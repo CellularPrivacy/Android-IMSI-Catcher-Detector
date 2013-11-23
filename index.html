@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Android IMSI Catcher Detector (AIMSICD) by SecUpwN</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Android IMSI Catcher Detector (AIMSICD)</h1>
+        <h2>Detect and prevent IMSI-Catcher attacks!</h2>
+        <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p>Android-based project to detect and (hopefully one day) prevent fake base stations (IMSI-Catchers) in GSM/UMTS Networks.
+Project Website: <a href="http://secupwn.github.io/Android-IMSI-Catcher-Detector/">http://secupwn.github.io/Android-IMSI-Catcher-Detector/</a></p>
+
+<p>Official XDA development thread: <a href="http://forum.xda-developers.com/showthread.php?t=1422969">http://forum.xda-developers.com/showthread.php?t=1422969</a></p>
+
+<h1>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
+
+<p>Unfortunately it seems that IMSI catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and 
+criminals all the same, using it. Anyone can now buy an IMSI catcher... In addition they can all crack the A5.1-3 encryption on the fly!
+This is why the original author named "E:V:A" started this project. Let's protect against threats like these!</p>
+
+<p><img src="http://i43.tinypic.com/2i9i0kk.jpg" alt="Riots on Taksim Square" title="IMSI Catcher during the Riots on Taksim Square"></p>
+
+<h1>
+<a name="credits--greetings" class="anchor" href="#credits--greetings"><span class="octicon octicon-link"></span></a>Credits &amp; Greetings</h1>
+
+<p><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS</a></p>
+
+<p>(list will be updated as project evolves and shall be included within the final app)</p>
+
+<h1>
+<a name="development-roadmap" class="anchor" href="#development-roadmap"><span class="octicon octicon-link"></span></a>Development Roadmap</h1>
+
+<h5>
+<a name="make-an-empty-shell-app-that" class="anchor" href="#make-an-empty-shell-app-that"><span class="octicon octicon-link"></span></a>Make an empty "shell" App that:</h5>
+
+<ul>
+<li>a. collects relevant RF related variables using public API calls. (LAC etc)</li>
+<li>b. puts them in an SQLite database</li>
+<li>c. catches hidden SMS's</li>
+<li>d. catches hidden App installations</li>
+</ul><h5>
+<a name="make-another-empty-shell-app-or-module-that" class="anchor" href="#make-another-empty-shell-app-or-module-that"><span class="octicon octicon-link"></span></a>Make another empty "shell" App (or module) that:</h5>
+
+<ul>
+<li>e. opens a device <strong>local</strong> terminal root shell</li>
+<li>f. uses (e.) to connect to the modem AT-Command Processor) ATCoP via shared memory interface SHM on those devices that uses that (Samsung) etc. </li>
+<li>g. displays the results from sent AT commands</li>
+</ul><h5>
+<a name="possibly-make-another-app-that" class="anchor" href="#possibly-make-another-app-that"><span class="octicon octicon-link"></span></a>[Possibly] Make another App that:</h5>
+
+<ul>
+<li>h. use the OTG (USB-host-mode) interface to use and FTDI serial cable to interface with another OsmocomBB compatible phone (use Android host as an GUI host)</li>
+<li>i. uses the "catchercatcher" detector SW on the 2nd phone</li>
+<li><p>j. can inject fake 2G GSM location data</p></li>
+<li><p>Find out how to access L0-L2 data using the ATCoP connection</p></li>
+<li>Use a statistical algorithm (and smart thinking) on the DB data to detect rogue IMSI catchers</li>
+<li>Combine all of the above (steps h to j) into a BETA App for testing, add other languages</li>
+<li>Improve Beta app by adding (many more) things like IMSI catcher counter measures</li>
+</ul><p>Further ideas: Add option to make app device administrator, maybe also use the XPosed Framework</p>
+
+<pre><code>                                    DEVELOPERS ARE VERY WELCOME! ;-)
+</code></pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector"></a> is maintained by <a href="https://github.com/SecUpwN">SecUpwN</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
