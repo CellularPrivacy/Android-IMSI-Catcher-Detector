@@ -47,5 +47,25 @@ Development Roadmap
 
 Further ideas: Add option to make app device administrator, maybe also use the XPosed Framework
 
+Summary (please read carefully)
+===============================
+
+### This project: 
+* Detects IMSI based device location tracking
+* Provides counter measures for device tracking
+* Can provide swarm-wise-decision-based cellular service interruption
+* Can provide secure wifi/wimax alternative data routes through MESH-like networking.
+* Detect and prevent remote hidden application installation
+* Detect and prevent remote hidden SMS-based SIM attacks
+* Prevent or spoof GPS data
+* Does NOT secure any data transmissions
+* Does NOT prevent already installed rogue application from full access
+
+### Other projects:
+* Provide full device encryption
+* Provide secure application sand-boxing
+* Provide secure data transmission
+* Provide firewalls
+
                                         DEVELOPERS ARE VERY WELCOME! ;-)
 
