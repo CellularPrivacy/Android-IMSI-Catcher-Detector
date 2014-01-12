@@ -1,7 +1,9 @@
 Android-based project to detect and (hopefully one day) prevent fake base stations (IMSI-Catchers) in GSM/UMTS Networks.
 Project Website: http://secupwn.github.io/Android-IMSI-Catcher-Detector/
 
-Official XDA development thread: http://forum.xda-developers.com/showthread.php?t=1422969
+OFFICIAL XDA DEVELOPMENT THREAD: http://forum.xda-developers.com/showthread.php?t=1422969
+
+Contribute source of other apps: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE
 
 Introduction
 ============
