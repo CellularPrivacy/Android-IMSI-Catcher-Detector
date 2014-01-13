@@ -2,7 +2,7 @@ SOURCES OF USEFUL APPS
 ======================
 
 This file shall provide a short overview of added source code of apps.
-If you add an app to the Folder 'MERGESOURCE', please update this file!
+If you add an app to the folder 'MERGESOURCE', please update this file!
 
 IMPORTANT: Get written permission of the app developer to be allowed to
 add his source code here first, explicitly point him to our 'LICENSE'!
@@ -12,7 +12,7 @@ link to play store or thread (just to make sure we can track additions).
 
 ----------------------
 
-* 11.01.2014, added source code of RawPhone developed by Jofre Palau
+* 11.01.2014, added source code of 'RawPhone' developed by Jofre Palau
 - https://play.google.com/store/apps/details?id=com.jofrepalau.rawphone
 
 * 
