@@ -1,73 +1,73 @@
-Android-based project to detect and (hopefully one day) prevent fake base stations (IMSI-Catchers) in GSM/UMTS Networks.
-Project Website: http://secupwn.github.io/Android-IMSI-Catcher-Detector/
+Android-based project to detect and (hopefully one day) prevent fake base stations (IMSI-Catchers) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to visit our [OFFICIAL DEVELOPMENT THREAD ON XDA](http://forum.xda-developers.com/showthread.php?t=1422969) and contribute!
 
-OFFICIAL XDA DEVELOPMENT THREAD: http://forum.xda-developers.com/showthread.php?t=1422969
-
-Contribute source of other apps: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE
-
-Introduction
-============
-
-Unfortunately it seems that IMSI catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and 
-criminals all the same, using it. Anyone can now buy an IMSI catcher... In addition they can all crack the A5.1-3 encryption on the fly!
-This is why the original author named "E:V:A" started this project. Let's protect against threats like these!
+Found some source code of an app you think is important to add? Contribute it [here](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE), but **please** carefully follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
 
 
-![Riots on Taksim Square](http://i43.tinypic.com/2i9i0kk.jpg "IMSI Catcher during the Riots on Taksim Square")
+# Introduction
 
-Credits & Greetings
-===================
+Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). In addition they can all crack the A5.1-3 encryption on the fly! This is why the original author named "E:V:A" started this project. Let's detect and protect against threats like these! Never think that you've got "nothing to hide". You'll very likely regret it one day.
 
-https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS
+Scary side note on YouTube: [How easy it is to clone a phone + call when connected to a femtocell](http://www.youtube.com/watch?v=Ydo19YOzpzU).
 
-(list will be updated as project evolves and shall be included within the final app)
+![IMSI-Catcher during the riots on Taksim Square](http://i43.tinypic.com/2i9i0kk.jpg)
 
-Development Roadmap
-====================
+### Credits & Greetings
+
+Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS). HUGE THANKS! ;-)
+
+This list will be updated as our project evolves and shall be included within the final app.
+
+
+# Development Roadmap
 
 ##### Make an empty "shell" App that:
+
 * a. collects relevant RF related variables using public API calls. (LAC etc)
 * b. puts them in an SQLite database
 * c. catches hidden SMS's
 * d. catches hidden App installations
 
 ##### Make another empty "shell" App (or module) that:
+
 * e. opens a device **local** terminal root shell
-* f. uses (e.) to connect to the modem AT-Command Processor) ATCoP via shared memory interface SHM on those devices that uses that (Samsung) etc. 
+* f. uses (e.) to connect to the modem AT-Command Processor ATCoP via shared memory interface SHM
 * g. displays the results from sent AT commands
+* NOTE: This part is **crucial** to our project. Please help E:V:A to develop a [Native AT Command Injector](http://forum.xda-developers.com/showthread.php?t=1708598)!
 
 ##### [Possibly] Make another App that:
 
-* h. use the OTG (USB-host-mode) interface to use and FTDI serial cable to interface with another OsmocomBB compatible phone (use Android host as an GUI host)
-* i. uses the "catchercatcher" detector SW on the 2nd phone
+* h. use the OTG (USB-host-mode) interface to use FTDI serial cable to interface with another OsmocomBB compatible phone (using Android host as a GUI host)
+* i. uses the "[CatcherCatcher](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/CatcherCatcher)" detector SW on the 2nd phone
 * j. can inject fake 2G GSM location data
+* k. find out how to access L0-L2 data using the ATCoP connection
+* l. use a statistical algorithm (and smart thinking) on the DB data to detect rogue IMSI catchers
+* m. combine all of the above (steps h to l) into a BETA App for testing, (maybe) add other languages
+* n. improve BETA app by adding (many more) things like IMSI-Catcher counter measures
 
-* Find out how to access L0-L2 data using the ATCoP connection
-* Use a statistical algorithm (and smart thinking) on the DB data to detect rogue IMSI catchers
-* Combine all of the above (steps h to j) into a BETA App for testing, add other languages
-* Improve Beta app by adding (many more) things like IMSI catcher counter measures
+**Further ideas**: Add option to make app device administrator, maybe also use ROOT and the [XPosed Framework](http://forum.xda-developers.com/showthread.php?t=1574401).
 
-Further ideas: Add option to make app device administrator, maybe also use the XPosed Framework
-
-Summary (please read carefully)
-===============================
+# Summary (please read carefully!)
 
 ### This project: 
+
 * Detects IMSI based device location tracking
 * Provides counter measures for device tracking
 * Can provide swarm-wise-decision-based cellular service interruption
-* Can provide secure wifi/wimax alternative data routes through MESH-like networking.
+* Can provide secure wifi/wimax alternative data routes through MESH-like networking
 * Detect and prevent remote hidden application installation
 * Detect and prevent remote hidden SMS-based SIM attacks
 * Prevent or spoof GPS data
 * Does NOT secure any data transmissions
 * Does NOT prevent already installed rogue application from full access
 
-### Other projects:
+### Other projects (NOT this one):
+
 * Provide full device encryption
 * Provide secure application sand-boxing
 * Provide secure data transmission
 * Provide firewalls
 
-                                        DEVELOPERS ARE VERY WELCOME! ;-)
+  
+DEVELOPERS are VERY WELCOME and will be [REWARDED](http://forum.xda-developers.com/showthread.php?p=46957078).
 
+You know of a cool crowdfunding service? [Recommend it to us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/1)!
