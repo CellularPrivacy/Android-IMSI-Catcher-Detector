@@ -67,6 +67,13 @@ This list will be updated as our project evolves and shall be included within th
 * Provide secure data transmission
 * Provide firewalls
 
+### Websites about security worth checking out:
+
+* [Smartphone Attack Vector](http://smartphone-attack-vector.de/) - smartphone flaws and countermeasures
+* [Kuketz IT-Security Blog](http://www.kuketz-blog.de/) - great security reviews (written in German)
+* [PRISM Break](https://prism-break.org/) - alternatives to opt out of global data surveillance
+* [The Guardian Project](https://guardianproject.info/) - Secure Open Source Mobile Apps
+
   
 DEVELOPERS are VERY WELCOME and will be [REWARDED](http://forum.xda-developers.com/showthread.php?p=46957078).
 
