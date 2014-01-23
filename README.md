@@ -1,4 +1,4 @@
-Android-based project to detect and (hopefully one day) prevent fake base stations (IMSI-Catchers) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to visit our [OFFICIAL DEVELOPMENT THREAD ON XDA](http://forum.xda-developers.com/showthread.php?t=1422969) and contribute! Not a developer? Don't worry, you can help too. Get the APP [GSMmap-APK](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk) and submit collected data to the [GSM Security Map](https://www.gsmmap.org/) in order to enlarge its database for comparison of mobile network protection capabilities!
+Android-based project to detect and (hopefully one day) avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to visit our [OFFICIAL DEVELOPMENT THREAD ON XDA](http://forum.xda-developers.com/showthread.php?t=1422969) and contribute! Not a developer? Don't worry, you can help too. Get the APP [GSMmap-APK](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk) and submit collected data to the [GSM Security Map](https://www.gsmmap.org/) in order to enlarge its database for comparison of mobile network protection capabilities!
 
 Want to add source code of an important app? Contribute it [here](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE), **carefully** follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
 
@@ -36,7 +36,7 @@ This list will be updated as our project evolves and shall be included within th
 * e. opens a device **local** terminal root shell
 * f. uses (e.) to connect to the modem AT-Command Processor ATCoP via shared memory interface SHM
 * g. displays the results from sent AT commands
-* NOTE: This part is **crucial** to our project. Please help E:V:A to develop a [Native AT Command Injector](http://forum.xda-developers.com/showthread.php?t=1708598)!
+* NOTE: This is **crucial** to our project. Please help E:V:A develop a [Native AT Command Injector](http://forum.xda-developers.com/showthread.php?t=1708598)!
 
 ##### [Possibly] Make another App that:
 
@@ -48,14 +48,18 @@ This list will be updated as our project evolves and shall be included within th
 * m. combine all of the above (steps h to l) into a BETA App for testing, (maybe) add other languages
 * n. improve BETA app by adding (many more) things like IMSI-Catcher counter measures
 
-**Further ideas**: Add option to make app device administrator, maybe also use ROOT and the [XPosed Framework](http://forum.xda-developers.com/showthread.php?t=1574401).
+##### Further ideas (none of them for sure yet):
+
+* Add option to make app device administrator
+* Add switch to utilize ROOT for digging deeper
+* Usage of the [XPosed Framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 
 # Summary (please read carefully!)
 
 ### This project: 
 
 * Detects IMSI based device location tracking
-* Provides counter measures for device tracking
+* Provides counter measures against device tracking
 * Can provide swarm-wise-decision-based cellular service interruption
 * Can provide secure wifi/wimax alternative data routes through MESH-like networking
 * Detect and prevent remote hidden application installation
@@ -69,7 +73,7 @@ This list will be updated as our project evolves and shall be included within th
 * Provide full device encryption
 * Provide secure application sand-boxing
 * Provide secure data transmission
-* Provide firewalls
+* Provide firewalls (awesome solution: [AFWall+](https://github.com/ukanth/afwall))
 
 ### Websites about security worth checking out:
 
