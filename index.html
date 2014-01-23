@@ -20,7 +20,7 @@
     <header>
       <div class="inner">
         <h1>Android IMSI Catcher Detector (AIMSICD)</h1>
-        <h2>Detect and prevent IMSI-Catcher attacks!</h2>
+        <h2>Detect and avoid IMSI-Catcher attacks!</h2>
         <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector" class="button"><small>View project on</small>GitHub</a>
       </div>
     </header>
@@ -28,7 +28,7 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <p>Android-based project to detect and (hopefully one day) prevent fake base stations (IMSI-Catchers) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to visit our <a href="http://forum.xda-developers.com/showthread.php?t=1422969">OFFICIAL DEVELOPMENT THREAD ON XDA</a> and contribute! Not a developer? Don't worry, you can help too. Get the APP <a href="https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk">GSMmap-APK</a> and submit collected data to the <a href="https://www.gsmmap.org/">GSM Security Map</a> in order to enlarge its database for comparison of mobile network protection capabilities!</p>
+          <p>Android-based project to detect and (hopefully one day) avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to visit our <a href="http://forum.xda-developers.com/showthread.php?t=1422969">OFFICIAL DEVELOPMENT THREAD ON XDA</a> and contribute! Not a developer? Don't worry, you can help too. Get the APP <a href="https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk">GSMmap-APK</a> and submit collected data to the <a href="https://www.gsmmap.org/">GSM Security Map</a> in order to enlarge its database for comparison of mobile network protection capabilities!</p>
 
 <p>Want to add source code of an important app? Contribute it <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE">here</a>, <strong>carefully</strong> follow this <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README">README</a>.</p>
 
@@ -71,7 +71,7 @@
 <li>e. opens a device <strong>local</strong> terminal root shell</li>
 <li>f. uses (e.) to connect to the modem AT-Command Processor ATCoP via shared memory interface SHM</li>
 <li>g. displays the results from sent AT commands</li>
-<li>NOTE: This part is <strong>crucial</strong> to our project. Please help E:V:A to develop a <a href="http://forum.xda-developers.com/showthread.php?t=1708598">Native AT Command Injector</a>!</li>
+<li>NOTE: This is <strong>crucial</strong> to our project. Please help E:V:A develop a <a href="http://forum.xda-developers.com/showthread.php?t=1708598">Native AT Command Injector</a>!</li>
 </ul><h5>
 <a name="possibly-make-another-app-that" class="anchor" href="#possibly-make-another-app-that"><span class="octicon octicon-link"></span></a>[Possibly] Make another App that:</h5>
 
@@ -83,9 +83,15 @@
 <li>l. use a statistical algorithm (and smart thinking) on the DB data to detect rogue IMSI catchers</li>
 <li>m. combine all of the above (steps h to l) into a BETA App for testing, (maybe) add other languages</li>
 <li>n. improve BETA app by adding (many more) things like IMSI-Catcher counter measures</li>
-</ul><p><strong>Further ideas</strong>: Add option to make app device administrator, maybe also use ROOT and the <a href="http://forum.xda-developers.com/showthread.php?t=1574401">XPosed Framework</a>.</p>
+</ul><h5>
+<a name="further-ideas-none-of-them-for-sure-yet" class="anchor" href="#further-ideas-none-of-them-for-sure-yet"><span class="octicon octicon-link"></span></a>Further ideas (none of them for sure yet):</h5>
 
-<h1>
+<ul>
+<li>Add option to make app device administrator</li>
+<li>Add switch to utilize ROOT for digging deeper</li>
+<li>Usage of the <a href="http://forum.xda-developers.com/showthread.php?t=1574401">XPosed Framework</a>
+</li>
+</ul><h1>
 <a name="summary-please-read-carefully" class="anchor" href="#summary-please-read-carefully"><span class="octicon octicon-link"></span></a>Summary (please read carefully!)</h1>
 
 <h3>
@@ -93,7 +99,7 @@
 
 <ul>
 <li>Detects IMSI based device location tracking</li>
-<li>Provides counter measures for device tracking</li>
+<li>Provides counter measures against device tracking</li>
 <li>Can provide swarm-wise-decision-based cellular service interruption</li>
 <li>Can provide secure wifi/wimax alternative data routes through MESH-like networking</li>
 <li>Detect and prevent remote hidden application installation</li>
@@ -108,7 +114,7 @@
 <li>Provide full device encryption</li>
 <li>Provide secure application sand-boxing</li>
 <li>Provide secure data transmission</li>
-<li>Provide firewalls</li>
+<li>Provide firewalls (awesome solution: <a href="https://github.com/ukanth/afwall">AFWall+</a>)</li>
 </ul><h3>
 <a name="websites-about-security-worth-checking-out" class="anchor" href="#websites-about-security-worth-checking-out"><span class="octicon octicon-link"></span></a>Websites about security worth checking out:</h3>
 
