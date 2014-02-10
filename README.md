@@ -82,7 +82,7 @@ This list will be updated as our project evolves and shall be included within th
 * [PRISM Break](https://prism-break.org/) - Alternatives to opt out of global data surveillance
 * [The Guardian Project](https://guardianproject.info/) - Secure Open Source Mobile Apps
 * [Security Research Labs](https://srlabs.de/) - Stunning Security Revelations made in Berlin
-
+* [The Surveillance Self-Defense Project](https://ssd.eff.org/) - Defend against the threat of surveillance
   
 DEVELOPERS are VERY WELCOME and will be [REWARDED](http://forum.xda-developers.com/showthread.php?p=46957078).
 
