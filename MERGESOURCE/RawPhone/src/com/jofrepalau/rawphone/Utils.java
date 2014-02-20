@@ -16,58 +16,50 @@ import java.util.List;
 
 public class Utils {
 
-    public static void CheckUtils(Context ctx)
-    {
-        final String szChmod;
-        final Context ctxInstance = ctx;
+    public static void CheckUtils(Context ctx) {
+        final String mChmod;
+        final Context mInstance = ctx;
 
         // Check chmod utils
         if (RootTools.checkUtil("chmod"))
-            szChmod = "chmod";
-        else
-        {
+            mChmod = "chmod";
+        else {
             if (RootTools.checkUtil("busybox") && RootTools.hasUtil("chmod", "busybox"))
-                szChmod = "busybox chmod";
+                mChmod = "busybox chmod";
             else if (RootTools.checkUtil("toolbox") && RootTools.hasUtil("chmod", "toolbox"))
-                szChmod = "toolbox chmod";
+                mChmod = "toolbox chmod";
             else
-                szChmod = "";
+                mChmod = "";
         }
 
         // Check for microcom applet
-        if (!RootTools.checkUtil("microcom"))
-        {
+        if (!RootTools.checkUtil("microcom")) {
             AlertDialog.Builder mMicrocom = new AlertDialog.Builder(ctx);
             mMicrocom.setTitle("RawPhone - Microcom applet");
             mMicrocom.setMessage(ctx.getResources().getString(R.string.text_no_microcom));
-            mMicrocom.setPositiveButton(ctx.getResources().getString(R.string.text_ok), new DialogInterface.OnClickListener()
-            {
+            mMicrocom.setPositiveButton(ctx.getResources().getString(R.string.text_ok), new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
-                    if (CopyAssetsToLocal(ctxInstance, "microcom","microcom"))
-                    {
+                public void onClick(DialogInterface dialog, int which) {
+                    if (CopyAssetsToLocal(mInstance, "microcom", "microcom")) {
                         boolean bOperationSucceed;
                         // Copy to system
-                        String szPathName = GetBasePath(ctxInstance);
+                        String szPathName = GetBasePath(mInstance);
                         if (!szPathName.endsWith("/"))
                             szPathName = szPathName + "/";
 
-                        bOperationSucceed = InstallBinary(szPathName, "microcom", szChmod);
+                        bOperationSucceed = InstallBinary(szPathName, "microcom", mChmod);
 
                         CharSequence text = "Microcom applet successfully installed!";
                         int duration = Toast.LENGTH_SHORT;
 
-                        Toast toast = Toast.makeText(ctxInstance, text, duration);
+                        Toast toast = Toast.makeText(mInstance, text, duration);
                         toast.show();
                     }
                 }
             });
-            mMicrocom.setNegativeButton(ctx.getResources().getString(R.string.text_cancel), new DialogInterface.OnClickListener()
-            {
+            mMicrocom.setNegativeButton(ctx.getResources().getString(R.string.text_cancel), new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
+                public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
@@ -77,32 +69,28 @@ public class Utils {
     }
 
     // Copy assets to local
-    private static boolean CopyAssetsToLocal(Context ctx, String szSourceName, String szDstName)
-    {
-        String szBasePath = GetBasePath(ctx);
-        if (szBasePath.equals("")) return false;
-        szDstName = szBasePath + "/" + szDstName;
+    private static boolean CopyAssetsToLocal(Context ctx, String mSourceName, String mDstName) {
+        String mBasePath = GetBasePath(ctx);
+        if (mBasePath.equals("")) return false;
+        mDstName = mBasePath+ "/" + mDstName;
 
-        InputStream myInput;
-        OutputStream myOutput;
-        String outFileName = szDstName;
-        try
-        {
-            File hfOutput = new File(szDstName);
-            if (hfOutput.exists()) hfOutput.delete();
+        InputStream mAssetInput;
+        OutputStream mAssetOutput;
+        String outFileName = mDstName;
+        try {
+            File mFileOutput = new File(mDstName);
+            if (mFileOutput.exists()) mFileOutput.delete();
 
-            myOutput = new FileOutputStream(outFileName);
-            myInput = ctx.getAssets().open(szSourceName);
+            mAssetOutput = new FileOutputStream(mFileOutput);
+            mAssetInput = ctx.getAssets().open(mSourceName);
             byte[] tBuffer = new byte[4096];  /* 4K page size */
             int nLength;
-            while ((nLength = myInput.read(tBuffer)) > 0)
-                myOutput.write(tBuffer, 0, nLength);
-            myOutput.flush();
-            myInput.close();
-            myOutput.close();
-        }
-        catch (Exception e)
-        {
+            while ((nLength = mAssetInput.read(tBuffer)) > 0)
+                mAssetOutput.write(tBuffer, 0, nLength);
+            mAssetOutput.flush();
+            mAssetInput.close();
+            mAssetOutput.close();
+        } catch (Exception e) {
             Log.e("RawPhone_Utils", "CopyAssetsToLocal() failed, msg = " + e.getMessage());
             return false;
         }
@@ -111,96 +99,81 @@ public class Utils {
     }
 
     // Get application data path
-    private static String GetBasePath(Context ctx)
-    {
-        Context cont = ctx.getApplicationContext();
-        String szBasePath = "";
-        if (cont != null)
-        {
+    private static String GetBasePath(Context ctx) {
+        Context mContext = ctx.getApplicationContext();
+        String mBasePath = "";
+        if (mContext != null) {
             // No try catch the cont != null will prevent a possible NPE here
-            if (cont.getFilesDir().exists())
-                szBasePath = cont.getFilesDir().getAbsolutePath();
-            else if (!cont.getFilesDir().mkdirs())
-                szBasePath = "";
-        }
-        else
-        {
-            szBasePath = "";
+            if (mContext.getFilesDir().exists())
+                mBasePath = mContext.getFilesDir().getAbsolutePath();
+            else if (!mContext.getFilesDir().mkdirs())
+                mBasePath = "";
+        } else {
+            mBasePath = "";
         }
 
-        return szBasePath;
+        return mBasePath;
     }
 
-    private static boolean InstallBinary(String szBinaryPath, String szBinaryName,String szChmod)
-    {
+    private static boolean InstallBinary(String mBinaryPath, String mBinaryName, String mChmod) {
         boolean mOperationSucceeded;
 
         mOperationSucceeded = CMDProcessor.runSuCommand("mount -o rw,remount /system").success();
-        mOperationSucceeded &= CMDProcessor.runSuCommand("cp " + szBinaryPath + szBinaryName + " /system/xbin/" + szBinaryName).success();
-        mOperationSucceeded &= CMDProcessor.runSuCommand(szChmod + " 755 /system/xbin/" + szBinaryName).success();
+        mOperationSucceeded &= CMDProcessor.runSuCommand("cp " + mBinaryPath + mBinaryName + " /system/xbin/" + mBinaryName).success();
+        mOperationSucceeded &= CMDProcessor.runSuCommand(mChmod + " 755 /system/xbin/" + mBinaryName).success();
         mOperationSucceeded &= CMDProcessor.runSuCommand("sync").success();
         mOperationSucceeded &= CMDProcessor.runSuCommand("mount -o ro,remount /system").success();
 
         return mOperationSucceeded;
     }
 
-    private static String ByteToString(byte[] baByteArray)
-    {
-        if (baByteArray == null) return null;
-        try
-        {
-            String szResult = new String(baByteArray, "ASCII");
-            szResult = String.copyValueOf(szResult.toCharArray(), 0, baByteArray.length);
-            return szResult;
-        }
-        catch (UnsupportedEncodingException e)
-        {
+    private static String ByteToString(byte[] mByteArray) {
+        if (mByteArray == null) return null;
+        try {
+            String mResult = new String(mByteArray, "ASCII");
+            mResult = String.copyValueOf(mResult.toCharArray(), 0, mByteArray.length);
+            return mResult;
+        } catch (UnsupportedEncodingException e) {
             return null;
         }
     }
 
-    private static String[] ByteArrayToStringArray(byte[] baByteArray, int nDataLength)
-    {
-        if (baByteArray == null) return null;
-        if (nDataLength <= 0) return null;
-        if (nDataLength > baByteArray.length) return null;
+    private static String[] ByteArrayToStringArray(byte[] mByteArray, int mDataLength) {
+        if (mByteArray == null) return null;
+        if (mDataLength <= 0) return null;
+        if (mDataLength > mByteArray.length) return null;
 
         // Replace all unvisible chars to '.'
-        for (int i = 0; i < nDataLength; i++)
-        {
-            if ((baByteArray[i] == 0x0D) || (baByteArray[i] == 0x0A))
-            {
-                baByteArray[i] = 0;
+        for (int i = 0; i < mDataLength; i++) {
+            if ((mByteArray[i] == 0x0D) || (mByteArray[i] == 0x0A)) {
+                mByteArray[i] = 0;
                 continue;
             }
-            if (baByteArray[i] < 0x20) baByteArray[i] = 0x2E;
-            if (baByteArray[i] > 0x7E) baByteArray[i] = 0x2E;
+            if (mByteArray[i] < 0x20) mByteArray[i] = 0x2E;
+            if (mByteArray[i] > 0x7E) mByteArray[i] = 0x2E;
         }
 
         // Split and convert to string
-        List<String> lstString = new ArrayList<String>();
-        for (int i = 0; i < nDataLength; i++)
-        {
-            if (baByteArray[i] == 0) continue;
+        List<String> mListString = new ArrayList<String>();
+        for (int i = 0; i < mDataLength; i++) {
+            if (mByteArray[i] == 0) continue;
             int nBlockLength = -1;
-            for (int j = i + 1; j < nDataLength; j++)
-            {
-                if (baByteArray[j] == 0)
-                {
+            for (int j = i + 1; j < mDataLength; j++) {
+                if (mByteArray[j] == 0) {
                     nBlockLength = j - i;
                     break;
                 }
             }
-            if (nBlockLength == -1) nBlockLength = nDataLength - i;
-            byte[] baBlockData = new byte[nBlockLength];
-            System.arraycopy(baByteArray, i, baBlockData, 0, nBlockLength);
-            lstString.add(ByteToString(baBlockData));
+            if (nBlockLength == -1) nBlockLength = mDataLength - i;
+            byte[] mBlockData = new byte[nBlockLength];
+            System.arraycopy(mByteArray, i, mBlockData, 0, nBlockLength);
+            mListString.add(ByteToString(mBlockData));
             i += nBlockLength;
         }
 
-        if (lstString.size() <= 0) return null;
-        String[] szResult = new String[lstString.size()];
-        lstString.toArray(szResult);
-        return szResult;
+        if (mListString.size() <= 0) return null;
+        String[] mResult = new String[mListString.size()];
+        mListString.toArray(mResult);
+        return mResult;
     }
 }

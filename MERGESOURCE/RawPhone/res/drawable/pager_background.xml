@@ -14,5 +14,5 @@
     limitations under the License.
 -->
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/vp_background_texture"
-    android:tileMode="repeat" />
+        android:src="@drawable/vp_background_texture"
+        android:tileMode="repeat"/>
