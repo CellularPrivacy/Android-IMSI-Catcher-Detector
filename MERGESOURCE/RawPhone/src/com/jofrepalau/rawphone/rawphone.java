@@ -1,9 +1,7 @@
 package com.jofrepalau.rawphone;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +12,7 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.view.Menu;
-import com.jofrepalau.rawphone.cmdprocessor.CMDProcessor;
+
 import com.jofrepalau.rawphone.cmdprocessor.Helpers;
 import com.stericson.RootTools.RootTools;
 
@@ -37,8 +35,8 @@ public class rawphone extends Activity {
         //Initialise device details
         Device.InitDevice(mContext);
 
-        boolean isRootProvided = RootTools.isAccessGiven();
-        boolean isBusyboxInstalled = Helpers.checkBusybox();
+        /*boolean isRootProvided = RootTools.isAccessGiven();
+        boolean isBusyboxInstalled = Helpers.checkBusybox();*/
 
         // Check required utilities are available
         Utils.CheckUtils(mContext);

@@ -22,47 +22,60 @@ import android.view.View.OnKeyListener;
 import android.widget.*;
 
 import com.android.internal.telephony.Phone;
+import com.android.internal.telephony.PhoneFactory;
 
 public class ATRilHook extends Activity {
 
 	private static final String LOG_TAG = "RILOemHookTestApp";
 	private RadioButton mRadioButtonAPI1 = null;
 	private RadioGroup mRadioGroupAPI = null;
-	private Object mPhone = null;
-	private AsyncResult RilRequestRaw = null;
-	private AsyncResult RilRequestString = null;
 	private EditText mRespText = null;
-    private static Context sContext = null;
+    private ListView mListView;
+    private String[] mDisplay;
+	private Phone mPhone = null;
+    private OemCommands mOemCommands;
+	private static Context sContext = null;
+
+    private int mCurrentSvcMode = OemCommands.OEM_SM_TYPE_TEST_MANUAL;
+    private int mCurrentModeType = OemCommands.OEM_SM_TYPE_SUB_ENTER;
 
 	private static final int EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE = 1300;
 	private static final int EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE = 1400;
 	private static final int EVENT_UNSOL_RIL_OEM_HOOK_RAW = 500;
 	private static final int EVENT_UNSOL_RIL_OEM_HOOK_STR = 600;
+    private static final int ID_SERVICE_MODE_REFRESH = 1001;
+    private static final int ID_SERVICE_MODE_REQUEST = 1008;
+    private static final int ID_SERVICE_MODE_END = 1009;
+
+    private static final int DIALOG_INPUT = 0;
+    private static final int CHARS_PER_LINE = 34;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-        sContext = this;
+		sContext = this;
 		setContentView(R.layout.riloemhook_layout);
+        mListView = (ListView)findViewById(R.id.displayList);
 		mRadioButtonAPI1 = (RadioButton) findViewById(R.id.radio_api1);
 		mRadioGroupAPI = (RadioGroup) findViewById(R.id.radio_group_api);
 		// Initially turn on first button.
 		mRadioButtonAPI1.toggle();
 		// Get our main phone object.
 
-		makeDefaultPhones();
-		getDefaultPhone();
-		// mPhone = PhoneFactory.getDefaultPhone();
-		// Register for OEM raw notification.
-		// mPhone.mCM.setOnUnsolOemHookRaw(mHandler,EVENT_UNSOL_RIL_OEM_HOOK_RAW, null);
-		// Capture text edit key press
+		mPhone = PhoneFactory.getDefaultPhone();
+        mOemCommands = OemCommands.getInstance(sContext);
+
+		/*
+		 * makeDefaultPhones(); getDefaultPhone();
+		 */
+
 		mRespText = (EditText) findViewById(R.id.edit_cmdstr);
 		mRespText.setOnKeyListener(new OnKeyListener() {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				// If the event is a key down event on the "enter" button
 				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
 					// Perform action on key press
-					Toast.makeText(ATRilHook.this, mRespText.getText(), Toast.LENGTH_SHORT).show();
+					Toast.makeText(sContext, mRespText.getText(), Toast.LENGTH_SHORT).show();
 					return true;
 				}
 				return false;
@@ -82,16 +95,12 @@ public class ATRilHook extends Activity {
 	public void onPause() {
 		super.onPause();
 		log("onPause()");
-		// Unregister for OEM raw notification.
-		// mPhone.mCM.unSetOnUnsolOemHookRaw(mHandler);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		log("onResume()");
-		// Register for OEM raw notification.
-		// mPhone.mCM.setOnUnsolOemHookRaw(mHandler, EVENT_UNSOL_RIL_OEM_HOOK_RAW, null);
 	}
 
 	public void execRIL(View view) {
@@ -125,14 +134,25 @@ public class ATRilHook extends Activity {
 		case R.id.radio_api4:
 			// Send OEM command string
 			break;
+         case R.id.radio_api5:
+             // Ciphering Indicator
+             mCurrentSvcMode = OemCommands.OEM_SM_ENTER_MODE_MESSAGE;
+             mCurrentModeType = OemCommands.OEM_SM_TYPE_SUB_CIPHERING_PROTECTION_ENTER;
+             byte[] data = mOemCommands.getEnterServiceModeData(mCurrentSvcMode, mCurrentModeType, OemCommands.OEM_SM_ACTION);
+             sendRequest(data, ID_SERVICE_MODE_REQUEST);
+             break;
 		default:
 			log("unknown button selected");
 			break;
 		}
 
-		if (idButtonChecked != R.id.radio_api4) {
+
+        if (idButtonChecked == R.id.radio_api5) {
+            byte[] data = mOemCommands.getEnterServiceModeData(mCurrentSvcMode, mCurrentModeType, OemCommands.OEM_SM_ACTION);
+            sendRequest(data, ID_SERVICE_MODE_REQUEST);
+        } else if (idButtonChecked != R.id.radio_api4) {
 			Message msg = mHandler.obtainMessage(EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE);
-			getOemRilRequestRaw(oemhook, msg);
+			mPhone.invokeOemRilRequestRaw(oemhook, msg);
 			mRespText.setText("");
 		} else {
 			// Copy string from EditText and add carriage return
@@ -141,44 +161,54 @@ public class ATRilHook extends Activity {
 			// Create message
 			Message msg = mHandler.obtainMessage(EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE);
 			// Send request
-			getOemRilRequestStrings(oemhookstring, msg);
+			mPhone.invokeOemRilRequestStrings(oemhookstring, msg);
 			mRespText = (EditText) findViewById(R.id.edit_response);
 			mRespText.setText("---Wait response---");
 		}
+
+		/*
+		 * if (idButtonChecked != R.id.radio_api4) { Message msg =
+		 * mHandler.obtainMessage(EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE); getOemRilRequestRaw(oemhook, msg);
+		 * mRespText.setText(""); } else { // Copy string from EditText and add carriage return String[] oemhookstring =
+		 * { ((EditText) findViewById(R.id.edit_cmdstr)).getText().toString() + '\r' };
+		 * 
+		 * // Create message Message msg = mHandler.obtainMessage(EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE); // Send request
+		 * getOemRilRequestStrings(oemhookstring, msg); mRespText = (EditText) findViewById(R.id.edit_response);
+		 * mRespText.setText("---Wait response---"); }
+		 */
 	}
 
 	private void logRilOemHookResponse(AsyncResult ar) {
 		log("received oem hook response");
-		String mResponse = "";
+		String str = new String("");
 
 		if (ar.exception != null) {
 			log("Exception:" + ar.exception);
-			mResponse += "Exception:" + ar.exception + "\n\n";
+			str += "Exception:" + ar.exception + "\n\n";
 		}
 
 		if (ar.result != null) {
 			byte[] oemResponse = (byte[]) ar.result;
 			int size = oemResponse.length;
 			log("oemResponse length=[" + Integer.toString(size) + "]");
-			mResponse += "oemResponse length=[" + Integer.toString(size) + "]" + "\n";
+			str += "oemResponse length=[" + Integer.toString(size) + "]" + "\n";
 
 			if (size > 0) {
 				for (int i = 0; i < size; i++) {
 					byte myByte = oemResponse[i];
-					int myInt = myByte & 0xFF;
+					int myInt = (int) (myByte & 0xFF);
 					log("oemResponse[" + Integer.toString(i) + "]=[0x" + Integer.toString(myInt, 16) + "]");
-					mResponse += "oemResponse[" + Integer.toString(i) + "]=[0x" + Integer.toString(myInt, 16) + "]"
-							+ "\n";
+					str += "oemResponse[" + Integer.toString(i) + "]=[0x" + Integer.toString(myInt, 16) + "]" + "\n";
 				}
 			}
 		} else {
 			log("received NULL oem hook response");
-			mResponse += "received NULL oem hook response";
+			str += "received NULL oem hook response";
 		}
 
 		// Display message box
-		AlertDialog.Builder builder = new AlertDialog.Builder(sContext);
-		builder.setMessage(mResponse);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(str);
 		builder.setPositiveButton("OK", null);
 		AlertDialog alert = builder.create();
 		alert.show();
@@ -186,17 +216,17 @@ public class ATRilHook extends Activity {
 
 	private void logRilOemHookResponseString(AsyncResult ar) {
 		log("received oem hook string response");
-		String mException = "";
-		// CmdRespText = (EditText) findViewById(R.id.edit_response);
+		String str = new String("");
+		mRespText = (EditText) findViewById(R.id.edit_response);
 
 		if (ar.exception != null) {
 			log("Exception:" + ar.exception);
-			mException += "Exception:" + ar.exception + "\n\n";
+			str += "Exception:" + ar.exception + "\n\n";
 		}
 
 		if (ar.result != null) {
 			String[] oemStrResponse = (String[]) ar.result;
-			int mStringSize = oemStrResponse.length;
+			int sizeStr = oemStrResponse.length;
 			log("oemResponseString[0] [" + oemStrResponse[0] + "]");
 			mRespText.setText("" + oemStrResponse[0]);
 		} else {
@@ -211,25 +241,106 @@ public class ATRilHook extends Activity {
 
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			AsyncResult ar;
+            AsyncResult result;
 			switch (msg.what) {
-			case EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE:
-				log("EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE");
-				ar = (AsyncResult) msg.obj;
-				logRilOemHookResponse(ar);
-				break;
-			case EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE:
-				log("EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE");
-				ar = (AsyncResult) msg.obj;
-				logRilOemHookResponseString(ar);
-				break;
-			case EVENT_UNSOL_RIL_OEM_HOOK_RAW:
-				break;
-			case EVENT_UNSOL_RIL_OEM_HOOK_STR:
-				break;
-			}
+            case ID_SERVICE_MODE_REFRESH:
+                Log.v(LOG_TAG, "Tick");
+                byte[] data = null;
+                switch(mCurrentSvcMode) {
+                    case OemCommands.OEM_SM_ENTER_MODE_MESSAGE:
+                        data = mOemCommands.getEnterServiceModeData(0, 0, OemCommands.OEM_SM_QUERY);
+                        break;
+                    case OemCommands.OEM_SM_PROCESS_KEY_MESSAGE:
+                        data = mOemCommands.getPressKeyData('\0', OemCommands.OEM_SM_QUERY);
+                        break;
+                    default:
+                        Log.e(LOG_TAG, "Unknown mode: " + mCurrentSvcMode);
+                        break;
+                }
+
+                if (data != null) {
+                    sendRequest(data, ID_SERVICE_MODE_REQUEST);
+                }
+                break;
+            case ID_SERVICE_MODE_REQUEST:
+                result = (AsyncResult)msg.obj;
+                if (result.exception != null) {
+                    Log.e(LOG_TAG, "", result.exception);
+                    return;
+                }
+                if (result.result == null) {
+                    Log.v(LOG_TAG, "No need to refresh.");
+                    return;
+                }
+                byte[] aob = (byte[])result.result;
+
+                if (aob.length == 0) {
+                    Log.v(LOG_TAG, "Length = 0");
+                    return;
+                }
+
+                int lines = aob.length / CHARS_PER_LINE;
+
+                if (mDisplay == null || mDisplay.length != lines) {
+                    Log.v(LOG_TAG, "New array = " + lines);
+                    mDisplay = new String[lines];
+                }
+
+                for (int i = 0; i < lines; i++) {
+                    StringBuilder strb = new StringBuilder(CHARS_PER_LINE);
+                    for (int j = 2; i < CHARS_PER_LINE; j++) {
+                        int pos = i * CHARS_PER_LINE + j;
+                        if (pos >= aob.length) {
+                            Log.e(LOG_TAG, "Unexpected EOF");
+                            break;
+                        }
+                        if (aob[pos] == 0) {
+                            break;
+                        }
+                        strb.append((char)aob[pos]);
+                    }
+                    mDisplay[i] = strb.toString();
+                }
+
+                mListView.setAdapter(new ArrayAdapter<String>(
+                        ATRilHook.this, R.layout.list_item, mDisplay));
+
+                if (mDisplay[0].contains("End service mode")) {
+                    finish();
+                } else if (((mDisplay[0].contains("[")) && (mDisplay[0].contains("]")))
+                        || ((mDisplay[1].contains("[")) && (mDisplay[1].contains("]")))) {
+                    // This is a menu, don't refresh
+                } else if ((mDisplay[0].length() != 0) && (mDisplay[1].length() == 0)
+                        && (mDisplay[0].charAt(1) > 48) && (mDisplay[0].charAt(1) < 58)) {
+                    // Only numerical display, refresh
+                    mHandler.sendEmptyMessageDelayed(ID_SERVICE_MODE_REFRESH, 200);
+                } else {
+                    // Periodical refresh
+                    mHandler.sendEmptyMessageDelayed(ID_SERVICE_MODE_REFRESH, 1500);
+                }
+                break;
+            case ID_SERVICE_MODE_END:
+                Log.v(LOG_TAG, "Service Mode End");
+                break;
+            case EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE:
+                log("EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE");
+                result = (AsyncResult)msg.obj;
+                logRilOemHookResponse(result);
+                break;
+            case EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE:
+                log("EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE");
+                result = (AsyncResult) msg.obj;
+                logRilOemHookResponseString(result);
+                break;
+            }
 		}
+
 	};
+
+    private void sendRequest(byte[] data, int id) {
+        Message msg = mHandler.obtainMessage(id);
+        mPhone.invokeOemRilRequestRaw(data, msg);
+    }
 
 	public static void makeDefaultPhones() throws IllegalArgumentException {
 
@@ -251,6 +362,9 @@ public class ATRilHook extends Activity {
 
 			get.invoke(null, params);
 
+			Toast toast = Toast.makeText(sContext, "makeDefaultPhones Completed!", Toast.LENGTH_SHORT);
+			toast.show();
+
 		} catch (IllegalArgumentException iAE) {
 			throw iAE;
 		} catch (Exception e) {
@@ -259,10 +373,9 @@ public class ATRilHook extends Activity {
 
 	}
 
-	public static void makeDefaultPhone(Context context) throws IllegalArgumentException {
+	public static void makeDefaultPhone() throws IllegalArgumentException {
 
 		try {
-            sContext = context;
 			ClassLoader cl = sContext.getClassLoader();
 			@SuppressWarnings("rawtypes")
 			Class PhoneFactory = cl.loadClass("com.android.internal.telephony.PhoneFactory");
@@ -300,7 +413,7 @@ public class ATRilHook extends Activity {
 		Integer ret = -1;
 
 		try {
-            sContext = context;
+			sContext = context;
 			ClassLoader cl = sContext.getClassLoader();
 			@SuppressWarnings("rawtypes")
 			Class PhoneFactory = cl.loadClass("com.android.internal.telephony.PhoneFactory");
@@ -340,6 +453,9 @@ public class ATRilHook extends Activity {
 			Method get = PhoneFactory.getMethod("getDefaultPhone", (Class[]) null);
 			ret = get.invoke(null, (Object[]) null);
 
+			Toast toast = Toast.makeText(sContext, "getDefaultPhone Completed!", Toast.LENGTH_SHORT);
+			toast.show();
+
 		} catch (IllegalArgumentException iAE) {
 			throw iAE;
 		} catch (Exception e) {
@@ -350,30 +466,7 @@ public class ATRilHook extends Activity {
 
 	}
 
-	public static Phone getCdmaPhone() throws IllegalArgumentException {
-
-		Phone ret = null;
-
-		try {
-			ClassLoader cl = sContext.getClassLoader();
-			@SuppressWarnings("rawtypes")
-			Class PhoneFactory = cl.loadClass("com.android.internal.telephony.PhoneFactory");
-
-			Method get = PhoneFactory.getMethod("getCdmaPhone", (Class[]) null);
-			ret = (Phone) get.invoke(null, (Object[]) null);
-
-		} catch (IllegalArgumentException iAE) {
-			throw iAE;
-		} catch (Exception e) {
-			//
-		}
-
-		return ret;
-
-	}
-
-	public void getOemRilRequestRaw(byte[] oemhook, Message msg)
-			throws IllegalArgumentException {
+	public void getOemRilRequestRaw(byte[] oemhook, Message msg) throws IllegalArgumentException {
 
 		try {
 			ClassLoader cl = sContext.getClassLoader();
@@ -393,8 +486,10 @@ public class ATRilHook extends Activity {
 			params[0] = oemhook;
 			params[1] = msg;
 
-            // Process the response
-            logRilOemHookResponse((AsyncResult) get.invoke(PhoneFactory, params));
+			// Process the response
+			get.invoke(PhoneFactory, params);
+			Toast toast = Toast.makeText(sContext, "invoke OemRilRequestRaw Completed!", Toast.LENGTH_SHORT);
+			toast.show();
 
 		} catch (IllegalArgumentException iAE) {
 			throw iAE;
@@ -404,8 +499,7 @@ public class ATRilHook extends Activity {
 
 	}
 
-	public void getOemRilRequestStrings(String[] oemhook, Message msg)
-			throws IllegalArgumentException {
+	public void getOemRilRequestStrings(String[] oemhook, Message msg) throws IllegalArgumentException {
 
 		try {
 			ClassLoader cl = sContext.getClassLoader();
@@ -425,9 +519,10 @@ public class ATRilHook extends Activity {
 			params[0] = oemhook;
 			params[1] = msg;
 
-            // Process the response
-            logRilOemHookResponseString((AsyncResult) get.invoke(PhoneFactory, params));
-
+			// Process the response
+			get.invoke(PhoneFactory, params);
+			Toast toast = Toast.makeText(sContext, "invoke OemRilRequestStrings Completed!", Toast.LENGTH_SHORT);
+			toast.show();
 		} catch (IllegalArgumentException iAE) {
 			throw iAE;
 		} catch (Exception e) {

@@ -7,6 +7,9 @@
     <string name="text_ok">OK</string>
     <string name="text_cancel">Cancel</string>
 
+    <string name="device_info_title">Device Information</string>
+    <string name="oemrilhook_title">OEM RIL Hook</string>
+
     <string name="text_no_busybox">Busybox was not detected on your device, would you like to install it now?</string>
     <string name="text_busybox_not_installed">Busybox install failed, please confirm your phone has been rooted and su
         binary installed.
@@ -34,6 +37,7 @@
     <string name="radio_api2">API 2 (datalen=1)</string>
     <string name="radio_api3">API 3 (datalen=6)</string>
     <string name="radio_api4">API 4 Type command :</string>
+    <string name="radio_api5">API 5 Ciphering Indicator</string>
     <string name="radio_run">RUN</string>
     <string name="ril_oem_response">Module response:</string>
 </resources>

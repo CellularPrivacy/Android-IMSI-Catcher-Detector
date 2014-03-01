@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
@@ -12,7 +12,6 @@
     <RadioGroup android:id="@+id/radio_group_api"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/mylabel"
                 android:orientation="vertical">
         <RadioButton android:id="@+id/radio_api1"
                      android:layout_width="wrap_content"
@@ -29,6 +28,11 @@
                      android:layout_height="wrap_content"
                      android:text="@string/radio_api3"
                 />
+        <RadioButton android:id="@+id/radio_api5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/radio_api5"
+                />
         <RadioButton android:id="@+id/radio_api4"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
@@ -39,7 +43,6 @@
             android:id="@+id/edit_cmdstr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/radio_group_api"
             android:layout_marginRight="20dip"
             android:minWidth="200dip"
             android:textColor="#000000"
@@ -48,21 +51,17 @@
     <Button android:id="@+id/run"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_cmdstr"
             android:text="@string/radio_run"
-            android:clickable="true"
-            />
+            android:clickable="true"/>
     <TextView android:id="@+id/label_response"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:layout_below="@+id/run"
               android:text="@string/ril_oem_response"
             />
     <EditText
             android:id="@+id/edit_response"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label_response"
             android:minWidth="200dip"
             android:minHeight="50dip"
             android:layout_marginLeft="20dip"
@@ -72,4 +71,9 @@
             android:background="#000000"
             android:editable="false"
             android:inputType="text"/>
-</RelativeLayout>
+    <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/displayList"
+            />
+</LinearLayout>
