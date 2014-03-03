@@ -1,6 +1,11 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 17.02.2014
+* Initial Development Commit by [xLaMbChOpSx](https://github.com/xLaMbChOpSx), yet to be reviewed and added ;-)
+* Article for [Kuketz IT-Security Blog](http://www.kuketz-blog.de/) by [He3556](https://github.com/He3556) and me almost finished (still needs review)
+* Cleanup of GitHub is being prepared in order to add code and commits. Stay tuned!
+
 #### 02.02.2014
 * The [EFF](https://www.eff.org/) and [The Guardian Project](https://guardianproject.info/) have been contacted to join our quest
 * Mike Kuketz of the [Kuketz IT-Security Blog](http://www.kuketz-blog.de/) confirms article in the works about our project
