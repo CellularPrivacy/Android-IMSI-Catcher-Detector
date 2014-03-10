@@ -1,6 +1,6 @@
 Android-based project to detect and (hopefully one day) avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to visit our [OFFICIAL DEVELOPMENT THREAD ON XDA](http://forum.xda-developers.com/showthread.php?t=1422969) and contribute! Not a developer? Don't worry, you can help too. Get the APP [GSMmap-APK](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk) and submit collected data to the [GSM Security Map](https://www.gsmmap.org/) in order to enlarge its database for comparison of mobile network protection capabilities!
 
-Want to add source code of an important app? Contribute it [here](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE), **carefully** follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
+Before submitting new commits, please read our [STYLEGUIDE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md). Want to add source code of an important app? Contribute it [here](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE) (purely a storage for clean, unchanged code to be added with permission of its author), **carefully** follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
 
 [![DEF CON 18: Practical Cellphone Spying](http://img.youtube.com/vi/fQSu9cBaojc/0.jpg)](https://www.youtube.com/watch?v=fQSu9cBaojc)
 
