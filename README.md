@@ -4,9 +4,9 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 
 * Discussion and constructive criticism: [Official Development Thread on XDA](http://forum.xda-developers.com/showthread.php?t=1422969).
 * Before submitting a commit, please carefully read our [Styleguide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md).
-* Storage for unchanged source code we should add: [MERGESOURCE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE), **carefully** follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
+* Storage for source code we should add: [MERGESOURCE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE), **carefully** follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
 * Developers will be [rewarded](http://forum.xda-developers.com/showthread.php?p=46957078). You know of a cool crowdfunding service? [Recommend it to us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/1).
-* Not a developer? Don't worry, you can help too! Get the APP [GSMmap-APK](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk) and submit collected data to the [GSM Security Map](https://www.gsmmap.org/) in order to enlarge its database for comparison of mobile network protection capabilities!
+* Not a developer? Don't worry, you can help too! Get the [GSMmap-APP](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk) and submit collected data to the [GSM Security Map](https://www.gsmmap.org/) to enlarge its database for comparison of mobile network protection capabilities!
 
 # Introduction
 
@@ -14,7 +14,7 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 
 YouTube: DEF CON 18 - Practical Cellphone Spying with Kristin Paget
 
-Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). In addition they can all crack the A5.1-3 encryption on the fly! This is why the original author named "E:V:A" started this project. Let's detect and protect against threats like these! Never think that you've got "nothing to hide". You'll very likely regret it one day.
+Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). In addition they can all crack the A5.1-3 encryption on the fly! This is why the original author named "E:V:A" started this project. Let's detect and protect against these threats! Never think that you've got "nothing to hide". You'll very likely regret it one day.
 
 * Get scared on YouTube: [How easy it is to clone a phone + call when connected to a femtocell](http://www.youtube.com/watch?v=Ydo19YOzpzU).
 * Also, check out this talk by Karsten Nohl and Luca Melette on [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck).
@@ -44,7 +44,7 @@ Unfortunately it seems that IMSI-Catchers have been exponentially popular lately
 * j. can inject fake 2G GSM location data
 * k. find out how to access L0-L2 data using the ATCoP connection
 * l. use a statistical algorithm (and smart thinking) on the DB data to detect rogue IMSI catchers
-* m. combine all of the above (steps h to l) into a BETA App for testing, (maybe) add other languages
+* m. combine all of the above (steps h to l) into a BETA App for testing, add more languages
 * n. improve BETA app by adding (many more) things like IMSI-Catcher counter measures
 
 ##### Further ideas (none of them for sure yet):
