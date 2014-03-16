@@ -1,14 +1,18 @@
 # Android IMSI-Catcher Detector (AIMSICD)
 
-Android-based project to detect and (hopefully one day) avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to visit our [OFFICIAL DEVELOPMENT THREAD ON XDA](http://forum.xda-developers.com/showthread.php?t=1422969) and contribute! Not a developer? Don't worry, you can help too. Get the APP [GSMmap-APK](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk) and submit collected data to the [GSM Security Map](https://www.gsmmap.org/) in order to enlarge its database for comparison of mobile network protection capabilities!
+Android-based project to detect and (hopefully one day) avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to contribute! ;-)
 
-Before submitting new commits, please read our [STYLEGUIDE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md). Want to add source code of an important app? Contribute it [here](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE) (purely a storage for clean, unchanged code to be added with permission of its author), **carefully** follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
+* Discussion and constructive criticism: [Official Development Thread on XDA](http://forum.xda-developers.com/showthread.php?t=1422969).
+* Before submitting a commit, please carefully read our [Styleguide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md).
+* Storage for unchanged source code we should add: [MERGESOURCE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE), **carefully** follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
+* Developers will be [rewarded](http://forum.xda-developers.com/showthread.php?p=46957078). You know of a cool crowdfunding service? [Recommend it to us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/1).
+* Not a developer? Don't worry, you can help too! Get the APP [GSMmap-APK](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk) and submit collected data to the [GSM Security Map](https://www.gsmmap.org/) in order to enlarge its database for comparison of mobile network protection capabilities!
+
+# Introduction
 
 [![DEF CON 18: Practical Cellphone Spying](http://img.youtube.com/vi/fQSu9cBaojc/0.jpg)](https://www.youtube.com/watch?v=fQSu9cBaojc)
 
 YouTube: DEF CON 18 - Practical Cellphone Spying with Kristin Paget
-
-# Introduction
 
 Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). In addition they can all crack the A5.1-3 encryption on the fly! This is why the original author named "E:V:A" started this project. Let's detect and protect against threats like these! Never think that you've got "nothing to hide". You'll very likely regret it one day.
 
@@ -16,13 +20,6 @@ Unfortunately it seems that IMSI-Catchers have been exponentially popular lately
 * Also, check out this talk by Karsten Nohl and Luca Melette on [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck).
 
 ![IMSI-Catcher during the riots on Taksim Square](http://i43.tinypic.com/2i9i0kk.jpg)
-
-### Credits & Greetings
-
-Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS). HUGE THANKS! ;-)
-
-This list will be updated as our project evolves and shall be included within the final app.
-
 
 # Development Roadmap
 
@@ -77,6 +74,20 @@ This list will be updated as our project evolves and shall be included within th
 * Provide secure data transmission
 * Provide firewalls (awesome solution: [AFWall+](https://github.com/ukanth/afwall))
 
+### License
+
+This project is completely licensed under [GPL v3+](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE).
+
+### Bug tracker
+
+Found a bug? Please [create an issue here on GitHub](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/new)!
+
+# Credits & Greetings
+
+Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS). HUGE THANKS! ;-)
+
+This list will be updated as our project evolves and shall be included within the final app.
+
 ### Websites about security worth checking out:
 
 * [Smartphone Attack Vector](http://smartphone-attack-vector.de/) - Smartphone flaws and countermeasures
@@ -85,7 +96,4 @@ This list will be updated as our project evolves and shall be included within th
 * [The Guardian Project](https://guardianproject.info/) - Secure Open Source Mobile Apps
 * [Security Research Labs](https://srlabs.de/) - Stunning Security Revelations made in Berlin
 * [The Surveillance Self-Defense Project](https://ssd.eff.org/) - Defend against the threat of surveillance
-  
-DEVELOPERS are VERY WELCOME and will be [REWARDED](http://forum.xda-developers.com/showthread.php?p=46957078).
-
-You know of a cool crowdfunding service? [Recommend it to us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/1)!
+* [TextSecure](https://github.com/WhisperSystems/TextSecure) - Secure text messaging application for Android (replace WhatsApp)
