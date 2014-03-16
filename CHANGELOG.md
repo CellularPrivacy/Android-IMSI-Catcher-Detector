@@ -1,6 +1,12 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 16.03.2014
+
+* Beautified README.md and added [TextSecure](https://github.com/WhisperSystems/TextSecure) to the links worth checking out
+* Finalized article for [Kuketz IT-Security Blog](http://www.kuketz-blog.de/), last review to be done by Mike Kuketz
+* App Icon + Banner for article and GitHub **WANTED**, ideas welcome in our [Development Thread](http://forum.xda-developers.com/showthread.php?t=1422969)!
+
 #### 10.03.2014
 * Added a [STYLEGUIDE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md) to avoid neglected commits - please read it before commiting!
 
