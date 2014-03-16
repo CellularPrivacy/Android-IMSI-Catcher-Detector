@@ -6,7 +6,8 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 * Before submitting a commit, please carefully read our [Styleguide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md).
 * Storage for source code we should add: [MERGESOURCE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE), **carefully** follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
 * Developers will be [rewarded](http://forum.xda-developers.com/showthread.php?p=46957078). You know of a cool crowdfunding service? [Recommend it to us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/1).
-* Not a developer? Don't worry, you can help too! Get the [GSMmap-APP](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk) and submit collected data to the [GSM Security Map](https://www.gsmmap.org/) to enlarge its database for comparison of mobile network protection capabilities!
+* Not a developer? You can help too! Get the [GSMmap-APP](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk) and submit collected data to the [GSM Security Map](https://www.gsmmap.org/) to enlarge its database for comparison of mobile network protection capabilities!
+* Want to know what's boiling under the hood? You're welcome to bookmark our [Changelog](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md).
 
 # Introduction
 
