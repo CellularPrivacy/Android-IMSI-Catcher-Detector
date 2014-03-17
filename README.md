@@ -1,4 +1,4 @@
-# Android IMSI-Catcher Detector (AIMSICD)
+## Android IMSI-Catcher Detector (AIMSICD)
 
 Android-based project to detect and (hopefully one day) avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to contribute! ;-)
 
@@ -97,4 +97,5 @@ This list will be updated as our project evolves and shall be included within th
 * [The Guardian Project](https://guardianproject.info/) - Secure Open Source Mobile Apps
 * [Security Research Labs](https://srlabs.de/) - Stunning Security Revelations made in Berlin
 * [The Surveillance Self-Defense Project](https://ssd.eff.org/) - Defend against the threat of surveillance
+* [Electronic Frontier Foundation](https://www.eff.org/) - nonprofit organization defending civil liberties in the digital world
 * [TextSecure](https://github.com/WhisperSystems/TextSecure) - Secure text messaging application for Android (replace WhatsApp)
