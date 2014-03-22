@@ -1,7 +1,11 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
-#### 20.03.2014
+#### 22.03.2014
+
+* Added source code of [RawPhone](https://play.google.com/store/apps/details?id=com.jofrepalau.rawphone) into main file tree to start off with. Throw your commits at me! 
+
+#### 21.03.2014
 
 * Ladies and Gentlemen, I am **honored** to announce our [German Article featuring AIMSICD](http://www.kuketz-blog.de/imsi-catcher-erkennung-fuer-android-aimsicd)! ;-)
 * THANK YOU, Mike! Bookmark www.kuketz-blog.de - a lot of awesome stuff to discover and learn!
