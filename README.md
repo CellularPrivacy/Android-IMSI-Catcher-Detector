@@ -102,3 +102,4 @@ This list will be updated as our project evolves and shall be included within th
 * [Electronic Frontier Foundation](https://www.eff.org/) - nonprofit organization defending civil liberties in the digital world
 * [TextSecure](https://github.com/WhisperSystems/TextSecure) - Secure text messaging application for Android (replace WhatsApp)
 * [RedPhone](https://github.com/WhisperSystems/RedPhone) - encrypted voice calls for Android
+* [KillYourPhone](http://killyourphone.com) - make your own signal blocking phone pouch super fast for little money
