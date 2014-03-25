@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012-2013 The CyanogenMod Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources>
+    <color name="white">#ffffffff</color>
+    <color name="off_white">#ffdedede</color>
+    <color name="black">#ff000000</color>
+    <color name="grid_lines">#22ffffff</color>
+    <color name="cb">#88bbffff</color>
+    <color name="freq_hl">#2000ddff</color>
+    <color name="freq_hl2">#4033b5e5</color>
+    <color name="eq_red">#80ff0000</color>
+    <color name="eq_yellow">#80f0ff00</color>
+    <color name="eq_holo_bright">#8000ddff</color>
+    <color name="eq_holo_blue">#8033b5e5</color>
+    <color name="eq_holo_dark">#800099cc</color>
+    <color name="cb_shader">#ffccffff</color>
+    <color name="cb_shader_alpha">#44ccffff</color>
+    <color name="action_bar_color">#ff0d0d0d</color>
+</resources> 
