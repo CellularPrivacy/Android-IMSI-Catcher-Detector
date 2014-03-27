@@ -1,6 +1,12 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 27.03.2014
+
+* A few team members reported that they've been crawled by IP adresses that where not connected to any country (probably   secret agencies) and stalked by members of the famous company Rohde & Schwarz (the leading manufacturer for   
+  IMSI-Catchers). We know that with our actions we already have attracked forces out there which get their will through 
+  more brutal methods. Thus, we added a small [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER). Just to mention it: I always have the latest copy of everything. Enjoy!
+
 #### 25.03.2014
 
 * Progress! We've merged an [Intitial Development Commit](/https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/5) by [xLaMbChOpSx](https://github.com/xLaMbChOpSx). HUGE THANKS!
