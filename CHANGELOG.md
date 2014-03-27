@@ -1,6 +1,10 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 25.03.2014
+
+* Progress! We've merged an [Intitial Development Commit](/https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/5) by [xLaMbChOpSx](https://github.com/xLaMbChOpSx). HUGE THANKS!
+
 #### 22.03.2014
 
 * Added source code of [RawPhone](https://play.google.com/store/apps/details?id=com.jofrepalau.rawphone) into main file tree to start off with. Throw your commits at me! 
