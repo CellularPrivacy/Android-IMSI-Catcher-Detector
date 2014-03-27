@@ -84,6 +84,9 @@ This project is completely licensed under [GPL v3+](https://github.com/SecUpwN/A
 ### Bug tracker
 
 Found a bug? Please [create an issue here on GitHub](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/new)!
+### Disclaimer
+
+For our own safety, here's our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER). In short terms: Think before you act! We're untouchable.
 
 # Credits & Greetings
 
