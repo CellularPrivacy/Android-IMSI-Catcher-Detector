@@ -22,7 +22,20 @@ Unfortunately it seems that IMSI-Catchers have been exponentially popular lately
 * Get scared on YouTube: [How easy it is to clone a phone + call when connected to a femtocell](http://www.youtube.com/watch?v=Ydo19YOzpzU).
 * Also, check out this talk by Karsten Nohl and Luca Melette on [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck).
 
+#### Curious? Want to know what IMSI-Catchers can look like?
+
+* This picture has been taken during the riots on Taksim Square in Instanbul:
+
 ![IMSI-Catcher during the riots on Taksim Square](http://i43.tinypic.com/2i9i0kk.jpg)
+
+* Above example is way too conspicuous and you'll likely never encounter one of these.
+* Todays IMSI-Catchers can be [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/), or are hidden inside comfortable Spy-Vehicles:
+
+![Comfort inside IMSI-Catcher vehicle](http://oi42.tinypic.com/16ba4b4.jpg)
+
+* Todays IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html) now:
+
+![Septier IMSI-Catcher Mini](http://www.septier.com/contentManagment/uploadedFiles/Mini.png)
 
 # Development Roadmap
 
