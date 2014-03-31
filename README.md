@@ -17,7 +17,7 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 
 YouTube: DEF CON 18 - Practical Cellphone Spying with Kristin Paget
 
-Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). In addition they can all crack the A5.1-3 encryption on the fly! This is why the original author named "E:V:A" started this project. Let's detect and protect against these threats! Never think that you've got "nothing to hide". You'll very likely regret it one day.
+Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). In addition they can all [crack the A5.1-3 encryption](http://www.infosecurity-magazine.com/view/6394/3g-encryption-cracked-in-less-than-two-hours) on the fly! This is why the original author named "E:V:A" started this project. Let's detect and protect against these threats! Never think that you've got "nothing to hide". You'll very likely regret it one day.
 
 * Get scared on YouTube: [How easy it is to clone a phone + call when connected to a femtocell](http://www.youtube.com/watch?v=Ydo19YOzpzU).
 * Also, check out this talk by Karsten Nohl and Luca Melette on [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck).
@@ -33,7 +33,7 @@ Unfortunately it seems that IMSI-Catchers have been exponentially popular lately
 
 ![Comfort inside IMSI-Catcher vehicle](http://oi42.tinypic.com/16ba4b4.jpg)
 
-* Todays IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html) now:
+* Current IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html) now:
 
 ![Septier IMSI-Catcher Mini](http://www.septier.com/contentManagment/uploadedFiles/Mini.png)
 
