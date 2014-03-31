@@ -1,6 +1,13 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 31.03.2014
+
+* New [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/7) by our awesome developer [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! This one reduces the target SDK version and updates the code.
+* Curious to get you hands on something to try out? Bookmark our [WIP-RELEASES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/) and feel free to [report feedback on XDA](http://forum.xda-developers.com/showthread.php?t=1422969).
+* New [WIKI-Pages](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki) have been created by [xLaMbChOpSx](https://github.com/xLaMbChOpSx) to explain building and installation. HAVE PHUN! ;-)
+
+
 #### 27.03.2014
 
 * A few team members reported that they've been crawled by IP adresses that where not connected to any country (probably   secret agencies) and stalked by members of the famous company Rohde & Schwarz (the leading manufacturer for   
