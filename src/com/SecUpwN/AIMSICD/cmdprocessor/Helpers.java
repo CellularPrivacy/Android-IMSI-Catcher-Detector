@@ -44,6 +44,7 @@ public class Helpers {
             "DynamicRegexReplaceableByCompiledPattern",
             "BreakStatement"
     })
+
     // avoids hardcoding the tag
     private static final String TAG = "AIMSICD_Helpers";
 
