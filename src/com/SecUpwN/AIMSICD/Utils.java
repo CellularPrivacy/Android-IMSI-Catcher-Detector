@@ -1,11 +1,7 @@
 package com.SecUpwN.AIMSICD;
 
-
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
-import android.widget.Toast;
 import com.SecUpwN.AIMSICD.cmdprocessor.CMDProcessor;
 import com.stericson.RootTools.RootTools;
 
@@ -154,4 +150,5 @@ public class Utils {
         mListString.toArray(mResult);
         return mResult;
     }
+
 }
