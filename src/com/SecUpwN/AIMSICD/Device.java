@@ -21,40 +21,38 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Device {
 
     private static String TAG = "AIMSICD_Device";
 
-    private static String LOCATION_TABLE = "locationinfo";
-    private static String CELL_TABLE = "cellinfo";
-    private static String SIGNAL_TABLE = "signalinfo";
-    private static String DB_NAME = "myCellInfo";
+    public static String LOCATION_TABLE = "locationinfo";
+    public static String CELL_TABLE = "cellinfo";
+    public static String SIGNAL_TABLE = "signalinfo";
+    public static String DB_NAME = "myCellInfo";
 
     private static PhoneStateListener sSignalListenerStrength;
     private static PhoneStateListener sSignalListenerLocation;
     private static LocationManager lm;
     private static LocationListener sLocationListener;
-    private static SQLiteDatabase sDB;
-    private static MySQLiteHelper dbHelper;
-
+    public static SQLiteDatabase sDB;
+    private static SQLiteHelper dbHelper;
 
     private static int sPhoneID;
     private static int sSignalInfo;
-    private static int sDataActivity;
     private static int sNetID;
     private static int sLacID;
     private static int sCellID;
     private static double sLongitude;
     private static double sLatitude;
-    private static String sCSV, sNetType, sCellInfo, sDataState;
-    private static String sKML, sPhoneNum, sCellType, sLac, sNetName, sMmcmcc, sSimCountry, sPhoneType;
-    private static String sIMEI, sIMEIV, sSimOperator, sSimOperatorName, sSimSerial, sSimSubs, sDataActivityType;
+    private static String sNetType = "", sCellInfo = "", sDataState = "";
+    private static String sKML = "", sPhoneNum = "", sCellType = "", sLac = "";
+    private static String sNetName = "", sMmcmcc = "", sSimCountry = "", sPhoneType = "";
+    private static String sIMEI = "", sIMEIV = "", sSimOperator = "", sSimOperatorName = "";
+    private static String sSimSerial = "", sSimSubs = "", sDataActivityType = "";
 
     private static boolean TrackingCell;
     private static boolean TrackingSignal;
@@ -97,128 +95,24 @@ public class Device {
         }
 
         //Network type
-        sNetID = tm.getNetworkType();
-        switch (sNetID) {
-            case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-                sNetType = "Unknown";
-                break;
-            case TelephonyManager.NETWORK_TYPE_GPRS:
-                sNetType = "GPRS";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EDGE:
-                sNetType = "EDGE";
-                break;
-            case TelephonyManager.NETWORK_TYPE_UMTS:
-                sNetType = "UMTS";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSDPA:
-                sNetType = "HSPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSUPA:
-                sNetType = "HDSPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSPA:
-                sNetType = "HUSPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_CDMA:
-                sNetType = "CDMA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_0:
-                sNetType = "EVDO_0";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_A:
-                sNetType = "EVDO_A";
-                break;
-            case TelephonyManager.NETWORK_TYPE_1xRTT:
-                sNetType = "1xRTT";
-                break;
-            default:
-                sNetType = "Unknown";
-                break;
-        }
+        sNetID = getNetID(true);
+        sNetType = tm.getNetworkTypeName();
 
-        sDataActivity = tm.getDataActivity();
-        sDataActivityType = "undef";
-        switch (sDataActivity) {
-            case TelephonyManager.DATA_ACTIVITY_NONE:
-                sDataActivityType = "None";
-                break;
-            case TelephonyManager.DATA_ACTIVITY_IN:
-                sDataActivityType = "In";
-                break;
-            case TelephonyManager.DATA_ACTIVITY_OUT:
-                sDataActivityType = "Out";
-                break;
-            case TelephonyManager.DATA_ACTIVITY_INOUT:
-                sDataActivityType = "In-Out";
-                break;
-            case TelephonyManager.DATA_ACTIVITY_DORMANT:
-                sDataActivityType = "Dormant";
-                break;
-        }
+        int sDataActivity = tm.getDataActivity();
+        sDataActivityType = getActivityDesc(sDataActivity);
 
         sDataActivity = tm.getDataState();
-        sDataState = "undef";
-        switch (sDataActivity) {
-            case TelephonyManager.DATA_DISCONNECTED:
-                sDataActivityType = "Disconnected";
-                break;
-            case TelephonyManager.DATA_CONNECTING:
-                sDataActivityType = "Connecting";
-                break;
-            case TelephonyManager.DATA_CONNECTED:
-                sDataActivityType = "Connected";
-                break;
-            case TelephonyManager.DATA_SUSPENDED:
-                sDataActivityType = "Suspended";
-                break;
-        }
+        sDataState = getStateDesc(sDataActivity);
 
         //Create DB Instance
-        dbHelper = new MySQLiteHelper(mContext);
+        dbHelper = new SQLiteHelper(mContext);
         sDB = dbHelper.getWritableDatabase();
 
         sSignalListenerLocation = new PhoneStateListener() {
             public void onCellLocationChanged(CellLocation location) {
-                sNetID = tm.getNetworkType();
-                switch (sNetID) {
-                    case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-                        sNetType = "Unknown";
-                        break;
-                    case TelephonyManager.NETWORK_TYPE_GPRS:
-                        sNetType = "GPRS";
-                        break;
-                    case TelephonyManager.NETWORK_TYPE_EDGE:
-                        sNetType = "EDGE";
-                        break;
-                    case TelephonyManager.NETWORK_TYPE_UMTS:
-                        sNetType = "UMTS";
-                        break;
-                    case TelephonyManager.NETWORK_TYPE_HSDPA:
-                        sNetType = "HDSPA";
-                        break;
-                    case TelephonyManager.NETWORK_TYPE_HSUPA:
-                        sNetType = "HSUPA";
-                        break;
-                    case TelephonyManager.NETWORK_TYPE_HSPA:
-                        sNetType = "HSPA";
-                        break;
-                    case TelephonyManager.NETWORK_TYPE_CDMA:
-                        sNetType = "CDMA";
-                        break;
-                    case TelephonyManager.NETWORK_TYPE_EVDO_0:
-                        sNetType = "EVDO_0";
-                        break;
-                    case TelephonyManager.NETWORK_TYPE_EVDO_A:
-                        sNetType = "EVDO_A";
-                        break;
-                    case TelephonyManager.NETWORK_TYPE_1xRTT:
-                        sNetType = "1xRTT";
-                        break;
-                    default:
-                        sNetType = "Unknown";
-                        break;
-                }
+                sNetID = getNetID(true);
+                sNetType = tm.getNetworkTypeName();
+
                 int dataActivityType = tm.getDataActivity();
                 String dataActivity = "un";
                 switch (dataActivityType) {
@@ -268,9 +162,9 @@ public class Device {
                                 sSimOperator = getSimOperator(true);
                                 sSimOperatorName = getSimOperatorName(true);
                                 dbHelper.insertCell(sDB, sLacID, sCellID, sNetID, sLatitude,
-                                        sLongitude, sSignalInfo, sCellInfo, sSimCountry,                                        sSimOperator, sSimOperatorName);
+                                        sLongitude, sSignalInfo, sCellInfo, sSimCountry,
+                                        sSimOperator, sSimOperatorName);
                             }
-                            kmlpoints(sLacID, sCellID, sCellInfo, sLongitude, sLatitude);
                         }
                         break;
                     case TelephonyManager.PHONE_TYPE_CDMA:
@@ -284,14 +178,9 @@ public class Device {
                                 sSimOperator = getSimOperator(true);
                                 sSimOperatorName = getNetworkName(true);
                             }
-                            kmlpoints(sLacID, sCellID, sCellInfo, sLongitude, sLatitude);
                         }
                 }
 
-                if (TrackingLocation) {
-                    dbHelper.insertLocation(sDB, sLacID, sCellID, sNetID, sLatitude, sLongitude,
-                            sSignalInfo, sCellInfo);
-                }
                 if (TrackingCell && !dbHelper.cellExists(sCellID)) {
                     dbHelper.insertCell(sDB, sLacID, sCellID, sNetID, sLatitude, sLongitude,
                             sSignalInfo, sCellInfo, sSimCountry, sSimOperator, sSimOperatorName);
@@ -313,7 +202,7 @@ public class Device {
                     default:
                         sSignalInfo = 0;
                 }
-                kmlpoints(sLacID, sCellID, sCellInfo, sLongitude, sLatitude);
+
                 if (TrackingSignal) {
                     dbHelper.insertSignal(sDB, sLacID, sCellID, sNetID, sLatitude, sLongitude,
                             sSignalInfo, sCellInfo);
@@ -413,49 +302,17 @@ public class Device {
         return sMmcmcc;
     }
 
-    public static String getsNetworkType(boolean force) {
-        if (sNetType.isEmpty() || force) {
-            switch (tm.getNetworkType()) {
-                case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-                    sNetType = "Unknown";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_GPRS:
-                    sNetType = "GPRS";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_EDGE:
-                    sNetType = "EDGE";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_UMTS:
-                    sNetType = "UMTS";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_HSDPA:
-                    sNetType = "HDSPA";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_HSUPA:
-                    sNetType = "HSUPA";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_HSPA:
-                    sNetType = "HSPA";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_CDMA:
-                    sNetType = "CDMA";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_EVDO_0:
-                    sNetType = "EVDO_0";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_EVDO_A:
-                    sNetType = "EVDO_A";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_1xRTT:
-                    sNetType = "1xRTT";
-                    break;
-                default:
-                    sNetType = "Unknown";
-                    break;
-            }
+    public static String getNetworkTypeName() {
+        return tm.getNetworkTypeName();
+
+    }
+
+    public static int getNetID (boolean force) {
+        if (sNetID < 0 || force) {
+            sNetID = tm.getNetworkType();
         }
 
-        return sNetType;
+        return sNetID;
     }
 
     public static String getsLAC(boolean force) {
@@ -480,50 +337,43 @@ public class Device {
         return sCellType;
     }
 
-    public static String getsDataActivity(boolean force) {
-        if (sDataActivityType.isEmpty() || force) {
-            sDataActivity = tm.getDataActivity();
-            sDataActivityType = "undef";
-            switch (sDataActivity) {
-                case TelephonyManager.DATA_ACTIVITY_NONE:
-                    sDataActivityType = "None";
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_IN:
-                    sDataActivityType = "In";
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_OUT:
-                    sDataActivityType = "Out";
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_INOUT:
-                    sDataActivityType = "In-Out";
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_DORMANT:
-                    sDataActivityType = "Dormant";
-                    break;
-            }
+    public static String getActivityDesc(int dataID) {
+        sDataActivityType = "undef";
+        switch (dataID) {
+            case TelephonyManager.DATA_ACTIVITY_NONE:
+                sDataActivityType = "None";
+                break;
+            case TelephonyManager.DATA_ACTIVITY_IN:
+                sDataActivityType = "In";
+                break;
+            case TelephonyManager.DATA_ACTIVITY_OUT:
+                sDataActivityType = "Out";
+                break;
+            case TelephonyManager.DATA_ACTIVITY_INOUT:
+                sDataActivityType = "In-Out";
+                break;
+            case TelephonyManager.DATA_ACTIVITY_DORMANT:
+                sDataActivityType = "Dormant";
+                break;
         }
-
         return sDataActivityType;
     }
 
-    public static String getsDataState(boolean force) {
-        if (sDataState.isEmpty() || force) {
-            sDataActivity = tm.getDataState();
-            sDataState = "undef";
-            switch (sDataActivity) {
-                case TelephonyManager.DATA_DISCONNECTED:
-                    sDataActivityType = "Disconnected";
-                    break;
-                case TelephonyManager.DATA_CONNECTING:
-                    sDataActivityType = "Connecting";
-                    break;
-                case TelephonyManager.DATA_CONNECTED:
-                    sDataActivityType = "Connected";
-                    break;
-                case TelephonyManager.DATA_SUSPENDED:
-                    sDataActivityType = "Suspended";
-                    break;
-            }
+    public static String getStateDesc(int dataID) {
+        sDataState = "undef";
+        switch (dataID) {
+            case TelephonyManager.DATA_DISCONNECTED:
+                sDataActivityType = "Disconnected";
+                break;
+            case TelephonyManager.DATA_CONNECTING:
+                sDataActivityType = "Connecting";
+                break;
+            case TelephonyManager.DATA_CONNECTED:
+                sDataActivityType = "Connected";
+                break;
+            case TelephonyManager.DATA_SUSPENDED:
+                sDataActivityType = "Suspended";
+                break;
         }
 
         return sDataState;
@@ -605,6 +455,10 @@ public class Device {
                 sLongitude = loc.getLongitude();
                 sLatitude = loc.getLatitude();
             }
+            if (TrackingLocation) {
+                dbHelper.insertLocation(sDB, sLacID, sCellID, sNetID, sLatitude, sLongitude,
+                        sSignalInfo, sCellInfo);
+            }
         }
 
         @Override
@@ -624,118 +478,6 @@ public class Device {
         }
     }
 
-    public static void kmlheader() {
-        sKML = "<kml xmlns=\"http://earth.google.com/kml/2.0\">\n";
-        sKML += "<Folder>\n";
-        sKML += "<name>AIMSICD</name>\n";
-        sKML += "<description><![CDATA[AIMSICD LAC and CellID logs]]></description>\n";
-    }
-
-    private static void kmlpoints(int lac, int cellid, String info, double lng, double lat) {
-        if ((lng != 0.0) || (lat != 0.0)) {
-            //String timestamp = new java.text.SimpleDateFormat("yyyy-MM-ddTHH:mm:ss").format(new java.util.Date (epoch*1000));
-            alPosition.add(lng + "," + lat);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            java.util.Date date = new java.util.Date();
-            String datetime = dateFormat.format(date);
-            sKML += "<Placemark>\n";
-            sKML += "<TimeStamp><when>" + datetime + "</when></TimeStamp>\n";
-            sKML += "<name>" + lac + " " + cellid + "</name>\n";
-            sKML += "<description><![CDATA[" + info + "]]></description>\n";
-            sKML += "<Style><IconStyle><color>ffffbebe</color><scale>0.5</scale></IconStyle></Style><Point><coordinates>" + lng + "," + lat + ",0</coordinates></Point>\n";
-            sKML += "</Placemark>\n";
-        }
-    }
-
-    private static String kmlLAC(String content) {
-        return poligon(sLacID, alPosition, content);
-    }
-
-    private static String poligon(int lac, ArrayList<String> alPosition, String content) {
-        //Collections.sort(alPosition);
-        if (alPosition.size() > 0) {
-            String[] aPosition = new String[alPosition.size()];
-            alPosition.toArray(aPosition);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            java.util.Date date = new java.util.Date();
-            String datetime = dateFormat.format(date);
-
-            content += "<Placemark>\n";
-            content += "  <TimeStamp><when>" + datetime + "</when></TimeStamp>\n";
-            content += "  <name>LAC " + lac + "</name>\n";
-            content += "  <description><![CDATA[LAC " + lac + "]]></description>\n";
-            content += "  <Style><PolyStyle><color>7f9e9eff</color></PolyStyle></Style><MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>";
-            String initpos = aPosition[0];
-            for (String pos : aPosition) {
-                content += " " + pos;
-            }
-            content += " " + initpos + "\n</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>\n";
-            content += "</Placemark>\n";
-        }
-        return content;
-    }
-
-    public static void dumpinfokml(Context context) {
-        try {
-            String state = Environment.getExternalStorageState();
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                File rootcasirectory = new File(Environment.getExternalStorageDirectory() + "/AIMSICD/");
-                // have the object build the directory structure, if needed.
-                rootcasirectory.mkdirs();
-                // create a File object for the output file
-
-                // Make a copy of current content
-                String buff = sKML;
-                buff = kmlLAC(buff);
-                buff += "</Folder>\n</kml>\n";
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
-                java.util.Date date = new java.util.Date();
-                String datetime = dateFormat.format(date);
-
-                File file = new File(rootcasirectory, "aimsicd-"+datetime+".kml");
-                try {
-                    OutputStream os = new FileOutputStream(file);
-
-                    os.write(buff.getBytes());
-                } catch (IOException e) {
-                    // Unable to create file, likely because external storage is
-                    // not currently mounted.
-                    Log.e(TAG, "ExternalStorage: Error writing " + file + e.getMessage());
-                }
-
-                AlertDialog.Builder msg = new AlertDialog.Builder(context);
-                msg.setMessage("KML log copied in " + file);
-                AlertDialog alert = msg.create();
-                alert.setTitle("Log:");
-                alert.show();
-            } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-                // We can only read the media
-                AlertDialog.Builder msg = new AlertDialog.Builder(context);
-                msg.setMessage("Sorry, your SD card is mounted in read only mode. Write access is required to your SD card.");
-                AlertDialog alert = msg.create();
-                alert.setTitle("Error:");
-                alert.show();
-            } else {
-                // Something else is wrong. It may be one of many other states, but all we need
-                //  to know is we can neither read nor write
-                AlertDialog.Builder msg = new AlertDialog.Builder(context);
-                msg.setMessage("Sorry, I could not find an SD card to copy the log.");
-                AlertDialog alert = msg.create();
-                alert.setTitle("Error:");
-                alert.show();
-            }
-        } catch (Exception e) {
-            AlertDialog.Builder msg = new AlertDialog.Builder(context);
-            msg.setMessage("Something unexpected happened: " + e.getMessage());
-            AlertDialog alert = msg.create();
-            alert.setTitle("Error!");
-            alert.setIcon(R.drawable.icon);
-            alert.show();
-            e.printStackTrace();
-        }
-    }
-
     public static void exportDB () {
         try {
             dbHelper.export(LOCATION_TABLE);
@@ -749,7 +491,7 @@ public class Device {
     /**
      * SQLiteHelper class for the Location, Cell and Signal Strength Databases
      */
-    public static class MySQLiteHelper extends SQLiteOpenHelper {
+    public static class SQLiteHelper extends SQLiteOpenHelper {
 
         public static final String COLUMN_ID = "_id";
         private static final int DATABASE_VERSION = 1;
@@ -774,7 +516,7 @@ public class Device {
                 "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
                 "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
 
-        public MySQLiteHelper(Context context) {
+        public SQLiteHelper(Context context) {
             super(context, DB_NAME, null, DATABASE_VERSION);
         }
 
@@ -830,7 +572,7 @@ public class Device {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(MySQLiteHelper.class.getName(),
+            Log.w(SQLiteHelper.class.getName(),
                     "Upgrading database from version " + oldVersion + " to "
                             + newVersion + ", which will destroy all old data");
             db.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE);
