@@ -4,6 +4,8 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 
 **German Article about our Project**: [IMSI-Catcher Erkennung für Android – AIMSICD](http://www.kuketz-blog.de/imsi-catcher-erkennung-fuer-android-aimsicd/).
 
+* Grab the [latest WIP-RELEASE of AIMSICD](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases) and make sure to [check out our WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)!
+
 * Discussion and constructive criticism: [Official Development Thread on XDA](http://forum.xda-developers.com/showthread.php?t=1422969).
 * Before submitting a commit, please carefully read our [Styleguide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md).
 * Storage for source code we should add: [MERGESOURCE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE), **carefully** follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
