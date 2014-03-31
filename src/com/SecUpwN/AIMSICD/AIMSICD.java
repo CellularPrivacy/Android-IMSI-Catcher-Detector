@@ -50,20 +50,20 @@ public class AIMSICD extends Activity {
             outputView.append("SIM serial:     " + Device.getSimSerial(false) + "\n\n");
         }
 
+        int netID = Device.getNetID(true);
         outputView.append("Device type:    " + Device.getPhoneType(false) + "\n");
         outputView.append("Device IMEI:    " + Device.getIMEI(false) + "\n");
         outputView.append("Device version: " + Device.getIMEIv(false) + "\n");
         outputView.append("Device num:     " + Device.getPhoneNumber(false) + "\n\n");
         outputView.append("Network name:   " + Device.getNetworkName(false) + "\n");
         outputView.append("Network code:   " + Device.getSmmcMcc(false) + "\n");
-        outputView.append("Network type:   " + Device.getsNetworkType(false) + "\n");
+        outputView.append("Network type:   " + Device.getNetworkTypeName() + "\n");
         outputView.append("Network LAC:    " + Device.getsLAC(false) + "\n");
         outputView.append("Network CellID: " + Device.getsCellId(false) + "\n\n");
 
-        outputView.append("Data activity:  " + Device.getsDataActivity(false) + "\n");
-        outputView.append("Data status:    " + Device.getsDataState(false) + "\n");
+        outputView.append("Data activity:  " + Device.getActivityDesc(netID) + "\n");
+        outputView.append("Data status:    " + Device.getStateDesc(netID) + "\n");
 
-        Device.kmlheader();
         outputView.append("--------------------------------\n");
         outputView.append("[LAC,CID]|DAct|DStat|Net|Sig|Lat|Lng\n");
         Log.i(TAG, "**** AIMSICD ****");
@@ -71,7 +71,7 @@ public class AIMSICD extends Activity {
         Log.i(TAG, "Device imei   : " + Device.getIMEI(false));
         Log.i(TAG, "Device version: " + Device.getIMEIv(false));
         Log.i(TAG, "Device num    : " + Device.getPhoneNumber(false));
-        Log.i(TAG, "Network type  : " + Device.getsNetworkType(false));
+        Log.i(TAG, "Network type  : " + Device.getNetworkTypeName());
         Log.i(TAG, "Network CellID: " + Device.getsCellId(false));
         Log.i(TAG, "Network LAC   : " + Device.getsLAC(false));
         Log.i(TAG, "Network code  : " + Device.getSmmcMcc(false));
@@ -93,16 +93,15 @@ public class AIMSICD extends Activity {
             menu.add(1, 1, 0, "Track Signal");
         }
         if (Device.isTrackingLocation()) {
-            menu.add(1, 2, 0, "Remove Loc.");
+            menu.add(1, 2, 0, "Untrack Location");
         } else {
-            menu.add(1, 2, 0, "Add Location");
+            menu.add(1, 2, 0, "Track Location");
         }
         menu.add(0, 4, 4, "Show Map");
 
         menu.add(0, 6, 6, "Quit");
-        menu.add(0, 7, 7, "Dump Session KML");
-        menu.add(0, 8, 8, "Export Database Tables");
-        menu.add(0, 9, 9, "AT OEM RIL Hook Test");
+        menu.add(0, 7, 7, "Export Database Tables");
+        menu.add(0, 8, 8, "AT OEM RIL Hook Test");
         menu.setGroupCheckable(1, true, false);
         return super.onCreateOptionsMenu(menu);
     }
@@ -130,12 +129,9 @@ public class AIMSICD extends Activity {
                 finish();
                 return true;
             case 7:
-                Device.dumpinfokml(mContext);
-                return true;
-            case 8:
                 Device.exportDB();
                 return true;
-            case 9:
+            case 8:
                 Intent intent = new Intent(this, ATRilHook.class);
                 startActivity(intent);
                 return true;
@@ -163,7 +159,7 @@ public class AIMSICD extends Activity {
                 webview.bringToFront();
             } else {
                 webview = new WebView(this);
-                webview.loadUrl("http://github.com/SecUpwN/Android-IMSI-Catcher-Detector");
+                webview.loadUrl("http://secupwn.github.io/Android-IMSI-Catcher-Detector/");
                 setContentView(webview);
             }
             isAbout = true;

@@ -37,7 +37,8 @@
     <string name="radio_api2">API 2 (datalen=1)</string>
     <string name="radio_api3">API 3 (datalen=6)</string>
     <string name="radio_api4">API 4 Type command :</string>
-    <string name="radio_api5">API 5 Ciphering Indicator</string>
+    <string name="radio_api5">Ciphering Indicator - RilRAW</string>
+    <string name="radio_api6">Ciphering Indicator - ServiceMode</string>
     <string name="radio_run">RUN</string>
     <string name="ril_oem_response">Module response:</string>
 </resources>
