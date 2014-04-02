@@ -5,7 +5,6 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 **German Article about our Project**: [IMSI-Catcher Erkennung für Android – AIMSICD](http://www.kuketz-blog.de/imsi-catcher-erkennung-fuer-android-aimsicd/).
 
 * Grab the [latest WIP-RELEASE of AIMSICD](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases) and make sure to [check out our WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)!
-
 * Discussion and constructive criticism: [Official Development Thread on XDA](http://forum.xda-developers.com/showthread.php?t=1422969).
 * Before submitting a commit, please carefully read our [Styleguide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md).
 * Storage for source code we should add: [MERGESOURCE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE), **carefully** follow this [README](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README).
@@ -65,11 +64,10 @@ Unfortunately it seems that IMSI-Catchers have been exponentially popular lately
 * m. combine all of the above (steps h to l) into a BETA App for testing, add more languages
 * n. improve BETA app by adding (many more) things like IMSI-Catcher counter measures
 
-##### Further ideas (none of them for sure yet):
+### TODO
 
-* Add option to make app device administrator
-* Add switch to utilize ROOT for digging deeper
-* Usage of the [XPosed Framework](http://forum.xda-developers.com/showthread.php?t=1574401)
+If you'd like to move something and help us making this App come true, view our [TODO](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/TODO.md).
+
 
 # Summary (please read carefully!)
 
