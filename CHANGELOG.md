@@ -1,6 +1,11 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 02.04.2014
+
+* Thanks to the creative work of [SgtObst](https://github.com/SgtObst), we now have FRESH and NEW ICONS for AIMSICD! ;-)
+* Added a [TODO](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/TODO.md) for collecting the things that are planned to be added in the long run.
+
 #### 31.03.2014
 
 * New [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/7) by our awesome developer [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! This one reduces the target SDK version and updates the code.
