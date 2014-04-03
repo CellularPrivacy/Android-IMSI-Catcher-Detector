@@ -3,7 +3,6 @@ package com.SecUpwN.AIMSICD;
 import android.content.Context;
 import android.util.Log;
 import com.SecUpwN.AIMSICD.cmdprocessor.CMDProcessor;
-import com.stericson.RootTools.RootTools;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -12,24 +11,6 @@ import java.util.List;
 
 public class Utils {
     private static String TAG = "AIMSICD_Utils";
-
-    public static void CheckUtils(Context ctx) {
-        final String mChmod;
-        final Context mInstance = ctx;
-
-        // Check chmod utils
-        if (RootTools.checkUtil("chmod"))
-            mChmod = "chmod";
-        else {
-            if (RootTools.checkUtil("busybox") && RootTools.hasUtil("chmod", "busybox"))
-                mChmod = "busybox chmod";
-            else if (RootTools.checkUtil("toolbox") && RootTools.hasUtil("chmod", "toolbox"))
-                mChmod = "toolbox chmod";
-            else
-                mChmod = "";
-        }
-
-    }
 
     // Copy assets to local
     private static boolean CopyAssetsToLocal(Context ctx, String mSourceName, String mDstName) {

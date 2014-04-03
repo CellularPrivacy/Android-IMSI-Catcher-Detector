@@ -33,7 +33,7 @@
     <!--For RIL OEM HOOK testing-->
     <string name="testing_RIL_OEMHook">RIL OEM Hook Test</string>
     <string name="ril_oem_choose">Choose a RIL OEM Hook API to test:</string>
-    <string name="radio_api1">API 1 (datalen=0)</string>
+    <string name="radio_api1">CRSM - RilStrings</string>
     <string name="radio_api2">API 2 (datalen=1)</string>
     <string name="radio_api3">API 3 (datalen=6)</string>
     <string name="radio_api4">API 4 Type command :</string>
