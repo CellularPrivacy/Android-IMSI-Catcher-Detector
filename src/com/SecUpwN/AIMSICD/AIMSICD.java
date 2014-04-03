@@ -35,7 +35,7 @@ public class AIMSICD extends Activity {
         Device.InitDevice(mContext);
 
         // Check required utilities are available
-        Utils.CheckUtils(mContext);
+        //Utils.CheckUtils();
 
         outputView = (TextView) findViewById(R.id.view);
         outputView.setHorizontalFadingEdgeEnabled(false);
