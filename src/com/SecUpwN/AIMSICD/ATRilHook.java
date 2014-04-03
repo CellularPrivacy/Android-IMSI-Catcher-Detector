@@ -23,6 +23,7 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneFactory;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 public class ATRilHook extends Activity {
 
@@ -30,6 +31,7 @@ public class ATRilHook extends Activity {
     private RadioButton mRadioButtonAPI1 = null;
     private RadioGroup mRadioGroupAPI = null;
     private EditText mRespText = null;
+    private EditText mInput = null;
     private ListView mListView;
     private String[] mDisplay;
     private Phone mPhone = null;
@@ -38,6 +40,8 @@ public class ATRilHook extends Activity {
 
     private int mCurrentSvcMode = OemCommands.OEM_SM_TYPE_TEST_MANUAL;
     private int mCurrentModeType = OemCommands.OEM_SM_TYPE_SUB_ENTER;
+
+    private static final int EVENT_OEM_RIL_MESSAGE = 13;
 
     private static final int EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE = 1300;
     private static final int EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE = 1400;
@@ -65,13 +69,14 @@ public class ATRilHook extends Activity {
         mPhone = PhoneFactory.getDefaultPhone();
         mOemCommands = OemCommands.getInstance(sContext);
 
+        mInput = (EditText) findViewById(R.id.edit_cmdstr);
         mRespText = (EditText) findViewById(R.id.edit_cmdstr);
         mRespText.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
-                    Toast.makeText(sContext, mRespText.getText(), Toast.LENGTH_SHORT).show();
+                    Helpers.msgShort(sContext, mRespText.getText().toString());
                     return true;
                 }
                 return false;
@@ -109,10 +114,9 @@ public class ATRilHook extends Activity {
         Message msg;
         switch (idButtonChecked) {
             case R.id.radio_api1:
-                oemhook = new byte[1];
-                oemhook[0] = (byte) 0xAA;
-                sendRequest(oemhook, EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE);
-                mRespText.setText("");
+                mPhone.invokeOemRilRequestStrings(new String[] { "AT+CRSM=176,28589,0,0,3\0" },
+                        mHandler.obtainMessage(EVENT_OEM_RIL_MESSAGE));
+                mRespText.setText("---Wait response---");
                 break;
             case R.id.radio_api2:
                 oemhook = new byte[2];
@@ -135,11 +139,8 @@ public class ATRilHook extends Activity {
                 mRespText.setText("");
                 break;
             case R.id.radio_api4:
-                String[] oemhookstring = {"UNIAT",
-                        ((EditText) findViewById(R.id.edit_cmdstr)).getText().toString() + "\r" };
-                msg = mHandler.obtainMessage(EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE);
-                mPhone.invokeOemRilRequestStrings(oemhookstring, msg);
-                mRespText = (EditText) findViewById(R.id.edit_response);
+                mPhone.invokeOemRilRequestStrings(new String[] { mInput.getText().toString() + '\0' },
+                        mHandler.obtainMessage(EVENT_OEM_RIL_MESSAGE));
                 mRespText.setText("---Wait response---");
                 break;
             case R.id.radio_api5:
@@ -214,6 +215,7 @@ public class ATRilHook extends Activity {
         String[] aos = (String[]) ar.result;
 
         mListView.setAdapter(new ArrayAdapter<String>(ATRilHook.this, R.layout.list_item, aos));
+        mRespText.setText(aos[0]);
     }
 
     private void log(String msg) {
@@ -348,10 +350,38 @@ public class ATRilHook extends Activity {
                     //result = (AsyncResult) msg.obj;
                     //logRilOemHookResponse(result);
                     break;
-                case EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE:
-                    log("EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE");
+                case EVENT_OEM_RIL_MESSAGE:
+                    log("EVENT_OEM_RIL_MESSAGE");
                     result = (AsyncResult) msg.obj;
-                    logRilOemHookResponseString(result);
+                    //logRilOemHookResponseString(result);
+
+                    if (result.exception != null) {
+                        Log.e(LOG_TAG, "", result.exception);
+                        return;
+                    }
+                    if (result.result == null) {
+                        Log.v(LOG_TAG, "No need to refresh.");
+                        return;
+                    }
+                    String[] aos = (String[]) result.result;
+
+                    if (aos.length == 0) {
+                        Log.v(LOG_TAG, "Length = 0");
+                        return;
+                    }
+
+                    if (mDisplay == null || mDisplay.length != aos.length) {
+                        Log.v(LOG_TAG, "New array = " + aos.length);
+                        mDisplay = new String[aos.length];
+                    }
+
+                    for (int i = 0; i < aos.length; i++) {
+                        StringBuilder strb = new StringBuilder();
+                            strb.append(aos[i]);
+                        mDisplay[i] = strb.toString();
+                    }
+                    mListView.setAdapter(new ArrayAdapter<String>(ATRilHook.this, R.layout.list_item, mDisplay));
+
                     break;
             }
         }
