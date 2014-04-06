@@ -1,10 +1,26 @@
-package com.SecUpwN.AIMSICD;
+/* Android IMSI Catcher Detector
+ *      Copyright (C) 2014
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You may obtain a copy of the License at
+ *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE
+ */
 
 /*=========================================================
  Demo App Code by Ublox, modified copy and paste from:
  http://www.u-blox.com/images/downloads/Product_Docs/AndroidRIL_Source_Code_ApplicationNote_%283G.G2-CS-11003%29.pdf
-
  =========================================================== */
+
+package com.SecUpwN.AIMSICD;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,7 +39,6 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneFactory;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 public class ATRilHook extends Activity {
 
