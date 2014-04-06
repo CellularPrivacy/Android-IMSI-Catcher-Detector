@@ -40,11 +40,13 @@
         <activity
             android:name=".MapViewer"
             android:label="@string/app_name"
+            android:parentActivityName=".AIMSICD"
             android:exported="true">
         </activity>
         <activity
             android:name=".ATRilHook"
             android:label="@string/testing_RIL_OEMHook"
+            android:parentActivityName=".AIMSICD"
             android:process="com.android.phone"
             android:exported="true">
         </activity>
