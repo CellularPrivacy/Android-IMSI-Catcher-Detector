@@ -1,3 +1,20 @@
+/* Android IMSI Catcher Detector
+ *      Copyright (C) 2014
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You may obtain a copy of the License at
+ *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE
+ */
+
 package com.SecUpwN.AIMSICD;
 
 import android.database.Cursor;
@@ -10,17 +27,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
-import android.widget.ImageView;
 import com.SecUpwN.AIMSICD.cmdprocessor.Helpers;
 import com.google.android.maps.*;
 
 import java.util.List;
 
-
 public class MapViewer extends MapActivity {
     private final String TAG = "AIMSICD_MapViewer";
 
     public MapView mapView;
+    private AIMSICDDbAdapter mDbHelper;
 
     private MapController mapc;
     private final int SIGNAL_SIZE_RATIO = 15;
@@ -61,7 +77,7 @@ public class MapViewer extends MapActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
 
-        ImageView imagev = new ImageView(this);
+        mDbHelper = new AIMSICDDbAdapter(this);
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.setBuiltInZoomControls(true);
         mapView.displayZoomControls(true);
@@ -117,8 +133,8 @@ public class MapViewer extends MapActivity {
         GeoPoint p = null;
         mapc = mapView.getController();
         int color = 0x000000;
-        Cursor c = Device.sDB.rawQuery("SELECT Net, Lat, Lng, Signal FROM "
-                + Device.LOCATION_TABLE, null);
+        mDbHelper.open();
+        Cursor c = mDbHelper.getSignalData();
         if (c.getCount()>0) {
             if (c.moveToFirst()) {
                 List<Overlay> listOfOverlays = mapView.getOverlays();
@@ -172,7 +188,7 @@ public class MapViewer extends MapActivity {
                                 color = 0xF0F8FF;
                                 break;
                         }
-                        Log.i(TAG, " ==> Poin:" + p.toString() + " radius: " + radius + " color: " + color + " signal:" + signal);
+                        Log.i(TAG, " ==> Point:" + p.toString() + " radius: " + radius + " color: " + color + " signal:" + signal);
                         listOfOverlays.add(new MapOverlay(p, radius, color));
                     }
 
@@ -193,7 +209,7 @@ public class MapViewer extends MapActivity {
     }
 
     private final void erasedb() {
-        Device.sDB.delete(Device.LOCATION_TABLE, null, null);
+        mDbHelper.eraseLocationData();
     }
 }
 
