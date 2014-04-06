@@ -30,6 +30,18 @@
     <string name="evo0"># EVO-0</string>
     <string name="evoA"># EVO-A</string>
 
+    <!-- MENU -->
+    <string name="track_cell">Track Cell Details</string>
+    <string name="untrack_cell">Untrack Cell Details</string>
+    <string name="track_location">Track Location</string>
+    <string name="untrack_location">Untrack Location</string>
+    <string name="track_signal">Track Signal</string>
+    <string name="untrack_signal">Untrack Signal</string>
+    <string name="show_map">Show Map</string>
+    <string name="export_database">Export Database tables</string>
+    <string name="at_ril_injection">AT Command Injection</string>
+
+
     <!--For RIL OEM HOOK testing-->
     <string name="testing_RIL_OEMHook">RIL OEM Hook Test</string>
     <string name="ril_oem_choose">Choose a RIL OEM Hook API to test:</string>

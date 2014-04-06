@@ -1,5 +1,6 @@
 package com.SecUpwN.AIMSICD;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
@@ -27,46 +28,44 @@ import java.util.ArrayList;
 
 public class Device {
 
-    private static String TAG = "AIMSICD_Device";
+    private String TAG = "AIMSICD_Device";
 
-    public static String LOCATION_TABLE = "locationinfo";
-    public static String CELL_TABLE = "cellinfo";
-    public static String SIGNAL_TABLE = "signalinfo";
-    public static String DB_NAME = "myCellInfo";
+    public String LOCATION_TABLE = "locationinfo";
+    public String CELL_TABLE = "cellinfo";
+    public String SIGNAL_TABLE = "signalinfo";
+    public String DB_NAME = "myCellInfo";
 
-    private static PhoneStateListener sSignalListenerStrength;
-    private static PhoneStateListener sSignalListenerLocation;
-    private static LocationManager lm;
-    private static LocationListener sLocationListener;
-    public static SQLiteDatabase sDB;
-    private static SQLiteHelper dbHelper;
+    private PhoneStateListener sSignalListenerStrength;
+    private PhoneStateListener sSignalListenerLocation;
+    private LocationManager lm;
+    private LocationListener sLocationListener;
+    public SQLiteDatabase sDB;
+    private SQLiteHelper dbHelper;
 
-    private static int sPhoneID;
-    private static int sSignalInfo;
-    private static int sNetID;
-    private static int sLacID;
-    private static int sCellID;
-    private static double sLongitude;
-    private static double sLatitude;
-    private static String sNetType = "", sCellInfo = "", sDataState = "";
-    private static String sKML = "", sPhoneNum = "", sCellType = "", sLac = "";
-    private static String sNetName = "", sMmcmcc = "", sSimCountry = "", sPhoneType = "";
-    private static String sIMEI = "", sIMEIV = "", sSimOperator = "", sSimOperatorName = "";
-    private static String sSimSerial = "", sSimSubs = "", sDataActivityType = "";
+    private int sPhoneID;
+    private int sSignalInfo;
+    private int sNetID;
+    private int sLacID;
+    private int sCellID;
+    private double sLongitude;
+    private double sLatitude;
+    private String sNetType = "", sCellInfo = "", sDataState = "";
+    private String sKML = "", sPhoneNum = "", sCellType = "", sLac = "";
+    private String sNetName = "", sMmcmcc = "", sSimCountry = "", sPhoneType = "";
+    private String sIMEI = "", sIMEIV = "", sSimOperator = "", sSimOperatorName = "";
+    private String sSimSerial = "", sSimSubs = "", sDataActivityType = "";
 
-    private static boolean TrackingCell;
-    private static boolean TrackingSignal;
-    private static boolean TrackingLocation;
+    private boolean TrackingCell;
+    private boolean TrackingSignal;
+    private boolean TrackingLocation;
 
-    private static ArrayList<String> alPosition;
+    private ArrayList<String> alPosition;
 
-    private static TelephonyManager tm;
+    private TelephonyManager tm;
 
-
-
-    public static void InitDevice(Context mContext) {
+    Device(Context context) {
         //TelephonyManager provides system details
-        tm = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
         //Phone type and associated details
         sIMEI = tm.getDeviceId();
@@ -105,7 +104,7 @@ public class Device {
         sDataState = getStateDesc(sDataActivity);
 
         //Create DB Instance
-        dbHelper = new SQLiteHelper(mContext);
+        dbHelper = new SQLiteHelper(context);
         sDB = dbHelper.getWritableDatabase();
 
         sSignalListenerLocation = new PhoneStateListener() {
@@ -212,49 +211,49 @@ public class Device {
 
     }
 
-    public static int getPhoneID() {
+    public int getPhoneID() {
         if (sPhoneID <= 0 || sPhoneID > 6)
             sPhoneID = tm.getPhoneType();
 
         return sPhoneID;
     }
 
-    public static String getSimCountry(boolean force) {
+    public String getSimCountry(boolean force) {
         if (sSimCountry.isEmpty() || force)
             sSimCountry = tm.getSimCountryIso();
 
         return sSimCountry;
     }
 
-    public static String getSimOperator(boolean force) {
+    public String getSimOperator(boolean force) {
         if (sSimOperator.isEmpty() || force)
             sSimOperator = tm.getSimOperator();
 
         return sSimOperator;
     }
 
-    public static String getSimOperatorName(boolean force) {
+    public String getSimOperatorName(boolean force) {
         if (sSimOperatorName.isEmpty() || force)
             sSimOperatorName = tm.getSimOperatorName();
 
         return sSimOperatorName;
     }
 
-    public static String getSimSubs(boolean force) {
+    public String getSimSubs(boolean force) {
         if (sSimSubs.isEmpty() || force)
             sSimSubs = tm.getSubscriberId();
 
         return sSimSubs;
     }
 
-    public static String getSimSerial(boolean force) {
+    public String getSimSerial(boolean force) {
         if (sSimSerial.isEmpty() || force)
             sSimSerial = tm.getSimSerialNumber();
 
         return sSimSerial;
     }
 
-    public static String getPhoneType(boolean force) {
+    public String getPhoneType(boolean force) {
         if (sPhoneType.isEmpty()|| force) {
             if (getPhoneID() == TelephonyManager.PHONE_TYPE_GSM)
                 sPhoneType = "GSM";
@@ -267,47 +266,47 @@ public class Device {
         return sPhoneType;
     }
 
-    public static String getIMEI(boolean force) {
+    public String getIMEI(boolean force) {
         if (sIMEI.isEmpty() || force)
             sIMEI = tm.getDeviceId();
 
         return sIMEI;
     }
 
-    public static String getIMEIv(boolean force) {
+    public String getIMEIv(boolean force) {
         if (sIMEIV.isEmpty() || force)
             sIMEIV = tm.getDeviceSoftwareVersion();
 
         return sIMEIV;
     }
 
-    public static String getPhoneNumber(boolean force) {
+    public String getPhoneNumber(boolean force) {
         if (sPhoneNum.isEmpty() || force)
             sPhoneNum = tm.getLine1Number();
 
         return sPhoneNum;
     }
 
-    public static String getNetworkName(boolean force) {
+    public String getNetworkName(boolean force) {
         if (sNetName.isEmpty() || force)
             sNetName = tm.getNetworkOperatorName();
 
         return sNetName;
     }
 
-    public static String getSmmcMcc(boolean force) {
+    public String getSmmcMcc(boolean force) {
         if (sMmcmcc.isEmpty() || force)
             sMmcmcc = tm.getNetworkOperator();
 
         return sMmcmcc;
     }
 
-    public static String getNetworkTypeName() {
+    public String getNetworkTypeName() {
         return tm.getNetworkTypeName();
 
     }
 
-    public static int getNetID (boolean force) {
+    public int getNetID (boolean force) {
         if (sNetID < 0 || force) {
             sNetID = tm.getNetworkType();
         }
@@ -315,7 +314,7 @@ public class Device {
         return sNetID;
     }
 
-    public static String getsLAC(boolean force) {
+    public String getsLAC(boolean force) {
         if (sLac.isEmpty() || force) {
             GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
             if (gsmCellLocation != null) {
@@ -326,7 +325,7 @@ public class Device {
         return sLac;
     }
 
-    public static String getsCellId(boolean force) {
+    public String getsCellId(boolean force) {
         if (sCellType.isEmpty() || force) {
             GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
             if (gsmCellLocation != null) {
@@ -337,7 +336,7 @@ public class Device {
         return sCellType;
     }
 
-    public static String getActivityDesc(int dataID) {
+    public String getActivityDesc(int dataID) {
         sDataActivityType = "undef";
         switch (dataID) {
             case TelephonyManager.DATA_ACTIVITY_NONE:
@@ -359,7 +358,7 @@ public class Device {
         return sDataActivityType;
     }
 
-    public static String getStateDesc(int dataID) {
+    public String getStateDesc(int dataID) {
         sDataState = "undef";
         switch (dataID) {
             case TelephonyManager.DATA_DISCONNECTED:
@@ -379,19 +378,19 @@ public class Device {
         return sDataState;
     }
 
-    public static Boolean isTrackingSignal() {
+    public Boolean isTrackingSignal() {
         return TrackingSignal;
     }
 
-    public static Boolean isTrackingCell() {
+    public Boolean isTrackingCell() {
         return TrackingCell;
     }
 
-    public static Boolean isTrackingLocation() {
+    public Boolean isTrackingLocation() {
         return TrackingLocation;
     }
 
-    public static void tracksignal() {
+    public void tracksignal() {
         if (TrackingSignal) {
             tm.listen(sSignalListenerStrength, PhoneStateListener.LISTEN_NONE);
             TrackingSignal = false;
@@ -402,7 +401,7 @@ public class Device {
         }
     }
 
-    public static void trackcell() {
+    public void trackcell() {
         if (TrackingCell) {
             tm.listen(sSignalListenerLocation, PhoneStateListener.LISTEN_NONE);
             TrackingCell = false;
@@ -413,7 +412,7 @@ public class Device {
         }
     }
 
-    public static void tracklocation(Context ctx) {
+    public void tracklocation(Context ctx) {
         if (TrackingLocation) {
             lm.removeUpdates(sLocationListener);
             TrackingLocation = false;
@@ -448,7 +447,7 @@ public class Device {
         }
     }
 
-    private static class MyLocationListener implements LocationListener {
+    private class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location loc) {
             if (loc != null) {
@@ -478,7 +477,7 @@ public class Device {
         }
     }
 
-    public static void exportDB () {
+    public void exportDB () {
         try {
             dbHelper.export(LOCATION_TABLE);
             dbHelper.export(CELL_TABLE);
@@ -491,7 +490,7 @@ public class Device {
     /**
      * SQLiteHelper class for the Location, Cell and Signal Strength Databases
      */
-    public static class SQLiteHelper extends SQLiteOpenHelper {
+    public class SQLiteHelper extends SQLiteOpenHelper {
 
         public static final String COLUMN_ID = "_id";
         private static final int DATABASE_VERSION = 1;
