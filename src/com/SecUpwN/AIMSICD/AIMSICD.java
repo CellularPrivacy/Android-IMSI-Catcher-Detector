@@ -1,32 +1,51 @@
+/* Android IMSI Catcher Detector
+ *      Copyright (C) 2014
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You may obtain a copy of the License at
+ *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE
+ */
+
 package com.SecUpwN.AIMSICD;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.webkit.WebView;
 import android.widget.TextView;
-import android.os.Build;
+import android.widget.Toast;
 
 public class AIMSICD extends Activity {
 
     private final String TAG = "AIMSICD";
 
     private Device mDevice;
-
-    private TextView outputView;
-
-    private WebView webview;
-
-    private boolean isAbout;
     private final Context mContext = this;
     private Menu mMenu;
+
+    //Back press to exit timer
+    private long mLastPress = 0;
+
+    //Notification ID
+    private int mID = 1;
 
     /**
      * Called when the activity is first created.
@@ -36,9 +55,9 @@ public class AIMSICD extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mDevice = new Device(mContext);
+        mDevice = new Device(mContext, this);
 
-        outputView = (TextView) findViewById(R.id.view);
+        TextView outputView = (TextView) findViewById(R.id.view);
         outputView.setHorizontalFadingEdgeEnabled(false);
 
         outputView.setText("Information:\n\n");
@@ -59,8 +78,8 @@ public class AIMSICD extends Activity {
         outputView.append("Network name:   " + mDevice.getNetworkName(false) + "\n");
         outputView.append("Network code:   " + mDevice.getSmmcMcc(false) + "\n");
         outputView.append("Network type:   " + mDevice.getNetworkTypeName() + "\n");
-        outputView.append("Network LAC:    " + mDevice.getsLAC(false) + "\n");
-        outputView.append("Network CellID: " + mDevice.getsCellId(false) + "\n\n");
+        outputView.append("Network LAC:    " + mDevice.getLAC(false) + "\n");
+        outputView.append("Network CellID: " + mDevice.getCellId(false) + "\n\n");
 
         outputView.append("Data activity:  " + mDevice.getActivityDesc(netID) + "\n");
         outputView.append("Data status:    " + mDevice.getStateDesc(netID) + "\n");
@@ -69,14 +88,16 @@ public class AIMSICD extends Activity {
         outputView.append("[LAC,CID]|DAct|DStat|Net|Sig|Lat|Lng\n");
         Log.i(TAG, "**** AIMSICD ****");
         Log.i(TAG, "Device type   : " + mDevice.getPhoneType(false));
-        Log.i(TAG, "Device imei   : " + mDevice.getIMEI(false));
+        Log.i(TAG, "Device IMEI   : " + mDevice.getIMEI(false));
         Log.i(TAG, "Device version: " + mDevice.getIMEIv(false));
         Log.i(TAG, "Device num    : " + mDevice.getPhoneNumber(false));
         Log.i(TAG, "Network type  : " + mDevice.getNetworkTypeName());
-        Log.i(TAG, "Network CellID: " + mDevice.getsCellId(false));
-        Log.i(TAG, "Network LAC   : " + mDevice.getsLAC(false));
+        Log.i(TAG, "Network CellID: " + mDevice.getCellId(false));
+        Log.i(TAG, "Network LAC   : " + mDevice.getLAC(false));
         Log.i(TAG, "Network code  : " + mDevice.getSmmcMcc(false));
         Log.i(TAG, "Network name  : " + mDevice.getNetworkName(false));
+
+        setNotification();
     }
 
     @Override
@@ -95,26 +116,26 @@ public class AIMSICD extends Activity {
         MenuItem mTrackLocation = menu.findItem(R.id.track_location);
 
         if (mDevice.isTrackingCell()) {
-            mTrackCell.setTitle(getResources().getString(R.string.track_cell));
-            mTrackCell.setIcon(getResources().getDrawable(R.drawable.track_cell));
+            mTrackCell.setTitle(R.string.track_cell);
+            mTrackCell.setIcon(R.drawable.track_cell);
         } else {
-            mTrackCell.setTitle(getResources().getString(R.string.untrack_cell));
-            mTrackCell.setIcon(getResources().getDrawable(R.drawable.untrack_cell));
+            mTrackCell.setTitle(R.string.untrack_cell);
+            mTrackCell.setIcon(R.drawable.untrack_cell);
         }
 
         if (mDevice.isTrackingSignal()) {
-            mTrackSignal.setTitle(getResources().getString(R.string.track_signal));
-            mTrackSignal.setIcon(getResources().getDrawable(R.drawable.ic_action_network_cell));
+            mTrackSignal.setTitle(R.string.track_signal);
+            mTrackSignal.setIcon(R.drawable.ic_action_network_cell);
         } else {
-            mTrackSignal.setTitle(getResources().getString(R.string.untrack_signal));
-            mTrackSignal.setIcon(getResources().getDrawable(R.drawable.ic_action_network_cell_not_tracked));
+            mTrackSignal.setTitle(R.string.untrack_signal);
+            mTrackSignal.setIcon(R.drawable.ic_action_network_cell_not_tracked);
         }
         if (mDevice.isTrackingLocation()) {
-            mTrackLocation.setTitle(getResources().getString(R.string.track_location));
-            mTrackLocation.setIcon(getResources().getDrawable(R.drawable.ic_action_location_found));
+            mTrackLocation.setTitle(R.string.track_location);
+            mTrackLocation.setIcon(R.drawable.ic_action_location_found);
         } else {
-            mTrackLocation.setTitle(getResources().getString(R.string.untrack_location));
-            mTrackLocation.setIcon(getResources().getDrawable(R.drawable.ic_action_location_off));
+            mTrackLocation.setTitle(R.string.untrack_location);
+            mTrackLocation.setIcon(R.drawable.ic_action_location_off);
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -125,24 +146,27 @@ public class AIMSICD extends Activity {
         switch (item.getItemId()) {
             case R.id.track_cell:
                 mDevice.trackcell();
-                if (Build.VERSION.SDK_INT > 11)
+                if (Build.VERSION.SDK_INT > 11) {
                     onPrepareOptionsMenu(mMenu);
+                }
                 return true;
             case R.id.track_signal:
                 mDevice.tracksignal();
-                if (Build.VERSION.SDK_INT > 11)
+                if (Build.VERSION.SDK_INT > 11) {
                     onPrepareOptionsMenu(mMenu);
+                }
                 return true;
             case R.id.track_location:
-                mDevice.tracklocation(mContext);
-                if (Build.VERSION.SDK_INT > 11)
+                mDevice.tracklocation();
+                if (Build.VERSION.SDK_INT > 11) {
                     onPrepareOptionsMenu(mMenu);
+                }
                 return true;
             case R.id.show_map:
                 showmap();
                 return true;
             case R.id.export_database:
-                mDevice.exportDB();
+                mDevice.getDbHelper().exportDB();
                 return true;
             case R.id.at_injector:
                 Intent intent = new Intent(this, ATRilHook.class);
@@ -156,39 +180,88 @@ public class AIMSICD extends Activity {
         }
     }
 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return false;
-        }
-        return false;
-    }
-
-    protected final void about() {
-        if (isAbout) {
-            Log.i(TAG, "Call bring outputview (LOG) to front");
-            webview.bringChildToFront(outputView);
-            outputView.bringToFront();
-            isAbout = false;
-
+    /**
+     * Exit application if back pressed twice
+     */
+    @Override
+    public void onBackPressed() {
+        Toast onBackPressedToast = Toast.makeText(this, R.string.press_once_again_to_exit, Toast.LENGTH_SHORT);
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - mLastPress > 5000) {
+            onBackPressedToast.show();
+            mLastPress = currentTime;
         } else {
-            if (webview != null) {
-                webview.bringToFront();
-            } else {
-                webview = new WebView(this);
-                webview.loadUrl("http://secupwn.github.io/Android-IMSI-Catcher-Detector/");
-                setContentView(webview);
-            }
-            isAbout = true;
+            onBackPressedToast.cancel();
+            super.onBackPressed();
+            finish();
         }
     }
 
-    protected final void showmap() {
+    @Override
+    public void onDestroy() {
+        cancelNotification();
+        super.onDestroy();
+    }
+
+    /**
+     * Set or modify the Notification
+     */
+    private void setNotification() {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(mContext)
+                        .setSmallIcon(R.drawable.iconbn)
+                        .setContentTitle(mContext.getResources().getString(R.string.app_name))
+                        .setContentText("Phone Type " + mDevice.getPhoneType(false))
+                        .setOngoing(true)
+                        .setAutoCancel(false);
+
+        Intent notificationIntent = new Intent(this, AIMSICD.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                this, 0, notificationIntent, 0);
+
+        mBuilder.setContentIntent(contentIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(mID, mBuilder.build());
+    }
+
+    private void cancelNotification() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(
+                NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.cancel(mID);
+        }
+    }
+
+    /**
+     * Show the Map Viewer Activity
+     */
+    private final void showmap() {
         Intent myIntent = new Intent(this, MapViewer.class);
         startActivity(myIntent);
     }
 
+    /**
+     * Returns the device instance
+     */
     public Device getDevice() {
         return mDevice;
+    }
+
+    /**
+     * Receives a response from Location Services Settings if the user agreed to enable them.
+     * If activity returns that the user made a valid selection then enable Location Tracking
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == mDevice.START_LOCATION_SERVICES) {
+            // Make sure the request was successful
+            if (resultCode == Activity.RESULT_OK) {
+                // Location Services were enabled attempt to enable Location Tracking
+                mDevice.tracklocation();
+            }
+        }
     }
 
 }
