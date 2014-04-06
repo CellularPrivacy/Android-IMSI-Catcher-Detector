@@ -16,11 +16,12 @@ import com.google.android.maps.*;
 
 import java.util.List;
 
-
 public class MapViewer extends MapActivity {
     private final String TAG = "AIMSICD_MapViewer";
 
     public MapView mapView;
+    private AIMSICD mAimsicd = new AIMSICD();
+    private Device mDevice = mAimsicd.getDevice();
 
     private MapController mapc;
     private final int SIGNAL_SIZE_RATIO = 15;
@@ -117,8 +118,8 @@ public class MapViewer extends MapActivity {
         GeoPoint p = null;
         mapc = mapView.getController();
         int color = 0x000000;
-        Cursor c = Device.sDB.rawQuery("SELECT Net, Lat, Lng, Signal FROM "
-                + Device.LOCATION_TABLE, null);
+        Cursor c = mDevice.sDB.rawQuery("SELECT Net, Lat, Lng, Signal FROM "
+                + mDevice.LOCATION_TABLE, null);
         if (c.getCount()>0) {
             if (c.moveToFirst()) {
                 List<Overlay> listOfOverlays = mapView.getOverlays();
@@ -193,7 +194,7 @@ public class MapViewer extends MapActivity {
     }
 
     private final void erasedb() {
-        Device.sDB.delete(Device.LOCATION_TABLE, null, null);
+        mDevice.sDB.delete(mDevice.LOCATION_TABLE, null, null);
     }
 }
 

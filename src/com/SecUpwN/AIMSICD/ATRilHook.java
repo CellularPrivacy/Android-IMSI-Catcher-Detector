@@ -42,6 +42,7 @@ public class ATRilHook extends Activity {
     private int mCurrentModeType = OemCommands.OEM_SM_TYPE_SUB_ENTER;
 
     private static final int EVENT_OEM_RIL_MESSAGE = 13;
+    private static final int RIL_REQUEST_OEM_HOOK_STRINGS = 60;
 
     private static final int EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE = 1300;
     private static final int EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE = 1400;
@@ -114,8 +115,8 @@ public class ATRilHook extends Activity {
         Message msg;
         switch (idButtonChecked) {
             case R.id.radio_api1:
-                mPhone.invokeOemRilRequestStrings(new String[] { "AT+CRSM=176,28589,0,0,3\0" },
-                        mHandler.obtainMessage(EVENT_OEM_RIL_MESSAGE));
+                mPhone.invokeOemRilRequestStrings(new String[] { "AT+CRSM=176,28589,0,0,3\r\0" },
+                        mHandler.obtainMessage(EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE));
                 mRespText.setText("---Wait response---");
                 break;
             case R.id.radio_api2:
@@ -139,8 +140,8 @@ public class ATRilHook extends Activity {
                 mRespText.setText("");
                 break;
             case R.id.radio_api4:
-                mPhone.invokeOemRilRequestStrings(new String[] { mInput.getText().toString() + '\0' },
-                        mHandler.obtainMessage(EVENT_OEM_RIL_MESSAGE));
+                mPhone.invokeOemRilRequestStrings(new String[] { mInput.getText().toString() + '\r' + '\0' },
+                        mHandler.obtainMessage(EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE));
                 mRespText.setText("---Wait response---");
                 break;
             case R.id.radio_api5:
@@ -350,8 +351,8 @@ public class ATRilHook extends Activity {
                     //result = (AsyncResult) msg.obj;
                     //logRilOemHookResponse(result);
                     break;
-                case EVENT_OEM_RIL_MESSAGE:
-                    log("EVENT_OEM_RIL_MESSAGE");
+                case EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE:
+                    log("RIL_REQUEST_OEM_HOOK_STRINGS");
                     result = (AsyncResult) msg.obj;
                     //logRilOemHookResponseString(result);
 
@@ -370,17 +371,7 @@ public class ATRilHook extends Activity {
                         return;
                     }
 
-                    if (mDisplay == null || mDisplay.length != aos.length) {
-                        Log.v(LOG_TAG, "New array = " + aos.length);
-                        mDisplay = new String[aos.length];
-                    }
-
-                    for (int i = 0; i < aos.length; i++) {
-                        StringBuilder strb = new StringBuilder();
-                            strb.append(aos[i]);
-                        mDisplay[i] = strb.toString();
-                    }
-                    mListView.setAdapter(new ArrayAdapter<String>(ATRilHook.this, R.layout.list_item, mDisplay));
+                    mListView.setAdapter(new ArrayAdapter<String>(ATRilHook.this, R.layout.list_item, aos));
 
                     break;
             }
