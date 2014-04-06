@@ -1,10 +1,26 @@
-package com.SecUpwN.AIMSICD;
+/* Android IMSI Catcher Detector
+ *      Copyright (C) 2014
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You may obtain a copy of the License at
+ *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE
+ */
 
 /*=========================================================
  Demo App Code by Ublox, modified copy and paste from:
  http://www.u-blox.com/images/downloads/Product_Docs/AndroidRIL_Source_Code_ApplicationNote_%283G.G2-CS-11003%29.pdf
-
  =========================================================== */
+
+package com.SecUpwN.AIMSICD;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,6 +46,7 @@ public class ATRilHook extends Activity {
     private RadioButton mRadioButtonAPI1 = null;
     private RadioGroup mRadioGroupAPI = null;
     private EditText mRespText = null;
+    private EditText mInput = null;
     private ListView mListView;
     private String[] mDisplay;
     private Phone mPhone = null;
@@ -38,6 +55,9 @@ public class ATRilHook extends Activity {
 
     private int mCurrentSvcMode = OemCommands.OEM_SM_TYPE_TEST_MANUAL;
     private int mCurrentModeType = OemCommands.OEM_SM_TYPE_SUB_ENTER;
+
+    private static final int EVENT_OEM_RIL_MESSAGE = 13;
+    private static final int RIL_REQUEST_OEM_HOOK_STRINGS = 60;
 
     private static final int EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE = 1300;
     private static final int EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE = 1400;
@@ -65,13 +85,14 @@ public class ATRilHook extends Activity {
         mPhone = PhoneFactory.getDefaultPhone();
         mOemCommands = OemCommands.getInstance(sContext);
 
+        mInput = (EditText) findViewById(R.id.edit_cmdstr);
         mRespText = (EditText) findViewById(R.id.edit_cmdstr);
         mRespText.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
-                    Toast.makeText(sContext, mRespText.getText(), Toast.LENGTH_SHORT).show();
+                    Helpers.msgShort(sContext, mRespText.getText().toString());
                     return true;
                 }
                 return false;
@@ -109,10 +130,9 @@ public class ATRilHook extends Activity {
         Message msg;
         switch (idButtonChecked) {
             case R.id.radio_api1:
-                oemhook = new byte[1];
-                oemhook[0] = (byte) 0xAA;
-                sendRequest(oemhook, EVENT_RIL_OEM_HOOK_CMDRAW_COMPLETE);
-                mRespText.setText("");
+                mPhone.invokeOemRilRequestStrings(new String[] { "AT+CRSM=176,28589,0,0,3\r\0" },
+                        mHandler.obtainMessage(EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE));
+                mRespText.setText("---Wait response---");
                 break;
             case R.id.radio_api2:
                 oemhook = new byte[2];
@@ -135,11 +155,8 @@ public class ATRilHook extends Activity {
                 mRespText.setText("");
                 break;
             case R.id.radio_api4:
-                String[] oemhookstring = {"UNIAT",
-                        ((EditText) findViewById(R.id.edit_cmdstr)).getText().toString() + "\r" };
-                msg = mHandler.obtainMessage(EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE);
-                mPhone.invokeOemRilRequestStrings(oemhookstring, msg);
-                mRespText = (EditText) findViewById(R.id.edit_response);
+                mPhone.invokeOemRilRequestStrings(new String[] { mInput.getText().toString() + '\r' + '\0' },
+                        mHandler.obtainMessage(EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE));
                 mRespText.setText("---Wait response---");
                 break;
             case R.id.radio_api5:
@@ -214,6 +231,7 @@ public class ATRilHook extends Activity {
         String[] aos = (String[]) ar.result;
 
         mListView.setAdapter(new ArrayAdapter<String>(ATRilHook.this, R.layout.list_item, aos));
+        mRespText.setText(aos[0]);
     }
 
     private void log(String msg) {
@@ -349,9 +367,27 @@ public class ATRilHook extends Activity {
                     //logRilOemHookResponse(result);
                     break;
                 case EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE:
-                    log("EVENT_RIL_OEM_HOOK_CMDSTR_COMPLETE");
+                    log("RIL_REQUEST_OEM_HOOK_STRINGS");
                     result = (AsyncResult) msg.obj;
-                    logRilOemHookResponseString(result);
+                    //logRilOemHookResponseString(result);
+
+                    if (result.exception != null) {
+                        Log.e(LOG_TAG, "", result.exception);
+                        return;
+                    }
+                    if (result.result == null) {
+                        Log.v(LOG_TAG, "No need to refresh.");
+                        return;
+                    }
+                    String[] aos = (String[]) result.result;
+
+                    if (aos.length == 0) {
+                        Log.v(LOG_TAG, "Length = 0");
+                        return;
+                    }
+
+                    mListView.setAdapter(new ArrayAdapter<String>(ATRilHook.this, R.layout.list_item, aos));
+
                     break;
             }
         }

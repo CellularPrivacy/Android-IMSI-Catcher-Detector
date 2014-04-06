@@ -23,7 +23,6 @@ package com.SecUpwN.AIMSICD.cmdprocessor;
 
 import android.os.AsyncTask;
 
-
 /**
  * An abstract implentation of AsyncTask
  * <p/>

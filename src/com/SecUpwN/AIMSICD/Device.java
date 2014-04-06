@@ -1,15 +1,32 @@
+/* Android IMSI Catcher Detector
+ *      Copyright (C) 2014
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You may obtain a copy of the License at
+ *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE
+ */
+
 package com.SecUpwN.AIMSICD;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Environment;
+import android.provider.Settings;
 import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
@@ -17,101 +34,93 @@ import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
+import com.SecUpwN.AIMSICD.cmdprocessor.Helpers;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class Device {
 
-    private static String TAG = "AIMSICD_Device";
+    private String TAG = "AIMSICD_Device";
 
-    public static String LOCATION_TABLE = "locationinfo";
-    public static String CELL_TABLE = "cellinfo";
-    public static String SIGNAL_TABLE = "signalinfo";
-    public static String DB_NAME = "myCellInfo";
+    private PhoneStateListener mSignalListenerStrength;
+    private PhoneStateListener mSignalListenerLocation;
+    private LocationManager lm;
+    private LocationListener mLocationListener;
+    private AIMSICDDbAdapter dbHelper;
+    private Context mContext;
+    private Activity mActivity;
+    public final int START_LOCATION_SERVICES = 1;
 
-    private static PhoneStateListener sSignalListenerStrength;
-    private static PhoneStateListener sSignalListenerLocation;
-    private static LocationManager lm;
-    private static LocationListener sLocationListener;
-    public static SQLiteDatabase sDB;
-    private static SQLiteHelper dbHelper;
+    private int mPhoneID;
+    private int mSignalInfo;
+    private int mNetID;
+    private int mLacID;
+    private int mCellID;
+    private double mLongitude;
+    private double mLatitude;
+    private String mNetType = "", mCellInfo = "", mDataState = "";
+    private String mPhoneNum = "", mCellType = "", mLac = "";
+    private String mNetName = "", mMmcmcc = "", mSimCountry = "", mPhoneType = "";
+    private String mIMEI = "", mIMEIV = "", mSimOperator = "", mSimOperatorName = "";
+    private String mSimSerial = "", mSimSubs = "", mDataActivityType = "";
 
-    private static int sPhoneID;
-    private static int sSignalInfo;
-    private static int sNetID;
-    private static int sLacID;
-    private static int sCellID;
-    private static double sLongitude;
-    private static double sLatitude;
-    private static String sNetType = "", sCellInfo = "", sDataState = "";
-    private static String sKML = "", sPhoneNum = "", sCellType = "", sLac = "";
-    private static String sNetName = "", sMmcmcc = "", sSimCountry = "", sPhoneType = "";
-    private static String sIMEI = "", sIMEIV = "", sSimOperator = "", sSimOperatorName = "";
-    private static String sSimSerial = "", sSimSubs = "", sDataActivityType = "";
+    private boolean TrackingCell;
+    private boolean TrackingSignal;
+    private boolean TrackingLocation;
 
-    private static boolean TrackingCell;
-    private static boolean TrackingSignal;
-    private static boolean TrackingLocation;
+    private ArrayList<String> alPosition;
 
-    private static ArrayList<String> alPosition;
+    private TelephonyManager tm;
 
-    private static TelephonyManager tm;
-
-
-
-    public static void InitDevice(Context mContext) {
+    Device(Context context, Activity activity) {
+        mContext = context;
+        mActivity = activity;
         //TelephonyManager provides system details
-        tm = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
         //Phone type and associated details
-        sIMEI = tm.getDeviceId();
-        sIMEIV = tm.getDeviceSoftwareVersion();
-        sPhoneNum = tm.getLine1Number();
-        sPhoneID = tm.getPhoneType();
-        switch (sPhoneID) {
+        mIMEI = tm.getDeviceId();
+        mIMEIV = tm.getDeviceSoftwareVersion();
+        mPhoneNum = tm.getLine1Number();
+        mPhoneID = tm.getPhoneType();
+        switch (mPhoneID) {
             case TelephonyManager.PHONE_TYPE_GSM:
-                sPhoneType = "GSM";
-                sMmcmcc = tm.getNetworkOperator();
-                sNetName = tm.getNetworkOperatorName();
+                mPhoneType = "GSM";
+                mMmcmcc = tm.getNetworkOperator();
+                mNetName = tm.getNetworkOperatorName();
                 GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
                 if (gsmCellLocation != null) {
-                    sCellType = "" + gsmCellLocation.getCid();
-                    sLac = "" + gsmCellLocation.getLac();
+                    mCellType = "" + gsmCellLocation.getCid();
+                    mLac = "" + gsmCellLocation.getLac();
                 }
-                sSimCountry = tm.getSimCountryIso();
-                sSimOperator = tm.getSimOperator();
-                sSimOperatorName = tm.getSimOperatorName();
-                sSimSerial = tm.getSimSerialNumber();
-                sSimSubs = tm.getSubscriberId();
+                mSimCountry = tm.getSimCountryIso();
+                mSimOperator = tm.getSimOperator();
+                mSimOperatorName = tm.getSimOperatorName();
+                mSimSerial = tm.getSimSerialNumber();
+                mSimSubs = tm.getSubscriberId();
                 break;
             case TelephonyManager.PHONE_TYPE_CDMA:
-                sPhoneType = "CDMA";
+                mPhoneType = "CDMA";
                 break;
         }
 
         //Network type
-        sNetID = getNetID(true);
-        sNetType = tm.getNetworkTypeName();
+        mNetID = getNetID(true);
+        mNetType = tm.getNetworkTypeName();
 
-        int sDataActivity = tm.getDataActivity();
-        sDataActivityType = getActivityDesc(sDataActivity);
+        int mDataActivity = tm.getDataActivity();
+        mDataActivityType = getActivityDesc(mDataActivity);
 
-        sDataActivity = tm.getDataState();
-        sDataState = getStateDesc(sDataActivity);
+        mDataActivity = tm.getDataState();
+        mDataState = getStateDesc(mDataActivity);
 
         //Create DB Instance
-        dbHelper = new SQLiteHelper(mContext);
-        sDB = dbHelper.getWritableDatabase();
+        dbHelper = new AIMSICDDbAdapter(mContext);
 
-        sSignalListenerLocation = new PhoneStateListener() {
+        mSignalListenerLocation = new PhoneStateListener() {
             public void onCellLocationChanged(CellLocation location) {
-                sNetID = getNetID(true);
-                sNetType = tm.getNetworkTypeName();
+                mNetID = getNetID(true);
+                mNetType = tm.getNetworkTypeName();
 
                 int dataActivityType = tm.getDataActivity();
                 String dataActivity = "un";
@@ -150,314 +159,334 @@ public class Device {
                         break;
                 }
 
-                switch (sPhoneID) {
+                switch (mPhoneID) {
                     case TelephonyManager.PHONE_TYPE_GSM:
                         GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
                         if (gsmCellLocation != null) {
-                            sCellInfo = gsmCellLocation.toString() + dataActivity + "|" + dataState + "|" + sNetType + "|";
-                            sLacID = gsmCellLocation.getLac();
-                            sCellID = gsmCellLocation.getCid();
-                            if (isTrackingCell() && !dbHelper.cellExists(sCellID)){
-                                sSimCountry = getSimCountry(true);
-                                sSimOperator = getSimOperator(true);
-                                sSimOperatorName = getSimOperatorName(true);
-                                dbHelper.insertCell(sDB, sLacID, sCellID, sNetID, sLatitude,
-                                        sLongitude, sSignalInfo, sCellInfo, sSimCountry,
-                                        sSimOperator, sSimOperatorName);
+                            mCellInfo = gsmCellLocation.toString() + dataActivity + "|" + dataState + "|" + mNetType + "|";
+                            mLacID = gsmCellLocation.getLac();
+                            mCellID = gsmCellLocation.getCid();
+                            dbHelper.open();
+                            if (isTrackingCell() && !dbHelper.cellExists(mCellID)){
+                                mSimCountry = getSimCountry(true);
+                                mSimOperator = getSimOperator(true);
+                                mSimOperatorName = getSimOperatorName(true);
+                                dbHelper.insertCell(mLacID, mCellID, mNetID, mLatitude,
+                                        mLongitude, mSignalInfo, mCellInfo, mSimCountry,
+                                        mSimOperator, mSimOperatorName);
                             }
                         }
                         break;
                     case TelephonyManager.PHONE_TYPE_CDMA:
                         CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                         if (cdmaCellLocation != null) {
-                            sCellInfo = cdmaCellLocation.toString() + dataActivity + "|" + dataState + "|" + sNetType + "|";
-                            sLacID = cdmaCellLocation.getNetworkId();
-                            sCellID = cdmaCellLocation.getBaseStationId();
-                            if (isTrackingCell() && !dbHelper.cellExists(sCellID)){
-                                sSimCountry = getSimCountry(true);
-                                sSimOperator = getSimOperator(true);
-                                sSimOperatorName = getNetworkName(true);
+                            mCellInfo = cdmaCellLocation.toString() + dataActivity + "|" + dataState + "|" + mNetType + "|";
+                            mLacID = cdmaCellLocation.getNetworkId();
+                            mCellID = cdmaCellLocation.getBaseStationId();
+                            if (isTrackingCell() && !dbHelper.cellExists(mCellID)){
+                                mSimCountry = getSimCountry(true);
+                                mSimOperator = getSimOperator(true);
+                                mSimOperatorName = getNetworkName(true);
                             }
                         }
                 }
 
-                if (TrackingCell && !dbHelper.cellExists(sCellID)) {
-                    dbHelper.insertCell(sDB, sLacID, sCellID, sNetID, sLatitude, sLongitude,
-                            sSignalInfo, sCellInfo, sSimCountry, sSimOperator, sSimOperatorName);
+                if (TrackingCell && !dbHelper.cellExists(mCellID)) {
+                    dbHelper.insertCell(mLacID, mCellID, mNetID, mLatitude, mLongitude,
+                            mSignalInfo, mCellInfo, mSimCountry, mSimOperator, mSimOperatorName);
                 }
 
 
             }
         };
 
-        sSignalListenerStrength = new PhoneStateListener() {
+        mSignalListenerStrength = new PhoneStateListener() {
             public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-                switch (sPhoneID) {
+                switch (mPhoneID) {
                     case TelephonyManager.PHONE_TYPE_GSM:
-                        sSignalInfo = signalStrength.getGsmSignalStrength();
+                        mSignalInfo = signalStrength.getGsmSignalStrength();
                         break;
                     case TelephonyManager.PHONE_TYPE_CDMA:
-                        sSignalInfo = signalStrength.getCdmaDbm();
+                        mSignalInfo = signalStrength.getCdmaDbm();
                         break;
                     default:
-                        sSignalInfo = 0;
+                        mSignalInfo = 0;
                 }
 
                 if (TrackingSignal) {
-                    dbHelper.insertSignal(sDB, sLacID, sCellID, sNetID, sLatitude, sLongitude,
-                            sSignalInfo, sCellInfo);
+                    dbHelper.insertSignal(mLacID, mCellID, mNetID, mLatitude, mLongitude,
+                            mSignalInfo, mCellInfo);
                 }
             }
         };
 
     }
 
-    public static int getPhoneID() {
-        if (sPhoneID <= 0 || sPhoneID > 6)
-            sPhoneID = tm.getPhoneType();
+    public int getPhoneID() {
+        if (mPhoneID <= 0 || mPhoneID > 6)
+            mPhoneID = tm.getPhoneType();
 
-        return sPhoneID;
+        return mPhoneID;
     }
 
-    public static String getSimCountry(boolean force) {
-        if (sSimCountry.isEmpty() || force)
-            sSimCountry = tm.getSimCountryIso();
+    public String getSimCountry(boolean force) {
+        if (mSimCountry.isEmpty() || force)
+            mSimCountry = tm.getSimCountryIso();
 
-        return sSimCountry;
+        return mSimCountry;
     }
 
-    public static String getSimOperator(boolean force) {
-        if (sSimOperator.isEmpty() || force)
-            sSimOperator = tm.getSimOperator();
+    public String getSimOperator(boolean force) {
+        if (mSimOperator.isEmpty() || force)
+            mSimOperator = tm.getSimOperator();
 
-        return sSimOperator;
+        return mSimOperator;
     }
 
-    public static String getSimOperatorName(boolean force) {
-        if (sSimOperatorName.isEmpty() || force)
-            sSimOperatorName = tm.getSimOperatorName();
+    public String getSimOperatorName(boolean force) {
+        if (mSimOperatorName.isEmpty() || force)
+            mSimOperatorName = tm.getSimOperatorName();
 
-        return sSimOperatorName;
+        return mSimOperatorName;
     }
 
-    public static String getSimSubs(boolean force) {
-        if (sSimSubs.isEmpty() || force)
-            sSimSubs = tm.getSubscriberId();
+    public String getSimSubs(boolean force) {
+        if (mSimSubs.isEmpty() || force)
+            mSimSubs = tm.getSubscriberId();
 
-        return sSimSubs;
+        return mSimSubs;
     }
 
-    public static String getSimSerial(boolean force) {
-        if (sSimSerial.isEmpty() || force)
-            sSimSerial = tm.getSimSerialNumber();
+    public String getSimSerial(boolean force) {
+        if (mSimSerial.isEmpty() || force)
+            mSimSerial = tm.getSimSerialNumber();
 
-        return sSimSerial;
+        return mSimSerial;
     }
 
-    public static String getPhoneType(boolean force) {
-        if (sPhoneType.isEmpty()|| force) {
+    public String getPhoneType(boolean force) {
+        if (mPhoneType.isEmpty()|| force) {
             if (getPhoneID() == TelephonyManager.PHONE_TYPE_GSM)
-                sPhoneType = "GSM";
+                mPhoneType = "GSM";
             else if (getPhoneID() == TelephonyManager.PHONE_TYPE_CDMA)
-                sPhoneType = "CDMA";
+                mPhoneType = "CDMA";
             else
-                sPhoneType = "Unknown";
+                mPhoneType = "Unknown";
         }
 
-        return sPhoneType;
+        return mPhoneType;
     }
 
-    public static String getIMEI(boolean force) {
-        if (sIMEI.isEmpty() || force)
-            sIMEI = tm.getDeviceId();
+    public String getIMEI(boolean force) {
+        if (mIMEI.isEmpty() || force)
+            mIMEI = tm.getDeviceId();
 
-        return sIMEI;
+        return mIMEI;
     }
 
-    public static String getIMEIv(boolean force) {
-        if (sIMEIV.isEmpty() || force)
-            sIMEIV = tm.getDeviceSoftwareVersion();
+    public String getIMEIv(boolean force) {
+        if (mIMEIV.isEmpty() || force)
+            mIMEIV = tm.getDeviceSoftwareVersion();
 
-        return sIMEIV;
+        return mIMEIV;
     }
 
-    public static String getPhoneNumber(boolean force) {
-        if (sPhoneNum.isEmpty() || force)
-            sPhoneNum = tm.getLine1Number();
+    public String getPhoneNumber(boolean force) {
+        if (mPhoneNum.isEmpty() || force)
+            mPhoneNum = tm.getLine1Number();
 
-        return sPhoneNum;
+        return mPhoneNum;
     }
 
-    public static String getNetworkName(boolean force) {
-        if (sNetName.isEmpty() || force)
-            sNetName = tm.getNetworkOperatorName();
+    public String getNetworkName(boolean force) {
+        if (mNetName.isEmpty() || force)
+            mNetName = tm.getNetworkOperatorName();
 
-        return sNetName;
+        return mNetName;
     }
 
-    public static String getSmmcMcc(boolean force) {
-        if (sMmcmcc.isEmpty() || force)
-            sMmcmcc = tm.getNetworkOperator();
+    public String getSmmcMcc(boolean force) {
+        if (mMmcmcc.isEmpty() || force)
+            mMmcmcc = tm.getNetworkOperator();
 
-        return sMmcmcc;
+        return mMmcmcc;
     }
 
-    public static String getNetworkTypeName() {
+    public String getNetworkTypeName() {
         return tm.getNetworkTypeName();
 
     }
 
-    public static int getNetID (boolean force) {
-        if (sNetID < 0 || force) {
-            sNetID = tm.getNetworkType();
+    public int getNetID (boolean force) {
+        if (mNetID < 0 || force) {
+            mNetID = tm.getNetworkType();
         }
 
-        return sNetID;
+        return mNetID;
     }
 
-    public static String getsLAC(boolean force) {
-        if (sLac.isEmpty() || force) {
+    public String getLAC(boolean force) {
+        if (mLac.isEmpty() || force) {
             GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
             if (gsmCellLocation != null) {
-                sLac = "" + gsmCellLocation.getLac();
+                mLac = "" + gsmCellLocation.getLac();
             }
         }
 
-        return sLac;
+        return mLac;
     }
 
-    public static String getsCellId(boolean force) {
-        if (sCellType.isEmpty() || force) {
+    public String getCellId(boolean force) {
+        if (mCellType.isEmpty() || force) {
             GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
             if (gsmCellLocation != null) {
-                sCellType = "" + gsmCellLocation.getCid();
+                mCellType = "" + gsmCellLocation.getCid();
             }
         }
 
-        return sCellType;
+        return mCellType;
     }
 
-    public static String getActivityDesc(int dataID) {
-        sDataActivityType = "undef";
+    public String getActivityDesc(int dataID) {
+        mDataActivityType = "undef";
         switch (dataID) {
             case TelephonyManager.DATA_ACTIVITY_NONE:
-                sDataActivityType = "None";
+                mDataActivityType = "None";
                 break;
             case TelephonyManager.DATA_ACTIVITY_IN:
-                sDataActivityType = "In";
+                mDataActivityType = "In";
                 break;
             case TelephonyManager.DATA_ACTIVITY_OUT:
-                sDataActivityType = "Out";
+                mDataActivityType = "Out";
                 break;
             case TelephonyManager.DATA_ACTIVITY_INOUT:
-                sDataActivityType = "In-Out";
+                mDataActivityType = "In-Out";
                 break;
             case TelephonyManager.DATA_ACTIVITY_DORMANT:
-                sDataActivityType = "Dormant";
+                mDataActivityType = "Dormant";
                 break;
         }
-        return sDataActivityType;
+        return mDataActivityType;
     }
 
-    public static String getStateDesc(int dataID) {
-        sDataState = "undef";
+    public String getStateDesc(int dataID) {
+        mDataState = "undef";
         switch (dataID) {
             case TelephonyManager.DATA_DISCONNECTED:
-                sDataActivityType = "Disconnected";
+                mDataActivityType = "Disconnected";
                 break;
             case TelephonyManager.DATA_CONNECTING:
-                sDataActivityType = "Connecting";
+                mDataActivityType = "Connecting";
                 break;
             case TelephonyManager.DATA_CONNECTED:
-                sDataActivityType = "Connected";
+                mDataActivityType = "Connected";
                 break;
             case TelephonyManager.DATA_SUSPENDED:
-                sDataActivityType = "Suspended";
+                mDataActivityType = "Suspended";
                 break;
         }
 
-        return sDataState;
+        return mDataState;
     }
 
-    public static Boolean isTrackingSignal() {
+    public AIMSICDDbAdapter getDbHelper() {
+        return dbHelper;
+    }
+
+    public Boolean isTrackingSignal() {
         return TrackingSignal;
     }
 
-    public static Boolean isTrackingCell() {
+    public Boolean isTrackingCell() {
         return TrackingCell;
     }
 
-    public static Boolean isTrackingLocation() {
+    public Boolean isTrackingLocation() {
         return TrackingLocation;
     }
 
-    public static void tracksignal() {
+    public void tracksignal() {
         if (TrackingSignal) {
-            tm.listen(sSignalListenerStrength, PhoneStateListener.LISTEN_NONE);
+            tm.listen(mSignalListenerStrength, PhoneStateListener.LISTEN_NONE);
+            Helpers.msgShort(mContext, "Stopped tracking signal strength");
             TrackingSignal = false;
-            sSignalInfo = 0;
+            mSignalInfo = 0;
         } else {
-            tm.listen(sSignalListenerStrength, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+            tm.listen(mSignalListenerStrength, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+            Helpers.msgShort(mContext, "Tracking signal strength");
             TrackingSignal = true;
         }
     }
 
-    public static void trackcell() {
+    public void trackcell() {
         if (TrackingCell) {
-            tm.listen(sSignalListenerLocation, PhoneStateListener.LISTEN_NONE);
+            tm.listen(mSignalListenerLocation, PhoneStateListener.LISTEN_NONE);
+            Helpers.msgShort(mContext, "Stopped tracking cell information");
             TrackingCell = false;
-            sCellInfo = "[0,0]|nn|nn|";
+            mCellInfo = "[0,0]|nn|nn|";
         } else {
-            tm.listen(sSignalListenerLocation, PhoneStateListener.LISTEN_CELL_LOCATION);
+            tm.listen(mSignalListenerLocation, PhoneStateListener.LISTEN_CELL_LOCATION);
+            Helpers.msgShort(mContext, "Tracking cell information");
             TrackingCell = true;
         }
     }
 
-    public static void tracklocation(Context ctx) {
+    public void tracklocation() {
         if (TrackingLocation) {
-            lm.removeUpdates(sLocationListener);
+            lm.removeUpdates(mLocationListener);
+            Helpers.msgShort(mContext, "Stopped tracking location");
             TrackingLocation = false;
-            sLongitude = 0.0;
-            sLatitude = 0.0;
+            mLongitude = 0.0;
+            mLatitude = 0.0;
         } else {
             if (lm != null) {
                 Log.i(TAG, "LocationManager already existed");
-                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, sLocationListener);
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+                Helpers.msgShort(mContext, "Tracking location");
                 TrackingLocation = true;
             } else {
                 Log.i(TAG, "LocationManager did not existed");
-                lm = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
+                lm = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
                 if (lm != null) {
                     if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         Log.i(TAG, "LocationManager created");
-                        sLocationListener = new MyLocationListener();
-                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, sLocationListener);
+                        mLocationListener = new MyLocationListener();
+                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+                        Helpers.msgShort(mContext, "Tracking location");
                         TrackingLocation = true;
                     } else {
-                        // GPS No es permet
-                        Log.i(TAG, "GPS not allowed");
-                        AlertDialog.Builder msg = new AlertDialog.Builder(ctx);
-                        msg.setMessage("GPS is not enabled!. You won�t be able to use GPS data until you enable it");
-                        AlertDialog alert = msg.create();
-                        alert.setTitle("Error:");
-                        alert.show();
-                        lm = null;
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setMessage(R.string.location_error_message)
+                                .setTitle(R.string.location_error_title);
+                        builder.setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //Display Location Services Menu Fragment
+                                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                mActivity.startActivityForResult(intent, START_LOCATION_SERVICES);
+                            }
+                        });
+                        builder.setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                            }
+                        });
+                        builder.create().show();
                     }
                 }
             }
         }
     }
 
-    private static class MyLocationListener implements LocationListener {
+    private class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location loc) {
             if (loc != null) {
-                sLongitude = loc.getLongitude();
-                sLatitude = loc.getLatitude();
+                mLongitude = loc.getLongitude();
+                mLatitude = loc.getLatitude();
             }
             if (TrackingLocation) {
-                dbHelper.insertLocation(sDB, sLacID, sCellID, sNetID, sLatitude, sLongitude,
-                        sSignalInfo, sCellInfo);
+                dbHelper.insertLocation(mLacID, mCellID, mNetID, mLatitude, mLongitude,
+                        mSignalInfo, mCellInfo);
             }
         }
 
@@ -475,217 +504,6 @@ public class Device {
         public void onStatusChanged(String provider, int status,
                 Bundle extras) {
             // TODO Auto-generated method stub
-        }
-    }
-
-    public static void exportDB () {
-        try {
-            dbHelper.export(LOCATION_TABLE);
-            dbHelper.export(CELL_TABLE);
-            dbHelper.export(SIGNAL_TABLE);
-        } catch (IOException ioe) {
-            Log.e (TAG, "exportDB() " + ioe.getMessage());
-        }
-    }
-
-    /**
-     * SQLiteHelper class for the Location, Cell and Signal Strength Databases
-     */
-    public static class SQLiteHelper extends SQLiteOpenHelper {
-
-        public static final String COLUMN_ID = "_id";
-        private static final int DATABASE_VERSION = 1;
-
-        // Database creation statements
-        private final String LOC_DATABASE_CREATE = "create table " +
-                LOCATION_TABLE + " (" + COLUMN_ID +
-                " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
-                "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
-                "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-
-        private final String CELL_DATABASE_CREATE = "create table " +
-                CELL_TABLE + " (" + COLUMN_ID +
-                " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
-                "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
-                "Country VARCHAR, Operator VARCHAR, OperatorName VARCHAR, " +
-                "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-
-        private final String SIG_DATABASE_CREATE = "create table " +
-                SIGNAL_TABLE + " (" + COLUMN_ID +
-                " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
-                "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
-                "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-
-        public SQLiteHelper(Context context) {
-            super(context, DB_NAME, null, DATABASE_VERSION);
-        }
-
-        public void insertCell(SQLiteDatabase db, int lac, int cellID,
-                int netType, double latitude, double longitude,
-                int signalInfo, String cellInfo, String simCountry,
-                String simOperator, String simOperatorName) {
-
-            db.execSQL("INSERT INTO " + CELL_TABLE +
-                    " (Lac , CellID, Net, Lat, Lng, Signal, Connection," +
-                    "Country, Operator, OperatorName)" +
-                    " VALUES(" + lac + "," + cellID + "," + netType + ","
-                    + latitude + "," + longitude + "," + signalInfo + ",\""
-                    + cellInfo + "\", \"" + simCountry + "\"," + simOperator + ",\""
-                    + simOperatorName + "\");");
-        }
-
-        public void insertLocation(SQLiteDatabase db, int lac, int cellID,
-                int netType, double latitude, double longitude,
-                int signalInfo, String cellInfo) {
-
-            db.execSQL("INSERT INTO " + LOCATION_TABLE +
-                    " (Lac , CellID, Net, Lat, Lng, Signal, Connection)" +
-                    " VALUES(" + lac + "," + cellID + "," + netType + ","
-                    + latitude + "," + longitude + "," + signalInfo + ",\""
-                    + cellInfo + "\");");
-        }
-
-        public void insertSignal(SQLiteDatabase db, int lac, int cellID,
-                int netType, double latitude, double longitude,
-                int signalInfo, String cellInfo) {
-
-            db.execSQL("INSERT INTO " + SIGNAL_TABLE +
-                    " (Lac , CellID, Net, Lat, Lng, Signal, Connection)" +
-                    " VALUES(" + lac + "," + cellID + "," + netType + ","
-                    + latitude + "," + longitude + "," + signalInfo + ",\""
-                    + cellInfo + "\");");
-        }
-
-        public boolean cellExists(int cellID) {
-            Cursor cursor = sDB.rawQuery("SELECT * FROM " + CELL_TABLE + " WHERE CellID = " +
-                    cellID, null);
-
-            return cursor.getCount()>0;
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase database) {
-            database.execSQL(LOC_DATABASE_CREATE);
-            database.execSQL(CELL_DATABASE_CREATE);
-            database.execSQL(SIG_DATABASE_CREATE);
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(SQLiteHelper.class.getName(),
-                    "Upgrading database from version " + oldVersion + " to "
-                            + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + CELL_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + SIGNAL_TABLE);
-            onCreate(db);
-        }
-
-        public void export(String tableName) throws IOException {
-            Log.i(TAG, "exporting database - " + DB_NAME);
-
-            XmlBuilder xmlBuilder = new XmlBuilder();
-            xmlBuilder.start(DB_NAME);
-            Log.d(TAG, "table name " + tableName);
-
-            exportTable(tableName, xmlBuilder);
-            String xmlString = xmlBuilder.end();
-            writeToFile(xmlString, "aimsicd-" + tableName + ".xml");
-
-            Log.i(TAG, "exporting database complete");
-        }
-
-        private void exportTable(final String tableName, XmlBuilder xmlBuilder) throws IOException {
-            Log.d(TAG, "exporting table - " + tableName);
-            xmlBuilder.openTable(tableName);
-            String sql = "select * from " + tableName;
-            Cursor c = sDB.rawQuery(sql, new String[0]);
-            if (c.moveToFirst()) {
-                int cols = c.getColumnCount();
-                do {
-                    xmlBuilder.openRow();
-                    for (int i = 0; i < cols; i++) {
-                        xmlBuilder.addColumn(c.getColumnName(i), c.getString(i));
-                    }
-                    xmlBuilder.closeRow();
-                } while (c.moveToNext());
-            }
-            c.close();
-            xmlBuilder.closeTable();
-        }
-
-        private void writeToFile(String xmlString, String exportFileName) throws IOException {
-            File dir = new File(Environment.getExternalStorageDirectory() + "/AIMSICD/");
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            File file = new File(dir, exportFileName);
-            file.createNewFile();
-
-            ByteBuffer buff = ByteBuffer.wrap(xmlString.getBytes());
-            FileChannel channel = new FileOutputStream(file).getChannel();
-            try {
-                channel.write(buff);
-            } finally {
-                if (channel != null)
-                    channel.close();
-            }
-        }
-    }
-
-    /**
-     * XmlBuilder is used to write XML tags (open and close, and a few attributes)
-     * to a StringBuilder. Here we have nothing to do with IO or SQL, just a fancy StringBuilder.
-     *
-     * @author ccollins
-     *
-     */
-    private static class XmlBuilder {
-        private static final String OPEN_XML_STANZA = "";
-        private static final String CLOSE_WITH_TICK = "'>";
-        private static final String DB_OPEN = "<database name='";
-        private static final String DB_CLOSE = "";
-        private static final String TABLE_OPEN = "<table name='";
-        private static final String TABLE_CLOSE = "";
-        private static final String ROW_OPEN = "";
-        private static final String ROW_CLOSE = "";
-        private static final String COL_OPEN = "<col name='";
-        private static final String COL_CLOSE = "";
-
-        private final StringBuilder sb;
-
-        public XmlBuilder() throws IOException {
-            this.sb = new StringBuilder();
-        }
-
-        void start(String dbName) {
-            this.sb.append(OPEN_XML_STANZA);
-            this.sb.append(DB_OPEN).append(dbName).append(CLOSE_WITH_TICK);
-        }
-
-        String end() throws IOException {
-            this.sb.append(DB_CLOSE);
-            return this.sb.toString();
-        }
-
-        void openTable(String tableName) {
-            this.sb.append(TABLE_OPEN).append(tableName).append(CLOSE_WITH_TICK);
-        }
-
-        void closeTable() {
-            this.sb.append(TABLE_CLOSE);
-        }
-
-        void openRow() {
-            this.sb.append(ROW_OPEN);
-        }
-
-        void closeRow() {
-            this.sb.append(ROW_CLOSE);
-        }
-
-        void addColumn(final String name, final String val) throws IOException {
-            this.sb.append(COL_OPEN).append(name).append(CLOSE_WITH_TICK).append(val).append(COL_CLOSE);
         }
     }
 

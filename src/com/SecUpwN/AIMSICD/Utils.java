@@ -1,9 +1,25 @@
+/* Android IMSI Catcher Detector
+ *      Copyright (C) 2014
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You may obtain a copy of the License at
+ *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE
+ */
+
 package com.SecUpwN.AIMSICD;
 
 import android.content.Context;
 import android.util.Log;
 import com.SecUpwN.AIMSICD.cmdprocessor.CMDProcessor;
-import com.stericson.RootTools.RootTools;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -12,24 +28,6 @@ import java.util.List;
 
 public class Utils {
     private static String TAG = "AIMSICD_Utils";
-
-    public static void CheckUtils(Context ctx) {
-        final String mChmod;
-        final Context mInstance = ctx;
-
-        // Check chmod utils
-        if (RootTools.checkUtil("chmod"))
-            mChmod = "chmod";
-        else {
-            if (RootTools.checkUtil("busybox") && RootTools.hasUtil("chmod", "busybox"))
-                mChmod = "busybox chmod";
-            else if (RootTools.checkUtil("toolbox") && RootTools.hasUtil("chmod", "toolbox"))
-                mChmod = "toolbox chmod";
-            else
-                mChmod = "";
-        }
-
-    }
 
     // Copy assets to local
     private static boolean CopyAssetsToLocal(Context ctx, String mSourceName, String mDstName) {
