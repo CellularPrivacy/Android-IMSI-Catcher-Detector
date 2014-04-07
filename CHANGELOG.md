@@ -3,9 +3,9 @@
 
 #### 06.04.2014
 
-* Applause to [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! He submitted a new [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/14) and issued a complete rewrite of the menu system, implementing the Actionbar, rewrite of the Device class to perform better and change it from a static class, Persistent notification was added which can be tweaked down the line and the Database helper class was created to provide application wide support.
+* Applause to [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! He submitted a new [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/14) with a complete rewrite of the menu system, implementing the Actionbar, rewrite of the Device class to perform better and change it from a static class, Persistent notification was added which can be tweaked down the line and the Database helper class was created to provide application wide support.
 * The old Icons of RawPhone have been fully replaced by the great work of [SgtObst](https://github.com/SgtObst). More to come soon!
-* Our developers are currently working **hard** to find viable ways to acquire the ciphering info - if you have **good** ideas or code and are a programmer, feel free to perticipate in the discussion on the [official development thread](http://forum.xda-developers.com/showthread.php?t=1422969) (only technical talk, please).
+* Our developers are currently working **hard** to find viable ways to acquire the ciphering info - if you have **good** ideas or code and are a programmer, feel free to perticipate in the discussion on the [official development thread](http://forum.xda-developers.com/showthread.php?t=1422969) (only technical talk).
 
 #### 02.04.2014
 
