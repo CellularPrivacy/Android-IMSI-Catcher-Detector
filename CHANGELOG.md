@@ -8,6 +8,7 @@
 * Removed folder 'MERGESOURCE' to clean up unused code and avoid confusion
 * Created new file: [SOURCES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/SOURCES). Please actively use it. Know where your code comes from.
 * Removed TODO and created [WANTED_FEATURES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/WANTED_FEATURES). Hit us with your ideas there!
+* Complete revamp of our [PAPERS-Directory](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/PAPERS). Make sure to grab your nightly lecture.
 
 #### 06.04.2014
 
