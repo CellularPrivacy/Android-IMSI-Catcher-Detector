@@ -25,6 +25,14 @@ Example 2: [GER]-Diplomarbeit_der_Pozilei.pdf
 Example 3: [TUR]-Tez_Doner_Güzel_Yapar.pdf
 
 
+# Removing sensitive information
+--------------------------------
+
+* Protect yourself and entirely remove all metadata from your file!
+* This command will remove all metadata from the files in a folder:
+
+~$ exiftool -r -overwrite_original -P -all= <UPLOAD_FOLDER>
+
 IMPORTANT: Before uploading anything to this directory, make sure it is not
 copyrighted in a way that prohibits public sharing. If you ever encounter
 the case that you simply don't know, polish your balls and ask the author!
