@@ -9,6 +9,8 @@
 * Created new file: [SOURCES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/SOURCES). Please actively use it. Know where your code comes from.
 * Removed TODO and created [WANTED_FEATURES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/WANTED_FEATURES). Hit us with your ideas there!
 * Complete revamp of our [PAPERS-Directory](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/PAPERS). Make sure to grab your nightly lecture.
+* Another new and fresh Iconset has been added with a [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/20) [SgtObst](https://github.com/SgtObst). Cool! :)
+* The latest [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/21) now adds Service, Boot Completed Receiver and TableView & FemtoCatcher Additions. We're travelling towards a really awesome App! To everyone developing here: You're doing a WONDERFUL job! THANK YOU!
 
 #### 06.04.2014
 
