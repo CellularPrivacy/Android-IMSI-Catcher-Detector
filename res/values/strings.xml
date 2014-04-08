@@ -7,8 +7,8 @@
     <string name="quit">Quit</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Cancel</string>
-
-    <string name="device_info_title">Device Information</string>
+    <string name="empty"> </string>
+    <string name="gsm_only">GSM Phones Only</string>
 
     <!-- Mobile Network Types -->
     <string name="gprs"># GPRS</string>
@@ -33,9 +33,32 @@
     <string name="at_ril_injection">AT Command Injection</string>
     <string name="press_once_again_to_exit">Press again to exit</string>
 
+    <!-- MAIN LAYOUT -->
+    <string name="device_info_title">Device Information</string>
+    <string name="gsm_sim_info_title">GSM SIM Information</string>
+    <string name="mobile_data_title">Mobile Data Information</string>
+    <string name="sim_country">SIM Country:</string>
+    <string name="sim_operator_id">SIM Operator ID:</string>
+    <string name="sim_operator_name">SIM Operator Name:</string>
+    <string name="sim_imsi">SIM IMSI:</string>
+    <string name="sim_serial">SIM Serial:</string>
+    <string name="device_type">Type:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">Version:</string>
+    <string name="device_number">Line Number:</string>
+    <string name="network_name">Network Name:</string>
+    <string name="network_code">Network Code:</string>
+    <string name="network_type">Network Type:</string>
+    <string name="network_lac">Network LAC:</string>
+    <string name="network_cellid">Network CellID:</string>
+    <string name="data_activity">Data Activity:</string>
+    <string name="data_status">Data Status:</string>
+
+
+
     <!-- Location Helper -->
     <string name="location_error_title">Location Services Disabled</string>
-    <string name="location_error_message">Would you like to enable Location Services to track GPS Data?</string>
+    <string name="location_error_message">You cannot track GPS data without enabling Location Services.</string>
 
     <!-- AT Injection Activity -->
     <string name="testing_RIL_OEMHook">RIL OEM Hook Test</string>

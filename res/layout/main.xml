@@ -1,15 +1,351 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:scrollbars="vertical">
-
-    <TextView
-        android:id="@+id/view"
-        android:layout_width="wrap_content"
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:shrinkColumns="*"
+    android:stretchColumns="1">
+    <TableRow
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:typeface="monospace"
-        android:textColor="#00FF00"/>
-</LinearLayout>
+        android:layout_width="fill_parent"
+        android:gravity="center_horizontal"
+        android:background="@color/black">
+        <TextView
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textSize="18dp" android:text="@string/device_info_title"  android:layout_span="2"
+            android:background="@color/black"
+            android:textColor="@color/green_text"
+            android:padding="4dip"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/device_type_label" android:text="@string/device_type"
+            android:layout_weight="1"  android:background="@color/black"
+        android:textColor="@color/white"
+        android:padding="2dip" android:gravity="right"
+        android:layout_gravity="right"
+        android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/device_type" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="left"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/device_imei_label" android:text="@string/device_imei"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/device_imei" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/device_version_label" android:text="@string/device_version"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/device_version" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/device_number_label" android:text="@string/device_number"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/device_number" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/network_name_label" android:text="@string/network_name"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/network_name" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/network_code_label" android:text="@string/network_code"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/network_code" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="left"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/network_type_label" android:text="@string/network_type"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/network_type" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/network_lac_label" android:text="@string/network_lac"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/network_lac" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/network_cellid_label" android:text="@string/network_cellid"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/network_cellid" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="center_horizontal"
+        android:background="@color/black">
+        <TextView
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textSize="18dp" android:text="@string/gsm_sim_info_title"  android:layout_span="2"
+            android:background="@color/black"
+            android:textColor="@color/green_text"
+            android:padding="5dip"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/sim_country_label" android:text="@string/sim_country"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_width="fill_parent"
+            android:layout_gravity="right"/>
+
+        <TextView
+            android:id="@+id/sim_country" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/sim_operator_id_label" android:text="@string/sim_operator_id"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/sim_operator_id" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/sim_operator_name_label" android:text="@string/sim_operator_name"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/sim_operator_name" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/sim_imsi_label" android:text="@string/sim_imsi"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/sim_imsi" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/sim_serial_label" android:text="@string/sim_serial"
+            android:layout_weight="1"  android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_width="fill_parent"/>
+
+        <TextView
+            android:id="@+id/sim_serial" android:text="@string/empty"
+            android:layout_weight="1" android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="left"/>
+    </TableRow>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:shrinkColumns="*"
+        android:stretchColumns="1,3"
+        android:background="@color/black">
+
+        <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="center_horizontal"
+        android:background="@color/black">
+        <TextView
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textSize="18dp" android:text="@string/mobile_data_title"  android:layout_span="4"
+            android:background="@color/black"
+            android:textColor="@color/green_text"
+            android:padding="5dip"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@color/black">
+
+            <TextView
+                android:id="@+id/data_activity_label" android:text="@string/data_activity"
+                android:layout_weight="1"  android:background="@color/black"
+                android:textColor="@color/white"
+                android:padding="2dip" android:gravity="right"/>
+
+            <TextView
+                android:id="@+id/data_activity" android:text="@string/empty"
+                android:layout_weight="1" android:background="@color/black"
+                android:textColor="@color/medium_blue"
+                android:padding="2dip" android:gravity="left"/>
+            <TextView
+                android:id="@+id/data_status_label" android:text="@string/data_status"
+                android:layout_weight="1"  android:background="@color/black"
+                android:textColor="@color/white"
+                android:padding="2dip" android:gravity="right"/>
+
+            <TextView
+                android:id="@+id/data_status" android:text="@string/empty"
+                android:layout_weight="1" android:background="@color/black"
+                android:textColor="@color/medium_blue"
+                android:padding="2dip" android:gravity="left"/>
+        </TableRow>
+    </TableLayout>
+
+</TableLayout>
