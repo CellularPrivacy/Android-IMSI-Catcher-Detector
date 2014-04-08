@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
 
     <application
         android:icon="@drawable/icon"
@@ -26,7 +25,7 @@
 
         <activity
             android:name=".AIMSICD"
-            android:label="@string/app_name"
+            android:label="@string/app_name_short"
             android:process="com.android.phone"
             android:screenOrientation="portrait"
             android:exported="true">
@@ -37,6 +36,21 @@
                 <category android:name="android.intent.category.DEVELOPMENT_PREFERENCE"/>
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.AimsicdService"
+            android:process="com.android.phone"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+
+        <receiver android:name=".receiver.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".MapViewer"
             android:label="@string/app_name"
