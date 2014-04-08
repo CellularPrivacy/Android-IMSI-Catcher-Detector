@@ -13,6 +13,6 @@ This guide will be updated as soon as we discover the need to do so. Suggestions
 
 #### On Bugs and Suggestions
 
-* Discovered something you think seems odd or out of place? Give us a hint, we are humans.
-* NEVER be shy to suggest a new feature - but PLEASE skip questions on ETAs. Thank you.
+* Discovered a real bug? Then have a a look if the [Issue](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues?state=open) already exists. If not, [create it](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/new)!
+* NEVER be shy to [suggest a new feature](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/WANTED_FEATURES) - but PLEASE skip questions on ETAs. Thank you.
 * Be polite and respectful. This project is like a plant: Be gentle to it and let it grow!
