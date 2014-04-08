@@ -1,6 +1,13 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 08.04.2014
+
+* Updated Disclaimer to encourage people to talk to us BEFORE hunting our developers
+* Updated Credits to reflect latest contributions (please give me a hint if I missed someone)
+* Removed folder 'MERGESOURCE' to clean up unused code and avoid confusion
+* Created new file: [SOURCES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/SOURCES). Please actively use it. Know where your code comes from.
+
 #### 06.04.2014
 
 * Applause to [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! He submitted a new [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/14) with a complete rewrite of the menu system, implementing the Actionbar, rewrite of the Device class to perform better and change it from a static class, Persistent notification was added which can be tweaked down the line and the Database helper class was created to provide application wide support.
