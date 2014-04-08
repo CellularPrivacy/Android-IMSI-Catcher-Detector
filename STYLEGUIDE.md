@@ -6,9 +6,10 @@ This guide will be updated as soon as we discover the need to do so. Suggestions
 
 #### Important note on Commits
 
-* Please DO NOT issue a commit on folder ['MERGESOURCE'](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE) (ONLY store for clean source of useful apps)
-* If you submit a commit, please make sure to explain it poperly
-* ALWAYS respect the [LICENSE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE) this project is licensed with
+* If you added foreign code, please reference it in our [SOURCES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/SOURCES).
+* If you submit a commit, please make sure to explain it poperly.
+* ALWAYS respect the [LICENSE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE) this project is licensed with.
+
 
 #### On Bugs and Suggestions
 
