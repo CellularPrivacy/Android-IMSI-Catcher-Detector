@@ -18,28 +18,52 @@
 package com.SecUpwN.AIMSICD;
 
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
+import android.os.IBinder;
+import android.telephony.CellLocation;
+import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.telephony.cdma.CdmaCellLocation;
+import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.SecUpwN.AIMSICD.cmdprocessor.Helpers;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
 
 public class AIMSICD extends Activity {
 
     private final String TAG = "AIMSICD";
 
-    private Device mDevice;
+    public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD";
+
     private final Context mContext = this;
     private Menu mMenu;
+    private boolean mBound;
+    private boolean mDisplayCurrent;
+    public PhoneStateListener mSignalListenerStrength;
+    public TelephonyManager tm;
+    public LocationManager lm;
+    public LocationListener mLocationListener;
+    private AIMSICDDbAdapter dbHelper;
+
+    private boolean TrackingCell;
+    private boolean TrackingSignal;
+    private boolean TrackingLocation;
+
+    private AimsicdService mAimsicdService;
 
     //Back press to exit timer
     private long mLastPress = 0;
@@ -55,49 +79,117 @@ public class AIMSICD extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mDevice = new Device(mContext, this);
+        //Create DB Instance
+        dbHelper = new AIMSICDDbAdapter(mContext);
 
-        TextView outputView = (TextView) findViewById(R.id.view);
-        outputView.setHorizontalFadingEdgeEnabled(false);
+        // Bind to LocalService
+        Intent intent = new Intent(this, AimsicdService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
 
-        outputView.setText("Information:\n\n");
 
-        if (mDevice.getPhoneID() == TelephonyManager.PHONE_TYPE_GSM) {
-            outputView.append("SIM country:    " + mDevice.getSimCountry(false) + "\n");
-            outputView.append("SIM Op ID:      " + mDevice.getSimOperator(false) + "\n");
-            outputView.append("SIM Op Name:    " + mDevice.getSimOperatorName(false) + "\n");
-            outputView.append("SIM IMSI:       " + mDevice.getSimSubs(false) + "\n");
-            outputView.append("SIM serial:     " + mDevice.getSimSerial(false) + "\n\n");
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unbind from the service
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+    }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
+            mBound = true;
+            updateUI();
         }
 
-        int netID = mDevice.getNetID(true);
-        outputView.append("Device type:    " + mDevice.getPhoneType(false) + "\n");
-        outputView.append("Device IMEI:    " + mDevice.getIMEI(false) + "\n");
-        outputView.append("Device version: " + mDevice.getIMEIv(false) + "\n");
-        outputView.append("Device num:     " + mDevice.getPhoneNumber(false) + "\n\n");
-        outputView.append("Network name:   " + mDevice.getNetworkName(false) + "\n");
-        outputView.append("Network code:   " + mDevice.getSmmcMcc(false) + "\n");
-        outputView.append("Network type:   " + mDevice.getNetworkTypeName() + "\n");
-        outputView.append("Network LAC:    " + mDevice.getLAC(false) + "\n");
-        outputView.append("Network CellID: " + mDevice.getCellId(false) + "\n\n");
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            Log.e(TAG, "Service Disconnected");
+            mBound = false;
+        }
+    };
 
-        outputView.append("Data activity:  " + mDevice.getActivityDesc(netID) + "\n");
-        outputView.append("Data status:    " + mDevice.getStateDesc(netID) + "\n");
+    @Override
+    public void onResume() {
+        super.onResume();
+        tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (!mDisplayCurrent)
+            updateUI();
+    }
 
-        outputView.append("--------------------------------\n");
-        outputView.append("[LAC,CID]|DAct|DStat|Net|Sig|Lat|Lng\n");
-        Log.i(TAG, "**** AIMSICD ****");
-        Log.i(TAG, "Device type   : " + mDevice.getPhoneType(false));
-        Log.i(TAG, "Device IMEI   : " + mDevice.getIMEI(false));
-        Log.i(TAG, "Device version: " + mDevice.getIMEIv(false));
-        Log.i(TAG, "Device num    : " + mDevice.getPhoneNumber(false));
-        Log.i(TAG, "Network type  : " + mDevice.getNetworkTypeName());
-        Log.i(TAG, "Network CellID: " + mDevice.getCellId(false));
-        Log.i(TAG, "Network LAC   : " + mDevice.getLAC(false));
-        Log.i(TAG, "Network code  : " + mDevice.getSmmcMcc(false));
-        Log.i(TAG, "Network name  : " + mDevice.getNetworkName(false));
+    private void updateUI() {
+        TextView content = (TextView) findViewById(R.id.sim_country);
+        if (mBound) {
+            if (mAimsicdService.getPhoneID() == TelephonyManager.PHONE_TYPE_GSM) {
+                content.setText(mAimsicdService.getSimCountry(false));
+                content = (TextView) findViewById(R.id.sim_operator_id);
+                content.setText(mAimsicdService.getSimOperator(false));
+                content = (TextView) findViewById(R.id.sim_operator_name);
+                content.setText(mAimsicdService.getSimOperatorName(false));
+                content = (TextView) findViewById(R.id.sim_imsi);
+                content.setText(mAimsicdService.getSimSubs(false));
+                content = (TextView) findViewById(R.id.sim_serial);
+                content.setText(mAimsicdService.getSimSerial(false));
+            } else {
+                content.setText(R.string.gsm_only);
+                content = (TextView) findViewById(R.id.sim_operator_id);
+                content.setText(R.string.gsm_only);
+                content = (TextView) findViewById(R.id.sim_operator_name);
+                content.setText(R.string.gsm_only);
+                content = (TextView) findViewById(R.id.sim_imsi);
+                content.setText(R.string.gsm_only);
+                content = (TextView) findViewById(R.id.sim_serial);
+                content.setText(R.string.gsm_only);
+            }
 
-        setNotification();
+            int netID = mAimsicdService.getNetID(true);
+            content = (TextView) findViewById(R.id.device_type);
+            content.setText(mAimsicdService.getPhoneType(false));
+            content = (TextView) findViewById(R.id.device_imei);
+            content.setText(mAimsicdService.getIMEI(false));
+            content = (TextView) findViewById(R.id.device_version);
+            content.setText(mAimsicdService.getIMEIv(false));
+            content = (TextView) findViewById(R.id.device_number);
+            content.setText(mAimsicdService.getPhoneNumber(false));
+            content = (TextView) findViewById(R.id.network_name);
+            content.setText(mAimsicdService.getNetworkName(false));
+            content = (TextView) findViewById(R.id.network_code);
+            content.setText(mAimsicdService.getSmmcMcc(false));
+            content = (TextView) findViewById(R.id.network_type);
+            content.setText(mAimsicdService.getNetworkTypeName());
+            content = (TextView) findViewById(R.id.network_lac);
+            content.setText(mAimsicdService.getLAC(false));
+            content = (TextView) findViewById(R.id.network_cellid);
+            content.setText(mAimsicdService.getCellId(false));
+
+            content = (TextView) findViewById(R.id.data_activity);
+            content.setText(mAimsicdService.getActivityDesc(netID));
+            content = (TextView) findViewById(R.id.data_status);
+            content.setText(mAimsicdService.getStateDesc(netID));
+
+            Log.i(TAG, "**** AIMSICD ****");
+            Log.i(TAG, "Device type   : " + mAimsicdService.getPhoneType(false));
+            Log.i(TAG, "Device IMEI   : " + mAimsicdService.getIMEI(false));
+            Log.i(TAG, "Device version: " + mAimsicdService.getIMEIv(false));
+            Log.i(TAG, "Device num    : " + mAimsicdService.getPhoneNumber(false));
+            Log.i(TAG, "Network type  : " + mAimsicdService.getNetworkTypeName());
+            Log.i(TAG, "Network CellID: " + mAimsicdService.getCellId(false));
+            Log.i(TAG, "Network LAC   : " + mAimsicdService.getLAC(false));
+            Log.i(TAG, "Network code  : " + mAimsicdService.getSmmcMcc(false));
+            Log.i(TAG, "Network name  : " + mAimsicdService.getNetworkName(false));
+            mDisplayCurrent = true;
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mDisplayCurrent = false;
     }
 
     @Override
@@ -115,7 +207,7 @@ public class AIMSICD extends Activity {
         MenuItem mTrackSignal = menu.findItem(R.id.track_signal);
         MenuItem mTrackLocation = menu.findItem(R.id.track_location);
 
-        if (mDevice.isTrackingCell()) {
+        if (isTrackingCell()) {
             mTrackCell.setTitle(R.string.track_cell);
             mTrackCell.setIcon(R.drawable.track_cell);
         } else {
@@ -123,14 +215,14 @@ public class AIMSICD extends Activity {
             mTrackCell.setIcon(R.drawable.untrack_cell);
         }
 
-        if (mDevice.isTrackingSignal()) {
+        if (isTrackingSignal()) {
             mTrackSignal.setTitle(R.string.track_signal);
             mTrackSignal.setIcon(R.drawable.ic_action_network_cell);
         } else {
             mTrackSignal.setTitle(R.string.untrack_signal);
             mTrackSignal.setIcon(R.drawable.ic_action_network_cell_not_tracked);
         }
-        if (mDevice.isTrackingLocation()) {
+        if (isTrackingLocation()) {
             mTrackLocation.setTitle(R.string.track_location);
             mTrackLocation.setIcon(R.drawable.ic_action_location_found);
         } else {
@@ -145,19 +237,19 @@ public class AIMSICD extends Activity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.track_cell:
-                mDevice.trackcell();
+                trackcell();
                 if (Build.VERSION.SDK_INT > 11) {
                     onPrepareOptionsMenu(mMenu);
                 }
                 return true;
             case R.id.track_signal:
-                mDevice.tracksignal();
+                tracksignal();
                 if (Build.VERSION.SDK_INT > 11) {
                     onPrepareOptionsMenu(mMenu);
                 }
                 return true;
             case R.id.track_location:
-                mDevice.tracklocation();
+                tracklocation();
                 if (Build.VERSION.SDK_INT > 11) {
                     onPrepareOptionsMenu(mMenu);
                 }
@@ -166,7 +258,7 @@ public class AIMSICD extends Activity {
                 showmap();
                 return true;
             case R.id.export_database:
-                mDevice.getDbHelper().exportDB();
+                dbHelper.exportDB();
                 return true;
             case R.id.at_injector:
                 Intent intent = new Intent(this, ATRilHook.class);
@@ -197,71 +289,211 @@ public class AIMSICD extends Activity {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        cancelNotification();
-        super.onDestroy();
-    }
-
-    /**
-     * Set or modify the Notification
-     */
-    private void setNotification() {
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(mContext)
-                        .setSmallIcon(R.drawable.iconbn)
-                        .setContentTitle(mContext.getResources().getString(R.string.app_name))
-                        .setContentText("Phone Type " + mDevice.getPhoneType(false))
-                        .setOngoing(true)
-                        .setAutoCancel(false);
-
-        Intent notificationIntent = new Intent(this, AIMSICD.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(
-                this, 0, notificationIntent, 0);
-
-        mBuilder.setContentIntent(contentIntent);
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(mID, mBuilder.build());
-    }
-
-    private void cancelNotification() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(
-                NOTIFICATION_SERVICE);
-        if (notificationManager != null) {
-            notificationManager.cancel(mID);
-        }
-    }
-
     /**
      * Show the Map Viewer Activity
      */
-    private final void showmap() {
+    private void showmap() {
         Intent myIntent = new Intent(this, MapViewer.class);
         startActivity(myIntent);
     }
 
-    /**
-     * Returns the device instance
-     */
-    public Device getDevice() {
-        return mDevice;
+    public void tracksignal() {
+        if (TrackingSignal) {
+            tm.listen(mSignalListenerStrength, PhoneStateListener.LISTEN_NONE);
+            Helpers.msgShort(mContext, "Stopped tracking signal strength");
+            TrackingSignal = false;
+            mAimsicdService.mSignalInfo = 0;
+        } else {
+            tm.listen(mSignalListenerStrength, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+            Helpers.msgShort(mContext, "Tracking signal strength");
+            TrackingSignal = true;
+        }
     }
 
-    /**
-     * Receives a response from Location Services Settings if the user agreed to enable them.
-     * If activity returns that the user made a valid selection then enable Location Tracking
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == mDevice.START_LOCATION_SERVICES) {
-            // Make sure the request was successful
-            if (resultCode == Activity.RESULT_OK) {
-                // Location Services were enabled attempt to enable Location Tracking
-                mDevice.tracklocation();
+    public void trackcell() {
+        if (TrackingCell) {
+            tm.listen(mSignalListenerLocation, PhoneStateListener.LISTEN_NONE);
+            Helpers.msgShort(mContext, "Stopped tracking cell information");
+            TrackingCell = false;
+            mAimsicdService.mCellInfo = "[0,0]|nn|nn|";
+        } else {
+            tm.listen(mSignalListenerLocation, PhoneStateListener.LISTEN_CELL_LOCATION);
+            Helpers.msgShort(mContext, "Tracking cell information");
+            TrackingCell = true;
+        }
+    }
+
+    public void tracklocation() {
+        if (TrackingLocation) {
+            lm.removeUpdates(mLocationListener);
+            Helpers.msgShort(mContext, "Stopped tracking location");
+            TrackingLocation = false;
+            mAimsicdService.mLongitude = 0.0;
+            mAimsicdService.mLatitude = 0.0;
+        } else {
+            if (lm != null) {
+                Log.i(TAG, "LocationManager already existed");
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+                Helpers.msgShort(mContext, "Tracking location");
+                TrackingLocation = true;
+            } else {
+                Log.i(TAG, "LocationManager did not existed");
+                lm = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+                if (lm != null) {
+                    if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        Log.i(TAG, "LocationManager created");
+                        mLocationListener = new MyLocationListener();
+                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+                        Helpers.msgShort(mContext, "Tracking location");
+                        TrackingLocation = true;
+                    } else {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setMessage(R.string.location_error_message)
+                                .setTitle(R.string.location_error_title);
+                        builder.create().show();
+                    }
+                }
             }
         }
+    }
+
+    private PhoneStateListener mSignalListenerLocation = new PhoneStateListener() {
+        public void onCellLocationChanged(CellLocation location) {
+            mAimsicdService.mNetID = mAimsicdService.getNetID(true);
+            mAimsicdService.mNetType = tm.getNetworkTypeName();
+
+            int dataActivityType = tm.getDataActivity();
+            String dataActivity = "un";
+            switch (dataActivityType) {
+                case TelephonyManager.DATA_ACTIVITY_NONE:
+                    dataActivity = "No";
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_IN:
+                    dataActivity = "In";
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_OUT:
+                    dataActivity = "Ou";
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_INOUT:
+                    dataActivity = "IO";
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_DORMANT:
+                    dataActivity = "Do";
+                    break;
+            }
+
+            int dataType = tm.getDataState();
+            String dataState = "un";
+            switch (dataType) {
+                case TelephonyManager.DATA_DISCONNECTED:
+                    dataState = "Di";
+                    break;
+                case TelephonyManager.DATA_CONNECTING:
+                    dataState = "Ct";
+                    break;
+                case TelephonyManager.DATA_CONNECTED:
+                    dataState = "Cd";
+                    break;
+                case TelephonyManager.DATA_SUSPENDED:
+                    dataState = "Su";
+                    break;
+            }
+
+            switch (mAimsicdService.mPhoneID) {
+                case TelephonyManager.PHONE_TYPE_GSM:
+                    GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
+                    if (gsmCellLocation != null) {
+                        mAimsicdService.mCellInfo = gsmCellLocation.toString() + dataActivity + "|"
+                                + dataState + "|" + mAimsicdService.mNetType + "|";
+                        mAimsicdService.mLacID = gsmCellLocation.getLac();
+                        mAimsicdService.mCellID = gsmCellLocation.getCid();
+                        dbHelper.open();
+                        if (isTrackingCell() && !dbHelper.cellExists(mAimsicdService.mCellID)){
+                            mAimsicdService.mSimCountry = mAimsicdService.getSimCountry(true);
+                            mAimsicdService.mSimOperator = mAimsicdService.getSimOperator(true);
+                            mAimsicdService.mSimOperatorName = mAimsicdService.getSimOperatorName(true);
+                            dbHelper.insertCell(mAimsicdService.mLacID, mAimsicdService.mCellID,
+                                    mAimsicdService.mNetID, mAimsicdService.mLatitude,
+                                    mAimsicdService.mLongitude, mAimsicdService.mSignalInfo,
+                                    mAimsicdService.mCellInfo, mAimsicdService.mSimCountry,
+                                    mAimsicdService.mSimOperator, mAimsicdService.mSimOperatorName);
+                        }
+                    }
+                    break;
+                case TelephonyManager.PHONE_TYPE_CDMA:
+                    CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
+                    if (cdmaCellLocation != null) {
+                        mAimsicdService.mCellInfo = cdmaCellLocation.toString() + dataActivity
+                                + "|" + dataState + "|" + mAimsicdService.mNetType + "|";
+                        mAimsicdService.mLacID = cdmaCellLocation.getNetworkId();
+                        mAimsicdService.mCellID = cdmaCellLocation.getBaseStationId();
+                        if (isTrackingCell() && !dbHelper.cellExists(mAimsicdService.mCellID)){
+                            mAimsicdService.mSimCountry = mAimsicdService.getSimCountry(true);
+                            mAimsicdService.mSimOperator = mAimsicdService.getSimOperator(true);
+                            mAimsicdService.mSimOperatorName = mAimsicdService.getNetworkName(true);
+                        }
+                    }
+            }
+
+            if (TrackingCell && !dbHelper.cellExists(mAimsicdService.mCellID)) {
+                dbHelper.insertCell(mAimsicdService.mLacID, mAimsicdService.mCellID,
+                        mAimsicdService.mNetID, mAimsicdService.mLatitude,
+                        mAimsicdService.mLongitude, mAimsicdService.mSignalInfo,
+                        mAimsicdService.mCellInfo, mAimsicdService.mSimCountry,
+                        mAimsicdService.mSimOperator, mAimsicdService.mSimOperatorName);
+            }
+
+
+        }
+    };
+
+    public class MyLocationListener implements LocationListener {
+        @Override
+        public void onLocationChanged(Location loc) {
+            if (loc != null) {
+                mAimsicdService.mLongitude = loc.getLongitude();
+                mAimsicdService.mLatitude = loc.getLatitude();
+            }
+            if (TrackingLocation) {
+                dbHelper.insertLocation(mAimsicdService.mLacID, mAimsicdService.mCellID,
+                        mAimsicdService.mNetID, mAimsicdService.mLatitude,
+                        mAimsicdService.mLongitude, mAimsicdService.mSignalInfo,
+                        mAimsicdService.mCellInfo);
+            }
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status,
+                Bundle extras) {
+            // TODO Auto-generated method stub
+        }
+    }
+
+    public Boolean isTrackingSignal() {
+        return TrackingSignal;
+    }
+
+    public Boolean isTrackingCell() {
+        return TrackingCell;
+    }
+
+    public Boolean isTrackingLocation() {
+        return TrackingLocation;
+    }
+
+
+    public AIMSICDDbAdapter getDbHelper() {
+        return dbHelper;
     }
 
 }

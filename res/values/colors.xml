@@ -17,16 +17,10 @@
     <color name="white">#ffffffff</color>
     <color name="off_white">#ffdedede</color>
     <color name="black">#ff000000</color>
-    <color name="grid_lines">#22ffffff</color>
-    <color name="cb">#88bbffff</color>
-    <color name="freq_hl">#2000ddff</color>
-    <color name="freq_hl2">#4033b5e5</color>
-    <color name="eq_red">#80ff0000</color>
-    <color name="eq_yellow">#80f0ff00</color>
-    <color name="eq_holo_bright">#8000ddff</color>
-    <color name="eq_holo_blue">#8033b5e5</color>
-    <color name="eq_holo_dark">#800099cc</color>
-    <color name="cb_shader">#ffccffff</color>
+    <color name="light_blue">#ffccffff</color>
     <color name="cb_shader_alpha">#44ccffff</color>
     <color name="action_bar_color">#ff0d0d0d</color>
+    <color name="green_text">#00FF00</color>
+    <color name="medium_blue">#ff33B5E5</color>
+
 </resources> 
