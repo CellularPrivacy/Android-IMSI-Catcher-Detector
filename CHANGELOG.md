@@ -7,6 +7,7 @@
 * Updated Credits to reflect latest contributions (please give me a hint if I missed someone)
 * Removed folder 'MERGESOURCE' to clean up unused code and avoid confusion
 * Created new file: [SOURCES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/SOURCES). Please actively use it. Know where your code comes from.
+* Removed TODO and created [WANTED_FEATURES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/WANTED_FEATURES). Hit us with your ideas there!
 
 #### 06.04.2014
 
@@ -65,7 +66,7 @@
 * Mike Kuketz of the [Kuketz IT-Security Blog](http://www.kuketz-blog.de/) confirms article in the works about our project
 
 #### 11.01.2014
-* Creation of folder '[MERGESOURCE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE)' for source code of apps to be added to 'AIMSICD'
+* Creation of folder 'MERGESOURCE' for source code of apps to be added to 'AIMSICD'
 * Added source code of app '[RawPhone](https://play.google.com/store/apps/details?id=com.jofrepalau.rawphone)' to be used in the base of our own app
 
 #### 23.11.2013
