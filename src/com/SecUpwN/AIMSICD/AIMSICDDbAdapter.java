@@ -29,11 +29,11 @@ public class AIMSICDDbAdapter {
     private final Context mContext;
 
     public AIMSICDDbAdapter(Context context) {
-        this.mContext = context;
+        mContext = context;
+        mDbHelper = new DbHelper(mContext);
     }
 
     public AIMSICDDbAdapter open() throws SQLException {
-        mDbHelper = new DbHelper(mContext);
         mDb = mDbHelper.getWritableDatabase();
         return this;
     }
