@@ -44,6 +44,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
@@ -60,6 +62,7 @@ import com.SecUpwN.AIMSICD.R;
 public class AimsicdService extends Service {
 
     private final String TAG = "AIMSICD_Service";
+    public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD";
 
     //TODO: Clean this mess up!!
     private final AimscidBinder mBinder = new AimscidBinder();
@@ -69,6 +72,7 @@ public class AimsicdService extends Service {
     public int mNetID = -1;
     public int mLacID = -1;
     public int mCellID = -1;
+    public int mSystemStatus = 10;
     public double mLongitude;
     public double mLatitude;
     public String mNetType = "";
@@ -125,7 +129,7 @@ public class AimsicdService extends Service {
 
         //Network type
         mNetID = getNetID(true);
-        mNetType = tm.getNetworkTypeName();
+        mNetType = getNetworkTypeName(mNetID, true);
 
         int mDataActivity = tm.getDataActivity();
         mDataActivityType = getActivityDesc(mDataActivity);
@@ -254,9 +258,49 @@ public class AimsicdService extends Service {
         return mMmcmcc;
     }
 
-    public String getNetworkTypeName() {
-        return tm.getNetworkTypeName();
+    public String getNetworkTypeName(int netID, boolean force) {
+        if (mNetType.isEmpty() || force) {
+            switch (netID) {
+                case TelephonyManager.NETWORK_TYPE_UNKNOWN:
+                    mNetType = "Unknown";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_GPRS:
+                    mNetType = "GPRS";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_EDGE:
+                    mNetType = "EDGE";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_UMTS:
+                    mNetType = "UMTS";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_HSDPA:
+                    mNetType = "HDSPA";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_HSUPA:
+                    mNetType = "HSUPA";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_HSPA:
+                    mNetType = "HSPA";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_CDMA:
+                    mNetType = "CDMA";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                    mNetType = "EVDO_0";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                    mNetType = "EVDO_A";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_1xRTT:
+                    mNetType = "1xRTT";
+                    break;
+                default:
+                    mNetType = "Unknown";
+                    break;
+            }
+        }
 
+        return mNetType;
     }
 
     public int getNetID(boolean force) {
@@ -333,17 +377,91 @@ public class AimsicdService extends Service {
 
     /**
      * Set or modify the Notification
+     *
+     * Uses mSystemStatus int for Alert Level
+     * 10 - Idle
+     * 20 - Good
+     * 30 - Alarm
      */
     public void setNotification() {
         Intent notificationIntent = new Intent(this, AIMSICD.class);
         PendingIntent contentIntent = PendingIntent.getActivity(
                 this, 0, notificationIntent, 0);
 
+        String tickerText;
+        String contentText = "Phone Type " + getPhoneType(false);
+
+        SharedPreferences prefSettings = getSharedPreferences(
+                SHARED_PREFERENCES_BASENAME + "_preferences", 0);
+        int iconType = Integer.parseInt(prefSettings.getString(
+                "pref_ui_icons", "1"));
+
+        //TODO: Work out a better method for this mess
+        iconType += mSystemStatus;
+        int icon;
+        switch (iconType) {
+            case 11:
+                icon = R.drawable.flat_idle;
+                tickerText = getResources().getString(R.string.app_name_short)
+                        + " - Status: Idle";
+                break;
+            case 12:
+                icon = R.drawable.sense_idle;
+                tickerText = getResources().getString(R.string.app_name_short)
+                        + " - Status: Idle";
+                break;
+            case 13:
+                icon = R.drawable.white_idle;
+                tickerText = getResources().getString(R.string.app_name_short)
+                        + " - Status: Idle";
+                break;
+            case 21:
+                icon = R.drawable.flat_good;
+                tickerText = getResources().getString(R.string.app_name_short)
+                        + " - Status: Good No Threats Detected";
+                break;
+            case 22:
+                icon = R.drawable.sense_good;
+                tickerText = getResources().getString(R.string.app_name_short)
+                        + " - Status: Good No Threats Detected";
+                break;
+            case 23:
+                icon = R.drawable.white_good;
+                tickerText = getResources().getString(R.string.app_name_short)
+                        + " - Status: Good No Threats Detected";
+                break;
+            case 31:
+                icon = R.drawable.flat_alarm;
+                tickerText = getResources().getString(R.string.app_name_short)
+                        + " - ALERT!! Threat Detected";
+                contentText = "ALERT!! Threat Detected";
+                break;
+            case 32:
+                icon = R.drawable.sense_alarm;
+                tickerText = getResources().getString(R.string.app_name_short)
+                        + " - ALERT!! Threat Detected";
+                contentText = "ALERT!! Threat Detected";
+                break;
+            case 33:
+                icon = R.drawable.white_alarm;
+                tickerText = getResources().getString(R.string.app_name_short)
+                        + " - ALERT!! Threat Detected";
+                contentText = "ALERT!! Threat Detected";
+                break;
+            default:
+                icon = R.drawable.sense_idle;
+                tickerText = getResources().getString(R.string.app_name);
+                break;
+        }
+
+
+
         Notification mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.iconbn)
+                        .setSmallIcon(icon)
+                        .setTicker(tickerText)
                         .setContentTitle(this.getResources().getString(R.string.app_name))
-                        .setContentText("Phone Type " + getPhoneType(false))
+                        .setContentText(contentText)
                         .setOngoing(true)
                         .setAutoCancel(false)
                         .setContentIntent(contentIntent)
@@ -372,7 +490,7 @@ public class AimsicdService extends Service {
     public void startTracking() {
 
         /* Check if it is a CDMA phone */
-        if (tm.getPhoneType() != TelephonyManager.PHONE_TYPE_CDMA) {
+        if (getPhoneID() != TelephonyManager.PHONE_TYPE_CDMA) {
             //tv1.setText("This application can detect a femtocell on a CDMA phone only.");
             return;
         }
@@ -410,8 +528,6 @@ public class AimsicdService extends Service {
         /* Get International Roaming indicator
          * if indicator is not 0 return false
          */
-
-        //TODO
 
         /* Get the radio technology */
         int networkType = getNetID(true);

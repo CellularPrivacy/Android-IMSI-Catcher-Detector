@@ -22,6 +22,9 @@ import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.preference.PreferenceManager;
 import android.content.ServiceConnection;
 import android.location.Location;
 import android.location.LocationListener;
@@ -31,6 +34,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
+import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
@@ -43,7 +47,7 @@ import android.widget.Toast;
 import com.SecUpwN.AIMSICD.cmdprocessor.Helpers;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
-public class AIMSICD extends Activity {
+public class AIMSICD extends Activity implements OnSharedPreferenceChangeListener{
 
     private final String TAG = "AIMSICD";
 
@@ -53,7 +57,6 @@ public class AIMSICD extends Activity {
     private Menu mMenu;
     private boolean mBound;
     private boolean mDisplayCurrent;
-    public PhoneStateListener mSignalListenerStrength;
     public TelephonyManager tm;
     public LocationManager lm;
     public LocationListener mLocationListener;
@@ -64,6 +67,9 @@ public class AIMSICD extends Activity {
     private boolean TrackingLocation;
 
     private AimsicdService mAimsicdService;
+
+    private SharedPreferences prefs;
+    public static final String KEY_UI_ICONS = "pref_ui_icons";
 
     //Back press to exit timer
     private long mLastPress = 0;
@@ -84,6 +90,8 @@ public class AIMSICD extends Activity {
 
         // Bind to LocalService
         Intent intent = new Intent(this, AimsicdService.class);
+        //Start Service before binding to keep it resident when activity is destroyed
+        startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -118,8 +126,13 @@ public class AIMSICD extends Activity {
     public void onResume() {
         super.onResume();
         tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        //Shared Preferences
+        prefs = getSharedPreferences(
+                SHARED_PREFERENCES_BASENAME + "_preferences", 0);
+        prefs.registerOnSharedPreferenceChangeListener(this);
         if (!mDisplayCurrent)
             updateUI();
+
     }
 
     private void updateUI() {
@@ -161,7 +174,7 @@ public class AIMSICD extends Activity {
             content = (TextView) findViewById(R.id.network_code);
             content.setText(mAimsicdService.getSmmcMcc(false));
             content = (TextView) findViewById(R.id.network_type);
-            content.setText(mAimsicdService.getNetworkTypeName());
+            content.setText(mAimsicdService.getNetworkTypeName(netID, false));
             content = (TextView) findViewById(R.id.network_lac);
             content.setText(mAimsicdService.getLAC(false));
             content = (TextView) findViewById(R.id.network_cellid);
@@ -177,7 +190,7 @@ public class AIMSICD extends Activity {
             Log.i(TAG, "Device IMEI   : " + mAimsicdService.getIMEI(false));
             Log.i(TAG, "Device version: " + mAimsicdService.getIMEIv(false));
             Log.i(TAG, "Device num    : " + mAimsicdService.getPhoneNumber(false));
-            Log.i(TAG, "Network type  : " + mAimsicdService.getNetworkTypeName());
+            Log.i(TAG, "Network type  : " + mAimsicdService.getNetworkTypeName(netID, false));
             Log.i(TAG, "Network CellID: " + mAimsicdService.getCellId(false));
             Log.i(TAG, "Network LAC   : " + mAimsicdService.getLAC(false));
             Log.i(TAG, "Network code  : " + mAimsicdService.getSmmcMcc(false));
@@ -190,6 +203,7 @@ public class AIMSICD extends Activity {
     public void onPause() {
         super.onPause();
         mDisplayCurrent = false;
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -257,12 +271,12 @@ public class AIMSICD extends Activity {
             case R.id.show_map:
                 showmap();
                 return true;
+            case R.id.preferences:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.export_database:
                 dbHelper.exportDB();
-                return true;
-            case R.id.at_injector:
-                Intent intent = new Intent(this, ATRilHook.class);
-                startActivity(intent);
                 return true;
             case R.id.app_exit:
                 finish();
@@ -312,12 +326,12 @@ public class AIMSICD extends Activity {
 
     public void trackcell() {
         if (TrackingCell) {
-            tm.listen(mSignalListenerLocation, PhoneStateListener.LISTEN_NONE);
+            tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
             Helpers.msgShort(mContext, "Stopped tracking cell information");
             TrackingCell = false;
             mAimsicdService.mCellInfo = "[0,0]|nn|nn|";
         } else {
-            tm.listen(mSignalListenerLocation, PhoneStateListener.LISTEN_CELL_LOCATION);
+            tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_CELL_LOCATION);
             Helpers.msgShort(mContext, "Tracking cell information");
             TrackingCell = true;
         }
@@ -357,10 +371,32 @@ public class AIMSICD extends Activity {
         }
     }
 
-    private PhoneStateListener mSignalListenerLocation = new PhoneStateListener() {
+    private PhoneStateListener mSignalListenerStrength = new PhoneStateListener() {
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            switch (mAimsicdService.mPhoneID) {
+                case TelephonyManager.PHONE_TYPE_GSM:
+                    mAimsicdService.mSignalInfo = signalStrength.getGsmSignalStrength();
+                    break;
+                case TelephonyManager.PHONE_TYPE_CDMA:
+                    mAimsicdService.mSignalInfo = signalStrength.getCdmaDbm();
+                    break;
+                default:
+                    mAimsicdService.mSignalInfo = 0;
+            }
+
+            if (TrackingSignal) {
+                dbHelper.insertSignal(mAimsicdService.mLacID,mAimsicdService.mCellID,
+                        mAimsicdService.mNetID, mAimsicdService.mLatitude,
+                        mAimsicdService.mLongitude,mAimsicdService.mSignalInfo,
+                        mAimsicdService.mCellInfo);
+            }
+        }
+    };
+
+    private PhoneStateListener mCellSignalListener = new PhoneStateListener() {
         public void onCellLocationChanged(CellLocation location) {
             mAimsicdService.mNetID = mAimsicdService.getNetID(true);
-            mAimsicdService.mNetType = tm.getNetworkTypeName();
+            mAimsicdService.mNetType = mAimsicdService.getNetworkTypeName(mAimsicdService.mNetID, true);
 
             int dataActivityType = tm.getDataActivity();
             String dataActivity = "un";
@@ -442,12 +478,25 @@ public class AIMSICD extends Activity {
                         mAimsicdService.mCellInfo, mAimsicdService.mSimCountry,
                         mAimsicdService.mSimOperator, mAimsicdService.mSimOperatorName);
             }
+        }
 
-
+        //Added Signal Strength to Cell Location Listener to ensure accurate signal strength
+        //is added to the Cell Location database record
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            switch (mAimsicdService.mPhoneID) {
+                case TelephonyManager.PHONE_TYPE_GSM:
+                    mAimsicdService.mSignalInfo = signalStrength.getGsmSignalStrength();
+                    break;
+                case TelephonyManager.PHONE_TYPE_CDMA:
+                    mAimsicdService.mSignalInfo = signalStrength.getCdmaDbm();
+                    break;
+                default:
+                    mAimsicdService.mSignalInfo = 0;
+            }
         }
     };
 
-    public class MyLocationListener implements LocationListener {
+    private class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location loc) {
             if (loc != null) {
@@ -491,9 +540,15 @@ public class AIMSICD extends Activity {
         return TrackingLocation;
     }
 
-
     public AIMSICDDbAdapter getDbHelper() {
         return dbHelper;
+    }
+
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(KEY_UI_ICONS)) {
+            //Update Notification to display selected icon type
+            mAimsicdService.setNotification();
+        }
     }
 
 }
