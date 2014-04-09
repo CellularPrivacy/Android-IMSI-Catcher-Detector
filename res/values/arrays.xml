@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_ui_icons_entries">
+        <item>"Flat"</item>
+        <item>"Sense"</item>
+        <item>"White"</item>
+    </string-array>
+
+    <string-array name="pref_ui_icons_values">
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
+    </string-array>
+
+    <array name="pref_ui_icon_display">
+        <item>@drawable/flat_good</item>
+        <item>@drawable/sense_good</item>
+        <item>@drawable/white_good</item>
+    </array>
+
+</resources>
