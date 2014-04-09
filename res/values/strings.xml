@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name_short">AIMSICD</string>
-    <string name="app_name">Android IMSI Catcher Detector</string>
+    <string name="app_name">Android IMSI-Catcher Detector</string>
     <string name="strength">Signal strength</string>
     <string name="quit">Quit</string>
     <string name="text_ok">OK</string>
@@ -30,7 +30,7 @@
     <string name="untrack_signal">Untrack Signal</string>
     <string name="show_map">Show Map</string>
     <string name="export_database">Export Database tables</string>
-    <string name="at_ril_injection">AT Command Injection</string>
+    <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit</string>
 
     <!-- MAIN LAYOUT -->
@@ -54,21 +54,22 @@
     <string name="data_activity">Data Activity:</string>
     <string name="data_status">Data Status:</string>
 
-
-
-    <!-- Location Helper -->
+    <!-- LOCATION HELPER -->
     <string name="location_error_title">Location Services Disabled</string>
     <string name="location_error_message">You cannot track GPS data without enabling Location Services.</string>
 
-    <!-- AT Injection Activity -->
-    <string name="testing_RIL_OEMHook">RIL OEM Hook Test</string>
-    <string name="ril_oem_choose">Choose a RIL OEM Hook API to test:</string>
-    <string name="radio_api1">CRSM - RilStrings</string>
-    <string name="radio_api2">API 2 (datalen=1)</string>
-    <string name="radio_api3">API 3 (datalen=6)</string>
-    <string name="radio_api4">API 4 Type command :</string>
-    <string name="radio_api5">Ciphering Indicator - RilRAW</string>
-    <string name="radio_api6">Ciphering Indicator - ServiceMode</string>
-    <string name="radio_run">RUN</string>
-    <string name="ril_oem_response">Module response:</string>
+    <!-- PREFERENCES -->
+    <string name="pref_system_title">System Settings</string>
+    <string name="pref_autostart_title">Auto Start</string>
+    <string name="pref_autostart_summ">Automatically start service on boot</string>
+    <string name="pref_protection_title">Protection Settings</string>
+    <string name="pref_femto_title">FemtoCell</string>
+    <string name="pref_femto_summ">FemtoCell Detection (CDMA Phones ONLY)</string>
+    <string name="pref_femto_action_title">FemtoCell Protection</string>
+    <string name="pref_femto_action_summ">Enforce Airplane Mode when FemtoCell detected</string>
+    <string name="pref_ui_title">Interface Settings</string>
+    <string name="pref_ui_icons_title">Icons</string>
+    <string name="pref_ui_icons_summ">Icon Theme Selection</string>
+
+
 </resources>

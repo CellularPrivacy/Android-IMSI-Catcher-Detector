@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
-          android:versionName="0.1.1"
-          android:versionCode="3"
-          android:sharedUserId="android.uid.phone">
+          android:versionName="0.1.5"
+          android:versionCode="5">
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -15,9 +14,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
-        android:icon="@drawable/icon"
+        android:icon="@drawable/sense_alarm"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:allowBackup="false">
@@ -26,7 +26,6 @@
         <activity
             android:name=".AIMSICD"
             android:label="@string/app_name_short"
-            android:process="com.android.phone"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
@@ -39,7 +38,6 @@
 
         <service
             android:name=".service.AimsicdService"
-            android:process="com.android.phone"
             android:enabled="true"
             android:exported="false">
         </service>
@@ -60,15 +58,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".AIMSICD"/>
         </activity>
+
         <activity
-            android:name=".ATRilHook"
-            android:label="@string/at_ril_injection"
+            android:name=".SettingsActivity"
+            android:label="@string/preferences"
+            android:icon="@drawable/ic_action_settings"
             android:parentActivityName=".AIMSICD"
-            android:process="com.android.phone"
             android:exported="true">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".AIMSICD"/>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
 
     </application>
