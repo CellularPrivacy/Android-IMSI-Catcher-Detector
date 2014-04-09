@@ -1,6 +1,14 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 09.04.2014
+
+* Improvement: Universal Compatibility achieved via the [Universal Compatibility Commit](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/24)!
+* Reduced functionality  of AIMSICD until methods are discovered to issue AT commands.
+* Improvement: AIMSICD now can be installed as user application (no ROOT needed)!
+* Improvement: AIMSICD should now function on any device. We're open for your feedback!
+* Femtocell Detection will be fully implemented for CDMA devices in the next commit by [xLaMbChOpSx](https://github.com/xLaMbChOpSx).
+
 #### 08.04.2014
 
 * Updated Disclaimer to encourage people to talk to us BEFORE hunting our developers
