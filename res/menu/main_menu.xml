@@ -21,9 +21,9 @@
           android:icon="@drawable/ic_action_import_export"
           android:title="@string/export_database"
           android:showAsAction="ifRoom" />
-    <item android:id="@+id/at_injector"
-          android:icon="@drawable/ic_action_computer"
-          android:title="@string/at_ril_injection"
+    <item android:id="@+id/preferences"
+          android:icon="@drawable/ic_action_settings"
+          android:title="@string/preferences"
           android:showAsAction="ifRoom" />
     <item android:id="@+id/app_exit"
           android:icon="@drawable/ic_action_remove"
