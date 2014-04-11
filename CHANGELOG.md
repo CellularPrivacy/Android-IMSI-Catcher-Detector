@@ -1,6 +1,13 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 11.04.2014
+
+* Change: Project changed to Gradle Build System to make use of Android Studio
+* Added: Google Maps API v2 support to enable new features and gain an API Key
+* Fix: Signal strength data is now correctly overlayed on the map as well
+* Fix: Database export corrected and changed to use OpenCV library
+
 #### 09.04.2014
 
 * Improvement: Universal Compatibility achieved via the [Universal Compatibility Commit](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/24)!
