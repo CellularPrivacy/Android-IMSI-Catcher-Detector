@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name_short">AIMSICD</string>
+    <string name="app_name">Android IMSI-Catcher Detector</string>
+    <string name="map_view">AIMSICD Map Viewer</string>
+    <string name="strength">Signal strength</string>
+    <string name="quit">Quit</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="empty"> </string>
+    <string name="gsm_only">GSM Phones Only</string>
+
+    <!-- Mobile Network Types -->
+    <string name="gprs"># GPRS</string>
+    <string name="edge"># EDGE</string>
+    <string name="umts"># UMTS</string>
+    <string name="hsdpa"># HSDPA</string>
+    <string name="hsupa"># HSUPA</string>
+    <string name="hspa"># HSPA</string>
+    <string name="cdma"># CDMA</string>
+    <string name="evo0"># EVO-0</string>
+    <string name="evoA"># EVO-A</string>
+
+    <!-- MENU -->
+    <string name="track_cell">Track Cell Details</string>
+    <string name="untrack_cell">Untrack Cell Details</string>
+    <string name="track_location">Track Location</string>
+    <string name="untrack_location">Untrack Location</string>
+    <string name="track_signal">Track Signal</string>
+    <string name="untrack_signal">Untrack Signal</string>
+    <string name="show_map">Show Map</string>
+    <string name="export_database">Export Database tables</string>
+    <string name="preferences">Preferences</string>
+    <string name="press_once_again_to_exit">Press again to exit</string>
+
+    <!-- MAIN LAYOUT -->
+    <string name="device_info_title">Device Information</string>
+    <string name="gsm_sim_info_title">GSM SIM Information</string>
+    <string name="mobile_data_title">Mobile Data Information</string>
+    <string name="sim_country">SIM Country:</string>
+    <string name="sim_operator_id">SIM Operator ID:</string>
+    <string name="sim_operator_name">SIM Operator Name:</string>
+    <string name="sim_imsi">SIM IMSI:</string>
+    <string name="sim_serial">SIM Serial:</string>
+    <string name="device_type">Type:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">Version:</string>
+    <string name="device_number">Line Number:</string>
+    <string name="network_name">Network Name:</string>
+    <string name="network_code">Network Code:</string>
+    <string name="network_type">Network Type:</string>
+    <string name="network_lac">Network LAC:</string>
+    <string name="network_cellid">Network CellID:</string>
+    <string name="data_activity">Data Activity:</string>
+    <string name="data_status">Data Status:</string>
+
+    <!-- LOCATION HELPER -->
+    <string name="location_error_title">Location Services Disabled</string>
+    <string name="location_error_message">You cannot track GPS data without enabling Location Services.</string>
+
+    <!-- PREFERENCES -->
+    <string name="pref_system_title">System Settings</string>
+    <string name="pref_autostart_title">Auto Start</string>
+    <string name="pref_autostart_summ">Automatically start service on boot</string>
+    <string name="pref_protection_title">Protection Settings</string>
+    <string name="pref_femto_title">FemtoCell</string>
+    <string name="pref_femto_summ">FemtoCell Detection (CDMA Phones ONLY)</string>
+    <string name="pref_femto_action_title">FemtoCell Protection</string>
+    <string name="pref_femto_action_summ">Enforce Airplane Mode when FemtoCell detected</string>
+    <string name="pref_ui_title">Interface Settings</string>
+    <string name="pref_ui_icons_title">Icons</string>
+    <string name="pref_ui_icons_summ">Icon Theme Selection</string>
+
+
+</resources>

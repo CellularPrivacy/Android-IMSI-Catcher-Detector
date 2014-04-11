@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012-2013 The CyanogenMod Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources>
+    <color name="white">#ffffffff</color>
+    <color name="off_white">#ffdedede</color>
+    <color name="black">#ff000000</color>
+    <color name="light_blue">#ffccffff</color>
+    <color name="cb_shader_alpha">#44ccffff</color>
+    <color name="action_bar_color">#ff0d0d0d</color>
+    <color name="green_text">#ff00FF00</color>
+    <color name="medium_blue">#ff33B5E5</color>
+    
+    <!-- MAP COLOURS -->
+    <color name="map_unknown">#fff0f8ff</color>
+    <color name="map_gprs">#ffa9a9a9</color>
+    <color name="map_edge">#ff87cefa</color>
+    <color name="map_umts">#ff7cfc00</color>
+    <color name="map_hsdpa">#ffff6347</color>
+    <color name="map_hsupa">#ffff00ff</color>
+    <color name="map_hspa">#ff238e6b</color>
+    <color name="map_cdma">#ff8a2be2</color>
+    <color name="map_evdo0">#ffff69b4</color>
+    <color name="map_evdoA">#ffffff00</color>
+    <color name="map_1xrtt">#ff7cfc00</color>
+    <color name="map_default">#fff0f8ff</color>
+
+</resources>
