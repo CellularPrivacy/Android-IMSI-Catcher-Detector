@@ -21,8 +21,6 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,7 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
-public class AIMSICD extends Activity implements OnSharedPreferenceChangeListener{
+public class AIMSICD extends Activity {
 
     private final String TAG = "AIMSICD";
 
@@ -49,9 +47,6 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
     private AIMSICDDbAdapter dbHelper;
 
     private AimsicdService mAimsicdService;
-
-    private SharedPreferences prefs;
-    public static final String KEY_UI_ICONS = "pref_ui_icons";
 
     //Back press to exit timer
     private long mLastPress = 0;
@@ -104,10 +99,6 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
     @Override
     public void onResume() {
         super.onResume();
-        //Shared Preferences
-        prefs = getSharedPreferences(
-                SHARED_PREFERENCES_BASENAME + "_preferences", 0);
-        prefs.registerOnSharedPreferenceChangeListener(this);
         if (!mDisplayCurrent)
             updateUI();
 
@@ -181,7 +172,6 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
     public void onPause() {
         super.onPause();
         mDisplayCurrent = false;
-        prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -198,29 +188,40 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
         MenuItem mTrackCell = menu.findItem(R.id.track_cell);
         MenuItem mTrackSignal = menu.findItem(R.id.track_signal);
         MenuItem mTrackLocation = menu.findItem(R.id.track_location);
+        MenuItem mTrackFemtocell = menu.findItem(R.id.track_femtocell);
 
         if (mAimsicdService.TrackingCell) {
-            mTrackCell.setTitle(R.string.track_cell);
+            mTrackCell.setTitle(R.string.untrack_cell);
             mTrackCell.setIcon(R.drawable.track_cell);
         } else {
-            mTrackCell.setTitle(R.string.untrack_cell);
+            mTrackCell.setTitle(R.string.track_cell);
             mTrackCell.setIcon(R.drawable.untrack_cell);
         }
 
         if (mAimsicdService.TrackingSignal) {
-            mTrackSignal.setTitle(R.string.track_signal);
+            mTrackSignal.setTitle(R.string.untrack_signal);
             mTrackSignal.setIcon(R.drawable.ic_action_network_cell);
         } else {
-            mTrackSignal.setTitle(R.string.untrack_signal);
+            mTrackSignal.setTitle(R.string.track_signal);
             mTrackSignal.setIcon(R.drawable.ic_action_network_cell_not_tracked);
         }
+
         if (mAimsicdService.TrackingLocation) {
-            mTrackLocation.setTitle(R.string.track_location);
+            mTrackLocation.setTitle(R.string.untrack_location);
             mTrackLocation.setIcon(R.drawable.ic_action_location_found);
         } else {
-            mTrackLocation.setTitle(R.string.untrack_location);
+            mTrackLocation.setTitle(R.string.track_location);
             mTrackLocation.setIcon(R.drawable.ic_action_location_off);
         }
+
+        if (mAimsicdService.TrackingFemtocell) {
+            mTrackFemtocell.setTitle(R.string.untrack_femtocell);
+            mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
+        } else {
+            mTrackFemtocell.setTitle(R.string.track_femtocell);
+            mTrackSignal.setIcon(R.drawable.ic_action_network_cell_not_tracked);
+        }
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -242,6 +243,12 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
                 return true;
             case R.id.track_location:
                 tracklocation();
+                if (Build.VERSION.SDK_INT > 11) {
+                    onPrepareOptionsMenu(mMenu);
+                }
+                return true;
+            case R.id.track_femtocell:
+                trackFemtocell();
                 if (Build.VERSION.SDK_INT > 11) {
                     onPrepareOptionsMenu(mMenu);
                 }
@@ -313,15 +320,16 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
         }
     }
 
-    public AIMSICD getAimsicd() {
-        return this;
+    public void trackFemtocell() {
+        if (mAimsicdService.TrackingFemtocell) {
+            mAimsicdService.stopTrackingFemto();
+        } else {
+            mAimsicdService.startTrackingFemto();
+        }
     }
 
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(KEY_UI_ICONS)) {
-            //Update Notification to display selected icon type
-            mAimsicdService.setNotification();
-        }
+    public AIMSICD getAimsicd() {
+        return this;
     }
 
 }

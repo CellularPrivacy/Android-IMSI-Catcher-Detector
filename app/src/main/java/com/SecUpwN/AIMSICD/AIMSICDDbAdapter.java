@@ -9,13 +9,8 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
@@ -127,8 +122,8 @@ public class AIMSICDDbAdapter {
      * Returns Signal Strength database contents
      */
     public Cursor getSignalData() {
-        return mDb.query(SIGNAL_TABLE, new String[] {"Net", "Lat", "Lng", "Signal"},
-                "Lat <> 0.0 AND lng <> 0.0",null,null,null,null);
+        return mDb.query(true, SIGNAL_TABLE, new String[] {"Net", "Lat", "Lng", "Signal", "CellID"},
+                "Lat <> 0.0 AND lng <> 0.0",null,null,null,null,null);
     }
 
     /**

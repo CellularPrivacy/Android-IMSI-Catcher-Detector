@@ -8,7 +8,7 @@
     <string name="quit">Quit</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Cancel</string>
-    <string name="empty"> </string>
+    <string name="empty"></string>
     <string name="gsm_only">GSM Phones Only</string>
 
     <!-- Mobile Network Types -->
@@ -29,10 +29,18 @@
     <string name="untrack_location">Untrack Location</string>
     <string name="track_signal">Track Signal</string>
     <string name="untrack_signal">Untrack Signal</string>
+    <string name="track_femtocell">Track Femtocell</string>
+    <string name="untrack_femtocell">Untrack Femtocell</string>
     <string name="show_map">Show Map</string>
     <string name="export_database">Export Database tables</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit</string>
+
+    <!-- MAP VIEWER -->
+    <string name="error_google_play_services_title">Map Viewer Unavailable</string>
+    <string name="error_google_play_services_message">Maps Viewer requires Google Play Services
+        to be installed on your device, you CANNOT continue unless you install Google Play.</string>
+    <string name="map_type">Map Display Type</string>
 
     <!-- MAIN LAYOUT -->
     <string name="device_info_title">Device Information</string>
@@ -62,15 +70,19 @@
     <!-- PREFERENCES -->
     <string name="pref_system_title">System Settings</string>
     <string name="pref_autostart_title">Auto Start</string>
+    <string name="pref_autostart_key">pref_autostart</string>
     <string name="pref_autostart_summ">Automatically start service on boot</string>
     <string name="pref_protection_title">Protection Settings</string>
     <string name="pref_femto_title">FemtoCell</string>
     <string name="pref_femto_summ">FemtoCell Detection (CDMA Phones ONLY)</string>
+    <string name="pref_femto_detection_key">pref_femto_detection</string>
     <string name="pref_femto_action_title">FemtoCell Protection</string>
+    <string name="pref_femto_action_key">pref_femto_action</string>
     <string name="pref_femto_action_summ">Enforce Airplane Mode when FemtoCell detected</string>
     <string name="pref_ui_title">Interface Settings</string>
     <string name="pref_ui_icons_title">Icons</string>
+    <string name="pref_ui_icons_key">pref_ui_icons</string>
     <string name="pref_ui_icons_summ">Icon Theme Selection</string>
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
