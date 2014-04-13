@@ -11,10 +11,9 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        SharedPreferences prefSettings = context.getSharedPreferences(
-                AimsicdService.SHARED_PREFERENCES_BASENAME + "_settings", 0);
-        boolean mAutoStart = prefSettings.getBoolean(
-                "pref_autostart", true);
+        SharedPreferences prefs = context.getSharedPreferences(
+                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        boolean mAutoStart = prefs.getBoolean("pref_autostart", true);
         if (mAutoStart) {
             Log.i("AIMSICD", "System booted starting service.");
             context.startService(new Intent(context, AimsicdService.class));

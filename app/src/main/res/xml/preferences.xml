@@ -6,7 +6,7 @@
         android:title="@string/pref_system_title"
         android:key="pref_key_system_settings">
     <CheckBoxPreference
-        android:key="pref_autostart"
+        android:key="@string/pref_autostart_key"
         android:title="@string/pref_autostart_title"
         android:summary="@string/pref_autostart_summ"
         android:defaultValue="true" />
@@ -16,12 +16,12 @@
         android:title="@string/pref_protection_title"
         android:key="pref_key_protection_settings">
         <CheckBoxPreference
-            android:key="pref_femto_detection"
+            android:key="@string/pref_femto_detection_key"
             android:title="@string/pref_femto_title"
             android:summary="@string/pref_femto_summ"
             android:defaultValue="false" />
         <CheckBoxPreference
-            android:key="pref_femto_action"
+            android:key="@string/pref_femto_action_key"
             android:title="@string/pref_femto_action_title"
             android:summary="@string/pref_femto_action_summ"
             android:defaultValue="false" />
@@ -31,7 +31,7 @@
         android:title="@string/pref_ui_title"
         android:key="pref_key_ui_settings">
         <ListPreference
-            android:key="pref_ui_icons"
+            android:key="@string/pref_ui_icons_key"
             android:title="@string/pref_ui_icons_title"
             android:dialogTitle="@string/pref_ui_icons_summ"
             android:entries="@array/pref_ui_icons_entries"
