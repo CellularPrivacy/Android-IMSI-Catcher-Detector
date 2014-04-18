@@ -5,11 +5,16 @@
     <PreferenceCategory
         android:title="@string/pref_system_title"
         android:key="pref_key_system_settings">
-    <CheckBoxPreference
-        android:key="@string/pref_autostart_key"
-        android:title="@string/pref_autostart_title"
-        android:summary="@string/pref_autostart_summ"
-        android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="@string/pref_autostart_key"
+            android:title="@string/pref_autostart_title"
+            android:summary="@string/pref_autostart_summ"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="@string/pref_killservice_key"
+            android:title="@string/pref_killservice_title"
+            android:summary="@string/pref_killservice_summ"
+            android:defaultValue="false" />
     </PreferenceCategory>
 
     <PreferenceCategory
