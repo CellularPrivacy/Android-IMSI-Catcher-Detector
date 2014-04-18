@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
@@ -13,7 +15,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         SharedPreferences prefs = context.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-        boolean mAutoStart = prefs.getBoolean("pref_autostart", true);
+        final String AUTO_START = context.getString(R.string.pref_autostart_key);
+        boolean mAutoStart = prefs.getBoolean(AUTO_START, false);
         if (mAutoStart) {
             Log.i("AIMSICD", "System booted starting service.");
             context.startService(new Intent(context, AimsicdService.class));
