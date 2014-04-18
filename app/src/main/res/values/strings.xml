@@ -42,15 +42,15 @@
         to be installed on your device, you CANNOT continue unless you install Google Play.</string>
     <string name="map_type">Map Display Type</string>
 
-    <!-- MAIN LAYOUT -->
+    <!-- LAYOUT -->
     <string name="device_info_title">Device Information</string>
-    <string name="gsm_sim_info_title">GSM SIM Information</string>
-    <string name="mobile_data_title">Mobile Data Information</string>
-    <string name="sim_country">SIM Country:</string>
-    <string name="sim_operator_id">SIM Operator ID:</string>
-    <string name="sim_operator_name">SIM Operator Name:</string>
-    <string name="sim_imsi">SIM IMSI:</string>
-    <string name="sim_serial">SIM Serial:</string>
+    <string name="sim_info_title">SIM Information</string>
+    <string name="network_info">Network Information</string>
+    <string name="sim_country">Country:</string>
+    <string name="sim_operator_id">Operator ID:</string>
+    <string name="sim_operator_name">Operator Name:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">Serial:</string>
     <string name="device_type">Type:</string>
     <string name="device_imei">IMEI:</string>
     <string name="device_version">Version:</string>
@@ -62,6 +62,14 @@
     <string name="network_cellid">Network CellID:</string>
     <string name="data_activity">Data Activity:</string>
     <string name="data_status">Data Status:</string>
+    <string name="network_roaming">Roaming:</string>
+
+    <!-- CDMA LAYOUT -->
+    <string name="network_netid">Network ID:</string>
+    <string name="network_sysid">System ID:</string>
+    <string name="network_baseid">Base Station ID:</string>
+    <string name="network_cdma_long">Longitude:</string>
+    <string name="network_cdma_lat">Latitude:</string>
 
     <!-- LOCATION HELPER -->
     <string name="location_error_title">Location Services Disabled</string>
@@ -72,6 +80,9 @@
     <string name="pref_autostart_title">Auto Start</string>
     <string name="pref_autostart_key">pref_autostart</string>
     <string name="pref_autostart_summ">Automatically start service on boot</string>
+    <string name="pref_killservice_title">Disable Persistent Service</string>
+    <string name="pref_killservice_key">pref_kill_service</string>
+    <string name="pref_killservice_summ">Disable the Persistent Service when exiting the application</string>
     <string name="pref_protection_title">Protection Settings</string>
     <string name="pref_femto_title">FemtoCell</string>
     <string name="pref_femto_summ">FemtoCell Detection (CDMA Phones ONLY)</string>

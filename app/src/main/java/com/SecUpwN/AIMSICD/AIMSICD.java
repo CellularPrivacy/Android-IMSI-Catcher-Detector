@@ -22,6 +22,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -30,6 +31,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
@@ -38,12 +42,11 @@ public class AIMSICD extends Activity {
 
     private final String TAG = "AIMSICD";
 
-    public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD";
-
     private final Context mContext = this;
     private Menu mMenu;
     private boolean mBound;
     private boolean mDisplayCurrent;
+    private SharedPreferences prefs;
     private AIMSICDDbAdapter dbHelper;
 
     private AimsicdService mAimsicdService;
@@ -67,8 +70,10 @@ public class AIMSICD extends Activity {
 
         //Create DB Instance
         dbHelper = new AIMSICDDbAdapter(mContext);
-    }
 
+        prefs = mContext.getSharedPreferences(
+                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+    }
 
     @Override
     protected void onDestroy() {
@@ -77,6 +82,13 @@ public class AIMSICD extends Activity {
         if (mBound) {
             unbindService(mConnection);
             mBound = false;
+        }
+
+        final String KEY_KILL_SERVICE = mContext.getString(R.string.pref_killservice_key);
+        boolean killService = prefs.getBoolean(KEY_KILL_SERVICE, false);
+        if (killService) {
+            Intent intent = new Intent(this, AimsicdService.class);
+            stopService(intent);
         }
     }
 
@@ -105,29 +117,49 @@ public class AIMSICD extends Activity {
     }
 
     private void updateUI() {
-        TextView content = (TextView) findViewById(R.id.sim_country);
+        TextView content;
+        TableLayout tableLayout;
+        TableRow tr;
         if (mBound) {
-            if (mAimsicdService.getPhoneID() == TelephonyManager.PHONE_TYPE_GSM) {
-                content.setText(mAimsicdService.getSimCountry(false));
-                content = (TextView) findViewById(R.id.sim_operator_id);
-                content.setText(mAimsicdService.getSimOperator(false));
-                content = (TextView) findViewById(R.id.sim_operator_name);
-                content.setText(mAimsicdService.getSimOperatorName(false));
-                content = (TextView) findViewById(R.id.sim_imsi);
-                content.setText(mAimsicdService.getSimSubs(false));
-                content = (TextView) findViewById(R.id.sim_serial);
-                content.setText(mAimsicdService.getSimSerial(false));
-            } else {
-                content.setText(R.string.gsm_only);
-                content = (TextView) findViewById(R.id.sim_operator_id);
-                content.setText(R.string.gsm_only);
-                content = (TextView) findViewById(R.id.sim_operator_name);
-                content.setText(R.string.gsm_only);
-                content = (TextView) findViewById(R.id.sim_imsi);
-                content.setText(R.string.gsm_only);
-                content = (TextView) findViewById(R.id.sim_serial);
-                content.setText(R.string.gsm_only);
+            switch (mAimsicdService.getPhoneID())
+            {
+                case TelephonyManager.PHONE_TYPE_GSM: {
+                    tableLayout = (TableLayout) findViewById(R.id.cdmaView);
+                    tableLayout.setVisibility(View.INVISIBLE);
+                    tr = (TableRow) findViewById(R.id.gsm_cellid);
+                    tr.setVisibility(View.VISIBLE);
+                    content = (TextView) findViewById(R.id.network_lac);
+                    content.setText(mAimsicdService.getLAC(true));
+                    content = (TextView) findViewById(R.id.network_cellid);
+                    content.setText(mAimsicdService.getCellId());
+                    break;
+                }
+                case TelephonyManager.PHONE_TYPE_CDMA:
+                {
+                    tableLayout = (TableLayout) findViewById(R.id.cdmaView);
+                    tableLayout.setVisibility(View.VISIBLE);
+                    tr = (TableRow) findViewById(R.id.gsm_cellid);
+                    tr.setVisibility(View.INVISIBLE);
+                    content = (TextView) findViewById(R.id.network_netid);
+                    content.setText(mAimsicdService.getLAC(true));
+                    content = (TextView) findViewById(R.id.network_sysid);
+                    content.setText(mAimsicdService.getSID());
+                    content = (TextView) findViewById(R.id.network_baseid);
+                    content.setText(mAimsicdService.getCellId());
+                    break;
+                }
             }
+
+            content = (TextView) findViewById(R.id.sim_country);
+            content.setText(mAimsicdService.getSimCountry(false));
+            content = (TextView) findViewById(R.id.sim_operator_id);
+            content.setText(mAimsicdService.getSimOperator(false));
+            content = (TextView) findViewById(R.id.sim_operator_name);
+            content.setText(mAimsicdService.getSimOperatorName(false));
+            content = (TextView) findViewById(R.id.sim_imsi);
+            content.setText(mAimsicdService.getSimSubs(false));
+            content = (TextView) findViewById(R.id.sim_serial);
+            content.setText(mAimsicdService.getSimSerial(false));
 
             int netID = mAimsicdService.getNetID(true);
             content = (TextView) findViewById(R.id.device_type);
@@ -144,15 +176,13 @@ public class AIMSICD extends Activity {
             content.setText(mAimsicdService.getSmmcMcc(false));
             content = (TextView) findViewById(R.id.network_type);
             content.setText(mAimsicdService.getNetworkTypeName(netID, false));
-            content = (TextView) findViewById(R.id.network_lac);
-            content.setText(mAimsicdService.getLAC(true));
-            content = (TextView) findViewById(R.id.network_cellid);
-            content.setText(mAimsicdService.getCellId(true));
 
             content = (TextView) findViewById(R.id.data_activity);
             content.setText(mAimsicdService.getActivityDesc(netID));
             content = (TextView) findViewById(R.id.data_status);
             content.setText(mAimsicdService.getStateDesc(netID));
+            content = (TextView) findViewById(R.id.network_roaming);
+            content.setText(mAimsicdService.isRoaming());
 
             Log.i(TAG, "**** AIMSICD ****");
             Log.i(TAG, "Device type   : " + mAimsicdService.getPhoneType(false));
@@ -160,10 +190,11 @@ public class AIMSICD extends Activity {
             Log.i(TAG, "Device version: " + mAimsicdService.getIMEIv(false));
             Log.i(TAG, "Device num    : " + mAimsicdService.getPhoneNumber(false));
             Log.i(TAG, "Network type  : " + mAimsicdService.getNetworkTypeName(netID, false));
-            Log.i(TAG, "Network CellID: " + mAimsicdService.getCellId(false));
+            Log.i(TAG, "Network CellID: " + mAimsicdService.getCellId());
             Log.i(TAG, "Network LAC   : " + mAimsicdService.getLAC(false));
             Log.i(TAG, "Network code  : " + mAimsicdService.getSmmcMcc(false));
             Log.i(TAG, "Network name  : " + mAimsicdService.getNetworkName(false));
+            Log.i(TAG, "Roaming       : " + mAimsicdService.isRoaming());
             mDisplayCurrent = true;
         }
     }
