@@ -21,9 +21,8 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -32,26 +31,25 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
-public class AIMSICD extends Activity implements OnSharedPreferenceChangeListener{
+public class AIMSICD extends Activity {
 
     private final String TAG = "AIMSICD";
-
-    public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD";
 
     private final Context mContext = this;
     private Menu mMenu;
     private boolean mBound;
     private boolean mDisplayCurrent;
+    private SharedPreferences prefs;
     private AIMSICDDbAdapter dbHelper;
 
     private AimsicdService mAimsicdService;
-
-    private SharedPreferences prefs;
-    public static final String KEY_UI_ICONS = "pref_ui_icons";
 
     //Back press to exit timer
     private long mLastPress = 0;
@@ -72,8 +70,10 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
 
         //Create DB Instance
         dbHelper = new AIMSICDDbAdapter(mContext);
-    }
 
+        prefs = mContext.getSharedPreferences(
+                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+    }
 
     @Override
     protected void onDestroy() {
@@ -82,6 +82,13 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
         if (mBound) {
             unbindService(mConnection);
             mBound = false;
+        }
+
+        final String KEY_KILL_SERVICE = mContext.getString(R.string.pref_killservice_key);
+        boolean killService = prefs.getBoolean(KEY_KILL_SERVICE, false);
+        if (killService) {
+            Intent intent = new Intent(this, AimsicdService.class);
+            stopService(intent);
         }
     }
 
@@ -104,39 +111,55 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
     @Override
     public void onResume() {
         super.onResume();
-        //Shared Preferences
-        prefs = getSharedPreferences(
-                SHARED_PREFERENCES_BASENAME + "_preferences", 0);
-        prefs.registerOnSharedPreferenceChangeListener(this);
         if (!mDisplayCurrent)
             updateUI();
 
     }
 
     private void updateUI() {
-        TextView content = (TextView) findViewById(R.id.sim_country);
+        TextView content;
+        TableLayout tableLayout;
+        TableRow tr;
         if (mBound) {
-            if (mAimsicdService.getPhoneID() == TelephonyManager.PHONE_TYPE_GSM) {
-                content.setText(mAimsicdService.getSimCountry(false));
-                content = (TextView) findViewById(R.id.sim_operator_id);
-                content.setText(mAimsicdService.getSimOperator(false));
-                content = (TextView) findViewById(R.id.sim_operator_name);
-                content.setText(mAimsicdService.getSimOperatorName(false));
-                content = (TextView) findViewById(R.id.sim_imsi);
-                content.setText(mAimsicdService.getSimSubs(false));
-                content = (TextView) findViewById(R.id.sim_serial);
-                content.setText(mAimsicdService.getSimSerial(false));
-            } else {
-                content.setText(R.string.gsm_only);
-                content = (TextView) findViewById(R.id.sim_operator_id);
-                content.setText(R.string.gsm_only);
-                content = (TextView) findViewById(R.id.sim_operator_name);
-                content.setText(R.string.gsm_only);
-                content = (TextView) findViewById(R.id.sim_imsi);
-                content.setText(R.string.gsm_only);
-                content = (TextView) findViewById(R.id.sim_serial);
-                content.setText(R.string.gsm_only);
+            switch (mAimsicdService.getPhoneID())
+            {
+                case TelephonyManager.PHONE_TYPE_GSM: {
+                    tableLayout = (TableLayout) findViewById(R.id.cdmaView);
+                    tableLayout.setVisibility(View.INVISIBLE);
+                    tr = (TableRow) findViewById(R.id.gsm_cellid);
+                    tr.setVisibility(View.VISIBLE);
+                    content = (TextView) findViewById(R.id.network_lac);
+                    content.setText(mAimsicdService.getLAC(true));
+                    content = (TextView) findViewById(R.id.network_cellid);
+                    content.setText(mAimsicdService.getCellId());
+                    break;
+                }
+                case TelephonyManager.PHONE_TYPE_CDMA:
+                {
+                    tableLayout = (TableLayout) findViewById(R.id.cdmaView);
+                    tableLayout.setVisibility(View.VISIBLE);
+                    tr = (TableRow) findViewById(R.id.gsm_cellid);
+                    tr.setVisibility(View.INVISIBLE);
+                    content = (TextView) findViewById(R.id.network_netid);
+                    content.setText(mAimsicdService.getLAC(true));
+                    content = (TextView) findViewById(R.id.network_sysid);
+                    content.setText(mAimsicdService.getSID());
+                    content = (TextView) findViewById(R.id.network_baseid);
+                    content.setText(mAimsicdService.getCellId());
+                    break;
+                }
             }
+
+            content = (TextView) findViewById(R.id.sim_country);
+            content.setText(mAimsicdService.getSimCountry(false));
+            content = (TextView) findViewById(R.id.sim_operator_id);
+            content.setText(mAimsicdService.getSimOperator(false));
+            content = (TextView) findViewById(R.id.sim_operator_name);
+            content.setText(mAimsicdService.getSimOperatorName(false));
+            content = (TextView) findViewById(R.id.sim_imsi);
+            content.setText(mAimsicdService.getSimSubs(false));
+            content = (TextView) findViewById(R.id.sim_serial);
+            content.setText(mAimsicdService.getSimSerial(false));
 
             int netID = mAimsicdService.getNetID(true);
             content = (TextView) findViewById(R.id.device_type);
@@ -153,15 +176,13 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
             content.setText(mAimsicdService.getSmmcMcc(false));
             content = (TextView) findViewById(R.id.network_type);
             content.setText(mAimsicdService.getNetworkTypeName(netID, false));
-            content = (TextView) findViewById(R.id.network_lac);
-            content.setText(mAimsicdService.getLAC(true));
-            content = (TextView) findViewById(R.id.network_cellid);
-            content.setText(mAimsicdService.getCellId(true));
 
             content = (TextView) findViewById(R.id.data_activity);
             content.setText(mAimsicdService.getActivityDesc(netID));
             content = (TextView) findViewById(R.id.data_status);
             content.setText(mAimsicdService.getStateDesc(netID));
+            content = (TextView) findViewById(R.id.network_roaming);
+            content.setText(mAimsicdService.isRoaming());
 
             Log.i(TAG, "**** AIMSICD ****");
             Log.i(TAG, "Device type   : " + mAimsicdService.getPhoneType(false));
@@ -169,10 +190,11 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
             Log.i(TAG, "Device version: " + mAimsicdService.getIMEIv(false));
             Log.i(TAG, "Device num    : " + mAimsicdService.getPhoneNumber(false));
             Log.i(TAG, "Network type  : " + mAimsicdService.getNetworkTypeName(netID, false));
-            Log.i(TAG, "Network CellID: " + mAimsicdService.getCellId(false));
+            Log.i(TAG, "Network CellID: " + mAimsicdService.getCellId());
             Log.i(TAG, "Network LAC   : " + mAimsicdService.getLAC(false));
             Log.i(TAG, "Network code  : " + mAimsicdService.getSmmcMcc(false));
             Log.i(TAG, "Network name  : " + mAimsicdService.getNetworkName(false));
+            Log.i(TAG, "Roaming       : " + mAimsicdService.isRoaming());
             mDisplayCurrent = true;
         }
     }
@@ -181,7 +203,6 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
     public void onPause() {
         super.onPause();
         mDisplayCurrent = false;
-        prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -198,29 +219,40 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
         MenuItem mTrackCell = menu.findItem(R.id.track_cell);
         MenuItem mTrackSignal = menu.findItem(R.id.track_signal);
         MenuItem mTrackLocation = menu.findItem(R.id.track_location);
+        MenuItem mTrackFemtocell = menu.findItem(R.id.track_femtocell);
 
         if (mAimsicdService.TrackingCell) {
-            mTrackCell.setTitle(R.string.track_cell);
+            mTrackCell.setTitle(R.string.untrack_cell);
             mTrackCell.setIcon(R.drawable.track_cell);
         } else {
-            mTrackCell.setTitle(R.string.untrack_cell);
+            mTrackCell.setTitle(R.string.track_cell);
             mTrackCell.setIcon(R.drawable.untrack_cell);
         }
 
         if (mAimsicdService.TrackingSignal) {
-            mTrackSignal.setTitle(R.string.track_signal);
+            mTrackSignal.setTitle(R.string.untrack_signal);
             mTrackSignal.setIcon(R.drawable.ic_action_network_cell);
         } else {
-            mTrackSignal.setTitle(R.string.untrack_signal);
+            mTrackSignal.setTitle(R.string.track_signal);
             mTrackSignal.setIcon(R.drawable.ic_action_network_cell_not_tracked);
         }
+
         if (mAimsicdService.TrackingLocation) {
-            mTrackLocation.setTitle(R.string.track_location);
+            mTrackLocation.setTitle(R.string.untrack_location);
             mTrackLocation.setIcon(R.drawable.ic_action_location_found);
         } else {
-            mTrackLocation.setTitle(R.string.untrack_location);
+            mTrackLocation.setTitle(R.string.track_location);
             mTrackLocation.setIcon(R.drawable.ic_action_location_off);
         }
+
+        if (mAimsicdService.TrackingFemtocell) {
+            mTrackFemtocell.setTitle(R.string.untrack_femtocell);
+            mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
+        } else {
+            mTrackFemtocell.setTitle(R.string.track_femtocell);
+            mTrackSignal.setIcon(R.drawable.ic_action_network_cell_not_tracked);
+        }
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -242,6 +274,12 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
                 return true;
             case R.id.track_location:
                 tracklocation();
+                if (Build.VERSION.SDK_INT > 11) {
+                    onPrepareOptionsMenu(mMenu);
+                }
+                return true;
+            case R.id.track_femtocell:
+                trackFemtocell();
                 if (Build.VERSION.SDK_INT > 11) {
                     onPrepareOptionsMenu(mMenu);
                 }
@@ -313,15 +351,16 @@ public class AIMSICD extends Activity implements OnSharedPreferenceChangeListene
         }
     }
 
-    public AIMSICD getAimsicd() {
-        return this;
+    public void trackFemtocell() {
+        if (mAimsicdService.TrackingFemtocell) {
+            mAimsicdService.stopTrackingFemto();
+        } else {
+            mAimsicdService.startTrackingFemto();
+        }
     }
 
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(KEY_UI_ICONS)) {
-            //Update Notification to display selected icon type
-            mAimsicdService.setNotification();
-        }
+    public AIMSICD getAimsicd() {
+        return this;
     }
 
 }
