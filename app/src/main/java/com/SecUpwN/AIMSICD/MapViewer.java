@@ -17,25 +17,35 @@
 
 package com.SecUpwN.AIMSICD;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.telephony.TelephonyManager;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,9 +54,9 @@ import android.view.MenuItem;
 import com.SecUpwN.AIMSICD.cmdprocessor.Helpers;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -62,14 +72,16 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import au.com.bytecode.opencsv.CSVReader;
+
 public class MapViewer extends FragmentActivity {
     private final String TAG = "AIMSICD_MapViewer";
 
     private GoogleMap mMap;
     private UiSettings mUiSettings;
     private AIMSICDDbAdapter mDbHelper;
-
-    private GoogleMapOptions mMapOptions = new GoogleMapOptions();
+    private Context mContext;
+    private LatLng loc = null;
 
     /**
      * Called when the activity is first created.
@@ -92,6 +104,7 @@ public class MapViewer extends FragmentActivity {
 
         mDbHelper = new AIMSICDDbAdapter(this);
         loadEntries();
+        mContext = this;
     }
 
     @Override
@@ -119,6 +132,7 @@ public class MapViewer extends FragmentActivity {
                 mUiSettings.setZoomGesturesEnabled(true);
                 mUiSettings.setTiltGesturesEnabled(true);
                 mUiSettings.setRotateGesturesEnabled(true);
+                mMap.setMyLocationEnabled(true);
             } else {
                 Helpers.sendMsg(this, "Unable to create map!");
             }
@@ -171,6 +185,27 @@ public class MapViewer extends FragmentActivity {
                 AlertDialog menuMapType = menuAlert.create();
                 menuMapType.show();
                 return true;
+            case R.id.get_opencellid:
+            {
+                Location mLocation = mMap.getMyLocation();
+                if (mLocation != null) {
+                    getOpenCellData(mLocation.getLatitude(), mLocation.getLongitude());
+                    Log.i(TAG, "Lat: " + mLocation.getLatitude()
+                            + " Long: " + mLocation.getLongitude());
+                } else if (loc != null) {
+                    getOpenCellData(loc.latitude, loc.longitude);
+                } else {
+                    double[] lastKnown = getlocation();
+                    if (lastKnown != null) {
+                        getOpenCellData(lastKnown[0], lastKnown[1]);
+                        Log.i(TAG, "Lat: " + lastKnown[0]
+                                + " Long: " + lastKnown[1]);
+                    } else {
+                        Helpers.sendMsg(this, "Error finding your location!");
+                    }
+                }
+                return true;
+            }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -187,15 +222,14 @@ public class MapViewer extends FragmentActivity {
         mDbHelper.open();
         Cursor c = mDbHelper.getSignalData();
         if (c.moveToFirst()) {
-            LatLng loc = null;
+
             CircleOptions circleOptions;
             do {
                 net = c.getInt(0);
                 dlat = Double.parseDouble(c.getString(1));
                 dlng = Double.parseDouble(c.getString(2));
-                Log.i(TAG, "Lat: " + dlat + " Long: " + dlng);
                 signal = c.getInt(3);
-                if (signal == -1) {
+                if (signal > 0) {
                     signal = 20;
                 }
                 cellID = c.getInt(4);
@@ -314,14 +348,20 @@ public class MapViewer extends FragmentActivity {
 
             //Calculate the Bounding Coordinates in a 50 mile radius
             //0 = min 1 = max
-            GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(50, earthRadius);
+            GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
+            String boundParameter;
 
             //Request OpenCellID data for Bounding Coordinates
-            String openCellID = "http://www.opencellid.org/cell/getInArea?key=24c66165-9748-4384-ab7c-172e3f533056" +
-                    "&BBOX=" + boundingCoords[0].getLatitudeInDegrees() + "," + boundingCoords[0].getLongitudeInDegrees() +
-                    "," + boundingCoords[1].getLatitudeInDegrees() + "," + boundingCoords[1].getLongitudeInDegrees() +
-                    "format=kml";
-            new RequestTask().execute(openCellID);
+            boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
+                    + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
+                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
+                    + String .valueOf(boundingCoords[1].getLongitudeInDegrees());
+
+            String urlString = "http://www.opencellid.org/cell/getInArea?key=24c66165-9748-4384-ab7c-172e3f533056"
+                    + "&BBOX=" + boundParameter
+                    + "&format=csv";
+
+            new RequestTask().execute(urlString);
         }
     }
 
@@ -341,6 +381,31 @@ public class MapViewer extends FragmentActivity {
             e.printStackTrace();
         }
         return false;
+    }
+
+    private void parseOpenCellID (String fileName) {
+
+        File file = new File(fileName);
+        try {
+            CSVReader csvReader = new CSVReader(new FileReader(file));
+            List<String[]> csvCellID = csvReader.readAll();
+
+            for (int i=1; i<csvCellID.size(); i++)
+            {
+                new LatLng(Double.parseDouble(csvCellID.get(i)[0]), Double.parseDouble(csvCellID.get(i)[1]));
+
+                // Add map marker for CellID
+                mMap.addMarker(new MarkerOptions()
+                        .position(loc)
+                        .draggable(false)
+                        .title("CellID - " + csvCellID.get(i)[5]));
+            }
+
+
+        } catch (Exception e) {
+            Log.e (TAG, "Error parsing OpenCellID data - " + e.getMessage());
+        }
+
     }
 
     class RequestTask extends AsyncTask<String, String, String> {
@@ -376,7 +441,31 @@ public class MapViewer extends FragmentActivity {
             super.onPostExecute(result);
             //Do anything with response..
             if (result != null) {
+                if (Utils.isSdWritable()) {
+                    try {
+                        File dir = new File(
+                                Environment.getExternalStorageDirectory() + "/AIMSICD/OpenCellID/");
+                        if (!dir.exists()) {
+                            dir.mkdirs();
+                        }
+                        Time today = new Time(Time.getCurrentTimezone());
+                        today.setToNow();
+                        String fileName = Environment.getExternalStorageDirectory() + "/AIMSICD/OpenCellID/"
+                                + "cellid-" + today.format2445() + ".csv";
+                        File file = new File(dir, "cellid-"
+                                + today.format2445() + ".csv");
 
+                        FileOutputStream fOut = new FileOutputStream(file);
+                        OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+                        myOutWriter.append(result);
+                        myOutWriter.close();
+                        fOut.close();
+                        Helpers.sendMsg(mContext, "OpenCellID data successfully received");
+                        parseOpenCellID(fileName);
+                    } catch (Exception e) {
+                        Log.e (TAG, "Write OpenCellID response - " + e.getMessage());
+                    }
+                }
             }
         }
     }
