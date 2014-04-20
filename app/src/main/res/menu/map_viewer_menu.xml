@@ -2,8 +2,11 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/map_type"
-        android:icon="@drawable/ic_action_map"
-        android:title="@string/map_type"
-        android:showAsAction="ifRoom"/>
-
+          android:icon="@drawable/ic_action_map"
+          android:title="@string/map_type"
+          android:showAsAction="ifRoom"/>
+    <item android:id="@+id/get_opencellid"
+          android:icon="@drawable/ic_action_download"
+          android:title="@string/get_opencellid"
+          android:showAsAction="ifRoom"/>
 </menu>
