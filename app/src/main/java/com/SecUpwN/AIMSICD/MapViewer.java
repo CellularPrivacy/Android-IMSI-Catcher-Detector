@@ -392,7 +392,7 @@ public class MapViewer extends FragmentActivity {
 
             for (int i=1; i<csvCellID.size(); i++)
             {
-                new LatLng(Double.parseDouble(csvCellID.get(i)[0]), Double.parseDouble(csvCellID.get(i)[1]));
+              loc =  new LatLng(Double.parseDouble(csvCellID.get(i)[0]), Double.parseDouble(csvCellID.get(i)[1]));
 
                 // Add map marker for CellID
                 mMap.addMarker(new MarkerOptions()
