@@ -1,6 +1,21 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 21.04.2014   v0.1.7-alpha
+
+* Added: Enabled CDMA Femtocell Detection for initial testing. (CDMA devices ONLY!)
+* Added: missing resources for Actionbar icons
+* Fix: MapView updated to check for Google Play Services 
+* Added: option to select map type and extended the details (the system will 
+  apply to the map including markers for unique CellID's found and signal overlays.)
+* Fix: MapView will now default to last known location (if one is available) 
+  or will zoom to the last loaded location found in the tracking database, 
+  other map controls enabled to allow gesture control.
+* Added: GeoLocation class to provides an equation to determine a bounding radius 
+  of a given point, for example a circle 50 miles/kilometers around a given location.
+* Preference change is now detected correctly by the application showing immediate 
+  changes to through the persistent notification for system status (Idle, Good & Alarm).
+
 #### 11.04.2014
 
 * Change: Project changed to Gradle Build System to make use of Android Studio
