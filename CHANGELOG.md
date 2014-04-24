@@ -1,7 +1,7 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
-#### 21.04.2014   v0.1.7-alpha
+#### 21.04.2014 - WIP Release v0.1.7-alpha
 
 * Added: Enabled CDMA Femtocell Detection for initial testing. (CDMA devices ONLY!)
 * Added: missing resources for Actionbar icons
@@ -16,14 +16,14 @@
 * Preference change is now detected correctly by the application showing immediate 
   changes to through the persistent notification for system status (Idle, Good & Alarm).
 
-#### 11.04.2014
+#### 11.04.2014 - WIP Release v0.1.6-alpha
 
 * Change: Project changed to Gradle Build System to make use of Android Studio
 * Added: Google Maps API v2 support to enable new features and gain an API Key
 * Fix: Signal strength data is now correctly overlayed on the map as well
 * Fix: Database export corrected and changed to use OpenCV library
 
-#### 09.04.2014
+#### 09.04.2014 - WIP Release v0.1.5-alpha
 
 * Improvement: Universal Compatibility achieved via the [Universal Compatibility Commit](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/24)!
 * Reduced functionality  of AIMSICD until methods are discovered to issue AT commands.
@@ -31,7 +31,7 @@
 * Improvement: AIMSICD should now function on any device. We're open for your feedback!
 * Femtocell Detection will be fully implemented for CDMA devices in the next commit by [xLaMbChOpSx](https://github.com/xLaMbChOpSx).
 
-#### 08.04.2014
+#### 08.04.2014 - WIP Release v0.1.4-alpha
 
 * Updated Disclaimer to encourage people to talk to us BEFORE hunting our developers
 * Updated Credits to reflect latest contributions (please give me a hint if I missed someone)
@@ -42,7 +42,7 @@
 * Another new and fresh Iconset has been added with a [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/20) [SgtObst](https://github.com/SgtObst). Cool! :)
 * The latest [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/21) now adds Service, Boot Completed Receiver and TableView & FemtoCatcher Additions. We're travelling towards a really awesome App! To everyone developing here: You're doing a WONDERFUL job! THANK YOU!
 
-#### 06.04.2014
+#### 06.04.2014 WIP Release v0.1.3-alpha
 
 * Applause to [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! He submitted a new [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/14) with a complete rewrite of the menu system, implementing the Actionbar, rewrite of the Device class to perform better and change it from a static class, Persistent notification was added which can be tweaked down the line and the Database helper class was created to provide application wide support.
 * The old Icons of RawPhone have been fully replaced by the great work of [SgtObst](https://github.com/SgtObst). More to come soon!
