@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
@@ -43,9 +42,7 @@ public class AIMSICD extends Activity {
     private final String TAG = "AIMSICD";
 
     private final Context mContext = this;
-    private Menu mMenu;
     private boolean mBound;
-    private boolean mDisplayCurrent;
     private SharedPreferences prefs;
     private AIMSICDDbAdapter dbHelper;
 
@@ -92,7 +89,10 @@ public class AIMSICD extends Activity {
         }
     }
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    /**
+     * Service Connection to bind the activity to the service
+     */
+    private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
@@ -111,9 +111,7 @@ public class AIMSICD extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        if (!mDisplayCurrent)
-            updateUI();
-
+        updateUI();
     }
 
     private void updateUI() {
@@ -121,6 +119,7 @@ public class AIMSICD extends Activity {
         TableLayout tableLayout;
         TableRow tr;
         if (mBound) {
+            int netID = mAimsicdService.getNetID(true);
             switch (mAimsicdService.getPhoneID())
             {
                 case TelephonyManager.PHONE_TYPE_GSM: {
@@ -150,6 +149,16 @@ public class AIMSICD extends Activity {
                 }
             }
 
+            if (mAimsicdService.getNetID(true) == TelephonyManager.NETWORK_TYPE_LTE) {
+                content = (TextView) findViewById(R.id.network_lte_timing_advance);
+                content.setText(mAimsicdService.getLteTimingAdvance());
+                tr = (TableRow) findViewById(R.id.lte_timing_advance);
+                tr.setVisibility(View.VISIBLE);
+            } else {
+                tr = (TableRow) findViewById(R.id.lte_timing_advance);
+                tr.setVisibility(View.GONE);
+            }
+
             content = (TextView) findViewById(R.id.sim_country);
             content.setText(mAimsicdService.getSimCountry(false));
             content = (TextView) findViewById(R.id.sim_operator_id);
@@ -161,7 +170,7 @@ public class AIMSICD extends Activity {
             content = (TextView) findViewById(R.id.sim_serial);
             content.setText(mAimsicdService.getSimSerial(false));
 
-            int netID = mAimsicdService.getNetID(true);
+
             content = (TextView) findViewById(R.id.device_type);
             content.setText(mAimsicdService.getPhoneType(false));
             content = (TextView) findViewById(R.id.device_imei);
@@ -195,14 +204,7 @@ public class AIMSICD extends Activity {
             Log.i(TAG, "Network code  : " + mAimsicdService.getSmmcMcc(false));
             Log.i(TAG, "Network name  : " + mAimsicdService.getNetworkName(false));
             Log.i(TAG, "Roaming       : " + mAimsicdService.isRoaming());
-            mDisplayCurrent = true;
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mDisplayCurrent = false;
     }
 
     @Override
@@ -210,7 +212,6 @@ public class AIMSICD extends Activity {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        mMenu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -262,33 +263,25 @@ public class AIMSICD extends Activity {
         switch (item.getItemId()) {
             case R.id.track_cell:
                 trackcell();
-                if (Build.VERSION.SDK_INT > 11) {
-                    onPrepareOptionsMenu(mMenu);
-                }
+                invalidateOptionsMenu();
                 return true;
             case R.id.track_signal:
                 tracksignal();
-                if (Build.VERSION.SDK_INT > 11) {
-                    onPrepareOptionsMenu(mMenu);
-                }
+                invalidateOptionsMenu();
                 return true;
             case R.id.track_location:
                 tracklocation();
-                if (Build.VERSION.SDK_INT > 11) {
-                    onPrepareOptionsMenu(mMenu);
-                }
+                invalidateOptionsMenu();
                 return true;
             case R.id.track_femtocell:
                 trackFemtocell();
-                if (Build.VERSION.SDK_INT > 11) {
-                    onPrepareOptionsMenu(mMenu);
-                }
+                invalidateOptionsMenu();
                 return true;
             case R.id.show_map:
                 showmap();
                 return true;
             case R.id.preferences:
-                Intent intent = new Intent(this, SettingsActivity.class);
+                Intent intent = new Intent(this, PrefActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.export_database:
@@ -327,7 +320,10 @@ public class AIMSICD extends Activity {
         startActivity(myIntent);
     }
 
-    public void tracksignal() {
+    /**
+     * Signal Strength Tracking - Enable/Disable
+     */
+    private void tracksignal() {
         if (mAimsicdService.TrackingSignal) {
             mAimsicdService.setSignalTracking(false);
         } else {
@@ -335,7 +331,10 @@ public class AIMSICD extends Activity {
         }
     }
 
-    public void trackcell() {
+    /**
+     * Cell Information Tracking - Enable/Disable
+     */
+    private void trackcell() {
         if (mAimsicdService.TrackingCell) {
             mAimsicdService.setCellTracking(false);
         } else {
@@ -343,7 +342,10 @@ public class AIMSICD extends Activity {
         }
     }
 
-    public void tracklocation() {
+    /**
+     * Location Information Tracking - Enable/Disable
+     */
+    private void tracklocation() {
         if (mAimsicdService.TrackingLocation) {
             mAimsicdService.setLocationTracking(false);
         } else {
@@ -351,16 +353,15 @@ public class AIMSICD extends Activity {
         }
     }
 
-    public void trackFemtocell() {
+    /**
+     * FemtoCell Detection (CDMA Phones ONLY) - Enable/Disable
+     */
+    private void trackFemtocell() {
         if (mAimsicdService.TrackingFemtocell) {
             mAimsicdService.stopTrackingFemto();
         } else {
             mAimsicdService.startTrackingFemto();
         }
-    }
-
-    public AIMSICD getAimsicd() {
-        return this;
     }
 
 }

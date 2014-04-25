@@ -17,33 +17,26 @@
 
 package com.SecUpwN.AIMSICD;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.telephony.TelephonyManager;
 import android.text.format.Time;
 import android.util.Log;
@@ -54,10 +47,9 @@ import android.view.MenuItem;
 import com.SecUpwN.AIMSICD.cmdprocessor.Helpers;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -113,14 +105,16 @@ public class MapViewer extends FragmentActivity {
         setUpMapIfNeeded();
     }
 
+    /**
+     * Initialises the Map and sets initial options
+     *
+     */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the
         // map.
         if (mMap == null) {
-            FragmentManager fmanager = getSupportFragmentManager();
-            Fragment fragment = fmanager.findFragmentById(R.id.map);
-            SupportMapFragment supportmapfragment = (SupportMapFragment) fragment;
-            mMap = supportmapfragment.getMap();
+            mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 // The Map is verified. It is now safe to manipulate the map.
@@ -211,6 +205,11 @@ public class MapViewer extends FragmentActivity {
         }
     }
 
+    /**
+     * Loads Signal Strength Database details to plot on the map,
+     * only entries which have a location (lon, lat) are used.
+     *
+     */
     private void loadEntries() {
         int SIGNAL_SIZE_RATIO = 15;
         double dlat;
@@ -312,6 +311,10 @@ public class MapViewer extends FragmentActivity {
         }
     }
 
+    /**
+     * Uses last known location to animateCamera to location
+     *
+     */
     private void GetCurrentLocation() {
 
         double[] d = getlocation();
@@ -320,7 +323,11 @@ public class MapViewer extends FragmentActivity {
                 new LatLng(d[0], d[1]), 5));
     }
 
-    public double[] getlocation() {
+    /**
+     * Attempts to retrieve the last known location from the device
+     *
+     */
+    private double[] getlocation() {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = lm.getProviders(true);
 
@@ -339,6 +346,13 @@ public class MapViewer extends FragmentActivity {
         return gps;
     }
 
+    /**
+     * Requests Cell data from OpenCellID.org, calculating a 100 mile bounding radius
+     * and requesting all Cell ID information in that area.
+     *
+     * @param lat Latitude of current location
+     * @param lng Longitude of current location
+     */
     private void getOpenCellData(double lat, double lng) {
         if (isNetAvailable(this)) {
             double earthRadius = 6371.01;
@@ -365,7 +379,11 @@ public class MapViewer extends FragmentActivity {
         }
     }
 
-    public Boolean isNetAvailable(Context context)  {
+    /**
+     * Checks Network connectivity is available to download OpenCellID data
+     *
+     */
+    private Boolean isNetAvailable(Context context)  {
 
         try{
             ConnectivityManager connectivityManager = (ConnectivityManager)
@@ -383,6 +401,12 @@ public class MapViewer extends FragmentActivity {
         return false;
     }
 
+    /**
+     * Parses the downloaded CSV from OpenCellID and adds Map Marker to identify known
+     * Cell ID's
+     *
+     * @param fileName Name of file downloaded from OpenCellID
+     */
     private void parseOpenCellID (String fileName) {
 
         File file = new File(fileName);
@@ -408,7 +432,13 @@ public class MapViewer extends FragmentActivity {
 
     }
 
-    class RequestTask extends AsyncTask<String, String, String> {
+    /**
+     * Runs the request to download OpenCellID data in an AsyncTask
+     * preventing the application from becoming unresponsive whilst
+     * waiting for a response and download from the server
+     *
+     */
+    private class RequestTask extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... uri) {

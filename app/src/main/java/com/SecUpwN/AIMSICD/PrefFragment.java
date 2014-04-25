@@ -1,9 +1,9 @@
 package com.SecUpwN.AIMSICD;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 
-public class SettingsActivity extends PreferenceActivity {
+public class PrefFragment extends PreferenceFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
