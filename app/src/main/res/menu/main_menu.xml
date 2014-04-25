@@ -29,6 +29,9 @@
           android:icon="@drawable/ic_action_settings"
           android:title="@string/preferences"
           android:showAsAction="ifRoom" />
+    <item android:id="@+id/update_opencelldata"
+          android:title="@string/update_opencelldata"
+          android:showAsAction="ifRoom" />
     <item android:id="@+id/app_exit"
           android:icon="@drawable/ic_action_remove"
           android:title="@string/quit"

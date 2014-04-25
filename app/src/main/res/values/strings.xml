@@ -35,6 +35,11 @@
     <string name="export_database">Export Database tables</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit</string>
+    <string name="update_opencelldata">Update OpenCellID Data</string>
+
+    <string name="no_network_connection_title">No Internet Connection</string>
+    <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
+    connectivity, enable Wifi/Mobile Data and try again.</string>
 
     <!-- MAP VIEWER -->
     <string name="error_google_play_services_title">Map Viewer Unavailable</string>

@@ -51,19 +51,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
-import android.telephony.CellInfo;
-import android.telephony.CellInfoCdma;
-import android.telephony.CellInfoGsm;
-import android.telephony.CellInfoLte;
 import android.telephony.CellLocation;
-import android.telephony.CellSignalStrengthCdma;
-import android.telephony.CellSignalStrengthGsm;
-import android.telephony.CellSignalStrengthLte;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
@@ -75,7 +67,7 @@ import android.util.Log;
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.cmdprocessor.Helpers;
+import com.SecUpwN.AIMSICD.Helpers;
 
 public class AimsicdService extends Service implements OnSharedPreferenceChangeListener {
 
@@ -87,6 +79,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     */
     private final AimscidBinder mBinder = new AimscidBinder();
     private final AIMSICDDbAdapter dbHelper = new AIMSICDDbAdapter(this);
+    private long mDbResult;
     private int mUpdateInterval;
     private TelephonyManager tm;
     private LocationManager lm;
@@ -155,6 +148,13 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         prefs.registerOnSharedPreferenceChangeListener(this);
         refreshDeviceInfo();
         setNotification();
+
+        boolean trackFemtoPref = prefs.getBoolean(
+                this.getString(R.string.pref_femto_detection_key), false);
+
+        if (trackFemtoPref) {
+            startTrackingFemto();
+        }
 
         Log.i(TAG, "Service launched successfully");
     }
@@ -258,6 +258,25 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         mDataActivity = tm.getDataState();
         mDataState = getStateDesc(mDataActivity);
+
+        if (mLongitude == 0.0 || mLatitude == 0.0) {
+
+            Location lastKnownLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (lastKnownLocation != null) {
+                mLongitude = lastKnownLocation.getLongitude();
+                mLatitude = lastKnownLocation.getLatitude();
+            } else {
+                lastKnownLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (lastKnownLocation != null) {
+                    mLongitude = lastKnownLocation.getLongitude();
+                    mLatitude = lastKnownLocation.getLatitude();
+                }
+            }
+        }
+    }
+
+    public double[] getLastLocation() {
+        return new double[] {mLatitude, mLongitude};
     }
 
     /**
@@ -828,11 +847,25 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             //Insert database record if tracking signal
             if (TrackingSignal) {
                 dbHelper.open();
-                dbHelper.insertSignal(mLacID,mCellID,
+                mDbResult = dbHelper.insertSignal(mLacID,mCellID,
                         mNetID, mLatitude,
                         mLongitude,mSignalInfo,
                         mCellInfo);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
             }
+
+            if (TrackingCell) {
+                dbHelper.open();
+                mDbResult = dbHelper.insertCell(mLacID, mCellID,
+                        mNetID, mLatitude,
+                        mLongitude, mSignalInfo,
+                        mCellInfo, mSimCountry,
+                        mSimOperator, mSimOperatorName);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
+            }
+
         }
     };
 
@@ -906,13 +939,15 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     }
             }
 
-            if (TrackingCell && !dbHelper.cellExists(mCellID)) {
+            if (TrackingCell) {
                 dbHelper.open();
-                dbHelper.insertCell(mLacID, mCellID,
+                mDbResult = dbHelper.insertCell(mLacID, mCellID,
                         mNetID, mLatitude,
                         mLongitude, mSignalInfo,
                         mCellInfo, mSimCountry,
                         mSimOperator, mSimOperatorName);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
             }
         }
     };
@@ -967,10 +1002,23 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
             if (TrackingLocation) {
                 dbHelper.open();
-                dbHelper.insertLocation(mLacID, mCellID,
+                mDbResult = dbHelper.insertLocation(mLacID, mCellID,
                         mNetID, mLatitude,
                         mLongitude, mSignalInfo,
                         mCellInfo);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
+            }
+
+            if (TrackingCell) {
+                dbHelper.open();
+                mDbResult = dbHelper.insertCell(mLacID, mCellID,
+                        mNetID, mLatitude,
+                        mLongitude, mSignalInfo,
+                        mCellInfo, mSimCountry,
+                        mSimOperator, mSimOperatorName);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
             }
         }
 
@@ -994,12 +1042,20 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {
         final String KEY_UI_ICONS = getBaseContext().getString(R.string.pref_ui_icons_key);
+        final String FEMTO_DECTECTION = getBaseContext().getString(R.string.pref_femto_detection_key);
 
         if (key.equals(KEY_UI_ICONS)) {
             //Update Notification to display selected icon type
             setNotification();
+        } else if (key.equals(FEMTO_DECTECTION)) {
+            boolean trackFemtoPref = sharedPreferences.getBoolean(
+                    this.getString(R.string.pref_femto_detection_key), false);
+            if (trackFemtoPref) {
+                startTrackingFemto();
+            } else {
+                stopTrackingFemto();
+            }
         }
-
     }
 
     /*

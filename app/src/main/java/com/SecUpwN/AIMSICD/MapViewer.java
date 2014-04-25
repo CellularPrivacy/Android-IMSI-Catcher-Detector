@@ -44,7 +44,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.SecUpwN.AIMSICD.cmdprocessor.Helpers;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -181,11 +180,10 @@ public class MapViewer extends FragmentActivity {
                 return true;
             case R.id.get_opencellid:
             {
+                Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
                 Location mLocation = mMap.getMyLocation();
                 if (mLocation != null) {
                     getOpenCellData(mLocation.getLatitude(), mLocation.getLongitude());
-                    Log.i(TAG, "Lat: " + mLocation.getLatitude()
-                            + " Long: " + mLocation.getLongitude());
                 } else if (loc != null) {
                     getOpenCellData(loc.latitude, loc.longitude);
                 } else {
@@ -235,7 +233,6 @@ public class MapViewer extends FragmentActivity {
 
                 if ((dlat != 0.0) || (dlng != 0.0)) {
                     loc = new LatLng(dlat, dlng);
-                    Log.i(TAG, "LatLng: " + loc.toString());
                     switch (net) {
                         case TelephonyManager.NETWORK_TYPE_UNKNOWN:
                             color = 0xF0F8FF;
@@ -305,9 +302,18 @@ public class MapViewer extends FragmentActivity {
             }
         } else {
             Helpers.msgShort(this, "No tracked locations found to overlay on map.");
+            String locationProvider = LocationManager.NETWORK_PROVIDER;
 
-            // Try and find last known location and zoom there
-            GetCurrentLocation();
+            LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            Location lastKnownLocation = lm.getLastKnownLocation(locationProvider);
+            if ( lastKnownLocation != null) {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                        new LatLng(lastKnownLocation.getLatitude(),
+                                lastKnownLocation.getLongitude()), 5));
+            } else {
+                // Try and find last known location and zoom there
+                GetCurrentLocation();
+            }
         }
     }
 
@@ -328,7 +334,8 @@ public class MapViewer extends FragmentActivity {
      *
      */
     private double[] getlocation() {
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = lm.getProviders(true);
 
         Location l = null;
@@ -376,6 +383,11 @@ public class MapViewer extends FragmentActivity {
                     + "&format=csv";
 
             new RequestTask().execute(urlString);
+        } else {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle(R.string.no_network_connection_title)
+                    .setMessage(R.string.no_network_connection_message);
+            builder.create().show();
         }
     }
 
@@ -423,6 +435,18 @@ public class MapViewer extends FragmentActivity {
                         .position(loc)
                         .draggable(false)
                         .title("CellID - " + csvCellID.get(i)[5]));
+
+                //Insert details into OpenCellID Database
+                long result =
+                mDbHelper.insertOpenCell(Double.parseDouble(csvCellID.get(i)[0]),
+                        Double.parseDouble(csvCellID.get(i)[1]),
+                        Integer.parseInt(csvCellID.get(i)[2]), Integer.parseInt(csvCellID.get(i)[3]),
+                        Integer.parseInt(csvCellID.get(i)[4]), Integer.parseInt(csvCellID.get(i)[5]),
+                        Integer.parseInt(csvCellID.get(i)[6]), Integer.parseInt(csvCellID.get(i)[7]));
+                if (result == -1)
+                {
+                    Log.e(TAG, "Error inserting OpenCellID database value");
+                }
             }
 
 
@@ -471,7 +495,7 @@ public class MapViewer extends FragmentActivity {
             super.onPostExecute(result);
             //Do anything with response..
             if (result != null) {
-                if (Utils.isSdWritable()) {
+                if (Helpers.isSdWritable()) {
                     try {
                         File dir = new File(
                                 Environment.getExternalStorageDirectory() + "/AIMSICD/OpenCellID/");
@@ -480,10 +504,9 @@ public class MapViewer extends FragmentActivity {
                         }
                         Time today = new Time(Time.getCurrentTimezone());
                         today.setToNow();
-                        String fileName = Environment.getExternalStorageDirectory() + "/AIMSICD/OpenCellID/"
-                                + "cellid-" + today.format2445() + ".csv";
-                        File file = new File(dir, "cellid-"
-                                + today.format2445() + ".csv");
+                        String fileName = Environment.getExternalStorageDirectory()
+                                + "/AIMSICD/OpenCellID/opencellid.csv";
+                        File file = new File(dir, "opencellid.csv");
 
                         FileOutputStream fOut = new FileOutputStream(file);
                         OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
