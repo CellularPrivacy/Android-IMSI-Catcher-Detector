@@ -42,7 +42,7 @@
 * Another new and fresh Iconset has been added with a [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/20) [SgtObst](https://github.com/SgtObst). Cool! :)
 * The latest [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/21) now adds Service, Boot Completed Receiver and TableView & FemtoCatcher Additions. We're travelling towards a really awesome App! To everyone developing here: You're doing a WONDERFUL job! THANK YOU!
 
-#### 06.04.2014 WIP Release v0.1.3-alpha
+#### 06.04.2014 - WIP Release v0.1.3-alpha
 
 * Applause to [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! He submitted a new [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/14) with a complete rewrite of the menu system, implementing the Actionbar, rewrite of the Device class to perform better and change it from a static class, Persistent notification was added which can be tweaked down the line and the Database helper class was created to provide application wide support.
 * The old Icons of RawPhone have been fully replaced by the great work of [SgtObst](https://github.com/SgtObst). More to come soon!
@@ -53,7 +53,7 @@
 * Thanks to the creative work of [SgtObst](https://github.com/SgtObst), we now have FRESH and NEW ICONS for AIMSICD! ;-)
 * Added a TODO for collecting the things that are planned to be added in the long run.
 
-#### 31.03.2014
+#### 31.03.2014 - WIP Release v0.1.2-alpha
 
 * New [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/7) by our awesome developer [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! This one reduces the target SDK version and updates the code.
 * Curious to get you hands on something to try out? Bookmark our [WIP-RELEASES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/) and feel free to [report feedback on XDA](http://forum.xda-developers.com/showthread.php?t=1422969).
@@ -66,11 +66,11 @@
   IMSI-Catchers). We know that with our actions we already have attracked forces out there which get their will through 
   more brutal methods. Thus, we added a small [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER). Just to mention it: I always have the latest copy of everything. Enjoy!
 
-#### 25.03.2014
+#### 25.03.2014 - WIP Release v0.1.1-alpha
 
 * Progress! We've merged an [Intitial Development Commit](/https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/5) by [xLaMbChOpSx](https://github.com/xLaMbChOpSx). HUGE THANKS!
 
-#### 22.03.2014
+#### 22.03.2014 - WIP Release v0.1-alpha
 
 * Added source code of [RawPhone](https://play.google.com/store/apps/details?id=com.jofrepalau.rawphone) into main file tree to start off with. Throw your commits at me! 
 
@@ -89,7 +89,7 @@
 #### 10.03.2014
 * Added a [STYLEGUIDE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md) to avoid neglected commits - please read it before commiting!
 
-#### 17.02.2014
+#### 17.02.2014 - - WIP Release v0.1.1-alpha
 * Initial Development Commit by [xLaMbChOpSx](https://github.com/xLaMbChOpSx), yet to be reviewed and added ;-)
 * Article for [Kuketz IT-Security Blog](http://www.kuketz-blog.de/) by [He3556](https://github.com/He3556) and me almost finished (still needs review)
 * Cleanup of GitHub is being prepared in order to add code and commits. Stay tuned!
