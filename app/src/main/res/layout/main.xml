@@ -385,6 +385,28 @@
                 android:padding="2dip" android:gravity="left"/>
         </TableRow>
 
+        <TableRow
+                android:id="@+id/lte_timing_advance"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:background="@color/black">
+
+            <TextView
+                    android:id="@+id/network_lte_timing_advance_label" android:text="@string/network_lte_timing_advance"
+                    android:layout_weight="1"  android:background="@color/black"
+                    android:textColor="@color/white"
+                    android:padding="2dip" android:gravity="right"
+                    android:layout_gravity="right"
+                    android:layout_width="fill_parent"/>
+
+            <TextView
+                    android:id="@+id/network_lte_timing_advance" android:text="@string/empty"
+                    android:layout_weight="1" android:background="@color/black"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip" android:gravity="left"/>
+        </TableRow>
+
         <TableLayout
             android:id="@+id/cdmaView"
             android:shrinkColumns="0"

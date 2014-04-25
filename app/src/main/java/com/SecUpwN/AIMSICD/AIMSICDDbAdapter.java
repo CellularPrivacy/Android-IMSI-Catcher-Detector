@@ -1,5 +1,6 @@
 package com.SecUpwN.AIMSICD;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -18,26 +19,24 @@ public class AIMSICDDbAdapter {
 
     private final String TAG = "AISMICD_DbAdaptor";
 
-    private DbHelper mDbHelper;
+    private final DbHelper mDbHelper;
     private SQLiteDatabase mDb;
+    private Context mContext;
     private static final int DATABASE_VERSION = 1;
-    public static final String COLUMN_ID = "_id";
-    public String LOCATION_TABLE = "locationinfo";
-    public String CELL_TABLE = "cellinfo";
-    public String SIGNAL_TABLE = "signalinfo";
-    public String DB_NAME = "myCellInfo";
+    private static final String COLUMN_ID = "_id";
+    private final String LOCATION_TABLE = "locationinfo";
+    private final String CELL_TABLE = "cellinfo";
+    private final String SIGNAL_TABLE = "signalinfo";
+    private final String DB_NAME = "myCellInfo";
+    private final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
 
     public AIMSICDDbAdapter(Context context) {
+        mContext = context;
         mDbHelper = new DbHelper(context);
     }
 
     public AIMSICDDbAdapter open() throws SQLException {
         mDb = mDbHelper.getWritableDatabase();
-        return this;
-    }
-
-    public AIMSICDDbAdapter openRead() throws SQLException {
-        mDb = mDbHelper.getReadableDatabase();
         return this;
     }
 
@@ -146,20 +145,27 @@ public class AIMSICDDbAdapter {
         return cursor.getCount()>0;
     }
 
+    /**
+     * Exports the database tables to CSV files
+     */
     public void exportDB () {
         try {
             export(LOCATION_TABLE);
             export(CELL_TABLE);
             export(SIGNAL_TABLE);
-        } catch (IOException ioe) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle(R.string.database_export_successful)
+                    .setMessage("Database tables exported succesfully to:\n" + FOLDER);
+            builder.create().show();
+        } catch (Exception ioe) {
             Log.e (TAG, "exportDB() " + ioe.getMessage());
         }
     }
 
-    public void export(String tableName) throws IOException {
+    private void export(String tableName) {
         Log.i(TAG, "exporting database - " + DB_NAME);
 
-        File dir = new File(Environment.getExternalStorageDirectory() + "/AIMSICD/");
+        File dir = new File(FOLDER);
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -185,8 +191,8 @@ public class AIMSICDDbAdapter {
 
             csvWrite.close();
             c.close();
-        } catch (Exception sqlEx) {
-            Log.e(TAG, "Error exporting table " + tableName + " " + sqlEx.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "Error exporting table " + tableName + " " + e);
         }
 
         Log.i(TAG, "exporting database complete");
