@@ -4,12 +4,12 @@ android {
     compileSdkVersion 19
     buildToolsVersion '19.0.3'
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 16
         targetSdkVersion 19
     }
     buildTypes {
         release {
-            runProguard false
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
@@ -21,8 +21,8 @@ android {
 }
 
 dependencies {
+    compile files('libs/opencsv-2.3.jar')
     compile 'com.android.support:appcompat-v7:19.1.+'
     compile 'com.google.android.gms:play-services:4.3.23'
     compile 'com.android.support:support-v4:19.+'
-    compile files('libs/opencsv-2.3.jar')
 }

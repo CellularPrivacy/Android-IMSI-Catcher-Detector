@@ -35,6 +35,11 @@
     <string name="export_database">Export Database tables</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit</string>
+    <string name="update_opencelldata">Update OpenCellID Data</string>
+
+    <string name="no_network_connection_title">No Internet Connection</string>
+    <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
+    connectivity, enable Wifi/Mobile Data and try again.</string>
 
     <!-- MAP VIEWER -->
     <string name="error_google_play_services_title">Map Viewer Unavailable</string>
@@ -64,6 +69,7 @@
     <string name="data_activity">Data Activity:</string>
     <string name="data_status">Data Status:</string>
     <string name="network_roaming">Roaming:</string>
+    <string name="network_lte_timing_advance">Timing Advance:</string>
 
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Network ID:</string>
@@ -96,5 +102,10 @@
     <string name="pref_ui_icons_key">pref_ui_icons</string>
     <string name="pref_ui_icons_summ">Icon Theme Selection</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="database_export_successful">Export Successful</string>
 
 </resources>
