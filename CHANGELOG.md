@@ -89,8 +89,8 @@
 #### 10.03.2014
 * Added a [STYLEGUIDE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md) to avoid neglected commits - please read it before commiting!
 
-#### 17.02.2014 - - WIP Release v0.1.1-alpha
-* Initial Development Commit by [xLaMbChOpSx](https://github.com/xLaMbChOpSx), yet to be reviewed and added ;-)
+#### 17.02.2014
+
 * Article for [Kuketz IT-Security Blog](http://www.kuketz-blog.de/) by [He3556](https://github.com/He3556) and me almost finished (still needs review)
 * Cleanup of GitHub is being prepared in order to add code and commits. Stay tuned!
 
