@@ -4,6 +4,7 @@
     <string name="app_name_short">AIMSICD</string>
     <string name="app_name">Android IMSI-Catcher Detector</string>
     <string name="map_view">AIMSICD Map Viewer</string>
+    <string name="db_viewer">Database Viewer</string>
     <string name="strength">Signal strength</string>
     <string name="quit">Quit</string>
     <string name="text_ok">OK</string>
@@ -107,5 +108,15 @@
     <string name="action_settings">Settings</string>
 
     <string name="database_export_successful">Export Successful</string>
+
+    <!-- Database Viewer -->
+    <string name="load_table_data">Load Data</string>
+    <string name="table_names_prompt">Select Table</string>
+    <string-array name="table_names">
+        <item>Cell Data</item>
+        <item>Signal Strength Data</item>
+        <item>Location Data</item>
+        <item>OpenCellID Data</item>
+    </string-array>
 
 </resources>
