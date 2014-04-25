@@ -57,6 +57,16 @@
         </receiver>
 
         <activity
+                android:name=".DbViewer"
+                android:exported="true"
+                android:label="@string/db_viewer"
+                android:parentActivityName=".AIMSICD" >
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".AIMSICD" />
+        </activity>
+
+        <activity
             android:name=".MapViewer"
             android:exported="true"
             android:label="@string/map_view"
