@@ -21,6 +21,9 @@
           android:icon="@drawable/ic_action_map"
           android:title="@string/show_map"
           android:showAsAction="ifRoom" />
+    <item android:id="@+id/view_db"
+          android:title="@string/db_viewer"
+          android:showAsAction="ifRoom" />
     <item android:id="@+id/export_database"
           android:icon="@drawable/ic_action_import_export"
           android:title="@string/export_database"
