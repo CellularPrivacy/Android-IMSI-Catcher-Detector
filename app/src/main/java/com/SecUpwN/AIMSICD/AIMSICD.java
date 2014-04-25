@@ -18,15 +18,20 @@
 package com.SecUpwN.AIMSICD;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.os.Build;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,14 +43,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.List;
+
+import au.com.bytecode.opencsv.CSVReader;
+
 public class AIMSICD extends Activity {
 
     private final String TAG = "AIMSICD";
 
     private final Context mContext = this;
-    private Menu mMenu;
     private boolean mBound;
-    private boolean mDisplayCurrent;
     private SharedPreferences prefs;
     private AIMSICDDbAdapter dbHelper;
 
@@ -92,7 +113,10 @@ public class AIMSICD extends Activity {
         }
     }
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    /**
+     * Service Connection to bind the activity to the service
+     */
+    private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
@@ -111,9 +135,7 @@ public class AIMSICD extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        if (!mDisplayCurrent)
-            updateUI();
-
+        updateUI();
     }
 
     private void updateUI() {
@@ -121,6 +143,7 @@ public class AIMSICD extends Activity {
         TableLayout tableLayout;
         TableRow tr;
         if (mBound) {
+            int netID = mAimsicdService.getNetID(true);
             switch (mAimsicdService.getPhoneID())
             {
                 case TelephonyManager.PHONE_TYPE_GSM: {
@@ -150,6 +173,16 @@ public class AIMSICD extends Activity {
                 }
             }
 
+            if (mAimsicdService.getNetID(true) == TelephonyManager.NETWORK_TYPE_LTE) {
+                content = (TextView) findViewById(R.id.network_lte_timing_advance);
+                content.setText(mAimsicdService.getLteTimingAdvance());
+                tr = (TableRow) findViewById(R.id.lte_timing_advance);
+                tr.setVisibility(View.VISIBLE);
+            } else {
+                tr = (TableRow) findViewById(R.id.lte_timing_advance);
+                tr.setVisibility(View.GONE);
+            }
+
             content = (TextView) findViewById(R.id.sim_country);
             content.setText(mAimsicdService.getSimCountry(false));
             content = (TextView) findViewById(R.id.sim_operator_id);
@@ -161,7 +194,7 @@ public class AIMSICD extends Activity {
             content = (TextView) findViewById(R.id.sim_serial);
             content.setText(mAimsicdService.getSimSerial(false));
 
-            int netID = mAimsicdService.getNetID(true);
+
             content = (TextView) findViewById(R.id.device_type);
             content.setText(mAimsicdService.getPhoneType(false));
             content = (TextView) findViewById(R.id.device_imei);
@@ -195,14 +228,7 @@ public class AIMSICD extends Activity {
             Log.i(TAG, "Network code  : " + mAimsicdService.getSmmcMcc(false));
             Log.i(TAG, "Network name  : " + mAimsicdService.getNetworkName(false));
             Log.i(TAG, "Roaming       : " + mAimsicdService.isRoaming());
-            mDisplayCurrent = true;
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mDisplayCurrent = false;
     }
 
     @Override
@@ -210,7 +236,6 @@ public class AIMSICD extends Activity {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        mMenu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -262,37 +287,33 @@ public class AIMSICD extends Activity {
         switch (item.getItemId()) {
             case R.id.track_cell:
                 trackcell();
-                if (Build.VERSION.SDK_INT > 11) {
-                    onPrepareOptionsMenu(mMenu);
-                }
+                invalidateOptionsMenu();
                 return true;
             case R.id.track_signal:
                 tracksignal();
-                if (Build.VERSION.SDK_INT > 11) {
-                    onPrepareOptionsMenu(mMenu);
-                }
+                invalidateOptionsMenu();
                 return true;
             case R.id.track_location:
                 tracklocation();
-                if (Build.VERSION.SDK_INT > 11) {
-                    onPrepareOptionsMenu(mMenu);
-                }
+                invalidateOptionsMenu();
                 return true;
             case R.id.track_femtocell:
                 trackFemtocell();
-                if (Build.VERSION.SDK_INT > 11) {
-                    onPrepareOptionsMenu(mMenu);
-                }
+                invalidateOptionsMenu();
                 return true;
             case R.id.show_map:
                 showmap();
                 return true;
             case R.id.preferences:
-                Intent intent = new Intent(this, SettingsActivity.class);
+                Intent intent = new Intent(this, PrefActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.export_database:
                 dbHelper.exportDB();
+                return true;
+            case R.id.update_opencelldata:
+                double[] loc = mAimsicdService.getLastLocation();
+                getOpenCellData(loc[0], loc[1]);
                 return true;
             case R.id.app_exit:
                 finish();
@@ -327,7 +348,10 @@ public class AIMSICD extends Activity {
         startActivity(myIntent);
     }
 
-    public void tracksignal() {
+    /**
+     * Signal Strength Tracking - Enable/Disable
+     */
+    private void tracksignal() {
         if (mAimsicdService.TrackingSignal) {
             mAimsicdService.setSignalTracking(false);
         } else {
@@ -335,7 +359,10 @@ public class AIMSICD extends Activity {
         }
     }
 
-    public void trackcell() {
+    /**
+     * Cell Information Tracking - Enable/Disable
+     */
+    private void trackcell() {
         if (mAimsicdService.TrackingCell) {
             mAimsicdService.setCellTracking(false);
         } else {
@@ -343,7 +370,10 @@ public class AIMSICD extends Activity {
         }
     }
 
-    public void tracklocation() {
+    /**
+     * Location Information Tracking - Enable/Disable
+     */
+    private void tracklocation() {
         if (mAimsicdService.TrackingLocation) {
             mAimsicdService.setLocationTracking(false);
         } else {
@@ -351,7 +381,10 @@ public class AIMSICD extends Activity {
         }
     }
 
-    public void trackFemtocell() {
+    /**
+     * FemtoCell Detection (CDMA Phones ONLY) - Enable/Disable
+     */
+    private void trackFemtocell() {
         if (mAimsicdService.TrackingFemtocell) {
             mAimsicdService.stopTrackingFemto();
         } else {
@@ -359,8 +392,166 @@ public class AIMSICD extends Activity {
         }
     }
 
-    public AIMSICD getAimsicd() {
-        return this;
+    /**
+     * Requests Cell data from OpenCellID.org, calculating a 100 mile bounding radius
+     * and requesting all Cell ID information in that area.
+     *
+     * @param lat Latitude of current location
+     * @param lng Longitude of current location
+     */
+    private void getOpenCellData(double lat, double lng) {
+        if (isNetAvailable(this)) {
+            double earthRadius = 6371.01;
+
+            //New GeoLocation object to find bounding Coordinates
+            GeoLocation currentLoc = GeoLocation.fromDegrees(lat, lng);
+
+            //Calculate the Bounding Coordinates in a 50 mile radius
+            //0 = min 1 = max
+            GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
+            String boundParameter;
+
+            //Request OpenCellID data for Bounding Coordinates
+            boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
+                    + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
+                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
+                    + String .valueOf(boundingCoords[1].getLongitudeInDegrees());
+
+            String urlString = "http://www.opencellid.org/cell/getInArea?key=24c66165-9748-4384-ab7c-172e3f533056"
+                    + "&BBOX=" + boundParameter
+                    + "&format=csv";
+
+            new RequestTask().execute(urlString);
+        } else {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle(R.string.no_network_connection_title)
+                    .setMessage(R.string.no_network_connection_message);
+            builder.create().show();
+        }
     }
 
+    /**
+     * Checks Network connectivity is available to download OpenCellID data
+     *
+     */
+    private Boolean isNetAvailable(Context context)  {
+
+        try{
+            ConnectivityManager connectivityManager = (ConnectivityManager)
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo mobileInfo =
+                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if (wifiInfo.isConnected() || mobileInfo.isConnected()) {
+                return true;
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Parses the downloaded CSV from OpenCellID and adds Map Marker to identify known
+     * Cell ID's
+     *
+     * @param fileName Name of file downloaded from OpenCellID
+     */
+    private void parseOpenCellID (String fileName) {
+
+        File file = new File(fileName);
+        try {
+            CSVReader csvReader = new CSVReader(new FileReader(file));
+            List<String[]> csvCellID = csvReader.readAll();
+
+
+            for (int i=1; i<csvCellID.size(); i++)
+            {
+                //Insert details into OpenCellID Database
+                long result =
+                        dbHelper.insertOpenCell(Double.parseDouble(csvCellID.get(i)[0]),
+                                Double.parseDouble(csvCellID.get(i)[1]),
+                                Integer.parseInt(csvCellID.get(i)[2]), Integer.parseInt(csvCellID.get(i)[3]),
+                                Integer.parseInt(csvCellID.get(i)[4]), Integer.parseInt(csvCellID.get(i)[5]),
+                                Integer.parseInt(csvCellID.get(i)[6]), Integer.parseInt(csvCellID.get(i)[7]));
+                if (result == -1)
+                {
+                    Log.e(TAG, "Error inserting OpenCellID database value");
+                }
+            }
+
+
+        } catch (Exception e) {
+            Log.e (TAG, "Error parsing OpenCellID data - " + e.getMessage());
+        }
+
+    }
+
+    /**
+     * Runs the request to download OpenCellID data in an AsyncTask
+     * preventing the application from becoming unresponsive whilst
+     * waiting for a response and download from the server
+     *
+     */
+    private class RequestTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... uri) {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpResponse response;
+            String responseString = null;
+            try {
+                response = httpclient.execute(new HttpGet(uri[0]));
+                StatusLine statusLine = response.getStatusLine();
+                if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    response.getEntity().writeTo(out);
+                    out.close();
+                    responseString = out.toString();
+                } else{
+                    //Closes the connection.
+                    response.getEntity().getContent().close();
+                    throw new IOException(statusLine.getReasonPhrase());
+                }
+            } catch (ClientProtocolException e) {
+                //TODO Handle problems..
+            } catch (IOException e) {
+                //TODO Handle problems..
+            }
+            return responseString;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            //Do anything with response..
+            if (result != null) {
+                if (Helpers.isSdWritable()) {
+                    try {
+                        File dir = new File(
+                                Environment.getExternalStorageDirectory() + "/AIMSICD/OpenCellID/");
+                        if (!dir.exists()) {
+                            dir.mkdirs();
+                        }
+                        Time today = new Time(Time.getCurrentTimezone());
+                        today.setToNow();
+                        String fileName = Environment.getExternalStorageDirectory()
+                                + "/AIMSICD/OpenCellID/opencellid.csv";
+                        File file = new File(dir, "opencellid.csv");
+
+                        FileOutputStream fOut = new FileOutputStream(file);
+                        OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+                        myOutWriter.append(result);
+                        myOutWriter.close();
+                        fOut.close();
+                        Helpers.sendMsg(mContext, "OpenCellID data successfully received");
+                        parseOpenCellID(fileName);
+                    } catch (Exception e) {
+                        Log.e (TAG, "Write OpenCellID response - " + e.getMessage());
+                    }
+                }
+            }
+        }
+    }
 }
