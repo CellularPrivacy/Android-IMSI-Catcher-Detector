@@ -51,7 +51,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -68,7 +67,7 @@ import android.util.Log;
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.cmdprocessor.Helpers;
+import com.SecUpwN.AIMSICD.Helpers;
 
 public class AimsicdService extends Service implements OnSharedPreferenceChangeListener {
 
@@ -79,7 +78,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     * System and helper declarations
     */
     private final AimscidBinder mBinder = new AimscidBinder();
-    public final AIMSICDDbAdapter dbHelper = new AIMSICDDbAdapter(this);
+    private final AIMSICDDbAdapter dbHelper = new AIMSICDDbAdapter(this);
+    private long mDbResult;
     private int mUpdateInterval;
     private TelephonyManager tm;
     private LocationManager lm;
@@ -90,19 +90,32 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
    /*
     * Device Declarations
     */
-    public int mPhoneID = -1;
-    public int mSignalInfo = -1;
-    public int mNetID = -1;
-    public int mLacID = -1;
-    public int mCellID = -1;
-    public int mSID = -1;
-    public double mLongitude = 0.0;
-    public double mLatitude = 0.0;
-    public String mNetType = "";
-    public String mPhoneNum = "", mCellType = "", mLac = "", mCellInfo = "", mDataState = "";
-    public String mNetName = "", mMmcmcc = "", mSimCountry = "", mPhoneType = "";
-    public String mIMEI = "", mIMEIV = "", mSimOperator = "", mSimOperatorName = "";
-    public String mSimSerial = "", mSimSubs = "", mDataActivityType = "";
+    private int mPhoneID = -1;
+    private int mSignalInfo = -1;
+    private int mNetID = -1;
+    private int mLacID = -1;
+    private int mCellID = -1;
+    private int mSID = -1;
+    private int mTimingAdvance = -1;
+    private double mLongitude = 0.0;
+    private double mLatitude = 0.0;
+    private String mNetType = "";
+    private String mPhoneNum = "";
+    private String mCellType = "";
+    private String mLac = "";
+    private String mCellInfo = "";
+    private String mDataState = "";
+    private String mNetName = "";
+    private String mMmcmcc = "";
+    private String mSimCountry = "";
+    private String mPhoneType = "";
+    private String mIMEI = "";
+    private String mIMEIV = "";
+    private String mSimOperator = "";
+    private String mSimOperatorName = "";
+    private String mSimSerial = "";
+    private String mSimSubs = "";
+    private String mDataActivityType = "";
 
    /*
     * Tracking and Alert Declarations
@@ -136,13 +149,20 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         refreshDeviceInfo();
         setNotification();
 
+        boolean trackFemtoPref = prefs.getBoolean(
+                this.getString(R.string.pref_femto_detection_key), false);
+
+        if (trackFemtoPref) {
+            startTrackingFemto();
+        }
+
         Log.i(TAG, "Service launched successfully");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Override
@@ -150,17 +170,24 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         super.onDestroy();
         prefs.unregisterOnSharedPreferenceChangeListener(this);
         cancelNotification();
-
+        dbHelper.close();
         Log.i(TAG, "Service destroyed");
     }
 
-    public void refreshDeviceInfo() {
+    /**
+     * Refreshes all device specific details
+     */
+    private void refreshDeviceInfo() {
         //Phone type and associated details
         mIMEI = tm.getDeviceId();
         mIMEIV = tm.getDeviceSoftwareVersion();
         mPhoneNum = tm.getLine1Number();
         mPhoneID = tm.getPhoneType();
         mRoaming = tm.isNetworkRoaming();
+        //Network type
+        mNetID = getNetID(true);
+        mNetType = getNetworkTypeName(mNetID, true);
+
         switch (mPhoneID) {
             case TelephonyManager.PHONE_TYPE_GSM:
                 mPhoneType = "GSM";
@@ -189,6 +216,36 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 break;
         }
 
+        //SDK 17 allows access to signal strength outside of the listener and also
+        //provide access to the LTE timing advance data
+        /*
+        if (Build.VERSION.SDK_INT > 16) {
+            try {
+                final TelephonyManager tm = (TelephonyManager) this
+                        .getSystemService(Context.TELEPHONY_SERVICE);
+                for (final CellInfo info : tm.getAllCellInfo()) {
+                    if (info instanceof CellInfoGsm) {
+                        final CellSignalStrengthGsm gsm = ((CellInfoGsm) info)
+                                .getCellSignalStrength();
+                        mSignalInfo = gsm.getDbm();
+                    } else if (info instanceof CellInfoCdma) {
+                        final CellSignalStrengthCdma cdma = ((CellInfoCdma) info)
+                                .getCellSignalStrength();
+                        mSignalInfo = cdma.getDbm();
+                    } else if (info instanceof CellInfoLte) {
+                        final CellSignalStrengthLte lte = ((CellInfoLte) info)
+                                .getCellSignalStrength();
+                        mSignalInfo = lte.getDbm();
+                        mTimingAdvance = lte.getTimingAdvance();
+                    } else {
+                        throw new Exception("Unknown type of cell signal!");
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Unable to obtain cell signal information", e);
+            }
+        }*/
+
         //SIM Information
         mSimCountry = tm.getSimCountryIso();
         mSimOperator = tm.getSimOperator();
@@ -196,23 +253,57 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mSimSerial = tm.getSimSerialNumber();
         mSimSubs = tm.getSubscriberId();
 
-        //Network type
-        mNetID = getNetID(true);
-        mNetType = getNetworkTypeName(mNetID, true);
-
         int mDataActivity = tm.getDataActivity();
         mDataActivityType = getActivityDesc(mDataActivity);
 
         mDataActivity = tm.getDataState();
         mDataState = getStateDesc(mDataActivity);
+
+        if (mLongitude == 0.0 || mLatitude == 0.0) {
+
+            Location lastKnownLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (lastKnownLocation != null) {
+                mLongitude = lastKnownLocation.getLongitude();
+                mLatitude = lastKnownLocation.getLatitude();
+            } else {
+                lastKnownLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (lastKnownLocation != null) {
+                    mLongitude = lastKnownLocation.getLongitude();
+                    mLatitude = lastKnownLocation.getLatitude();
+                }
+            }
+        }
     }
 
+    public double[] getLastLocation() {
+        return new double[] {mLatitude, mLongitude};
+    }
+
+    /**
+     * LTE Timing Advance
+     *
+     * @return Timing Advance figure or -1 if not available
+     */
+    public int getLteTimingAdvance() {
+        return mTimingAdvance;
+    }
+
+    /**
+     * Mobile Roaming
+     *
+     * @return string representing Roaming status (True/False)
+     */
     public String isRoaming() {
         mRoaming = tm.isNetworkRoaming();
 
         return  String.valueOf(mRoaming);
     }
 
+    /**
+     * CDMA System ID
+     *
+     * @return System ID or -1 if not supported
+     */
     public int getSID() {
         CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
         if (cdmaCellLocation != null) {
@@ -224,12 +315,22 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mSID;
     }
 
+    /**
+     * Phone Type ID
+     *
+     * @return integer representation of Phone Type
+     */
     public int getPhoneID() {
         mPhoneID = tm.getPhoneType();
 
         return mPhoneID;
     }
 
+    /**
+     * SIM Country
+     *
+     * @return string of SIM Country data
+     */
     public String getSimCountry(boolean force) {
         if (mSimCountry.isEmpty() || force) {
             mSimCountry = tm.getSimCountryIso();
@@ -238,6 +339,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mSimCountry;
     }
 
+    /**
+     * SIM Operator
+     *
+     * @return string of SIM Operator data
+     */
     public String getSimOperator(boolean force) {
         if (mSimOperator.isEmpty() || force) {
             mSimOperator = tm.getSimOperator();
@@ -246,6 +352,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mSimOperator;
     }
 
+    /**
+     * SIM Operator Name
+     *
+     * @return string of SIM Operator Name
+     */
     public String getSimOperatorName(boolean force) {
         if (mSimOperatorName.isEmpty() || force) {
             mSimOperatorName = tm.getSimOperatorName();
@@ -254,6 +365,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mSimOperatorName;
     }
 
+    /**
+     * SIM Subscriber ID
+     *
+     * @return string of SIM Subscriber ID data
+     */
     public String getSimSubs(boolean force) {
         if (mSimSubs.isEmpty() || force) {
             mSimSubs = tm.getSubscriberId();
@@ -262,6 +378,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mSimSubs;
     }
 
+    /**
+     * SIM Serial Number
+     *
+     * @return string of SIM Serial Number data
+     */
     public String getSimSerial(boolean force) {
         if (mSimSerial.isEmpty() || force) {
             mSimSerial = tm.getSimSerialNumber();
@@ -270,6 +391,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mSimSerial;
     }
 
+    /**
+     * Phone Type
+     *
+     * @return string representing Phone Type
+     */
     public String getPhoneType(boolean force) {
         if (mPhoneType.isEmpty() || force) {
             switch (getPhoneID()) {
@@ -294,6 +420,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mPhoneType;
     }
 
+    /**
+     * IMEI
+     *
+     * @return string representing device IMEI
+     */
     public String getIMEI(boolean force) {
         if (mIMEI.isEmpty() || force) {
             mIMEI = tm.getDeviceId();
@@ -302,6 +433,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mIMEI;
     }
 
+    /**
+     * IMEI Version / Device Software Version
+     *
+     * @return string representing device IMEI Version
+     */
     public String getIMEIv(boolean force) {
         if (mIMEIV.isEmpty() || force) {
             mIMEIV = tm.getDeviceSoftwareVersion();
@@ -310,6 +446,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mIMEIV;
     }
 
+    /**
+     * Device Line Number
+     *
+     * @return string representing device line number
+     */
     public String getPhoneNumber(boolean force) {
         if (mPhoneNum.isEmpty() || force) {
             mPhoneNum = tm.getLine1Number();
@@ -318,6 +459,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mPhoneNum;
     }
 
+    /**
+     * Network Operator Name
+     *
+     * @return string representing device Network Operator Name
+     */
     public String getNetworkName(boolean force) {
         if (mNetName.isEmpty() || force) {
             mNetName = tm.getNetworkOperatorName();
@@ -326,6 +472,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mNetName;
     }
 
+    /**
+     * Network Operator
+     *
+     * @return string representing the Network Operator
+     */
     public String getSmmcMcc(boolean force) {
         if (mMmcmcc.isEmpty() || force) {
             mMmcmcc = tm.getNetworkOperator();
@@ -334,6 +485,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mMmcmcc;
     }
 
+    /**
+     * Network Type
+     *
+     * @return string representing device Network Type
+     */
     public String getNetworkTypeName(int netID, boolean force) {
         if (mNetType.isEmpty() || force) {
             switch (netID) {
@@ -373,6 +529,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 case TelephonyManager.NETWORK_TYPE_1xRTT:
                     mNetType = "1xRTT";
                     break;
+                case TelephonyManager.NETWORK_TYPE_LTE:
+                    mNetType = "LTE";
+                    break;
                 default:
                     mNetType = "Unknown";
                     break;
@@ -382,6 +541,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mNetType;
     }
 
+    /**
+     * Network Type
+     *
+     * @return integer representing device Network Type
+     */
     public int getNetID(boolean force) {
         if (mNetID == -1 || force) {
             mNetID = tm.getNetworkType();
@@ -390,6 +554,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mNetID;
     }
 
+    /**
+     * Local Area Code (LAC) for either GSM or CDMA devices, returns string representation
+     * but also updates the integer member as well
+     *
+     * @return string representing the Local Area Code (LAC) from GSM or CDMA devices
+     */
     public String getLAC(boolean force) {
         if (mLac.isEmpty() || force) {
             switch (getPhoneID()) {
@@ -415,6 +585,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mLac;
     }
 
+    /**
+     * Cell ID for either GSM or CDMA devices, returns string representation
+     * but also updates the integer member as well
+     *
+     * @return string representing the Cell ID from GSM or CDMA devices
+     */
     public String getCellId() {
 
         switch (getPhoneID())
@@ -444,6 +620,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mCellType;
     }
 
+    /**
+     * Mobile data activity description
+     *
+     * @return string representing the current Mobile Data Activity
+     */
     public String getActivityDesc(int dataID) {
         mDataActivityType = "undef";
         switch (dataID) {
@@ -466,6 +647,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mDataActivityType;
     }
 
+    /**
+     * Mobile data state description
+     *
+     * @return string representing the current Mobile Data State
+     */
     public String getStateDesc(int dataID) {
         mDataState = "undef";
         switch (dataID) {
@@ -486,7 +672,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mDataState;
     }
 
-    public void updateCdmaLocation() {
+    /**
+     * Updates location from CDMA base station longitude and latitude
+     *
+     */
+    private void updateCdmaLocation() {
         CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
         int Long = cdmaCellLocation.getBaseStationLongitude();
         int Lat = cdmaCellLocation.getBaseStationLatitude();
@@ -504,7 +694,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      * Set or update the Notification
      *
      */
-    public void setNotification() {
+    private void setNotification() {
 
         Intent notificationIntent = new Intent(this, AIMSICD.class);
         PendingIntent contentIntent = PendingIntent.getActivity(
@@ -589,6 +779,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mNotificationManager.notify(0x1212, mBuilder);
     }
 
+    /**
+     * Cancel and remove the persistent notification
+     *
+     */
     private void cancelNotification() {
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(
                 NOTIFICATION_SERVICE);
@@ -597,6 +791,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
     }
 
+    /**
+     * Cell Information Tracking and database logging
+     *
+     * @param track Enable/Disable tracking
+     */
     public void setCellTracking(boolean track) {
         if (track) {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_CELL_LOCATION);
@@ -613,6 +812,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         setNotification();
     }
 
+    /**
+     * Signal Strength Tracking and database logging
+     *
+     * @param track Enable/Disable tracking
+     */
     public void setSignalTracking(boolean track) {
         if (track) {
             tm.listen(mSignalListenerStrength, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
@@ -627,7 +831,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         setNotification();
     }
 
-    private PhoneStateListener mSignalListenerStrength = new PhoneStateListener() {
+    private final PhoneStateListener mSignalListenerStrength = new PhoneStateListener() {
         public void onSignalStrengthsChanged(SignalStrength signalStrength) {
             switch (mPhoneID) {
                 case TelephonyManager.PHONE_TYPE_GSM:
@@ -643,15 +847,29 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             //Insert database record if tracking signal
             if (TrackingSignal) {
                 dbHelper.open();
-                dbHelper.insertSignal(mLacID,mCellID,
+                mDbResult = dbHelper.insertSignal(mLacID,mCellID,
                         mNetID, mLatitude,
                         mLongitude,mSignalInfo,
                         mCellInfo);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
             }
+
+            if (TrackingCell) {
+                dbHelper.open();
+                mDbResult = dbHelper.insertCell(mLacID, mCellID,
+                        mNetID, mLatitude,
+                        mLongitude, mSignalInfo,
+                        mCellInfo, mSimCountry,
+                        mSimOperator, mSimOperatorName);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
+            }
+
         }
     };
 
-    private PhoneStateListener mCellSignalListener = new PhoneStateListener() {
+    private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
         public void onCellLocationChanged(CellLocation location) {
             mNetID = getNetID(true);
             mNetType = getNetworkTypeName(mNetID, true);
@@ -721,17 +939,24 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     }
             }
 
-            if (TrackingCell && !dbHelper.cellExists(mCellID)) {
+            if (TrackingCell) {
                 dbHelper.open();
-                dbHelper.insertCell(mLacID, mCellID,
+                mDbResult = dbHelper.insertCell(mLacID, mCellID,
                         mNetID, mLatitude,
                         mLongitude, mSignalInfo,
                         mCellInfo, mSimCountry,
                         mSimOperator, mSimOperatorName);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
             }
         }
     };
 
+    /**
+     * Location Information Tracking and database logging
+     *
+     * @param track Enable/Disable tracking
+     */
     public void setLocationTracking(boolean track) {
         if (track) {
             if (lm != null) {
@@ -754,6 +979,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         builder.setMessage(R.string.location_error_message)
                                 .setTitle(R.string.location_error_title);
                         builder.create().show();
+                        TrackingLocation = false;
                     }
                 }
             }
@@ -776,10 +1002,23 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
             if (TrackingLocation) {
                 dbHelper.open();
-                dbHelper.insertLocation(mLacID, mCellID,
+                mDbResult = dbHelper.insertLocation(mLacID, mCellID,
                         mNetID, mLatitude,
                         mLongitude, mSignalInfo,
                         mCellInfo);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
+            }
+
+            if (TrackingCell) {
+                dbHelper.open();
+                mDbResult = dbHelper.insertCell(mLacID, mCellID,
+                        mNetID, mLatitude,
+                        mLongitude, mSignalInfo,
+                        mCellInfo, mSimCountry,
+                        mSimOperator, mSimOperatorName);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
             }
         }
 
@@ -803,20 +1042,34 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {
         final String KEY_UI_ICONS = getBaseContext().getString(R.string.pref_ui_icons_key);
+        final String FEMTO_DECTECTION = getBaseContext().getString(R.string.pref_femto_detection_key);
 
         if (key.equals(KEY_UI_ICONS)) {
             //Update Notification to display selected icon type
             setNotification();
+        } else if (key.equals(FEMTO_DECTECTION)) {
+            boolean trackFemtoPref = sharedPreferences.getBoolean(
+                    this.getString(R.string.pref_femto_detection_key), false);
+            if (trackFemtoPref) {
+                startTrackingFemto();
+            } else {
+                stopTrackingFemto();
+            }
         }
-
     }
 
-/*
- * The below code section was copied and modified from
- * Femtocatcher https://github.com/iSECPartners/femtocatcher
- *
- * Copyright (C) 2013 iSEC Partners
- */
+    /*
+     * The below code section was copied and modified from
+     * Femtocatcher https://github.com/iSECPartners/femtocatcher
+     *
+     * Copyright (C) 2013 iSEC Partners
+     */
+
+    /**
+     * Start FemtoCell detection tracking
+     * CDMA Devices ONLY
+     *
+     */
     public void startTrackingFemto() {
 
         /* Check if it is a CDMA phone */
@@ -837,6 +1090,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         setNotification();
     }
 
+    /**
+     * Stop FemtoCell detection tracking
+     * CDMA Devices ONLY
+     *
+     */
     public void stopTrackingFemto() {
         if (mPhoneStateListener != null) {
             tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
@@ -846,7 +1104,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
     }
 
-    public void getServiceStateInfo(ServiceState s) {
+    private void getServiceStateInfo(ServiceState s) {
         if (s != null) {
             if (IsConnectedToCdmaFemto(s)) {
                 Helpers.sendMsg(this, "ALERT!! Femtocell Connection Detected!!");
@@ -924,28 +1182,22 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
     }
 
+    /**
+     * Confirmation of connection to an EVDO Network
+     *
+     * @return EVDO network connection returns TRUE
+     */
     private boolean isEvDoNetwork(int networkType) {
-        if (Build.VERSION.SDK_INT > 11) {
-            if ((networkType == TelephonyManager.NETWORK_TYPE_EVDO_0) ||
-                    (networkType == TelephonyManager.NETWORK_TYPE_EVDO_A) ||
-                    (networkType == TelephonyManager.NETWORK_TYPE_EVDO_B) ||
-                    (networkType == TelephonyManager.NETWORK_TYPE_EHRPD)) {
-                return true;
-            }
-        } else {
-            if ((networkType == TelephonyManager.NETWORK_TYPE_EVDO_0) ||
-                    (networkType == TelephonyManager.NETWORK_TYPE_EVDO_A) ||
-                    (networkType == TelephonyManager.NETWORK_TYPE_EVDO_B)) {
-                return true;
-            }
-        }
-        return false;
+        return (networkType == TelephonyManager.NETWORK_TYPE_EVDO_0) ||
+                (networkType == TelephonyManager.NETWORK_TYPE_EVDO_A) ||
+                (networkType == TelephonyManager.NETWORK_TYPE_EVDO_B) ||
+                (networkType == TelephonyManager.NETWORK_TYPE_EHRPD);
     }
-/*
- * The above code section was copied and modified from
- * Femtocatcher https://github.com/iSECPartners/femtocatcher
- *
- * Copyright (C) 2013 iSEC Partners
- */
+    /*
+     * The above code section was copied and modified from
+     * Femtocatcher https://github.com/iSECPartners/femtocatcher
+     *
+     * Copyright (C) 2013 iSEC Partners
+     */
 
 }
