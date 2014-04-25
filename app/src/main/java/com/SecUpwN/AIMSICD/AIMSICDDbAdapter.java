@@ -12,6 +12,7 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
@@ -201,6 +202,33 @@ public class AIMSICDDbAdapter {
     public Cursor getSignalData() {
         return mDb.query(true, SIGNAL_TABLE, new String[] {"Net", "Lat", "Lng", "Signal", "CellID"},
                 "Lat <> 0.0 AND lng <> 0.0",null,null,null,null,null);
+    }
+
+    /**
+     * Returns Cell Information database contents
+     */
+    public Cursor getCellData() {
+        return mDb.query(CELL_TABLE, new String[] {"CellID", "Lac", "Net", "Lat", "Lng",
+                        "Signal"},
+                null,null,null,null, null);
+    }
+
+    /**
+     * Returns Location Information database contents
+     */
+    public Cursor getLocationData() {
+        return mDb.query(LOCATION_TABLE, new String[] {"CellID", "Lac", "Net", "Lat", "Lng",
+                        "Signal"},
+                null,null,null,null,null);
+    }
+
+    /**
+     * Returns OpenCellID database contents
+     */
+    public Cursor getOpenCellIDData() {
+        return mDb.query(OPENCELLID_TABLE, new String[] {"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng",
+                        "AvgSigStr", "Samples"},
+                null,null,null,null,null);
     }
 
     /**
