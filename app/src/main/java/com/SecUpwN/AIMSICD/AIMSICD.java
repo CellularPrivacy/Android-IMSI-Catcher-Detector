@@ -284,6 +284,7 @@ public class AIMSICD extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.track_cell:
                 trackcell();
@@ -304,8 +305,12 @@ public class AIMSICD extends Activity {
             case R.id.show_map:
                 showmap();
                 return true;
+            case R.id.view_db:
+                intent = new Intent(this, DbViewer.class);
+                startActivity(intent);
+                return true;
             case R.id.preferences:
-                Intent intent = new Intent(this, PrefActivity.class);
+                intent = new Intent(this, PrefActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.export_database:
