@@ -3,8 +3,8 @@
 
 #### 25.04.2014 - WIP-Release v0.1.9-alpha
 
-Added: Ability to view the current database contents using a CardUI type interface
-Added: Access to all current contents including the newly created OpenCellID data table
+* Added: Ability to view the current database contents using a CardUI type interface
+* Added: Access to all current contents including the newly created OpenCellID data table
 
 #### 25.04.2014 - WIP-Release v0.1.8-alpha
 
