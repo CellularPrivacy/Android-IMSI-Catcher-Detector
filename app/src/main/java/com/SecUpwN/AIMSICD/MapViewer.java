@@ -294,7 +294,7 @@ public class MapViewer extends FragmentActivity {
             if (loc != null) {
                 final CameraPosition POSITION =
                         new CameraPosition.Builder().target(loc)
-                                .zoom(13)
+                                .zoom(18.0f)
                                 .bearing(320)
                                 .tilt(30)
                                 .build();
@@ -309,7 +309,7 @@ public class MapViewer extends FragmentActivity {
             if ( lastKnownLocation != null) {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                         new LatLng(lastKnownLocation.getLatitude(),
-                                lastKnownLocation.getLongitude()), 5));
+                                lastKnownLocation.getLongitude()), 18.0f));
             } else {
                 // Try and find last known location and zoom there
                 GetCurrentLocation();
@@ -326,7 +326,7 @@ public class MapViewer extends FragmentActivity {
         double[] d = getlocation();
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(d[0], d[1]), 5));
+                new LatLng(d[0], d[1]), 18.0f));
     }
 
     /**
