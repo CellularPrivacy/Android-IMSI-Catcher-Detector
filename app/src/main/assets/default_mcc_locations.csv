@@ -38,6 +38,7 @@ Central African Republic,623,18.5833,4.36667
 Chad,622,15.05,12.1167
 Chile,730,-70.6667,-33.45
 China,460,116.388,39.9289
+China,461,116.388,39.9289
 Colombia,732,-74.0833,4.6
 Comoros,654,43.2403,-11.7042
 Congo,629,15.2847,-4.25917
@@ -92,6 +93,7 @@ Isle Of Man,243,-4.48333,54.15
 Italy,222,12.4833,41.9
 Jamaica,338,-76.8,18
 Japan,440,139.753,35.6861
+Japan,441,139.753,35.6861
 Jersey,234,-2.1,49.1833
 Jordan,416,35.9333,31.95
 Kazakhstan,401,71.4278,51.1811
@@ -175,7 +177,7 @@ Swaziland,653,31.1333,-26.3167
 Sweden,240,18.05,59.3333
 Switzerland,228,7.46667,46.9167
 Syria,417,36.3,33.5
-Taiwan,466,121.45,25.0167
+Taiwan,466,25.0167,121.45
 Tajikistan,436,68.7739,38.56
 Tanzania,640,39.2833,-6.8
 Thailand,520,100.517,13.75
@@ -190,7 +192,17 @@ Tuvalu,553,179.217,-8.51667
 Uganda,641,32.5833,0.316667
 Ukraine,255,30.5167,50.4333
 United Arab Emirates,424,54.3667,24.4667
+United Arab Emirates,430,54.3667,24.4667
+United Arab Emirates,431,54.3667,24.4667
 United Kingdom,235,-0.116667,51.5
+United Kingdom,234,-0.116667,51.5
+United States of America,312,38.8951,77.0367
+United States of America,316,38.8951,77.0367
+United States of America,310,38.8951,77.0367
+United States of America,311,38.8951,77.0367
+United States of America,313,38.8951,77.0367
+United States of America,314,38.8951,77.0367
+United States of America,315,38.8951,77.0367
 Uruguay,748,-56.1708,-34.8581
 Uzbekistan,434,69.25,41.3167
 Vanuatu,541,168.317,-17.7333
