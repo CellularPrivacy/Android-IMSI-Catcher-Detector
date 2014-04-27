@@ -136,6 +136,7 @@ public class AIMSICD extends Activity {
     public void onResume() {
         super.onResume();
         updateUI();
+        invalidateOptionsMenu();
     }
 
     private void updateUI() {
@@ -275,7 +276,7 @@ public class AIMSICD extends Activity {
             mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
         } else {
             mTrackFemtocell.setTitle(R.string.track_femtocell);
-            mTrackSignal.setIcon(R.drawable.ic_action_network_cell_not_tracked);
+            mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell_not_tracked);
         }
 
         return super.onPrepareOptionsMenu(menu);

@@ -12,6 +12,7 @@ public class CardItemData
     private String mSamples;
     private String mLat;
     private String mLng;
+    private String mCountry;
 
 
     public CardItemData(String cellID, String lac, String mcc, String mnc, String lat, String lng,
@@ -35,6 +36,14 @@ public class CardItemData
         mLat = lat;
         mLng = lng;
         mSignal = signal;
+    }
+
+    public CardItemData(String country, String mcc, String lat, String lng)
+    {
+        mCountry = country;
+        mMcc = mcc;
+        mLat = lat;
+        mLng = lng;
     }
 
     public String getCellID() {
@@ -75,5 +84,9 @@ public class CardItemData
 
     public String getLng() {
         return mLng;
+    }
+
+    public String getCountry() {
+        return mCountry;
     }
 }
