@@ -1,6 +1,12 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 27.04.2014 - WIP-Release v0.1.10-alpha
+
+* Improved: Database Viewer UI tweaked to use a gradient colouring scheme
+* Improved: Map Viewer will fall back to a default location based on MCC and the Countries Capital City
+* Fix: Bug with Signal Strength Tracking icon always showing as disabled
+
 #### 25.04.2014 - WIP-Release v0.1.9-alpha
 
 * Added: Ability to view the current database contents using a CardUI type interface
