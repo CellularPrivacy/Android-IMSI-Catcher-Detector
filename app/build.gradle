@@ -18,6 +18,13 @@ android {
             keyAlias 'androiddebugkey'
         }
     }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets']
+        }
+    }
+
+
 }
 
 dependencies {

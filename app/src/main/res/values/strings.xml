@@ -117,6 +117,7 @@
         <item>Signal Strength Data</item>
         <item>Location Data</item>
         <item>OpenCellID Data</item>
+        <item>Default MCC Locations</item>
     </string-array>
 
 </resources>
