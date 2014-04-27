@@ -3,6 +3,7 @@ package com.SecUpwN.AIMSICD;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,9 +12,13 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.util.List;
 
+import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
 public class AIMSICDDbAdapter {
@@ -23,12 +28,13 @@ public class AIMSICDDbAdapter {
     private final DbHelper mDbHelper;
     private SQLiteDatabase mDb;
     private Context mContext;
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String COLUMN_ID = "_id";
     private final String LOCATION_TABLE = "locationinfo";
     private final String CELL_TABLE = "cellinfo";
     private final String SIGNAL_TABLE = "signalinfo";
     private final String OPENCELLID_TABLE = "opencellid";
+    private final String DEFAULT_MCC_TABLE = "defaultlocation";
     private final String DB_NAME = "myCellInfo";
     private final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
 
@@ -82,6 +88,14 @@ public class AIMSICDDbAdapter {
             " integer primary key autoincrement, Lat VARCHAR, Lng VARCHAR, Mcc INTEGER, " +
             "Mnc INTEGER, Lac INTEGER, CellID INTEGER, AvgSigStr INTEGER, Samples INTEGER, " +
             "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
+
+    /**
+     * Default MCC Location Database
+     */
+    private final String DEFAULT_MCC_DATABASE_CREATE = "create table " +
+            DEFAULT_MCC_TABLE + " (" + COLUMN_ID +
+            " integer primary key autoincrement, Country VARCHAR, Mcc INTEGER, "
+            + "Lat VARCHAR, Lng VARCHAR);";
 
     /**
      * Inserts Cell Details into Database
@@ -232,6 +246,14 @@ public class AIMSICDDbAdapter {
     }
 
     /**
+     * Returns Default MCC Locations database contents
+     */
+    public Cursor getDefaultMccLocationData() {
+        return mDb.query(DEFAULT_MCC_TABLE, new String[] {"Country", "Mcc", "Lat", "Lng"},
+                null,null,null,null,null);
+    }
+
+    /**
      * Checks to see if Location already exists in database
      */
     public boolean locationExists(int cellID) {
@@ -271,6 +293,67 @@ public class AIMSICDDbAdapter {
         return cursor.getCount()>0;
     }
 
+    public double[] getDefaultLocation(int mcc) {
+        double[] loc = new double[2];
+
+        Cursor cursor = mDb.rawQuery("SELECT Lat, Lng FROM " + DEFAULT_MCC_TABLE + " WHERE Mcc = " +
+        mcc, null);
+
+        if (cursor.moveToFirst()) {
+            loc[0] = Double.parseDouble(cursor.getString(0));
+            loc[1] = Double.parseDouble(cursor.getString(1));
+        } else {
+            loc[0] = 0.0;
+            loc[1] = 0.0;
+        }
+
+        return loc;
+    }
+
+    /**
+     * Populates the Default Mcc Location table using the CSV file found in the
+     * application ASSETS folder
+     */
+    private void populateDefaultMCC(SQLiteDatabase db) {
+        AssetManager mngr = mContext.getAssets();
+        InputStream csvDefaultMcc;
+        FileOutputStream fout;
+
+        try {
+            csvDefaultMcc = mngr.open("default_mcc_locations.csv");
+            File tempfile = File.createTempFile("tempFile", ".tmp");
+            tempfile.deleteOnExit();
+
+            fout = new FileOutputStream(tempfile);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = csvDefaultMcc.read(buf)) != -1) {
+                fout.write(buf, 0, len);
+            }
+            fout.close();
+            csvDefaultMcc.close();
+
+            CSVReader csvReader = new CSVReader(new FileReader(tempfile));
+            List<String[]> csvMcc = csvReader.readAll();
+            //Populate Content Values for Insert or Update
+            ContentValues defaultMccValues = new ContentValues();
+
+            for (int i=1; i < csvMcc.size(); i++)
+            {
+                defaultMccValues.put("Country", csvMcc.get(i)[0]);
+                defaultMccValues.put("Mcc", csvMcc.get(i)[1]);
+                defaultMccValues.put("Lng", csvMcc.get(i)[2]);
+                defaultMccValues.put("Lat", csvMcc.get(i)[3]);
+
+                db.insert(DEFAULT_MCC_TABLE, null, defaultMccValues);
+            }
+
+
+        } catch (Exception e) {
+            Log.e (TAG, "Error parsing OpenCellID data - " + e);
+        }
+    }
+
     /**
      * Exports the database tables to CSV files
      */
@@ -279,6 +362,7 @@ public class AIMSICDDbAdapter {
             export(LOCATION_TABLE);
             export(CELL_TABLE);
             export(SIGNAL_TABLE);
+            export(OPENCELLID_TABLE);
             final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setTitle(R.string.database_export_successful)
                     .setMessage("Database tables exported succesfully to:\n" + FOLDER);
@@ -288,6 +372,11 @@ public class AIMSICDDbAdapter {
         }
     }
 
+    /**
+     * Exports the database tables to CSV files
+     *
+     * @param tableName String representing table name to export
+     */
     private void export(String tableName) {
         Log.i(TAG, "exporting database - " + DB_NAME);
 
@@ -339,6 +428,8 @@ public class AIMSICDDbAdapter {
             database.execSQL(CELL_DATABASE_CREATE);
             database.execSQL(SIG_DATABASE_CREATE);
             database.execSQL(OPENCELLID_DATABASE_CREATE);
+            database.execSQL(DEFAULT_MCC_DATABASE_CREATE);
+            populateDefaultMCC(database);
         }
 
         @Override
@@ -351,6 +442,8 @@ public class AIMSICDDbAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + CELL_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + SIGNAL_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + OPENCELLID_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + DEFAULT_MCC_TABLE);
+
             onCreate(db);
         }
     }
