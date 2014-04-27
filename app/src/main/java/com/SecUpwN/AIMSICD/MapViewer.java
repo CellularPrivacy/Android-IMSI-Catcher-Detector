@@ -187,7 +187,7 @@ public class MapViewer extends FragmentActivity {
                 } else if (loc != null) {
                     getOpenCellData(loc.latitude, loc.longitude);
                 } else {
-                    double[] lastKnown = getlocation();
+                    double[] lastKnown = getLastLocation();
                     if (lastKnown != null) {
                         getOpenCellData(lastKnown[0], lastKnown[1]);
                         Log.i(TAG, "Lat: " + lastKnown[0]
@@ -291,10 +291,10 @@ public class MapViewer extends FragmentActivity {
 
             } while (c.moveToNext());
             c.close();
-            if (loc != null) {
+            if (loc != null && (loc.latitude != 0.0 && loc.longitude != 0.0)) {
                 final CameraPosition POSITION =
                         new CameraPosition.Builder().target(loc)
-                                .zoom(18.0f)
+                                .zoom(16.0f)
                                 .bearing(320)
                                 .tilt(30)
                                 .build();
@@ -302,55 +302,59 @@ public class MapViewer extends FragmentActivity {
             }
         } else {
             Helpers.msgShort(this, "No tracked locations found to overlay on map.");
-            String locationProvider = LocationManager.NETWORK_PROVIDER;
+            // Try and find last known location and zoom there
+            double[] d = getLastLocation();
+            if (d[0] != 0.0 && d[1] != 0.0) {
+                loc = new LatLng(d[0], d[1]);
+                final CameraPosition POSITION =
+                        new CameraPosition.Builder().target(loc)
+                                .zoom(16.0f)
+                                .bearing(320)
+                                .tilt(30)
+                                .build();
 
-            LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-            Location lastKnownLocation = lm.getLastKnownLocation(locationProvider);
-            if ( lastKnownLocation != null) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                        new LatLng(lastKnownLocation.getLatitude(),
-                                lastKnownLocation.getLongitude()), 18.0f));
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(POSITION));
             } else {
-                // Try and find last known location and zoom there
-                GetCurrentLocation();
+                //Use Mcc to move camera to an approximate location near Countries Capital
+                final TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+                final int mcc = Integer.parseInt(tm.getNetworkOperator().substring(0, 3));
+                d = mDbHelper.getDefaultLocation(mcc);
+                loc = new LatLng(d[0], d[1]);
+                final CameraPosition POSITION =
+                        new CameraPosition.Builder().target(loc)
+                                .zoom(13.0f)
+                                .bearing(320)
+                                .tilt(30)
+                                .build();
+
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(POSITION));
             }
         }
-    }
-
-    /**
-     * Uses last known location to animateCamera to location
-     *
-     */
-    private void GetCurrentLocation() {
-
-        double[] d = getlocation();
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(d[0], d[1]), 18.0f));
     }
 
     /**
      * Attempts to retrieve the last known location from the device
      *
      */
-    private double[] getlocation() {
-
-        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+    private double[] getLastLocation() {
+        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = lm.getProviders(true);
 
+        /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
         Location l = null;
-        for (String provider : providers) {
-            l = lm.getLastKnownLocation(provider);
-            if (l != null)
-                break;
-        }
-        double[] gps = new double[2];
 
+        for (int i=providers.size()-1; i>=0; i--) {
+            l = lm.getLastKnownLocation(providers.get(i));
+            if (l != null) break;
+        }
+
+        double[] gps = new double[2];
         if (l != null) {
             gps[0] = l.getLatitude();
             gps[1] = l.getLongitude();
         }
         return gps;
+
     }
 
     /**
