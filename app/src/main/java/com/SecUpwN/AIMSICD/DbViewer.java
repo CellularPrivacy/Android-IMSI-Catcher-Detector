@@ -3,6 +3,7 @@ package com.SecUpwN.AIMSICD;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.CardItemData;
 import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
+import com.SecUpwN.AIMSICD.adapters.DefaultLocationCardInflater;
 import com.SecUpwN.AIMSICD.adapters.OpenCellIdCardInflater;
 
 import android.app.Activity;
@@ -15,7 +16,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 
 public class DbViewer extends Activity {
 
@@ -75,6 +75,16 @@ public class DbViewer extends Activity {
                         adapter.addItem(data, false);
                 }
                 lv.setAdapter(adapter);
+            } else if (mTableSelected.equals("Default MCC Locations")) {
+                BaseInflaterAdapter<CardItemData> adapter = new BaseInflaterAdapter<CardItemData>(
+                        new DefaultLocationCardInflater());
+                while (tableData.moveToNext()) {
+                    CardItemData data = new CardItemData("Country: " + tableData.getString(0),
+                            "MCC: " + tableData.getString(1), "Latitude: " + tableData.getString(2),
+                            "Longitude: " + tableData.getString(3));
+                    adapter.addItem(data, false);
+                }
+                lv.setAdapter(adapter);
             } else {
                 BaseInflaterAdapter<CardItemData> adapter = new BaseInflaterAdapter<CardItemData>(
                         new CellCardInflater());
@@ -112,6 +122,8 @@ public class DbViewer extends Activity {
                 return mDb.getLocationData();
             } else if (mTableSelected.equals("OpenCellID Data")) {
                 return mDb.getOpenCellIDData();
+            } else if (mTableSelected.equals("Default MCC Locations")) {
+                return mDb.getDefaultMccLocationData();
             }
 
             return null;
