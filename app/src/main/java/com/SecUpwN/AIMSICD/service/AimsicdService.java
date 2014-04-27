@@ -1024,7 +1024,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         @Override
         public void onProviderDisabled(String provider) {
-            // TODO Auto-generated method stub
+            Helpers.sendMsg(getApplicationContext(), "GPS is off");
+            Intent gpsSettings = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            gpsSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(gpsSettings);
         }
 
         @Override
