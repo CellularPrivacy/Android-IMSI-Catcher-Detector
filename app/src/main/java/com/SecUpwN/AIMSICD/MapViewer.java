@@ -28,6 +28,8 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
@@ -55,6 +57,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import com.SecUpwN.AIMSICD.service.AimsicdService;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -73,6 +77,8 @@ public class MapViewer extends FragmentActivity {
     private AIMSICDDbAdapter mDbHelper;
     private Context mContext;
     private LatLng loc = null;
+    private SharedPreferences prefs;
+    private String mapTypePref;
 
     /**
      * Called when the activity is first created.
@@ -96,6 +102,26 @@ public class MapViewer extends FragmentActivity {
         mDbHelper = new AIMSICDDbAdapter(this);
         loadEntries();
         mContext = this;
+        mapTypePref = getResources().getString(R.string.map_pref_type);
+        prefs = mContext.getSharedPreferences(
+                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        if (prefs.contains(mapTypePref)) {
+            int mapType = prefs.getInt(mapTypePref, 0);
+            switch (mapType) {
+                case 0:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    break;
+                case 1:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    break;
+                case 2:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                    break;
+                case 3:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -159,20 +185,27 @@ public class MapViewer extends FragmentActivity {
                 menuAlert.setTitle("Map Type");
                 menuAlert.setItems(menuList, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
+                        Editor editor = prefs.edit();
+
                         switch (item) {
                             case 0:
                                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                                editor.putInt(mapTypePref, 0);
                                 break;
                             case 1:
                                 mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                                editor.putInt(mapTypePref, 1);
                                 break;
                             case 2:
                                 mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                                editor.putInt(mapTypePref, 2);
                                 break;
                             case 3:
                                 mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                                editor.putInt(mapTypePref, 3);
                                 break;
                         }
+                        editor.commit();
                     }
                 });
                 AlertDialog menuMapType = menuAlert.create();
@@ -190,8 +223,6 @@ public class MapViewer extends FragmentActivity {
                     double[] lastKnown = getLastLocation();
                     if (lastKnown != null) {
                         getOpenCellData(lastKnown[0], lastKnown[1]);
-                        Log.i(TAG, "Lat: " + lastKnown[0]
-                                + " Long: " + lastKnown[1]);
                     } else {
                         Helpers.sendMsg(this, "Error finding your location!");
                     }
@@ -216,20 +247,21 @@ public class MapViewer extends FragmentActivity {
         int signal;
         int color;
         int cellID;
+        CircleOptions circleOptions;
         mDbHelper.open();
-        Cursor c = mDbHelper.getSignalData();
+        Cursor c = mDbHelper.getCellData();
         if (c.moveToFirst()) {
-
-            CircleOptions circleOptions;
             do {
-                net = c.getInt(0);
-                dlat = Double.parseDouble(c.getString(1));
-                dlng = Double.parseDouble(c.getString(2));
-                signal = c.getInt(3);
-                if (signal > 0) {
+                cellID = c.getInt(0);
+                net = c.getInt(2);
+                dlat = Double.parseDouble(c.getString(3));
+                dlng = Double.parseDouble(c.getString(4));
+                if (dlat == 0.0 && dlng == 0.0)
+                    continue;
+                signal = c.getInt(5);
+                if (signal <= 0) {
                     signal = 20;
                 }
-                cellID = c.getInt(4);
 
                 if ((dlat != 0.0) || (dlng != 0.0)) {
                     loc = new LatLng(dlat, dlng);
@@ -291,44 +323,65 @@ public class MapViewer extends FragmentActivity {
 
             } while (c.moveToNext());
             c.close();
-            if (loc != null && (loc.latitude != 0.0 && loc.longitude != 0.0)) {
-                final CameraPosition POSITION =
-                        new CameraPosition.Builder().target(loc)
-                                .zoom(16.0f)
-                                .bearing(320)
-                                .tilt(30)
-                                .build();
-                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(POSITION));
-            }
         } else {
             Helpers.msgShort(this, "No tracked locations found to overlay on map.");
+        }
+
+        if (loc != null && (loc.latitude != 0.0 && loc.longitude != 0.0)) {
+            CameraPosition POSITION =
+                    new CameraPosition.Builder().target(loc)
+                            .zoom(16)
+                            .build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
+        } else {
             // Try and find last known location and zoom there
             double[] d = getLastLocation();
             if (d[0] != 0.0 && d[1] != 0.0) {
                 loc = new LatLng(d[0], d[1]);
-                final CameraPosition POSITION =
+                CameraPosition POSITION =
                         new CameraPosition.Builder().target(loc)
-                                .zoom(16.0f)
-                                .bearing(320)
-                                .tilt(30)
+                                .zoom(16)
                                 .build();
 
-                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(POSITION));
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
             } else {
                 //Use Mcc to move camera to an approximate location near Countries Capital
-                final TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-                final int mcc = Integer.parseInt(tm.getNetworkOperator().substring(0, 3));
+                TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+                int mcc = Integer.parseInt(tm.getNetworkOperator().substring(0, 3));
                 d = mDbHelper.getDefaultLocation(mcc);
                 loc = new LatLng(d[0], d[1]);
-                final CameraPosition POSITION =
+                CameraPosition POSITION =
                         new CameraPosition.Builder().target(loc)
-                                .zoom(13.0f)
-                                .bearing(320)
-                                .tilt(30)
+                                .zoom(13)
                                 .build();
 
-                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(POSITION));
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
             }
+        }
+
+        //Check if OpenCellID data exists and if so load this now
+        c = mDbHelper.getOpenCellIDData();
+        if (c.moveToFirst()) {
+            do {
+                cellID = c.getInt(0);
+                dlat = Double.parseDouble(c.getString(4));
+                dlng = Double.parseDouble(c.getString(5));
+                loc = new LatLng (dlat, dlng);
+                int lac = c.getInt(1);
+                int mcc = c.getInt(2);
+                int mnc = c.getInt(3);
+                int samples = c.getInt(7);
+                // Add map marker for CellID
+                mMap.addMarker(new MarkerOptions()
+                        .position(loc)
+                        .draggable(false)
+                        .title("CellID - " + cellID))
+                        .setSnippet("LAC: " + lac
+                        + "\nMCC: " + mcc
+                        + "\nMNC: " + mnc
+                        + "\nSamples: " + samples);
+
+            } while (c.moveToNext());
         }
     }
 
@@ -438,7 +491,11 @@ public class MapViewer extends FragmentActivity {
                 mMap.addMarker(new MarkerOptions()
                         .position(loc)
                         .draggable(false)
-                        .title("CellID - " + csvCellID.get(i)[5]));
+                        .title("CellID - " + csvCellID.get(i)[5]))
+                        .setSnippet("LAC: " + csvCellID.get(i)[4]
+                                + "\nMCC: " + csvCellID.get(i)[2]
+                                + "\nMNC: " + csvCellID.get(i)[3]
+                                + "\nSamples: " + csvCellID.get(i)[7]);
 
                 //Insert details into OpenCellID Database
                 long result =

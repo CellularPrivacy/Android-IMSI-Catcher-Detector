@@ -32,7 +32,6 @@ public class AIMSICDDbAdapter {
     private static final String COLUMN_ID = "_id";
     private final String LOCATION_TABLE = "locationinfo";
     private final String CELL_TABLE = "cellinfo";
-    private final String SIGNAL_TABLE = "signalinfo";
     private final String OPENCELLID_TABLE = "opencellid";
     private final String DEFAULT_MCC_TABLE = "defaultlocation";
     private final String DB_NAME = "myCellInfo";
@@ -69,15 +68,6 @@ public class AIMSICDDbAdapter {
             " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
             "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
             "Country VARCHAR, Operator VARCHAR, OperatorName VARCHAR, " +
-            "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-
-    /**
-     * Signal Strength Tracking Database
-     */
-    private final String SIG_DATABASE_CREATE = "create table " +
-            SIGNAL_TABLE + " (" + COLUMN_ID +
-            " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
-            "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
             "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
 
     /**
@@ -184,39 +174,6 @@ public class AIMSICDDbAdapter {
         }
     }
 
-    /**
-     * Inserts Signal Strength Details into Database
-     *
-     * @return row id or -1 if error
-     */
-    public long insertSignal(int lac, int cellID,
-            int netType, double latitude, double longitude,
-            int signalInfo, String cellInfo) {
-        //Populate Content Values for Insert or Update
-        ContentValues signalValues = new ContentValues();
-        signalValues.put("Lac", lac);
-        signalValues.put("CellID", cellID);
-        signalValues.put("Net", netType);
-        signalValues.put("Lat", latitude);
-        signalValues.put("Lng", longitude);
-        signalValues.put("Signal", signalInfo);
-        signalValues.put("Connection", cellInfo);
-
-        if (cellSignalExists(cellID)) {
-            return mDb.update(SIGNAL_TABLE, signalValues, "CellID=?",
-                    new String[]{Integer.toString(cellID)});
-        } else {
-            return mDb.insert(LOCATION_TABLE, null, signalValues);
-        }
-    }
-
-    /**
-     * Returns Signal Strength database contents
-     */
-    public Cursor getSignalData() {
-        return mDb.query(true, SIGNAL_TABLE, new String[] {"Net", "Lat", "Lng", "Signal", "CellID"},
-                "Lat <> 0.0 AND lng <> 0.0",null,null,null,null,null);
-    }
 
     /**
      * Returns Cell Information database contents
@@ -278,16 +235,6 @@ public class AIMSICDDbAdapter {
      */
     public boolean openCellExists(int cellID) {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE + " WHERE CellID = " +
-                cellID, null);
-
-        return cursor.getCount()>0;
-    }
-
-    /**
-     * Checks to see if Cell Signal data already exists in database
-     */
-    public boolean cellSignalExists(int cellID) {
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + SIGNAL_TABLE + " WHERE CellID = " +
                 cellID, null);
 
         return cursor.getCount()>0;
@@ -361,7 +308,6 @@ public class AIMSICDDbAdapter {
         try {
             export(LOCATION_TABLE);
             export(CELL_TABLE);
-            export(SIGNAL_TABLE);
             export(OPENCELLID_TABLE);
             final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setTitle(R.string.database_export_successful)
@@ -426,7 +372,6 @@ public class AIMSICDDbAdapter {
         public void onCreate(SQLiteDatabase database) {
             database.execSQL(LOC_DATABASE_CREATE);
             database.execSQL(CELL_DATABASE_CREATE);
-            database.execSQL(SIG_DATABASE_CREATE);
             database.execSQL(OPENCELLID_DATABASE_CREATE);
             database.execSQL(DEFAULT_MCC_DATABASE_CREATE);
             populateDefaultMCC(database);
@@ -440,7 +385,6 @@ public class AIMSICDDbAdapter {
             );
             db.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + CELL_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + SIGNAL_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + OPENCELLID_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + DEFAULT_MCC_TABLE);
 
