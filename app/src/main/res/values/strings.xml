@@ -12,6 +12,20 @@
     <string name="empty"></string>
     <string name="gsm_only">GSM Phones Only</string>
 
+    <!-- DISCLAIMER -->
+    <string name="disclaimer_title">DISCLAIMER</string>
+    <string name="disclaimer">By using AIMSICD you have understood and agree that AIMSICD is an experimental
+        and informative Android application that can fail to detect surveillance and
+        tracking for many reasons. You also understand that it can be circumvented or
+        defeated by other means, not yet understood to the developers. Thus you also
+        agree and understand that the developers and companies related to this free
+        product, can in no way be held responsible for any results or outcome,
+        depending on the use of this application.
+
+        \n\n[OK] - I understand and agree
+        \n\n[CANCEL] - I do not agree and want to remove this Application
+    </string>
+
     <!-- Mobile Network Types -->
     <string name="gprs"># GPRS</string>
     <string name="edge"># EDGE</string>
@@ -28,8 +42,6 @@
     <string name="untrack_cell">Untrack Cell Details</string>
     <string name="track_location">Track Location</string>
     <string name="untrack_location">Untrack Location</string>
-    <string name="track_signal">Track Signal</string>
-    <string name="untrack_signal">Untrack Signal</string>
     <string name="track_femtocell">Track Femtocell</string>
     <string name="untrack_femtocell">Untrack Femtocell</string>
     <string name="show_map">Show Map</string>
@@ -92,6 +104,9 @@
     <string name="pref_killservice_key">pref_kill_service</string>
     <string name="pref_killservice_summ">Disable the Persistent Service when exiting the application</string>
     <string name="pref_protection_title">Protection Settings</string>
+    <string name="pref_enable_cell_key">pref_enable_cell</string>
+    <string name="pref_enable_cell_title">Cell Tracking</string>
+    <string name="pref_enable_cell_summ">Enable Cell Tracking Automatically</string>
     <string name="pref_femto_title">FemtoCell</string>
     <string name="pref_femto_summ">FemtoCell Detection (CDMA Phones ONLY)</string>
     <string name="pref_femto_detection_key">pref_femto_detection</string>
@@ -106,6 +121,8 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="map_pref_type">map_pref_type</string>
+    <string name="disclaimer_accepted">disclaimer_accepted</string>
 
     <string name="database_export_successful">Export Successful</string>
 
@@ -114,7 +131,6 @@
     <string name="table_names_prompt">Select Table</string>
     <string-array name="table_names">
         <item>Cell Data</item>
-        <item>Signal Strength Data</item>
         <item>Location Data</item>
         <item>OpenCellID Data</item>
         <item>Default MCC Locations</item>

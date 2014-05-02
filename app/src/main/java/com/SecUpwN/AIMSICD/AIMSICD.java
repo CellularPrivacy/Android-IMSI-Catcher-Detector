@@ -21,11 +21,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -68,7 +71,9 @@ public class AIMSICD extends Activity {
     private final Context mContext = this;
     private boolean mBound;
     private SharedPreferences prefs;
+    private Editor prefsEditor;
     private AIMSICDDbAdapter dbHelper;
+    private String mDisclaimerAccepted;
 
     private AimsicdService mAimsicdService;
 
@@ -89,11 +94,43 @@ public class AIMSICD extends Activity {
         startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
+        prefs = mContext.getSharedPreferences(
+                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+
+        mDisclaimerAccepted = getResources().getString(R.string.disclaimer_accepted);
+
+        if (!prefs.getBoolean(mDisclaimerAccepted, false)) {
+            final AlertDialog.Builder disclaimer = new AlertDialog.Builder(this)
+                    .setTitle(R.string.disclaimer_title)
+                    .setMessage(R.string.disclaimer)
+                    .setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            prefsEditor = prefs.edit();
+                            prefsEditor.putBoolean(mDisclaimerAccepted, true);
+                            prefsEditor.commit();
+                        }
+                    })
+                    .setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            prefsEditor = prefs.edit();
+                            prefsEditor.putBoolean(mDisclaimerAccepted, false);
+                            prefsEditor.commit();
+                            Uri packageUri = Uri.parse("package:com.SecUpwN.AIMSICD");
+                            Intent uninstallIntent =
+                                    new Intent(Intent.ACTION_DELETE, packageUri);
+                            startActivity(uninstallIntent);
+                            finish();
+                            mAimsicdService.onDestroy();
+                        }
+                    });
+
+            AlertDialog disclaimerAlert = disclaimer.create();
+            disclaimerAlert.show();
+        }
+
         //Create DB Instance
         dbHelper = new AIMSICDDbAdapter(mContext);
 
-        prefs = mContext.getSharedPreferences(
-                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
     }
 
     @Override
@@ -212,9 +249,9 @@ public class AIMSICD extends Activity {
             content.setText(mAimsicdService.getNetworkTypeName(netID, false));
 
             content = (TextView) findViewById(R.id.data_activity);
-            content.setText(mAimsicdService.getActivityDesc(netID));
+            content.setText(mAimsicdService.getActivityDesc());
             content = (TextView) findViewById(R.id.data_status);
-            content.setText(mAimsicdService.getStateDesc(netID));
+            content.setText(mAimsicdService.getStateDesc());
             content = (TextView) findViewById(R.id.network_roaming);
             content.setText(mAimsicdService.isRoaming());
 
@@ -243,7 +280,6 @@ public class AIMSICD extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem mTrackCell = menu.findItem(R.id.track_cell);
-        MenuItem mTrackSignal = menu.findItem(R.id.track_signal);
         MenuItem mTrackLocation = menu.findItem(R.id.track_location);
         MenuItem mTrackFemtocell = menu.findItem(R.id.track_femtocell);
 
@@ -255,14 +291,6 @@ public class AIMSICD extends Activity {
             mTrackCell.setIcon(R.drawable.untrack_cell);
         }
 
-        if (mAimsicdService.TrackingSignal) {
-            mTrackSignal.setTitle(R.string.untrack_signal);
-            mTrackSignal.setIcon(R.drawable.ic_action_network_cell);
-        } else {
-            mTrackSignal.setTitle(R.string.track_signal);
-            mTrackSignal.setIcon(R.drawable.ic_action_network_cell_not_tracked);
-        }
-
         if (mAimsicdService.TrackingLocation) {
             mTrackLocation.setTitle(R.string.untrack_location);
             mTrackLocation.setIcon(R.drawable.ic_action_location_found);
@@ -271,12 +299,16 @@ public class AIMSICD extends Activity {
             mTrackLocation.setIcon(R.drawable.ic_action_location_off);
         }
 
-        if (mAimsicdService.TrackingFemtocell) {
-            mTrackFemtocell.setTitle(R.string.untrack_femtocell);
-            mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
+        if (mAimsicdService.getPhoneID() == TelephonyManager.PHONE_TYPE_CDMA) {
+            if (mAimsicdService.TrackingFemtocell) {
+                mTrackFemtocell.setTitle(R.string.untrack_femtocell);
+                mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
+            } else {
+                mTrackFemtocell.setTitle(R.string.track_femtocell);
+                mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell_not_tracked);
+            }
         } else {
-            mTrackFemtocell.setTitle(R.string.track_femtocell);
-            mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell_not_tracked);
+            mTrackFemtocell.setVisible(false);
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -289,10 +321,6 @@ public class AIMSICD extends Activity {
         switch (item.getItemId()) {
             case R.id.track_cell:
                 trackcell();
-                invalidateOptionsMenu();
-                return true;
-            case R.id.track_signal:
-                tracksignal();
                 invalidateOptionsMenu();
                 return true;
             case R.id.track_location:
@@ -352,17 +380,6 @@ public class AIMSICD extends Activity {
     private void showmap() {
         Intent myIntent = new Intent(this, MapViewer.class);
         startActivity(myIntent);
-    }
-
-    /**
-     * Signal Strength Tracking - Enable/Disable
-     */
-    private void tracksignal() {
-        if (mAimsicdService.TrackingSignal) {
-            mAimsicdService.setSignalTracking(false);
-        } else {
-            mAimsicdService.setSignalTracking(true);
-        }
     }
 
     /**
