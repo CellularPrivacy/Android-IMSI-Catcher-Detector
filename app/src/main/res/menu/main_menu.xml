@@ -9,10 +9,6 @@
           android:icon="@drawable/ic_action_location_off"
           android:title="@string/track_location"
           android:showAsAction="ifRoom" />
-    <item android:id="@+id/track_signal"
-          android:icon="@drawable/ic_action_network_cell"
-          android:title="@string/track_signal"
-          android:showAsAction="ifRoom" />
     <item android:id="@+id/track_femtocell"
         android:icon="@drawable/ic_action_network_cell"
         android:title="@string/track_femtocell"
