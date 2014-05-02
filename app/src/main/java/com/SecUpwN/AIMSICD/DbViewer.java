@@ -61,8 +61,7 @@ public class DbViewer extends Activity {
     }
 
     private void BuildTable(Cursor tableData) {
-        if (tableData != null && tableData.moveToFirst()) {
-
+        if (tableData != null && tableData.getCount() > 0) {
             if (mTableSelected.equals("OpenCellID Data")) {
                 BaseInflaterAdapter<CardItemData> adapter = new BaseInflaterAdapter<CardItemData>(
                         new OpenCellIdCardInflater());
@@ -99,7 +98,9 @@ public class DbViewer extends Activity {
                 }
                 lv.setAdapter(adapter);
             }
+            lv.setVisibility(View.VISIBLE);
         } else {
+            lv.setVisibility(View.GONE);
             Helpers.sendMsg(this, "Table contains no data to display");
         }
     }
@@ -116,8 +117,6 @@ public class DbViewer extends Activity {
             mDb.open();
             if (mTableSelected.equals("Cell Data")) {
                 return mDb.getCellData();
-            } else if (mTableSelected.equals("Signal Strength Data")) {
-                return mDb.getSignalData();
             } else if (mTableSelected.equals("Location Data")) {
                 return mDb.getLocationData();
             } else if (mTableSelected.equals("OpenCellID Data")) {
