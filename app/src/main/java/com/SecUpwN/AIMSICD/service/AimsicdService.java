@@ -46,6 +46,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.Location;
 import android.location.LocationListener;
@@ -105,6 +106,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private String mLac = "";
     private String mCellInfo = "";
     private String mDataState = "";
+    private String mDataStateShort = "";
     private String mNetName = "";
     private String mMmcmcc = "";
     private String mSimCountry = "";
@@ -116,6 +118,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private String mSimSerial = "";
     private String mSimSubs = "";
     private String mDataActivityType = "";
+    private String mDataActivityTypeShort = "";
 
    /*
     * Tracking and Alert Declarations
@@ -129,6 +132,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
     @Override
     public IBinder onBind(Intent intent) {
+        setNotification();
         return mBinder;
     }
 
@@ -146,15 +150,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         prefs = this.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         prefs.registerOnSharedPreferenceChangeListener(this);
+        loadPreferences();
+
         refreshDeviceInfo();
         setNotification();
-
-        boolean trackFemtoPref = prefs.getBoolean(
-                this.getString(R.string.pref_femto_detection_key), false);
-
-        if (trackFemtoPref) {
-            startTrackingFemto();
-        }
 
         Log.i(TAG, "Service launched successfully");
     }
@@ -172,6 +171,25 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         cancelNotification();
         dbHelper.close();
         Log.i(TAG, "Service destroyed");
+    }
+
+    /**
+     * Process User Preferences
+     */
+    private void loadPreferences() {
+        boolean trackFemtoPref = prefs.getBoolean(
+                this.getString(R.string.pref_femto_detection_key), false);
+
+        boolean trackCellPref = prefs.getBoolean(
+                this.getString(R.string.pref_enable_cell_key), false);
+
+        if (trackFemtoPref) {
+            startTrackingFemto();
+        }
+
+        if (trackCellPref) {
+            setCellTracking(true);
+        }
     }
 
     /**
@@ -253,11 +271,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mSimSerial = tm.getSimSerialNumber();
         mSimSubs = tm.getSubscriberId();
 
-        int mDataActivity = tm.getDataActivity();
-        mDataActivityType = getActivityDesc(mDataActivity);
-
-        mDataActivity = tm.getDataState();
-        mDataState = getStateDesc(mDataActivity);
+        mDataActivityType = getActivityDesc();
+        mDataState = getStateDesc();
 
         if (mLongitude == 0.0 || mLatitude == 0.0) {
 
@@ -625,25 +640,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      *
      * @return string representing the current Mobile Data Activity
      */
-    public String getActivityDesc(int dataID) {
-        mDataActivityType = "undef";
-        switch (dataID) {
-            case TelephonyManager.DATA_ACTIVITY_NONE:
-                mDataActivityType = "None";
-                break;
-            case TelephonyManager.DATA_ACTIVITY_IN:
-                mDataActivityType = "In";
-                break;
-            case TelephonyManager.DATA_ACTIVITY_OUT:
-                mDataActivityType = "Out";
-                break;
-            case TelephonyManager.DATA_ACTIVITY_INOUT:
-                mDataActivityType = "In-Out";
-                break;
-            case TelephonyManager.DATA_ACTIVITY_DORMANT:
-                mDataActivityType = "Dormant";
-                break;
-        }
+    public String getActivityDesc() {
         return mDataActivityType;
     }
 
@@ -652,23 +649,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      *
      * @return string representing the current Mobile Data State
      */
-    public String getStateDesc(int dataID) {
-        mDataState = "undef";
-        switch (dataID) {
-            case TelephonyManager.DATA_DISCONNECTED:
-                mDataActivityType = "Disconnected";
-                break;
-            case TelephonyManager.DATA_CONNECTING:
-                mDataActivityType = "Connecting";
-                break;
-            case TelephonyManager.DATA_CONNECTED:
-                mDataActivityType = "Connected";
-                break;
-            case TelephonyManager.DATA_SUSPENDED:
-                mDataActivityType = "Suspended";
-                break;
-        }
-
+    public String getStateDesc() {
         return mDataState;
     }
 
@@ -710,7 +691,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         if (mFemtoDetected) {
             status = 3; //ALARM
-        } else if (TrackingFemtocell || TrackingCell || TrackingLocation || TrackingSignal) {
+        } else if (TrackingFemtocell || TrackingCell || TrackingLocation) {
             status = 2; //Good
             if (TrackingFemtocell)
                 contentText = "FemtoCell Detection Active";
@@ -798,13 +779,15 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     public void setCellTracking(boolean track) {
         if (track) {
-            tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_CELL_LOCATION);
-            tm.listen(mSignalListenerStrength, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+            tm.listen(mCellSignalListener,
+                    PhoneStateListener.LISTEN_CELL_LOCATION |
+                    PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |
+                    PhoneStateListener.LISTEN_DATA_ACTIVITY |
+                    PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
             Helpers.msgShort(this, "Tracking cell information");
             TrackingCell = true;
         } else {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
-            tm.listen(mSignalListenerStrength, PhoneStateListener.LISTEN_NONE);
             Helpers.msgShort(this, "Stopped tracking cell information");
             TrackingCell = false;
             mCellInfo = "[0,0]|nn|nn|";
@@ -812,111 +795,17 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         setNotification();
     }
 
-    /**
-     * Signal Strength Tracking and database logging
-     *
-     * @param track Enable/Disable tracking
-     */
-    public void setSignalTracking(boolean track) {
-        if (track) {
-            tm.listen(mSignalListenerStrength, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
-            Helpers.msgShort(this, "Tracking signal strength");
-            TrackingSignal = true;
-        } else {
-            tm.listen(mSignalListenerStrength, PhoneStateListener.LISTEN_NONE);
-            Helpers.msgShort(this, "Stopped tracking signal strength");
-            TrackingSignal = false;
-            mSignalInfo = 0;
-        }
-        setNotification();
-    }
-
-    private final PhoneStateListener mSignalListenerStrength = new PhoneStateListener() {
-        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-            switch (mPhoneID) {
-                case TelephonyManager.PHONE_TYPE_GSM:
-                    mSignalInfo = signalStrength.getGsmSignalStrength();
-                    break;
-                case TelephonyManager.PHONE_TYPE_CDMA:
-                    mSignalInfo = signalStrength.getCdmaDbm();
-                    break;
-                default:
-                    mSignalInfo = 0;
-            }
-
-            //Insert database record if tracking signal
-            if (TrackingSignal) {
-                dbHelper.open();
-                mDbResult = dbHelper.insertSignal(mLacID,mCellID,
-                        mNetID, mLatitude,
-                        mLongitude,mSignalInfo,
-                        mCellInfo);
-                if (mDbResult == -1)
-                    Log.e (TAG, "Error writing to database");
-            }
-
-            if (TrackingCell) {
-                dbHelper.open();
-                mDbResult = dbHelper.insertCell(mLacID, mCellID,
-                        mNetID, mLatitude,
-                        mLongitude, mSignalInfo,
-                        mCellInfo, mSimCountry,
-                        mSimOperator, mSimOperatorName);
-                if (mDbResult == -1)
-                    Log.e (TAG, "Error writing to database");
-            }
-
-        }
-    };
-
-    private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
+    private PhoneStateListener mCellSignalListener = new PhoneStateListener() {
         public void onCellLocationChanged(CellLocation location) {
             mNetID = getNetID(true);
             mNetType = getNetworkTypeName(mNetID, true);
-
-            int dataActivityType = tm.getDataActivity();
-            String dataActivity = "un";
-            switch (dataActivityType) {
-                case TelephonyManager.DATA_ACTIVITY_NONE:
-                    dataActivity = "No";
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_IN:
-                    dataActivity = "In";
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_OUT:
-                    dataActivity = "Ou";
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_INOUT:
-                    dataActivity = "IO";
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_DORMANT:
-                    dataActivity = "Do";
-                    break;
-            }
-
-            int dataType = tm.getDataState();
-            String dataState = "un";
-            switch (dataType) {
-                case TelephonyManager.DATA_DISCONNECTED:
-                    dataState = "Di";
-                    break;
-                case TelephonyManager.DATA_CONNECTING:
-                    dataState = "Ct";
-                    break;
-                case TelephonyManager.DATA_CONNECTED:
-                    dataState = "Cd";
-                    break;
-                case TelephonyManager.DATA_SUSPENDED:
-                    dataState = "Su";
-                    break;
-            }
 
             switch (mPhoneID) {
                 case TelephonyManager.PHONE_TYPE_GSM:
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
                     if (gsmCellLocation != null) {
-                        mCellInfo = gsmCellLocation.toString() + dataActivity + "|"
-                                + dataState + "|" + mNetType + "|";
+                        mCellInfo = gsmCellLocation.toString() + mDataActivityTypeShort + "|"
+                                + mDataStateShort + "|" + mNetType + "|";
                         mLacID = gsmCellLocation.getLac();
                         mCellID = gsmCellLocation.getCid();
                         dbHelper.open();
@@ -928,8 +817,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 case TelephonyManager.PHONE_TYPE_CDMA:
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                     if (cdmaCellLocation != null) {
-                        mCellInfo = cdmaCellLocation.toString() + dataActivity
-                                + "|" + dataState + "|" + mNetType + "|";
+                        mCellInfo = cdmaCellLocation.toString() + mDataActivityTypeShort
+                                + "|" + mDataStateShort + "|" + mNetType + "|";
                         mLacID = cdmaCellLocation.getNetworkId();
                         mCellID = cdmaCellLocation.getBaseStationId();
                         mSimCountry = getSimCountry(true);
@@ -950,6 +839,80 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     Log.e (TAG, "Error writing to database");
             }
         }
+
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            if (signalStrength.isGsm()) {
+                mSignalInfo = signalStrength.getGsmSignalStrength();
+            } else {
+                int evdoDbm = signalStrength.getEvdoDbm();
+                int cdmaDbm = signalStrength.getCdmaDbm();
+
+                //Use lowest signal to be conservative
+                mSignalInfo = (cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm;
+            }
+
+            if (TrackingCell) {
+                dbHelper.open();
+                mDbResult = dbHelper.insertCell(mLacID, mCellID,
+                        mNetID, mLatitude,
+                        mLongitude, mSignalInfo,
+                        mCellInfo, mSimCountry,
+                        mSimOperator, mSimOperatorName);
+                if (mDbResult == -1)
+                    Log.e (TAG, "Error writing to database");
+            }
+        }
+
+        public void onDataActivity(int direction) {
+            mDataActivityTypeShort = "un";
+            mDataActivityType = "undef";
+            switch (direction) {
+                case TelephonyManager.DATA_ACTIVITY_NONE:
+                    mDataActivityTypeShort = "No";
+                    mDataActivityType = "None";
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_IN:
+                    mDataActivityTypeShort = "In";
+                    mDataActivityType = "In";
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_OUT:
+                    mDataActivityTypeShort = "Ou";
+                    mDataActivityType = "Out";
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_INOUT:
+                    mDataActivityTypeShort = "IO";
+                    mDataActivityType = "In-Out";
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_DORMANT:
+                    mDataActivityTypeShort = "Do";
+                    mDataActivityType = "Dormant";
+                    break;
+            }
+        }
+
+        public void onDataConnectionStateChanged(int state) {
+            mDataState = "undef";
+            mDataStateShort = "un";
+            switch (state) {
+                case TelephonyManager.DATA_DISCONNECTED:
+                    mDataState = "Disconnected";
+                    mDataStateShort = "Di";
+                    break;
+                case TelephonyManager.DATA_CONNECTING:
+                    mDataState = "Connecting";
+                    mDataStateShort = "Ct";
+                    break;
+                case TelephonyManager.DATA_CONNECTED:
+                    mDataState = "Connected";
+                    mDataStateShort = "Cd";
+                    break;
+                case TelephonyManager.DATA_SUSPENDED:
+                    mDataState = "Suspended";
+                    mDataStateShort = "Su";
+                    break;
+            }
+        }
+
     };
 
     /**
