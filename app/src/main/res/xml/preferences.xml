@@ -45,7 +45,8 @@
             android:title="@string/pref_ui_icons_title"
             android:dialogTitle="@string/pref_ui_icons_summ"
             android:entries="@array/pref_ui_icons_entries"
-            android:entryValues="@array/pref_ui_icons_values"/>
+            android:entryValues="@array/pref_ui_icons_values"
+            android:defaultValue="sense"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
