@@ -17,7 +17,7 @@
 
 package com.SecUpwN.AIMSICD;
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -33,13 +33,22 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
 import android.text.format.Time;
 import android.util.Log;
+import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -60,13 +69,17 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-public class AIMSICD extends Activity {
+public class AIMSICD extends FragmentActivity {
 
     private final String TAG = "AIMSICD";
+
+    private MyFragmentPagerAdapter mMyFragmentPagerAdapter;
+    private ViewPager mViewPager;
 
     private final Context mContext = this;
     private boolean mBound;
@@ -86,13 +99,17 @@ public class AIMSICD extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.top);
 
         // Bind to LocalService
         Intent intent = new Intent(this, AimsicdService.class);
         //Start Service before binding to keep it resident when activity is destroyed
         startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        mMyFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        mViewPager = (ViewPager)findViewById(R.id.viewPager);
+        mViewPager.setAdapter(mMyFragmentPagerAdapter);
 
         prefs = mContext.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
@@ -159,7 +176,6 @@ public class AIMSICD extends Activity {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
             mBound = true;
-            updateUI();
         }
 
         @Override
@@ -172,101 +188,7 @@ public class AIMSICD extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        updateUI();
         invalidateOptionsMenu();
-    }
-
-    private void updateUI() {
-        TextView content;
-        TableLayout tableLayout;
-        TableRow tr;
-        if (mBound) {
-            int netID = mAimsicdService.getNetID(true);
-            switch (mAimsicdService.getPhoneID())
-            {
-                case TelephonyManager.PHONE_TYPE_GSM: {
-                    tableLayout = (TableLayout) findViewById(R.id.cdmaView);
-                    tableLayout.setVisibility(View.INVISIBLE);
-                    tr = (TableRow) findViewById(R.id.gsm_cellid);
-                    tr.setVisibility(View.VISIBLE);
-                    content = (TextView) findViewById(R.id.network_lac);
-                    content.setText(mAimsicdService.getLAC(true));
-                    content = (TextView) findViewById(R.id.network_cellid);
-                    content.setText(mAimsicdService.getCellId());
-                    break;
-                }
-                case TelephonyManager.PHONE_TYPE_CDMA:
-                {
-                    tableLayout = (TableLayout) findViewById(R.id.cdmaView);
-                    tableLayout.setVisibility(View.VISIBLE);
-                    tr = (TableRow) findViewById(R.id.gsm_cellid);
-                    tr.setVisibility(View.INVISIBLE);
-                    content = (TextView) findViewById(R.id.network_netid);
-                    content.setText(mAimsicdService.getLAC(true));
-                    content = (TextView) findViewById(R.id.network_sysid);
-                    content.setText(mAimsicdService.getSID());
-                    content = (TextView) findViewById(R.id.network_baseid);
-                    content.setText(mAimsicdService.getCellId());
-                    break;
-                }
-            }
-
-            if (mAimsicdService.getNetID(true) == TelephonyManager.NETWORK_TYPE_LTE) {
-                content = (TextView) findViewById(R.id.network_lte_timing_advance);
-                content.setText(mAimsicdService.getLteTimingAdvance());
-                tr = (TableRow) findViewById(R.id.lte_timing_advance);
-                tr.setVisibility(View.VISIBLE);
-            } else {
-                tr = (TableRow) findViewById(R.id.lte_timing_advance);
-                tr.setVisibility(View.GONE);
-            }
-
-            content = (TextView) findViewById(R.id.sim_country);
-            content.setText(mAimsicdService.getSimCountry(false));
-            content = (TextView) findViewById(R.id.sim_operator_id);
-            content.setText(mAimsicdService.getSimOperator(false));
-            content = (TextView) findViewById(R.id.sim_operator_name);
-            content.setText(mAimsicdService.getSimOperatorName(false));
-            content = (TextView) findViewById(R.id.sim_imsi);
-            content.setText(mAimsicdService.getSimSubs(false));
-            content = (TextView) findViewById(R.id.sim_serial);
-            content.setText(mAimsicdService.getSimSerial(false));
-
-
-            content = (TextView) findViewById(R.id.device_type);
-            content.setText(mAimsicdService.getPhoneType(false));
-            content = (TextView) findViewById(R.id.device_imei);
-            content.setText(mAimsicdService.getIMEI(false));
-            content = (TextView) findViewById(R.id.device_version);
-            content.setText(mAimsicdService.getIMEIv(false));
-            content = (TextView) findViewById(R.id.device_number);
-            content.setText(mAimsicdService.getPhoneNumber(false));
-            content = (TextView) findViewById(R.id.network_name);
-            content.setText(mAimsicdService.getNetworkName(false));
-            content = (TextView) findViewById(R.id.network_code);
-            content.setText(mAimsicdService.getSmmcMcc(false));
-            content = (TextView) findViewById(R.id.network_type);
-            content.setText(mAimsicdService.getNetworkTypeName(netID, false));
-
-            content = (TextView) findViewById(R.id.data_activity);
-            content.setText(mAimsicdService.getActivityDesc());
-            content = (TextView) findViewById(R.id.data_status);
-            content.setText(mAimsicdService.getStateDesc());
-            content = (TextView) findViewById(R.id.network_roaming);
-            content.setText(mAimsicdService.isRoaming());
-
-            Log.i(TAG, "**** AIMSICD ****");
-            Log.i(TAG, "Device type   : " + mAimsicdService.getPhoneType(false));
-            Log.i(TAG, "Device IMEI   : " + mAimsicdService.getIMEI(false));
-            Log.i(TAG, "Device version: " + mAimsicdService.getIMEIv(false));
-            Log.i(TAG, "Device num    : " + mAimsicdService.getPhoneNumber(false));
-            Log.i(TAG, "Network type  : " + mAimsicdService.getNetworkTypeName(netID, false));
-            Log.i(TAG, "Network CellID: " + mAimsicdService.getCellId());
-            Log.i(TAG, "Network LAC   : " + mAimsicdService.getLAC(false));
-            Log.i(TAG, "Network code  : " + mAimsicdService.getSmmcMcc(false));
-            Log.i(TAG, "Network name  : " + mAimsicdService.getNetworkName(false));
-            Log.i(TAG, "Roaming       : " + mAimsicdService.isRoaming());
-        }
     }
 
     @Override
@@ -333,10 +255,6 @@ public class AIMSICD extends Activity {
                 return true;
             case R.id.show_map:
                 showmap();
-                return true;
-            case R.id.view_db:
-                intent = new Intent(this, DbViewer.class);
-                startActivity(intent);
                 return true;
             case R.id.preferences:
                 intent = new Intent(this, PrefActivity.class);
@@ -575,6 +493,39 @@ public class AIMSICD extends Activity {
                     }
                 }
             }
+        }
+    }
+
+
+
+
+
+    class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+        private List<Fragment> fragments;
+        private List<String> titles;
+
+        public MyFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+            this.fragments = new ArrayList<Fragment>();
+            titles = new ArrayList<String>();
+            fragments.add(new DeviceFragment(mContext));
+            titles.add(getString(R.string.device_info));
+            fragments.add(new DbViewerFragment(mContext));
+            titles.add(getString(R.string.db_viewer));
+        }
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles.get(position);
+        }
+
+            @Override
+        public int getCount() {
+            return fragments.size();
         }
     }
 }
