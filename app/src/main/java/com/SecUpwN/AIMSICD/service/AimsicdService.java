@@ -475,9 +475,17 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     public String getPhoneNumber(boolean force) {
         if (mPhoneNum.isEmpty() || force) {
-            mPhoneNum = tm.getLine1Number();
+            try {
+                mPhoneNum = tm.getLine1Number();
+            } catch (NullPointerException npe) {
+                //Sim does not hold line number
+            }
         }
 
+        //Check if Phone Number successfully retrieved and if not try subscriber
+        if (mPhoneNum.isEmpty())
+            mPhoneNum = tm.getSubscriberId();
+        
         return mPhoneNum;
     }
 
