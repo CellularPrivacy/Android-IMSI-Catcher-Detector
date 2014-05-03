@@ -272,11 +272,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }*/
 
         //SIM Information
-        mSimCountry = tm.getSimCountryIso();
-        mSimOperator = tm.getSimOperator();
-        mSimOperatorName = tm.getSimOperatorName();
-        mSimSerial = tm.getSimSerialNumber();
-        mSimSubs = tm.getSubscriberId();
+        mSimCountry = getSimCountry(true);
+        mSimOperator = getSimOperator(true);
+        mSimOperatorName = getSimOperatorName(true);
+        mSimSerial = getSimSerial(true);
+        mSimSubs = getSimSubs(true);
 
         mDataActivityType = getActivityDesc();
         mDataState = getStateDesc();
@@ -355,7 +355,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     public String getSimCountry(boolean force) {
         if (mSimCountry.isEmpty() || force) {
-            mSimCountry = tm.getSimCountryIso();
+            try {
+                mSimCountry = tm.getSimCountryIso();
+            } catch (Exception e) {
+                //SIM methods can cause Exceptions on some devices
+            }
         }
 
         return mSimCountry;
@@ -368,7 +372,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     public String getSimOperator(boolean force) {
         if (mSimOperator.isEmpty() || force) {
-            mSimOperator = tm.getSimOperator();
+            try {
+                mSimOperator = tm.getSimOperator();
+            } catch (Exception e) {
+                //SIM methods can cause Exceptions on some devices
+            }
         }
 
         return mSimOperator;
@@ -381,7 +389,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     public String getSimOperatorName(boolean force) {
         if (mSimOperatorName.isEmpty() || force) {
-            mSimOperatorName = tm.getSimOperatorName();
+            try {
+                mSimOperatorName = tm.getSimOperatorName();
+            }catch (Exception e) {
+                //SIM methods can cause Exceptions on some devices
+            }
         }
 
         return mSimOperatorName;
@@ -394,7 +406,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     public String getSimSubs(boolean force) {
         if (mSimSubs.isEmpty() || force) {
-            mSimSubs = tm.getSubscriberId();
+            try {
+                mSimSubs = tm.getSubscriberId();
+            } catch (Exception e) {
+                //Some devices don't like this method
+            }
+
         }
 
         return mSimSubs;
@@ -407,7 +424,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     public String getSimSerial(boolean force) {
         if (mSimSerial.isEmpty() || force) {
-            mSimSerial = tm.getSimSerialNumber();
+            try {
+                mSimSerial = tm.getSimSerialNumber();
+            } catch (Exception e) {
+                //SIM methods can cause Exceptions on some devices
+            }
         }
 
         return mSimSerial;
@@ -484,7 +505,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         //Check if Phone Number successfully retrieved and if not try subscriber
         if (mPhoneNum.isEmpty())
-            mPhoneNum = tm.getSubscriberId();
+            try {
+                mPhoneNum = tm.getSubscriberId();
+            } catch (NullPointerException npe) {
+                //Seems some devices don't like this on either
+            }
+
 
         return mPhoneNum;
     }
