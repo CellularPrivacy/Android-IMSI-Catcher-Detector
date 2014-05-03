@@ -46,7 +46,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.Location;
 import android.location.LocationListener;
@@ -57,6 +56,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 import android.telephony.CellLocation;
+import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
@@ -69,6 +69,11 @@ import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.Helpers;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
 
 public class AimsicdService extends Service implements OnSharedPreferenceChangeListener {
 
@@ -87,6 +92,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private SharedPreferences prefs;
     private PhoneStateListener mPhoneStateListener;
     private LocationListener mLocationListener;
+    private Timer timer = new Timer();
 
    /*
     * Device Declarations
@@ -119,13 +125,14 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private String mSimSubs = "";
     private String mDataActivityType = "";
     private String mDataActivityTypeShort = "";
+    private Map<Integer,Integer> mNeighborMapUMTS = new HashMap<Integer,Integer>();
+    private Map<String,Integer> mNeighborMapGSM = new HashMap<String,Integer>();
 
    /*
     * Tracking and Alert Declarations
     */
     private boolean mRoaming;
     public boolean TrackingCell;
-    public boolean TrackingSignal;
     public boolean TrackingLocation;
     public boolean TrackingFemtocell;
     private boolean mFemtoDetected;
@@ -468,9 +475,17 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     public String getPhoneNumber(boolean force) {
         if (mPhoneNum.isEmpty() || force) {
-            mPhoneNum = tm.getLine1Number();
+            try {
+                mPhoneNum = tm.getLine1Number();
+            } catch (NullPointerException npe) {
+                //Sim does not hold line number
+            }
         }
 
+        //Check if Phone Number successfully retrieved and if not try subscriber
+        if (mPhoneNum.isEmpty())
+            mPhoneNum = tm.getSubscriberId();
+        
         return mPhoneNum;
     }
 
@@ -841,6 +856,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
 
         public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            //Update Signal Strength
             if (signalStrength.isGsm()) {
                 mSignalInfo = signalStrength.getGsmSignalStrength();
             } else {
@@ -849,6 +865,25 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
                 //Use lowest signal to be conservative
                 mSignalInfo = (cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm;
+            }
+
+            //Update Neighbouring Cell Map
+            for (String key: mNeighborMapGSM.keySet())
+                mNeighborMapGSM.put(key,-113);
+            for (int key: mNeighborMapUMTS.keySet())
+                mNeighborMapUMTS.put(key,-115);
+
+            List<NeighboringCellInfo> neighboringCellInfo;
+            neighboringCellInfo = tm.getNeighboringCellInfo();
+            for (NeighboringCellInfo i : neighboringCellInfo) {
+                int networktype = i.getNetworkType();
+                if ((networktype == TelephonyManager.NETWORK_TYPE_UMTS) ||
+                        (networktype == TelephonyManager.NETWORK_TYPE_HSDPA) ||
+                        (networktype == TelephonyManager.NETWORK_TYPE_HSUPA) ||
+                        (networktype == TelephonyManager.NETWORK_TYPE_HSPA))
+                    mNeighborMapUMTS.put(i.getPsc(), i.getRssi()-115);
+                else
+                    mNeighborMapGSM.put(i.getLac()+"-"+i.getCid(), (-113+2*(i.getRssi())));
             }
 
             if (TrackingCell) {
