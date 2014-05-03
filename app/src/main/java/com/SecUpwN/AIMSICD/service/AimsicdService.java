@@ -206,7 +206,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         //Phone type and associated details
         mIMEI = tm.getDeviceId();
         mIMEIV = tm.getDeviceSoftwareVersion();
-        mPhoneNum = tm.getLine1Number();
+        mPhoneNum = getPhoneNumber(true);
         mPhoneID = tm.getPhoneType();
         mRoaming = tm.isNetworkRoaming();
         //Network type
@@ -485,7 +485,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         //Check if Phone Number successfully retrieved and if not try subscriber
         if (mPhoneNum.isEmpty())
             mPhoneNum = tm.getSubscriberId();
-        
+
         return mPhoneNum;
     }
 
