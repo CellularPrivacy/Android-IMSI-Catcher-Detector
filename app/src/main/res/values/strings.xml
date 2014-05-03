@@ -3,7 +3,8 @@
 
     <string name="app_name_short">AIMSICD</string>
     <string name="app_name">Android IMSI-Catcher Detector</string>
-    <string name="map_view">AIMSICD Map Viewer</string>
+    <string name="device_info">Device Details</string>
+    <string name="map_view">Map Viewer</string>
     <string name="db_viewer">Database Viewer</string>
     <string name="strength">Signal strength</string>
     <string name="quit">Quit</string>
