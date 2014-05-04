@@ -1,6 +1,24 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 03.05.2014 - WIP-Release v0.1.13-alpha
+
+* Added: Exception handling added to all methods that attempt to draw SIM specific information
+
+#### 03.05.2014 - WIP-Release v0.1.12-alpha
+
+* Update: MASSIVE UI update implementing fragments to enable easy navigation through SWIPING! ;-)
+* Update: Default icon is now selected within the preferences screen
+* Fix: NPE-Issue corrected through several code improvements
+
+#### 03.05.2014 - WIP-Release v0.1.11-alpha
+
+* Added: Requirement to accept our Disclaimer (if you decline you MUST uninstall AIMSICD)
+* Update: Consolidation of Signal Strength, Data Activity & Data State into one Phone State Listener
+* Fix: Map Viewer Tweaks to correct issues with initial location placement and map type preferences
+* Added: Support for [NoGAPPS Maps API](http://forum.xda-developers.com/showthread.php?t=1715375) if you don't like to install Google Maps
+* Update: Main menu updated to only display FemtoCell detection on CDMA devices only
+
 #### 27.04.2014 - WIP-Release v0.1.10-alpha
 
 * Improved: Database Viewer UI tweaked to use a gradient colouring scheme
