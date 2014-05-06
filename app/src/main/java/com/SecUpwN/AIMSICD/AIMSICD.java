@@ -205,7 +205,7 @@ public class AIMSICD extends FragmentActivity {
         MenuItem mTrackLocation = menu.findItem(R.id.track_location);
         MenuItem mTrackFemtocell = menu.findItem(R.id.track_femtocell);
 
-        if (mAimsicdService.TrackingCell) {
+        if (mBound && mAimsicdService.isTrackingCell()) {
             mTrackCell.setTitle(R.string.untrack_cell);
             mTrackCell.setIcon(R.drawable.track_cell);
         } else {
@@ -213,7 +213,7 @@ public class AIMSICD extends FragmentActivity {
             mTrackCell.setIcon(R.drawable.untrack_cell);
         }
 
-        if (mAimsicdService.TrackingLocation) {
+        if (mBound && mAimsicdService.isTrackingLocation()) {
             mTrackLocation.setTitle(R.string.untrack_location);
             mTrackLocation.setIcon(R.drawable.ic_action_location_found);
         } else {
@@ -221,8 +221,8 @@ public class AIMSICD extends FragmentActivity {
             mTrackLocation.setIcon(R.drawable.ic_action_location_off);
         }
 
-        if (mAimsicdService.getPhoneID() == TelephonyManager.PHONE_TYPE_CDMA) {
-            if (mAimsicdService.TrackingFemtocell) {
+        if (mBound && mAimsicdService.getPhoneID() == TelephonyManager.PHONE_TYPE_CDMA) {
+            if (mBound && mAimsicdService.isTrackingFemtocell()) {
                 mTrackFemtocell.setTitle(R.string.untrack_femtocell);
                 mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
             } else {
@@ -265,7 +265,11 @@ public class AIMSICD extends FragmentActivity {
                 return true;
             case R.id.update_opencelldata:
                 double[] loc = mAimsicdService.getLastLocation();
-                getOpenCellData(loc[0], loc[1]);
+                if (loc[0] != 0.0 && loc[1] != 0.0) {
+                    getOpenCellData(loc[0], loc[1]);
+                } else {
+                    Helpers.sendMsg(mContext, "Unable to determine your last location, enable Location Services (GPS) and try again.");
+                }
                 return true;
             case R.id.app_exit:
                 finish();
@@ -304,7 +308,7 @@ public class AIMSICD extends FragmentActivity {
      * Cell Information Tracking - Enable/Disable
      */
     private void trackcell() {
-        if (mAimsicdService.TrackingCell) {
+        if (mAimsicdService.isTrackingCell()) {
             mAimsicdService.setCellTracking(false);
         } else {
             mAimsicdService.setCellTracking(true);
@@ -315,7 +319,7 @@ public class AIMSICD extends FragmentActivity {
      * Location Information Tracking - Enable/Disable
      */
     private void tracklocation() {
-        if (mAimsicdService.TrackingLocation) {
+        if (mAimsicdService.isTrackingLocation()) {
             mAimsicdService.setLocationTracking(false);
         } else {
             mAimsicdService.setLocationTracking(true);
@@ -326,7 +330,7 @@ public class AIMSICD extends FragmentActivity {
      * FemtoCell Detection (CDMA Phones ONLY) - Enable/Disable
      */
     private void trackFemtocell() {
-        if (mAimsicdService.TrackingFemtocell) {
+        if (mAimsicdService.isTrackingFemtocell()) {
             mAimsicdService.stopTrackingFemto();
         } else {
             mAimsicdService.startTrackingFemto();
@@ -512,6 +516,8 @@ public class AIMSICD extends FragmentActivity {
             titles.add(getString(R.string.device_info));
             fragments.add(new DbViewerFragment(mContext));
             titles.add(getString(R.string.db_viewer));
+            fragments.add(new CellInfoFragment(mContext));
+            titles.add(getString(R.string.cell_info_title));
         }
         @Override
         public Fragment getItem(int position) {
