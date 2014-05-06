@@ -25,17 +25,21 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 public class Helpers {
 
     private static final String TAG = "AIMSICD_Helpers";
+    private static final int CHARS_PER_LINE = 34;
 
     /**
      * Long toast message
@@ -197,6 +201,42 @@ public class Helpers {
             Log.e(TAG, "isSdWritable - " + ex.getMessage());
         }
         return mExternalStorageAvailable;
+    }
+
+    public static List<String> unpackListOfStrings(byte aob[]) {
+
+        if (aob.length == 0) {
+            Log.v(TAG, "Length = 0");
+            return Collections.emptyList();
+        }
+
+        int lines = aob.length / CHARS_PER_LINE;
+
+        String[] display = new String[lines];
+        for (int i = 0; i < lines; i++) {
+            int offset, byteCount;
+            offset = i * CHARS_PER_LINE + 2;
+            byteCount = 0;
+
+            if (offset + byteCount >= aob.length) {
+                Log.e(TAG, "Unexpected EOF");
+                break;
+            }
+
+            while (aob[offset + byteCount] != 0 && (byteCount < CHARS_PER_LINE)) {
+                byteCount += 1;
+                if (offset + byteCount >= aob.length) {
+                    Log.e(TAG, "Unexpected EOF");
+                    break;
+                }
+            }
+            display[i] = new String(aob, offset, byteCount).trim();
+        }
+
+        int newLength = display.length;
+        while (newLength > 0 && TextUtils.isEmpty(display[newLength - 1])) newLength -= 1;
+
+        return Arrays.asList(Arrays.copyOf(display, newLength));
     }
 }
 
