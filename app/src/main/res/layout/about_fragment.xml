@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:textSize="18sp" android:text="@string/about_aimsicd"
+    android:background="@color/black"
+    android:textColor="@color/green_text"
+    android:padding="4dip" android:id="@+id/textView"/>
+
+    <TextView
+            android:id="@+id/aimsicd_about_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/aimsicd_about_info"
+            android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="8dip" android:layout_below="@+id/textView"/>
+    <TextView
+            android:id="@+id/aimsicd_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty"
+            android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="8dip" android:layout_below="@+id/textView"
+            android:layout_toRightOf="@+id/aimsicd_about_info"/>
+    <TextView
+            android:id="@+id/aimsicd_about_info2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/aimsicd_about_info2"
+            android:textStyle="italic"
+            android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="8dip" android:layout_below="@+id/aimsicd_version"/>
+    <TextView
+            android:id="@+id/aimsicd_poc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/poc_info"
+            android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="8dip" android:layout_below="@+id/aimsicd_about_info2"/>
+    <TextView
+            android:id="@+id/aimsicd_poc_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/poc_link"
+            android:autoLink="web"
+            android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="8dip" android:layout_below="@+id/aimsicd_about_info2"
+            android:layout_toRightOf="@+id/aimsicd_poc"/>
+    <TextView
+            android:id="@+id/aimsicd_disclaimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/disclaimer_info"
+            android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="8dip" android:layout_below="@+id/aimsicd_poc"/>
+    <TextView
+            android:id="@+id/aimsicd_disclaimer_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/disclaimer_link"
+            android:autoLink="web"
+            android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="8dip" android:layout_below="@+id/aimsicd_poc"
+            android:layout_toRightOf="@+id/aimsicd_disclaimer"/>
+    <TextView
+            android:id="@+id/aimsicd_contribute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/github_info"
+            android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="8dip" android:layout_below="@+id/aimsicd_disclaimer"/>
+    <TextView
+            android:id="@+id/aimsicd_contribute_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/aimsicd_github_link"
+            android:autoLink="web"
+            android:background="@color/black"
+            android:textColor="@color/medium_blue"
+            android:padding="8dip" android:layout_below="@+id/aimsicd_disclaimer"
+            android:layout_toRightOf="@+id/aimsicd_contribute"/>
+
+</RelativeLayout>

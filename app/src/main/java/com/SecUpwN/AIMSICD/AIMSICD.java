@@ -518,6 +518,8 @@ public class AIMSICD extends FragmentActivity {
             titles.add(getString(R.string.db_viewer));
             fragments.add(new CellInfoFragment(mContext));
             titles.add(getString(R.string.cell_info_title));
+            fragments.add(new AboutFragment(mContext));
+            titles.add(getString(R.string.about_aimsicd));
         }
         @Override
         public Fragment getItem(int position) {
