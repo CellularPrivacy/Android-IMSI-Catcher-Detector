@@ -14,7 +14,7 @@
             android:key="@string/pref_killservice_key"
             android:title="@string/pref_killservice_title"
             android:summary="@string/pref_killservice_summ"
-            android:defaultValue="false" />
+            android:defaultValue="true" />
         <CheckBoxPreference
                 android:key="@string/pref_enable_cell_key"
                 android:title="@string/pref_enable_cell_title"
