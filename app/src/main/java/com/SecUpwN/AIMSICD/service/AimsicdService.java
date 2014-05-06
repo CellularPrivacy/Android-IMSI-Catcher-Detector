@@ -36,6 +36,24 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/*
+ * Portions of this software have been copied and modified from
+ * https://github.com/illarionov/SamsungRilMulticlient
+ * Copyright (C) 2014 Alexey Illarionov
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.SecUpwN.AIMSICD.service;
 
 import android.app.AlertDialog;
@@ -52,7 +70,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.ConditionVariable;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 
 import android.telephony.CellLocation;
@@ -69,10 +92,20 @@ import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.Helpers;
+import com.SecUpwN.AIMSICD.OemCommands;
+import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
+import com.SecUpwN.AIMSICD.rilexecutor.OemRilExecutor;
+import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
+import com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Timer;
 
 public class AimsicdService extends Service implements OnSharedPreferenceChangeListener {
@@ -104,6 +137,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private int mCellID = -1;
     private int mSID = -1;
     private int mTimingAdvance = -1;
+    private int mNeighbouringCellSize = -1;
     private double mLongitude = 0.0;
     private double mLatitude = 0.0;
     private String mNetType = "";
@@ -125,17 +159,42 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private String mSimSubs = "";
     private String mDataActivityType = "";
     private String mDataActivityTypeShort = "";
-    private Map<Integer,Integer> mNeighborMapUMTS = new HashMap<Integer,Integer>();
-    private Map<String,Integer> mNeighborMapGSM = new HashMap<String,Integer>();
+    private final Map<Integer,Integer> mNeighborMapUMTS = new HashMap<Integer,Integer>();
+    private final Map<String,Integer> mNeighborMapGSM = new HashMap<String,Integer>();
 
    /*
     * Tracking and Alert Declarations
     */
     private boolean mRoaming;
-    public boolean TrackingCell;
-    public boolean TrackingLocation;
-    public boolean TrackingFemtocell;
+    private boolean TrackingCell;
+    private boolean TrackingLocation;
+    private boolean TrackingFemtocell;
     private boolean mFemtoDetected;
+
+   /*
+    * Samsung MultiRil Implementation
+    */
+    private static final int ID_REQUEST_START_SERVICE_MODE_COMMAND = 1;
+    private static final int ID_REQUEST_FINISH_SERVICE_MODE_COMMAND = 2;
+    private static final int ID_REQUEST_PRESS_A_KEY = 3;
+    private static final int ID_REQUEST_REFRESH = 4;
+
+    private static final int ID_RESPONSE = 101;
+    private static final int ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND = 102;
+    private static final int ID_RESPONSE_PRESS_A_KEY = 103;
+
+    private static final int REQUEST_TIMEOUT = 10000; // ms
+    private static final int REQUEST_VERSION_TIMEOUT = 300; // ms
+    private final ConditionVariable mRequestCondvar = new ConditionVariable();
+    private final Object mLastResponseLock = new Object();
+
+    private volatile List<String> mLastResponse;
+
+    private DetectResult mRilExecutorDetectResult;
+    private OemRilExecutor mRequestExecutor;
+
+    private HandlerThread mHandlerThread;
+    private Handler mHandler;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -162,6 +221,22 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         refreshDeviceInfo();
         setNotification();
 
+        //Sumsung MultiRil Initialization
+        mHandlerThread = new HandlerThread("ServiceModeSeqHandler");
+        mHandlerThread.start();
+
+        Looper l = mHandlerThread.getLooper();
+        mHandler = new Handler(l, new MyHandler());
+
+        mRequestExecutor = new SamsungMulticlientRilExecutor();
+        mRilExecutorDetectResult = mRequestExecutor.detect();
+        if (!mRilExecutorDetectResult.available) {
+            Log.e(TAG, "Samsung multiclient ril not available: " + mRilExecutorDetectResult.error);
+            mRequestExecutor = null;
+        } else {
+            mRequestExecutor.start();
+        }
+
         Log.i(TAG, "Service launched successfully");
     }
 
@@ -177,7 +252,166 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         prefs.unregisterOnSharedPreferenceChangeListener(this);
         cancelNotification();
         dbHelper.close();
+
+        //Samsung MultiRil Cleanup
+        if (mRequestExecutor != null) {
+            mRequestExecutor.stop();
+            mRequestExecutor = null;
+        }
+        mHandler = null;
+        mHandlerThread.quit();
+        mHandlerThread = null;
         Log.i(TAG, "Service destroyed");
+    }
+
+    public DetectResult getRilExecutorStatus() {
+        return mRilExecutorDetectResult;
+    }
+
+    public List<String> getCipheringInfo() {
+        return executeServiceModeCommand(
+                OemCommands.OEM_SM_TYPE_TEST_MANUAL,
+                OemCommands.OEM_SM_TYPE_SUB_CIPHERING_PROTECTION_ENTER,
+                null
+        );
+    }
+
+    public List<String> getNeighbours() {
+        KeyStep getNeighboursKeySeq[] = new KeyStep[]{
+                new KeyStep('\0', false),
+                new KeyStep('1', false), // [1] DEBUG SCREEN
+                new KeyStep('4', true), // [4] NEIGHBOUR CELL
+        };
+
+        return executeServiceModeCommand(
+                OemCommands.OEM_SM_TYPE_TEST_MANUAL,
+                OemCommands.OEM_SM_TYPE_SUB_ENTER,
+                Arrays.asList(getNeighboursKeySeq)
+        );
+
+    }
+
+    private List<String> executeServiceModeCommand(int type, int subtype,
+            java.util.Collection<KeyStep> keySeqence) {
+        return executeServiceModeCommand(type, subtype, keySeqence, REQUEST_TIMEOUT);
+    }
+
+    private synchronized List<String> executeServiceModeCommand(int type, int subtype,
+            java.util.Collection<KeyStep> keySeqence, int timeout) {
+        if (mRequestExecutor == null) return Collections.emptyList();
+
+        mRequestCondvar.close();
+        mHandler.obtainMessage(ID_REQUEST_START_SERVICE_MODE_COMMAND,
+                type,
+                subtype,
+                keySeqence).sendToTarget();
+        if (!mRequestCondvar.block(timeout)) {
+            Log.e(TAG, "request timeout");
+            return Collections.emptyList();
+        } else {
+            synchronized (mLastResponseLock) {
+                return mLastResponse;
+            }
+        }
+    }
+
+    private static class KeyStep {
+        public final char keychar;
+        public boolean captureResponse;
+
+        public KeyStep(char keychar, boolean captureResponse) {
+            this.keychar = keychar;
+            this.captureResponse = captureResponse;
+        }
+
+        public static KeyStep KEY_START_SERVICE_MODE = new KeyStep('\0', true);
+    }
+
+    private class MyHandler implements Handler.Callback {
+
+        private int mCurrentType;
+        private int mCurrentSubtype;
+
+        private Queue<KeyStep> mKeySequence;
+
+        @Override
+        public boolean handleMessage(Message msg) {
+            byte[] requestData;
+            Message responseMsg;
+            KeyStep lastKeyStep;
+
+            switch (msg.what) {
+                case ID_REQUEST_START_SERVICE_MODE_COMMAND:
+                    mCurrentType = msg.arg1;
+                    mCurrentSubtype = msg.arg2;
+                    mKeySequence = new ArrayDeque<KeyStep>(3);
+                    if (msg.obj != null) {
+                        mKeySequence.addAll((java.util.Collection<KeyStep>) msg.obj);
+                    } else {
+                        mKeySequence.add(KeyStep.KEY_START_SERVICE_MODE);
+                    }
+                    synchronized (mLastResponseLock) {
+                        mLastResponse = new ArrayList<>();
+                    }
+                    requestData = OemCommands.getEnterServiceModeData(
+                            mCurrentType, mCurrentSubtype, OemCommands.OEM_SM_ACTION);
+                    responseMsg = mHandler.obtainMessage(ID_RESPONSE);
+                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
+                    break;
+                case ID_REQUEST_FINISH_SERVICE_MODE_COMMAND:
+                    requestData = OemCommands.getEndServiceModeData(mCurrentType);
+                    responseMsg = mHandler.obtainMessage(ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND);
+                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
+                    break;
+                case ID_REQUEST_PRESS_A_KEY:
+                    requestData = OemCommands.getPressKeyData(msg.arg1, OemCommands.OEM_SM_ACTION);
+                    responseMsg = mHandler.obtainMessage(ID_RESPONSE_PRESS_A_KEY);
+                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
+                    break;
+                case ID_REQUEST_REFRESH:
+                    requestData = OemCommands.getPressKeyData('\0', OemCommands.OEM_SM_QUERY);
+                    responseMsg = mHandler.obtainMessage(ID_RESPONSE);
+                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
+                    break;
+                case ID_RESPONSE:
+                    lastKeyStep = mKeySequence.poll();
+                    try {
+                        RawResult result = (RawResult) msg.obj;
+                        if (result == null) {
+                            Log.e(TAG, "result is null");
+                            break;
+                        }
+                        if (result.exception != null) {
+                            Log.e(TAG, "", result.exception);
+                            break;
+                        }
+                        if (result.result == null) {
+                            Log.v(TAG, "No need to refresh.");
+                            break;
+                        }
+                        if (lastKeyStep.captureResponse) {
+                            synchronized (mLastResponseLock) {
+                                mLastResponse.addAll(Helpers.unpackListOfStrings(result.result));
+                            }
+                        }
+                    } finally {
+                        if (mKeySequence.isEmpty()) {
+                            mHandler.obtainMessage(ID_REQUEST_FINISH_SERVICE_MODE_COMMAND).sendToTarget();
+                        } else {
+                            mHandler.obtainMessage(ID_REQUEST_PRESS_A_KEY, mKeySequence.element().keychar, 0).sendToTarget();
+                        }
+                    }
+                    break;
+                case ID_RESPONSE_PRESS_A_KEY:
+                    mHandler.sendMessageDelayed(mHandler.obtainMessage(ID_REQUEST_REFRESH), 10);
+                    break;
+                case ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND:
+                    mRequestCondvar.open();
+                    break;
+
+            }
+            return true;
+        }
     }
 
     /**
@@ -302,6 +536,34 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     }
 
     /**
+     * Tracking Cell Information
+     *
+     * @return boolean indicating Cell Information Tracking State
+     */
+    public boolean isTrackingCell() {
+        return TrackingCell;
+    }
+
+    /**
+     * Tracking Location Information
+     *
+     * @return boolean indicating Location Tracking State
+     */
+    public boolean isTrackingLocation() {
+        return TrackingLocation;
+    }
+
+    /**
+     * Tracking Femotcell Connections
+     *
+     * @return boolean indicating Femtocell Connection Tracking State
+     */
+    public boolean isTrackingFemtocell() {
+        return TrackingFemtocell;
+    }
+
+
+    /**
      * LTE Timing Advance
      *
      * @return Timing Advance figure or -1 if not available
@@ -356,9 +618,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getSimCountry(boolean force) {
         if (mSimCountry.isEmpty() || force) {
             try {
-                mSimCountry = tm.getSimCountryIso();
+                mSimCountry = (tm.getSimCountryIso() != null) ? tm.getSimCountryIso() : "";
             } catch (Exception e) {
                 //SIM methods can cause Exceptions on some devices
+                Log.e(TAG, "getSimCountry " + e);
             }
         }
 
@@ -373,9 +636,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getSimOperator(boolean force) {
         if (mSimOperator.isEmpty() || force) {
             try {
-                mSimOperator = tm.getSimOperator();
+                mSimOperator = (tm.getSimOperator() != null) ? tm.getSimOperator() : "";
             } catch (Exception e) {
                 //SIM methods can cause Exceptions on some devices
+                Log.e(TAG, "getSimOperator " + e);
             }
         }
 
@@ -390,7 +654,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getSimOperatorName(boolean force) {
         if (mSimOperatorName.isEmpty() || force) {
             try {
-                mSimOperatorName = tm.getSimOperatorName();
+                mSimOperatorName = (tm.getSimOperatorName() != null) ? tm.getSimOperatorName() : "";
             }catch (Exception e) {
                 //SIM methods can cause Exceptions on some devices
             }
@@ -407,9 +671,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getSimSubs(boolean force) {
         if (mSimSubs.isEmpty() || force) {
             try {
-                mSimSubs = tm.getSubscriberId();
+                mSimSubs = (tm.getSubscriberId() != null) ? tm.getSubscriberId() : "";
             } catch (Exception e) {
                 //Some devices don't like this method
+                Log.e(TAG, "getSimSubs " + e);
             }
 
         }
@@ -425,9 +690,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getSimSerial(boolean force) {
         if (mSimSerial.isEmpty() || force) {
             try {
-                mSimSerial = tm.getSimSerialNumber();
+                mSimSerial = (tm.getSimSerialNumber() != null) ? tm.getSimSerialNumber() : "";
             } catch (Exception e) {
                 //SIM methods can cause Exceptions on some devices
+                Log.e(TAG, "getSimSerial " + e);
             }
         }
 
@@ -497,18 +763,20 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getPhoneNumber(boolean force) {
         if (mPhoneNum.isEmpty() || force) {
             try {
-                mPhoneNum = tm.getLine1Number();
-            } catch (NullPointerException npe) {
+                mPhoneNum = (tm.getLine1Number() != null) ? tm.getLine1Number() : "";
+            } catch (Exception e) {
                 //Sim does not hold line number
+                Log.e(TAG, "getPhoneNumber (1) " + e);
             }
         }
 
         //Check if Phone Number successfully retrieved and if not try subscriber
         if (mPhoneNum.isEmpty())
             try {
-                mPhoneNum = tm.getSubscriberId();
-            } catch (NullPointerException npe) {
+                mPhoneNum = (tm.getSubscriberId() != null) ? tm.getSubscriberId() : "";
+            } catch (Exception e) {
                 //Seems some devices don't like this on either
+                Log.e(TAG, "getPhoneNumber (2) " + e);
             }
 
 
@@ -814,6 +1082,60 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     }
 
     /**
+     * Updates Neighbouring Cell details for either GSM or UMTS networks
+     *
+     */
+    public void updateNeighbouringCells() {
+        //Update Neighbouring Cell Map
+        for (String key: mNeighborMapGSM.keySet())
+            mNeighborMapGSM.put(key,-113);
+        for (int key: mNeighborMapUMTS.keySet())
+            mNeighborMapUMTS.put(key,-115);
+
+        List<NeighboringCellInfo> neighboringCellInfo;
+        neighboringCellInfo = tm.getNeighboringCellInfo();
+        mNeighbouringCellSize = neighboringCellInfo.size();
+        for (NeighboringCellInfo i : neighboringCellInfo) {
+            int networktype = i.getNetworkType();
+            if ((networktype == TelephonyManager.NETWORK_TYPE_UMTS) ||
+                    (networktype == TelephonyManager.NETWORK_TYPE_HSDPA) ||
+                    (networktype == TelephonyManager.NETWORK_TYPE_HSUPA) ||
+                    (networktype == TelephonyManager.NETWORK_TYPE_HSPA))
+                mNeighborMapUMTS.put(i.getPsc(), i.getRssi()-115);
+            else
+                mNeighborMapGSM.put(i.getLac()+"-"+i.getCid(), (-113+2*(i.getRssi())));
+        }
+    }
+
+    /**
+     * Neighbouring GSM Cell Map
+     *
+     * @return Map of GSM Neighbouring Cell Information
+     */
+    public Map getGSMNeighbouringCells() {
+        return mNeighborMapGSM;
+    }
+
+    /**
+     * Neighbouring UMTS Cell Map
+     *
+     * @return Map of UMTS Neighbouring Cell Information
+     */
+    public Map getUMTSNeighbouringCells() {
+        return mNeighborMapUMTS;
+    }
+
+    /**
+     * Neighbouring Cell Size
+     *
+     * @return Integer of Neighbouring Cell Size
+     */
+    public int getNeighbouringCellSize() {
+        return mNeighbouringCellSize;
+    }
+
+
+    /**
      * Cell Information Tracking and database logging
      *
      * @param track Enable/Disable tracking
@@ -866,8 +1188,24 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         mSimOperator = getSimOperator(true);
                         mSimOperatorName = getNetworkName(true);
                         mSID = getSID();
+
+                        //Update location through CDMA if not tracking through GPS
+                        if (!TrackingLocation) {
+                            int Long = cdmaCellLocation.getBaseStationLongitude();
+                            int Lat = cdmaCellLocation.getBaseStationLatitude();
+
+                            if (!(Double.isNaN(Long) || Long < -2592000 || Long > 2592000)) {
+                                mLongitude = ((double) Long) / (3600 * 4);
+                            }
+
+                            if (!(Double.isNaN(Lat) || Lat < -2592000 || Lat > 2592000)) {
+                                mLatitude = ((double) Lat) / (3600 * 4);
+                            }
+                        }
                     }
             }
+
+            updateNeighbouringCells();
 
             if (TrackingCell) {
                 dbHelper.open();
@@ -899,18 +1237,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             for (int key: mNeighborMapUMTS.keySet())
                 mNeighborMapUMTS.put(key,-115);
 
-            List<NeighboringCellInfo> neighboringCellInfo;
-            neighboringCellInfo = tm.getNeighboringCellInfo();
-            for (NeighboringCellInfo i : neighboringCellInfo) {
-                int networktype = i.getNetworkType();
-                if ((networktype == TelephonyManager.NETWORK_TYPE_UMTS) ||
-                        (networktype == TelephonyManager.NETWORK_TYPE_HSDPA) ||
-                        (networktype == TelephonyManager.NETWORK_TYPE_HSUPA) ||
-                        (networktype == TelephonyManager.NETWORK_TYPE_HSPA))
-                    mNeighborMapUMTS.put(i.getPsc(), i.getRssi()-115);
-                else
-                    mNeighborMapGSM.put(i.getLac()+"-"+i.getCid(), (-113+2*(i.getRssi())));
-            }
+            updateNeighbouringCells();
 
             if (TrackingCell) {
                 dbHelper.open();
