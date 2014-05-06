@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical" >
+
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" android:id="@+id/linearLayout">
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout">
 
         <Spinner
                 android:layout_width="269dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/table_spinner"
                 android:entries="@array/table_names"
-                android:prompt="@string/table_names_prompt"
-                tools:context="com.SecUpwN.AIMSICD.DbViewerFragment"/>
+                android:prompt="@string/table_names_prompt"/>
         <Button
                 android:id="@+id/load_table_data"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/load_table_data"
-                tools:context="com.SecUpwN.AIMSICD.DbViewerFragment"/>
+                android:text="@string/load_table_data"/>
     </LinearLayout>
 
     <ListView
@@ -33,6 +32,7 @@
             android:listSelector="@android:color/transparent"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@null"
-            android:dividerHeight="10dp" android:layout_below="@+id/linearLayout"/>
+            android:dividerHeight="10dp"
+            android:layout_below="@+id/linearLayout"/>
 
 </RelativeLayout>

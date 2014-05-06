@@ -66,6 +66,10 @@
     <string name="device_info_title">Device Information</string>
     <string name="sim_info_title">SIM Information</string>
     <string name="network_info">Network Information</string>
+    <string name="cell_info_title">Cell Information</string>
+    <string name="neighbouring_cells_title">Neighbouring Cells</string>
+    <string name="ciphering_indicator_title">Ciphering Indicator</string>
+    <string name="neighbouring_cells_num_title">Total:</string>
     <string name="sim_country">Country:</string>
     <string name="sim_operator_id">Operator ID:</string>
     <string name="sim_operator_name">Operator Name:</string>
@@ -84,6 +88,7 @@
     <string name="data_status">Data Status:</string>
     <string name="network_roaming">Roaming:</string>
     <string name="network_lte_timing_advance">Timing Advance:</string>
+    <string name="button_refresh">Refresh</string>
 
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Network ID:</string>
@@ -101,9 +106,9 @@
     <string name="pref_autostart_title">Auto Start</string>
     <string name="pref_autostart_key">pref_autostart</string>
     <string name="pref_autostart_summ">Automatically start service on boot</string>
-    <string name="pref_killservice_title">Disable Persistent Service</string>
+    <string name="pref_killservice_title">Persistent Service</string>
     <string name="pref_killservice_key">pref_kill_service</string>
-    <string name="pref_killservice_summ">Disable the Persistent Service when exiting the application</string>
+    <string name="pref_killservice_summ">Service will continue to run after exiting the application</string>
     <string name="pref_protection_title">Protection Settings</string>
     <string name="pref_enable_cell_key">pref_enable_cell</string>
     <string name="pref_enable_cell_title">Cell Tracking</string>
