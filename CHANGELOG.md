@@ -1,7 +1,7 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
-#### 06.05.2014 - WIP-Release v0.1.13-alpha
+#### 06.05.2014 - WIP-Release v0.1.14-alpha
 
 * Added: Neighbouring Cell details shown on Cell Information fragment
 * Added: Ciphering Indicator provided through the Samsung MultiRil method
