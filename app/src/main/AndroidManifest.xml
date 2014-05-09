@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.SecUpwN.AIMSICD"
-    android:versionCode="13"
-    android:versionName="0.1.13" >
+    android:versionCode="14"
+    android:versionName="0.1.14" >
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -59,16 +59,6 @@
         </receiver>
 
         <activity
-                android:name=".DbViewer"
-                android:exported="true"
-                android:label="@string/db_viewer"
-                android:parentActivityName=".AIMSICD" >
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".AIMSICD" />
-        </activity>
-
-        <activity
             android:name=".MapViewer"
             android:exported="true"
             android:label="@string/map_view"
@@ -83,6 +73,17 @@
             android:icon="@drawable/ic_action_settings"
             android:label="@string/preferences"
             android:parentActivityName=".AIMSICD" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".MapPrefActivity"
+                android:exported="true"
+                android:icon="@drawable/ic_action_settings"
+                android:label="@string/preferences"
+                android:parentActivityName=".AIMSICD" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

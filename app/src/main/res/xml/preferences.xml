@@ -11,9 +11,9 @@
             android:summary="@string/pref_autostart_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
-            android:key="@string/pref_killservice_key"
-            android:title="@string/pref_killservice_title"
-            android:summary="@string/pref_killservice_summ"
+            android:key="@string/pref_persistservice_key"
+            android:title="@string/pref_persistservice_title"
+            android:summary="@string/pref_persistservice_summ"
             android:defaultValue="true" />
         <CheckBoxPreference
                 android:key="@string/pref_enable_cell_key"
