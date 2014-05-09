@@ -159,9 +159,9 @@ public class AIMSICD extends FragmentActivity {
             mBound = false;
         }
 
-        final String KEY_KILL_SERVICE = mContext.getString(R.string.pref_killservice_key);
-        boolean killService = prefs.getBoolean(KEY_KILL_SERVICE, false);
-        if (killService) {
+        final String KEY_KILL_SERVICE = mContext.getString(R.string.pref_persistservice_key);
+        boolean persistService = prefs.getBoolean(KEY_KILL_SERVICE, true);
+        if (!persistService) {
             Intent intent = new Intent(this, AimsicdService.class);
             stopService(intent);
         }
@@ -501,9 +501,6 @@ public class AIMSICD extends FragmentActivity {
     }
 
 
-
-
-
     class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragments;
         private List<String> titles;
@@ -514,10 +511,10 @@ public class AIMSICD extends FragmentActivity {
             titles = new ArrayList<String>();
             fragments.add(new DeviceFragment(mContext));
             titles.add(getString(R.string.device_info));
-            fragments.add(new DbViewerFragment(mContext));
-            titles.add(getString(R.string.db_viewer));
             fragments.add(new CellInfoFragment(mContext));
             titles.add(getString(R.string.cell_info_title));
+            fragments.add(new DbViewerFragment(mContext));
+            titles.add(getString(R.string.db_viewer));
             fragments.add(new AboutFragment(mContext));
             titles.add(getString(R.string.about_aimsicd));
         }

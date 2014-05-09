@@ -123,9 +123,9 @@
     <string name="pref_autostart_title">Auto Start</string>
     <string name="pref_autostart_key">pref_autostart</string>
     <string name="pref_autostart_summ">Automatically start service on boot</string>
-    <string name="pref_killservice_title">Persistent Service</string>
-    <string name="pref_killservice_key">pref_kill_service</string>
-    <string name="pref_killservice_summ">Service will continue to run after exiting the application</string>
+    <string name="pref_persistservice_title">Persistent Service</string>
+    <string name="pref_persistservice_key">pref_persistservice_service</string>
+    <string name="pref_persistservice_summ">Service will continue to run after exiting the application</string>
     <string name="pref_protection_title">Protection Settings</string>
     <string name="pref_enable_cell_key">pref_enable_cell</string>
     <string name="pref_enable_cell_title">Cell Tracking</string>
@@ -146,6 +146,14 @@
     <string name="action_settings">Settings</string>
     <string name="map_pref_type">map_pref_type</string>
     <string name="disclaimer_accepted">disclaimer_accepted</string>
+
+    <!-- MAP PREFERENCES -->
+    <string name="pref_map_title">Map Viewer Preferences</string>
+    <string name="pref_map_type_key">pref_map_type</string>
+    <string name="pref_map_type_title">Map Type</string>
+    <string name="pref_map_type_summ">Display the Map using different styles</string>
+
+
 
     <string name="database_export_successful">Export Successful</string>
 
