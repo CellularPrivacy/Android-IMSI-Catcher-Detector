@@ -104,13 +104,10 @@ public class DeviceFragment extends Fragment {
         TableLayout tableLayout;
         TableRow tr;
         if (mBound) {
+            tableLayout = (TableLayout) mView.findViewById(R.id.mainView);
             int netID = mAimsicdService.getNetID(true);
             switch (mAimsicdService.getPhoneID()) {
                 case TelephonyManager.PHONE_TYPE_GSM: {
-                    tableLayout = (TableLayout) mView.findViewById(R.id.cdmaView);
-                    tableLayout.setVisibility(View.INVISIBLE);
-                    tr = (TableRow) mView.findViewById(R.id.gsm_cellid);
-                    tr.setVisibility(View.VISIBLE);
                     content = (TextView) mView.findViewById(R.id.network_lac);
                     content.setText(mAimsicdService.getLAC(true));
                     content = (TextView) mView.findViewById(R.id.network_cellid);
@@ -118,10 +115,14 @@ public class DeviceFragment extends Fragment {
                     break;
                 }
                 case TelephonyManager.PHONE_TYPE_CDMA: {
-                    tableLayout = (TableLayout) mView.findViewById(R.id.cdmaView);
-                    tableLayout.setVisibility(View.VISIBLE);
-                    tr = (TableRow) mView.findViewById(R.id.gsm_cellid);
-                    tr.setVisibility(View.INVISIBLE);
+                    for(int i = 0; i < tableLayout.getChildCount();  i++){
+                        TableRow row = (TableRow) tableLayout.getChildAt(i);
+                        if (row.getTag().equals("cdma")) {
+                            row.setVisibility(View.GONE);
+                        } else if( row.getTag().equals("gsm_network")) {
+                            row.setVisibility(View.VISIBLE);
+                        }
+                    }
                     content = (TextView) mView.findViewById(R.id.network_netid);
                     content.setText(mAimsicdService.getLAC(true));
                     content = (TextView) mView.findViewById(R.id.network_sysid);
