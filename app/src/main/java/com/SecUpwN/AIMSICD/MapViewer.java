@@ -27,9 +27,9 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
@@ -69,7 +69,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-public class MapViewer extends FragmentActivity {
+public class MapViewer extends FragmentActivity implements OnSharedPreferenceChangeListener {
     private final String TAG = "AIMSICD_MapViewer";
 
     private GoogleMap mMap;
@@ -102,11 +102,11 @@ public class MapViewer extends FragmentActivity {
         mDbHelper = new AIMSICDDbAdapter(this);
         loadEntries();
         mContext = this;
-        mapTypePref = getResources().getString(R.string.map_pref_type);
+        mapTypePref = getResources().getString(R.string.pref_map_type_key);
         prefs = mContext.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         if (prefs.contains(mapTypePref)) {
-            int mapType = prefs.getInt(mapTypePref, 0);
+            int mapType = Integer.parseInt(prefs.getString(mapTypePref, "0"));
             switch (mapType) {
                 case 0:
                     mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -128,6 +128,16 @@ public class MapViewer extends FragmentActivity {
     public void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+
+        prefs = this.getSharedPreferences(
+                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     /**
@@ -162,13 +172,11 @@ public class MapViewer extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.map_viewer_menu, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -176,40 +184,9 @@ public class MapViewer extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.map_type:
-                final AlertDialog.Builder menuAlert = new
-                        AlertDialog.Builder(this);
-                final String[] menuList = {
-                        "Normal", "Hybrid", "Satellite", "Terrain"
-                };
-                menuAlert.setTitle("Map Type");
-                menuAlert.setItems(menuList, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        Editor editor = prefs.edit();
-
-                        switch (item) {
-                            case 0:
-                                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                                editor.putInt(mapTypePref, 0);
-                                break;
-                            case 1:
-                                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                                editor.putInt(mapTypePref, 1);
-                                break;
-                            case 2:
-                                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                                editor.putInt(mapTypePref, 2);
-                                break;
-                            case 3:
-                                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-                                editor.putInt(mapTypePref, 3);
-                                break;
-                        }
-                        editor.commit();
-                    }
-                });
-                AlertDialog menuMapType = menuAlert.create();
-                menuMapType.show();
+            case R.id.map_preferences:
+                Intent intent = new Intent(this, MapPrefActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.get_opencellid:
             {
@@ -580,6 +557,29 @@ public class MapViewer extends FragmentActivity {
                         Log.e (TAG, "Write OpenCellID response - " + e.getMessage());
                     }
                 }
+            }
+        }
+    }
+
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+    {
+        final String KEY_MAP_TYPE = getBaseContext().getString(R.string.pref_map_type_key);
+
+        if (key.equals(KEY_MAP_TYPE)) {
+            int item = Integer.parseInt(sharedPreferences.getString(key, "0"));
+            switch (item) {
+                case 0:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    break;
+                case 1:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    break;
+                case 2:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                    break;
+                case 3:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                    break;
             }
         }
     }

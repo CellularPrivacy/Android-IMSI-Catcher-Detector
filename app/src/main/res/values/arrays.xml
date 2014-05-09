@@ -12,4 +12,18 @@
         <item>"white"</item>
     </string-array>
 
+    <string-array name="pref_map_type_entries">
+        <item>"Normal"</item>
+        <item>"Hybrid"</item>
+        <item>"Satellite"</item>
+        <item>"Terrain"</item>
+    </string-array>
+
+    <string-array name="pref_map_type_values">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
+    </string-array>
+
 </resources>
