@@ -1243,6 +1243,13 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             TrackingCell = true;
         } else {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
+            if (isTrackingLocation()) { //Disable Location Tracking
+                lm.removeUpdates(mLocationListener);
+                Helpers.msgShort(this, "Stopped tracking location");
+                TrackingLocation = false;
+                mLongitude = 0.0;
+                mLatitude = 0.0;
+            }
             Helpers.msgShort(this, "Stopped tracking cell information");
             TrackingCell = false;
             mCellInfo = "[0,0]|nn|nn|";
