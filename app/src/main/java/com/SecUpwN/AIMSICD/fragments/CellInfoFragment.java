@@ -1,5 +1,6 @@
-package com.SecUpwN.AIMSICD;
+package com.SecUpwN.AIMSICD.fragments;
 
+import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
@@ -37,13 +38,12 @@ public class CellInfoFragment extends Fragment {
     private Map<Integer,Integer> mNeighborMapUMTS = new HashMap<Integer,Integer>();
     private Map<String,Integer> mNeighborMapGSM = new HashMap<String,Integer>();
 
-    public CellInfoFragment (Context context) {
-        mContext = context;
-    }
+    public CellInfoFragment () {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+
         mView= inflater.inflate(R.layout.cell_fragment,
                 container, false);
         mNeighbouringCells = (TextView) mView.findViewById(R.id.neighbouring_cells);
@@ -70,6 +70,7 @@ public class CellInfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getActivity().getBaseContext();
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         //Start Service before binding to keep it resident when activity is destroyed

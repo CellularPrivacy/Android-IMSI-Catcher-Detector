@@ -89,10 +89,10 @@ import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.Helpers;
-import com.SecUpwN.AIMSICD.OemCommands;
+import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.OemCommands;
 import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.rilexecutor.OemRilExecutor;
 import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
@@ -125,6 +125,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private SharedPreferences prefs;
     private PhoneStateListener mPhoneStateListener;
     private LocationListener mLocationListener;
+    public boolean mMultiRilCompatible;
     private Timer timer = new Timer();
 
    /*
@@ -184,7 +185,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private static final int ID_RESPONSE_PRESS_A_KEY = 103;
 
     private static final int REQUEST_TIMEOUT = 10000; // ms
-    private static final int REQUEST_VERSION_TIMEOUT = 300; // ms
     private final ConditionVariable mRequestCondvar = new ConditionVariable();
     private final Object mLastResponseLock = new Object();
 
@@ -231,10 +231,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mRequestExecutor = new SamsungMulticlientRilExecutor();
         mRilExecutorDetectResult = mRequestExecutor.detect();
         if (!mRilExecutorDetectResult.available) {
+            mMultiRilCompatible = false;
             Log.e(TAG, "Samsung multiclient ril not available: " + mRilExecutorDetectResult.error);
             mRequestExecutor = null;
         } else {
             mRequestExecutor.start();
+            mMultiRilCompatible = true;
         }
 
         Log.i(TAG, "Service launched successfully");
@@ -264,10 +266,21 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         Log.i(TAG, "Service destroyed");
     }
 
+    /**
+     * Check the status of the Rill Executor
+     *
+     * @return DetectResult providing access status of the Ril Executor
+     */
     public DetectResult getRilExecutorStatus() {
         return mRilExecutorDetectResult;
     }
 
+    /**
+     * Executes and receives the Ciphering Information request using
+     * the Rill Executor
+     *
+     * @return String list response from Rill Executor
+     */
     public List<String> getCipheringInfo() {
         return executeServiceModeCommand(
                 OemCommands.OEM_SM_TYPE_TEST_MANUAL,
@@ -276,6 +289,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         );
     }
 
+    /**
+     * Executes and receives the Neighbouring Cell request using
+     * the Rill Executor
+     *
+     * @return String list response from Rill Executor
+     */
     public List<String> getNeighbours() {
         KeyStep getNeighboursKeySeq[] = new KeyStep[]{
                 new KeyStep('\0', false),
@@ -291,11 +310,21 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
     }
 
+    /**
+     * Service Mode Command Helper to call with Timeout value
+     *
+     * @return executeServiceModeCommand adding REQUEST_TIMEOUT
+     */
     private List<String> executeServiceModeCommand(int type, int subtype,
             java.util.Collection<KeyStep> keySeqence) {
         return executeServiceModeCommand(type, subtype, keySeqence, REQUEST_TIMEOUT);
     }
 
+    /**
+     * Service Mode Command Helper to call with Timeout value
+     *
+     * @return executeServiceModeCommand adding REQUEST_TIMEOUT
+     */
     private synchronized List<String> executeServiceModeCommand(int type, int subtype,
             java.util.Collection<KeyStep> keySeqence, int timeout) {
         if (mRequestExecutor == null) return Collections.emptyList();
@@ -445,7 +474,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mRoaming = tm.isNetworkRoaming();
         //Network type
         mNetID = getNetID(true);
-        mNetType = getNetworkTypeName(mNetID, true);
+        mNetType = getNetworkTypeName();
 
         switch (mPhoneID) {
             case TelephonyManager.PHONE_TYPE_GSM:
@@ -531,6 +560,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
     }
 
+    /**
+     * Attempts to retrieve the Last Known Location from the device
+     *
+     * @return double array [0] - Latitude [1] - Longitude
+     */
     public double[] getLastLocation() {
         return new double[] {mLatitude, mLongitude};
     }
@@ -814,55 +848,111 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      *
      * @return string representing device Network Type
      */
-    public String getNetworkTypeName(int netID, boolean force) {
-        if (mNetType.isEmpty() || force) {
-            switch (netID) {
-                case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-                    mNetType = "Unknown";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_GPRS:
-                    mNetType = "GPRS";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_EDGE:
-                    mNetType = "EDGE";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_UMTS:
-                    mNetType = "UMTS";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_HSDPA:
-                    mNetType = "HDSPA";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_HSUPA:
-                    mNetType = "HSUPA";
-                    break;
-                case TelephonyManager.NETWORK_TYPE_HSPA:
-                    mNetType = "HSPA";
+    public String getNetworkTypeName() {
+            switch (tm.getNetworkType()) {
+                case TelephonyManager.NETWORK_TYPE_1xRTT:
+                    mNetType = "1xRTT";
                     break;
                 case TelephonyManager.NETWORK_TYPE_CDMA:
                     mNetType = "CDMA";
                     break;
+                case TelephonyManager.NETWORK_TYPE_EDGE:
+                    mNetType = "EDGE";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_EHRPD:
+                    mNetType = "eHRPD";
+                    break;
                 case TelephonyManager.NETWORK_TYPE_EVDO_0:
-                    mNetType = "EVDO_0";
+                    mNetType = "EVDO rev. 0";
                     break;
                 case TelephonyManager.NETWORK_TYPE_EVDO_A:
-                    mNetType = "EVDO_A";
+                    mNetType = "EVDO rev. A";
                     break;
                 case TelephonyManager.NETWORK_TYPE_EVDO_B:
-                    mNetType = "EVDO_B";
+                    mNetType = "EVDO rev. B";
                     break;
-                case TelephonyManager.NETWORK_TYPE_1xRTT:
-                    mNetType = "1xRTT";
+                case TelephonyManager.NETWORK_TYPE_GPRS:
+                    mNetType = "GPRS";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_HSDPA:
+                    mNetType = "HSDPA";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_HSPA:
+                    mNetType = "HSPA";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_HSPAP:
+                    mNetType = "HSPA+";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_HSUPA:
+                    mNetType = "HSUPA";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_IDEN:
+                    mNetType = "iDen";
                     break;
                 case TelephonyManager.NETWORK_TYPE_LTE:
                     mNetType = "LTE";
                     break;
-                default:
+                case TelephonyManager.NETWORK_TYPE_UMTS:
+                    mNetType = "UMTS";
+                    break;
+                case TelephonyManager.NETWORK_TYPE_UNKNOWN:
                     mNetType = "Unknown";
                     break;
             }
-        }
 
         return mNetType;
+    }
+
+    public void getDataActivity() {
+        int direction = tm.getDataActivity();
+        mDataActivityTypeShort = "un";
+        mDataActivityType = "undef";
+        switch (direction) {
+            case TelephonyManager.DATA_ACTIVITY_NONE:
+                mDataActivityTypeShort = "No";
+                mDataActivityType = "None";
+                break;
+            case TelephonyManager.DATA_ACTIVITY_IN:
+                mDataActivityTypeShort = "In";
+                mDataActivityType = "In";
+                break;
+            case TelephonyManager.DATA_ACTIVITY_OUT:
+                mDataActivityTypeShort = "Ou";
+                mDataActivityType = "Out";
+                break;
+            case TelephonyManager.DATA_ACTIVITY_INOUT:
+                mDataActivityTypeShort = "IO";
+                mDataActivityType = "In-Out";
+                break;
+            case TelephonyManager.DATA_ACTIVITY_DORMANT:
+                mDataActivityTypeShort = "Do";
+                mDataActivityType = "Dormant";
+                break;
+        }
+    }
+
+    public void getDataState() {
+        int state = tm.getDataState();
+        mDataState = "undef";
+        mDataStateShort = "un";
+        switch (state) {
+            case TelephonyManager.DATA_DISCONNECTED:
+                mDataState = "Disconnected";
+                mDataStateShort = "Di";
+                break;
+            case TelephonyManager.DATA_CONNECTING:
+                mDataState = "Connecting";
+                mDataStateShort = "Ct";
+                break;
+            case TelephonyManager.DATA_CONNECTED:
+                mDataState = "Connected";
+                mDataStateShort = "Cd";
+                break;
+            case TelephonyManager.DATA_SUSPENDED:
+                mDataState = "Suspended";
+                mDataStateShort = "Su";
+                break;
+        }
     }
 
     /**
@@ -950,6 +1040,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      * @return string representing the current Mobile Data Activity
      */
     public String getActivityDesc() {
+        getDataActivity();
         return mDataActivityType;
     }
 
@@ -959,6 +1050,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      * @return string representing the current Mobile Data State
      */
     public String getStateDesc() {
+        getDataState();
         return mDataState;
     }
 
@@ -1161,7 +1253,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private PhoneStateListener mCellSignalListener = new PhoneStateListener() {
         public void onCellLocationChanged(CellLocation location) {
             mNetID = getNetID(true);
-            mNetType = getNetworkTypeName(mNetID, true);
+            mNetType = getNetworkTypeName();
 
             switch (mPhoneID) {
                 case TelephonyManager.PHONE_TYPE_GSM:

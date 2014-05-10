@@ -26,4 +26,31 @@
         <item>"3"</item>
     </string-array>
 
+
+    <string-array name="pref_refresh_entries">
+        <item>"Manual"</item>
+        <item>"Automatic"</item>
+        <item>"2s"</item>
+        <item>"5s"</item>
+        <item>"10s"</item>
+        <item>"25s"</item>
+        <item>"45s"</item>
+        <item>"1 min"</item>
+        <item>"5 min"</item>
+    </string-array>
+
+    <string-array name="pref_refresh_values">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"5"</item>
+        <item>"10"</item>
+        <item>"25"</item>
+        <item>"45"</item>
+        <item>"60"</item>
+        <item>"300"</item>
+    </string-array>
+
+
+
 </resources>

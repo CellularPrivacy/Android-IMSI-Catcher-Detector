@@ -1,4 +1,4 @@
-package com.SecUpwN.AIMSICD;
+package com.SecUpwN.AIMSICD.utils;
 
 /**
  * <p>
