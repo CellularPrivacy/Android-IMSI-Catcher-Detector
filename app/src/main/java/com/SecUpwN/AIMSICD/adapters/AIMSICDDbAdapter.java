@@ -101,25 +101,28 @@ public class AIMSICDDbAdapter {
             int signalInfo, String cellInfo, String simCountry,
             String simOperator, String simOperatorName) {
 
-        //Populate Content Values for Insert or Update
-        ContentValues cellValues = new ContentValues();
-        cellValues.put("Lac", HexDump.toHexString(lac));
-        cellValues.put("CellID", HexDump.toHexString(cellID));
-        cellValues.put("Net", netType);
-        cellValues.put("Lat", latitude);
-        cellValues.put("Lng", longitude);
-        cellValues.put("Signal", signalInfo);
-        cellValues.put("Connection", cellInfo);
-        cellValues.put("Country", simCountry);
-        cellValues.put("Operator", simOperator);
-        cellValues.put("OperatorName", simOperatorName);
+        if (cellID != -1) {
+            //Populate Content Values for Insert or Update
+            ContentValues cellValues = new ContentValues();
+            cellValues.put("Lac", HexDump.toHexString(lac));
+            cellValues.put("CellID", HexDump.toHexString(cellID));
+            cellValues.put("Net", netType);
+            cellValues.put("Lat", latitude);
+            cellValues.put("Lng", longitude);
+            cellValues.put("Signal", signalInfo);
+            cellValues.put("Connection", cellInfo);
+            cellValues.put("Country", simCountry);
+            cellValues.put("Operator", simOperator);
+            cellValues.put("OperatorName", simOperatorName);
 
-        if (cellExists(cellID)) {
-            return mDb.update(CELL_TABLE, cellValues, "CellID=?",
-                    new String[]{Integer.toString(cellID)});
-        } else {
-            return mDb.insert(CELL_TABLE, null, cellValues);
+            if (cellExists(cellID)) {
+                return mDb.update(CELL_TABLE, cellValues, "CellID=?",
+                        new String[]{Integer.toString(cellID)});
+            } else {
+                return mDb.insert(CELL_TABLE, null, cellValues);
+            }
         }
+        return 0;
     }
 
     /**
@@ -160,22 +163,26 @@ public class AIMSICDDbAdapter {
             int netType, double latitude, double longitude,
             int signalInfo, String cellInfo) {
 
-        //Populate Content Values for Insert or Update
-        ContentValues locationValues = new ContentValues();
-        locationValues.put("Lac", HexDump.toHexString(lac));
-        locationValues.put("CellID", HexDump.toHexString(cellID));
-        locationValues.put("Net", netType);
-        locationValues.put("Lat", latitude);
-        locationValues.put("Lng", longitude);
-        locationValues.put("Signal", signalInfo);
-        locationValues.put("Connection", cellInfo);
+        if (latitude != 0.0 && longitude != 0.0) {
+            //Populate Content Values for Insert or Update
+            ContentValues locationValues = new ContentValues();
+            locationValues.put("Lac", HexDump.toHexString(lac));
+            locationValues.put("CellID", HexDump.toHexString(cellID));
+            locationValues.put("Net", netType);
+            locationValues.put("Lat", latitude);
+            locationValues.put("Lng", longitude);
+            locationValues.put("Signal", signalInfo);
+            locationValues.put("Connection", cellInfo);
 
-        if (locationExists(cellID)) {
-            return mDb.update(LOCATION_TABLE, locationValues,"CellID=?",
-                    new String[]{Integer.toString(cellID)});
-        } else {
-            return mDb.insert(LOCATION_TABLE, null, locationValues);
+            if (locationExists(cellID)) {
+                return mDb.update(LOCATION_TABLE, locationValues, "CellID=?",
+                        new String[]{Integer.toString(cellID)});
+            } else {
+                return mDb.insert(LOCATION_TABLE, null, locationValues);
+            }
         }
+
+        return 0;
     }
 
 
