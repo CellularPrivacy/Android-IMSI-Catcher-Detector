@@ -1,5 +1,6 @@
-package com.SecUpwN.AIMSICD;
+package com.SecUpwN.AIMSICD.fragments;
 
+import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
 import android.content.ComponentName;
@@ -28,13 +29,12 @@ public class DeviceFragment extends Fragment {
 
     private Context mContext;
 
-    public DeviceFragment(Context context) {
-        mContext = context;
-    }
+    public DeviceFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
+        mContext = getActivity().getBaseContext();
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         //Start Service before binding to keep it resident when activity is destroyed
@@ -105,7 +105,6 @@ public class DeviceFragment extends Fragment {
         TableRow tr;
         if (mBound) {
             tableLayout = (TableLayout) mView.findViewById(R.id.mainView);
-            int netID = mAimsicdService.getNetID(true);
             switch (mAimsicdService.getPhoneID()) {
                 case TelephonyManager.PHONE_TYPE_GSM: {
                     content = (TextView) mView.findViewById(R.id.network_lac);
@@ -115,7 +114,8 @@ public class DeviceFragment extends Fragment {
                     break;
                 }
                 case TelephonyManager.PHONE_TYPE_CDMA: {
-                    for(int i = 0; i < tableLayout.getChildCount();  i++){
+                    int layouts = tableLayout.getChildCount();
+                    for(int i = 0; i < layouts;  i++){
                         TableRow row = (TableRow) tableLayout.getChildAt(i);
                         if (row.getTag().equals("cdma")) {
                             row.setVisibility(View.GONE);
@@ -167,7 +167,7 @@ public class DeviceFragment extends Fragment {
             content = (TextView) mView.findViewById(R.id.network_code);
             content.setText(mAimsicdService.getSmmcMcc(false));
             content = (TextView) mView.findViewById(R.id.network_type);
-            content.setText(mAimsicdService.getNetworkTypeName(netID, false));
+            content.setText(mAimsicdService.getNetworkTypeName());
 
             content = (TextView) mView.findViewById(R.id.data_activity);
             content.setText(mAimsicdService.getActivityDesc());

@@ -1,4 +1,6 @@
-package com.SecUpwN.AIMSICD;
+package com.SecUpwN.AIMSICD.fragments;
+
+import com.SecUpwN.AIMSICD.R;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;

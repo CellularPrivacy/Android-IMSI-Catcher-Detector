@@ -1,5 +1,8 @@
-package com.SecUpwN.AIMSICD;
+package com.SecUpwN.AIMSICD.fragments;
 
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.CardItemData;
 import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
@@ -29,13 +32,12 @@ public class DbViewerFragment extends Fragment {
     private View mView;
     private Context mContext;
 
-    public DbViewerFragment(Context context) {
-        mContext = context;
-    }
+    public DbViewerFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getActivity().getBaseContext();
         mDb  = new AIMSICDDbAdapter(mContext);
     }
 
