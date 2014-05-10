@@ -15,7 +15,7 @@
  *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE
  */
 
-package com.SecUpwN.AIMSICD;
+package com.SecUpwN.AIMSICD.activities;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -57,7 +57,11 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
+import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;

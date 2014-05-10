@@ -15,7 +15,7 @@
  *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE
  */
 
-package com.SecUpwN.AIMSICD;
+package com.SecUpwN.AIMSICD.utils;
 
 import android.util.Log;
 
