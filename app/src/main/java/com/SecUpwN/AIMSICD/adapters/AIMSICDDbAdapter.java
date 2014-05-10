@@ -1,6 +1,7 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.rilexecutor.HexDump;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -18,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -30,7 +32,7 @@ public class AIMSICDDbAdapter {
     private final DbHelper mDbHelper;
     private SQLiteDatabase mDb;
     private Context mContext;
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String COLUMN_ID = "_id";
     private final String LOCATION_TABLE = "locationinfo";
     private final String CELL_TABLE = "cellinfo";
@@ -101,8 +103,8 @@ public class AIMSICDDbAdapter {
 
         //Populate Content Values for Insert or Update
         ContentValues cellValues = new ContentValues();
-        cellValues.put("Lac", lac);
-        cellValues.put("CellID", cellID);
+        cellValues.put("Lac", HexDump.toHexString(lac));
+        cellValues.put("CellID", HexDump.toHexString(cellID));
         cellValues.put("Net", netType);
         cellValues.put("Lat", latitude);
         cellValues.put("Lng", longitude);
@@ -160,8 +162,8 @@ public class AIMSICDDbAdapter {
 
         //Populate Content Values for Insert or Update
         ContentValues locationValues = new ContentValues();
-        locationValues.put("Lac", lac);
-        locationValues.put("CellID", cellID);
+        locationValues.put("Lac", HexDump.toHexString(lac));
+        locationValues.put("CellID", HexDump.toHexString(cellID));
         locationValues.put("Net", netType);
         locationValues.put("Lat", latitude);
         locationValues.put("Lng", longitude);
