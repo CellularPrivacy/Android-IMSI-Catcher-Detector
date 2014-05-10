@@ -1,4 +1,6 @@
-package com.SecUpwN.AIMSICD;
+package com.SecUpwN.AIMSICD.adapters;
+
+import com.SecUpwN.AIMSICD.R;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;

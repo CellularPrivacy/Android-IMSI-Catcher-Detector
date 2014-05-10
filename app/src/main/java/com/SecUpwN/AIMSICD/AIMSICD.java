@@ -42,18 +42,21 @@ import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
 import android.text.format.Time;
 import android.util.Log;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.activities.MapViewer;
+import com.SecUpwN.AIMSICD.activities.PrefActivity;
+import com.SecUpwN.AIMSICD.fragments.AboutFragment;
+import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
+import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
+import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
+import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -268,7 +271,8 @@ public class AIMSICD extends FragmentActivity {
                 if (loc[0] != 0.0 && loc[1] != 0.0) {
                     getOpenCellData(loc[0], loc[1]);
                 } else {
-                    Helpers.sendMsg(mContext, "Unable to determine your last location, enable Location Services (GPS) and try again.");
+                    Helpers.sendMsg(mContext,
+                            "Unable to determine your last location, enable Location Services (GPS) and try again.");
                 }
                 return true;
             case R.id.app_exit:
@@ -509,13 +513,13 @@ public class AIMSICD extends FragmentActivity {
             super(fm);
             this.fragments = new ArrayList<Fragment>();
             titles = new ArrayList<String>();
-            fragments.add(new DeviceFragment(mContext));
+            fragments.add(new DeviceFragment());
             titles.add(getString(R.string.device_info));
-            fragments.add(new CellInfoFragment(mContext));
+            fragments.add(new CellInfoFragment());
             titles.add(getString(R.string.cell_info_title));
-            fragments.add(new DbViewerFragment(mContext));
+            fragments.add(new DbViewerFragment());
             titles.add(getString(R.string.db_viewer));
-            fragments.add(new AboutFragment(mContext));
+            fragments.add(new AboutFragment());
             titles.add(getString(R.string.about_aimsicd));
         }
         @Override
@@ -527,6 +531,8 @@ public class AIMSICD extends FragmentActivity {
         public CharSequence getPageTitle(int position) {
             return titles.get(position);
         }
+
+
 
             @Override
         public int getCount() {
