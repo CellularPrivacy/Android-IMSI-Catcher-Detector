@@ -1,6 +1,15 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 10.05.2014 - WIP-Release v0.1.15-alpha
+
+* Fix: Main layout alignment corrected and page order changed so Cell Information is now page 2
+* Fix: Service Persistence Preferences updated to work with the change of the preference logic
+* Fix: Multiple small issues with some device variables with Network type
+* Update: Map Viewer type selection moved into a dedicated Map preference fragment
+* Update: About Page completed with links functioning correctly
+* Update: Cleaned up source file structure and moved items for a more logical structure
+
 #### 06.05.2014 - WIP-Release v0.1.14-alpha
 
 * Added: Neighbouring Cell details shown on Cell Information fragment
