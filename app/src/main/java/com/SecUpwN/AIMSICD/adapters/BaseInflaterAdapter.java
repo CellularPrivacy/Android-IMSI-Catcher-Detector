@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BaseInflaterAdapter<T> extends BaseAdapter
 {
-    private List<T> m_items = new ArrayList<T>();
+    private final List<T> m_items = new ArrayList<>();
     private IAdapterViewInflater<T> m_viewInflater;
 
     public BaseInflaterAdapter(IAdapterViewInflater<T> viewInflater)

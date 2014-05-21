@@ -77,12 +77,11 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
     private final String TAG = "AIMSICD_MapViewer";
 
     private GoogleMap mMap;
-    private UiSettings mUiSettings;
+
     private AIMSICDDbAdapter mDbHelper;
     private Context mContext;
     private LatLng loc = null;
     private SharedPreferences prefs;
-    private String mapTypePref;
 
     /**
      * Called when the activity is first created.
@@ -106,7 +105,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         mDbHelper = new AIMSICDDbAdapter(this);
         loadEntries();
         mContext = this;
-        mapTypePref = getResources().getString(R.string.pref_map_type_key);
+        String mapTypePref = getResources().getString(R.string.pref_map_type_key);
         prefs = mContext.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         if (prefs.contains(mapTypePref)) {
@@ -157,14 +156,14 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 // The Map is verified. It is now safe to manipulate the map.
-                mUiSettings = mMap.getUiSettings();
-                mUiSettings.setZoomControlsEnabled(true);
-                mUiSettings.setCompassEnabled(true);
-                mUiSettings.setMyLocationButtonEnabled(true);
-                mUiSettings.setScrollGesturesEnabled(true);
-                mUiSettings.setZoomGesturesEnabled(true);
-                mUiSettings.setTiltGesturesEnabled(true);
-                mUiSettings.setRotateGesturesEnabled(true);
+                UiSettings uiSettings = mMap.getUiSettings();
+                uiSettings.setZoomControlsEnabled(true);
+                uiSettings.setCompassEnabled(true);
+                uiSettings.setMyLocationButtonEnabled(true);
+                uiSettings.setScrollGesturesEnabled(true);
+                uiSettings.setZoomGesturesEnabled(true);
+                uiSettings.setTiltGesturesEnabled(true);
+                uiSettings.setRotateGesturesEnabled(true);
                 mMap.setMyLocationEnabled(true);
             } else {
                 Helpers.sendMsg(this, "Unable to create map!");
@@ -441,8 +440,8 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
             NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             NetworkInfo mobileInfo =
                     connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if (wifiInfo.isConnected() || mobileInfo.isConnected()) {
-                return true;
+            if (wifiInfo != null && mobileInfo != null) {
+                return wifiInfo.isConnected() || mobileInfo.isConnected();
             }
         }
         catch(Exception e){
