@@ -32,15 +32,15 @@ public class OpenCellIdCardInflater implements IAdapterViewInflater<CardItemData
 
     private class ViewHolder
     {
-        private View mRootView;
-        private TextView mCellID;
-        private TextView mLac;
-        private TextView mMcc;
-        private TextView mMnc;
-        private TextView mLat;
-        private TextView mLng;
-        private TextView mAvgSigStr;
-        private TextView mSamples;
+        private final View mRootView;
+        private final TextView mCellID;
+        private final TextView mLac;
+        private final TextView mMcc;
+        private final TextView mMnc;
+        private final TextView mLat;
+        private final TextView mLng;
+        private final TextView mAvgSigStr;
+        private final TextView mSamples;
 
         public ViewHolder(View rootView)
         {

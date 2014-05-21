@@ -91,12 +91,13 @@ import android.util.Log;
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.OemCommands;
 import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.rilexecutor.OemRilExecutor;
 import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
 import com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor;
+import com.SecUpwN.AIMSICD.rilexecutor.StringsResult;
+import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.OemCommands;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -160,8 +161,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private String mSimSubs = "";
     private String mDataActivityType = "";
     private String mDataActivityTypeShort = "";
-    private final Map<Integer,Integer> mNeighborMapUMTS = new HashMap<Integer,Integer>();
-    private final Map<String,Integer> mNeighborMapGSM = new HashMap<String,Integer>();
+    private final Map<Integer,Integer> mNeighborMapUMTS = new HashMap<>();
+    private final Map<String,Integer> mNeighborMapGSM = new HashMap<>();
 
    /*
     * Tracking and Alert Declarations
@@ -179,16 +180,19 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private static final int ID_REQUEST_FINISH_SERVICE_MODE_COMMAND = 2;
     private static final int ID_REQUEST_PRESS_A_KEY = 3;
     private static final int ID_REQUEST_REFRESH = 4;
+    private static final int ID_REQUEST_AT_COMMAND = 5;
 
     private static final int ID_RESPONSE = 101;
     private static final int ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND = 102;
     private static final int ID_RESPONSE_PRESS_A_KEY = 103;
+    private static final int ID_RESPONSE_AT_COMMAND = 104;
 
     private static final int REQUEST_TIMEOUT = 10000; // ms
     private final ConditionVariable mRequestCondvar = new ConditionVariable();
     private final Object mLastResponseLock = new Object();
 
     private volatile List<String> mLastResponse;
+    private String[] mAtCommand;
 
     private DetectResult mRilExecutorDetectResult;
     private OemRilExecutor mRequestExecutor;
@@ -221,13 +225,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         refreshDeviceInfo();
         setNotification();
 
-        //Sumsung MultiRil Initialization
-        mHandlerThread = new HandlerThread("ServiceModeSeqHandler");
-        mHandlerThread.start();
-
-        Looper l = mHandlerThread.getLooper();
-        mHandler = new Handler(l, new MyHandler());
-
         mRequestExecutor = new SamsungMulticlientRilExecutor();
         mRilExecutorDetectResult = mRequestExecutor.detect();
         if (!mRilExecutorDetectResult.available) {
@@ -237,6 +234,14 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         } else {
             mRequestExecutor.start();
             mMultiRilCompatible = true;
+            //Sumsung MultiRil Initialization
+            mHandlerThread = new HandlerThread("ServiceModeSeqHandler");
+            mHandlerThread.start();
+
+            Looper l = mHandlerThread.getLooper();
+            if (l != null) {
+                mHandler = new Handler(l, new MyHandler());
+            }
         }
 
         Log.i(TAG, "Service launched successfully");
@@ -286,6 +291,22 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 OemCommands.OEM_SM_TYPE_TEST_MANUAL,
                 OemCommands.OEM_SM_TYPE_SUB_CIPHERING_PROTECTION_ENTER,
                 null
+        );
+    }
+
+    /**
+     * Executes an AT Command entered by the user using
+     * the Rill Executor
+     *
+     * @return String list response from Rill Executor
+     */
+    public List<String> executeAtCommand(String[] commands) {
+        mAtCommand = commands;
+        return executeAtServiceModeCommand(
+                ID_REQUEST_AT_COMMAND,
+                ID_REQUEST_AT_COMMAND,
+                null,
+                REQUEST_TIMEOUT
         );
     }
 
@@ -344,6 +365,29 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
     }
 
+    /**
+     * AT Command Helper to call with Timeout value
+     *
+     */
+    private synchronized List<String> executeAtServiceModeCommand(int type, int subtype,
+            java.util.Collection<KeyStep> keySeqence, int timeout) {
+        if (mRequestExecutor == null) return Collections.emptyList();
+
+        mRequestCondvar.close();
+        mHandler.obtainMessage(ID_REQUEST_AT_COMMAND,
+                type,
+                subtype,
+                keySeqence).sendToTarget();
+        if (!mRequestCondvar.block(timeout)) {
+            Log.e(TAG, "request timeout");
+            return Collections.emptyList();
+        } else {
+            synchronized (mLastResponseLock) {
+                return mLastResponse;
+            }
+        }
+    }
+
     private static class KeyStep {
         public final char keychar;
         public boolean captureResponse;
@@ -353,13 +397,14 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             this.captureResponse = captureResponse;
         }
 
-        public static KeyStep KEY_START_SERVICE_MODE = new KeyStep('\0', true);
+        public static final KeyStep KEY_START_SERVICE_MODE = new KeyStep('\0', true);
     }
 
     private class MyHandler implements Handler.Callback {
 
         private int mCurrentType;
         private int mCurrentSubtype;
+        private String[] mAtCommands;
 
         private Queue<KeyStep> mKeySequence;
 
@@ -369,11 +414,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             Message responseMsg;
             KeyStep lastKeyStep;
 
+
             switch (msg.what) {
                 case ID_REQUEST_START_SERVICE_MODE_COMMAND:
                     mCurrentType = msg.arg1;
                     mCurrentSubtype = msg.arg2;
-                    mKeySequence = new ArrayDeque<KeyStep>(3);
+                    mKeySequence = new ArrayDeque<>(3);
                     if (msg.obj != null) {
                         mKeySequence.addAll((java.util.Collection<KeyStep>) msg.obj);
                     } else {
@@ -402,6 +448,36 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     responseMsg = mHandler.obtainMessage(ID_RESPONSE);
                     mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
                     break;
+                case ID_REQUEST_AT_COMMAND:
+                    mAtCommands = mAtCommand;
+                    responseMsg = mHandler.obtainMessage(ID_RESPONSE_AT_COMMAND);
+                    mRequestExecutor.invokeOemRilRequestStrings(mAtCommands, responseMsg);
+                    break;
+                case ID_RESPONSE_AT_COMMAND:
+                    lastKeyStep = mKeySequence.poll();
+                    try {
+                        StringsResult result = (StringsResult) msg.obj;
+                        if (result == null) {
+                            Log.e(TAG, "result is null");
+                            break;
+                        }
+                        if (result.exception != null) {
+                            Log.e(TAG, "", result.exception);
+                            break;
+                        }
+                        if (result.result == null) {
+                            Log.v(TAG, "No need to refresh.");
+                            break;
+                        }
+                        if (lastKeyStep.captureResponse) {
+                            synchronized (mLastResponseLock) {
+                                mLastResponse.addAll(Helpers.unpackListOfStrings(result.result));
+                            }
+                        }
+                    } catch (Exception e){
+                        Log.e(TAG, "AT Response: " + e);
+                    }
+                    break;
                 case ID_RESPONSE:
                     lastKeyStep = mKeySequence.poll();
                     try {
@@ -420,7 +496,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         }
                         if (lastKeyStep.captureResponse) {
                             synchronized (mLastResponseLock) {
-                                mLastResponse.addAll(Helpers.unpackListOfStrings(result.result));
+                                mLastResponse.addAll(Helpers.unpackByteListOfStrings(result.result));
                             }
                         }
                     } finally {
@@ -1106,34 +1182,46 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         switch (status) {
             case 1: //Idle
-                if (iconType.equals("flat")) {
-                    icon = R.drawable.flat_idle;
-                } else if (iconType.equals("sense")) {
-                    icon = R.drawable.sense_idle;
-                } else if (iconType.equals("white")) {
-                    icon = R.drawable.white_idle;
+                switch (iconType) {
+                    case "flat":
+                        icon = R.drawable.flat_idle;
+                        break;
+                    case "sense":
+                        icon = R.drawable.sense_idle;
+                        break;
+                    case "white":
+                        icon = R.drawable.white_idle;
+                        break;
                 }
                 tickerText = getResources().getString(R.string.app_name_short)
                         + " - Status: Idle";
                 break;
             case 2: //Good
-                if (iconType.equals("flat")) {
-                    icon = R.drawable.flat_good;
-                } else if (iconType.equals("sense")) {
-                    icon = R.drawable.sense_good;
-                } else if (iconType.equals("white")) {
-                    icon = R.drawable.white_good;
+                switch (iconType) {
+                    case "flat":
+                        icon = R.drawable.flat_good;
+                        break;
+                    case "sense":
+                        icon = R.drawable.sense_good;
+                        break;
+                    case "white":
+                        icon = R.drawable.white_good;
+                        break;
                 }
                 tickerText = getResources().getString(R.string.app_name_short)
                         + " - Status: Good No Threats Detected";
                 break;
             case 3: //ALARM
-                if (iconType.equals("flat")) {
-                    icon = R.drawable.flat_alarm;
-                } else if (iconType.equals("sense")) {
-                    icon = R.drawable.sense_alarm;
-                } else if (iconType.equals("white")) {
-                    icon = R.drawable.white_alarm;
+                switch (iconType) {
+                    case "flat":
+                        icon = R.drawable.flat_alarm;
+                        break;
+                    case "sense":
+                        icon = R.drawable.sense_alarm;
+                        break;
+                    case "white":
+                        icon = R.drawable.white_alarm;
+                        break;
                 }
                 tickerText = getResources().getString(R.string.app_name_short)
                         + " - ALERT!! Threat Detected";
@@ -1257,7 +1345,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         setNotification();
     }
 
-    private PhoneStateListener mCellSignalListener = new PhoneStateListener() {
+    private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
         public void onCellLocationChanged(CellLocation location) {
             mNetID = getNetID(true);
             mNetType = getNetworkTypeName();

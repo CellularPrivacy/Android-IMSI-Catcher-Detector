@@ -1,7 +1,6 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.rilexecutor.HexDump;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -19,7 +18,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -31,7 +29,7 @@ public class AIMSICDDbAdapter {
 
     private final DbHelper mDbHelper;
     private SQLiteDatabase mDb;
-    private Context mContext;
+    private final Context mContext;
     private static final int DATABASE_VERSION = 4;
     private static final String COLUMN_ID = "_id";
     private final String LOCATION_TABLE = "locationinfo";
@@ -56,42 +54,6 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Location Tracking Database
-     */
-    private final String LOC_DATABASE_CREATE = "create table " +
-            LOCATION_TABLE + " (" + COLUMN_ID +
-            " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
-            "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
-            "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-
-    /**
-     * Cell Information Tracking Database
-     */
-    private final String CELL_DATABASE_CREATE = "create table " +
-            CELL_TABLE + " (" + COLUMN_ID +
-            " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
-            "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
-            "Country VARCHAR, Operator VARCHAR, OperatorName VARCHAR, " +
-            "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-
-    /**
-     * OpenCellID Cell Information Database
-     */
-    private final String OPENCELLID_DATABASE_CREATE = "create table " +
-            OPENCELLID_TABLE + " (" + COLUMN_ID +
-            " integer primary key autoincrement, Lat VARCHAR, Lng VARCHAR, Mcc INTEGER, " +
-            "Mnc INTEGER, Lac INTEGER, CellID INTEGER, AvgSigStr INTEGER, Samples INTEGER, " +
-            "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-
-    /**
-     * Default MCC Location Database
-     */
-    private final String DEFAULT_MCC_DATABASE_CREATE = "create table " +
-            DEFAULT_MCC_TABLE + " (" + COLUMN_ID +
-            " integer primary key autoincrement, Country VARCHAR, Mcc INTEGER, "
-            + "Lat VARCHAR, Lng VARCHAR);";
-
-    /**
      * Inserts Cell Details into Database
      *
      * @return row id or -1 if error
@@ -104,8 +66,8 @@ public class AIMSICDDbAdapter {
         if (cellID != -1) {
             //Populate Content Values for Insert or Update
             ContentValues cellValues = new ContentValues();
-            cellValues.put("Lac", HexDump.toHexString(lac));
-            cellValues.put("CellID", HexDump.toHexString(cellID));
+            cellValues.put("Lac", lac);
+            cellValues.put("CellID", cellID);
             cellValues.put("Net", netType);
             cellValues.put("Lat", latitude);
             cellValues.put("Lng", longitude);
@@ -166,8 +128,8 @@ public class AIMSICDDbAdapter {
         if (latitude != 0.0 && longitude != 0.0) {
             //Populate Content Values for Insert or Update
             ContentValues locationValues = new ContentValues();
-            locationValues.put("Lac", HexDump.toHexString(lac));
-            locationValues.put("CellID", HexDump.toHexString(cellID));
+            locationValues.put("Lac", lac);
+            locationValues.put("CellID", cellID);
             locationValues.put("Net", netType);
             locationValues.put("Lat", latitude);
             locationValues.put("Lng", longitude);
@@ -224,7 +186,7 @@ public class AIMSICDDbAdapter {
     /**
      * Checks to see if Location already exists in database
      */
-    public boolean locationExists(int cellID) {
+    boolean locationExists(int cellID) {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + LOCATION_TABLE + " WHERE CellID = " +
                 cellID, null);
 
@@ -234,7 +196,7 @@ public class AIMSICDDbAdapter {
     /**
      * Checks to see if Cell already exists in database
      */
-    public boolean cellExists(int cellID) {
+    boolean cellExists(int cellID) {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + CELL_TABLE + " WHERE CellID = " +
                 cellID, null);
 
@@ -244,7 +206,7 @@ public class AIMSICDDbAdapter {
     /**
      * Checks to see if Cell already exists in OpenCellID database
      */
-    public boolean openCellExists(int cellID) {
+    boolean openCellExists(int cellID) {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE + " WHERE CellID = " +
                 cellID, null);
 
@@ -381,10 +343,50 @@ public class AIMSICDDbAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase database) {
+             /*
+              * Location Tracking Database
+              */
+            String LOC_DATABASE_CREATE = "create table " +
+                    LOCATION_TABLE + " (" + COLUMN_ID +
+                    " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
+                    "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(LOC_DATABASE_CREATE);
+
+            /*
+             * Cell Information Tracking Database
+             */
+            String CELL_DATABASE_CREATE = "create table " +
+                    CELL_TABLE + " (" + COLUMN_ID +
+                    " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
+                    "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
+                    "Country VARCHAR, Operator VARCHAR, OperatorName VARCHAR, " +
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(CELL_DATABASE_CREATE);
+
+            /*
+             * OpenCellID Cell Information Database
+             */
+            String OPENCELLID_DATABASE_CREATE = "create table " +
+                    OPENCELLID_TABLE + " (" + COLUMN_ID +
+                    " integer primary key autoincrement, Lat VARCHAR, Lng VARCHAR, Mcc INTEGER, " +
+                    "Mnc INTEGER, Lac INTEGER, CellID INTEGER, AvgSigStr INTEGER, Samples INTEGER, "
+                    +
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(OPENCELLID_DATABASE_CREATE);
+
+            /*
+             * Default MCC Location Database
+             */
+            String DEFAULT_MCC_DATABASE_CREATE = "create table " +
+                    DEFAULT_MCC_TABLE + " (" + COLUMN_ID +
+                    " integer primary key autoincrement, Country VARCHAR, Mcc INTEGER, "
+                    + "Lat VARCHAR, Lng VARCHAR);";
             database.execSQL(DEFAULT_MCC_DATABASE_CREATE);
+
+            /*
+             * Repopulate the default MCC location table
+             */
             populateDefaultMCC(database);
         }
 

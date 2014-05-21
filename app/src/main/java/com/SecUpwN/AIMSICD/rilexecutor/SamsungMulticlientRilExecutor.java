@@ -25,7 +25,6 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +38,8 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
     public static final String MULTICLIENT_SOCKET = "Multiclient";
 
-    public static final int RIL_REQUEST_OEM_RAW = 59;
+    private static final int RIL_REQUEST_OEM_RAW = 59;
+    private static final int RIL_REQUEST_OEM_STRINGS = 60;
 
     public static final int RIL_CLIENT_ERR_SUCCESS = 0;
     public static final int RIL_CLIENT_ERR_AGAIN = 1;
@@ -50,10 +50,13 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
     public static final int RIL_CLIENT_ERR_RESPONSE = 6;
     public static final int RIL_CLIENT_ERR_UNKNOWN = 7;
 
-    public static final int RESPONSE_SOLICITED = 0;
-    public static final int RESPONSE_UNSOLICITED = 1;
+    private static final int RESPONSE_SOLICITED = 0;
+    private static final int RESPONSE_UNSOLICITED = 1;
 
-    private static final boolean DBG = BuildConfig.DEBUG & true;
+    private static final int ID_REQUEST_AT_COMMAND = 5;
+    private static final int ID_RESPONSE_AT_COMMAND = 104;
+
+    private static final boolean DBG = BuildConfig.DEBUG;
     private static final String TAG = SamsungMulticlientRilExecutor.class.getSimpleName();
 
     private volatile LocalSocketThread mThread;
@@ -127,6 +130,19 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
         }
     }
 
+    @Override
+    public synchronized void invokeOemRilRequestStrings(String[] strings, Message response) {
+        if (mThread == null) {
+            Log.e(TAG, "OEM raw request executor thread is not running");
+            return;
+        }
+        try {
+            mThread.invokeOemRilRequestStrings(strings, response);
+        } catch (IOException ioe) {
+            Log.e(TAG, "invokeOemRilRequestStrings() error", ioe);
+        }
+    }
+
     public class LocalSocketThread extends Thread {
 
         private static final int MAX_MESSAGES = 30;
@@ -147,7 +163,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
             mInputStream = null;
             mOutputStream = null;
-            mMessages = new HashMap<Integer, Message>();
+            mMessages = new HashMap<>();
         }
 
         public void cancel() {
@@ -185,6 +201,33 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             mMessages.put(token, response);
         }
 
+        public synchronized void invokeOemRilRequestStrings(String strings[], Message response) throws IOException {
+            int token;
+            if (mMessages.size() > MAX_MESSAGES) {
+                Log.e(TAG, "message queue is full");
+                return;
+            }
+
+            if (mOutputStream == null) {
+                Log.e(TAG, "Local write() error: not connected");
+                return;
+            }
+
+            do {
+                token = mTokenGen.nextInt();
+            } while (mMessages.containsKey(token));
+
+            byte[] req = marshallRequest(token, strings);
+
+            if (DBG) Log.v(TAG, String.format(
+                    "invokeOemRilRequestStrings() token: 0x%X, header: %s, req: %s ",
+                    token, HexDump.toHexString(getHeader(req)), HexDump.toHexString(req)));
+
+            mOutputStream.write(getHeader(req));
+            mOutputStream.write(req);
+            mMessages.put(token, response);
+        }
+
         private byte[] getHeader(byte data[]) {
             int len = data.length;
             return new byte[]{
@@ -201,6 +244,16 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             p.writeInt(token);
             p.writeByteArray(data);
             byte[] res =  p.marshall();
+            p.recycle();
+            return res;
+        }
+
+        private byte[] marshallRequest(int token, String strings[]) {
+            Parcel p = Parcel.obtain();
+            p.writeInt(RIL_REQUEST_OEM_STRINGS);
+            p.writeInt(token);
+            p.writeStringArray(strings);
+            byte[] res = p.marshall();
             p.recycle();
             return res;
         }
@@ -330,6 +383,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
         private int processSolicited(Parcel p) {
             Integer token = null;
             byte responseData[] = null;
+            String stringsResponseData[] = null;
             Exception errorEx = null;
 
             try {
@@ -343,6 +397,8 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                 }
 
                 responseData = p.createByteArray();
+                stringsResponseData = p.createStringArray();
+
             } catch (Exception ex) {
                 errorEx = ex;
             }
@@ -352,12 +408,22 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             } else {
                 synchronized (this) {
                     Message m = mMessages.remove(token);
+
                     if (m != null) {
-                        m.obj = new RawResult(responseData, errorEx);
-                        m.sendToTarget();
+                        switch (m.what) {
+                            case ID_REQUEST_AT_COMMAND:
+                            case ID_RESPONSE_AT_COMMAND:
+                            case RIL_REQUEST_OEM_STRINGS:
+                                m.obj = new StringsResult(stringsResponseData, errorEx);
+                                m.sendToTarget();
+                                break;
+                            default:
+                                m.obj = new RawResult(responseData, errorEx);
+                                m.sendToTarget();
+                        }
                     } else {
                         Log.i(TAG, "Message with token " + token + " not found");
-                    }
+                }
                 }
             }
             return RIL_CLIENT_ERR_SUCCESS;

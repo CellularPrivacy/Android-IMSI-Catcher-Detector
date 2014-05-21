@@ -37,7 +37,6 @@ public class DeviceFragment extends Fragment {
         mContext = getActivity().getBaseContext();
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
-        //Start Service before binding to keep it resident when activity is destroyed
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -117,10 +116,12 @@ public class DeviceFragment extends Fragment {
                     int layouts = tableLayout.getChildCount();
                     for(int i = 0; i < layouts;  i++){
                         TableRow row = (TableRow) tableLayout.getChildAt(i);
-                        if (row.getTag().equals("cdma")) {
-                            row.setVisibility(View.GONE);
-                        } else if( row.getTag().equals("gsm_network")) {
-                            row.setVisibility(View.VISIBLE);
+                        if (row != null) {
+                            if (row.getTag().equals("cdma")) {
+                                row.setVisibility(View.GONE);
+                            } else if( row.getTag().equals("gsm_network")) {
+                                row.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                     content = (TextView) mView.findViewById(R.id.network_netid);
