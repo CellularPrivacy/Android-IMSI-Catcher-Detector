@@ -32,13 +32,13 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData>
 
     private class ViewHolder
     {
-        private View mRootView;
-        private TextView mCellID;
-        private TextView mLac;
-        private TextView mNet;
-        private TextView mLat;
-        private TextView mLng;
-        private TextView mSignal;
+        private final View mRootView;
+        private final TextView mCellID;
+        private final TextView mLac;
+        private final TextView mNet;
+        private final TextView mLat;
+        private final TextView mLng;
+        private final TextView mSignal;
 
         public ViewHolder(View rootView)
         {

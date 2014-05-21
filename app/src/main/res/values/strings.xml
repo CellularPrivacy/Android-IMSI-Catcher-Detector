@@ -155,16 +155,12 @@
     <string name="pref_refresh_title">Refresh Rate</string>
     <string name="pref_refresh_summ">Control the frequency of device updates</string>
 
-
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
     <string name="pref_map_type_key">pref_map_type</string>
     <string name="pref_map_type_title">Map Type</string>
     <string name="pref_map_type_summ">Display the Map using different styles</string>
 
-
-
-    <string name="database_export_successful">Export Successful</string>
 
     <!-- Database Viewer -->
     <string name="load_table_data">Load Data</string>
@@ -175,5 +171,11 @@
         <item>OpenCellID Data</item>
         <item>Default MCC Locations</item>
     </string-array>
+    <string name="database_export_successful">Export Successful</string>
 
+    <!-- AT Command Injector -->
+    <string name="at_command_title">AT Command Injector</string>
+    <string name="enter_at_command_title">Enter AT Command:</string>
+    <string name="response_label">Response:</string>
+    <string name="execute_at">Execute</string>
 </resources>

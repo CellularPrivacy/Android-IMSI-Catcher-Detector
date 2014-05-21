@@ -84,7 +84,7 @@ public class Helpers {
      */
     @SuppressWarnings("UnnecessaryFullyQualifiedName")
     public static String getTimestamp(Context context) {
-        String timestamp = "unknown";
+        String timestamp;
         Date now = new Date();
         java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
         java.text.DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
@@ -104,8 +104,8 @@ public class Helpers {
             NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             NetworkInfo mobileInfo =
                     connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if (wifiInfo.isConnected() || mobileInfo.isConnected()) {
-                return true;
+            if (wifiInfo != null && mobileInfo != null) {
+                return wifiInfo.isConnected() || mobileInfo.isConnected();
             }
         }
         catch(Exception e){
@@ -128,6 +128,14 @@ public class Helpers {
         }
     }
 
+    /**
+     * Converts a byte array into a String array
+     *
+     * @param mByteArray byte array to convert
+     * @param mDataLength length of byte array
+     *
+     * @return String array copy of passed byte array
+     */
     private static String[] ByteArrayToStringArray(byte[] mByteArray,
             int mDataLength) {
         if (mByteArray == null) {
@@ -155,7 +163,7 @@ public class Helpers {
         }
 
         // Split and convert to string
-        List<String> mListString = new ArrayList<String>();
+        List<String> mListString = new ArrayList<>();
         for (int i = 0; i < mDataLength; i++) {
             if (mByteArray[i] == 0) {
                 continue;
@@ -184,6 +192,11 @@ public class Helpers {
         return mResult;
     }
 
+    /**
+     * Checks if the external media (SD Card) is writable
+     *
+     * @return boolean True if Writable
+     */
     public static boolean isSdWritable() {
 
         boolean mExternalStorageAvailable = false;
@@ -203,6 +216,11 @@ public class Helpers {
         return mExternalStorageAvailable;
     }
 
+    /**
+     * Return a String List representing response from invokeOemRilRequestRaw
+     *
+     * @param aob byte array response from invokeOemRilRequestRaw
+     */
     public static List<String> unpackListOfStrings(byte aob[]) {
 
         if (aob.length == 0) {
@@ -235,6 +253,62 @@ public class Helpers {
 
         int newLength = display.length;
         while (newLength > 0 && TextUtils.isEmpty(display[newLength - 1])) newLength -= 1;
+
+        return Arrays.asList(Arrays.copyOf(display, newLength));
+    }
+
+    /**
+     * Return a String List representing response from invokeOemRilRequestStrings
+     *
+     * @param strings String array response from invokeOemRilRequestStrings
+     */
+    public static List<String> unpackListOfStrings(String strings[]) {
+
+        if (strings.length == 0) {
+            Log.v(TAG, "Length = 0");
+            return Collections.emptyList();
+        }
+
+        return Arrays.asList(Arrays.copyOf(strings, strings.length));
+    }
+
+    /**
+     * Return a String List representing response from invokeOemRilRequestRaw
+     *
+     * @param aob Byte array response from invokeOemRilRequestRaw
+     */
+    public static List<String> unpackByteListOfStrings(byte aob[]) {
+
+        if (aob.length == 0) {
+            Log.v(TAG, "Length = 0");
+            return Collections.emptyList();
+        }
+
+        int lines = aob.length / CHARS_PER_LINE;
+
+        String[] display = new String[lines];
+        for (int i = 0; i < lines; i++) {
+            int offset, byteCount;
+            offset = i * CHARS_PER_LINE + 2;
+            byteCount = 0;
+
+            if (offset + byteCount >= aob.length) {
+                Log.e(TAG, "Unexpected EOF");
+                break;
+            }
+
+            while (aob[offset + byteCount] != 0 && (byteCount < CHARS_PER_LINE)) {
+                byteCount += 1;
+                if (offset + byteCount >= aob.length) {
+                    Log.e(TAG, "Unexpected EOF");
+                    break;
+                }
+            }
+            display[i] = new String(aob, offset, byteCount).trim();
+        }
+
+        int newLength = display.length;
+        while (newLength > 0 && TextUtils.isEmpty(display[newLength-1])) newLength -= 1;
 
         return Arrays.asList(Arrays.copyOf(display, newLength));
     }

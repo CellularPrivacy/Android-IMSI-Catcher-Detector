@@ -33,11 +33,11 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
 
     private class ViewHolder
     {
-        private View mRootView;
-        private TextView mCountry;
-        private TextView mMcc;
-        private TextView mLat;
-        private TextView mLng;
+        private final View mRootView;
+        private final TextView mCountry;
+        private final TextView mMcc;
+        private final TextView mLat;
+        private final TextView mLng;
 
         public ViewHolder(View rootView)
         {

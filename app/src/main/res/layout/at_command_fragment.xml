@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/atcommandView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textSize="18sp" android:text="@string/at_command_title"
+            android:background="@color/black"
+            android:textColor="@color/green_text"
+            android:padding="4dip" android:id="@+id/at_command_title"/>
+
+    <TextView
+            android:id="@+id/enter_at_command_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_at_command_title"
+            android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="8dip" android:layout_below="@+id/at_command_title"/>
+
+    <EditText
+            android:id="@+id/at_command"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:layout_below="@+id/enter_at_command_title"
+            android:layout_toLeftOf="@+id/execute"/>
+
+    <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/execute_at"
+            android:id="@+id/execute" android:layout_alignBottom="@+id/at_command"
+            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+            android:layout_below="@+id/enter_at_command_title"/>
+
+    <TextView
+            android:id="@+id/response_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/response_label"
+            android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="8dip" android:layout_below="@+id/at_command"/>
+
+    <TextView
+            android:id="@+id/response"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/empty"
+            android:background="@color/black"
+            android:textColor="@color/white"
+            android:padding="4dip" android:layout_below="@+id/response_label"/>
+
+</RelativeLayout>
