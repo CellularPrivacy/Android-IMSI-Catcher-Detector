@@ -1,6 +1,15 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 21.05.2014 - WIP-Release v0.1.16-alpha
+
+* Update: Disabling Cell tracking will now also disable Location tracking if enabled
+* Update: Huge code cleanup and updates to a number of areas across a large number of packages
+* Added: AT Command Injector (currently disabled until further testing has been completed)
+* Added: Code comments to a variety of methods
+* Fix: Adressed numerous possible NPE for better stability and an increased user experience
+* Removed: Unnecessary compatibility library (positive reduction in size of the APK)
+
 #### 10.05.2014 - WIP-Release v0.1.15-alpha
 
 * Fix: Main layout alignment corrected and page order changed so Cell Information is now page 2
