@@ -33,7 +33,6 @@ android {
 
 dependencies {
     compile files('libs/opencsv-2.3.jar')
-    compile 'com.android.support:appcompat-v7:19.1.+'
-    compile 'com.google.android.gms:play-services:4.3.23'
+    compile 'com.google.android.gms:play-services:4.4.52'
     compile 'com.android.support:support-v4:19.+'
 }

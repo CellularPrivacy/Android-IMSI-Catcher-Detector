@@ -51,6 +51,7 @@ import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
 import com.SecUpwN.AIMSICD.fragments.AboutFragment;
+import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
 import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
 import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
@@ -61,7 +62,6 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -80,9 +80,6 @@ import au.com.bytecode.opencsv.CSVReader;
 public class AIMSICD extends FragmentActivity {
 
     private final String TAG = "AIMSICD";
-
-    private MyFragmentPagerAdapter mMyFragmentPagerAdapter;
-    private ViewPager mViewPager;
 
     private final Context mContext = this;
     private boolean mBound;
@@ -110,9 +107,10 @@ public class AIMSICD extends FragmentActivity {
         startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
-        mMyFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager)findViewById(R.id.viewPager);
-        mViewPager.setAdapter(mMyFragmentPagerAdapter);
+        MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(
+                getSupportFragmentManager());
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setAdapter(myFragmentPagerAdapter);
 
         prefs = mContext.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
@@ -209,31 +207,45 @@ public class AIMSICD extends FragmentActivity {
         MenuItem mTrackFemtocell = menu.findItem(R.id.track_femtocell);
 
         if (mBound && mAimsicdService.isTrackingCell()) {
-            mTrackCell.setTitle(R.string.untrack_cell);
-            mTrackCell.setIcon(R.drawable.track_cell);
+            if (mTrackCell != null) {
+                mTrackCell.setTitle(R.string.untrack_cell);
+                mTrackCell.setIcon(R.drawable.track_cell);
+            }
         } else {
-            mTrackCell.setTitle(R.string.track_cell);
-            mTrackCell.setIcon(R.drawable.untrack_cell);
+            if (mTrackCell != null) {
+                mTrackCell.setTitle(R.string.track_cell);
+                mTrackCell.setIcon(R.drawable.untrack_cell);
+            }
         }
 
         if (mBound && mAimsicdService.isTrackingLocation()) {
-            mTrackLocation.setTitle(R.string.untrack_location);
-            mTrackLocation.setIcon(R.drawable.ic_action_location_found);
+            if (mTrackLocation != null) {
+                mTrackLocation.setTitle(R.string.untrack_location);
+                mTrackLocation.setIcon(R.drawable.ic_action_location_found);
+            }
         } else {
-            mTrackLocation.setTitle(R.string.track_location);
-            mTrackLocation.setIcon(R.drawable.ic_action_location_off);
+            if (mTrackLocation != null) {
+                mTrackLocation.setTitle(R.string.track_location);
+                mTrackLocation.setIcon(R.drawable.ic_action_location_off);
+            }
         }
 
         if (mBound && mAimsicdService.getPhoneID() == TelephonyManager.PHONE_TYPE_CDMA) {
             if (mBound && mAimsicdService.isTrackingFemtocell()) {
-                mTrackFemtocell.setTitle(R.string.untrack_femtocell);
-                mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
+                if (mTrackFemtocell != null) {
+                    mTrackFemtocell.setTitle(R.string.untrack_femtocell);
+                    mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
+                }
             } else {
-                mTrackFemtocell.setTitle(R.string.track_femtocell);
-                mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell_not_tracked);
+                if (mTrackFemtocell != null) {
+                    mTrackFemtocell.setTitle(R.string.track_femtocell);
+                    mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell_not_tracked);
+                }
             }
         } else {
-            mTrackFemtocell.setVisible(false);
+            if (mTrackFemtocell != null) {
+                mTrackFemtocell.setVisible(false);
+            }
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -391,12 +403,12 @@ public class AIMSICD extends FragmentActivity {
             NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             NetworkInfo mobileInfo =
                     connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if (wifiInfo.isConnected() || mobileInfo.isConnected()) {
-                return true;
+            if (wifiInfo != null && mobileInfo != null) {
+                return wifiInfo.isConnected() || mobileInfo.isConnected();
             }
         }
         catch(Exception e){
-            e.printStackTrace();
+            Log.e(TAG, "isNetAvailable " + e);
         }
         return false;
     }
@@ -463,8 +475,6 @@ public class AIMSICD extends FragmentActivity {
                     response.getEntity().getContent().close();
                     throw new IOException(statusLine.getReasonPhrase());
                 }
-            } catch (ClientProtocolException e) {
-                //TODO Handle problems..
             } catch (IOException e) {
                 //TODO Handle problems..
             }
@@ -506,17 +516,19 @@ public class AIMSICD extends FragmentActivity {
 
 
     class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-        private List<Fragment> fragments;
-        private List<String> titles;
+        private final List<Fragment> fragments;
+        private final List<String> titles;
 
         public MyFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.fragments = new ArrayList<Fragment>();
-            titles = new ArrayList<String>();
+            this.fragments = new ArrayList<>();
+            titles = new ArrayList<>();
             fragments.add(new DeviceFragment());
             titles.add(getString(R.string.device_info));
             fragments.add(new CellInfoFragment());
             titles.add(getString(R.string.cell_info_title));
+            fragments.add(new AtCommandFragment());
+            titles.add(getString(R.string.at_command_title));
             fragments.add(new DbViewerFragment());
             titles.add(getString(R.string.db_viewer));
             fragments.add(new AboutFragment());

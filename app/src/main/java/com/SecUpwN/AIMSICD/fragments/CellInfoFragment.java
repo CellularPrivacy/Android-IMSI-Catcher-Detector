@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class CellInfoFragment extends Fragment {
     private AimsicdService mAimsicdService;
-    private View mView;
+
     private TextView mNeighbouringCells;
     private TextView mNeighbouringTotal;
     private TextView mNeighbouringTotalLabel;
@@ -35,26 +35,26 @@ public class CellInfoFragment extends Fragment {
     private boolean mBound;
     private Context mContext;
 
-    private Map<Integer,Integer> mNeighborMapUMTS = new HashMap<Integer,Integer>();
-    private Map<String,Integer> mNeighborMapGSM = new HashMap<String,Integer>();
-
     public CellInfoFragment () {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        mView= inflater.inflate(R.layout.cell_fragment,
+        View view = inflater.inflate(R.layout.cell_fragment,
                 container, false);
-        mNeighbouringCells = (TextView) mView.findViewById(R.id.neighbouring_cells);
-        mNeighbouringTotal = (TextView) mView.findViewById(R.id.neighbouring_number);
-        mNeighbouringTotalLabel = (TextView) mView.findViewById(R.id.neighbouring_number_label);
-        mCipheringIndicatorLabel = (TextView) mView.findViewById(R.id.ciphering_indicator_title);
-        mCipheringIndicator = (TextView) mView.findViewById(R.id.ciphering_indicator);
-        Button refresh = (Button) mView.findViewById(R.id.button_refresh);
-        refresh.setOnClickListener(new btnClick());
+        if (view != null) {
+            mNeighbouringCells = (TextView) view.findViewById(R.id.neighbouring_cells);
 
-        return mView;
+            mNeighbouringTotal = (TextView) view.findViewById(R.id.neighbouring_number);
+            mNeighbouringTotalLabel = (TextView) view.findViewById(R.id.neighbouring_number_label);
+            mCipheringIndicatorLabel = (TextView) view.findViewById(R.id.ciphering_indicator_title);
+            mCipheringIndicator = (TextView) view.findViewById(R.id.ciphering_indicator);
+
+            Button refresh = (Button) view.findViewById(R.id.button_refresh);
+            refresh.setOnClickListener(new btnClick());
+        }
+        return view;
     }
 
     @Override
@@ -73,7 +73,6 @@ public class CellInfoFragment extends Fragment {
         mContext = getActivity().getBaseContext();
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
-        //Start Service before binding to keep it resident when activity is destroyed
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -113,43 +112,43 @@ public class CellInfoFragment extends Fragment {
     private void updateUI() {
         if (mBound) {
             mAimsicdService.updateNeighbouringCells();
-            mNeighborMapUMTS = mAimsicdService.getUMTSNeighbouringCells();
-            mNeighborMapGSM = mAimsicdService.getGSMNeighbouringCells();
+            Map neighborMapUMTS = mAimsicdService.getUMTSNeighbouringCells();
+            Map neighborMapGSM = mAimsicdService.getGSMNeighbouringCells();
 
             mNeighbouringTotal
                     .setText(String.valueOf(mAimsicdService.getNeighbouringCellSize()) + "/"
-                            + String.valueOf(mNeighborMapUMTS.size() + mNeighborMapGSM.size()));
+                            + String.valueOf(neighborMapUMTS.size() + neighborMapGSM.size()));
 
             StringBuilder sb = new StringBuilder();
             int i = 1;
-            if (!mNeighborMapUMTS.isEmpty())
-                for (Object key : mNeighborMapUMTS.keySet()) {
+            if (!neighborMapUMTS.isEmpty())
+                for (Object key : neighborMapUMTS.keySet()) {
                     sb.append(i)
                             .append(") PSC: ")
                             .append(key)
                             .append(" RSCP: ")
-                            .append(mNeighborMapUMTS.get(key)) //TS25.133 section 9.1.1.3
+                            .append(neighborMapUMTS.get(key)) //TS25.133 section 9.1.1.3
                             .append(" dBm");
-                    if (i < mNeighborMapUMTS.size() + mNeighborMapGSM.size())
+                    if (i < neighborMapUMTS.size() + neighborMapGSM.size())
                         sb.append("\n");
                     i++;
                 }
-            if (!mNeighborMapGSM.isEmpty())
-                for (Object key : mNeighborMapGSM.keySet()) {
+            if (!neighborMapGSM.isEmpty())
+                for (Object key : neighborMapGSM.keySet()) {
                     sb.append(i)
                             .append(") LAC-CID: ")
                             .append(key)
                             .append(" RSSI: ")
-                            .append(mNeighborMapGSM.get(key)) //TS27.007 section 8.5
+                            .append(neighborMapGSM.get(key)) //TS27.007 section 8.5
                             .append(" dBm");
-                    if (i < mNeighborMapUMTS.size() + mNeighborMapGSM.size())
+                    if (i < neighborMapUMTS.size() + neighborMapGSM.size())
                         sb.append("\n");
                     i++;
                 }
             mNeighbouringCells.setText(sb);
 
             //Try SamSung MultiRil Implementation
-            if (mNeighborMapGSM.isEmpty() && mNeighborMapUMTS.isEmpty()) {
+            if (neighborMapGSM.isEmpty() && neighborMapUMTS.isEmpty()) {
                     DetectResult rilStatus = mAimsicdService.getRilExecutorStatus();
                     if (rilStatus.available) {
                         //new RequestOemInfoTask().execute();

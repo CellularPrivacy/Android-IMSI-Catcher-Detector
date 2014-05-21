@@ -48,13 +48,16 @@ public class DbViewerFragment extends Fragment {
          mView = inflater.inflate(R.layout.db_view,
                 container, false);
 
-        lv = (ListView) mView.findViewById(R.id.list_view);
-        tblSpinner = (Spinner) mView.findViewById(R.id.table_spinner);
-        tblSpinner.setOnItemSelectedListener(new spinnerListener());
+        if (mView != null) {
+            lv = (ListView) mView.findViewById(R.id.list_view);
 
-        Button loadTable = (Button) mView.findViewById(R.id.load_table_data);
+            tblSpinner = (Spinner) mView.findViewById(R.id.table_spinner);
+            tblSpinner.setOnItemSelectedListener(new spinnerListener());
 
-        loadTable.setOnClickListener(new btnClick());
+            Button loadTable = (Button) mView.findViewById(R.id.load_table_data);
+
+            loadTable.setOnClickListener(new btnClick());
+        }
 
         return mView;
     }
@@ -114,48 +117,56 @@ public class DbViewerFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
     private void BuildTable(Cursor tableData) {
         if (tableData != null && tableData.getCount() > 0) {
-            if (mTableSelected.equals("OpenCellID Data")) {
-                BaseInflaterAdapter<CardItemData> adapter = new BaseInflaterAdapter<CardItemData>(
-                        new OpenCellIdCardInflater());
-                while (tableData.moveToNext()) {
-                    CardItemData data = new CardItemData("CellID: " + tableData.getString(0),
-                            "LAC: " + tableData.getString(1), "MCC: " + tableData.getString(2),
-                            "MNC: " + tableData.getString(3), "Latitude: " + tableData.getString(4),
-                            "Longitude: " + tableData.getString(5), "Average Signal Strength: " + tableData.getString(6),
-                            "Samples: " + tableData.getString(7));
-                    adapter.addItem(data, false);
+            switch (mTableSelected) {
+                case "OpenCellID Data": {
+                    BaseInflaterAdapter<CardItemData> adapter
+                            = new BaseInflaterAdapter<>(
+                            new OpenCellIdCardInflater());
+                    while (tableData.moveToNext()) {
+                        CardItemData data = new CardItemData("CellID: " + tableData.getString(0),
+                                "LAC: " + tableData.getString(1), "MCC: " + tableData.getString(2),
+                                "MNC: " + tableData.getString(3),
+                                "Latitude: " + tableData.getString(4),
+                                "Longitude: " + tableData.getString(5),
+                                "Average Signal Strength: " + tableData.getString(6),
+                                "Samples: " + tableData.getString(7));
+                        adapter.addItem(data, false);
+                    }
+                    lv.setAdapter(adapter);
+                    break;
                 }
-                lv.setAdapter(adapter);
-            } else if (mTableSelected.equals("Default MCC Locations")) {
-                BaseInflaterAdapter<CardItemData> adapter = new BaseInflaterAdapter<CardItemData>(
-                        new DefaultLocationCardInflater());
-                while (tableData.moveToNext()) {
-                    CardItemData data = new CardItemData("Country: " + tableData.getString(0),
-                            "MCC: " + tableData.getString(1), "Latitude: " + tableData.getString(2),
-                            "Longitude: " + tableData.getString(3));
-                    adapter.addItem(data, false);
+                case "Default MCC Locations": {
+                    BaseInflaterAdapter<CardItemData> adapter
+                            = new BaseInflaterAdapter<>(
+                            new DefaultLocationCardInflater());
+                    while (tableData.moveToNext()) {
+                        CardItemData data = new CardItemData("Country: " + tableData.getString(0),
+                                "MCC: " + tableData.getString(1),
+                                "Latitude: " + tableData.getString(2),
+                                "Longitude: " + tableData.getString(3));
+                        adapter.addItem(data, false);
+                    }
+                    lv.setAdapter(adapter);
+                    break;
                 }
-                lv.setAdapter(adapter);
-            } else {
-                BaseInflaterAdapter<CardItemData> adapter = new BaseInflaterAdapter<CardItemData>(
-                        new CellCardInflater());
-                while (tableData.moveToNext()){
-                    CardItemData data = new CardItemData("CellID: " + tableData.getString(0),
-                            "LAC: " + tableData.getString(1),
-                            "Network Type: " + tableData.getString(2),
-                            "Latitude: " + tableData.getString(3),
-                            "Longitude: " + tableData.getString(4),
-                            "Signal Strength: " + tableData.getString(5));
-                    adapter.addItem(data, false);
+                default: {
+                    BaseInflaterAdapter<CardItemData> adapter
+                            = new BaseInflaterAdapter<>(
+                            new CellCardInflater());
+                    while (tableData.moveToNext()) {
+                        CardItemData data = new CardItemData("CellID: " + tableData.getString(0),
+                                "LAC: " + tableData.getString(1),
+                                "Network Type: " + tableData.getString(2),
+                                "Latitude: " + tableData.getString(3),
+                                "Longitude: " + tableData.getString(4),
+                                "Signal Strength: " + tableData.getString(5));
+                        adapter.addItem(data, false);
+                    }
+                    lv.setAdapter(adapter);
+                    break;
                 }
-                lv.setAdapter(adapter);
             }
             lv.setVisibility(View.VISIBLE);
         } else {
@@ -167,21 +178,17 @@ public class DbViewerFragment extends Fragment {
     private class MyAsync extends AsyncTask<Cursor, Cursor, Cursor> {
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
         protected Cursor doInBackground(Cursor... params) {
             mDb.open();
-            if (mTableSelected.equals("Cell Data")) {
-                return mDb.getCellData();
-            } else if (mTableSelected.equals("Location Data")) {
-                return mDb.getLocationData();
-            } else if (mTableSelected.equals("OpenCellID Data")) {
-                return mDb.getOpenCellIDData();
-            } else if (mTableSelected.equals("Default MCC Locations")) {
-                return mDb.getDefaultMccLocationData();
+            switch (mTableSelected) {
+                case "Cell Data":
+                    return mDb.getCellData();
+                case "Location Data":
+                    return mDb.getLocationData();
+                case "OpenCellID Data":
+                    return mDb.getOpenCellIDData();
+                case "Default MCC Locations":
+                    return mDb.getDefaultMccLocationData();
             }
 
             return null;

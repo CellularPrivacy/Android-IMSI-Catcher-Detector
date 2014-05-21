@@ -23,10 +23,11 @@
         <ListPreference
                 android:key="@string/pref_refresh_key"
                 android:title="@string/pref_refresh_title"
-                android:dialogTitle="@string/pref_refresh_summ"
+                android:summary="@string/pref_refresh_summ"
+                android:dialogTitle="@string/pref_refresh_title"
                 android:entries="@array/pref_refresh_entries"
                 android:entryValues="@array/pref_refresh_values"
-                android:defaultValue="sense"/>
+                android:defaultValue=""/>
     </PreferenceCategory>
 
     <PreferenceCategory
