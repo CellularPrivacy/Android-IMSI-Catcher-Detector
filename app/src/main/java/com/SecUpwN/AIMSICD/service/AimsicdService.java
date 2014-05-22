@@ -728,7 +728,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getSimCountry(boolean force) {
         if (mSimCountry.isEmpty() || force) {
             try {
-                mSimCountry = (tm.getSimCountryIso() != null) ? tm.getSimCountryIso() : "";
+                mSimCountry = (tm.getSimCountryIso() != null) ? tm.getSimCountryIso() : "N/A";
             } catch (Exception e) {
                 //SIM methods can cause Exceptions on some devices
                 Log.e(TAG, "getSimCountry " + e);
@@ -746,7 +746,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getSimOperator(boolean force) {
         if (mSimOperator.isEmpty() || force) {
             try {
-                mSimOperator = (tm.getSimOperator() != null) ? tm.getSimOperator() : "";
+                mSimOperator = (tm.getSimOperator() != null) ? tm.getSimOperator() : "N/A";
             } catch (Exception e) {
                 //SIM methods can cause Exceptions on some devices
                 Log.e(TAG, "getSimOperator " + e);
@@ -764,7 +764,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getSimOperatorName(boolean force) {
         if (mSimOperatorName.isEmpty() || force) {
             try {
-                mSimOperatorName = (tm.getSimOperatorName() != null) ? tm.getSimOperatorName() : "";
+                mSimOperatorName = (tm.getSimOperatorName() != null) ? tm.getSimOperatorName() : "N/A";
             }catch (Exception e) {
                 //SIM methods can cause Exceptions on some devices
             }
@@ -781,7 +781,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getSimSubs(boolean force) {
         if (mSimSubs.isEmpty() || force) {
             try {
-                mSimSubs = (tm.getSubscriberId() != null) ? tm.getSubscriberId() : "";
+                mSimSubs = (tm.getSubscriberId() != null) ? tm.getSubscriberId() : "N/A";
             } catch (Exception e) {
                 //Some devices don't like this method
                 Log.e(TAG, "getSimSubs " + e);
@@ -800,7 +800,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getSimSerial(boolean force) {
         if (mSimSerial.isEmpty() || force) {
             try {
-                mSimSerial = (tm.getSimSerialNumber() != null) ? tm.getSimSerialNumber() : "";
+                mSimSerial = (tm.getSimSerialNumber() != null) ? tm.getSimSerialNumber() : "N/A";
             } catch (Exception e) {
                 //SIM methods can cause Exceptions on some devices
                 Log.e(TAG, "getSimSerial " + e);
