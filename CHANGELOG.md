@@ -1,6 +1,10 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 26.05.2014
+
+* Added: SHA-1 Checksums have been (and will be) added to all (previous) WIP-Releases
+
 #### 21.05.2014 - WIP-Release v0.1.16-alpha
 
 * Update: Disabling Cell tracking will now also disable Location tracking if enabled
