@@ -13,10 +13,10 @@ public class CardItemData
     private String mLat;
     private String mLng;
     private String mCountry;
-
+    private String mRecordId;
 
     public CardItemData(String cellID, String lac, String mcc, String mnc, String lat, String lng,
-            String avgSigStr, String samples)
+            String avgSigStr, String samples, String recordId)
     {
         mCellID = cellID;
         mLac = lac;
@@ -26,9 +26,11 @@ public class CardItemData
         mLng = lng;
         mAvgSigStr = avgSigStr;
         mSamples = samples;
+        mRecordId = recordId;
     }
 
-    public CardItemData(String cellID, String lac, String net, String lat, String lng, String signal)
+    public CardItemData(String cellID, String lac, String net, String lat, String lng, String signal,
+            String recordId)
     {
         mCellID = cellID;
         mLac = lac;
@@ -36,14 +38,16 @@ public class CardItemData
         mLat = lat;
         mLng = lng;
         mSignal = signal;
+        mRecordId = recordId;
     }
 
-    public CardItemData(String country, String mcc, String lat, String lng)
+    public CardItemData(String country, String mcc, String lat, String lng, String recordId)
     {
         mCountry = country;
         mMcc = mcc;
         mLat = lat;
         mLng = lng;
+        mRecordId = recordId;
     }
 
     public String getCellID() {
@@ -89,4 +93,6 @@ public class CardItemData
     public String getCountry() {
         return mCountry;
     }
+
+    public String getRecordId() { return mRecordId; }
 }

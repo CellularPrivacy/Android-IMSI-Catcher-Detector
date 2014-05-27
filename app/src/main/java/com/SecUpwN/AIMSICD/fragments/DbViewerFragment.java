@@ -124,6 +124,7 @@ public class DbViewerFragment extends Fragment {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>(
                             new OpenCellIdCardInflater());
+                    int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData("CellID: " + tableData.getString(0),
                                 "LAC: " + tableData.getString(1), "MCC: " + tableData.getString(2),
@@ -131,7 +132,8 @@ public class DbViewerFragment extends Fragment {
                                 "Latitude: " + tableData.getString(4),
                                 "Longitude: " + tableData.getString(5),
                                 "Average Signal Strength: " + tableData.getString(6),
-                                "Samples: " + tableData.getString(7));
+                                "Samples: " + tableData.getString(7),
+                                "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     lv.setAdapter(adapter);
@@ -141,11 +143,13 @@ public class DbViewerFragment extends Fragment {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>(
                             new DefaultLocationCardInflater());
+                    int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData("Country: " + tableData.getString(0),
                                 "MCC: " + tableData.getString(1),
                                 "Latitude: " + tableData.getString(2),
-                                "Longitude: " + tableData.getString(3));
+                                "Longitude: " + tableData.getString(3),
+                                "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     lv.setAdapter(adapter);
@@ -155,13 +159,15 @@ public class DbViewerFragment extends Fragment {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>(
                             new CellCardInflater());
+                    int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData("CellID: " + tableData.getString(0),
                                 "LAC: " + tableData.getString(1),
                                 "Network Type: " + tableData.getString(2),
                                 "Latitude: " + tableData.getString(3),
                                 "Longitude: " + tableData.getString(4),
-                                "Signal Strength: " + tableData.getString(5));
+                                "Signal Strength: " + tableData.getString(5),
+                                "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     lv.setAdapter(adapter);
