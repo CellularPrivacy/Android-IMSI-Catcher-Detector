@@ -30,7 +30,7 @@ public class AIMSICDDbAdapter {
     private final DbHelper mDbHelper;
     private SQLiteDatabase mDb;
     private final Context mContext;
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String COLUMN_ID = "_id";
     private final String LOCATION_TABLE = "locationinfo";
     private final String CELL_TABLE = "cellinfo";
@@ -77,10 +77,7 @@ public class AIMSICDDbAdapter {
             cellValues.put("Operator", simOperator);
             cellValues.put("OperatorName", simOperatorName);
 
-            if (cellExists(cellID)) {
-                return mDb.update(CELL_TABLE, cellValues, "CellID=?",
-                        new String[]{Integer.toString(cellID)});
-            } else {
+            if (!cellExists(cellID,latitude, longitude, signalInfo)) {
                 return mDb.insert(CELL_TABLE, null, cellValues);
             }
         }
@@ -136,7 +133,7 @@ public class AIMSICDDbAdapter {
             locationValues.put("Signal", signalInfo);
             locationValues.put("Connection", cellInfo);
 
-            if (locationExists(cellID)) {
+            if (locationExists(cellID, latitude, longitude, signalInfo)) {
                 return mDb.update(LOCATION_TABLE, locationValues, "CellID=?",
                         new String[]{Integer.toString(cellID)});
             } else {
@@ -186,9 +183,9 @@ public class AIMSICDDbAdapter {
     /**
      * Checks to see if Location already exists in database
      */
-    boolean locationExists(int cellID) {
+    boolean locationExists(int cellID, double lat, double lng, int signal) {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + LOCATION_TABLE + " WHERE CellID = " +
-                cellID, null);
+                cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal, null);
 
         return cursor.getCount()>0;
     }
@@ -196,9 +193,10 @@ public class AIMSICDDbAdapter {
     /**
      * Checks to see if Cell already exists in database
      */
-    boolean cellExists(int cellID) {
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + CELL_TABLE + " WHERE CellID = " +
-                cellID, null);
+    boolean cellExists(int cellID, double lat, double lng, int signal) {
+        Cursor cursor = mDb.rawQuery("SELECT 1 FROM " + CELL_TABLE + " WHERE CellID = " +
+                cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal, null);
+
 
         return cursor.getCount()>0;
     }
