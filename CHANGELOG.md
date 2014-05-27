@@ -1,6 +1,13 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 27.05.2014 - WIP-Release v0.1.17-alpha
+
+* Update: Better way of how AIMSICD draws and displays any SIM variable & further error handling
+* Fix: Reverted an update to the GMS Play Services library to solve issues with the Map Viewer
+* Added: Initial version of a custom InfoWindow in the Map Viewer to display further details
+* Added: Record ID added to the database viewer cards
+
 #### 26.05.2014
 
 * Added: SHA-1 Checksums have been (and will be) added to all (previous) WIP-Releases
