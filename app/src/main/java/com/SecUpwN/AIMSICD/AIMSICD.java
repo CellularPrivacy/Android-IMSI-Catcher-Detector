@@ -17,7 +17,6 @@
 
 package com.SecUpwN.AIMSICD;
 
-
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -26,12 +25,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.location.Location;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
 
 import android.support.v4.app.Fragment;
@@ -40,7 +36,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,26 +51,10 @@ import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
 import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
 import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 public class AIMSICD extends FragmentActivity {
 
@@ -205,36 +184,37 @@ public class AIMSICD extends FragmentActivity {
         MenuItem mTrackCell = menu.findItem(R.id.track_cell);
         MenuItem mTrackFemtocell = menu.findItem(R.id.track_femtocell);
 
-        if (mBound && mAimsicdService.isTrackingCell()) {
-            if (mTrackCell != null) {
-                mTrackCell.setTitle(R.string.untrack_cell);
-                mTrackCell.setIcon(R.drawable.track_cell);
+        if (mBound) {
+            if (mAimsicdService.isTrackingCell()) {
+                if (mTrackCell != null) {
+                    mTrackCell.setTitle(R.string.untrack_cell);
+                    mTrackCell.setIcon(R.drawable.track_cell);
+                }
+            } else {
+                if (mTrackCell != null) {
+                    mTrackCell.setTitle(R.string.track_cell);
+                    mTrackCell.setIcon(R.drawable.untrack_cell);
+                }
             }
-        } else {
-            if (mTrackCell != null) {
-                mTrackCell.setTitle(R.string.track_cell);
-                mTrackCell.setIcon(R.drawable.untrack_cell);
-            }
-        }
 
-        if (mBound && mAimsicdService.getPhoneID() == TelephonyManager.PHONE_TYPE_CDMA) {
-            if (mBound && mAimsicdService.isTrackingFemtocell()) {
-                if (mTrackFemtocell != null) {
-                    mTrackFemtocell.setTitle(R.string.untrack_femtocell);
-                    mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
+            if (mAimsicdService.getPhoneID() == TelephonyManager.PHONE_TYPE_CDMA) {
+                if (mAimsicdService.isTrackingFemtocell()) {
+                    if (mTrackFemtocell != null) {
+                        mTrackFemtocell.setTitle(R.string.untrack_femtocell);
+                        mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
+                    }
+                } else {
+                    if (mTrackFemtocell != null) {
+                        mTrackFemtocell.setTitle(R.string.track_femtocell);
+                        mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell_not_tracked);
+                    }
                 }
             } else {
                 if (mTrackFemtocell != null) {
-                    mTrackFemtocell.setTitle(R.string.track_femtocell);
-                    mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell_not_tracked);
+                    mTrackFemtocell.setVisible(false);
                 }
             }
-        } else {
-            if (mTrackFemtocell != null) {
-                mTrackFemtocell.setVisible(false);
-            }
         }
-
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -262,12 +242,12 @@ public class AIMSICD extends FragmentActivity {
                 dbHelper.exportDB();
                 return true;
             case R.id.update_opencelldata:
-                double[] loc = mAimsicdService.getLastLocation();
-                if (loc[0] != 0.0 && loc[1] != 0.0) {
-                    getOpenCellData(loc[0], loc[1]);
+                Location loc = mAimsicdService.lastKnownLocation();
+                if (loc != null) {
+                    Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude());
                 } else {
                     Helpers.sendMsg(mContext,
-                            "Unable to determine your last location, enable Location Services (GPS) and try again.");
+                            "Unable to determine your last location, enable Location Services and try again.");
                 }
                 return true;
             case R.id.app_exit:
@@ -325,169 +305,6 @@ public class AIMSICD extends FragmentActivity {
         }
     }
 
-    /**
-     * Requests Cell data from OpenCellID.org, calculating a 100 mile bounding radius
-     * and requesting all Cell ID information in that area.
-     *
-     * @param lat Latitude of current location
-     * @param lng Longitude of current location
-     */
-    private void getOpenCellData(double lat, double lng) {
-        if (isNetAvailable(this)) {
-            double earthRadius = 6371.01;
-
-            //New GeoLocation object to find bounding Coordinates
-            GeoLocation currentLoc = GeoLocation.fromDegrees(lat, lng);
-
-            //Calculate the Bounding Coordinates in a 50 mile radius
-            //0 = min 1 = max
-            GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
-            String boundParameter;
-
-            //Request OpenCellID data for Bounding Coordinates
-            boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
-                    + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
-                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
-                    + String .valueOf(boundingCoords[1].getLongitudeInDegrees());
-
-            String urlString = "http://www.opencellid.org/cell/getInArea?key=24c66165-9748-4384-ab7c-172e3f533056"
-                    + "&BBOX=" + boundParameter
-                    + "&format=csv";
-
-            Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
-            new RequestTask().execute(urlString);
-        } else {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setTitle(R.string.no_network_connection_title)
-                    .setMessage(R.string.no_network_connection_message);
-            builder.create().show();
-        }
-    }
-
-    /**
-     * Checks Network connectivity is available to download OpenCellID data
-     *
-     */
-    private Boolean isNetAvailable(Context context)  {
-
-        try{
-            ConnectivityManager connectivityManager = (ConnectivityManager)
-                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            NetworkInfo mobileInfo =
-                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if (wifiInfo != null && mobileInfo != null) {
-                return wifiInfo.isConnected() || mobileInfo.isConnected();
-            }
-        }
-        catch(Exception e){
-            Log.e(TAG, "isNetAvailable " + e);
-        }
-        return false;
-    }
-
-    /**
-     * Parses the downloaded CSV from OpenCellID and adds Map Marker to identify known
-     * Cell ID's
-     *
-     * @param fileName Name of file downloaded from OpenCellID
-     */
-    private void parseOpenCellID (String fileName) {
-
-        File file = new File(fileName);
-        try {
-            CSVReader csvReader = new CSVReader(new FileReader(file));
-            List<String[]> csvCellID = csvReader.readAll();
-
-
-            for (int i=1; i<csvCellID.size(); i++)
-            {
-                //Insert details into OpenCellID Database
-                long result =
-                        dbHelper.insertOpenCell(Double.parseDouble(csvCellID.get(i)[0]),
-                                Double.parseDouble(csvCellID.get(i)[1]),
-                                Integer.parseInt(csvCellID.get(i)[2]), Integer.parseInt(csvCellID.get(i)[3]),
-                                Integer.parseInt(csvCellID.get(i)[4]), Integer.parseInt(csvCellID.get(i)[5]),
-                                Integer.parseInt(csvCellID.get(i)[6]), Integer.parseInt(csvCellID.get(i)[7]));
-                if (result == -1)
-                {
-                    Log.e(TAG, "Error inserting OpenCellID database value");
-                }
-            }
-
-
-        } catch (Exception e) {
-            Log.e (TAG, "Error parsing OpenCellID data - " + e.getMessage());
-        }
-
-    }
-
-    /**
-     * Runs the request to download OpenCellID data in an AsyncTask
-     * preventing the application from becoming unresponsive whilst
-     * waiting for a response and download from the server
-     *
-     */
-    private class RequestTask extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... uri) {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpResponse response;
-            String responseString = null;
-            try {
-                response = httpclient.execute(new HttpGet(uri[0]));
-                StatusLine statusLine = response.getStatusLine();
-                if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    response.getEntity().writeTo(out);
-                    out.close();
-                    responseString = out.toString();
-                } else{
-                    //Closes the connection.
-                    response.getEntity().getContent().close();
-                    throw new IOException(statusLine.getReasonPhrase());
-                }
-            } catch (IOException e) {
-                //TODO Handle problems..
-            }
-            return responseString;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            //Do anything with response..
-            if (result != null) {
-                if (Helpers.isSdWritable()) {
-                    try {
-                        File dir = new File(
-                                Environment.getExternalStorageDirectory() + "/AIMSICD/OpenCellID/");
-                        if (!dir.exists()) {
-                            dir.mkdirs();
-                        }
-                        Time today = new Time(Time.getCurrentTimezone());
-                        today.setToNow();
-                        String fileName = Environment.getExternalStorageDirectory()
-                                + "/AIMSICD/OpenCellID/opencellid.csv";
-                        File file = new File(dir, "opencellid.csv");
-
-                        FileOutputStream fOut = new FileOutputStream(file);
-                        OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-                        myOutWriter.append(result);
-                        myOutWriter.close();
-                        fOut.close();
-                        Helpers.sendMsg(mContext, "OpenCellID data successfully received");
-                        parseOpenCellID(fileName);
-                    } catch (Exception e) {
-                        Log.e (TAG, "Write OpenCellID response - " + e.getMessage());
-                    }
-                }
-            }
-        }
-    }
-
-
     class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> fragments;
         private final List<String> titles;
@@ -516,8 +333,6 @@ public class AIMSICD extends FragmentActivity {
         public CharSequence getPageTitle(int position) {
             return titles.get(position);
         }
-
-
 
             @Override
         public int getCount() {

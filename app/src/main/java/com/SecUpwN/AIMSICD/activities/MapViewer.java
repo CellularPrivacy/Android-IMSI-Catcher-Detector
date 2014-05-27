@@ -17,34 +17,27 @@
 
 package com.SecUpwN.AIMSICD.activities;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.List;
-
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
+import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 import android.telephony.TelephonyManager;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -52,26 +45,21 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import java.util.HashMap;
+import java.util.Map;
 
-import au.com.bytecode.opencsv.CSVReader;
 
 public class MapViewer extends FragmentActivity implements OnSharedPreferenceChangeListener {
     private final String TAG = "AIMSICD_MapViewer";
@@ -82,6 +70,11 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
     private Context mContext;
     private LatLng loc = null;
     private SharedPreferences prefs;
+
+    private AimsicdService mAimsicdService;
+    private boolean mBound;
+
+    private Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
 
     /**
      * Called when the activity is first created.
@@ -101,10 +94,14 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
 
         setContentView(R.layout.map);
         setUpMapIfNeeded();
-
-        mDbHelper = new AIMSICDDbAdapter(this);
-        loadEntries();
         mContext = this;
+        mDbHelper = new AIMSICDDbAdapter(mContext);
+        // Bind to LocalService
+        Intent intent = new Intent(mContext, AimsicdService.class);
+        mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        loadEntries();
+
         String mapTypePref = getResources().getString(R.string.pref_map_type_key);
         prefs = mContext.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
@@ -141,7 +138,30 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
     protected void onDestroy() {
         super.onDestroy();
         prefs.unregisterOnSharedPreferenceChangeListener(this);
+        // Unbind from the service
+        if (mBound) {
+            mContext.unbindService(mConnection);
+            mBound = false;
+        }
     }
+
+    /**
+     * Service Connection to bind the activity to the service
+     */
+    private final ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            Log.e(TAG, "Service Disconnected");
+            mBound = false;
+        }
+    };
 
     /**
      * Initialises the Map and sets initial options
@@ -165,6 +185,51 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 uiSettings.setTiltGesturesEnabled(true);
                 uiSettings.setRotateGesturesEnabled(true);
                 mMap.setMyLocationEnabled(true);
+                // Setting a custom info window adapter for the google map
+                mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                    // Use default InfoWindow frame
+                    @Override
+                    public View getInfoWindow(Marker arg0) {
+                        return null;
+                    }
+
+                    // Defines the contents of the InfoWindow
+                    @Override
+                    public View getInfoContents(Marker arg0) {
+
+                        TextView tv;
+
+                        // Getting view from the layout file info_window_layout
+                        View v = getLayoutInflater().inflate(R.layout.marker_info_window, null);
+
+                        if  (v != null) {
+                            final MarkerData data = mMarkerMap.get(arg0);
+                            if (data != null) {
+                                if (data.openCellID) {
+                                    TableRow tr = (TableRow) v.findViewById(R.id.open_cell_label);
+                                    tr.setVisibility(View.VISIBLE);
+                                }
+
+                                tv = (TextView) v.findViewById(R.id.cell_id);
+                                tv.setText(data.cellID);
+                                tv = (TextView) v.findViewById(R.id.lat);
+                                tv.setText("" + data.lat);
+                                tv = (TextView) v.findViewById(R.id.lng);
+                                tv.setText("" + data.lng);
+                                tv = (TextView) v.findViewById(R.id.mcc);
+                                tv.setText(data.mcc);
+                                tv = (TextView) v.findViewById(R.id.mnc);
+                                tv.setText(data.mnc);
+                                tv = (TextView) v.findViewById(R.id.samples);
+                                tv.setText(data.samples);
+                            }
+                        }
+
+                        // Returning the view containing InfoWindow contents
+                        return v;
+                    }
+                });
             } else {
                 Helpers.sendMsg(this, "Unable to create map!");
             }
@@ -196,15 +261,17 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
                 Location mLocation = mMap.getMyLocation();
                 if (mLocation != null) {
-                    getOpenCellData(mLocation.getLatitude(), mLocation.getLongitude());
+                    Helpers.getOpenCellData(mContext, mLocation.getLatitude(),
+                            mLocation.getLongitude());
                 } else if (loc != null) {
-                    getOpenCellData(loc.latitude, loc.longitude);
+                    Helpers.getOpenCellData(mContext, loc.latitude, loc.longitude);
                 } else {
-                    double[] lastKnown = getLastLocation();
+                    Location lastKnown = mAimsicdService.lastKnownLocation();
                     if (lastKnown != null) {
-                        getOpenCellData(lastKnown[0], lastKnown[1]);
+                        Helpers.getOpenCellData(mContext, lastKnown.getLatitude(),
+                                lastKnown.getLongitude());
                     } else {
-                        Helpers.sendMsg(this, "Error finding your location!");
+                        Helpers.sendMsg(this, "Unable to determine your location!");
                     }
                 }
                 return true;
@@ -227,12 +294,14 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         int signal;
         int color;
         int cellID;
+        int lac;
         CircleOptions circleOptions;
         mDbHelper.open();
         Cursor c = mDbHelper.getCellData();
         if (c.moveToFirst()) {
             do {
                 cellID = c.getInt(0);
+                lac = c.getInt(1);
                 net = c.getInt(2);
                 dlat = Double.parseDouble(c.getString(3));
                 dlng = Double.parseDouble(c.getString(4));
@@ -295,10 +364,12 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                     mMap.addCircle(circleOptions);
 
                     // Add map marker for CellID
-                    mMap.addMarker(new MarkerOptions()
+                    Marker marker = mMap.addMarker(new MarkerOptions()
                             .position(loc)
                             .draggable(false)
                             .title("CellID - " + cellID));
+                    mMarkerMap.put(marker, new MarkerData("" + cellID, "" + loc.latitude,
+                            "" + loc.longitude, "" + lac, "", "", "",false));
                 }
 
             } while (c.moveToNext());
@@ -315,9 +386,9 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
         } else {
             // Try and find last known location and zoom there
-            double[] d = getLastLocation();
-            if (d[0] != 0.0 && d[1] != 0.0) {
-                loc = new LatLng(d[0], d[1]);
+            Location lastLoc = mAimsicdService.lastKnownLocation();
+            if (lastLoc.getLatitude() != 0.0 && lastLoc.getLongitude() != 0.0) {
+                loc = new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude());
                 CameraPosition POSITION =
                         new CameraPosition.Builder().target(loc)
                                 .zoom(16)
@@ -328,7 +399,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 //Use Mcc to move camera to an approximate location near Countries Capital
                 TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
                 int mcc = Integer.parseInt(tm.getNetworkOperator().substring(0, 3));
-                d = mDbHelper.getDefaultLocation(mcc);
+                double[] d = mDbHelper.getDefaultLocation(mcc);
                 loc = new LatLng(d[0], d[1]);
                 CameraPosition POSITION =
                         new CameraPosition.Builder().target(loc)
@@ -347,222 +418,49 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 dlat = Double.parseDouble(c.getString(4));
                 dlng = Double.parseDouble(c.getString(5));
                 loc = new LatLng (dlat, dlng);
-                int lac = c.getInt(1);
+                lac = c.getInt(1);
                 int mcc = c.getInt(2);
                 int mnc = c.getInt(3);
                 int samples = c.getInt(7);
                 // Add map marker for CellID
-                mMap.addMarker(new MarkerOptions()
+                Marker marker = mMap.addMarker(new MarkerOptions()
                         .position(loc)
                         .draggable(false)
-                        .title("CellID - " + cellID))
-                        .setSnippet("LAC: " + lac
-                        + "\nMCC: " + mcc
-                        + "\nMNC: " + mnc
-                        + "\nSamples: " + samples);
+                        .title("CellID - " + cellID));
+
+                mMarkerMap.put(marker, new MarkerData("" + cellID, "" + loc.latitude,
+                        "" + loc.longitude, "" + lac, "" + mcc, "" + mnc,
+                        "" + samples, true));
 
             } while (c.moveToNext());
         }
     }
 
-    /**
-     * Attempts to retrieve the last known location from the device
-     *
-     */
-    private double[] getLastLocation() {
-        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        List<String> providers = lm.getProviders(true);
+    public class MarkerData {
+        public String cellID;
+        public String lat;
+        public String lng;
+        public String lac;
+        public String mcc;
+        public String mnc;
+        public String samples;
+        public boolean openCellID;
 
-        /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
-        Location l = null;
-
-        for (int i=providers.size()-1; i>=0; i--) {
-            l = lm.getLastKnownLocation(providers.get(i));
-            if (l != null) break;
-        }
-
-        double[] gps = new double[2];
-        if (l != null) {
-            gps[0] = l.getLatitude();
-            gps[1] = l.getLongitude();
-        }
-        return gps;
-
-    }
-
-    /**
-     * Requests Cell data from OpenCellID.org, calculating a 100 mile bounding radius
-     * and requesting all Cell ID information in that area.
-     *
-     * @param lat Latitude of current location
-     * @param lng Longitude of current location
-     */
-    private void getOpenCellData(double lat, double lng) {
-        if (isNetAvailable(this)) {
-            double earthRadius = 6371.01;
-
-            //New GeoLocation object to find bounding Coordinates
-            GeoLocation currentLoc = GeoLocation.fromDegrees(lat, lng);
-
-            //Calculate the Bounding Coordinates in a 50 mile radius
-            //0 = min 1 = max
-            GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
-            String boundParameter;
-
-            //Request OpenCellID data for Bounding Coordinates
-            boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
-                    + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
-                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
-                    + String .valueOf(boundingCoords[1].getLongitudeInDegrees());
-
-            String urlString = "http://www.opencellid.org/cell/getInArea?key=24c66165-9748-4384-ab7c-172e3f533056"
-                    + "&BBOX=" + boundParameter
-                    + "&format=csv";
-
-            new RequestTask().execute(urlString);
-        } else {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setTitle(R.string.no_network_connection_title)
-                    .setMessage(R.string.no_network_connection_message);
-            builder.create().show();
+        MarkerData(String cell_id, String latitude, String longitude,
+                String local_area_code, String mobile_country_code, String mobile_network_code,
+                String samples_taken, boolean openCellID_Data) {
+            cellID = cell_id;
+            lat = latitude;
+            lng = longitude;
+            lac = local_area_code;
+            mcc = mobile_country_code;
+            mnc = mobile_network_code;
+            samples = samples_taken;
+            openCellID = openCellID_Data;
         }
     }
 
-    /**
-     * Checks Network connectivity is available to download OpenCellID data
-     *
-     */
-    private Boolean isNetAvailable(Context context)  {
 
-        try{
-            ConnectivityManager connectivityManager = (ConnectivityManager)
-                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            NetworkInfo mobileInfo =
-                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if (wifiInfo != null && mobileInfo != null) {
-                return wifiInfo.isConnected() || mobileInfo.isConnected();
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * Parses the downloaded CSV from OpenCellID and adds Map Marker to identify known
-     * Cell ID's
-     *
-     * @param fileName Name of file downloaded from OpenCellID
-     */
-    private void parseOpenCellID (String fileName) {
-
-        File file = new File(fileName);
-        try {
-            CSVReader csvReader = new CSVReader(new FileReader(file));
-            List<String[]> csvCellID = csvReader.readAll();
-
-            for (int i=1; i<csvCellID.size(); i++)
-            {
-              loc =  new LatLng(Double.parseDouble(csvCellID.get(i)[0]), Double.parseDouble(csvCellID.get(i)[1]));
-
-                // Add map marker for CellID
-                mMap.addMarker(new MarkerOptions()
-                        .position(loc)
-                        .draggable(false)
-                        .title("CellID - " + csvCellID.get(i)[5]))
-                        .setSnippet("LAC: " + csvCellID.get(i)[4]
-                                + "\nMCC: " + csvCellID.get(i)[2]
-                                + "\nMNC: " + csvCellID.get(i)[3]
-                                + "\nSamples: " + csvCellID.get(i)[7]);
-
-                //Insert details into OpenCellID Database
-                long result =
-                mDbHelper.insertOpenCell(Double.parseDouble(csvCellID.get(i)[0]),
-                        Double.parseDouble(csvCellID.get(i)[1]),
-                        Integer.parseInt(csvCellID.get(i)[2]), Integer.parseInt(csvCellID.get(i)[3]),
-                        Integer.parseInt(csvCellID.get(i)[4]), Integer.parseInt(csvCellID.get(i)[5]),
-                        Integer.parseInt(csvCellID.get(i)[6]), Integer.parseInt(csvCellID.get(i)[7]));
-                if (result == -1)
-                {
-                    Log.e(TAG, "Error inserting OpenCellID database value");
-                }
-            }
-
-
-        } catch (Exception e) {
-            Log.e (TAG, "Error parsing OpenCellID data - " + e.getMessage());
-        }
-
-    }
-
-    /**
-     * Runs the request to download OpenCellID data in an AsyncTask
-     * preventing the application from becoming unresponsive whilst
-     * waiting for a response and download from the server
-     *
-     */
-    private class RequestTask extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... uri) {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpResponse response;
-            String responseString = null;
-            try {
-                response = httpclient.execute(new HttpGet(uri[0]));
-                StatusLine statusLine = response.getStatusLine();
-                if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    response.getEntity().writeTo(out);
-                    out.close();
-                    responseString = out.toString();
-                } else{
-                    //Closes the connection.
-                    response.getEntity().getContent().close();
-                    throw new IOException(statusLine.getReasonPhrase());
-                }
-            } catch (ClientProtocolException e) {
-                //TODO Handle problems..
-            } catch (IOException e) {
-                //TODO Handle problems..
-            }
-            return responseString;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            //Do anything with response..
-            if (result != null) {
-                if (Helpers.isSdWritable()) {
-                    try {
-                        File dir = new File(
-                                Environment.getExternalStorageDirectory() + "/AIMSICD/OpenCellID/");
-                        if (!dir.exists()) {
-                            dir.mkdirs();
-                        }
-                        Time today = new Time(Time.getCurrentTimezone());
-                        today.setToNow();
-                        String fileName = Environment.getExternalStorageDirectory()
-                                + "/AIMSICD/OpenCellID/opencellid.csv";
-                        File file = new File(dir, "opencellid.csv");
-
-                        FileOutputStream fOut = new FileOutputStream(file);
-                        OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-                        myOutWriter.append(result);
-                        myOutWriter.close();
-                        fOut.close();
-                        Helpers.sendMsg(mContext, "OpenCellID data successfully received");
-                        parseOpenCellID(fileName);
-                    } catch (Exception e) {
-                        Log.e (TAG, "Write OpenCellID response - " + e.getMessage());
-                    }
-                }
-            }
-        }
-    }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {
