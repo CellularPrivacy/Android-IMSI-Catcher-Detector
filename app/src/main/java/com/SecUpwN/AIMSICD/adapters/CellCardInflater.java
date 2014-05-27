@@ -39,6 +39,7 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData>
         private final TextView mLat;
         private final TextView mLng;
         private final TextView mSignal;
+        private final TextView mRecordId;
 
         public ViewHolder(View rootView)
         {
@@ -49,6 +50,7 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData>
             mLat = (TextView) mRootView.findViewById(R.id.lat);
             mLng = (TextView) mRootView.findViewById(R.id.lng);
             mSignal = (TextView) mRootView.findViewById(R.id.signal);
+            mRecordId = (TextView) mRootView.findViewById(R.id.record_id);
             rootView.setTag(this);
         }
 
@@ -60,6 +62,7 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData>
             mLat.setText(item.getLat());
             mLng.setText(item.getLng());
             mSignal.setText(item.getSignal());
+            mRecordId.setText(item.getRecordId());
         }
     }
 }
