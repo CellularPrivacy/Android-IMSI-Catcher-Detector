@@ -41,6 +41,7 @@ public class OpenCellIdCardInflater implements IAdapterViewInflater<CardItemData
         private final TextView mLng;
         private final TextView mAvgSigStr;
         private final TextView mSamples;
+        private final TextView mRecordId;
 
         public ViewHolder(View rootView)
         {
@@ -53,6 +54,7 @@ public class OpenCellIdCardInflater implements IAdapterViewInflater<CardItemData
             mLng = (TextView) mRootView.findViewById(R.id.lng);
             mAvgSigStr = (TextView) mRootView.findViewById(R.id.avgSigStr);
             mSamples = (TextView) mRootView.findViewById(R.id.samples);
+            mRecordId = (TextView) mRootView.findViewById(R.id.record_id);
             rootView.setTag(this);
         }
 
@@ -66,6 +68,7 @@ public class OpenCellIdCardInflater implements IAdapterViewInflater<CardItemData
             mLng.setText(item.getLng());
             mAvgSigStr.setText(item.getAvgSigStr());
             mSamples.setText(item.getSamples());
+            mRecordId.setText(item.getRecordId());
         }
     }
 }

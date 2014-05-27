@@ -48,5 +48,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/medium_blue" />
+        <TextView
+                android:id="@+id/record_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/medium_blue" android:gravity="right"/>
     </LinearLayout>
 </FrameLayout>
