@@ -203,7 +203,6 @@ public class AIMSICD extends FragmentActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem mTrackCell = menu.findItem(R.id.track_cell);
-        MenuItem mTrackLocation = menu.findItem(R.id.track_location);
         MenuItem mTrackFemtocell = menu.findItem(R.id.track_femtocell);
 
         if (mBound && mAimsicdService.isTrackingCell()) {
@@ -215,18 +214,6 @@ public class AIMSICD extends FragmentActivity {
             if (mTrackCell != null) {
                 mTrackCell.setTitle(R.string.track_cell);
                 mTrackCell.setIcon(R.drawable.untrack_cell);
-            }
-        }
-
-        if (mBound && mAimsicdService.isTrackingLocation()) {
-            if (mTrackLocation != null) {
-                mTrackLocation.setTitle(R.string.untrack_location);
-                mTrackLocation.setIcon(R.drawable.ic_action_location_found);
-            }
-        } else {
-            if (mTrackLocation != null) {
-                mTrackLocation.setTitle(R.string.track_location);
-                mTrackLocation.setIcon(R.drawable.ic_action_location_off);
             }
         }
 
@@ -258,10 +245,6 @@ public class AIMSICD extends FragmentActivity {
         switch (item.getItemId()) {
             case R.id.track_cell:
                 trackcell();
-                invalidateOptionsMenu();
-                return true;
-            case R.id.track_location:
-                tracklocation();
                 invalidateOptionsMenu();
                 return true;
             case R.id.track_femtocell:
@@ -332,17 +315,6 @@ public class AIMSICD extends FragmentActivity {
     }
 
     /**
-     * Location Information Tracking - Enable/Disable
-     */
-    private void tracklocation() {
-        if (mAimsicdService.isTrackingLocation()) {
-            mAimsicdService.setLocationTracking(false);
-        } else {
-            mAimsicdService.setLocationTracking(true);
-        }
-    }
-
-    /**
      * FemtoCell Detection (CDMA Phones ONLY) - Enable/Disable
      */
     private void trackFemtocell() {
@@ -382,6 +354,7 @@ public class AIMSICD extends FragmentActivity {
                     + "&BBOX=" + boundParameter
                     + "&format=csv";
 
+            Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
             new RequestTask().execute(urlString);
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
