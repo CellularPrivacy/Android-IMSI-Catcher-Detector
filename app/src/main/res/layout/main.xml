@@ -387,7 +387,7 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal"
                 android:background="@color/black"
-                android:tag="gsm_network">
+                android:tag="gsm_network" android:visibility="gone">
 
             <TextView
                     android:id="@+id/network_cellid_label" android:text="@string/network_cellid"
@@ -410,7 +410,7 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal"
                 android:background="@color/black"
-                android:tag="lte">
+                android:tag="lte" android:visibility="gone">
 
             <TextView
                     android:id="@+id/network_lte_timing_advance_label"

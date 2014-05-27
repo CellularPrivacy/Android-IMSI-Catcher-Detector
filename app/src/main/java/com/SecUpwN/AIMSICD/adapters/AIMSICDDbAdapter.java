@@ -77,7 +77,7 @@ public class AIMSICDDbAdapter {
             cellValues.put("Operator", simOperator);
             cellValues.put("OperatorName", simOperatorName);
 
-            if (!cellExists(cellID,latitude, longitude, signalInfo)) {
+            if (!cellExists(cellID, latitude, longitude, signalInfo)) {
                 return mDb.insert(CELL_TABLE, null, cellValues);
             }
         }
@@ -270,6 +270,39 @@ public class AIMSICDDbAdapter {
         } catch (Exception e) {
             Log.e (TAG, "Error parsing OpenCellID data - " + e);
         }
+    }
+
+    /**
+     * Parses the downloaded CSV from OpenCellID and adds Map Marker to identify known
+     * Cell ID's
+     */
+    public void updateOpenCellID () {
+        String fileName = Environment.getExternalStorageDirectory()
+                + "/AIMSICD/OpenCellID/opencellid.csv";
+        File file = new File(fileName);
+        try {
+            CSVReader csvReader = new CSVReader(new FileReader(file));
+            List<String[]> csvCellID = csvReader.readAll();
+
+            for (int i=1; i<csvCellID.size(); i++)
+            {
+                //Insert details into OpenCellID Database
+                long result =
+                        insertOpenCell(Double.parseDouble(csvCellID.get(i)[0]),
+                                Double.parseDouble(csvCellID.get(i)[1]),
+                                Integer.parseInt(csvCellID.get(i)[2]), Integer.parseInt(csvCellID.get(i)[3]),
+                                Integer.parseInt(csvCellID.get(i)[4]), Integer.parseInt(csvCellID.get(i)[5]),
+                                Integer.parseInt(csvCellID.get(i)[6]), Integer.parseInt(csvCellID.get(i)[7]));
+                if (result == -1)
+                {
+                    Log.e(TAG, "Error inserting OpenCellID database value");
+                }
+            }
+
+        } catch (Exception e) {
+            Log.e (TAG, "Error parsing OpenCellID data - " + e.getMessage());
+        }
+
     }
 
     /**
