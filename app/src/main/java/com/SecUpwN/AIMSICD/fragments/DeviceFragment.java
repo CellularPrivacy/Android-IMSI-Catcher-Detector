@@ -64,12 +64,6 @@ public class DeviceFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        updateUI();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         // Unbind from the service
@@ -107,9 +101,11 @@ public class DeviceFragment extends Fragment {
             switch (mAimsicdService.getPhoneID()) {
                 case TelephonyManager.PHONE_TYPE_GSM: {
                     content = (TextView) mView.findViewById(R.id.network_lac);
-                    content.setText(mAimsicdService.getLAC(true));
+                    content.setText(String.valueOf(mAimsicdService.getLAC(true)));
+                    tr = (TableRow) mView.findViewById(R.id.gsm_cellid);
+                    tr.setVisibility(View.VISIBLE);
                     content = (TextView) mView.findViewById(R.id.network_cellid);
-                    content.setText(mAimsicdService.getCellId());
+                    content.setText(String.valueOf(mAimsicdService.getCellId()));
                     break;
                 }
                 case TelephonyManager.PHONE_TYPE_CDMA: {
@@ -118,27 +114,33 @@ public class DeviceFragment extends Fragment {
                         TableRow row = (TableRow) tableLayout.getChildAt(i);
                         if (row != null) {
                             if (row.getTag().equals("cdma")) {
-                                row.setVisibility(View.GONE);
-                            } else if( row.getTag().equals("gsm_network")) {
                                 row.setVisibility(View.VISIBLE);
+                            } else if( row.getTag().equals("gsm_network")) {
+                                row.setVisibility(View.GONE);
                             }
                         }
                     }
                     content = (TextView) mView.findViewById(R.id.network_netid);
-                    content.setText(mAimsicdService.getLAC(true));
+                    content.setText(String.valueOf(mAimsicdService.getLAC(true)));
                     content = (TextView) mView.findViewById(R.id.network_sysid);
-                    content.setText(mAimsicdService.getSID());
+                    content.setText(String.valueOf(mAimsicdService.getSID()));
                     content = (TextView) mView.findViewById(R.id.network_baseid);
-                    content.setText(mAimsicdService.getCellId());
+                    content.setText(String.valueOf(mAimsicdService.getCellId()));
+                    mAimsicdService.updateCdmaLocation();
+                    double[] location = mAimsicdService.getLastLocation();
+                    content = (TextView) mView.findViewById(R.id.network_cmda_lat);
+                    content.setText(String.valueOf(location[0]));
+                    content = (TextView) mView.findViewById(R.id.network_cmda_long);
+                    content.setText(String.valueOf(location[1]));
                     break;
                 }
             }
 
             if (mAimsicdService.getNetID(true) == TelephonyManager.NETWORK_TYPE_LTE) {
-                content = (TextView) mView.findViewById(R.id.network_lte_timing_advance);
-                content.setText(mAimsicdService.getLteTimingAdvance());
                 tr = (TableRow) mView.findViewById(R.id.lte_timing_advance);
                 tr.setVisibility(View.VISIBLE);
+                content = (TextView) mView.findViewById(R.id.network_lte_timing_advance);
+                content.setText(String.valueOf(mAimsicdService.getLteTimingAdvance()));
             } else {
                 tr = (TableRow) mView.findViewById(R.id.lte_timing_advance);
                 tr.setVisibility(View.GONE);
