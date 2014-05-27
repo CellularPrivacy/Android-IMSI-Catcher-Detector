@@ -160,6 +160,15 @@
     <string name="pref_map_type_key">pref_map_type</string>
     <string name="pref_map_type_title">Map Type</string>
     <string name="pref_map_type_summ">Display the Map using different styles</string>
+    
+    <!-- MAP INFOWINDOW -->
+    <string name="cell_id_label">Cell ID: </string>
+    <string name="mcc_label">MCC: </string>
+    <string name="mnc_label">MNC: </string>
+    <string name="samples_label">Samples:</string>
+    <string name="open_cell_id_label">OpenCellID Data</string>
+    <string name="lat_label">Lat: </string>
+    <string name="lng_label">Lng: </string>
 
 
     <!-- Database Viewer -->
