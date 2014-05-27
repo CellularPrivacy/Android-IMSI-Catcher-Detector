@@ -62,15 +62,19 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ConditionVariable;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -78,7 +82,13 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 
+import android.telephony.CellIdentityCdma;
+import android.telephony.CellIdentityGsm;
+import android.telephony.CellInfo;
+import android.telephony.CellInfoCdma;
+import android.telephony.CellInfoGsm;
 import android.telephony.CellLocation;
+import android.telephony.CellSignalStrength;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -87,6 +97,7 @@ import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
@@ -169,7 +180,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     */
     private boolean mRoaming;
     private boolean TrackingCell;
-    private boolean TrackingLocation;
     private boolean TrackingFemtocell;
     private boolean mFemtoDetected;
 
@@ -655,15 +665,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     }
 
     /**
-     * Tracking Location Information
-     *
-     * @return boolean indicating Location Tracking State
-     */
-    public boolean isTrackingLocation() {
-        return TrackingLocation;
-    }
-
-    /**
      * Tracking Femotcell Connections
      *
      * @return boolean indicating Femtocell Connection Tracking State
@@ -735,6 +736,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }
 
+        if (mSimCountry.isEmpty())
+            mSimCountry = "N/A";
+
         return mSimCountry;
     }
 
@@ -753,6 +757,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }
 
+        if (mSimOperator.isEmpty())
+            mSimOperator = "N/A";
+
         return mSimOperator;
     }
 
@@ -770,6 +777,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }
 
+        if (mSimOperatorName.isEmpty())
+            mSimOperatorName = "N/A";
+
         return mSimOperatorName;
     }
 
@@ -786,8 +796,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 //Some devices don't like this method
                 Log.e(TAG, "getSimSubs " + e);
             }
-
         }
+
+        if (mSimSubs.isEmpty())
+            mSimSubs = "N/A";
 
         return mSimSubs;
     }
@@ -806,6 +818,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 Log.e(TAG, "getSimSerial " + e);
             }
         }
+
+        if (mSimSerial.isEmpty())
+            mSimSerial = "N/A";
 
         return mSimSerial;
     }
@@ -873,7 +888,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public String getPhoneNumber(boolean force) {
         if (mPhoneNum.isEmpty() || force) {
             try {
-                mPhoneNum = (tm.getLine1Number() != null) ? tm.getLine1Number() : "";
+                mPhoneNum = (tm.getLine1Number() != null) ? tm.getLine1Number() : "N/A";
             } catch (Exception e) {
                 //Sim does not hold line number
                 Log.e(TAG, "getPhoneNumber (1) " + e);
@@ -883,12 +898,14 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         //Check if Phone Number successfully retrieved and if not try subscriber
         if (mPhoneNum.isEmpty())
             try {
-                mPhoneNum = (tm.getSubscriberId() != null) ? tm.getSubscriberId() : "";
+                mPhoneNum = (tm.getSubscriberId() != null) ? tm.getSubscriberId() : "N/A";
             } catch (Exception e) {
                 //Seems some devices don't like this on either
                 Log.e(TAG, "getPhoneNumber (2) " + e);
             }
 
+        if (mPhoneNum.isEmpty())
+            mPhoneNum = "N/A";
 
         return mPhoneNum;
     }
@@ -1168,12 +1185,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         if (mFemtoDetected) {
             status = 3; //ALARM
-        } else if (TrackingFemtocell || TrackingCell || TrackingLocation) {
+        } else if (TrackingFemtocell || TrackingCell) {
             status = 2; //Good
             if (TrackingFemtocell)
                 contentText = "FemtoCell Detection Active";
             else
-                contentText = "Cell, Signal or Location Tracking Active";
+                contentText = "Cell Tracking Active";
         } else {
             status = 1; //Idle
         }
@@ -1322,25 +1339,35 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     public void setCellTracking(boolean track) {
         if (track) {
-            tm.listen(mCellSignalListener,
+           tm.listen(mCellSignalListener,
                     PhoneStateListener.LISTEN_CELL_LOCATION |
                     PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |
                     PhoneStateListener.LISTEN_DATA_ACTIVITY |
                     PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
+            if (lm != null) {
+                mLocationListener = new MyLocationListener();
+                Log.i(TAG, "LocationManager already existed");
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+            } else {
+                Log.i(TAG, "LocationManager did not existed");
+                lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+                if (lm != null) {
+                    if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        Log.i(TAG, "LocationManager created");
+                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+                    }
+                }
+            }
             Helpers.msgShort(this, "Tracking cell information");
             TrackingCell = true;
         } else {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
-            if (isTrackingLocation()) { //Disable Location Tracking
-                lm.removeUpdates(mLocationListener);
-                Helpers.msgShort(this, "Stopped tracking location");
-                TrackingLocation = false;
-                mLongitude = 0.0;
-                mLatitude = 0.0;
-            }
-            Helpers.msgShort(this, "Stopped tracking cell information");
+            lm.removeUpdates(mLocationListener);
+            mLongitude = 0.0;
+            mLatitude = 0.0;
             TrackingCell = false;
             mCellInfo = "[0,0]|nn|nn|";
+            Helpers.msgShort(this, "Stopped tracking cell information");
         }
         setNotification();
     }
@@ -1375,35 +1402,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         mSimOperator = getSimOperator(true);
                         mSimOperatorName = getNetworkName(true);
                         mSID = getSID();
-
-                        //Update location through CDMA if not tracking through GPS
-                        if (!TrackingLocation) {
-                            int Long = cdmaCellLocation.getBaseStationLongitude();
-                            int Lat = cdmaCellLocation.getBaseStationLatitude();
-
-                            if (!(Double.isNaN(Long) || Long < -2592000 || Long > 2592000)) {
-                                mLongitude = ((double) Long) / (3600 * 4);
-                            }
-
-                            if (!(Double.isNaN(Lat) || Lat < -2592000 || Lat > 2592000)) {
-                                mLatitude = ((double) Lat) / (3600 * 4);
-                            }
-                        }
                     }
             }
 
             updateNeighbouringCells();
 
-            if (TrackingCell) {
-                dbHelper.open();
-                mDbResult = dbHelper.insertCell(mLacID, mCellID,
-                        mNetID, mLatitude,
-                        mLongitude, mSignalInfo,
-                        mCellInfo, mSimCountry,
-                        mSimOperator, mSimOperatorName);
-                if (mDbResult == -1)
-                    Log.e (TAG, "Error writing to database");
-            }
         }
 
         public void onSignalStrengthsChanged(SignalStrength signalStrength) {
@@ -1425,17 +1428,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 mNeighborMapUMTS.put(key,-115);
 
             updateNeighbouringCells();
-
-            if (TrackingCell) {
-                dbHelper.open();
-                mDbResult = dbHelper.insertCell(mLacID, mCellID,
-                        mNetID, mLatitude,
-                        mLongitude, mSignalInfo,
-                        mCellInfo, mSimCountry,
-                        mSimOperator, mSimOperatorName);
-                if (mDbResult == -1)
-                    Log.e (TAG, "Error writing to database");
-            }
         }
 
         public void onDataActivity(int direction) {
@@ -1490,82 +1482,91 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
     };
 
-    /**
-     * Location Information Tracking and database logging
-     *
-     * @param track Enable/Disable tracking
-     */
-    public void setLocationTracking(boolean track) {
-        if (track) {
-            if (lm != null) {
-                mLocationListener = new MyLocationListener();
-                Log.i(TAG, "LocationManager already existed");
-                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
-                Helpers.msgShort(this, "Tracking location");
-                TrackingLocation = true;
-            } else {
-                Log.i(TAG, "LocationManager did not existed");
-                lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-                if (lm != null) {
-                    if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                        Log.i(TAG, "LocationManager created");
-                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
-                        Helpers.msgShort(this, "Tracking location");
-                        TrackingLocation = true;
-                    } else {
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setMessage(R.string.location_error_message)
-                                .setTitle(R.string.location_error_title);
-                        builder.create().show();
-                        TrackingLocation = false;
+    private void enableLocationServices() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.location_error_message)
+                .setTitle(R.string.location_error_title)
+                .setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent gpsSettings = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        gpsSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(gpsSettings);
                     }
-                }
-            }
-        } else {
-            lm.removeUpdates(mLocationListener);
-            Helpers.msgShort(this, "Stopped tracking location");
-            TrackingLocation = false;
-            mLongitude = 0.0;
-            mLatitude = 0.0;
-        }
-        setNotification();
+                })
+                .setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        setCellTracking(false);
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        alert.show();
     }
 
     private class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location loc) {
+            if (Build.VERSION.SDK_INT > 16) {
+                List<CellInfo> cellinfolist = tm.getAllCellInfo();
+                if (cellinfolist != null) {
+                    for (final CellInfo cellinfo : cellinfolist) {
+                        if (cellinfo instanceof CellInfoGsm) {
+                            CellInfoGsm GSMinfo = (CellInfoGsm) cellinfo;
+                            CellIdentityGsm gsmCellIdentity = GSMinfo.getCellIdentity();
+                            if (gsmCellIdentity != null) {
+                                mCellID = gsmCellIdentity.getCid();
+                                mLacID = gsmCellIdentity.getLac();
+                            }
+                        } else if (cellinfo instanceof CellInfoCdma) {
+                            CellInfoCdma CDMAinfo = (CellInfoCdma) cellinfo;
+                            CellIdentityCdma cdmaCellIdentity = CDMAinfo.getCellIdentity();
+                            if (cdmaCellIdentity != null) {
+                                mCellID = cdmaCellIdentity.getBasestationId();
+                                mLacID = cdmaCellIdentity.getNetworkId();
+                            }
+                        }
+                    }
+                } else {
+                    CellLocation cellLocation = tm.getCellLocation();
+                    if (cellLocation != null) {
+                        switch (mPhoneID) {
+                            case TelephonyManager.PHONE_TYPE_GSM:
+                                GsmCellLocation gsmCellLocation = (GsmCellLocation) cellLocation;
+                                mCellID = gsmCellLocation.getCid();
+                                mLacID = gsmCellLocation.getLac();
+                                break;
+                            case TelephonyManager.PHONE_TYPE_CDMA:
+                                CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cellLocation;
+                                mCellID = cdmaCellLocation.getBaseStationId();
+                                mLacID = cdmaCellLocation.getNetworkId();
+                        }
+                    }
+                }
+            }
+
             if (loc != null) {
                 mLongitude = loc.getLongitude();
                 mLatitude = loc.getLatitude();
-            }
-            if (TrackingLocation) {
-                dbHelper.open();
-                mDbResult = dbHelper.insertLocation(mLacID, mCellID,
-                        mNetID, mLatitude,
-                        mLongitude, mSignalInfo,
-                        mCellInfo);
-                if (mDbResult == -1)
-                    Log.e (TAG, "Error writing to database");
-            }
-
-            if (TrackingCell) {
-                dbHelper.open();
-                mDbResult = dbHelper.insertCell(mLacID, mCellID,
-                        mNetID, mLatitude,
-                        mLongitude, mSignalInfo,
-                        mCellInfo, mSimCountry,
-                        mSimOperator, mSimOperatorName);
-                if (mDbResult == -1)
-                    Log.e (TAG, "Error writing to database");
+                if (TrackingCell) {
+                    dbHelper.open();
+                    mDbResult = dbHelper.insertCell(mLacID, mCellID,
+                            mNetID, mLatitude,
+                            mLongitude, mSignalInfo,
+                            mCellInfo, mSimCountry,
+                            mSimOperator, mSimOperatorName);
+                    mDbResult = dbHelper.insertLocation(mLacID, mCellID,
+                            mNetID, mLatitude,
+                            mLongitude, mSignalInfo,
+                            mCellInfo);
+                    if (mDbResult == -1)
+                        Log.e(TAG, "Error writing to database");
+                }
             }
         }
 
         @Override
         public void onProviderDisabled(String provider) {
-            Helpers.sendMsg(getApplicationContext(), "GPS is off");
-            Intent gpsSettings = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            gpsSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(gpsSettings);
+            enableLocationServices();
         }
 
         @Override
