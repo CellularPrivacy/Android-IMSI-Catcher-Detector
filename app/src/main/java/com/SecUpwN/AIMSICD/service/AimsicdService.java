@@ -125,6 +125,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
     private final String TAG = "AIMSICD_Service";
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
+    public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
 
    /*
     * System and helper declarations
@@ -187,6 +188,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private boolean TrackingFemtocell;
     private boolean mFemtoDetected;
     private boolean mLocationPrompted;
+    private boolean mClassZeroSmsDetected;
 
    /*
     * Samsung MultiRil Implementation
@@ -593,7 +595,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     mCellID = cdmaCellLocation.getBaseStationId();
                     mLac = cdmaCellLocation.getNetworkId();
                     mSID = getSID();
-                    updateCdmaLocation();
+                    //updateCdmaLocation();
                 }
                 break;
         }
@@ -733,6 +735,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }
 
+        if (mSimCountry.isEmpty())
+            mSimCountry = "N/A";
+
         return mSimCountry;
     }
 
@@ -756,6 +761,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }
 
+        if (mSimOperator.isEmpty())
+            mSimOperator = "N/A";
+
         return mSimOperator;
     }
 
@@ -777,6 +785,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 mSimOperatorName = "N/A";
             }
         }
+
+        if (mSimOperatorName.isEmpty())
+            mSimOperatorName = "N/A";
 
         return mSimOperatorName;
     }
@@ -801,6 +812,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }
 
+        if (mSimSubs.isEmpty())
+            mSimSubs= "N/A";
+
         return mSimSubs;
     }
 
@@ -823,6 +837,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 Log.e(TAG, "getSimSerial " + e);
             }
         }
+
+        if (mSimSerial.isEmpty())
+            mSimSerial = "N/A";
 
         return mSimSerial;
     }
@@ -1155,11 +1172,18 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         if(!(Double.isNaN(Long) || Long < -2592000 || Long > 2592000)) {
             mLongitude = ((double) Long) / (3600 * 4);
+        } else {
+            mLongitude = 0.0f;
         }
 
         if(!(Double.isNaN(Lat) || Lat < -2592000 || Lat > 2592000)) {
             mLatitude = ((double) Lat) / (3600 * 4);
+        } else {
+            mLatitude = 0.0f;
         }
+
+        mLastLocation.setLongitude(mLongitude);
+        mLastLocation.setLatitude(mLatitude);
     }
 
     /**
@@ -1234,7 +1258,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 }
                 tickerText = getResources().getString(R.string.app_name_short)
                         + " - ALERT!! Threat Detected";
-                contentText = "ALERT!! Threat Detected";
+                if (mFemtoDetected) {
+                    contentText = "ALERT!! FemtoCell Connection Threat Detected";
+                } else if (mClassZeroSmsDetected) {
+                    contentText = "ALERT!! Class Zero Hidden SMS Intercepted";
+                }
+
                 break;
             default:
                 icon = R.drawable.sense_idle;
@@ -1271,7 +1300,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(
                 NOTIFICATION_SERVICE);
         if (notificationManager != null) {
-            notificationManager.cancel(0x1212);
+            notificationManager.cancel(NOTIFICATION_ID);
         }
     }
 
@@ -1488,7 +1517,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      * @return double array [0] - Latitude [1] - Longitude
      */
     public double[] getLastLocation() {
-        return new double[] {mLastLocation.getLatitude(), mLastLocation.getLongitude()};
+        if (mLastLocation != null) {
+            return new double[]{mLastLocation.getLatitude(), mLastLocation.getLongitude()};
+        } else {
+            return new double[]{0.0f,0.0f};
+        }
     }
 
     public Location lastKnownLocation() {
@@ -1499,6 +1532,24 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         if (location != null)
             location = (isBetterLocation(location, mLastLocation) ? location : mLastLocation);
+        else {
+            CellLocation cellLocation = tm.getCellLocation();
+            if (cellLocation != null) {
+                switch (mPhoneID) {
+                    case TelephonyManager.PHONE_TYPE_GSM:
+                        GsmCellLocation gsmCellLocation
+                                = (GsmCellLocation) cellLocation;
+                        mCellID = gsmCellLocation.getCid();
+                        mLac = gsmCellLocation.getLac();
+                        break;
+                    case TelephonyManager.PHONE_TYPE_CDMA:
+                        CdmaCellLocation cdmaCellLocation
+                                = (CdmaCellLocation) cellLocation;
+                        mCellID = cdmaCellLocation.getBaseStationId();
+                        mLac = cdmaCellLocation.getNetworkId();
+                }
+            }
+        }
 
         return location;
     }
