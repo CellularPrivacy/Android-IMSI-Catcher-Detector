@@ -37,6 +37,7 @@ import com.SecUpwN.AIMSICD.BuildConfig;
 public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
     public static final String MULTICLIENT_SOCKET = "Multiclient";
+    public static final String SOCKET_NAME_RIL = "rild";
 
     private static final int RIL_REQUEST_OEM_RAW = 59;
     private static final int RIL_REQUEST_OEM_STRINGS = 60;

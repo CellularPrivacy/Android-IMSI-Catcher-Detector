@@ -23,19 +23,21 @@ import java.io.OutputStreamWriter;
 public class RequestTask extends AsyncTask<String, String, String> {
 
     public static final int OPEN_CELL_ID_REQUEST = 1;
+    public static final int RESTORE_DATABASE = 2;
 
-    private AIMSICDDbAdapter mDbAdapter;
-    private Context mContext;
+    private final AIMSICDDbAdapter mDbAdapter;
+    private final Context mContext;
     private int mType;
 
-    RequestTask (Context context, int type) {
-        mContext = context;
+    public RequestTask (Context context, int type) {
         mType = type;
+        mContext = context;
+        mDbAdapter = new AIMSICDDbAdapter(mContext);
     }
 
     @Override
     protected String doInBackground(String... uri) {
-        String responseString = null;
+        String responseString = "";
         switch (mType) {
             case OPEN_CELL_ID_REQUEST:
                 HttpClient httpclient = new DefaultHttpClient();
@@ -58,6 +60,12 @@ public class RequestTask extends AsyncTask<String, String, String> {
                     //TODO Handle problems..
                 }
             break;
+            case RESTORE_DATABASE:
+                mDbAdapter.open();
+                if (mDbAdapter.importDB())
+                    responseString =  "Successful";
+                mDbAdapter.close();
+                break;
         }
 
         return responseString;
@@ -77,8 +85,6 @@ public class RequestTask extends AsyncTask<String, String, String> {
                             if (!dir.exists()) {
                                 dir.mkdirs();
                             }
-                            String fileName = Environment.getExternalStorageDirectory()
-                                    + "/AIMSICD/OpenCellID/opencellid.csv";
                             File file = new File(dir, "opencellid.csv");
 
                             FileOutputStream fOut = new FileOutputStream(file);
@@ -86,13 +92,23 @@ public class RequestTask extends AsyncTask<String, String, String> {
                             myOutWriter.append(result);
                             myOutWriter.close();
                             fOut.close();
-                            mDbAdapter = new AIMSICDDbAdapter(mContext);
+
                             mDbAdapter.open();
                             mDbAdapter.updateOpenCellID();
+                            mDbAdapter.close();
                         } catch (Exception e) {
                             Log.e("AIMSICD",
                                     "RequestTask() write OpenCellID response - " + e.getMessage());
                         }
+                    }
+                }
+                break;
+            case RESTORE_DATABASE:
+                if (result != null) {
+                    if (result.equals("Successful")){
+                        Helpers.sendMsg(mContext, "Restore database completed successfully");
+                    } else {
+                        Helpers.sendMsg(mContext, "Error restoring database");
                     }
                 }
                 break;
