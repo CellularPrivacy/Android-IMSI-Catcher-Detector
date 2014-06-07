@@ -1,6 +1,8 @@
 package com.SecUpwN.AIMSICD.adapters;
 
+import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -10,6 +12,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
@@ -18,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -30,18 +34,22 @@ public class AIMSICDDbAdapter {
     private final DbHelper mDbHelper;
     private SQLiteDatabase mDb;
     private final Context mContext;
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     private static final String COLUMN_ID = "_id";
+    private String[] mTables;
     private final String LOCATION_TABLE = "locationinfo";
     private final String CELL_TABLE = "cellinfo";
     private final String OPENCELLID_TABLE = "opencellid";
     private final String DEFAULT_MCC_TABLE = "defaultlocation";
+    private final String SILENT_SMS_TABLE = "silentsms";
     private final String DB_NAME = "myCellInfo";
     private final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
 
     public AIMSICDDbAdapter(Context context) {
         mContext = context;
         mDbHelper = new DbHelper(context);
+        mTables = new String[] { LOCATION_TABLE, CELL_TABLE, OPENCELLID_TABLE,
+                SILENT_SMS_TABLE };
     }
 
     public AIMSICDDbAdapter open() throws SQLException {
@@ -51,6 +59,17 @@ public class AIMSICDDbAdapter {
 
     public void close() {
         mDbHelper.close();
+    }
+
+    public long insertSilentSms(Bundle bundle) {
+        ContentValues smsValues = new ContentValues();
+        smsValues.put("Address", bundle.getString("address"));
+        smsValues.put("Display", bundle.getString("display_address"));
+        smsValues.put("ServiceCtr", bundle.getString("service_centre"));
+        smsValues.put("Message", bundle.getString("message"));
+        smsValues.put("Timestamp", bundle.getInt("timestamp"));
+
+        return mDb.insert(SILENT_SMS_TABLE, null, smsValues);
     }
 
     /**
@@ -144,6 +163,14 @@ public class AIMSICDDbAdapter {
         return 0;
     }
 
+    /**
+     * Returns Silent Sms database contents
+     */
+    public Cursor getSilentSmsData() {
+        return mDb.query(SILENT_SMS_TABLE, new String[] {"Address", "Display", "ServiceCtr",
+                        "Message", "Timestamp"},
+                null,null,"Timestamp DESC",null, null);
+    }
 
     /**
      * Returns Cell Information database contents
@@ -283,9 +310,12 @@ public class AIMSICDDbAdapter {
         try {
             CSVReader csvReader = new CSVReader(new FileReader(file));
             List<String[]> csvCellID = csvReader.readAll();
-
-            for (int i=1; i<csvCellID.size(); i++)
+            int size = csvCellID.size();
+            AIMSICD.mProgressBar.setProgress(0);
+            AIMSICD.mProgressBar.setMax(size);
+            for (int i=1; i<size; i++)
             {
+                AIMSICD.mProgressBar.setProgress(i);
                 //Insert details into OpenCellID Database
                 long result =
                         insertOpenCell(Double.parseDouble(csvCellID.get(i)[0]),
@@ -301,6 +331,90 @@ public class AIMSICDDbAdapter {
 
         } catch (Exception e) {
             Log.e (TAG, "Error parsing OpenCellID data - " + e.getMessage());
+        } finally {
+            AIMSICD.mProgressBar.setProgress(0);
+        }
+
+    }
+
+    /**
+     * Imports CSV file export data into the database
+     */
+    public boolean importDB() {
+        try {
+            for (String table : mTables) {
+                File file = new File(FOLDER + "aimsicd-" + table + ".csv");
+                if (file.exists()) {
+                    List<String[]> records = new ArrayList<>();
+                    String next[];
+                    CSVReader csvReader = new CSVReader(new FileReader(file));
+                    while ((next = csvReader.readNext()) != null) {
+                        records.add(next);
+                    }
+
+                    if (!records.isEmpty()) {
+                        int lines = records.size();
+                        AIMSICD.mProgressBar.setMax(lines);
+                        AIMSICD.mProgressBar.setProgress(0);
+                        for (int i = 1; i < lines; i++) {
+                            AIMSICD.mProgressBar.setProgress(i);
+                            switch (table) {
+                                case CELL_TABLE:
+                                    insertCell(Integer.parseInt(records.get(i)[1]),
+                                            Integer.parseInt(records.get(i)[2]),
+                                            Integer.parseInt(records.get(i)[3]),
+                                            Double.parseDouble(records.get(i)[4]),
+                                            Double.parseDouble(records.get(i)[5]),
+                                            Integer.parseInt(records.get(i)[6]),
+                                            String.valueOf(records.get(i)[7]),
+                                            String.valueOf(records.get(i)[8]),
+                                            String.valueOf(records.get(i)[9]),
+                                            String.valueOf(records.get(i)[10]));
+                                    break;
+                                case LOCATION_TABLE:
+                                    insertLocation(Integer.parseInt(records.get(i)[1]),
+                                            Integer.parseInt(records.get(i)[2]),
+                                            Integer.parseInt(records.get(i)[3]),
+                                            Double.parseDouble(records.get(i)[4]),
+                                            Double.parseDouble(records.get(i)[5]),
+                                            Integer.parseInt(records.get(i)[6]),
+                                            String.valueOf(records.get(i)[7]));
+                                    break;
+                                case OPENCELLID_TABLE:
+                                    insertOpenCell(Double.parseDouble(records.get(i)[1]),
+                                            Double.parseDouble(records.get(i)[2]),
+                                            Integer.parseInt(records.get(i)[3]),
+                                            Integer.parseInt(records.get(i)[4]),
+                                            Integer.parseInt(records.get(i)[5]),
+                                            Integer.parseInt(records.get(i)[6]),
+                                            Integer.parseInt(records.get(i)[7]),
+                                            Integer.parseInt(records.get(i)[8]));
+                                    break;
+                                case SILENT_SMS_TABLE:
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("address", String.valueOf(records.get(i)[1]));
+                                    bundle.putString("display_address",
+                                            String.valueOf(records.get(i)[2]));
+                                    bundle.putString("message_class",
+                                            String.valueOf(records.get(i)[3]));
+                                    bundle.putString("service_centre",
+                                            String.valueOf(records.get(i)[4]));
+                                    bundle.putString("message", String.valueOf(records.get(i)[5]));
+                                    bundle.putInt("timestamp", Integer.parseInt(records.get(i)[6]));
+                                    insertSilentSms(bundle);
+                                    break;
+                            }
+
+                        }
+                    }
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "importDB() " + e);
+            return false;
+        } finally {
+            AIMSICD.mProgressBar.setProgress(0);
         }
 
     }
@@ -310,15 +424,16 @@ public class AIMSICDDbAdapter {
      */
     public void exportDB () {
         try {
-            export(LOCATION_TABLE);
-            export(CELL_TABLE);
-            export(OPENCELLID_TABLE);
+            for (String table : mTables) {
+                export(table);
+            }
             final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setTitle(R.string.database_export_successful)
                     .setMessage("Database tables exported succesfully to:\n" + FOLDER);
             builder.create().show();
         } catch (Exception ioe) {
-            Log.e (TAG, "exportDB() " + ioe.getMessage());
+            Helpers.sendMsg(mContext, "Error exporting database tables");
+            Log.e (TAG, "exportDB() " + ioe);
         }
     }
 
@@ -346,10 +461,13 @@ public class AIMSICDDbAdapter {
 
             csvWrite.writeNext(c.getColumnNames());
             String[] rowData = new String[c.getColumnCount()];
-
+            int size = c.getColumnCount();
+            AIMSICD.mProgressBar.setProgress(0);
+            AIMSICD.mProgressBar.setMax(size);
             while (c.moveToNext()) {
-                for (int i = 0; i < c.getColumnCount(); i++) {
+                for (int i = 0; i < size; i++) {
                     rowData[i] = c.getString(i);
+                    AIMSICD.mProgressBar.setProgress(i);
                 }
                 csvWrite.writeNext(rowData);
             }
@@ -358,6 +476,8 @@ public class AIMSICDDbAdapter {
             c.close();
         } catch (Exception e) {
             Log.e(TAG, "Error exporting table " + tableName + " " + e);
+        } finally {
+            AIMSICD.mProgressBar.setProgress(0);
         }
 
         Log.i(TAG, "exporting database complete");
@@ -374,6 +494,16 @@ public class AIMSICDDbAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase database) {
+
+            /*
+             * Silent Sms Database
+             */
+            String SMS_DATABASE_CREATE = "create table " +
+                    SILENT_SMS_TABLE + " (" + COLUMN_ID +
+                    " integer primary key autoincrement, Address VARCHAR, Display VARCHAR, " +
+                    "ServiceCtr VARCHAR, Message VARCHAR, Timestamp INTEGER);";
+            database.execSQL(SMS_DATABASE_CREATE);
+
              /*
               * Location Tracking Database
               */
@@ -430,6 +560,7 @@ public class AIMSICDDbAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + CELL_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + OPENCELLID_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + SILENT_SMS_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + DEFAULT_MCC_TABLE);
 
             onCreate(db);
