@@ -1,6 +1,7 @@
 package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
@@ -91,7 +92,7 @@ public class AtCommandFragment extends Fragment {
     }
 
     private void executeAT() {
-        /*if (mBound && !mView.findViewById(R.id.at_command).toString().isEmpty()) {
+/*        if (mBound && !mView.findViewById(R.id.at_command).toString().isEmpty()) {
             //Try SamSung MultiRil Implementation
             DetectResult rilStatus = mAimsicdService.getRilExecutorStatus();
             if (rilStatus.available) {
