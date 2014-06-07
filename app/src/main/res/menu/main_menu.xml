@@ -19,9 +19,13 @@
           android:showAsAction="ifRoom"/>
     <item android:id="@+id/view_db"
           android:title="@string/db_viewer"/>
-    <item android:id="@+id/export_database"
+    <item android:id="@+id/backup_database"
           android:icon="@drawable/ic_action_import_export"
-          android:title="@string/export_database"
+          android:title="@string/backup_database"
+          android:showAsAction="ifRoom"/>
+    <item android:id="@+id/restore_database"
+          android:icon="@drawable/ic_action_import_export"
+          android:title="@string/restore_database"
           android:showAsAction="ifRoom"/>
     <item android:id="@+id/update_opencelldata"
           android:title="@string/update_opencelldata"/>
