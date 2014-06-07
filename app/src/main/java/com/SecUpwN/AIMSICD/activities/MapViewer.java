@@ -373,7 +373,6 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 }
 
             } while (c.moveToNext());
-            c.close();
         } else {
             Helpers.msgShort(this, "No tracked locations found to overlay on map.");
         }
@@ -434,6 +433,8 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
 
             } while (c.moveToNext());
         }
+
+        mDbHelper.close();
     }
 
     public class MarkerData {
