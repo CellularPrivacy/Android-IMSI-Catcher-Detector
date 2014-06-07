@@ -18,10 +18,12 @@
 package com.SecUpwN.AIMSICD;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -33,13 +35,14 @@ import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
@@ -50,8 +53,10 @@ import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
 import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
 import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
+import com.SecUpwN.AIMSICD.fragments.SilentSmsFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.RequestTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +74,13 @@ public class AIMSICD extends FragmentActivity {
 
     private AimsicdService mAimsicdService;
 
+    private FragmentManager fm;
+    private List<Fragment> mFragmentList;
+    private List<String> titles;
+
+    private FragmentStatePagerAdapter adapterViewPager;
+    public static ProgressBar mProgressBar;
+
     //Back press to exit timer
     private long mLastPress = 0;
 
@@ -85,11 +97,11 @@ public class AIMSICD extends FragmentActivity {
         //Start Service before binding to keep it resident when activity is destroyed
         startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
-        MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(
-                getSupportFragmentManager());
+        fm = getSupportFragmentManager();
+        adapterViewPager = new MyPagerAdapter(fm);
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPager.setAdapter(myFragmentPagerAdapter);
+        viewPager.setAdapter(adapterViewPager);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         prefs = mContext.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
@@ -128,6 +140,8 @@ public class AIMSICD extends FragmentActivity {
         //Create DB Instance
         dbHelper = new AIMSICDDbAdapter(mContext);
 
+        //Register receiver for Silent SMS Interception Notification
+        mContext.registerReceiver(mMessageReceiver, new IntentFilter(AimsicdService.SILENT_SMS));
     }
 
     @Override
@@ -139,12 +153,14 @@ public class AIMSICD extends FragmentActivity {
             mBound = false;
         }
 
-        final String KEY_KILL_SERVICE = mContext.getString(R.string.pref_persistservice_key);
-        boolean persistService = prefs.getBoolean(KEY_KILL_SERVICE, true);
+        final String PERSIST_SERVICE = mContext.getString(R.string.pref_persistservice_key);
+        boolean persistService = prefs.getBoolean(PERSIST_SERVICE, false);
         if (!persistService) {
-            Intent intent = new Intent(this, AimsicdService.class);
+            Intent intent = new Intent(mContext, AimsicdService.class);
             stopService(intent);
         }
+
+        mContext.unregisterReceiver(mMessageReceiver);
     }
 
     /**
@@ -238,8 +254,11 @@ public class AIMSICD extends FragmentActivity {
                 intent = new Intent(this, PrefActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.export_database:
+            case R.id.backup_database:
                 dbHelper.exportDB();
+                return true;
+            case R.id.restore_database:
+                new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
                 return true;
             case R.id.update_opencelldata:
                 Location loc = mAimsicdService.lastKnownLocation();
@@ -305,28 +324,68 @@ public class AIMSICD extends FragmentActivity {
         }
     }
 
-    class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> fragments;
-        private final List<String> titles;
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                String originatingAddress = (bundle.getString("address") != null ?
+                        "Originating Address: " + bundle.getString("address")
+                        : "Originating Address: Unknown");
+                String displayAddress = (bundle.getString("display_address") != null ?
+                        "Display Address: " + bundle.getString("display_address")
+                        : "Display Address: Unknown");
+                String messageClass = (bundle.getString("class") != null ?
+                        "Message Class: " + bundle.getString("class")
+                        : "Message Class: Unknown");
+                String serviceCentre = (bundle.getString("service_centre") != null ?
+                        "Routing Service Centre: " + bundle.getString("service_centre")
+                        : "Routing Service Centre: Unknown");
+                String messageBody = (bundle.getString("message") != null ?
+                        "Message: " + bundle.getString("message") : "Message: Unknown");
+                int timestamp = bundle.getInt("timestamp");
 
-        public MyFragmentPagerAdapter(FragmentManager fm) {
+                Bundle smsCardBundle = new Bundle();
+                smsCardBundle.putString("address", originatingAddress);
+                smsCardBundle.putString("display_address", displayAddress);
+                smsCardBundle.putString("message_class", messageClass);
+                smsCardBundle.putString("service_centre", serviceCentre);
+                smsCardBundle.putString("message", messageBody);
+                smsCardBundle.putInt("timestamp", timestamp);
+                dbHelper.open();
+                dbHelper.insertSilentSms(smsCardBundle);
+                dbHelper.close();
+                Fragment fragment = new SilentSmsFragment();
+                //fragment.setArguments(smsCardBundle);
+                titles.add(getString(R.string.sms_title));
+                mFragmentList.add(fragment);
+                adapterViewPager.notifyDataSetChanged();
+                adapterViewPager.getItem(adapterViewPager.getCount()-1);
+            }
+        }
+    };
+
+    class MyPagerAdapter extends FragmentStatePagerAdapter {
+
+        public MyPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.fragments = new ArrayList<>();
+            mFragmentList = new ArrayList<>();
             titles = new ArrayList<>();
-            fragments.add(new DeviceFragment());
+            mFragmentList.add(new DeviceFragment());
             titles.add(getString(R.string.device_info));
-            fragments.add(new CellInfoFragment());
+            mFragmentList.add(new CellInfoFragment());
             titles.add(getString(R.string.cell_info_title));
-            fragments.add(new AtCommandFragment());
+            mFragmentList.add(new AtCommandFragment());
             titles.add(getString(R.string.at_command_title));
-            fragments.add(new DbViewerFragment());
+            mFragmentList.add(new DbViewerFragment());
             titles.add(getString(R.string.db_viewer));
-            fragments.add(new AboutFragment());
+            mFragmentList.add(new AboutFragment());
             titles.add(getString(R.string.about_aimsicd));
         }
+
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position);
+            return mFragmentList.get(position);
         }
 
         @Override
@@ -334,9 +393,10 @@ public class AIMSICD extends FragmentActivity {
             return titles.get(position);
         }
 
-            @Override
+        @Override
         public int getCount() {
-            return fragments.size();
+            return mFragmentList.size();
         }
+
     }
 }

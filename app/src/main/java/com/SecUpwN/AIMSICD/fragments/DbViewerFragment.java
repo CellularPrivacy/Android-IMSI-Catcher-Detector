@@ -1,6 +1,8 @@
 package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
+import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
@@ -155,6 +157,23 @@ public class DbViewerFragment extends Fragment {
                     lv.setAdapter(adapter);
                     break;
                 }
+                case "Silent Sms": {
+                    BaseInflaterAdapter<SilentSmsCardData> adapter
+                            = new BaseInflaterAdapter<>(
+                            new SilentSmsCardInflater());
+                    int count = tableData.getCount();
+                    while (tableData.moveToNext()) {
+                        SilentSmsCardData data = new SilentSmsCardData("Address: " + tableData.getString(0),
+                                "Display Address: " + tableData.getString(1),
+                                "Message Class: " + tableData.getString(2),
+                                "Service Centre: " + tableData.getString(3),
+                                "Message: " + tableData.getString(4),
+                                tableData.getInt(5));
+                        adapter.addItem(data, false);
+                    }
+                    lv.setAdapter(adapter);
+                    break;
+                }
                 default: {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>(
@@ -195,6 +214,8 @@ public class DbViewerFragment extends Fragment {
                     return mDb.getOpenCellIDData();
                 case "Default MCC Locations":
                     return mDb.getDefaultMccLocationData();
+                case "Silent Sms":
+                    return mDb.getSilentSmsData();
             }
 
             return null;

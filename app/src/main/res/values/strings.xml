@@ -46,7 +46,8 @@
     <string name="track_femtocell">Track Femtocell</string>
     <string name="untrack_femtocell">Untrack Femtocell</string>
     <string name="show_map">Show Map</string>
-    <string name="export_database">Export Database tables</string>
+    <string name="backup_database">Backup Database</string>
+    <string name="restore_database">Restore Database</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
@@ -170,7 +171,6 @@
     <string name="lat_label">Lat: </string>
     <string name="lng_label">Lng: </string>
 
-
     <!-- Database Viewer -->
     <string name="load_table_data">Load Data</string>
     <string name="table_names_prompt">Select Table</string>
@@ -179,6 +179,7 @@
         <item>Location Data</item>
         <item>OpenCellID Data</item>
         <item>Default MCC Locations</item>
+        <item>Silent Sms</item>
     </string-array>
     <string name="database_export_successful">Export Successful</string>
 
@@ -187,4 +188,7 @@
     <string name="enter_at_command_title">Enter AT Command:</string>
     <string name="response_label">Response:</string>
     <string name="execute_at">Execute</string>
+
+    <!-- SILENT SMS FRAGMENT -->
+    <string name="sms_title">Silent SMS Intercepted</string>
 </resources>
