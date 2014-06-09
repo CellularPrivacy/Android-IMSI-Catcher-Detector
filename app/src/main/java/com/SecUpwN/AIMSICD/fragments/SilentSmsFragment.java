@@ -34,12 +34,6 @@ public class SilentSmsFragment extends Fragment {
 
         if (view != null) {
             ListView lv = (ListView) view.findViewById(R.id.list_view);
-/*            String originatingAddress = getArguments().getString("address");
-            String displayAddress = getArguments().getString("display_address");
-            String messageClass = getArguments().getString("message_class");
-            String serviceCentre = getArguments().getString("service_centre");
-            String messageBody = getArguments().getString("message");
-            int timestamp = getArguments().getInt("timestamp");*/
             mDbHelper.open();
             Cursor smsData = mDbHelper.getSilentSmsData();
             BaseInflaterAdapter<SilentSmsCardData> adapter

@@ -128,25 +128,28 @@ public class Helpers {
         if (Helpers.isNetAvailable(context)) {
             double earthRadius = 6371.01;
 
-            //New GeoLocation object to find bounding Coordinates
-            GeoLocation currentLoc = GeoLocation.fromDegrees(lat, lng);
+            if (lat != 0.0 && lng != 0.0) {
+                //New GeoLocation object to find bounding Coordinates
+                GeoLocation currentLoc = GeoLocation.fromDegrees(lat, lng);
 
-            //Calculate the Bounding Coordinates in a 50 mile radius
-            //0 = min 1 = max
-            GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
-            String boundParameter;
+                //Calculate the Bounding Coordinates in a 50 mile radius
+                //0 = min 1 = max
+                GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
+                String boundParameter;
 
-            //Request OpenCellID data for Bounding Coordinates
-            boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
-                    + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
-                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
-                    + String .valueOf(boundingCoords[1].getLongitudeInDegrees());
+                //Request OpenCellID data for Bounding Coordinates
+                boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
+                        + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
+                        + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
+                        + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
-            String urlString = "http://www.opencellid.org/cell/getInArea?key=24c66165-9748-4384-ab7c-172e3f533056"
-                    + "&BBOX=" + boundParameter
-                    + "&format=csv";
+                String urlString =
+                        "http://www.opencellid.org/cell/getInArea?key=24c66165-9748-4384-ab7c-172e3f533056"
+                                + "&BBOX=" + boundParameter
+                                + "&format=csv";
 
-            new RequestTask(context, RequestTask.OPEN_CELL_ID_REQUEST).execute(urlString);
+                new RequestTask(context, RequestTask.OPEN_CELL_ID_REQUEST).execute(urlString);
+            }
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(R.string.no_network_connection_title)
