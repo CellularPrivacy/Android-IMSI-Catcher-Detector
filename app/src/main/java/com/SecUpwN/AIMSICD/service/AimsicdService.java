@@ -1186,6 +1186,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mLastLocation.setLatitude(mLatitude);
     }
 
+    public void setSilentSmsStatus(boolean state) {
+        mClassZeroSmsDetected = state;
+    }
+
     /**
      * Set or update the Notification
      */
@@ -1199,7 +1203,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         int status;
 
-        if (mFemtoDetected) {
+        if (mFemtoDetected || mClassZeroSmsDetected) {
             status = 3; //ALARM
         } else if (TrackingFemtocell || TrackingCell) {
             status = 2; //Good
@@ -1261,7 +1265,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 if (mFemtoDetected) {
                     contentText = "ALERT!! FemtoCell Connection Threat Detected";
                 } else if (mClassZeroSmsDetected) {
-                    contentText = "ALERT!! Class Zero Hidden SMS Intercepted";
+                    contentText = "ALERT!! Class Zero Silent SMS Intercepted";
                 }
 
                 break;
