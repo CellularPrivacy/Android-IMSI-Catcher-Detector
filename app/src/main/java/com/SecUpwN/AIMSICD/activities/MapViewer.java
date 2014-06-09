@@ -260,7 +260,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
             {
                 Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
                 Location mLocation = mMap.getMyLocation();
-                if (mLocation != null) {
+                if (mLocation != null && mLocation.hasAccuracy()) {
                     Helpers.getOpenCellData(mContext, mLocation.getLatitude(),
                             mLocation.getLongitude());
                 } else if (loc != null) {
