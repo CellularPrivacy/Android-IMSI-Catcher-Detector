@@ -329,29 +329,13 @@ public class AIMSICD extends FragmentActivity {
         public void onReceive(Context context, Intent intent) {
             final Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                String originatingAddress = (bundle.getString("address") != null ?
-                        "Originating Address: " + bundle.getString("address")
-                        : "Originating Address: Unknown");
-                String displayAddress = (bundle.getString("display_address") != null ?
-                        "Display Address: " + bundle.getString("display_address")
-                        : "Display Address: Unknown");
-                String messageClass = (bundle.getString("class") != null ?
-                        "Message Class: " + bundle.getString("class")
-                        : "Message Class: Unknown");
-                String serviceCentre = (bundle.getString("service_centre") != null ?
-                        "Routing Service Centre: " + bundle.getString("service_centre")
-                        : "Routing Service Centre: Unknown");
-                String messageBody = (bundle.getString("message") != null ?
-                        "Message: " + bundle.getString("message") : "Message: Unknown");
-                int timestamp = bundle.getInt("timestamp");
-
                 Bundle smsCardBundle = new Bundle();
-                smsCardBundle.putString("address", originatingAddress);
-                smsCardBundle.putString("display_address", displayAddress);
-                smsCardBundle.putString("message_class", messageClass);
-                smsCardBundle.putString("service_centre", serviceCentre);
-                smsCardBundle.putString("message", messageBody);
-                smsCardBundle.putInt("timestamp", timestamp);
+                smsCardBundle.putString("address", bundle.getString("address"));
+                smsCardBundle.putString("display_address", bundle.getString("display_address"));
+                smsCardBundle.putString("message_class", bundle.getString("class"));
+                smsCardBundle.putString("service_centre", bundle.getString("service_centre"));
+                smsCardBundle.putString("message", bundle.getString("message"));
+                smsCardBundle.putInt("timestamp", bundle.getInt("timestamp"));
                 dbHelper.open();
                 dbHelper.insertSilentSms(smsCardBundle);
                 dbHelper.close();

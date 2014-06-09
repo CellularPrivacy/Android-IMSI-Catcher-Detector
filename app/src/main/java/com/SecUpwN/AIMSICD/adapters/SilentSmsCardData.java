@@ -20,23 +20,53 @@ public class SilentSmsCardData {
     }
 
     public String getAddress() {
-        return mAddress;
+        String address = "Address: ";
+        if (mAddress.isEmpty())
+            address += "Unavailable";
+        else
+            address += mAddress;
+
+        return address;
     }
 
     public String getDisplayAddress() {
-        return mDisplayAddress;
+        String display = "Display Address: ";
+        if (mDisplayAddress.isEmpty())
+            display += "Unavailable";
+        else
+            display += mDisplayAddress;
+
+        return display;
     }
 
     public String getMessageClass() {
-        return mMessageClass;
+        String messageClass = "Message Class: ";
+        if (messageClass.isEmpty())
+            messageClass += "Unavailable";
+        else
+            messageClass += mMessageClass;
+
+        return messageClass;
     }
 
     public String getServiceCentre() {
-        return mServiceCentre;
+        String serviceCentre = "Service Centre: ";
+        if (mServiceCentre.isEmpty())
+            serviceCentre += "Unavailable";
+        else
+            serviceCentre += mServiceCentre;
+
+        return serviceCentre;
     }
 
     public String getMessage() {
-        return mMessage;
+        String message = "Message: ";
+        if (message.isEmpty())
+            message += "Unavailable";
+        else
+            message += mMessage;
+
+        return message;
     }
 
     public String getTimestamp() {
