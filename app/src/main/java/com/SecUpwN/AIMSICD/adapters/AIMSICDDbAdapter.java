@@ -308,33 +308,40 @@ public class AIMSICDDbAdapter {
                 + "/AIMSICD/OpenCellID/opencellid.csv";
         File file = new File(fileName);
         try {
-            CSVReader csvReader = new CSVReader(new FileReader(file));
-            List<String[]> csvCellID = csvReader.readAll();
-            int size = csvCellID.size();
-            AIMSICD.mProgressBar.setProgress(0);
-            AIMSICD.mProgressBar.setMax(size);
-            for (int i=1; i<size; i++)
-            {
-                AIMSICD.mProgressBar.setProgress(i);
-                //Insert details into OpenCellID Database
-                long result =
+            if (file.exists()) {
+                CSVReader csvReader = new CSVReader(new FileReader(file));
+                List<String[]> csvCellID = new ArrayList<>();
+                String next[];
+                int count = 0;
+                AIMSICD.mProgressBar.setProgress(0);
+                AIMSICD.mProgressBar.setMax(csvCellID.size());
+                while ((next = csvReader.readNext()) != null) {
+                    csvCellID.add(next);
+                    AIMSICD.mProgressBar.setProgress(count++);
+                }
+
+                AIMSICD.mProgressBar.setProgress(0);
+                if (!csvCellID.isEmpty()) {
+                    int lines = csvCellID.size();
+                    for (int i = 1; i < lines; i++) {
+                        AIMSICD.mProgressBar.setProgress(i);
+                        //Insert details into OpenCellID Database
                         insertOpenCell(Double.parseDouble(csvCellID.get(i)[0]),
                                 Double.parseDouble(csvCellID.get(i)[1]),
-                                Integer.parseInt(csvCellID.get(i)[2]), Integer.parseInt(csvCellID.get(i)[3]),
-                                Integer.parseInt(csvCellID.get(i)[4]), Integer.parseInt(csvCellID.get(i)[5]),
-                                Integer.parseInt(csvCellID.get(i)[6]), Integer.parseInt(csvCellID.get(i)[7]));
-                if (result == -1)
-                {
-                    Log.e(TAG, "Error inserting OpenCellID database value");
+                                Integer.parseInt(csvCellID.get(i)[2]),
+                                Integer.parseInt(csvCellID.get(i)[3]),
+                                Integer.parseInt(csvCellID.get(i)[4]),
+                                Integer.parseInt(csvCellID.get(i)[5]),
+                                Integer.parseInt(csvCellID.get(i)[6]),
+                                Integer.parseInt(csvCellID.get(i)[7]));
+                    }
                 }
             }
-
         } catch (Exception e) {
             Log.e (TAG, "Error parsing OpenCellID data - " + e.getMessage());
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
         }
-
     }
 
     /**
