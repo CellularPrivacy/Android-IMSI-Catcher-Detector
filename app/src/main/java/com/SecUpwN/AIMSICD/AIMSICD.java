@@ -336,11 +336,11 @@ public class AIMSICD extends FragmentActivity {
                 smsCardBundle.putString("service_centre", bundle.getString("service_centre"));
                 smsCardBundle.putString("message", bundle.getString("message"));
                 smsCardBundle.putInt("timestamp", bundle.getInt("timestamp"));
+                mAimsicdService.setSilentSmsStatus(true);
                 dbHelper.open();
                 dbHelper.insertSilentSms(smsCardBundle);
                 dbHelper.close();
                 Fragment fragment = new SilentSmsFragment();
-                //fragment.setArguments(smsCardBundle);
                 titles.add(getString(R.string.sms_title));
                 mFragmentList.add(fragment);
                 adapterViewPager.notifyDataSetChanged();
