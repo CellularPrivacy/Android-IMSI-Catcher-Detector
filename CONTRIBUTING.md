@@ -12,6 +12,7 @@ To avoid confusion and neglected development commits, please ALWAYS read this gu
 
 #### Important note on Commits
 
+* We **love** developers! Earn our respect through [creating pull requests](https://help.github.com/articles/using-pull-requests)!
 * If you added foreign code, please reference it in our [SOURCES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/SOURCES).
 * If you submit a commit, please make sure to explain it poperly.
 * ALWAYS respect the [LICENSE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE) this project is licensed with.
