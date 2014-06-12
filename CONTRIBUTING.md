@@ -2,7 +2,6 @@
 --------------------------------
 
 To avoid confusion and neglected development commits, please ALWAYS read this guide first!
-This guide will be updated as soon as we discover the need to do so. Suggestions are welcome.
 
 #### Testers welcome!
 
