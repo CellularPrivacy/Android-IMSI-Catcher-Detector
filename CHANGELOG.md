@@ -1,6 +1,13 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 13.06.2014
+
+* Update: Major revamp of our README, making it much fresher and structured
+* Added: We now accept [ANONYMOUS DONATIONS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) through [DarkCoin](https://www.darkcoin.io/)! ;-)
+* Update: Reworked our WIKI and instructions on how to correctly submit Issues
+* Changed: StyleGuide is now CONTRIBUTING.md - will be shown when opening Issues
+
 #### 27.05.2014 - WIP-Release v0.1.17-alpha
 
 * Update: Better way of how AIMSICD draws and displays any SIM variable & further error handling
