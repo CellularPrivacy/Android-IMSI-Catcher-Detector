@@ -31,32 +31,56 @@
           <h2>
 <a name="android-imsi-catcher-detector-aimsicd" class="anchor" href="#android-imsi-catcher-detector-aimsicd"><span class="octicon octicon-link"></span></a>Android IMSI-Catcher Detector (AIMSICD)</h2>
 
-<p>Android-based project to detect and (hopefully one day) avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to contribute! ;-)</p>
+<h4>
+<a name="alternative-name-imsi-cure---pronounced-im-secure" class="anchor" href="#alternative-name-imsi-cure---pronounced-im-secure"><span class="octicon octicon-link"></span></a>[alternative name: <code>IMSI-Cure</code> - pronounced <code>I'm-Secure</code>]</h4>
+
+<p>Android-based project to detect and (hopefully one day) avoid fake base stations (<a href="https://en.wikipedia.org/wiki/IMSI-catcher">IMSI-Catchers</a>) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to contribute! ;-)</p>
 
 <p><strong>German Article about our Project</strong>: <a href="http://www.kuketz-blog.de/imsi-catcher-erkennung-fuer-android-aimsicd/">IMSI-Catcher Erkennung für Android – AIMSICD</a>.</p>
 
+<p><img src="https://cloud.githubusercontent.com/assets/6475465/3053970/e50b28c8-e1b1-11e3-887a-e1b82a21f166.png" alt="AIMSICD-Status"></p>
+
+<hr><h1>
+<a name="index" class="anchor" href="#index"><span class="octicon octicon-link"></span></a>Index</h1>
+
 <ul>
-<li><p>Grab the <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases">latest WIP-RELEASE of AIMSICD</a> and make sure to <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki">check out our WIKI</a>!</p></li>
-<li><p>Discussion and constructive criticism: <a href="http://forum.xda-developers.com/showthread.php?t=1422969">Official Development Thread on XDA</a>.</p></li>
-<li>Before submitting a commit, please carefully read our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/STYLEGUIDE.md">Styleguide</a>.</li>
-<li>Storage for source code we should add: <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/MERGESOURCE">MERGESOURCE</a>, <strong>carefully</strong> follow this <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/MERGESOURCE/SOURCES_README">README</a>.</li>
-<li>Developers will be <a href="http://forum.xda-developers.com/showthread.php?p=46957078">rewarded</a>. You know of a cool crowdfunding service? <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/1">Recommend it to us</a>.</li>
-<li>Not a developer? You can help too! Get the <a href="https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/GSMmap-apk">GSMmap-APP</a> and submit collected data to the <a href="https://www.gsmmap.org/">GSM Security Map</a> to enlarge its database for comparison of mobile network protection capabilities!</li>
-<li>Want to know what's boiling under the hood? You're welcome to bookmark our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md">Changelog</a>.</li>
-</ul><h1>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction">Introduction</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#curious-want-to-know-what-imsi-catchers-can-look-like">IMSI-Catchers</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap">Roadmap</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#this-project">Goals</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#other-projects-not-this-one">Limitations</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER">Disclaimer</a></li>
+<li><strong><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases">WIP-Releases</a></strong></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-install-the-AIMSICD">Installation</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md">Changelog</a></li>
+<li><a href="http://forum.xda-developers.com/showthread.php?t=1422969">Discussion</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-build-the-AIMSICD">Build</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CONTRIBUTING.md">Contributing</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/support">Support</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues">Bugs</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki">Wiki</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#credits--greetings">Credits</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#license">License</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#websites-about-security-worth-checking-out">More Security</a></li>
+</ul><hr><h1>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
 <p><a href="https://www.youtube.com/watch?v=fQSu9cBaojc"><img src="http://img.youtube.com/vi/fQSu9cBaojc/0.jpg" alt="DEF CON 18: Practical Cellphone Spying"></a></p>
 
 <p>YouTube: DEF CON 18 - Practical Cellphone Spying with Kristin Paget</p>
 
-<p>Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). In addition they can all <a href="http://www.infosecurity-magazine.com/view/6394/3g-encryption-cracked-in-less-than-two-hours">crack the A5.1-3 encryption</a> on the fly! This is why the original author named "E:V:A" started this project. Let's detect and protect against these threats! Never think that you've got "nothing to hide". You'll very likely regret it one day.</p>
+<p>Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). In addition they can all <a href="http://www.infosecurity-magazine.com/view/6394/3g-encryption-cracked-in-less-than-two-hours">crack the A5.1-3 encryption</a> on the fly! This is why the original author named "E:V:A" started this project. <strong>Let's detect and protect against these threats!</strong> Never think that you've got "nothing to hide". You'll very likely regret it one day.</p>
 
 <ul>
-<li>Get scared on YouTube: <a href="http://www.youtube.com/watch?v=Ydo19YOzpzU">How easy it is to clone a phone + call when connected to a femtocell</a>.</li>
-<li>Also, check out this talk by Karsten Nohl and Luca Melette on <a href="http://youtu.be/YWdHSJsEOck">28c3: Defending mobile phones</a>.</li>
-</ul><h4>
+<li>Scary YouTube-Video: <a href="http://www.youtube.com/watch?v=Ydo19YOzpzU">How easy it is to clone phones</a>.</li>
+<li>Talk by Karsten Nohl and Luca Melette on <a href="http://youtu.be/YWdHSJsEOck">28c3: Defending mobile phones</a>.</li>
+</ul><hr><h4>
 <a name="curious-want-to-know-what-imsi-catchers-can-look-like" class="anchor" href="#curious-want-to-know-what-imsi-catchers-can-look-like"><span class="octicon octicon-link"></span></a>Curious? Want to know what IMSI-Catchers can look like?</h4>
+
+<ul>
+<li>Current IMSI-Catchers can be as <strong>tiny</strong> as the portable <a href="http://www.septier.com/368.html">Septier IMSI-Catcher Mini</a> now:</li>
+<li>Below, the smartphone takes up the most space. IMSI-Catchers will even get smaller!</li>
+</ul><p><img src="http://www.septier.com/contentManagment/uploadedFiles/Mini.png" alt="Septier IMSI-Catcher Mini"></p>
 
 <ul>
 <li>This picture has been taken during the riots on Taksim Square in Instanbul:</li>
@@ -67,11 +91,7 @@
 <li>Todays IMSI-Catchers can be <a href="http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/">body-worn</a>, or are hidden inside comfortable Spy-Vehicles:</li>
 </ul><p><img src="http://oi42.tinypic.com/16ba4b4.jpg" alt="Comfort inside IMSI-Catcher vehicle"></p>
 
-<ul>
-<li>Current IMSI-Catchers can be as <strong>tiny</strong> as the portable <a href="http://www.septier.com/368.html">Septier IMSI-Catcher Mini</a> now:</li>
-</ul><p><img src="http://www.septier.com/contentManagment/uploadedFiles/Mini.png" alt="Septier IMSI-Catcher Mini"></p>
-
-<h1>
+<hr><h1>
 <a name="development-roadmap" class="anchor" href="#development-roadmap"><span class="octicon octicon-link"></span></a>Development Roadmap</h1>
 
 <h5>
@@ -89,7 +109,8 @@
 <li>e. opens a device <strong>local</strong> terminal root shell</li>
 <li>f. uses (e.) to connect to the modem AT-Command Processor ATCoP via shared memory interface SHM</li>
 <li>g. displays the results from sent AT commands</li>
-<li>NOTE: This is <strong>crucial</strong> to our project. Please help E:V:A develop a <a href="http://forum.xda-developers.com/showthread.php?t=1708598">Native AT Command Injector</a>!</li>
+<li>
+<strong>CRUCIAL</strong> to our project: Please help E:V:A develop a <a href="http://forum.xda-developers.com/showthread.php?t=1708598">Native AT Command Injector</a>!</li>
 </ul><h5>
 <a name="possibly-make-another-app-that" class="anchor" href="#possibly-make-another-app-that"><span class="octicon octicon-link"></span></a>[Possibly] Make another App that:</h5>
 
@@ -101,16 +122,8 @@
 <li>l. use a statistical algorithm (and smart thinking) on the DB data to detect rogue IMSI catchers</li>
 <li>m. combine all of the above (steps h to l) into a BETA App for testing, add more languages</li>
 <li>n. improve BETA app by adding (many more) things like IMSI-Catcher counter measures</li>
-</ul><h5>
-<a name="further-ideas-none-of-them-for-sure-yet" class="anchor" href="#further-ideas-none-of-them-for-sure-yet"><span class="octicon octicon-link"></span></a>Further ideas (none of them for sure yet):</h5>
-
-<ul>
-<li>Add option to make app device administrator</li>
-<li>Add switch to utilize ROOT for digging deeper</li>
-<li>Usage of the <a href="http://forum.xda-developers.com/showthread.php?t=1574401">XPosed Framework</a>
-</li>
-</ul><h1>
-<a name="summary-please-read-carefully" class="anchor" href="#summary-please-read-carefully"><span class="octicon octicon-link"></span></a>Summary (please read carefully!)</h1>
+</ul><hr><h1>
+<a name="goals-please-read-carefully" class="anchor" href="#goals-please-read-carefully"><span class="octicon octicon-link"></span></a>Goals (please read carefully!)</h1>
 
 <h3>
 <a name="this-project" class="anchor" href="#this-project"><span class="octicon octicon-link"></span></a>This project:</h3>
@@ -125,6 +138,10 @@
 <li>Prevent or spoof GPS data</li>
 <li>Does NOT secure any data transmissions</li>
 <li>Does NOT prevent already installed rogue application from full access</li>
+<li>Aims to be added to the <a href="https://guardianproject.info/apps">Guardian Project's list of secure Apps</a>
+</li>
+<li>Aims to be recommended by the <a href="https://ssd.eff.org/">SSD Project of the Electronic Frontier Foundation</a>
+</li>
 </ul><h3>
 <a name="other-projects-not-this-one" class="anchor" href="#other-projects-not-this-one"><span class="octicon octicon-link"></span></a>Other projects (NOT this one):</h3>
 
@@ -133,29 +150,36 @@
 <li>Provide secure application sand-boxing</li>
 <li>Provide secure data transmission</li>
 <li>Provide firewalls (awesome solution: <a href="https://github.com/ukanth/afwall">AFWall+</a>)</li>
-</ul><h3>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
-
-<p>This project is completely licensed under <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE">GPL v3+</a>.</p>
-
-<h3>
-<a name="bug-tracker" class="anchor" href="#bug-tracker"><span class="octicon octicon-link"></span></a>Bug tracker</h3>
-
-<p>Found a bug? Please <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/new">create an issue here on GitHub</a>!</p>
-
-<h3>
+</ul><hr><h3>
 <a name="disclaimer" class="anchor" href="#disclaimer"><span class="octicon octicon-link"></span></a>Disclaimer</h3>
 
 <p>For our own safety, here's our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER">Disclaimer</a>. In short terms: Think before you act! We're untouchable.</p>
 
-<h1>
+<hr><h3>
+<a name="bug-tracker" class="anchor" href="#bug-tracker"><span class="octicon octicon-link"></span></a>Bug Tracker</h3>
+
+<p>Found a bug? Please carefully follow our guide on <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues">how to correctly submit Issues</a>!</p>
+
+<hr><h1>
+<a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h1>
+
+<p>Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending <a href="https://www.darkcoin.io/">DarkCoin</a> to our new OFFICIAL DONATION ADDRESS: <strong>XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys</strong></p>
+
+<p>All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will <strong>NOT</strong> reward junk, only awesome stuff. If you are unsure how to do this, visit our WIKI-Page on <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations">Anonymous Donations</a>.</p>
+
+<hr><h3>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
+
+<p>This project is completely licensed under <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE">GPL v3+</a>.</p>
+
+<hr><h1>
 <a name="credits--greetings" class="anchor" href="#credits--greetings"><span class="octicon octicon-link"></span></a>Credits &amp; Greetings</h1>
 
 <p>Our project would not have been possible without <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS">these awesome people</a>. HUGE THANKS! ;-)</p>
 
 <p>This list will be updated as our project evolves and shall be included within the final app.</p>
 
-<h3>
+<hr><h3>
 <a name="websites-about-security-worth-checking-out" class="anchor" href="#websites-about-security-worth-checking-out"><span class="octicon octicon-link"></span></a>Websites about security worth checking out:</h3>
 
 <ul>
@@ -172,13 +196,15 @@
 <li>
 <a href="https://ssd.eff.org/">The Surveillance Self-Defense Project</a> - Defend against the threat of surveillance</li>
 <li>
-<a href="https://www.eff.org/">Electronic Frontier Foundation</a> - nonprofit organization defending civil liberties in the digital world</li>
+<a href="https://www.eff.org/">Electronic Frontier Foundation</a> - Nonprofit organization defending civil liberties in the digital world</li>
 <li>
 <a href="https://github.com/WhisperSystems/TextSecure">TextSecure</a> - Secure text messaging application for Android (replace WhatsApp)</li>
 <li>
-<a href="https://github.com/WhisperSystems/RedPhone">RedPhone</a> - encrypted voice calls for Android</li>
+<a href="https://github.com/WhisperSystems/RedPhone">RedPhone</a> - Encrypted voice calls for Android</li>
 <li>
-<a href="http://killyourphone.com">KillYourPhone</a> - make your own signal blocking phone pouch super fast for little money</li>
+<a href="http://killyourphone.com">KillYourPhone</a> - Make your own signal blocking phone pouch super fast for little money</li>
+<li>
+<a href="http://gsmmap.org/">GSM-Map</a>- Compares the protection capabilities of mobile networks (contribute data!)</li>
 </ul>
         </section>
 
