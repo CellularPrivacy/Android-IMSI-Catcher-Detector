@@ -6,6 +6,8 @@ look at our own LICENSE, our DISCLAIMER as well as our CREDITS. Thanks.
 
 Our project utilized the following sources and libraries listed below:
 
+* SamsungRilMulticlient by Illarionov 
+- https://github.com/illarionov/SamsungRilMulticlient
 
 * RawPhone by Jofre Palau
 - https://github.com/jofrep/Android-RawPhone
