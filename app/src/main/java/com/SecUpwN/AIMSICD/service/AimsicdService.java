@@ -61,9 +61,11 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.Location;
@@ -119,7 +121,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Timer;
 
 public class AimsicdService extends Service implements OnSharedPreferenceChangeListener {
 
@@ -132,6 +133,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     */
     private final AimscidBinder mBinder = new AimscidBinder();
     private final AIMSICDDbAdapter dbHelper = new AIMSICDDbAdapter(this);
+    private Context mContext;
     private final int NOTIFICATION_ID = 1;
     private long mDbResult;
     private TelephonyManager tm;
@@ -142,7 +144,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private static final long GPS_MIN_UPDATE_TIME = 1000;
     private static final float GPS_MIN_UPDATE_DISTANCE = 10;
     public boolean mMultiRilCompatible;
-    private Timer timer = new Timer();
 
    /*
     * Device Declarations
@@ -177,8 +178,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private String mSimSubs = "";
     private String mDataActivityType = "";
     private String mDataActivityTypeShort = "";
-    private final Map<Integer,Integer> mNeighborMapUMTS = new HashMap<>();
-    private final Map<String,Integer> mNeighborMapGSM = new HashMap<>();
+    private final Map<String, String> mNeighborMap = new HashMap<>();
 
    /*
     * Tracking and Alert Declarations
@@ -237,6 +237,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         //TelephonyManager provides system details
         tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        mContext = getApplicationContext();
 
         prefs = this.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
@@ -265,6 +266,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }
 
+        //Register receiver for Silent SMS Interception Notification
+        mContext.registerReceiver(mMessageReceiver, new IntentFilter(SILENT_SMS));
+
         Log.i(TAG, "Service launched successfully");
     }
 
@@ -280,6 +284,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         prefs.unregisterOnSharedPreferenceChangeListener(this);
         cancelNotification();
         dbHelper.close();
+        mContext.unregisterReceiver(mMessageReceiver);
 
         //Samsung MultiRil Cleanup
         if (mRequestExecutor != null) {
@@ -289,8 +294,22 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mHandler = null;
         mHandlerThread.quit();
         mHandlerThread = null;
+
         Log.i(TAG, "Service destroyed");
     }
+
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                dbHelper.open();
+                dbHelper.insertSilentSms(bundle);
+                dbHelper.close();
+                setSilentSmsStatus(true);
+            }
+        }
+    };
 
     /**
      * Check the status of the Rill Executor
@@ -411,7 +430,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
     private static class KeyStep {
         public final char keychar;
-        public boolean captureResponse;
+        public final boolean captureResponse;
 
         public KeyStep(char keychar, boolean captureResponse) {
             this.keychar = keychar;
@@ -1015,7 +1034,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mNetType;
     }
 
-    public void getDataActivity() {
+    void getDataActivity() {
         int direction = tm.getDataActivity();
         mDataActivityTypeShort = "un";
         mDataActivityType = "undef";
@@ -1043,7 +1062,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
     }
 
-    public void getDataState() {
+    void getDataState() {
         int state = tm.getDataState();
         mDataState = "undef";
         mDataStateShort = "un";
@@ -1186,8 +1205,17 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mLastLocation.setLatitude(mLatitude);
     }
 
-    public void setSilentSmsStatus(boolean state) {
+    void setSilentSmsStatus(boolean state) {
         mClassZeroSmsDetected = state;
+        setNotification();
+        if (state) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.sms_message)
+                    .setTitle(R.string.location_error_title);
+            AlertDialog alert = builder.create();
+            alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            alert.show();
+        }
     }
 
     /**
@@ -1275,11 +1303,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 break;
         }
 
-        Context context = getApplicationContext();
-        Intent notificationIntent = new Intent(context, AIMSICD.class);
+        Intent notificationIntent = new Intent(mContext, AIMSICD.class);
+        notificationIntent.putExtra("silent_sms", mClassZeroSmsDetected);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
         PendingIntent contentIntent = PendingIntent.getActivity(
-                context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                mContext, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         Notification mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(icon)
@@ -1313,24 +1341,25 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      *
      */
     public void updateNeighbouringCells() {
-        //Update Neighbouring Cell Map
-        for (String key: mNeighborMapGSM.keySet())
-            mNeighborMapGSM.put(key,-113);
-        for (int key: mNeighborMapUMTS.keySet())
-            mNeighborMapUMTS.put(key,-115);
-
         List<NeighboringCellInfo> neighboringCellInfo;
         neighboringCellInfo = tm.getNeighboringCellInfo();
-        mNeighbouringCellSize = neighboringCellInfo.size();
-        for (NeighboringCellInfo i : neighboringCellInfo) {
-            int networktype = i.getNetworkType();
-            if ((networktype == TelephonyManager.NETWORK_TYPE_UMTS) ||
-                    (networktype == TelephonyManager.NETWORK_TYPE_HSDPA) ||
-                    (networktype == TelephonyManager.NETWORK_TYPE_HSUPA) ||
-                    (networktype == TelephonyManager.NETWORK_TYPE_HSPA))
-                mNeighborMapUMTS.put(i.getPsc(), i.getRssi()-115);
-            else
-                mNeighborMapGSM.put(i.getLac()+"-"+i.getCid(), (-113+2*(i.getRssi())));
+        if (neighboringCellInfo != null) {
+            mNeighbouringCellSize = neighboringCellInfo.size();
+            for (int i = 0; i > neighboringCellInfo.size(); i++) {
+                if (neighboringCellInfo.get(i) != null) {
+                    String dBm;
+                    int rssi = neighboringCellInfo.get(i).getRssi();
+
+                    if (rssi == NeighboringCellInfo.UNKNOWN_RSSI) {
+                        dBm = "Unknown RSSI";
+                    } else {
+                        dBm = String.valueOf(-113 + 2 * rssi) + " dBm";
+                    }
+
+                    mNeighborMap.put(neighboringCellInfo.get(i).getLac() +
+                            ":" + neighboringCellInfo.get(i).getCid(), dBm);
+                }
+            }
         }
     }
 
@@ -1339,19 +1368,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      *
      * @return Map of GSM Neighbouring Cell Information
      */
-    public Map getGSMNeighbouringCells() {
-        return mNeighborMapGSM;
+    public Map getNeighbouringCells() {
+        return mNeighborMap;
     }
-
-    /**
-     * Neighbouring UMTS Cell Map
-     *
-     * @return Map of UMTS Neighbouring Cell Information
-     */
-    public Map getUMTSNeighbouringCells() {
-        return mNeighborMapUMTS;
-    }
-
     /**
      * Neighbouring Cell Size
      *
@@ -1665,7 +1684,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      * @param location  The new Location that you want to evaluate
      * @param currentBestLocation  The current Location fix, to which you want to compare the new one
      */
-    protected boolean isBetterLocation(Location location, Location currentBestLocation) {
+    boolean isBetterLocation(Location location, Location currentBestLocation) {
         if (currentBestLocation == null) {
             // A new location is always better than no location
             return true;
