@@ -25,7 +25,6 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -45,7 +44,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -74,7 +72,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
     private AimsicdService mAimsicdService;
     private boolean mBound;
 
-    private Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
+    private final Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
 
     /**
      * Called when the activity is first created.
@@ -438,14 +436,14 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
     }
 
     public class MarkerData {
-        public String cellID;
-        public String lat;
-        public String lng;
-        public String lac;
-        public String mcc;
-        public String mnc;
-        public String samples;
-        public boolean openCellID;
+        public final String cellID;
+        public final String lat;
+        public final String lng;
+        public final String lac;
+        public final String mcc;
+        public final String mnc;
+        public final String samples;
+        public final boolean openCellID;
 
         MarkerData(String cell_id, String latitude, String longitude,
                 String local_area_code, String mobile_country_code, String mobile_network_code,

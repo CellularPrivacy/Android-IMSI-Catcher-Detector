@@ -111,43 +111,28 @@ public class CellInfoFragment extends Fragment {
     private void updateUI() {
         if (mBound) {
             mAimsicdService.updateNeighbouringCells();
-            Map neighborMapUMTS = mAimsicdService.getUMTSNeighbouringCells();
-            Map neighborMapGSM = mAimsicdService.getGSMNeighbouringCells();
+            Map neighborMap = mAimsicdService.getNeighbouringCells();
 
             mNeighbouringTotal
-                    .setText(String.valueOf(mAimsicdService.getNeighbouringCellSize()) + "/"
-                            + String.valueOf(neighborMapUMTS.size() + neighborMapGSM.size()));
+                    .setText(String.valueOf(mAimsicdService.getNeighbouringCellSize()));
 
             StringBuilder sb = new StringBuilder();
             int i = 1;
-            if (!neighborMapUMTS.isEmpty())
-                for (Object key : neighborMapUMTS.keySet()) {
-                    sb.append(i)
-                            .append(") PSC: ")
-                            .append(key)
-                            .append(" RSCP: ")
-                            .append(neighborMapUMTS.get(key)) //TS25.133 section 9.1.1.3
-                            .append(" dBm");
-                    if (i < neighborMapUMTS.size() + neighborMapGSM.size())
-                        sb.append("\n");
-                    i++;
-                }
-            if (!neighborMapGSM.isEmpty())
-                for (Object key : neighborMapGSM.keySet()) {
+            if (!neighborMap.isEmpty())
+                for (Object key : neighborMap.keySet()) {
                     sb.append(i)
                             .append(") LAC-CID: ")
                             .append(key)
                             .append(" RSSI: ")
-                            .append(neighborMapGSM.get(key)) //TS27.007 section 8.5
-                            .append(" dBm");
-                    if (i < neighborMapUMTS.size() + neighborMapGSM.size())
+                            .append(neighborMap.get(key)); //TS27.007 section 8.5
+                    if (i < neighborMap.size())
                         sb.append("\n");
                     i++;
                 }
             mNeighbouringCells.setText(sb);
 
             //Try SamSung MultiRil Implementation
-            if (neighborMapGSM.isEmpty() && neighborMapUMTS.isEmpty()) {
+            if (neighborMap.isEmpty()) {
                     DetectResult rilStatus = mAimsicdService.getRilExecutorStatus();
                     if (rilStatus.available) {
                         //new RequestOemInfoTask().execute();

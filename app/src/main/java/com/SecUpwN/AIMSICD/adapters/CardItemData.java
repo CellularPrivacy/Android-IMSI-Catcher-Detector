@@ -10,10 +10,10 @@ public class CardItemData
     private String mSignal;
     private String mAvgSigStr;
     private String mSamples;
-    private String mLat;
-    private String mLng;
+    private final String mLat;
+    private final String mLng;
     private String mCountry;
-    private String mRecordId;
+    private final String mRecordId;
 
     public CardItemData(String cellID, String lac, String mcc, String mnc, String lat, String lng,
             String avgSigStr, String samples, String recordId)
