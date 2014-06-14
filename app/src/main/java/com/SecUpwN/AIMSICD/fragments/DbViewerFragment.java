@@ -163,12 +163,9 @@ public class DbViewerFragment extends Fragment {
                             new SilentSmsCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        SilentSmsCardData data = new SilentSmsCardData("Address: " + tableData.getString(0),
-                                "Display Address: " + tableData.getString(1),
-                                "Message Class: " + tableData.getString(2),
-                                "Service Centre: " + tableData.getString(3),
-                                "Message: " + tableData.getString(4),
-                                tableData.getInt(5));
+                        SilentSmsCardData data = new SilentSmsCardData(tableData.getString(0),
+                                tableData.getString(1),tableData.getString(2),tableData.getString(3),
+                                tableData.getString(4), tableData.getLong(5));
                         adapter.addItem(data, false);
                     }
                     lv.setAdapter(adapter);

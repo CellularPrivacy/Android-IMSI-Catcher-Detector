@@ -1,7 +1,6 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.fragments.SilentSmsFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
