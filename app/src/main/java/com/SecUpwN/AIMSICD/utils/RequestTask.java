@@ -3,17 +3,9 @@ package com.SecUpwN.AIMSICD.utils;
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -21,20 +13,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 public class RequestTask extends AsyncTask<String, String, String> {
 
     public static final int OPEN_CELL_ID_REQUEST = 1;
-    public static final int RESTORE_DATABASE = 2;
-    private final HttpClient Client = new DefaultHttpClient();
-    private String Content;
-    private String Error = null;
+    public static final int BACKUP_DATABASE = 2;
+    public static final int RESTORE_DATABASE = 3;
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
-    private int mType;
+    private final int mType;
 
     public RequestTask (Context context, int type) {
         mType = type;
@@ -43,17 +33,12 @@ public class RequestTask extends AsyncTask<String, String, String> {
     }
 
     @Override
-    protected String doInBackground(String... uri) {
+    protected String doInBackground(String... urlString) {
 
         switch (mType) {
             case OPEN_CELL_ID_REQUEST:
+                int count;
                 try {
-                    URL url = new URL(uri[0]);
-                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    urlConnection.setRequestMethod("GET");
-                    urlConnection.setDoOutput(true);
-                    urlConnection.connect();
-
                     File dir = new File(
                             Environment.getExternalStorageDirectory()
                                     + "/AIMSICD/OpenCellID/");
@@ -62,24 +47,40 @@ public class RequestTask extends AsyncTask<String, String, String> {
                     }
                     File file = new File(dir, "opencellid.csv");
 
-                    FileOutputStream fileOutput = new FileOutputStream(file);
-                    InputStream inputStream = urlConnection.getInputStream();
-                    int totalSize = urlConnection.getContentLength();
-                    AIMSICD.mProgressBar.setMax(totalSize);
-                    int downloadedSize = 0;
+                    URL url = new URL(urlString[0]);
+                    URLConnection conection = url.openConnection();
+                    conection.connect();
 
-                    byte[] buffer = new byte[1024];
-                    int bufferLength = 0;
+                    // this will be useful so that you can show a typical 0-100%
+                    // progress bar
+                    int lengthOfFile = conection.getContentLength();
+                    AIMSICD.mProgressBar.setMax(lengthOfFile);
 
-                    while ( (bufferLength = inputStream.read(buffer)) > 0 ) {
-                        fileOutput.write(buffer, 0, bufferLength);
-                        downloadedSize += bufferLength;
+                    // download the file
+                    InputStream input = new BufferedInputStream(url.openStream(),
+                            8192);
 
-                        //Update progress bar
-                        AIMSICD.mProgressBar.setProgress(downloadedSize);
+                    // Output stream
+                    OutputStream output = new FileOutputStream(file);
+
+                    byte data[] = new byte[1024];
+
+                    long total = 0;
+
+                    while ((count = input.read(data)) != -1) {
+                        total += count;
+                        AIMSICD.mProgressBar.setProgress((int) ((total * 100) / lengthOfFile));
+
+                        // writing data to file
+                        output.write(data, 0, count);
                     }
 
-                    fileOutput.close();
+                    // flushing output
+                    output.flush();
+
+                    // closing streams
+                    output.close();
+                    input.close();
 
                 } catch (MalformedURLException e) {
                     return null;
@@ -87,9 +88,15 @@ public class RequestTask extends AsyncTask<String, String, String> {
                     return null;
                 }
                 break;
+            case BACKUP_DATABASE:
+                mDbAdapter.open();
+                if (mDbAdapter.backupDB())
+                    return "Successful";
+                mDbAdapter.close();
+                break;
             case RESTORE_DATABASE:
                 mDbAdapter.open();
-                if (mDbAdapter.importDB())
+                if (mDbAdapter.restoreDB())
                     return "Successful";
                 mDbAdapter.close();
                 break;
@@ -101,25 +108,18 @@ public class RequestTask extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
+        AIMSICD.mProgressBar.setProgress(0);
+
         switch (mType) {
             case OPEN_CELL_ID_REQUEST:
-                AIMSICD.mProgressBar.setProgress(0);
-                try {
                     mDbAdapter.open();
-                    mDbAdapter.updateOpenCellID();
+                    if (mDbAdapter.updateOpenCellID())
+                        Helpers.sendMsg(mContext, "OpenCellID data successfully received");
                     mDbAdapter.close();
-                } catch (Exception e) {
-                    Log.e("AIMSICD",
-                            "RequestTask() write OpenCellID response - " + e);
-                }
                 break;
             case RESTORE_DATABASE:
-                if (result != null) {
-                    if (result.equals("Successful")){
-                        Helpers.sendMsg(mContext, "Restore database completed successfully");
-                    } else {
-                        Helpers.sendMsg(mContext, "Error restoring database");
-                    }
+                if (result != null && result.equals("Successful")) {
+                    Helpers.sendMsg(mContext, "Restore database completed successfully");
                 } else {
                     Helpers.sendMsg(mContext, "Error restoring database");
                 }

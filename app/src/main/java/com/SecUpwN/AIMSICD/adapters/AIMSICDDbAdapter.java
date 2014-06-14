@@ -34,9 +34,9 @@ public class AIMSICDDbAdapter {
     private final DbHelper mDbHelper;
     private SQLiteDatabase mDb;
     private final Context mContext;
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     private static final String COLUMN_ID = "_id";
-    private String[] mTables;
+    private final String[] mTables;
     private final String LOCATION_TABLE = "locationinfo";
     private final String CELL_TABLE = "cellinfo";
     private final String OPENCELLID_TABLE = "opencellid";
@@ -65,9 +65,9 @@ public class AIMSICDDbAdapter {
         ContentValues smsValues = new ContentValues();
         smsValues.put("Address", bundle.getString("address"));
         smsValues.put("Display", bundle.getString("display_address"));
+        smsValues.put("Class", bundle.getString("class"));
         smsValues.put("ServiceCtr", bundle.getString("service_centre"));
         smsValues.put("Message", bundle.getString("message"));
-        smsValues.put("Timestamp", bundle.getInt("timestamp"));
 
         return mDb.insert(SILENT_SMS_TABLE, null, smsValues);
     }
@@ -167,9 +167,9 @@ public class AIMSICDDbAdapter {
      * Returns Silent Sms database contents
      */
     public Cursor getSilentSmsData() {
-        return mDb.query(SILENT_SMS_TABLE, new String[] {"Address", "Display", "ServiceCtr",
+        return mDb.query(SILENT_SMS_TABLE, new String[] {"Address", "Display", "Class", "ServiceCtr",
                         "Message", "Timestamp"},
-                null,null,"Timestamp DESC",null, null);
+                null,null,null,null,COLUMN_ID + " DESC");
     }
 
     /**
@@ -303,7 +303,7 @@ public class AIMSICDDbAdapter {
      * Parses the downloaded CSV from OpenCellID and adds Map Marker to identify known
      * Cell ID's
      */
-    public void updateOpenCellID () {
+    public boolean updateOpenCellID () {
         String fileName = Environment.getExternalStorageDirectory()
                 + "/AIMSICD/OpenCellID/opencellid.csv";
         File file = new File(fileName);
@@ -337,8 +337,10 @@ public class AIMSICDDbAdapter {
                     }
                 }
             }
+            return true;
         } catch (Exception e) {
             Log.e (TAG, "Error parsing OpenCellID data - " + e.getMessage());
+            return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
         }
@@ -347,7 +349,7 @@ public class AIMSICDDbAdapter {
     /**
      * Imports CSV file export data into the database
      */
-    public boolean importDB() {
+    public boolean restoreDB() {
         try {
             for (String table : mTables) {
                 File file = new File(FOLDER + "aimsicd-" + table + ".csv");
@@ -407,7 +409,6 @@ public class AIMSICDDbAdapter {
                                     bundle.putString("service_centre",
                                             String.valueOf(records.get(i)[4]));
                                     bundle.putString("message", String.valueOf(records.get(i)[5]));
-                                    bundle.putInt("timestamp", Integer.parseInt(records.get(i)[6]));
                                     insertSilentSms(bundle);
                                     break;
                             }
@@ -427,20 +428,24 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Exports the database tables to CSV files
+     * Backup the database tables to CSV files
+     *
+     * @return boolean indicating backup outcome
      */
-    public void exportDB () {
+    public boolean backupDB () {
         try {
             for (String table : mTables) {
-                export(table);
+                backup(table);
             }
             final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setTitle(R.string.database_export_successful)
-                    .setMessage("Database tables exported succesfully to:\n" + FOLDER);
+                    .setMessage("Database Backup successfully saved to:\n" + FOLDER);
             builder.create().show();
+            return true;
         } catch (Exception ioe) {
-            Helpers.sendMsg(mContext, "Error exporting database tables");
+            Helpers.sendMsg(mContext, "Database Backup Error");
             Log.e (TAG, "exportDB() " + ioe);
+            return false;
         }
     }
 
@@ -449,8 +454,8 @@ public class AIMSICDDbAdapter {
      *
      * @param tableName String representing table name to export
      */
-    private void export(String tableName) {
-        Log.i(TAG, "exporting database - " + DB_NAME);
+    private void backup(String tableName) {
+        Log.i(TAG, "Database Backup - " + DB_NAME);
 
         File dir = new File(FOLDER);
         if (!dir.exists()) {
@@ -507,8 +512,9 @@ public class AIMSICDDbAdapter {
              */
             String SMS_DATABASE_CREATE = "create table " +
                     SILENT_SMS_TABLE + " (" + COLUMN_ID +
-                    " integer primary key autoincrement, Address VARCHAR, Display VARCHAR, " +
-                    "ServiceCtr VARCHAR, Message VARCHAR, Timestamp INTEGER);";
+                    " integer primary key autoincrement, Address VARCHAR, Display VARCHAR, Class VARCHAR, " +
+                    "ServiceCtr VARCHAR, Message VARCHAR, " +
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(SMS_DATABASE_CREATE);
 
              /*
@@ -538,8 +544,7 @@ public class AIMSICDDbAdapter {
             String OPENCELLID_DATABASE_CREATE = "create table " +
                     OPENCELLID_TABLE + " (" + COLUMN_ID +
                     " integer primary key autoincrement, Lat VARCHAR, Lng VARCHAR, Mcc INTEGER, " +
-                    "Mnc INTEGER, Lac INTEGER, CellID INTEGER, AvgSigStr INTEGER, Samples INTEGER, "
-                    +
+                    "Mnc INTEGER, Lac INTEGER, CellID INTEGER, AvgSigStr INTEGER, Samples INTEGER, " +
                     "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(OPENCELLID_DATABASE_CREATE);
 
