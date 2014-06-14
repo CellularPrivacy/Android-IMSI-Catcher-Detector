@@ -1,15 +1,17 @@
 package com.SecUpwN.AIMSICD.adapters;
 
+import java.text.SimpleDateFormat;
+
 public class SilentSmsCardData {
-    private String mAddress;
-    private String mDisplayAddress;
-    private String mMessageClass;
-    private String mServiceCentre;
-    private String mMessage;
-    private int mTimestamp;
+    private final String mAddress;
+    private final String mDisplayAddress;
+    private final String mMessageClass;
+    private final String mServiceCentre;
+    private final String mMessage;
+    private final long mTimestamp;
 
     public SilentSmsCardData(String address, String displayAddress, String messageClass,
-            String serviceCentre, String messageBody, int timestamp)
+            String serviceCentre, String messageBody, long timestamp)
     {
         mAddress = address;
         mDisplayAddress = displayAddress;
@@ -70,7 +72,9 @@ public class SilentSmsCardData {
     }
 
     public String getTimestamp() {
-        return "Timestamp: " + mTimestamp;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+        String dateString = formatter.format(mTimestamp);
+        return "Timestamp: " + dateString;
     }
 
 }

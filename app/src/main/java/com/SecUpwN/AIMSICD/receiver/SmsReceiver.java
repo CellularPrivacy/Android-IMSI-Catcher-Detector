@@ -11,8 +11,6 @@ import android.util.Log;
 
 public class SmsReceiver extends BroadcastReceiver {
 
-    private final String TAG = "AIMSICD_SmsReceiver";
-
     public void onReceive(Context context, Intent intent) {
         try {
                 final Bundle bundle = intent.getExtras();
@@ -26,15 +24,16 @@ public class SmsReceiver extends BroadcastReceiver {
                         for (SmsMessage sms : messages) {
                             if (sms.getMessageClass().equals(SmsMessage.MessageClass.CLASS_0)) {
                                 Intent smsIntent = new Intent(AimsicdService.SILENT_SMS);
-                                intent.putExtra("address", sms.getOriginatingAddress());
-                                intent.putExtra("display_address",
+                                Bundle smsData = new Bundle();
+                                smsData.putString("address", sms.getOriginatingAddress());
+                                smsData.putString("display_address",
                                         sms.getDisplayOriginatingAddress());
-                                intent.putExtra("class", sms.getMessageClass().toString());
-                                intent.putExtra("service_centre", sms.getServiceCenterAddress());
-                                intent.putExtra("message", sms.getMessageBody());
-                                intent.putExtra("timestamp", sms.getTimestampMillis());
+                                smsData.putString("class", sms.getMessageClass().name());
+                                smsData.putString("service_centre", sms.getServiceCenterAddress());
+                                smsData.putString("message", sms.getMessageBody());
+                                smsIntent.putExtras(smsData);
                                 context.sendBroadcast(smsIntent);
-                                Log.i(TAG, "Class 0 Message received, Sender: "
+                                Log.i("AIMSICD_SmsReceiver", "Class 0 Message received, Sender: "
                                         + sms.getOriginatingAddress() + " Message: "
                                         + sms.getMessageBody());
                             }
