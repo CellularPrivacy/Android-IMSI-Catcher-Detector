@@ -191,4 +191,5 @@
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Silent SMS Intercepted</string>
+    <string name="sms_message">Silent Sms Message has been intercepted! \n\nDetails are available through the DbViewer</string>
 </resources>
