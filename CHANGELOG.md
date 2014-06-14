@@ -1,6 +1,15 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 14.06.2014 - WIP-Release v0.1.18-alpha
+
+* **ATTENTION**: Backup your Database prior to installing this WIP-Release!
+* Added: Database Restore added to repopulate database tables from exported CSV
+* Added: Silent SMS Detection - Class 0 SMS will be intercepted and will display a system alert
+* Added: OpenCellID, DB Backup & Restore have been added to main async class for better performance
+* Fix: OpenCellID download methods have been rewritten and should function correctly now
+* Fix: Device specific updates which addressed some issues being faced by users with CDMA devices
+
 #### 13.06.2014
 
 * Update: Major revamp of our README, making it much fresher and structured
