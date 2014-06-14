@@ -18,12 +18,10 @@
 package com.SecUpwN.AIMSICD;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -45,7 +43,6 @@ import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
 import com.SecUpwN.AIMSICD.fragments.AboutFragment;
@@ -53,7 +50,6 @@ import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
 import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
 import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
-import com.SecUpwN.AIMSICD.fragments.SilentSmsFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
@@ -69,7 +65,6 @@ public class AIMSICD extends FragmentActivity {
     private boolean mBound;
     private SharedPreferences prefs;
     private Editor prefsEditor;
-    private AIMSICDDbAdapter dbHelper;
     private String mDisclaimerAccepted;
 
     private AimsicdService mAimsicdService;
@@ -137,11 +132,6 @@ public class AIMSICD extends FragmentActivity {
             disclaimerAlert.show();
         }
 
-        //Create DB Instance
-        dbHelper = new AIMSICDDbAdapter(mContext);
-
-        //Register receiver for Silent SMS Interception Notification
-        mContext.registerReceiver(mMessageReceiver, new IntentFilter(AimsicdService.SILENT_SMS));
     }
 
     @Override
@@ -159,8 +149,6 @@ public class AIMSICD extends FragmentActivity {
             Intent intent = new Intent(mContext, AimsicdService.class);
             stopService(intent);
         }
-
-        mContext.unregisterReceiver(mMessageReceiver);
     }
 
     /**
@@ -255,7 +243,7 @@ public class AIMSICD extends FragmentActivity {
                 startActivity(intent);
                 return true;
             case R.id.backup_database:
-                dbHelper.exportDB();
+                new RequestTask(mContext, RequestTask.BACKUP_DATABASE).execute();
                 return true;
             case R.id.restore_database:
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
@@ -263,6 +251,7 @@ public class AIMSICD extends FragmentActivity {
             case R.id.update_opencelldata:
                 Location loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
+                    Helpers.sendMsg(mContext, "Contacting OpenCellID.org for data...");
                     Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude());
                 } else {
                     Helpers.sendMsg(mContext,
@@ -323,31 +312,6 @@ public class AIMSICD extends FragmentActivity {
             mAimsicdService.startTrackingFemto();
         }
     }
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                Bundle smsCardBundle = new Bundle();
-                smsCardBundle.putString("address", bundle.getString("address"));
-                smsCardBundle.putString("display_address", bundle.getString("display_address"));
-                smsCardBundle.putString("message_class", bundle.getString("class"));
-                smsCardBundle.putString("service_centre", bundle.getString("service_centre"));
-                smsCardBundle.putString("message", bundle.getString("message"));
-                smsCardBundle.putInt("timestamp", bundle.getInt("timestamp"));
-                mAimsicdService.setSilentSmsStatus(true);
-                dbHelper.open();
-                dbHelper.insertSilentSms(smsCardBundle);
-                dbHelper.close();
-                Fragment fragment = new SilentSmsFragment();
-                titles.add(getString(R.string.sms_title));
-                mFragmentList.add(fragment);
-                adapterViewPager.notifyDataSetChanged();
-                adapterViewPager.getItem(adapterViewPager.getCount()-1);
-            }
-        }
-    };
 
     class MyPagerAdapter extends FragmentStatePagerAdapter {
 
