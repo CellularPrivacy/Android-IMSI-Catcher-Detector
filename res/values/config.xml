@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Service Mode API version. Below is just a rough guideline, use what works.
-         Version 1: Found in < 4.2 ROMs
-         Version 2: Found in JellyBean 4.2 ROMs-->
-    <integer name="config_api_version">1</integer>
-</resources>
