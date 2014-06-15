@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.SecUpwN.AIMSICD"
+          android:versionCode="18"
+          android:versionName="0.1.18">
+
+    <uses-feature
+            android:glEsVersion="0x00020000"
+            android:required="true"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+
+    <application
+            android:allowBackup="false"
+            android:icon="@drawable/sense_alarm"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+        <uses-library android:name="com.google.android.maps"/>
+
+        <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version"/>
+
+        <activity
+                android:name=".AIMSICD"
+                android:exported="true"
+                android:label="@string/app_name_short"
+                android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.DELETE"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEVELOPMENT_PREFERENCE"/>
+            </intent-filter>
+        </activity>
+
+        <service
+                android:name=".service.AimsicdService"
+                android:enabled="true"
+                android:exported="false">
+        </service>
+
+        <receiver android:name=".receiver.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.SmsReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
+        <activity
+                android:name=".activities.MapViewer"
+                android:exported="true"
+                android:label="@string/map_view"
+                android:parentActivityName=".AIMSICD">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".AIMSICD"/>
+        </activity>
+        <activity
+                android:name=".activities.PrefActivity"
+                android:exported="true"
+                android:icon="@drawable/ic_action_settings"
+                android:label="@string/preferences"
+                android:parentActivityName=".AIMSICD">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".activities.MapPrefActivity"
+                android:exported="true"
+                android:icon="@drawable/ic_action_settings"
+                android:label="@string/preferences"
+                android:parentActivityName=".AIMSICD">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <meta-data
+                android:name="com.google.android.maps.v2.API_KEY"
+                android:value="AIzaSyDI1lvgpBmNhQS33JfJA4w8GAmrtFeg078"/>
+
+    </application>
+
+</manifest>
