@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+        <Button
+                android:id="@+id/button_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_refresh" />
+
+    <TableLayout
+            android:id="@+id/cellView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="1" android:layout_below="@+id/button_refresh">
+        <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:background="@color/black">
+            <TextView
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="18sp" android:text="@string/neighbouring_cells_title"
+                    android:layout_span="2"
+                    android:background="@color/black"
+                    android:textColor="@color/green_text"
+                    android:padding="4dip"/>
+        </TableRow>
+        <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@color/black">
+
+            <TextView
+                    android:id="@+id/neighbouring_number_label"
+                    android:text="@string/neighbouring_cells_num_title"
+                    android:background="@color/black"
+                    android:textColor="@color/white"
+                    android:padding="2dip" android:gravity="right"
+                    android:layout_gravity="right"
+                    android:layout_width="fill_parent"/>
+
+            <TextView
+                    android:id="@+id/neighbouring_number" android:text="@string/empty"
+                    android:background="@color/black"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip" android:gravity="left"/>
+        </TableRow>
+        <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="left"
+                android:background="@color/black">
+
+            <TextView
+                    android:id="@+id/neighbouring_cells" android:text="@string/empty"
+                    android:layout_weight="1" android:background="@color/black"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:layout_gravity="left"
+                    android:layout_width="fill_parent"
+                    android:layout_span="2"/>
+        </TableRow>
+        <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:background="@color/black">
+            <TextView
+                    android:id="@+id/ciphering_indicator_title"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="18sp" android:text="@string/ciphering_indicator_title"
+                    android:layout_span="2"
+                    android:background="@color/black"
+                    android:textColor="@color/green_text"
+                    android:padding="4dip" android:visibility="gone"/>
+        </TableRow>
+        <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="left"
+                android:background="@color/black">
+
+            <TextView
+                    android:id="@+id/ciphering_indicator" android:text="@string/empty"
+                    android:layout_weight="1" android:background="@color/black"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:layout_gravity="left"
+                    android:layout_width="fill_parent"
+                    android:layout_span="2" android:visibility="gone"/>
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

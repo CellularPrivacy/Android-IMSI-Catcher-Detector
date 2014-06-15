@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name_short">AIMSICD</string>
+    <string name="app_name">Android IMSI-Catcher Detector</string>
+    <string name="device_info">Device Details</string>
+    <string name="map_view">Map Viewer</string>
+    <string name="db_viewer">Database Viewer</string>
+    <string name="strength">Signal strength</string>
+    <string name="quit">Quit</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="empty"></string>
+    <string name="gsm_only">GSM Phones Only</string>
+
+    <!-- DISCLAIMER -->
+    <string name="disclaimer_title">DISCLAIMER</string>
+    <string name="disclaimer">By using AIMSICD you have understood and agree that AIMSICD is an experimental
+        and informative Android application that can fail to detect surveillance and
+        tracking for many reasons. You also understand that it can be circumvented or
+        defeated by other means, not yet understood to the developers. Thus you also
+        agree and understand that the developers and companies related to this free
+        product, can in no way be held responsible for any results or outcome,
+        depending on the use of this application.
+
+        \n\n[OK] - I understand and agree
+        \n\n[CANCEL] - I do not agree and want to remove this Application
+    </string>
+
+    <!-- Mobile Network Types -->
+    <string name="gprs"># GPRS</string>
+    <string name="edge"># EDGE</string>
+    <string name="umts"># UMTS</string>
+    <string name="hsdpa"># HSDPA</string>
+    <string name="hsupa"># HSUPA</string>
+    <string name="hspa"># HSPA</string>
+    <string name="cdma"># CDMA</string>
+    <string name="evo0"># EVO-0</string>
+    <string name="evoA"># EVO-A</string>
+
+    <!-- MENU -->
+    <string name="track_cell">Track Cell Details</string>
+    <string name="untrack_cell">Untrack Cell Details</string>
+    <string name="track_location">Track Location</string>
+    <string name="untrack_location">Untrack Location</string>
+    <string name="track_femtocell">Track Femtocell</string>
+    <string name="untrack_femtocell">Untrack Femtocell</string>
+    <string name="show_map">Show Map</string>
+    <string name="backup_database">Backup Database</string>
+    <string name="restore_database">Restore Database</string>
+    <string name="preferences">Preferences</string>
+    <string name="press_once_again_to_exit">Press again to exit</string>
+    <string name="update_opencelldata">Update OpenCellID Data</string>
+
+    <string name="no_network_connection_title">No Internet Connection</string>
+    <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
+    connectivity, enable Wifi/Mobile Data and try again.</string>
+
+    <!-- MAP VIEWER -->
+    <string name="error_google_play_services_title">Map Viewer Unavailable</string>
+    <string name="error_google_play_services_message">Maps Viewer requires Google Play Services
+        to be installed on your device, you CANNOT continue unless you install Google Play.</string>
+    <string name="map_type">Map Display Type</string>
+    <string name="get_opencellid">Get OpenCellID Data</string>
+
+    <!-- LAYOUT -->
+    <string name="device_info_title">Device Information</string>
+    <string name="sim_info_title">SIM Information</string>
+    <string name="network_info">Network Information</string>
+    <string name="cell_info_title">Cell Information</string>
+    <string name="neighbouring_cells_title">Neighbouring Cells</string>
+    <string name="ciphering_indicator_title">Ciphering Indicator</string>
+    <string name="neighbouring_cells_num_title">Total:</string>
+    <string name="sim_country">Country:</string>
+    <string name="sim_operator_id">Operator ID:</string>
+    <string name="sim_operator_name">Operator Name:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">Serial:</string>
+    <string name="device_type">Type:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">Version:</string>
+    <string name="device_number">Line Number:</string>
+    <string name="network_name">Network Name:</string>
+    <string name="network_code">Network Code:</string>
+    <string name="network_type">Network Type:</string>
+    <string name="network_lac">Network LAC:</string>
+    <string name="network_cellid">Network CellID:</string>
+    <string name="data_activity">Data Activity:</string>
+    <string name="data_status">Data Status:</string>
+    <string name="network_roaming">Roaming:</string>
+    <string name="network_lte_timing_advance">Timing Advance:</string>
+    <string name="button_refresh">Refresh</string>
+
+    <!-- ABOUT LAYOUT -->
+    <string name="about_aimsicd">About AIMSICD</string>
+    <string name="aimsicd_about_info">Android IMSI-Catcher Detector - </string>
+    <string name="aimsicd_about_info2">Detect and avoid IMSI-Catcher attacks!</string>
+    <string name="poc_info">This App is a</string>
+    <string name="poc_link">&lt;a href="https://en.wikipedia.org/wiki/Proof_of_concept"&gt;PoC&lt;/a&gt;</string>
+    <string name="disclaimer_info">You MUST accept our</string>
+    <string name="disclaimer_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER"&gt;Disclaimer&lt;/a&gt;</string>
+    <string name="github_info">Contribute to the AIMSICD-Project on</string>
+    <string name="aimsicd_github_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector"&gt;Github&lt;/a&gt;</string>
+    <string name="xda_info">Visit the</string>
+    <string name="aimsicd_xda_link">&lt;a href="http://forum.xda-developers.com/showthread.php?t=1422969"&gt;Official XDA Development Thread&lt;/a&gt;</string>
+    <string name="release_info">Check for the latest</string>
+    <string name="aimsicd_release_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases"&gt;WIP-Release of AIMSICD&lt;/a&gt;</string>
+    <string name="changelog_info">Stay up to date and visit our</string>
+    <string name="aimsicd_changelog_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md"&gt;Changelog&lt;/a&gt;</string>
+    <string name="license_info">The AIMSICD-Project is licensed under</string>
+    <string name="aimsicd_license_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE"&gt;GPL v3+&lt;/a&gt;</string>
+    <string name="credits_info">Awesome people for an awesome Project:</string>
+    <string name="aimsicd_credits_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS&gt;"CREDITS&lt;/a&gt;</string>
+
+
+    <!-- CDMA LAYOUT -->
+    <string name="network_netid">Network ID:</string>
+    <string name="network_sysid">System ID:</string>
+    <string name="network_baseid">Base Station ID:</string>
+    <string name="network_cdma_long">Longitude:</string>
+    <string name="network_cdma_lat">Latitude:</string>
+
+    <!-- LOCATION HELPER -->
+    <string name="location_error_title">Location Services Disabled</string>
+    <string name="location_error_message">You cannot track GPS data without enabling Location Services.</string>
+
+    <!-- PREFERENCES -->
+    <string name="pref_system_title">System Settings</string>
+    <string name="pref_autostart_title">Auto Start</string>
+    <string name="pref_autostart_key">pref_autostart</string>
+    <string name="pref_autostart_summ">Automatically start service on boot</string>
+    <string name="pref_persistservice_title">Persistent Service</string>
+    <string name="pref_persistservice_key">pref_persistservice_service</string>
+    <string name="pref_persistservice_summ">Service will continue to run after exiting the application</string>
+    <string name="pref_protection_title">Protection Settings</string>
+    <string name="pref_enable_cell_key">pref_enable_cell</string>
+    <string name="pref_enable_cell_title">Cell Tracking</string>
+    <string name="pref_enable_cell_summ">Enable Cell Tracking Automatically</string>
+    <string name="pref_femto_title">FemtoCell</string>
+    <string name="pref_femto_summ">FemtoCell Detection (CDMA Phones ONLY)</string>
+    <string name="pref_femto_detection_key">pref_femto_detection</string>
+    <string name="pref_femto_action_title">FemtoCell Protection</string>
+    <string name="pref_femto_action_key">pref_femto_action</string>
+    <string name="pref_femto_action_summ">Enforce Airplane Mode when FemtoCell detected</string>
+    <string name="pref_ui_title">Interface Settings</string>
+    <string name="pref_ui_icons_title">Icons</string>
+    <string name="pref_ui_icons_key">pref_ui_icons</string>
+    <string name="pref_ui_icons_summ">Icon Theme Selection</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="map_pref_type">map_pref_type</string>
+    <string name="disclaimer_accepted">disclaimer_accepted</string>
+    <string name="pref_refresh_key">pref_refresh</string>
+    <string name="pref_refresh_title">Refresh Rate</string>
+    <string name="pref_refresh_summ">Control the frequency of device updates</string>
+
+    <!-- MAP PREFERENCES -->
+    <string name="pref_map_title">Map Viewer Preferences</string>
+    <string name="pref_map_type_key">pref_map_type</string>
+    <string name="pref_map_type_title">Map Type</string>
+    <string name="pref_map_type_summ">Display the Map using different styles</string>
+    
+    <!-- MAP INFOWINDOW -->
+    <string name="cell_id_label">Cell ID: </string>
+    <string name="mcc_label">MCC: </string>
+    <string name="mnc_label">MNC: </string>
+    <string name="samples_label">Samples:</string>
+    <string name="open_cell_id_label">OpenCellID Data</string>
+    <string name="lat_label">Lat: </string>
+    <string name="lng_label">Lng: </string>
+
+    <!-- Database Viewer -->
+    <string name="load_table_data">Load Data</string>
+    <string name="table_names_prompt">Select Table</string>
+    <string-array name="table_names">
+        <item>Cell Data</item>
+        <item>Location Data</item>
+        <item>OpenCellID Data</item>
+        <item>Default MCC Locations</item>
+        <item>Silent Sms</item>
+    </string-array>
+    <string name="database_export_successful">Export Successful</string>
+
+    <!-- AT Command Injector -->
+    <string name="at_command_title">AT Command Injector</string>
+    <string name="enter_at_command_title">Enter AT Command:</string>
+    <string name="response_label">Response:</string>
+    <string name="execute_at">Execute</string>
+
+    <!-- SILENT SMS FRAGMENT -->
+    <string name="sms_title">Silent SMS Intercepted</string>
+    <string name="sms_message">Silent Sms Message has been intercepted! \n\nDetails are available through the DbViewer</string>
+</resources>

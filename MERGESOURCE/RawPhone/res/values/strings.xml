@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="hello">no content</string>
-    <string name="app_name">rawphone</string>
-	<string name="strength">Signal strength</string>
-	<string name="quit">Quit</string>
-</resources>
