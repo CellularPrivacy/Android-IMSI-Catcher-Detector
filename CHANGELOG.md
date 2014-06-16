@@ -1,6 +1,10 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 16.06.2014
+
+* Fix: Corrected naming of Icons
+
 #### 15.06.2014
 
 * Added: Fresh Icons indicating the new threat levels "MEDIUM", "HIGH" and "RUN!"
