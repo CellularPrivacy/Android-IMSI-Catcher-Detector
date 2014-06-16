@@ -5,6 +5,8 @@
 
 * Fix: Corrected naming of Icons to reflect the new naming scheme
 * Update: Changed naming of Icons within AimsicdService.java
+* Added: [SCREENSHOTS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/SCREENSHOTS) for all our needs to explain our App - enjoy the eye candy!
+* Added: Initial version of our [official User Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/User-Guide), will be constantly updated
 
 #### 15.06.2014
 
