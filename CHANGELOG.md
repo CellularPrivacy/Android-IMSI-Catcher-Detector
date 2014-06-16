@@ -3,7 +3,8 @@
 
 #### 16.06.2014
 
-* Fix: Corrected naming of Icons
+* Fix: Corrected naming of Icons to reflect the new naming scheme
+* Update: Changed naming of Icons within AimsicdService.java
 
 #### 15.06.2014
 
