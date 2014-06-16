@@ -36,6 +36,10 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 
 # Introduction
 
+Both law enforcement agencies and criminals use [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher), which are false mobile towers acting between the target mobile phone(s) and the service providers real towers. As such it is considered a Man In the Middle (MITM) attack. The FBI or local police might deploy the device at a protest to obtain a record of everyone who attended with a cell phone. IMSI-Catchers can allow adversaries to intercept your conversations, text messages, and data. Police can also use them to determine your location, or to find out who is in a given geographic area at what time. Identity thieves might sit with an IMSI-Catcher in a parked car in a residential neighborhood, stealing passwords or credit card information from people nearby who make purchases on their phones. All of this surveillance happens in secret.
+
+Powerful, expensive IMSI-Catchers are in use at federal agencies and some police departments. And if you think that IMSI-Catchers are not used in your own town, think twice! If you ever happen to be near a riot or demonstration, pay close attention to cars with numerous (tiny) antennas on their roof - those might be IMSI-Catchers. But most of the time you won't even discover these creepy devices - current technology shrinks them to be as tiny as your phone!
+
 [![DEF CON 18: Practical Cellphone Spying](http://img.youtube.com/vi/fQSu9cBaojc/0.jpg)](https://www.youtube.com/watch?v=fQSu9cBaojc)
 
 YouTube: DEF CON 18 - Practical Cellphone Spying with Kristin Paget
