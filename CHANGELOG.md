@@ -1,6 +1,10 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 15.06.2014
+
+* Added: Fresh Icons indicating the new threat levels "MEDIUM", "HIGH" and "RUN!"
+
 #### 14.06.2014 - WIP-Release v0.1.18-alpha
 
 * **ATTENTION**: Backup your Database prior to installing this WIP-Release!
