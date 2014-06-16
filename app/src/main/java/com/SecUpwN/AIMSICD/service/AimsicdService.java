@@ -1264,13 +1264,13 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             case 2: //Good
                 switch (iconType) {
                     case "flat":
-                        icon = R.drawable.flat_good;
+                        icon = R.drawable.flat_ok;
                         break;
                     case "sense":
-                        icon = R.drawable.sense_good;
+                        icon = R.drawable.sense_ok;
                         break;
                     case "white":
-                        icon = R.drawable.white_good;
+                        icon = R.drawable.white_ok;
                         break;
                 }
                 tickerText = getResources().getString(R.string.app_name_short)
@@ -1279,13 +1279,13 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             case 3: //ALARM
                 switch (iconType) {
                     case "flat":
-                        icon = R.drawable.flat_alarm;
+                        icon = R.drawable.flat_danger;
                         break;
                     case "sense":
-                        icon = R.drawable.sense_alarm;
+                        icon = R.drawable.sense_danger;
                         break;
                     case "white":
-                        icon = R.drawable.white_alarm;
+                        icon = R.drawable.white_danger;
                         break;
                 }
                 tickerText = getResources().getString(R.string.app_name_short)
