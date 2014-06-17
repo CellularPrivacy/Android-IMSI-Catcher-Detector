@@ -1,6 +1,12 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 17.06.2014
+
+* Fix: Corrected code values and namings for Flash SMS in multiple files
+* Update: New explanations in User Guide to distinguish between Class 0 and Type 0 SMS
+* Added: Link to the NSA’s Secret Role in the U.S. Assassination Program
+
 #### 16.06.2014
 
 * Fix: Corrected naming of Icons to reflect the new naming scheme
@@ -16,7 +22,7 @@
 
 * **ATTENTION**: Backup your Database prior to installing this WIP-Release!
 * Added: Database Restore added to repopulate database tables from exported CSV
-* Added: Silent SMS Detection - Class 0 SMS will be intercepted and will display a system alert
+* Added: Flash SMS Detection - Class 0 SMS will be intercepted and will display a system alert
 * Added: OpenCellID, DB Backup & Restore have been added to main async class for better performance
 * Fix: OpenCellID download methods have been rewritten and should function correctly now
 * Fix: Device specific updates which addressed some issues being faced by users with CDMA devices
