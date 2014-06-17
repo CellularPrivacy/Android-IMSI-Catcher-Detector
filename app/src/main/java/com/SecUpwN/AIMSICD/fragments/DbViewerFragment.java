@@ -1,8 +1,8 @@
 package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
-import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
+import com.SecUpwN.AIMSICD.adapters.FlashSmsCardData;
+import com.SecUpwN.AIMSICD.adapters.FlashSmsCardInflater;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
@@ -157,13 +157,13 @@ public class DbViewerFragment extends Fragment {
                     lv.setAdapter(adapter);
                     break;
                 }
-                case "Silent Sms": {
-                    BaseInflaterAdapter<SilentSmsCardData> adapter
+                case "Flash Sms": {
+                    BaseInflaterAdapter<FlashSmsCardData> adapter
                             = new BaseInflaterAdapter<>(
-                            new SilentSmsCardInflater());
+                            new FlashSmsCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        SilentSmsCardData data = new SilentSmsCardData(tableData.getString(0),
+                        FlashSmsCardData data = new FlashSmsCardData(tableData.getString(0),
                                 tableData.getString(1),tableData.getString(2),tableData.getString(3),
                                 tableData.getString(4), tableData.getLong(5));
                         adapter.addItem(data, false);
@@ -211,8 +211,8 @@ public class DbViewerFragment extends Fragment {
                     return mDb.getOpenCellIDData();
                 case "Default MCC Locations":
                     return mDb.getDefaultMccLocationData();
-                case "Silent Sms":
-                    return mDb.getSilentSmsData();
+                case "Flash Sms":
+                    return mDb.getFlashSmsData();
             }
 
             return null;
