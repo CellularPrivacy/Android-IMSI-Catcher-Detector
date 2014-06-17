@@ -126,7 +126,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
     private final String TAG = "AIMSICD_Service";
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
-    public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
+    public static final String FLASH_SMS = "FLASH_SMS_INTERCEPTED";
 
    /*
     * System and helper declarations
@@ -266,8 +266,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }
 
-        //Register receiver for Silent SMS Interception Notification
-        mContext.registerReceiver(mMessageReceiver, new IntentFilter(SILENT_SMS));
+        //Register receiver for FLASH SMS Interception Notification
+        mContext.registerReceiver(mMessageReceiver, new IntentFilter(FLASH_SMS));
 
         Log.i(TAG, "Service launched successfully");
     }
@@ -304,9 +304,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             final Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 dbHelper.open();
-                dbHelper.insertSilentSms(bundle);
+                dbHelper.insertFlashSms(bundle);
                 dbHelper.close();
-                setSilentSmsStatus(true);
+                setFlashSmsStatus(true);
             }
         }
     };
@@ -1205,7 +1205,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mLastLocation.setLatitude(mLatitude);
     }
 
-    void setSilentSmsStatus(boolean state) {
+    void setFlashSmsStatus(boolean state) {
         mClassZeroSmsDetected = state;
         setNotification();
         if (state) {
@@ -1293,7 +1293,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 if (mFemtoDetected) {
                     contentText = "ALERT!! FemtoCell Connection Threat Detected";
                 } else if (mClassZeroSmsDetected) {
-                    contentText = "ALERT!! Class Zero Silent SMS Intercepted";
+                    contentText = "ALERT!! Class Zero Flash SMS Intercepted";
                 }
 
                 break;
@@ -1304,7 +1304,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
 
         Intent notificationIntent = new Intent(mContext, AIMSICD.class);
-        notificationIntent.putExtra("silent_sms", mClassZeroSmsDetected);
+        notificationIntent.putExtra("flash_sms", mClassZeroSmsDetected);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
         PendingIntent contentIntent = PendingIntent.getActivity(
                 mContext, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
