@@ -23,7 +23,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     if (messages.length > -1) {
                         for (SmsMessage sms : messages) {
                             if (sms.getMessageClass().equals(SmsMessage.MessageClass.CLASS_0)) {
-                                Intent smsIntent = new Intent(AimsicdService.SILENT_SMS);
+                                Intent smsIntent = new Intent(AimsicdService.FLASH_SMS);
                                 Bundle smsData = new Bundle();
                                 smsData.putString("address", sms.getOriginatingAddress());
                                 smsData.putString("display_address",
