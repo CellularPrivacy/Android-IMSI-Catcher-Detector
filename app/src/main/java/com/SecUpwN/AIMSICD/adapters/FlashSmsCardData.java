@@ -2,7 +2,7 @@ package com.SecUpwN.AIMSICD.adapters;
 
 import java.text.SimpleDateFormat;
 
-public class FlashSmsCardData {
+public class SilentSmsCardData {
     private final String mAddress;
     private final String mDisplayAddress;
     private final String mMessageClass;
@@ -10,7 +10,7 @@ public class FlashSmsCardData {
     private final String mMessage;
     private final long mTimestamp;
 
-    public FlashSmsCardData(String address, String displayAddress, String messageClass,
+    public SilentSmsCardData(String address, String displayAddress, String messageClass,
             String serviceCentre, String messageBody, long timestamp)
     {
         mAddress = address;
