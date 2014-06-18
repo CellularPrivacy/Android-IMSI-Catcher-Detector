@@ -27,9 +27,11 @@ public class SmsReceiver extends BroadcastReceiver {
                          * by TP_PID field set to value 0x40
                          */
                         int firstByte = smsPdu[0] & 0xff;
-                        Log.i("AIMSICD_SmsReceiver", "Pdu data: firstByte = " + firstByte + " TP_PID = "
-                                + smsPdu[0]);
-                        if (firstByte == 0x40) {
+                        int mti = firstByte & 0x3;
+                        int pID = smsPdu[1] & 0xc0;
+                        Log.i("AIMSICD_SmsReceiver", "Pdu data: firstByte = " + firstByte +
+                                " mti = " + mti + " TP_PID = " + pID );
+                        if (pID == 0x40 || mti == 0) {
                             messages.add(SmsMessage.createFromPdu((byte[]) pdu));
                         }
                     }
