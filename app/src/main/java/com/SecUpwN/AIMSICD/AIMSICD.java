@@ -160,6 +160,7 @@ public class AIMSICD extends FragmentActivity {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
             mBound = true;
+            mAimsicdService.setNotification();
         }
 
         @Override
@@ -173,6 +174,11 @@ public class AIMSICD extends FragmentActivity {
     public void onResume() {
         super.onResume();
         invalidateOptionsMenu();
+        if (!mBound) {
+            // Bind to LocalService
+            Intent intent = new Intent(this, AimsicdService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
     }
 
     @Override

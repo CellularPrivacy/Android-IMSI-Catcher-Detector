@@ -1211,17 +1211,18 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         if (state) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.sms_message)
-                    .setTitle(R.string.location_error_title);
+                    .setTitle(R.string.sms_title);
             AlertDialog alert = builder.create();
             alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             alert.show();
+            mClassZeroSmsDetected = false;
         }
     }
 
     /**
      * Set or update the Notification
      */
-    private void setNotification() {
+    public void setNotification() {
 
         String tickerText;
         String contentText = "Phone Type " + getPhoneType(false);
