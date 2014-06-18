@@ -1,6 +1,15 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 18.06.2014
+
+* Changed: Reverted commits that changed Silent SMS to Flash SMS. we **only** want to detect Silent SMS
+* Changed: SMS Broadcast receiver modified to look for true TYPE 0 Stealth SMS messages
+* Update: Modified User Guide to reflect the latest changes and clarifications thereafter
+* Added: Additional check for Message type indicator & the TP-PID value
+* Added: Yet another additional check added as framework seems to use both in different places
+* Fix: Disabled notification alert once the application becomes visible to address persisting alert
+
 #### 17.06.2014
 
 * Fix: Corrected code values and namings for Flash SMS in multiple files
@@ -22,7 +31,7 @@
 
 * **ATTENTION**: Backup your Database prior to installing this WIP-Release!
 * Added: Database Restore added to repopulate database tables from exported CSV
-* Added: Flash SMS Detection - Class 0 SMS will be intercepted and will display a system alert
+* Added: Silent SMS Detection - Type 0 SMS will be intercepted and will display a system alert
 * Added: OpenCellID, DB Backup & Restore have been added to main async class for better performance
 * Fix: OpenCellID download methods have been rewritten and should function correctly now
 * Fix: Device specific updates which addressed some issues being faced by users with CDMA devices
