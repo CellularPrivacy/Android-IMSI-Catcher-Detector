@@ -126,7 +126,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
     private final String TAG = "AIMSICD_Service";
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
-    public static final String FLASH_SMS = "FLASH_SMS_INTERCEPTED";
+    public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
 
    /*
     * System and helper declarations
@@ -266,8 +266,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }
 
-        //Register receiver for FLASH SMS Interception Notification
-        mContext.registerReceiver(mMessageReceiver, new IntentFilter(FLASH_SMS));
+        //Register receiver for Silent SMS Interception Notification
+        mContext.registerReceiver(mMessageReceiver, new IntentFilter(SILENT_SMS));
 
         Log.i(TAG, "Service launched successfully");
     }
@@ -304,9 +304,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             final Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 dbHelper.open();
-                dbHelper.insertFlashSms(bundle);
+                dbHelper.insertSilentSms(bundle);
                 dbHelper.close();
-                setFlashSmsStatus(true);
+                setSilentSmsStatus(true);
             }
         }
     };
@@ -1205,23 +1205,24 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mLastLocation.setLatitude(mLatitude);
     }
 
-    void setFlashSmsStatus(boolean state) {
+    void setSilentSmsStatus(boolean state) {
         mClassZeroSmsDetected = state;
         setNotification();
         if (state) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.sms_message)
-                    .setTitle(R.string.location_error_title);
+                    .setTitle(R.string.sms_title);
             AlertDialog alert = builder.create();
             alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             alert.show();
+            mClassZeroSmsDetected = false;
         }
     }
 
     /**
      * Set or update the Notification
      */
-    private void setNotification() {
+    public void setNotification() {
 
         String tickerText;
         String contentText = "Phone Type " + getPhoneType(false);
@@ -1293,7 +1294,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 if (mFemtoDetected) {
                     contentText = "ALERT!! FemtoCell Connection Threat Detected";
                 } else if (mClassZeroSmsDetected) {
-                    contentText = "ALERT!! Class Zero Flash SMS Intercepted";
+                    contentText = "ALERT!! Class Zero Silent SMS Intercepted";
                 }
 
                 break;
@@ -1304,7 +1305,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
 
         Intent notificationIntent = new Intent(mContext, AIMSICD.class);
-        notificationIntent.putExtra("flash_sms", mClassZeroSmsDetected);
+        notificationIntent.putExtra("silent_sms", mClassZeroSmsDetected);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
         PendingIntent contentIntent = PendingIntent.getActivity(
                 mContext, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
