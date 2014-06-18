@@ -41,7 +41,7 @@ public class AIMSICDDbAdapter {
     private final String CELL_TABLE = "cellinfo";
     private final String OPENCELLID_TABLE = "opencellid";
     private final String DEFAULT_MCC_TABLE = "defaultlocation";
-    private final String FLASH_SMS_TABLE = "flashsms";
+    private final String SILENT_SMS_TABLE = "silentsms";
     private final String DB_NAME = "myCellInfo";
     private final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
 
@@ -49,7 +49,7 @@ public class AIMSICDDbAdapter {
         mContext = context;
         mDbHelper = new DbHelper(context);
         mTables = new String[] { LOCATION_TABLE, CELL_TABLE, OPENCELLID_TABLE,
-                FLASH_SMS_TABLE };
+                SILENT_SMS_TABLE };
     }
 
     public AIMSICDDbAdapter open() throws SQLException {
@@ -61,7 +61,7 @@ public class AIMSICDDbAdapter {
         mDbHelper.close();
     }
 
-    public long insertFlashSms(Bundle bundle) {
+    public long insertSilentSms(Bundle bundle) {
         ContentValues smsValues = new ContentValues();
         smsValues.put("Address", bundle.getString("address"));
         smsValues.put("Display", bundle.getString("display_address"));
@@ -69,7 +69,7 @@ public class AIMSICDDbAdapter {
         smsValues.put("ServiceCtr", bundle.getString("service_centre"));
         smsValues.put("Message", bundle.getString("message"));
 
-        return mDb.insert(FLASH_SMS_TABLE, null, smsValues);
+        return mDb.insert(SILENT_SMS_TABLE, null, smsValues);
     }
 
     /**
@@ -164,10 +164,10 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Returns FLASH SMS database contents
+     * Returns Silent Sms database contents
      */
-    public Cursor getFlashSmsData() {
-        return mDb.query(FLASH_SMS_TABLE, new String[] {"Address", "Display", "Class", "ServiceCtr",
+    public Cursor getSilentSmsData() {
+        return mDb.query(SILENT_SMS_TABLE, new String[] {"Address", "Display", "Class", "ServiceCtr",
                         "Message", "Timestamp"},
                 null,null,null,null,COLUMN_ID + " DESC");
     }
@@ -399,7 +399,7 @@ public class AIMSICDDbAdapter {
                                             Integer.parseInt(records.get(i)[7]),
                                             Integer.parseInt(records.get(i)[8]));
                                     break;
-                                case FLASH_SMS_TABLE:
+                                case SILENT_SMS_TABLE:
                                     Bundle bundle = new Bundle();
                                     bundle.putString("address", String.valueOf(records.get(i)[1]));
                                     bundle.putString("display_address",
@@ -409,7 +409,7 @@ public class AIMSICDDbAdapter {
                                     bundle.putString("service_centre",
                                             String.valueOf(records.get(i)[4]));
                                     bundle.putString("message", String.valueOf(records.get(i)[5]));
-                                    insertFlashSms(bundle);
+                                    insertSilentSms(bundle);
                                     break;
                             }
 
@@ -508,10 +508,10 @@ public class AIMSICDDbAdapter {
         public void onCreate(SQLiteDatabase database) {
 
             /*
-             * Flash SMS Database
+             * Silent Sms Database
              */
             String SMS_DATABASE_CREATE = "create table " +
-                    FLASH_SMS_TABLE + " (" + COLUMN_ID +
+                    SILENT_SMS_TABLE + " (" + COLUMN_ID +
                     " integer primary key autoincrement, Address VARCHAR, Display VARCHAR, Class VARCHAR, " +
                     "ServiceCtr VARCHAR, Message VARCHAR, " +
                     "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
@@ -572,7 +572,7 @@ public class AIMSICDDbAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + CELL_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + OPENCELLID_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + FLASH_SMS_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + SILENT_SMS_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + DEFAULT_MCC_TABLE);
 
             onCreate(db);
