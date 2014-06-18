@@ -7,17 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class FlashSmsCardInflater implements IAdapterViewInflater<FlashSmsCardData> {
+public class SilentSmsCardInflater implements IAdapterViewInflater<SilentSmsCardData> {
 
     @Override
-    public View inflate(final BaseInflaterAdapter<FlashSmsCardData> adapter, final int pos, View convertView, ViewGroup parent)
+    public View inflate(final BaseInflaterAdapter<SilentSmsCardData> adapter, final int pos, View convertView, ViewGroup parent)
     {
         ViewHolder holder;
 
         if (convertView == null)
         {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            convertView = inflater.inflate(R.layout.flash_sms_items, parent, false);
+            convertView = inflater.inflate(R.layout.silent_sms_items, parent, false);
             holder = new ViewHolder(convertView);
         }
         else
@@ -25,7 +25,7 @@ public class FlashSmsCardInflater implements IAdapterViewInflater<FlashSmsCardDa
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final FlashSmsCardData item = adapter.getTItem(pos);
+        final SilentSmsCardData item = adapter.getTItem(pos);
         holder.updateDisplay(item);
 
         return convertView;
@@ -53,7 +53,7 @@ public class FlashSmsCardInflater implements IAdapterViewInflater<FlashSmsCardDa
             rootView.setTag(this);
         }
 
-        public void updateDisplay(FlashSmsCardData item)
+        public void updateDisplay(SilentSmsCardData item)
         {
             mAddress.setText(item.getAddress());
             mDisplayAddress.setText(item.getDisplayAddress());
