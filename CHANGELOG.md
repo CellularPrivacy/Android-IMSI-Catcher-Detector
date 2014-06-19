@@ -1,6 +1,15 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 19.06.2014 - WIP-Release v0.1.19-alpha
+
+* Fix: Corrected async task calling UI methods, Database backup and restore should work now
+* Fix: Modified MapViewer location logic which previously did not return any data
+* Fix: Fully removed CDMA specific location methods which caused crashes AGAIN for CDMA users
+* Added: Local Broadcast Receiver handling OpenCellID data and ensure map markers reflect data
+* Added: Cell class added to support modified API neighbouring cell data and simplify operations
+* Update: Android API version of Neighbouring Cell Information as it was broken
+
 #### 18.06.2014
 
 * Changed: Reverted commits that changed Silent SMS to Flash SMS. we **only** want to detect Silent SMS
