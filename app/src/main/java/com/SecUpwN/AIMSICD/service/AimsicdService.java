@@ -80,6 +80,7 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 
 import android.telephony.CellIdentityCdma;
@@ -110,6 +111,7 @@ import com.SecUpwN.AIMSICD.rilexecutor.OemRilExecutor;
 import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
 import com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor;
 import com.SecUpwN.AIMSICD.rilexecutor.StringsResult;
+import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.OemCommands;
 
@@ -144,6 +146,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private static final long GPS_MIN_UPDATE_TIME = 1000;
     private static final float GPS_MIN_UPDATE_DISTANCE = 10;
     public boolean mMultiRilCompatible;
+    public static int REFRESH_RATE;
 
    /*
     * Device Declarations
@@ -158,7 +161,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private int mSID = -1;
     private int mPSC = -1;
     private int mTimingAdvance = -1;
-    private int mNeighbouringCellSize = -1;
     private double mLongitude = 0.0;
     private double mLatitude = 0.0;
     private String mNetType = "";
@@ -178,7 +180,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private String mSimSubs = "";
     private String mDataActivityType = "";
     private String mDataActivityTypeShort = "";
-    private final Map<String, String> mNeighborMap = new HashMap<>();
+    private final List<Cell> mNeighboringCells = new ArrayList<>();
 
    /*
     * Tracking and Alert Declarations
@@ -188,7 +190,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private boolean TrackingFemtocell;
     private boolean mFemtoDetected;
     private boolean mLocationPrompted;
-    private boolean mClassZeroSmsDetected;
+    private boolean mTypeZeroSmsDetected;
 
    /*
     * Samsung MultiRil Implementation
@@ -569,6 +571,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         boolean trackCellPref = prefs.getBoolean(
                 this.getString(R.string.pref_enable_cell_key), false);
 
+        REFRESH_RATE = Integer.parseInt(prefs.getString(this.getString(R.string.pref_refresh_key), "1"));
+
         if (trackFemtoPref) {
             startTrackingFemto();
         }
@@ -614,7 +618,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     mCellID = cdmaCellLocation.getBaseStationId();
                     mLac = cdmaCellLocation.getNetworkId();
                     mSID = getSID();
-                    //updateCdmaLocation();
                 }
                 break;
         }
@@ -666,6 +669,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 mLatitude = lastKnownLocation.getLatitude();
             }
         }
+
+        updateNeighbouringCells();
     }
 
     /**
@@ -1181,32 +1186,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mDataState;
     }
 
-    /**
-     * Updates location from CDMA base station longitude and latitude
-     */
-    public void updateCdmaLocation() {
-        CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
-        int Long = cdmaCellLocation.getBaseStationLongitude();
-        int Lat = cdmaCellLocation.getBaseStationLatitude();
-
-        if(!(Double.isNaN(Long) || Long < -2592000 || Long > 2592000)) {
-            mLongitude = ((double) Long) / (3600 * 4);
-        } else {
-            mLongitude = 0.0f;
-        }
-
-        if(!(Double.isNaN(Lat) || Lat < -2592000 || Lat > 2592000)) {
-            mLatitude = ((double) Lat) / (3600 * 4);
-        } else {
-            mLatitude = 0.0f;
-        }
-
-        mLastLocation.setLongitude(mLongitude);
-        mLastLocation.setLatitude(mLatitude);
-    }
-
     void setSilentSmsStatus(boolean state) {
-        mClassZeroSmsDetected = state;
+        mTypeZeroSmsDetected = state;
         setNotification();
         if (state) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -1215,7 +1196,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             AlertDialog alert = builder.create();
             alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             alert.show();
-            mClassZeroSmsDetected = false;
+            mTypeZeroSmsDetected = false;
         }
     }
 
@@ -1232,7 +1213,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         int status;
 
-        if (mFemtoDetected || mClassZeroSmsDetected) {
+        if (mFemtoDetected || mTypeZeroSmsDetected) {
             status = 3; //ALARM
         } else if (TrackingFemtocell || TrackingCell) {
             status = 2; //Good
@@ -1293,8 +1274,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         + " - ALERT!! Threat Detected";
                 if (mFemtoDetected) {
                     contentText = "ALERT!! FemtoCell Connection Threat Detected";
-                } else if (mClassZeroSmsDetected) {
-                    contentText = "ALERT!! Class Zero Silent SMS Intercepted";
+                } else if (mTypeZeroSmsDetected) {
+                    contentText = "ALERT!! Type Zero Silent SMS Intercepted";
                 }
 
                 break;
@@ -1305,7 +1286,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
 
         Intent notificationIntent = new Intent(mContext, AIMSICD.class);
-        notificationIntent.putExtra("silent_sms", mClassZeroSmsDetected);
+        notificationIntent.putExtra("silent_sms", mTypeZeroSmsDetected);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
         PendingIntent contentIntent = PendingIntent.getActivity(
                 mContext, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -1338,47 +1319,55 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     }
 
     /**
-     * Updates Neighbouring Cell details for either GSM or UMTS networks
+     * Updates Neighbouring Cell details
      *
      */
     public void updateNeighbouringCells() {
-        List<NeighboringCellInfo> neighboringCellInfo;
-        neighboringCellInfo = tm.getNeighboringCellInfo();
-        if (neighboringCellInfo != null) {
-            mNeighbouringCellSize = neighboringCellInfo.size();
-            for (int i = 0; i > neighboringCellInfo.size(); i++) {
-                if (neighboringCellInfo.get(i) != null) {
-                    String dBm;
-                    int rssi = neighboringCellInfo.get(i).getRssi();
+        if (Build.VERSION.SDK_INT > 16) {
+            List<CellInfo> allCellInfo = tm.getAllCellInfo();
+            if (allCellInfo != null) {
+                for (CellInfo cellInfo : allCellInfo) {
+                    if (cellInfo instanceof CellInfoGsm) {
+                        CellInfoGsm gsmCellInfo = (CellInfoGsm) cellInfo;
+                        CellIdentityGsm cellIdentity = gsmCellInfo
+                                .getCellIdentity();
+                        CellSignalStrengthGsm cellSignalStrengthGsm = gsmCellInfo
+                                .getCellSignalStrength();
 
-                    if (rssi == NeighboringCellInfo.UNKNOWN_RSSI) {
-                        dBm = "Unknown RSSI";
-                    } else {
-                        dBm = String.valueOf(-113 + 2 * rssi) + " dBm";
+                        int dbmLevel = cellSignalStrengthGsm.getDbm();
+                        Cell cell = new Cell(cellIdentity.getLac(), cellIdentity.getMcc(),
+                                cellIdentity.getMnc(), dbmLevel, SystemClock.currentThreadTimeMillis());
+
+                        mNeighboringCells.add(cell);
                     }
+                }
+            }
+        } else {
+            List<NeighboringCellInfo> neighboringCellInfo;
+            neighboringCellInfo = tm.getNeighboringCellInfo();
+            if (neighboringCellInfo != null) {
+                for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
+                    int rssi = neighbourCell.getRssi();
+                    int dbmLevel = 0;
 
-                    mNeighborMap.put(neighboringCellInfo.get(i).getLac() +
-                            ":" + neighboringCellInfo.get(i).getCid(), dBm);
+                    if (rssi != NeighboringCellInfo.UNKNOWN_RSSI) {
+                        dbmLevel = -113 + 2 * rssi;
+                    }
+                    Cell cell = new Cell(neighbourCell.getLac(), mMcc, mMnc, dbmLevel,
+                            SystemClock.currentThreadTimeMillis());
+                    mNeighboringCells.add(cell);
                 }
             }
         }
     }
 
     /**
-     * Neighbouring GSM Cell Map
+     * Neighbouring Cell List
      *
-     * @return Map of GSM Neighbouring Cell Information
+     * @return List of (Cell) Neighbouring Cell Information
      */
-    public Map getNeighbouringCells() {
-        return mNeighborMap;
-    }
-    /**
-     * Neighbouring Cell Size
-     *
-     * @return Integer of Neighbouring Cell Size
-     */
-    public int getNeighbouringCellSize() {
-        return mNeighbouringCellSize;
+    public List<Cell> getNeighbouringCells() {
+        return mNeighboringCells;
     }
 
     /**
