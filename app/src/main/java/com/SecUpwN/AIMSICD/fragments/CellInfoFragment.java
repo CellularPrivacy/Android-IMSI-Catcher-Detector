@@ -3,6 +3,7 @@ package com.SecUpwN.AIMSICD.fragments;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.utils.Cell;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,7 +21,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Map;
 
 public class CellInfoFragment extends Fragment {
     private AimsicdService mAimsicdService;
@@ -111,36 +111,28 @@ public class CellInfoFragment extends Fragment {
     private void updateUI() {
         if (mBound) {
             mAimsicdService.updateNeighbouringCells();
-            Map neighborMap = mAimsicdService.getNeighbouringCells();
+            List<Cell> neighboringCells = mAimsicdService.getNeighbouringCells();
+            if (neighboringCells != null && neighboringCells.size() != 0) {
+                mNeighbouringTotal
+                        .setText(String.valueOf(neighboringCells.size()));
 
-            mNeighbouringTotal
-                    .setText(String.valueOf(mAimsicdService.getNeighbouringCellSize()));
-
-            StringBuilder sb = new StringBuilder();
-            int i = 1;
-            if (!neighborMap.isEmpty())
-                for (Object key : neighborMap.keySet()) {
-                    sb.append(i)
-                            .append(") LAC-CID: ")
-                            .append(key)
-                            .append(" RSSI: ")
-                            .append(neighborMap.get(key)); //TS27.007 section 8.5
-                    if (i < neighborMap.size())
-                        sb.append("\n");
-                    i++;
+                StringBuilder sb = new StringBuilder();
+                int i = 1;
+                for (Cell cell : neighboringCells) {
+                    sb.append("Neighbouring Cell ").append(i++).append("\n")
+                            .append("----------------------------")
+                            .append(cell.toString())
+                            .append("----------------------------");
                 }
-            mNeighbouringCells.setText(sb);
-
-            //Try SamSung MultiRil Implementation
-            if (neighborMap.isEmpty()) {
-                    DetectResult rilStatus = mAimsicdService.getRilExecutorStatus();
-                    if (rilStatus.available) {
-                        //new RequestOemInfoTask().execute();
-                        new RequestOemInfoTask().execute();
-                    }
-            } else {
+                mNeighbouringCells.setText(sb);
                 mNeighbouringTotal.setVisibility(View.VISIBLE);
                 mNeighbouringTotalLabel.setVisibility(View.VISIBLE);
+            } else {
+                //Try SamSung MultiRil Implementation
+                DetectResult rilStatus = mAimsicdService.getRilExecutorStatus();
+                if (rilStatus.available) {
+                    new RequestOemInfoTask().execute();
+                }
             }
         }
     }
