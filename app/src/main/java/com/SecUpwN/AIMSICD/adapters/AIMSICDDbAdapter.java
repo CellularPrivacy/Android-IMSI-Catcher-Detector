@@ -1,10 +1,7 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.utils.Helpers;
 
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -43,7 +40,7 @@ public class AIMSICDDbAdapter {
     private final String DEFAULT_MCC_TABLE = "defaultlocation";
     private final String SILENT_SMS_TABLE = "silentsms";
     private final String DB_NAME = "myCellInfo";
-    private final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
+    public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
 
     public AIMSICDDbAdapter(Context context) {
         mContext = context;
@@ -437,13 +434,8 @@ public class AIMSICDDbAdapter {
             for (String table : mTables) {
                 backup(table);
             }
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setTitle(R.string.database_export_successful)
-                    .setMessage("Database Backup successfully saved to:\n" + FOLDER);
-            builder.create().show();
             return true;
         } catch (Exception ioe) {
-            Helpers.sendMsg(mContext, "Database Backup Error");
             Log.e (TAG, "exportDB() " + ioe);
             return false;
         }

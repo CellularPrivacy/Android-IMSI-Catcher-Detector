@@ -124,7 +124,7 @@ public class Helpers {
      * @param lat Latitude of current location
      * @param lng Longitude of current location
      */
-    public static void getOpenCellData(Context context, double lat, double lng) {
+    public static void getOpenCellData(Context context, double lat, double lng, int type) {
         if (Helpers.isNetAvailable(context)) {
             double earthRadius = 6371.01;
 
@@ -148,7 +148,7 @@ public class Helpers {
                                 + "&BBOX=" + boundParameter
                                 + "&format=csv";
 
-                new RequestTask(context, RequestTask.OPEN_CELL_ID_REQUEST).execute(urlString);
+                new RequestTask(context, type).execute(urlString);
             }
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);

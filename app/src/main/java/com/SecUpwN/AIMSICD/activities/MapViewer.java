@@ -18,9 +18,11 @@
 package com.SecUpwN.AIMSICD.activities;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -29,6 +31,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -54,6 +57,7 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.RequestTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,6 +65,8 @@ import java.util.Map;
 
 public class MapViewer extends FragmentActivity implements OnSharedPreferenceChangeListener {
     private final String TAG = "AIMSICD_MapViewer";
+
+    public static String updateOpenCellIDMarkers = "update_opencell_markers";
 
     private GoogleMap mMap;
 
@@ -120,6 +126,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                     break;
             }
         }
+
     }
 
     @Override
@@ -130,6 +137,9 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         prefs = this.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         prefs.registerOnSharedPreferenceChangeListener(this);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(updateOpenCellIDMarkers));
     }
 
     @Override
@@ -141,7 +151,22 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
             mContext.unbindService(mConnection);
             mBound = false;
         }
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            loadOpenCellIDMarkers();
+        }
+    };
 
     /**
      * Service Connection to bind the activity to the service
@@ -256,21 +281,18 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 return true;
             case R.id.get_opencellid:
             {
-                Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
-                Location mLocation = mMap.getMyLocation();
-                if (mLocation != null && mLocation.hasAccuracy()) {
-                    Helpers.getOpenCellData(mContext, mLocation.getLatitude(),
-                            mLocation.getLongitude());
+                Location lastKnown = mAimsicdService.lastKnownLocation();
+                if (lastKnown != null) {
+                    Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
+                    Helpers.getOpenCellData(mContext, lastKnown.getLatitude(),
+                            lastKnown.getLongitude(), RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
                 } else if (loc != null) {
-                    Helpers.getOpenCellData(mContext, loc.latitude, loc.longitude);
+                    Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
+                    Helpers.getOpenCellData(mContext, loc.latitude, loc.longitude,
+                            RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
                 } else {
-                    Location lastKnown = mAimsicdService.lastKnownLocation();
-                    if (lastKnown != null) {
-                        Helpers.getOpenCellData(mContext, lastKnown.getLatitude(),
-                                lastKnown.getLongitude());
-                    } else {
-                        Helpers.sendMsg(this, "Unable to determine your location!");
-                    }
+                    Helpers.sendMsg(mContext,
+                            "Unable to determine your last location. \nEnable Location Services and try again.");
                 }
                 return true;
             }
@@ -285,24 +307,19 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
      *
      */
     private void loadEntries() {
-        int SIGNAL_SIZE_RATIO = 15;
-        double dlat;
-        double dlng;
-        int net;
+        final int SIGNAL_SIZE_RATIO = 15;
         int signal;
         int color;
-        int cellID;
-        int lac;
         CircleOptions circleOptions;
         mDbHelper.open();
         Cursor c = mDbHelper.getCellData();
         if (c.moveToFirst()) {
             do {
-                cellID = c.getInt(0);
-                lac = c.getInt(1);
-                net = c.getInt(2);
-                dlat = Double.parseDouble(c.getString(3));
-                dlng = Double.parseDouble(c.getString(4));
+                final int cellID = c.getInt(0);
+                final int lac = c.getInt(1);
+                final int net = c.getInt(2);
+                final double dlat = Double.parseDouble(c.getString(3));
+                final double dlng = Double.parseDouble(c.getString(4));
                 if (dlat == 0.0 && dlng == 0.0)
                     continue;
                 signal = c.getInt(5);
@@ -407,21 +424,28 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
             }
         }
 
+        loadOpenCellIDMarkers();
+
+        mDbHelper.close();
+    }
+
+    private void loadOpenCellIDMarkers() {
         //Check if OpenCellID data exists and if so load this now
-        c = mDbHelper.getOpenCellIDData();
+        mDbHelper.open();
+        Cursor c = mDbHelper.getOpenCellIDData();
         if (c.moveToFirst()) {
             do {
-                cellID = c.getInt(0);
-                dlat = Double.parseDouble(c.getString(4));
-                dlng = Double.parseDouble(c.getString(5));
-                loc = new LatLng (dlat, dlng);
-                lac = c.getInt(1);
-                int mcc = c.getInt(2);
-                int mnc = c.getInt(3);
-                int samples = c.getInt(7);
+                final double dlat = Double.parseDouble(c.getString(4));
+                final double dlng = Double.parseDouble(c.getString(5));
+                final int cellID = c.getInt(0);
+                final int lac = c.getInt(1);
+                final LatLng location = new LatLng (dlat, dlng);
+                final int mcc = c.getInt(2);
+                final int mnc = c.getInt(3);
+                final int samples = c.getInt(7);
                 // Add map marker for CellID
                 Marker marker = mMap.addMarker(new MarkerOptions()
-                        .position(loc)
+                        .position(location)
                         .draggable(false)
                         .title("CellID - " + cellID));
 
@@ -431,7 +455,6 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
 
             } while (c.moveToNext());
         }
-
         mDbHelper.close();
     }
 
