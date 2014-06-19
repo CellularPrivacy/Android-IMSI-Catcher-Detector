@@ -1,11 +1,16 @@
 package com.SecUpwN.AIMSICD.utils;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.v4.content.LocalBroadcastManager;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -20,8 +25,9 @@ import java.net.URLConnection;
 public class RequestTask extends AsyncTask<String, String, String> {
 
     public static final int OPEN_CELL_ID_REQUEST = 1;
-    public static final int BACKUP_DATABASE = 2;
-    public static final int RESTORE_DATABASE = 3;
+    public static final int OPEN_CELL_ID_REQUEST_FROM_MAP = 2;
+    public static final int BACKUP_DATABASE = 3;
+    public static final int RESTORE_DATABASE = 4;
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
     private final int mType;
@@ -37,6 +43,7 @@ public class RequestTask extends AsyncTask<String, String, String> {
 
         switch (mType) {
             case OPEN_CELL_ID_REQUEST:
+            case OPEN_CELL_ID_REQUEST_FROM_MAP:
                 int count;
                 try {
                     File dir = new File(
@@ -48,12 +55,12 @@ public class RequestTask extends AsyncTask<String, String, String> {
                     File file = new File(dir, "opencellid.csv");
 
                     URL url = new URL(urlString[0]);
-                    URLConnection conection = url.openConnection();
-                    conection.connect();
+                    URLConnection connection = url.openConnection();
+                    connection.connect();
 
                     // this will be useful so that you can show a typical 0-100%
                     // progress bar
-                    int lengthOfFile = conection.getContentLength();
+                    int lengthOfFile = connection.getContentLength();
                     AIMSICD.mProgressBar.setMax(lengthOfFile);
 
                     // download the file
@@ -82,24 +89,28 @@ public class RequestTask extends AsyncTask<String, String, String> {
                     output.close();
                     input.close();
 
+                    return "Successful";
                 } catch (MalformedURLException e) {
                     return null;
                 } catch (IOException e) {
                     return null;
                 }
-                break;
             case BACKUP_DATABASE:
                 mDbAdapter.open();
-                if (mDbAdapter.backupDB())
+                if (mDbAdapter.backupDB()) {
+                    mDbAdapter.close();
                     return "Successful";
+                }
                 mDbAdapter.close();
-                break;
+                return null;
             case RESTORE_DATABASE:
                 mDbAdapter.open();
-                if (mDbAdapter.restoreDB())
+                if (mDbAdapter.restoreDB()) {
+                    mDbAdapter.close();
                     return "Successful";
+                }
                 mDbAdapter.close();
-                break;
+                return null;
         }
 
         return null;
@@ -112,10 +123,28 @@ public class RequestTask extends AsyncTask<String, String, String> {
 
         switch (mType) {
             case OPEN_CELL_ID_REQUEST:
+                if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
                     if (mDbAdapter.updateOpenCellID())
                         Helpers.sendMsg(mContext, "OpenCellID data successfully received");
                     mDbAdapter.close();
+                } else {
+                    Helpers.sendMsg(mContext, "Error retrieving OpenCellID data");
+                }
+                break;
+            case OPEN_CELL_ID_REQUEST_FROM_MAP:
+                if (result != null && result.equals("Successful")) {
+                    mDbAdapter.open();
+                    if (mDbAdapter.updateOpenCellID()) {
+                        Intent intent = new Intent(MapViewer.updateOpenCellIDMarkers);
+                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                        Helpers.sendMsg(mContext, "OpenCellID data successfully received and "
+                                + "Map Markers updated");
+                        mDbAdapter.close();
+                    }
+                } else {
+                    Helpers.sendMsg(mContext, "Error retrieving OpenCellID data");
+                }
                 break;
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
@@ -124,6 +153,15 @@ public class RequestTask extends AsyncTask<String, String, String> {
                     Helpers.sendMsg(mContext, "Error restoring database");
                 }
                 break;
+            case BACKUP_DATABASE:
+                if (result != null && result.equals("Successful")) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setTitle(R.string.database_export_successful)
+                            .setMessage("Database Backup successfully saved to:\n" + AIMSICDDbAdapter.FOLDER);
+                    builder.create().show();
+                } else {
+                    Helpers.sendMsg(mContext, "Error backing up database");
+                }
         }
     }
 }
