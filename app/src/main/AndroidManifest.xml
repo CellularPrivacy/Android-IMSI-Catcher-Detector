@@ -22,7 +22,7 @@
 
     <application
             android:allowBackup="false"
-            android:icon="@drawable/sense_alarm"
+            android:icon="@drawable/sense_danger"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
         <uses-library android:name="com.google.android.maps"/>
