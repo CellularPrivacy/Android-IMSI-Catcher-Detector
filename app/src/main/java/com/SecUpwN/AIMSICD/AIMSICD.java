@@ -258,10 +258,11 @@ public class AIMSICD extends FragmentActivity {
                 Location loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
                     Helpers.sendMsg(mContext, "Contacting OpenCellID.org for data...");
-                    Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude());
+                    Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude(),
+                            RequestTask.OPEN_CELL_ID_REQUEST);
                 } else {
                     Helpers.sendMsg(mContext,
-                            "Unable to determine your last location, enable Location Services and try again.");
+                            "Unable to determine your last location. \nEnable Location Services and try again.");
                 }
                 return true;
             case R.id.app_exit:
