@@ -126,7 +126,6 @@ public class DeviceFragment extends Fragment {
                     content.setText(String.valueOf(mAimsicdService.getSID()));
                     content = (TextView) mView.findViewById(R.id.network_baseid);
                     content.setText(String.valueOf(mAimsicdService.getCellId()));
-                    mAimsicdService.updateCdmaLocation();
                     double[] location = mAimsicdService.getLastLocation();
                     content = (TextView) mView.findViewById(R.id.network_cmda_lat);
                     content.setText(String.valueOf(location[0]));
