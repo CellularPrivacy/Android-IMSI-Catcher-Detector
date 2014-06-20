@@ -1,6 +1,12 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 20.06.2014
+
+* Update: Massive revamp of the UI to nuke swiping and add a new menu button the upper left side
+* Added: App refresh rate implemented into the Device Information & Cell Information fragments
+* Added: Re-added CMD Processor functions to support AT Command Injection via device terminal
+
 #### 19.06.2014 - WIP-Release v0.1.19-alpha
 
 * Fix: Corrected async task calling UI methods, Database backup and restore should work now
