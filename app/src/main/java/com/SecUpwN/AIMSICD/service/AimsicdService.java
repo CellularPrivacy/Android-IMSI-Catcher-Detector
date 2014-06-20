@@ -581,7 +581,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         long t;
         switch (rate) {
             case 1:
-                t = 30L;
+                t = 15L;
                 break;
             default:
                 t = (rate * 1L);
@@ -1744,6 +1744,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     {
         final String KEY_UI_ICONS = getBaseContext().getString(R.string.pref_ui_icons_key);
         final String FEMTO_DECTECTION = getBaseContext().getString(R.string.pref_femto_detection_key);
+        final String REFRESH = getBaseContext().getString(R.string.pref_refresh_key);
 
         if (key.equals(KEY_UI_ICONS)) {
             //Update Notification to display selected icon type
@@ -1756,6 +1757,22 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             } else {
                 stopTrackingFemto();
             }
+        } else if (key.equals(REFRESH)) {
+            String refreshRate = prefs.getString(getString(R.string.pref_refresh_key), "1");
+            if (refreshRate.isEmpty())
+                refreshRate = "1";
+
+            int rate = Integer.parseInt(refreshRate);
+            long t;
+            switch (rate) {
+                case 1:
+                    t = 15L;
+                    break;
+                default:
+                    t = (rate * 1L);
+                    break;
+            }
+            REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
         }
     }
 
