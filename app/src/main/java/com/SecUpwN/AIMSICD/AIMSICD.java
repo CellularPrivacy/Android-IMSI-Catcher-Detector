@@ -17,7 +17,10 @@
 
 package com.SecUpwN.AIMSICD;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,22 +28,24 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.activities.MapViewer;
@@ -55,9 +60,10 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class AIMSICD extends FragmentActivity {
+public class AIMSICD extends Activity {
 
     private final String TAG = "AIMSICD";
 
@@ -69,11 +75,14 @@ public class AIMSICD extends FragmentActivity {
 
     private AimsicdService mAimsicdService;
 
-    private FragmentManager fm;
-    private List<Fragment> mFragmentList;
-    private List<String> titles;
+    private String[] mNavigationTitles;
+    private List<HashMap<String,String>> mNavigationItems;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
 
-    private FragmentStatePagerAdapter adapterViewPager;
     public static ProgressBar mProgressBar;
 
     //Back press to exit timer
@@ -85,17 +94,79 @@ public class AIMSICD extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.top);
+        setContentView(R.layout.main);
 
         // Bind to LocalService
         Intent intent = new Intent(this, AimsicdService.class);
         //Start Service before binding to keep it resident when activity is destroyed
         startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        fm = getSupportFragmentManager();
-        adapterViewPager = new MyPagerAdapter(fm);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPager.setAdapter(adapterViewPager);
+
+        mNavigationTitles = getResources().getStringArray(R.array.navigation_array);
+        mTitle = mDrawerTitle = getTitle();
+
+        //Declare Drawer Icons
+        int[] mIcons = new int[]{
+                R.drawable.ic_action_phone,
+                R.drawable.cell_tower,
+                R.drawable.ic_action_computer,
+                R.drawable.ic_action_storage,
+                R.drawable.ic_action_map,
+                R.drawable.ic_action_about,
+        };
+
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        mNavigationItems = new ArrayList<>();
+        for(int i=0;i<6;i++){
+            HashMap<String, String> hm = new HashMap<>();
+            hm.put("title", mNavigationTitles[i]);
+            hm.put("icon", Integer.toString(mIcons[i]) );
+            mNavigationItems.add(hm);
+        }
+
+        String[] from = {"title", "icon"};
+        int[] to = {R.id.navigation_item, R.id.icon};
+
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new SimpleAdapter(mContext,
+                mNavigationItems, R.layout.drawer_layout, from, to));
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mDrawerTitle);
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        //Display the Device Fragment as the Default View
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, new DeviceFragment())
+                .commit();
+
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         prefs = mContext.getSharedPreferences(
@@ -135,6 +206,21 @@ public class AIMSICD extends FragmentActivity {
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         // Unbind from the service
@@ -150,6 +236,61 @@ public class AIMSICD extends FragmentActivity {
             stopService(intent);
         }
     }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position) {
+        // Create a new fragment
+        Fragment fragment;
+        switch (position) {
+            case 0:
+                fragment = new DeviceFragment();
+                break;
+            case 1:
+                fragment = new CellInfoFragment();
+                break;
+            case 2:
+                fragment = new AtCommandFragment();
+                break;
+            case 3:
+                fragment = new DbViewerFragment();
+                break;
+            case 4:
+                //Need to declare a fragment so make it the Device fragment
+                fragment = new DeviceFragment();
+                showmap();
+                break;
+            case 5:
+                fragment = new AboutFragment();
+                break;
+            default:
+                fragment = new DeviceFragment();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        // Highlight the selected item, update the title, and close the drawer
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mNavigationTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getActionBar().setTitle(mTitle);
+    }
+
 
     /**
      * Service Connection to bind the activity to the service
@@ -230,6 +371,12 @@ public class AIMSICD extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         // Handle item selection
         Intent intent;
         switch (item.getItemId()) {
@@ -318,40 +465,5 @@ public class AIMSICD extends FragmentActivity {
         } else {
             mAimsicdService.startTrackingFemto();
         }
-    }
-
-    class MyPagerAdapter extends FragmentStatePagerAdapter {
-
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-            mFragmentList = new ArrayList<>();
-            titles = new ArrayList<>();
-            mFragmentList.add(new DeviceFragment());
-            titles.add(getString(R.string.device_info));
-            mFragmentList.add(new CellInfoFragment());
-            titles.add(getString(R.string.cell_info_title));
-            mFragmentList.add(new AtCommandFragment());
-            titles.add(getString(R.string.at_command_title));
-            mFragmentList.add(new DbViewerFragment());
-            titles.add(getString(R.string.db_viewer));
-            mFragmentList.add(new AboutFragment());
-            titles.add(getString(R.string.about_aimsicd));
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titles.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
     }
 }
