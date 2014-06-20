@@ -3,7 +3,7 @@
 
 #### 20.06.2014
 
-* Update: Massive revamp of the UI to nuke swiping and add a new menu button the upper left side
+* Update: Massive revamp of the UI to nuke swiping and add a new menu button on the upper left side
 * Added: App refresh rate implemented into the Device Information & Cell Information fragments
 * Added: Re-added CMD Processor functions to support AT Command Injection via device terminal
 
