@@ -4,6 +4,7 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -12,6 +13,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.app.Fragment;
 import android.text.TextUtils;
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CellInfoFragment extends Fragment {
     private AimsicdService mAimsicdService;
@@ -34,6 +37,18 @@ public class CellInfoFragment extends Fragment {
 
     private boolean mBound;
     private Context mContext;
+    private Activity mActivity;
+
+    Handler timerHandler = new Handler();
+
+    Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            updateUI();
+            timerHandler.postDelayed(this, AimsicdService.REFRESH_RATE);
+        }
+    };
 
     public CellInfoFragment () {}
 
@@ -41,9 +56,29 @@ public class CellInfoFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = activity.getBaseContext();
+        mActivity = activity;
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        //Refresh display if preference is not set to manual
+        if (AimsicdService.REFRESH_RATE != 0) {
+            timerHandler.postDelayed(timerRunnable, 0);
+            Helpers.sendMsg(mContext, "Refreshing every "
+                    + TimeUnit.MILLISECONDS.toSeconds(AimsicdService.REFRESH_RATE) + " seconds");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        timerHandler.removeCallbacks(timerRunnable);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        timerHandler.removeCallbacks(timerRunnable);
     }
 
     @Override
@@ -74,6 +109,7 @@ public class CellInfoFragment extends Fragment {
             mContext.unbindService(mConnection);
             mBound = false;
         }
+        timerHandler.removeCallbacks(timerRunnable);
     }
 
     @Override
@@ -145,7 +181,7 @@ public class CellInfoFragment extends Fragment {
 
     void updateCipheringIndicator() {
         final List<String> list = mAimsicdService.getCipheringInfo();
-        getActivity().runOnUiThread(new Runnable() {
+        mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (list != null) {
@@ -160,7 +196,7 @@ public class CellInfoFragment extends Fragment {
 
     void updateNeighbouringCells() {
         final List<String> list = mAimsicdService.getNeighbours();
-        getActivity().runOnUiThread(new Runnable() {
+        mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (list != null) {
