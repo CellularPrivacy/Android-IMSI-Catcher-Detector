@@ -3,13 +3,14 @@ package com.SecUpwN.AIMSICD.fragments;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +35,13 @@ public class DeviceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        mContext = getActivity().getBaseContext();
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = activity.getBaseContext();
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -43,7 +50,7 @@ public class DeviceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        mView= inflater.inflate(R.layout.main,
+        mView= inflater.inflate(R.layout.device,
                 container, false);
         updateUI();
         return mView;
