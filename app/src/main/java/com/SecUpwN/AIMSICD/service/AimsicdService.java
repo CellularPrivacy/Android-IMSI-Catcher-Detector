@@ -101,6 +101,7 @@ import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
+import android.util.TimeUtils;
 import android.view.WindowManager;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
@@ -123,6 +124,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 
 public class AimsicdService extends Service implements OnSharedPreferenceChangeListener {
 
@@ -146,7 +148,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private static final long GPS_MIN_UPDATE_TIME = 1000;
     private static final float GPS_MIN_UPDATE_DISTANCE = 10;
     public boolean mMultiRilCompatible;
-    public static int REFRESH_RATE;
+    public static long REFRESH_RATE;
 
    /*
     * Device Declarations
@@ -571,7 +573,21 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         boolean trackCellPref = prefs.getBoolean(
                 this.getString(R.string.pref_enable_cell_key), false);
 
-        REFRESH_RATE = Integer.parseInt(prefs.getString(this.getString(R.string.pref_refresh_key), "1"));
+        String refreshRate = prefs.getString(getString(R.string.pref_refresh_key), "1");
+        if (refreshRate.isEmpty())
+            refreshRate = "1";
+
+        int rate = Integer.parseInt(refreshRate);
+        long t;
+        switch (rate) {
+            case 1:
+                t = 30L;
+                break;
+            default:
+                t = (rate * 1L);
+                break;
+        }
+        REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
 
         if (trackFemtoPref) {
             startTrackingFemto();
