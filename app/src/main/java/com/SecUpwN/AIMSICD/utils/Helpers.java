@@ -32,6 +32,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -355,6 +356,69 @@ public class Helpers {
         while (newLength > 0 && TextUtils.isEmpty(display[newLength-1])) newLength -= 1;
 
         return Arrays.asList(Arrays.copyOf(display, newLength));
+    }
+
+    public static String getProp(String prop) {
+        return CMDProcessor.runSuCommand("getprop " + prop).getStdout();
+    }
+
+    public static String getSystemProp(Context context, String prop, String def) {
+        String result = null;
+        try {
+            result = SystemPropertiesReflection.get(context, prop);
+        } catch (IllegalArgumentException iae) {
+            Log.e(TAG, "Failed to get prop: " + prop);
+        }
+        return result == null ? def : result;
+    }
+
+    /**
+     * Checks device for SuperUser permission
+     *
+     * @return If SU was granted or denied
+     */
+    @SuppressWarnings("MethodWithMultipleReturnPoints")
+    public static boolean checkSu() {
+        if (!new File("/system/bin/su").exists()
+                && !new File("/system/xbin/su").exists()) {
+            Log.e(TAG, "su binary does not exist!!!");
+            return false; // tell caller to bail...
+        }
+        try {
+            if (CMDProcessor.runSuCommand("ls /data/app-private").success()) {
+                Log.i(TAG, " SU exists and we have permission");
+                return true;
+            } else {
+                Log.i(TAG, " SU exists but we don't have permission");
+                return false;
+            }
+        } catch (NullPointerException e) {
+            Log.e(TAG, "NullPointer throw while looking for su binary", e);
+            return false;
+        }
+    }
+
+    /**
+     * Checks to see if Busybox is installed in "/system/"
+     *
+     * @return If busybox exists
+     */
+    public static boolean checkBusybox() {
+        if (!new File("/system/bin/busybox").exists()
+                && !new File("/system/xbin/busybox").exists()) {
+            Log.e(TAG, "Busybox not in xbin or bin!");
+            return false;
+        }
+        try {
+            if (!CMDProcessor.runSuCommand("busybox mount").success()) {
+                Log.e(TAG, "Busybox is there but it is borked! ");
+                return false;
+            }
+        } catch (NullPointerException e) {
+            Log.e(TAG, "NullpointerException thrown while testing busybox", e);
+            return false;
+        }
+        return true;
     }
 
 }
