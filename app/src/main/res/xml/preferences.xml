@@ -27,7 +27,7 @@
                 android:dialogTitle="@string/pref_refresh_title"
                 android:entries="@array/pref_refresh_entries"
                 android:entryValues="@array/pref_refresh_values"
-                android:defaultValue=""/>
+                android:defaultValue="1"/>
     </PreferenceCategory>
 
     <PreferenceCategory
