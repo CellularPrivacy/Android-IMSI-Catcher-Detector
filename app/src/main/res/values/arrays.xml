@@ -51,6 +51,14 @@
         <item>"300"</item>
     </string-array>
 
+    <string-array name="navigation_array">
+        <item>"Device Information"</item>
+        <item>"Cell Information"</item>
+        <item>"AT Command Injector"</item>
+        <item>"Database Viewer"</item>
+        <item>"Map Viewer"</item>
+        <item>"About AIMSICD"</item>
+    </string-array>
 
 
 </resources>

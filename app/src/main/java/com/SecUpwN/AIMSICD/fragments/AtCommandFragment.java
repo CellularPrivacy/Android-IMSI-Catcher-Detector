@@ -1,10 +1,10 @@
 package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +29,7 @@ public class AtCommandFragment extends Fragment {
     private AimsicdService mAimsicdService;
     private boolean mBound;
     private Context mContext;
+    private Activity mActivity;
     private View mView;
     private Button mAtCommandExecute;
     private TextView mAtResponse;
@@ -51,7 +52,13 @@ public class AtCommandFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getActivity().getBaseContext();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = activity.getBaseContext();
+        mActivity = activity;
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -106,7 +113,7 @@ public class AtCommandFragment extends Fragment {
         try {
             String[] atCommand = new String[]{mAtCommand.getText().toString()};
             final List<String> list = mAimsicdService.executeAtCommand(atCommand);
-            getActivity().runOnUiThread(new Runnable() {
+            mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     if (list != null) {
