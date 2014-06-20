@@ -5,6 +5,7 @@ import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +13,7 @@ import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,15 @@ public class CellInfoFragment extends Fragment {
     private Context mContext;
 
     public CellInfoFragment () {}
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = activity.getBaseContext();
+        // Bind to LocalService
+        Intent intent = new Intent(mContext, AimsicdService.class);
+        mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,10 +79,6 @@ public class CellInfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getActivity().getBaseContext();
-        // Bind to LocalService
-        Intent intent = new Intent(mContext, AimsicdService.class);
-        mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     /**
