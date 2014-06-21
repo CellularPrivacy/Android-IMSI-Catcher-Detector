@@ -104,28 +104,6 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
-        loadEntries();
-
-        String mapTypePref = getResources().getString(R.string.pref_map_type_key);
-        prefs = mContext.getSharedPreferences(
-                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-        if (prefs.contains(mapTypePref)) {
-            int mapType = Integer.parseInt(prefs.getString(mapTypePref, "0"));
-            switch (mapType) {
-                case 0:
-                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                    break;
-                case 1:
-                    mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                    break;
-                case 2:
-                    mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                    break;
-                case 3:
-                    mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-                    break;
-            }
-        }
 
     }
 
@@ -140,6 +118,15 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter(updateOpenCellIDMarkers));
+
+        if (!mBound) {
+            // Bind to LocalService
+            Intent intent = new Intent(mContext, AimsicdService.class);
+            mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+
+        loadPreferences();
+        loadEntries();
     }
 
     @Override
@@ -185,6 +172,29 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
             mBound = false;
         }
     };
+
+    private void loadPreferences() {
+        String mapTypePref = getResources().getString(R.string.pref_map_type_key);
+        prefs = mContext.getSharedPreferences(
+                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        if (prefs.contains(mapTypePref)) {
+            int mapType = Integer.parseInt(prefs.getString(mapTypePref, "0"));
+            switch (mapType) {
+                case 0:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    break;
+                case 1:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    break;
+                case 2:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                    break;
+                case 3:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                    break;
+            }
+        }
+    }
 
     /**
      * Initialises the Map and sets initial options
@@ -237,9 +247,9 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                                 tv = (TextView) v.findViewById(R.id.cell_id);
                                 tv.setText(data.cellID);
                                 tv = (TextView) v.findViewById(R.id.lat);
-                                tv.setText("" + data.lat);
+                                tv.setText(String.valueOf(data.lat));
                                 tv = (TextView) v.findViewById(R.id.lng);
-                                tv.setText("" + data.lng);
+                                tv.setText(String.valueOf(data.lng));
                                 tv = (TextView) v.findViewById(R.id.mcc);
                                 tv.setText(data.mcc);
                                 tv = (TextView) v.findViewById(R.id.mnc);
@@ -310,6 +320,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         final int SIGNAL_SIZE_RATIO = 15;
         int signal;
         int color;
+        mMap.clear();
         CircleOptions circleOptions;
         mDbHelper.open();
         Cursor c = mDbHelper.getCellData();
@@ -401,7 +412,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         } else {
             // Try and find last known location and zoom there
             Location lastLoc = mAimsicdService.lastKnownLocation();
-            if (lastLoc.getLatitude() != 0.0 && lastLoc.getLongitude() != 0.0) {
+            if (lastLoc != null && (lastLoc.getLatitude() != 0.0 && lastLoc.getLongitude() != 0.0)) {
                 loc = new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude());
                 CameraPosition POSITION =
                         new CameraPosition.Builder().target(loc)
@@ -411,8 +422,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
             } else {
                 //Use Mcc to move camera to an approximate location near Countries Capital
-                TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-                int mcc = Integer.parseInt(tm.getNetworkOperator().substring(0, 3));
+                int mcc = mAimsicdService.getMCC();
                 double[] d = mDbHelper.getDefaultLocation(mcc);
                 loc = new LatLng(d[0], d[1]);
                 CameraPosition POSITION =
