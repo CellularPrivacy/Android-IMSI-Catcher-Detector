@@ -1,6 +1,9 @@
 package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
+import com.SecUpwN.AIMSICD.adapters.CardItemData;
+import com.SecUpwN.AIMSICD.adapters.NeighbouringCellCardInflater;
 import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
@@ -21,6 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,9 +34,10 @@ import java.util.concurrent.TimeUnit;
 public class CellInfoFragment extends Fragment {
     private AimsicdService mAimsicdService;
 
+    private ListView lv;
     private TextView mNeighbouringCells;
     private TextView mNeighbouringTotal;
-    private TextView mNeighbouringTotalLabel;
+    private TableRow mNeighbouringTotalView;
     private TextView mCipheringIndicatorLabel;
     private TextView mCipheringIndicator;
 
@@ -88,10 +94,10 @@ public class CellInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.cell_fragment,
                 container, false);
         if (view != null) {
+            lv = (ListView) view.findViewById(R.id.list_view);
             mNeighbouringCells = (TextView) view.findViewById(R.id.neighbouring_cells);
-
             mNeighbouringTotal = (TextView) view.findViewById(R.id.neighbouring_number);
-            mNeighbouringTotalLabel = (TextView) view.findViewById(R.id.neighbouring_number_label);
+            mNeighbouringTotalView = (TableRow) view.findViewById(R.id.neighbouring_total);
             mCipheringIndicatorLabel = (TextView) view.findViewById(R.id.ciphering_indicator_title);
             mCipheringIndicator = (TextView) view.findViewById(R.id.ciphering_indicator);
 
@@ -138,6 +144,7 @@ public class CellInfoFragment extends Fragment {
     private class btnClick implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            Helpers.sendMsg(mContext,"Refreshing now...");
             updateUI();
         }
     }
@@ -158,17 +165,24 @@ public class CellInfoFragment extends Fragment {
                 mNeighbouringTotal
                         .setText(String.valueOf(neighboringCells.size()));
 
-                StringBuilder sb = new StringBuilder();
+                BaseInflaterAdapter<CardItemData> adapter
+                        = new BaseInflaterAdapter<>(
+                        new NeighbouringCellCardInflater());
                 int i = 1;
+                int total = neighboringCells.size();
                 for (Cell cell : neighboringCells) {
-                    sb.append("Neighbouring Cell ").append(i++).append("\n")
-                            .append("----------------------------")
-                            .append(cell.toString())
-                            .append("----------------------------");
+                    CardItemData data = new CardItemData("Cell ID (CID): " + cell.getCID(),
+                            "Location Code (LAC): " + cell.getLAC(),
+                            "Country Code (MCC): " + cell.getMCC(),
+                            "Network Code (MNC): " + cell.getMNC(),
+                            "Signal Strength (dBM): " + cell.getDBM(),
+                            "" + i + " / " + total);
+                    adapter.addItem(data, false);
+
                 }
-                mNeighbouringCells.setText(sb);
-                mNeighbouringTotal.setVisibility(View.VISIBLE);
-                mNeighbouringTotalLabel.setVisibility(View.VISIBLE);
+                lv.setAdapter(adapter);
+                mNeighbouringCells.setVisibility(View.GONE);
+                mNeighbouringTotalView.setVisibility(View.VISIBLE);
             } else {
                 //Try SamSung MultiRil Implementation
                 DetectResult rilStatus = mAimsicdService.getRilExecutorStatus();
@@ -188,7 +202,6 @@ public class CellInfoFragment extends Fragment {
                     mCipheringIndicatorLabel.setVisibility(View.VISIBLE);
                     mCipheringIndicator.setVisibility(View.VISIBLE);
                     mCipheringIndicator.setText(TextUtils.join("\n", list));
-
                 }
             }
         });
@@ -201,8 +214,8 @@ public class CellInfoFragment extends Fragment {
             public void run() {
                 if (list != null) {
                     mNeighbouringCells.setText(TextUtils.join("\n", list));
-                    mNeighbouringTotal.setVisibility(View.GONE);
-                    mNeighbouringTotalLabel.setVisibility(View.GONE);
+                    mNeighbouringCells.setVisibility(View.VISIBLE);
+                    mNeighbouringTotalView.setVisibility(View.GONE);
                 }
             }
         });
