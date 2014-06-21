@@ -93,38 +93,6 @@ public class DbViewerFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        lv = (ListView) mView.findViewById(R.id.list_view);
-        tblSpinner = (Spinner) mView.findViewById(R.id.table_spinner);
-        tblSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
-                    int position, long id) {
-                mTableSelected = String.valueOf(tblSpinner.getSelectedItem());
-                mMadeSelection = true;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                mMadeSelection = false;
-            }
-
-        });
-
-        Button loadTable = (Button) mView.findViewById(R.id.load_table_data);
-
-        loadTable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mMadeSelection) {
-                    new MyAsync().execute();
-                }
-            }
-        });
-    }
-
     private void BuildTable(Cursor tableData) {
         if (tableData != null && tableData.getCount() > 0) {
             switch (mTableSelected) {
