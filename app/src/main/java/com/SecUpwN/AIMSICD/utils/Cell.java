@@ -1,15 +1,16 @@
 package com.SecUpwN.AIMSICD.utils;
 
 public class Cell {
+
     private int cid;
     private int lac;
     private int mcc;
     private int mnc;
     private int dbm;
-
     private long timestamp;
 
-    public Cell() {}
+    public Cell() {
+    }
 
     public Cell(int cid, int lac, int mcc, int mnc, int dbm, long timestamp) {
         this.cid = cid;
@@ -81,19 +82,21 @@ public class Cell {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Cell other = (Cell) obj;
         return this.cid == other.getCID() && this.lac == other.getLAC() && this.mcc == other
                 .getMCC() && this.mnc == other.getMNC();
     }
 
-    public String toString ()
-    {
+    public String toString() {
         StringBuilder result = new StringBuilder();
 
         result.append("Cell ID (CID): ").append(cid).append("\n");

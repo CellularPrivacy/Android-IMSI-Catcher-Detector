@@ -3,6 +3,7 @@ package com.SecUpwN.AIMSICD.adapters;
 import java.text.SimpleDateFormat;
 
 public class SilentSmsCardData {
+
     private final String mAddress;
     private final String mDisplayAddress;
     private final String mMessageClass;
@@ -11,8 +12,7 @@ public class SilentSmsCardData {
     private final long mTimestamp;
 
     public SilentSmsCardData(String address, String displayAddress, String messageClass,
-            String serviceCentre, String messageBody, long timestamp)
-    {
+            String serviceCentre, String messageBody, long timestamp) {
         mAddress = address;
         mDisplayAddress = displayAddress;
         mMessageClass = messageClass;
@@ -23,50 +23,55 @@ public class SilentSmsCardData {
 
     public String getAddress() {
         String address = "Address: ";
-        if (mAddress.isEmpty())
+        if (mAddress.isEmpty()) {
             address += "Unavailable";
-        else
+        } else {
             address += mAddress;
+        }
 
         return address;
     }
 
     public String getDisplayAddress() {
         String display = "Display Address: ";
-        if (mDisplayAddress.isEmpty())
+        if (mDisplayAddress.isEmpty()) {
             display += "Unavailable";
-        else
+        } else {
             display += mDisplayAddress;
+        }
 
         return display;
     }
 
     public String getMessageClass() {
         String messageClass = "Message Class: ";
-        if (messageClass.isEmpty())
+        if (messageClass.isEmpty()) {
             messageClass += "Unavailable";
-        else
+        } else {
             messageClass += mMessageClass;
+        }
 
         return messageClass;
     }
 
     public String getServiceCentre() {
         String serviceCentre = "Service Centre: ";
-        if (mServiceCentre.isEmpty())
+        if (mServiceCentre.isEmpty()) {
             serviceCentre += "Unavailable";
-        else
+        } else {
             serviceCentre += mServiceCentre;
+        }
 
         return serviceCentre;
     }
 
     public String getMessage() {
         String message = "Message: ";
-        if (message.isEmpty())
+        if (message.isEmpty()) {
             message += "Unavailable";
-        else
+        } else {
             message += mMessage;
+        }
 
         return message;
     }

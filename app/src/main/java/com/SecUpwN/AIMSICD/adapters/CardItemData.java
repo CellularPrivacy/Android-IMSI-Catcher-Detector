@@ -1,7 +1,7 @@
 package com.SecUpwN.AIMSICD.adapters;
 
-public class CardItemData
-{
+public class CardItemData {
+
     private String mCellID;
     private String mLac;
     private String mMcc;
@@ -16,8 +16,7 @@ public class CardItemData
     private final String mRecordId;
 
     public CardItemData(String cellID, String lac, String mcc, String mnc, String lat, String lng,
-            String avgSigStr, String samples, String recordId)
-    {
+            String avgSigStr, String samples, String recordId) {
         mCellID = cellID;
         mLac = lac;
         mMcc = mcc;
@@ -29,8 +28,8 @@ public class CardItemData
         mRecordId = recordId;
     }
 
-    public CardItemData(String cellID, String lac, String mcc, String mnc, String signal, String recordId)
-    {
+    public CardItemData(String cellID, String lac, String mcc, String mnc, String signal,
+            String recordId) {
         mCellID = cellID;
         mLac = lac;
         mMcc = mcc;
@@ -39,9 +38,9 @@ public class CardItemData
         mRecordId = recordId;
     }
 
-    public CardItemData(String cellID, String lac, String net, String lat, String lng, String signal,
-            String recordId)
-    {
+    public CardItemData(String cellID, String lac, String net, String lat, String lng,
+            String signal,
+            String recordId) {
         mCellID = cellID;
         mLac = lac;
         mNet = net;
@@ -51,8 +50,7 @@ public class CardItemData
         mRecordId = recordId;
     }
 
-    public CardItemData(String country, String mcc, String lat, String lng, String recordId)
-    {
+    public CardItemData(String country, String mcc, String lat, String lng, String recordId) {
         mCountry = country;
         mMcc = mcc;
         mLat = lat;
@@ -104,5 +102,7 @@ public class CardItemData
         return mCountry;
     }
 
-    public String getRecordId() { return mRecordId; }
+    public String getRecordId() {
+        return mRecordId;
+    }
 }

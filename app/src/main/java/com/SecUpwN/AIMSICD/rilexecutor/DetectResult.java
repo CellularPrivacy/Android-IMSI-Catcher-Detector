@@ -21,7 +21,7 @@ public class DetectResult {
 
     public final String error;
 
-    static final DetectResult AVAILABLE = new  DetectResult(true, null);
+    static final DetectResult AVAILABLE = new DetectResult(true, null);
 
     private DetectResult(boolean available, String error) {
         this.available = available;

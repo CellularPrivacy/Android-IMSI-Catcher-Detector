@@ -1,22 +1,22 @@
 package com.SecUpwN.AIMSICD.fragments;
 
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
-import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
-import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.CardItemData;
 import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
 import com.SecUpwN.AIMSICD.adapters.DefaultLocationCardInflater;
 import com.SecUpwN.AIMSICD.adapters.OpenCellIdCardInflater;
+import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
+import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
+import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +28,17 @@ import android.widget.Spinner;
 public class DbViewerFragment extends Fragment {
 
     private AIMSICDDbAdapter mDb;
-    private Spinner tblSpinner;
     private String mTableSelected;
     private boolean mMadeSelection;
-    private ListView lv;
-    private View mView;
     private Context mContext;
 
-    public DbViewerFragment() {}
+    //Layout items
+    private Spinner tblSpinner;
+    private ListView lv;
+    private View mView;
+
+    public DbViewerFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,14 +49,14 @@ public class DbViewerFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = activity.getBaseContext();
-        mDb  = new AIMSICDDbAdapter(mContext);
+        mDb = new AIMSICDDbAdapter(mContext);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-         mView = inflater.inflate(R.layout.db_view,
+        mView = inflater.inflate(R.layout.db_view,
                 container, false);
 
         if (mView != null) {
@@ -71,6 +74,7 @@ public class DbViewerFragment extends Fragment {
     }
 
     private class spinnerListener implements AdapterView.OnItemSelectedListener {
+
         @Override
         public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
                 int position, long id) {
@@ -85,6 +89,7 @@ public class DbViewerFragment extends Fragment {
     }
 
     private class btnClick implements View.OnClickListener {
+
         @Override
         public void onClick(View v) {
             if (mMadeSelection) {
@@ -138,7 +143,8 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         SilentSmsCardData data = new SilentSmsCardData(tableData.getString(0),
-                                tableData.getString(1),tableData.getString(2),tableData.getString(3),
+                                tableData.getString(1), tableData.getString(2),
+                                tableData.getString(3),
                                 tableData.getString(4), tableData.getLong(5));
                         adapter.addItem(data, false);
                     }

@@ -85,7 +85,8 @@ public class SystemPropertiesReflection {
      * @return if the key isn't found, return def if it isn't null, or an empty string otherwise
      * @throws IllegalArgumentException if the key exceeds 32 characters
      */
-    public static String get(Context context, String key, String def) throws IllegalArgumentException {
+    public static String get(Context context, String key, String def)
+            throws IllegalArgumentException {
 
         String ret = def;
 
@@ -129,7 +130,8 @@ public class SystemPropertiesReflection {
      * cannot be parsed
      * @throws IllegalArgumentException if the key exceeds 32 characters
      */
-    public static Integer getInt(Context context, String key, int def) throws IllegalArgumentException {
+    public static Integer getInt(Context context, String key, int def)
+            throws IllegalArgumentException {
 
         Integer ret = def;
 
@@ -173,7 +175,8 @@ public class SystemPropertiesReflection {
      * cannot be parsed
      * @throws IllegalArgumentException if the key exceeds 32 characters
      */
-    public static Long getLong(Context context, String key, long def) throws IllegalArgumentException {
+    public static Long getLong(Context context, String key, long def)
+            throws IllegalArgumentException {
 
         Long ret = def;
 
@@ -223,7 +226,8 @@ public class SystemPropertiesReflection {
      * not able to be parsed as a boolean.
      * @throws IllegalArgumentException if the key exceeds 32 characters
      */
-    public static Boolean getBoolean(Context context, String key, boolean def) throws IllegalArgumentException {
+    public static Boolean getBoolean(Context context, String key, boolean def)
+            throws IllegalArgumentException {
 
         Boolean ret = def;
 
@@ -265,7 +269,8 @@ public class SystemPropertiesReflection {
      * @throws IllegalArgumentException if the key exceeds 32 characters
      * @throws IllegalArgumentException if the value exceeds 92 characters
      */
-    public static void set(Context context, String key, String val) throws IllegalArgumentException {
+    public static void set(Context context, String key, String val)
+            throws IllegalArgumentException {
 
         try {
 

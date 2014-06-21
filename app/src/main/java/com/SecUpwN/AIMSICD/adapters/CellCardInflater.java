@@ -1,26 +1,24 @@
 package com.SecUpwN.AIMSICD.adapters;
 
+import com.SecUpwN.AIMSICD.R;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.SecUpwN.AIMSICD.R;
 
-public class CellCardInflater implements IAdapterViewInflater<CardItemData>
-{
+public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
+
     @Override
-    public View inflate(final BaseInflaterAdapter<CardItemData> adapter, final int pos, View convertView, ViewGroup parent)
-    {
+    public View inflate(final BaseInflaterAdapter<CardItemData> adapter, final int pos,
+            View convertView, ViewGroup parent) {
         ViewHolder holder;
 
-        if (convertView == null)
-        {
+        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             convertView = inflater.inflate(R.layout.cell_items, parent, false);
             holder = new ViewHolder(convertView);
-        }
-        else
-        {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
@@ -30,8 +28,8 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData>
         return convertView;
     }
 
-    private class ViewHolder
-    {
+    private class ViewHolder {
+
         private final View mRootView;
         private final TextView mCellID;
         private final TextView mLac;
@@ -41,8 +39,7 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData>
         private final TextView mSignal;
         private final TextView mRecordId;
 
-        public ViewHolder(View rootView)
-        {
+        public ViewHolder(View rootView) {
             mRootView = rootView;
             mCellID = (TextView) mRootView.findViewById(R.id.cellID);
             mLac = (TextView) mRootView.findViewById(R.id.lac);
@@ -54,8 +51,7 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData>
             rootView.setTag(this);
         }
 
-        public void updateDisplay(CardItemData item)
-        {
+        public void updateDisplay(CardItemData item) {
             mCellID.setText(item.getCellID());
             mLac.setText(item.getLac());
             mNet.setText(item.getNet());
