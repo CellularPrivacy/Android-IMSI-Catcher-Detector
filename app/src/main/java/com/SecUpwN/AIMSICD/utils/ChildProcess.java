@@ -28,12 +28,15 @@ import java.io.OutputStream;
 import static java.lang.System.nanoTime;
 
 public class ChildProcess {
+
     private String TAG = getClass().getSimpleName();
 
     private static final int PIPE_SIZE = 1024;
 
     private class ChildReader extends Thread {
+
         InputStream mStream;
+
         StringBuffer mBuffer;
 
         ChildReader(InputStream is, StringBuffer buf) {
@@ -61,7 +64,9 @@ public class ChildProcess {
     }
 
     private class ChildWriter extends Thread {
+
         OutputStream mStream;
+
         String mBuffer;
 
         ChildWriter(OutputStream os, String buf) {

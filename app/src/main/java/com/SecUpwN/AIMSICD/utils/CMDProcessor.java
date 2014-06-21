@@ -24,6 +24,7 @@ package com.SecUpwN.AIMSICD.utils;
 import android.util.Log;
 
 public final class CMDProcessor {
+
     private static final String TAG = "CMDProcessor";
 
     public CMDProcessor() {

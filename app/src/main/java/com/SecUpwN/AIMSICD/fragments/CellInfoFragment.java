@@ -10,6 +10,7 @@ import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +19,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,20 +32,20 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CellInfoFragment extends Fragment {
-    private AimsicdService mAimsicdService;
 
+    private AimsicdService mAimsicdService;
+    private boolean mBound;
+    private Context mContext;
+    private Activity mActivity;
+    Handler timerHandler = new Handler();
+
+    //Layout items
     private ListView lv;
     private TextView mNeighbouringCells;
     private TextView mNeighbouringTotal;
     private TableRow mNeighbouringTotalView;
     private TextView mCipheringIndicatorLabel;
     private TextView mCipheringIndicator;
-
-    private boolean mBound;
-    private Context mContext;
-    private Activity mActivity;
-
-    Handler timerHandler = new Handler();
 
     Runnable timerRunnable = new Runnable() {
 
@@ -56,7 +56,8 @@ public class CellInfoFragment extends Fragment {
         }
     };
 
-    public CellInfoFragment () {}
+    public CellInfoFragment() {
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -146,9 +147,10 @@ public class CellInfoFragment extends Fragment {
     };
 
     private class btnClick implements View.OnClickListener {
+
         @Override
         public void onClick(View v) {
-            Helpers.sendMsg(mContext,"Refreshing now...");
+            Helpers.sendMsg(mContext, "Refreshing now...");
             updateUI();
         }
     }
@@ -226,9 +228,12 @@ public class CellInfoFragment extends Fragment {
     }
 
     private class RequestOemInfoTask extends AsyncTask<Void, Void, Void> {
+
         @Override
         protected Void doInBackground(Void... string) {
-            if (!mBound) return null;
+            if (!mBound) {
+                return null;
+            }
             updateNeighbouringCells();
             updateCipheringIndicator();
 
