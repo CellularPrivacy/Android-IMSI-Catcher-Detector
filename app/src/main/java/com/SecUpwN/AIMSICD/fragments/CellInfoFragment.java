@@ -66,6 +66,22 @@ public class CellInfoFragment extends Fragment {
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        timerHandler.removeCallbacks(timerRunnable);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!mBound) {
+            // Bind to LocalService
+            Intent intent = new Intent(mContext, AimsicdService.class);
+            mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
 
         //Refresh display if preference is not set to manual
         if (AimsicdService.REFRESH_RATE != 0) {
@@ -73,18 +89,6 @@ public class CellInfoFragment extends Fragment {
             Helpers.sendMsg(mContext, "Refreshing every "
                     + TimeUnit.MILLISECONDS.toSeconds(AimsicdService.REFRESH_RATE) + " seconds");
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        timerHandler.removeCallbacks(timerRunnable);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        timerHandler.removeCallbacks(timerRunnable);
     }
 
     @Override

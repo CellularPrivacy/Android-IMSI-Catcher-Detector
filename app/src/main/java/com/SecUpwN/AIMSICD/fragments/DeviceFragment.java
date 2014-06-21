@@ -50,7 +50,6 @@ public class DeviceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-
     }
 
     @Override
@@ -60,19 +59,6 @@ public class DeviceFragment extends Fragment {
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
-        //Refresh display if preference is not set to manual
-        if (AimsicdService.REFRESH_RATE != 0) {
-            timerHandler.postDelayed(timerRunnable, 0);
-            Helpers.sendMsg(mContext, "Refreshing every "
-                    + TimeUnit.MILLISECONDS.toSeconds(AimsicdService.REFRESH_RATE) + " seconds");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        timerHandler.removeCallbacks(timerRunnable);
     }
 
     @Override
@@ -80,21 +66,25 @@ public class DeviceFragment extends Fragment {
             Bundle savedInstanceState) {
         mView= inflater.inflate(R.layout.device,
                 container, false);
-        updateUI();
         return mView;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            updateUI();
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        if (!mBound) {
+            // Bind to LocalService
+            Intent intent = new Intent(mContext, AimsicdService.class);
+            mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
+
+        //Refresh display if preference is not set to manual
+        if (AimsicdService.REFRESH_RATE != 0) {
+            timerHandler.postDelayed(timerRunnable, 0);
+            Helpers.sendMsg(mContext, "Refreshing every "
+                    + TimeUnit.MILLISECONDS.toSeconds(AimsicdService.REFRESH_RATE) + " seconds");
+        }
         updateUI();
     }
 
