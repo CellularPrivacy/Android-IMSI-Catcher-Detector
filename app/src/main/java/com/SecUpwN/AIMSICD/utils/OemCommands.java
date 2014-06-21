@@ -26,7 +26,6 @@ import java.io.IOException;
 public class OemCommands {
 
     private static final String TAG = "AIMSICD_OemCommands";
-
     public static final char OEM_SERVM_FUNCTAG = 1;
     public static final char OEM_SM_ACTION = 0;
     public static final char OEM_SM_QUERY = 1;

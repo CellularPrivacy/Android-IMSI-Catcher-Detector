@@ -32,6 +32,7 @@ import java.io.IOException;
 
 @SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
+
     private final String TAG = "AIMSICD_CommandResult";
     private final long mStartTime;
     private final int mExitValue;
@@ -40,10 +41,10 @@ public class CommandResult implements Parcelable {
     private final long mEndTime;
 
     public CommandResult(long startTime,
-                         int exitValue,
-                         String stdout,
-                         String stderr,
-                         long endTime) {
+            int exitValue,
+            String stdout,
+            String stderr,
+            long endTime) {
         mStartTime = startTime;
         mExitValue = exitValue;
         mStdout = stdout;
@@ -106,7 +107,8 @@ public class CommandResult implements Parcelable {
             try {
                 File errorLogFile = new File(
                         Environment.getExternalStorageDirectory()
-                                + "/aokp/error.txt");
+                                + "/aokp/error.txt"
+                );
                 if (!errorLogFile.exists()) {
                     errorLogFile.createNewFile();
                 }
@@ -161,6 +163,18 @@ public class CommandResult implements Parcelable {
                 ", mEndTime=" + mEndTime +
                 '}';
     }
+
+    public static final Parcelable.Creator<CommandResult> CREATOR
+            = new Parcelable.Creator<CommandResult>() {
+        public CommandResult createFromParcel(Parcel in) {
+            return new CommandResult(in);
+        }
+
+        public CommandResult[] newArray(int size) {
+            return new CommandResult[size];
+        }
+    };
+
 
     @Override
     public boolean equals(Object o) {

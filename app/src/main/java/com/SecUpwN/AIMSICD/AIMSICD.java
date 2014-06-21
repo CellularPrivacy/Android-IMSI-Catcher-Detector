@@ -17,6 +17,17 @@
 
 package com.SecUpwN.AIMSICD;
 
+import com.SecUpwN.AIMSICD.activities.MapViewer;
+import com.SecUpwN.AIMSICD.activities.PrefActivity;
+import com.SecUpwN.AIMSICD.fragments.AboutFragment;
+import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
+import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
+import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
+import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.RequestTask;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -33,7 +44,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
@@ -48,17 +58,6 @@ import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.SecUpwN.AIMSICD.activities.MapViewer;
-import com.SecUpwN.AIMSICD.activities.PrefActivity;
-import com.SecUpwN.AIMSICD.fragments.AboutFragment;
-import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
-import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
-import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
-import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.RequestTask;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,17 +71,14 @@ public class AIMSICD extends Activity {
     private SharedPreferences prefs;
     private Editor prefsEditor;
     private String mDisclaimerAccepted;
-
     private AimsicdService mAimsicdService;
-
     private String[] mNavigationTitles;
-    private List<HashMap<String,String>> mNavigationItems;
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-
     public static ProgressBar mProgressBar;
 
     //Back press to exit timer
@@ -115,16 +111,15 @@ public class AIMSICD extends Activity {
                 R.drawable.ic_action_about,
         };
 
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        mNavigationItems = new ArrayList<>();
-        for(int i=0;i<6;i++){
+        List<HashMap<String, String>> navigationItems = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
             HashMap<String, String> hm = new HashMap<>();
             hm.put("title", mNavigationTitles[i]);
-            hm.put("icon", Integer.toString(mIcons[i]) );
-            mNavigationItems.add(hm);
+            hm.put("icon", Integer.toString(mIcons[i]));
+            navigationItems.add(hm);
         }
 
         String[] from = {"title", "icon"};
@@ -132,7 +127,7 @@ public class AIMSICD extends Activity {
 
         // Set the adapter for the list view
         mDrawerList.setAdapter(new SimpleAdapter(mContext,
-                mNavigationItems, R.layout.drawer_layout, from, to));
+                navigationItems, R.layout.drawer_layout, from, to));
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
@@ -219,7 +214,6 @@ public class AIMSICD extends Activity {
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -238,6 +232,7 @@ public class AIMSICD extends Activity {
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             selectItem(position);
@@ -425,7 +420,8 @@ public class AIMSICD extends Activity {
      */
     @Override
     public void onBackPressed() {
-        Toast onBackPressedToast = Toast.makeText(this, R.string.press_once_again_to_exit, Toast.LENGTH_SHORT);
+        Toast onBackPressedToast = Toast
+                .makeText(this, R.string.press_once_again_to_exit, Toast.LENGTH_SHORT);
         long currentTime = System.currentTimeMillis();
         if (currentTime - mLastPress > 5000) {
             onBackPressedToast.show();

@@ -43,6 +43,7 @@ import java.util.List;
 public class Helpers {
 
     private static final String TAG = "AIMSICD_Helpers";
+
     private static final int CHARS_PER_LINE = 34;
 
     /**
@@ -98,21 +99,20 @@ public class Helpers {
 
     /**
      * Checks Network connectivity is available to download OpenCellID data
-     *
      */
-    public static Boolean isNetAvailable(Context context)  {
+    public static Boolean isNetAvailable(Context context) {
 
-        try{
+        try {
             ConnectivityManager connectivityManager = (ConnectivityManager)
                     context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo wifiInfo = connectivityManager
+                    .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             NetworkInfo mobileInfo =
                     connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (wifiInfo != null && mobileInfo != null) {
                 return wifiInfo.isConnected() || mobileInfo.isConnected();
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -176,9 +176,8 @@ public class Helpers {
     /**
      * Converts a byte array into a String array
      *
-     * @param mByteArray byte array to convert
+     * @param mByteArray  byte array to convert
      * @param mDataLength length of byte array
-     *
      * @return String array copy of passed byte array
      */
     private static String[] ByteArrayToStringArray(byte[] mByteArray,
@@ -297,7 +296,9 @@ public class Helpers {
         }
 
         int newLength = display.length;
-        while (newLength > 0 && TextUtils.isEmpty(display[newLength - 1])) newLength -= 1;
+        while (newLength > 0 && TextUtils.isEmpty(display[newLength - 1])) {
+            newLength -= 1;
+        }
 
         return Arrays.asList(Arrays.copyOf(display, newLength));
     }
@@ -353,7 +354,9 @@ public class Helpers {
         }
 
         int newLength = display.length;
-        while (newLength > 0 && TextUtils.isEmpty(display[newLength-1])) newLength -= 1;
+        while (newLength > 0 && TextUtils.isEmpty(display[newLength - 1])) {
+            newLength -= 1;
+        }
 
         return Arrays.asList(Arrays.copyOf(display, newLength));
     }

@@ -28,11 +28,12 @@ public class RequestTask extends AsyncTask<String, String, String> {
     public static final int OPEN_CELL_ID_REQUEST_FROM_MAP = 2;
     public static final int BACKUP_DATABASE = 3;
     public static final int RESTORE_DATABASE = 4;
+
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
     private final int mType;
 
-    public RequestTask (Context context, int type) {
+    public RequestTask(Context context, int type) {
         mType = type;
         mContext = context;
         mDbAdapter = new AIMSICDDbAdapter(mContext);
@@ -48,7 +49,8 @@ public class RequestTask extends AsyncTask<String, String, String> {
                 try {
                     File dir = new File(
                             Environment.getExternalStorageDirectory()
-                                    + "/AIMSICD/OpenCellID/");
+                                    + "/AIMSICD/OpenCellID/"
+                    );
                     if (!dir.exists()) {
                         dir.mkdirs();
                     }
@@ -125,8 +127,9 @@ public class RequestTask extends AsyncTask<String, String, String> {
             case OPEN_CELL_ID_REQUEST:
                 if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
-                    if (mDbAdapter.updateOpenCellID())
+                    if (mDbAdapter.updateOpenCellID()) {
                         Helpers.sendMsg(mContext, "OpenCellID data successfully received");
+                    }
                     mDbAdapter.close();
                 } else {
                     Helpers.sendMsg(mContext, "Error retrieving OpenCellID data");
@@ -157,7 +160,8 @@ public class RequestTask extends AsyncTask<String, String, String> {
                 if (result != null && result.equals("Successful")) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setTitle(R.string.database_export_successful)
-                            .setMessage("Database Backup successfully saved to:\n" + AIMSICDDbAdapter.FOLDER);
+                            .setMessage("Database Backup successfully saved to:\n"
+                                    + AIMSICDDbAdapter.FOLDER);
                     builder.create().show();
                 } else {
                     Helpers.sendMsg(mContext, "Error backing up database");
