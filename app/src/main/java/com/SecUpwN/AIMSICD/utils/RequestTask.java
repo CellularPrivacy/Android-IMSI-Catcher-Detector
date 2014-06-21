@@ -22,25 +22,25 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class RequestTask extends AsyncTask<String, String, String> {
+public class RequestTask extends AsyncTask<String, Integer, String> {
 
-    public static final int OPEN_CELL_ID_REQUEST = 1;
-    public static final int OPEN_CELL_ID_REQUEST_FROM_MAP = 2;
-    public static final int BACKUP_DATABASE = 3;
-    public static final int RESTORE_DATABASE = 4;
+    public static final char OPEN_CELL_ID_REQUEST = 1;
+    public static final char OPEN_CELL_ID_REQUEST_FROM_MAP = 2;
+    public static final char BACKUP_DATABASE = 3;
+    public static final char RESTORE_DATABASE = 4;
 
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
-    private final int mType;
+    private final char mType;
 
-    public RequestTask(Context context, int type) {
+    public RequestTask(Context context, char type) {
         mType = type;
         mContext = context;
         mDbAdapter = new AIMSICDDbAdapter(mContext);
     }
 
     @Override
-    protected String doInBackground(String... urlString) {
+    protected String doInBackground(String... commandString) {
 
         switch (mType) {
             case OPEN_CELL_ID_REQUEST:
@@ -56,7 +56,7 @@ public class RequestTask extends AsyncTask<String, String, String> {
                     }
                     File file = new File(dir, "opencellid.csv");
 
-                    URL url = new URL(urlString[0]);
+                    URL url = new URL(commandString[0]);
                     URLConnection connection = url.openConnection();
                     connection.connect();
 
@@ -78,7 +78,7 @@ public class RequestTask extends AsyncTask<String, String, String> {
 
                     while ((count = input.read(data)) != -1) {
                         total += count;
-                        AIMSICD.mProgressBar.setProgress((int) ((total * 100) / lengthOfFile));
+                        publishProgress((int) ((total * 100) / lengthOfFile));
 
                         // writing data to file
                         output.write(data, 0, count);
@@ -116,6 +116,11 @@ public class RequestTask extends AsyncTask<String, String, String> {
         }
 
         return null;
+    }
+
+
+    protected void onProgressUpdate(Integer... values) {
+        AIMSICD.mProgressBar.setProgress(values[0]);
     }
 
     @Override
