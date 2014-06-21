@@ -11,7 +11,8 @@ public class Cell {
 
     public Cell() {}
 
-    public Cell(int lac, int mcc, int mnc, int dbm, long timestamp) {
+    public Cell(int cid, int lac, int mcc, int mnc, int dbm, long timestamp) {
+        this.cid = cid;
         this.lac = lac;
         this.mcc = mcc;
         this.mnc = mnc;

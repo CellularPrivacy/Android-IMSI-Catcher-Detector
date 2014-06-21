@@ -10,8 +10,8 @@ public class CardItemData
     private String mSignal;
     private String mAvgSigStr;
     private String mSamples;
-    private final String mLat;
-    private final String mLng;
+    private String mLat;
+    private String mLng;
     private String mCountry;
     private final String mRecordId;
 
@@ -26,6 +26,16 @@ public class CardItemData
         mLng = lng;
         mAvgSigStr = avgSigStr;
         mSamples = samples;
+        mRecordId = recordId;
+    }
+
+    public CardItemData(String cellID, String lac, String mcc, String mnc, String signal, String recordId)
+    {
+        mCellID = cellID;
+        mLac = lac;
+        mMcc = mcc;
+        mMnc = mnc;
+        mSignal = signal;
         mRecordId = recordId;
     }
 
