@@ -729,6 +729,18 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     }
 
     /**
+     * Mobile Country Code MCC
+     *
+     */
+    public int getMCC() {
+        if (mMcc == -1) {
+            mMcc = Integer.parseInt(tm.getNetworkOperator().substring(0, 3));
+        }
+
+        return mMcc;
+    }
+
+    /**
      * CDMA System ID
      *
      * @return System ID or -1 if not supported
