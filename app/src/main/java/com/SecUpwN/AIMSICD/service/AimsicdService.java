@@ -182,7 +182,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private String mSimSubs = "";
     private String mDataActivityType = "";
     private String mDataActivityTypeShort = "";
-    private final List<Cell> mNeighboringCells = new ArrayList<>();
+    private List<Cell> mNeighboringCells;
 
    /*
     * Tracking and Alert Declarations
@@ -294,10 +294,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         if (mRequestExecutor != null) {
             mRequestExecutor.stop();
             mRequestExecutor = null;
+            mHandler = null;
+            mHandlerThread.quit();
+            mHandlerThread = null;
         }
-        mHandler = null;
-        mHandlerThread.quit();
-        mHandlerThread = null;
 
         Log.i(TAG, "Service destroyed");
     }
@@ -1339,6 +1339,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      *
      */
     public void updateNeighbouringCells() {
+        mNeighboringCells = new ArrayList<>();
         if (Build.VERSION.SDK_INT > 16) {
             List<CellInfo> allCellInfo = tm.getAllCellInfo();
             if (allCellInfo != null) {
@@ -1351,8 +1352,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                                 .getCellSignalStrength();
 
                         int dbmLevel = cellSignalStrengthGsm.getDbm();
-                        Cell cell = new Cell(cellIdentity.getLac(), cellIdentity.getMcc(),
-                                cellIdentity.getMnc(), dbmLevel, SystemClock.currentThreadTimeMillis());
+                        Cell cell = new Cell(cellIdentity.getCid(), cellIdentity.getLac(),
+                                cellIdentity.getMcc(), cellIdentity.getMnc(), dbmLevel,
+                                SystemClock.currentThreadTimeMillis());
 
                         mNeighboringCells.add(cell);
                     }
@@ -1363,14 +1365,16 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             neighboringCellInfo = tm.getNeighboringCellInfo();
             if (neighboringCellInfo != null) {
                 for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
+                    if (neighbourCell.getCid() == NeighboringCellInfo.UNKNOWN_CID)
+                        continue;
                     int rssi = neighbourCell.getRssi();
                     int dbmLevel = 0;
 
                     if (rssi != NeighboringCellInfo.UNKNOWN_RSSI) {
                         dbmLevel = -113 + 2 * rssi;
                     }
-                    Cell cell = new Cell(neighbourCell.getLac(), mMcc, mMnc, dbmLevel,
-                            SystemClock.currentThreadTimeMillis());
+                    Cell cell = new Cell(neighbourCell.getCid(), neighbourCell.getLac(), mMcc, mMnc,
+                            dbmLevel, SystemClock.currentThreadTimeMillis());
                     mNeighboringCells.add(cell);
                 }
             }
