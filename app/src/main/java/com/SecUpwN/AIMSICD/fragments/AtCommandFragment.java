@@ -1,21 +1,15 @@
 package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.CMDProcessor;
 import com.SecUpwN.AIMSICD.utils.CommandResult;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.util.List;
 
 public class AtCommandFragment extends Fragment {
 
@@ -36,10 +28,7 @@ public class AtCommandFragment extends Fragment {
     private final int BUSYBOX_UNAVAILABLE = 203;
 
     //System items
-    private AimsicdService mAimsicdService;
-    private boolean mBound;
     private Context mContext;
-    private Activity mActivity;
 
     //Layout items
     private View mView;
@@ -77,30 +66,16 @@ public class AtCommandFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = activity.getBaseContext();
-        mActivity = activity;
-        // Bind to LocalService
-        Intent intent = new Intent(mContext, AimsicdService.class);
-        mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // Unbind from the service
-        if (mBound) {
-            mContext.unbindService(mConnection);
-            mBound = false;
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (!mBound) {
-            // Bind to LocalService
-            Intent intent = new Intent(mContext, AimsicdService.class);
-            mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        }
 
         int rilInit = initialiseRil();
 
@@ -140,23 +115,6 @@ public class AtCommandFragment extends Fragment {
 
 
     }
-
-    /**
-     * Service Connection to bind the activity to the service
-     */
-    private final ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
-            mBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
 
     private class btnClick implements View.OnClickListener {
 
