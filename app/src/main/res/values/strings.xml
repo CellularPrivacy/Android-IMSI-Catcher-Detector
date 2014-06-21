@@ -190,6 +190,7 @@
     <string name="enter_at_command_title">Enter AT Command:</string>
     <string name="response_label">Response:</string>
     <string name="execute_at">Execute</string>
+    <string name="ril_device_title">Ril Serial Device:</string>
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Silent SMS Intercepted</string>

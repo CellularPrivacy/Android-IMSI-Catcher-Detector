@@ -125,7 +125,7 @@ public class Helpers {
      * @param lat Latitude of current location
      * @param lng Longitude of current location
      */
-    public static void getOpenCellData(Context context, double lat, double lng, int type) {
+    public static void getOpenCellData(Context context, double lat, double lng, char type) {
         if (Helpers.isNetAvailable(context)) {
             double earthRadius = 6371.01;
 

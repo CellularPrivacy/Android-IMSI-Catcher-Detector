@@ -21,6 +21,8 @@
 
 package com.SecUpwN.AIMSICD.utils;
 
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -106,8 +108,7 @@ public class CommandResult implements Parcelable {
             FileWriter errorWriter = null;
             try {
                 File errorLogFile = new File(
-                        Environment.getExternalStorageDirectory()
-                                + "/aokp/error.txt"
+                        AIMSICDDbAdapter.FOLDER + "error.txt"
                 );
                 if (!errorLogFile.exists()) {
                     errorLogFile.createNewFile();
@@ -175,7 +176,6 @@ public class CommandResult implements Parcelable {
         }
     };
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -189,8 +189,8 @@ public class CommandResult implements Parcelable {
 
         return (mStartTime == that.mStartTime &&
                 mExitValue == that.mExitValue &&
-                mStdout == that.mStdout &&
-                mStderr == that.mStderr &&
+                mStdout.equals(that.mStdout) &&
+                mStderr.equals(that.mStderr) &&
                 mEndTime == that.mEndTime);
     }
 
