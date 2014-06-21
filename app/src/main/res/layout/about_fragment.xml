@@ -8,7 +8,6 @@
     <TextView
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:textSize="18sp" android:text="@string/about_aimsicd"
-    android:background="@color/black"
     android:textColor="@color/green_text"
     android:padding="4dip" android:id="@+id/textView"/>
 
@@ -17,7 +16,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/aimsicd_about_info"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/textView"/>
     <TextView
@@ -25,7 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empty"
-            android:background="@color/black"
             android:textColor="@color/medium_blue"
             android:padding="8dip" android:layout_below="@+id/textView"
             android:layout_toRightOf="@+id/aimsicd_about_info"/>
@@ -35,7 +32,6 @@
             android:layout_height="wrap_content"
             android:text="@string/aimsicd_about_info2"
             android:textStyle="italic"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/aimsicd_version"/>
     <TextView
@@ -43,7 +39,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/poc_info"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/aimsicd_about_info2"/>
     <TextView
@@ -59,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/disclaimer_info"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/aimsicd_poc"/>
     <TextView
@@ -75,7 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/github_info"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/aimsicd_disclaimer"/>
     <TextView
@@ -92,7 +85,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/xda_info"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/aimsicd_contribute"/>
     <TextView
@@ -109,7 +101,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/release_info"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/aimsicd_visit_xda"/>
     <TextView
@@ -126,7 +117,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/changelog_info"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/aimsicd_release"/>
     <TextView
@@ -143,7 +133,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/license_info"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/aimsicd_changelog"/>
     <TextView
@@ -160,7 +149,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/credits_info"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/aimsicd_license"/>
     <TextView
