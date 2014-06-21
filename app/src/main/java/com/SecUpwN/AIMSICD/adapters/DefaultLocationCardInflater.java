@@ -7,21 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class DefaultLocationCardInflater implements IAdapterViewInflater<CardItemData>
-{
+public class DefaultLocationCardInflater implements IAdapterViewInflater<CardItemData> {
+
     @Override
-    public View inflate(final BaseInflaterAdapter<CardItemData> adapter, final int pos, View convertView, ViewGroup parent)
-    {
+    public View inflate(final BaseInflaterAdapter<CardItemData> adapter, final int pos,
+            View convertView, ViewGroup parent) {
         ViewHolder holder;
 
-        if (convertView == null)
-        {
+        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             convertView = inflater.inflate(R.layout.default_location_items, parent, false);
             holder = new ViewHolder(convertView);
-        }
-        else
-        {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
@@ -31,16 +28,15 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
         return convertView;
     }
 
-    private class ViewHolder
-    {
+    private class ViewHolder {
+
         private final View mRootView;
         private final TextView mCountry;
         private final TextView mMcc;
         private final TextView mLat;
         private final TextView mLng;
 
-        public ViewHolder(View rootView)
-        {
+        public ViewHolder(View rootView) {
             mRootView = rootView;
             mCountry = (TextView) mRootView.findViewById(R.id.country);
             mMcc = (TextView) mRootView.findViewById(R.id.mcc);
@@ -49,8 +45,7 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
             rootView.setTag(this);
         }
 
-        public void updateDisplay(CardItemData item)
-        {
+        public void updateDisplay(CardItemData item) {
             mCountry.setText(item.getCountry());
             mMcc.setText(item.getMcc());
             mLat.setText(item.getLat());

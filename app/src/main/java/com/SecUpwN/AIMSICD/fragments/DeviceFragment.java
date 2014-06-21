@@ -5,6 +5,7 @@ import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +13,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.app.Fragment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,12 +28,11 @@ public class DeviceFragment extends Fragment {
 
     private final String TAG = "AIMSICD";
 
-    private AimsicdService mAimsicdService;
     private View mView;
+
+    private AimsicdService mAimsicdService;
     private boolean mBound;
-
     private Context mContext;
-
     Handler timerHandler = new Handler();
 
     Runnable timerRunnable = new Runnable() {
@@ -45,7 +44,8 @@ public class DeviceFragment extends Fragment {
         }
     };
 
-    public DeviceFragment() {}
+    public DeviceFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -64,7 +64,7 @@ public class DeviceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        mView= inflater.inflate(R.layout.device,
+        mView = inflater.inflate(R.layout.device,
                 container, false);
         return mView;
     }
@@ -142,12 +142,12 @@ public class DeviceFragment extends Fragment {
                 }
                 case TelephonyManager.PHONE_TYPE_CDMA: {
                     int layouts = tableLayout.getChildCount();
-                    for(int i = 0; i < layouts;  i++){
+                    for (int i = 0; i < layouts; i++) {
                         TableRow row = (TableRow) tableLayout.getChildAt(i);
                         if (row != null) {
                             if (row.getTag().equals("cdma")) {
                                 row.setVisibility(View.VISIBLE);
-                            } else if( row.getTag().equals("gsm_network")) {
+                            } else if (row.getTag().equals("gsm_network")) {
                                 row.setVisibility(View.GONE);
                             }
                         }

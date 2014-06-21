@@ -27,26 +27,27 @@ import au.com.bytecode.opencsv.CSVWriter;
 public class AIMSICDDbAdapter {
 
     private final String TAG = "AISMICD_DbAdaptor";
-
-    private final DbHelper mDbHelper;
-    private SQLiteDatabase mDb;
-    private final Context mContext;
-    private static final int DATABASE_VERSION = 7;
+    public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
     private static final String COLUMN_ID = "_id";
-    private final String[] mTables;
     private final String LOCATION_TABLE = "locationinfo";
     private final String CELL_TABLE = "cellinfo";
     private final String OPENCELLID_TABLE = "opencellid";
     private final String DEFAULT_MCC_TABLE = "defaultlocation";
     private final String SILENT_SMS_TABLE = "silentsms";
     private final String DB_NAME = "myCellInfo";
-    public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
+
+    private final String[] mTables;
+    private final DbHelper mDbHelper;
+    private SQLiteDatabase mDb;
+    private final Context mContext;
+
+    private static final int DATABASE_VERSION = 7;
 
     public AIMSICDDbAdapter(Context context) {
         mContext = context;
         mDbHelper = new DbHelper(context);
-        mTables = new String[] { LOCATION_TABLE, CELL_TABLE, OPENCELLID_TABLE,
-                SILENT_SMS_TABLE };
+        mTables = new String[]{LOCATION_TABLE, CELL_TABLE, OPENCELLID_TABLE,
+                SILENT_SMS_TABLE};
     }
 
     public AIMSICDDbAdapter open() throws SQLException {
@@ -74,7 +75,7 @@ public class AIMSICDDbAdapter {
      *
      * @return row id or -1 if error
      */
-    public long insertCell( int lac, int cellID,
+    public long insertCell(int lac, int cellID,
             int netType, double latitude, double longitude,
             int signalInfo, String cellInfo, String simCountry,
             String simOperator, String simOperatorName) {
@@ -105,7 +106,7 @@ public class AIMSICDDbAdapter {
      *
      * @return row id or -1 if error
      */
-    public long insertOpenCell( double latitude, double longitude,
+    public long insertOpenCell(double latitude, double longitude,
             int mcc, int mnc, int lac, int cellID, int avgSigStr,
             int samples) {
 
@@ -164,44 +165,48 @@ public class AIMSICDDbAdapter {
      * Returns Silent Sms database contents
      */
     public Cursor getSilentSmsData() {
-        return mDb.query(SILENT_SMS_TABLE, new String[] {"Address", "Display", "Class", "ServiceCtr",
+        return mDb.query(SILENT_SMS_TABLE, new String[]{"Address", "Display", "Class", "ServiceCtr",
                         "Message", "Timestamp"},
-                null,null,null,null,COLUMN_ID + " DESC");
+                null, null, null, null, COLUMN_ID + " DESC"
+        );
     }
 
     /**
      * Returns Cell Information database contents
      */
     public Cursor getCellData() {
-        return mDb.query(CELL_TABLE, new String[] {"CellID", "Lac", "Net", "Lat", "Lng",
+        return mDb.query(CELL_TABLE, new String[]{"CellID", "Lac", "Net", "Lat", "Lng",
                         "Signal"},
-                null,null,null,null, null);
+                null, null, null, null, null
+        );
     }
 
     /**
      * Returns Location Information database contents
      */
     public Cursor getLocationData() {
-        return mDb.query(LOCATION_TABLE, new String[] {"CellID", "Lac", "Net", "Lat", "Lng",
+        return mDb.query(LOCATION_TABLE, new String[]{"CellID", "Lac", "Net", "Lat", "Lng",
                         "Signal"},
-                null,null,null,null,null);
+                null, null, null, null, null
+        );
     }
 
     /**
      * Returns OpenCellID database contents
      */
     public Cursor getOpenCellIDData() {
-        return mDb.query(OPENCELLID_TABLE, new String[] {"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng",
+        return mDb.query(OPENCELLID_TABLE, new String[]{"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng",
                         "AvgSigStr", "Samples"},
-                null,null,null,null,null);
+                null, null, null, null, null
+        );
     }
 
     /**
      * Returns Default MCC Locations database contents
      */
     public Cursor getDefaultMccLocationData() {
-        return mDb.query(DEFAULT_MCC_TABLE, new String[] {"Country", "Mcc", "Lat", "Lng"},
-                null,null,null,null,null);
+        return mDb.query(DEFAULT_MCC_TABLE, new String[]{"Country", "Mcc", "Lat", "Lng"},
+                null, null, null, null, null);
     }
 
     /**
@@ -209,9 +214,10 @@ public class AIMSICDDbAdapter {
      */
     boolean locationExists(int cellID, double lat, double lng, int signal) {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + LOCATION_TABLE + " WHERE CellID = " +
-                cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal, null);
+                cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal,
+                null);
 
-        return cursor.getCount()>0;
+        return cursor.getCount() > 0;
     }
 
     /**
@@ -219,10 +225,10 @@ public class AIMSICDDbAdapter {
      */
     boolean cellExists(int cellID, double lat, double lng, int signal) {
         Cursor cursor = mDb.rawQuery("SELECT 1 FROM " + CELL_TABLE + " WHERE CellID = " +
-                cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal, null);
+                cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal,
+                null);
 
-
-        return cursor.getCount()>0;
+        return cursor.getCount() > 0;
     }
 
     /**
@@ -232,14 +238,14 @@ public class AIMSICDDbAdapter {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE + " WHERE CellID = " +
                 cellID, null);
 
-        return cursor.getCount()>0;
+        return cursor.getCount() > 0;
     }
 
     public double[] getDefaultLocation(int mcc) {
         double[] loc = new double[2];
 
         Cursor cursor = mDb.rawQuery("SELECT Lat, Lng FROM " + DEFAULT_MCC_TABLE + " WHERE Mcc = " +
-        mcc, null);
+                mcc, null);
 
         if (cursor.moveToFirst()) {
             loc[0] = Double.parseDouble(cursor.getString(0));
@@ -280,8 +286,7 @@ public class AIMSICDDbAdapter {
             //Populate Content Values for Insert or Update
             ContentValues defaultMccValues = new ContentValues();
 
-            for (int i=1; i < csvMcc.size(); i++)
-            {
+            for (int i = 1; i < csvMcc.size(); i++) {
                 defaultMccValues.put("Country", csvMcc.get(i)[0]);
                 defaultMccValues.put("Mcc", csvMcc.get(i)[1]);
                 defaultMccValues.put("Lng", csvMcc.get(i)[2]);
@@ -292,7 +297,7 @@ public class AIMSICDDbAdapter {
 
 
         } catch (Exception e) {
-            Log.e (TAG, "Error parsing OpenCellID data - " + e);
+            Log.e(TAG, "Error parsing OpenCellID data - " + e);
         }
     }
 
@@ -300,7 +305,7 @@ public class AIMSICDDbAdapter {
      * Parses the downloaded CSV from OpenCellID and adds Map Marker to identify known
      * Cell ID's
      */
-    public boolean updateOpenCellID () {
+    public boolean updateOpenCellID() {
         String fileName = Environment.getExternalStorageDirectory()
                 + "/AIMSICD/OpenCellID/opencellid.csv";
         File file = new File(fileName);
@@ -336,7 +341,7 @@ public class AIMSICDDbAdapter {
             }
             return true;
         } catch (Exception e) {
-            Log.e (TAG, "Error parsing OpenCellID data - " + e.getMessage());
+            Log.e(TAG, "Error parsing OpenCellID data - " + e.getMessage());
             return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
@@ -429,14 +434,14 @@ public class AIMSICDDbAdapter {
      *
      * @return boolean indicating backup outcome
      */
-    public boolean backupDB () {
+    public boolean backupDB() {
         try {
             for (String table : mTables) {
                 backup(table);
             }
             return true;
         } catch (Exception ioe) {
-            Log.e (TAG, "exportDB() " + ioe);
+            Log.e(TAG, "exportDB() " + ioe);
             return false;
         }
     }
@@ -454,7 +459,6 @@ public class AIMSICDDbAdapter {
             dir.mkdirs();
         }
         File file = new File(dir, "aimsicd-" + tableName + ".csv");
-
 
         try {
             file.createNewFile();
@@ -504,7 +508,8 @@ public class AIMSICDDbAdapter {
              */
             String SMS_DATABASE_CREATE = "create table " +
                     SILENT_SMS_TABLE + " (" + COLUMN_ID +
-                    " integer primary key autoincrement, Address VARCHAR, Display VARCHAR, Class VARCHAR, " +
+                    " integer primary key autoincrement, Address VARCHAR, Display VARCHAR, Class VARCHAR, "
+                    +
                     "ServiceCtr VARCHAR, Message VARCHAR, " +
                     "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(SMS_DATABASE_CREATE);
@@ -536,7 +541,8 @@ public class AIMSICDDbAdapter {
             String OPENCELLID_DATABASE_CREATE = "create table " +
                     OPENCELLID_TABLE + " (" + COLUMN_ID +
                     " integer primary key autoincrement, Lat VARCHAR, Lng VARCHAR, Mcc INTEGER, " +
-                    "Mnc INTEGER, Lac INTEGER, CellID INTEGER, AvgSigStr INTEGER, Samples INTEGER, " +
+                    "Mnc INTEGER, Lac INTEGER, CellID INTEGER, AvgSigStr INTEGER, Samples INTEGER, "
+                    +
                     "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(OPENCELLID_DATABASE_CREATE);
 

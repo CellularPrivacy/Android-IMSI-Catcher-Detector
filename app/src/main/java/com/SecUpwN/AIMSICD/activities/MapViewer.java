@@ -17,6 +17,24 @@
 
 package com.SecUpwN.AIMSICD.activities;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.RequestTask;
+
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -41,43 +59,23 @@ import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.RequestTask;
-
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class MapViewer extends FragmentActivity implements OnSharedPreferenceChangeListener {
-    private final String TAG = "AIMSICD_MapViewer";
 
+    private final String TAG = "AIMSICD_MapViewer";
     public static String updateOpenCellIDMarkers = "update_opencell_markers";
 
     private GoogleMap mMap;
-
     private AIMSICDDbAdapter mDbHelper;
     private Context mContext;
-    private LatLng loc = null;
     private SharedPreferences prefs;
-
     private AimsicdService mAimsicdService;
     private boolean mBound;
 
+    private LatLng loc = null;
     private final Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
 
     /**
@@ -88,7 +86,8 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         Log.i(TAG, "Starting MapViewer");
         super.onCreate(savedInstanceState);
 
-        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) != ConnectionResult.SUCCESS) {
+        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)
+                != ConnectionResult.SUCCESS) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.error_google_play_services_message)
                     .setTitle(R.string.error_google_play_services_title);
@@ -103,8 +102,6 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
-
     }
 
     @Override
@@ -198,7 +195,6 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
 
     /**
      * Initialises the Map and sets initial options
-     *
      */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the
@@ -236,7 +232,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                         // Getting view from the layout file info_window_layout
                         View v = getLayoutInflater().inflate(R.layout.marker_info_window, null);
 
-                        if  (v != null) {
+                        if (v != null) {
                             final MarkerData data = mMarkerMap.get(arg0);
                             if (data != null) {
                                 if (data.openCellID) {
@@ -289,8 +285,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 Intent intent = new Intent(this, MapPrefActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.get_opencellid:
-            {
+            case R.id.get_opencellid: {
                 Location lastKnown = mAimsicdService.lastKnownLocation();
                 if (lastKnown != null) {
                     Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
@@ -314,7 +309,6 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
     /**
      * Loads Signal Strength Database details to plot on the map,
      * only entries which have a location (lon, lat) are used.
-     *
      */
     private void loadEntries() {
         final int SIGNAL_SIZE_RATIO = 15;
@@ -331,8 +325,9 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 final int net = c.getInt(2);
                 final double dlat = Double.parseDouble(c.getString(3));
                 final double dlng = Double.parseDouble(c.getString(4));
-                if (dlat == 0.0 && dlng == 0.0)
+                if (dlat == 0.0 && dlng == 0.0) {
                     continue;
+                }
                 signal = c.getInt(5);
                 if (signal <= 0) {
                     signal = 20;
@@ -395,7 +390,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                             .draggable(false)
                             .title("CellID - " + cellID));
                     mMarkerMap.put(marker, new MarkerData("" + cellID, "" + loc.latitude,
-                            "" + loc.longitude, "" + lac, "", "", "",false));
+                            "" + loc.longitude, "" + lac, "", "", "", false));
                 }
 
             } while (c.moveToNext());
@@ -412,7 +407,8 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         } else {
             // Try and find last known location and zoom there
             Location lastLoc = mAimsicdService.lastKnownLocation();
-            if (lastLoc != null && (lastLoc.getLatitude() != 0.0 && lastLoc.getLongitude() != 0.0)) {
+            if (lastLoc != null && (lastLoc.getLatitude() != 0.0
+                    && lastLoc.getLongitude() != 0.0)) {
                 loc = new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude());
                 CameraPosition POSITION =
                         new CameraPosition.Builder().target(loc)
@@ -449,7 +445,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 final double dlng = Double.parseDouble(c.getString(5));
                 final int cellID = c.getInt(0);
                 final int lac = c.getInt(1);
-                final LatLng location = new LatLng (dlat, dlng);
+                final LatLng location = new LatLng(dlat, dlng);
                 final int mcc = c.getInt(2);
                 final int mnc = c.getInt(3);
                 final int samples = c.getInt(7);
@@ -469,13 +465,21 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
     }
 
     public class MarkerData {
+
         public final String cellID;
+
         public final String lat;
+
         public final String lng;
+
         public final String lac;
+
         public final String mcc;
+
         public final String mnc;
+
         public final String samples;
+
         public final boolean openCellID;
 
         MarkerData(String cell_id, String latitude, String longitude,
@@ -493,9 +497,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
     }
 
 
-
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
-    {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_MAP_TYPE = getBaseContext().getString(R.string.pref_map_type_key);
 
         if (key.equals(KEY_MAP_TYPE)) {
