@@ -95,23 +95,23 @@
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">About AIMSICD</string>
-    <string name="aimsicd_about_info">Android IMSI-Catcher Detector - </string>
+    <string name="aimsicd_about_info">Android IMSI-Catcher Detector -</string>
     <string name="aimsicd_about_info2">Detect and avoid IMSI-Catcher attacks!</string>
     <string name="poc_info">This App is a</string>
-    <string name="poc_link">&lt;a href="https://en.wikipedia.org/wiki/Proof_of_concept"&gt;PoC&lt;/a&gt;</string>
+    <string name="poc_link">&lt;a href="https://en.wikipedia.org/wiki/Proof_of_concept"&gt;Proof-of-Concept (PoC)&lt;/a&gt;</string>
     <string name="disclaimer_info">You MUST accept our</string>
     <string name="disclaimer_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER"&gt;Disclaimer&lt;/a&gt;</string>
     <string name="github_info">Contribute to the AIMSICD-Project on</string>
-    <string name="aimsicd_github_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector"&gt;Github&lt;/a&gt;</string>
-    <string name="xda_info">Visit the</string>
+    <string name="aimsicd_github_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector"&gt;GitHub&lt;/a&gt;</string>
+    <string name="xda_info">Visit our</string>
     <string name="aimsicd_xda_link">&lt;a href="http://forum.xda-developers.com/showthread.php?t=1422969"&gt;Official XDA Development Thread&lt;/a&gt;</string>
     <string name="release_info">Check for the latest</string>
     <string name="aimsicd_release_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases"&gt;WIP-Release of AIMSICD&lt;/a&gt;</string>
     <string name="changelog_info">Stay up to date and visit our</string>
     <string name="aimsicd_changelog_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md"&gt;Changelog&lt;/a&gt;</string>
-    <string name="license_info">The AIMSICD-Project is licensed under</string>
+    <string name="license_info">The AIMSICD-Project is licensed</string>
     <string name="aimsicd_license_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE"&gt;GPL v3+&lt;/a&gt;</string>
-    <string name="credits_info">Awesome people for an awesome Project:</string>
+    <string name="credits_info">Awesome people for our Project:</string>
     <string name="aimsicd_credits_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS&gt;"CREDITS&lt;/a&gt;</string>
 
 
