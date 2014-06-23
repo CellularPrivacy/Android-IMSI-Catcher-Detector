@@ -1,6 +1,18 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 21.06.2014 - WIP-Release v0.1.20-alpha
+
+* Update: AT Command Injection is **ENABLED** now - huge THANKS to [E3V3A](https://github.com/E3V3A)! **ROOT REQUIRED!**
+* Update: WIKI of [AT Command Injector](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/User-Guide#at-command-injector) improved, please see this before using AT Commands
+* Improved: Clean up and maintenance of code format, arrangement of imports and formatting style
+* Removed: Unnecessary calls from methods based on fragment lifecycles
+* Added: Method to the service to return the Mobile Country Code (MCC)
+* Fix: Corrected the list that stores neighbouring cell information
+* Fix: Modified layout for the neighbouring cells so they display now using the Card UI style
+* Fix: Change onDestory method to address the NPE some devices had when service was destroyed
+* Fix: Corected NPE caused by null location returned during loadEntries method
+
 #### 20.06.2014
 
 * Update: Massive revamp of the UI to nuke swiping and add a new menu button on the upper left side
@@ -10,6 +22,7 @@
 #### 19.06.2014 - WIP-Release v0.1.19-alpha
 
 * Fix: Corrected async task calling UI methods, Database backup and restore should work now
+* Fix: Corrected naming value to correctly show our new awesome Icons
 * Fix: Modified MapViewer location logic which previously did not return any data
 * Fix: Fully removed CDMA specific location methods which caused crashes AGAIN for CDMA users
 * Added: Local Broadcast Receiver handling OpenCellID data and ensure map markers reflect data
