@@ -84,7 +84,7 @@
     <string name="network_code">Network Code:</string>
     <string name="network_type">Network Type:</string>
     <string name="network_lac">Network LAC:</string>
-    <string name="network_cellid">Network CellID:</string>
+    <string name="network_cellid">Network CID:</string>
     <string name="data_activity">Data Activity:</string>
     <string name="data_status">Data Status:</string>
     <string name="network_roaming">Roaming:</string>
@@ -190,7 +190,9 @@
     <string name="enter_at_command_title">Enter AT Command:</string>
     <string name="response_label">Response:</string>
     <string name="execute_at">Execute</string>
-    <string name="ril_device_title">Ril Serial Device:</string>
+    <string name="serial_device_title">Current Serial Device:</string>
+    <string name="serial_device_prompt">Select Serial Device</string>
+    <string name="serial_device_spinner_title">Detected Devices:</string>
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Silent SMS Intercepted</string>
