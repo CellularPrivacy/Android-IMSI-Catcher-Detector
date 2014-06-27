@@ -8,31 +8,48 @@
     <TextView
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:textSize="18sp" android:text="@string/at_command_title"
-            android:background="@color/black"
             android:textColor="@color/green_text"
             android:padding="4dip" android:id="@+id/at_command_title"/>
 
     <TextView
-            android:id="@+id/ril_device_title"
+            android:id="@+id/serial_device_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ril_device_title"
-            android:background="@color/black"
+            android:text="@string/serial_device_title"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@id/at_command_title"/>
+
     <TextView
-            android:id="@+id/ril_device"
+            android:id="@+id/serial_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empty"
-            android:background="@color/black"
             android:textColor="@color/medium_blue"
             android:padding="8dip" android:layout_below="@+id/at_command_title"
-            android:layout_toRightOf="@+id/ril_device_title"/>
+            android:layout_toRightOf="@+id/serial_device_title"/>
+
+    <TextView
+            android:id="@+id/serial_device_spinner_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/serial_device_spinner_title"
+            android:textColor="@color/white"
+            android:padding="8dip" android:layout_below="@id/serial_device"
+            android:visibility="gone"/>
+
+    <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/serial_device_spinner"
+            android:entries="@array/table_names"
+            android:prompt="@string/serial_device_prompt"
+            android:layout_below="@+id/serial_device"
+            android:layout_toRightOf="@id/serial_device_spinner_title"
+            android:visibility="gone"/>
 
     <RelativeLayout android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/ril_device_title"
+                    android:layout_below="@+id/serial_device_spinner"
                     android:id="@+id/atcommandView"
             android:visibility="gone">
     <TextView
@@ -40,7 +57,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/enter_at_command_title"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip"/>
 
@@ -66,18 +82,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/response_label"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/at_command"/>
 
-    <TextView
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/response_label">
+        <TextView
             android:id="@+id/response"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:text="@string/empty"
-            android:background="@color/black"
             android:textColor="@color/white"
-            android:padding="4dip" android:layout_below="@+id/response_label"/>
+            android:padding="4dip" />
+    </ScrollView>
     </RelativeLayout>
 
     <TextView
@@ -85,8 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empty"
-            android:background="@color/black"
             android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/ril_device"
+            android:padding="8dip" android:layout_below="@+id/serial_device"
             android:visibility="gone"/>
 </RelativeLayout>

@@ -11,16 +11,18 @@
             android:id="@+id/linearLayout">
 
         <Spinner
-                android:layout_width="269dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/table_spinner"
                 android:entries="@array/table_names"
-                android:prompt="@string/table_names_prompt"/>
+                android:prompt="@string/table_names_prompt"
+                android:layout_weight="5"/>
         <Button
                 android:id="@+id/load_table_data"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/load_table_data"/>
+                android:text="@string/load_table_data"
+                android:layout_weight="1"/>
     </LinearLayout>
 
     <ListView
