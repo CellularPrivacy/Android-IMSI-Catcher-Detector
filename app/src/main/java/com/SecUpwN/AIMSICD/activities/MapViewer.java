@@ -286,7 +286,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 startActivity(intent);
                 return true;
             case R.id.get_opencellid: {
-                Location lastKnown = mAimsicdService.lastKnownLocation();
+                Location lastKnown = mAimsicdService.mDevice.getLastLocation();
                 if (lastKnown != null) {
                     Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
                     Helpers.getOpenCellData(mContext, lastKnown.getLatitude(),
@@ -406,7 +406,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
         } else {
             // Try and find last known location and zoom there
-            Location lastLoc = mAimsicdService.lastKnownLocation();
+            Location lastLoc = mAimsicdService.mDevice.getLastLocation();
             if (lastLoc != null && (lastLoc.getLatitude() != 0.0
                     && lastLoc.getLongitude() != 0.0)) {
                 loc = new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude());
@@ -418,7 +418,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
             } else {
                 //Use Mcc to move camera to an approximate location near Countries Capital
-                int mcc = mAimsicdService.getMCC();
+                int mcc = mAimsicdService.mDevice.getMCC();
                 double[] d = mDbHelper.getDefaultLocation(mcc);
                 loc = new LatLng(d[0], d[1]);
                 CameraPosition POSITION =

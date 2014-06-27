@@ -2,17 +2,16 @@ package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
+import android.app.Fragment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,8 +20,6 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import java.util.concurrent.TimeUnit;
 
 public class DeviceFragment extends Fragment {
 
@@ -33,16 +30,6 @@ public class DeviceFragment extends Fragment {
     private AimsicdService mAimsicdService;
     private boolean mBound;
     private Context mContext;
-    Handler timerHandler = new Handler();
-
-    Runnable timerRunnable = new Runnable() {
-
-        @Override
-        public void run() {
-            updateUI();
-            timerHandler.postDelayed(this, AimsicdService.REFRESH_RATE);
-        }
-    };
 
     public DeviceFragment() {
     }
@@ -79,12 +66,6 @@ public class DeviceFragment extends Fragment {
             mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
-        //Refresh display if preference is not set to manual
-        if (AimsicdService.REFRESH_RATE != 0) {
-            timerHandler.postDelayed(timerRunnable, 0);
-            Helpers.sendMsg(mContext, "Refreshing every "
-                    + TimeUnit.MILLISECONDS.toSeconds(AimsicdService.REFRESH_RATE) + " seconds");
-        }
         updateUI();
     }
 
@@ -96,13 +77,6 @@ public class DeviceFragment extends Fragment {
             mContext.unbindService(mConnection);
             mBound = false;
         }
-        timerHandler.removeCallbacks(timerRunnable);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        timerHandler.removeCallbacks(timerRunnable);
     }
 
     /**
@@ -130,14 +104,14 @@ public class DeviceFragment extends Fragment {
         TableRow tr;
         if (mBound) {
             tableLayout = (TableLayout) mView.findViewById(R.id.mainView);
-            switch (mAimsicdService.getPhoneID()) {
+            switch (mAimsicdService.mDevice.getPhoneID()) {
                 case TelephonyManager.PHONE_TYPE_GSM: {
                     content = (TextView) mView.findViewById(R.id.network_lac);
-                    content.setText(String.valueOf(mAimsicdService.getLAC(true)));
+                    content.setText(String.valueOf(mAimsicdService.mDevice.getLac()));
                     tr = (TableRow) mView.findViewById(R.id.gsm_cellid);
                     tr.setVisibility(View.VISIBLE);
                     content = (TextView) mView.findViewById(R.id.network_cellid);
-                    content.setText(String.valueOf(mAimsicdService.getCellId()));
+                    content.setText(String.valueOf(mAimsicdService.mDevice.getCellId()));
                     break;
                 }
                 case TelephonyManager.PHONE_TYPE_CDMA: {
@@ -153,62 +127,60 @@ public class DeviceFragment extends Fragment {
                         }
                     }
                     content = (TextView) mView.findViewById(R.id.network_netid);
-                    content.setText(String.valueOf(mAimsicdService.getLAC(true)));
+                    content.setText(String.valueOf(mAimsicdService.mDevice.getLac()));
                     content = (TextView) mView.findViewById(R.id.network_sysid);
-                    content.setText(String.valueOf(mAimsicdService.getSID()));
+                    content.setText(String.valueOf(mAimsicdService.mDevice.getSID()));
                     content = (TextView) mView.findViewById(R.id.network_baseid);
-                    content.setText(String.valueOf(mAimsicdService.getCellId()));
-                    double[] location = mAimsicdService.getLastLocation();
+                    content.setText(String.valueOf(mAimsicdService.mDevice.getCellId()));
+                    Location location = mAimsicdService.mDevice.getLastLocation();
                     content = (TextView) mView.findViewById(R.id.network_cmda_lat);
-                    content.setText(String.valueOf(location[0]));
+                    content.setText(String.valueOf(location.getLatitude()));
                     content = (TextView) mView.findViewById(R.id.network_cmda_long);
-                    content.setText(String.valueOf(location[1]));
+                    content.setText(String.valueOf(location.getLongitude()));
                     break;
                 }
             }
 
-            if (mAimsicdService.getNetID(true) == TelephonyManager.NETWORK_TYPE_LTE) {
+            if (mAimsicdService.mDevice.getNetID() == TelephonyManager.NETWORK_TYPE_LTE) {
                 tr = (TableRow) mView.findViewById(R.id.lte_timing_advance);
                 tr.setVisibility(View.VISIBLE);
                 content = (TextView) mView.findViewById(R.id.network_lte_timing_advance);
-                content.setText(String.valueOf(mAimsicdService.getLteTimingAdvance()));
+                content.setText(String.valueOf(mAimsicdService.mDevice.getLteTimingAdvance()));
             } else {
                 tr = (TableRow) mView.findViewById(R.id.lte_timing_advance);
                 tr.setVisibility(View.GONE);
             }
 
             content = (TextView) mView.findViewById(R.id.sim_country);
-            content.setText(mAimsicdService.getSimCountry(false));
+            content.setText(mAimsicdService.mDevice.getSimCountry());
             content = (TextView) mView.findViewById(R.id.sim_operator_id);
-            content.setText(mAimsicdService.getSimOperator(false));
+            content.setText(mAimsicdService.mDevice.getSimOperator());
             content = (TextView) mView.findViewById(R.id.sim_operator_name);
-            content.setText(mAimsicdService.getSimOperatorName(false));
+            content.setText(mAimsicdService.mDevice.getSimOperatorName());
             content = (TextView) mView.findViewById(R.id.sim_imsi);
-            content.setText(mAimsicdService.getSimSubs(false));
+            content.setText(mAimsicdService.mDevice.getSimSubs());
             content = (TextView) mView.findViewById(R.id.sim_serial);
-            content.setText(mAimsicdService.getSimSerial(false));
+            content.setText(mAimsicdService.mDevice.getSimSerial());
 
             content = (TextView) mView.findViewById(R.id.device_type);
-            content.setText(mAimsicdService.getPhoneType(false));
+            content.setText(mAimsicdService.mDevice.getPhoneType());
             content = (TextView) mView.findViewById(R.id.device_imei);
-            content.setText(mAimsicdService.getIMEI(false));
+            content.setText(mAimsicdService.mDevice.getIMEI());
             content = (TextView) mView.findViewById(R.id.device_version);
-            content.setText(mAimsicdService.getIMEIv(false));
-            content = (TextView) mView.findViewById(R.id.device_number);
-            content.setText(mAimsicdService.getPhoneNumber(false));
+            content.setText(mAimsicdService.mDevice.getIMEIv());
             content = (TextView) mView.findViewById(R.id.network_name);
-            content.setText(mAimsicdService.getNetworkName(false));
+            content.setText(mAimsicdService.mDevice.getNetworkName());
             content = (TextView) mView.findViewById(R.id.network_code);
-            content.setText(mAimsicdService.getSmmcMcc(false));
+            content.setText(mAimsicdService.mDevice.getSmmcMcc());
             content = (TextView) mView.findViewById(R.id.network_type);
-            content.setText(mAimsicdService.getNetworkTypeName());
+            content.setText(mAimsicdService.mDevice.getNetworkTypeName());
 
             content = (TextView) mView.findViewById(R.id.data_activity);
-            content.setText(mAimsicdService.getActivityDesc());
+            content.setText(mAimsicdService.mDevice.getDataActivity());
             content = (TextView) mView.findViewById(R.id.data_status);
-            content.setText(mAimsicdService.getStateDesc());
+            content.setText(mAimsicdService.mDevice.getDataState());
             content = (TextView) mView.findViewById(R.id.network_roaming);
-            content.setText(mAimsicdService.isRoaming());
+            content.setText(mAimsicdService.mDevice.isRoaming());
         }
     }
 }
