@@ -165,8 +165,7 @@ public class CellInfoFragment extends Fragment {
 
     private void updateUI() {
         if (mBound) {
-            mAimsicdService.updateNeighbouringCells();
-            List<Cell> neighboringCells = mAimsicdService.getNeighbouringCells();
+            List<Cell> neighboringCells = mAimsicdService.updateNeighbouringCells();
             if (neighboringCells != null && neighboringCells.size() != 0) {
                 mNeighbouringTotal
                         .setText(String.valueOf(neighboringCells.size()));
