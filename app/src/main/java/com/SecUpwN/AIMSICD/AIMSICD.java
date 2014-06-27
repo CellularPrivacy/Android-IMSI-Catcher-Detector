@@ -28,6 +28,7 @@ import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -75,6 +76,7 @@ public class AIMSICD extends Activity {
     private String[] mNavigationTitles;
 
     private DrawerLayout mDrawerLayout;
+    private ActionBar mActionBar;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
@@ -98,6 +100,11 @@ public class AIMSICD extends Activity {
         startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mActionBar = getActionBar();
+
         mNavigationTitles = getResources().getStringArray(R.array.navigation_array);
         mTitle = mDrawerTitle = getTitle();
 
@@ -111,8 +118,7 @@ public class AIMSICD extends Activity {
                 R.drawable.ic_action_about,
         };
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
 
         List<HashMap<String, String>> navigationItems = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
@@ -139,22 +145,21 @@ public class AIMSICD extends Activity {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
+                mActionBar.setTitle(mTitle);
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
+                mActionBar.setTitle(mDrawerTitle);
             }
         };
 
         // Set the drawer toggle as the DrawerListener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
 
         //Display the Device Fragment as the Default View
         FragmentManager fragmentManager = getFragmentManager();
@@ -256,16 +261,15 @@ public class AIMSICD extends Activity {
             case 3:
                 fragment = new DbViewerFragment();
                 break;
-            case 4:
-                //Need to declare a fragment so make it the Device fragment
-                fragment = new DeviceFragment();
-                showmap();
-                break;
             case 5:
                 fragment = new AboutFragment();
                 break;
             default:
                 fragment = new DeviceFragment();
+        }
+
+        if (position == 4) {
+            showmap();
         }
 
         // Insert the fragment by replacing any existing fragment
@@ -283,7 +287,7 @@ public class AIMSICD extends Activity {
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(mTitle);
+        mActionBar.setTitle(mTitle);
     }
 
 
@@ -343,7 +347,7 @@ public class AIMSICD extends Activity {
                 }
             }
 
-            if (mAimsicdService.getPhoneID() == TelephonyManager.PHONE_TYPE_CDMA) {
+            if (mAimsicdService.mDevice.getPhoneID() == TelephonyManager.PHONE_TYPE_CDMA) {
                 if (mAimsicdService.isTrackingFemtocell()) {
                     if (mTrackFemtocell != null) {
                         mTrackFemtocell.setTitle(R.string.untrack_femtocell);
@@ -383,9 +387,6 @@ public class AIMSICD extends Activity {
                 trackFemtocell();
                 invalidateOptionsMenu();
                 return true;
-            case R.id.show_map:
-                showmap();
-                return true;
             case R.id.preferences:
                 intent = new Intent(this, PrefActivity.class);
                 startActivity(intent);
@@ -397,7 +398,7 @@ public class AIMSICD extends Activity {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
                 return true;
             case R.id.update_opencelldata:
-                Location loc = mAimsicdService.lastKnownLocation();
+                Location loc = mAimsicdService.mDevice.getLastLocation();
                 if (loc != null) {
                     Helpers.sendMsg(mContext, "Contacting OpenCellID.org for data...");
                     Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude(),
