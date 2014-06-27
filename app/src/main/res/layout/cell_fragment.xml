@@ -15,14 +15,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp" android:text="@string/ciphering_indicator_title"
-            android:background="@color/black"
             android:textColor="@color/green_text"
             android:padding="4dip" android:layout_below="@+id/button_refresh"
             android:visibility="gone"/>
 
     <TextView
             android:id="@+id/ciphering_indicator" android:text="@string/empty"
-            android:background="@color/black"
             android:textColor="@color/white"
             android:padding="2dip"
             android:layout_gravity="left"
@@ -46,20 +44,17 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp" android:text="@string/neighbouring_cells_title"
                     android:layout_span="2"
-                    android:background="@color/black"
                     android:textColor="@color/green_text"
                     android:padding="4dip"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:background="@color/black"
                 android:id="@+id/neighbouring_total">
 
             <TextView
                     android:id="@+id/neighbouring_number_label"
                     android:text="@string/neighbouring_cells_num_title"
-                    android:background="@color/black"
                     android:textColor="@color/white"
                     android:padding="2dip" android:gravity="right"
                     android:layout_gravity="right"
@@ -67,19 +62,17 @@
 
             <TextView
                     android:id="@+id/neighbouring_number" android:text="@string/empty"
-                    android:background="@color/black"
                     android:textColor="@color/medium_blue"
                     android:padding="2dip" android:gravity="left"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:gravity="left"
-                android:background="@color/black">
+                android:gravity="left">
 
             <TextView
                     android:id="@+id/neighbouring_cells" android:text=""
-                    android:layout_weight="1" android:background="@color/black"
+                    android:layout_weight="1"
                     android:textColor="@color/white"
                     android:padding="2dip"
                     android:layout_gravity="left"
