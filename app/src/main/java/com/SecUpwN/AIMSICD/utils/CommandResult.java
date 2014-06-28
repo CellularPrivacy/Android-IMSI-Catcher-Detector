@@ -23,7 +23,6 @@ package com.SecUpwN.AIMSICD.utils;
 
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 
-import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -78,11 +77,11 @@ public class CommandResult implements Parcelable {
     }
 
     public String getStderr() {
-        return new String(mStderr);
+        return mStderr;
     }
 
     public String getStdout() {
-        return new String(mStdout);
+        return mStdout;
     }
 
     public Integer getExitValue() {
