@@ -260,7 +260,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                     }
                 });
             } else {
-                Helpers.sendMsg(this, "Unable to create map!");
+                Helpers.msgShort(this, "Unable to create map!");
             }
         }
     }
@@ -288,15 +288,15 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
             case R.id.get_opencellid: {
                 Location lastKnown = mAimsicdService.mDevice.getLastLocation();
                 if (lastKnown != null) {
-                    Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
+                    Helpers.msgShort(this, "Contacting OpenCellID.org for data...");
                     Helpers.getOpenCellData(mContext, lastKnown.getLatitude(),
                             lastKnown.getLongitude(), RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
                 } else if (loc != null) {
-                    Helpers.sendMsg(this, "Contacting OpenCellID.org for data...");
+                    Helpers.msgShort(this, "Contacting OpenCellID.org for data...");
                     Helpers.getOpenCellData(mContext, loc.latitude, loc.longitude,
                             RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
                 } else {
-                    Helpers.sendMsg(mContext,
+                    Helpers.msgShort(mContext,
                             "Unable to determine your last location. \nEnable Location Services and try again.");
                 }
                 return true;
@@ -406,9 +406,8 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
         } else {
             // Try and find last known location and zoom there
-            Location lastLoc = mAimsicdService.mDevice.getLastLocation();
-            if (lastLoc != null && (lastLoc.getLatitude() != 0.0
-                    && lastLoc.getLongitude() != 0.0)) {
+            Location lastLoc = mAimsicdService.lastKnownLocation();
+            if (lastLoc != null && lastLoc.hasAccuracy()) {
                 loc = new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude());
                 CameraPosition POSITION =
                         new CameraPosition.Builder().target(loc)
