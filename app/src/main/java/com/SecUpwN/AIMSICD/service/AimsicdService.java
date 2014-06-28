@@ -1021,7 +1021,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         /* Check if it is a CDMA phone */
         if (mDevice.getPhoneID() != TelephonyManager.PHONE_TYPE_CDMA) {
-            Helpers.sendMsg(this, "AIMSICD can only detect Femtocell connections on CDMA devices.");
+            Helpers.msgShort(this, "AIMSICD can only detect Femtocell connections on CDMA devices.");
             return;
         }
 
@@ -1053,7 +1053,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private void getServiceStateInfo(ServiceState s) {
         if (s != null) {
             if (IsConnectedToCdmaFemto(s)) {
-                Helpers.sendMsg(this, "ALERT!! Femtocell Connection Detected!!");
+                Helpers.msgShort(this, "ALERT!! Femtocell Connection Detected!!");
                 mFemtoDetected = true;
                 setNotification();
                 //toggleRadio();
