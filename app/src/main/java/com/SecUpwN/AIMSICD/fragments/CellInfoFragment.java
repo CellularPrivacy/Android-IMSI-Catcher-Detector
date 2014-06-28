@@ -87,7 +87,7 @@ public class CellInfoFragment extends Fragment {
         //Refresh display if preference is not set to manual
         if (AimsicdService.REFRESH_RATE != 0) {
             timerHandler.postDelayed(timerRunnable, 0);
-            Helpers.sendMsg(mContext, "Refreshing every "
+            Helpers.msgShort(mContext, "Refreshing every "
                     + TimeUnit.MILLISECONDS.toSeconds(AimsicdService.REFRESH_RATE) + " seconds");
         }
     }
@@ -150,7 +150,7 @@ public class CellInfoFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Helpers.sendMsg(mContext, "Refreshing now...");
+            Helpers.msgShort(mContext, "Refreshing now...");
             updateUI();
         }
     }
