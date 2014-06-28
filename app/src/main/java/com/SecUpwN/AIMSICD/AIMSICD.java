@@ -400,11 +400,11 @@ public class AIMSICD extends Activity {
             case R.id.update_opencelldata:
                 Location loc = mAimsicdService.lastKnownLocation();
                 if (loc != null && loc.hasAccuracy()) {
-                    Helpers.sendMsg(mContext, "Contacting OpenCellID.org for data...");
+                    Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
                     Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude(),
                             RequestTask.OPEN_CELL_ID_REQUEST);
                 } else {
-                    Helpers.sendMsg(mContext,
+                    Helpers.msgShort(mContext,
                             "Unable to determine your last location. \nEnable Location Services and try again.");
                 }
                 return true;

@@ -133,11 +133,11 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
                     if (mDbAdapter.updateOpenCellID()) {
-                        Helpers.sendMsg(mContext, "OpenCellID data successfully received");
+                        Helpers.msgShort(mContext, "OpenCellID data successfully received");
                     }
                     mDbAdapter.close();
                 } else {
-                    Helpers.sendMsg(mContext, "Error retrieving OpenCellID data");
+                    Helpers.msgShort(mContext, "Error retrieving OpenCellID data");
                 }
                 break;
             case OPEN_CELL_ID_REQUEST_FROM_MAP:
@@ -146,19 +146,19 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     if (mDbAdapter.updateOpenCellID()) {
                         Intent intent = new Intent(MapViewer.updateOpenCellIDMarkers);
                         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-                        Helpers.sendMsg(mContext, "OpenCellID data successfully received and "
+                        Helpers.msgShort(mContext, "OpenCellID data successfully received and "
                                 + "Map Markers updated");
                         mDbAdapter.close();
                     }
                 } else {
-                    Helpers.sendMsg(mContext, "Error retrieving OpenCellID data");
+                    Helpers.msgShort(mContext, "Error retrieving OpenCellID data");
                 }
                 break;
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
-                    Helpers.sendMsg(mContext, "Restore database completed successfully");
+                    Helpers.msgShort(mContext, "Restore database completed successfully");
                 } else {
-                    Helpers.sendMsg(mContext, "Error restoring database");
+                    Helpers.msgShort(mContext, "Error restoring database");
                 }
                 break;
             case BACKUP_DATABASE:
@@ -169,7 +169,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                                     + AIMSICDDbAdapter.FOLDER);
                     builder.create().show();
                 } else {
-                    Helpers.sendMsg(mContext, "Error backing up database");
+                    Helpers.msgShort(mContext, "Error backing up database");
                 }
         }
     }
