@@ -688,7 +688,19 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
     }
 
+    public Location lastKnownLocation() {
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location == null || (location.getLatitude() == 0.0 && location.getLongitude() == 0.0)) {
+            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
 
+        if (location != null && location.hasAccuracy()) {
+            location = (mDevice.isBetterLocation(location, mDevice.getLastLocation()) ? location :
+                    mDevice.getLastLocation());
+        }
+
+        return location;
+    }
 
     /**
      * Neighbouring Cell List

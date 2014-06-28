@@ -398,8 +398,8 @@ public class AIMSICD extends Activity {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
                 return true;
             case R.id.update_opencelldata:
-                Location loc = mAimsicdService.mDevice.getLastLocation();
-                if (loc != null) {
+                Location loc = mAimsicdService.lastKnownLocation();
+                if (loc != null && loc.hasAccuracy()) {
                     Helpers.sendMsg(mContext, "Contacting OpenCellID.org for data...");
                     Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude(),
                             RequestTask.OPEN_CELL_ID_REQUEST);

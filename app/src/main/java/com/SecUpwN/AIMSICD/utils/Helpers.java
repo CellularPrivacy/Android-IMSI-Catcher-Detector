@@ -159,15 +159,15 @@ public class Helpers {
         }
     }
 
-    private static String ByteToString(byte[] mByteArray) {
-        if (mByteArray == null) {
+    public static String ByteToString(byte[] byteArray) {
+        if (byteArray == null) {
             return null;
         }
         try {
-            String mResult = new String(mByteArray, "ASCII");
-            mResult = String.copyValueOf(mResult.toCharArray(), 0,
-                    mByteArray.length);
-            return mResult;
+            String result = new String(byteArray, "ASCII");
+            result = String.copyValueOf(result.toCharArray(), 0,
+                    byteArray.length);
+            return result;
         } catch (UnsupportedEncodingException e) {
             return null;
         }
@@ -176,64 +176,62 @@ public class Helpers {
     /**
      * Converts a byte array into a String array
      *
-     * @param mByteArray  byte array to convert
-     * @param mDataLength length of byte array
+     * @param byteArray  byte array to convert
+     * @param dataLength length of byte array
      * @return String array copy of passed byte array
      */
-    private static String[] ByteArrayToStringArray(byte[] mByteArray,
-            int mDataLength) {
-        if (mByteArray == null) {
+    public static List<String> ByteArrayToStringList(byte[] byteArray,
+            int dataLength) {
+        if (byteArray == null) {
             return null;
         }
-        if (mDataLength <= 0) {
+        if (dataLength <= 0) {
             return null;
         }
-        if (mDataLength > mByteArray.length) {
+        if (dataLength > byteArray.length) {
             return null;
         }
 
         // Replace all invisible chars to '.'
-        for (int i = 0; i < mDataLength; i++) {
-            if ((mByteArray[i] == 0x0D) || (mByteArray[i] == 0x0A)) {
-                mByteArray[i] = 0;
+        for (int i = 0; i < dataLength; i++) {
+            if ((byteArray[i] == 0x0D) || (byteArray[i] == 0x0A)) {
+                byteArray[i] = 0;
                 continue;
             }
-            if (mByteArray[i] < 0x20) {
-                mByteArray[i] = 0x2E;
+            if (byteArray[i] < 0x20) {
+                byteArray[i] = 0x2E;
             }
-            if (mByteArray[i] > 0x7E) {
-                mByteArray[i] = 0x2E;
+            if (byteArray[i] > 0x7E) {
+                byteArray[i] = 0x2E;
             }
         }
 
         // Split and convert to string
-        List<String> mListString = new ArrayList<>();
-        for (int i = 0; i < mDataLength; i++) {
-            if (mByteArray[i] == 0) {
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < dataLength; i++) {
+            if (byteArray[i] == 0) {
                 continue;
             }
-            int nBlockLength = -1;
-            for (int j = i + 1; j < mDataLength; j++) {
-                if (mByteArray[j] == 0) {
-                    nBlockLength = j - i;
+            int blockLength = -1;
+            for (int j = i + 1; j < dataLength; j++) {
+                if (byteArray[j] == 0) {
+                    blockLength = j - i;
                     break;
                 }
             }
-            if (nBlockLength == -1) {
-                nBlockLength = mDataLength - i;
+            if (blockLength == -1) {
+                blockLength = dataLength - i;
             }
-            byte[] mBlockData = new byte[nBlockLength];
-            System.arraycopy(mByteArray, i, mBlockData, 0, nBlockLength);
-            mListString.add(ByteToString(mBlockData));
-            i += nBlockLength;
+            byte[] mBlockData = new byte[blockLength];
+            System.arraycopy(byteArray, i, mBlockData, 0, blockLength);
+            result.add(ByteToString(mBlockData));
+            i += blockLength;
         }
 
-        if (mListString.size() <= 0) {
+        if (result.size() <= 0) {
             return null;
         }
-        String[] mResult = new String[mListString.size()];
-        mListString.toArray(mResult);
-        return mResult;
+        return result;
     }
 
     /**
@@ -301,21 +299,6 @@ public class Helpers {
         }
 
         return Arrays.asList(Arrays.copyOf(display, newLength));
-    }
-
-    /**
-     * Return a String List representing response from invokeOemRilRequestStrings
-     *
-     * @param strings String array response from invokeOemRilRequestStrings
-     */
-    public static List<String> unpackListOfStrings(String strings[]) {
-
-        if (strings.length == 0) {
-            Log.v(TAG, "Length = 0");
-            return Collections.emptyList();
-        }
-
-        return Arrays.asList(Arrays.copyOf(strings, strings.length));
     }
 
     /**

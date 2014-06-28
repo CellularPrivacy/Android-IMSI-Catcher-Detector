@@ -1,20 +1,15 @@
 package com.SecUpwN.AIMSICD.utils;
 
-import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
-import android.os.SystemClock;
-import android.telephony.CellIdentityGsm;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
 import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
-import android.telephony.CellLocation;
 import android.telephony.CellSignalStrengthCdma;
 import android.telephony.CellSignalStrengthGsm;
 import android.telephony.CellSignalStrengthLte;
-import android.telephony.NeighboringCellInfo;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
@@ -31,36 +26,65 @@ public class Device {
      * Device Declarations
      */
     private int mPhoneID = -1;
+
     private int mMcc = -1;
+
     private int mMnc = -1;
+
     private int mSignalInfo = -1;
+
     private int mNetID = -1;
+
     private int mLac = -1;
+
     private int mCellID = -1;
+
     private int mSID = -1;
+
     private int mPSC = -1;
+
     private int mTimingAdvance = -1;
+
     private double mLongitude = 0.0;
+
     private double mLatitude = 0.0;
+
     private String mNetType = "";
+
     private String mCellInfo = "";
+
     private String mDataState = "";
+
     private String mDataStateShort = "";
+
     private String mNetName = "";
+
     private String mMmcmcc = "";
+
     private String mSimCountry = "";
+
     private String mPhoneType = "";
+
     private String mIMEI = "";
+
     private String mIMEIV = "";
+
     private String mSimOperator = "";
+
     private String mSimOperatorName = "";
+
     private String mSimSerial = "";
+
     private String mSimSubs = "";
+
     private String mDataActivityType = "";
+
     private String mDataActivityTypeShort = "";
+
     private boolean mRoaming;
 
     private final List<Cell> mNeighboringCells = new ArrayList<>();
+
     private Location mLastLocation;
 
     private static final int TWO_MINUTES = 1000 * 60 * 2;
@@ -145,14 +169,6 @@ public class Device {
         mDataActivityType = getDataActivity(tm);
         mDataState = getDataState(tm);
 
-        if (mLongitude == 0.0 || mLatitude == 0.0) {
-            Location lastKnownLocation = lastKnownLocation(tm,lm);
-            if (lastKnownLocation != null) {
-                mLongitude = lastKnownLocation.getLongitude();
-                mLatitude = lastKnownLocation.getLatitude();
-            }
-        }
-
     }
 
     public double getLongitude() {
@@ -199,6 +215,9 @@ public class Device {
         return mMcc;
     }
 
+    /**
+     * Mobile Network Code MCC
+     */
     public int getMnc() {
         return mMnc;
     }
@@ -246,6 +265,9 @@ public class Device {
         return mSimCountry;
     }
 
+    /**
+     * SIM Country data
+     */
     public String getSimCountry() {
         return mSimCountry;
     }
@@ -578,7 +600,6 @@ public class Device {
 
     /**
      * Update Network Type
-     *
      */
     public void setNetID(TelephonyManager tm) {
         mNetID = tm.getNetworkType();
@@ -597,7 +618,7 @@ public class Device {
         return mLac;
     }
 
-    public void setLAC (int lac) {
+    public void setLAC(int lac) {
         mLac = lac;
     }
 
@@ -611,7 +632,7 @@ public class Device {
         return mCellID;
     }
 
-    public void setCellID (int cellID) {
+    public void setCellID(int cellID) {
         mCellID = cellID;
     }
 
@@ -628,35 +649,6 @@ public class Device {
         return mLastLocation;
     }
 
-    public Location lastKnownLocation(TelephonyManager tm, LocationManager lm) {
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location == null || (location.getLatitude() == 0.0 && location.getLongitude() == 0.0)) {
-            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-
-        if (location != null) {
-            location = (isBetterLocation(location, mLastLocation) ? location : mLastLocation);
-        } else {
-            CellLocation cellLocation = tm.getCellLocation();
-            if (cellLocation != null) {
-                switch (mPhoneID) {
-                    case TelephonyManager.PHONE_TYPE_GSM:
-                        GsmCellLocation gsmCellLocation
-                                = (GsmCellLocation) cellLocation;
-                        mCellID = gsmCellLocation.getCid();
-                        mLac = gsmCellLocation.getLac();
-                        break;
-                    case TelephonyManager.PHONE_TYPE_CDMA:
-                        CdmaCellLocation cdmaCellLocation
-                                = (CdmaCellLocation) cellLocation;
-                        mCellID = cdmaCellLocation.getBaseStationId();
-                        mLac = cdmaCellLocation.getNetworkId();
-                }
-            }
-        }
-
-        return location;
-    }
 
     /**
      * Determines whether one Location reading is better than the current Location fix
