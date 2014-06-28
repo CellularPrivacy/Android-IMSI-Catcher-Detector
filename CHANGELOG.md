@@ -1,6 +1,14 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 28.06.2014 - WIP-Release v0.1.21-alpha
+
+* Fix: Consistent background colour for text items correcting strange look in several menus
+* Fix: Corrected some items to achieve correct display on different screen sizes
+* Update: Moved large number of methods out of the service and into the Device class
+* Added: Automatic detection system for possible candidates for AT command serial devices
+* Added: Shell class added to provide ongoing root shell for correct execution of AT Commands
+
 #### 21.06.2014 - WIP-Release v0.1.20-alpha
 
 * Update: AT Command Injection is **ENABLED** now - huge THANKS to [E3V3A](https://github.com/E3V3A)! **ROOT REQUIRED!**
