@@ -1,6 +1,11 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 29.06.2014
+
+* Update: Screenshots updated to reflect latest changes within the UI and menu structure
+* Update: User Guide updated with new screenshots and explanations on several menus
+
 #### 28.06.2014 - WIP-Release v0.1.21-alpha
 
 * Fix: Consistent background colour for text items correcting strange look in several menus
