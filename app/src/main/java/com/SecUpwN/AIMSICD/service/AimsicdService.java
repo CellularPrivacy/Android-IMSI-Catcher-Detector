@@ -197,7 +197,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         prefs.registerOnSharedPreferenceChangeListener(this);
         loadPreferences();
 
-        mDevice.refreshDeviceInfo(tm, lm); //Telephony Manager, Location Manager
+        mDevice.refreshDeviceInfo(tm); //Telephony Manager
         setNotification();
 
         mRequestExecutor = new SamsungMulticlientRilExecutor();
@@ -498,6 +498,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
             return true;
         }
+    }
+
+    public void refreshDevice() {
+        mDevice.refreshDeviceInfo(tm);
     }
 
     /**
