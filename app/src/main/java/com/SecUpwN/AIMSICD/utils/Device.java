@@ -121,7 +121,9 @@ public class Device {
                             mSignalInfo = lte.getDbm();
                             mTimingAdvance = lte.getTimingAdvance();
                         } else {
-                            throw new NullPointerException("Unknown type of cell signal!");
+                            Log.i(TAG, "Unknown type of cell signal!" + "ClassName: " +
+                                    info.getClass().getSimpleName() + " ToString: " +
+                                    info.toString());
                         }
                     }
                 }
