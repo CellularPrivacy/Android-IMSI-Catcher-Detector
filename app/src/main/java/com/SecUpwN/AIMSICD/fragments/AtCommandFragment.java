@@ -162,10 +162,10 @@ public class AtCommandFragment extends Fragment {
             if (mAtCommand.getText() != null) {
                 String command = mAtCommand.getText().toString();
                 if (command.indexOf("AT") == 0 || command.indexOf("at") == 0) {
-                    Log.i("AIMSICD", "AT Command Detected");
+                    mShell = new Shell(mSerialDevice);
                     new MyAsync().execute(EXECUTE_AT);
                 } else {
-                    Log.i("AIMSICD", "Terminal Command Detected");
+                    mShell = new Shell();
                     new MyAsync().execute(EXECUTE_COMMAND);
                 }
             }
