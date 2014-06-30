@@ -103,6 +103,7 @@ public class DeviceFragment extends Fragment {
         TableLayout tableLayout;
         TableRow tr;
         if (mBound) {
+            mAimsicdService.refreshDevice();
             tableLayout = (TableLayout) mView.findViewById(R.id.mainView);
             switch (mAimsicdService.mDevice.getPhoneID()) {
                 case TelephonyManager.PHONE_TYPE_GSM: {
