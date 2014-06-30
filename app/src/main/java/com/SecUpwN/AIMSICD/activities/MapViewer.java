@@ -405,27 +405,29 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                             .build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
         } else {
-            // Try and find last known location and zoom there
-            Location lastLoc = mAimsicdService.lastKnownLocation();
-            if (lastLoc != null && lastLoc.hasAccuracy()) {
-                loc = new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude());
-                CameraPosition POSITION =
-                        new CameraPosition.Builder().target(loc)
-                                .zoom(16)
-                                .build();
+            if (mBound) {
+                // Try and find last known location and zoom there
+                Location lastLoc = mAimsicdService.lastKnownLocation();
+                if (lastLoc != null && lastLoc.hasAccuracy()) {
+                    loc = new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude());
+                    CameraPosition POSITION =
+                            new CameraPosition.Builder().target(loc)
+                                    .zoom(16)
+                                    .build();
 
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
-            } else {
-                //Use Mcc to move camera to an approximate location near Countries Capital
-                int mcc = mAimsicdService.mDevice.getMCC();
-                double[] d = mDbHelper.getDefaultLocation(mcc);
-                loc = new LatLng(d[0], d[1]);
-                CameraPosition POSITION =
-                        new CameraPosition.Builder().target(loc)
-                                .zoom(13)
-                                .build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
+                } else {
+                    //Use Mcc to move camera to an approximate location near Countries Capital
+                    int mcc = mAimsicdService.mDevice.getMCC();
+                    double[] d = mDbHelper.getDefaultLocation(mcc);
+                    loc = new LatLng(d[0], d[1]);
+                    CameraPosition POSITION =
+                            new CameraPosition.Builder().target(loc)
+                                    .zoom(13)
+                                    .build();
 
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
+                }
             }
         }
 
