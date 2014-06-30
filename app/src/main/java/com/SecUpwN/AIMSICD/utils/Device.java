@@ -26,65 +26,36 @@ public class Device {
      * Device Declarations
      */
     private int mPhoneID = -1;
-
     private int mMcc = -1;
-
     private int mMnc = -1;
-
     private int mSignalInfo = -1;
-
     private int mNetID = -1;
-
     private int mLac = -1;
-
     private int mCellID = -1;
-
     private int mSID = -1;
-
     private int mPSC = -1;
-
     private int mTimingAdvance = -1;
-
     private double mLongitude = 0.0;
-
     private double mLatitude = 0.0;
-
     private String mNetType = "";
-
     private String mCellInfo = "";
-
     private String mDataState = "";
-
     private String mDataStateShort = "";
-
     private String mNetName = "";
-
     private String mMmcmcc = "";
-
     private String mSimCountry = "";
-
     private String mPhoneType = "";
-
     private String mIMEI = "";
-
     private String mIMEIV = "";
-
     private String mSimOperator = "";
-
     private String mSimOperatorName = "";
-
     private String mSimSerial = "";
-
     private String mSimSubs = "";
-
     private String mDataActivityType = "";
-
     private String mDataActivityTypeShort = "";
-
     private boolean mRoaming;
 
     private final List<Cell> mNeighboringCells = new ArrayList<>();
-
     private Location mLastLocation;
 
     private static final int TWO_MINUTES = 1000 * 60 * 2;
@@ -93,7 +64,7 @@ public class Device {
     /**
      * Refreshes all device specific details
      */
-    public void refreshDeviceInfo(TelephonyManager tm, LocationManager lm) {
+    public void refreshDeviceInfo(TelephonyManager tm) {
         //Phone type and associated details
         mIMEI = tm.getDeviceId();
         mIMEIV = tm.getDeviceSoftwareVersion();
