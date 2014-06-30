@@ -19,19 +19,22 @@ package com.SecUpwN.AIMSICD;
 
 import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
+import com.SecUpwN.AIMSICD.adapters.DrawerMenuAdapter;
 import com.SecUpwN.AIMSICD.fragments.AboutFragment;
 import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
 import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
 import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
+import com.SecUpwN.AIMSICD.fragments.DrawerMenuItem;
+import com.SecUpwN.AIMSICD.fragments.DrawerMenuSection;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.utils.DrawerMenuActivityConfiguration;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -56,7 +59,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -86,13 +88,25 @@ public class AIMSICD extends Activity {
     //Back press to exit timer
     private long mLastPress = 0;
 
+    private DrawerMenuActivityConfiguration mNavConf ;
+
+    public interface NavDrawerItem {
+        public int getId();
+        public String getLabel();
+        public int getType();
+        public boolean isEnabled();
+        public boolean updateActionBarTitle();
+    }
+
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        mNavConf = getNavDrawerConfiguration();
+
+        setContentView(mNavConf.getMainLayout());
 
         // Bind to LocalService
         Intent intent = new Intent(this, AimsicdService.class);
@@ -100,40 +114,15 @@ public class AIMSICD extends Activity {
         startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
+        mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
         mActionBar = getActionBar();
 
         mNavigationTitles = getResources().getStringArray(R.array.navigation_array);
         mTitle = mDrawerTitle = getTitle();
 
-        //Declare Drawer Icons
-        int[] mIcons = new int[]{
-                R.drawable.ic_action_phone,
-                R.drawable.cell_tower,
-                R.drawable.ic_action_computer,
-                R.drawable.ic_action_storage,
-                R.drawable.ic_action_map,
-                R.drawable.ic_action_about,
-        };
+        mDrawerList.setAdapter(mNavConf.getBaseAdapter());
 
-
-
-        List<HashMap<String, String>> navigationItems = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            HashMap<String, String> hm = new HashMap<>();
-            hm.put("title", mNavigationTitles[i]);
-            hm.put("icon", Integer.toString(mIcons[i]));
-            navigationItems.add(hm);
-        }
-
-        String[] from = {"title", "icon"};
-        int[] to = {R.id.navigation_item, R.id.icon};
-
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(new SimpleAdapter(mContext,
-                navigationItems, R.layout.drawer_layout, from, to));
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
@@ -146,12 +135,14 @@ public class AIMSICD extends Activity {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 mActionBar.setTitle(mTitle);
+                invalidateOptionsMenu();
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 mActionBar.setTitle(mDrawerTitle);
+                invalidateOptionsMenu();
             }
         };
 
@@ -237,51 +228,72 @@ public class AIMSICD extends Activity {
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
-
         @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
         }
     }
 
     /** Swaps fragments in the main content view */
-    private void selectItem(int position) {
+    public void selectItem(int position) {
+        NavDrawerItem selectedItem = mNavConf.getNavItems()[position];
+
         // Create a new fragment
-        Fragment fragment;
-        switch (position) {
-            case 0:
-                fragment = new DeviceFragment();
+        switch (selectedItem.getId()) {
+            case 101:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, new DeviceFragment()).commit();
                 break;
-            case 1:
-                fragment = new CellInfoFragment();
+            case 102:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, new CellInfoFragment()).commit();
                 break;
-            case 2:
-                fragment = new AtCommandFragment();
+            case 103:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, new AtCommandFragment()).commit();
                 break;
-            case 3:
-                fragment = new DbViewerFragment();
+            case 104:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, new DbViewerFragment()).commit();
                 break;
-            case 5:
-                fragment = new AboutFragment();
+            case 302:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, new AboutFragment()).commit();
                 break;
-            default:
-                fragment = new DeviceFragment();
         }
 
-        if (position == 4) {
+        if (selectedItem.getId() == 901) {
+            trackcell();
+        } else if (selectedItem.getId() == 105) {
             showmap();
+        } else if (selectedItem.getId() == 202) {
+            Intent intent = new Intent(this, PrefActivity.class);
+            startActivity(intent);
+        } else if (selectedItem.getId() == 203) {
+            new RequestTask(mContext, RequestTask.BACKUP_DATABASE).execute();
+        } else if (selectedItem.getId() == 204) {
+            new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
+        } else if (selectedItem.getId() == 301) {
+            Location loc = mAimsicdService.lastKnownLocation();
+            if (loc != null && loc.hasAccuracy()) {
+                Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
+                Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude(),
+                        RequestTask.OPEN_CELL_ID_REQUEST);
+            } else {
+                Helpers.msgShort(mContext,
+                          "Unable to determine your last location. \nEnable Location Services and try again.");
+            }
         }
 
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
-
-        // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
-        setTitle(mNavigationTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
+
+        if ( selectedItem.updateActionBarTitle()) {
+            setTitle(selectedItem.getLabel());
+        }
+
+        if ( this.mDrawerLayout.isDrawerOpen(this.mDrawerList)) {
+            mDrawerLayout.closeDrawer(mDrawerList);
+        }
     }
 
     @Override
@@ -290,6 +302,38 @@ public class AIMSICD extends Activity {
         mActionBar.setTitle(mTitle);
     }
 
+    protected DrawerMenuActivityConfiguration getNavDrawerConfiguration() {
+
+        NavDrawerItem[] menu = new NavDrawerItem[] {
+                DrawerMenuSection.create(900, "Tracking"),
+                DrawerMenuItem.create(901, getString(R.string.track_cell), "untrack_cell", false, this),
+                DrawerMenuSection.create(100, "Main"),
+                DrawerMenuItem
+                        .create(101, getString(R.string.device_info), "ic_action_phone", true, this),
+                DrawerMenuItem.create(102, getString(R.string.cell_info_title), "cell_tower", true, this),
+                DrawerMenuItem.create(103, getString(R.string.at_command_title), "ic_action_computer", true, this),
+                DrawerMenuItem.create(104, getString(R.string.db_viewer), "ic_action_storage", true, this),
+                DrawerMenuItem.create(105, getString(R.string.map_view), "ic_action_map", true, this),
+                DrawerMenuSection.create(200, "Settings"),
+                DrawerMenuItem.create(202, getString(R.string.preferences), "ic_action_settings", false, this),
+                DrawerMenuItem.create(203, getString(R.string.backup_database), "ic_action_import_export", false, this),
+                DrawerMenuItem.create(204, getString(R.string.restore_database), "ic_action_import_export", false, this),
+                DrawerMenuSection.create(300, "Application"),
+                DrawerMenuItem.create(301, getString(R.string.get_opencellid), "stat_sys_download_anim0", false, this),
+                DrawerMenuItem.create(302, getString(R.string.about_aimsicd), "ic_action_about", true, this),
+                DrawerMenuItem.create(303, getString(R.string.quit), "ic_action_remove", false, this)};
+
+        DrawerMenuActivityConfiguration navDrawerActivityConfiguration = new DrawerMenuActivityConfiguration();
+        navDrawerActivityConfiguration.setMainLayout(R.layout.main);
+        navDrawerActivityConfiguration.setDrawerLayoutId(R.id.drawer_layout);
+        navDrawerActivityConfiguration.setLeftDrawerId(R.id.left_drawer);
+        navDrawerActivityConfiguration.setNavItems(menu);
+        navDrawerActivityConfiguration.setDrawerOpenDesc(R.string.drawer_open);
+        navDrawerActivityConfiguration.setDrawerCloseDesc(R.string.drawer_close);
+        navDrawerActivityConfiguration.setBaseAdapter(
+                new DrawerMenuAdapter(this, R.layout.drawer_item, menu ));
+        return navDrawerActivityConfiguration;
+    }
 
     /**
      * Service Connection to bind the activity to the service
@@ -322,19 +366,15 @@ public class AIMSICD extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem mTrackCell = menu.findItem(R.id.track_cell);
-        MenuItem mTrackFemtocell = menu.findItem(R.id.track_femtocell);
+        if ( mNavConf.getActionMenuItemsToHideWhenDrawerOpen() != null ) {
+            boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+            for( int iItem : mNavConf.getActionMenuItemsToHideWhenDrawerOpen()) {
+                menu.findItem(iItem).setVisible(!drawerOpen);
+            }
+        }
 
-        if (mBound) {
+/*        if (mBound) {
             if (mAimsicdService.isTrackingCell()) {
                 if (mTrackCell != null) {
                     mTrackCell.setTitle(R.string.untrack_cell);
@@ -364,19 +404,17 @@ public class AIMSICD extends Activity {
                     mTrackFemtocell.setVisible(false);
                 }
             }
-        }
+        }*/
         return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
-        // Handle item selection
+/*        // Handle item selection
         Intent intent;
         switch (item.getItemId()) {
             case R.id.track_cell:
@@ -413,7 +451,8 @@ public class AIMSICD extends Activity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
+        }*/
+        return super.onOptionsItemSelected(item);
     }
 
     /**
