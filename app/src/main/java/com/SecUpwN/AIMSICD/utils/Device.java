@@ -83,8 +83,10 @@ public class Device {
                 mNetName = tm.getNetworkOperatorName();
                 GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
                 if (gsmCellLocation != null) {
-                    mCellID = gsmCellLocation.getCid();
-                    mLac = gsmCellLocation.getLac();
+                    mCellID = (gsmCellLocation.getCid() == 0x7FFFFFFF) ?
+                            gsmCellLocation.getCid() & 0xffff : gsmCellLocation.getCid();
+                    mLac = (gsmCellLocation.getLac() == 0x7FFFFFFF ) ?
+                            gsmCellLocation.getLac() & 0xffff : gsmCellLocation.getLac();
                     mPSC = gsmCellLocation.getPsc();
                 }
 
