@@ -1,6 +1,23 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 03.07.2014 - WIP-Release v0.1.22-alpha
+
+* Update: Drawer UI components now allow removal of all option menu items
+* Update: Tracking functions are now available through the first section of the drawer
+* Update: Items will dynamically update to reflect the current status of the tracking item
+* Update: FemtoCell tracking will from now on only be shown for CDMA devices
+* Update: Moved classes & interface files into dedicated package folder for easier maintenance
+* Update: Small updates to methods providing data from the device class
+* Update: Screenshots updated to reflect latest changes within the UI and menu structure
+* Update: User Guide updated with new screenshots and explanations on several menus
+* Added: Check for devices that are returning both the CID & LAC as INTEGER.MAX value
+* Added: Spinner for selection of a number of timeout values to assist with AT Command responses
+* Fix: Missing check for bound service added to the MapViewer to address NPE
+* Fix: Method getAllCellInfo is encountering an unknown CellInfo type, added log to display the error
+* Fix: Corrected RequestTask class to correctly show progress bar for downloading OpenCellID data
+
+
 #### 29.06.2014
 
 * Update: Screenshots updated to reflect latest changes within the UI and menu structure
