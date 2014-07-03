@@ -52,20 +52,30 @@
                     android:layout_below="@+id/serial_device_spinner"
                     android:id="@+id/atcommandView"
             android:visibility="gone">
+
     <TextView
-            android:id="@+id/enter_at_command_title"
+            android:id="@+id/timeout_spinner_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enter_at_command_title"
+            android:text="@string/timeout_spinner_title"
             android:textColor="@color/white"
-            android:padding="8dip"/>
+            android:padding="8dip" />
+
+    <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeout_spinner"
+            android:entries="@array/timeout_spinner_values"
+            android:prompt="@string/timeout_spinner_prompt"
+            android:layout_toRightOf="@id/timeout_spinner_title" />
 
     <EditText
             android:id="@+id/at_command"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:layout_below="@+id/enter_at_command_title"
+            android:hint="@string/command_hint"
+            android:layout_below="@+id/timeout_spinner_title"
             android:layout_toLeftOf="@+id/execute"/>
 
     <Button
