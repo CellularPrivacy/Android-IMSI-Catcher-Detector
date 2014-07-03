@@ -1,18 +1,18 @@
-package com.SecUpwN.AIMSICD.fragments;
-
-import com.SecUpwN.AIMSICD.AIMSICD.NavDrawerItem;
+package com.SecUpwN.AIMSICD.drawer;
 
 public class DrawerMenuSection implements NavDrawerItem {
 
     public static final int SECTION_TYPE = 0;
     private int id;
     private String label;
+    private int icon;
 
     private DrawerMenuSection() {
     }
 
     public static DrawerMenuSection create( int id, String label ) {
         DrawerMenuSection section = new DrawerMenuSection();
+        section.setId(id);
         section.setLabel(label);
         return section;
     }
@@ -28,6 +28,10 @@ public class DrawerMenuSection implements NavDrawerItem {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 
     @Override

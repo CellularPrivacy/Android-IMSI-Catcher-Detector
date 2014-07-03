@@ -1,6 +1,4 @@
-package com.SecUpwN.AIMSICD.fragments;
-
-import com.SecUpwN.AIMSICD.AIMSICD.NavDrawerItem;
+package com.SecUpwN.AIMSICD.drawer;
 
 import android.content.Context;
 
