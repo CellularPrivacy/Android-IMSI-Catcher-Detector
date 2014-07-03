@@ -187,12 +187,14 @@
 
     <!-- AT Command Injector -->
     <string name="at_command_title">AT Command Injector</string>
-    <string name="enter_at_command_title">Enter AT Command:</string>
     <string name="response_label">Response:</string>
     <string name="execute_at">Execute</string>
     <string name="serial_device_title">Current Serial Device:</string>
     <string name="serial_device_prompt">Select Serial Device</string>
     <string name="serial_device_spinner_title">Detected Devices:</string>
+    <string name="timeout_spinner_title">Timeout:</string>
+    <string name="timeout_spinner_prompt">Select Timeout</string>
+    <string name="command_hint">Enter Command…</string>
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Silent SMS Intercepted</string>
