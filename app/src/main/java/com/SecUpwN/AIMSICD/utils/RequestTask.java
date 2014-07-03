@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -60,11 +61,6 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     URLConnection connection = url.openConnection();
                     connection.connect();
 
-                    // this will be useful so that you can show a typical 0-100%
-                    // progress bar
-                    int lengthOfFile = connection.getContentLength();
-                    AIMSICD.mProgressBar.setMax(lengthOfFile);
-
                     // download the file
                     InputStream input = new BufferedInputStream(url.openStream(),
                             8192);
@@ -78,7 +74,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                     while ((count = input.read(data)) != -1) {
                         total += count;
-                        publishProgress((int) ((total * 100) / lengthOfFile));
+                        publishProgress((int) (total / 1024) * 2 );
 
                         // writing data to file
                         output.write(data, 0, count);
