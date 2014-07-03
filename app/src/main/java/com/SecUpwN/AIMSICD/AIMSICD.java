@@ -25,13 +25,13 @@ import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
 import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
 import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
-import com.SecUpwN.AIMSICD.fragments.DrawerMenuItem;
-import com.SecUpwN.AIMSICD.fragments.DrawerMenuSection;
+import com.SecUpwN.AIMSICD.drawer.DrawerMenuItem;
+import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.utils.DrawerMenuActivityConfiguration;
+import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
+import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -53,7 +53,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -62,7 +61,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class AIMSICD extends Activity {
@@ -75,7 +73,6 @@ public class AIMSICD extends Activity {
     private Editor prefsEditor;
     private String mDisclaimerAccepted;
     private AimsicdService mAimsicdService;
-    private String[] mNavigationTitles;
 
     private DrawerLayout mDrawerLayout;
     private ActionBar mActionBar;
@@ -89,14 +86,6 @@ public class AIMSICD extends Activity {
     private long mLastPress = 0;
 
     private DrawerMenuActivityConfiguration mNavConf ;
-
-    public interface NavDrawerItem {
-        public int getId();
-        public String getLabel();
-        public int getType();
-        public boolean isEnabled();
-        public boolean updateActionBarTitle();
-    }
 
     /**
      * Called when the activity is first created.
@@ -117,8 +106,6 @@ public class AIMSICD extends Activity {
         mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
         mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
         mActionBar = getActionBar();
-
-        mNavigationTitles = getResources().getStringArray(R.array.navigation_array);
         mTitle = mDrawerTitle = getTitle();
 
         mDrawerList.setAdapter(mNavConf.getBaseAdapter());
@@ -230,13 +217,14 @@ public class AIMSICD extends Activity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            mDrawerLayout.closeDrawer(mDrawerList);
             selectItem(position);
         }
     }
 
     /** Swaps fragments in the main content view */
     public void selectItem(int position) {
-        NavDrawerItem selectedItem = mNavConf.getNavItems()[position];
+        NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
 
         // Create a new fragment
         switch (selectedItem.getId()) {
@@ -264,6 +252,8 @@ public class AIMSICD extends Activity {
 
         if (selectedItem.getId() == 901) {
             trackcell();
+        } else if (selectedItem.getId() == 902) {
+            trackFemtocell();
         } else if (selectedItem.getId() == 105) {
             showmap();
         } else if (selectedItem.getId() == 202) {
@@ -304,24 +294,40 @@ public class AIMSICD extends Activity {
 
     protected DrawerMenuActivityConfiguration getNavDrawerConfiguration() {
 
-        NavDrawerItem[] menu = new NavDrawerItem[] {
-                DrawerMenuSection.create(900, "Tracking"),
-                DrawerMenuItem.create(901, getString(R.string.track_cell), "untrack_cell", false, this),
-                DrawerMenuSection.create(100, "Main"),
-                DrawerMenuItem
-                        .create(101, getString(R.string.device_info), "ic_action_phone", true, this),
-                DrawerMenuItem.create(102, getString(R.string.cell_info_title), "cell_tower", true, this),
-                DrawerMenuItem.create(103, getString(R.string.at_command_title), "ic_action_computer", true, this),
-                DrawerMenuItem.create(104, getString(R.string.db_viewer), "ic_action_storage", true, this),
-                DrawerMenuItem.create(105, getString(R.string.map_view), "ic_action_map", true, this),
-                DrawerMenuSection.create(200, "Settings"),
-                DrawerMenuItem.create(202, getString(R.string.preferences), "ic_action_settings", false, this),
-                DrawerMenuItem.create(203, getString(R.string.backup_database), "ic_action_import_export", false, this),
-                DrawerMenuItem.create(204, getString(R.string.restore_database), "ic_action_import_export", false, this),
-                DrawerMenuSection.create(300, "Application"),
-                DrawerMenuItem.create(301, getString(R.string.get_opencellid), "stat_sys_download_anim0", false, this),
-                DrawerMenuItem.create(302, getString(R.string.about_aimsicd), "ic_action_about", true, this),
-                DrawerMenuItem.create(303, getString(R.string.quit), "ic_action_remove", false, this)};
+        List<NavDrawerItem> menu = new ArrayList<>();
+
+        menu.add(DrawerMenuSection.create(900, "Tracking"));
+        menu.add(DrawerMenuItem.create
+                (901, getString(R.string.track_cell), "untrack_cell", false, this));
+        if (AimsicdService.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
+            menu.add(DrawerMenuItem.create
+                    (902, getString(R.string.track_femtocell), "ic_action_network_cell", false, this));
+        }
+        menu.add(DrawerMenuSection.create(100, "Main"));
+        menu.add(DrawerMenuItem
+                .create(101, getString(R.string.device_info), "ic_action_phone", true, this));
+        menu.add(DrawerMenuItem.create
+                (102, getString(R.string.cell_info_title), "cell_tower", true, this));
+        menu.add(DrawerMenuItem.create
+                (103, getString(R.string.at_command_title), "ic_action_computer", true, this));
+        menu.add(DrawerMenuItem.create
+                (104, getString(R.string.db_viewer), "ic_action_storage", true, this));
+        menu.add(DrawerMenuItem.create
+                (105, getString(R.string.map_view), "ic_action_map", true, this));
+        menu.add(DrawerMenuSection.create(200, "Settings"));
+        menu.add(DrawerMenuItem.create
+                (202, getString(R.string.preferences), "ic_action_settings", false, this));
+        menu.add(DrawerMenuItem.create
+                (203, getString(R.string.backup_database), "ic_action_import_export", false, this));
+        menu.add(DrawerMenuItem.create
+                (204, getString(R.string.restore_database), "ic_action_import_export", false, this));
+        menu.add(DrawerMenuSection.create(300, "Application"));
+        menu.add(DrawerMenuItem.create
+                (301, getString(R.string.get_opencellid), "stat_sys_download_anim0", false, this));
+        menu.add(DrawerMenuItem.create
+                (302, getString(R.string.about_aimsicd), "ic_action_about", true, this));
+        menu.add(DrawerMenuItem.create
+                (303, getString(R.string.quit), "ic_action_remove", false, this));
 
         DrawerMenuActivityConfiguration navDrawerActivityConfiguration = new DrawerMenuActivityConfiguration();
         navDrawerActivityConfiguration.setMainLayout(R.layout.main);
@@ -374,85 +380,43 @@ public class AIMSICD extends Activity {
             }
         }
 
-/*        if (mBound) {
-            if (mAimsicdService.isTrackingCell()) {
-                if (mTrackCell != null) {
-                    mTrackCell.setTitle(R.string.untrack_cell);
-                    mTrackCell.setIcon(R.drawable.track_cell);
+        NavDrawerItem femtoTrackingItem = null;
+
+        List<NavDrawerItem> menuItems = mNavConf.getNavItems();
+        NavDrawerItem cellTrackingItem = menuItems.get(1);
+        if (AimsicdService.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
+            femtoTrackingItem = menuItems.get(2);
+        }
+
+        if (mBound) {
+            if (cellTrackingItem != null) {
+                if (mAimsicdService.isTrackingCell()) {
+                    cellTrackingItem.setLabel(getString(R.string.untrack_cell));
+                    cellTrackingItem.setIcon(R.drawable.track_cell);
+                } else {
+                    cellTrackingItem.setLabel(getString(R.string.track_cell));
+                    cellTrackingItem.setIcon(R.drawable.untrack_cell);
                 }
-            } else {
-                if (mTrackCell != null) {
-                    mTrackCell.setTitle(R.string.track_cell);
-                    mTrackCell.setIcon(R.drawable.untrack_cell);
-                }
+                mNavConf.getBaseAdapter().notifyDataSetChanged();
             }
 
-            if (mAimsicdService.mDevice.getPhoneID() == TelephonyManager.PHONE_TYPE_CDMA) {
+            if (femtoTrackingItem != null) {
                 if (mAimsicdService.isTrackingFemtocell()) {
-                    if (mTrackFemtocell != null) {
-                        mTrackFemtocell.setTitle(R.string.untrack_femtocell);
-                        mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell);
-                    }
+                    femtoTrackingItem.setLabel(getString(R.string.untrack_femtocell));
+                    femtoTrackingItem.setIcon(R.drawable.ic_action_network_cell);
                 } else {
-                    if (mTrackFemtocell != null) {
-                        mTrackFemtocell.setTitle(R.string.track_femtocell);
-                        mTrackFemtocell.setIcon(R.drawable.ic_action_network_cell_not_tracked);
-                    }
+                    femtoTrackingItem.setLabel(getString(R.string.track_femtocell));
+                    femtoTrackingItem.setIcon(R.drawable.ic_action_network_cell_not_tracked);
                 }
-            } else {
-                if (mTrackFemtocell != null) {
-                    mTrackFemtocell.setVisible(false);
-                }
+                mNavConf.getBaseAdapter().notifyDataSetChanged();
             }
-        }*/
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-/*        // Handle item selection
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.track_cell:
-                trackcell();
-                invalidateOptionsMenu();
-                return true;
-            case R.id.track_femtocell:
-                trackFemtocell();
-                invalidateOptionsMenu();
-                return true;
-            case R.id.preferences:
-                intent = new Intent(this, PrefActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.backup_database:
-                new RequestTask(mContext, RequestTask.BACKUP_DATABASE).execute();
-                return true;
-            case R.id.restore_database:
-                new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
-                return true;
-            case R.id.update_opencelldata:
-                Location loc = mAimsicdService.lastKnownLocation();
-                if (loc != null && loc.hasAccuracy()) {
-                    Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
-                    Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude(),
-                            RequestTask.OPEN_CELL_ID_REQUEST);
-                } else {
-                    Helpers.msgShort(mContext,
-                            "Unable to determine your last location. \nEnable Location Services and try again.");
-                }
-                return true;
-            case R.id.app_exit:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }*/
-        return super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     /**

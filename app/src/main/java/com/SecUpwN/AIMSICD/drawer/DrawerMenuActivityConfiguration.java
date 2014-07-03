@@ -1,8 +1,8 @@
-package com.SecUpwN.AIMSICD.utils;
-
-import com.SecUpwN.AIMSICD.AIMSICD.NavDrawerItem;
+package com.SecUpwN.AIMSICD.drawer;
 
 import android.widget.BaseAdapter;
+
+import java.util.List;
 
 public class DrawerMenuActivityConfiguration {
 
@@ -10,7 +10,7 @@ public class DrawerMenuActivityConfiguration {
     private int drawerLayoutId;
     private int leftDrawerId;
     private int[] actionMenuItemsToHideWhenDrawerOpen;
-    private NavDrawerItem[] navItems;
+    private List<NavDrawerItem> navItems;
     private int drawerOpenDesc;
     private int drawerCloseDesc;
     private BaseAdapter baseAdapter;
@@ -48,11 +48,11 @@ public class DrawerMenuActivityConfiguration {
         this.actionMenuItemsToHideWhenDrawerOpen = actionMenuItemsToHideWhenDrawerOpen;
     }
 
-    public NavDrawerItem[] getNavItems() {
+    public List<NavDrawerItem> getNavItems() {
         return navItems;
     }
 
-    public void setNavItems(NavDrawerItem[] navItems) {
+    public void setNavItems(List<NavDrawerItem> navItems) {
         this.navItems = navItems;
     }
 
