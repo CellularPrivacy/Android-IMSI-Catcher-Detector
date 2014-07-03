@@ -124,6 +124,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private final String TAG = "AIMSICD_Service";
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
     public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
+    public static int PHONE_TYPE;
 
     /*
      * System and helper declarations
@@ -191,6 +192,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         mContext = getApplicationContext();
+
+        PHONE_TYPE = tm.getPhoneType();
 
         prefs = this.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
@@ -769,8 +772,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     if (gsmCellLocation != null) {
                         mDevice.setCellInfo(gsmCellLocation.toString() + mDevice.getDataActivityTypeShort() + "|"
                                 + mDevice.getDataStateShort() + "|" + mDevice.getNetworkTypeName() + "|");
-                        mDevice.setLAC(gsmCellLocation.getLac());
-                        mDevice.setCellID(gsmCellLocation.getCid());
+                        mDevice.setLAC((gsmCellLocation.getLac() == 0x7FFFFFFF ) ?
+                                gsmCellLocation.getLac() & 0xffff : gsmCellLocation.getLac());
+                        mDevice.setCellID((gsmCellLocation.getCid() == 0x7FFFFFFF) ?
+                                gsmCellLocation.getCid() & 0xffff : gsmCellLocation.getCid());
                         mDevice.getSimCountry(tm);
                         mDevice.getSimOperator(tm);
                         mDevice.getSimOperatorName(tm);
