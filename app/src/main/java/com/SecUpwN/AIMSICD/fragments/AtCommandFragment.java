@@ -37,10 +37,10 @@ public class AtCommandFragment extends Fragment {
     private final int EXECUTE_AT = 300;
     private final int EXECUTE_COMMAND = 301;
 
-    //System items
     private Context mContext;
     private Shell mShell = null;
     private String mSerialDevice;
+    private float mTimeout;
     private final List<String> mSerialDevices = new ArrayList<>();
 
     private List<String> mOutput;
@@ -56,6 +56,7 @@ public class AtCommandFragment extends Fragment {
     private EditText mAtCommand;
     private Spinner mSerialDeviceSpinner;
     private TextView mSerialDeviceSpinnerLabel;
+    private Spinner mTimoutSpinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,9 +73,45 @@ public class AtCommandFragment extends Fragment {
             mSerialDeviceSpinner = (Spinner) mView.findViewById(R.id.serial_device_spinner);
             mSerialDeviceSpinner.setOnItemSelectedListener(new spinnerListener());
             mSerialDeviceSpinnerLabel = (TextView) mView.findViewById(R.id.serial_device_spinner_title);
+            mTimoutSpinner = (Spinner) mView.findViewById(R.id.timeout_spinner);
+            mTimoutSpinner.setOnItemSelectedListener(new timoutSpinnerListener());
+            mTimoutSpinner.setSelection(1);
+            mTimeout = 5.0f;
         }
 
         return mView;
+    }
+
+    private class timoutSpinnerListener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+                int position, long id) {
+            switch (position) {
+                case 0: //2 seconds
+                    mTimeout = 2.0f;
+                    break;
+                case 1: //5 seconds
+                    mTimeout = 5.0f;
+                    break;
+                case 2: //8 seconds
+                    mTimeout = 8.0f;
+                    break;
+                case 3: //10 seconds
+                    mTimeout = 10.0f;
+                    break;
+                case 4: //15 seconds
+                    mTimeout = 15.0f;
+                    break;
+                default:
+                    mTimeout = 5.0f;
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parentView) {
+
+        }
     }
 
     private class spinnerListener implements AdapterView.OnItemSelectedListener {
@@ -198,7 +235,7 @@ public class AtCommandFragment extends Fragment {
             mSerialDevices.add(mSerialDevice);
         }
 
-        boolean result = mShell.sendCommandPreserveOut("ls /dev/radio | grep atci*", 5.0f);
+        boolean result = mShell.sendCommandPreserveOut("ls /dev/radio | grep atci*", mTimeout);
         if (result) {
             mOutput = new ArrayList<>();
             mOutput = mShell.GetStdOut();
@@ -220,7 +257,7 @@ public class AtCommandFragment extends Fragment {
         File xgold = new File("/system/etc/ril_xgold_radio.cfg");
         if (xgold.exists() && xgold.isFile()) {
             result = mShell.sendCommandPreserveOut("cat /system/etc/ril_xgold_radio.cfg | "
-                    + "grep -E \"atport*|dataport*\"", 5.0f);
+                    + "grep -E \"atport*|dataport*\"", mTimeout);
             if (result) {
                 mOutput = new ArrayList<>();
                 mOutput = mShell.GetStdOut();
@@ -277,7 +314,7 @@ public class AtCommandFragment extends Fragment {
     private boolean executeCommand() {
         boolean result = false;
         if (mAtCommand.getText() != null) {
-            result = mShell.sendCommandPreserveOut(mAtCommand.getText().toString(), 5.0f);
+            result = mShell.sendCommandPreserveOut(mAtCommand.getText().toString(), mTimeout);
             if (result) {
                 mOutput = new ArrayList<>();
                 mOutput = mShell.GetStdOut();
