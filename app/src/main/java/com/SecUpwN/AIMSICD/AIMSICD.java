@@ -30,7 +30,9 @@ import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
+import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -63,7 +65,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AIMSICD extends Activity {
+public class AIMSICD extends Activity implements AsyncResponse {
 
     private final String TAG = "AIMSICD";
 
@@ -81,6 +83,8 @@ public class AIMSICD extends Activity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     public static ProgressBar mProgressBar;
+
+    private LocationServices.LocationAsync mLocationAsync;
 
     //Back press to exit timer
     private long mLastPress = 0;
@@ -160,14 +164,14 @@ public class AIMSICD extends Activity {
                         public void onClick(DialogInterface dialog, int which) {
                             prefsEditor = prefs.edit();
                             prefsEditor.putBoolean(mDisclaimerAccepted, true);
-                            prefsEditor.commit();
+                            prefsEditor.apply();
                         }
                     })
                     .setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             prefsEditor = prefs.edit();
                             prefsEditor.putBoolean(mDisclaimerAccepted, false);
-                            prefsEditor.commit();
+                            prefsEditor.apply();
                             Uri packageUri = Uri.parse("package:com.SecUpwN.AIMSICD");
                             Intent uninstallIntent =
                                     new Intent(Intent.ACTION_DELETE, packageUri);
@@ -180,6 +184,7 @@ public class AIMSICD extends Activity {
             AlertDialog disclaimerAlert = disclaimer.create();
             disclaimerAlert.show();
         }
+
 
     }
 
@@ -264,14 +269,23 @@ public class AIMSICD extends Activity {
         } else if (selectedItem.getId() == 204) {
             new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
         } else if (selectedItem.getId() == 301) {
+            boolean foundLocation = false;
             Location loc = mAimsicdService.lastKnownLocation();
             if (loc != null && loc.hasAccuracy()) {
                 Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
                 Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude(),
                         RequestTask.OPEN_CELL_ID_REQUEST);
+                foundLocation = true;
             } else {
-                Helpers.msgShort(mContext,
-                          "Unable to determine your last location. \nEnable Location Services and try again.");
+                //Attempt to find location through CID
+                //CID Location Async Output Delegate Interface Implementation
+                mLocationAsync = new LocationServices.LocationAsync();
+                mLocationAsync.delegate = this;
+                mLocationAsync.execute(
+                        mAimsicdService.mDevice.getCellId(),
+                        mAimsicdService.mDevice.getLac(),
+                        mAimsicdService.mDevice.getMnc(),
+                        mAimsicdService.mDevice.getMCC());
             }
         }
 
@@ -283,6 +297,19 @@ public class AIMSICD extends Activity {
 
         if ( this.mDrawerLayout.isDrawerOpen(this.mDrawerList)) {
             mDrawerLayout.closeDrawer(mDrawerList);
+        }
+    }
+
+    @Override
+    public void processFinish(float[] location) {
+        Log.i(TAG, "processFinish - location[0]=" + location[0] + " location[1]=" + location[1]);
+        if (location[0] != 0.0f && location[1] != 0.0f) {
+            Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
+            Helpers.getOpenCellData(mContext, location[0], location[1],
+                    RequestTask.OPEN_CELL_ID_REQUEST);
+        } else {
+            Helpers.msgShort(mContext,
+                    "Unable to determine your last location. \nEnable Location Services and try again.");
         }
     }
 
