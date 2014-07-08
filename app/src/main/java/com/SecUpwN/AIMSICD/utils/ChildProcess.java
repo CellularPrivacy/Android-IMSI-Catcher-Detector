@@ -35,9 +35,9 @@ public class ChildProcess {
 
     private class ChildReader extends Thread {
 
-        InputStream mStream;
+        final InputStream mStream;
 
-        StringBuffer mBuffer;
+        final StringBuffer mBuffer;
 
         ChildReader(InputStream is, StringBuffer buf) {
             mStream = is;
@@ -65,9 +65,9 @@ public class ChildProcess {
 
     private class ChildWriter extends Thread {
 
-        OutputStream mStream;
+        final OutputStream mStream;
 
-        String mBuffer;
+        final String mBuffer;
 
         ChildWriter(OutputStream os, String buf) {
             mStream = os;
@@ -94,7 +94,7 @@ public class ChildProcess {
         }
     }
 
-    private long mStartTime;
+    private final long mStartTime;
     private Process mChildProc;
     private ChildWriter mChildStdinWriter;
     private ChildReader mChildStdoutReader;

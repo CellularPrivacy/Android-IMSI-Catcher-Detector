@@ -134,7 +134,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private Context mContext;
     private final int NOTIFICATION_ID = 1;
     private long mDbResult;
-    public TelephonyManager tm;
+    private TelephonyManager tm;
     private LocationManager lm;
     private SharedPreferences prefs;
     private PhoneStateListener mPhoneStateListener;
@@ -340,7 +340,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     }
                 }
             }
-        } else {
+        }
+        if (Build.VERSION.SDK_INT < 16 || neighboringCells.isEmpty()) {
             List<NeighboringCellInfo> neighboringCellInfo;
             neighboringCellInfo = tm.getNeighboringCellInfo();
             if (neighboringCellInfo != null) {
@@ -707,15 +708,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
 
         return location;
-    }
-
-    /**
-     * Neighbouring Cell List
-     *
-     * @return List of (Cell) Neighbouring Cell Information
-     */
-    public List<Cell> getNeighbouringCells() {
-        return mDevice.getNeighboringCells();
     }
 
     /**

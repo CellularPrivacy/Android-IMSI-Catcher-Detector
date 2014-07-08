@@ -37,7 +37,7 @@ public class CellInfoFragment extends Fragment {
     private boolean mBound;
     private Context mContext;
     private Activity mActivity;
-    Handler timerHandler = new Handler();
+    private final Handler timerHandler = new Handler();
 
     //Layout items
     private ListView lv;
@@ -47,7 +47,7 @@ public class CellInfoFragment extends Fragment {
     private TextView mCipheringIndicatorLabel;
     private TextView mCipheringIndicator;
 
-    Runnable timerRunnable = new Runnable() {
+    private final Runnable timerRunnable = new Runnable() {
 
         @Override
         public void run() {
@@ -123,11 +123,6 @@ public class CellInfoFragment extends Fragment {
         timerHandler.removeCallbacks(timerRunnable);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     /**
      * Service Connection to bind the activity to the service
      */
@@ -181,7 +176,7 @@ public class CellInfoFragment extends Fragment {
                             "Country Code (MCC): " + cell.getMCC(),
                             "Network Code (MNC): " + cell.getMNC(),
                             "Signal Strength (dBM): " + cell.getDBM(),
-                            "" + i + " / " + total);
+                            "" + i++ + " / " + total);
                     adapter.addItem(data, false);
 
                 }

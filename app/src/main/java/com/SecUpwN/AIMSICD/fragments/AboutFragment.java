@@ -36,7 +36,7 @@ public class AboutFragment extends Fragment {
             version = "";
         }
 
-        TextView versionNumber = null;
+        TextView versionNumber;
         if (v != null) {
             versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
 
@@ -83,11 +83,6 @@ public class AboutFragment extends Fragment {
             tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_credits_link)));
         }
         return v;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
