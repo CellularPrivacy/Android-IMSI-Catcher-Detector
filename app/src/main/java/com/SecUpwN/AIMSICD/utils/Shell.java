@@ -350,7 +350,6 @@ public class Shell {
         clearStdOutAndErr();
         try {
             int oldCount;
-            boolean returned = false;
             try {
                 oldCount = mShellStdOut.available() + mShellStdErr.available();
             } catch (IOException ioe) {
@@ -369,7 +368,6 @@ public class Shell {
                         + ", curr = " + currCount);
                 if (currCount != oldCount) {
                     Log.i(TAG, "Command returned");
-                    returned = true;
                     break;
                 }
                 SystemClock.sleep(100);

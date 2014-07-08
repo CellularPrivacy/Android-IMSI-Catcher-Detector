@@ -66,7 +66,7 @@ import java.util.Map;
 public class MapViewer extends FragmentActivity implements OnSharedPreferenceChangeListener {
 
     private final String TAG = "AIMSICD_MapViewer";
-    public static String updateOpenCellIDMarkers = "update_opencell_markers";
+    public static final String updateOpenCellIDMarkers = "update_opencell_markers";
 
     private GoogleMap mMap;
     private AIMSICDDbAdapter mDbHelper;
@@ -145,7 +145,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             loadOpenCellIDMarkers();
