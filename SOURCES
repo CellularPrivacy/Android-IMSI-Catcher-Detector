@@ -1,16 +1,16 @@
 # SOURCES used within 'AIMSICD'
 -------------------------------
 
-This is our legal reference of what has been used. Please also have a
-look at our own LICENSE, our DISCLAIMER as well as our CREDITS. Thanks.
+This is our legal reference of which code and Apps have been used, in no particular order.
+Please also have a look at our own LICENSE, our DISCLAIMER as well as our CREDITS. Thanks.
 
 Our project utilized the following sources and libraries listed below:
 
-* SamsungRilMulticlient by Alexey Illarionov 
-- https://github.com/illarionov/SamsungRilMulticlient
-
 * RawPhone by Jofre Palau
 - https://github.com/jofrep/Android-RawPhone
+
+* SamsungRilMulticlient by Alexey Illarionov 
+- https://github.com/illarionov/SamsungRilMulticlient
 
 * Awesome Icons crafted by Sgt-Obst
 - https://github.com/SgtObst
@@ -20,6 +20,9 @@ Our project utilized the following sources and libraries listed below:
 
 * Code snippets written by The CyanogenMod Project (Cyanogen Inc.)
 - https://github.com/cyanogenmod and http://www.cyanogenmod.com/
+
+* Code snippets written by Louis Teboul (a.k.a Androguide)
+- https://github.com/Androguide and http://androguide.fr/
 
 * Self-written code by our very own developers and contributors
 - Yes, imagine that! Sounds impossible, right? Contribute, too!
