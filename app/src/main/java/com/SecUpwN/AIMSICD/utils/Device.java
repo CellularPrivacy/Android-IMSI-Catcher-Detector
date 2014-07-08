@@ -3,13 +3,19 @@ package com.SecUpwN.AIMSICD.utils;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
+import android.telephony.CellIdentityCdma;
+import android.telephony.CellIdentityGsm;
+import android.telephony.CellIdentityLte;
+import android.telephony.CellIdentityWcdma;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
 import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
+import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrengthCdma;
 import android.telephony.CellSignalStrengthGsm;
 import android.telephony.CellSignalStrengthLte;
+import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
@@ -42,7 +48,7 @@ public class Device {
     private String mDataState = "";
     private String mDataStateShort = "";
     private String mNetName = "";
-    private String mMmcmcc = "";
+    private String mMncmcc = "";
     private String mSimCountry = "";
     private String mPhoneType = "";
     private String mIMEI = "";
@@ -77,9 +83,11 @@ public class Device {
         switch (mPhoneID) {
             case TelephonyManager.PHONE_TYPE_GSM:
                 mPhoneType = "GSM";
-                mMmcmcc = tm.getNetworkOperator();
-                mMcc = Integer.parseInt(tm.getNetworkOperator().substring(0, 3));
-                mMnc = Integer.parseInt(tm.getNetworkOperator().substring(3));
+                mMncmcc = tm.getNetworkOperator();
+                if (mMncmcc != null) {
+                    mMcc = Integer.parseInt(tm.getNetworkOperator().substring(0, 3));
+                    mMnc = Integer.parseInt(tm.getNetworkOperator().substring(3));
+                }
                 mNetName = tm.getNetworkOperatorName();
                 GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
                 if (gsmCellLocation != null) {
@@ -112,16 +120,51 @@ public class Device {
                         if (info instanceof CellInfoGsm) {
                             final CellSignalStrengthGsm gsm = ((CellInfoGsm) info)
                                     .getCellSignalStrength();
+                            final CellIdentityGsm identityGsm = ((CellInfoGsm) info)
+                                    .getCellIdentity();
+                            //Signal Strength
                             mSignalInfo = gsm.getDbm();
+                            //Cell Identity
+                            mCellID = identityGsm.getCid();
+                            mMcc = identityGsm.getMcc();
+                            mMnc = identityGsm.getMnc();
+                            mLac = identityGsm.getLac();
                         } else if (info instanceof CellInfoCdma) {
                             final CellSignalStrengthCdma cdma = ((CellInfoCdma) info)
                                     .getCellSignalStrength();
+                            final CellIdentityCdma identityCdma = ((CellInfoCdma) info)
+                                    .getCellIdentity();
+                            //Signal Strength
                             mSignalInfo = cdma.getDbm();
+                            //Cell Identity
+                            mCellID = identityCdma.getBasestationId();
+                            mLac = identityCdma.getNetworkId();
+                            mSID = identityCdma.getSystemId();
                         } else if (info instanceof CellInfoLte) {
                             final CellSignalStrengthLte lte = ((CellInfoLte) info)
                                     .getCellSignalStrength();
+                            final CellIdentityLte identityLte = ((CellInfoLte) info)
+                                    .getCellIdentity();
+                            //Signal Strength
                             mSignalInfo = lte.getDbm();
                             mTimingAdvance = lte.getTimingAdvance();
+                            //Cell Identity
+                            mMcc = identityLte.getMcc();
+                            mMnc = identityLte.getMnc();
+                            mCellID = identityLte.getCi();
+                        } else if (info instanceof CellInfoWcdma) {
+                            final CellSignalStrengthWcdma wcdma = ((CellInfoWcdma) info)
+                                    .getCellSignalStrength();
+                            final CellIdentityWcdma identityWcdma = ((CellInfoWcdma) info)
+                                    .getCellIdentity();
+                            //Signal Strength
+                            mSignalInfo = wcdma.getDbm();
+                            //Cell Identity
+                            mLac = identityWcdma.getLac();
+                            mMcc = identityWcdma.getMcc();
+                            mMnc = identityWcdma.getMnc();
+                            mCellID = identityWcdma.getCid();
+                            mPSC = identityWcdma.getPsc();
                         } else {
                             Log.i(TAG, "Unknown type of cell signal!" + "ClassName: " +
                                     info.getClass().getSimpleName() + " ToString: " +
@@ -172,6 +215,10 @@ public class Device {
 
     public List<Cell> getNeighboringCells() {
         return mNeighboringCells;
+    }
+
+    public int getPSC() {
+        return mPSC;
     }
 
     /**
@@ -405,7 +452,7 @@ public class Device {
      * @return string representing the Network Operator
      */
     public String getSmmcMcc() {
-        return mMmcmcc;
+        return mMncmcc;
     }
 
     /**
