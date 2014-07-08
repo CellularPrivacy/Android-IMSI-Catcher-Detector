@@ -9,9 +9,6 @@ public class Cell {
     private int dbm;
     private long timestamp;
 
-    public Cell() {
-    }
-
     public Cell(int cid, int lac, int mcc, int mnc, int dbm, long timestamp) {
         this.cid = cid;
         this.lac = lac;

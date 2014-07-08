@@ -106,7 +106,7 @@ public class AIMSICDDbAdapter {
      *
      * @return row id or -1 if error
      */
-    public long insertOpenCell(double latitude, double longitude,
+    long insertOpenCell(double latitude, double longitude,
             int mcc, int mnc, int lac, int cellID, int avgSigStr,
             int samples) {
 

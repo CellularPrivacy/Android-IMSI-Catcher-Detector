@@ -34,11 +34,6 @@ public class DeviceFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstance) {
-        super.onCreate(savedInstance);
-    }
-
-    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = activity.getBaseContext();

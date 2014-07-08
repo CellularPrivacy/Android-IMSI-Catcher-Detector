@@ -35,14 +35,8 @@ public class DbViewerFragment extends Fragment {
     //Layout items
     private Spinner tblSpinner;
     private ListView lv;
-    private View mView;
 
     public DbViewerFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -56,21 +50,21 @@ public class DbViewerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        mView = inflater.inflate(R.layout.db_view,
+        View view = inflater.inflate(R.layout.db_view,
                 container, false);
 
-        if (mView != null) {
-            lv = (ListView) mView.findViewById(R.id.list_view);
+        if (view != null) {
+            lv = (ListView) view.findViewById(R.id.list_view);
 
-            tblSpinner = (Spinner) mView.findViewById(R.id.table_spinner);
+            tblSpinner = (Spinner) view.findViewById(R.id.table_spinner);
             tblSpinner.setOnItemSelectedListener(new spinnerListener());
 
-            Button loadTable = (Button) mView.findViewById(R.id.load_table_data);
+            Button loadTable = (Button) view.findViewById(R.id.load_table_data);
 
             loadTable.setOnClickListener(new btnClick());
         }
 
-        return mView;
+        return view;
     }
 
     private class spinnerListener implements AdapterView.OnItemSelectedListener {
@@ -140,7 +134,6 @@ public class DbViewerFragment extends Fragment {
                     BaseInflaterAdapter<SilentSmsCardData> adapter
                             = new BaseInflaterAdapter<>(
                             new SilentSmsCardInflater());
-                    int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         SilentSmsCardData data = new SilentSmsCardData(tableData.getString(0),
                                 tableData.getString(1), tableData.getString(2),
