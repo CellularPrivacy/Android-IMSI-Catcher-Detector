@@ -303,6 +303,28 @@
         </TableRow>
 
         <TableRow
+                android:id="@+id/primary_scrambling_code"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:visibility="gone">
+
+            <TextView
+                    android:id="@+id/network_psc_label" android:text="@string/network_psc"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip" android:gravity="right"
+                    android:layout_gravity="right"
+                    android:layout_width="fill_parent"/>
+
+            <TextView
+                    android:id="@+id/network_psc" android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip" android:gravity="left"/>
+        </TableRow>
+
+        <TableRow
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:tag="network">
@@ -446,50 +468,6 @@
 
             <TextView
                     android:id="@+id/network_baseid" android:text="@string/empty"
-                    android:layout_weight="1"
-                    android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
-        </TableRow>
-
-        <TableRow
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:gravity="center_horizontal"
-                android:tag="cdma" android:visibility="gone">
-
-            <TextView
-                    android:id="@+id/network_cdma_long_label"
-                    android:text="@string/network_cdma_long"
-                    android:layout_weight="1"
-                    android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
-                    android:layout_width="fill_parent"/>
-
-            <TextView
-                    android:id="@+id/network_cmda_long" android:text="@string/empty"
-                    android:layout_weight="1"
-                    android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
-        </TableRow>
-
-        <TableRow
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:gravity="center_horizontal"
-                android:tag="cdma" android:visibility="gone">
-
-            <TextView
-                    android:id="@+id/network_cdma_lat_label"
-                    android:text="@string/network_cdma_lat"
-                    android:layout_weight="1"
-                    android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
-                    android:layout_width="fill_parent"/>
-
-            <TextView
-                    android:id="@+id/network_cmda_lat" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
                     android:padding="2dip" android:gravity="left"/>

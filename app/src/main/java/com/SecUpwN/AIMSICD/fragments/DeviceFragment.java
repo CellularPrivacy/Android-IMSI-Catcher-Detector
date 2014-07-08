@@ -133,11 +133,6 @@ public class DeviceFragment extends Fragment {
                     content.setText(String.valueOf(mAimsicdService.mDevice.getSID()));
                     content = (TextView) mView.findViewById(R.id.network_baseid);
                     content.setText(String.valueOf(mAimsicdService.mDevice.getCellId()));
-                    Location location = mAimsicdService.mDevice.getLastLocation();
-                    content = (TextView) mView.findViewById(R.id.network_cmda_lat);
-                    content.setText(String.valueOf(location.getLatitude()));
-                    content = (TextView) mView.findViewById(R.id.network_cmda_long);
-                    content.setText(String.valueOf(location.getLongitude()));
                     break;
                 }
             }
@@ -150,6 +145,13 @@ public class DeviceFragment extends Fragment {
             } else {
                 tr = (TableRow) mView.findViewById(R.id.lte_timing_advance);
                 tr.setVisibility(View.GONE);
+            }
+
+            if (mAimsicdService.mDevice.getPSC() != -1) {
+                content = (TextView) mView.findViewById(R.id.network_psc);
+                content.setText(mAimsicdService.mDevice.getPSC());
+                tr = (TableRow) mView.findViewById(R.id.primary_scrambling_code);
+                tr.setVisibility(View.VISIBLE);
             }
 
             content = (TextView) mView.findViewById(R.id.sim_country);
