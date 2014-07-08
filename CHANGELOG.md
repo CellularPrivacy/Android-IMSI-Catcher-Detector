@@ -1,6 +1,14 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 08.07.2014 - WIP-Release v0.1.23-alpha
+
+* Fix: Wcdma CellInfo type added to getAllCellInfo method to address unknown cell type exception
+* Fix: Custom map info window corrected to return to a black background of the info window
+* Added: Gmaps undocumented API incorporated to translate a GSM CellID into a location value
+* Added: Primary Scrambling Code display added to the device fragment where available
+* Update: General code clean up as well as declaration access tweaks where appropriate
+
 #### 03.07.2014 - WIP-Release v0.1.22-alpha
 
 * Update: Drawer UI components now allow removal of all option menu items
@@ -16,7 +24,6 @@
 * Fix: Missing check for bound service added to the MapViewer to address NPE
 * Fix: Method getAllCellInfo is encountering an unknown CellInfo type, added log to display the error
 * Fix: Corrected RequestTask class to correctly show progress bar for downloading OpenCellID data
-
 
 #### 29.06.2014
 
