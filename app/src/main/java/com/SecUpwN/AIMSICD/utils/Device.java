@@ -25,7 +25,7 @@ import java.util.List;
 
 public class Device {
 
-    public final String TAG = "AIMSICD";
+    private final String TAG = "AIMSICD";
 
     /*
      * Device Declarations
@@ -356,7 +356,7 @@ public class Device {
      *
      * @return string of SIM Subscriber ID data
      */
-    public String getSimSubs(TelephonyManager tm) {
+    String getSimSubs(TelephonyManager tm) {
         try {
             if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
                 mSimSubs = (tm.getSubscriberId() != null) ? tm.getSubscriberId() : "N/A";
@@ -385,7 +385,7 @@ public class Device {
      *
      * @return string of SIM Serial Number data
      */
-    public String getSimSerial(TelephonyManager tm) {
+    String getSimSerial(TelephonyManager tm) {
         try {
             if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
                 mSimSerial = (tm.getSimSerialNumber() != null) ? tm.getSimSerialNumber()
@@ -433,9 +433,8 @@ public class Device {
     }
 
     /**
-     * Network Operator Name
+     * Sets Network Operator Name
      *
-     * @return string representing device Network Operator Name
      */
     public void setNetworkName(String networkName) {
         mNetName = networkName;

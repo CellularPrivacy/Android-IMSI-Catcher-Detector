@@ -16,9 +16,9 @@ import android.widget.TextView;
 import java.util.List;
 
 public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
-    Context mContext;
-    List<NavDrawerItem> drawerItemList;
-    private LayoutInflater inflater;
+    private final Context mContext;
+    final List<NavDrawerItem> drawerItemList;
+    private final LayoutInflater inflater;
 
 
     public DrawerMenuAdapter(Context context, int textViewResourceId, List<NavDrawerItem> objects ) {
@@ -30,7 +30,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = null ;
+        View view;
         NavDrawerItem menuItem = this.getItem(position);
         if ( menuItem.getType() == DrawerMenuItem.ITEM_TYPE ) {
             view = getItemView(convertView, parent, menuItem );
@@ -41,7 +41,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
         return view ;
     }
 
-    public View getItemView( View convertView, ViewGroup parentView, NavDrawerItem navDrawerItem ) {
+    View getItemView(View convertView, ViewGroup parentView, NavDrawerItem navDrawerItem) {
 
         DrawerMenuItem menuItem = (DrawerMenuItem) navDrawerItem ;
         NavMenuItemHolder navMenuItemHolder = null;
@@ -70,7 +70,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
         return convertView ;
     }
 
-    public View getSectionView(View convertView, ViewGroup parentView,
+    View getSectionView(View convertView, ViewGroup parentView,
             NavDrawerItem navDrawerItem) {
 
         DrawerMenuSection menuSection = (DrawerMenuSection) navDrawerItem ;

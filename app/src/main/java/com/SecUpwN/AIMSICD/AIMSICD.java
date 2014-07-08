@@ -84,8 +84,6 @@ public class AIMSICD extends Activity implements AsyncResponse {
     private CharSequence mTitle;
     public static ProgressBar mProgressBar;
 
-    private LocationServices.LocationAsync mLocationAsync;
-
     //Back press to exit timer
     private long mLastPress = 0;
 
@@ -228,7 +226,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
     }
 
     /** Swaps fragments in the main content view */
-    public void selectItem(int position) {
+    void selectItem(int position) {
         NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
 
         // Create a new fragment
@@ -269,19 +267,17 @@ public class AIMSICD extends Activity implements AsyncResponse {
         } else if (selectedItem.getId() == 204) {
             new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
         } else if (selectedItem.getId() == 301) {
-            boolean foundLocation = false;
             Location loc = mAimsicdService.lastKnownLocation();
             if (loc != null && loc.hasAccuracy()) {
                 Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
                 Helpers.getOpenCellData(mContext, loc.getLatitude(), loc.getLongitude(),
                         RequestTask.OPEN_CELL_ID_REQUEST);
-                foundLocation = true;
             } else {
                 //Attempt to find location through CID
                 //CID Location Async Output Delegate Interface Implementation
-                mLocationAsync = new LocationServices.LocationAsync();
-                mLocationAsync.delegate = this;
-                mLocationAsync.execute(
+                LocationServices.LocationAsync locationAsync = new LocationServices.LocationAsync();
+                locationAsync.delegate = this;
+                locationAsync.execute(
                         mAimsicdService.mDevice.getCellId(),
                         mAimsicdService.mDevice.getLac(),
                         mAimsicdService.mDevice.getMnc(),
