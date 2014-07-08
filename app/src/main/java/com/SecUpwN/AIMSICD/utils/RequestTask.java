@@ -42,7 +42,6 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected String doInBackground(String... commandString) {
-
         switch (mType) {
             case OPEN_CELL_ID_REQUEST:
             case OPEN_CELL_ID_REQUEST_FROM_MAP:

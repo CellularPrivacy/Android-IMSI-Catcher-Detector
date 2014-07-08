@@ -92,6 +92,7 @@
     <string name="button_refresh">Refresh</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="network_psc">Primary Scrambling Code:</string>
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">About AIMSICD</string>
