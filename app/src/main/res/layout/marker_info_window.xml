@@ -3,7 +3,7 @@
              android:id="@+id/mainView"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-              >
+              android:background="@color/black">
 
     <TableRow
             android:id="@+id/open_cell_label"
