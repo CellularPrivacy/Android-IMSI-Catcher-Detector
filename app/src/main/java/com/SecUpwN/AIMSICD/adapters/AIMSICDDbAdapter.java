@@ -41,7 +41,7 @@ public class AIMSICDDbAdapter {
     private SQLiteDatabase mDb;
     private final Context mContext;
 
-    private static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 8;
 
     public AIMSICDDbAdapter(Context context) {
         mContext = context;
@@ -77,8 +77,8 @@ public class AIMSICDDbAdapter {
      */
     public long insertCell(int lac, int cellID,
             int netType, double latitude, double longitude,
-            int signalInfo, String cellInfo, String simCountry,
-            String simOperator, String simOperatorName) {
+            int signalInfo, int mcc, int mnc, double accuracy,
+            double speed, double direction, String networkType) {
 
         if (cellID != -1) {
             //Populate Content Values for Insert or Update
@@ -89,10 +89,12 @@ public class AIMSICDDbAdapter {
             cellValues.put("Lat", latitude);
             cellValues.put("Lng", longitude);
             cellValues.put("Signal", signalInfo);
-            cellValues.put("Connection", cellInfo);
-            cellValues.put("Country", simCountry);
-            cellValues.put("Operator", simOperator);
-            cellValues.put("OperatorName", simOperatorName);
+            cellValues.put("Mcc", mcc);
+            cellValues.put("Mnc", mnc);
+            cellValues.put("Accuracy", accuracy);
+            cellValues.put("Speed", speed);
+            cellValues.put("Direction", direction);
+            cellValues.put("NetworkType", networkType);
 
             if (!cellExists(cellID, latitude, longitude, signalInfo)) {
                 return mDb.insert(CELL_TABLE, null, cellValues);
@@ -176,7 +178,7 @@ public class AIMSICDDbAdapter {
      */
     public Cursor getCellData() {
         return mDb.query(CELL_TABLE, new String[]{"CellID", "Lac", "Net", "Lat", "Lng",
-                        "Signal"},
+                        "Signal", "Mcc", "Mnc", "Accuracy", "Speed", "Direction"},
                 null, null, null, null, null
         );
     }
@@ -377,9 +379,11 @@ public class AIMSICDDbAdapter {
                                             Double.parseDouble(records.get(i)[4]),
                                             Double.parseDouble(records.get(i)[5]),
                                             Integer.parseInt(records.get(i)[6]),
-                                            String.valueOf(records.get(i)[7]),
-                                            String.valueOf(records.get(i)[8]),
-                                            String.valueOf(records.get(i)[9]),
+                                            Integer.valueOf(records.get(i)[7]),
+                                            Integer.valueOf(records.get(i)[8]),
+                                            Double.valueOf(records.get(i)[9]),
+                                            Double.valueOf(records.get(i)[10]),
+                                            Double.valueOf(records.get(i)[11]),
                                             String.valueOf(records.get(i)[10]));
                                     break;
                                 case LOCATION_TABLE:
@@ -530,8 +534,8 @@ public class AIMSICDDbAdapter {
             String CELL_DATABASE_CREATE = "create table " +
                     CELL_TABLE + " (" + COLUMN_ID +
                     " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
-                    "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
-                    "Country VARCHAR, Operator VARCHAR, OperatorName VARCHAR, " +
+                    "Net INTEGER, Lat REAL, Lng REAL, Signal INTEGER, Mcc INTEGER, Mnc INTEGER, " +
+                    "Accuracy REAL, Speed REAL, Direction REAL, NetworkType VARCHAR, " +
                     "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(CELL_DATABASE_CREATE);
 
