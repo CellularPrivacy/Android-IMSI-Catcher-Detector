@@ -42,6 +42,9 @@ public class Device {
     private int mTimingAdvance = -1;
     private double mLongitude = 0.0;
     private double mLatitude = 0.0;
+    private double mSpeed = 0.0;
+    private double mAccuracy = 0.0;
+    private double mBearing = 0.0;
     private String mNetType = "";
     private String mCellInfo = "";
     private String mDataState = "";
@@ -83,7 +86,7 @@ public class Device {
             case TelephonyManager.PHONE_TYPE_GSM:
                 mPhoneType = "GSM";
                 mMncmcc = tm.getNetworkOperator();
-                if (mMncmcc != null) {
+                if (mMncmcc != null && mMncmcc.length() > 0) {
                     mMcc = Integer.parseInt(tm.getNetworkOperator().substring(0, 3));
                     mMnc = Integer.parseInt(tm.getNetworkOperator().substring(3));
                 }
@@ -128,6 +131,7 @@ public class Device {
                             mMcc = identityGsm.getMcc();
                             mMnc = identityGsm.getMnc();
                             mLac = identityGsm.getLac();
+                            break;
                         } else if (info instanceof CellInfoCdma) {
                             final CellSignalStrengthCdma cdma = ((CellInfoCdma) info)
                                     .getCellSignalStrength();
@@ -139,6 +143,7 @@ public class Device {
                             mCellID = identityCdma.getBasestationId();
                             mLac = identityCdma.getNetworkId();
                             mSID = identityCdma.getSystemId();
+                            break;
                         } else if (info instanceof CellInfoLte) {
                             final CellSignalStrengthLte lte = ((CellInfoLte) info)
                                     .getCellSignalStrength();
@@ -151,6 +156,7 @@ public class Device {
                             mMcc = identityLte.getMcc();
                             mMnc = identityLte.getMnc();
                             mCellID = identityLte.getCi();
+                            break;
                         } else if (info instanceof CellInfoWcdma) {
                             final CellSignalStrengthWcdma wcdma = ((CellInfoWcdma) info)
                                     .getCellSignalStrength();
@@ -164,6 +170,7 @@ public class Device {
                             mMnc = identityWcdma.getMnc();
                             mCellID = identityWcdma.getCid();
                             mPSC = identityWcdma.getPsc();
+                            break;
                         } else {
                             Log.i(TAG, "Unknown type of cell signal!" + "ClassName: " +
                                     info.getClass().getSimpleName() + " ToString: " +
@@ -212,10 +219,6 @@ public class Device {
         mCellInfo = cellInfo;
     }
 
-    public List<Cell> getNeighboringCells() {
-        return mNeighboringCells;
-    }
-
     public int getPSC() {
         return mPSC;
     }
@@ -236,11 +239,19 @@ public class Device {
         return mMcc;
     }
 
+    public void setMcc(int mcc) {
+        mMcc = mcc;
+    }
+
     /**
      * Mobile Network Code MCC
      */
     public int getMnc() {
         return mMnc;
+    }
+
+    public void setMnc(int mnc) {
+        mMnc = mnc;
     }
 
     /**
@@ -259,6 +270,57 @@ public class Device {
      */
     public int getPhoneID() {
         return mPhoneID;
+    }
+
+    /**
+     * Location reading accuracy
+     *
+     * @return double representation of accuracy of location
+     */
+    public double getAccuracy() {
+        return mAccuracy;
+    }
+
+    /**
+     * Location reading accuracy
+     *
+     */
+    public void setAccuracy(double accuracy) {
+        mAccuracy = accuracy;
+    }
+
+    /**
+     * Location reading speed
+     *
+     * @return double representation of speed when location taken
+     */
+    public double getSpeed() {
+        return mSpeed;
+    }
+
+    /**
+     * Location reading speed
+     *
+     */
+    public void setSpeed(double speed) {
+        mSpeed = speed;
+    }
+
+    /**
+     * Location reading bearing
+     *
+     * @return double representation of bearing when location taken
+     */
+    public double getBearing() {
+        return mBearing;
+    }
+
+    /**
+     * Location reading bearing
+     *
+     */
+    public void setBearing(double bearing) {
+        mBearing = bearing;
     }
 
     /**
@@ -511,6 +573,67 @@ public class Device {
         }
 
         return mNetType;
+    }
+
+    /**
+     * Network Type
+     *
+     * @return string representing device Network Type
+     */
+    public static String getNetworkTypeName(int netType) {
+        String networkType = "Unknown";
+        switch (netType) {
+            case TelephonyManager.NETWORK_TYPE_1xRTT:
+                networkType = "1xRTT";
+                break;
+            case TelephonyManager.NETWORK_TYPE_CDMA:
+                networkType = "CDMA";
+                break;
+            case TelephonyManager.NETWORK_TYPE_EDGE:
+                networkType = "EDGE";
+                break;
+            case TelephonyManager.NETWORK_TYPE_EHRPD:
+                networkType = "eHRPD";
+                break;
+            case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                networkType = "EVDO_0";
+                break;
+            case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                networkType = "EVDO_A";
+                break;
+            case TelephonyManager.NETWORK_TYPE_EVDO_B:
+                networkType = "EVDO_B";
+                break;
+            case TelephonyManager.NETWORK_TYPE_GPRS:
+                networkType = "GPRS";
+                break;
+            case TelephonyManager.NETWORK_TYPE_HSDPA:
+                networkType = "HSDPA";
+                break;
+            case TelephonyManager.NETWORK_TYPE_HSPA:
+                networkType = "HSPA";
+                break;
+            case TelephonyManager.NETWORK_TYPE_HSPAP:
+                networkType = "HSPA+";
+                break;
+            case TelephonyManager.NETWORK_TYPE_HSUPA:
+                networkType = "HSUPA";
+                break;
+            case TelephonyManager.NETWORK_TYPE_IDEN:
+                networkType = "iDEN";
+                break;
+            case TelephonyManager.NETWORK_TYPE_LTE:
+                networkType = "LTE";
+                break;
+            case TelephonyManager.NETWORK_TYPE_UMTS:
+                networkType = "UMTS";
+                break;
+            case TelephonyManager.NETWORK_TYPE_UNKNOWN:
+                networkType = "Unknown";
+                break;
+        }
+
+        return networkType;
     }
 
     String getDataActivity(TelephonyManager tm) {
