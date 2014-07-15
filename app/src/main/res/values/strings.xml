@@ -158,6 +158,7 @@
     <string name="pref_refresh_key">pref_refresh</string>
     <string name="pref_refresh_title">Refresh Rate</string>
     <string name="pref_refresh_summ">Control the frequency of device updates</string>
+    <string name="pref_last_database_backup_version">pref_last_db_backup_version</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>

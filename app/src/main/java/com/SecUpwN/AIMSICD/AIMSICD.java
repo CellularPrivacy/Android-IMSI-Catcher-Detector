@@ -19,6 +19,7 @@ package com.SecUpwN.AIMSICD;
 
 import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.adapters.DrawerMenuAdapter;
 import com.SecUpwN.AIMSICD.fragments.AboutFragment;
 import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
@@ -265,7 +266,12 @@ public class AIMSICD extends Activity implements AsyncResponse {
         } else if (selectedItem.getId() == 203) {
             new RequestTask(mContext, RequestTask.BACKUP_DATABASE).execute();
         } else if (selectedItem.getId() == 204) {
-            new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
+            if (AimsicdService.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
+                Helpers.msgShort(mContext, "Unable to restore backup from previous database version"
+                        + " due to structural changes");
+            } else {
+                new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
+            }
         } else if (selectedItem.getId() == 301) {
             Location loc = mAimsicdService.lastKnownLocation();
             if (loc != null && loc.hasAccuracy()) {
