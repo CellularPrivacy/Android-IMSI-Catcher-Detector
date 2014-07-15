@@ -96,11 +96,18 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.CellIdentityCdma;
 import android.telephony.CellIdentityGsm;
+import android.telephony.CellIdentityLte;
+import android.telephony.CellIdentityWcdma;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
 import android.telephony.CellInfoGsm;
+import android.telephony.CellInfoLte;
+import android.telephony.CellInfoWcdma;
 import android.telephony.CellLocation;
+import android.telephony.CellSignalStrengthCdma;
 import android.telephony.CellSignalStrengthGsm;
+import android.telephony.CellSignalStrengthLte;
+import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -143,6 +150,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private static final float GPS_MIN_UPDATE_DISTANCE = 10;
     public boolean mMultiRilCompatible;
     public static long REFRESH_RATE;
+    public static int LAST_DB_BACKUP_VERSION;
 
     public final Device mDevice = new Device();
 
@@ -325,15 +333,64 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             if (allCellInfo != null) {
                 for (CellInfo cellInfo : allCellInfo) {
                     if (cellInfo instanceof CellInfoGsm) {
-                        CellInfoGsm gsmCellInfo = (CellInfoGsm) cellInfo;
-                        CellIdentityGsm cellIdentity = gsmCellInfo
+                        CellIdentityGsm cellIdentity =  ((CellInfoGsm) cellInfo)
                                 .getCellIdentity();
-                        CellSignalStrengthGsm cellSignalStrengthGsm = gsmCellInfo
+                        CellSignalStrengthGsm cellSignalStrengthGsm = ((CellInfoGsm) cellInfo)
                                 .getCellSignalStrength();
+                        if (cellIdentity.getCid() == Integer.MAX_VALUE) {
+                            continue;
+                        }
 
                         int dbmLevel = cellSignalStrengthGsm.getDbm();
-                        Cell cell = new Cell(cellIdentity.getCid(), cellIdentity.getLac(),
+                        final Cell cell = new Cell(cellIdentity.getCid(), cellIdentity.getLac(),
                                 cellIdentity.getMcc(), cellIdentity.getMnc(), dbmLevel,
+                                SystemClock.currentThreadTimeMillis());
+
+                        neighboringCells.add(cell);
+                    } else if (cellInfo instanceof CellInfoCdma) {
+                        final CellSignalStrengthCdma cellSignalStrengthCdma = ((CellInfoCdma) cellInfo)
+                                .getCellSignalStrength();
+                        final CellIdentityCdma cellIdentity = ((CellInfoCdma) cellInfo)
+                                .getCellIdentity();
+
+                        if (cellIdentity.getBasestationId() == Integer.MAX_VALUE) {
+                            continue;
+                        }
+
+                        final Cell cell = new Cell(cellIdentity.getBasestationId(), cellIdentity.getNetworkId(),
+                                mDevice.getMCC(), mDevice.getMnc(), cellSignalStrengthCdma.getDbm(),
+                                SystemClock.currentThreadTimeMillis());
+
+                        neighboringCells.add(cell);
+                    } else if (cellInfo instanceof CellInfoLte) {
+                        final CellSignalStrengthLte cellSignalStrengthLte = ((CellInfoLte) cellInfo)
+                                .getCellSignalStrength();
+                        final CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo)
+                                .getCellIdentity();
+
+                        if (cellIdentity.getPci() == Integer.MAX_VALUE) {
+                            continue;
+                        }
+
+                        final Cell cell = new Cell(cellIdentity.getPci(), cellIdentity.getTac(),
+                                cellIdentity.getMcc(), cellIdentity.getMnc(), cellSignalStrengthLte.getDbm(),
+                                SystemClock.currentThreadTimeMillis());
+
+                        neighboringCells.add(cell);
+                    } else if (cellInfo instanceof CellInfoWcdma) {
+                        final CellSignalStrengthWcdma cellSignalStrengthWcdma
+                                = ((CellInfoWcdma) cellInfo)
+                                .getCellSignalStrength();
+                        final CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo)
+                                .getCellIdentity();
+
+                        if (cellIdentity.getCid() == Integer.MAX_VALUE) {
+                            continue;
+                        }
+
+                        final Cell cell = new Cell(cellIdentity.getCid(), cellIdentity.getLac(),
+                                cellIdentity.getMcc(), cellIdentity.getMnc(),
+                                cellSignalStrengthWcdma.getDbm(),
                                 SystemClock.currentThreadTimeMillis());
 
                         neighboringCells.add(cell);
@@ -341,24 +398,24 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 }
             }
         }
-        if (Build.VERSION.SDK_INT < 16 || neighboringCells.isEmpty()) {
+
+        if (neighboringCells.size() == 0) {
             List<NeighboringCellInfo> neighboringCellInfo;
             neighboringCellInfo = tm.getNeighboringCellInfo();
-            if (neighboringCellInfo != null) {
-                for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
-                    if (neighbourCell.getCid() == NeighboringCellInfo.UNKNOWN_CID) {
-                        continue;
-                    }
-                    int rssi = neighbourCell.getRssi();
-                    int dbmLevel = 0;
+            for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
+                Log.i(TAG, "neighbouringCellInfo - CID:" + neighbourCell.getCid() +
+                " LAC:" + neighbourCell.getLac() + " RSSI:" + neighbourCell.getRssi() +
+                " PSC:" + neighbourCell.getPsc());
 
-                    if (rssi != NeighboringCellInfo.UNKNOWN_RSSI) {
-                        dbmLevel = -113 + 2 * rssi;
-                    }
-                    Cell cell = new Cell(neighbourCell.getCid(), neighbourCell.getLac(), mDevice.getMCC(),
-                            mDevice.getMnc(), dbmLevel, SystemClock.currentThreadTimeMillis());
-                    neighboringCells.add(cell);
+                int rssi = 0;
+
+                if (neighbourCell.getRssi() != NeighboringCellInfo.UNKNOWN_RSSI) {
+                    rssi = (2 * neighbourCell.getRssi()) - 113;
                 }
+
+                final Cell cell = new Cell(neighbourCell.getCid(), neighbourCell.getLac(), mDevice.getMCC(),
+                        mDevice.getMnc(), rssi, neighbourCell.getPsc(), SystemClock.currentThreadTimeMillis());
+                neighboringCells.add(cell);
             }
         }
 
@@ -517,6 +574,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         boolean trackCellPref = prefs.getBoolean(
                 this.getString(R.string.pref_enable_cell_key), false);
+
+        LAST_DB_BACKUP_VERSION = prefs.getInt(
+                this.getString(R.string.pref_last_database_backup_version), 1);
 
         String refreshRate = prefs.getString(getString(R.string.pref_refresh_key), "1");
         if (refreshRate.isEmpty()) {
@@ -758,6 +818,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             mDevice.setNetID(tm);
             mDevice.getNetworkTypeName();
 
+
             switch (mDevice.getPhoneID()) {
                 case TelephonyManager.PHONE_TYPE_GSM:
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
@@ -793,8 +854,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 mDbResult = dbHelper.insertCell(mDevice.getLac(), mDevice.getCellId(),
                         mDevice.getNetID(), mDevice.getLatitude(),
                         mDevice.getLongitude(), mDevice.getSignalInfo(),
-                        mDevice.getCellInfo(), mDevice.getSimCountry(),
-                        mDevice.getSimOperator(), mDevice.getSimOperatorName());
+                        mDevice.getMCC(), mDevice.getMnc(),
+                        mDevice.getAccuracy(), mDevice.getSpeed(), mDevice.getBearing(),
+                        mDevice.getNetworkTypeName());
                 if (mDbResult == -1) {
                     Log.e(TAG, "Error writing to database");
                 }
@@ -894,19 +956,67 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     if (cellinfolist != null) {
                         for (final CellInfo cellinfo : cellinfolist) {
                             if (cellinfo instanceof CellInfoGsm) {
-                                CellInfoGsm GSMinfo = (CellInfoGsm) cellinfo;
-                                CellIdentityGsm gsmCellIdentity = GSMinfo.getCellIdentity();
-                                if (gsmCellIdentity != null) {
-                                    mDevice.setCellID(gsmCellIdentity.getCid());
-                                    mDevice.setLAC(gsmCellIdentity.getLac());
+                                final CellSignalStrengthGsm signalStrengthGsm = ((CellInfoGsm) cellinfo)
+                                        .getCellSignalStrength();
+                                final CellIdentityGsm identityGsm = ((CellInfoGsm) cellinfo)
+                                        .getCellIdentity();
+                                if (identityGsm != null) {
+                                    mDevice.setCellID(identityGsm.getCid());
+                                    mDevice.setLAC(identityGsm.getLac());
+                                    mDevice.setMcc(identityGsm.getMcc());
+                                    mDevice.setMnc(identityGsm.getMnc());
                                 }
+                                if (signalStrengthGsm != null) {
+                                    mDevice.setSignalInfo(signalStrengthGsm.getDbm());
+                                }
+                                break;
                             } else if (cellinfo instanceof CellInfoCdma) {
-                                CellInfoCdma CDMAinfo = (CellInfoCdma) cellinfo;
-                                CellIdentityCdma cdmaCellIdentity = CDMAinfo.getCellIdentity();
-                                if (cdmaCellIdentity != null) {
-                                    mDevice.setCellID(cdmaCellIdentity.getBasestationId());
-                                    mDevice.setLAC(cdmaCellIdentity.getNetworkId());
+                                final CellSignalStrengthCdma signalStrengthCdma = ((CellInfoCdma) cellinfo)
+                                        .getCellSignalStrength();
+                                final CellIdentityCdma identityCdma = ((CellInfoCdma) cellinfo)
+                                        .getCellIdentity();
+                                if (identityCdma != null) {
+                                    mDevice.setCellID(identityCdma.getBasestationId());
+                                    mDevice.setLAC(identityCdma.getNetworkId());
                                 }
+
+                                if (signalStrengthCdma != null) {
+                                    mDevice.setSignalInfo(signalStrengthCdma.getDbm());
+                                }
+                                break;
+                            } else if (cellinfo instanceof CellInfoLte) {
+                                final CellSignalStrengthLte signalStrengthLte = ((CellInfoLte) cellinfo)
+                                        .getCellSignalStrength();
+                                final CellIdentityLte identityLte = ((CellInfoLte) cellinfo)
+                                        .getCellIdentity();
+
+                                if (identityLte != null) {
+                                    mDevice.setCellID(identityLte.getPci());
+                                    mDevice.setLAC(identityLte.getTac());
+                                    mDevice.setMcc(identityLte.getMcc());
+                                    mDevice.setMnc(identityLte.getMnc());
+                                }
+
+                                if (signalStrengthLte != null) {
+                                    mDevice.setSignalInfo(signalStrengthLte.getDbm());
+                                }
+                                break;
+                            } else if (cellinfo instanceof CellInfoWcdma) {
+                                final CellSignalStrengthWcdma signalStrengthWcdma = ((CellInfoWcdma) cellinfo)
+                                        .getCellSignalStrength();
+                                final CellIdentityWcdma identityWcdma = ((CellInfoWcdma) cellinfo)
+                                        .getCellIdentity();
+                                if (identityWcdma != null) {
+                                    mDevice.setCellID(identityWcdma.getCid());
+                                    mDevice.setLAC(identityWcdma.getLac());
+                                    mDevice.setMcc(identityWcdma.getMcc());
+                                    mDevice.setMnc(identityWcdma.getMnc());
+                                }
+
+                                if (signalStrengthWcdma != null) {
+                                    mDevice.setSignalInfo(signalStrengthWcdma.getDbm());
+                                }
+                                break;
                             }
                         }
                     } else {
@@ -933,6 +1043,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     mDevice.setLongitude(loc.getLongitude());
                     mDevice.setLatitude(loc.getLatitude());
                     mDevice.setLastLocation(loc);
+                    mDevice.setSpeed(loc.getSpeed());
+                    mDevice.setAccuracy(loc.getAccuracy());
+                    mDevice.setBearing(loc.getBearing());
                 }
 
                 if (TrackingCell) {
@@ -941,6 +1054,14 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                             mDevice.getNetID(), mDevice.getLatitude(),
                             mDevice.getLongitude(), mDevice.getSignalInfo(),
                             mDevice.getCellInfo());
+
+                    mDbResult = dbHelper.insertCell(mDevice.getLac(), mDevice.getCellId(),
+                            mDevice.getNetID(), mDevice.getLatitude(),
+                            mDevice.getLongitude(), mDevice.getSignalInfo(),
+                            mDevice.getMCC(), mDevice.getMnc(),
+                            mDevice.getAccuracy(), mDevice.getSpeed(), mDevice.getBearing(),
+                            mDevice.getNetworkTypeName());
+
                     if (mDbResult == -1) {
                         Log.e(TAG, "Error writing to database");
                     }
@@ -971,10 +1092,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        final String KEY_UI_ICONS = getBaseContext().getString(R.string.pref_ui_icons_key);
-        final String FEMTO_DECTECTION = getBaseContext()
+        final String KEY_UI_ICONS = this.getString(R.string.pref_ui_icons_key);
+        final String FEMTO_DECTECTION = this
                 .getString(R.string.pref_femto_detection_key);
-        final String REFRESH = getBaseContext().getString(R.string.pref_refresh_key);
+        final String REFRESH = this.getString(R.string.pref_refresh_key);
+        final String DB_VERSION = this.getString(R.string.pref_last_database_backup_version);
 
         if (key.equals(KEY_UI_ICONS)) {
             //Update Notification to display selected icon type
@@ -988,7 +1110,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 stopTrackingFemto();
             }
         } else if (key.equals(REFRESH)) {
-            String refreshRate = prefs.getString(getString(R.string.pref_refresh_key), "1");
+            String refreshRate = sharedPreferences.getString(getString(R.string.pref_refresh_key), "1");
             if (refreshRate.isEmpty()) {
                 refreshRate = "1";
             }
@@ -1004,6 +1126,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     break;
             }
             REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
+        } else if (key.equals(DB_VERSION)) {
+            LAST_DB_BACKUP_VERSION = sharedPreferences.getInt(
+                    this.getString(R.string.pref_last_database_backup_version), 1);
         }
     }
 

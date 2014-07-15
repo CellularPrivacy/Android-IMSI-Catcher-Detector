@@ -143,7 +143,7 @@ public class DeviceFragment extends Fragment {
 
             if (mAimsicdService.mDevice.getPSC() != -1) {
                 content = (TextView) mView.findViewById(R.id.network_psc);
-                content.setText(mAimsicdService.mDevice.getPSC());
+                content.setText(String.valueOf(mAimsicdService.mDevice.getPSC()));
                 tr = (TableRow) mView.findViewById(R.id.primary_scrambling_code);
                 tr.setVisibility(View.VISIBLE);
             }
