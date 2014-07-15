@@ -3,7 +3,7 @@ package com.SecUpwN.AIMSICD.fragments;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.CardItemData;
-import com.SecUpwN.AIMSICD.adapters.NeighbouringCellCardInflater;
+import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
 import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
@@ -167,18 +167,30 @@ public class CellInfoFragment extends Fragment {
 
                 BaseInflaterAdapter<CardItemData> adapter
                         = new BaseInflaterAdapter<>(
-                        new NeighbouringCellCardInflater());
+                        new CellCardInflater());
                 int i = 1;
                 int total = neighboringCells.size();
                 for (Cell cell : neighboringCells) {
-                    CardItemData data = new CardItemData("Cell ID (CID): " + cell.getCID(),
-                            "Location Code (LAC): " + cell.getLAC(),
-                            "Country Code (MCC): " + cell.getMCC(),
-                            "Network Code (MNC): " + cell.getMNC(),
-                            "Signal Strength (dBM): " + cell.getDBM(),
-                            "" + i++ + " / " + total);
+                    CardItemData data;
+                    if (cell.getPSC() != -1) {
+                        data = new CardItemData("Cell ID (CID): " + cell.getCID(),
+                                "Location Code (LAC): " + cell.getLAC(),
+                                "Country Code (MCC): " + cell.getMCC(),
+                                "Network Code (MNC): " + cell.getMNC(),
+                                "Signal Strength (dBM): " + cell.getDBM(),
+                                "Primary Scrambling Code (PSC): " + cell.getPSC(),
+                                "Timestamp: " + cell.getTimestamp(),
+                                "" + i++ + " / " + total);
+                    } else {
+                        data = new CardItemData(1,"Cell ID (CID): " + cell.getCID(),
+                                "Location Code (LAC): " + cell.getLAC(),
+                                "Country Code (MCC): " + cell.getMCC(),
+                                "Network Code (MNC): " + cell.getMNC(),
+                                "Signal Strength (dBM): " + cell.getDBM(),
+                                "Timestamp: " + cell.getTimestamp(),
+                                "" + i++ + " / " + total);
+                    }
                     adapter.addItem(data, false);
-
                 }
                 lv.setAdapter(adapter);
                 mNeighbouringCells.setVisibility(View.GONE);
