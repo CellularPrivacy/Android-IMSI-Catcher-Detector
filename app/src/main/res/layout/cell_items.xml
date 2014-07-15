@@ -29,6 +29,16 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/medium_blue"/>
         <TextView
+                android:id="@+id/mcc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/medium_blue" />
+        <TextView
+                android:id="@+id/mnc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/medium_blue" />
+        <TextView
                 android:id="@+id/net"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
