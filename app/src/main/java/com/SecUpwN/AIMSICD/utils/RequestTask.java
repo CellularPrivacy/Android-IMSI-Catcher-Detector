@@ -4,10 +4,12 @@ import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -157,6 +159,14 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 break;
             case BACKUP_DATABASE:
                 if (result != null && result.equals("Successful")) {
+                    SharedPreferences prefs;
+                    prefs = mContext.getSharedPreferences(
+                            AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+                    SharedPreferences.Editor prefsEditor;
+                    prefsEditor = prefs.edit();
+                    prefsEditor.putInt(mContext.getString(R.string.pref_last_database_backup_version),
+                            AIMSICDDbAdapter.DATABASE_VERSION);
+                    prefsEditor.apply();
                     final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setTitle(R.string.database_export_successful)
                             .setMessage("Database Backup successfully saved to:\n"
