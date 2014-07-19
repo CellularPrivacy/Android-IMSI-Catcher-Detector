@@ -9,7 +9,7 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 
 ---
 
-**[DONATE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) [![DarkCoin privately accepted here](https://camo.githubusercontent.com/2493dc2003e4ce2b039ecdec057087033d75246b/68747470733a2f2f6670626a35612e646d312e6c69766566696c6573746f72652e636f6d2f793270557432436755384e534a524f785931693076755253715647576b48526e4d41494d71464f72376d645469414c55786a32635646315471536165785035487a6178743950624f79597578524b6f3056535f68736965316b346359684148766d5f443175795f5a67585346766f2f6461726b636f696e5f61636365707465645f686572655f6e6f726d616c5f322e706e673f707369643d31)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) to help us becoming strong supporters of:**
+**[DONATE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) to help us becoming strong supporters of:**
 
 [![EFF](https://www.eff.org/files/2014/01/24/eff-logo-name-72.jpg)](https://www.eff.org/)
 [![Guardian Project](https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png)](https://guardianproject.info/)
