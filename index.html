@@ -40,6 +40,12 @@
 
 <p><img src="https://cloud.githubusercontent.com/assets/6475465/3053970/e50b28c8-e1b1-11e3-887a-e1b82a21f166.png" alt="AIMSICD-Status"></p>
 
+<hr><p><strong><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations">DONATE</a> <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations"><img src="https://camo.githubusercontent.com/2493dc2003e4ce2b039ecdec057087033d75246b/68747470733a2f2f6670626a35612e646d312e6c69766566696c6573746f72652e636f6d2f793270557432436755384e534a524f785931693076755253715647576b48526e4d41494d71464f72376d645469414c55786a32635646315471536165785035487a6178743950624f79597578524b6f3056535f68736965316b346359684148766d5f443175795f5a67585346766f2f6461726b636f696e5f61636365707465645f686572655f6e6f726d616c5f322e706e673f707369643d31" alt="DarkCoin privately accepted here"></a> to help us becoming strong supporters of:</strong></p>
+
+<p><a href="https://www.eff.org/"><img src="https://www.eff.org/files/2014/01/24/eff-logo-name-72.jpg" alt="EFF"></a>
+<a href="https://guardianproject.info/"><img src="https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png" alt="Guardian Project"></a>
+<a href="https://www.privacyinternational.org/"><img src="https://www.privacyinternational.org/profiles/pi/themes/custom/privacy/logo.png" alt="Privacy International"></a></p>
+
 <hr><h1>
 <a name="index" class="anchor" href="#index"><span class="octicon octicon-link"></span></a>Index</h1>
 
@@ -77,7 +83,7 @@
 
 <p>Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). Sending spam and phishing SMS via fake base stations is already a lucrative underground market, particularly in Russia, China and Brazil (see <a href="http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-papers/wp-the-mobile-cybercriminal-underground-market-in-china.pdf">The Mobile Cybercriminal Underground Market in China</a>). For example in China, 1.530 people got arrested for using <a href="http://www.ecns.cn/business/2014/03-26/106525.shtml">this kind of equipment</a>. Just recently, hackers decided to start <a href="http://heise.de/-2235339">reverse-engineering the NSA toolset</a> and are releasing tools like <a href="http://www.nsaplayset.org/twilightvegetable">TWILIGHTVEGETABLE</a> - an easy to use, boot and pwn toolkit for passive monitoring of GSM communications. It's just a matter of time of when your own neighbor will spy on you with simple self-build tools!</p>
 
-<p>In addition, they can all crack A5/1 encryption which is most commonly used for GSM traffic on the fly (passively)! Only the latest A5/3 encryption which is used for securing mobile data (4G and 3G) and is offered as <a href="http://www.telekom.com/media/company/210108">new security standard for GSM encryption</a> remains secure in practice while susceptible to theoretical attacks. Although A5/3 withstands passive eavesdropping, it can be bypassed by deploying an IMSI-Catcher which can force a mobile device into 2G mode and <a href="http://www.septier.com/149.html">downgrade then the encryption to A5/1 or disable it</a>. There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. <strong>Let's detect and protect against these threats!</strong> Never think that you've got "nothing to hide". You'll very likely regret it one day.</p>
+<p>In addition, they can all crack A5/1 encryption which is most commonly used for GSM traffic on the fly (passively)! Only the latest A5/3 encryption which is used for securing mobile data (4G and 3G) and is offered as <a href="http://www.telekom.com/media/company/210108">new security standard for GSM encryption</a> remains secure in practice while susceptible to theoretical attacks. Although A5/3 withstands passive eavesdropping, it can be bypassed by deploying an IMSI-Catcher which can force a mobile device into 2G mode and <a href="http://www.septier.com/149.html">downgrade then the encryption to A5/1 or disable it</a>. There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the <a href="https://code.google.com/p/android/issues/detail?id=5353">Issue of not having a convenient display of the Ciphering Indictor</a> has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. <strong>Let's detect and protect against these threats!</strong> Never think that you've got "nothing to hide". You'll very likely regret it one day.</p>
 
 <ul>
 <li><a href="https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/">NSA’s Secret Role in the U.S. Assassination Program</a></li>
@@ -174,7 +180,7 @@
 
 <p>Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending <a href="https://www.darkcoin.io/">DarkCoin</a> to our new OFFICIAL DONATION ADDRESS: <strong>XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys</strong></p>
 
-<p>All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will <strong>NOT</strong> reward junk, only awesome stuff. If you are unsure how to do this, visit our WIKI-Page on <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations">Anonymous Donations</a>.</p>
+<p>All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will <strong>NOT</strong> reward junk, only awesome stuff. Furthermore, donations will be used to support the <a href="https://www.eff.org/">Electronic Frontier Foundation</a>, <a href="https://guardianproject.info/">The Guardian Project</a> as well as <a href="https://www.privacyinternational.org/">Privacy International</a>. If you are unsure how to donate, visit our WIKI-Page on <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations">Anonymous Donations</a>.</p>
 
 <hr><h3>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
@@ -206,6 +212,8 @@
 <a href="https://ssd.eff.org/">The Surveillance Self-Defense Project</a> - Defend against the threat of surveillance</li>
 <li>
 <a href="https://www.eff.org/">Electronic Frontier Foundation</a> - Nonprofit organization defending civil liberties in the digital world</li>
+<li>
+<a href="https://www.privacyinternational.org/">Privacy International</a> - Charity ommitted to fighting for the right to privacy across the world</li>
 <li>
 <a href="https://github.com/WhisperSystems/TextSecure">TextSecure</a> - Secure text messaging application for Android (replace WhatsApp)</li>
 <li>
