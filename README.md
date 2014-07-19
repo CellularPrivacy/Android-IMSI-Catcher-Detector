@@ -9,6 +9,14 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 
 ---
 
+**[DONATE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) [![DarkCoin privately accepted here](https://camo.githubusercontent.com/2493dc2003e4ce2b039ecdec057087033d75246b/68747470733a2f2f6670626a35612e646d312e6c69766566696c6573746f72652e636f6d2f793270557432436755384e534a524f785931693076755253715647576b48526e4d41494d71464f72376d645469414c55786a32635646315471536165785035487a6178743950624f79597578524b6f3056535f68736965316b346359684148766d5f443175795f5a67585346766f2f6461726b636f696e5f61636365707465645f686572655f6e6f726d616c5f322e706e673f707369643d31)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) to help us becoming strong supporters of:**
+
+[![EFF](https://www.eff.org/files/2014/01/24/eff-logo-name-72.jpg)](https://www.eff.org/)
+[![Guardian Project](https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png)](https://guardianproject.info/)
+[![Privacy International](https://www.privacyinternational.org/profiles/pi/themes/custom/privacy/logo.png)](https://www.privacyinternational.org/)
+
+---
+
 #  Index
 
 * [Introduction](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction)
@@ -141,7 +149,7 @@ Found a bug? Please carefully follow our guide on [how to correctly submit Issue
 
 Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending [DarkCoin](https://www.darkcoin.io/) to our new OFFICIAL DONATION ADDRESS: **XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys**
 
-All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will **NOT** reward junk, only awesome stuff. If you are unsure how to do this, visit our WIKI-Page on [Anonymous Donations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations).
+All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will **NOT** reward junk, only awesome stuff. Furthermore, donations will be used to support the [Electronic Frontier Foundation](https://www.eff.org/), [The Guardian Project](https://guardianproject.info/) as well as [Privacy International](https://www.privacyinternational.org/). If you are unsure how to donate, visit our WIKI-Page on [Anonymous Donations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations).
 
 ---
 
@@ -168,6 +176,7 @@ This list will be updated as our project evolves and shall be included within th
 * [Security Research Labs](https://srlabs.de/) - Stunning Security Revelations made in Berlin
 * [The Surveillance Self-Defense Project](https://ssd.eff.org/) - Defend against the threat of surveillance
 * [Electronic Frontier Foundation](https://www.eff.org/) - Nonprofit organization defending civil liberties in the digital world
+* [Privacy International](https://www.privacyinternational.org/) - Charity ommitted to fighting for the right to privacy across the world
 * [TextSecure](https://github.com/WhisperSystems/TextSecure) - Secure text messaging application for Android (replace WhatsApp)
 * [RedPhone](https://github.com/WhisperSystems/RedPhone) - Encrypted voice calls for Android
 * [KillYourPhone](http://killyourphone.com) - Make your own signal blocking phone pouch super fast for little money
