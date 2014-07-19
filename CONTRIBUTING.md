@@ -12,7 +12,6 @@ To avoid confusion and neglected development commits, please ALWAYS read this gu
 
 #### Right formatting of Posts
 
-Getting the GitHub Markdown right in your posts, can be challenging for non-trivial posts.
 Here are some useful links to help you with correctly structuring and formatting posts.
 
 * [Markdown CheatSheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
@@ -33,5 +32,5 @@ Here are some useful links to help you with correctly structuring and formatting
 #### On Bugs and Suggestions
 
 * Discovered a real bug? Please follow our instructions on [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues).
-* NEVER be shy to suggest a new feature - but PLEASE skip questions on ETAs. Thank you.
+* NEVER be shy to [suggest a new feature](https://forum.xda-developers.com/showthread.php?t=1422969) - but PLEASE skip questions on ETAs. Thank you.
 * Be polite and respectful. This project is like a plant: Be gentle to it and let it grow!
