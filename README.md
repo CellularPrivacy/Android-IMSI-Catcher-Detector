@@ -180,4 +180,5 @@ This list will be updated as our project evolves and shall be included within th
 * [TextSecure](https://github.com/WhisperSystems/TextSecure) - Secure text messaging application for Android (replace WhatsApp)
 * [RedPhone](https://github.com/WhisperSystems/RedPhone) - Encrypted voice calls for Android
 * [KillYourPhone](http://killyourphone.com) - Make your own signal blocking phone pouch super fast for little money
-* [GSM-Map](http://gsmmap.org/)- Compares the protection capabilities of mobile networks (contribute data!)
+* [GSM-Map](http://gsmmap.org/) - Compares the protection capabilities of mobile networks (contribute data!)
+* [Datenschmutz Wiki](https://www.datenschmutz.de) - Awesome German wiki of databases and tools of law enforcements
