@@ -11,7 +11,7 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 
 **[DONATE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) to help us becoming strong supporters of:**
 
-[![EFF](https://www.eff.org/files/2014/01/24/eff-logo-name-72.jpg)](https://www.eff.org/)
+[![EFF](https://www.eff.org/sites/all/themes/frontier/images/logo_full.png)](https://www.eff.org/)
 [![Guardian Project](https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png)](https://guardianproject.info/)
 [![Privacy International](https://www.privacyinternational.org/profiles/pi/themes/custom/privacy/logo.png)](https://www.privacyinternational.org/)
 
