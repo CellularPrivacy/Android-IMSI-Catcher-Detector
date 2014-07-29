@@ -37,6 +37,7 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 * [Wiki](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
 * [Sources](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/SOURCES)
 * [Credits](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#credits--greetings)
+* [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team!)
 * [License](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#license)
 * [More Security](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#websites-about-security-worth-checking-out)
 
@@ -164,6 +165,18 @@ This project is completely licensed under [GPL v3+](https://github.com/SecUpwN/A
 Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS). HUGE THANKS! ;-)
 
 This list will be updated as our project evolves and shall be included within the final app.
+
+---
+
+### Get in touch with the core team!
+
+|                   Task                  |                              Developer                              |
+|:---------------------------------------:|:-------------------------------------------------------------------:|
+|      Project Inventor and smarthead     |                  [E:V:A](mailto:xdae3v3a@gmail.com)                 |
+|      Lead developer and code-monkey     | [xLaMbChOpSx](http://forum.xda-developers.com/member.php?u=4661001) |
+| Attack vectors & vulnerability-analyzer |    [He3556](http://forum.xda-developers.com/member.php?u=4600707)   |
+|         Leading graphical designer      |   [Sgt-Obst](http://forum.xda-developers.com/member.php?u=5102584)  |
+| Security enthusiast and Public Speaker  |   [SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)   |
 
 ---
 
