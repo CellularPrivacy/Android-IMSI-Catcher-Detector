@@ -37,7 +37,7 @@ Android-based project to detect and (hopefully one day) avoid fake base stations
 * [Wiki](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
 * [Sources](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/SOURCES)
 * [Credits](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#credits--greetings)
-* [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team!)
+* [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team)
 * [License](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#license)
 * [More Security](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#websites-about-security-worth-checking-out)
 
