@@ -85,6 +85,8 @@ There are almost no phones on the market which offer an option to check what kin
 
 # Development Roadmap
 
+Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule Them ALL".
+
 ##### Make an empty "shell" App that:
 
 * a. collects relevant RF related variables using public API calls. (LAC etc)
