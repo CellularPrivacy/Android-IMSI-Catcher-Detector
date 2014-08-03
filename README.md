@@ -174,8 +174,6 @@ This list will be updated as our project evolves and shall be included within th
 
 ### Get in touch with the core team!
 
-[![Gitter chat](https://badges.gitter.im/SecUpwN/Android-IMSI-Catcher-Detector.png)](https://gitter.im/SecUpwN/Android-IMSI-Catcher-Detector)
-
 |                   Task                  |                              Developer                              |
 |:---------------------------------------:|:-------------------------------------------------------------------:|
 |      Project Inventor and smarthead     |                  [E:V:A](mailto:xdae3v3a@gmail.com)                 |
