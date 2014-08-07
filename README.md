@@ -1,7 +1,7 @@
 ## Android IMSI-Catcher Detector (AIMSICD)
 #### [alternative name: `IMSI-Cure` - pronounced `I'm-Secure`]
 
-Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. Sounds cool and security is important to you? Feel free to contribute, spread the word! ;-)
+Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks.
 
 **German Article about our Project**: [IMSI-Catcher Erkennung für Android – AIMSICD](http://www.kuketz-blog.de/imsi-catcher-erkennung-fuer-android-aimsicd/).
 
