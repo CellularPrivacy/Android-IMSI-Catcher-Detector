@@ -51,13 +51,13 @@ YouTube: DEF CON 18 - Practical Cellphone Spying with Kristin Paget (click pictu
 
 Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). Sending spam and phishing SMS via fake base stations is already a lucrative underground market, particularly in Russia, China and Brazil (see [The Mobile Cybercriminal Underground Market in China](http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-papers/wp-the-mobile-cybercriminal-underground-market-in-china.pdf)). For example in China, 1.530 people got arrested for using [this kind of equipment](http://www.ecns.cn/business/2014/03-26/106525.shtml). Just recently, hackers decided to start [reverse-engineering the NSA toolset](http://heise.de/-2235339) and are releasing tools like [TWILIGHTVEGETABLE](http://www.nsaplayset.org/twilightvegetable) - an easy to use, boot and pwn toolkit for passive monitoring of GSM communications. It's just a matter of time of when your own neighbor will spy on you with simple self-build tools!
 
-In addition, they can all crack A5/1 encryption which is most commonly used for GSM traffic on the fly (passively)! Only the latest A5/3 encryption which is used for securing mobile data (4G and 3G) and is offered as [new security standard for GSM encryption](http://www.telekom.com/media/company/210108) remains secure in practice while susceptible to theoretical attacks. Although A5/3 withstands passive eavesdropping, it can be bypassed by IMSI-Catchers forcing a mobile device into 2G mode and [downgrade the encryption to A5/1 or disable it](http://www.septier.com/149.html).
+In addition, they can all crack A5/1 encryption which is most commonly used for GSM traffic on the fly (passively)! Only the latest A5/3 encryption which is used for securing mobile data (4G and 3G) and is offered as [new security standard for GSM encryption](http://www.telekom.com/media/company/210108) remains secure in practice while susceptible to theoretical attacks. Although A5/3 withstands passive eavesdropping, it can be bypassed by IMSI-Catchers forcing a mobile device into 2G mode and [downgrade encryption to A5/1 or disable it](http://www.septier.com/149.html).
 
 There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the [Issue of not having a convenient display of the Ciphering Indictor](https://code.google.com/p/android/issues/detail?id=5353) has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. **Let's detect and protect against these threats!** Never think that you've got "nothing to hide". You'll regret it one day.
 
 Some examples to make you familar with IMSI-Catcher threads:
 
-* **[NSA Killings with IMSI-Catcher drones](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)**.
+* **[NSA-Killings with IMSI-Catcher drones](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)**.
 * On YouTube: [How easy it is to clone phones](http://www.youtube.com/watch?v=Ydo19YOzpzU).
 * Talk by Karsten Nohl and Luca Melette on [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck).
 * [Stingrays: The Biggest Technological Threat](https://www.eff.org/deeplinks/2012/10/stingrays-biggest-unknown-technological-threat-cell-phone-privacy).
@@ -199,7 +199,7 @@ This list will be updated as our project evolves and shall be included within th
 
 * [Smartphone Attack Vector](http://smartphone-attack-vector.de/) - Smartphone flaws and countermeasures
 * [Kuketz IT-Security Blog](http://www.kuketz-blog.de/) - Great Security Reviews and Guides (written in German)
-* [PRISM Break](https://prism-break.org/) - Alternatives to Opt out of global data surveillance programs
+* [PRISM Break](https://prism-break.org/) - Alternatives to opt out of global data surveillance programs
 * [The Guardian Project](https://guardianproject.info/) - Secure Open Source Mobile Apps (Apps & Tools You Can Trust)
 * [Security Research Labs](https://srlabs.de/) - Stunning Security Revelations discovered in Berlin
 * [The Surveillance Self-Defense Project](https://ssd.eff.org/) - Defend against the threat of surveillance
