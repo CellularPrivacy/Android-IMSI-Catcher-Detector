@@ -1,6 +1,6 @@
 ## Android IMSI-Catcher Detector (AIMSICD)
-##### [also called `IMSI-Cure` or `I'm-Secure`]
-
+#### [also called `IMSI-Cure` or `I'm-Secure`]
+--
 Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. **German Article about our Project**: [IMSI-Catcher Erkennung für Android – AIMSICD](http://www.kuketz-blog.de/imsi-catcher-erkennung-fuer-android-aimsicd/).
 
 [![AIMSICD-Status](http://fs1.d-h.st/view/Oh7/00133/AIMSICD-Status_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
@@ -41,9 +41,9 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 
 # Introduction
 
-Both law enforcement agencies and criminals use [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher), which are false mobile towers acting between the target mobile phone(s) and the service providers real towers. As such it is considered a Man In the Middle (MITM) attack. The FBI or local police might deploy the device at a protest to obtain a record of everyone who attended with a cell phone. In the USA this technology is known under the name "[Stingray](https://en.wikipedia.org/wiki/Stingray_phone_tracker)", which is even capable to track the people who are traveling together with an owner of a targeted phone across the country. [Here](http://www.pgsup.com/wp-content/uploads/2010/06/P4230059.jpg) you can see alleged Stingray tracking devices mounted to the roof of three SUVs. IMSI-Catchers can allow adversaries to intercept your conversations, text messages, and data. Police can also use them to determine your location, or to find out who is in a given geographic area at what time. Identity thieves might sit with an IMSI-Catcher in a parked car in a residential neighborhood, stealing passwords or credit card information from people nearby who make purchases on their phones. All of this surveillance happens in secret.
+Both law enforcement agencies and criminals use [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher), which are false mobile towers acting between the target mobile phone(s) and the service providers real towers. As such it is considered a Man In the Middle (MITM) attack. The FBI or local police might deploy the device at a protest to obtain a record of everyone who attended with a cell phone. In the USA this technology is known under the name "[StingRay](https://en.wikipedia.org/wiki/Stingray_phone_tracker)", which is even capable to track the people who are traveling together with an owner of a targeted phone across the country. [Here](http://www.pgsup.com/wp-content/uploads/2010/06/P4230059.jpg) you can see alleged StingRay tracking devices mounted to the roof of three SUVs. IMSI-Catchers can allow adversaries to intercept your conversations, text messages, and data. Police can also use them to determine your location, or to find out who is in a given geographic area at what time. Identity thieves might sit with an IMSI-Catcher in a parked car in a residential neighborhood, stealing passwords or credit card information from people nearby who make purchases on their phones.
 
-Powerful, expensive IMSI-Catchers are in use at federal agencies and some police departments. And if you think that IMSI-Catchers are not used in your own town, think twice! If you ever happen to be near a riot or demonstration (hint: leave you phone at home if participating), pay close attention to cars standing along the path of the demonstration - those might be IMSI-Catchers. It is common practice for police to position IMSI-Catchers at the beginning as well as the end of roads where the demonstrating crowd moves to capture and compare data in order to find out who participated. But most of the time IMSI-Catchers are well hidden and can be even [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/) - therefore you won't even discover these creepy devices. Current technology shrinks them to be as tiny as your phone! So again, if you really have to participate in a riot or demonstration, don't be a dumbass and leave your phones at home. Or, at the very least, build yourself a [signal blocking phone pouch](http://killyourphone.com/)!
+There is more: Powerful, expensive IMSI-Catchers are in use at federal agencies and some police departments. And if you think that IMSI-Catchers are not used in your own town, think twice! If you ever happen to be near a riot or demonstration (hint: leave you phone at home if participating), pay close attention to cars standing along the path of the demonstration - those might be IMSI-Catchers. It is common practice for police to position IMSI-Catchers at the beginning as well as the end of roads where the demonstrating crowd moves to capture and compare data in order to find out who participated. But most of the time IMSI-Catchers are well hidden and can be even [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/) - therefore you won't even discover these creepy devices. Current technology shrinks them to be as tiny as your phone! So again, if you really have to participate in a riot or demonstration, don't be a dumbass and leave your phones at home. Or, at the very least, build yourself a [signal blocking phone pouch](http://killyourphone.com/)!
 
 [![DEF CON 18: Practical Cellphone Spying](http://img.youtube.com/vi/fQSu9cBaojc/0.jpg)](https://www.youtube.com/watch?v=fQSu9cBaojc)
 
@@ -53,9 +53,9 @@ Unfortunately it seems that IMSI-Catchers have been exponentially popular lately
 
 In addition, they can all crack A5/1 encryption which is most commonly used for GSM traffic on the fly (passively)! Only the latest A5/3 encryption which is used for securing mobile data (4G and 3G) and is offered as [new security standard for GSM encryption](http://www.telekom.com/media/company/210108) remains secure in practice while susceptible to theoretical attacks. Although A5/3 withstands passive eavesdropping, it can be bypassed by IMSI-Catchers forcing a mobile device into 2G mode and [downgrade encryption to A5/1 or disable it](http://www.septier.com/149.html).
 
-There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the [Issue of not having a convenient display of the Ciphering Indictor](https://code.google.com/p/android/issues/detail?id=5353) has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. **Let's detect and protect against these threats!** Never think that you've got "nothing to hide". You'll regret it one day.
+There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the [Issue of not having a convenient display of the Ciphering Indictor](https://code.google.com/p/android/issues/detail?id=5353) has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. **Let's detect and protect against these threats!** Never think you've got "nothing to hide".
 
-Some examples to make you familar with IMSI-Catcher threads:
+Some examples to make you familar with the most common IMSI-Catcher threats:
 
 * **[NSA-Killings with IMSI-Catcher drones](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)**.
 * On YouTube: [How easy it is to clone phones](http://www.youtube.com/watch?v=Ydo19YOzpzU).
@@ -69,6 +69,8 @@ Some examples to make you familar with IMSI-Catcher threads:
 
 They come in uncountable shapes and sizes:
 
+![IMSI-Catcher](http://x-cellular.com/images/image9.jpg)
+
 * Current IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html) now.
 * Below, the smartphone takes up the most space. IMSI-Catchers will even get smaller!
 
@@ -79,9 +81,11 @@ They come in uncountable shapes and sizes:
 ![IMSI-Catcher during the riots on Taksim Square](http://i43.tinypic.com/2i9i0kk.jpg)
 
 * Above example is way too conspicuous and you'll likely never encounter one of these.
-* Todays IMSI-Catchers can be [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/), or are hidden inside comfortable Spy-Vehicles:
+* Todays IMSI-Catchers can be [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/), or are hidden inside GSM Interceptor vehicles:
 
-![Comfort inside IMSI-Catcher vehicle](http://oi42.tinypic.com/16ba4b4.jpg)
+![Inside an IMSI-Catcher vehicle](http://www.armedforces-int.com/upload/image_files/cellular-monitoring1.jpg)
+
+Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereof.
 
 ---
 
@@ -128,7 +132,7 @@ Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule T
 ### This project: 
 
 * Detects IMSI based device location tracking
-* Provides counter measures against device tracking
+* Provides counter measures against tracking
 * Can provide swarm-wise-decision-based cellular service interruption
 * Can provide secure wifi/wimax alternative data routes through MESH-like networking
 * Detect and prevent remote hidden application installation
@@ -136,7 +140,7 @@ Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule T
 * Prevent or spoof GPS data
 * Does NOT secure any data transmissions
 * Does NOT prevent already installed rogue application from full access
-* Aims to be added to the [Guardian Project's list of secure Apps](https://guardianproject.info/apps)
+* Aims to be recommended and added to the [Guardian Project's list of secure Apps](https://guardianproject.info/apps)
 * Aims to be recommended by the [SSD Project of the Electronic Frontier Foundation](https://ssd.eff.org/)
 * Aims to be recommended by [Privacy International](https://www.privacyinternational.org/) (and like-minded organizations)
 
@@ -210,3 +214,4 @@ This list will be updated as our project evolves and shall be included within th
 * [KillYourPhone](http://killyourphone.com) - Make your own signal blocking phone pouch for little money
 * [GSM-Map](http://gsmmap.org/) - Compares protection capabilities of mobile networks (contribute data!)
 * [Datenschmutz Wiki](https://www.datenschmutz.de) - Awesome German wiki of databases and tools of law enforcements
+* [Telefoniert nach Hause](https://www.telefoniert-nach-hause.de) - Documentation about hard- and software contacting third parties
