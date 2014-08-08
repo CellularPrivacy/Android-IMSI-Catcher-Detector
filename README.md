@@ -69,7 +69,7 @@ Some examples to make you familar with the most common IMSI-Catcher threats:
 
 They come in uncountable shapes and sizes:
 
-![IMSI-Catcher](http://x-cellular.com/images/image9.jpg)
+![IMSI-Catchers](http://fs1.d-h.st/view/VnC/00134/IMSI-Catchers.jpg)
 
 * Current IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html) now.
 * Below, the smartphone takes up the most space. IMSI-Catchers will even get smaller!
