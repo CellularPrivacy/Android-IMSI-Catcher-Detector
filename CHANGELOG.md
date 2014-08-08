@@ -1,6 +1,20 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 08.08.2014
+
+* Update: Too many small improvements of our README (enough editing for now, off to development!)
+* Update: SOURCES file has been updated with the latest used code snippets
+* Update: SCREENSHOTS have been updated to reflect the latest UI of HushSMS
+* Update: Cell data table has been updated for correct contributions to OpenCellID
+* Update: Cell Clas & Card UI Updates to support extra data and extended functions
+* Update: Neighbouring cell methods have been rewritten to improve neighbouring cell functions
+* Removed: Tested Gitter chat has fully been purged due to security issues we cannot support
+* Added: CONTRIBUTIONS has been expanded with some links for help on GitHub Markdown
+* Fix: getAllCellInfo method has been corrected in a number of it's uses
+* Fix: Tweaks Device & Service to address numerous small bugs and NPEs in isolated cases
+* Fix: Small corrections of strings within AIMSICD, including a proper version formatting
+
 #### 08.07.2014 - WIP-Release v0.1.23-alpha
 
 * Fix: Wcdma CellInfo type added to getAllCellInfo method to address unknown cell type exception
