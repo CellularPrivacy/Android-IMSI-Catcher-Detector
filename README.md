@@ -1,15 +1,12 @@
 ## Android IMSI-Catcher Detector (AIMSICD)
 #### [alternative name: `IMSI-Cure` - pronounced `I'm-Secure`]
 
-Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks.
-
-**German Article about our Project**: [IMSI-Catcher Erkennung für Android – AIMSICD](http://www.kuketz-blog.de/imsi-catcher-erkennung-fuer-android-aimsicd/).
+Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. **German Article about our Project**: [IMSI-Catcher Erkennung für Android – AIMSICD](http://www.kuketz-blog.de/imsi-catcher-erkennung-fuer-android-aimsicd/).
 
 [![AIMSICD-Status](http://fs1.d-h.st/view/Oh7/00133/AIMSICD-Status_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
-
 ---
 
-**[DONATE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) to help us becoming strong supporters of:**
+**[DONATE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) to help us support:**
 
 [![EFF](https://www.eff.org/sites/all/themes/frontier/images/logo_full.png)](https://www.eff.org/)
 [![Guardian Project](https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png)](https://guardianproject.info/)
@@ -20,7 +17,7 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 #  Index
 
 * [Introduction](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction)
-* [IMSI-Catchers](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#curious-want-to-know-what-imsi-catchers-can-look-like)
+* [IMSI-Catchers](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#want-to-know-what-imsi-catchers-look-like)
 * [Roadmap](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap)
 * [Goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#this-project)
 * [Limitations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#other-projects-not-this-one)
@@ -50,23 +47,29 @@ Powerful, expensive IMSI-Catchers are in use at federal agencies and some police
 
 [![DEF CON 18: Practical Cellphone Spying](http://img.youtube.com/vi/fQSu9cBaojc/0.jpg)](https://www.youtube.com/watch?v=fQSu9cBaojc)
 
-YouTube: DEF CON 18 - Practical Cellphone Spying with Kristin Paget
+YouTube: DEF CON 18 - Practical Cellphone Spying with Kristin Paget (click picture)
 
 Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). Sending spam and phishing SMS via fake base stations is already a lucrative underground market, particularly in Russia, China and Brazil (see [The Mobile Cybercriminal Underground Market in China](http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-papers/wp-the-mobile-cybercriminal-underground-market-in-china.pdf)). For example in China, 1.530 people got arrested for using [this kind of equipment](http://www.ecns.cn/business/2014/03-26/106525.shtml). Just recently, hackers decided to start [reverse-engineering the NSA toolset](http://heise.de/-2235339) and are releasing tools like [TWILIGHTVEGETABLE](http://www.nsaplayset.org/twilightvegetable) - an easy to use, boot and pwn toolkit for passive monitoring of GSM communications. It's just a matter of time of when your own neighbor will spy on you with simple self-build tools!
 
-In addition, they can all crack A5/1 encryption which is most commonly used for GSM traffic on the fly (passively)! Only the latest A5/3 encryption which is used for securing mobile data (4G and 3G) and is offered as [new security standard for GSM encryption](http://www.telekom.com/media/company/210108) remains secure in practice while susceptible to theoretical attacks. Although A5/3 withstands passive eavesdropping, it can be bypassed by deploying an IMSI-Catcher which can force a mobile device into 2G mode and [downgrade then the encryption to A5/1 or disable it](http://www.septier.com/149.html).
+In addition, they can all crack A5/1 encryption which is most commonly used for GSM traffic on the fly (passively)! Only the latest A5/3 encryption which is used for securing mobile data (4G and 3G) and is offered as [new security standard for GSM encryption](http://www.telekom.com/media/company/210108) remains secure in practice while susceptible to theoretical attacks. Although A5/3 withstands passive eavesdropping, it can be bypassed by IMSI-Catchers which can force a mobile device into 2G mode and [downgrade the encryption to A5/1 or disable it](http://www.septier.com/149.html).
 
-There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the [Issue of not having a convenient display of the Ciphering Indictor](https://code.google.com/p/android/issues/detail?id=5353) has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. **Let's detect and protect against these threats!** Never think that you've got "nothing to hide". You'll very likely regret it one day.
+There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the [Issue of not having a convenient display of the Ciphering Indictor](https://code.google.com/p/android/issues/detail?id=5353) has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. **Let's detect and protect against these threats!** Never think that you've got "nothing to hide". You'll regret it one day.
 
-* [NSA’s Secret Role in the U.S. Assassination Program](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)
-* Scary YouTube-Video: [How easy it is to clone phones](http://www.youtube.com/watch?v=Ydo19YOzpzU).
+Some examples to make you familar with IMSI-Catcher threads:
+
+* **[NSA killing people with IMSI-Catcher drones](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)**.
+* On YouTube: [How easy it is to clone phones](http://www.youtube.com/watch?v=Ydo19YOzpzU).
 * Talk by Karsten Nohl and Luca Melette on [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck).
+* [Stingrays: The Biggest Technological Threat](https://www.eff.org/deeplinks/2012/10/stingrays-biggest-unknown-technological-threat-cell-phone-privacy).
+* [GSOC surveillance inquiry reveals IMSI-Catcher](https://www.privacyinternational.org/blog/beirtear-na-imsis-irelands-gsoc-surveillance-inquiry-reveals-use-of-mobile-phone-interception).
 
 ---
 
-#### Curious? Want to know what IMSI-Catchers can look like?
+#### Want to know what IMSI-Catchers look like?
 
-* Current IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html) now:
+They come in uncountable shapes and sizes. Some examples:
+
+* Current IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html) now.
 * Below, the smartphone takes up the most space. IMSI-Catchers will even get smaller!
 
 ![Septier IMSI-Catcher Mini](http://www.septier.com/contentManagment/uploadedFiles/Mini.png)
@@ -83,6 +86,14 @@ There are almost no phones on the market which offer an option to check what kin
 ---
 
 # Development Roadmap
+
+In short: We're merely using any possible way to overcome the ridiculous AOS limitations on displaying highly important and relevant network variables and data. One of those is the Ciphering Indicator that has been 3GPP "required" for the last 10-15 years, but which Google and most Network providers choose to ignore. (Since they didn't want to implement better encryption, until very recently.) Another is finding the Timing Advance and various Network (RRC) Timers.
+
+1. There are several types of silent SMS, most of which are already detectable and there is nothing strange with that. It does need further testing for a greater variety of devices, and to see what would happen on a real IMSI-Catcher.
+
+2. Sending AT commands to the baseband processor and use the results to detect anomalies is an ongoing challenge because certain basebands do not expose enough usable information. The whole detection process is strongly hardware dependent, some basebands expose everything (MTK) and others (Qualcomm) expose very little, since they have their own protocols (DM/QMI). But the SIM card filesystem does provide useful info. So a combination of AT commands, SIM card readings and also API access to Service Mode (Samsung) menus, can provide all that we need and more. But it is a rather technical challenge for our developers to do this, and to collect all support material needed. That's where YOU come into play. Check our [open Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues?q=is%3Aopen+is%3Aissue)!
+
+3. OBB support would be trivial, but we're not really proposing this. Very few people would bother going through the pain of finding an appropriate OBB compatible phone, less implementing it as a piggy-back to an Android. So unless some OBB developer serves the required Java + binaries to us on a silver platter, this will not be a feature of AIMSICD.
 
 Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule Them ALL".
 
@@ -127,13 +138,14 @@ Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule T
 * Does NOT prevent already installed rogue application from full access
 * Aims to be added to the [Guardian Project's list of secure Apps](https://guardianproject.info/apps)
 * Aims to be recommended by the [SSD Project of the Electronic Frontier Foundation](https://ssd.eff.org/)
+* Aims to be recommended by [Privacy International](https://www.privacyinternational.org/)
 
 ### Other projects (NOT this one):
 
 * Provide full device encryption
 * Provide secure application sand-boxing
 * Provide secure data transmission
-* Provide firewalls (awesome solution: [AFWall+](https://github.com/ukanth/afwall))
+* Provide firewalls (recommended: [AFWall+](https://github.com/ukanth/afwall))
 
 ---
 
@@ -151,7 +163,7 @@ Found a bug? Please carefully follow our guide on [how to correctly submit Issue
 
 # Support
 
-Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending [DarkCoin](https://www.darkcoin.io/) to our new OFFICIAL DONATION ADDRESS: **XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys**
+Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending [DarkCoin](https://www.darkcoin.io/) to our DONATION ADDRESS: **XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys**
 
 All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will **NOT** reward junk, only awesome stuff. Furthermore, donations will be used to support the [Electronic Frontier Foundation](https://www.eff.org/), [The Guardian Project](https://guardianproject.info/) as well as [Privacy International](https://www.privacyinternational.org/). If you are unsure how to donate, visit our WIKI-Page on [Anonymous Donations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations).
 
@@ -159,7 +171,7 @@ All collected donations will be split into appropriate pieces and directly sent 
 
 ### License
 
-This project is completely licensed under [GPL v3+](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE).
+This project is completely licensed [GPL v3+](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE).
 
 ---
 
@@ -186,15 +198,15 @@ This list will be updated as our project evolves and shall be included within th
 ### Websites about security worth checking out:
 
 * [Smartphone Attack Vector](http://smartphone-attack-vector.de/) - Smartphone flaws and countermeasures
-* [Kuketz IT-Security Blog](http://www.kuketz-blog.de/) - Great Security Reviews (written in German)
-* [PRISM Break](https://prism-break.org/) - Alternatives to opt out of global data surveillance
-* [The Guardian Project](https://guardianproject.info/) - Secure Open Source Mobile Apps
+* [Kuketz IT-Security Blog](http://www.kuketz-blog.de/) - Great Security Reviews and Guides (written in German)
+* [PRISM Break](https://prism-break.org/) - Opt out of global data surveillance programs and end your reliance on proprietary services
+* [The Guardian Project](https://guardianproject.info/) - Secure Open Source Mobile Apps (Apps & Tools You Can Trust)
 * [Security Research Labs](https://srlabs.de/) - Stunning Security Revelations made in Berlin
 * [The Surveillance Self-Defense Project](https://ssd.eff.org/) - Defend against the threat of surveillance
-* [Electronic Frontier Foundation](https://www.eff.org/) - Nonprofit organization defending your rights in the digital world
-* [Privacy International](https://www.privacyinternational.org/) - Charity ommitted to fighting for the right to privacy across the world
+* [Electronic Frontier Foundation](https://www.eff.org/) - Nonprofit defending your rights in the digital world
+* [Privacy International](https://www.privacyinternational.org/) - Charity fighting for the right to privacy across the world
 * [TextSecure](https://github.com/WhisperSystems/TextSecure) - Secure text messaging application for Android (replace WhatsApp)
-* [RedPhone](https://github.com/WhisperSystems/RedPhone) - Encrypted voice calls for Android
-* [KillYourPhone](http://killyourphone.com) - Make your own signal blocking phone pouch super fast for little money
-* [GSM-Map](http://gsmmap.org/) - Compares the protection capabilities of mobile networks (contribute data!)
+* [RedPhone](https://github.com/WhisperSystems/RedPhone) - Encrypted calls for Android
+* [KillYourPhone](http://killyourphone.com) - Make your own signal blocking phone pouch for little money
+* [GSM-Map](http://gsmmap.org/) - Compares protection capabilities of mobile networks (contribute!)
 * [Datenschmutz Wiki](https://www.datenschmutz.de) - Awesome German wiki of databases and tools of law enforcements
