@@ -86,17 +86,11 @@ public class Device {
             case TelephonyManager.PHONE_TYPE_GSM:
                 mPhoneType = "GSM";
                 mMncmcc = tm.getNetworkOperator();
-                if (mMncmcc != null && mMncmcc.length() > 0) {
-                    mMcc = Integer.parseInt(tm.getNetworkOperator().substring(0, 3));
-                    mMnc = Integer.parseInt(tm.getNetworkOperator().substring(3));
-                }
                 mNetName = tm.getNetworkOperatorName();
                 GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
                 if (gsmCellLocation != null) {
-                    mCellID = (gsmCellLocation.getCid() == 0x7FFFFFFF) ?
-                            gsmCellLocation.getCid() & 0xffff : gsmCellLocation.getCid();
-                    mLac = (gsmCellLocation.getLac() == 0x7FFFFFFF ) ?
-                            gsmCellLocation.getLac() & 0xffff : gsmCellLocation.getLac();
+                    mCellID = gsmCellLocation.getCid();
+                    mLac = gsmCellLocation.getLac();
                     mPSC = gsmCellLocation.getPsc();
                 }
 
