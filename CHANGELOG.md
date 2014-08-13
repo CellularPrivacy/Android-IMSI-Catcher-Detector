@@ -1,6 +1,16 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 13.08.2014
+
+* Update: Slight updates to layouts to enable correct Right to Left support
+* Update: Changed the layout of neighbouring cell information to display PSC, RSSI & Network Type
+* Update: OpenCellID Contribution Upload finished to allow the use of the API functions
+* Update: Cleaned up some database cursors that were not being closed correctly
+* Added: New preference for contribution of tracked cell information to the OpenCellID project
+* Fix: Removed code that attempts to draw the MCC & MNC whilst refreshing the device information
+* Fix: Changed wording within our DISCLAIMER to comply with the GPL and avoid confusion
+
 #### 08.08.2014
 
 * Update: Too many small improvements of our README (enough editing for now, off to development!)
