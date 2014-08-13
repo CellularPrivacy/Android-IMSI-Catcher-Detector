@@ -132,6 +132,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
     public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
     public static int PHONE_TYPE;
+    public static String OCID_API_KEY = "API KEY GOES HERE.......";
 
     /*
      * System and helper declarations

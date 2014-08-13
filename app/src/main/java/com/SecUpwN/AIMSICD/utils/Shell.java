@@ -382,7 +382,7 @@ public class Shell {
     }
 
     public boolean executeAt(String command) {
-        return sendCommandPreserveOut("echo -e " + command + "\r > " + mSerialDevice, 5.0f);
+        return sendCommandPreserveOut("echo -e " + command + " > " + mSerialDevice, 5.0f);
     }
 
     public int getLastReturnValue() {

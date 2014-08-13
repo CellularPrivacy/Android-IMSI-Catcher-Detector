@@ -78,9 +78,9 @@ public class AIMSICDDbAdapter {
     public long insertCell(int lac, int cellID,
             int netType, double latitude, double longitude,
             int signalInfo, int mcc, int mnc, double accuracy,
-            double speed, double direction, String networkType) {
+            double speed, double direction, String networkType, long measurementTaken) {
 
-        if (cellID != -1) {
+        if (cellID != -1 && (latitude != 0.0 && longitude != 0.0)) {
             //Populate Content Values for Insert or Update
             ContentValues cellValues = new ContentValues();
             cellValues.put("Lac", lac);
@@ -95,6 +95,7 @@ public class AIMSICDDbAdapter {
             cellValues.put("Speed", speed);
             cellValues.put("Direction", direction);
             cellValues.put("NetworkType", networkType);
+            cellValues.put("MeasurementTaken", measurementTaken);
 
             if (!cellExists(cellID, latitude, longitude, signalInfo)) {
                 return mDb.insert(CELL_TABLE, null, cellValues);
@@ -184,6 +185,16 @@ public class AIMSICDDbAdapter {
     }
 
     /**
+     * Returns Cell Information for contribution to the OpenCellID Project
+     */
+    public Cursor getOPCIDSubmitData() {
+        return mDb.query(CELL_TABLE, new String[]{"Mcc", "Mnc", "Lac", "CellID", "Lng", "Lat",
+                        "Signal", "Timestamp", "Accuracy", "Speed", "Direction", "NetworkType"},
+                "OCID_SUBMITTED <> 1", null, null, null, null
+        );
+    }
+
+    /**
      * Returns Location Information database contents
      */
     public Cursor getLocationData() {
@@ -218,8 +229,10 @@ public class AIMSICDDbAdapter {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + LOCATION_TABLE + " WHERE CellID = " +
                 cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal,
                 null);
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
 
-        return cursor.getCount() > 0;
+        return exists;
     }
 
     /**
@@ -230,7 +243,10 @@ public class AIMSICDDbAdapter {
                 cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal,
                 null);
 
-        return cursor.getCount() > 0;
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+
+        return exists;
     }
 
     /**
@@ -240,7 +256,21 @@ public class AIMSICDDbAdapter {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE + " WHERE CellID = " +
                 cellID, null);
 
-        return cursor.getCount() > 0;
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+
+        return exists;
+    }
+
+    /**
+     * Updates Cell records to indicate OpenCellID contribution has been made
+     */
+    public void ocidProcessed() {
+        ContentValues ocidValues = new ContentValues();
+        ocidValues.put("OCID_SUBMITTED", 1);
+
+        mDb.update(CELL_TABLE, ocidValues, "OCID_SUBMITTED<>?",
+                new String[]{"1"});
     }
 
     public double[] getDefaultLocation(int mcc) {
@@ -257,7 +287,48 @@ public class AIMSICDDbAdapter {
             loc[1] = 0.0;
         }
 
+        cursor.close();
+
         return loc;
+    }
+
+    public boolean prepareOpenCellUploadData() {
+        boolean dataExtracted = false;
+        File dir = new File(FOLDER + "OpenCellID/");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(dir, "aimsicd-ocid-data.csv");
+
+        try {
+            file.createNewFile();
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            open();
+            Cursor c = getOPCIDSubmitData();
+
+            csvWrite.writeNext(new String[]{"mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act"});
+            String[] rowData = new String[c.getColumnCount()];
+            int size = c.getColumnCount();
+            AIMSICD.mProgressBar.setProgress(0);
+            AIMSICD.mProgressBar.setMax(size);
+            while (c.moveToNext()) {
+                for (int i = 0; i < size; i++) {
+                    rowData[i] = c.getString(i);
+                    AIMSICD.mProgressBar.setProgress(i);
+                }
+                csvWrite.writeNext(rowData);
+                dataExtracted = true;
+            }
+
+            csvWrite.close();
+            c.close();
+            return dataExtracted;
+        } catch (Exception e) {
+            Log.e(TAG, "Error creating OpenCellID Upload Data " + e);
+            return dataExtracted;
+        } finally {
+            AIMSICD.mProgressBar.setProgress(0);
+        }
     }
 
     /**
@@ -299,7 +370,7 @@ public class AIMSICDDbAdapter {
 
 
         } catch (Exception e) {
-            Log.e(TAG, "Error parsing OpenCellID data - " + e);
+            Log.e(TAG, "Error populating Default Mcc Data - " + e);
         }
     }
 
@@ -384,7 +455,8 @@ public class AIMSICDDbAdapter {
                                             Double.valueOf(records.get(i)[9]),
                                             Double.valueOf(records.get(i)[10]),
                                             Double.valueOf(records.get(i)[11]),
-                                            String.valueOf(records.get(i)[10]));
+                                            String.valueOf(records.get(i)[10]),
+                                            Long.valueOf(records.get(i)[11]));
                                     break;
                                 case LOCATION_TABLE:
                                     insertLocation(Integer.parseInt(records.get(i)[1]),
@@ -513,8 +585,7 @@ public class AIMSICDDbAdapter {
             String SMS_DATABASE_CREATE = "create table " +
                     SILENT_SMS_TABLE + " (" + COLUMN_ID +
                     " integer primary key autoincrement, Address VARCHAR, Display VARCHAR, Class VARCHAR, "
-                    +
-                    "ServiceCtr VARCHAR, Message VARCHAR, " +
+                    + "ServiceCtr VARCHAR, Message VARCHAR, " +
                     "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(SMS_DATABASE_CREATE);
 
@@ -534,8 +605,9 @@ public class AIMSICDDbAdapter {
             String CELL_DATABASE_CREATE = "create table " +
                     CELL_TABLE + " (" + COLUMN_ID +
                     " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
-                    "Net INTEGER, Lat REAL, Lng REAL, Signal INTEGER, Mcc INTEGER, Mnc INTEGER, " +
+                    "Net INTEGER, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Mcc INTEGER, Mnc INTEGER, " +
                     "Accuracy REAL, Speed REAL, Direction REAL, NetworkType VARCHAR, " +
+                    "MeasurementTaken VARCHAR, OCID_SUBMITTED INTEGER DEFAULT 0, " +
                     "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(CELL_DATABASE_CREATE);
 
@@ -546,8 +618,7 @@ public class AIMSICDDbAdapter {
                     OPENCELLID_TABLE + " (" + COLUMN_ID +
                     " integer primary key autoincrement, Lat VARCHAR, Lng VARCHAR, Mcc INTEGER, " +
                     "Mnc INTEGER, Lac INTEGER, CellID INTEGER, AvgSigStr INTEGER, Samples INTEGER, "
-                    +
-                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
+                    + "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
             database.execSQL(OPENCELLID_DATABASE_CREATE);
 
             /*
