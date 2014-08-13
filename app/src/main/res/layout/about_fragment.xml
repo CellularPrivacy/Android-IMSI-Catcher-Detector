@@ -25,7 +25,8 @@
             android:text="@string/empty"
             android:textColor="@color/medium_blue"
             android:padding="8dip" android:layout_below="@+id/textView"
-            android:layout_toRightOf="@+id/aimsicd_about_info"/>
+            android:layout_toRightOf="@+id/aimsicd_about_info"
+            android:layout_toEndOf="@+id/aimsicd_about_info"/>
     <TextView
             android:id="@+id/aimsicd_about_info2"
             android:layout_width="wrap_content"
@@ -48,7 +49,8 @@
             android:text="@string/empty"
             android:textColor="@color/green_text"
             android:padding="8dip" android:layout_below="@+id/aimsicd_about_info2"
-            android:layout_toRightOf="@+id/aimsicd_poc"/>
+            android:layout_toRightOf="@+id/aimsicd_poc"
+            android:layout_toEndOf="@+id/aimsicd_poc"/>
     <TextView
             android:id="@+id/aimsicd_disclaimer"
             android:layout_width="wrap_content"
@@ -63,7 +65,8 @@
             android:text="@string/empty"
             android:textColor="@color/green_text"
             android:padding="8dip" android:layout_below="@+id/aimsicd_poc"
-            android:layout_toRightOf="@+id/aimsicd_disclaimer"/>
+            android:layout_toRightOf="@+id/aimsicd_disclaimer"
+            android:layout_toEndOf="@+id/aimsicd_disclaimer"/>
     <TextView
             android:id="@+id/aimsicd_contribute"
             android:layout_width="wrap_content"
@@ -78,7 +81,8 @@
             android:text="@string/empty"
             android:textColor="@color/green_text"
             android:padding="8dip" android:layout_below="@+id/aimsicd_disclaimer"
-            android:layout_toRightOf="@+id/aimsicd_contribute"/>
+            android:layout_toRightOf="@+id/aimsicd_contribute"
+            android:layout_toEndOf="@+id/aimsicd_contribute"/>
 
     <TextView
             android:id="@+id/aimsicd_visit_xda"
@@ -94,7 +98,8 @@
             android:text="@string/empty"
             android:textColor="@color/green_text"
             android:padding="8dip" android:layout_below="@+id/aimsicd_contribute"
-            android:layout_toRightOf="@+id/aimsicd_visit_xda"/>
+            android:layout_toRightOf="@+id/aimsicd_visit_xda"
+            android:layout_toEndOf="@+id/aimsicd_visit_xda"/>
 
     <TextView
             android:id="@+id/aimsicd_release"
@@ -110,7 +115,8 @@
             android:text="@string/empty"
             android:textColor="@color/green_text"
             android:padding="8dip" android:layout_below="@+id/aimsicd_visit_xda"
-            android:layout_toRightOf="@+id/aimsicd_release"/>
+            android:layout_toRightOf="@+id/aimsicd_release"
+            android:layout_toEndOf="@+id/aimsicd_release"/>
 
     <TextView
             android:id="@+id/aimsicd_changelog"
@@ -126,7 +132,8 @@
             android:text="@string/empty"
             android:textColor="@color/green_text"
             android:padding="8dip" android:layout_below="@+id/aimsicd_release"
-            android:layout_toRightOf="@+id/aimsicd_changelog"/>
+            android:layout_toRightOf="@+id/aimsicd_changelog"
+            android:layout_toEndOf="@+id/aimsicd_changelog"/>
 
     <TextView
             android:id="@+id/aimsicd_license"
@@ -142,7 +149,8 @@
             android:text="@string/empty"
             android:textColor="@color/green_text"
             android:padding="8dip" android:layout_below="@+id/aimsicd_changelog"
-            android:layout_toRightOf="@+id/aimsicd_license"/>
+            android:layout_toRightOf="@+id/aimsicd_license"
+            android:layout_toEndOf="@+id/aimsicd_license"/>
 
     <TextView
             android:id="@+id/aimsicd_credits"
@@ -158,6 +166,7 @@
             android:text="@string/empty"
             android:textColor="@color/green_text"
             android:padding="8dip" android:layout_below="@+id/aimsicd_license"
-            android:layout_toRightOf="@+id/aimsicd_credits"/>
+            android:layout_toRightOf="@+id/aimsicd_credits"
+            android:layout_toEndOf="@+id/aimsicd_credits"/>
 
 </RelativeLayout>

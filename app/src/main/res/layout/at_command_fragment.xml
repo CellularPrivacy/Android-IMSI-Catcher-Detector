@@ -26,7 +26,8 @@
             android:text="@string/empty"
             android:textColor="@color/medium_blue"
             android:padding="8dip" android:layout_below="@+id/at_command_title"
-            android:layout_toRightOf="@+id/serial_device_title"/>
+            android:layout_toRightOf="@+id/serial_device_title"
+            android:layout_toEndOf="@+id/serial_device_title"/>
 
     <TextView
             android:id="@+id/serial_device_spinner_title"
@@ -45,6 +46,7 @@
             android:prompt="@string/serial_device_prompt"
             android:layout_below="@+id/serial_device"
             android:layout_toRightOf="@id/serial_device_spinner_title"
+            android:layout_toEndOf="@id/serial_device_spinner_title"
             android:visibility="gone"/>
 
     <RelativeLayout android:layout_width="wrap_content"
@@ -67,7 +69,8 @@
             android:id="@+id/timeout_spinner"
             android:entries="@array/timeout_spinner_values"
             android:prompt="@string/timeout_spinner_prompt"
-            android:layout_toRightOf="@id/timeout_spinner_title" />
+            android:layout_toRightOf="@id/timeout_spinner_title"
+            android:layout_toEndOf="@id/timeout_spinner_title"/>
 
     <EditText
             android:id="@+id/at_command"
@@ -76,7 +79,8 @@
             android:inputType="text"
             android:hint="@string/command_hint"
             android:layout_below="@+id/timeout_spinner_title"
-            android:layout_toLeftOf="@+id/execute"/>
+            android:layout_toLeftOf="@+id/execute"
+            android:layout_toStartOf="@+id/execute"/>
 
     <Button
             style="?android:attr/buttonStyleSmall"
@@ -85,7 +89,7 @@
             android:text="@string/execute_at"
             android:id="@+id/execute" android:layout_alignBottom="@+id/at_command"
             android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-            android:layout_below="@+id/enter_at_command_title"/>
+            android:layout_below="@+id/timeout_spinner"/>
 
     <TextView
             android:id="@+id/response_label"
