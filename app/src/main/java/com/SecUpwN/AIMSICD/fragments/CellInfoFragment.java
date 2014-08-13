@@ -171,25 +171,7 @@ public class CellInfoFragment extends Fragment {
                 int i = 1;
                 int total = neighboringCells.size();
                 for (Cell cell : neighboringCells) {
-                    CardItemData data;
-                    if (cell.getPSC() != -1) {
-                        data = new CardItemData("Cell ID (CID): " + cell.getCID(),
-                                "Location Code (LAC): " + cell.getLAC(),
-                                "Country Code (MCC): " + cell.getMCC(),
-                                "Network Code (MNC): " + cell.getMNC(),
-                                "Signal Strength (dBM): " + cell.getDBM(),
-                                "Primary Scrambling Code (PSC): " + cell.getPSC(),
-                                "Timestamp: " + cell.getTimestamp(),
-                                "" + i++ + " / " + total);
-                    } else {
-                        data = new CardItemData(1,"Cell ID (CID): " + cell.getCID(),
-                                "Location Code (LAC): " + cell.getLAC(),
-                                "Country Code (MCC): " + cell.getMCC(),
-                                "Network Code (MNC): " + cell.getMNC(),
-                                "Signal Strength (dBM): " + cell.getDBM(),
-                                "Timestamp: " + cell.getTimestamp(),
-                                "" + i++ + " / " + total);
-                    }
+                    CardItemData data = new CardItemData(cell, i++ + " / " + total);
                     adapter.addItem(data, false);
                 }
                 lv.setAdapter(adapter);
