@@ -22,6 +22,7 @@
 package com.SecUpwN.AIMSICD.utils;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -32,7 +33,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -145,7 +149,7 @@ public class Helpers {
                         + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
                 String urlString =
-                        "http://www.opencellid.org/cell/getInArea?key=24c66165-9748-4384-ab7c-172e3f533056"
+                        "http://www.opencellid.org/cell/getInArea?key=" + AimsicdService.OCID_API_KEY
                                 + "&BBOX=" + boundParameter
                                 + "&format=csv";
 
@@ -405,6 +409,17 @@ public class Helpers {
             return false;
         }
         return true;
+    }
+
+    public static String convertStreamToString(InputStream is) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        reader.close();
+        return sb.toString();
     }
 
 }

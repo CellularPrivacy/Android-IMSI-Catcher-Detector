@@ -64,7 +64,7 @@
                 android:key="@string/pref_ocid_upload"
                 android:title="@string/pref_ui_ocid_upload_title"
                 android:summary="@string/pref_ui_ocid_upload_summ"
-                android:defaultValue="true" />
+                android:defaultValue="false" />
     </PreferenceCategory>
 
 </PreferenceScreen>
