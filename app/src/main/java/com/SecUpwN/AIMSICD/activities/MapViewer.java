@@ -432,7 +432,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         }
 
         loadOpenCellIDMarkers();
-
+        c.close();
         mDbHelper.close();
     }
 
@@ -462,6 +462,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
 
             } while (c.moveToNext());
         }
+        c.close();
         mDbHelper.close();
     }
 

@@ -6,6 +6,17 @@ import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +24,13 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +62,54 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
             case OPEN_CELL_ID_REQUEST:
             case OPEN_CELL_ID_REQUEST_FROM_MAP:
                 int count;
+                try {
+                    if (AimsicdService.OCID_UPLOAD_PREF) {
+                        boolean prepared = mDbAdapter.prepareOpenCellUploadData();
+                        Log.i("AIMSICD", "OCID prepared - " + String.valueOf(prepared));
+                        if (prepared) {
+                            File file = new File(Environment.getExternalStorageDirectory()
+                                    + "/AIMSICD/OpenCellID/aimsicd-ocid-data.csv");
+
+                            MultipartEntity mpEntity = new MultipartEntity();
+                            FileInputStream fin = new FileInputStream(file);
+                            String csv = Helpers.convertStreamToString(fin);
+                            mpEntity.addPart("key", new StringBody(AimsicdService.OCID_API_KEY));
+                            mpEntity.addPart("datafile", new InputStreamBody(new ByteArrayInputStream(csv.getBytes()), "text/csv", "aimsicd-ocid-data.csv"));
+
+                            ByteArrayOutputStream mBAOS = new ByteArrayOutputStream();
+
+                            mpEntity.writeTo(mBAOS);
+                            mBAOS.flush();
+                            ByteArrayEntity bArrEntity = new ByteArrayEntity(mBAOS.toByteArray());
+                            mBAOS.close();
+                            bArrEntity.setChunked(false);
+                            bArrEntity.setContentEncoding(mpEntity.getContentEncoding());
+                            bArrEntity.setContentType(mpEntity.getContentType());
+
+                            HttpClient httpclient;
+                            HttpPost httppost;
+                            HttpResponse response = null;
+
+                            httpclient = new DefaultHttpClient();
+                            httppost = new HttpPost("http://www.opencellid.org/measure/uploadCsv");
+
+                            httppost.setEntity(bArrEntity);
+                            response = httpclient.execute(httppost);
+
+                            if (response!= null) {
+                                Log.i("AIMSICD", "OCID Upload Response: " + response.getStatusLine().getStatusCode() + " - " + response.getStatusLine());
+                                HttpEntity resEntity = response.getEntity();
+                                Log.i("AIMSICD", "OCID Response Content: " + EntityUtils.toString(resEntity));
+                                resEntity.consumeContent();
+                                mDbAdapter.ocidProcessed();
+                            }
+
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.i("AIMSICD", "Upload OpenCellID data - " + e.getMessage());
+                }
+
                 try {
                     File dir = new File(
                             Environment.getExternalStorageDirectory()

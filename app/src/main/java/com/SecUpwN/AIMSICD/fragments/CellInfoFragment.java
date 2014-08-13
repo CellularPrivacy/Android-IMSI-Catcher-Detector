@@ -161,9 +161,9 @@ public class CellInfoFragment extends Fragment {
     private void updateUI() {
         if (mBound) {
             List<Cell> neighboringCells = mAimsicdService.updateNeighbouringCells();
-            if (neighboringCells != null && neighboringCells.size() != 0) {
-                mNeighbouringTotal
-                        .setText(String.valueOf(neighboringCells.size()));
+            mNeighbouringTotal
+                    .setText(String.valueOf(neighboringCells.size()));
+            if (neighboringCells.size() != 0) {
 
                 BaseInflaterAdapter<CardItemData> adapter
                         = new BaseInflaterAdapter<>(
