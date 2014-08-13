@@ -9,6 +9,7 @@ public class Cell {
     private int mnc;
     private int dbm;
     private int psc;
+    private int rssi;
     private long timestamp;
 
     //Tracked Cell Specific Variables
@@ -27,14 +28,16 @@ public class Cell {
         this.timestamp = timestamp;
     }
 
-    public Cell(int cid, int lac, int mcc, int mnc, int dbm, int psc, long timestamp) {
+    public Cell(int cid, int lac, int signal, int psc, int netType, boolean dbm) {
         this.cid = cid;
         this.lac = lac;
-        this.mcc = mcc;
-        this.mnc = mnc;
-        this.dbm = dbm;
+        if (dbm) {
+            this.dbm = signal;
+        } else {
+            this.rssi = signal;
+        }
         this.psc = psc;
-        this.timestamp = timestamp;
+        this.netType = netType;
     }
 
     public Cell(int cid, int lac, int mcc, int mnc, int dbm, double accuracy, double speed,
@@ -101,6 +104,14 @@ public class Cell {
 
     public int getPSC() {
         return this.psc;
+    }
+
+    public int getRssi() {
+        return this.rssi;
+    }
+
+    public int getNetType() {
+        return this.netType;
     }
 
     public long getTimestamp() {

@@ -57,4 +57,14 @@
             android:defaultValue="sense"/>
     </PreferenceCategory>
 
+    <PreferenceCategory
+            android:title="@string/pref_ocid_title"
+            android:key="pref_key_ocid_settings">
+        <CheckBoxPreference
+                android:key="@string/pref_ocid_upload"
+                android:title="@string/pref_ui_ocid_upload_title"
+                android:summary="@string/pref_ui_ocid_upload_summ"
+                android:defaultValue="true" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
