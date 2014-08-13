@@ -159,6 +159,10 @@
     <string name="pref_refresh_title">Refresh Rate</string>
     <string name="pref_refresh_summ">Control the frequency of device updates</string>
     <string name="pref_last_database_backup_version">pref_last_db_backup_version</string>
+    <string name="pref_ocid_title">OpenCellID Settings</string>
+    <string name="pref_ocid_upload">pref_ocid_upload</string>
+    <string name="pref_ui_ocid_upload_title">Contribute Cell Data</string>
+    <string name="pref_ui_ocid_upload_summ">Upload cell information data to the OpenCellID Project (NO personal information is submitted)</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
