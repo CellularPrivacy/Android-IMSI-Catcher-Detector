@@ -195,6 +195,7 @@ public class DbViewerFragment extends Fragment {
         protected void onPostExecute(Cursor result) {
             super.onPostExecute(result);
             BuildTable(result);
+            result.close();
             mDb.close();
         }
     }
