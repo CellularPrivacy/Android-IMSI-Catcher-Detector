@@ -124,6 +124,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class AimsicdService extends Service implements OnSharedPreferenceChangeListener {
@@ -409,21 +410,90 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }*/
 
-        //if (neighboringCells.size() == 0) {
-            List<NeighboringCellInfo> neighboringCellInfo;
+        List<NeighboringCellInfo> neighboringCellInfo;
             neighboringCellInfo = tm.getNeighboringCellInfo();
-        Log.i(TAG, "neighbouringCellInfo Size - " + neighboringCellInfo.size());
-            for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
-                Log.i(TAG, "neighbouringCellInfo - CID:" + neighbourCell.getCid() +
-                " LAC:" + neighbourCell.getLac() + " RSSI:" + neighbourCell.getRssi() +
-                " PSC:" + neighbourCell.getPsc());
-
-                final Cell cell = new Cell(neighbourCell.getCid(), neighbourCell.getLac(),
-                        neighbourCell.getRssi(), neighbourCell.getPsc(),
-                        neighbourCell.getNetworkType(), false);
-                neighboringCells.add(cell);
+        if (neighboringCellInfo.size() == 0) {
+            // try to poll the neighboring cells for a few seconds
+            final LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue =
+                    new LinkedBlockingQueue<NeighboringCellInfo>(100);
+            final PhoneStateListener listener = new PhoneStateListener() {
+                private void handle() {
+                    List<NeighboringCellInfo> neighboringCellInfo;
+                        neighboringCellInfo = tm.getNeighboringCellInfo();
+                    if (neighboringCellInfo.size() == 0) {
+                        return;
+                    }
+                    Log.i(TAG, "neighbouringCellInfo empty - event based polling succeeded!");
+                    tm.listen(this, PhoneStateListener.LISTEN_NONE);
+                    neighboringCellBlockingQueue.addAll(neighboringCellInfo);
+                }
+                @Override
+                public void onServiceStateChanged(ServiceState serviceState) {
+                    handle();
+                }
+                @Override
+                public void onSignalStrengthChanged(int asu) {
+                    handle();
+                }
+                @Override
+                public void onDataConnectionStateChanged(int state) {
+                    handle();
+                }
+                @Override
+                public void onDataConnectionStateChanged(int state, int networkType) {
+                    handle();
+                }
+                @Override
+                public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+                    handle();
+                }
+                @Override
+                public void onCellInfoChanged(List<CellInfo> cellInfo) {
+                    handle();
+                }
+            };
+            Log.i(TAG, "neighbouringCellInfo empty - start polling");
+            tm.listen(listener,
+                PhoneStateListener.LISTEN_CELL_INFO | PhoneStateListener.LISTEN_CELL_LOCATION |
+                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE | PhoneStateListener.LISTEN_SERVICE_STATE |
+                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS | PhoneStateListener.LISTEN_SIGNAL_STRENGTH);
+            for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
+                try {
+                    Log.i(TAG, "neighbouringCellInfo empty - try " + i);
+                    NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
+                    if (info == null) {
+                        neighboringCellInfo = tm.getNeighboringCellInfo();
+                        if (neighboringCellInfo.size() > 0) {
+                            Log.i(TAG, "neighbouringCellInfo empty - try " + i + " succeeded time based");
+                            break;
+                        } else {
+                            continue;
+                        }
+                    }
+                    ArrayList<NeighboringCellInfo> cellInfoList =
+                            new ArrayList<NeighboringCellInfo>(neighboringCellBlockingQueue.size() + 1);
+                    while (info != null) {
+                        cellInfoList.add(info);
+                        info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
+                    }
+                    neighboringCellInfo = cellInfoList;
+                } catch (InterruptedException e) {
+                    // normal
+                }
             }
-        //}
+        }
+
+        Log.i(TAG, "neighbouringCellInfo Size - " + neighboringCellInfo.size());
+        for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
+            Log.i(TAG, "neighbouringCellInfo - CID:" + neighbourCell.getCid() +
+                    " LAC:" + neighbourCell.getLac() + " RSSI:" + neighbourCell.getRssi() +
+                    " PSC:" + neighbourCell.getPsc());
+
+            final Cell cell = new Cell(neighbourCell.getCid(), neighbourCell.getLac(),
+                    neighbourCell.getRssi(), neighbourCell.getPsc(),
+                    neighbourCell.getNetworkType(), false);
+            neighboringCells.add(cell);
+        }
 
         return neighboringCells;
     }
