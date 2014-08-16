@@ -284,10 +284,10 @@ public class AIMSICD extends Activity implements AsyncResponse {
                 LocationServices.LocationAsync locationAsync = new LocationServices.LocationAsync();
                 locationAsync.delegate = this;
                 locationAsync.execute(
-                        mAimsicdService.mDevice.getCellId(),
-                        mAimsicdService.mDevice.getLac(),
-                        mAimsicdService.mDevice.getMnc(),
-                        mAimsicdService.mDevice.getMCC());
+                        mAimsicdService.mDevice.mCell.getCID(),
+                        mAimsicdService.mDevice.mCell.getLAC(),
+                        mAimsicdService.mDevice.mCell.getMNC(),
+                        mAimsicdService.mDevice.mCell.getMCC());
             }
         }
 
