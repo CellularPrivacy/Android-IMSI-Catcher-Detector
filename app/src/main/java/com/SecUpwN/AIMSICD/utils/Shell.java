@@ -23,11 +23,6 @@ public class Shell {
         openRootShell(true);
     }
 
-    public Shell(String serialDevice) {
-        openRootShell(true);
-        setSerialDevice(serialDevice);
-    }
-
     public List<String> GetStdOut() {
         if (mShellStdOut == null) {
             return null;
