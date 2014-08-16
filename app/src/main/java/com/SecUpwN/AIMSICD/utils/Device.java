@@ -20,7 +20,6 @@ import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Device {
@@ -30,21 +29,10 @@ public class Device {
     /*
      * Device Declarations
      */
+    public Cell mCell;
+
     private int mPhoneID = -1;
-    private int mMcc = -1;
-    private int mMnc = -1;
-    private int mSignalInfo = -1;
-    private int mNetID = -1;
-    private int mLac = -1;
-    private int mCellID = -1;
-    private int mSID = -1;
-    private int mPSC = -1;
-    private int mTimingAdvance = -1;
-    private double mLongitude = 0.0;
-    private double mLatitude = 0.0;
-    private double mSpeed = 0.0;
-    private double mAccuracy = 0.0;
-    private double mBearing = 0.0;
+
     private String mNetType = "";
     private String mCellInfo = "";
     private String mDataState = "";
@@ -63,48 +51,24 @@ public class Device {
     private String mDataActivityTypeShort = "";
     private boolean mRoaming;
 
-    private final List<Cell> mNeighboringCells = new ArrayList<>();
     private Location mLastLocation;
 
     private static final int TWO_MINUTES = 1000 * 60 * 2;
-
 
     /**
      * Refreshes all device specific details
      */
     public void refreshDeviceInfo(TelephonyManager tm) {
+        mCell = new Cell();
+
         //Phone type and associated details
         mIMEI = tm.getDeviceId();
         mIMEIV = tm.getDeviceSoftwareVersion();
         mPhoneID = tm.getPhoneType();
         mRoaming = tm.isNetworkRoaming();
         //Network type
-        mNetID = tm.getNetworkType();
+        mCell.setNetType(tm.getNetworkType());
         mNetType = getNetworkTypeName();
-
-        switch (mPhoneID) {
-            case TelephonyManager.PHONE_TYPE_GSM:
-                mPhoneType = "GSM";
-                mMncmcc = tm.getNetworkOperator();
-                mNetName = tm.getNetworkOperatorName();
-                GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
-                if (gsmCellLocation != null) {
-                    mCellID = gsmCellLocation.getCid();
-                    mLac = gsmCellLocation.getLac();
-                    mPSC = gsmCellLocation.getPsc();
-                }
-
-                break;
-            case TelephonyManager.PHONE_TYPE_CDMA:
-                mPhoneType = "CDMA";
-                CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
-                if (cdmaCellLocation != null) {
-                    mCellID = cdmaCellLocation.getBaseStationId();
-                    mLac = cdmaCellLocation.getNetworkId();
-                    mSID = cdmaCellLocation.getSystemId();
-                }
-                break;
-        }
 
         //SDK 17 allows access to signal strength outside of the listener and also
         //provide access to the LTE timing advance data
@@ -119,63 +83,89 @@ public class Device {
                             final CellIdentityGsm identityGsm = ((CellInfoGsm) info)
                                     .getCellIdentity();
                             //Signal Strength
-                            mSignalInfo = gsm.getDbm();
+                            mCell.setDBM(gsm.getDbm());
                             //Cell Identity
-                            mCellID = identityGsm.getCid();
-                            mMcc = identityGsm.getMcc();
-                            mMnc = identityGsm.getMnc();
-                            mLac = identityGsm.getLac();
-                            break;
+                            mCell.setCID(identityGsm.getCid());
+                            mCell.setMCC(identityGsm.getMcc());
+                            mCell.setMNC(identityGsm.getMnc());
+                            mCell.setLAC(identityGsm.getLac());
                         } else if (info instanceof CellInfoCdma) {
                             final CellSignalStrengthCdma cdma = ((CellInfoCdma) info)
                                     .getCellSignalStrength();
                             final CellIdentityCdma identityCdma = ((CellInfoCdma) info)
                                     .getCellIdentity();
                             //Signal Strength
-                            mSignalInfo = cdma.getDbm();
+                            mCell.setDBM(cdma.getDbm());
                             //Cell Identity
-                            mCellID = identityCdma.getBasestationId();
-                            mLac = identityCdma.getNetworkId();
-                            mSID = identityCdma.getSystemId();
-                            break;
+                            mCell.setCID(identityCdma.getBasestationId());
+                            mCell.setLAC(identityCdma.getNetworkId());
+                            mCell.setSID(identityCdma.getSystemId());
                         } else if (info instanceof CellInfoLte) {
                             final CellSignalStrengthLte lte = ((CellInfoLte) info)
                                     .getCellSignalStrength();
                             final CellIdentityLte identityLte = ((CellInfoLte) info)
                                     .getCellIdentity();
                             //Signal Strength
-                            mSignalInfo = lte.getDbm();
-                            mTimingAdvance = lte.getTimingAdvance();
+                            mCell.setDBM(lte.getDbm());
+                            mCell.setTimingAdvance(lte.getTimingAdvance());
                             //Cell Identity
-                            mMcc = identityLte.getMcc();
-                            mMnc = identityLte.getMnc();
-                            mCellID = identityLte.getCi();
-                            break;
+                            mCell.setMCC(identityLte.getMcc());
+                            mCell.setMNC(identityLte.getMnc());
+                            mCell.setCID(identityLte.getCi());
                         } else if (info instanceof CellInfoWcdma) {
                             final CellSignalStrengthWcdma wcdma = ((CellInfoWcdma) info)
                                     .getCellSignalStrength();
                             final CellIdentityWcdma identityWcdma = ((CellInfoWcdma) info)
                                     .getCellIdentity();
                             //Signal Strength
-                            mSignalInfo = wcdma.getDbm();
+                            mCell.setDBM(wcdma.getDbm());
                             //Cell Identity
-                            mLac = identityWcdma.getLac();
-                            mMcc = identityWcdma.getMcc();
-                            mMnc = identityWcdma.getMnc();
-                            mCellID = identityWcdma.getCid();
-                            mPSC = identityWcdma.getPsc();
-                            break;
+                            mCell.setLAC(identityWcdma.getLac());
+                            mCell.setMCC(identityWcdma.getMcc());
+                            mCell.setMNC(identityWcdma.getMnc());
+                            mCell.setCID(identityWcdma.getCid());
+                            mCell.setPSC(identityWcdma.getPsc());
                         } else {
                             Log.i(TAG, "Unknown type of cell signal!" + "ClassName: " +
                                     info.getClass().getSimpleName() + " ToString: " +
                                     info.toString());
                         }
+                        if (mCell.isValid())
+                            break;
                     }
                 }
             } catch (NullPointerException npe) {
                 Log.e(TAG, "Unable to obtain cell signal information", npe);
             }
         }
+
+        switch (mPhoneID) {
+            case TelephonyManager.PHONE_TYPE_GSM:
+                mPhoneType = "GSM";
+                mMncmcc = tm.getNetworkOperator();
+                mNetName = tm.getNetworkOperatorName();
+                if (!mCell.isValid()) {
+                    GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
+                    if (gsmCellLocation != null) {
+                        mCell.setCID(gsmCellLocation.getCid());
+                        mCell.setLAC(gsmCellLocation.getLac());
+                        mCell.setPSC(gsmCellLocation.getPsc());
+                    }
+                }
+                break;
+            case TelephonyManager.PHONE_TYPE_CDMA:
+                mPhoneType = "CDMA";
+                if (!mCell.isValid()) {
+                    CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
+                    if (cdmaCellLocation != null) {
+                        mCell.setCID(cdmaCellLocation.getBaseStationId());
+                        mCell.setLAC(cdmaCellLocation.getNetworkId());
+                        mCell.setSID(cdmaCellLocation.getSystemId());
+                    }
+                }
+                break;
+        }
+
 
         //SIM Information
         mSimCountry = getSimCountry(tm);
@@ -186,23 +176,6 @@ public class Device {
 
         mDataActivityType = getDataActivity(tm);
         mDataState = getDataState(tm);
-
-    }
-
-    public double getLongitude() {
-        return mLongitude;
-    }
-
-    public void setLongitude(double longitude) {
-        mLongitude = longitude;
-    }
-
-    public double getLatitude() {
-        return mLatitude;
-    }
-
-    public void setLatitude(double latitude) {
-        mLatitude = latitude;
     }
 
     public String getCellInfo() {
@@ -213,50 +186,6 @@ public class Device {
         mCellInfo = cellInfo;
     }
 
-    public int getPSC() {
-        return mPSC;
-    }
-
-    /**
-     * LTE Timing Advance
-     *
-     * @return Timing Advance figure or -1 if not available
-     */
-    public int getLteTimingAdvance() {
-        return mTimingAdvance;
-    }
-
-    /**
-     * Mobile Country Code MCC
-     */
-    public int getMCC() {
-        return mMcc;
-    }
-
-    public void setMcc(int mcc) {
-        mMcc = mcc;
-    }
-
-    /**
-     * Mobile Network Code MCC
-     */
-    public int getMnc() {
-        return mMnc;
-    }
-
-    public void setMnc(int mnc) {
-        mMnc = mnc;
-    }
-
-    /**
-     * CDMA System ID
-     *
-     * @return System ID or -1 if not supported
-     */
-    public int getSID() {
-        return mSID;
-    }
-
     /**
      * Phone Type ID
      *
@@ -264,57 +193,6 @@ public class Device {
      */
     public int getPhoneID() {
         return mPhoneID;
-    }
-
-    /**
-     * Location reading accuracy
-     *
-     * @return double representation of accuracy of location
-     */
-    public double getAccuracy() {
-        return mAccuracy;
-    }
-
-    /**
-     * Location reading accuracy
-     *
-     */
-    public void setAccuracy(double accuracy) {
-        mAccuracy = accuracy;
-    }
-
-    /**
-     * Location reading speed
-     *
-     * @return double representation of speed when location taken
-     */
-    public double getSpeed() {
-        return mSpeed;
-    }
-
-    /**
-     * Location reading speed
-     *
-     */
-    public void setSpeed(double speed) {
-        mSpeed = speed;
-    }
-
-    /**
-     * Location reading bearing
-     *
-     * @return double representation of bearing when location taken
-     */
-    public double getBearing() {
-        return mBearing;
-    }
-
-    /**
-     * Location reading bearing
-     *
-     */
-    public void setBearing(double bearing) {
-        mBearing = bearing;
     }
 
     /**
@@ -515,7 +393,7 @@ public class Device {
      * @return string representing device Network Type
      */
     public String getNetworkTypeName() {
-        switch (getNetID()) {
+        switch (mCell.getNetType()) {
             case TelephonyManager.NETWORK_TYPE_1xRTT:
                 mNetType = "1xRTT";
                 break;
@@ -718,28 +596,15 @@ public class Device {
         mDataState = dataState;
     }
 
-    public void setSignalInfo(int signalInfo) {
-        mSignalInfo = signalInfo;
-    }
-
-    public int getSignalInfo() {
-        return mSignalInfo;
-    }
-
-    /**
-     * Network Type
-     *
-     * @return integer representing device Network Type
-     */
-    public int getNetID() {
-        return mNetID;
+    public void setSignalDbm(int signalDbm) {
+        mCell.setDBM(signalDbm);
     }
 
     /**
      * Update Network Type
      */
     public void setNetID(TelephonyManager tm) {
-        mNetID = tm.getNetworkType();
+        mCell.setNetType(tm.getNetworkType());
     }
 
     /**
@@ -749,28 +614,6 @@ public class Device {
      */
     public String isRoaming() {
         return String.valueOf(mRoaming);
-    }
-
-    public int getLac() {
-        return mLac;
-    }
-
-    public void setLAC(int lac) {
-        mLac = lac;
-    }
-
-    /**
-     * Cell ID for either GSM or CDMA devices, returns string representation
-     * but also updates the integer member as well
-     *
-     * @return int representing the Cell ID from GSM or CDMA devices
-     */
-    public int getCellId() {
-        return mCellID;
-    }
-
-    public void setCellID(int cellID) {
-        mCellID = cellID;
     }
 
     public void setLastLocation(Location location) {
