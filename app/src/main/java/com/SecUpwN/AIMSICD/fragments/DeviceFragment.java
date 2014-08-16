@@ -102,11 +102,11 @@ public class DeviceFragment extends Fragment {
             switch (mAimsicdService.mDevice.getPhoneID()) {
                 case TelephonyManager.PHONE_TYPE_GSM: {
                     content = (TextView) mView.findViewById(R.id.network_lac);
-                    content.setText(String.valueOf(mAimsicdService.mDevice.getLac()));
+                    content.setText(String.valueOf(mAimsicdService.mDevice.mCell.getLAC()));
                     tr = (TableRow) mView.findViewById(R.id.gsm_cellid);
                     tr.setVisibility(View.VISIBLE);
                     content = (TextView) mView.findViewById(R.id.network_cellid);
-                    content.setText(String.valueOf(mAimsicdService.mDevice.getCellId()));
+                    content.setText(String.valueOf(mAimsicdService.mDevice.mCell.getCID()));
                     break;
                 }
                 case TelephonyManager.PHONE_TYPE_CDMA: {
@@ -122,28 +122,28 @@ public class DeviceFragment extends Fragment {
                         }
                     }
                     content = (TextView) mView.findViewById(R.id.network_netid);
-                    content.setText(String.valueOf(mAimsicdService.mDevice.getLac()));
+                    content.setText(String.valueOf(mAimsicdService.mDevice.mCell.getLAC()));
                     content = (TextView) mView.findViewById(R.id.network_sysid);
-                    content.setText(String.valueOf(mAimsicdService.mDevice.getSID()));
+                    content.setText(String.valueOf(mAimsicdService.mDevice.mCell.getSID()));
                     content = (TextView) mView.findViewById(R.id.network_baseid);
-                    content.setText(String.valueOf(mAimsicdService.mDevice.getCellId()));
+                    content.setText(String.valueOf(mAimsicdService.mDevice.mCell.getCID()));
                     break;
                 }
             }
 
-            if (mAimsicdService.mDevice.getNetID() == TelephonyManager.NETWORK_TYPE_LTE) {
+            if (mAimsicdService.mDevice.mCell.getTimingAdvance() != Integer.MAX_VALUE) {
                 tr = (TableRow) mView.findViewById(R.id.lte_timing_advance);
                 tr.setVisibility(View.VISIBLE);
                 content = (TextView) mView.findViewById(R.id.network_lte_timing_advance);
-                content.setText(String.valueOf(mAimsicdService.mDevice.getLteTimingAdvance()));
+                content.setText(String.valueOf(mAimsicdService.mDevice.mCell.getTimingAdvance()));
             } else {
                 tr = (TableRow) mView.findViewById(R.id.lte_timing_advance);
                 tr.setVisibility(View.GONE);
             }
 
-            if (mAimsicdService.mDevice.getPSC() != -1) {
+            if (mAimsicdService.mDevice.mCell.getPSC() != Integer.MAX_VALUE) {
                 content = (TextView) mView.findViewById(R.id.network_psc);
-                content.setText(String.valueOf(mAimsicdService.mDevice.getPSC()));
+                content.setText(String.valueOf(mAimsicdService.mDevice.mCell.getPSC()));
                 tr = (TableRow) mView.findViewById(R.id.primary_scrambling_code);
                 tr.setVisibility(View.VISIBLE);
             }

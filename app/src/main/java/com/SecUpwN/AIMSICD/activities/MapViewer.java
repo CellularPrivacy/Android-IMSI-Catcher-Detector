@@ -418,7 +418,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
                 } else {
                     //Use Mcc to move camera to an approximate location near Countries Capital
-                    int mcc = mAimsicdService.mDevice.getMCC();
+                    int mcc = mAimsicdService.mDevice.mCell.getMCC();
                     double[] d = mDbHelper.getDefaultLocation(mcc);
                     loc = new LatLng(d[0], d[1]);
                     CameraPosition POSITION =
