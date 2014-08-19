@@ -6,18 +6,12 @@
                 android:layout_height="match_parent">
 
     <TextView
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:textSize="18sp" android:text="@string/at_command_title"
-            android:textColor="@color/green_text"
-            android:padding="4dip" android:id="@+id/at_command_title"/>
-
-    <TextView
             android:id="@+id/serial_device_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/serial_device_title"
             android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@id/at_command_title"/>
+            android:padding="8dip"/>
 
     <TextView
             android:id="@+id/serial_device"
@@ -25,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/empty"
             android:textColor="@color/medium_blue"
-            android:padding="8dip" android:layout_below="@+id/at_command_title"
+            android:padding="8dip"
             android:layout_toRightOf="@+id/serial_device_title"
             android:layout_toEndOf="@+id/serial_device_title"/>
 
