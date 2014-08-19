@@ -87,6 +87,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ConditionVariable;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -332,91 +333,13 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     public List<Cell> updateNeighbouringCells() {
         List<Cell> neighboringCells = new ArrayList<>();
-        /*if (Build.VERSION.SDK_INT > 16) {
-            List<CellInfo> allCellInfo = tm.getAllCellInfo();
-            if (allCellInfo != null) {
-                for (CellInfo cellInfo : allCellInfo) {
-                    if (cellInfo instanceof CellInfoGsm) {
-                        CellIdentityGsm cellIdentity =  ((CellInfoGsm) cellInfo)
-                                .getCellIdentity();
-                        CellSignalStrengthGsm cellSignalStrengthGsm = ((CellInfoGsm) cellInfo)
-                                .getCellSignalStrength();
-                        if (cellIdentity.getCid() == Integer.MAX_VALUE) {
-                            continue;
-                        }
-
-                        final Cell cell = new Cell(cellIdentity.getCid(), cellIdentity.getLac(),
-                                cellSignalStrengthGsm.getDbm(), -1, -1, true);
-                        Log.i(TAG, "CellInfoGSM - CID:" + cellIdentity.getCid() +
-                                " LAC:" + cellIdentity.getLac() + " Dbm:" + cellSignalStrengthGsm.getDbm());
-
-                        neighboringCells.add(cell);
-                    } else if (cellInfo instanceof CellInfoCdma) {
-                        final CellSignalStrengthCdma cellSignalStrengthCdma = ((CellInfoCdma) cellInfo)
-                                .getCellSignalStrength();
-                        final CellIdentityCdma cellIdentity = ((CellInfoCdma) cellInfo)
-                                .getCellIdentity();
-
-                        if (cellIdentity.getBasestationId() == Integer.MAX_VALUE) {
-                            continue;
-                        }
-
-                        final Cell cell = new Cell(cellIdentity.getBasestationId(), cellIdentity.getNetworkId(),
-                                cellSignalStrengthCdma.getDbm(), -1, TelephonyManager.NETWORK_TYPE_CDMA
-                                , true);
-                        Log.i(TAG, "CellInfoCdma - BaseStationID:" + cellIdentity.getBasestationId() +
-                                " NetworkID:" + cellIdentity.getNetworkId() + " SystemID:" + cellIdentity.getSystemId() +
-                                " Dbm:" + cellSignalStrengthCdma.getDbm());
-
-                        neighboringCells.add(cell);
-                    } else if (cellInfo instanceof CellInfoLte) {
-                        final CellSignalStrengthLte cellSignalStrengthLte = ((CellInfoLte) cellInfo)
-                                .getCellSignalStrength();
-                        final CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo)
-                                .getCellIdentity();
-
-                        if (cellIdentity.getPci() == Integer.MAX_VALUE) {
-                            continue;
-                        }
-
-                        final Cell cell = new Cell(cellIdentity.getPci(), cellIdentity.getTac(),
-                                cellSignalStrengthLte.getDbm(), -1, TelephonyManager.NETWORK_TYPE_LTE
-                                , true);
-
-                        Log.i(TAG, "CellInfoLTE - PCI:" + cellIdentity.getPci() +
-                                " TAC:" + cellIdentity.getTac() + " Dbm:" + cellSignalStrengthLte.getDbm() +
-                                " CI:" + cellIdentity.getCi() + " TYPE:" + TelephonyManager.NETWORK_TYPE_LTE);
-
-                        neighboringCells.add(cell);
-                    } else if (cellInfo instanceof CellInfoWcdma) {
-                        final CellSignalStrengthWcdma cellSignalStrengthWcdma
-                                = ((CellInfoWcdma) cellInfo)
-                                .getCellSignalStrength();
-                        final CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo)
-                                .getCellIdentity();
-
-                        if (cellIdentity.getCid() == Integer.MAX_VALUE) {
-                            continue;
-                        }
-
-                        final Cell cell = new Cell(cellIdentity.getCid(), cellIdentity.getLac(),
-                                cellSignalStrengthWcdma.getDbm(), cellIdentity.getPsc(), -1, true);
-                        Log.i(TAG, "CellInfoWcdma - CID:" + cellIdentity.getCid() +
-                                " LAC:" + cellIdentity.getLac() + " Dbm:" + cellSignalStrengthWcdma.getDbm() +
-                                " PSC:" + cellIdentity.getPsc());
-
-                        neighboringCells.add(cell);
-                    }
-                }
-            }
-        }*/
 
         List<NeighboringCellInfo> neighboringCellInfo;
             neighboringCellInfo = tm.getNeighboringCellInfo();
         if (neighboringCellInfo.size() == 0) {
             // try to poll the neighboring cells for a few seconds
             final LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue =
-                    new LinkedBlockingQueue<NeighboringCellInfo>(100);
+                    new LinkedBlockingQueue<>(100);
             final PhoneStateListener listener = new PhoneStateListener() {
                 private void handle() {
                     List<NeighboringCellInfo> neighboringCellInfo;
@@ -448,16 +371,31 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 public void onSignalStrengthsChanged(SignalStrength signalStrength) {
                     handle();
                 }
+
                 @Override
                 public void onCellInfoChanged(List<CellInfo> cellInfo) {
                     handle();
                 }
             };
             Log.i(TAG, "neighbouringCellInfo empty - start polling");
-            tm.listen(listener,
-                PhoneStateListener.LISTEN_CELL_INFO | PhoneStateListener.LISTEN_CELL_LOCATION |
-                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE | PhoneStateListener.LISTEN_SERVICE_STATE |
-                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS | PhoneStateListener.LISTEN_SIGNAL_STRENGTH);
+
+            //LISTEN_CELL_INFO added in API 17
+            if (Build.VERSION.SDK_INT > 16) {
+                tm.listen(listener,
+                        PhoneStateListener.LISTEN_CELL_INFO
+                                | PhoneStateListener.LISTEN_CELL_LOCATION |
+                                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
+                                | PhoneStateListener.LISTEN_SERVICE_STATE |
+                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS
+                                | PhoneStateListener.LISTEN_SIGNAL_STRENGTH);
+            } else {
+                tm.listen(listener,
+                                PhoneStateListener.LISTEN_CELL_LOCATION |
+                                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
+                                | PhoneStateListener.LISTEN_SERVICE_STATE |
+                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS
+                                | PhoneStateListener.LISTEN_SIGNAL_STRENGTH);
+            }
             for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
                 try {
                     Log.i(TAG, "neighbouringCellInfo empty - try " + i);
@@ -911,8 +849,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 case TelephonyManager.PHONE_TYPE_CDMA:
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                     if (cdmaCellLocation != null) {
-                        mDevice.setCellInfo(cdmaCellLocation.toString() + mDevice.getDataActivityTypeShort()
-                                + "|" + mDevice.getDataStateShort() + "|" + mDevice.getNetworkTypeName() + "|");
+                        mDevice.setCellInfo(
+                                cdmaCellLocation.toString() + mDevice.getDataActivityTypeShort()
+                                        + "|" + mDevice.getDataStateShort() + "|" + mDevice
+                                        .getNetworkTypeName() + "|");
                         mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());
                         mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());
                         mDevice.mCell.setSID(cdmaCellLocation.getSystemId());
