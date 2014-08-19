@@ -33,11 +33,17 @@ import java.util.concurrent.TimeUnit;
 
 public class CellInfoFragment extends Fragment {
 
+    public static final char STOCK_REQUEST = 1;
+    public static final char SAMSUNG_MULTIRIL_REQUEST = 2;
+
     private AimsicdService mAimsicdService;
     private boolean mBound;
     private Context mContext;
     private Activity mActivity;
     private final Handler timerHandler = new Handler();
+    private char mAsyncType;
+
+    private List<Cell> neighboringCells;
 
     //Layout items
     private ListView lv;
@@ -159,32 +165,8 @@ public class CellInfoFragment extends Fragment {
     }
 
     private void updateUI() {
-        if (mBound) {
-            List<Cell> neighboringCells = mAimsicdService.updateNeighbouringCells();
-            mNeighbouringTotal
-                    .setText(String.valueOf(neighboringCells.size()));
-            if (neighboringCells.size() != 0) {
-
-                BaseInflaterAdapter<CardItemData> adapter
-                        = new BaseInflaterAdapter<>(
-                        new CellCardInflater());
-                int i = 1;
-                int total = neighboringCells.size();
-                for (Cell cell : neighboringCells) {
-                    CardItemData data = new CardItemData(cell, i++ + " / " + total);
-                    adapter.addItem(data, false);
-                }
-                lv.setAdapter(adapter);
-                mNeighbouringCells.setVisibility(View.GONE);
-                mNeighbouringTotalView.setVisibility(View.VISIBLE);
-            } else {
-                //Try SamSung MultiRil Implementation
-                DetectResult rilStatus = mAimsicdService.getRilExecutorStatus();
-                if (rilStatus.available) {
-                    new RequestOemInfoTask().execute();
-                }
-            }
-        }
+        mAsyncType = STOCK_REQUEST;
+        new CellAsyncTask().execute();
     }
 
     void updateCipheringIndicator() {
@@ -201,6 +183,35 @@ public class CellInfoFragment extends Fragment {
         });
     }
 
+    boolean getStockNeighbouringCells() {
+        if (mBound) {
+            neighboringCells = mAimsicdService.updateNeighbouringCells();
+            return neighboringCells.size() > 0;
+        }
+
+        return false;
+    }
+
+    void updateStockNeighbouringCells() {
+        mNeighbouringTotal
+                .setText(String.valueOf(neighboringCells.size()));
+        if (neighboringCells.size() != 0) {
+
+            BaseInflaterAdapter<CardItemData> adapter
+                    = new BaseInflaterAdapter<>(
+                    new CellCardInflater());
+            int i = 1;
+            int total = neighboringCells.size();
+            for (Cell cell : neighboringCells) {
+                CardItemData data = new CardItemData(cell, i++ + " / " + total);
+                adapter.addItem(data, false);
+            }
+            lv.setAdapter(adapter);
+            mNeighbouringCells.setVisibility(View.GONE);
+            mNeighbouringTotalView.setVisibility(View.VISIBLE);
+        }
+    }
+
     void updateNeighbouringCells() {
         final List<String> list = mAimsicdService.getNeighbours();
         mActivity.runOnUiThread(new Runnable() {
@@ -215,23 +226,39 @@ public class CellInfoFragment extends Fragment {
         });
     }
 
-    private class RequestOemInfoTask extends AsyncTask<Void, Void, Void> {
+    private class CellAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
         @Override
-        protected Void doInBackground(Void... string) {
-            if (!mBound) {
-                return null;
+        protected Boolean doInBackground(Void... string) {
+            switch (mAsyncType) {
+                case STOCK_REQUEST:
+                    return getStockNeighbouringCells();
+                case SAMSUNG_MULTIRIL_REQUEST:
+                    if (mBound) {
+                        updateNeighbouringCells();
+                        updateCipheringIndicator();
+                    }
+                    break;
             }
-            updateNeighbouringCells();
-            updateCipheringIndicator();
-
-            return null;
+            return false;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            switch (mAsyncType) {
+                case STOCK_REQUEST:
+                    if (result) {
+                        updateStockNeighbouringCells();
+                    } else {
+                        if (mAimsicdService.mMultiRilCompatible) {
+                            mAsyncType = SAMSUNG_MULTIRIL_REQUEST;
+                            new CellAsyncTask().execute();
+                        }
+                    }
+                    break;
+            }
+
         }
     }
-
 }
