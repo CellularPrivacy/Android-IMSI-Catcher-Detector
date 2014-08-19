@@ -34,10 +34,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.List;
 
 public class RequestTask extends AsyncTask<String, Integer, String> {
 
@@ -45,6 +45,8 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     public static final char OPEN_CELL_ID_REQUEST_FROM_MAP = 2;
     public static final char BACKUP_DATABASE = 3;
     public static final char RESTORE_DATABASE = 4;
+    public static final char CELL_LOOKUP = 5;
+
 
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
@@ -74,21 +76,23 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             FileInputStream fin = new FileInputStream(file);
                             String csv = Helpers.convertStreamToString(fin);
                             mpEntity.addPart("key", new StringBody(AimsicdService.OCID_API_KEY));
-                            mpEntity.addPart("datafile", new InputStreamBody(new ByteArrayInputStream(csv.getBytes()), "text/csv", "aimsicd-ocid-data.csv"));
+                            mpEntity.addPart("datafile", new InputStreamBody(
+                                    new ByteArrayInputStream(csv.getBytes()), "text/csv",
+                                    "aimsicd-ocid-data.csv"));
 
-                            ByteArrayOutputStream mBAOS = new ByteArrayOutputStream();
+                            ByteArrayOutputStream bAOS = new ByteArrayOutputStream();
 
-                            mpEntity.writeTo(mBAOS);
-                            mBAOS.flush();
-                            ByteArrayEntity bArrEntity = new ByteArrayEntity(mBAOS.toByteArray());
-                            mBAOS.close();
+                            mpEntity.writeTo(bAOS);
+                            bAOS.flush();
+                            ByteArrayEntity bArrEntity = new ByteArrayEntity(bAOS.toByteArray());
+                            bAOS.close();
                             bArrEntity.setChunked(false);
                             bArrEntity.setContentEncoding(mpEntity.getContentEncoding());
                             bArrEntity.setContentType(mpEntity.getContentType());
 
                             HttpClient httpclient;
                             HttpPost httppost;
-                            HttpResponse response = null;
+                            HttpResponse response;
 
                             httpclient = new DefaultHttpClient();
                             httppost = new HttpPost("http://www.opencellid.org/measure/uploadCsv");
@@ -111,6 +115,8 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 }
 
                 try {
+                    int total = 0;
+                    int progress = 0;
                     File dir = new File(
                             Environment.getExternalStorageDirectory()
                                     + "/AIMSICD/OpenCellID/"
@@ -121,34 +127,34 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     File file = new File(dir, "opencellid.csv");
 
                     URL url = new URL(commandString[0]);
-                    URLConnection connection = url.openConnection();
-                    connection.connect();
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.setConnectTimeout(20000);
+                    urlConnection.setReadTimeout(20000);
 
-                    // download the file
-                    InputStream input = new BufferedInputStream(url.openStream(),
-                            8192);
+                    urlConnection.setDoInput(true);
+                    urlConnection.connect();
 
-                    // Output stream
-                    OutputStream output = new FileOutputStream(file);
+                    total = urlConnection.getContentLength();
+                    publishProgress(progress, total);
 
-                    byte data[] = new byte[1024];
+                    FileOutputStream output = new FileOutputStream(file, false);
+                    InputStream input = new BufferedInputStream(urlConnection.getInputStream());
 
-                    long total = 0;
-
-                    while ((count = input.read(data)) != -1) {
-                        total += count;
-                        publishProgress((int) (total / 1024) * 2 );
-
+                    byte[] data = new byte[1024];
+                    while ((count = input.read(data)) > 0) {
                         // writing data to file
                         output.write(data, 0, count);
+                        progress += count;
+
+                        publishProgress(progress, total);
                     }
 
                     // flushing output
                     output.flush();
-
-                    // closing streams
                     output.close();
-                    input.close();
+
+                    urlConnection.disconnect();
 
                     return "Successful";
                 } catch (MalformedURLException e) {
@@ -179,6 +185,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
 
     protected void onProgressUpdate(Integer... values) {
+        AIMSICD.mProgressBar.setMax(values[1]);
         AIMSICD.mProgressBar.setProgress(values[0]);
     }
 
