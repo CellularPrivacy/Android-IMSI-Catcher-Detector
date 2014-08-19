@@ -51,6 +51,7 @@
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
+    <string name="cell_lookup">Lookup Current Cell Details</string>
 
     <string name="no_network_connection_title">No Internet Connection</string>
     <string name="no_network_connection_message">Unable to download OpenCellID data without Internet

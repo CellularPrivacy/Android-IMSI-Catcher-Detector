@@ -2,11 +2,14 @@ package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -60,7 +63,14 @@ public class DeviceFragment extends Fragment {
             mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
+        mContext.registerReceiver(mMessageReceiver, new IntentFilter(AimsicdService.UPDATE_DISPLAY));
         updateUI();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mContext.unregisterReceiver(mMessageReceiver);
     }
 
     @Override
@@ -89,6 +99,17 @@ public class DeviceFragment extends Fragment {
         public void onServiceDisconnected(ComponentName arg0) {
             Log.e(TAG, "Service Disconnected");
             mBound = false;
+        }
+    };
+
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final Bundle bundle = intent.getExtras();
+            if (bundle != null && bundle.getBoolean("update")) {
+                Helpers.msgShort(mContext, "Refreshing display");
+                updateUI();
+            }
         }
     };
 
@@ -168,7 +189,7 @@ public class DeviceFragment extends Fragment {
             content = (TextView) mView.findViewById(R.id.network_name);
             content.setText(mAimsicdService.mDevice.getNetworkName());
             content = (TextView) mView.findViewById(R.id.network_code);
-            content.setText(mAimsicdService.mDevice.getSmmcMcc());
+            content.setText(mAimsicdService.mDevice.getMncMcc());
             content = (TextView) mView.findViewById(R.id.network_type);
             content.setText(mAimsicdService.mDevice.getNetworkTypeName());
 
