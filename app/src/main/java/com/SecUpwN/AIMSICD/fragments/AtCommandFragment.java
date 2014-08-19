@@ -8,7 +8,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -220,6 +222,8 @@ public class AtCommandFragment extends Fragment {
             mShell = new Shell();
         }
 
+        mAtResponse.setText("*** Setting Up... Ignore any errors. ***\n");
+
         //Draw Ril Serial Device details from the System Property
         String rilDevice = Helpers.getSystemProp(mContext, "rild.libargs", "UNKNOWN");
         mSerialDevice = (rilDevice.equals("UNKNOWN") ? rilDevice : rilDevice.substring(3));
@@ -285,6 +289,7 @@ public class AtCommandFragment extends Fragment {
             mSerialDeviceSpinnerLabel.setVisibility(View.VISIBLE);
         }
 
+        mAtResponse.append("*** Setup Complete ***\n");
         mAtResponse.setVisibility(View.VISIBLE);
 
         return SERIAL_INIT_OK;
