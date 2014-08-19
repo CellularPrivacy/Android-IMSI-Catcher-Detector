@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
@@ -61,7 +62,6 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class MapViewer extends FragmentActivity implements OnSharedPreferenceChangeListener {
 
@@ -286,14 +286,25 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 startActivity(intent);
                 return true;
             case R.id.get_opencellid: {
-                Location lastKnown = mAimsicdService.mDevice.getLastLocation();
-                if (lastKnown != null) {
+                if (mBound) {
+                    Location lastKnown = mAimsicdService.mDevice.getLastLocation();
+                    if (lastKnown != null) {
+                        Helpers.msgShort(this, "Contacting OpenCellID.org for data...");
+                        Cell cell = new Cell();
+                        cell = mAimsicdService.mDevice.mCell;
+                        cell.setLon(lastKnown.getLongitude());
+                        cell.setLat(lastKnown.getLatitude());
+                        Helpers.getOpenCellData(mContext, cell,
+                                RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
+                        return true;
+                    }
+                }
+                if (loc != null) {
                     Helpers.msgShort(this, "Contacting OpenCellID.org for data...");
-                    Helpers.getOpenCellData(mContext, lastKnown.getLatitude(),
-                            lastKnown.getLongitude(), RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
-                } else if (loc != null) {
-                    Helpers.msgShort(this, "Contacting OpenCellID.org for data...");
-                    Helpers.getOpenCellData(mContext, loc.latitude, loc.longitude,
+                    Cell cell = new Cell();
+                    cell.setLat(loc.latitude);
+                    cell.setLon(loc.longitude);
+                    Helpers.getOpenCellData(mContext, cell,
                             RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
                 } else {
                     Helpers.msgShort(mContext,
@@ -469,19 +480,12 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
     public class MarkerData {
 
         public final String cellID;
-
         public final String lat;
-
         public final String lng;
-
         public final String lac;
-
         public final String mcc;
-
         public final String mnc;
-
         public final String samples;
-
         public final boolean openCellID;
 
         MarkerData(String cell_id, String latitude, String longitude,

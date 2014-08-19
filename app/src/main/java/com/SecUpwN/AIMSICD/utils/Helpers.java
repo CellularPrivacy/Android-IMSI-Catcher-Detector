@@ -126,16 +126,15 @@ public class Helpers {
      * Requests Cell data from OpenCellID.org, calculating a 100 mile bounding radius
      * and requesting all Cell ID information in that area.
      *
-     * @param lat Latitude of current location
-     * @param lng Longitude of current location
+     * @param cell Current Cell Information
      */
-    public static void getOpenCellData(Context context, double lat, double lng, char type) {
+    public static void getOpenCellData(Context context, Cell cell, char type) {
         if (Helpers.isNetAvailable(context)) {
             double earthRadius = 6371.01;
 
-            if (lat != 0.0 && lng != 0.0) {
+            if (cell.getLat() != 0.0 && cell.getLon() != 0.0) {
                 //New GeoLocation object to find bounding Coordinates
-                GeoLocation currentLoc = GeoLocation.fromDegrees(lat, lng);
+                GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
                 //Calculate the Bounding Coordinates in a 50 mile radius
                 //0 = min 1 = max
@@ -148,12 +147,26 @@ public class Helpers {
                         + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
                         + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
-                String urlString =
-                        "http://www.opencellid.org/cell/getInArea?key=" + AimsicdService.OCID_API_KEY
-                                + "&BBOX=" + boundParameter
-                                + "&format=csv";
+                StringBuilder sb = new StringBuilder();
+                sb.append("http://www.opencellid.org/cell/getInArea?key=")
+                        .append(AimsicdService.OCID_API_KEY).append("&BBOX=")
+                        .append(boundParameter);
 
-                new RequestTask(context, type).execute(urlString);
+                if (cell.getMCC() != Integer.MAX_VALUE) {
+                    sb.append("&mcc=").append(cell.getMCC());
+                }
+
+                if (cell.getMNC() != Integer.MAX_VALUE) {
+                    sb.append("&mnc=").append(cell.getMNC());
+                }
+
+                if (cell.getLAC() != Integer.MAX_VALUE) {
+                    sb.append("&lac=").append(cell.getLAC());
+                }
+
+                sb.append("&format=csv");
+
+                new RequestTask(context, type).execute(sb.toString());
             }
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);

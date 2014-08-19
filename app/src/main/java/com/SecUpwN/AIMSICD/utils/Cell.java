@@ -1,8 +1,17 @@
 package com.SecUpwN.AIMSICD.utils;
 
+import android.os.AsyncTask;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.os.SystemClock;
+import android.util.Log;
 
-public class Cell {
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+
+public class Cell implements Parcelable {
 
     //Cell Specific Variables
     private int cid;
@@ -24,7 +33,7 @@ public class Cell {
     private double lon;
     private double lat;
 
-    Cell() {
+    {
         cid = Integer.MAX_VALUE;
         lac = Integer.MAX_VALUE;
         mcc = Integer.MAX_VALUE;
@@ -42,19 +51,33 @@ public class Cell {
         bearing = 0.0;
     }
 
+    public Cell() {}
+
     public Cell(int cid, int lac, int mcc, int mnc, int dbm, long timestamp) {
+        super();
         this.cid = cid;
         this.lac = lac;
         this.mcc = mcc;
         this.mnc = mnc;
         this.dbm = dbm;
+        rssi = Integer.MAX_VALUE;
         this.psc = Integer.MAX_VALUE;
         this.timestamp = timestamp;
+        timingAdvance = Integer.MAX_VALUE;
+        sid = Integer.MAX_VALUE;
+        netType = Integer.MAX_VALUE;
+        lon = 0.0;
+        lat = 0.0;
+        speed = 0.0;
+        accuracy = 0.0;
+        bearing = 0.0;
     }
 
     public Cell(int cid, int lac, int signal, int psc, int netType, boolean dbm) {
         this.cid = cid;
         this.lac = lac;
+        mcc = Integer.MAX_VALUE;
+        mnc = Integer.MAX_VALUE;
         if (dbm) {
             this.dbm = signal;
         } else {
@@ -62,6 +85,13 @@ public class Cell {
         }
         this.psc = psc;
         this.netType = netType;
+        timingAdvance = Integer.MAX_VALUE;
+        sid = Integer.MAX_VALUE;
+        lon = 0.0;
+        lat = 0.0;
+        speed = 0.0;
+        accuracy = 0.0;
+        bearing = 0.0;
         this.timestamp = SystemClock.currentThreadTimeMillis();
     }
 
@@ -72,6 +102,9 @@ public class Cell {
         this.mcc = mcc;
         this.mnc = mnc;
         this.dbm = dbm;
+        rssi = Integer.MAX_VALUE;
+        timingAdvance = Integer.MAX_VALUE;
+        sid = Integer.MAX_VALUE;
         this.accuracy = accuracy;
         this.speed = speed;
         this.bearing = bearing;
@@ -382,11 +415,11 @@ public class Cell {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (((Object) this).getClass() != obj.getClass()) {
             return false;
         }
         Cell other = (Cell) obj;
-        if (this.psc != -1) {
+        if (this.psc != Integer.MAX_VALUE) {
             return this.cid == other.getCID() && this.lac == other.getLAC() && this.mcc == other
                     .getMCC() && this.mnc == other.getMNC() && this.psc == other.getPSC();
         } else {
@@ -397,19 +430,107 @@ public class Cell {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
-
-        result.append("Cell ID (CID): ").append(cid).append("\n");
-        result.append("Location Code (LAC): ").append(lac).append("\n");
-        result.append("Country Code (MCC): ").append(mcc).append("\n");
-        result.append("Network Code (MNC): ").append(mnc).append("\n");
-        result.append("Signal Strength (DBM): ").append(dbm).append("\n");
-        if (psc != -1) {
-            result.append("Primary Scrambling Code (PSC): ").append(psc).append("\n");
+        result.append("CID - ").append(cid).append("\n");
+        result.append("LAC - ").append(lac).append("\n");
+        result.append("MCC - ").append(mcc).append("\n");
+        result.append("MNC - ").append(mnc).append("\n");
+        result.append("DBm - ").append(dbm).append("\n");
+        if (psc != Integer.MAX_VALUE) {
+            result.append("PSC - ").append(psc).append("\n");
         }
+        result.append("Type - ").append(netType).append("\n");
+        result.append("Lon - ").append(lon).append("\n");
+        result.append("Lat - ").append(lat).append("\n");
+
         return result.toString();
     }
 
     public boolean isValid() {
         return this.getCID() != Integer.MAX_VALUE && this.getLAC() != Integer.MAX_VALUE;
     }
+
+    public static class CellLookUpAsync extends AsyncTask<String, Void, List<Cell>> {
+        public AsyncResponse delegate=null;
+
+        @Override
+        protected List<Cell> doInBackground(String ... urls) {
+            try {
+                InputStream stream = null;
+                // Instantiate the parser
+                StackOverflowXmlParser stackOverflowXmlParser = new StackOverflowXmlParser();
+                List<Cell> cells = null;
+
+                URL url = new URL(urls[0]);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000 /* milliseconds */);
+                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+                // Starts the query
+                conn.connect();
+
+                stream = conn.getInputStream();
+                cells = stackOverflowXmlParser.parse(stream);
+
+                conn.disconnect();
+                stream.close();
+
+                return cells;
+
+            } catch (Exception e) {
+                Log.i("AIMSICD", "Cell Lookup - " + e.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Cell> cells) {
+            delegate.processFinish(cells);
+        }
+    }
+
+    // Parcelling
+    public Cell(Parcel in){
+        String[] data = new String[15];
+
+        in.readStringArray(data);
+        cid = Integer.valueOf(data[0]);
+        lac = Integer.valueOf(data[1]);
+        mcc = Integer.valueOf(data[2]);
+        mnc = Integer.valueOf(data[3]);
+        dbm = Integer.valueOf(data[4]);
+        psc = Integer.valueOf(data[5]);
+        rssi = Integer.valueOf(data[6]);
+        timingAdvance = Integer.valueOf(data[7]);
+        sid = Integer.valueOf(data[8]);
+        netType = Integer.valueOf(data[9]);
+        lon = Double.valueOf(data[10]);
+        lat = Double.valueOf(data[11]);
+        speed = Double.valueOf(data[12]);
+        accuracy = Double.valueOf(data[13]);
+        bearing = Double.valueOf(data[14]);
+    }
+
+    public int describeContents(){
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[] {String.valueOf(this.cid),
+                String.valueOf(this.lac), String.valueOf(this.mcc), String.valueOf(this.mnc),
+                String.valueOf(this.dbm), String.valueOf(this.psc), String.valueOf(this.rssi),
+                String.valueOf(this.timingAdvance), String.valueOf(this.sid), String.valueOf(this.netType),
+                String.valueOf(this.lon), String.valueOf(this.lat), String.valueOf(this.speed),
+                String.valueOf(this.accuracy), String.valueOf(this.bearing)});
+    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Cell createFromParcel(Parcel in) {
+            return new Cell(in);
+        }
+
+        public Cell[] newArray(int size) {
+            return new Cell[size];
+        }
+    };
 }
