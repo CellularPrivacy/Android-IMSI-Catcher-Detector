@@ -1,5 +1,6 @@
 package com.SecUpwN.AIMSICD.utils;
 
+import android.content.Context;
 import android.location.Location;
 import android.os.Build;
 import android.telephony.CellIdentityCdma;
@@ -32,7 +33,7 @@ public class Device {
     public Cell mCell;
 
     private int mPhoneID = -1;
-
+    private int mSimState;
     private String mNetType = "";
     private String mCellInfo = "";
     private String mDataState = "";
@@ -58,17 +59,14 @@ public class Device {
     /**
      * Refreshes all device specific details
      */
-    public void refreshDeviceInfo(TelephonyManager tm) {
-        mCell = new Cell();
+    public void refreshDeviceInfo(TelephonyManager tm, Context context) {
 
         //Phone type and associated details
         mIMEI = tm.getDeviceId();
         mIMEIV = tm.getDeviceSoftwareVersion();
         mPhoneID = tm.getPhoneType();
         mRoaming = tm.isNetworkRoaming();
-        //Network type
-        mCell.setNetType(tm.getNetworkType());
-        mNetType = getNetworkTypeName();
+
 
         //SDK 17 allows access to signal strength outside of the listener and also
         //provide access to the LTE timing advance data
@@ -77,6 +75,10 @@ public class Device {
                 List<CellInfo> cellInfoList = tm.getAllCellInfo();
                 if (cellInfoList != null) {
                     for (final CellInfo info : cellInfoList) {
+                        mCell = new Cell();
+                        //Network type
+                        mCell.setNetType(tm.getNetworkType());
+                        mNetType = getNetworkTypeName();
                         if (info instanceof CellInfoGsm) {
                             final CellSignalStrengthGsm gsm = ((CellInfoGsm) info)
                                     .getCellSignalStrength();
@@ -98,6 +100,7 @@ public class Device {
                             mCell.setDBM(cdma.getDbm());
                             //Cell Identity
                             mCell.setCID(identityCdma.getBasestationId());
+                            mCell.setMNC(identityCdma.getSystemId());
                             mCell.setLAC(identityCdma.getNetworkId());
                             mCell.setSID(identityCdma.getSystemId());
                         } else if (info instanceof CellInfoLte) {
@@ -139,10 +142,23 @@ public class Device {
             }
         }
 
+        if (mCell == null)
+            mCell = new Cell();
+
         switch (mPhoneID) {
             case TelephonyManager.PHONE_TYPE_GSM:
                 mPhoneType = "GSM";
                 mMncmcc = tm.getNetworkOperator();
+                if (mMncmcc != null && mMncmcc.length() >= 5 ) {
+                    try {
+                        if (mCell.getMCC() == Integer.MAX_VALUE)
+                            mCell.setMCC(Integer.parseInt(tm.getNetworkOperator().substring(0, 3)));
+                        if (mCell.getMNC() == Integer.MAX_VALUE)
+                            mCell.setMNC(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
+                    } catch (Exception e) {
+                        Log.i(TAG, "MncMcc parse exception - " + e.getMessage());
+                    }
+                }
                 mNetName = tm.getNetworkOperatorName();
                 if (!mCell.isValid()) {
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
@@ -161,18 +177,48 @@ public class Device {
                         mCell.setCID(cdmaCellLocation.getBaseStationId());
                         mCell.setLAC(cdmaCellLocation.getNetworkId());
                         mCell.setSID(cdmaCellLocation.getSystemId());
+                        mCell.setMNC(cdmaCellLocation.getSystemId());
+
+                        //Retrieve MCC through System Property
+                        String homeOperator = Helpers.getSystemProp(context,
+                                "ro.cdma.home.operator.numeric", "UNKNOWN");
+                        if (!homeOperator.contains("UNKNOWN")) {
+                            if (mCell.getMCC() == Integer.MAX_VALUE)
+                                mCell.setMCC(Integer.valueOf(homeOperator.substring(0, 3)));
+                            if (mCell.getMNC() == Integer.MAX_VALUE)
+                                mCell.setMNC(Integer.valueOf(homeOperator.substring(3, 5)));
+                        }
                     }
                 }
                 break;
         }
 
-
         //SIM Information
-        mSimCountry = getSimCountry(tm);
-        mSimOperator = getSimOperator(tm);
-        mSimOperatorName = getSimOperatorName(tm);
-        mSimSerial = getSimSerial(tm);
-        mSimSubs = getSimSubs(tm);
+        mSimState = tm.getSimState();
+        switch (mSimState) {
+
+            case (TelephonyManager.SIM_STATE_ABSENT): break;
+            case (TelephonyManager.SIM_STATE_NETWORK_LOCKED): break;
+            case (TelephonyManager.SIM_STATE_PIN_REQUIRED): break;
+            case (TelephonyManager.SIM_STATE_PUK_REQUIRED): break;
+            case (TelephonyManager.SIM_STATE_UNKNOWN): break;
+            case (TelephonyManager.SIM_STATE_READY): {
+
+                // Get the SIM country ISO code
+                mSimCountry = getSimCountry(tm);
+
+                // Get the operator code of the active SIM (MCC + MNC)
+                mSimOperator = getSimOperator(tm);
+
+                // Get the name of the SIM operator
+                mSimOperatorName = getSimOperatorName(tm);
+
+                // Get the SIM’s serial number
+                mSimSerial = getSimSerial(tm);
+
+                mSimSubs = getSimSubs(tm);
+            }
+        }
 
         mDataActivityType = getDataActivity(tm);
         mDataState = getDataState(tm);
@@ -383,7 +429,7 @@ public class Device {
      *
      * @return string representing the Network Operator
      */
-    public String getSmmcMcc() {
+    public String getMncMcc() {
         return mMncmcc;
     }
 
@@ -623,7 +669,7 @@ public class Device {
     /**
      * Attempts to retrieve the Last Known Location from the device
      *
-     * @return Location object representing last known location
+     * @return Cell object representing last known location
      */
     public Location getLastLocation() {
         return mLastLocation;

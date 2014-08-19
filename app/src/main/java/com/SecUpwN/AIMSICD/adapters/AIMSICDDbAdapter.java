@@ -1,6 +1,8 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.utils.Cell;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -97,7 +99,37 @@ public class AIMSICDDbAdapter {
             cellValues.put("NetworkType", networkType);
             cellValues.put("MeasurementTaken", measurementTaken);
 
-            if (!cellExists(cellID, latitude, longitude, signalInfo)) {
+            if (!cellExists(cellID)) {
+                return mDb.insert(CELL_TABLE, null, cellValues);
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Inserts Cell Details into Database
+     *
+     * @return row id or -1 if error
+     */
+    public long insertCell(Cell cell) {
+
+        if (cell.getCID() != Integer.MAX_VALUE && (cell.getLat() != 0.0 && cell.getLon() != 0.0)) {
+            //Populate Content Values for Insert or Update
+            ContentValues cellValues = new ContentValues();
+            cellValues.put("Lac", cell.getLAC());
+            cellValues.put("CellID", cell.getCID());
+            cellValues.put("Net", cell.getNetType());
+            cellValues.put("Lat", cell.getLat());
+            cellValues.put("Lng", cell.getLon());
+            cellValues.put("Signal", cell.getDBM());
+            cellValues.put("Mcc", cell.getMCC());
+            cellValues.put("Mnc", cell.getMNC());
+            cellValues.put("Accuracy", cell.getAccuracy());
+            cellValues.put("Speed", cell.getSpeed());
+            cellValues.put("Direction", cell.getBearing());
+            cellValues.put("MeasurementTaken", cell.getTimestamp());
+
+            if (!cellExists(cell.getCID())) {
                 return mDb.insert(CELL_TABLE, null, cellValues);
             }
         }
@@ -238,9 +270,8 @@ public class AIMSICDDbAdapter {
     /**
      * Checks to see if Cell already exists in database
      */
-    boolean cellExists(int cellID, double lat, double lng, int signal) {
-        Cursor cursor = mDb.rawQuery("SELECT 1 FROM " + CELL_TABLE + " WHERE CellID = " +
-                cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal,
+    boolean cellExists(int cellID) {
+        Cursor cursor = mDb.rawQuery("SELECT 1 FROM " + CELL_TABLE + " WHERE CellID = " + cellID,
                 null);
 
         boolean exists = cursor.getCount() > 0;
