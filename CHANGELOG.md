@@ -1,6 +1,21 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 19.08.2014
+
+* Improved: Poll the telephone manager for neighboring cell infos
+* Changed: Reverted "Shell & AT Command Fragment Tweaks"
+* Changed: Reverted commit that was possibly causing instability compared with v0.1.21
+* Changed: Rewrote both upload and download methods of OpenCellID and requested new API key
+* Removed: Heading from Layout has been erased for a much clearer overview
+* Update: Cell Classes have been updated
+* Update: OpenCSV has been updated to v2.4
+* Update: Extensive updates to the Cell Class to provide an easy system for tracking and comparison
+* Update: Neighbouring Cells have been slightly teaked based on the commit made by @rtreffr
+* Added: Small banner on AT Command Injector to notify of setup and ignore any error messages
+* Fix: Corrected Proguard Settings 
+
+
 #### 13.08.2014
 
 * Update: Slight updates to layouts to enable correct Right to Left support
