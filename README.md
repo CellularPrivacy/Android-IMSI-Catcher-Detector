@@ -215,3 +215,4 @@ This list will be updated as our project evolves and shall be included within th
 * [GSM-Map](http://gsmmap.org/) - Compares protection capabilities of mobile networks (contribute data!)
 * [Datenschmutz Wiki](https://www.datenschmutz.de) - Awesome German wiki of databases and tools of law enforcements
 * [Telefoniert nach Hause](https://www.telefoniert-nach-hause.de) - Wiki about hard- and software contacting third parties
+* [DEF CON 22: Am I Being Spied On?](https://www.youtube.com/watch?v=Bc7WoDXhcjM) - awesome talk by Dr. Philip Polstra
