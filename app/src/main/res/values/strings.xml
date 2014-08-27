@@ -126,7 +126,7 @@
 
     <!-- LOCATION HELPER -->
     <string name="location_error_title">Location Services Disabled</string>
-    <string name="location_error_message">You cannot track GPS data without enabling Location Services.</string>
+    <string name="location_error_message">You cannot track GPS data without enabling Location Services. Enable them now?</string>
 
     <!-- PREFERENCES -->
     <string name="pref_system_title">System Settings</string>
