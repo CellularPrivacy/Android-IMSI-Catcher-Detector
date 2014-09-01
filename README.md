@@ -35,7 +35,7 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 * [Credits](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#credits--greetings)
 * [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team)
 * [License](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#license)
-* [More Security](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#websites-about-security-worth-checking-out)
+* [Recommendations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Recommendations)
 
 ---
 
@@ -198,21 +198,3 @@ This list will be updated as our project evolves and shall be included within th
 |   [SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)   | Security enthusiast & Public Speaker |
 
 ---
-
-### Websites about security worth checking out & bookmarking:
-
-* [Smartphone Attack Vector](http://smartphone-attack-vector.de/) - Smartphone flaws and countermeasures
-* [Kuketz IT-Security Blog](http://www.kuketz-blog.de/) - Great Security Reviews and Guides (written in German)
-* [PRISM Break](https://prism-break.org/) - Alternatives to opt out of global data surveillance programs
-* [The Guardian Project](https://guardianproject.info/) - Secure Open Source Mobile Apps (Apps & Tools You Can Trust)
-* [Security Research Labs](https://srlabs.de/) - Stunning Security Revelations discovered in Berlin
-* [The Surveillance Self-Defense Project](https://ssd.eff.org/) - Defend against the threat of surveillance
-* [Electronic Frontier Foundation](https://www.eff.org/) - Nonprofit defending your rights in the digital world
-* [Privacy International](https://www.privacyinternational.org/) - Charity fighting for the right to privacy across the world
-* [TextSecure](https://github.com/WhisperSystems/TextSecure) - Secure text messaging application for Android (replace WhatsApp)
-* [RedPhone](https://github.com/WhisperSystems/RedPhone) - Encrypted calls for Android
-* [KillYourPhone](http://killyourphone.com) - Make your own signal blocking phone pouch for little money
-* [GSM-Map](http://gsmmap.org/) - Compares protection capabilities of mobile networks (contribute data!)
-* [Datenschmutz Wiki](https://www.datenschmutz.de) - Awesome German wiki of databases and tools of law enforcements
-* [Telefoniert nach Hause](https://www.telefoniert-nach-hause.de) - Wiki about hard- and software contacting third parties
-* [DEF CON 22: Am I Being Spied On?](https://www.youtube.com/watch?v=Bc7WoDXhcjM) - awesome talk by Dr. Philip Polstra
