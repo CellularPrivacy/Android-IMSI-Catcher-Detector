@@ -35,4 +35,3 @@ Here are some useful links to help you with correctly structuring and formatting
 * Discovered a real bug? Please follow our instructions on [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues).
 * NEVER be shy to [suggest a new feature](https://forum.xda-developers.com/showthread.php?t=1422969) - but PLEASE skip questions on ETAs. Thank you.
 * Be polite and respectful. This project is like a plant: Be gentle to it and let it grow!
-* Check back on our [TODO](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/TODO) to see which bugs we're currently squashing.
