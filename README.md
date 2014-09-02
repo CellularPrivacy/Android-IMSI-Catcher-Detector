@@ -161,7 +161,7 @@ For our own safety, here's our [Disclaimer](https://github.com/SecUpwN/Android-I
 
 ### Bug Tracker
 
-Found a bug? Please carefully read [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues) and see our [TODO](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/TODO)!
+Found a bug? Please carefully read [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues)!
 
 ---
 
