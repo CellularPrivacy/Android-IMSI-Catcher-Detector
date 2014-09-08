@@ -300,6 +300,22 @@ public class AIMSICDDbAdapter {
         return exists;
     }
 
+    public boolean checkLAC(Cell cell) {
+        Cursor cursor = mDb.query(CELL_TABLE, new String[]{"Lac"}, "CellID=" + cell.getCID(),
+                null,null,null,null);
+
+        while (cursor.moveToNext()) {
+            if (cell.getLAC() != cursor.getInt(0)) {
+                cursor.close();
+                return false;
+            }
+        }
+
+        cursor.close();
+
+        return true;
+    }
+
     /**
      * Updates Cell records to indicate OpenCellID contribution has been made
      */
