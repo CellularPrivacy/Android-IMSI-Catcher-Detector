@@ -79,6 +79,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.Location;
 import android.location.LocationListener;
@@ -155,6 +156,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public static long REFRESH_RATE;
     public static int LAST_DB_BACKUP_VERSION;
     public static boolean OCID_UPLOAD_PREF;
+    private boolean CELL_TABLE_CLEANSED;
 
     public final Device mDevice = new Device();
 
@@ -211,6 +213,16 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         prefs.registerOnSharedPreferenceChangeListener(this);
         loadPreferences();
+
+        if (!CELL_TABLE_CLEANSED) {
+            dbHelper.open();
+            dbHelper.cleanseCellTable();
+            dbHelper.close();
+            Editor prefsEditor;
+            prefsEditor = prefs.edit();
+            prefsEditor.putBoolean(this.getString(R.string.pref_cell_table_cleansed), true);
+            prefsEditor.apply();
+        }
 
         mDevice.refreshDeviceInfo(tm, this); //Telephony Manager
         setNotification();
@@ -596,6 +608,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         OCID_UPLOAD_PREF = prefs.getBoolean(
                 this.getString(R.string.pref_ocid_upload), false);
+
+        CELL_TABLE_CLEANSED = prefs.getBoolean(this.getString(R.string.pref_cell_table_cleansed),
+                false);
 
         String refreshRate = prefs.getString(getString(R.string.pref_refresh_key), "1");
         if (refreshRate.isEmpty()) {

@@ -164,6 +164,7 @@
     <string name="pref_ocid_upload">pref_ocid_upload</string>
     <string name="pref_ui_ocid_upload_title">Contribute Cell Data</string>
     <string name="pref_ui_ocid_upload_summ">Upload cell information data to the OpenCellID Project (NO personal information is submitted)</string>
+    <string name="pref_cell_table_cleansed">pref_cell_table_cleansed</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
