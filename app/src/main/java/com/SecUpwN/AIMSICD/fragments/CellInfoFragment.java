@@ -4,7 +4,6 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.CardItemData;
 import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
-import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Helpers;
@@ -33,15 +32,14 @@ import java.util.concurrent.TimeUnit;
 
 public class CellInfoFragment extends Fragment {
 
-    public static final char STOCK_REQUEST = 1;
-    public static final char SAMSUNG_MULTIRIL_REQUEST = 2;
+    public static final int STOCK_REQUEST = 1;
+    public static final int SAMSUNG_MULTIRIL_REQUEST = 2;
 
     private AimsicdService mAimsicdService;
     private boolean mBound;
     private Context mContext;
     private Activity mActivity;
     private final Handler timerHandler = new Handler();
-    private char mAsyncType;
 
     private List<Cell> neighboringCells;
 
@@ -165,8 +163,11 @@ public class CellInfoFragment extends Fragment {
     }
 
     private void updateUI() {
-        mAsyncType = STOCK_REQUEST;
-        new CellAsyncTask().execute();
+        if (mBound && mAimsicdService.mMultiRilCompatible) {
+                new CellAsyncTask().execute(SAMSUNG_MULTIRIL_REQUEST);
+            } else {
+            new CellAsyncTask().execute(STOCK_REQUEST);
+        }
     }
 
     void updateCipheringIndicator() {
@@ -226,11 +227,16 @@ public class CellInfoFragment extends Fragment {
         });
     }
 
-    private class CellAsyncTask extends AsyncTask<Void, Void, Boolean> {
+    void getSamSungMultiRil() {
+        if (mBound && mAimsicdService.mMultiRilCompatible) {
+            new CellAsyncTask().execute(SAMSUNG_MULTIRIL_REQUEST);
+        }
+    }
 
+    private class CellAsyncTask extends AsyncTask<Integer, Void, Boolean> {
         @Override
-        protected Boolean doInBackground(Void... string) {
-            switch (mAsyncType) {
+        protected Boolean doInBackground(Integer... type) {
+            switch (type[0]) {
                 case STOCK_REQUEST:
                     return getStockNeighbouringCells();
                 case SAMSUNG_MULTIRIL_REQUEST:
@@ -246,19 +252,11 @@ public class CellInfoFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            switch (mAsyncType) {
-                case STOCK_REQUEST:
-                    if (result) {
-                        updateStockNeighbouringCells();
-                    } else {
-                        if (mAimsicdService.mMultiRilCompatible) {
-                            mAsyncType = SAMSUNG_MULTIRIL_REQUEST;
-                            new CellAsyncTask().execute();
-                        }
-                    }
-                    break;
+            if (result) {
+                updateStockNeighbouringCells();
+            } else {
+                getSamSungMultiRil();
             }
-
         }
     }
 }
