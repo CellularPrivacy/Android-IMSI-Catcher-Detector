@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -115,11 +114,9 @@ public class DeviceFragment extends Fragment {
 
     private void updateUI() {
         TextView content;
-        TableLayout tableLayout;
         TableRow tr;
         if (mBound) {
             mAimsicdService.refreshDevice();
-            tableLayout = (TableLayout) mView.findViewById(R.id.mainView);
             switch (mAimsicdService.mDevice.getPhoneID()) {
                 case TelephonyManager.PHONE_TYPE_GSM: {
                     content = (TextView) mView.findViewById(R.id.network_lac);
@@ -131,21 +128,16 @@ public class DeviceFragment extends Fragment {
                     break;
                 }
                 case TelephonyManager.PHONE_TYPE_CDMA: {
-                    int layouts = tableLayout.getChildCount();
-                    for (int i = 0; i < layouts; i++) {
-                        TableRow row = (TableRow) tableLayout.getChildAt(i);
-                        if (row != null) {
-                            if (row.getTag().equals("cdma")) {
-                                row.setVisibility(View.VISIBLE);
-                            } else if (row.getTag().equals("gsm_network")) {
-                                row.setVisibility(View.GONE);
-                            }
-                        }
-                    }
+                    tr = (TableRow) mView.findViewById(R.id.cdma_netid);
+                    tr.setVisibility(View.VISIBLE);
                     content = (TextView) mView.findViewById(R.id.network_netid);
                     content.setText(String.valueOf(mAimsicdService.mDevice.mCell.getLAC()));
+                    tr = (TableRow) mView.findViewById(R.id.cdma_sysid);
+                    tr.setVisibility(View.VISIBLE);
                     content = (TextView) mView.findViewById(R.id.network_sysid);
                     content.setText(String.valueOf(mAimsicdService.mDevice.mCell.getSID()));
+                    tr = (TableRow) mView.findViewById(R.id.cdma_baseid);
+                    tr.setVisibility(View.VISIBLE);
                     content = (TextView) mView.findViewById(R.id.network_baseid);
                     content.setText(String.valueOf(mAimsicdService.mDevice.mCell.getCID()));
                     break;

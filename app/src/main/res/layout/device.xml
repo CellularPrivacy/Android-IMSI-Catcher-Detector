@@ -408,6 +408,7 @@
         </TableRow>
 
         <TableRow
+                android:id="@+id/cdma_netid"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal"
@@ -430,6 +431,7 @@
         </TableRow>
 
         <TableRow
+                android:id="@+id/cdma_sysid"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal"
@@ -452,6 +454,7 @@
         </TableRow>
 
         <TableRow
+                android:id="@+id/cdma_baseid"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal"
