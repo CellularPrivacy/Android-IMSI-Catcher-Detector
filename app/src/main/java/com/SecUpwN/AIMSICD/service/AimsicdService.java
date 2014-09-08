@@ -87,7 +87,6 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ConditionVariable;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -335,7 +334,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         List<Cell> neighboringCells = new ArrayList<>();
 
         List<NeighboringCellInfo> neighboringCellInfo;
-            neighboringCellInfo = tm.getNeighboringCellInfo();
+        neighboringCellInfo = tm.getNeighboringCellInfo();
         if (neighboringCellInfo.size() == 0) {
             // try to poll the neighboring cells for a few seconds
             final LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue =
@@ -343,7 +342,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             final PhoneStateListener listener = new PhoneStateListener() {
                 private void handle() {
                     List<NeighboringCellInfo> neighboringCellInfo;
-                        neighboringCellInfo = tm.getNeighboringCellInfo();
+                    neighboringCellInfo = tm.getNeighboringCellInfo();
                     if (neighboringCellInfo.size() == 0) {
                         return;
                     }
@@ -351,22 +350,22 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     tm.listen(this, PhoneStateListener.LISTEN_NONE);
                     neighboringCellBlockingQueue.addAll(neighboringCellInfo);
                 }
+
                 @Override
                 public void onServiceStateChanged(ServiceState serviceState) {
                     handle();
                 }
-                @Override
-                public void onSignalStrengthChanged(int asu) {
-                    handle();
-                }
+
                 @Override
                 public void onDataConnectionStateChanged(int state) {
                     handle();
                 }
+
                 @Override
                 public void onDataConnectionStateChanged(int state, int networkType) {
                     handle();
                 }
+
                 @Override
                 public void onSignalStrengthsChanged(SignalStrength signalStrength) {
                     handle();
@@ -386,31 +385,33 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                                 | PhoneStateListener.LISTEN_CELL_LOCATION |
                                 PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
                                 | PhoneStateListener.LISTEN_SERVICE_STATE |
-                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS
-                                | PhoneStateListener.LISTEN_SIGNAL_STRENGTH);
+                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
             } else {
                 tm.listen(listener,
-                                PhoneStateListener.LISTEN_CELL_LOCATION |
+                        PhoneStateListener.LISTEN_CELL_LOCATION |
                                 PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
                                 | PhoneStateListener.LISTEN_SERVICE_STATE |
-                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS
-                                | PhoneStateListener.LISTEN_SIGNAL_STRENGTH);
+                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
             }
+
             for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
                 try {
                     Log.i(TAG, "neighbouringCellInfo empty - try " + i);
-                    NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
+                    NeighboringCellInfo info = neighboringCellBlockingQueue
+                            .poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
                         if (neighboringCellInfo.size() > 0) {
-                            Log.i(TAG, "neighbouringCellInfo empty - try " + i + " succeeded time based");
+                            Log.i(TAG, "neighbouringCellInfo empty - try " + i
+                                    + " succeeded time based");
                             break;
                         } else {
                             continue;
                         }
                     }
                     ArrayList<NeighboringCellInfo> cellInfoList =
-                            new ArrayList<NeighboringCellInfo>(neighboringCellBlockingQueue.size() + 1);
+                            new ArrayList<NeighboringCellInfo>(
+                                    neighboringCellBlockingQueue.size() + 1);
                     while (info != null) {
                         cellInfoList.add(info);
                         info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);

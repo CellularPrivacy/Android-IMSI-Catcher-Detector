@@ -67,10 +67,7 @@ public class Device {
         mPhoneID = tm.getPhoneType();
         mRoaming = tm.isNetworkRoaming();
 
-
-        //SDK 17 allows access to signal strength outside of the listener and also
-        //provide access to the LTE timing advance data
-        if (Build.VERSION.SDK_INT > 16) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             try {
                 List<CellInfo> cellInfoList = tm.getAllCellInfo();
                 if (cellInfoList != null) {
@@ -115,7 +112,7 @@ public class Device {
                             mCell.setMCC(identityLte.getMcc());
                             mCell.setMNC(identityLte.getMnc());
                             mCell.setCID(identityLte.getCi());
-                        } else if (info instanceof CellInfoWcdma) {
+                        } else if  (info instanceof CellInfoWcdma) {
                             final CellSignalStrengthWcdma wcdma = ((CellInfoWcdma) info)
                                     .getCellSignalStrength();
                             final CellIdentityWcdma identityWcdma = ((CellInfoWcdma) info)
