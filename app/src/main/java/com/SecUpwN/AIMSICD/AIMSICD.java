@@ -254,8 +254,10 @@ public class AIMSICD extends Activity implements AsyncResponse {
         }
 
         if (selectedItem.getId() == 901) {
-            trackcell();
+            monitercell();
         } else if (selectedItem.getId() == 902) {
+            trackcell();
+        } else if (selectedItem.getId() == 903) {
             trackFemtocell();
         } else if (selectedItem.getId() == 105) {
             showmap();
@@ -372,10 +374,12 @@ public class AIMSICD extends Activity implements AsyncResponse {
 
         menu.add(DrawerMenuSection.create(900, "Tracking"));
         menu.add(DrawerMenuItem.create
-                (901, getString(R.string.track_cell), "untrack_cell", false, this));
+                (901, getString(R.string.monitor_cell), "untrack_cell", false, this));
+        menu.add(DrawerMenuItem.create
+                (902, getString(R.string.track_cell), "untrack_cell", false, this));
         if (AimsicdService.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
             menu.add(DrawerMenuItem.create
-                    (902, getString(R.string.track_femtocell), "ic_action_network_cell", false, this));
+                    (903, getString(R.string.track_femtocell), "ic_action_network_cell", false, this));
         }
         menu.add(DrawerMenuSection.create(100, "Main"));
         menu.add(DrawerMenuItem
@@ -426,7 +430,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
             mBound = true;
-            mAimsicdService.setNotification();
+            mAimsicdService.setLoaded();
         }
 
         @Override
@@ -459,12 +463,23 @@ public class AIMSICD extends Activity implements AsyncResponse {
         NavDrawerItem femtoTrackingItem = null;
 
         List<NavDrawerItem> menuItems = mNavConf.getNavItems();
-        NavDrawerItem cellTrackingItem = menuItems.get(1);
+        NavDrawerItem cellMonitoringItem = menuItems.get(1);
+        NavDrawerItem cellTrackingItem = menuItems.get(2);
         if (AimsicdService.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
-            femtoTrackingItem = menuItems.get(2);
+            femtoTrackingItem = menuItems.get(3);
         }
 
         if (mBound) {
+            if (cellMonitoringItem != null) {
+                if (mAimsicdService.isMonitoringCell()) {
+                    cellMonitoringItem.setLabel(getString(R.string.unmonitor_cell));
+                    cellMonitoringItem.setIcon(R.drawable.track_cell);
+                } else {
+                    cellMonitoringItem.setLabel(getString(R.string.monitor_cell));
+                    cellMonitoringItem.setIcon(R.drawable.untrack_cell);
+                }
+                mNavConf.getBaseAdapter().notifyDataSetChanged();
+            }
             if (cellTrackingItem != null) {
                 if (mAimsicdService.isTrackingCell()) {
                     cellTrackingItem.setLabel(getString(R.string.untrack_cell));
@@ -529,6 +544,17 @@ public class AIMSICD extends Activity implements AsyncResponse {
             mAimsicdService.setCellTracking(false);
         } else {
             mAimsicdService.setCellTracking(true);
+        }
+    }
+
+    /**
+     * Cell Information Monitoring - Enable/Disable
+     */
+    private void monitercell() {
+        if (mAimsicdService.isMonitoringCell()) {
+            mAimsicdService.setCellMonitoring(false);
+        } else {
+            mAimsicdService.setCellMonitoring(true);
         }
     }
 
