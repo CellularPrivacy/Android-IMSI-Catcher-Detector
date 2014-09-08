@@ -1,7 +1,6 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
 
 import android.content.ContentValues;
@@ -99,7 +98,11 @@ public class AIMSICDDbAdapter {
             cellValues.put("NetworkType", networkType);
             cellValues.put("MeasurementTaken", measurementTaken);
 
-            if (!cellExists(cellID)) {
+            if (cellExists(cellID)) {
+                return mDb.update(CELL_TABLE, cellValues,
+                        "CellID=?",
+                        new String[]{Integer.toString(cellID)});
+            } else {
                 return mDb.insert(CELL_TABLE, null, cellValues);
             }
         }
@@ -129,7 +132,11 @@ public class AIMSICDDbAdapter {
             cellValues.put("Direction", cell.getBearing());
             cellValues.put("MeasurementTaken", cell.getTimestamp());
 
-            if (!cellExists(cell.getCID())) {
+            if (cellExists(cell.getCID())) {
+                return mDb.update(CELL_TABLE, cellValues,
+                        "CellID=?",
+                        new String[]{Integer.toString(cell.getCID())});
+            } else {
                 return mDb.insert(CELL_TABLE, null, cellValues);
             }
         }
@@ -293,6 +300,22 @@ public class AIMSICDDbAdapter {
         return exists;
     }
 
+    public boolean checkLAC(Cell cell) {
+        Cursor cursor = mDb.query(CELL_TABLE, new String[]{"Lac"}, "CellID=" + cell.getCID(),
+                null,null,null,null);
+
+        while (cursor.moveToNext()) {
+            if (cell.getLAC() != cursor.getInt(0)) {
+                cursor.close();
+                return false;
+            }
+        }
+
+        cursor.close();
+
+        return true;
+    }
+
     /**
      * Updates Cell records to indicate OpenCellID contribution has been made
      */
@@ -321,6 +344,11 @@ public class AIMSICDDbAdapter {
         cursor.close();
 
         return loc;
+    }
+
+    public void cleanseCellTable() {
+        mDb.execSQL("DELETE FROM " + CELL_TABLE + " WHERE " + COLUMN_ID + " NOT IN (SELECT MAX(" + COLUMN_ID + ") FROM " + CELL_TABLE + " GROUP BY CellID)");
+        mDb.execSQL("DELETE FROM " + CELL_TABLE + " WHERE CellID = " + Integer.MAX_VALUE + " OR CellID = -1");
     }
 
     public boolean prepareOpenCellUploadData() {
