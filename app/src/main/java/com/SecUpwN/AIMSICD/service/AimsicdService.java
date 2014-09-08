@@ -142,6 +142,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      */
     private final AimscidBinder mBinder = new AimscidBinder();
     private final AIMSICDDbAdapter dbHelper = new AIMSICDDbAdapter(this);
+    private final Handler timerHandler = new Handler();
     private Context mContext;
     private final int NOTIFICATION_ID = 1;
     private long mDbResult;
@@ -163,11 +164,15 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     /*
      * Tracking and Alert Declarations
      */
-    private boolean TrackingCell;
-    private boolean TrackingFemtocell;
+    private boolean mLoaded;
+    private boolean mMonitoringCell;
+    private boolean mTrackingCell;
+    private boolean mTrackingFemtocell;
     private boolean mFemtoDetected;
     private boolean mLocationPrompted;
     private boolean mTypeZeroSmsDetected;
+    private boolean mChangedLAC;
+    private Cell mMonitorCell;
 
     /*
      * Samsung MultiRil Implementation
@@ -189,9 +194,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private HandlerThread mHandlerThread;
     private Handler mHandler;
 
+
+
     @Override
     public IBinder onBind(Intent intent) {
-        setNotification();
         return mBinder;
     }
 
@@ -249,6 +255,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         //Register receiver for Silent SMS Interception Notification
         mContext.registerReceiver(mMessageReceiver, new IntentFilter(SILENT_SMS));
 
+        mMonitorCell = new Cell();
+
         Log.i(TAG, "Service launched successfully");
     }
 
@@ -265,7 +273,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         cancelNotification();
         dbHelper.close();
         mContext.unregisterReceiver(mMessageReceiver);
-        if (TrackingCell) {
+        if (mTrackingCell) {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
             lm.removeUpdates(mLocationListener);
         }
@@ -644,7 +652,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      * @return boolean indicating Cell Information Tracking State
      */
     public boolean isTrackingCell() {
-        return TrackingCell;
+        return mTrackingCell;
     }
 
     /**
@@ -653,7 +661,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      * @return boolean indicating Femtocell Connection Tracking State
      */
     public boolean isTrackingFemtocell() {
-        return TrackingFemtocell;
+        return mTrackingFemtocell;
     }
 
     void setSilentSmsStatus(boolean state) {
@@ -679,27 +687,30 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         String contentText = "Phone Type " + mDevice.getPhoneType();
 
         String iconType = prefs.getString(
-                this.getString(R.string.pref_ui_icons_key), "flat");
+                this.getString(R.string.pref_ui_icons_key), "sense");
 
         int status;
 
         if (mFemtoDetected || mTypeZeroSmsDetected) {
-            status = 3; //ALARM
-        } else if (TrackingFemtocell || TrackingCell) {
-            status = 2; //Good
-            if (TrackingFemtocell) {
+            status = 4; //ALARM
+        } else if (mChangedLAC) {
+            status = 3; //MEDIUM
+            contentText = "Hostile Service Area: Changing LAC Detected";
+        } else if (mTrackingFemtocell || mTrackingCell || mLoaded) {
+            status = 2; //NORMAL
+            if (mTrackingFemtocell) {
                 contentText = "FemtoCell Detection Active";
-            } else {
+            } else if (mTrackingCell) {
                 contentText = "Cell Tracking Active";
             }
         } else {
-            status = 1; //Idle
+            status = 1; //IDLE
         }
 
         int icon = R.drawable.sense_idle;
 
         switch (status) {
-            case 1: //Idle
+            case 1: //IDLE
                 switch (iconType) {
                     case "flat":
                         icon = R.drawable.flat_idle;
@@ -714,7 +725,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 tickerText = getResources().getString(R.string.app_name_short)
                         + " - Status: Idle";
                 break;
-            case 2: //Good
+            case 2: //NORMAL
                 switch (iconType) {
                     case "flat":
                         icon = R.drawable.flat_ok;
@@ -729,7 +740,22 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 tickerText = getResources().getString(R.string.app_name_short)
                         + " - Status: Good No Threats Detected";
                 break;
-            case 3: //ALARM
+            case 3: //MEDIUM
+                switch (iconType) {
+                    case "flat":
+                        icon = R.drawable.flat_medium;
+                        break;
+                    case "sense":
+                        icon = R.drawable.sense_medium;
+                        break;
+                    case "white":
+                        icon = R.drawable.white_medium;
+                        break;
+                }
+                tickerText = getResources().getString(R.string.app_name_short)
+                        + " - Hostile Service Area: Changing LAC Detected";
+                break;
+            case 4: //DANGER
                 switch (iconType) {
                     case "flat":
                         icon = R.drawable.flat_danger;
@@ -800,6 +826,76 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return location;
     }
 
+    public void setLoaded() {
+        mLoaded = true;
+        setNotification();
+    }
+
+    public boolean isMonitoringCell() {
+        return mMonitoringCell;
+    }
+
+    private LocationListener cellMonitorListener = new MyLocationListener();
+
+    /**
+     * Cell Information Monitoring
+     *
+     * @param monitor Enable/Disable monitoring
+     */
+    public void setCellMonitoring(boolean monitor) {
+        if (monitor) {
+            timerHandler.postDelayed(timerRunnable, 0);
+            mMonitoringCell = true;
+            Helpers.msgShort(this, "Monitoring cell information");
+        } else {
+            timerHandler.removeCallbacks(timerRunnable);
+            mMonitoringCell = false;
+            Helpers.msgShort(this, "Stopped monitoring cell information");
+        }
+    }
+
+    private final Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            switch (mDevice.getPhoneID()) {
+                case TelephonyManager.PHONE_TYPE_GSM:
+                    GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
+                    if (gsmCellLocation != null) {
+                        mMonitorCell.setLAC(gsmCellLocation.getLac());
+                        mMonitorCell.setCID(gsmCellLocation.getCid());
+                        dbHelper.open();
+                        boolean lacOK = dbHelper.checkLAC(mMonitorCell);
+                        if (!lacOK) {
+                            mChangedLAC = true;
+                            setNotification();
+                        }
+                        dbHelper.close();
+                    }
+                    break;
+                case TelephonyManager.PHONE_TYPE_CDMA:
+                    CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
+                    if (cdmaCellLocation != null) {
+                        mMonitorCell.setLAC(cdmaCellLocation.getNetworkId());
+                        mMonitorCell.setCID(cdmaCellLocation.getBaseStationId());
+                        dbHelper.open();
+                        boolean lacOK = dbHelper.checkLAC(mMonitorCell);
+                        if (!lacOK) {
+                            mChangedLAC = true;
+                            setNotification();
+                        }
+                        dbHelper.close();
+                    }
+            }
+            if (REFRESH_RATE != 0) {
+                timerHandler.postDelayed(this, REFRESH_RATE);
+            } else {
+                //Default to 25 seconds refresh rate
+                timerHandler.postDelayed(this,TimeUnit.SECONDS.toMillis(25) );
+            }
+        }
+    };
+
     /**
      * Cell Information Tracking and database logging
      *
@@ -830,13 +926,13 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 }
             }
             Helpers.msgShort(this, "Tracking cell information");
-            TrackingCell = true;
+            mTrackingCell = true;
         } else {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
             lm.removeUpdates(mLocationListener);
             mDevice.mCell.setLon(0.0);
             mDevice.mCell.setLat(0.0);
-            TrackingCell = false;
+            mTrackingCell = false;
             mDevice.setCellInfo("[0,0]|nn|nn|");
             Helpers.msgShort(this, "Stopped tracking cell information");
         }
@@ -847,7 +943,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         public void onCellLocationChanged(CellLocation location) {
             mDevice.setNetID(tm);
             mDevice.getNetworkTypeName();
-
 
             switch (mDevice.getPhoneID()) {
                 case TelephonyManager.PHONE_TYPE_GSM:
@@ -1070,7 +1165,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     mDevice.mCell.setBearing(loc.getBearing());
                     mDevice.setLastLocation(loc);
 
-                    if (TrackingCell ) {
+                    if (mTrackingCell ) {
                         dbHelper.open();
                         mDbResult = dbHelper.insertLocation(mDevice.mCell.getLAC(),
                                 mDevice.mCell.getCID(), mDevice.mCell.getNetType(), mDevice.mCell.getLat(),
@@ -1175,7 +1270,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             return;
         }
 
-        TrackingFemtocell = true;
+        mTrackingFemtocell = true;
         mPhoneStateListener = new PhoneStateListener() {
             public void onServiceStateChanged(ServiceState s) {
                 Log.d(TAG, "Service State changed!");
@@ -1194,7 +1289,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public void stopTrackingFemto() {
         if (mPhoneStateListener != null) {
             tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
-            TrackingFemtocell = false;
+            mTrackingFemtocell = false;
             setNotification();
             Log.v(TAG, "Stopped tracking Femtocell connections");
         }
