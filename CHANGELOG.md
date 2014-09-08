@@ -1,6 +1,14 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 08.09.2014
+
+* Update: Cleaned Cell Table Contents to assist with Detection Method 1
+* Update: Small tweaks to the updated neighbouring cell methods for better functionality
+* Added: Initial Implementation of Detection Method 1: Changing LAC
+* Added: New Papers about IMSI Privacy and Projects developing IMSI-Catcher-Catchers
+* Fix: CDMA Layout Correction to address NPE experienced by CDMA device users
+
 #### 19.08.2014
 
 * Improved: Poll the telephone manager for neighboring cell infos
