@@ -39,12 +39,12 @@
     <string name="evoA"># EVO-A</string>
 
     <!-- MENU -->
-    <string name="track_cell">Track Cell Details</string>
-    <string name="untrack_cell">Untrack Cell Details</string>
-    <string name="track_location">Track Location</string>
-    <string name="untrack_location">Untrack Location</string>
+    <string name="monitor_cell">Monitor Cell Details</string>
+    <string name="unmonitor_cell">Stop Monitoring Cell Details</string>
+    <string name="track_cell">Track Cell Details \nGPS Required</string>
+    <string name="untrack_cell">Stop Tracking Cell Details</string>
     <string name="track_femtocell">Track Femtocell</string>
-    <string name="untrack_femtocell">Untrack Femtocell</string>
+    <string name="untrack_femtocell">Stop Tracking Femtocell</string>
     <string name="show_map">Show Map</string>
     <string name="backup_database">Backup Database</string>
     <string name="restore_database">Restore Database</string>
