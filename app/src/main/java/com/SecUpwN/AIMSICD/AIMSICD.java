@@ -184,8 +184,6 @@ public class AIMSICD extends Activity implements AsyncResponse {
             AlertDialog disclaimerAlert = disclaimer.create();
             disclaimerAlert.show();
         }
-
-
     }
 
     @Override
