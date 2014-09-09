@@ -41,7 +41,7 @@
     <!-- MENU -->
     <string name="monitor_cell">Monitor Cell Details</string>
     <string name="unmonitor_cell">Stop Monitoring Cell Details</string>
-    <string name="track_cell">Track Cell Details \nGPS Required</string>
+    <string name="track_cell">Track Cell Details \n(GPS Required)</string>
     <string name="untrack_cell">Stop Tracking Cell Details</string>
     <string name="track_femtocell">Track Femtocell</string>
     <string name="untrack_femtocell">Stop Tracking Femtocell</string>
