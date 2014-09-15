@@ -430,7 +430,6 @@ public class AIMSICD extends Activity implements AsyncResponse {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
             mBound = true;
-            mAimsicdService.setLoaded();
         }
 
         @Override
