@@ -1,7 +1,15 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
-#### 08.09.2014
+#### 15.09.2014 - WIP-Internal v0.1.24-alpha-build-6
+
+* Improved: Several small adjustments of our GitHub Introduction (thanks @andr3jx)
+* Changed: Reverted notification behaviour to correctly launch each Status Icon as meant to be
+* Update: Better Location Services (GPS) Handling to detect if GPS was actually activated
+* Update: Rewritten AT Command Injection v2 & RootTools to bring better level of functionality
+* Fix: Corrected Cell Monitoring method to correctly update the notification icon
+
+#### 08.09.2014 - WIP-Internal v0.1.24-alpha-build-5
 
 * Update: Cleaned Cell Table Contents to assist with Detection Method 1
 * Update: Small tweaks to the updated neighbouring cell methods for better functionality
@@ -9,7 +17,7 @@
 * Added: New Papers about IMSI Privacy and Projects developing IMSI-Catcher-Catchers
 * Fix: CDMA Layout Correction to address NPE experienced by CDMA device users
 
-#### 19.08.2014
+#### 19.08.2014 - WIP-Internal v0.1.24-alpha-build-4
 
 * Improved: Poll the telephone manager for neighboring cell infos
 * Changed: Reverted "Shell & AT Command Fragment Tweaks"
@@ -24,7 +32,7 @@
 * Fix: Corrected Proguard Settings 
 
 
-#### 13.08.2014
+#### 13.08.2014 - WIP-Internal v0.1.24-alpha-build-3
 
 * Update: Slight updates to layouts to enable correct Right to Left support
 * Update: Changed the layout of neighbouring cell information to display PSC, RSSI & Network Type
@@ -34,7 +42,7 @@
 * Fix: Removed code that attempts to draw the MCC & MNC whilst refreshing the device information
 * Fix: Changed wording within our DISCLAIMER to comply with the GPL and avoid confusion
 
-#### 08.08.2014
+#### 08.08.2014 - WIP-Internal v0.1.24-alpha-build-2
 
 * Update: Too many small improvements of our README (enough editing for now, off to development!)
 * Update: SOURCES file has been updated with the latest used code snippets
