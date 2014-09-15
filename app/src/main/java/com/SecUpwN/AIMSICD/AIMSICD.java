@@ -430,7 +430,11 @@ public class AIMSICD extends Activity implements AsyncResponse {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
             mBound = true;
-            mAimsicdService.setLoaded();
+
+            //If tracking cell details check location services are still enabled
+            if (mAimsicdService.isTrackingCell()) {
+                mAimsicdService.checkLocationServices();
+            }
         }
 
         @Override
@@ -448,6 +452,10 @@ public class AIMSICD extends Activity implements AsyncResponse {
             // Bind to LocalService
             Intent intent = new Intent(this, AimsicdService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        } else {
+            if (mAimsicdService.isTrackingCell()) {
+                mAimsicdService.checkLocationServices();
+            }
         }
     }
 
