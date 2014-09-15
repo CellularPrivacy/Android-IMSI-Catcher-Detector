@@ -148,8 +148,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private Context mContext;
     private final int NOTIFICATION_ID = 1;
     private long mDbResult;
-    private TelephonyManager tm;
-    private LocationManager lm;
+    private static TelephonyManager tm;
+    private static LocationManager lm;
     private SharedPreferences prefs;
     private PhoneStateListener mPhoneStateListener;
     private LocationListener mLocationListener;
@@ -1044,6 +1044,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
 
     };
+
+    public void checkLocationServices() {
+        if (mTrackingCell && !lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            enableLocationServices();
+        }
+    }
 
     private void enableLocationServices() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
