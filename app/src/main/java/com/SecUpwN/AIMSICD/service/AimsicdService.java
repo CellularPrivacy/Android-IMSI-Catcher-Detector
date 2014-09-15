@@ -725,6 +725,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         icon = R.drawable.white_idle;
                         break;
                 }
+                contentText = "Phone Type " + mDevice.getPhoneType();
                 tickerText = getResources().getString(R.string.app_name_short)
                         + " - Status: Idle";
                 break;
@@ -757,6 +758,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 }
                 tickerText = getResources().getString(R.string.app_name_short)
                         + " - Hostile Service Area: Changing LAC Detected";
+                if (mChangedLAC) {
+                    contentText = "Hostile Service Area: Changing LAC Detected";
+                }
                 break;
             case 4: //DANGER
                 switch (iconType) {
@@ -849,6 +853,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             mMonitoringCell = false;
             Helpers.msgShort(this, "Stopped monitoring cell information");
         }
+
+        setNotification();
     }
 
     private final Runnable timerRunnable = new Runnable() {
@@ -1201,7 +1207,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         @Override
         public void onProviderDisabled(String provider) {
             if (mTrackingCell && provider.equals(LocationManager.GPS_PROVIDER)) {
-                mLocationPrompted = true;
                 enableLocationServices();
             }
         }
