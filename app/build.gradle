@@ -36,4 +36,5 @@ dependencies {
     compile 'com.android.support:support-v4:19.1.0'
     compile files('libs/httpmime-4.2.1.jar')
     compile files('libs/opencsv-2.4.jar')
+    compile files('libs/RootTools.jar')
 }
