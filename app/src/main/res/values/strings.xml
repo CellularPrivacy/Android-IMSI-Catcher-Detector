@@ -77,9 +77,9 @@
     <string name="sim_operator_name">Operator Name:</string>
     <string name="sim_imsi">IMSI:</string>
     <string name="sim_serial">Serial:</string>
-    <string name="device_type">Type:</string>
+    <string name="device_type">Phone Type:</string>
     <string name="device_imei">IMEI:</string>
-    <string name="device_version">Version:</string>
+    <string name="device_version">RIL Version:</string>
     <string name="device_number">Line Number:</string>
     <string name="network_name">Network Name:</string>
     <string name="network_code">Network Code:</string>
