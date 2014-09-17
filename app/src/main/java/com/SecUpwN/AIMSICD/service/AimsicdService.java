@@ -137,7 +137,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
     public static final String UPDATE_DISPLAY = "UPDATE_DISPLAY";
     public static int PHONE_TYPE;
-    public static String OCID_API_KEY = "API KEY GOES HERE.......";
+    public static String OCID_API_KEY = "NA";
 
     /*
      * System and helper declarations
@@ -637,6 +637,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 break;
         }
         REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
+
+        OCID_API_KEY = prefs.getString(this.getString(R.string.pref_ocid_key), "NA");
 
         if (trackFemtoPref) {
             startTrackingFemto();
@@ -1238,6 +1240,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         final String REFRESH = this.getString(R.string.pref_refresh_key);
         final String DB_VERSION = this.getString(R.string.pref_last_database_backup_version);
         final String OCID_UPLOAD = this.getString(R.string.pref_ocid_upload);
+        final String OCID_KEY = this.getString(R.string.pref_ocid_key);
 
         if (key.equals(KEY_UI_ICONS)) {
             //Update Notification to display selected icon type
@@ -1270,6 +1273,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             LAST_DB_BACKUP_VERSION = sharedPreferences.getInt(DB_VERSION, 1);
         } else if (key.equals(OCID_UPLOAD)) {
             OCID_UPLOAD_PREF = sharedPreferences.getBoolean(OCID_UPLOAD, false);
+        } else if (key.equals(OCID_KEY)) {
+            OCID_API_KEY = sharedPreferences.getString(OCID_KEY, "NA");
         }
     }
 

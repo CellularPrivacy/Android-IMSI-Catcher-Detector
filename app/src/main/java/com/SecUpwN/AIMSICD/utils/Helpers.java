@@ -130,43 +130,48 @@ public class Helpers {
      */
     public static void getOpenCellData(Context context, Cell cell, char type) {
         if (Helpers.isNetAvailable(context)) {
-            double earthRadius = 6371.01;
+            if (!AimsicdService.OCID_API_KEY.equals("NA")) {
+                double earthRadius = 6371.01;
 
-            if (cell.getLat() != 0.0 && cell.getLon() != 0.0) {
-                //New GeoLocation object to find bounding Coordinates
-                GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
+                if (cell.getLat() != 0.0 && cell.getLon() != 0.0) {
+                    //New GeoLocation object to find bounding Coordinates
+                    GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
-                //Calculate the Bounding Coordinates in a 50 mile radius
-                //0 = min 1 = max
-                GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
-                String boundParameter;
+                    //Calculate the Bounding Coordinates in a 50 mile radius
+                    //0 = min 1 = max
+                    GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
+                    String boundParameter;
 
-                //Request OpenCellID data for Bounding Coordinates
-                boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
-                        + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
-                        + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
-                        + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
+                    //Request OpenCellID data for Bounding Coordinates
+                    boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
+                            + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
+                            + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
+                            + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
-                StringBuilder sb = new StringBuilder();
-                sb.append("http://www.opencellid.org/cell/getInArea?key=")
-                        .append(AimsicdService.OCID_API_KEY).append("&BBOX=")
-                        .append(boundParameter);
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("http://www.opencellid.org/cell/getInArea?key=")
+                            .append(AimsicdService.OCID_API_KEY).append("&BBOX=")
+                            .append(boundParameter);
 
-                if (cell.getMCC() != Integer.MAX_VALUE) {
-                    sb.append("&mcc=").append(cell.getMCC());
+                    if (cell.getMCC() != Integer.MAX_VALUE) {
+                        sb.append("&mcc=").append(cell.getMCC());
+                    }
+
+                    if (cell.getMNC() != Integer.MAX_VALUE) {
+                        sb.append("&mnc=").append(cell.getMNC());
+                    }
+
+                    if (cell.getLAC() != Integer.MAX_VALUE) {
+                        sb.append("&lac=").append(cell.getLAC());
+                    }
+
+                    sb.append("&format=csv");
+
+                    new RequestTask(context, type).execute(sb.toString());
                 }
-
-                if (cell.getMNC() != Integer.MAX_VALUE) {
-                    sb.append("&mnc=").append(cell.getMNC());
-                }
-
-                if (cell.getLAC() != Integer.MAX_VALUE) {
-                    sb.append("&lac=").append(cell.getLAC());
-                }
-
-                sb.append("&format=csv");
-
-                new RequestTask(context, type).execute(sb.toString());
+            } else {
+                Helpers.msgShort(context,
+                        "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
