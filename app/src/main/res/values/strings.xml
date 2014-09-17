@@ -163,8 +163,11 @@
     <string name="pref_ocid_title">OpenCellID Settings</string>
     <string name="pref_ocid_upload">pref_ocid_upload</string>
     <string name="pref_ui_ocid_upload_title">Contribute Cell Data</string>
-    <string name="pref_ui_ocid_upload_summ">Upload cell information data to the OpenCellID Project (NO personal information is submitted)</string>
+    <string name="pref_ui_ocid_upload_summ">Contribute data to the OpenCellID Project (NO personal information is submitted)</string>
     <string name="pref_cell_table_cleansed">pref_cell_table_cleansed</string>
+    <string name="pref_ocid_key">pref_ocid_key</string>
+    <string name="pref_ocid_key_title">OpenCellID API Key</string>
+    <string name="pref_ocid_key_summ">Enter your OpenCellID API Key here</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
