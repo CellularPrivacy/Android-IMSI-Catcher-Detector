@@ -227,7 +227,7 @@ public class AIMSICDDbAdapter {
      * Returns Cell Information for contribution to the OpenCellID Project
      */
     public Cursor getOPCIDSubmitData() {
-        return mDb.query(CELL_TABLE, new String[]{"Mcc", "Mnc", "Lac", "CellID", "Lng", "Lat",
+        return mDb.query(CELL_TABLE, new String[]{ "Lng", "Lat", "Mcc", "Mnc", "Lac", "CellID",
                         "Signal", "Timestamp", "Accuracy", "Speed", "Direction", "NetworkType"},
                 "OCID_SUBMITTED <> 1", null, null, null, null
         );
