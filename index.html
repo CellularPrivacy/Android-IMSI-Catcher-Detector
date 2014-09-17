@@ -71,7 +71,7 @@
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#credits--greetings">Credits</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team">Contact</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#license">License</a></li>
-<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#websites-about-security-worth-checking-out">More Security</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Recommendations">Recommendations</a></li>
 </ul><hr><h1>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
@@ -85,7 +85,7 @@
 
 <p>Unfortunately it seems that IMSI-Catchers have been exponentially popular lately, with an explosion of various "bastards" with governments and criminals all the same, using it. Anyone can now buy an IMSI-Catcher (or build a cheap one on his own). Sending spam and phishing SMS via fake base stations is already a lucrative underground market, particularly in Russia, China and Brazil (see <a href="http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-papers/wp-the-mobile-cybercriminal-underground-market-in-china.pdf">The Mobile Cybercriminal Underground Market in China</a>). For example in China, 1.530 people got arrested for using <a href="http://www.ecns.cn/business/2014/03-26/106525.shtml">this kind of equipment</a>. Just recently, hackers decided to start <a href="http://heise.de/-2235339">reverse-engineering the NSA toolset</a> and are releasing tools like <a href="http://www.nsaplayset.org/twilightvegetable">TWILIGHTVEGETABLE</a> - an easy to use, boot and pwn toolkit for passive monitoring of GSM communications as well as <a href="http://www.nsaplayset.org/chordghost">CHORDGHOST</a> as an extension to that system, which is an inconspicuous handset modified for passively intercepting GSM traffic. It's just a matter of time of when your own neighbor will spy on you with simple self-build tools!</p>
 
-<p>In addition, they can all crack A5/1 encryption which is most commonly used for GSM traffic on the fly (passively)! Only the latest A5/3 encryption which is used for securing mobile data (4G and 3G) and is offered as <a href="http://www.telekom.com/media/company/210108">new security standard for GSM encryption</a> remains secure in practice while susceptible to theoretical attacks. Although A5/3 withstands passive eavesdropping, it can be bypassed by IMSI-Catchers forcing a mobile device into 2G mode and <a href="http://www.septier.com/149.html">downgrade encryption to A5/1 or disable it</a>.</p>
+<p>In addition, they can all crack A5/1 encryption which is most commonly used for GSM traffic on the fly (passively)! A5/3 encryption which is used for securing 3G and is offered as <a href="http://www.telekom.com/media/company/210108">new security standard for GSM encryption</a> remains secure in practice while susceptible to theoretical attacks. Although 3G and 4G offer sufficient protection from eavesdropping, the security measures can be bypassed by IMSI-Catchers forcing a mobile device into 2G mode and <a href="http://www.septier.com/149.html">downgrade encryption to A5/1 or disable it</a>.</p>
 
 <p>There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the <a href="https://code.google.com/p/android/issues/detail?id=5353">Issue of not having a convenient display of the Ciphering Indictor</a> has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. <strong>Let's detect and protect against these threats!</strong> Never think you've got "nothing to hide".</p>
 
@@ -199,7 +199,7 @@
 <hr><h3>
 <a name="bug-tracker" class="anchor" href="#bug-tracker"><span class="octicon octicon-link"></span></a>Bug Tracker</h3>
 
-<p>Found a bug? Please carefully follow our guide on <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues">how to correctly submit Issues</a> and contribute!</p>
+<p>Found a bug? Please carefully read <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues">how to correctly submit Issues</a>!</p>
 
 <hr><h1>
 <a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h1>
@@ -250,39 +250,7 @@
 <td align="center">Security enthusiast &amp; Public Speaker</td>
 </tr>
 </tbody>
-</table><hr><h3>
-<a name="websites-about-security-worth-checking-out--bookmarking" class="anchor" href="#websites-about-security-worth-checking-out--bookmarking"><span class="octicon octicon-link"></span></a>Websites about security worth checking out &amp; bookmarking:</h3>
-
-<ul>
-<li>
-<a href="http://smartphone-attack-vector.de/">Smartphone Attack Vector</a> - Smartphone flaws and countermeasures</li>
-<li>
-<a href="http://www.kuketz-blog.de/">Kuketz IT-Security Blog</a> - Great Security Reviews and Guides (written in German)</li>
-<li>
-<a href="https://prism-break.org/">PRISM Break</a> - Alternatives to opt out of global data surveillance programs</li>
-<li>
-<a href="https://guardianproject.info/">The Guardian Project</a> - Secure Open Source Mobile Apps (Apps &amp; Tools You Can Trust)</li>
-<li>
-<a href="https://srlabs.de/">Security Research Labs</a> - Stunning Security Revelations discovered in Berlin</li>
-<li>
-<a href="https://ssd.eff.org/">The Surveillance Self-Defense Project</a> - Defend against the threat of surveillance</li>
-<li>
-<a href="https://www.eff.org/">Electronic Frontier Foundation</a> - Nonprofit defending your rights in the digital world</li>
-<li>
-<a href="https://www.privacyinternational.org/">Privacy International</a> - Charity fighting for the right to privacy across the world</li>
-<li>
-<a href="https://github.com/WhisperSystems/TextSecure">TextSecure</a> - Secure text messaging application for Android (replace WhatsApp)</li>
-<li>
-<a href="https://github.com/WhisperSystems/RedPhone">RedPhone</a> - Encrypted calls for Android</li>
-<li>
-<a href="http://killyourphone.com">KillYourPhone</a> - Make your own signal blocking phone pouch for little money</li>
-<li>
-<a href="http://gsmmap.org/">GSM-Map</a> - Compares protection capabilities of mobile networks (contribute data!)</li>
-<li>
-<a href="https://www.datenschmutz.de">Datenschmutz Wiki</a> - Awesome German wiki of databases and tools of law enforcements</li>
-<li>
-<a href="https://www.telefoniert-nach-hause.de">Telefoniert nach Hause</a> - Wiki about hard- and software contacting third parties</li>
-</ul>
+</table><hr>
         </section>
 
         <aside id="sidebar">
