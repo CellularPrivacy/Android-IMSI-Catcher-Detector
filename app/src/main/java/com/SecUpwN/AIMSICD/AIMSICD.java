@@ -274,50 +274,62 @@ public class AIMSICD extends Activity implements AsyncResponse {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
             }
         } else if (selectedItem.getId() == 301) {
-            Location loc = mAimsicdService.lastKnownLocation();
-            if (loc != null) {
-                Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
-                Cell cell = new Cell();
-                cell.setLon(loc.getLongitude());
-                cell.setLat(loc.getLatitude());
-                Helpers.getOpenCellData(mContext, cell,
-                        RequestTask.OPEN_CELL_ID_REQUEST);
+            if (!AimsicdService.OCID_API_KEY.equals("NA")) {
+                Location loc = mAimsicdService.lastKnownLocation();
+                if (loc != null) {
+                    Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
+                    Cell cell = new Cell();
+                    cell.setLon(loc.getLongitude());
+                    cell.setLat(loc.getLatitude());
+                    Helpers.getOpenCellData(mContext, cell,
+                            RequestTask.OPEN_CELL_ID_REQUEST);
+                } else {
+                    //Attempt to find location through CID
+                    //CID Location Async Output Delegate Interface Implementation
+                    LocationServices.LocationAsync locationAsync
+                            = new LocationServices.LocationAsync();
+                    locationAsync.delegate = this;
+                    locationAsync.execute(
+                            mAimsicdService.mDevice.mCell.getCID(),
+                            mAimsicdService.mDevice.mCell.getLAC(),
+                            mAimsicdService.mDevice.mCell.getMNC(),
+                            mAimsicdService.mDevice.mCell.getMCC());
+                }
             } else {
-                //Attempt to find location through CID
-                //CID Location Async Output Delegate Interface Implementation
-                LocationServices.LocationAsync locationAsync = new LocationServices.LocationAsync();
-                locationAsync.delegate = this;
-                locationAsync.execute(
-                        mAimsicdService.mDevice.mCell.getCID(),
-                        mAimsicdService.mDevice.mCell.getLAC(),
-                        mAimsicdService.mDevice.mCell.getMNC(),
-                        mAimsicdService.mDevice.mCell.getMCC());
+                Helpers.msgShort(mContext,
+                        "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
         } else if (selectedItem.getId() == 302) {
-            Cell.CellLookUpAsync cellLookUpAsync = new Cell.CellLookUpAsync();
-            cellLookUpAsync.delegate = this;
-            StringBuilder sb = new StringBuilder();
-            sb.append("http://www.opencellid.org/cell/get?key=")
-                    .append(AimsicdService.OCID_API_KEY);
+            if (!AimsicdService.OCID_API_KEY.equals("NA")) {
+                Cell.CellLookUpAsync cellLookUpAsync = new Cell.CellLookUpAsync();
+                cellLookUpAsync.delegate = this;
+                StringBuilder sb = new StringBuilder();
+                sb.append("http://www.opencellid.org/cell/get?key=")
+                        .append(AimsicdService.OCID_API_KEY);
 
-            if (mAimsicdService.mDevice.mCell.getMCC() != Integer.MAX_VALUE) {
-                sb.append("&mcc=").append(mAimsicdService.mDevice.mCell.getMCC());
+                if (mAimsicdService.mDevice.mCell.getMCC() != Integer.MAX_VALUE) {
+                    sb.append("&mcc=").append(mAimsicdService.mDevice.mCell.getMCC());
+                }
+
+                if (mAimsicdService.mDevice.mCell.getMNC() != Integer.MAX_VALUE) {
+                    sb.append("&mnc=").append(mAimsicdService.mDevice.mCell.getMNC());
+                }
+
+                if (mAimsicdService.mDevice.mCell.getLAC() != Integer.MAX_VALUE) {
+                    sb.append("&lac=").append(mAimsicdService.mDevice.mCell.getLAC());
+                }
+
+                if (mAimsicdService.mDevice.mCell.getCID() != Integer.MAX_VALUE) {
+                    sb.append("&cellid=").append(mAimsicdService.mDevice.mCell.getCID());
+                }
+
+                sb.append("&format=xml");
+                cellLookUpAsync.execute(sb.toString());
+            } else {
+                Helpers.msgShort(mContext,
+                        "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
 
-            if (mAimsicdService.mDevice.mCell.getMNC() != Integer.MAX_VALUE) {
-                sb.append("&mnc=").append(mAimsicdService.mDevice.mCell.getMNC());
-            }
-
-            if (mAimsicdService.mDevice.mCell.getLAC() != Integer.MAX_VALUE) {
-                sb.append("&lac=").append(mAimsicdService.mDevice.mCell.getLAC());
-            }
-
-            if (mAimsicdService.mDevice.mCell.getCID() != Integer.MAX_VALUE) {
-                sb.append("&cellid=").append(mAimsicdService.mDevice.mCell.getCID());
-            }
-
-            sb.append("&format=xml");
-            cellLookUpAsync.execute(sb.toString());
         }
 
         mDrawerList.setItemChecked(position, true);
