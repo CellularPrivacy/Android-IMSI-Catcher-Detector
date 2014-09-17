@@ -1,6 +1,11 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 17.09.2014
+
+* Update: Modifed the OpenCellID methods to enable each user to request and use their own keys
+* Update: Added small clarifications to Phone Type and RIL Version within Device Information
+
 #### 15.09.2014 - WIP-Internal v0.1.24-alpha-build-6
 
 * Improved: Several small adjustments of our GitHub Introduction (thanks @andr3jx)
