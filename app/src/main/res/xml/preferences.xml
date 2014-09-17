@@ -60,6 +60,10 @@
     <PreferenceCategory
             android:title="@string/pref_ocid_title"
             android:key="pref_key_ocid_settings">
+        <EditTextPreference
+            android:key="@string/pref_ocid_key"
+            android:title="@string/pref_ocid_key_title"
+            android:summary="@string/pref_ocid_key_summ" />
         <CheckBoxPreference
                 android:key="@string/pref_ocid_upload"
                 android:title="@string/pref_ui_ocid_upload_title"

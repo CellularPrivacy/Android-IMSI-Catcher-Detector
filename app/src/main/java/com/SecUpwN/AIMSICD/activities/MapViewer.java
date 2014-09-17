@@ -290,7 +290,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                     Location lastKnown = mAimsicdService.mDevice.getLastLocation();
                     if (lastKnown != null) {
                         Helpers.msgShort(this, "Contacting OpenCellID.org for data...");
-                        Cell cell = new Cell();
+                        Cell cell;
                         cell = mAimsicdService.mDevice.mCell;
                         cell.setLon(lastKnown.getLongitude());
                         cell.setLat(lastKnown.getLatitude());
