@@ -236,7 +236,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mRilExecutorDetectResult = mRequestExecutor.detect();
         if (!mRilExecutorDetectResult.available) {
             mMultiRilCompatible = false;
-            Log.e(TAG, "Samsung multiclient ril not available: " + mRilExecutorDetectResult.error);
+            Log.e(TAG, "Samsung Multiclient RIL not available: " + mRilExecutorDetectResult.error);
             mRequestExecutor = null;
         } else {
             mRequestExecutor.start();
@@ -256,7 +256,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         mMonitorCell = new Cell();
 
-        Log.i(TAG, "Service launched successfully");
+        Log.i(TAG, "Service launched successfully.");
     }
 
     @Override
@@ -286,7 +286,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             mHandlerThread = null;
         }
 
-        Log.i(TAG, "Service destroyed");
+        Log.i(TAG, "Service destroyed.");
     }
 
     private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -698,15 +698,15 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             status = 4; //ALARM
         } else if (mChangedLAC) {
             status = 3; //MEDIUM
-            contentText = "Hostile Service Area: Changing LAC Detected";
+            contentText = "Hostile Service Area: Changing LAC Detected!";
         } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
             status = 2; //NORMAL
             if (mTrackingFemtocell) {
-                contentText = "FemtoCell Detection Active";
+                contentText = "FemtoCell Detection Active.";
             } else if (mTrackingCell) {
-                contentText = "Cell Tracking Active";
+                contentText = "Cell Tracking Active.";
             } else {
-                contentText = "Cell Monitoring Active";
+                contentText = "Cell Monitoring Active.";
             }
         } else {
             status = 1; //IDLE
@@ -744,7 +744,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         break;
                 }
                 tickerText = getResources().getString(R.string.app_name_short)
-                        + " - Status: Good No Threats Detected";
+                        + " - Status: Good. No Threats Detected.";
                 break;
             case 3: //MEDIUM
                 switch (iconType) {
@@ -759,9 +759,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         break;
                 }
                 tickerText = getResources().getString(R.string.app_name_short)
-                        + " - Hostile Service Area: Changing LAC Detected";
+                        + " - Hostile Service Area: Changing LAC Detected!";
                 if (mChangedLAC) {
-                    contentText = "Hostile Service Area: Changing LAC Detected";
+                    contentText = "Hostile Service Area: Changing LAC Detected!";
                 }
                 break;
             case 4: //DANGER
@@ -777,11 +777,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         break;
                 }
                 tickerText = getResources().getString(R.string.app_name_short)
-                        + " - ALERT!! Threat Detected";
+                        + " - ALERT!! Threat Detected!";
                 if (mFemtoDetected) {
-                    contentText = "ALERT!! FemtoCell Connection Threat Detected";
+                    contentText = "ALERT!! FemtoCell Connection Threat Detected!";
                 } else if (mTypeZeroSmsDetected) {
-                    contentText = "ALERT!! Type Zero Silent SMS Intercepted";
+                    contentText = "ALERT!! Type Zero Silent SMS Intercepted!";
                 }
 
                 break;
@@ -849,11 +849,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         if (monitor) {
             timerHandler.postDelayed(timerRunnable, 0);
             mMonitoringCell = true;
-            Helpers.msgShort(this, "Monitoring cell information");
+            Helpers.msgShort(this, "Monitoring Cell Information");
         } else {
             timerHandler.removeCallbacks(timerRunnable);
             mMonitoringCell = false;
-            Helpers.msgShort(this, "Stopped monitoring cell information");
+            Helpers.msgShort(this, "Stopped monitoring Cell Information");
         }
 
         setNotification();
@@ -920,21 +920,21 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             );
             if (lm != null) {
                 mLocationListener = new MyLocationListener();
-                Log.i(TAG, "LocationManager already existed");
+                Log.i(TAG, "LocationManager already existed.");
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
                         GPS_MIN_UPDATE_DISTANCE, mLocationListener);
             } else {
-                Log.i(TAG, "LocationManager did not exist");
+                Log.i(TAG, "LocationManager did not exist.");
                 lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
                 if (lm != null) {
                     if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                        Log.i(TAG, "LocationManager created");
+                        Log.i(TAG, "LocationManager created.");
                         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
                                 GPS_MIN_UPDATE_DISTANCE, mLocationListener);
                     }
                 }
             }
-            Helpers.msgShort(this, "Tracking cell information");
+            Helpers.msgShort(this, "Tracking Cell Information.");
             mTrackingCell = true;
         } else {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
@@ -943,7 +943,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             mDevice.mCell.setLat(0.0);
             mTrackingCell = false;
             mDevice.setCellInfo("[0,0]|nn|nn|");
-            Helpers.msgShort(this, "Stopped tracking cell information");
+            Helpers.msgShort(this, "Stopped tracking Cell Information.");
         }
         setNotification();
     }
@@ -1205,7 +1205,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                                     SystemClock.currentThreadTimeMillis());
 
                     if (mDbResult == -1) {
-                        Log.e(TAG, "Error writing to database");
+                        Log.e(TAG, "Error writing to database!");
                     }
                 }
             }
@@ -1318,7 +1318,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
             mTrackingFemtocell = false;
             setNotification();
-            Log.v(TAG, "Stopped tracking Femtocell connections");
+            Log.v(TAG, "Stopped tracking Femtocell connections.");
         }
     }
 
