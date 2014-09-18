@@ -99,6 +99,8 @@
     <string name="about_aimsicd">About AIMSICD</string>
     <string name="aimsicd_about_info">Android IMSI-Catcher Detector</string>
     <string name="aimsicd_about_info2">Detect and avoid IMSI-Catcher attacks!</string>
+    <string name="wiki_info">The complete documentation is available at our</string>
+    <string name="wiki_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki"&gt;WIKI&lt;/a&gt;</string>
     <string name="poc_info">This App is a</string>
     <string name="poc_link">&lt;a href="https://en.wikipedia.org/wiki/Proof_of_concept"&gt;Proof-of-Concept (PoC)&lt;/a&gt;</string>
     <string name="disclaimer_info">You MUST accept our</string>
