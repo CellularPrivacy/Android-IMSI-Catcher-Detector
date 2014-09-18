@@ -42,6 +42,11 @@ public class AboutFragment extends Fragment {
 
             versionNumber.setText(version);
 
+            //GitHub WIKI Link
+            TextView tv = (TextView) v.findViewById(R.id.aimsicd_wiki_link);
+            tv.setMovementMethod(LinkMovementMethod.getInstance());
+            tv.setText(Html.fromHtml(getResources().getString(R.string.wiki_link)));
+
             //Proof of Concept Link
             TextView tv = (TextView) v.findViewById(R.id.aimsicd_poc_link);
             tv.setMovementMethod(LinkMovementMethod.getInstance());
@@ -52,7 +57,7 @@ public class AboutFragment extends Fragment {
             tv.setMovementMethod(LinkMovementMethod.getInstance());
             tv.setText(Html.fromHtml(getResources().getString(R.string.disclaimer_link)));
 
-            //Github Contribution Link
+            //GitHub Contribution Link
             tv = (TextView) v.findViewById(R.id.aimsicd_contribute_link);
             tv.setMovementMethod(LinkMovementMethod.getInstance());
             tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_github_link)));
