@@ -48,7 +48,7 @@ public class AboutFragment extends Fragment {
             tv.setText(Html.fromHtml(getResources().getString(R.string.wiki_link)));
 
             //Proof of Concept Link
-            TextView tv = (TextView) v.findViewById(R.id.aimsicd_poc_link);
+            tv = (TextView) v.findViewById(R.id.aimsicd_poc_link);
             tv.setMovementMethod(LinkMovementMethod.getInstance());
             tv.setText(Html.fromHtml(getResources().getString(R.string.poc_link)));
 
