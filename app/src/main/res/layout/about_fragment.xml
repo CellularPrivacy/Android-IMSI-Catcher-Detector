@@ -36,19 +36,35 @@
             android:textColor="@color/white"
             android:padding="8dip" android:layout_below="@+id/aimsicd_version"/>
     <TextView
+            android:id="@+id/aimsicd_wiki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wiki_info"
+            android:textColor="@color/white"
+            android:padding="8dip" android:layout_below="@+id/aimsicd_about_info2"/>
+    <TextView
+            android:id="@+id/aimsicd_wiki_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty"
+            android:textColor="@color/green_text"
+            android:padding="8dip" android:layout_below="@+id/aimsicd_wiki"
+            android:layout_toRightOf="@+id/aimsicd_wiki"
+            android:layout_toEndOf="@+id/aimsicd_wiki"/>
+    <TextView
             android:id="@+id/aimsicd_poc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/poc_info"
             android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_about_info2"/>
+            android:padding="8dip" android:layout_below="@+id/aimsicd_wiki"/>
     <TextView
             android:id="@+id/aimsicd_poc_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empty"
             android:textColor="@color/green_text"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_about_info2"
+            android:padding="8dip" android:layout_below="@+id/aimsicd_wiki"
             android:layout_toRightOf="@+id/aimsicd_poc"
             android:layout_toEndOf="@+id/aimsicd_poc"/>
     <TextView
