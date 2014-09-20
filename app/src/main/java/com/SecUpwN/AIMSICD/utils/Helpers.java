@@ -170,7 +170,7 @@ public class Helpers {
                     new RequestTask(context, type).execute(sb.toString());
                 }
             } else {
-                Helpers.msgShort(context,
+                Helpers.sendMsg(context,
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
         } else {
