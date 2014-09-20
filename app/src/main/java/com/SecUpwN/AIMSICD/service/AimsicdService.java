@@ -65,6 +65,7 @@ import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
 import com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Device;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.OemCommands;
 
@@ -823,17 +824,26 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
     }
 
-    public Location lastKnownLocation() {
+    public GeoLocation lastKnownLocation() {
+        GeoLocation loc = null;
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location == null || (location.getLatitude() == 0.0 && location.getLongitude() == 0.0)) {
+        if (location != null && (location.getLatitude() != 0.0 && location.getLongitude() != 0.0)) {
+            loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
+        } else {
             location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (location == null || (location.getLatitude() == 0.0
-                    && location.getLongitude() == 0.0)) {
-
+            if (location != null && (location.getLatitude() != 0.0
+                    && location.getLongitude() != 0.0)) {
+                loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
+            } else {
+                String coords = prefs.getString(this.getString(R.string.data_last_lat_lon), null);
+                if (coords != null) {
+                    String[] coord = coords.split(":");
+                    loc = GeoLocation.fromDegrees(Double.valueOf(coord[0]), Double.valueOf(coord[1]));
+                }
             }
         }
 
-        return location;
+        return loc;
     }
 
     public boolean isMonitoringCell() {
@@ -1185,6 +1195,14 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 mDevice.mCell.setAccuracy(loc.getAccuracy());
                 mDevice.mCell.setBearing(loc.getBearing());
                 mDevice.setLastLocation(loc);
+
+                //Store last known location in preference
+                Editor prefsEditor;
+                prefsEditor = prefs.edit();
+                prefsEditor.putString(mContext.getString(R.string.data_last_lat_lon),
+                        String.valueOf(loc.getLatitude()) + ":" + String
+                                .valueOf(loc.getLongitude()));
+                prefsEditor.apply();
 
                 if (mTrackingCell) {
                     dbHelper.open();

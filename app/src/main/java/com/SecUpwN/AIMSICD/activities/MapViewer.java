@@ -33,6 +33,7 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
@@ -418,9 +419,10 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         } else {
             if (mBound) {
                 // Try and find last known location and zoom there
-                Location lastLoc = mAimsicdService.lastKnownLocation();
-                if (lastLoc != null && lastLoc.hasAccuracy()) {
-                    loc = new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude());
+                GeoLocation lastLoc = mAimsicdService.lastKnownLocation();
+                if (lastLoc != null) {
+                    loc = new LatLng(lastLoc.getLatitudeInDegrees(),
+                            lastLoc.getLongitudeInDegrees());
                     CameraPosition POSITION =
                             new CameraPosition.Builder().target(loc)
                                     .zoom(16)
