@@ -613,6 +613,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         boolean trackCellPref = prefs.getBoolean(
                 this.getString(R.string.pref_enable_cell_key), false);
 
+        boolean monitorCellPref = prefs.getBoolean(
+                this.getString(R.string.pref_enable_cell_monitoring_key), true);
+
         LAST_DB_BACKUP_VERSION = prefs.getInt(
                 this.getString(R.string.pref_last_database_backup_version), 1);
 
@@ -647,6 +650,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         if (trackCellPref) {
             setCellTracking(true);
+        }
+
+        if (monitorCellPref) {
+            setCellMonitoring(true);
         }
     }
 
