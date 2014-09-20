@@ -335,6 +335,8 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 final int cellID = c.getInt(0);
                 final int lac = c.getInt(1);
                 final int net = c.getInt(2);
+                final int mcc = c.getInt(6);
+                final int mnc = c.getInt(7);
                 final double dlat = Double.parseDouble(c.getString(3));
                 final double dlng = Double.parseDouble(c.getString(4));
                 if (dlat == 0.0 && dlng == 0.0) {
@@ -402,7 +404,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                             .draggable(false)
                             .title("CellID - " + cellID));
                     mMarkerMap.put(marker, new MarkerData("" + cellID, "" + loc.latitude,
-                            "" + loc.longitude, "" + lac, "", "", "", false));
+                            "" + loc.longitude, "" + lac, "" + mcc, "" + mnc, "", false));
                 }
 
             } while (c.moveToNext());
