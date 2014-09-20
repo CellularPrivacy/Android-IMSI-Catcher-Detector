@@ -331,6 +331,8 @@ public class AIMSICD extends Activity implements AsyncResponse {
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
 
+        } else if (selectedItem.getId() == 304) {
+            finish();
         }
 
         mDrawerList.setItemChecked(position, true);
