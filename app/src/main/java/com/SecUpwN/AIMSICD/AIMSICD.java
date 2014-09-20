@@ -17,6 +17,9 @@
 
 package com.SecUpwN.AIMSICD;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
@@ -261,7 +264,14 @@ public class AIMSICD extends Activity implements AsyncResponse {
         } else if (selectedItem.getId() == 903) {
             trackFemtocell();
         } else if (selectedItem.getId() == 105) {
-            showmap();
+            int status = GooglePlayServicesUtil
+                    .isGooglePlayServicesAvailable(getApplicationContext());
+            if (status == ConnectionResult.SUCCESS) {
+                showmap();
+            } else {
+                Helpers.sendMsg(this,
+                        "Google Play Services is required for the MapViewer and was not found on your device");
+            }
         } else if (selectedItem.getId() == 202) {
             Intent intent = new Intent(this, PrefActivity.class);
             startActivity(intent);
