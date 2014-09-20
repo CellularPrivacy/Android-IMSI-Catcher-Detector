@@ -32,7 +32,7 @@ public class DrawerMenuItem implements NavDrawerItem {
         return id;
     }
 
-    public void setId(int id) {
+    void setId(int id) {
         this.id = id;
     }
 
@@ -62,7 +62,7 @@ public class DrawerMenuItem implements NavDrawerItem {
         return this.updateActionBarTitle;
     }
 
-    public void setUpdateActionBarTitle(boolean updateActionBarTitle) {
+    void setUpdateActionBarTitle(boolean updateActionBarTitle) {
         this.updateActionBarTitle = updateActionBarTitle;
     }
 }

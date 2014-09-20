@@ -52,7 +52,6 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -393,7 +392,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
         mActionBar.setTitle(mTitle);
     }
 
-    protected DrawerMenuActivityConfiguration getNavDrawerConfiguration() {
+    DrawerMenuActivityConfiguration getNavDrawerConfiguration() {
 
         List<NavDrawerItem> menu = new ArrayList<>();
 

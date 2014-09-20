@@ -6,7 +6,6 @@ import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -15,7 +14,6 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -37,7 +35,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 public class RequestTask extends AsyncTask<String, Integer, String> {
 
@@ -71,6 +68,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         if (prepared) {
                             File file = new File(Environment.getExternalStorageDirectory()
                                     + "/AIMSICD/OpenCellID/aimsicd-ocid-data.csv");
+                            publishProgress(25,100);
 
                             MultipartEntity mpEntity = new MultipartEntity();
                             FileInputStream fin = new FileInputStream(file);
@@ -81,7 +79,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                                     "aimsicd-ocid-data.csv"));
 
                             ByteArrayOutputStream bAOS = new ByteArrayOutputStream();
-
+                            publishProgress(50,100);
                             mpEntity.writeTo(bAOS);
                             bAOS.flush();
                             ByteArrayEntity bArrEntity = new ByteArrayEntity(bAOS.toByteArray());
@@ -96,16 +94,14 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                             httpclient = new DefaultHttpClient();
                             httppost = new HttpPost("http://www.opencellid.org/measure/uploadCsv");
-
+                            publishProgress(60,100);
                             httppost.setEntity(bArrEntity);
                             response = httpclient.execute(httppost);
-
+                            publishProgress(80,100);
                             if (response!= null) {
                                 Log.i("AIMSICD", "OCID Upload Response: " + response.getStatusLine().getStatusCode() + " - " + response.getStatusLine());
-                                HttpEntity resEntity = response.getEntity();
-                                Log.i("AIMSICD", "OCID Response Content: " + EntityUtils.toString(resEntity));
-                                resEntity.consumeContent();
                                 mDbAdapter.ocidProcessed();
+                                publishProgress(95,100);
                             }
 
                         }
@@ -115,7 +111,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 }
 
                 try {
-                    int total = 0;
+                    int total;
                     int progress = 0;
                     File dir = new File(
                             Environment.getExternalStorageDirectory()
@@ -135,24 +131,34 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     urlConnection.setDoInput(true);
                     urlConnection.connect();
 
-                    total = urlConnection.getContentLength();
-                    publishProgress(progress, total);
-
-                    FileOutputStream output = new FileOutputStream(file, false);
-                    InputStream input = new BufferedInputStream(urlConnection.getInputStream());
-
-                    byte[] data = new byte[1024];
-                    while ((count = input.read(data)) > 0) {
-                        // writing data to file
-                        output.write(data, 0, count);
-                        progress += count;
-
+                    if (urlConnection.getResponseCode() != 200) {
+                        try {
+                            String error = Helpers
+                                    .convertStreamToString(urlConnection.getErrorStream());
+                            Log.e("AIMSICD", "Download ocid data error: " + error);
+                        } catch (Exception e) {
+                            Log.e("AIMSICD", "Download ocid - " + e);
+                        }
+                    } else {
+                        total = urlConnection.getContentLength();
                         publishProgress(progress, total);
-                    }
 
-                    // flushing output
-                    output.flush();
-                    output.close();
+                        FileOutputStream output = new FileOutputStream(file, false);
+                        InputStream input = new BufferedInputStream(urlConnection.getInputStream());
+
+                        byte[] data = new byte[1024];
+                        while ((count = input.read(data)) > 0) {
+                            // writing data to file
+                            output.write(data, 0, count);
+                            progress += count;
+
+                            publishProgress(progress, total);
+                        }
+
+                        // flushing output
+                        output.flush();
+                        output.close();
+                    }
 
                     urlConnection.disconnect();
 
