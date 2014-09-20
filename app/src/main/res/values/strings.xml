@@ -170,6 +170,7 @@
     <string name="pref_ocid_key">pref_ocid_key</string>
     <string name="pref_ocid_key_title">OpenCellID API Key</string>
     <string name="pref_ocid_key_summ">Enter your OpenCellID API Key here</string>
+    <string name="data_last_lat_lon">data_last_lat_lon</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>

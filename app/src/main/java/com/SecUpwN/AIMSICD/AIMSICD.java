@@ -33,6 +33,7 @@ import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
 import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
@@ -275,12 +276,12 @@ public class AIMSICD extends Activity implements AsyncResponse {
             }
         } else if (selectedItem.getId() == 301) {
             if (!AimsicdService.OCID_API_KEY.equals("NA")) {
-                Location loc = mAimsicdService.lastKnownLocation();
+                GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
                     Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
                     Cell cell = new Cell();
-                    cell.setLon(loc.getLongitude());
-                    cell.setLat(loc.getLatitude());
+                    cell.setLon(loc.getLongitudeInDegrees());
+                    cell.setLat(loc.getLatitudeInDegrees());
                     Helpers.getOpenCellData(mContext, cell,
                             RequestTask.OPEN_CELL_ID_REQUEST);
                 } else {
@@ -296,7 +297,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
                             mAimsicdService.mDevice.mCell.getMCC());
                 }
             } else {
-                Helpers.msgShort(mContext,
+                Helpers.sendMsg(mContext,
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
         } else if (selectedItem.getId() == 302) {
@@ -326,7 +327,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
                 sb.append("&format=xml");
                 cellLookUpAsync.execute(sb.toString());
             } else {
-                Helpers.msgShort(mContext,
+                Helpers.sendMsg(mContext,
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
 
