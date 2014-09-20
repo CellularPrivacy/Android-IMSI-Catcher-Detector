@@ -171,6 +171,9 @@
     <string name="pref_ocid_key_title">OpenCellID API Key</string>
     <string name="pref_ocid_key_summ">Enter your OpenCellID API Key here</string>
     <string name="data_last_lat_lon">data_last_lat_lon</string>
+    <string name="pref_enable_cell_monitoring_key">pref_enable_cell_monitoring</string>
+    <string name="pref_enable_cell_monitoring_title">Cell Monitoring</string>
+    <string name="pref_enable_cell_monitoring_summ">Enable Cell Monitoring Automatically</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
