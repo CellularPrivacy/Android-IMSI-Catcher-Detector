@@ -104,7 +104,7 @@ public class CardItemData {
         mAvgSigStr = "Avg Signal: N/A";
         mSamples = "Samples: N/A";
         mSignal = signal;
-        mPsc = "PSC: N/A";
+        mPsc = psc;
         mCountry = "Country: N/A";
         mTimestamp = "Timestamp: N/A";
         mRecordId = recordId;

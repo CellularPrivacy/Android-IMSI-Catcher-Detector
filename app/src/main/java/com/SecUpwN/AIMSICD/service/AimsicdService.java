@@ -148,7 +148,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private final Handler timerHandler = new Handler();
     private Context mContext;
     private final int NOTIFICATION_ID = 1;
-    private long mDbResult;
+
     private static TelephonyManager tm;
     private static LocationManager lm;
     private SharedPreferences prefs;
@@ -170,7 +170,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private boolean mTrackingCell;
     private boolean mTrackingFemtocell;
     private boolean mFemtoDetected;
-    private boolean mLocationPrompted;
     private boolean mTypeZeroSmsDetected;
     private boolean mChangedLAC;
     private Cell mMonitorCell;
@@ -430,7 +429,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         }
                     }
                     ArrayList<NeighboringCellInfo> cellInfoList =
-                            new ArrayList<NeighboringCellInfo>(
+                            new ArrayList<>(
                                     neighboringCellBlockingQueue.size() + 1);
                     while (info != null) {
                         cellInfoList.add(info);
@@ -692,7 +691,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     /**
      * Set or update the Notification
      */
-    public void setNotification() {
+    void setNotification() {
 
         String tickerText;
         String contentText = "Phone Type " + mDevice.getPhoneType();
@@ -1213,25 +1212,20 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
                 if (mTrackingCell) {
                     dbHelper.open();
-                    mDbResult = dbHelper.insertLocation(mDevice.mCell.getLAC(),
+                    dbHelper.insertLocation(mDevice.mCell.getLAC(),
                             mDevice.mCell.getCID(), mDevice.mCell.getNetType(),
                             mDevice.mCell.getLat(),
                             mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
                             mDevice.getCellInfo());
 
-                    mDbResult = dbHelper
-                            .insertCell(mDevice.mCell.getLAC(), mDevice.mCell.getCID(),
-                                    mDevice.mCell.getNetType(), mDevice.mCell.getLat(),
-                                    mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
-                                    mDevice.mCell.getMCC(), mDevice.mCell.getMNC(),
-                                    mDevice.mCell.getAccuracy(), mDevice.mCell.getSpeed(),
-                                    mDevice.mCell.getBearing(),
-                                    mDevice.getNetworkTypeName(),
-                                    SystemClock.currentThreadTimeMillis());
-
-                    if (mDbResult == -1) {
-                        Log.e(TAG, "Error writing to database!");
-                    }
+                   dbHelper.insertCell(mDevice.mCell.getLAC(), mDevice.mCell.getCID(),
+                           mDevice.mCell.getNetType(), mDevice.mCell.getLat(),
+                           mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
+                           mDevice.mCell.getMCC(), mDevice.mCell.getMNC(),
+                           mDevice.mCell.getAccuracy(), mDevice.mCell.getSpeed(),
+                           mDevice.mCell.getBearing(),
+                           mDevice.getNetworkTypeName(),
+                           SystemClock.currentThreadTimeMillis());
                 }
             }
 
