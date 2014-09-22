@@ -24,56 +24,46 @@ public class SilentSmsCardData {
     public String getAddress() {
         String address = "Address: ";
         if (mAddress.isEmpty()) {
-            address += "Unavailable";
+            return address + "Unavailable";
         } else {
-            address += mAddress;
+            return address + mAddress;
         }
-
-        return address;
     }
 
     public String getDisplayAddress() {
         String display = "Display Address: ";
         if (mDisplayAddress.isEmpty()) {
-            display += "Unavailable";
+            return display + "Unavailable";
         } else {
-            display += mDisplayAddress;
+            return display + mDisplayAddress;
         }
-
-        return display;
     }
 
     public String getMessageClass() {
         String messageClass = "Message Class: ";
         if (messageClass.isEmpty()) {
-            messageClass += "Unavailable";
+            return messageClass + "Unavailable";
         } else {
-            messageClass += mMessageClass;
+            return messageClass + mMessageClass;
         }
-
-        return messageClass;
     }
 
     public String getServiceCentre() {
         String serviceCentre = "Service Centre: ";
         if (mServiceCentre.isEmpty()) {
-            serviceCentre += "Unavailable";
+            return serviceCentre + "Unavailable";
         } else {
-            serviceCentre += mServiceCentre;
+            return serviceCentre + mServiceCentre;
         }
-
-        return serviceCentre;
     }
 
     public String getMessage() {
         String message = "Message: ";
         if (message.isEmpty()) {
-            message += "Unavailable";
+            return message + "Unavailable";
         } else {
-            message += mMessage;
+            return message + mMessage;
         }
-
-        return message;
     }
 
     public String getTimestamp() {
@@ -81,5 +71,4 @@ public class SilentSmsCardData {
         String dateString = formatter.format(mTimestamp);
         return "Timestamp: " + dateString;
     }
-
 }
