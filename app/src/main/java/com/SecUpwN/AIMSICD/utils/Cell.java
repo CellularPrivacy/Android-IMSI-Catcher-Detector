@@ -455,10 +455,10 @@ public class Cell implements Parcelable {
         @Override
         protected List<Cell> doInBackground(String ... urls) {
             try {
-                InputStream stream = null;
+                InputStream stream;
                 // Instantiate the parser
                 StackOverflowXmlParser stackOverflowXmlParser = new StackOverflowXmlParser();
-                List<Cell> cells = null;
+                List<Cell> cells;
 
                 URL url = new URL(urls[0]);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();

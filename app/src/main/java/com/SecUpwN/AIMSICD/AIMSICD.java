@@ -17,6 +17,9 @@
 
 package com.SecUpwN.AIMSICD;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
@@ -33,6 +36,7 @@ import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
 import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
@@ -48,7 +52,6 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -260,7 +263,14 @@ public class AIMSICD extends Activity implements AsyncResponse {
         } else if (selectedItem.getId() == 903) {
             trackFemtocell();
         } else if (selectedItem.getId() == 105) {
-            showmap();
+            int status = GooglePlayServicesUtil
+                    .isGooglePlayServicesAvailable(getApplicationContext());
+            if (status == ConnectionResult.SUCCESS) {
+                showmap();
+            } else {
+                Helpers.sendMsg(this,
+                        "Google Play Services is required for the MapViewer and was not found on your device");
+            }
         } else if (selectedItem.getId() == 202) {
             Intent intent = new Intent(this, PrefActivity.class);
             startActivity(intent);
@@ -275,12 +285,12 @@ public class AIMSICD extends Activity implements AsyncResponse {
             }
         } else if (selectedItem.getId() == 301) {
             if (!AimsicdService.OCID_API_KEY.equals("NA")) {
-                Location loc = mAimsicdService.lastKnownLocation();
+                GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
                     Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
                     Cell cell = new Cell();
-                    cell.setLon(loc.getLongitude());
-                    cell.setLat(loc.getLatitude());
+                    cell.setLon(loc.getLongitudeInDegrees());
+                    cell.setLat(loc.getLatitudeInDegrees());
                     Helpers.getOpenCellData(mContext, cell,
                             RequestTask.OPEN_CELL_ID_REQUEST);
                 } else {
@@ -296,7 +306,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
                             mAimsicdService.mDevice.mCell.getMCC());
                 }
             } else {
-                Helpers.msgShort(mContext,
+                Helpers.sendMsg(mContext,
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
         } else if (selectedItem.getId() == 302) {
@@ -326,10 +336,12 @@ public class AIMSICD extends Activity implements AsyncResponse {
                 sb.append("&format=xml");
                 cellLookUpAsync.execute(sb.toString());
             } else {
-                Helpers.msgShort(mContext,
+                Helpers.sendMsg(mContext,
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
 
+        } else if (selectedItem.getId() == 304) {
+            finish();
         }
 
         mDrawerList.setItemChecked(position, true);
@@ -380,7 +392,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
         mActionBar.setTitle(mTitle);
     }
 
-    protected DrawerMenuActivityConfiguration getNavDrawerConfiguration() {
+    DrawerMenuActivityConfiguration getNavDrawerConfiguration() {
 
         List<NavDrawerItem> menu = new ArrayList<>();
 
