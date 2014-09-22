@@ -2,7 +2,7 @@ package com.SecUpwN.AIMSICD.drawer;
 
 public class DrawerMenuSection implements NavDrawerItem {
 
-    public static final int SECTION_TYPE = 0;
+    private static final int SECTION_TYPE = 0;
     private int id;
     private String label;
     private int icon;

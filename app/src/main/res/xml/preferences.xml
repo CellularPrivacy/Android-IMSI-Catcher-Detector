@@ -20,6 +20,11 @@
                 android:title="@string/pref_enable_cell_title"
                 android:summary="@string/pref_enable_cell_summ"
                 android:defaultValue="true" />
+        <CheckBoxPreference
+                android:key="@string/pref_enable_cell_monitoring_key"
+                android:title="@string/pref_enable_cell_monitoring_title"
+                android:summary="@string/pref_enable_cell_monitoring_summ"
+                android:defaultValue="true" />
         <ListPreference
                 android:key="@string/pref_refresh_key"
                 android:title="@string/pref_refresh_title"
@@ -55,6 +60,20 @@
             android:entries="@array/pref_ui_icons_entries"
             android:entryValues="@array/pref_ui_icons_values"
             android:defaultValue="sense"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/pref_ocid_title"
+            android:key="pref_key_ocid_settings">
+        <EditTextPreference
+            android:key="@string/pref_ocid_key"
+            android:title="@string/pref_ocid_key_title"
+            android:summary="@string/pref_ocid_key_summ" />
+        <CheckBoxPreference
+                android:key="@string/pref_ocid_upload"
+                android:title="@string/pref_ui_ocid_upload_title"
+                android:summary="@string/pref_ui_ocid_upload_summ"
+                android:defaultValue="false" />
     </PreferenceCategory>
 
 </PreferenceScreen>

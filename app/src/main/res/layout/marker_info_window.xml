@@ -24,14 +24,14 @@
                 android:id="@+id/cell_id_label" android:text="@string/cell_id_label"
                 android:textSize="15sp"
                 android:textColor="@color/white"
-                android:padding="2dip" android:gravity="right"
-                android:layout_gravity="right"/>
+                android:padding="2dip" android:gravity="end"
+                android:layout_gravity="end"/>
 
         <TextView
                 android:id="@+id/cell_id" android:text="@string/empty"
                 android:textSize="15sp"
                 android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="left"/>
+                android:padding="2dip" android:gravity="start"/>
     </TableRow>
 
     <TableRow
@@ -40,13 +40,13 @@
         <TextView
                 android:id="@+id/lat_label" android:text="@string/lat_label"
                 android:textColor="@color/white"
-                android:padding="2dip" android:gravity="right"
-                android:layout_gravity="right"/>
+                android:padding="2dip" android:gravity="end"
+                android:layout_gravity="end"/>
 
         <TextView
                 android:id="@+id/lat" android:text="@string/empty"
                 android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="left"/>
+                android:padding="2dip" android:gravity="start"/>
     </TableRow>
 
     <TableRow
@@ -55,13 +55,13 @@
         <TextView
                 android:id="@+id/lng_label" android:text="@string/lng_label"
                 android:textColor="@color/white"
-                android:padding="2dip" android:gravity="right"
-                android:layout_gravity="right"/>
+                android:padding="2dip" android:gravity="end"
+                android:layout_gravity="end"/>
 
         <TextView
                 android:id="@+id/lng" android:text="@string/empty"
                 android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="left"/>
+                android:padding="2dip" android:gravity="start"/>
     </TableRow>
 
     <TableRow
@@ -70,13 +70,13 @@
         <TextView
                 android:id="@+id/mcc_label" android:text="@string/mcc_label"
                 android:textColor="@color/white"
-                android:padding="2dip" android:gravity="right"
-                android:layout_gravity="right"/>
+                android:padding="2dip" android:gravity="end"
+                android:layout_gravity="end"/>
 
         <TextView
                 android:id="@+id/mcc" android:text="@string/empty"
                 android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="left"/>
+                android:padding="2dip" android:gravity="start"/>
     </TableRow>
 
     <TableRow
@@ -85,13 +85,13 @@
         <TextView
                 android:id="@+id/mnc_label" android:text="@string/mnc_label"
                 android:textColor="@color/white"
-                android:padding="2dip" android:gravity="right"
-                android:layout_gravity="right"/>
+                android:padding="2dip" android:gravity="end"
+                android:layout_gravity="end"/>
 
         <TextView
                 android:id="@+id/mnc" android:text="@string/empty"
                 android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="left"/>
+                android:padding="2dip" android:gravity="start"/>
     </TableRow>
 
     <TableRow
@@ -100,13 +100,13 @@
         <TextView
                 android:id="@+id/samples_label" android:text="@string/samples_label"
                 android:textColor="@color/white"
-                android:padding="2dip" android:gravity="right"
-                android:layout_gravity="right"/>
+                android:padding="2dip" android:gravity="end"
+                android:layout_gravity="end"/>
 
         <TextView
                 android:id="@+id/samples" android:text="@string/empty"
                 android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="left"/>
+                android:padding="2dip" android:gravity="start"/>
     </TableRow>
 
 </TableLayout>

@@ -2,13 +2,16 @@ package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.Shell;
+import com.stericson.RootTools.RootTools;
+import com.stericson.RootTools.execution.Command;
+import com.stericson.RootTools.execution.CommandCapture;
+import com.stericson.RootTools.execution.Shell;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,57 +30,55 @@ import java.util.List;
 public class AtCommandFragment extends Fragment {
 
     //Return value constants
-    private final int SERIAL_INIT_OK = 200;
-    private final int SERIAL_INIT_ERROR = 201;
-    private final int ROOT_UNAVAILABLE = 202;
-    private final int BUSYBOX_UNAVAILABLE = 203;
+    private final int SERIAL_INIT_OK = 100;
+    private final int SERIAL_INIT_ERROR = 101;
+    private final int ROOT_UNAVAILABLE = 102;
+    private final int BUSYBOX_UNAVAILABLE = 103;
 
-    private final int EXECUTE_AT = 300;
-    private final int EXECUTE_COMMAND = 301;
+    private final int EXECUTE_AT = 200;
+    private final int EXECUTE_COMMAND = 201;
+
+    private final int SET_DEVICE = 300;
 
     private Context mContext;
-    private Shell mShell = null;
     private String mSerialDevice;
-    private float mTimeout;
+    private int mTimeout;
     private final List<String> mSerialDevices = new ArrayList<>();
 
-    private List<String> mOutput;
-    private List<String> mError;
-
-    //Layout items
-    private View mView;
     private RelativeLayout mAtCommandLayout;
     private TextView mAtCommandError;
     private TextView mSerialDeviceDisplay;
-    private Button mAtCommandExecute;
+
     private TextView mAtResponse;
     private EditText mAtCommand;
     private Spinner mSerialDeviceSpinner;
     private TextView mSerialDeviceSpinnerLabel;
-    private Spinner mTimoutSpinner;
+
+    private Shell shell;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.at_command_fragment, container, false);
-        if (mView != null) {
-            mAtCommandLayout = (RelativeLayout) mView.findViewById(R.id.atcommandView);
-            mAtCommandError = (TextView) mView.findViewById(R.id.at_command_error);
-            mAtCommandExecute = (Button) mView.findViewById(R.id.execute);
-            mSerialDeviceDisplay = (TextView) mView.findViewById(R.id.serial_device);
-            mAtResponse = (TextView) mView.findViewById(R.id.response);
-            mAtCommand = (EditText) mView.findViewById(R.id.at_command);
-            mAtCommandExecute.setOnClickListener(new btnClick());
-            mSerialDeviceSpinner = (Spinner) mView.findViewById(R.id.serial_device_spinner);
+        View view = inflater.inflate(R.layout.at_command_fragment, container, false);
+        if (view != null) {
+            mAtCommandLayout = (RelativeLayout) view.findViewById(R.id.atcommandView);
+            mAtCommandError = (TextView) view.findViewById(R.id.at_command_error);
+            Button atCommandExecute = (Button) view.findViewById(R.id.execute);
+            mSerialDeviceDisplay = (TextView) view.findViewById(R.id.serial_device);
+            mAtResponse = (TextView) view.findViewById(R.id.response);
+            mAtCommand = (EditText) view.findViewById(R.id.at_command);
+            atCommandExecute.setOnClickListener(new btnClick());
+            mSerialDeviceSpinner = (Spinner) view.findViewById(R.id.serial_device_spinner);
             mSerialDeviceSpinner.setOnItemSelectedListener(new spinnerListener());
-            mSerialDeviceSpinnerLabel = (TextView) mView.findViewById(R.id.serial_device_spinner_title);
-            mTimoutSpinner = (Spinner) mView.findViewById(R.id.timeout_spinner);
-            mTimoutSpinner.setOnItemSelectedListener(new timoutSpinnerListener());
-            mTimoutSpinner.setSelection(1);
-            mTimeout = 5.0f;
+            mSerialDeviceSpinnerLabel = (TextView) view
+                    .findViewById(R.id.serial_device_spinner_title);
+            Spinner timoutSpinner = (Spinner) view.findViewById(R.id.timeout_spinner);
+            timoutSpinner.setOnItemSelectedListener(new timoutSpinnerListener());
+            timoutSpinner.setSelection(1);
+            mTimeout = 5000;
         }
 
-        return mView;
+        return view;
     }
 
     private class timoutSpinnerListener implements AdapterView.OnItemSelectedListener {
@@ -87,22 +88,22 @@ public class AtCommandFragment extends Fragment {
                 int position, long id) {
             switch (position) {
                 case 0: //2 seconds
-                    mTimeout = 2.0f;
+                    mTimeout = 2000;
                     break;
                 case 1: //5 seconds
-                    mTimeout = 5.0f;
+                    mTimeout = 5000;
                     break;
                 case 2: //8 seconds
-                    mTimeout = 8.0f;
+                    mTimeout = 8000;
                     break;
                 case 3: //10 seconds
-                    mTimeout = 10.0f;
+                    mTimeout = 10000;
                     break;
                 case 4: //15 seconds
-                    mTimeout = 15.0f;
+                    mTimeout = 15000;
                     break;
                 default:
-                    mTimeout = 5.0f;
+                    mTimeout = 5000;
             }
         }
 
@@ -119,7 +120,7 @@ public class AtCommandFragment extends Fragment {
                 int position, long id) {
             mSerialDevice = String.valueOf(mSerialDeviceSpinner.getSelectedItem());
             mSerialDeviceDisplay.setText(mSerialDevice);
-            mShell.setSerialDevice(mSerialDevice);
+            setSerialDevice();
         }
 
         @Override
@@ -137,9 +138,12 @@ public class AtCommandFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mShell != null) {
-            mShell.close();
-            mShell = null;
+        if (shell != null) {
+            try {
+                shell.close();
+            } catch (Exception e) {
+                Log.e("AIMSICD", "Closing shell - " + e);
+            }
         }
     }
 
@@ -191,12 +195,12 @@ public class AtCommandFragment extends Fragment {
         public void onClick(View v) {
             if (mAtCommand.getText() != null) {
                 String command = mAtCommand.getText().toString();
-                if (command.indexOf("AT") == 0 || command.indexOf("at") == 0) {
-                    mShell = new Shell(mSerialDevice);
-                    new MyAsync().execute(EXECUTE_AT);
+                if (command.toUpperCase().indexOf("AT") == 0) {
+                    Log.i("AIMSICD", "AT Command Detected");
+                    executeAT();
                 } else {
-                    mShell = new Shell();
-                    new MyAsync().execute(EXECUTE_COMMAND);
+                    Log.i("AIMSICD", "Terminal Command Detected");
+                    executeCommand();
                 }
             }
         }
@@ -205,77 +209,80 @@ public class AtCommandFragment extends Fragment {
     private int initSerialDevice() {
 
         //Check for root access
-        boolean root = Helpers.checkSu();
+        boolean root = RootTools.isAccessGiven();
         if (!root) {
             return ROOT_UNAVAILABLE;
         }
 
         //Check busybox is installed
-        boolean busybox = Helpers.checkBusybox();
+        boolean busybox = RootTools.isBusyboxAvailable();
         if (!busybox) {
             return BUSYBOX_UNAVAILABLE;
         }
 
-        if (mShell == null) {
-            mShell = new Shell();
-        }
+        try {
+            shell = RootTools.getShell(true);
 
-        //Draw Ril Serial Device details from the System Property
-        String rilDevice = Helpers.getSystemProp(mContext, "rild.libargs", "UNKNOWN");
-        mSerialDevice = (rilDevice.equals("UNKNOWN") ? rilDevice : rilDevice.substring(3));
+            mAtResponse.setText("*** Setting Up... Ignore any errors. ***\n");
 
-        if (!mSerialDevice.equals("UNKNOWN")) {
-            mSerialDevices.add(mSerialDevice);
-        }
+            mSerialDevices.clear();
+            //Draw Ril Serial Device details from the System Property
+            String rilDevice = Helpers.getSystemProp(mContext, "rild.libargs", "UNKNOWN");
+            mSerialDevice = (rilDevice.equals("UNKNOWN") ? rilDevice : rilDevice.substring(3));
 
-        boolean result = mShell.sendCommandPreserveOut("ls /dev/radio | grep atci*", mTimeout);
-        if (result) {
-            mOutput = new ArrayList<>();
-            mOutput = mShell.GetStdOut();
-            mError = new ArrayList<>();
-            mError = mShell.GetStdErr();
-        }
-        if (mOutput != null) {
-            for (String device : mOutput) {
-                mSerialDevices.add("/dev/radio/" + device.trim());
+            if (!mSerialDevice.equals("UNKNOWN")) {
+                mSerialDevices.add(mSerialDevice);
             }
-        }
-        if (mError != null) {
-            for (String error : mError) {
-                mAtResponse.append(error + "\n");
-            }
-        }
 
-        //Now try xgold modem config
-        File xgold = new File("/system/etc/ril_xgold_radio.cfg");
-        if (xgold.exists() && xgold.isFile()) {
-            result = mShell.sendCommandPreserveOut("cat /system/etc/ril_xgold_radio.cfg | "
-                    + "grep -E \"atport*|dataport*\"", mTimeout);
-            if (result) {
-                mOutput = new ArrayList<>();
-                mOutput = mShell.GetStdOut();
-                mError = new ArrayList<>();
-                mError = mShell.GetStdErr();
-            }
-        }
+            //Check for ATCI devices and add found location to the serial device list
+            CommandCapture cmd = new CommandCapture(0, "ls /dev/radio | grep atci*") {
 
-        if (mOutput != null) {
-            for (String device : mOutput) {
-                if (device.contains("/dev/")) {
-                    int place = device.indexOf("=") + 1;
-                    mSerialDevices.add(device.substring(place, device.length()-1));
+                @Override
+                public void commandOutput(int id, String line) {
+                    if (id == 0) {
+                        if (!line.trim().equals("") &&
+                                !mSerialDevices.contains("/dev/radio/" + line.trim())) {
+                            mSerialDevices.add("/dev/radio/" + line.trim());
+                            mAtResponse.append("Found: /dev/radio/" + line.trim());
+                        }
+                    }
                 }
+            };
+
+            shell.add(cmd);
+            commandWait(shell, cmd);
+
+            //Now try xgold modem config
+            File xgold = new File("/system/etc/ril_xgold_radio.cfg");
+            if (xgold.exists() && xgold.isFile()) {
+                cmd = new CommandCapture(1, "cat /system/etc/ril_xgold_radio.cfg | "
+                        + "grep -E \"atport*|dataport*\"") {
+
+                    @Override
+                    public void commandOutput(int id, String line) {
+                        if (id == 0) {
+                            if (!line.trim().equals("") && line.contains("/dev/")) {
+                                int place = line.indexOf("=") + 1;
+                                mSerialDevices.add(line.substring(place, line.length() - 1));
+                                mAtResponse.append(line.substring(place, line.length() - 1));
+                            }
+                        }
+                    }
+                };
+
+                shell.add(cmd);
+                commandWait(shell, cmd);
+
             }
+
+        } catch (Exception e) {
+            Log.e("AIMSICD", "initSerialDevice " + e);
         }
-        if (mError != null) {
-            for (String error : mError) {
-                mAtResponse.append(error + "\n");
-            }
-        }
+
 
         if (!mSerialDevices.isEmpty()) {
             mSerialDevice = mSerialDevices.get(0);
-            mShell.setSerialDevice(mSerialDevices.get(0));
+            setSerialDevice();
             String[] entries = new String[mSerialDevices.size()];
             entries = mSerialDevices.toArray(entries);
             ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(mContext,
@@ -285,75 +292,111 @@ public class AtCommandFragment extends Fragment {
             mSerialDeviceSpinnerLabel.setVisibility(View.VISIBLE);
         }
 
+        mAtResponse.append("*** Setup Complete ***\n");
         mAtResponse.setVisibility(View.VISIBLE);
 
         return SERIAL_INIT_OK;
     }
 
-    private boolean executeAT() {
-        boolean result = false;
+    private void setSerialDevice() {
+        CommandCapture cmd = new CommandCapture(SET_DEVICE, "cat " + mSerialDevice + " \u0026\n");
+        try {
+            shell.add(cmd);
+            commandWait(shell, cmd);
+            Log.e("AIMSICD", "setSerialDevice finished on " + mSerialDevice);
+        } catch (Exception e) {
+            Log.e("AIMSICD", "setSerialDevice " + e);
+        }
+    }
+
+    private void executeAT() {
         if (mAtCommand.getText() != null) {
-            result = mShell.executeAt(mAtCommand.getText().toString());
-            if (result) {
-                mOutput = new ArrayList<>();
-                mOutput = mShell.GetStdOut();
-                mError = new ArrayList<>();
-                mError = mShell.GetStdErr();
+            try {
+                CommandCapture cmd = new CommandCapture(EXECUTE_AT,
+                        "echo -e " + mAtCommand.getText().toString().toUpperCase() +"\r > " + mSerialDevice + "\n") {
+
+                    @Override
+                    public void commandOutput(int id, String line) {
+                        if (id == EXECUTE_AT) {
+                            if (!line.trim().equals("")) {
+                                mAtResponse.append(line + "\n");
+                            }
+                        }
+                    }
+                };
+
+                shell.add(cmd);
+                commandWait(shell, cmd);
+            } catch (Exception e) {
+                Log.e("AIMSICD", "executeAT - " + e);
             }
         }
-        return result;
+
     }
 
-    private boolean executeCommand() {
-        boolean result = false;
+    private void executeCommand() {
         if (mAtCommand.getText() != null) {
-            result = mShell.sendCommandPreserveOut(mAtCommand.getText().toString(), mTimeout);
-            if (result) {
-                mOutput = new ArrayList<>();
-                mOutput = mShell.GetStdOut();
-                mError = new ArrayList<>();
-                mError = mShell.GetStdErr();
+            try {
+                CommandCapture cmd = new CommandCapture(EXECUTE_COMMAND,
+                        mAtCommand.getText().toString() + "\n") {
+
+                    @Override
+                    public void commandOutput(int id, String line) {
+                        if (id == EXECUTE_COMMAND) {
+                            if (!line.trim().equals("")) {
+                                mAtResponse.append(line + "\n");
+                            }
+                        }
+                    }
+
+                };
+
+                shell.add(cmd);
+                commandWait(shell, cmd);
+            } catch (Exception e) {
+                Log.e("AIMSICD", "executeCommand - " + e);
             }
         }
-        return result;
     }
 
-    private void updateDisplay() {
-        String displayOutput = "";
-        if (mOutput == null && mError == null) {
-            displayOutput = "Command Timeout/No Response\n";
-        } else {
-            if (mOutput != null) {
-                for (String output : mOutput) {
-                    displayOutput += output + "\n";
-                }
-            } else {
-                for (String error : mError) {
-                    displayOutput += error + "\n";
+    /**
+     * This below method is part of the RootTools Project: http://code.google.com/p/roottools/
+     *
+     * Copyright (c) 2012 Stephen Erickson, Chris Ravenscroft, Dominik Schuermann, Adam Shanks
+     *
+     * Slightly modified commandWait method as found in RootToolsInternalMethods.java to utilise
+     * the user selected timeout value.
+     *
+     */
+    private void commandWait(Shell shell, Command cmd) throws Exception {
+        while (!cmd.isFinished()) {
+            synchronized (cmd) {
+                try {
+                    if (!cmd.isFinished()) {
+                        cmd.wait(mTimeout);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
-        }
-
-        mAtResponse.append((displayOutput.isEmpty())
-                ? "Command Timeout/No Response\n" : displayOutput + "\n" );
-    }
-
-    private class MyAsync extends AsyncTask<Integer, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(Integer ... params) {
-            switch (params[0]) {
-                case EXECUTE_AT:
-                    return executeAT();
-                case EXECUTE_COMMAND:
-                    return executeCommand();
+            if (!cmd.isExecuting() && !cmd.isFinished()) {
+                if (!shell.isExecuting && !shell.isReading) {
+                    Log.e("AIMSICD", "Waiting for a command to be executed in a shell that is not executing and not reading! \n\n Command: " + cmd.getCommand());
+                    Exception e = new Exception();
+                    e.setStackTrace(Thread.currentThread().getStackTrace());
+                    e.printStackTrace();
+                } else if (shell.isExecuting && !shell.isReading) {
+                    Log.e("AIMSICD", "Waiting for a command to be executed in a shell that is executing but not reading! \n\n Command: " + cmd.getCommand());
+                    Exception e = new Exception();
+                    e.setStackTrace(Thread.currentThread().getStackTrace());
+                    e.printStackTrace();
+                } else {
+                    Log.e("AIMSICD", "Waiting for a command to be executed in a shell that is not reading! \n\n Command: " + cmd.getCommand());
+                    Exception e = new Exception();
+                    e.setStackTrace(Thread.currentThread().getStackTrace());
+                    e.printStackTrace();
+                }
             }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            updateDisplay();
         }
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
-          android:versionCode="23"
-          android:versionName="v0.1.23-alpha">
+          android:versionCode="24"
+          android:versionName="0.1.24-alpha-build-6">
 
     <uses-feature
             android:glEsVersion="0x00020000"
@@ -61,7 +61,8 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.SmsReceiver">
+        <receiver android:name=".receiver.SmsReceiver"
+                  android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>

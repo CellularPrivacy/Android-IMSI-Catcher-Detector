@@ -62,6 +62,6 @@
                 android:id="@+id/record_id"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/medium_blue" android:gravity="right"/>
+                android:textColor="@color/medium_blue" android:gravity="end"/>
     </LinearLayout>
 </FrameLayout>
