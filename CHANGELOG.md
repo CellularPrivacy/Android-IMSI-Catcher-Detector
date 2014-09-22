@@ -1,6 +1,17 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 20.09.2014
+
+* Changed: Added preference for Automatic Cell Monitoring which is now ENABLED by default
+* Update: Minor code cleanup, small visual improvements on the strings
+* Added: Link of our WIKI has been implemented into to the About-Menu
+* Fix: Correct NPE experienced when trying to view the Silent SMS database contents
+* Fix: Additional check for Google Play Services prior to starting the MapViewer
+* Fix: Added MCC & MNC details Map Marker display window for local database cell information
+* Fix: Exit Button will now actually exit the activity instead of doing absolutely nothing at all
+* Fix: Use GeoLocation Class & store last Location to use it for any methods that require location
+
 #### 17.09.2014
 
 * Update: Modifed the OpenCellID methods to enable each user to request and use their own keys
