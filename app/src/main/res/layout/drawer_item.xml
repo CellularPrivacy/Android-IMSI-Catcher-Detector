@@ -5,6 +5,7 @@
                 android:background="?android:attr/activatedBackgroundIndicator"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:gravity="center_vertical"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
         >
@@ -14,13 +15,16 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:paddingLeft="15dp" android:contentDescription="icon"/>
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:contentDescription="icon"/>
 
     <TextView
             android:id="@+id/drawer_menu_item_label"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_toRightOf="@id/drawer_menu_item_icon"
+            android:layout_toEndOf="@id/drawer_menu_item_icon"
             android:gravity="center_vertical"
             android:text="TextView"
             android:textColor="#FFFFFF"/>

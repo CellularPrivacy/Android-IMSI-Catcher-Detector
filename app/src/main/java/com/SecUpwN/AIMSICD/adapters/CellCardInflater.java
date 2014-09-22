@@ -32,6 +32,7 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
 
         private final View mRootView;
         private final TextView mCellID;
+        private final TextView mPsc;
         private final TextView mLac;
         private final TextView mMcc;
         private final TextView mMnc;
@@ -46,6 +47,8 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
             mRootView = rootView;
             mCellID = (TextView) mRootView.findViewById(R.id.cellID);
             mCellID.setVisibility(View.GONE);
+            mPsc = (TextView) mRootView.findViewById(R.id.psc);
+            mPsc.setVisibility(View.GONE);
             mLac = (TextView) mRootView.findViewById(R.id.lac);
             mLac.setVisibility(View.GONE);
             mMcc = (TextView) mRootView.findViewById(R.id.mcc);
@@ -68,6 +71,11 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
             if (!item.getCellID().contains("N/A")) {
                 mCellID.setVisibility(View.VISIBLE);
                 mCellID.setText(item.getCellID());
+            }
+
+            if (!item.getPsc().contains("N/A")) {
+                mPsc.setVisibility(View.VISIBLE);
+                mPsc.setText(item.getPsc());
             }
 
             if (!item.getLac().contains("N/A")) {

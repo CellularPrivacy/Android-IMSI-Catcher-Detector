@@ -4,7 +4,6 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.CardItemData;
 import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
-import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Helpers;
@@ -33,11 +32,16 @@ import java.util.concurrent.TimeUnit;
 
 public class CellInfoFragment extends Fragment {
 
+    public static final int STOCK_REQUEST = 1;
+    public static final int SAMSUNG_MULTIRIL_REQUEST = 2;
+
     private AimsicdService mAimsicdService;
     private boolean mBound;
     private Context mContext;
     private Activity mActivity;
     private final Handler timerHandler = new Handler();
+
+    private List<Cell> neighboringCells;
 
     //Layout items
     private ListView lv;
@@ -159,49 +163,10 @@ public class CellInfoFragment extends Fragment {
     }
 
     private void updateUI() {
-        if (mBound) {
-            List<Cell> neighboringCells = mAimsicdService.updateNeighbouringCells();
-            if (neighboringCells != null && neighboringCells.size() != 0) {
-                mNeighbouringTotal
-                        .setText(String.valueOf(neighboringCells.size()));
-
-                BaseInflaterAdapter<CardItemData> adapter
-                        = new BaseInflaterAdapter<>(
-                        new CellCardInflater());
-                int i = 1;
-                int total = neighboringCells.size();
-                for (Cell cell : neighboringCells) {
-                    CardItemData data;
-                    if (cell.getPSC() != -1) {
-                        data = new CardItemData("Cell ID (CID): " + cell.getCID(),
-                                "Location Code (LAC): " + cell.getLAC(),
-                                "Country Code (MCC): " + cell.getMCC(),
-                                "Network Code (MNC): " + cell.getMNC(),
-                                "Signal Strength (dBM): " + cell.getDBM(),
-                                "Primary Scrambling Code (PSC): " + cell.getPSC(),
-                                "Timestamp: " + cell.getTimestamp(),
-                                "" + i++ + " / " + total);
-                    } else {
-                        data = new CardItemData(1,"Cell ID (CID): " + cell.getCID(),
-                                "Location Code (LAC): " + cell.getLAC(),
-                                "Country Code (MCC): " + cell.getMCC(),
-                                "Network Code (MNC): " + cell.getMNC(),
-                                "Signal Strength (dBM): " + cell.getDBM(),
-                                "Timestamp: " + cell.getTimestamp(),
-                                "" + i++ + " / " + total);
-                    }
-                    adapter.addItem(data, false);
-                }
-                lv.setAdapter(adapter);
-                mNeighbouringCells.setVisibility(View.GONE);
-                mNeighbouringTotalView.setVisibility(View.VISIBLE);
+        if (mBound && mAimsicdService.mMultiRilCompatible) {
+                new CellAsyncTask().execute(SAMSUNG_MULTIRIL_REQUEST);
             } else {
-                //Try SamSung MultiRil Implementation
-                DetectResult rilStatus = mAimsicdService.getRilExecutorStatus();
-                if (rilStatus.available) {
-                    new RequestOemInfoTask().execute();
-                }
-            }
+            new CellAsyncTask().execute(STOCK_REQUEST);
         }
     }
 
@@ -219,6 +184,35 @@ public class CellInfoFragment extends Fragment {
         });
     }
 
+    boolean getStockNeighbouringCells() {
+        if (mBound) {
+            neighboringCells = mAimsicdService.updateNeighbouringCells();
+            return neighboringCells.size() > 0;
+        }
+
+        return false;
+    }
+
+    void updateStockNeighbouringCells() {
+        mNeighbouringTotal
+                .setText(String.valueOf(neighboringCells.size()));
+        if (neighboringCells.size() != 0) {
+
+            BaseInflaterAdapter<CardItemData> adapter
+                    = new BaseInflaterAdapter<>(
+                    new CellCardInflater());
+            int i = 1;
+            int total = neighboringCells.size();
+            for (Cell cell : neighboringCells) {
+                CardItemData data = new CardItemData(cell, i++ + " / " + total);
+                adapter.addItem(data, false);
+            }
+            lv.setAdapter(adapter);
+            mNeighbouringCells.setVisibility(View.GONE);
+            mNeighbouringTotalView.setVisibility(View.VISIBLE);
+        }
+    }
+
     void updateNeighbouringCells() {
         final List<String> list = mAimsicdService.getNeighbours();
         mActivity.runOnUiThread(new Runnable() {
@@ -233,23 +227,36 @@ public class CellInfoFragment extends Fragment {
         });
     }
 
-    private class RequestOemInfoTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... string) {
-            if (!mBound) {
-                return null;
-            }
-            updateNeighbouringCells();
-            updateCipheringIndicator();
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+    void getSamSungMultiRil() {
+        if (mBound && mAimsicdService.mMultiRilCompatible) {
+            new CellAsyncTask().execute(SAMSUNG_MULTIRIL_REQUEST);
         }
     }
 
+    private class CellAsyncTask extends AsyncTask<Integer, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Integer... type) {
+            switch (type[0]) {
+                case STOCK_REQUEST:
+                    return getStockNeighbouringCells();
+                case SAMSUNG_MULTIRIL_REQUEST:
+                    if (mBound) {
+                        updateNeighbouringCells();
+                        updateCipheringIndicator();
+                    }
+                    break;
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if (result) {
+                updateStockNeighbouringCells();
+            } else {
+                getSamSungMultiRil();
+            }
+        }
+    }
 }

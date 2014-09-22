@@ -30,34 +30,34 @@
             <TextView
                     android:id="@+id/device_type_label" android:text="@string/device_type"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/device_type" android:text="@string/empty"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:gravity="left"
+                android:gravity="start"
                 android:tag="device">
 
             <TextView
                     android:id="@+id/device_imei_label" android:text="@string/device_imei"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/device_imei" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
@@ -68,15 +68,15 @@
                     android:id="@+id/device_version_label" android:text="@string/device_version"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/device_version" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
         <TableRow
@@ -100,15 +100,15 @@
                     android:id="@+id/sim_country_label" android:text="@string/sim_country"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
+                    android:padding="2dip" android:gravity="end"
                     android:layout_width="fill_parent"
-                    android:layout_gravity="right"/>
+                    android:layout_gravity="end"/>
 
             <TextView
                     android:id="@+id/sim_country" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
@@ -120,15 +120,15 @@
                     android:text="@string/sim_operator_id"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/sim_operator_id" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
@@ -140,15 +140,15 @@
                     android:text="@string/sim_operator_name"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/sim_operator_name" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
@@ -159,15 +159,15 @@
                     android:id="@+id/sim_imsi_label" android:text="@string/sim_imsi"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/sim_imsi" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
@@ -178,15 +178,15 @@
                     android:id="@+id/sim_serial_label" android:text="@string/sim_serial"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/sim_serial" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
         <TableRow
@@ -211,15 +211,15 @@
                     android:id="@+id/network_name_label" android:text="@string/network_name"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_name" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
@@ -230,35 +230,35 @@
                     android:id="@+id/network_code_label" android:text="@string/network_code"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_code" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:gravity="left"
+                android:gravity="start"
                 android:tag="network">
 
             <TextView
                     android:id="@+id/network_type_label" android:text="@string/network_type"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_type" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
@@ -269,15 +269,15 @@
                     android:id="@+id/network_lac_label" android:text="@string/network_lac"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_lac" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
         <TableRow
@@ -291,15 +291,15 @@
                     android:id="@+id/network_cellid_label" android:text="@string/network_cellid"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_cellid" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
         <TableRow
@@ -313,15 +313,15 @@
                     android:id="@+id/network_psc_label" android:text="@string/network_psc"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_psc" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
         <TableRow
@@ -334,15 +334,15 @@
                     android:text="@string/network_roaming"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_roaming" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
         <TableRow
@@ -354,13 +354,13 @@
                     android:id="@+id/data_activity_label" android:text="@string/data_activity"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"/>
+                    android:padding="2dip" android:gravity="end"/>
 
             <TextView
                     android:id="@+id/data_activity" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
         <TableRow
@@ -373,13 +373,13 @@
                     android:id="@+id/data_status_label" android:text="@string/data_status"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"/>
+                    android:padding="2dip" android:gravity="end"/>
 
             <TextView
                     android:id="@+id/data_status" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
 
@@ -396,18 +396,19 @@
                     android:text="@string/network_lte_timing_advance"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_lte_timing_advance" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
         <TableRow
+                android:id="@+id/cdma_netid"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal"
@@ -418,18 +419,19 @@
                     android:text="@string/network_netid"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_netid" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
         <TableRow
+                android:id="@+id/cdma_sysid"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal"
@@ -440,18 +442,19 @@
                     android:text="@string/network_sysid"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_sysid" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
         <TableRow
+                android:id="@+id/cdma_baseid"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal"
@@ -462,15 +465,15 @@
                     android:text="@string/network_baseid"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/network_baseid" android:text="@string/empty"
                     android:layout_weight="1"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
 
     </TableLayout>

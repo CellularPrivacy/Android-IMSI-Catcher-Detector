@@ -1,6 +1,78 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 20.09.2014
+
+* Changed: Added preference for Automatic Cell Monitoring which is now ENABLED by default
+* Update: Minor code cleanup, small visual improvements on the strings
+* Added: Link of our WIKI has been implemented into to the About-Menu
+* Fix: Correct NPE experienced when trying to view the Silent SMS database contents
+* Fix: Additional check for Google Play Services prior to starting the MapViewer
+* Fix: Added MCC & MNC details Map Marker display window for local database cell information
+* Fix: Exit Button will now actually exit the activity instead of doing absolutely nothing at all
+* Fix: Use GeoLocation Class & store last Location to use it for any methods that require location
+
+#### 17.09.2014
+
+* Update: Modifed the OpenCellID methods to enable each user to request and use their own keys
+* Update: Added small clarifications to Phone Type and RIL Version within Device Information
+* Update: Added abortOnError false - so that gradle build runs without a problem (thanks @ligi)
+
+#### 15.09.2014 - WIP-Internal v0.1.24-alpha-build-6
+
+* Improved: Several small adjustments of our GitHub Introduction (thanks @andr3jx)
+* Changed: Reverted notification behaviour to correctly launch each Status Icon as meant to be
+* Update: Better Location Services (GPS) Handling to detect if GPS was actually activated
+* Update: Rewritten AT Command Injection v2 & RootTools to bring better level of functionality
+* Fix: Corrected Cell Monitoring method to correctly update the notification icon
+
+#### 08.09.2014 - WIP-Internal v0.1.24-alpha-build-5
+
+* Update: Cleaned Cell Table Contents to assist with Detection Method 1
+* Update: Small tweaks to the updated neighbouring cell methods for better functionality
+* Added: Initial Implementation of Detection Method 1: Changing LAC
+* Added: New Papers about IMSI Privacy and Projects developing IMSI-Catcher-Catchers
+* Fix: CDMA Layout Correction to address NPE experienced by CDMA device users
+
+#### 19.08.2014 - WIP-Internal v0.1.24-alpha-build-4
+
+* Improved: Poll the telephone manager for neighboring cell infos
+* Changed: Reverted "Shell & AT Command Fragment Tweaks"
+* Changed: Reverted commit that was possibly causing instability compared with v0.1.21
+* Changed: Rewrote both upload and download methods of OpenCellID and requested new API key
+* Removed: Heading from Layout has been erased for a much clearer overview
+* Update: Cell Classes have been updated
+* Update: OpenCSV has been updated to v2.4
+* Update: Extensive updates to the Cell Class to provide an easy system for tracking and comparison
+* Update: Neighbouring Cells have been slightly teaked based on the commit made by @rtreffr
+* Added: Small banner on AT Command Injector to notify of setup and ignore any error messages
+* Fix: Corrected Proguard Settings 
+
+
+#### 13.08.2014 - WIP-Internal v0.1.24-alpha-build-3
+
+* Update: Slight updates to layouts to enable correct Right to Left support
+* Update: Changed the layout of neighbouring cell information to display PSC, RSSI & Network Type
+* Update: OpenCellID Contribution Upload finished to allow the use of the API functions
+* Update: Cleaned up some database cursors that were not being closed correctly
+* Added: New preference for contribution of tracked cell information to the OpenCellID project
+* Fix: Removed code that attempts to draw the MCC & MNC whilst refreshing the device information
+* Fix: Changed wording within our DISCLAIMER to comply with the GPL and avoid confusion
+
+#### 08.08.2014 - WIP-Internal v0.1.24-alpha-build-2
+
+* Update: Too many small improvements of our README (enough editing for now, off to development!)
+* Update: SOURCES file has been updated with the latest used code snippets
+* Update: SCREENSHOTS have been updated to reflect the latest UI of HushSMS
+* Update: Cell data table has been updated for correct contributions to OpenCellID
+* Update: Cell Clas & Card UI Updates to support extra data and extended functions
+* Update: Neighbouring cell methods have been rewritten to improve neighbouring cell functions
+* Removed: Tested Gitter chat has fully been purged due to security issues we cannot support
+* Added: CONTRIBUTIONS has been expanded with some links for help on GitHub Markdown
+* Fix: getAllCellInfo method has been corrected in a number of it's uses
+* Fix: Tweaks Device & Service to address numerous small bugs and NPEs in isolated cases
+* Fix: Small corrections of strings within AIMSICD, including a proper version formatting
+
 #### 08.07.2014 - WIP-Release v0.1.23-alpha
 
 * Fix: Wcdma CellInfo type added to getAllCellInfo method to address unknown cell type exception
