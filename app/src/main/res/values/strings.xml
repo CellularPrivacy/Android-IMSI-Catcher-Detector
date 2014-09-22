@@ -39,18 +39,19 @@
     <string name="evoA"># EVO-A</string>
 
     <!-- MENU -->
-    <string name="track_cell">Track Cell Details</string>
-    <string name="untrack_cell">Untrack Cell Details</string>
-    <string name="track_location">Track Location</string>
-    <string name="untrack_location">Untrack Location</string>
+    <string name="monitor_cell">Monitor Cell Details</string>
+    <string name="unmonitor_cell">Stop Monitoring Cell Details</string>
+    <string name="track_cell">Track Cell Details \n(GPS Required)</string>
+    <string name="untrack_cell">Stop Tracking Cell Details</string>
     <string name="track_femtocell">Track Femtocell</string>
-    <string name="untrack_femtocell">Untrack Femtocell</string>
+    <string name="untrack_femtocell">Stop Tracking Femtocell</string>
     <string name="show_map">Show Map</string>
     <string name="backup_database">Backup Database</string>
     <string name="restore_database">Restore Database</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
+    <string name="cell_lookup">Lookup Current Cell Details</string>
 
     <string name="no_network_connection_title">No Internet Connection</string>
     <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
@@ -76,9 +77,9 @@
     <string name="sim_operator_name">Operator Name:</string>
     <string name="sim_imsi">IMSI:</string>
     <string name="sim_serial">Serial:</string>
-    <string name="device_type">Type:</string>
+    <string name="device_type">Phone Type:</string>
     <string name="device_imei">IMEI:</string>
-    <string name="device_version">Version:</string>
+    <string name="device_version">RIL Version:</string>
     <string name="device_number">Line Number:</string>
     <string name="network_name">Network Name:</string>
     <string name="network_code">Network Code:</string>
@@ -98,6 +99,8 @@
     <string name="about_aimsicd">About AIMSICD</string>
     <string name="aimsicd_about_info">Android IMSI-Catcher Detector</string>
     <string name="aimsicd_about_info2">Detect and avoid IMSI-Catcher attacks!</string>
+    <string name="wiki_info">The complete documentation is available at our</string>
+    <string name="wiki_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki"&gt;WIKI&lt;/a&gt;</string>
     <string name="poc_info">This App is a</string>
     <string name="poc_link">&lt;a href="https://en.wikipedia.org/wiki/Proof_of_concept"&gt;Proof-of-Concept (PoC)&lt;/a&gt;</string>
     <string name="disclaimer_info">You MUST accept our</string>
@@ -125,7 +128,7 @@
 
     <!-- LOCATION HELPER -->
     <string name="location_error_title">Location Services Disabled</string>
-    <string name="location_error_message">You cannot track GPS data without enabling Location Services.</string>
+    <string name="location_error_message">You cannot track GPS data without enabling Location Services. Enable them now?</string>
 
     <!-- PREFERENCES -->
     <string name="pref_system_title">System Settings</string>
@@ -159,6 +162,18 @@
     <string name="pref_refresh_title">Refresh Rate</string>
     <string name="pref_refresh_summ">Control the frequency of device updates</string>
     <string name="pref_last_database_backup_version">pref_last_db_backup_version</string>
+    <string name="pref_ocid_title">OpenCellID Settings</string>
+    <string name="pref_ocid_upload">pref_ocid_upload</string>
+    <string name="pref_ui_ocid_upload_title">Contribute Cell Data</string>
+    <string name="pref_ui_ocid_upload_summ">Contribute data to the OpenCellID Project (NO personal information is submitted)</string>
+    <string name="pref_cell_table_cleansed">pref_cell_table_cleansed</string>
+    <string name="pref_ocid_key">pref_ocid_key</string>
+    <string name="pref_ocid_key_title">OpenCellID API Key</string>
+    <string name="pref_ocid_key_summ">Enter your OpenCellID API Key here</string>
+    <string name="data_last_lat_lon">data_last_lat_lon</string>
+    <string name="pref_enable_cell_monitoring_key">pref_enable_cell_monitoring</string>
+    <string name="pref_enable_cell_monitoring_title">Cell Monitoring</string>
+    <string name="pref_enable_cell_monitoring_summ">Enable Cell Monitoring Automatically</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
@@ -183,7 +198,7 @@
         <item>Location Data</item>
         <item>OpenCellID Data</item>
         <item>Default MCC Locations</item>
-        <item>Silent Sms</item>
+        <item>Silent SMS</item>
     </string-array>
     <string name="database_export_successful">Export Successful</string>
 
@@ -200,5 +215,5 @@
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Silent SMS Intercepted</string>
-    <string name="sms_message">Silent Sms Message has been intercepted! \n\nDetails are available through the Database Viewer.</string>
+    <string name="sms_message">Silent SMS Message has been intercepted! \n\nDetails are available through the Database Viewer.</string>
 </resources>

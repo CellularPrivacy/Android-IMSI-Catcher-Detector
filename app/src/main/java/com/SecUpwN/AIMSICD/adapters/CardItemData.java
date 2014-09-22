@@ -1,5 +1,8 @@
 package com.SecUpwN.AIMSICD.adapters;
 
+import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.Device;
+
 public class CardItemData {
 
     private final String mCellID;
@@ -16,6 +19,60 @@ public class CardItemData {
     private final String mPsc;
     private final String mTimestamp;
     private final String mRecordId;
+
+    public CardItemData(Cell cell, String recordId) {
+        if (cell.getCID() != Integer.MAX_VALUE && cell.getCID() != -1) {
+            mCellID = "CID: " + cell.getCID();
+        } else {
+            mCellID = "N/A";
+        }
+
+        if (cell.getLAC() != Integer.MAX_VALUE && cell.getLAC() != -1) {
+            mLac = "LAC: " + cell.getLAC();
+        } else {
+            mLac = "N/A";
+        }
+
+        if (cell.getMCC() != Integer.MAX_VALUE && cell.getMCC() != 0) {
+            mMcc = "MCC: " + cell.getMCC();
+        } else {
+            mMcc = "N/A";
+        }
+
+        if (cell.getMNC() != Integer.MAX_VALUE && cell.getMNC() != 0) {
+            mMnc = "MNC: " + cell.getMNC();
+        } else {
+            mMnc = "N/A";
+        }
+
+        if (cell.getNetType() != Integer.MAX_VALUE && cell.getNetType() != -1) {
+            mNet = "Type: " + cell.getNetType() + " - " + Device.getNetworkTypeName(cell.getNetType());
+        } else {
+            mNet = "N/A";
+        }
+
+        if (cell.getPSC() != Integer.MAX_VALUE && cell.getPSC() != -1) {
+            mPsc = "PSC: " + cell.getPSC();
+        } else {
+            mPsc = "N/A";
+        }
+
+        if (cell.getRssi() != Integer.MAX_VALUE && cell.getRssi() != -1) {
+            mSignal = "RSSI: " + cell.getRssi();
+        } else if (cell.getDBM() != Integer.MAX_VALUE && cell.getDBM() != -1) {
+            mSignal = "Dbm: " + cell.getDBM();
+        } else {
+            mSignal = "N/A";
+        }
+
+        mLat = "N/A";
+        mLng = "N/A";
+        mAvgSigStr = "N/A";
+        mSamples = "N/A";
+        mCountry = "N/A";
+        mTimestamp = "N/A";
+        mRecordId = recordId;
+    }
 
     public CardItemData(String cellID, String lac, String mcc, String mnc, String lat, String lng,
             String avgSigStr, String samples, String recordId) {
@@ -35,10 +92,10 @@ public class CardItemData {
         mRecordId = recordId;
     }
 
-    public CardItemData(String cellID, String lac, String mcc, String mnc, String signal,
+    public CardItemData(String cellID, String psc, String mcc, String mnc, String signal,
             String recordId) {
         mCellID = cellID;
-        mLac = lac;
+        mLac = "LAC: N/A";
         mMcc = mcc;
         mMnc = mnc;
         mLat = "Latitude: N/A";
@@ -47,7 +104,7 @@ public class CardItemData {
         mAvgSigStr = "Avg Signal: N/A";
         mSamples = "Samples: N/A";
         mSignal = signal;
-        mPsc = "Primary Scrambling Code: N/A";
+        mPsc = psc;
         mCountry = "Country: N/A";
         mTimestamp = "Timestamp: N/A";
         mRecordId = recordId;

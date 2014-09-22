@@ -22,6 +22,7 @@
 package com.SecUpwN.AIMSICD.utils;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -32,7 +33,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -122,34 +126,52 @@ public class Helpers {
      * Requests Cell data from OpenCellID.org, calculating a 100 mile bounding radius
      * and requesting all Cell ID information in that area.
      *
-     * @param lat Latitude of current location
-     * @param lng Longitude of current location
+     * @param cell Current Cell Information
      */
-    public static void getOpenCellData(Context context, double lat, double lng, char type) {
+    public static void getOpenCellData(Context context, Cell cell, char type) {
         if (Helpers.isNetAvailable(context)) {
-            double earthRadius = 6371.01;
+            if (!AimsicdService.OCID_API_KEY.equals("NA")) {
+                double earthRadius = 6371.01;
 
-            if (lat != 0.0 && lng != 0.0) {
-                //New GeoLocation object to find bounding Coordinates
-                GeoLocation currentLoc = GeoLocation.fromDegrees(lat, lng);
+                if (cell.getLat() != 0.0 && cell.getLon() != 0.0) {
+                    //New GeoLocation object to find bounding Coordinates
+                    GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
-                //Calculate the Bounding Coordinates in a 50 mile radius
-                //0 = min 1 = max
-                GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
-                String boundParameter;
+                    //Calculate the Bounding Coordinates in a 50 mile radius
+                    //0 = min 1 = max
+                    GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
+                    String boundParameter;
 
-                //Request OpenCellID data for Bounding Coordinates
-                boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
-                        + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
-                        + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
-                        + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
+                    //Request OpenCellID data for Bounding Coordinates
+                    boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
+                            + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
+                            + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
+                            + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
-                String urlString =
-                        "http://www.opencellid.org/cell/getInArea?key=24c66165-9748-4384-ab7c-172e3f533056"
-                                + "&BBOX=" + boundParameter
-                                + "&format=csv";
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("http://www.opencellid.org/cell/getInArea?key=")
+                            .append(AimsicdService.OCID_API_KEY).append("&BBOX=")
+                            .append(boundParameter);
 
-                new RequestTask(context, type).execute(urlString);
+                    if (cell.getMCC() != Integer.MAX_VALUE) {
+                        sb.append("&mcc=").append(cell.getMCC());
+                    }
+
+                    if (cell.getMNC() != Integer.MAX_VALUE) {
+                        sb.append("&mnc=").append(cell.getMNC());
+                    }
+
+                    if (cell.getLAC() != Integer.MAX_VALUE) {
+                        sb.append("&lac=").append(cell.getLAC());
+                    }
+
+                    sb.append("&format=csv");
+
+                    new RequestTask(context, type).execute(sb.toString());
+                }
+            } else {
+                Helpers.sendMsg(context,
+                        "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -405,6 +427,17 @@ public class Helpers {
             return false;
         }
         return true;
+    }
+
+    public static String convertStreamToString(InputStream is) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        reader.close();
+        return sb.toString();
     }
 
 }
