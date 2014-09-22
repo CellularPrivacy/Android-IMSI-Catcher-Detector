@@ -23,7 +23,7 @@
             android:id="@+id/ciphering_indicator" android:text="@string/empty"
             android:textColor="@color/white"
             android:padding="2dip"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ciphering_indicator_title"
@@ -56,26 +56,26 @@
                     android:id="@+id/neighbouring_number_label"
                     android:text="@string/neighbouring_cells_num_title"
                     android:textColor="@color/white"
-                    android:padding="2dip" android:gravity="right"
-                    android:layout_gravity="right"
+                    android:padding="2dip" android:gravity="end"
+                    android:layout_gravity="end"
                     android:layout_width="fill_parent"/>
 
             <TextView
                     android:id="@+id/neighbouring_number" android:text="@string/empty"
                     android:textColor="@color/medium_blue"
-                    android:padding="2dip" android:gravity="left"/>
+                    android:padding="2dip" android:gravity="start"/>
         </TableRow>
         <TableRow
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:gravity="left">
+                android:gravity="start">
 
             <TextView
                     android:id="@+id/neighbouring_cells" android:text=""
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:padding="2dip"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_width="match_parent"
                     android:layout_span="2" />
         </TableRow>

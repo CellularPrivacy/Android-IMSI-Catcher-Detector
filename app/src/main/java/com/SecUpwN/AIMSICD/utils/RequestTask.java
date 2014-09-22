@@ -6,6 +6,15 @@ import com.SecUpwN.AIMSICD.activities.MapViewer;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,16 +22,19 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class RequestTask extends AsyncTask<String, Integer, String> {
 
@@ -30,6 +42,8 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     public static final char OPEN_CELL_ID_REQUEST_FROM_MAP = 2;
     public static final char BACKUP_DATABASE = 3;
     public static final char RESTORE_DATABASE = 4;
+    public static final char CELL_LOOKUP = 5;
+
 
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
@@ -48,6 +62,57 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
             case OPEN_CELL_ID_REQUEST_FROM_MAP:
                 int count;
                 try {
+                    if (AimsicdService.OCID_UPLOAD_PREF) {
+                        boolean prepared = mDbAdapter.prepareOpenCellUploadData();
+                        Log.i("AIMSICD", "OCID prepared - " + String.valueOf(prepared));
+                        if (prepared) {
+                            File file = new File(Environment.getExternalStorageDirectory()
+                                    + "/AIMSICD/OpenCellID/aimsicd-ocid-data.csv");
+                            publishProgress(25,100);
+
+                            MultipartEntity mpEntity = new MultipartEntity();
+                            FileInputStream fin = new FileInputStream(file);
+                            String csv = Helpers.convertStreamToString(fin);
+                            mpEntity.addPart("key", new StringBody(AimsicdService.OCID_API_KEY));
+                            mpEntity.addPart("datafile", new InputStreamBody(
+                                    new ByteArrayInputStream(csv.getBytes()), "text/csv",
+                                    "aimsicd-ocid-data.csv"));
+
+                            ByteArrayOutputStream bAOS = new ByteArrayOutputStream();
+                            publishProgress(50,100);
+                            mpEntity.writeTo(bAOS);
+                            bAOS.flush();
+                            ByteArrayEntity bArrEntity = new ByteArrayEntity(bAOS.toByteArray());
+                            bAOS.close();
+                            bArrEntity.setChunked(false);
+                            bArrEntity.setContentEncoding(mpEntity.getContentEncoding());
+                            bArrEntity.setContentType(mpEntity.getContentType());
+
+                            HttpClient httpclient;
+                            HttpPost httppost;
+                            HttpResponse response;
+
+                            httpclient = new DefaultHttpClient();
+                            httppost = new HttpPost("http://www.opencellid.org/measure/uploadCsv");
+                            publishProgress(60,100);
+                            httppost.setEntity(bArrEntity);
+                            response = httpclient.execute(httppost);
+                            publishProgress(80,100);
+                            if (response!= null) {
+                                Log.i("AIMSICD", "OCID Upload Response: " + response.getStatusLine().getStatusCode() + " - " + response.getStatusLine());
+                                mDbAdapter.ocidProcessed();
+                                publishProgress(95,100);
+                            }
+
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.i("AIMSICD", "Upload OpenCellID data - " + e.getMessage());
+                }
+
+                try {
+                    int total;
+                    int progress = 0;
                     File dir = new File(
                             Environment.getExternalStorageDirectory()
                                     + "/AIMSICD/OpenCellID/"
@@ -58,34 +123,44 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     File file = new File(dir, "opencellid.csv");
 
                     URL url = new URL(commandString[0]);
-                    URLConnection connection = url.openConnection();
-                    connection.connect();
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.setConnectTimeout(20000);
+                    urlConnection.setReadTimeout(20000);
 
-                    // download the file
-                    InputStream input = new BufferedInputStream(url.openStream(),
-                            8192);
+                    urlConnection.setDoInput(true);
+                    urlConnection.connect();
 
-                    // Output stream
-                    OutputStream output = new FileOutputStream(file);
+                    if (urlConnection.getResponseCode() != 200) {
+                        try {
+                            String error = Helpers
+                                    .convertStreamToString(urlConnection.getErrorStream());
+                            Log.e("AIMSICD", "Download ocid data error: " + error);
+                        } catch (Exception e) {
+                            Log.e("AIMSICD", "Download ocid - " + e);
+                        }
+                    } else {
+                        total = urlConnection.getContentLength();
+                        publishProgress(progress, total);
 
-                    byte data[] = new byte[1024];
+                        FileOutputStream output = new FileOutputStream(file, false);
+                        InputStream input = new BufferedInputStream(urlConnection.getInputStream());
 
-                    long total = 0;
+                        byte[] data = new byte[1024];
+                        while ((count = input.read(data)) > 0) {
+                            // writing data to file
+                            output.write(data, 0, count);
+                            progress += count;
 
-                    while ((count = input.read(data)) != -1) {
-                        total += count;
-                        publishProgress((int) (total / 1024) * 2 );
+                            publishProgress(progress, total);
+                        }
 
-                        // writing data to file
-                        output.write(data, 0, count);
+                        // flushing output
+                        output.flush();
+                        output.close();
                     }
 
-                    // flushing output
-                    output.flush();
-
-                    // closing streams
-                    output.close();
-                    input.close();
+                    urlConnection.disconnect();
 
                     return "Successful";
                 } catch (MalformedURLException e) {
@@ -116,6 +191,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
 
     protected void onProgressUpdate(Integer... values) {
+        AIMSICD.mProgressBar.setMax(values[1]);
         AIMSICD.mProgressBar.setProgress(values[0]);
     }
 
