@@ -2,7 +2,7 @@ package com.SecUpwN.AIMSICD.utils;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.MapViewer;
+import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
@@ -210,7 +210,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
                     if (mDbAdapter.updateOpenCellID()) {
-                        Intent intent = new Intent(MapViewer.updateOpenCellIDMarkers);
+                        Intent intent = new Intent(MapViewerOsmDroid.updateOpenCellIDMarkers);
                         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
                         Helpers.msgShort(mContext, "OpenCellID data successfully received and "
                                 + "Map Markers updated");
