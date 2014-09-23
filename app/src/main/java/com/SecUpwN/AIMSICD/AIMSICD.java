@@ -17,7 +17,7 @@
 
 package com.SecUpwN.AIMSICD;
 
-import com.SecUpwN.AIMSICD.activities.MapViewer;
+import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.adapters.DrawerMenuAdapter;
@@ -552,7 +552,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
      * Show the Map Viewer Activity
      */
     private void showmap() {
-        Intent myIntent = new Intent(this, MapViewer.class);
+        Intent myIntent = new Intent(this, MapViewerOsmDroid.class);
         startActivity(myIntent);
     }
 
