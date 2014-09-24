@@ -4,7 +4,7 @@
 #### 24.09.2014
 
 * Removed: Fully removed Google Play Services - WELCOME our new developer @tobykurien! ;-)
-* Update: Switch from Google Maps to OsmDroid, WIP
+* Update: Switch from Google Maps to OsmDroid (WIP), much smaller file size of APK
 * Update: OsmDroid mapview in progress - all pins added to map
 * Update: Integrated changes from upstream
 * Update: Cleaned up info window dialog box
