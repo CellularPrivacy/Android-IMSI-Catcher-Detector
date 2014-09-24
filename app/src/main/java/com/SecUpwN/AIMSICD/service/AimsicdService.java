@@ -57,6 +57,7 @@
 package com.SecUpwN.AIMSICD.service;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
