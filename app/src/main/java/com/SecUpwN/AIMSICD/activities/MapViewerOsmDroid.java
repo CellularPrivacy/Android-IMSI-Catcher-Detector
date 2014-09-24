@@ -17,6 +17,7 @@
 
 package com.SecUpwN.AIMSICD.activities;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -51,14 +52,13 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.ResourceProxyImpl;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.ItemizedOverlay;
-import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPreferenceChangeListener {
@@ -76,7 +76,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
     private GeoPoint loc = null;
     private final Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
     private MyLocationNewOverlay mMyLocationOverlay;
-    private ItemizedIconOverlay mOpenCellIdOverlay;
+    private TappableItemizedOverlay mOpenCellIdOverlay;
 
     /**
      * Called when the activity is first created.
@@ -87,9 +87,11 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.map);
-        setUpMapIfNeeded();
+        //setUpMapIfNeeded();
+
         mContext = this;
         mDbHelper = new AIMSICDDbAdapter(mContext);
+
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -211,10 +213,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                 mMyLocationOverlay.setDrawAccuracyEnabled(true);
                 mMap.getOverlays().add(mMyLocationOverlay);
 
-                Drawable myMarker = getResources().getDrawable(R.drawable.cell_tower);
-
-                mOpenCellIdOverlay = new ItemizedIconOverlay<OverlayItem>(new LinkedList<OverlayItem>(),
-                        myMarker, null, resProxyImp);
+                mOpenCellIdOverlay = new TappableItemizedOverlay(this, new LinkedList<OverlayItem>());
                 mMap.getOverlays().add(mOpenCellIdOverlay);
 
 
@@ -336,69 +335,78 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
      * only entries which have a location (lon, lat) are used.
      */
     private void loadEntries() {
-//        final int SIGNAL_SIZE_RATIO = 15;
-//        int signal;
-//        int color;
-//        mMap.removeAllViews();
-//        CircleOptions circleOptions;
-//        mDbHelper.open();
-//        Cursor c = mDbHelper.getCellData();
-//        if (c.moveToFirst()) {
-//            do {
-//                final int cellID = c.getInt(0);
-//                final int lac = c.getInt(1);
-//                final int net = c.getInt(2);
-//                final double dlat = Double.parseDouble(c.getString(3));
-//                final double dlng = Double.parseDouble(c.getString(4));
-//                if (dlat == 0.0 && dlng == 0.0) {
-//                    continue;
-//                }
-//                signal = c.getInt(5);
-//                if (signal <= 0) {
-//                    signal = 20;
-//                }
-//
-//                if ((dlat != 0.0) || (dlng != 0.0)) {
-//                    loc = new LatLng(dlat, dlng);
-//                    switch (net) {
-//                        case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-//                            color = 0xF0F8FF;
-//                            break;
-//                        case TelephonyManager.NETWORK_TYPE_GPRS:
-//                            color = 0xA9A9A9;
-//                            break;
-//                        case TelephonyManager.NETWORK_TYPE_EDGE:
-//                            color = 0x87CEFA;
-//                            break;
-//                        case TelephonyManager.NETWORK_TYPE_UMTS:
-//                            color = 0x7CFC00;
-//                            break;
-//                        case TelephonyManager.NETWORK_TYPE_HSDPA:
-//                            color = 0xFF6347;
-//                            break;
-//                        case TelephonyManager.NETWORK_TYPE_HSUPA:
-//                            color = 0xFF00FF;
-//                            break;
-//                        case TelephonyManager.NETWORK_TYPE_HSPA:
-//                            color = 0x238E6B;
-//                            break;
-//                        case TelephonyManager.NETWORK_TYPE_CDMA:
-//                            color = 0x8A2BE2;
-//                            break;
-//                        case TelephonyManager.NETWORK_TYPE_EVDO_0:
-//                            color = 0xFF69B4;
-//                            break;
-//                        case TelephonyManager.NETWORK_TYPE_EVDO_A:
-//                            color = 0xFFFF00;
-//                            break;
-//                        case TelephonyManager.NETWORK_TYPE_1xRTT:
-//                            color = 0x7CFC00;
-//                            break;
-//                        default:
-//                            color = 0xF0F8FF;
-//                            break;
-//                    }
-//
+        final int SIGNAL_SIZE_RATIO = 15;
+        int signal;
+        int color;
+        mMap.removeAllViews();
+        //CircleOptions circleOptions;
+        mDbHelper.open();
+        Cursor c = mDbHelper.getCellData();
+        if (c.moveToFirst()) {
+            do {
+                final int cellID = c.getInt(0);
+                final int lac = c.getInt(1);
+                final int net = c.getInt(2);
+                final double dlat = Double.parseDouble(c.getString(3));
+                final double dlng = Double.parseDouble(c.getString(4));
+                if (dlat == 0.0 && dlng == 0.0) {
+                    continue;
+                }
+                signal = c.getInt(5);
+                if (signal <= 0) {
+                    signal = 20;
+                }
+
+                if ((dlat != 0.0) || (dlng != 0.0)) {
+                    loc = new GeoPoint(dlat, dlng);
+                    switch (net) {
+                        case TelephonyManager.NETWORK_TYPE_UNKNOWN:
+                            color = 0xF0F8FF;
+                            break;
+                        case TelephonyManager.NETWORK_TYPE_GPRS:
+                            color = 0xA9A9A9;
+                            break;
+                        case TelephonyManager.NETWORK_TYPE_EDGE:
+                            color = 0x87CEFA;
+                            break;
+                        case TelephonyManager.NETWORK_TYPE_UMTS:
+                            color = 0x7CFC00;
+                            break;
+                        case TelephonyManager.NETWORK_TYPE_HSDPA:
+                            color = 0xFF6347;
+                            break;
+                        case TelephonyManager.NETWORK_TYPE_HSUPA:
+                            color = 0xFF00FF;
+                            break;
+                        case TelephonyManager.NETWORK_TYPE_HSPA:
+                            color = 0x238E6B;
+                            break;
+                        case TelephonyManager.NETWORK_TYPE_CDMA:
+                            color = 0x8A2BE2;
+                            break;
+                        case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                            color = 0xFF69B4;
+                            break;
+                        case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                            color = 0xFFFF00;
+                            break;
+                        case TelephonyManager.NETWORK_TYPE_1xRTT:
+                            color = 0x7CFC00;
+                            break;
+                        default:
+                            color = 0xF0F8FF;
+                            break;
+                    }
+
+                    String description = "" + loc.getLatitude() +
+                            "" + loc.getLongitude() + "" + lac;
+
+                    OverlayItem ovm = new OverlayItem("CellID - " + cellID, description, new
+                            GeoPoint(loc.getLatitude(), loc.getLongitude()));
+                    ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_green));
+                    mOpenCellIdOverlay.addItem(ovm);
+
+
 //                    // Add Signal radius circle based on signal strength
 //                    circleOptions = new CircleOptions()
 //                            .center(loc)
@@ -416,49 +424,60 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
 //                            .title("CellID - " + cellID));
 //                    mMarkerMap.put(marker, new MarkerData("" + cellID, "" + loc.latitude,
 //                            "" + loc.longitude, "" + lac, "", "", "", false));
-//                }
-//
-//            } while (c.moveToNext());
-//        } else {
-//            Helpers.msgShort(this, "No tracked locations found to overlay on map.");
-//        }
-//
-//        if (loc != null && (loc.latitude != 0.0 && loc.longitude != 0.0)) {
+                }
+
+            } while (c.moveToNext());
+        } else {
+            Helpers.msgShort(this, "No tracked locations found to overlay on map.");
+        }
+
+        if (loc != null && (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0)) {
+            mMap.getController().setZoom(16);
+            mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
+
 //            CameraPosition POSITION =
 //                    new CameraPosition.Builder().target(loc)
 //                            .zoom(16)
 //                            .build();
 //            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
-//        } else {
-//            if (mBound) {
-//                // Try and find last known location and zoom there
-//                Location lastLoc = mAimsicdService.lastKnownLocation();
-//                if (lastLoc != null && lastLoc.hasAccuracy()) {
-//                    loc = new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude());
+        } else {
+            if (mBound) {
+                // Try and find last known location and zoom there
+                Location lastLoc = mAimsicdService.lastKnownLocation();
+                if (lastLoc != null && lastLoc.hasAccuracy()) {
+                    loc = new GeoPoint(lastLoc.getLatitude(), lastLoc.getLongitude());
+
+                    mMap.getController().setZoom(16);
+                    mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
+
 //                    CameraPosition POSITION =
 //                            new CameraPosition.Builder().target(loc)
 //                                    .zoom(16)
 //                                    .build();
 //
 //                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
-//                } else {
-//                    //Use Mcc to move camera to an approximate location near Countries Capital
-//                    int mcc = mAimsicdService.mDevice.mCell.getMCC();
-//                    double[] d = mDbHelper.getDefaultLocation(mcc);
-//                    loc = new LatLng(d[0], d[1]);
+                } else {
+                    //Use Mcc to move camera to an approximate location near Countries Capital
+                    int mcc = mAimsicdService.mDevice.mCell.getMCC();
+                    double[] d = mDbHelper.getDefaultLocation(mcc);
+                    loc = new GeoPoint(d[0], d[1]);
+
+                    mMap.getController().setZoom(13);
+                    mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
+
 //                    CameraPosition POSITION =
 //                            new CameraPosition.Builder().target(loc)
 //                                    .zoom(13)
 //                                    .build();
 //
 //                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(POSITION));
-//                }
-//            }
-//        }
-//
-//        loadOpenCellIDMarkers();
-//        c.close();
-//        mDbHelper.close();
+                }
+            }
+        }
+
+        loadOpenCellIDMarkers();
+        c.close();
+        mDbHelper.close();
     }
 
     private void loadOpenCellIDMarkers() {
@@ -483,6 +502,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
 
                 OverlayItem ovm = new OverlayItem("CellID - " + cellID, description, new
                         GeoPoint(location.getLatitude(), location.getLongitude()));
+                ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_blue));
                 mOpenCellIdOverlay.addItem(ovm);
 
 
@@ -526,6 +546,32 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
         }
     }
 
+    public class TappableItemizedOverlay extends ItemizedIconOverlay<OverlayItem> {
+        protected Context mContext;
+
+        public TappableItemizedOverlay(final Context context, final List<OverlayItem> aList) {
+            super(context, aList, new OnItemGestureListener<OverlayItem>() {
+                @Override public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                    return false;
+                }
+                @Override public boolean onItemLongPress(final int index, final OverlayItem item) {
+                    return false;
+                }
+            } );
+
+            mContext = context;
+        }
+
+        @Override
+        protected boolean onSingleTapUpHelper(final int index, final OverlayItem item, final MapView mapView) {
+            // TODO - replace with InfoWindow
+            AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+            dialog.setTitle(item.getTitle());
+            dialog.setMessage(item.getSnippet());
+            dialog.show();
+            return true;
+        }
+    }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_MAP_TYPE = getBaseContext().getString(R.string.pref_map_type_key);
