@@ -27,7 +27,6 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -286,9 +285,9 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
      * only entries which have a location (lon, lat) are used.
      */
     private void loadEntries() {
-        new AsyncTask<Void,Void,Void>() {
+        new AsyncTask<Void,Void,GeoPoint>() {
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected GeoPoint doInBackground(Void... voids) {
                 final int SIGNAL_SIZE_RATIO = 15;
                 int signal;
                 int color;
@@ -385,19 +384,35 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
 
                     } while (c.moveToNext());
                 } else {
-                    Helpers.msgShort(MapViewerOsmDroid.this, "No tracked locations found to overlay on map.");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Helpers.msgShort(MapViewerOsmDroid.this, "No tracked locations found to overlay on map.");
+                        }
+                    });
                 }
+
+                GeoPoint ret = new GeoPoint(0,0);
+                try {
+                    int mcc = mAimsicdService.mDevice.mCell.getMCC();
+                    double[] d = mDbHelper.getDefaultLocation(mcc);
+                    ret = new GeoPoint(d[0], d[1]);
+                } catch (Exception e) {
+                    Log.e("map", "Error getting default location", e);
+                }
+
                 c.close();
                 mDbHelper.close();
 
                 mMap.getOverlays().remove(mOpenCellIdOverlay);
                 mOpenCellIdOverlay.addItems(items);
                 mMap.getOverlays().add(mOpenCellIdOverlay);
-                return null;
+
+                return ret;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(GeoPoint loc) {
                 if (loc != null && (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0)) {
                     mMap.getController().setZoom(16);
                     mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
@@ -412,10 +427,6 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                             mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
                         } else {
                             //Use Mcc to move camera to an approximate location near Countries Capital
-                            int mcc = mAimsicdService.mDevice.mCell.getMCC();
-                            double[] d = mDbHelper.getDefaultLocation(mcc);
-                            loc = new GeoPoint(d[0], d[1]);
-
                             mMap.getController().setZoom(13);
                             mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
                         }
