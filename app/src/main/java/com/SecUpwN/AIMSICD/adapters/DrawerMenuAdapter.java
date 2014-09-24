@@ -16,16 +16,15 @@ import android.widget.TextView;
 import java.util.List;
 
 public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
-    private final Context mContext;
-    final List<NavDrawerItem> drawerItemList;
+
+    private final List<NavDrawerItem> drawerItemList;
     private final LayoutInflater inflater;
 
 
     public DrawerMenuAdapter(Context context, int textViewResourceId, List<NavDrawerItem> objects ) {
         super(context, textViewResourceId, objects);
-        mContext = context;
         drawerItemList = objects;
-        inflater = LayoutInflater.from(mContext);
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
