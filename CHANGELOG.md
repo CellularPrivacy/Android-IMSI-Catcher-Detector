@@ -1,6 +1,19 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 24.09.2014
+
+* Removed: Fully removed Google Play Services - WELCOME our new developer @tobykurien! ;-)
+* Update: Switch from Google Maps to OsmDroid, WIP
+* Update: OsmDroid mapview in progress - all pins added to map
+* Update: Integrated changes from upstream
+* Update: Cleaned up info window dialog box
+* Added: We've got an official FAQ now. Feel free to check it out in the WIKI.
+* Added: Implemented async map building and cleaned up
+* Added: Implemented MarkerData to cell tower overlay items
+* Fix: Renewed default location usage
+* Fix: Stable null pointers on a clean install
+
 #### 20.09.2014
 
 * Changed: Added preference for Automatic Cell Monitoring which is now ENABLED by default
