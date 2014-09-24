@@ -306,6 +306,8 @@ public class AIMSICDDbAdapter {
 
         while (cursor.moveToNext()) {
             if (cell.getLAC() != cursor.getInt(0)) {
+                Log.i(TAG, "CHANGING LAC!!! - Current LAC: " + cell.getLAC() +
+                        " Database LAC: " + cursor.getInt(0));
                 cursor.close();
                 return false;
             }
@@ -352,20 +354,27 @@ public class AIMSICDDbAdapter {
     }
 
     public boolean prepareOpenCellUploadData() {
-        boolean dataExtracted = false;
+        boolean result;
         File dir = new File(FOLDER + "OpenCellID/");
         if (!dir.exists()) {
-            dir.mkdirs();
+            result = dir.mkdirs();
+            if (!result) {
+                return false;
+            }
         }
         File file = new File(dir, "aimsicd-ocid-data.csv");
 
         try {
-            file.createNewFile();
+            result = file.createNewFile();
+            if (!result) {
+                return false;
+            }
             CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
             open();
             Cursor c = getOPCIDSubmitData();
 
-            csvWrite.writeNext(new String[]{"mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act"});
+            csvWrite.writeNext(
+                    "mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act");
             String[] rowData = new String[c.getColumnCount()];
             int size = c.getColumnCount();
             AIMSICD.mProgressBar.setProgress(0);
@@ -376,15 +385,14 @@ public class AIMSICDDbAdapter {
                     AIMSICD.mProgressBar.setProgress(i);
                 }
                 csvWrite.writeNext(rowData);
-                dataExtracted = true;
             }
 
             csvWrite.close();
             c.close();
-            return dataExtracted;
+            return true;
         } catch (Exception e) {
             Log.e(TAG, "Error creating OpenCellID Upload Data " + e);
-            return dataExtracted;
+            return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
         }

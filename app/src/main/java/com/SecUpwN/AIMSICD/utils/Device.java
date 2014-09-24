@@ -33,7 +33,7 @@ public class Device {
     public Cell mCell;
 
     private int mPhoneID = -1;
-    private int mSimState;
+
     private String mNetType = "";
     private String mCellInfo = "";
     private String mDataState = "";
@@ -67,7 +67,7 @@ public class Device {
         mPhoneID = tm.getPhoneType();
         mRoaming = tm.isNetworkRoaming();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             try {
                 List<CellInfo> cellInfoList = tm.getAllCellInfo();
                 if (cellInfoList != null) {
@@ -191,8 +191,8 @@ public class Device {
         }
 
         //SIM Information
-        mSimState = tm.getSimState();
-        switch (mSimState) {
+        int simState = tm.getSimState();
+        switch (simState) {
 
             case (TelephonyManager.SIM_STATE_ABSENT): break;
             case (TelephonyManager.SIM_STATE_NETWORK_LOCKED): break;
@@ -243,7 +243,7 @@ public class Device {
      *
      * @return string of SIM Country data
      */
-    public String getSimCountry(TelephonyManager tm) {
+    String getSimCountry(TelephonyManager tm) {
         try {
             if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
                 mSimCountry = (tm.getSimCountryIso() != null) ? tm.getSimCountryIso() : "N/A";
@@ -304,7 +304,7 @@ public class Device {
      *
      * @return string of SIM Operator Name
      */
-    public String getSimOperatorName(TelephonyManager tm) {
+    String getSimOperatorName(TelephonyManager tm) {
         try {
             if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
                 mSimOperatorName = (tm.getSimOperatorName() != null) ? tm.getSimOperatorName()
