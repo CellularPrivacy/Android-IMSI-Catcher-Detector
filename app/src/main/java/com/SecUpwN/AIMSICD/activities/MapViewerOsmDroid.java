@@ -393,12 +393,14 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                 }
 
                 GeoPoint ret = new GeoPoint(0,0);
-                try {
-                    int mcc = mAimsicdService.mDevice.mCell.getMCC();
-                    double[] d = mDbHelper.getDefaultLocation(mcc);
-                    ret = new GeoPoint(d[0], d[1]);
-                } catch (Exception e) {
-                    Log.e("map", "Error getting default location", e);
+                if (mBound) {
+                    try {
+                        int mcc = mAimsicdService.mDevice.mCell.getMCC();
+                        double[] d = mDbHelper.getDefaultLocation(mcc);
+                        ret = new GeoPoint(d[0], d[1]);
+                    } catch (Exception e) {
+                        Log.e("map", "Error getting default location", e);
+                    }
                 }
 
                 c.close();
@@ -412,7 +414,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
             }
 
             @Override
-            protected void onPostExecute(GeoPoint loc) {
+            protected void onPostExecute(GeoPoint defaultLoc) {
                 if (loc != null && (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0)) {
                     mMap.getController().setZoom(16);
                     mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
@@ -427,6 +429,8 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                             mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
                         } else {
                             //Use Mcc to move camera to an approximate location near Countries Capital
+                            loc = defaultLoc;
+
                             mMap.getController().setZoom(13);
                             mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
                         }
