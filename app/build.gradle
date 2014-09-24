@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.1.0'
+    buildToolsVersion '19.1'
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19
@@ -36,8 +36,10 @@ android {
 }
 
 dependencies {
-    compile 'com.google.android.gms:play-services:4.3.23'
+    //compile 'com.google.android.gms:play-services:4.3.23'
     compile 'com.android.support:support-v4:19.1.0'
+    compile 'org.osmdroid:osmdroid-android:4.2'
+    compile 'eu.lp0.slf4j:slf4j-android:1.7+'
     compile files('libs/httpmime-4.2.1.jar')
     compile files('libs/opencsv-2.4.jar')
     compile files('libs/RootTools.jar')
