@@ -642,8 +642,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
         REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
 
-        OCID_API_KEY = prefs.getString(this.getString(R.string.pref_ocid_key),
-                BuildConfig.DEBUG ? "[debug api key]" : "NA");
+        OCID_API_KEY = prefs.getString(this.getString(R.string.pref_ocid_key), "NA");
 
         if (trackFemtoPref) {
             startTrackingFemto();

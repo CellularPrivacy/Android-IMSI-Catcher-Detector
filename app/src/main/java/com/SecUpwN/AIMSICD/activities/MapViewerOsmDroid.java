@@ -46,6 +46,7 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
@@ -302,6 +303,8 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                         final int cellID = c.getInt(0);
                         final int lac = c.getInt(1);
                         final int net = c.getInt(2);
+                        final int mcc = c.getInt(6);
+                        final int mnc = c.getInt(7);
                         final double dlat = Double.parseDouble(c.getString(3));
                         final double dlng = Double.parseDouble(c.getString(4));
                         if (dlat == 0.0 && dlng == 0.0) {
@@ -357,7 +360,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                                     "",
                                     new GeoPoint(loc.getLatitude(), loc.getLongitude()),
                                     new MarkerData("" + cellID, "" + loc.getLatitude(),"" +
-                                            loc.getLongitude(), "" + lac, "", "", "", false));
+                                            loc.getLongitude(), "" + lac, "" + mcc, "" + mnc, "", false));
 
                             ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_green));
                             items.add(ovm);
@@ -421,9 +424,10 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                 } else {
                     if (mBound) {
                         // Try and find last known location and zoom there
-                        Location lastLoc = mAimsicdService.lastKnownLocation();
-                        if (lastLoc != null && lastLoc.hasAccuracy()) {
-                            loc = new GeoPoint(lastLoc.getLatitude(), lastLoc.getLongitude());
+                        GeoLocation lastLoc = mAimsicdService.lastKnownLocation();
+                        if (lastLoc != null) {
+                            loc = new GeoPoint(lastLoc.getLatitudeInDegrees(),
+                                    lastLoc.getLongitudeInDegrees());
 
                             mMap.getController().setZoom(16);
                             mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
