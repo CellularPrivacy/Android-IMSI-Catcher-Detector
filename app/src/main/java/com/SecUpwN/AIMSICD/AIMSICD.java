@@ -17,10 +17,7 @@
 
 package com.SecUpwN.AIMSICD;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
-import com.SecUpwN.AIMSICD.activities.MapViewer;
+import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.adapters.DrawerMenuAdapter;
@@ -263,14 +260,15 @@ public class AIMSICD extends Activity implements AsyncResponse {
         } else if (selectedItem.getId() == 903) {
             trackFemtocell();
         } else if (selectedItem.getId() == 105) {
-            int status = GooglePlayServicesUtil
-                    .isGooglePlayServicesAvailable(getApplicationContext());
-            if (status == ConnectionResult.SUCCESS) {
-                showmap();
-            } else {
-                Helpers.sendMsg(this,
-                        "Google Play Services is required for the MapViewer and was not found on your device");
-            }
+            showmap();
+//            int status = GooglePlayServicesUtil
+//                    .isGooglePlayServicesAvailable(getApplicationContext());
+//            if (status == ConnectionResult.SUCCESS) {
+//                showmap();
+//            } else {
+//                Helpers.sendMsg(this,
+//                        "Google Play Services is required for the MapViewer and was not found on your device");
+//            }
         } else if (selectedItem.getId() == 202) {
             Intent intent = new Intent(this, PrefActivity.class);
             startActivity(intent);
@@ -564,7 +562,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
      * Show the Map Viewer Activity
      */
     private void showmap() {
-        Intent myIntent = new Intent(this, MapViewer.class);
+        Intent myIntent = new Intent(this, MapViewerOsmDroid.class);
         startActivity(myIntent);
     }
 
