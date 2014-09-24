@@ -76,7 +76,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
     private GeoPoint loc = null;
     private final Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
     private MyLocationNewOverlay mMyLocationOverlay;
-    private TappableItemizedOverlay mOpenCellIdOverlay;
+    private CellTowerItemizedOverlay mOpenCellIdOverlay;
 
     /**
      * Called when the activity is first created.
@@ -213,7 +213,8 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                 mMyLocationOverlay.setDrawAccuracyEnabled(true);
                 mMap.getOverlays().add(mMyLocationOverlay);
 
-                mOpenCellIdOverlay = new TappableItemizedOverlay(this, new LinkedList<OverlayItem>());
+                mOpenCellIdOverlay = new CellTowerItemizedOverlay(this,
+                        new LinkedList<CellTowerOverlayItem>());
                 mMap.getOverlays().add(mOpenCellIdOverlay);
 
 
@@ -401,8 +402,12 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                     String description = "" + loc.getLatitude() +
                             "" + loc.getLongitude() + "" + lac;
 
-                    OverlayItem ovm = new OverlayItem("CellID - " + cellID, description, new
-                            GeoPoint(loc.getLatitude(), loc.getLongitude()));
+                    CellTowerOverlayItem ovm = new CellTowerOverlayItem("CellID - " + cellID,
+                            description,
+                            new GeoPoint(loc.getLatitude(), loc.getLongitude()),
+                            new MarkerData("" + cellID, "" + loc.getLatitude(),"" +
+                                    loc.getLongitude(), "" + lac, "", "", "", false));
+
                     ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_green));
                     mOpenCellIdOverlay.addItem(ovm);
 
@@ -500,8 +505,12 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                         "" + loc.getLongitude() + "" + lac + "" + mcc + "" + mnc +
                         "" + samples;
 
-                OverlayItem ovm = new OverlayItem("CellID - " + cellID, description, new
-                        GeoPoint(location.getLatitude(), location.getLongitude()));
+                CellTowerOverlayItem ovm = new CellTowerOverlayItem("CellID - " + cellID,
+                        description,
+                        new GeoPoint(loc.getLatitude(), loc.getLongitude()),
+                        new MarkerData("" + cellID, "" + loc.getLatitude(),"" +
+                                loc.getLongitude(), "" + lac, "", "", "", false));
+
                 ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_blue));
                 mOpenCellIdOverlay.addItem(ovm);
 
@@ -546,15 +555,28 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
         }
     }
 
-    public class TappableItemizedOverlay extends ItemizedIconOverlay<OverlayItem> {
+    public class CellTowerOverlayItem extends OverlayItem {
+        MarkerData mMarkerData;
+
+        public CellTowerOverlayItem(String aTitle, String aSnippet, GeoPoint aGeoPoint, MarkerData data) {
+            super(aTitle, aSnippet, aGeoPoint);
+            mMarkerData = data;
+        }
+
+        public MarkerData getMarkerData() {
+            return mMarkerData;
+        }
+    }
+
+    public class CellTowerItemizedOverlay extends ItemizedIconOverlay<CellTowerOverlayItem> {
         protected Context mContext;
 
-        public TappableItemizedOverlay(final Context context, final List<OverlayItem> aList) {
-            super(context, aList, new OnItemGestureListener<OverlayItem>() {
-                @Override public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+        public CellTowerItemizedOverlay(final Context context, final List<CellTowerOverlayItem> aList) {
+            super(context, aList, new OnItemGestureListener<CellTowerOverlayItem>() {
+                @Override public boolean onItemSingleTapUp(final int index, final CellTowerOverlayItem item) {
                     return false;
                 }
-                @Override public boolean onItemLongPress(final int index, final OverlayItem item) {
+                @Override public boolean onItemLongPress(final int index, final CellTowerOverlayItem item) {
                     return false;
                 }
             } );
@@ -563,7 +585,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
         }
 
         @Override
-        protected boolean onSingleTapUpHelper(final int index, final OverlayItem item, final MapView mapView) {
+        protected boolean onSingleTapUpHelper(final int index, final CellTowerOverlayItem item, final MapView mapView) {
             // TODO - replace with InfoWindow
             AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
             dialog.setTitle(item.getTitle());
