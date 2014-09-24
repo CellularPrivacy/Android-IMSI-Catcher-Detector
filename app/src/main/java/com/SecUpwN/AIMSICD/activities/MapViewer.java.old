@@ -33,6 +33,7 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
@@ -334,6 +335,8 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                 final int cellID = c.getInt(0);
                 final int lac = c.getInt(1);
                 final int net = c.getInt(2);
+                final int mcc = c.getInt(6);
+                final int mnc = c.getInt(7);
                 final double dlat = Double.parseDouble(c.getString(3));
                 final double dlng = Double.parseDouble(c.getString(4));
                 if (dlat == 0.0 && dlng == 0.0) {
@@ -401,7 +404,7 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
                             .draggable(false)
                             .title("CellID - " + cellID));
                     mMarkerMap.put(marker, new MarkerData("" + cellID, "" + loc.latitude,
-                            "" + loc.longitude, "" + lac, "", "", "", false));
+                            "" + loc.longitude, "" + lac, "" + mcc, "" + mnc, "", false));
                 }
 
             } while (c.moveToNext());
@@ -418,9 +421,10 @@ public class MapViewer extends FragmentActivity implements OnSharedPreferenceCha
         } else {
             if (mBound) {
                 // Try and find last known location and zoom there
-                Location lastLoc = mAimsicdService.lastKnownLocation();
-                if (lastLoc != null && lastLoc.hasAccuracy()) {
-                    loc = new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude());
+                GeoLocation lastLoc = mAimsicdService.lastKnownLocation();
+                if (lastLoc != null) {
+                    loc = new LatLng(lastLoc.getLatitudeInDegrees(),
+                            lastLoc.getLongitudeInDegrees());
                     CameraPosition POSITION =
                             new CameraPosition.Builder().target(loc)
                                     .zoom(16)

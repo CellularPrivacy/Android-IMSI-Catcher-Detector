@@ -66,6 +66,7 @@ import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
 import com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Device;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.OemCommands;
 
@@ -148,7 +149,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private final Handler timerHandler = new Handler();
     private Context mContext;
     private final int NOTIFICATION_ID = 1;
-    private long mDbResult;
+
     private static TelephonyManager tm;
     private static LocationManager lm;
     private SharedPreferences prefs;
@@ -170,7 +171,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private boolean mTrackingCell;
     private boolean mTrackingFemtocell;
     private boolean mFemtoDetected;
-    private boolean mLocationPrompted;
     private boolean mTypeZeroSmsDetected;
     private boolean mChangedLAC;
     private Cell mMonitorCell;
@@ -430,7 +430,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         }
                     }
                     ArrayList<NeighboringCellInfo> cellInfoList =
-                            new ArrayList<NeighboringCellInfo>(
+                            new ArrayList<>(
                                     neighboringCellBlockingQueue.size() + 1);
                     while (info != null) {
                         cellInfoList.add(info);
@@ -613,6 +613,9 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         boolean trackCellPref = prefs.getBoolean(
                 this.getString(R.string.pref_enable_cell_key), false);
 
+        boolean monitorCellPref = prefs.getBoolean(
+                this.getString(R.string.pref_enable_cell_monitoring_key), true);
+
         LAST_DB_BACKUP_VERSION = prefs.getInt(
                 this.getString(R.string.pref_last_database_backup_version), 1);
 
@@ -648,6 +651,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         if (trackCellPref) {
             setCellTracking(true);
+        }
+
+        if (monitorCellPref) {
+            setCellMonitoring(true);
         }
     }
 
@@ -686,7 +693,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     /**
      * Set or update the Notification
      */
-    public void setNotification() {
+    void setNotification() {
 
         String tickerText;
         String contentText = "Phone Type " + mDevice.getPhoneType();
@@ -825,17 +832,26 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
     }
 
-    public Location lastKnownLocation() {
+    public GeoLocation lastKnownLocation() {
+        GeoLocation loc = null;
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location == null || (location.getLatitude() == 0.0 && location.getLongitude() == 0.0)) {
+        if (location != null && (location.getLatitude() != 0.0 && location.getLongitude() != 0.0)) {
+            loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
+        } else {
             location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (location == null || (location.getLatitude() == 0.0
-                    && location.getLongitude() == 0.0)) {
-
+            if (location != null && (location.getLatitude() != 0.0
+                    && location.getLongitude() != 0.0)) {
+                loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
+            } else {
+                String coords = prefs.getString(this.getString(R.string.data_last_lat_lon), null);
+                if (coords != null) {
+                    String[] coord = coords.split(":");
+                    loc = GeoLocation.fromDegrees(Double.valueOf(coord[0]), Double.valueOf(coord[1]));
+                }
             }
         }
 
-        return location;
+        return loc;
     }
 
     public boolean isMonitoringCell() {
@@ -1188,27 +1204,30 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 mDevice.mCell.setBearing(loc.getBearing());
                 mDevice.setLastLocation(loc);
 
+                //Store last known location in preference
+                Editor prefsEditor;
+                prefsEditor = prefs.edit();
+                prefsEditor.putString(mContext.getString(R.string.data_last_lat_lon),
+                        String.valueOf(loc.getLatitude()) + ":" + String
+                                .valueOf(loc.getLongitude()));
+                prefsEditor.apply();
+
                 if (mTrackingCell) {
                     dbHelper.open();
-                    mDbResult = dbHelper.insertLocation(mDevice.mCell.getLAC(),
+                    dbHelper.insertLocation(mDevice.mCell.getLAC(),
                             mDevice.mCell.getCID(), mDevice.mCell.getNetType(),
                             mDevice.mCell.getLat(),
                             mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
                             mDevice.getCellInfo());
 
-                    mDbResult = dbHelper
-                            .insertCell(mDevice.mCell.getLAC(), mDevice.mCell.getCID(),
-                                    mDevice.mCell.getNetType(), mDevice.mCell.getLat(),
-                                    mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
-                                    mDevice.mCell.getMCC(), mDevice.mCell.getMNC(),
-                                    mDevice.mCell.getAccuracy(), mDevice.mCell.getSpeed(),
-                                    mDevice.mCell.getBearing(),
-                                    mDevice.getNetworkTypeName(),
-                                    SystemClock.currentThreadTimeMillis());
-
-                    if (mDbResult == -1) {
-                        Log.e(TAG, "Error writing to database!");
-                    }
+                   dbHelper.insertCell(mDevice.mCell.getLAC(), mDevice.mCell.getCID(),
+                           mDevice.mCell.getNetType(), mDevice.mCell.getLat(),
+                           mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
+                           mDevice.mCell.getMCC(), mDevice.mCell.getMNC(),
+                           mDevice.mCell.getAccuracy(), mDevice.mCell.getSpeed(),
+                           mDevice.mCell.getBearing(),
+                           mDevice.getNetworkTypeName(),
+                           SystemClock.currentThreadTimeMillis());
                 }
             }
 
