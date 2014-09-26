@@ -321,12 +321,21 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                     mLastZ = z;
 
                     if (deltaX > 0 || deltaY > 0 || deltaZ > 0) {
-                        lastMovementTime = System.currentTimeMillis();
                         // movement detected
-                        Log.d("sensor", "Movement detected!");
-                        // re-enable GPS
+                        Log.d("sensor", "Movement detected, enabling GPS");
+
+                        // disable the movement sensor to save power
+                        mSensorManager.unregisterListener(mSensorListener);
+
+                        lastMovementTime = System.currentTimeMillis();
+
+                        // re-enable GPS, see timerRunner for when this gets switched off
                         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
                                 GPS_MIN_UPDATE_DISTANCE, mLocationListener);
+
+                        // check again in a while to see if GPS should be disabled
+                        // this runnable also re-enables this movement sensor
+                        timerHandler.postDelayed(batterySavingRunnable, MOVEMENT_THRESHOLD_MS);
                     }
                 }
             }
@@ -958,6 +967,23 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         setNotification();
     }
 
+    // while tracking a cell, manage the power usage by switching off GPS if no movement
+    private final Runnable batterySavingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Log.d("power", "Checking to see if GPS should be disabled");
+            // if no movement in a while, shut off GPS. Gets re-enabled when there is movement
+            if (lastLocationTime <= 0 ||
+                    System.currentTimeMillis() - lastMovementTime >= MOVEMENT_THRESHOLD_MS) {
+                Log.d("power", "Disabling GPS");
+                lm.removeUpdates(mLocationListener);
+            }
+
+            // check for movement again
+            mSensorManager.registerListener(mSensorListener, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+    };
+
     private final Runnable timerRunnable = new Runnable() {
 
         @Override
@@ -995,6 +1021,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                         dbHelper.close();
                     }
             }
+
             if (REFRESH_RATE != 0) {
                 timerHandler.postDelayed(this, REFRESH_RATE);
             } else {
@@ -1170,13 +1197,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         @Override
         public void onLocationChanged(Location loc) {
             Log.d("location", "Got location " + loc);
-            if (lastLocationTime <= 0 || System.currentTimeMillis() - lastMovementTime > MOVEMENT_THRESHOLD_MS) {
-                // disable GPS to save power until we start moving again
-                Log.d("location", "GPS disabled to save power");
-                lm.removeUpdates(mLocationListener);
-            }
-
             lastLocationTime = System.currentTimeMillis();
+            timerHandler.postDelayed(batterySavingRunnable, MOVEMENT_THRESHOLD_MS);
 
             if (Build.VERSION.SDK_INT > 16) {
                 List<CellInfo> cellinfolist = tm.getAllCellInfo();
