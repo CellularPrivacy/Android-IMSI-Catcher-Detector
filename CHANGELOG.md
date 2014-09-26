@@ -1,6 +1,12 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 26.09.2014
+
+* Changed: Re-worked accelerometer detection for better battery savings. Needs lots of testing.
+* Added: More tweaks and different map tile sources for the various map type settings
+* Fix: Eliminated bug which terminates the service when AIMSICD is closed
+
 #### 24.09.2014
 
 * Removed: Fully removed Google Play Services - WELCOME our new developer @tobykurien! ;-)
