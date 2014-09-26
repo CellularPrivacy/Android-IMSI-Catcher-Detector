@@ -1,13 +1,13 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
-#### 26.09.2014
+#### 26.09.2014 - WIP-Internal v0.1.24-alpha-build-9
 
 * Changed: Re-worked accelerometer detection for better battery savings. Needs lots of testing.
 * Added: More tweaks and different map tile sources for the various map type settings
 * Fix: Eliminated bug which terminates the service when AIMSICD is closed
 
-#### 24.09.2014
+#### 24.09.2014 - WIP-Internal v0.1.24-alpha-build-8
 
 * Removed: Fully removed Google Play Services - WELCOME our new developer @tobykurien! ;-)
 * Update: Switch from Google Maps to OsmDroid (WIP), much smaller file size of APK
@@ -31,7 +31,7 @@
 * Fix: Exit Button will now actually exit the activity instead of doing absolutely nothing at all
 * Fix: Use GeoLocation Class & store last Location to use it for any methods that require location
 
-#### 17.09.2014
+#### 17.09.2014 - WIP-Internal v0.1.24-alpha-build-7
 
 * Update: Modifed the OpenCellID methods to enable each user to request and use their own keys
 * Update: Added small clarifications to Phone Type and RIL Version within Device Information
