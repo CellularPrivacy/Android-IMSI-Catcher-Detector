@@ -98,7 +98,7 @@ In short: We're merely using any possible way to overcome the ridiculous AOS lim
 
 2. Sending AT commands to the baseband processor and use the results to detect anomalies is an ongoing challenge because certain basebands do not expose enough usable information. The whole detection process is strongly hardware dependent, some basebands expose everything (MTK) and others (Qualcomm) expose very little, since they have their own protocols (DM/QMI). But the SIM card filesystem does provide useful info. So a combination of AT commands, SIM card readings and also API access to Service Mode (Samsung) menus, can provide all that we need and more. But it is a rather technical challenge for our developers to do this, and to collect all support material needed. That's where YOU come into play. Check our [open Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues?q=is%3Aopen+is%3Aissue)!
 
-3. OBB support would be trivial, but we're not really proposing this. Very few people would bother going through the pain of finding an appropriate OBB compatible phone, less implementing it as a piggy-back to an Android. So unless some OBB developer serves the required Java + binaries to us on a silver platter, this will not be a feature of AIMSICD.
+3. OBB support would be crucial, but we're not really proposing this. Very few people would bother going through the pain of finding an appropriate OBB compatible phone, less implementing it as a piggy-back to an Android. So unless some OBB developer serves the required Java + binaries to us on a silver platter, this will not be a feature of AIMSICD.
 
 Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule Them ALL".
 
