@@ -56,20 +56,6 @@
 
 package com.SecUpwN.AIMSICD.service;
 
-import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.BuildConfig;
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
-import com.SecUpwN.AIMSICD.rilexecutor.OemRilExecutor;
-import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
-import com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor;
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.Device;
-import com.SecUpwN.AIMSICD.utils.GeoLocation;
-import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.OemCommands;
-
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -84,6 +70,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -122,6 +112,19 @@ import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
+import com.SecUpwN.AIMSICD.rilexecutor.OemRilExecutor;
+import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
+import com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor;
+import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.Device;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
+import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.OemCommands;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -154,9 +157,27 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private static LocationManager lm;
     private SharedPreferences prefs;
     private PhoneStateListener mPhoneStateListener;
+
+    /**
+     * Location listener stuff
+     */
     private LocationListener mLocationListener;
-    private static final long GPS_MIN_UPDATE_TIME = 1000;
+    private long lastLocationTime = 0;
+    private static final long GPS_MIN_UPDATE_TIME = 10000;
     private static final float GPS_MIN_UPDATE_DISTANCE = 10;
+
+    /**
+     * Accelerometer stuff for detecting movement
+     */
+    private float mLastX, mLastY, mLastZ;
+    private long lastMovementTime = 0;
+    private boolean mInitialized;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private SensorEventListener mSensorListener;
+    private final float ACCELEROMETER_NOISE = 2.0f;
+    private long MOVEMENT_THRESHOLD_MS = 60*1000; // time after last movement till GPS switched off
+
     public boolean mMultiRilCompatible;
     public static long REFRESH_RATE;
     public static int LAST_DB_BACKUP_VERSION;
@@ -213,6 +234,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         mContext = getApplicationContext();
 
+        setupAccelerometer();
+        mLocationListener = new MyLocationListener();
+        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
         PHONE_TYPE = tm.getPhoneType();
 
         prefs = this.getSharedPreferences(
@@ -260,6 +285,61 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         Log.i(TAG, "Service launched successfully.");
     }
 
+    /**
+     * Set up the accelerometer so that when movement is detected, the GPS is enabled.
+     * GPS is normally disabled to save battery power.
+     */
+    private void setupAccelerometer() {
+        // set up accelerometer sensor
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        mSensorListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+
+                if (!mInitialized) {
+                    mLastX = x;
+                    mLastY = y;
+                    mLastZ = z;
+
+                    mInitialized = true;
+                } else {
+                    float deltaX = Math.abs(mLastX - x);
+                    float deltaY = Math.abs(mLastY - y);
+                    float deltaZ = Math.abs(mLastZ - z);
+
+                    if (deltaX < ACCELEROMETER_NOISE) deltaX = 0.0f;
+                    if (deltaY < ACCELEROMETER_NOISE) deltaY = 0.0f;
+                    if (deltaZ < ACCELEROMETER_NOISE) deltaZ = 0.0f;
+
+                    mLastX = x;
+                    mLastY = y;
+                    mLastZ = z;
+
+                    if (deltaX > 0 || deltaY > 0 || deltaZ > 0) {
+                        lastMovementTime = System.currentTimeMillis();
+                        // movement detected
+                        Log.d("sensor", "Movement detected!");
+                        // re-enable GPS
+                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
+                                GPS_MIN_UPDATE_DISTANCE, mLocationListener);
+                    }
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int i) {
+
+            }
+        };
+
+        mSensorManager.registerListener(mSensorListener, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
@@ -277,6 +357,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
             lm.removeUpdates(mLocationListener);
         }
+
+        mSensorManager.unregisterListener(mSensorListener);
 
         //Samsung MultiRil Cleanup
         if (mRequestExecutor != null) {
@@ -935,22 +1017,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                             PhoneStateListener.LISTEN_DATA_ACTIVITY |
                             PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
             );
-            if (lm != null) {
-                mLocationListener = new MyLocationListener();
-                Log.i(TAG, "LocationManager already existed.");
-                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
-                        GPS_MIN_UPDATE_DISTANCE, mLocationListener);
-            } else {
-                Log.i(TAG, "LocationManager did not exist.");
-                lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-                if (lm != null) {
-                    if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                        Log.i(TAG, "LocationManager created.");
-                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
-                                GPS_MIN_UPDATE_DISTANCE, mLocationListener);
-                    }
-                }
-            }
+
+            Log.i(TAG, "LocationManager already existed.");
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
+                    GPS_MIN_UPDATE_DISTANCE, mLocationListener);
+
             Helpers.msgShort(this, "Tracking Cell Information.");
             mTrackingCell = true;
         } else {
@@ -1098,6 +1169,15 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Override
         public void onLocationChanged(Location loc) {
+            Log.d("location", "Got location " + loc);
+            if (lastLocationTime <= 0 || System.currentTimeMillis() - lastMovementTime > MOVEMENT_THRESHOLD_MS) {
+                // disable GPS to save power until we start moving again
+                Log.d("location", "GPS disabled to save power");
+                lm.removeUpdates(mLocationListener);
+            }
+
+            lastLocationTime = System.currentTimeMillis();
+
             if (Build.VERSION.SDK_INT > 16) {
                 List<CellInfo> cellinfolist = tm.getAllCellInfo();
                 if (cellinfolist != null) {
