@@ -180,20 +180,20 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
 
     private void setupMapType(int mapType) {
         mMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
-//            switch (mapType) {
-//                case 0:
-//                    mMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE); //setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//                    break;
-//                case 1:
-//                    mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-//                    break;
-//                case 2:
-//                    mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-//                    break;
-//                case 3:
-//                    mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-//                    break;
-//            }
+        switch (mapType) {
+            case 0:
+                mMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE); //setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                break;
+            case 1:
+                mMap.setTileSource(TileSourceFactory.MAPNIK); //.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                break;
+            case 2:
+                mMap.setTileSource(TileSourceFactory.MAPQUESTAERIAL); //.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                break;
+            case 3:
+                mMap.setTileSource(TileSourceFactory.CYCLEMAP); //.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                break;
+        }
     }
 
     /**
@@ -359,7 +359,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
 
                             CellTowerOverlayItem ovm = new CellTowerOverlayItem("CellID - " + cellID,
                                     "",
-                                    new GeoPoint(loc.getLatitude(), loc.getLongitude()),
+                                    loc,
                                     new MarkerData("" + cellID, "" + loc.getLatitude(),"" +
                                             loc.getLongitude(), "" + lac, "" + mcc, "" + mnc, "", false));
 
@@ -473,7 +473,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
 
                 CellTowerOverlayItem ovm = new CellTowerOverlayItem("CellID - " + cellID,
                         "",
-                        new GeoPoint(location.getLatitude(), location.getLongitude()),
+                        location,
                         new MarkerData("" + cellID, "" + location.getLatitude(),"" +
                                 location.getLongitude(), "" + lac, "", "", "", false));
 
