@@ -10,6 +10,7 @@
 * Fix: Moved RilExecutor to correct package and hooked up RilExecutor into CellInfoFragment
 * Fix: Cleaned up the code to resolve title "Map Viewer" staying after switching tabs
 * Fix: Corrected Cell Tracking status - code got left out during refactoring
+* Fix: Corrected regression through which the service did not load correctly on startup
 
 #### 26.09.2014 - WIP-Internal v0.1.24-alpha-build-9
 
