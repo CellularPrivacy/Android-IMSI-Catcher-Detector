@@ -7,7 +7,7 @@ import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.RilExecutor;
+import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
 
 import android.app.Activity;
 import android.app.Fragment;
