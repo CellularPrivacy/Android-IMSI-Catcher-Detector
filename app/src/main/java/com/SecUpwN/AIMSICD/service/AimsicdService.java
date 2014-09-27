@@ -119,6 +119,7 @@ import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.OemCommands;
+import com.SecUpwN.AIMSICD.utils.RilExecutor;
 
 import org.osmdroid.util.GeoPoint;
 
@@ -155,8 +156,8 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private PhoneStateListener mPhoneStateListener;
     private AccelerometerMonitor mAccelerometerMonitor;
     private LocationTracker mLocationTracker;
+    private RilExecutor mRilExecutor;
 
-    public boolean mMultiRilCompatible;
     public static long REFRESH_RATE;
     public static int LAST_DB_BACKUP_VERSION;
     public static boolean OCID_UPLOAD_PREF;
@@ -173,26 +174,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private boolean mTypeZeroSmsDetected;
     private boolean mChangedLAC;
     private Cell mMonitorCell;
-
-    /*
-     * Samsung MultiRil Implementation
-     */
-    private static final int ID_REQUEST_START_SERVICE_MODE_COMMAND = 1;
-    private static final int ID_REQUEST_FINISH_SERVICE_MODE_COMMAND = 2;
-    private static final int ID_REQUEST_PRESS_A_KEY = 3;
-    private static final int ID_REQUEST_REFRESH = 4;
-    private static final int ID_RESPONSE = 101;
-    private static final int ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND = 102;
-    private static final int ID_RESPONSE_PRESS_A_KEY = 103;
-    private static final int REQUEST_TIMEOUT = 10000; // ms
-
-    private final ConditionVariable mRequestCondvar = new ConditionVariable();
-    private final Object mLastResponseLock = new Object();
-    private volatile List<String> mLastResponse;
-    private DetectResult mRilExecutorDetectResult;
-    private OemRilExecutor mRequestExecutor;
-    private HandlerThread mHandlerThread;
-    private Handler mHandler;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -224,6 +205,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         });
 
         mLocationTracker = new LocationTracker(this, mLocationListener);
+        mRilExecutor = new RilExecutor(this);
 
         PHONE_TYPE = tm.getPhoneType();
 
@@ -244,25 +226,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         mDevice.refreshDeviceInfo(tm, this); //Telephony Manager
         setNotification();
-
-        mRequestExecutor = new SamsungMulticlientRilExecutor();
-        mRilExecutorDetectResult = mRequestExecutor.detect();
-        if (!mRilExecutorDetectResult.available) {
-            mMultiRilCompatible = false;
-            Log.e(TAG, "Samsung Multiclient RIL not available: " + mRilExecutorDetectResult.error);
-            mRequestExecutor = null;
-        } else {
-            mRequestExecutor.start();
-            mMultiRilCompatible = true;
-            //Sumsung MultiRil Initialization
-            mHandlerThread = new HandlerThread("ServiceModeSeqHandler");
-            mHandlerThread.start();
-
-            Looper l = mHandlerThread.getLooper();
-            if (l != null) {
-                mHandler = new Handler(l, new MyHandler());
-            }
-        }
 
         //Register receiver for Silent SMS Interception Notification
         mContext.registerReceiver(mMessageReceiver, new IntentFilter(SILENT_SMS));
@@ -292,15 +255,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
 
         mAccelerometerMonitor.stop();
 
-        //Samsung MultiRil Cleanup
-        if (mRequestExecutor != null) {
-            mRequestExecutor.stop();
-            mRequestExecutor = null;
-            mHandler = null;
-            mHandlerThread.quit();
-            mHandlerThread = null;
-        }
-
+        mRilExecutor.stop();
         Log.i(TAG, "Service destroyed.");
     }
 
@@ -316,50 +271,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
             }
         }
     };
-
-    /**
-     * Check the status of the Rill Executor
-     *
-     * @return DetectResult providing access status of the Ril Executor
-     */
-    public DetectResult getRilExecutorStatus() {
-        return mRilExecutorDetectResult;
-    }
-
-    /**
-     * Executes and receives the Ciphering Information request using
-     * the Rill Executor
-     *
-     * @return String list response from Rill Executor
-     */
-    public List<String> getCipheringInfo() {
-        return executeServiceModeCommand(
-                OemCommands.OEM_SM_TYPE_TEST_MANUAL,
-                OemCommands.OEM_SM_TYPE_SUB_CIPHERING_PROTECTION_ENTER,
-                null
-        );
-    }
-
-    /**
-     * Executes and receives the Neighbouring Cell request using
-     * the Rill Executor
-     *
-     * @return String list response from Rill Executor
-     */
-    public List<String> getNeighbours() {
-        KeyStep getNeighboursKeySeq[] = new KeyStep[]{
-                new KeyStep('\0', false),
-                new KeyStep('1', false), // [1] DEBUG SCREEN
-                new KeyStep('4', true), // [4] NEIGHBOUR CELL
-        };
-
-        return executeServiceModeCommand(
-                OemCommands.OEM_SM_TYPE_TEST_MANUAL,
-                OemCommands.OEM_SM_TYPE_SUB_ENTER,
-                Arrays.asList(getNeighboursKeySeq)
-        );
-
-    }
 
     public GeoLocation lastKnownLocation() {
         return mLocationTracker.lastKnownLocation();
@@ -474,147 +385,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
 
         return neighboringCells;
-    }
-
-    /**
-     * Service Mode Command Helper to call with Timeout value
-     *
-     * @return executeServiceModeCommand adding REQUEST_TIMEOUT
-     */
-    private List<String> executeServiceModeCommand(int type, int subtype,
-            java.util.Collection<KeyStep> keySeqence) {
-        return executeServiceModeCommand(type, subtype, keySeqence, REQUEST_TIMEOUT);
-    }
-
-    /**
-     * Service Mode Command Helper to call with Timeout value
-     *
-     * @return executeServiceModeCommand adding REQUEST_TIMEOUT
-     */
-    private synchronized List<String> executeServiceModeCommand(int type, int subtype,
-            java.util.Collection<KeyStep> keySeqence, int timeout) {
-        if (mRequestExecutor == null) {
-            return Collections.emptyList();
-        }
-
-        mRequestCondvar.close();
-        mHandler.obtainMessage(ID_REQUEST_START_SERVICE_MODE_COMMAND,
-                type,
-                subtype,
-                keySeqence).sendToTarget();
-        if (!mRequestCondvar.block(timeout)) {
-            Log.e(TAG, "request timeout");
-            return Collections.emptyList();
-        } else {
-            synchronized (mLastResponseLock) {
-                return mLastResponse;
-            }
-        }
-    }
-
-    private static class KeyStep {
-
-        public final char keychar;
-
-        public final boolean captureResponse;
-
-        public KeyStep(char keychar, boolean captureResponse) {
-            this.keychar = keychar;
-            this.captureResponse = captureResponse;
-        }
-
-        public static final KeyStep KEY_START_SERVICE_MODE = new KeyStep('\0', true);
-    }
-
-    private class MyHandler implements Handler.Callback {
-
-        private int mCurrentType;
-
-        private int mCurrentSubtype;
-
-        private Queue<KeyStep> mKeySequence;
-
-        @Override
-        public boolean handleMessage(Message msg) {
-            byte[] requestData;
-            Message responseMsg;
-            KeyStep lastKeyStep;
-
-            switch (msg.what) {
-                case ID_REQUEST_START_SERVICE_MODE_COMMAND:
-                    mCurrentType = msg.arg1;
-                    mCurrentSubtype = msg.arg2;
-                    mKeySequence = new ArrayDeque<>(3);
-                    if (msg.obj != null) {
-                        mKeySequence.addAll((java.util.Collection<KeyStep>) msg.obj);
-                    } else {
-                        mKeySequence.add(KeyStep.KEY_START_SERVICE_MODE);
-                    }
-                    synchronized (mLastResponseLock) {
-                        mLastResponse = new ArrayList<>();
-                    }
-                    requestData = OemCommands.getEnterServiceModeData(
-                            mCurrentType, mCurrentSubtype, OemCommands.OEM_SM_ACTION);
-                    responseMsg = mHandler.obtainMessage(ID_RESPONSE);
-                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
-                    break;
-                case ID_REQUEST_FINISH_SERVICE_MODE_COMMAND:
-                    requestData = OemCommands.getEndServiceModeData(mCurrentType);
-                    responseMsg = mHandler.obtainMessage(ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND);
-                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
-                    break;
-                case ID_REQUEST_PRESS_A_KEY:
-                    requestData = OemCommands.getPressKeyData(msg.arg1, OemCommands.OEM_SM_ACTION);
-                    responseMsg = mHandler.obtainMessage(ID_RESPONSE_PRESS_A_KEY);
-                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
-                    break;
-                case ID_REQUEST_REFRESH:
-                    requestData = OemCommands.getPressKeyData('\0', OemCommands.OEM_SM_QUERY);
-                    responseMsg = mHandler.obtainMessage(ID_RESPONSE);
-                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
-                    break;
-                case ID_RESPONSE:
-                    lastKeyStep = mKeySequence.poll();
-                    try {
-                        RawResult result = (RawResult) msg.obj;
-                        if (result == null) {
-                            Log.e(TAG, "result is null");
-                            break;
-                        }
-                        if (result.exception != null) {
-                            Log.e(TAG, "", result.exception);
-                            break;
-                        }
-                        if (result.result == null) {
-                            Log.v(TAG, "No need to refresh.");
-                            break;
-                        }
-                        if (lastKeyStep.captureResponse) {
-                            synchronized (mLastResponseLock) {
-                                mLastResponse
-                                        .addAll(Helpers.unpackByteListOfStrings(result.result));
-                            }
-                        }
-                    } finally {
-                        if (mKeySequence.isEmpty()) {
-                            mHandler.obtainMessage(ID_REQUEST_FINISH_SERVICE_MODE_COMMAND)
-                                    .sendToTarget();
-                        } else {
-                            mHandler.obtainMessage(ID_REQUEST_PRESS_A_KEY,
-                                    mKeySequence.element().keychar, 0).sendToTarget();
-                        }
-                    }
-                    break;
-                case ID_RESPONSE_PRESS_A_KEY:
-                    mHandler.sendMessageDelayed(mHandler.obtainMessage(ID_REQUEST_REFRESH), 10);
-                    break;
-                case ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND:
-                    mRequestCondvar.open();
-                    break;
-
-            }
-            return true;
-        }
     }
 
     public void refreshDevice() {
