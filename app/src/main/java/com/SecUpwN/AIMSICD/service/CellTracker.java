@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Build;
@@ -65,6 +67,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public static long REFRESH_RATE;
     public static int LAST_DB_BACKUP_VERSION;
     public static boolean OCID_UPLOAD_PREF;
+    public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
 
     private boolean CELL_TABLE_CLEANSED;
     private final Device mDevice = new Device();
@@ -112,6 +115,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         mDevice.refreshDeviceInfo(tm, context); //Telephony Manager
 
         mMonitorCell = new Cell();
+
+        //Register receiver for Silent SMS Interception Notification
+        context.registerReceiver(mMessageReceiver, new IntentFilter(SILENT_SMS));
     }
 
     public boolean isTrackingCell() {
@@ -155,8 +161,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     public void stop() {
+        cancelNotification();
         tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
+        context.unregisterReceiver(mMessageReceiver);
     }
 
     /**
@@ -185,16 +193,19 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         setNotification();
     }
 
-    /**
-     * Broadcast intent received for SMS
-     * @param bundle
-     */
-    public void messageReceived(Bundle bundle) {
-        dbHelper.open();
-        dbHelper.insertSilentSms(bundle);
-        dbHelper.close();
-        setSilentSmsStatus(true);
-    }
+
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                dbHelper.open();
+                dbHelper.insertSilentSms(bundle);
+                dbHelper.close();
+                setSilentSmsStatus(true);
+            }
+        }
+    };
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_UI_ICONS = context.getString(R.string.pref_ui_icons_key);
