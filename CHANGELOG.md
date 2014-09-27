@@ -1,7 +1,7 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
-#### 27.09.2014 - WIP-Internal v0.1.24-alpha-build-9
+#### 27.09.2014 - WIP-Internal v0.1.24-alpha-build-10
 
 * Changed: Extracted Accelerometer, Location Tracking, and RilExecutor into separate classes
 * Changed: Extracted CellTracker from the service and refactored code everywhere
