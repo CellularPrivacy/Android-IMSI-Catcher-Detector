@@ -56,11 +56,7 @@
 
 package com.SecUpwN.AIMSICD.service;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -68,71 +64,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.ConditionVariable;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.Looper;
-import android.os.Message;
-import android.os.SystemClock;
-import android.support.v4.app.NotificationCompat;
-import android.telephony.CellIdentityCdma;
-import android.telephony.CellIdentityGsm;
-import android.telephony.CellIdentityLte;
-import android.telephony.CellIdentityWcdma;
-import android.telephony.CellInfo;
-import android.telephony.CellInfoCdma;
-import android.telephony.CellInfoGsm;
-import android.telephony.CellInfoLte;
-import android.telephony.CellInfoWcdma;
-import android.telephony.CellLocation;
-import android.telephony.CellSignalStrengthCdma;
-import android.telephony.CellSignalStrengthGsm;
-import android.telephony.CellSignalStrengthLte;
-import android.telephony.CellSignalStrengthWcdma;
-import android.telephony.NeighboringCellInfo;
-import android.telephony.PhoneStateListener;
-import android.telephony.ServiceState;
-import android.telephony.SignalStrength;
-import android.telephony.TelephonyManager;
-import android.telephony.cdma.CdmaCellLocation;
-import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
-import com.SecUpwN.AIMSICD.rilexecutor.OemRilExecutor;
-import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
-import com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor;
+import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
 import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
-import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.OemCommands;
-
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 public class AimsicdService extends Service implements OnSharedPreferenceChangeListener {
 
@@ -141,8 +88,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
     public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
     public static final String UPDATE_DISPLAY = "UPDATE_DISPLAY";
-    public static int PHONE_TYPE;
-    public static String OCID_API_KEY = "NA";
 
     /*
      * System and helper declarations
@@ -151,70 +96,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private final AIMSICDDbAdapter dbHelper = new AIMSICDDbAdapter(this);
     private final Handler timerHandler = new Handler();
     private Context mContext;
-    private final int NOTIFICATION_ID = 1;
 
-    private static TelephonyManager tm;
-    private static LocationManager lm;
     private SharedPreferences prefs;
-    private PhoneStateListener mPhoneStateListener;
-
-    /**
-     * Location listener stuff
-     */
-    private LocationListener mLocationListener;
-    private long lastLocationTime = 0;
-    private static final long GPS_MIN_UPDATE_TIME = 10000;
-    private static final float GPS_MIN_UPDATE_DISTANCE = 10;
-
-    /**
-     * Accelerometer stuff for detecting movement
-     */
-    private float mLastX, mLastY, mLastZ;
-    private long lastMovementTime = 0;
-    private boolean mInitialized;
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private SensorEventListener mSensorListener;
-    private final float ACCELEROMETER_NOISE = 2.0f;
-    private long MOVEMENT_THRESHOLD_MS = 60*1000; // time after last movement till GPS switched off
-
-    public boolean mMultiRilCompatible;
-    public static long REFRESH_RATE;
-    public static int LAST_DB_BACKUP_VERSION;
-    public static boolean OCID_UPLOAD_PREF;
-    private boolean CELL_TABLE_CLEANSED;
-    public final Device mDevice = new Device();
-
-    /*
-     * Tracking and Alert Declarations
-     */
-    private boolean mMonitoringCell;
-    private boolean mTrackingCell;
-    private boolean mTrackingFemtocell;
-    private boolean mFemtoDetected;
-    private boolean mTypeZeroSmsDetected;
-    private boolean mChangedLAC;
-    private Cell mMonitorCell;
-
-    /*
-     * Samsung MultiRil Implementation
-     */
-    private static final int ID_REQUEST_START_SERVICE_MODE_COMMAND = 1;
-    private static final int ID_REQUEST_FINISH_SERVICE_MODE_COMMAND = 2;
-    private static final int ID_REQUEST_PRESS_A_KEY = 3;
-    private static final int ID_REQUEST_REFRESH = 4;
-    private static final int ID_RESPONSE = 101;
-    private static final int ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND = 102;
-    private static final int ID_RESPONSE_PRESS_A_KEY = 103;
-    private static final int REQUEST_TIMEOUT = 10000; // ms
-
-    private final ConditionVariable mRequestCondvar = new ConditionVariable();
-    private final Object mLastResponseLock = new Object();
-    private volatile List<String> mLastResponse;
-    private DetectResult mRilExecutorDetectResult;
-    private OemRilExecutor mRequestExecutor;
-    private HandlerThread mHandlerThread;
-    private Handler mHandler;
+    private CellTracker mCellTracker;
+    private AccelerometerMonitor mAccelerometerMonitor;
+    private LocationTracker mLocationTracker;
+    private RilExecutor mRilExecutor;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -229,129 +116,39 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     }
 
     public void onCreate() {
-        //TelephonyManager provides system details
-        tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         mContext = getApplicationContext();
 
-        setupAccelerometer();
-        mLocationListener = new MyLocationListener();
-        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        mAccelerometerMonitor = new AccelerometerMonitor(this, new Runnable() {
+            @Override
+            public void run() {
+                // movement detected, so enable GPS
+                mLocationTracker.start();
 
-        PHONE_TYPE = tm.getPhoneType();
+                // check again in a while to see if GPS should be disabled
+                // this runnable also re-enables this movement sensor
+                timerHandler.postDelayed(batterySavingRunnable, AccelerometerMonitor.MOVEMENT_THRESHOLD_MS);
+            }
+        });
+
+        mLocationTracker = new LocationTracker(this, mLocationListener);
+        mRilExecutor = new RilExecutor(this);
+        mCellTracker = new CellTracker(this);
 
         prefs = this.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         prefs.registerOnSharedPreferenceChangeListener(this);
-        loadPreferences();
-
-        if (!CELL_TABLE_CLEANSED) {
-            dbHelper.open();
-            dbHelper.cleanseCellTable();
-            dbHelper.close();
-            Editor prefsEditor;
-            prefsEditor = prefs.edit();
-            prefsEditor.putBoolean(this.getString(R.string.pref_cell_table_cleansed), true);
-            prefsEditor.apply();
-        }
-
-        mDevice.refreshDeviceInfo(tm, this); //Telephony Manager
-        setNotification();
-
-        mRequestExecutor = new SamsungMulticlientRilExecutor();
-        mRilExecutorDetectResult = mRequestExecutor.detect();
-        if (!mRilExecutorDetectResult.available) {
-            mMultiRilCompatible = false;
-            Log.e(TAG, "Samsung Multiclient RIL not available: " + mRilExecutorDetectResult.error);
-            mRequestExecutor = null;
-        } else {
-            mRequestExecutor.start();
-            mMultiRilCompatible = true;
-            //Sumsung MultiRil Initialization
-            mHandlerThread = new HandlerThread("ServiceModeSeqHandler");
-            mHandlerThread.start();
-
-            Looper l = mHandlerThread.getLooper();
-            if (l != null) {
-                mHandler = new Handler(l, new MyHandler());
-            }
-        }
+//        loadPreferences();
+//
+//        setNotification();
 
         //Register receiver for Silent SMS Interception Notification
         mContext.registerReceiver(mMessageReceiver, new IntentFilter(SILENT_SMS));
 
-        mMonitorCell = new Cell();
-
         Log.i(TAG, "Service launched successfully.");
-    }
-
-    /**
-     * Set up the accelerometer so that when movement is detected, the GPS is enabled.
-     * GPS is normally disabled to save battery power.
-     */
-    private void setupAccelerometer() {
-        // set up accelerometer sensor
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-        mSensorListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-                float x = event.values[0];
-                float y = event.values[1];
-                float z = event.values[2];
-
-                if (!mInitialized) {
-                    mLastX = x;
-                    mLastY = y;
-                    mLastZ = z;
-
-                    mInitialized = true;
-                } else {
-                    float deltaX = Math.abs(mLastX - x);
-                    float deltaY = Math.abs(mLastY - y);
-                    float deltaZ = Math.abs(mLastZ - z);
-
-                    if (deltaX < ACCELEROMETER_NOISE) deltaX = 0.0f;
-                    if (deltaY < ACCELEROMETER_NOISE) deltaY = 0.0f;
-                    if (deltaZ < ACCELEROMETER_NOISE) deltaZ = 0.0f;
-
-                    mLastX = x;
-                    mLastY = y;
-                    mLastZ = z;
-
-                    if (deltaX > 0 || deltaY > 0 || deltaZ > 0) {
-                        // movement detected
-                        Log.d("sensor", "Movement detected, enabling GPS");
-
-                        // disable the movement sensor to save power
-                        mSensorManager.unregisterListener(mSensorListener);
-
-                        lastMovementTime = System.currentTimeMillis();
-
-                        // re-enable GPS, see timerRunner for when this gets switched off
-                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
-                                GPS_MIN_UPDATE_DISTANCE, mLocationListener);
-
-                        // check again in a while to see if GPS should be disabled
-                        // this runnable also re-enables this movement sensor
-                        timerHandler.postDelayed(batterySavingRunnable, MOVEMENT_THRESHOLD_MS);
-                    }
-                }
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int i) {
-
-            }
-        };
-
-        mSensorManager.registerListener(mSensorListener, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         return START_STICKY;
     }
 
@@ -359,25 +156,17 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public void onDestroy() {
         super.onDestroy();
         prefs.unregisterOnSharedPreferenceChangeListener(this);
-        cancelNotification();
+        mCellTracker.cancelNotification();
         dbHelper.close();
         mContext.unregisterReceiver(mMessageReceiver);
-        if (mTrackingCell) {
-            tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
-            lm.removeUpdates(mLocationListener);
+        if (mCellTracker.isTrackingCell()) {
+            mCellTracker.stop();
+            mLocationTracker.stop();
         }
 
-        mSensorManager.unregisterListener(mSensorListener);
+        mAccelerometerMonitor.stop();
 
-        //Samsung MultiRil Cleanup
-        if (mRequestExecutor != null) {
-            mRequestExecutor.stop();
-            mRequestExecutor = null;
-            mHandler = null;
-            mHandlerThread.quit();
-            mHandlerThread = null;
-        }
-
+        mRilExecutor.stop();
         Log.i(TAG, "Service destroyed.");
     }
 
@@ -386,585 +175,51 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         public void onReceive(Context context, Intent intent) {
             final Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                dbHelper.open();
-                dbHelper.insertSilentSms(bundle);
-                dbHelper.close();
-                setSilentSmsStatus(true);
+                mCellTracker.messageReceived(bundle);
             }
         }
     };
 
-    /**
-     * Check the status of the Rill Executor
-     *
-     * @return DetectResult providing access status of the Ril Executor
-     */
-    public DetectResult getRilExecutorStatus() {
-        return mRilExecutorDetectResult;
-    }
-
-    /**
-     * Executes and receives the Ciphering Information request using
-     * the Rill Executor
-     *
-     * @return String list response from Rill Executor
-     */
-    public List<String> getCipheringInfo() {
-        return executeServiceModeCommand(
-                OemCommands.OEM_SM_TYPE_TEST_MANUAL,
-                OemCommands.OEM_SM_TYPE_SUB_CIPHERING_PROTECTION_ENTER,
-                null
-        );
-    }
-
-    /**
-     * Executes and receives the Neighbouring Cell request using
-     * the Rill Executor
-     *
-     * @return String list response from Rill Executor
-     */
-    public List<String> getNeighbours() {
-        KeyStep getNeighboursKeySeq[] = new KeyStep[]{
-                new KeyStep('\0', false),
-                new KeyStep('1', false), // [1] DEBUG SCREEN
-                new KeyStep('4', true), // [4] NEIGHBOUR CELL
-        };
-
-        return executeServiceModeCommand(
-                OemCommands.OEM_SM_TYPE_TEST_MANUAL,
-                OemCommands.OEM_SM_TYPE_SUB_ENTER,
-                Arrays.asList(getNeighboursKeySeq)
-        );
-
-    }
-
-    /**
-     * Updates Neighbouring Cell details
-     */
-    public List<Cell> updateNeighbouringCells() {
-        List<Cell> neighboringCells = new ArrayList<>();
-
-        List<NeighboringCellInfo> neighboringCellInfo;
-        neighboringCellInfo = tm.getNeighboringCellInfo();
-        if (neighboringCellInfo.size() == 0) {
-            // try to poll the neighboring cells for a few seconds
-            final LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue =
-                    new LinkedBlockingQueue<>(100);
-            final PhoneStateListener listener = new PhoneStateListener() {
-                private void handle() {
-                    List<NeighboringCellInfo> neighboringCellInfo;
-                    neighboringCellInfo = tm.getNeighboringCellInfo();
-                    if (neighboringCellInfo.size() == 0) {
-                        return;
-                    }
-                    Log.i(TAG, "neighbouringCellInfo empty - event based polling succeeded!");
-                    tm.listen(this, PhoneStateListener.LISTEN_NONE);
-                    neighboringCellBlockingQueue.addAll(neighboringCellInfo);
-                }
-
-                @Override
-                public void onServiceStateChanged(ServiceState serviceState) {
-                    handle();
-                }
-
-                @Override
-                public void onDataConnectionStateChanged(int state) {
-                    handle();
-                }
-
-                @Override
-                public void onDataConnectionStateChanged(int state, int networkType) {
-                    handle();
-                }
-
-                @Override
-                public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-                    handle();
-                }
-
-                @Override
-                public void onCellInfoChanged(List<CellInfo> cellInfo) {
-                    handle();
-                }
-            };
-            Log.i(TAG, "neighbouringCellInfo empty - start polling");
-
-            //LISTEN_CELL_INFO added in API 17
-            if (Build.VERSION.SDK_INT > 16) {
-                tm.listen(listener,
-                        PhoneStateListener.LISTEN_CELL_INFO
-                                | PhoneStateListener.LISTEN_CELL_LOCATION |
-                                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
-                                | PhoneStateListener.LISTEN_SERVICE_STATE |
-                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
-            } else {
-                tm.listen(listener,
-                        PhoneStateListener.LISTEN_CELL_LOCATION |
-                                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
-                                | PhoneStateListener.LISTEN_SERVICE_STATE |
-                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
-            }
-
-            for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
-                try {
-                    Log.i(TAG, "neighbouringCellInfo empty - try " + i);
-                    NeighboringCellInfo info = neighboringCellBlockingQueue
-                            .poll(1, TimeUnit.SECONDS);
-                    if (info == null) {
-                        neighboringCellInfo = tm.getNeighboringCellInfo();
-                        if (neighboringCellInfo.size() > 0) {
-                            Log.i(TAG, "neighbouringCellInfo empty - try " + i
-                                    + " succeeded time based");
-                            break;
-                        } else {
-                            continue;
-                        }
-                    }
-                    ArrayList<NeighboringCellInfo> cellInfoList =
-                            new ArrayList<>(
-                                    neighboringCellBlockingQueue.size() + 1);
-                    while (info != null) {
-                        cellInfoList.add(info);
-                        info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
-                    }
-                    neighboringCellInfo = cellInfoList;
-                } catch (InterruptedException e) {
-                    // normal
-                }
-            }
-        }
-
-        Log.i(TAG, "neighbouringCellInfo Size - " + neighboringCellInfo.size());
-        for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
-            Log.i(TAG, "neighbouringCellInfo - CID:" + neighbourCell.getCid() +
-                    " LAC:" + neighbourCell.getLac() + " RSSI:" + neighbourCell.getRssi() +
-                    " PSC:" + neighbourCell.getPsc());
-
-            final Cell cell = new Cell(neighbourCell.getCid(), neighbourCell.getLac(),
-                    neighbourCell.getRssi(), neighbourCell.getPsc(),
-                    neighbourCell.getNetworkType(), false);
-            neighboringCells.add(cell);
-        }
-
-        return neighboringCells;
-    }
-
-    /**
-     * Service Mode Command Helper to call with Timeout value
-     *
-     * @return executeServiceModeCommand adding REQUEST_TIMEOUT
-     */
-    private List<String> executeServiceModeCommand(int type, int subtype,
-            java.util.Collection<KeyStep> keySeqence) {
-        return executeServiceModeCommand(type, subtype, keySeqence, REQUEST_TIMEOUT);
-    }
-
-    /**
-     * Service Mode Command Helper to call with Timeout value
-     *
-     * @return executeServiceModeCommand adding REQUEST_TIMEOUT
-     */
-    private synchronized List<String> executeServiceModeCommand(int type, int subtype,
-            java.util.Collection<KeyStep> keySeqence, int timeout) {
-        if (mRequestExecutor == null) {
-            return Collections.emptyList();
-        }
-
-        mRequestCondvar.close();
-        mHandler.obtainMessage(ID_REQUEST_START_SERVICE_MODE_COMMAND,
-                type,
-                subtype,
-                keySeqence).sendToTarget();
-        if (!mRequestCondvar.block(timeout)) {
-            Log.e(TAG, "request timeout");
-            return Collections.emptyList();
-        } else {
-            synchronized (mLastResponseLock) {
-                return mLastResponse;
-            }
-        }
-    }
-
-    private static class KeyStep {
-
-        public final char keychar;
-
-        public final boolean captureResponse;
-
-        public KeyStep(char keychar, boolean captureResponse) {
-            this.keychar = keychar;
-            this.captureResponse = captureResponse;
-        }
-
-        public static final KeyStep KEY_START_SERVICE_MODE = new KeyStep('\0', true);
-    }
-
-    private class MyHandler implements Handler.Callback {
-
-        private int mCurrentType;
-
-        private int mCurrentSubtype;
-
-        private Queue<KeyStep> mKeySequence;
-
-        @Override
-        public boolean handleMessage(Message msg) {
-            byte[] requestData;
-            Message responseMsg;
-            KeyStep lastKeyStep;
-
-            switch (msg.what) {
-                case ID_REQUEST_START_SERVICE_MODE_COMMAND:
-                    mCurrentType = msg.arg1;
-                    mCurrentSubtype = msg.arg2;
-                    mKeySequence = new ArrayDeque<>(3);
-                    if (msg.obj != null) {
-                        mKeySequence.addAll((java.util.Collection<KeyStep>) msg.obj);
-                    } else {
-                        mKeySequence.add(KeyStep.KEY_START_SERVICE_MODE);
-                    }
-                    synchronized (mLastResponseLock) {
-                        mLastResponse = new ArrayList<>();
-                    }
-                    requestData = OemCommands.getEnterServiceModeData(
-                            mCurrentType, mCurrentSubtype, OemCommands.OEM_SM_ACTION);
-                    responseMsg = mHandler.obtainMessage(ID_RESPONSE);
-                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
-                    break;
-                case ID_REQUEST_FINISH_SERVICE_MODE_COMMAND:
-                    requestData = OemCommands.getEndServiceModeData(mCurrentType);
-                    responseMsg = mHandler.obtainMessage(ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND);
-                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
-                    break;
-                case ID_REQUEST_PRESS_A_KEY:
-                    requestData = OemCommands.getPressKeyData(msg.arg1, OemCommands.OEM_SM_ACTION);
-                    responseMsg = mHandler.obtainMessage(ID_RESPONSE_PRESS_A_KEY);
-                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
-                    break;
-                case ID_REQUEST_REFRESH:
-                    requestData = OemCommands.getPressKeyData('\0', OemCommands.OEM_SM_QUERY);
-                    responseMsg = mHandler.obtainMessage(ID_RESPONSE);
-                    mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
-                    break;
-                case ID_RESPONSE:
-                    lastKeyStep = mKeySequence.poll();
-                    try {
-                        RawResult result = (RawResult) msg.obj;
-                        if (result == null) {
-                            Log.e(TAG, "result is null");
-                            break;
-                        }
-                        if (result.exception != null) {
-                            Log.e(TAG, "", result.exception);
-                            break;
-                        }
-                        if (result.result == null) {
-                            Log.v(TAG, "No need to refresh.");
-                            break;
-                        }
-                        if (lastKeyStep.captureResponse) {
-                            synchronized (mLastResponseLock) {
-                                mLastResponse
-                                        .addAll(Helpers.unpackByteListOfStrings(result.result));
-                            }
-                        }
-                    } finally {
-                        if (mKeySequence.isEmpty()) {
-                            mHandler.obtainMessage(ID_REQUEST_FINISH_SERVICE_MODE_COMMAND)
-                                    .sendToTarget();
-                        } else {
-                            mHandler.obtainMessage(ID_REQUEST_PRESS_A_KEY,
-                                    mKeySequence.element().keychar, 0).sendToTarget();
-                        }
-                    }
-                    break;
-                case ID_RESPONSE_PRESS_A_KEY:
-                    mHandler.sendMessageDelayed(mHandler.obtainMessage(ID_REQUEST_REFRESH), 10);
-                    break;
-                case ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND:
-                    mRequestCondvar.open();
-                    break;
-
-            }
-            return true;
-        }
-    }
-
-    public void refreshDevice() {
-        mDevice.refreshDeviceInfo(tm, this);
-    }
-
-    /**
-     * Process User Preferences
-     */
-    private void loadPreferences() {
-        boolean trackFemtoPref = prefs.getBoolean(
-                this.getString(R.string.pref_femto_detection_key), false);
-
-        boolean trackCellPref = prefs.getBoolean(
-                this.getString(R.string.pref_enable_cell_key), false);
-
-        boolean monitorCellPref = prefs.getBoolean(
-                this.getString(R.string.pref_enable_cell_monitoring_key), true);
-
-        LAST_DB_BACKUP_VERSION = prefs.getInt(
-                this.getString(R.string.pref_last_database_backup_version), 1);
-
-        OCID_UPLOAD_PREF = prefs.getBoolean(
-                this.getString(R.string.pref_ocid_upload), false);
-
-        CELL_TABLE_CLEANSED = prefs.getBoolean(this.getString(R.string.pref_cell_table_cleansed),
-                false);
-
-        String refreshRate = prefs.getString(getString(R.string.pref_refresh_key), "1");
-        if (refreshRate.isEmpty()) {
-            refreshRate = "1";
-        }
-
-        int rate = Integer.parseInt(refreshRate);
-        long t;
-        switch (rate) {
-            case 1:
-                t = 15L;
-                break;
-            default:
-                t = (rate * 1L);
-                break;
-        }
-        REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
-
-        OCID_API_KEY = prefs.getString(this.getString(R.string.pref_ocid_key), "NA");
-
-        if (trackFemtoPref) {
-            startTrackingFemto();
-        }
-
-        if (trackCellPref) {
-            setCellTracking(true);
-        }
-
-        if (monitorCellPref) {
-            setCellMonitoring(true);
-        }
-    }
-
-    /**
-     * Tracking Cell Information
-     *
-     * @return boolean indicating Cell Information Tracking State
-     */
-    public boolean isTrackingCell() {
-        return mTrackingCell;
-    }
-
-    /**
-     * Tracking Femotcell Connections
-     *
-     * @return boolean indicating Femtocell Connection Tracking State
-     */
-    public boolean isTrackingFemtocell() {
-        return mTrackingFemtocell;
-    }
-
-    void setSilentSmsStatus(boolean state) {
-        mTypeZeroSmsDetected = state;
-        setNotification();
-        if (state) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.sms_message)
-                    .setTitle(R.string.sms_title);
-            AlertDialog alert = builder.create();
-            alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-            alert.show();
-            mTypeZeroSmsDetected = false;
-        }
-    }
-
-    /**
-     * Set or update the Notification
-     */
-    void setNotification() {
-
-        String tickerText;
-        String contentText = "Phone Type " + mDevice.getPhoneType();
-
-        String iconType = prefs.getString(
-                this.getString(R.string.pref_ui_icons_key), "sense");
-
-        int status;
-
-        if (mFemtoDetected || mTypeZeroSmsDetected) {
-            status = 4; //ALARM
-        } else if (mChangedLAC) {
-            status = 3; //MEDIUM
-            contentText = "Hostile Service Area: Changing LAC Detected!";
-        } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
-            status = 2; //NORMAL
-            if (mTrackingFemtocell) {
-                contentText = "FemtoCell Detection Active.";
-            } else if (mTrackingCell) {
-                contentText = "Cell Tracking Active.";
-            } else {
-                contentText = "Cell Monitoring Active.";
-            }
-        } else {
-            status = 1; //IDLE
-        }
-
-        int icon = R.drawable.sense_idle;
-
-        switch (status) {
-            case 1: //IDLE
-                switch (iconType) {
-                    case "flat":
-                        icon = R.drawable.flat_idle;
-                        break;
-                    case "sense":
-                        icon = R.drawable.sense_idle;
-                        break;
-                    case "white":
-                        icon = R.drawable.white_idle;
-                        break;
-                }
-                contentText = "Phone Type " + mDevice.getPhoneType();
-                tickerText = getResources().getString(R.string.app_name_short)
-                        + " - Status: Idle";
-                break;
-            case 2: //NORMAL
-                switch (iconType) {
-                    case "flat":
-                        icon = R.drawable.flat_ok;
-                        break;
-                    case "sense":
-                        icon = R.drawable.sense_ok;
-                        break;
-                    case "white":
-                        icon = R.drawable.white_ok;
-                        break;
-                }
-                tickerText = getResources().getString(R.string.app_name_short)
-                        + " - Status: Good. No Threats Detected.";
-                break;
-            case 3: //MEDIUM
-                switch (iconType) {
-                    case "flat":
-                        icon = R.drawable.flat_medium;
-                        break;
-                    case "sense":
-                        icon = R.drawable.sense_medium;
-                        break;
-                    case "white":
-                        icon = R.drawable.white_medium;
-                        break;
-                }
-                tickerText = getResources().getString(R.string.app_name_short)
-                        + " - Hostile Service Area: Changing LAC Detected!";
-                if (mChangedLAC) {
-                    contentText = "Hostile Service Area: Changing LAC Detected!";
-                }
-                break;
-            case 4: //DANGER
-                switch (iconType) {
-                    case "flat":
-                        icon = R.drawable.flat_danger;
-                        break;
-                    case "sense":
-                        icon = R.drawable.sense_danger;
-                        break;
-                    case "white":
-                        icon = R.drawable.white_danger;
-                        break;
-                }
-                tickerText = getResources().getString(R.string.app_name_short)
-                        + " - ALERT!! Threat Detected!";
-                if (mFemtoDetected) {
-                    contentText = "ALERT!! FemtoCell Connection Threat Detected!";
-                } else if (mTypeZeroSmsDetected) {
-                    contentText = "ALERT!! Type Zero Silent SMS Intercepted!";
-                }
-
-                break;
-            default:
-                icon = R.drawable.sense_idle;
-                tickerText = getResources().getString(R.string.app_name);
-                break;
-        }
-
-        Intent notificationIntent = new Intent(mContext, AIMSICD.class);
-        notificationIntent.putExtra("silent_sms", mTypeZeroSmsDetected);
-        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
-        PendingIntent contentIntent = PendingIntent.getActivity(
-                mContext, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        Notification mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(icon)
-                        .setTicker(tickerText)
-                        .setContentTitle(this.getResources().getString(R.string.app_name))
-                        .setContentText(contentText)
-                        .setOngoing(true)
-                        .setAutoCancel(false)
-                        .setContentIntent(contentIntent)
-                        .build();
-
-        NotificationManager mNotificationManager =
-                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
-    }
-
-    /**
-     * Cancel and remove the persistent notification
-     */
-    private void cancelNotification() {
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(
-                NOTIFICATION_SERVICE);
-        if (notificationManager != null) {
-            notificationManager.cancel(NOTIFICATION_ID);
-        }
-    }
-
     public GeoLocation lastKnownLocation() {
-        GeoLocation loc = null;
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location != null && (location.getLatitude() != 0.0 && location.getLongitude() != 0.0)) {
-            loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
-        } else {
-            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (location != null && (location.getLatitude() != 0.0
-                    && location.getLongitude() != 0.0)) {
-                loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
-            } else {
-                String coords = prefs.getString(this.getString(R.string.data_last_lat_lon), null);
-                if (coords != null) {
-                    String[] coord = coords.split(":");
-                    loc = GeoLocation.fromDegrees(Double.valueOf(coord[0]), Double.valueOf(coord[1]));
-                }
-            }
-        }
+        return mLocationTracker.lastKnownLocation();
+    }
 
-        return loc;
+    public RilExecutor getRilExecutor() {
+        return mRilExecutor;
+    }
+
+
+    public CellTracker getCellTracker() {
+        return mCellTracker;
+    }
+
+    public Cell getCell() {
+        return mCellTracker.getDevice().mCell;
+    }
+
+    public void setCell(Cell cell) {
+        mCellTracker.getDevice().mCell = cell;
+    }
+
+    public boolean isTrackingCell() {
+        return mCellTracker.isTrackingCell();
     }
 
     public boolean isMonitoringCell() {
-        return mMonitoringCell;
+        return mCellTracker.isMonitoringCell();
     }
 
-    /**
-     * Cell Information Monitoring
-     *
-     * @param monitor Enable/Disable monitoring
-     */
     public void setCellMonitoring(boolean monitor) {
-        if (monitor) {
-            timerHandler.postDelayed(timerRunnable, 0);
-            mMonitoringCell = true;
-            Helpers.msgShort(this, "Monitoring Cell Information");
-        } else {
-            timerHandler.removeCallbacks(timerRunnable);
-            mMonitoringCell = false;
-            Helpers.msgShort(this, "Stopped monitoring Cell Information");
-        }
+        mCellTracker.setCellMonitoring(monitor);
+    }
 
-        setNotification();
+    public boolean isTrackingFemtocell() {
+        return mCellTracker.isTrackingFemtocell();
+    }
+
+    public void setTrackingFemtocell(boolean track) {
+        if (track) mCellTracker.startTrackingFemto();
+        else mCellTracker.stopTrackingFemto();
     }
 
     // while tracking a cell, manage the power usage by switching off GPS if no movement
@@ -973,61 +228,13 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         public void run() {
             Log.d("power", "Checking to see if GPS should be disabled");
             // if no movement in a while, shut off GPS. Gets re-enabled when there is movement
-            if (lastLocationTime <= 0 ||
-                    System.currentTimeMillis() - lastMovementTime >= MOVEMENT_THRESHOLD_MS) {
+            if (mAccelerometerMonitor.notMovedInAWhile() ||
+                    mLocationTracker.notMovedInAWhile()) {
                 Log.d("power", "Disabling GPS");
-                lm.removeUpdates(mLocationListener);
+                mLocationTracker.stop();
             }
 
-            // check for movement again
-            mSensorManager.registerListener(mSensorListener, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        }
-    };
-
-    private final Runnable timerRunnable = new Runnable() {
-
-        @Override
-        public void run() {
-            switch (mDevice.getPhoneID()) {
-                case TelephonyManager.PHONE_TYPE_GSM:
-                    GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
-                    if (gsmCellLocation != null) {
-                        mMonitorCell.setLAC(gsmCellLocation.getLac());
-                        mMonitorCell.setCID(gsmCellLocation.getCid());
-                        dbHelper.open();
-                        boolean lacOK = dbHelper.checkLAC(mMonitorCell);
-                        if (!lacOK) {
-                            mChangedLAC = true;
-                            setNotification();
-                        } else {
-                            mChangedLAC = false;
-                        }
-                        dbHelper.close();
-                    }
-                    break;
-                case TelephonyManager.PHONE_TYPE_CDMA:
-                    CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
-                    if (cdmaCellLocation != null) {
-                        mMonitorCell.setLAC(cdmaCellLocation.getNetworkId());
-                        mMonitorCell.setCID(cdmaCellLocation.getBaseStationId());
-                        dbHelper.open();
-                        boolean lacOK = dbHelper.checkLAC(mMonitorCell);
-                        if (!lacOK) {
-                            mChangedLAC = true;
-                            setNotification();
-                        } else {
-                            mChangedLAC = false;
-                        }
-                        dbHelper.close();
-                    }
-            }
-
-            if (REFRESH_RATE != 0) {
-                timerHandler.postDelayed(this, REFRESH_RATE);
-            } else {
-                //Default to 25 seconds refresh rate
-                timerHandler.postDelayed(this, TimeUnit.SECONDS.toMillis(25));
-            }
+            mAccelerometerMonitor.start();
         }
     };
 
@@ -1037,133 +244,17 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      * @param track Enable/Disable tracking
      */
     public void setCellTracking(boolean track) {
+        mCellTracker.setCellTracking(track);
+
         if (track) {
-            tm.listen(mCellSignalListener,
-                    PhoneStateListener.LISTEN_CELL_LOCATION |
-                            PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |
-                            PhoneStateListener.LISTEN_DATA_ACTIVITY |
-                            PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
-            );
-
-            Log.i(TAG, "LocationManager already existed.");
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
-                    GPS_MIN_UPDATE_DISTANCE, mLocationListener);
-
-            Helpers.msgShort(this, "Tracking Cell Information.");
-            mTrackingCell = true;
+            mLocationTracker.start();
         } else {
-            tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
-            lm.removeUpdates(mLocationListener);
-            mDevice.mCell.setLon(0.0);
-            mDevice.mCell.setLat(0.0);
-            mTrackingCell = false;
-            mDevice.setCellInfo("[0,0]|nn|nn|");
-            Helpers.msgShort(this, "Stopped tracking Cell Information.");
+            mLocationTracker.stop();
         }
-        setNotification();
     }
 
-    private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
-        public void onCellLocationChanged(CellLocation location) {
-            mDevice.setNetID(tm);
-            mDevice.getNetworkTypeName();
-
-            switch (mDevice.getPhoneID()) {
-                case TelephonyManager.PHONE_TYPE_GSM:
-                    GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
-                    if (gsmCellLocation != null) {
-                        mDevice.setCellInfo(
-                                gsmCellLocation.toString() + mDevice.getDataActivityTypeShort()
-                                        + "|"
-                                        + mDevice.getDataStateShort() + "|" + mDevice
-                                        .getNetworkTypeName() + "|");
-                        mDevice.mCell.setLAC(gsmCellLocation.getLac());
-                        mDevice.mCell.setCID(gsmCellLocation.getCid());
-                        if (gsmCellLocation.getPsc() != -1)
-                            mDevice.mCell.setPSC(gsmCellLocation.getPsc());
-
-                    }
-                    break;
-                case TelephonyManager.PHONE_TYPE_CDMA:
-                    CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
-                    if (cdmaCellLocation != null) {
-                        mDevice.setCellInfo(
-                                cdmaCellLocation.toString() + mDevice.getDataActivityTypeShort()
-                                        + "|" + mDevice.getDataStateShort() + "|" + mDevice
-                                        .getNetworkTypeName() + "|");
-                        mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());
-                        mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());
-                        mDevice.mCell.setSID(cdmaCellLocation.getSystemId());
-                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());
-                        mDevice.setNetworkName(tm.getNetworkOperatorName());
-                    }
-            }
-
-        }
-
-        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-            //Update Signal Strength
-            if (signalStrength.isGsm()) {
-                mDevice.setSignalDbm(signalStrength.getGsmSignalStrength());
-            } else {
-                int evdoDbm = signalStrength.getEvdoDbm();
-                int cdmaDbm = signalStrength.getCdmaDbm();
-
-                //Use lowest signal to be conservative
-                mDevice.setSignalDbm((cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm);
-            }
-        }
-
-        public void onDataActivity(int direction) {
-            switch (direction) {
-                case TelephonyManager.DATA_ACTIVITY_NONE:
-                    mDevice.setDataActivityTypeShort("No");
-                    mDevice.setDataActivityType("None");
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_IN:
-                    mDevice.setDataActivityTypeShort("In");
-                    mDevice.setDataActivityType("In");
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_OUT:
-                    mDevice.setDataActivityTypeShort("Ou");
-                    mDevice.setDataActivityType("Out");
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_INOUT:
-                    mDevice.setDataActivityTypeShort("IO");
-                    mDevice.setDataActivityType("In-Out");
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_DORMANT:
-                    mDevice.setDataActivityTypeShort("Do");
-                    mDevice.setDataActivityType("Dormant");
-                    break;
-            }
-        }
-
-        public void onDataConnectionStateChanged(int state) {
-            switch (state) {
-                case TelephonyManager.DATA_DISCONNECTED:
-                    mDevice.setDataState("Disconnected");
-                    mDevice.setDataStateShort("Di");
-                    break;
-                case TelephonyManager.DATA_CONNECTING:
-                    mDevice.setDataState("Connecting");
-                    mDevice.setDataStateShort("Ct");
-                    break;
-                case TelephonyManager.DATA_CONNECTED:
-                    mDevice.setDataState("Connected");
-                    mDevice.setDataStateShort("Cd");
-                    break;
-                case TelephonyManager.DATA_SUSPENDED:
-                    mDevice.setDataState("Suspended");
-                    mDevice.setDataStateShort("Su");
-                    break;
-            }
-        }
-
-    };
-
     public void checkLocationServices() {
-        if (mTrackingCell && !lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if (mCellTracker.isTrackingCell() && !mLocationTracker.isGPSOn()) {
             enableLocationServices();
         }
     }
@@ -1191,353 +282,32 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         alert.show();
     }
 
-    private class MyLocationListener implements LocationListener {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        mCellTracker.onSharedPreferenceChanged(sharedPreferences, key);
+    }
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location loc) {
-            Log.d("location", "Got location " + loc);
-            lastLocationTime = System.currentTimeMillis();
-            timerHandler.postDelayed(batterySavingRunnable, MOVEMENT_THRESHOLD_MS);
-
-            if (Build.VERSION.SDK_INT > 16) {
-                List<CellInfo> cellinfolist = tm.getAllCellInfo();
-                if (cellinfolist != null) {
-                    for (final CellInfo cellinfo : cellinfolist) {
-                        if (cellinfo instanceof CellInfoGsm) {
-                            final CellSignalStrengthGsm signalStrengthGsm = ((CellInfoGsm) cellinfo)
-                                    .getCellSignalStrength();
-                            final CellIdentityGsm identityGsm = ((CellInfoGsm) cellinfo)
-                                    .getCellIdentity();
-                            if (identityGsm != null) {
-                                mDevice.mCell.setCID(identityGsm.getCid());
-                                mDevice.mCell.setLAC(identityGsm.getLac());
-                                mDevice.mCell.setMCC(identityGsm.getMcc());
-                                mDevice.mCell.setMNC(identityGsm.getMnc());
-                            }
-                            if (signalStrengthGsm != null) {
-                                mDevice.mCell.setDBM(signalStrengthGsm.getDbm());
-                            }
-                            break;
-                        } else if (cellinfo instanceof CellInfoCdma) {
-                            final CellSignalStrengthCdma signalStrengthCdma
-                                    = ((CellInfoCdma) cellinfo)
-                                    .getCellSignalStrength();
-                            final CellIdentityCdma identityCdma = ((CellInfoCdma) cellinfo)
-                                    .getCellIdentity();
-                            if (identityCdma != null) {
-                                mDevice.mCell.setCID(identityCdma.getBasestationId());
-                                mDevice.mCell.setLAC(identityCdma.getNetworkId());
-                                mDevice.mCell.setMNC(identityCdma.getSystemId());
-                                mDevice.mCell.setSID(identityCdma.getSystemId());
-                            }
-
-                            if (signalStrengthCdma != null) {
-                                mDevice.setSignalDbm(signalStrengthCdma.getDbm());
-                            }
-                            break;
-                        } else if (cellinfo instanceof CellInfoLte) {
-                            final CellSignalStrengthLte signalStrengthLte = ((CellInfoLte) cellinfo)
-                                    .getCellSignalStrength();
-                            final CellIdentityLte identityLte = ((CellInfoLte) cellinfo)
-                                    .getCellIdentity();
-
-                            if (identityLte != null) {
-                                mDevice.mCell.setCID(identityLte.getPci());
-                                mDevice.mCell.setLAC(identityLte.getTac());
-                                mDevice.mCell.setMCC(identityLte.getMcc());
-                                mDevice.mCell.setMNC(identityLte.getMnc());
-                            }
-
-                            if (signalStrengthLte != null) {
-                                mDevice.setSignalDbm(signalStrengthLte.getDbm());
-                            }
-                            break;
-                        } else if (cellinfo instanceof CellInfoWcdma) {
-                            final CellSignalStrengthWcdma signalStrengthWcdma
-                                    = ((CellInfoWcdma) cellinfo)
-                                    .getCellSignalStrength();
-                            final CellIdentityWcdma identityWcdma = ((CellInfoWcdma) cellinfo)
-                                    .getCellIdentity();
-                            if (identityWcdma != null) {
-                                mDevice.mCell.setCID(identityWcdma.getCid());
-                                mDevice.mCell.setLAC(identityWcdma.getLac());
-                                mDevice.mCell.setMCC(identityWcdma.getMcc());
-                                mDevice.mCell.setMNC(identityWcdma.getMnc());
-                            }
-
-                            if (signalStrengthWcdma != null) {
-                                mDevice.setSignalDbm(signalStrengthWcdma.getDbm());
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (!mDevice.mCell.isValid()) {
-                CellLocation cellLocation = tm.getCellLocation();
-                if (cellLocation != null) {
-                    switch (mDevice.getPhoneID()) {
-                        case TelephonyManager.PHONE_TYPE_GSM:
-                            GsmCellLocation gsmCellLocation
-                                    = (GsmCellLocation) cellLocation;
-                            mDevice.mCell.setCID(gsmCellLocation.getCid());
-                            mDevice.mCell.setLAC(gsmCellLocation.getLac());
-                            mDevice.mCell.setPSC(gsmCellLocation.getPsc());
-                            break;
-                        case TelephonyManager.PHONE_TYPE_CDMA:
-                            CdmaCellLocation cdmaCellLocation
-                                    = (CdmaCellLocation) cellLocation;
-                            mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());
-                            mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());
-                            mDevice.mCell.setSID(cdmaCellLocation.getSystemId());
-                            mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());
-                    }
-                }
-            }
-
-            if (loc != null && (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0)) {
-                mDevice.mCell.setLon(loc.getLongitude());
-                mDevice.mCell.setLat(loc.getLatitude());
-                mDevice.mCell.setSpeed(loc.getSpeed());
-                mDevice.mCell.setAccuracy(loc.getAccuracy());
-                mDevice.mCell.setBearing(loc.getBearing());
-                mDevice.setLastLocation(loc);
-
-                //Store last known location in preference
-                Editor prefsEditor;
-                prefsEditor = prefs.edit();
-                prefsEditor.putString(mContext.getString(R.string.data_last_lat_lon),
-                        String.valueOf(loc.getLatitude()) + ":" + String
-                                .valueOf(loc.getLongitude()));
-                prefsEditor.apply();
-
-                if (mTrackingCell) {
-                    dbHelper.open();
-                    dbHelper.insertLocation(mDevice.mCell.getLAC(),
-                            mDevice.mCell.getCID(), mDevice.mCell.getNetType(),
-                            mDevice.mCell.getLat(),
-                            mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
-                            mDevice.getCellInfo());
-
-                   dbHelper.insertCell(mDevice.mCell.getLAC(), mDevice.mCell.getCID(),
-                           mDevice.mCell.getNetType(), mDevice.mCell.getLat(),
-                           mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
-                           mDevice.mCell.getMCC(), mDevice.mCell.getMNC(),
-                           mDevice.mCell.getAccuracy(), mDevice.mCell.getSpeed(),
-                           mDevice.mCell.getBearing(),
-                           mDevice.getNetworkTypeName(),
-                           SystemClock.currentThreadTimeMillis());
-                }
-            }
-
+            timerHandler.postDelayed(batterySavingRunnable, AccelerometerMonitor.MOVEMENT_THRESHOLD_MS);
+            mCellTracker.onLocationChanged(loc);
         }
 
         @Override
         public void onProviderDisabled(String provider) {
-            if (mTrackingCell && provider.equals(LocationManager.GPS_PROVIDER)) {
+            if (mCellTracker.isTrackingCell() && provider.equals(LocationManager.GPS_PROVIDER)) {
                 enableLocationServices();
             }
         }
 
         @Override
-        public void onProviderEnabled(String provider) {
-            // TODO Auto-generated method stub
+        public void onProviderEnabled(String s) {
+
         }
 
         @Override
-        public void onStatusChanged(String provider, int status,
-                Bundle extras) {
-            // TODO Auto-generated method stub
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
         }
-    }
-
-
-
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        final String KEY_UI_ICONS = this.getString(R.string.pref_ui_icons_key);
-        final String FEMTO_DECTECTION = this
-                .getString(R.string.pref_femto_detection_key);
-        final String REFRESH = this.getString(R.string.pref_refresh_key);
-        final String DB_VERSION = this.getString(R.string.pref_last_database_backup_version);
-        final String OCID_UPLOAD = this.getString(R.string.pref_ocid_upload);
-        final String OCID_KEY = this.getString(R.string.pref_ocid_key);
-
-        if (key.equals(KEY_UI_ICONS)) {
-            //Update Notification to display selected icon type
-            setNotification();
-        } else if (key.equals(FEMTO_DECTECTION)) {
-            boolean trackFemtoPref = sharedPreferences.getBoolean(FEMTO_DECTECTION, false);
-            if (trackFemtoPref) {
-                startTrackingFemto();
-            } else {
-                stopTrackingFemto();
-            }
-        } else if (key.equals(REFRESH)) {
-            String refreshRate = sharedPreferences.getString(REFRESH, "1");
-            if (refreshRate.isEmpty()) {
-                refreshRate = "1";
-            }
-
-            int rate = Integer.parseInt(refreshRate);
-            long t;
-            switch (rate) {
-                case 1:
-                    t = 15L;
-                    break;
-                default:
-                    t = (rate * 1L);
-                    break;
-            }
-            REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
-        } else if (key.equals(DB_VERSION)) {
-            LAST_DB_BACKUP_VERSION = sharedPreferences.getInt(DB_VERSION, 1);
-        } else if (key.equals(OCID_UPLOAD)) {
-            OCID_UPLOAD_PREF = sharedPreferences.getBoolean(OCID_UPLOAD, false);
-        } else if (key.equals(OCID_KEY)) {
-            OCID_API_KEY = sharedPreferences.getString(OCID_KEY, "NA");
-        }
-    }
-
-    /*
-     * The below code section was copied and modified from
-     * Femtocatcher https://github.com/iSECPartners/femtocatcher
-     *
-     * Copyright (C) 2013 iSEC Partners
-     */
-
-    /**
-     * Start FemtoCell detection tracking
-     * CDMA Devices ONLY
-     */
-    public void startTrackingFemto() {
-
-        /* Check if it is a CDMA phone */
-        if (mDevice.getPhoneID() != TelephonyManager.PHONE_TYPE_CDMA) {
-            Helpers.msgShort(this, "AIMSICD can only detect Femtocell connections on CDMA devices.");
-            return;
-        }
-
-        mTrackingFemtocell = true;
-        mPhoneStateListener = new PhoneStateListener() {
-            public void onServiceStateChanged(ServiceState s) {
-                Log.d(TAG, "Service State changed!");
-                getServiceStateInfo(s);
-            }
-        };
-        tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CELL_LOCATION);
-        tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_SERVICE_STATE);
-        setNotification();
-    }
-
-    /**
-     * Stop FemtoCell detection tracking
-     * CDMA Devices ONLY
-     */
-    public void stopTrackingFemto() {
-        if (mPhoneStateListener != null) {
-            tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
-            mTrackingFemtocell = false;
-            setNotification();
-            Log.v(TAG, "Stopped tracking Femtocell connections.");
-        }
-    }
-
-    private void getServiceStateInfo(ServiceState s) {
-        if (s != null) {
-            if (IsConnectedToCdmaFemto(s)) {
-                Helpers.msgShort(this, "ALERT!! Femtocell Connection Detected!!");
-                mFemtoDetected = true;
-                setNotification();
-                //toggleRadio();
-            } else {
-                mFemtoDetected = false;
-                setNotification();
-            }
-        }
-    }
-
-    private boolean IsConnectedToCdmaFemto(ServiceState s) {
-        if (s == null) {
-            return false;
-        }
-
-        /* Get International Roaming indicator
-         * if indicator is not 0 return false
-         */
-
-        /* Get the radio technology */
-        int networkType = mDevice.mCell.getNetType();
-
-        /* Check if it is EvDo network */
-        boolean evDoNetwork = isEvDoNetwork(networkType);
-
-        /* If it is not an evDo network check the network ID range.
-         * If it is connected to femtocell, the nid should be lie between [0xfa, 0xff)
-         */
-        if (!evDoNetwork) {
-            /* get network ID */
-            if (tm != null) {
-                CdmaCellLocation c = (CdmaCellLocation) tm.getCellLocation();
-
-                if (c != null) {
-                    int networkID = c.getNetworkId();
-                    int FEMTO_NID_MAX = 0xff;
-                    int FEMTO_NID_MIN = 0xfa;
-                    return !((networkID < FEMTO_NID_MIN) || (networkID >= FEMTO_NID_MAX));
-
-                } else {
-                    Log.v(TAG, "Cell location info is null.");
-                    return false;
-                }
-            } else {
-                Log.v(TAG, "Telephony Manager is null.");
-                return false;
-            }
-        }
-
-        /* if it is an evDo network */
-        // TODO
-        else {
-            /* get network ID */
-            if (tm != null) {
-                CdmaCellLocation c = (CdmaCellLocation) tm.getCellLocation();
-
-                if (c != null) {
-                    int networkID = c.getNetworkId();
-
-                    int FEMTO_NID_MAX = 0xff;
-                    int FEMTO_NID_MIN = 0xfa;
-                    return !((networkID < FEMTO_NID_MIN) || (networkID >= FEMTO_NID_MAX));
-                } else {
-                    Log.v(TAG, "Cell location info is null.");
-                    return false;
-                }
-            } else {
-                Log.v(TAG, "Telephony Manager is null.");
-                return false;
-            }
-        }
-
-    }
-
-    /**
-     * Confirmation of connection to an EVDO Network
-     *
-     * @return EVDO network connection returns TRUE
-     */
-    private boolean isEvDoNetwork(int networkType) {
-        return (networkType == TelephonyManager.NETWORK_TYPE_EVDO_0) ||
-                (networkType == TelephonyManager.NETWORK_TYPE_EVDO_A) ||
-                (networkType == TelephonyManager.NETWORK_TYPE_EVDO_B) ||
-                (networkType == TelephonyManager.NETWORK_TYPE_EHRPD);
-    }
-    /*
-     * The above code section was copied and modified from
-     * Femtocatcher https://github.com/iSECPartners/femtocatcher
-     *
-     * Copyright (C) 2013 iSEC Partners
-     */
-
+    };
 }

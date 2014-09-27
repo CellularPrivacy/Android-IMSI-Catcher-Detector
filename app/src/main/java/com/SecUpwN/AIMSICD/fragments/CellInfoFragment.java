@@ -5,8 +5,10 @@ import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.CardItemData;
 import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -36,6 +38,7 @@ public class CellInfoFragment extends Fragment {
     public static final int SAMSUNG_MULTIRIL_REQUEST = 2;
 
     private AimsicdService mAimsicdService;
+    private RilExecutor rilExecutor;
     private boolean mBound;
     private Context mContext;
     private Activity mActivity;
@@ -56,7 +59,7 @@ public class CellInfoFragment extends Fragment {
         @Override
         public void run() {
             updateUI();
-            timerHandler.postDelayed(this, AimsicdService.REFRESH_RATE);
+            timerHandler.postDelayed(this, CellTracker.REFRESH_RATE);
         }
     };
 
@@ -89,10 +92,10 @@ public class CellInfoFragment extends Fragment {
         }
 
         //Refresh display if preference is not set to manual
-        if (AimsicdService.REFRESH_RATE != 0) {
+        if (CellTracker.REFRESH_RATE != 0) {
             timerHandler.postDelayed(timerRunnable, 0);
             Helpers.msgShort(mContext, "Refreshing every "
-                    + TimeUnit.MILLISECONDS.toSeconds(AimsicdService.REFRESH_RATE) + " seconds");
+                    + TimeUnit.MILLISECONDS.toSeconds(CellTracker.REFRESH_RATE) + " seconds");
         }
     }
 
@@ -135,6 +138,7 @@ public class CellInfoFragment extends Fragment {
         public void onServiceConnected(ComponentName name, IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
+            rilExecutor = mAimsicdService.getRilExecutor();
             mBound = true;
             updateUI();
         }
@@ -163,7 +167,7 @@ public class CellInfoFragment extends Fragment {
     }
 
     private void updateUI() {
-        if (mBound && mAimsicdService.mMultiRilCompatible) {
+        if (mBound && rilExecutor.mMultiRilCompatible) {
                 new CellAsyncTask().execute(SAMSUNG_MULTIRIL_REQUEST);
             } else {
             new CellAsyncTask().execute(STOCK_REQUEST);
@@ -171,7 +175,7 @@ public class CellInfoFragment extends Fragment {
     }
 
     void updateCipheringIndicator() {
-        final List<String> list = mAimsicdService.getCipheringInfo();
+        final List<String> list = rilExecutor.getCipheringInfo();
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -186,7 +190,7 @@ public class CellInfoFragment extends Fragment {
 
     boolean getStockNeighbouringCells() {
         if (mBound) {
-            neighboringCells = mAimsicdService.updateNeighbouringCells();
+            neighboringCells = mAimsicdService.getCellTracker().updateNeighbouringCells();
             return neighboringCells.size() > 0;
         }
 
@@ -214,7 +218,7 @@ public class CellInfoFragment extends Fragment {
     }
 
     void updateNeighbouringCells() {
-        final List<String> list = mAimsicdService.getNeighbours();
+        final List<String> list = rilExecutor.getNeighbours();
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -228,7 +232,7 @@ public class CellInfoFragment extends Fragment {
     }
 
     void getSamSungMultiRil() {
-        if (mBound && mAimsicdService.mMultiRilCompatible) {
+        if (mBound && rilExecutor.mMultiRilCompatible) {
             new CellAsyncTask().execute(SAMSUNG_MULTIRIL_REQUEST);
         }
     }
