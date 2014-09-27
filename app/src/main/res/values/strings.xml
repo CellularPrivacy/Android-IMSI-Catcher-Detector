@@ -51,14 +51,14 @@
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
-    <string name="cell_lookup">Lookup Current Cell Details</string>
+    <string name="cell_lookup">Lookup Current Cell Details (OpenCellID)</string>
 
     <string name="no_network_connection_title">No Internet Connection</string>
     <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
-    connectivity, enable Wifi/Mobile Data and try again.</string>
+    connectivity, enable data connection and try again.</string>
 
     <!-- MAP VIEWER -->
-    <string name="error_google_play_services_title">Map Viewer Unavailable</string>
+    <string name="error_google_play_services_title">Map Viewer Unavailable!</string>
     <string name="error_google_play_services_message">Maps Viewer requires Google Play Services
         to be installed on your device, you CANNOT continue unless you install Google Play.</string>
     <string name="map_type">Map Display Type</string>
@@ -179,7 +179,7 @@
     <string name="pref_map_title">Map Viewer Preferences</string>
     <string name="pref_map_type_key">pref_map_type</string>
     <string name="pref_map_type_title">Map Type</string>
-    <string name="pref_map_type_summ">Display the Map using different styles</string>
+    <string name="pref_map_type_summ">Display Map using different styles</string>
     
     <!-- MAP INFOWINDOW -->
     <string name="cell_id_label">Cell ID: </string>
