@@ -56,7 +56,6 @@
 
 package com.SecUpwN.AIMSICD.service;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -70,10 +69,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -125,6 +120,8 @@ import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.OemCommands;
 
+import org.osmdroid.util.GeoPoint;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -154,29 +151,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private final int NOTIFICATION_ID = 1;
 
     private static TelephonyManager tm;
-    private static LocationManager lm;
     private SharedPreferences prefs;
     private PhoneStateListener mPhoneStateListener;
-
-    /**
-     * Location listener stuff
-     */
-    private LocationListener mLocationListener;
-    private long lastLocationTime = 0;
-    private static final long GPS_MIN_UPDATE_TIME = 10000;
-    private static final float GPS_MIN_UPDATE_DISTANCE = 10;
-
-    /**
-     * Accelerometer stuff for detecting movement
-     */
-    private float mLastX, mLastY, mLastZ;
-    private long lastMovementTime = 0;
-    private boolean mInitialized;
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private SensorEventListener mSensorListener;
-    private final float ACCELEROMETER_NOISE = 2.0f;
-    private long MOVEMENT_THRESHOLD_MS = 60*1000; // time after last movement till GPS switched off
+    private AccelerometerMonitor mAccelerometerMonitor;
+    private LocationTracker mLocationTracker;
 
     public boolean mMultiRilCompatible;
     public static long REFRESH_RATE;
@@ -231,12 +209,21 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     public void onCreate() {
         //TelephonyManager provides system details
         tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         mContext = getApplicationContext();
 
-        setupAccelerometer();
-        mLocationListener = new MyLocationListener();
-        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        mAccelerometerMonitor = new AccelerometerMonitor(this, new Runnable() {
+            @Override
+            public void run() {
+                // movement detected, so enable GPS
+                mLocationTracker.start();
+
+                // check again in a while to see if GPS should be disabled
+                // this runnable also re-enables this movement sensor
+                timerHandler.postDelayed(batterySavingRunnable, AccelerometerMonitor.MOVEMENT_THRESHOLD_MS);
+            }
+        });
+
+        mLocationTracker = new LocationTracker(this, mLocationListener);
 
         PHONE_TYPE = tm.getPhoneType();
 
@@ -285,70 +272,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         Log.i(TAG, "Service launched successfully.");
     }
 
-    /**
-     * Set up the accelerometer so that when movement is detected, the GPS is enabled.
-     * GPS is normally disabled to save battery power.
-     */
-    private void setupAccelerometer() {
-        // set up accelerometer sensor
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-        mSensorListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-                float x = event.values[0];
-                float y = event.values[1];
-                float z = event.values[2];
-
-                if (!mInitialized) {
-                    mLastX = x;
-                    mLastY = y;
-                    mLastZ = z;
-
-                    mInitialized = true;
-                } else {
-                    float deltaX = Math.abs(mLastX - x);
-                    float deltaY = Math.abs(mLastY - y);
-                    float deltaZ = Math.abs(mLastZ - z);
-
-                    if (deltaX < ACCELEROMETER_NOISE) deltaX = 0.0f;
-                    if (deltaY < ACCELEROMETER_NOISE) deltaY = 0.0f;
-                    if (deltaZ < ACCELEROMETER_NOISE) deltaZ = 0.0f;
-
-                    mLastX = x;
-                    mLastY = y;
-                    mLastZ = z;
-
-                    if (deltaX > 0 || deltaY > 0 || deltaZ > 0) {
-                        // movement detected
-                        Log.d("sensor", "Movement detected, enabling GPS");
-
-                        // disable the movement sensor to save power
-                        mSensorManager.unregisterListener(mSensorListener);
-
-                        lastMovementTime = System.currentTimeMillis();
-
-                        // re-enable GPS, see timerRunner for when this gets switched off
-                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
-                                GPS_MIN_UPDATE_DISTANCE, mLocationListener);
-
-                        // check again in a while to see if GPS should be disabled
-                        // this runnable also re-enables this movement sensor
-                        timerHandler.postDelayed(batterySavingRunnable, MOVEMENT_THRESHOLD_MS);
-                    }
-                }
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int i) {
-
-            }
-        };
-
-        mSensorManager.registerListener(mSensorListener, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
@@ -364,10 +287,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mContext.unregisterReceiver(mMessageReceiver);
         if (mTrackingCell) {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
-            lm.removeUpdates(mLocationListener);
+            mLocationTracker.stop();
         }
 
-        mSensorManager.unregisterListener(mSensorListener);
+        mAccelerometerMonitor.stop();
 
         //Samsung MultiRil Cleanup
         if (mRequestExecutor != null) {
@@ -436,6 +359,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                 Arrays.asList(getNeighboursKeySeq)
         );
 
+    }
+
+    public GeoLocation lastKnownLocation() {
+        return mLocationTracker.lastKnownLocation();
     }
 
     /**
@@ -922,28 +849,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         }
     }
 
-    public GeoLocation lastKnownLocation() {
-        GeoLocation loc = null;
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location != null && (location.getLatitude() != 0.0 && location.getLongitude() != 0.0)) {
-            loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
-        } else {
-            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (location != null && (location.getLatitude() != 0.0
-                    && location.getLongitude() != 0.0)) {
-                loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
-            } else {
-                String coords = prefs.getString(this.getString(R.string.data_last_lat_lon), null);
-                if (coords != null) {
-                    String[] coord = coords.split(":");
-                    loc = GeoLocation.fromDegrees(Double.valueOf(coord[0]), Double.valueOf(coord[1]));
-                }
-            }
-        }
-
-        return loc;
-    }
-
     public boolean isMonitoringCell() {
         return mMonitoringCell;
     }
@@ -973,14 +878,13 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         public void run() {
             Log.d("power", "Checking to see if GPS should be disabled");
             // if no movement in a while, shut off GPS. Gets re-enabled when there is movement
-            if (lastLocationTime <= 0 ||
-                    System.currentTimeMillis() - lastMovementTime >= MOVEMENT_THRESHOLD_MS) {
+            if (mAccelerometerMonitor.notMovedInAWhile() ||
+                    mLocationTracker.notMovedInAWhile()) {
                 Log.d("power", "Disabling GPS");
-                lm.removeUpdates(mLocationListener);
+                mLocationTracker.stop();
             }
 
-            // check for movement again
-            mSensorManager.registerListener(mSensorListener, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+            mAccelerometerMonitor.start();
         }
     };
 
@@ -1045,15 +949,12 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
                             PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
             );
 
-            Log.i(TAG, "LocationManager already existed.");
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
-                    GPS_MIN_UPDATE_DISTANCE, mLocationListener);
-
+            mLocationTracker.start();
             Helpers.msgShort(this, "Tracking Cell Information.");
             mTrackingCell = true;
         } else {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
-            lm.removeUpdates(mLocationListener);
+            mLocationTracker.stop();
             mDevice.mCell.setLon(0.0);
             mDevice.mCell.setLat(0.0);
             mTrackingCell = false;
@@ -1163,7 +1064,7 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     };
 
     public void checkLocationServices() {
-        if (mTrackingCell && !lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if (mTrackingCell && !mLocationTracker.isGPSOn()) {
             enableLocationServices();
         }
     }
@@ -1190,170 +1091,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         alert.show();
     }
-
-    private class MyLocationListener implements LocationListener {
-
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-        @Override
-        public void onLocationChanged(Location loc) {
-            Log.d("location", "Got location " + loc);
-            lastLocationTime = System.currentTimeMillis();
-            timerHandler.postDelayed(batterySavingRunnable, MOVEMENT_THRESHOLD_MS);
-
-            if (Build.VERSION.SDK_INT > 16) {
-                List<CellInfo> cellinfolist = tm.getAllCellInfo();
-                if (cellinfolist != null) {
-                    for (final CellInfo cellinfo : cellinfolist) {
-                        if (cellinfo instanceof CellInfoGsm) {
-                            final CellSignalStrengthGsm signalStrengthGsm = ((CellInfoGsm) cellinfo)
-                                    .getCellSignalStrength();
-                            final CellIdentityGsm identityGsm = ((CellInfoGsm) cellinfo)
-                                    .getCellIdentity();
-                            if (identityGsm != null) {
-                                mDevice.mCell.setCID(identityGsm.getCid());
-                                mDevice.mCell.setLAC(identityGsm.getLac());
-                                mDevice.mCell.setMCC(identityGsm.getMcc());
-                                mDevice.mCell.setMNC(identityGsm.getMnc());
-                            }
-                            if (signalStrengthGsm != null) {
-                                mDevice.mCell.setDBM(signalStrengthGsm.getDbm());
-                            }
-                            break;
-                        } else if (cellinfo instanceof CellInfoCdma) {
-                            final CellSignalStrengthCdma signalStrengthCdma
-                                    = ((CellInfoCdma) cellinfo)
-                                    .getCellSignalStrength();
-                            final CellIdentityCdma identityCdma = ((CellInfoCdma) cellinfo)
-                                    .getCellIdentity();
-                            if (identityCdma != null) {
-                                mDevice.mCell.setCID(identityCdma.getBasestationId());
-                                mDevice.mCell.setLAC(identityCdma.getNetworkId());
-                                mDevice.mCell.setMNC(identityCdma.getSystemId());
-                                mDevice.mCell.setSID(identityCdma.getSystemId());
-                            }
-
-                            if (signalStrengthCdma != null) {
-                                mDevice.setSignalDbm(signalStrengthCdma.getDbm());
-                            }
-                            break;
-                        } else if (cellinfo instanceof CellInfoLte) {
-                            final CellSignalStrengthLte signalStrengthLte = ((CellInfoLte) cellinfo)
-                                    .getCellSignalStrength();
-                            final CellIdentityLte identityLte = ((CellInfoLte) cellinfo)
-                                    .getCellIdentity();
-
-                            if (identityLte != null) {
-                                mDevice.mCell.setCID(identityLte.getPci());
-                                mDevice.mCell.setLAC(identityLte.getTac());
-                                mDevice.mCell.setMCC(identityLte.getMcc());
-                                mDevice.mCell.setMNC(identityLte.getMnc());
-                            }
-
-                            if (signalStrengthLte != null) {
-                                mDevice.setSignalDbm(signalStrengthLte.getDbm());
-                            }
-                            break;
-                        } else if (cellinfo instanceof CellInfoWcdma) {
-                            final CellSignalStrengthWcdma signalStrengthWcdma
-                                    = ((CellInfoWcdma) cellinfo)
-                                    .getCellSignalStrength();
-                            final CellIdentityWcdma identityWcdma = ((CellInfoWcdma) cellinfo)
-                                    .getCellIdentity();
-                            if (identityWcdma != null) {
-                                mDevice.mCell.setCID(identityWcdma.getCid());
-                                mDevice.mCell.setLAC(identityWcdma.getLac());
-                                mDevice.mCell.setMCC(identityWcdma.getMcc());
-                                mDevice.mCell.setMNC(identityWcdma.getMnc());
-                            }
-
-                            if (signalStrengthWcdma != null) {
-                                mDevice.setSignalDbm(signalStrengthWcdma.getDbm());
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (!mDevice.mCell.isValid()) {
-                CellLocation cellLocation = tm.getCellLocation();
-                if (cellLocation != null) {
-                    switch (mDevice.getPhoneID()) {
-                        case TelephonyManager.PHONE_TYPE_GSM:
-                            GsmCellLocation gsmCellLocation
-                                    = (GsmCellLocation) cellLocation;
-                            mDevice.mCell.setCID(gsmCellLocation.getCid());
-                            mDevice.mCell.setLAC(gsmCellLocation.getLac());
-                            mDevice.mCell.setPSC(gsmCellLocation.getPsc());
-                            break;
-                        case TelephonyManager.PHONE_TYPE_CDMA:
-                            CdmaCellLocation cdmaCellLocation
-                                    = (CdmaCellLocation) cellLocation;
-                            mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());
-                            mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());
-                            mDevice.mCell.setSID(cdmaCellLocation.getSystemId());
-                            mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());
-                    }
-                }
-            }
-
-            if (loc != null && (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0)) {
-                mDevice.mCell.setLon(loc.getLongitude());
-                mDevice.mCell.setLat(loc.getLatitude());
-                mDevice.mCell.setSpeed(loc.getSpeed());
-                mDevice.mCell.setAccuracy(loc.getAccuracy());
-                mDevice.mCell.setBearing(loc.getBearing());
-                mDevice.setLastLocation(loc);
-
-                //Store last known location in preference
-                Editor prefsEditor;
-                prefsEditor = prefs.edit();
-                prefsEditor.putString(mContext.getString(R.string.data_last_lat_lon),
-                        String.valueOf(loc.getLatitude()) + ":" + String
-                                .valueOf(loc.getLongitude()));
-                prefsEditor.apply();
-
-                if (mTrackingCell) {
-                    dbHelper.open();
-                    dbHelper.insertLocation(mDevice.mCell.getLAC(),
-                            mDevice.mCell.getCID(), mDevice.mCell.getNetType(),
-                            mDevice.mCell.getLat(),
-                            mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
-                            mDevice.getCellInfo());
-
-                   dbHelper.insertCell(mDevice.mCell.getLAC(), mDevice.mCell.getCID(),
-                           mDevice.mCell.getNetType(), mDevice.mCell.getLat(),
-                           mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
-                           mDevice.mCell.getMCC(), mDevice.mCell.getMNC(),
-                           mDevice.mCell.getAccuracy(), mDevice.mCell.getSpeed(),
-                           mDevice.mCell.getBearing(),
-                           mDevice.getNetworkTypeName(),
-                           SystemClock.currentThreadTimeMillis());
-                }
-            }
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            if (mTrackingCell && provider.equals(LocationManager.GPS_PROVIDER)) {
-                enableLocationServices();
-            }
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            // TODO Auto-generated method stub
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status,
-                Bundle extras) {
-            // TODO Auto-generated method stub
-        }
-    }
-
-
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_UI_ICONS = this.getString(R.string.pref_ui_icons_key);
@@ -1540,4 +1277,159 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
      * Copyright (C) 2013 iSEC Partners
      */
 
+    LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location loc) {
+            timerHandler.postDelayed(batterySavingRunnable, AccelerometerMonitor.MOVEMENT_THRESHOLD_MS);
+
+            if (Build.VERSION.SDK_INT > 16) {
+                List<CellInfo> cellinfolist = tm.getAllCellInfo();
+                if (cellinfolist != null) {
+                    for (final CellInfo cellinfo : cellinfolist) {
+                        if (cellinfo instanceof CellInfoGsm) {
+                            final CellSignalStrengthGsm signalStrengthGsm = ((CellInfoGsm) cellinfo)
+                                    .getCellSignalStrength();
+                            final CellIdentityGsm identityGsm = ((CellInfoGsm) cellinfo)
+                                    .getCellIdentity();
+                            if (identityGsm != null) {
+                                mDevice.mCell.setCID(identityGsm.getCid());
+                                mDevice.mCell.setLAC(identityGsm.getLac());
+                                mDevice.mCell.setMCC(identityGsm.getMcc());
+                                mDevice.mCell.setMNC(identityGsm.getMnc());
+                            }
+                            if (signalStrengthGsm != null) {
+                                mDevice.mCell.setDBM(signalStrengthGsm.getDbm());
+                            }
+                            break;
+                        } else if (cellinfo instanceof CellInfoCdma) {
+                            final CellSignalStrengthCdma signalStrengthCdma
+                                    = ((CellInfoCdma) cellinfo)
+                                    .getCellSignalStrength();
+                            final CellIdentityCdma identityCdma = ((CellInfoCdma) cellinfo)
+                                    .getCellIdentity();
+                            if (identityCdma != null) {
+                                mDevice.mCell.setCID(identityCdma.getBasestationId());
+                                mDevice.mCell.setLAC(identityCdma.getNetworkId());
+                                mDevice.mCell.setMNC(identityCdma.getSystemId());
+                                mDevice.mCell.setSID(identityCdma.getSystemId());
+                            }
+
+                            if (signalStrengthCdma != null) {
+                                mDevice.setSignalDbm(signalStrengthCdma.getDbm());
+                            }
+                            break;
+                        } else if (cellinfo instanceof CellInfoLte) {
+                            final CellSignalStrengthLte signalStrengthLte = ((CellInfoLte) cellinfo)
+                                    .getCellSignalStrength();
+                            final CellIdentityLte identityLte = ((CellInfoLte) cellinfo)
+                                    .getCellIdentity();
+
+                            if (identityLte != null) {
+                                mDevice.mCell.setCID(identityLte.getPci());
+                                mDevice.mCell.setLAC(identityLte.getTac());
+                                mDevice.mCell.setMCC(identityLte.getMcc());
+                                mDevice.mCell.setMNC(identityLte.getMnc());
+                            }
+
+                            if (signalStrengthLte != null) {
+                                mDevice.setSignalDbm(signalStrengthLte.getDbm());
+                            }
+                            break;
+                        } else if (cellinfo instanceof CellInfoWcdma) {
+                            final CellSignalStrengthWcdma signalStrengthWcdma
+                                    = ((CellInfoWcdma) cellinfo)
+                                    .getCellSignalStrength();
+                            final CellIdentityWcdma identityWcdma = ((CellInfoWcdma) cellinfo)
+                                    .getCellIdentity();
+                            if (identityWcdma != null) {
+                                mDevice.mCell.setCID(identityWcdma.getCid());
+                                mDevice.mCell.setLAC(identityWcdma.getLac());
+                                mDevice.mCell.setMCC(identityWcdma.getMcc());
+                                mDevice.mCell.setMNC(identityWcdma.getMnc());
+                            }
+
+                            if (signalStrengthWcdma != null) {
+                                mDevice.setSignalDbm(signalStrengthWcdma.getDbm());
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!mDevice.mCell.isValid()) {
+                CellLocation cellLocation = tm.getCellLocation();
+                if (cellLocation != null) {
+                    switch (mDevice.getPhoneID()) {
+                        case TelephonyManager.PHONE_TYPE_GSM:
+                            GsmCellLocation gsmCellLocation
+                                    = (GsmCellLocation) cellLocation;
+                            mDevice.mCell.setCID(gsmCellLocation.getCid());
+                            mDevice.mCell.setLAC(gsmCellLocation.getLac());
+                            mDevice.mCell.setPSC(gsmCellLocation.getPsc());
+                            break;
+                        case TelephonyManager.PHONE_TYPE_CDMA:
+                            CdmaCellLocation cdmaCellLocation
+                                    = (CdmaCellLocation) cellLocation;
+                            mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());
+                            mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());
+                            mDevice.mCell.setSID(cdmaCellLocation.getSystemId());
+                            mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());
+                    }
+                }
+            }
+
+            if (loc != null && (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0)) {
+                mDevice.mCell.setLon(loc.getLongitude());
+                mDevice.mCell.setLat(loc.getLatitude());
+                mDevice.mCell.setSpeed(loc.getSpeed());
+                mDevice.mCell.setAccuracy(loc.getAccuracy());
+                mDevice.mCell.setBearing(loc.getBearing());
+                mDevice.setLastLocation(loc);
+
+                //Store last known location in preference
+                SharedPreferences.Editor prefsEditor;
+                prefsEditor = prefs.edit();
+                prefsEditor.putString(mContext.getString(R.string.data_last_lat_lon),
+                        String.valueOf(loc.getLatitude()) + ":" + String
+                                .valueOf(loc.getLongitude()));
+                prefsEditor.apply();
+
+                if (mTrackingCell) {
+                    dbHelper.open();
+                    dbHelper.insertLocation(mDevice.mCell.getLAC(),
+                            mDevice.mCell.getCID(), mDevice.mCell.getNetType(),
+                            mDevice.mCell.getLat(),
+                            mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
+                            mDevice.getCellInfo());
+
+                    dbHelper.insertCell(mDevice.mCell.getLAC(), mDevice.mCell.getCID(),
+                            mDevice.mCell.getNetType(), mDevice.mCell.getLat(),
+                            mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
+                            mDevice.mCell.getMCC(), mDevice.mCell.getMNC(),
+                            mDevice.mCell.getAccuracy(), mDevice.mCell.getSpeed(),
+                            mDevice.mCell.getBearing(),
+                            mDevice.getNetworkTypeName(),
+                            SystemClock.currentThreadTimeMillis());
+                }
+            }
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            if (mTrackingCell && provider.equals(LocationManager.GPS_PROVIDER)) {
+                enableLocationServices();
+            }
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+    };
 }
