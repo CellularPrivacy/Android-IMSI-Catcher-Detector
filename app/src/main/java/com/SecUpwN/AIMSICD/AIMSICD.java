@@ -414,7 +414,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
         menu.add(DrawerMenuItem.create
                 (104, getString(R.string.db_viewer), "ic_action_storage", true, this));
         menu.add(DrawerMenuItem.create
-                (105, getString(R.string.map_view), "ic_action_map", true, this));
+                (105, getString(R.string.map_view), "ic_action_map", false, this));
         menu.add(DrawerMenuSection.create(200, "Settings"));
         menu.add(DrawerMenuItem.create
                 (202, getString(R.string.preferences), "ic_action_settings", false, this));
