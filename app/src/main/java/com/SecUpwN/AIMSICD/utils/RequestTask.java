@@ -5,6 +5,7 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.service.CellTracker;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -62,7 +63,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
             case OPEN_CELL_ID_REQUEST_FROM_MAP:
                 int count;
                 try {
-                    if (AimsicdService.OCID_UPLOAD_PREF) {
+                    if (CellTracker.OCID_UPLOAD_PREF) {
                         boolean prepared = mDbAdapter.prepareOpenCellUploadData();
                         Log.i("AIMSICD", "OCID prepared - " + String.valueOf(prepared));
                         if (prepared) {
@@ -73,7 +74,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             MultipartEntity mpEntity = new MultipartEntity();
                             FileInputStream fin = new FileInputStream(file);
                             String csv = Helpers.convertStreamToString(fin);
-                            mpEntity.addPart("key", new StringBody(AimsicdService.OCID_API_KEY));
+                            mpEntity.addPart("key", new StringBody(CellTracker.OCID_API_KEY));
                             mpEntity.addPart("datafile", new InputStreamBody(
                                     new ByteArrayInputStream(csv.getBytes()), "text/csv",
                                     "aimsicd-ocid-data.csv"));
