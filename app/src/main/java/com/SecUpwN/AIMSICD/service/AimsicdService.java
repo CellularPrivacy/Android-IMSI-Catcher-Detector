@@ -79,7 +79,6 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
 import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 
 public class AimsicdService extends Service implements OnSharedPreferenceChangeListener {
