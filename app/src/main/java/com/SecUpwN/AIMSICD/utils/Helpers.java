@@ -172,7 +172,7 @@ public class Helpers {
                 }
             } else {
                 Helpers.sendMsg(context,
-                        "No OpenCellID API Key detected! \nPlease enter your key in settings first");
+                        "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
             }
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
