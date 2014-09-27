@@ -252,13 +252,13 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                 return true;
             case R.id.get_opencellid: {
                 if (mBound) {
-                    Location lastKnown = mAimsicdService.mDevice.getLastLocation();
+                    GeoLocation lastKnown = mAimsicdService.lastKnownLocation();
                     if (lastKnown != null) {
                         Helpers.msgShort(this, "Contacting OpenCellID.org for data...");
                         Cell cell;
-                        cell = mAimsicdService.mDevice.mCell;
-                        cell.setLon(lastKnown.getLongitude());
-                        cell.setLat(lastKnown.getLatitude());
+                        cell = mAimsicdService.getCell();
+                        cell.setLon(lastKnown.getLongitudeInDegrees());
+                        cell.setLat(lastKnown.getLatitudeInDegrees());
                         Helpers.getOpenCellData(mContext, cell,
                                 RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
                         return true;
@@ -399,7 +399,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                 GeoPoint ret = new GeoPoint(0,0);
                 if (mBound) {
                     try {
-                        int mcc = mAimsicdService.mDevice.mCell.getMCC();
+                        int mcc = mAimsicdService.getCell().getMCC();
                         double[] d = mDbHelper.getDefaultLocation(mcc);
                         ret = new GeoPoint(d[0], d[1]);
                     } catch (Exception e) {
