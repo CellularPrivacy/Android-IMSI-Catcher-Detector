@@ -276,6 +276,10 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         return mLocationTracker.lastKnownLocation();
     }
 
+    public RilExecutor getRilExecutor() {
+        return mRilExecutor;
+    }
+
     /**
      * Updates Neighbouring Cell details
      */
