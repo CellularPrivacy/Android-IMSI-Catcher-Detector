@@ -1,7 +1,7 @@
 ## Android IMSI-Catcher Detector (AIMSICD)
 #### [also called `IMSI-Cure` or `I'm-Secure`]
 --
-Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. This project has been featured in several [Press Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Press-Releases).
+Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. Feel free to read the [Press Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Press-Releases)  about our project.
 
 [![AIMSICD-Status](http://fs1.d-h.st/view/Oh7/00133/AIMSICD-Status_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
 ---
@@ -21,6 +21,8 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 * [Roadmap](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap)
 * [Goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#this-project)
 * [Limitations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#other-projects-not-this-one)
+* [General (non-geek)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/General-Overview)
+* [Technical (geek)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Technical-Overview)
 * [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)
 * **[WIP-Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)**
 * [Building](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Building)
