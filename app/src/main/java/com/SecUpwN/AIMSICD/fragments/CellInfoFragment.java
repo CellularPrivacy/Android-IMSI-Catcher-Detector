@@ -7,6 +7,7 @@ import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.RilExecutor;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -36,6 +37,7 @@ public class CellInfoFragment extends Fragment {
     public static final int SAMSUNG_MULTIRIL_REQUEST = 2;
 
     private AimsicdService mAimsicdService;
+    private RilExecutor rilExecutor;
     private boolean mBound;
     private Context mContext;
     private Activity mActivity;
@@ -135,6 +137,7 @@ public class CellInfoFragment extends Fragment {
         public void onServiceConnected(ComponentName name, IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
+            rilExecutor = mAimsicdService.getRilExecutor();
             mBound = true;
             updateUI();
         }
@@ -163,7 +166,7 @@ public class CellInfoFragment extends Fragment {
     }
 
     private void updateUI() {
-        if (mBound && mAimsicdService.mMultiRilCompatible) {
+        if (mBound && rilExecutor.mMultiRilCompatible) {
                 new CellAsyncTask().execute(SAMSUNG_MULTIRIL_REQUEST);
             } else {
             new CellAsyncTask().execute(STOCK_REQUEST);
@@ -171,7 +174,7 @@ public class CellInfoFragment extends Fragment {
     }
 
     void updateCipheringIndicator() {
-        final List<String> list = mAimsicdService.getCipheringInfo();
+        final List<String> list = rilExecutor.getCipheringInfo();
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -214,7 +217,7 @@ public class CellInfoFragment extends Fragment {
     }
 
     void updateNeighbouringCells() {
-        final List<String> list = mAimsicdService.getNeighbours();
+        final List<String> list = rilExecutor.getNeighbours();
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -228,7 +231,7 @@ public class CellInfoFragment extends Fragment {
     }
 
     void getSamSungMultiRil() {
-        if (mBound && mAimsicdService.mMultiRilCompatible) {
+        if (mBound && rilExecutor.mMultiRilCompatible) {
             new CellAsyncTask().execute(SAMSUNG_MULTIRIL_REQUEST);
         }
     }
