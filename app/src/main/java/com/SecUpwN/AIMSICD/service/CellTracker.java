@@ -61,12 +61,13 @@ public class CellTracker {
     private PhoneStateListener mPhoneStateListener;
     private SharedPreferences prefs;
 
+    public static int PHONE_TYPE;
     public static long REFRESH_RATE;
     public static int LAST_DB_BACKUP_VERSION;
     public static boolean OCID_UPLOAD_PREF;
+
     private boolean CELL_TABLE_CLEANSED;
-    public final Device mDevice = new Device();
-    public static int PHONE_TYPE;
+    private final Device mDevice = new Device();
 
     /*
      * Tracking and Alert Declarations
@@ -166,13 +167,14 @@ public class CellTracker {
                             PhoneStateListener.LISTEN_DATA_ACTIVITY |
                             PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
             );
-
+            mTrackingCell = true;
             Helpers.msgShort(context, "Tracking Cell Information.");
         } else {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
             mDevice.mCell.setLon(0.0);
             mDevice.mCell.setLat(0.0);
             mDevice.setCellInfo("[0,0]|nn|nn|");
+            mTrackingCell = false;
             Helpers.msgShort(context, "Stopped tracking Cell Information.");
         }
         setNotification();

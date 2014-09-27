@@ -194,11 +194,11 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     }
 
     public Cell getCell() {
-        return mCellTracker.mDevice.mCell;
+        return mCellTracker.getDevice().mCell;
     }
 
     public void setCell(Cell cell) {
-        mCellTracker.mDevice.mCell = cell;
+        mCellTracker.getDevice().mCell = cell;
     }
 
     public boolean isTrackingCell() {
