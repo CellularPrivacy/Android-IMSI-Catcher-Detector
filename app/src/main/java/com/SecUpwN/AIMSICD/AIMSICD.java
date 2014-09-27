@@ -278,7 +278,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
         } else if (selectedItem.getId() == 204) {
             if (CellTracker.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
                 Helpers.msgShort(mContext, "Unable to restore backup from previous database version"
-                        + " due to structural changes");
+                        + " due to structural changes!");
             } else {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
             }
@@ -306,7 +306,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
                 }
             } else {
                 Helpers.sendMsg(mContext,
-                        "No OpenCellID API Key detected! \nPlease enter your key in settings first");
+                        "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
             }
         } else if (selectedItem.getId() == 302) {
             if (!CellTracker.OCID_API_KEY.equals("NA")) {
@@ -336,7 +336,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
                 cellLookUpAsync.execute(sb.toString());
             } else {
                 Helpers.sendMsg(mContext,
-                        "No OpenCellID API Key detected! \nPlease enter your key in settings first");
+                        "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
             }
 
         } else if (selectedItem.getId() == 304) {
