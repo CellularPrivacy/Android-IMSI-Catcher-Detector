@@ -31,6 +31,7 @@ import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
+import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
@@ -275,14 +276,14 @@ public class AIMSICD extends Activity implements AsyncResponse {
         } else if (selectedItem.getId() == 203) {
             new RequestTask(mContext, RequestTask.BACKUP_DATABASE).execute();
         } else if (selectedItem.getId() == 204) {
-            if (AimsicdService.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
+            if (CellTracker.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
                 Helpers.msgShort(mContext, "Unable to restore backup from previous database version"
                         + " due to structural changes");
             } else {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
             }
         } else if (selectedItem.getId() == 301) {
-            if (!AimsicdService.OCID_API_KEY.equals("NA")) {
+            if (!CellTracker.OCID_API_KEY.equals("NA")) {
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
                     Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
@@ -298,37 +299,37 @@ public class AIMSICD extends Activity implements AsyncResponse {
                             = new LocationServices.LocationAsync();
                     locationAsync.delegate = this;
                     locationAsync.execute(
-                            mAimsicdService.mDevice.mCell.getCID(),
-                            mAimsicdService.mDevice.mCell.getLAC(),
-                            mAimsicdService.mDevice.mCell.getMNC(),
-                            mAimsicdService.mDevice.mCell.getMCC());
+                            mAimsicdService.getCell().getCID(),
+                            mAimsicdService.getCell().getLAC(),
+                            mAimsicdService.getCell().getMNC(),
+                            mAimsicdService.getCell().getMCC());
                 }
             } else {
                 Helpers.sendMsg(mContext,
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first");
             }
         } else if (selectedItem.getId() == 302) {
-            if (!AimsicdService.OCID_API_KEY.equals("NA")) {
+            if (!CellTracker.OCID_API_KEY.equals("NA")) {
                 Cell.CellLookUpAsync cellLookUpAsync = new Cell.CellLookUpAsync();
                 cellLookUpAsync.delegate = this;
                 StringBuilder sb = new StringBuilder();
                 sb.append("http://www.opencellid.org/cell/get?key=")
-                        .append(AimsicdService.OCID_API_KEY);
+                        .append(CellTracker.OCID_API_KEY);
 
-                if (mAimsicdService.mDevice.mCell.getMCC() != Integer.MAX_VALUE) {
-                    sb.append("&mcc=").append(mAimsicdService.mDevice.mCell.getMCC());
+                if (mAimsicdService.getCell().getMCC() != Integer.MAX_VALUE) {
+                    sb.append("&mcc=").append(mAimsicdService.getCell().getMCC());
                 }
 
-                if (mAimsicdService.mDevice.mCell.getMNC() != Integer.MAX_VALUE) {
-                    sb.append("&mnc=").append(mAimsicdService.mDevice.mCell.getMNC());
+                if (mAimsicdService.getCell().getMNC() != Integer.MAX_VALUE) {
+                    sb.append("&mnc=").append(mAimsicdService.getCell().getMNC());
                 }
 
-                if (mAimsicdService.mDevice.mCell.getLAC() != Integer.MAX_VALUE) {
-                    sb.append("&lac=").append(mAimsicdService.mDevice.mCell.getLAC());
+                if (mAimsicdService.getCell().getLAC() != Integer.MAX_VALUE) {
+                    sb.append("&lac=").append(mAimsicdService.getCell().getLAC());
                 }
 
-                if (mAimsicdService.mDevice.mCell.getCID() != Integer.MAX_VALUE) {
-                    sb.append("&cellid=").append(mAimsicdService.mDevice.mCell.getCID());
+                if (mAimsicdService.getCell().getCID() != Integer.MAX_VALUE) {
+                    sb.append("&cellid=").append(mAimsicdService.getCell().getCID());
                 }
 
                 sb.append("&format=xml");
@@ -358,7 +359,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
         Log.i(TAG, "processFinish - location[0]=" + location[0] + " location[1]=" + location[1]);
         if (location[0] != 0.0f && location[1] != 0.0f) {
             Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
-            Helpers.getOpenCellData(mContext, mAimsicdService.mDevice.mCell,
+            Helpers.getOpenCellData(mContext, mAimsicdService.getCell(),
                     RequestTask.OPEN_CELL_ID_REQUEST);
         } else {
             Helpers.msgShort(mContext,
@@ -373,7 +374,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
                 for (Cell cell : cells) {
                     Log.i(TAG, "processFinish - Cell =" + cell.toString());
                     if (cell.isValid()) {
-                        mAimsicdService.mDevice.mCell = cell;
+                        mAimsicdService.setCell(cell);
                         Intent intent = new Intent(AimsicdService.UPDATE_DISPLAY);
                         intent.putExtra("update", true);
                         mContext.sendBroadcast(intent);
@@ -399,7 +400,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
                 (901, getString(R.string.monitor_cell), "untrack_cell", false, this));
         menu.add(DrawerMenuItem.create
                 (902, getString(R.string.track_cell), "untrack_cell", false, this));
-        if (AimsicdService.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
+        if (CellTracker.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
             menu.add(DrawerMenuItem.create
                     (903, getString(R.string.track_femtocell), "ic_action_network_cell", false, this));
         }
@@ -495,7 +496,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
         List<NavDrawerItem> menuItems = mNavConf.getNavItems();
         NavDrawerItem cellMonitoringItem = menuItems.get(1);
         NavDrawerItem cellTrackingItem = menuItems.get(2);
-        if (AimsicdService.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
+        if (CellTracker.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
             femtoTrackingItem = menuItems.get(3);
         }
 
@@ -593,9 +594,9 @@ public class AIMSICD extends Activity implements AsyncResponse {
      */
     private void trackFemtocell() {
         if (mAimsicdService.isTrackingFemtocell()) {
-            mAimsicdService.stopTrackingFemto();
+            mAimsicdService.setTrackingFemtocell(false);
         } else {
-            mAimsicdService.startTrackingFemto();
+            mAimsicdService.setTrackingFemtocell(true);
         }
     }
 }

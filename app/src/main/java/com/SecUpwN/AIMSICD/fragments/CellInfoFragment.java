@@ -5,6 +5,7 @@ import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.CardItemData;
 import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
@@ -58,7 +59,7 @@ public class CellInfoFragment extends Fragment {
         @Override
         public void run() {
             updateUI();
-            timerHandler.postDelayed(this, AimsicdService.REFRESH_RATE);
+            timerHandler.postDelayed(this, CellTracker.REFRESH_RATE);
         }
     };
 
@@ -91,10 +92,10 @@ public class CellInfoFragment extends Fragment {
         }
 
         //Refresh display if preference is not set to manual
-        if (AimsicdService.REFRESH_RATE != 0) {
+        if (CellTracker.REFRESH_RATE != 0) {
             timerHandler.postDelayed(timerRunnable, 0);
             Helpers.msgShort(mContext, "Refreshing every "
-                    + TimeUnit.MILLISECONDS.toSeconds(AimsicdService.REFRESH_RATE) + " seconds");
+                    + TimeUnit.MILLISECONDS.toSeconds(CellTracker.REFRESH_RATE) + " seconds");
         }
     }
 
@@ -189,7 +190,7 @@ public class CellInfoFragment extends Fragment {
 
     boolean getStockNeighbouringCells() {
         if (mBound) {
-            neighboringCells = mAimsicdService.updateNeighbouringCells();
+            neighboringCells = mAimsicdService.getCellTracker().updateNeighbouringCells();
             return neighboringCells.size() > 0;
         }
 
