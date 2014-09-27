@@ -210,7 +210,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
         }
 
         final String PERSIST_SERVICE = mContext.getString(R.string.pref_persistservice_key);
-        boolean persistService = prefs.getBoolean(PERSIST_SERVICE, false);
+        boolean persistService = prefs.getBoolean(PERSIST_SERVICE, true);
         if (!persistService) {
             Intent intent = new Intent(mContext, AimsicdService.class);
             stopService(intent);
