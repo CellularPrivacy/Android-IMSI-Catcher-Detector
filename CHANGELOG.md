@@ -1,6 +1,16 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 27.09.2014 - WIP-Internal v0.1.24-alpha-build-9
+
+* Changed: Extracted Accelerometer, Location Tracking, and RilExecutor into separate classes
+* Changed: Extracted CellTracker from the service and refactored code everywhere
+* Changed: Small changes made to README to include General and Technical Overview
+* Update: Several small changes made to strings.xml for unified style (attempt to unify style)
+* Fix: Moved RilExecutor to correct package and hooked up RilExecutor into CellInfoFragment
+* Fix: Cleaned up the code to resolve title "Map Viewer" staying after switching tabs
+* Fix: Corrected Cell Tracking status - code got left out during refactoring
+
 #### 26.09.2014 - WIP-Internal v0.1.24-alpha-build-9
 
 * Changed: Re-worked accelerometer detection for better battery savings. Needs lots of testing.
