@@ -86,16 +86,13 @@ public class AimsicdService extends Service {
     private final String TAG = "AIMSICD_Service";
 
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
-    public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
     public static final String UPDATE_DISPLAY = "UPDATE_DISPLAY";
 
     /*
      * System and helper declarations
      */
     private final AimscidBinder mBinder = new AimscidBinder();
-    private final AIMSICDDbAdapter dbHelper = new AIMSICDDbAdapter(this);
     private final Handler timerHandler = new Handler();
-    private Context mContext;
 
     private CellTracker mCellTracker;
     private AccelerometerMonitor mAccelerometerMonitor;
@@ -115,8 +112,6 @@ public class AimsicdService extends Service {
     }
 
     public void onCreate() {
-        mContext = getApplicationContext();
-
         mAccelerometerMonitor = new AccelerometerMonitor(this, new Runnable() {
             @Override
             public void run() {
@@ -133,9 +128,6 @@ public class AimsicdService extends Service {
         mRilExecutor = new RilExecutor(this);
         mCellTracker = new CellTracker(this);
 
-        //Register receiver for Silent SMS Interception Notification
-        mContext.registerReceiver(mMessageReceiver, new IntentFilter(SILENT_SMS));
-
         Log.i(TAG, "Service launched successfully.");
     }
 
@@ -147,9 +139,6 @@ public class AimsicdService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mCellTracker.cancelNotification();
-        dbHelper.close();
-        mContext.unregisterReceiver(mMessageReceiver);
         if (mCellTracker.isTrackingCell()) {
             mCellTracker.stop();
             mLocationTracker.stop();
@@ -160,16 +149,6 @@ public class AimsicdService extends Service {
         mRilExecutor.stop();
         Log.i(TAG, "Service destroyed.");
     }
-
-    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                mCellTracker.messageReceived(bundle);
-            }
-        }
-    };
 
     public GeoLocation lastKnownLocation() {
         return mLocationTracker.lastKnownLocation();
@@ -271,10 +250,6 @@ public class AimsicdService extends Service {
         AlertDialog alert = builder.create();
         alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         alert.show();
-    }
-
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        mCellTracker.onSharedPreferenceChanged(sharedPreferences, key);
     }
 
     LocationListener mLocationListener = new LocationListener() {
