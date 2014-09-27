@@ -81,7 +81,7 @@ import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 
-public class AimsicdService extends Service implements OnSharedPreferenceChangeListener {
+public class AimsicdService extends Service {
 
     private final String TAG = "AIMSICD_Service";
 
@@ -97,7 +97,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     private final Handler timerHandler = new Handler();
     private Context mContext;
 
-    private SharedPreferences prefs;
     private CellTracker mCellTracker;
     private AccelerometerMonitor mAccelerometerMonitor;
     private LocationTracker mLocationTracker;
@@ -134,13 +133,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
         mRilExecutor = new RilExecutor(this);
         mCellTracker = new CellTracker(this);
 
-        prefs = this.getSharedPreferences(
-                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-        prefs.registerOnSharedPreferenceChangeListener(this);
-//        loadPreferences();
-//
-//        setNotification();
-
         //Register receiver for Silent SMS Interception Notification
         mContext.registerReceiver(mMessageReceiver, new IntentFilter(SILENT_SMS));
 
@@ -155,7 +147,6 @@ public class AimsicdService extends Service implements OnSharedPreferenceChangeL
     @Override
     public void onDestroy() {
         super.onDestroy();
-        prefs.unregisterOnSharedPreferenceChangeListener(this);
         mCellTracker.cancelNotification();
         dbHelper.close();
         mContext.unregisterReceiver(mMessageReceiver);
