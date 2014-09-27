@@ -23,6 +23,7 @@ package com.SecUpwN.AIMSICD.utils;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.service.CellTracker;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -130,7 +131,7 @@ public class Helpers {
      */
     public static void getOpenCellData(Context context, Cell cell, char type) {
         if (Helpers.isNetAvailable(context)) {
-            if (!AimsicdService.OCID_API_KEY.equals("NA")) {
+            if (!CellTracker.OCID_API_KEY.equals("NA")) {
                 double earthRadius = 6371.01;
 
                 if (cell.getLat() != 0.0 && cell.getLon() != 0.0) {
@@ -150,7 +151,7 @@ public class Helpers {
 
                     StringBuilder sb = new StringBuilder();
                     sb.append("http://www.opencellid.org/cell/getInArea?key=")
-                            .append(AimsicdService.OCID_API_KEY).append("&BBOX=")
+                            .append(CellTracker.OCID_API_KEY).append("&BBOX=")
                             .append(boundParameter);
 
                     if (cell.getMCC() != Integer.MAX_VALUE) {
