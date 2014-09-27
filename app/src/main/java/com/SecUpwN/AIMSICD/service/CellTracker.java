@@ -52,7 +52,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Class to handle tracking of cell information
  */
-public class CellTracker {
+public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String TAG = "CellTracker";
     public static String OCID_API_KEY = "NA";
     private final int NOTIFICATION_ID = 1;
@@ -91,6 +91,10 @@ public class CellTracker {
         tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         prefs = context.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+        loadPreferences();
+        setNotification();
+
 
         PHONE_TYPE = tm.getPhoneType();
 
@@ -152,6 +156,7 @@ public class CellTracker {
 
     public void stop() {
         tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     /**
