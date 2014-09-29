@@ -55,7 +55,7 @@
 
     <string name="no_network_connection_title">No Internet Connection</string>
     <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
-    connectivity, enable data connection and try again.</string>
+    connectivity, please enable data connection!</string>
 
     <!-- MAP VIEWER -->
     <string name="error_google_play_services_title">Map Viewer Unavailable!</string>
@@ -99,7 +99,7 @@
     <string name="about_aimsicd">About AIMSICD</string>
     <string name="aimsicd_about_info">Android IMSI-Catcher Detector</string>
     <string name="aimsicd_about_info2">Detect and avoid IMSI-Catcher attacks!</string>
-    <string name="wiki_info">The complete documentation is available at our</string>
+    <string name="wiki_info">Complete documentation on our</string>
     <string name="wiki_link">&lt;a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki"&gt;WIKI&lt;/a&gt;</string>
     <string name="poc_info">This App is a</string>
     <string name="poc_link">&lt;a href="https://en.wikipedia.org/wiki/Proof_of_concept"&gt;Proof-of-Concept (PoC)&lt;/a&gt;</string>
@@ -137,17 +137,17 @@
     <string name="pref_autostart_summ">Automatically start service on boot</string>
     <string name="pref_persistservice_title">Persistent Service</string>
     <string name="pref_persistservice_key">pref_persistservice_service</string>
-    <string name="pref_persistservice_summ">Service will continue to run after exiting the application</string>
+    <string name="pref_persistservice_summ">Service will continue to run after exiting the application (uncheck to fully close App)</string>
     <string name="pref_protection_title">Protection Settings</string>
     <string name="pref_enable_cell_key">pref_enable_cell</string>
     <string name="pref_enable_cell_title">Cell Tracking</string>
     <string name="pref_enable_cell_summ">Enable Cell Tracking Automatically</string>
-    <string name="pref_femto_title">FemtoCell</string>
-    <string name="pref_femto_summ">FemtoCell Detection (CDMA Phones ONLY)</string>
+    <string name="pref_femto_title">FemtoCell Detection</string>
+    <string name="pref_femto_summ">(currently CMDMA Phones ONLY)</string>
     <string name="pref_femto_detection_key">pref_femto_detection</string>
     <string name="pref_femto_action_title">FemtoCell Protection</string>
     <string name="pref_femto_action_key">pref_femto_action</string>
-    <string name="pref_femto_action_summ">Enforce Airplane Mode when FemtoCell detected</string>
+    <string name="pref_femto_action_summ">Enforce Airplane Mode when FemtoCell detected (re-enable network manually)</string>
     <string name="pref_ui_title">Interface Settings</string>
     <string name="pref_ui_icons_title">Icons</string>
     <string name="pref_ui_icons_key">pref_ui_icons</string>
@@ -165,7 +165,7 @@
     <string name="pref_ocid_title">OpenCellID Settings</string>
     <string name="pref_ocid_upload">pref_ocid_upload</string>
     <string name="pref_ui_ocid_upload_title">Contribute Cell Data</string>
-    <string name="pref_ui_ocid_upload_summ">Contribute data to the OpenCellID Project (NO personal information is submitted)</string>
+    <string name="pref_ui_ocid_upload_summ">Contribute data to the OpenCellID Project (NO personal information will ever be submitted)</string>
     <string name="pref_cell_table_cleansed">pref_cell_table_cleansed</string>
     <string name="pref_ocid_key">pref_ocid_key</string>
     <string name="pref_ocid_key_title">OpenCellID API Key</string>
@@ -179,7 +179,7 @@
     <string name="pref_map_title">Map Viewer Preferences</string>
     <string name="pref_map_type_key">pref_map_type</string>
     <string name="pref_map_type_title">Map Type</string>
-    <string name="pref_map_type_summ">Display Map using different styles</string>
+    <string name="pref_map_type_summ">Display Map in different styles</string>
     
     <!-- MAP INFOWINDOW -->
     <string name="cell_id_label">Cell ID: </string>
