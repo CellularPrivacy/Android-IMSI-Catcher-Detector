@@ -1,6 +1,14 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 30.09.2014 - WIP-Internal v0.1.24-alpha-build-11
+
+* Added: New page with Media Material in our WIKI for people wanting to spread the word
+* Update: Some restructuring done to README for better mobile view
+* Update: Exspressed our teams gratitude to our new developer Toby Kurien in the CREDITS
+* Update: Aligned text in strings.xml, DbViewerFragment, CellTracker and MapViewerOsmDroid
+* Update: More code cleanup done by our fabulous developer Toby Kurien
+
 #### 27.09.2014 - WIP-Internal v0.1.24-alpha-build-10
 
 * Changed: Extracted Accelerometer, Location Tracking, and RilExecutor into separate classes
