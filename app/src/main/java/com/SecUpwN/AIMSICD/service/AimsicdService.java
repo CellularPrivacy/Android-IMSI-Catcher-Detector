@@ -145,7 +145,6 @@ public class AimsicdService extends Service {
         }
 
         mAccelerometerMonitor.stop();
-
         mRilExecutor.stop();
         Log.i(TAG, "Service destroyed.");
     }
@@ -196,15 +195,17 @@ public class AimsicdService extends Service {
     private final Runnable batterySavingRunnable = new Runnable() {
         @Override
         public void run() {
-            Log.d("power", "Checking to see if GPS should be disabled");
-            // if no movement in a while, shut off GPS. Gets re-enabled when there is movement
-            if (mAccelerometerMonitor.notMovedInAWhile() ||
-                    mLocationTracker.notMovedInAWhile()) {
-                Log.d("power", "Disabling GPS");
-                mLocationTracker.stop();
-            }
+            if (mCellTracker.isTrackingCell()) {
+                Log.d("power", "Checking to see if GPS should be disabled");
+                // if no movement in a while, shut off GPS. Gets re-enabled when there is movement
+                if (mAccelerometerMonitor.notMovedInAWhile() ||
+                        mLocationTracker.notMovedInAWhile()) {
+                    Log.d("power", "Disabling GPS");
+                    mLocationTracker.stop();
+                }
 
-            mAccelerometerMonitor.start();
+                mAccelerometerMonitor.start();
+            }
         }
     };
 
@@ -218,8 +219,10 @@ public class AimsicdService extends Service {
 
         if (track) {
             mLocationTracker.start();
+            mAccelerometerMonitor.start();
         } else {
             mLocationTracker.stop();
+            mAccelerometerMonitor.stop();
         }
     }
 
