@@ -137,11 +137,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if (monitor) {
             timerHandler.postDelayed(timerRunnable, 0);
             mMonitoringCell = true;
-            Helpers.msgShort(context, "Monitoring Cell Information");
+            Helpers.msgShort(context, "Monitoring Cell Information.");
         } else {
             timerHandler.removeCallbacks(timerRunnable);
             mMonitoringCell = false;
-            Helpers.msgShort(context, "Stopped monitoring Cell Information");
+            Helpers.msgShort(context, "Stopped monitoring Cell Information.");
         }
 
         setNotification();
@@ -727,7 +727,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 }
                 contentText = "Phone Type " + mDevice.getPhoneType();
                 tickerText = context.getResources().getString(R.string.app_name_short)
-                        + " - Status: Idle";
+                        + " - Status: Idle.";
                 break;
             case 2: //NORMAL
                 switch (iconType) {
@@ -873,7 +873,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         /* Check if it is a CDMA phone */
         if (mDevice.getPhoneID() != TelephonyManager.PHONE_TYPE_CDMA) {
-            Helpers.msgShort(context, "AIMSICD can only detect Femtocell connections on CDMA devices.");
+            Helpers.msgShort(context, "AIMSICD can only detect FemtoCell connections on CDMA devices.");
             return;
         }
 
@@ -898,14 +898,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
             mTrackingFemtocell = false;
             setNotification();
-            Log.v(TAG, "Stopped tracking Femtocell connections.");
+            Log.v(TAG, "Stopped tracking FemtoCell connections.");
         }
     }
 
     private void getServiceStateInfo(ServiceState s) {
         if (s != null) {
             if (IsConnectedToCdmaFemto(s)) {
-                Helpers.msgShort(context, "ALERT!! Femtocell Connection Detected!!");
+                Helpers.msgShort(context, "ALERT!! FemtoCell Connection Detected!!");
                 mFemtoDetected = true;
                 setNotification();
                 //toggleRadio();
