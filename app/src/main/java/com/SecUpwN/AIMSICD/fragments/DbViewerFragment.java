@@ -166,7 +166,7 @@ public class DbViewerFragment extends Fragment {
             lv.setVisibility(View.VISIBLE);
         } else {
             lv.setVisibility(View.GONE);
-            Helpers.msgShort(mContext, "Table contains no data to display");
+            Helpers.msgShort(mContext, "Table contains no data to display.");
         }
     }
 

@@ -391,7 +391,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Helpers.msgShort(MapViewerOsmDroid.this, "No tracked locations found to overlay on map.");
+                            Helpers.msgShort(MapViewerOsmDroid.this, "No tracked locations found to show on map.");
                         }
                     });
                 }
@@ -403,7 +403,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                         double[] d = mDbHelper.getDefaultLocation(mcc);
                         ret = new GeoPoint(d[0], d[1]);
                     } catch (Exception e) {
-                        Log.e("map", "Error getting default location", e);
+                        Log.e("map", "Error getting default location!", e);
                     }
                 }
 
