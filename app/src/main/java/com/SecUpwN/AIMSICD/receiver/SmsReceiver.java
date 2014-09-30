@@ -1,6 +1,7 @@
 package com.SecUpwN.AIMSICD.receiver;
 
 import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.service.CellTracker;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -38,7 +39,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
                 if (messages.size() > 0) {
                     for (SmsMessage sms : messages) {
-                        Intent smsIntent = new Intent(AimsicdService.SILENT_SMS);
+                        Intent smsIntent = new Intent(CellTracker.SILENT_SMS);
                         Bundle smsData = new Bundle();
                         smsData.putString("address", sms.getOriginatingAddress());
                         smsData.putString("display_address",
