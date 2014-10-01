@@ -1,34 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
     <title>Android IMSI-Catcher Detector (AIMSICD) by SecUpwN</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Android IMSI-Catcher Detector (AIMSICD)</h1>
-        <h2>Detect and avoid IMSI-Catcher attacks!</h2>
-        <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h2>
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Android IMSI-Catcher Detector (AIMSICD)</h1>
+          <p>Detect and avoid IMSI-Catcher attacks!</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/SecUpwN">SecUpwN</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h2>
 <a name="android-imsi-catcher-detector" class="anchor" href="#android-imsi-catcher-detector"><span class="octicon octicon-link"></span></a>Android IMSI-Catcher Detector</h2>
 
 <h4>
@@ -39,7 +49,7 @@
 <p>Android-based project to detect and avoid fake base stations (<a href="https://en.wikipedia.org/wiki/IMSI-catcher">IMSI-Catchers</a>) in GSM/UMTS Networks. Feel free to read the <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Press-Releases">Press Releases</a> about us, spread the word with our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material">Media Material</a> and help us solving <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues">current challenges</a>!</p>
 
 <h2>
-<a name="-1" class="anchor" href="#-1"><span class="octicon octicon-link"></span></a><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons"><img src="http://fs1.d-h.st/view/Oh7/00133/AIMSICD-Status_Large.png" alt="AIMSICD-Status"></a>
+<a name="-1" class="anchor" href="#-1"><span class="octicon octicon-link"></span></a><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons"><img src="https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Banner_Large.png" alt="AIMSICD-Banner"></a>
 </h2>
 
 <p><strong><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations">DONATE</a> to help us support:</strong></p>
@@ -108,7 +118,7 @@
 
 <p>They come in uncountable shapes and sizes:</p>
 
-<p><img src="http://fs1.d-h.st/view/TU2/00134/IMSI-Catchers.png" alt="IMSI-Catchers"></p>
+<p><img src="https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/IMSI-Catchers.png" alt="IMSI-Catchers"></p>
 
 <ul>
 <li>Current IMSI-Catchers can be as <strong>tiny</strong> as the portable <a href="http://www.septier.com/368.html">Septier IMSI-Catcher Mini</a> now.</li>
@@ -254,25 +264,10 @@
 </tr>
 </tbody>
 </table><hr>
-        </section>
+      </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector"></a> is maintained by <a href="https://github.com/SecUpwN">SecUpwN</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
     </div>
-
-  
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
   </body>
 </html>
