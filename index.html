@@ -38,8 +38,8 @@
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
-        <h2>
-<a name="android-imsi-catcher-detector" class="anchor" href="#android-imsi-catcher-detector"><span class="octicon octicon-link"></span></a>Android IMSI-Catcher Detector</h2>
+        <h3>
+<a name="android-imsi-catcher-detector" class="anchor" href="#android-imsi-catcher-detector"><span class="octicon octicon-link"></span></a>Android IMSI-Catcher Detector</h3>
 
 <h4>
 <a name="also-called-imsi-cure-or-im-secure" class="anchor" href="#also-called-imsi-cure-or-im-secure"><span class="octicon octicon-link"></span></a>[also called <code>IMSI-Cure</code> or <code>I'm-Secure</code>]</h4>
@@ -107,10 +107,11 @@
 <ul>
 <li>
 <strong><a href="https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/">NSA-Killings with IMSI-Catcher drones</a></strong>.</li>
-<li>On YouTube: <a href="http://www.youtube.com/watch?v=Ydo19YOzpzU">How easy it is to clone phones</a>.</li>
+<li>
+<a href="http://www.youtube.com/watch?v=Ydo19YOzpzU">How easy it is to clone phones</a>.</li>
 <li>Talk by Karsten Nohl and Luca Melette on <a href="http://youtu.be/YWdHSJsEOck">28c3: Defending mobile phones</a>.</li>
 <li>
-<a href="https://www.eff.org/deeplinks/2012/10/stingrays-biggest-unknown-technological-threat-cell-phone-privacy">Stingrays: The Biggest Technological Threat</a>.</li>
+<a href="https://www.eff.org/deeplinks/2012/10/stingrays-biggest-unknown-technological-threat-cell-phone-privacy">Stingrays: Biggest Technological Threat</a>.</li>
 <li>
 <a href="https://www.privacyinternational.org/blog/beirtear-na-imsis-irelands-gsoc-surveillance-inquiry-reveals-use-of-mobile-phone-interception">GSOC reveals hidden IMSI-Catcher</a>.</li>
 </ul><hr><h4>
@@ -121,7 +122,7 @@
 <p><img src="https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/IMSI-Catchers.png" alt="IMSI-Catchers"></p>
 
 <ul>
-<li>Current IMSI-Catchers can be as <strong>tiny</strong> as the portable <a href="http://www.septier.com/368.html">Septier IMSI-Catcher Mini</a> now.</li>
+<li>Current IMSI-Catchers can be as <strong>tiny</strong> as the portable <a href="http://www.septier.com/368.html">Septier IMSI-Catcher Mini</a>.</li>
 <li>Below, the smartphone takes up the most space. IMSI-Catchers will even get smaller!</li>
 </ul><p><img src="http://www.septier.com/contentManagment/uploadedFiles/Mini.png" alt="Septier IMSI-Catcher Mini"></p>
 
@@ -130,8 +131,8 @@
 </ul><p><img src="http://i43.tinypic.com/2i9i0kk.jpg" alt="IMSI-Catcher during the riots on Taksim Square"></p>
 
 <ul>
-<li>Above example is way too conspicuous and you'll likely never encounter one of these.</li>
-<li>Todays IMSI-Catchers can be <a href="http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/">body-worn</a>, or are hidden inside GSM Interceptor vehicles:</li>
+<li>Above example is way too conspicuous and you'll likely never encounter these.</li>
+<li>Todays IMSI-Catchers can be <a href="http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/">body-worn</a> or hidden in GSM Interceptor vehicles:</li>
 </ul><p><img src="http://www.armedforces-int.com/upload/image_files/cellular-monitoring1.jpg" alt="Inside an IMSI-Catcher vehicle"></p>
 
 <p>Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereof.</p>
@@ -143,7 +144,7 @@
 
 <ol>
 <li><p>There are several types of silent SMS, most of which are already detectable and there is nothing strange with that. It does need further testing for a greater variety of devices, and to see what would happen on a real IMSI-Catcher.</p></li>
-<li><p>Sending AT commands to the baseband processor and use the results to detect anomalies is an ongoing challenge because certain basebands do not expose enough usable information. The whole detection process is strongly hardware dependent, some basebands expose everything (MTK) and others (Qualcomm) expose very little, since they have their own protocols (DM/QMI). But the SIM card filesystem does provide useful info. So a combination of AT commands, SIM card readings and also API access to Service Mode (Samsung) menus, can provide all that we need and more. But it is a rather technical challenge for our developers to do this, and to collect all support material needed. That's where YOU come into play. Check our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues?q=is%3Aopen+is%3Aissue">open Issues</a>!</p></li>
+<li><p>Sending AT commands to the baseband processor and use the results to detect anomalies is an ongoing challenge because certain basebands do not expose enough usable information. The whole detection process is strongly hardware dependent, some basebands expose everything (MTK) and others (Qualcomm) expose very little, since they have their own protocols (DM/QMI). But the SIM card filesystem does provide useful info. So a combination of AT commands, SIM card readings and also API access to Service Mode (Samsung) menus, can provide all that we need and more. But it is a rather technical challenge for our developers to do this, and to collect all support material needed. That's where YOU come into play. Check our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues?q=is%3Aopen+is%3Aissue">open Issues</a> and help us!</p></li>
 <li><p>OBB support would be crucial, but we're not really proposing this. Very few people would bother going through the pain of finding an appropriate OBB compatible phone, less implementing it as a piggy-back to an Android. So unless some OBB developer serves the required Java + binaries to us on a silver platter, this will not be a feature of AIMSICD.</p></li>
 </ol><p>Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule Them ALL".</p>
 
@@ -175,8 +176,8 @@
 <li>l. use a statistical algorithm on the DB data to detect rogue IMSI-Catchers</li>
 <li>m. combine all of the above (steps h to l) into a BETA App for testing, add languages</li>
 <li>n. improve BETA app by adding (many more) IMSI-Catcher counter measures</li>
-</ul><hr><h1>
-<a name="goals-please-read-carefully" class="anchor" href="#goals-please-read-carefully"><span class="octicon octicon-link"></span></a>Goals (please read carefully!)</h1>
+</ul><hr><h3>
+<a name="goals-please-read-carefully" class="anchor" href="#goals-please-read-carefully"><span class="octicon octicon-link"></span></a>Goals (please read carefully!)</h3>
 
 <h3>
 <a name="this-project" class="anchor" href="#this-project"><span class="octicon octicon-link"></span></a>This project:</h3>
@@ -219,7 +220,7 @@
 
 <p>Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending <a href="https://www.darkcoin.io/">DarkCoin</a> to our DONATION ADDRESS: <strong>XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys</strong></p>
 
-<p>All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will <strong>NOT</strong> reward junk, only awesome stuff. Furthermore, donations will be used to support the <a href="https://www.eff.org/">Electronic Frontier Foundation</a>, <a href="https://guardianproject.info/">The Guardian Project</a> as well as <a href="https://www.privacyinternational.org/">Privacy International</a>. If you are unsure how to donate, visit our WIKI-Page on <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations">Anonymous Donations</a>.</p>
+<p>All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will <strong>NOT</strong> reward junk, only awesome stuff. Donations will be used to support the <a href="https://www.eff.org/">Electronic Frontier Foundation</a>, <a href="https://guardianproject.info/">The Guardian Project</a> as well as <a href="https://www.privacyinternational.org/">Privacy International</a>. If you are unsure how to donate, visit our WIKI-Page on <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations">Anonymous Donations</a>.</p>
 
 <hr><h3>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
@@ -229,9 +230,7 @@
 <hr><h1>
 <a name="credits--greetings" class="anchor" href="#credits--greetings"><span class="octicon octicon-link"></span></a>Credits &amp; Greetings</h1>
 
-<p>Our project would not have been possible without <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS">these awesome people</a>. HUGE THANKS! ;-)</p>
-
-<p>This list will be updated as our project evolves and shall be included within the final app.</p>
+<p>Our project would not have been possible without <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS">these awesome people</a>. HUGE THANKS!</p>
 
 <hr><h3>
 <a name="get-in-touch-with-the-core-team" class="anchor" href="#get-in-touch-with-the-core-team"><span class="octicon octicon-link"></span></a>Get in touch with the core team!</h3>
