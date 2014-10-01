@@ -3,7 +3,7 @@
 --
 Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. Feel free to read the [Press Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Press-Releases) about us, spread the word with our [Media Material](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material) and help us solving [current challenges](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues)!
 
-[![AIMSICD-Status](http://fs1.d-h.st/view/Oh7/00133/AIMSICD-Status_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
+[![AIMSICD-Banner](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Banner_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
 ---
 
 **[DONATE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) to help us support:**
@@ -72,7 +72,7 @@ Some examples to make you familar with the most common IMSI-Catcher threats:
 
 They come in uncountable shapes and sizes:
 
-![IMSI-Catchers](http://fs1.d-h.st/view/TU2/00134/IMSI-Catchers.png)
+![IMSI-Catchers](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/IMSI-Catchers.png)
 
 * Current IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html) now.
 * Below, the smartphone takes up the most space. IMSI-Catchers will even get smaller!
