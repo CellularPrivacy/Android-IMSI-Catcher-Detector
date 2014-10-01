@@ -25,6 +25,7 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 * [Technical (geek)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Technical-Overview)
 * [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)
 * **[WIP-Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)**
+* [Privacy](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Privacy)
 * [Building](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Building)
 * [Installation](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Installation)
 * [User Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
@@ -84,7 +85,7 @@ They come in uncountable shapes and sizes:
 ![IMSI-Catcher during the riots on Taksim Square](http://i43.tinypic.com/2i9i0kk.jpg)
 
 * Above example is way too conspicuous and you'll likely never encounter these.
-* Todays IMSI-Catchers can be [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/) or hidden in GSM Interceptor vehicles:
+* Todays IMSI-Catchers can be [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/) or are hidden in GSM Interceptor vehicles:
 
 ![Inside an IMSI-Catcher vehicle](http://www.armedforces-int.com/upload/image_files/cellular-monitoring1.jpg)
 
@@ -158,13 +159,13 @@ Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule T
 
 ### Disclaimer
 
-For our own safety, here's our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER). In short terms: Think before you act! We're untouchable.
+For your and our own safety, here's our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER).
 
 ---
 
 ### Bug Tracker
 
-Found a bug? Please carefully read [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues)!
+Please follow [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues)!
 
 ---
 
