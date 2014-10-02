@@ -143,7 +143,7 @@
     <string name="pref_enable_cell_title">Cell Tracking</string>
     <string name="pref_enable_cell_summ">Enable Cell Tracking Automatically</string>
     <string name="pref_femto_title">FemtoCell Detection</string>
-    <string name="pref_femto_summ">(currently CMDMA Phones ONLY)</string>
+    <string name="pref_femto_summ">(currently CDMA Phones ONLY)</string>
     <string name="pref_femto_detection_key">pref_femto_detection</string>
     <string name="pref_femto_action_title">FemtoCell Protection</string>
     <string name="pref_femto_action_key">pref_femto_action</string>
