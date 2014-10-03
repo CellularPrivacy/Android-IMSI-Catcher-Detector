@@ -52,11 +52,7 @@
 <a name="-1" class="anchor" href="#-1"><span class="octicon octicon-link"></span></a><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons"><img src="https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Banner_Large.png" alt="AIMSICD-Banner"></a>
 </h2>
 
-<p><strong><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations">DONATE</a> to help us support:</strong></p>
-
-<p><a href="https://www.eff.org/"><img src="https://www.eff.org/sites/all/themes/frontier/images/logo_full.png" alt="EFF"></a>
-<a href="https://guardianproject.info/"><img src="https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png" alt="Guardian Project"></a>
-<a href="https://www.privacyinternational.org/"><img src="https://www.privacyinternational.org/profiles/pi/themes/custom/privacy/logo.png" alt="Privacy International"></a></p>
+<p><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases"><img src="https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Teaser.png" alt="AIMSICD-Teaser"></a></p>
 
 <hr><h1>
 <a name="index" class="anchor" href="#index"><span class="octicon octicon-link"></span></a>Index</h1>
@@ -64,9 +60,9 @@
 <ul>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction">Introduction</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#want-to-know-what-imsi-catchers-look-like">IMSI-Catchers</a></li>
-<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap">Roadmap</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#this-project">Goals</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#other-projects-not-this-one">Limitations</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap">Roadmap</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/General-Overview">General (non-geek)</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Technical-Overview">Technical (geek)</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER">Disclaimer</a></li>
@@ -83,8 +79,8 @@
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/FAQ">FAQ</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/SOURCES">Sources</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#credits--greetings">Credits</a></li>
-<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team">Contact</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#license">License</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team">Contact</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Recommendations">Recommendations</a></li>
 </ul><hr><h1>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
@@ -138,7 +134,36 @@
 
 <p>Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereof.</p>
 
-<hr><h1>
+<hr><h3>
+<a name="goals-please-read-carefully" class="anchor" href="#goals-please-read-carefully"><span class="octicon octicon-link"></span></a>Goals (please read carefully!)</h3>
+
+<h3>
+<a name="this-project" class="anchor" href="#this-project"><span class="octicon octicon-link"></span></a>This project:</h3>
+
+<ul>
+<li>Detects IMSI based device location tracking</li>
+<li>Provides counter measures against tracking</li>
+<li>Can provide swarm-wise-decision-based cellular service interruption</li>
+<li>Can provide secure wifi/wimax alternative data routes through MESH-like networking</li>
+<li>Detect and prevent remote hidden application installation</li>
+<li>Detect and prevent remote hidden SMS-based SIM attacks</li>
+<li>Prevent or spoof GPS data</li>
+<li>Does NOT secure any data transmissions</li>
+<li>Does NOT prevent already installed rogue application from full access</li>
+<li>Aims to be recommended and added to the <a href="https://guardianproject.info/apps">Guardian Project's list of secure Apps</a>
+</li>
+<li>Aims to be recommended by the <a href="https://ssd.eff.org/">SSD Project of the Electronic Frontier Foundation</a>
+</li>
+<li>Aims to be recommended by <a href="https://www.privacyinternational.org/">Privacy International</a> (and like-minded organizations)</li>
+</ul><h3>
+<a name="other-projects-not-this-one" class="anchor" href="#other-projects-not-this-one"><span class="octicon octicon-link"></span></a>Other projects (NOT this one):</h3>
+
+<ul>
+<li>Provide full device encryption</li>
+<li>Provide secure application sand-boxing</li>
+<li>Provide secure data transmission</li>
+<li>Provide firewalls (recommended: <a href="https://github.com/ukanth/afwall">AFWall+</a>)</li>
+</ul><hr><h1>
 <a name="development-roadmap" class="anchor" href="#development-roadmap"><span class="octicon octicon-link"></span></a>Development Roadmap</h1>
 
 <p>In short: We're merely using any possible way to overcome the ridiculous AOS limitations on displaying highly important and relevant network variables and data. One of those is the Ciphering Indicator that has been 3GPP "required" for the last 10-15 years, but which Google and most Network providers choose to ignore. (Since they didn't want to implement better encryption, until very recently.) Another is finding the Timing Advance and various Network (RRC) Timers.</p>
@@ -178,35 +203,6 @@
 <li>m. combine all of the above (steps h to l) into a BETA App for testing, add languages</li>
 <li>n. improve BETA app by adding (many more) IMSI-Catcher counter measures</li>
 </ul><hr><h3>
-<a name="goals-please-read-carefully" class="anchor" href="#goals-please-read-carefully"><span class="octicon octicon-link"></span></a>Goals (please read carefully!)</h3>
-
-<h3>
-<a name="this-project" class="anchor" href="#this-project"><span class="octicon octicon-link"></span></a>This project:</h3>
-
-<ul>
-<li>Detects IMSI based device location tracking</li>
-<li>Provides counter measures against tracking</li>
-<li>Can provide swarm-wise-decision-based cellular service interruption</li>
-<li>Can provide secure wifi/wimax alternative data routes through MESH-like networking</li>
-<li>Detect and prevent remote hidden application installation</li>
-<li>Detect and prevent remote hidden SMS-based SIM attacks</li>
-<li>Prevent or spoof GPS data</li>
-<li>Does NOT secure any data transmissions</li>
-<li>Does NOT prevent already installed rogue application from full access</li>
-<li>Aims to be recommended and added to the <a href="https://guardianproject.info/apps">Guardian Project's list of secure Apps</a>
-</li>
-<li>Aims to be recommended by the <a href="https://ssd.eff.org/">SSD Project of the Electronic Frontier Foundation</a>
-</li>
-<li>Aims to be recommended by <a href="https://www.privacyinternational.org/">Privacy International</a> (and like-minded organizations)</li>
-</ul><h3>
-<a name="other-projects-not-this-one" class="anchor" href="#other-projects-not-this-one"><span class="octicon octicon-link"></span></a>Other projects (NOT this one):</h3>
-
-<ul>
-<li>Provide full device encryption</li>
-<li>Provide secure application sand-boxing</li>
-<li>Provide secure data transmission</li>
-<li>Provide firewalls (recommended: <a href="https://github.com/ukanth/afwall">AFWall+</a>)</li>
-</ul><hr><h3>
 <a name="disclaimer" class="anchor" href="#disclaimer"><span class="octicon octicon-link"></span></a>Disclaimer</h3>
 
 <p>For your and our own safety, here's our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER">Disclaimer</a>.</p>
@@ -221,7 +217,13 @@
 
 <p>Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending <a href="https://www.darkcoin.io/">DarkCoin</a> to our DONATION ADDRESS: <strong>XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys</strong></p>
 
-<p>All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will <strong>NOT</strong> reward junk, only awesome stuff. Donations will be used to support the <a href="https://www.eff.org/">Electronic Frontier Foundation</a>, <a href="https://guardianproject.info/">The Guardian Project</a> as well as <a href="https://www.privacyinternational.org/">Privacy International</a>. If you are unsure how to donate, visit our WIKI-Page on <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations">Anonymous Donations</a>.</p>
+<p>All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will <strong>NOT</strong> reward junk, only awesome stuff. Additionally, donations will be used to support these organizations:</p>
+
+<p><a href="https://www.eff.org/"><img src="https://www.eff.org/sites/all/themes/frontier/images/logo_full.png" alt="EFF"></a>
+<a href="https://guardianproject.info/"><img src="https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png" alt="Guardian Project"></a>
+<a href="https://www.privacyinternational.org/"><img src="https://www.privacyinternational.org/profiles/pi/themes/custom/privacy/logo.png" alt="Privacy International"></a></p>
+
+<p>If you are unsure how to donate, visit our WIKI-Page on <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations">Anonymous Donations</a>.</p>
 
 <hr><h3>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
@@ -244,23 +246,27 @@
 <tbody>
 <tr>
 <td align="center"><a href="mailto:xdae3v3a@gmail.com">E:V:A</a></td>
-<td align="center">Project Inventor and Smarthead</td>
+<td align="center">Project Initiator</td>
 </tr>
 <tr>
 <td align="center"><a href="http://forum.xda-developers.com/member.php?u=4661001">xLaMbChOpSx</a></td>
-<td align="center">Lead developer and code-monkey</td>
+<td align="center">Code-Monkey</td>
+</tr>
+<tr>
+<td align="center"><a href="http://tobykurien.com/">tobykurien</a></td>
+<td align="center">Code-Monkey</td>
 </tr>
 <tr>
 <td align="center"><a href="http://forum.xda-developers.com/member.php?u=4600707">He3556</a></td>
-<td align="center">Attack and vulnerability analyzer</td>
+<td align="center">Vulnerability Analyzer</td>
 </tr>
 <tr>
 <td align="center"><a href="http://forum.xda-developers.com/member.php?u=5102584">Sgt-Obst</a></td>
-<td align="center">Leading graphical designer</td>
+<td align="center">Graphical Designer</td>
 </tr>
 <tr>
 <td align="center"><a href="http://forum.xda-developers.com/member.php?u=4686037">SecUpwN</a></td>
-<td align="center">Security enthusiast &amp; Public Speaker</td>
+<td align="center">Public Speaker</td>
 </tr>
 </tbody>
 </table><hr>
