@@ -1,16 +1,12 @@
-## Android IMSI-Catcher Detector (AIMSICD)
+### Android IMSI-Catcher Detector (AIMSICD)
 #### [also called `IMSI-Cure` or `I'm-Secure`]
 --
 Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. Feel free to read the [Press Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Press-Releases) about us, spread the word with our [Media Material](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material) and help us solving [current challenges](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues)!
 
-[![AIMSICD-Status](http://fs1.d-h.st/view/Oh7/00133/AIMSICD-Status_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
+[![AIMSICD-Banner](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Banner_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
 ---
 
-**[DONATE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) to help us support:**
 
-[![EFF](https://www.eff.org/sites/all/themes/frontier/images/logo_full.png)](https://www.eff.org/)
-[![Guardian Project](https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png)](https://guardianproject.info/)
-[![Privacy International](https://www.privacyinternational.org/profiles/pi/themes/custom/privacy/logo.png)](https://www.privacyinternational.org/)
 
 ---
 
@@ -25,6 +21,7 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 * [Technical (geek)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Technical-Overview)
 * [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)
 * **[WIP-Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)**
+* [Privacy](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Privacy)
 * [Building](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Building)
 * [Installation](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Installation)
 * [User Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
@@ -61,9 +58,9 @@ There are almost no phones on the market which offer an option to check what kin
 Some examples to make you familar with the most common IMSI-Catcher threats:
 
 * **[NSA-Killings with IMSI-Catcher drones](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)**.
-* On YouTube: [How easy it is to clone phones](http://www.youtube.com/watch?v=Ydo19YOzpzU).
+* [How easy it is to clone phones](http://www.youtube.com/watch?v=Ydo19YOzpzU).
 * Talk by Karsten Nohl and Luca Melette on [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck).
-* [Stingrays: The Biggest Technological Threat](https://www.eff.org/deeplinks/2012/10/stingrays-biggest-unknown-technological-threat-cell-phone-privacy).
+* [Stingrays: Biggest Technological Threat](https://www.eff.org/deeplinks/2012/10/stingrays-biggest-unknown-technological-threat-cell-phone-privacy).
 * [GSOC reveals hidden IMSI-Catcher](https://www.privacyinternational.org/blog/beirtear-na-imsis-irelands-gsoc-surveillance-inquiry-reveals-use-of-mobile-phone-interception).
 
 ---
@@ -72,9 +69,9 @@ Some examples to make you familar with the most common IMSI-Catcher threats:
 
 They come in uncountable shapes and sizes:
 
-![IMSI-Catchers](http://fs1.d-h.st/view/TU2/00134/IMSI-Catchers.png)
+![IMSI-Catchers](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/IMSI-Catchers.png)
 
-* Current IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html) now.
+* Current IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html).
 * Below, the smartphone takes up the most space. IMSI-Catchers will even get smaller!
 
 ![Septier IMSI-Catcher Mini](http://www.septier.com/contentManagment/uploadedFiles/Mini.png)
@@ -83,8 +80,8 @@ They come in uncountable shapes and sizes:
 
 ![IMSI-Catcher during the riots on Taksim Square](http://i43.tinypic.com/2i9i0kk.jpg)
 
-* Above example is way too conspicuous and you'll likely never encounter one of these.
-* Todays IMSI-Catchers can be [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/), or are hidden inside GSM Interceptor vehicles:
+* Above example is way too conspicuous and you'll likely never encounter these.
+* Todays IMSI-Catchers can be [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/) or are hidden in GSM Interceptor vehicles:
 
 ![Inside an IMSI-Catcher vehicle](http://www.armedforces-int.com/upload/image_files/cellular-monitoring1.jpg)
 
@@ -98,7 +95,7 @@ In short: We're merely using any possible way to overcome the ridiculous AOS lim
 
 1. There are several types of silent SMS, most of which are already detectable and there is nothing strange with that. It does need further testing for a greater variety of devices, and to see what would happen on a real IMSI-Catcher.
 
-2. Sending AT commands to the baseband processor and use the results to detect anomalies is an ongoing challenge because certain basebands do not expose enough usable information. The whole detection process is strongly hardware dependent, some basebands expose everything (MTK) and others (Qualcomm) expose very little, since they have their own protocols (DM/QMI). But the SIM card filesystem does provide useful info. So a combination of AT commands, SIM card readings and also API access to Service Mode (Samsung) menus, can provide all that we need and more. But it is a rather technical challenge for our developers to do this, and to collect all support material needed. That's where YOU come into play. Check our [open Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues?q=is%3Aopen+is%3Aissue)!
+2. Sending AT commands to the baseband processor and use the results to detect anomalies is an ongoing challenge because certain basebands do not expose enough usable information. The whole detection process is strongly hardware dependent, some basebands expose everything (MTK) and others (Qualcomm) expose very little, since they have their own protocols (DM/QMI). But the SIM card filesystem does provide useful info. So a combination of AT commands, SIM card readings and also API access to Service Mode (Samsung) menus, can provide all that we need and more. But it is a rather technical challenge for our developers to do this, and to collect all support material needed. That's where YOU come into play. Check our [open Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues?q=is%3Aopen+is%3Aissue) and help us!
 
 3. OBB support would be crucial, but we're not really proposing this. Very few people would bother going through the pain of finding an appropriate OBB compatible phone, less implementing it as a piggy-back to an Android. So unless some OBB developer serves the required Java + binaries to us on a silver platter, this will not be a feature of AIMSICD.
 
@@ -130,7 +127,7 @@ Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule T
 
 ---
 
-# Goals (please read carefully!)
+### Goals (please read carefully!)
 
 ### This project: 
 
@@ -158,13 +155,13 @@ Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule T
 
 ### Disclaimer
 
-For our own safety, here's our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER). In short terms: Think before you act! We're untouchable.
+For your and our own safety, here's our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER).
 
 ---
 
 ### Bug Tracker
 
-Found a bug? Please carefully read [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues)!
+Please follow [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/How-to-correctly-submit-Issues)!
 
 ---
 
@@ -172,7 +169,13 @@ Found a bug? Please carefully read [how to correctly submit Issues](https://gith
 
 Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending [DarkCoin](https://www.darkcoin.io/) to our DONATION ADDRESS: **XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys**
 
-All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will **NOT** reward junk, only awesome stuff. Furthermore, donations will be used to support the [Electronic Frontier Foundation](https://www.eff.org/), [The Guardian Project](https://guardianproject.info/) as well as [Privacy International](https://www.privacyinternational.org/). If you are unsure how to donate, visit our WIKI-Page on [Anonymous Donations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations).
+All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will **NOT** reward junk, only awesome stuff. Additionally, donations will be used to support these organizations:
+
+[![EFF](https://www.eff.org/sites/all/themes/frontier/images/logo_full.png)](https://www.eff.org/)
+[![Guardian Project](https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png)](https://guardianproject.info/)
+[![Privacy International](https://www.privacyinternational.org/profiles/pi/themes/custom/privacy/logo.png)](https://www.privacyinternational.org/)
+
+If you are unsure how to donate, visit our WIKI-Page on [Anonymous Donations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations).
 
 ---
 
@@ -184,9 +187,7 @@ This project is completely licensed [GPL v3+](https://github.com/SecUpwN/Android
 
 # Credits & Greetings
 
-Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS). HUGE THANKS! ;-)
-
-This list will be updated as our project evolves and shall be included within the final app.
+Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS). HUGE THANKS!
 
 ---
 
