@@ -14,9 +14,9 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 
 * [Introduction](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction)
 * [IMSI-Catchers](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#want-to-know-what-imsi-catchers-look-like)
-* [Roadmap](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap)
 * [Goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#this-project)
 * [Limitations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#other-projects-not-this-one)
+* [Roadmap](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap)
 * [General (non-geek)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/General-Overview)
 * [Technical (geek)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Technical-Overview)
 * [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)
@@ -33,8 +33,8 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 * [FAQ](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/FAQ)
 * [Sources](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/SOURCES)
 * [Credits](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#credits--greetings)
-* [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team)
 * [License](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#license)
+* [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team)
 * [Recommendations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Recommendations)
 
 ---
@@ -89,6 +89,32 @@ Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereo
 
 ---
 
+### Goals (please read carefully!)
+
+### This project: 
+
+* Detects IMSI based device location tracking
+* Provides counter measures against tracking
+* Can provide swarm-wise-decision-based cellular service interruption
+* Can provide secure wifi/wimax alternative data routes through MESH-like networking
+* Detect and prevent remote hidden application installation
+* Detect and prevent remote hidden SMS-based SIM attacks
+* Prevent or spoof GPS data
+* Does NOT secure any data transmissions
+* Does NOT prevent already installed rogue application from full access
+* Aims to be recommended and added to the [Guardian Project's list of secure Apps](https://guardianproject.info/apps)
+* Aims to be recommended by the [SSD Project of the Electronic Frontier Foundation](https://ssd.eff.org/)
+* Aims to be recommended by [Privacy International](https://www.privacyinternational.org/) (and like-minded organizations)
+
+### Other projects (NOT this one):
+
+* Provide full device encryption
+* Provide secure application sand-boxing
+* Provide secure data transmission
+* Provide firewalls (recommended: [AFWall+](https://github.com/ukanth/afwall))
+
+---
+
 # Development Roadmap
 
 In short: We're merely using any possible way to overcome the ridiculous AOS limitations on displaying highly important and relevant network variables and data. One of those is the Ciphering Indicator that has been 3GPP "required" for the last 10-15 years, but which Google and most Network providers choose to ignore. (Since they didn't want to implement better encryption, until very recently.) Another is finding the Timing Advance and various Network (RRC) Timers.
@@ -124,32 +150,6 @@ Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule T
 * l. use a statistical algorithm on the DB data to detect rogue IMSI-Catchers
 * m. combine all of the above (steps h to l) into a BETA App for testing, add languages
 * n. improve BETA app by adding (many more) IMSI-Catcher counter measures
-
----
-
-### Goals (please read carefully!)
-
-### This project: 
-
-* Detects IMSI based device location tracking
-* Provides counter measures against tracking
-* Can provide swarm-wise-decision-based cellular service interruption
-* Can provide secure wifi/wimax alternative data routes through MESH-like networking
-* Detect and prevent remote hidden application installation
-* Detect and prevent remote hidden SMS-based SIM attacks
-* Prevent or spoof GPS data
-* Does NOT secure any data transmissions
-* Does NOT prevent already installed rogue application from full access
-* Aims to be recommended and added to the [Guardian Project's list of secure Apps](https://guardianproject.info/apps)
-* Aims to be recommended by the [SSD Project of the Electronic Frontier Foundation](https://ssd.eff.org/)
-* Aims to be recommended by [Privacy International](https://www.privacyinternational.org/) (and like-minded organizations)
-
-### Other projects (NOT this one):
-
-* Provide full device encryption
-* Provide secure application sand-boxing
-* Provide secure data transmission
-* Provide firewalls (recommended: [AFWall+](https://github.com/ukanth/afwall))
 
 ---
 
@@ -193,12 +193,13 @@ Our project would not have been possible without [these awesome people](https://
 
 ### Get in touch with the core team!
 
-|                              Developer                              |                  Task                  |
-|:-------------------------------------------------------------------:|:--------------------------------------:|
-|                  [E:V:A](mailto:xdae3v3a@gmail.com)                 |     Project Inventor and Smarthead     |
-| [xLaMbChOpSx](http://forum.xda-developers.com/member.php?u=4661001) |     Lead developer and code-monkey     |
-|    [He3556](http://forum.xda-developers.com/member.php?u=4600707)   |    Attack and vulnerability analyzer   |
-|   [Sgt-Obst](http://forum.xda-developers.com/member.php?u=5102584)  |       Leading graphical designer       |
-|   [SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)   | Security enthusiast & Public Speaker |
+|                              Developer                             |         Task           |
+|:------------------------------------------------------------------:|:----------------------:|
+|[E:V:A](mailto:xdae3v3a@gmail.com)                                  |    Project Initiator   |
+|[xLaMbChOpSx](http://forum.xda-developers.com/member.php?u=4661001) |       Code-Monkey      |
+|[tobykurien](http://tobykurien.com/)                                |       Code-Monkey      |    
+|[He3556](http://forum.xda-developers.com/member.php?u=4600707)      | Vulnerability Analyzer |
+|[Sgt-Obst](http://forum.xda-developers.com/member.php?u=5102584)    |   Graphical Designer   |
+|[SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)     |      Public Speaker    |
 
 ---
