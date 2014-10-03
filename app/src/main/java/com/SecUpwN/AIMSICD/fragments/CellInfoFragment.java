@@ -95,7 +95,7 @@ public class CellInfoFragment extends Fragment {
         if (CellTracker.REFRESH_RATE != 0) {
             timerHandler.postDelayed(timerRunnable, 0);
             Helpers.msgShort(mContext, "Refreshing every "
-                    + TimeUnit.MILLISECONDS.toSeconds(CellTracker.REFRESH_RATE) + " seconds");
+                    + TimeUnit.MILLISECONDS.toSeconds(CellTracker.REFRESH_RATE) + " seconds.");
         }
     }
 
