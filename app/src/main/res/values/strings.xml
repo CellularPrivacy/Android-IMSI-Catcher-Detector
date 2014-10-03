@@ -49,7 +49,7 @@
     <string name="backup_database">Backup Database</string>
     <string name="restore_database">Restore Database</string>
     <string name="preferences">Preferences</string>
-    <string name="press_once_again_to_exit">Press again to exit</string>
+    <string name="press_once_again_to_exit">Press again to exit.</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
     <string name="cell_lookup">Lookup Current Cell Details (OpenCellID)</string>
 
@@ -137,13 +137,13 @@
     <string name="pref_autostart_summ">Automatically start service on boot</string>
     <string name="pref_persistservice_title">Persistent Service</string>
     <string name="pref_persistservice_key">pref_persistservice_service</string>
-    <string name="pref_persistservice_summ">Service will continue to run after exiting the application (uncheck to fully close App)</string>
+    <string name="pref_persistservice_summ">Service will continue to run after exiting the application (uncheck to fully close)</string>
     <string name="pref_protection_title">Protection Settings</string>
     <string name="pref_enable_cell_key">pref_enable_cell</string>
     <string name="pref_enable_cell_title">Cell Tracking</string>
     <string name="pref_enable_cell_summ">Enable Cell Tracking Automatically</string>
     <string name="pref_femto_title">FemtoCell Detection</string>
-    <string name="pref_femto_summ">(currently CMDMA Phones ONLY)</string>
+    <string name="pref_femto_summ">(currently CDMA Phones ONLY)</string>
     <string name="pref_femto_detection_key">pref_femto_detection</string>
     <string name="pref_femto_action_title">FemtoCell Protection</string>
     <string name="pref_femto_action_key">pref_femto_action</string>
@@ -165,7 +165,7 @@
     <string name="pref_ocid_title">OpenCellID Settings</string>
     <string name="pref_ocid_upload">pref_ocid_upload</string>
     <string name="pref_ui_ocid_upload_title">Contribute Cell Data</string>
-    <string name="pref_ui_ocid_upload_summ">Contribute data to the OpenCellID Project (NO personal information will ever be submitted)</string>
+    <string name="pref_ui_ocid_upload_summ">Contribute data to the OpenCellID Project (NO personal information will ever be submitted without notice)</string>
     <string name="pref_cell_table_cleansed">pref_cell_table_cleansed</string>
     <string name="pref_ocid_key">pref_ocid_key</string>
     <string name="pref_ocid_key_title">OpenCellID API Key</string>
