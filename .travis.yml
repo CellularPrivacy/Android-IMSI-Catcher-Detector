@@ -1,3 +1,6 @@
+# Test changes of this .travis.yml config before submitting them:
+# http://lint.travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector
+
 language: android
 
 android:
