@@ -4,8 +4,9 @@ android:
   components:
     # Uncomment the lines below if you want to
     # use the latest revision of Android SDK Tools
+     - build-tools-19.1.0
      - platform-tools
      - tools
      
   licenses:
-    - 'android-sdk-license-.+'
+     - 'android-sdk-license-.+'
