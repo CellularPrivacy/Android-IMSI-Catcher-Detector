@@ -6,3 +6,6 @@ android:
     # use the latest revision of Android SDK Tools
      - platform-tools
      - tools
+     
+  licenses:
+    - 'android-sdk-license-.+'
