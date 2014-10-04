@@ -2,13 +2,21 @@ language: android
 
 android:
   components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
+# Uncomment the lines below if you want to
+# use the latest revision of Android SDK Tools
      - build-tools-19.1.0
      - platform-tools
      - tools
+     - extra
      
   licenses:
      - 'android-sdk-license-.+'
+     
+# Emulator Management: Create, Start and Wait
+  before_script:
+     - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+     - emulator -avd test -no-skin -no-audio -no-window &
+     - android-wait-for-emulator
+     - adb shell input keyevent 82 &
      
 script: ./gradlew build connectedAndroidTest
