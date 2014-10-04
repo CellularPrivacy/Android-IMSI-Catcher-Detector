@@ -1,12 +1,12 @@
 ### Android IMSI-Catcher Detector (AIMSICD)
-#### [also called `IMSI-Cure` or `I'm-Secure`]
+#### [also called `IMSI-Cure` or `I'm-Secure`] [![Build Status](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector.svg)](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector)
 --
 Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. Feel free to read the [Press Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Press-Releases) about us, spread the word with our [Media Material](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material) and help us solving [current challenges](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues)!
 
 [![AIMSICD-Banner](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Banner_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
 ---
 
-
+[![AIMSICD-Teaser](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Teaser.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)
 
 ---
 
@@ -14,27 +14,28 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 
 * [Introduction](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction)
 * [IMSI-Catchers](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#want-to-know-what-imsi-catchers-look-like)
-* [Roadmap](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap)
-* [Goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#this-project)
+* [Project Goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#this-project)
 * [Limitations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#other-projects-not-this-one)
+* [Roadmap](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap)
+* **[WIP-RELEASES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)**
+* [Requirements](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Requirements)
+* [Installation](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Installation)
 * [General (non-geek)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/General-Overview)
 * [Technical (geek)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Technical-Overview)
+* [User Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
 * [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)
-* **[WIP-Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)**
 * [Privacy](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Privacy)
 * [Building](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Building)
-* [Installation](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Installation)
-* [User Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
 * [Changelog](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md)
 * [Discussion](http://forum.xda-developers.com/showthread.php?t=1422969)
 * [Contributing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CONTRIBUTING.md)
-* [Support](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#support)
 * [Bugs](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues)
 * [FAQ](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/FAQ)
+* [Support](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#support)
 * [Sources](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/SOURCES)
 * [Credits](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#credits--greetings)
-* [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team)
 * [License](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#license)
+* [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team)
 * [Recommendations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Recommendations)
 
 ---
@@ -89,6 +90,32 @@ Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereo
 
 ---
 
+### Goals (please read carefully!)
+
+### This project: 
+
+* Detects IMSI based device location tracking
+* Provides counter measures against tracking
+* Can provide swarm-wise-decision-based cellular service interruption
+* Can provide secure wifi/wimax alternative data routes through MESH-like networking
+* Detect and prevent remote hidden application installation
+* Detect and prevent remote hidden SMS-based SIM attacks
+* Prevent or spoof GPS data
+* Does NOT secure any data transmissions
+* Does NOT prevent already installed rogue application from full access
+* Aims to be recommended and added to the [Guardian Project's list of secure Apps](https://guardianproject.info/apps)
+* Aims to be recommended by the [SSD Project of the Electronic Frontier Foundation](https://ssd.eff.org/)
+* Aims to be recommended by [Privacy International](https://www.privacyinternational.org/) (and like-minded organizations)
+
+### Other projects (NOT this one):
+
+* Provide full device encryption
+* Provide secure application sand-boxing
+* Provide secure data transmission
+* Provide firewalls (recommended: [AFWall+](https://github.com/ukanth/afwall))
+
+---
+
 # Development Roadmap
 
 In short: We're merely using any possible way to overcome the ridiculous AOS limitations on displaying highly important and relevant network variables and data. One of those is the Ciphering Indicator that has been 3GPP "required" for the last 10-15 years, but which Google and most Network providers choose to ignore. (Since they didn't want to implement better encryption, until very recently.) Another is finding the Timing Advance and various Network (RRC) Timers.
@@ -124,32 +151,6 @@ Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule T
 * l. use a statistical algorithm on the DB data to detect rogue IMSI-Catchers
 * m. combine all of the above (steps h to l) into a BETA App for testing, add languages
 * n. improve BETA app by adding (many more) IMSI-Catcher counter measures
-
----
-
-### Goals (please read carefully!)
-
-### This project: 
-
-* Detects IMSI based device location tracking
-* Provides counter measures against tracking
-* Can provide swarm-wise-decision-based cellular service interruption
-* Can provide secure wifi/wimax alternative data routes through MESH-like networking
-* Detect and prevent remote hidden application installation
-* Detect and prevent remote hidden SMS-based SIM attacks
-* Prevent or spoof GPS data
-* Does NOT secure any data transmissions
-* Does NOT prevent already installed rogue application from full access
-* Aims to be recommended and added to the [Guardian Project's list of secure Apps](https://guardianproject.info/apps)
-* Aims to be recommended by the [SSD Project of the Electronic Frontier Foundation](https://ssd.eff.org/)
-* Aims to be recommended by [Privacy International](https://www.privacyinternational.org/) (and like-minded organizations)
-
-### Other projects (NOT this one):
-
-* Provide full device encryption
-* Provide secure application sand-boxing
-* Provide secure data transmission
-* Provide firewalls (recommended: [AFWall+](https://github.com/ukanth/afwall))
 
 ---
 
@@ -193,12 +194,13 @@ Our project would not have been possible without [these awesome people](https://
 
 ### Get in touch with the core team!
 
-|                              Developer                              |                  Task                  |
-|:-------------------------------------------------------------------:|:--------------------------------------:|
-|                  [E:V:A](mailto:xdae3v3a@gmail.com)                 |     Project Inventor and Smarthead     |
-| [xLaMbChOpSx](http://forum.xda-developers.com/member.php?u=4661001) |     Lead developer and code-monkey     |
-|    [He3556](http://forum.xda-developers.com/member.php?u=4600707)   |    Attack and vulnerability analyzer   |
-|   [Sgt-Obst](http://forum.xda-developers.com/member.php?u=5102584)  |       Leading graphical designer       |
-|   [SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)   | Security enthusiast & Public Speaker |
+|                              Developer                             |         Task           |
+|:------------------------------------------------------------------:|:----------------------:|
+|[E:V:A](mailto:xdae3v3a@gmail.com)                                  |    Project Initiator   |
+|[xLaMbChOpSx](http://forum.xda-developers.com/member.php?u=4661001) |       Code-Monkey      |
+|[tobykurien](http://tobykurien.com/)                                |       Code-Monkey      |    
+|[He3556](http://forum.xda-developers.com/member.php?u=4600707)      | Vulnerability Analyzer |
+|[Sgt-Obst](http://forum.xda-developers.com/member.php?u=5102584)    |   Graphical Designer   |
+|[SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)     |      Public Speaker    |
 
 ---
