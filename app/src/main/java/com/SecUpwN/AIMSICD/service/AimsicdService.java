@@ -99,6 +99,8 @@ public class AimsicdService extends Service {
     private LocationTracker mLocationTracker;
     private RilExecutor mRilExecutor;
 
+    private boolean isLocationRequestShowing = false;
+
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
@@ -139,11 +141,8 @@ public class AimsicdService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mCellTracker.isTrackingCell()) {
-            mCellTracker.stop();
-            mLocationTracker.stop();
-        }
-
+        mCellTracker.stop();
+        mLocationTracker.stop();
         mAccelerometerMonitor.stop();
         mRilExecutor.stop();
         Log.i(TAG, "Service destroyed.");
@@ -233,12 +232,15 @@ public class AimsicdService extends Service {
     }
 
     private void enableLocationServices() {
+        if (isLocationRequestShowing) return; // only show dialog once
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.location_error_message)
                 .setTitle(R.string.location_error_title)
                 .setCancelable(false)
                 .setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        isLocationRequestShowing = false;
                         Intent gpsSettings = new Intent(
                                 android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         gpsSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -247,12 +249,14 @@ public class AimsicdService extends Service {
                 })
                 .setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        isLocationRequestShowing = false;
                         setCellTracking(false);
                     }
                 });
         AlertDialog alert = builder.create();
         alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         alert.show();
+        isLocationRequestShowing = true;
     }
 
     LocationListener mLocationListener = new LocationListener() {
