@@ -25,6 +25,7 @@ import com.SecUpwN.AIMSICD.fragments.AboutFragment;
 import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
 import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
+import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
 import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuItem;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
@@ -54,6 +55,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -68,7 +70,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AIMSICD extends Activity implements AsyncResponse {
+public class AIMSICD extends FragmentActivity implements AsyncResponse {
 
     private final String TAG = "AIMSICD";
 
@@ -91,6 +93,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
     private long mLastPress = 0;
 
     private DrawerMenuActivityConfiguration mNavConf ;
+    private DetailsContainerFragment mDetailsFrag;
 
     /**
      * Called when the activity is first created.
@@ -145,9 +148,9 @@ public class AIMSICD extends Activity implements AsyncResponse {
         mActionBar.setHomeButtonEnabled(true);
 
         //Display the Device Fragment as the Default View
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, new DeviceFragment())
+        mDetailsFrag = new DetailsContainerFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, mDetailsFrag)
                 .commit();
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -233,20 +236,23 @@ public class AIMSICD extends Activity implements AsyncResponse {
         // Create a new fragment
         switch (selectedItem.getId()) {
             case 101:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new DeviceFragment()).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, mDetailsFrag).commit();
+                mDetailsFrag.setCurrentPage(0);
                 break;
             case 102:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new CellInfoFragment()).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, mDetailsFrag).commit();
+                mDetailsFrag.setCurrentPage(1);
                 break;
             case 103:
                 getFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new AtCommandFragment()).commit();
                 break;
             case 104:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new DbViewerFragment()).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, mDetailsFrag).commit();
+                mDetailsFrag.setCurrentPage(2);
                 break;
             case 303:
                 getFragmentManager().beginTransaction()
@@ -391,7 +397,7 @@ public class AIMSICD extends Activity implements AsyncResponse {
         mActionBar.setTitle(mTitle);
     }
 
-    DrawerMenuActivityConfiguration getNavDrawerConfiguration() {
+    public DrawerMenuActivityConfiguration getNavDrawerConfiguration() {
 
         List<NavDrawerItem> menu = new ArrayList<>();
 
