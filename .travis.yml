@@ -10,3 +10,5 @@ android:
      
   licenses:
      - 'android-sdk-license-.+'
+     
+script: ./gradlew build connectedAndroidTest
