@@ -1,6 +1,24 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 04.10.2014 - WIP-Internal v0.1.24-alpha-build-12
+
+* Changed: Polished even more internal strings to reflect current functionality of buttons
+* Changed: Switched to fresh new theme for our website which suits our project much better
+* Changed: Images like Banners are now being pulled directly from our won GitHub repository
+* Removed: Deleted old code of Map Viewer which had been left in the code structure
+* Update: Refreshed SCREENSHOTS and added new Images of our cool Map Viewer as well
+* Added: New PROMOTION directory which will be expanded with awesome promotional material
+* Added: GSMK Baseband Firewall Patent uploaded into our PAPERS as a reference
+* Added: New page on Requirements in our WIKI to enable users to check App dependencies
+* Added: New page in our WIKI on Privacy to ease the minds of scared contributers
+* Added: Support for TRAVIS CI which will continually check if our code builds well
+* Added: Ruby script to split OpenCellID CSV file into separate files for each MCC
+* Added: Re-enabled slide-view for Cell Information, Database Viewer and Neighboring Cells View
+* Moved: Donation Info now sits at the bottom of our README to make room for App Teaser
+* Fix: Enhanced code to remove multiple user prompts while phone had been locked
+* Fix: Enhanced code tp remove auto-starting of non-persistent service when GPS toggled
+
 #### 30.09.2014 - WIP-Internal v0.1.24-alpha-build-11
 
 * Added: New page with Media Material in our WIKI for people wanting to spread the word
