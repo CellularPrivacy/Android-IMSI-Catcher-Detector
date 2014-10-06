@@ -93,7 +93,6 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
     private long mLastPress = 0;
 
     private DrawerMenuActivityConfiguration mNavConf ;
-    private DetailsContainerFragment mDetailsFrag;
 
     /**
      * Called when the activity is first created.
@@ -148,9 +147,8 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
         mActionBar.setHomeButtonEnabled(true);
 
         //Display the Device Fragment as the Default View
-        mDetailsFrag = new DetailsContainerFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, mDetailsFrag)
+                .replace(R.id.content_frame, new DetailsContainerFragment())
                 .commit();
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -233,6 +231,15 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
     void selectItem(int position) {
         NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
 
+        /**
+         * This is a work-around for Issue 42601
+         * https://code.google.com/p/android/issues/detail?id=42601
+         *
+         * The method getChildFragmentManager() does not clear up
+         * when the Fragment is detached.
+         */
+        DetailsContainerFragment mDetailsFrag = new DetailsContainerFragment();
+
         // Create a new fragment
         switch (selectedItem.getId()) {
             case 101:
@@ -246,7 +253,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                 mDetailsFrag.setCurrentPage(1);
                 break;
             case 103:
-                getFragmentManager().beginTransaction()
+                getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new AtCommandFragment()).commit();
                 break;
             case 104:
@@ -255,7 +262,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                 mDetailsFrag.setCurrentPage(2);
                 break;
             case 303:
-                getFragmentManager().beginTransaction()
+                getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new AboutFragment()).commit();
                 break;
         }

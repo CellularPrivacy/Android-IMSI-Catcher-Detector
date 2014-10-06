@@ -4,6 +4,7 @@ package com.SecUpwN.AIMSICD.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
 public class DetailsContainerFragment extends Fragment {
     ViewPager vp;
     DetailsPagerAdapter adapter;
+    int initialPage = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class DetailsContainerFragment extends Fragment {
             public void onPageSelected(int position) {
                 int navId = (int) adapter.getItemId(position);
                 NavDrawerItem selectedItem = mNavConf.getNavItems().get(navId);
+                Log.d("nav", "selected Item " + selectedItem.getLabel());
                 getActivity().getActionBar().setTitle(selectedItem.getLabel());
             }
 
@@ -53,9 +56,18 @@ public class DetailsContainerFragment extends Fragment {
 
             }
         });
+
+        if (initialPage >= 0) {
+            vp.setCurrentItem(initialPage);
+        }
     }
 
     public void setCurrentPage(int page) {
+        if (adapter == null) {
+            initialPage = page;
+            return;
+        }
+
         if (page >= 0 && page < adapter.getCount()) {
             vp.setCurrentItem(page);
         }
