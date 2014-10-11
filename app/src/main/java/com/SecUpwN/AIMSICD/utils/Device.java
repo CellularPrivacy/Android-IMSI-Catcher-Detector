@@ -354,6 +354,8 @@ public class Device {
      * @return string representing device Network Type
      */
     public String getNetworkTypeName() {
+        if (mCell == null) return "Unknown";
+
         switch (mCell.getNetType()) {
             case TelephonyManager.NETWORK_TYPE_1xRTT:
                 mNetType = "1xRTT";
