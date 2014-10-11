@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.utils.Cell;
@@ -45,7 +46,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String TAG = "CellTracker";
-    public static String OCID_API_KEY = "NA";
+    public static String OCID_API_KEY = null; // see getOcidKey()
     private final int NOTIFICATION_ID = 1;
 
     private static TelephonyManager tm;
@@ -237,7 +238,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else if (key.equals(OCID_UPLOAD)) {
             OCID_UPLOAD_PREF = sharedPreferences.getBoolean(OCID_UPLOAD, false);
         } else if (key.equals(OCID_KEY)) {
-            OCID_API_KEY = sharedPreferences.getString(OCID_KEY, "NA");
+            getOcidKey();
+        }
+    }
+
+    public void getOcidKey() {
+        final String OCID_KEY = context.getString(R.string.pref_ocid_key);
+        OCID_API_KEY = prefs.getString(OCID_KEY, BuildConfig.OPEN_CELLID_API_KEY);
+        if (OCID_API_KEY.trim().length() == 0) {
+            OCID_API_KEY = BuildConfig.OPEN_CELLID_API_KEY;
         }
     }
 
@@ -364,7 +373,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
         REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
 
-        OCID_API_KEY = prefs.getString(context.getString(R.string.pref_ocid_key), "NA");
+        getOcidKey();
 
         if (trackFemtoPref) {
             startTrackingFemto();
