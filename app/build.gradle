@@ -9,7 +9,11 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField 'String', 'OPEN_CELLID_API_KEY', '\"' + open_cellid_api_key + '\"'
+            try {
+                buildConfigField 'String', 'OPEN_CELLID_API_KEY', '\"' + open_cellid_api_key + '\"'
+            } catch (MissingPropertyException e) {
+                buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
+            }
         }
         release {
             buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
