@@ -8,7 +8,15 @@ android {
         targetSdkVersion 19
     }
     buildTypes {
+        debug {
+            try {
+                buildConfigField 'String', 'OPEN_CELLID_API_KEY', '\"' + open_cellid_api_key + '\"'
+            } catch (MissingPropertyException e) {
+                buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
+            }
+        }
         release {
+            buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
             runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
