@@ -15,20 +15,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
-import android.telephony.CellIdentityCdma;
-import android.telephony.CellIdentityGsm;
-import android.telephony.CellIdentityLte;
-import android.telephony.CellIdentityWcdma;
 import android.telephony.CellInfo;
-import android.telephony.CellInfoCdma;
-import android.telephony.CellInfoGsm;
-import android.telephony.CellInfoLte;
-import android.telephony.CellInfoWcdma;
 import android.telephony.CellLocation;
-import android.telephony.CellSignalStrengthCdma;
-import android.telephony.CellSignalStrengthGsm;
-import android.telephony.CellSignalStrengthLte;
-import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -40,10 +28,12 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Device;
+import com.SecUpwN.AIMSICD.utils.DeviceApi17;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import java.util.ArrayList;
@@ -56,7 +46,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String TAG = "CellTracker";
-    public static String OCID_API_KEY = "NA";
+    public static String OCID_API_KEY = null; // see getOcidKey()
     private final int NOTIFICATION_ID = 1;
 
     private static TelephonyManager tm;
@@ -82,6 +72,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private boolean mChangedLAC;
     private Cell mMonitorCell;
     private boolean mTypeZeroSmsDetected;
+    private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
 
     private final AIMSICDDbAdapter dbHelper;
     private Context context;
@@ -247,7 +238,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else if (key.equals(OCID_UPLOAD)) {
             OCID_UPLOAD_PREF = sharedPreferences.getBoolean(OCID_UPLOAD, false);
         } else if (key.equals(OCID_KEY)) {
-            OCID_API_KEY = sharedPreferences.getString(OCID_KEY, "NA");
+            getOcidKey();
+        }
+    }
+
+    public void getOcidKey() {
+        final String OCID_KEY = context.getString(R.string.pref_ocid_key);
+        OCID_API_KEY = prefs.getString(OCID_KEY, BuildConfig.OPEN_CELLID_API_KEY);
+        if (OCID_API_KEY.trim().length() == 0) {
+            OCID_API_KEY = BuildConfig.OPEN_CELLID_API_KEY;
         }
     }
 
@@ -261,57 +260,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         neighboringCellInfo = tm.getNeighboringCellInfo();
         if (neighboringCellInfo.size() == 0) {
             // try to poll the neighboring cells for a few seconds
-            final LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue =
+            neighboringCellBlockingQueue =
                     new LinkedBlockingQueue<>(100);
-            final PhoneStateListener listener = new PhoneStateListener() {
-                private void handle() {
-                    List<NeighboringCellInfo> neighboringCellInfo;
-                    neighboringCellInfo = tm.getNeighboringCellInfo();
-                    if (neighboringCellInfo.size() == 0) {
-                        return;
-                    }
-                    Log.i(TAG, "neighbouringCellInfo empty - event based polling succeeded!");
-                    tm.listen(this, PhoneStateListener.LISTEN_NONE);
-                    neighboringCellBlockingQueue.addAll(neighboringCellInfo);
-                }
-
-                @Override
-                public void onServiceStateChanged(ServiceState serviceState) {
-                    handle();
-                }
-
-                @Override
-                public void onDataConnectionStateChanged(int state) {
-                    handle();
-                }
-
-                @Override
-                public void onDataConnectionStateChanged(int state, int networkType) {
-                    handle();
-                }
-
-                @Override
-                public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-                    handle();
-                }
-
-                @Override
-                public void onCellInfoChanged(List<CellInfo> cellInfo) {
-                    handle();
-                }
-            };
             Log.i(TAG, "neighbouringCellInfo empty - start polling");
 
             //LISTEN_CELL_INFO added in API 17
             if (Build.VERSION.SDK_INT > 16) {
-                tm.listen(listener,
-                        PhoneStateListener.LISTEN_CELL_INFO
-                                | PhoneStateListener.LISTEN_CELL_LOCATION |
-                                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
-                                | PhoneStateListener.LISTEN_SERVICE_STATE |
-                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+                DeviceApi17.startListening(tm, phoneStatelistener);
             } else {
-                tm.listen(listener,
+                tm.listen(phoneStatelistener,
                         PhoneStateListener.LISTEN_CELL_LOCATION |
                                 PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
                                 | PhoneStateListener.LISTEN_SERVICE_STATE |
@@ -362,6 +319,17 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         return neighboringCells;
     }
 
+    private void handlePhoneStateChange() {
+        List<NeighboringCellInfo> neighboringCellInfo;
+        neighboringCellInfo = tm.getNeighboringCellInfo();
+        if (neighboringCellInfo.size() == 0) {
+            return;
+        }
+        Log.i(TAG, "neighbouringCellInfo empty - event based polling succeeded!");
+        tm.listen(phoneStatelistener, PhoneStateListener.LISTEN_NONE);
+        neighboringCellBlockingQueue.addAll(neighboringCellInfo);
+    }
+
     public void refreshDevice() {
         mDevice.refreshDeviceInfo(tm, context);
     }
@@ -405,7 +373,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
         REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
 
-        OCID_API_KEY = prefs.getString(context.getString(R.string.pref_ocid_key), "NA");
+        getOcidKey();
 
         if (trackFemtoPref) {
             startTrackingFemto();
@@ -536,78 +504,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void onLocationChanged(Location loc) {
 
         if (Build.VERSION.SDK_INT > 16) {
-            List<CellInfo> cellinfolist = tm.getAllCellInfo();
-            if (cellinfolist != null) {
-                for (final CellInfo cellinfo : cellinfolist) {
-                    if (cellinfo instanceof CellInfoGsm) {
-                        final CellSignalStrengthGsm signalStrengthGsm = ((CellInfoGsm) cellinfo)
-                                .getCellSignalStrength();
-                        final CellIdentityGsm identityGsm = ((CellInfoGsm) cellinfo)
-                                .getCellIdentity();
-                        if (identityGsm != null) {
-                            mDevice.mCell.setCID(identityGsm.getCid());
-                            mDevice.mCell.setLAC(identityGsm.getLac());
-                            mDevice.mCell.setMCC(identityGsm.getMcc());
-                            mDevice.mCell.setMNC(identityGsm.getMnc());
-                        }
-                        if (signalStrengthGsm != null) {
-                            mDevice.mCell.setDBM(signalStrengthGsm.getDbm());
-                        }
-                        break;
-                    } else if (cellinfo instanceof CellInfoCdma) {
-                        final CellSignalStrengthCdma signalStrengthCdma
-                                = ((CellInfoCdma) cellinfo)
-                                .getCellSignalStrength();
-                        final CellIdentityCdma identityCdma = ((CellInfoCdma) cellinfo)
-                                .getCellIdentity();
-                        if (identityCdma != null) {
-                            mDevice.mCell.setCID(identityCdma.getBasestationId());
-                            mDevice.mCell.setLAC(identityCdma.getNetworkId());
-                            mDevice.mCell.setMNC(identityCdma.getSystemId());
-                            mDevice.mCell.setSID(identityCdma.getSystemId());
-                        }
-
-                        if (signalStrengthCdma != null) {
-                            mDevice.setSignalDbm(signalStrengthCdma.getDbm());
-                        }
-                        break;
-                    } else if (cellinfo instanceof CellInfoLte) {
-                        final CellSignalStrengthLte signalStrengthLte = ((CellInfoLte) cellinfo)
-                                .getCellSignalStrength();
-                        final CellIdentityLte identityLte = ((CellInfoLte) cellinfo)
-                                .getCellIdentity();
-
-                        if (identityLte != null) {
-                            mDevice.mCell.setCID(identityLte.getPci());
-                            mDevice.mCell.setLAC(identityLte.getTac());
-                            mDevice.mCell.setMCC(identityLte.getMcc());
-                            mDevice.mCell.setMNC(identityLte.getMnc());
-                        }
-
-                        if (signalStrengthLte != null) {
-                            mDevice.setSignalDbm(signalStrengthLte.getDbm());
-                        }
-                        break;
-                    } else if (cellinfo instanceof CellInfoWcdma) {
-                        final CellSignalStrengthWcdma signalStrengthWcdma
-                                = ((CellInfoWcdma) cellinfo)
-                                .getCellSignalStrength();
-                        final CellIdentityWcdma identityWcdma = ((CellInfoWcdma) cellinfo)
-                                .getCellIdentity();
-                        if (identityWcdma != null) {
-                            mDevice.mCell.setCID(identityWcdma.getCid());
-                            mDevice.mCell.setLAC(identityWcdma.getLac());
-                            mDevice.mCell.setMCC(identityWcdma.getMcc());
-                            mDevice.mCell.setMNC(identityWcdma.getMnc());
-                        }
-
-                        if (signalStrengthWcdma != null) {
-                            mDevice.setSignalDbm(signalStrengthWcdma.getDbm());
-                        }
-                        break;
-                    }
-                }
-            }
+            DeviceApi17.loadCellInfo(tm, mDevice.mCell);
         }
 
         if (!mDevice.mCell.isValid()) {
@@ -997,4 +894,35 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      * Copyright (C) 2013 iSEC Partners
      */
+
+    final PhoneStateListener phoneStatelistener = new PhoneStateListener() {
+        private void handle() {
+            handlePhoneStateChange();
+        }
+
+        @Override
+        public void onServiceStateChanged(ServiceState serviceState) {
+            handle();
+        }
+
+        @Override
+        public void onDataConnectionStateChanged(int state) {
+            handle();
+        }
+
+        @Override
+        public void onDataConnectionStateChanged(int state, int networkType) {
+            handle();
+        }
+
+        @Override
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            handle();
+        }
+
+        @Override
+        public void onCellInfoChanged(List<CellInfo> cellInfo) {
+            handle();
+        }
+    };
 }
