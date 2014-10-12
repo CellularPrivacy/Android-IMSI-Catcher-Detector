@@ -21,6 +21,7 @@ Here are some useful links to help you with correctly structuring and formatting
 * [Writing on GitHub](https://help.github.com/articles/writing-on-github)
 * [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 * [Markdown Tables Generator](http://www.tablesgenerator.com/markdown_tables)
+* [Code/Syntax Highlighting](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml)
 
 #### Important note on Commits
 
