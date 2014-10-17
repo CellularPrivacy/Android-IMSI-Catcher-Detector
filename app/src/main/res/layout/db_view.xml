@@ -37,4 +37,12 @@
             android:dividerHeight="10dp"
             android:layout_below="@+id/linearLayout"/>
 
+    <TextView
+        android:id="@+id/db_list_empty"
+        android:text="@string/table_contains_no_data"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
 </RelativeLayout>
