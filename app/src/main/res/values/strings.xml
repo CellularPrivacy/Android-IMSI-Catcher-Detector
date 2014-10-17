@@ -216,4 +216,5 @@
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Silent SMS Intercepted</string>
     <string name="sms_message">Silent SMS Message has been intercepted! \n\nDetails are available through the Database Viewer.</string>
+    <string name="table_contains_no_data">Table contains no data to display.</string>
 </resources>
