@@ -17,6 +17,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class DbViewerFragment extends Fragment {
     //Layout items
     private Spinner tblSpinner;
     private ListView lv;
+    private View emptyView;
 
     public DbViewerFragment() {
     }
@@ -55,6 +57,7 @@ public class DbViewerFragment extends Fragment {
 
         if (view != null) {
             lv = (ListView) view.findViewById(R.id.list_view);
+            emptyView = view.findViewById(R.id.db_list_empty);
 
             tblSpinner = (Spinner) view.findViewById(R.id.table_spinner);
             tblSpinner.setOnItemSelectedListener(new spinnerListener());
@@ -85,14 +88,69 @@ public class DbViewerFragment extends Fragment {
     private class btnClick implements View.OnClickListener {
 
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             if (mMadeSelection) {
-                new MyAsync().execute();
+                v.setEnabled(false);
+                getActivity().setProgressBarIndeterminateVisibility(true);
+                lv.setVisibility(View.GONE);
+
+                new AsyncTask<Void, Void, BaseInflaterAdapter> () {
+
+                    @Override
+                    protected BaseInflaterAdapter doInBackground(Void... params) {
+                        mDb.open();
+                        Cursor result = null;
+
+                        switch (mTableSelected) {
+                            case "Cell Data":
+                                result = mDb.getCellData();
+                                break;
+                            case "Location Data":
+                                result =  mDb.getLocationData();
+                                break;
+                            case "OpenCellID Data":
+                                result =  mDb.getOpenCellIDData();
+                                break;
+                            case "Default MCC Locations":
+                                result =  mDb.getDefaultMccLocationData();
+                                break;
+                            case "Silent Sms":
+                                result =  mDb.getSilentSmsData();
+                                break;
+                        }
+
+                        BaseInflaterAdapter adapter = null;
+                        if (result != null) {
+                            adapter = BuildTable(result);
+                        }
+                        mDb.close();
+
+                        return adapter;
+                    }
+
+                    @Override
+                    protected void onPostExecute(BaseInflaterAdapter adapter) {
+                        if (getActivity() == null) return; // fragment detached
+
+                        lv.setEmptyView(emptyView);
+                        if (adapter != null) {
+                            lv.setAdapter(adapter);
+                            lv.setVisibility(View.VISIBLE);
+                        } else {
+                            lv.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.VISIBLE);
+                            //Helpers.msgShort(mContext, "Table contains no data to display.");
+                        }
+
+                        v.setEnabled(true);
+                        getActivity().setProgressBarIndeterminateVisibility(false);
+                    }
+                }.execute();
             }
         }
     }
 
-    private void BuildTable(Cursor tableData) {
+    private BaseInflaterAdapter BuildTable(Cursor tableData) {
         if (tableData != null && tableData.getCount() > 0) {
             switch (mTableSelected) {
                 case "OpenCellID Data": {
@@ -111,14 +169,14 @@ public class DbViewerFragment extends Fragment {
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
-                    lv.setAdapter(adapter);
-                    break;
+                    return adapter;
                 }
                 case "Default MCC Locations": {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>(
                             new DefaultLocationCardInflater());
                     int count = tableData.getCount();
+                    Log.d("mcc", "Got records " + count);
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData("Country: " + tableData.getString(0),
                                 "MCC: " + tableData.getString(1),
@@ -127,8 +185,8 @@ public class DbViewerFragment extends Fragment {
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
-                    lv.setAdapter(adapter);
-                    break;
+                    Log.d("mcc", "Adapter has " + adapter.getCount());
+                    return adapter;
                 }
                 case "Silent Sms": {
                     BaseInflaterAdapter<SilentSmsCardData> adapter
@@ -141,8 +199,7 @@ public class DbViewerFragment extends Fragment {
                                 tableData.getString(4), tableData.getLong(5));
                         adapter.addItem(data, false);
                     }
-                    lv.setAdapter(adapter);
-                    break;
+                    return adapter;
                 }
                 default: {
                     BaseInflaterAdapter<CardItemData> adapter
@@ -159,44 +216,11 @@ public class DbViewerFragment extends Fragment {
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
-                    lv.setAdapter(adapter);
-                    break;
+                    return adapter;
                 }
             }
-            lv.setVisibility(View.VISIBLE);
         } else {
-            lv.setVisibility(View.GONE);
-            Helpers.msgShort(mContext, "Table contains no data to display.");
-        }
-    }
-
-    private class MyAsync extends AsyncTask<Cursor, Cursor, Cursor> {
-
-        @Override
-        protected Cursor doInBackground(Cursor... params) {
-            mDb.open();
-            switch (mTableSelected) {
-                case "Cell Data":
-                    return mDb.getCellData();
-                case "Location Data":
-                    return mDb.getLocationData();
-                case "OpenCellID Data":
-                    return mDb.getOpenCellIDData();
-                case "Default MCC Locations":
-                    return mDb.getDefaultMccLocationData();
-                case "Silent Sms":
-                    return mDb.getSilentSmsData();
-            }
-
             return null;
         }
-
-        @Override
-        protected void onPostExecute(Cursor result) {
-            super.onPostExecute(result);
-            BuildTable(result);
-            mDb.close();
-        }
     }
-
 }
