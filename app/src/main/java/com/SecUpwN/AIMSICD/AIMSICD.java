@@ -62,6 +62,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -100,6 +101,8 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
         mNavConf = getNavDrawerConfiguration();
 
         setContentView(mNavConf.getMainLayout());
