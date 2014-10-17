@@ -1,6 +1,23 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 12.10.2014 - WIP-Internal v0.1.24-alpha-build-13
+
+* Removed: Erased leftover PyGTK and NEATO Tutorials from our PAPERS section
+* Changed: Unified project name as "AIMSICD-Project" - we erased "IMSI-Cure" and "I'm Secure"
+* Update: New rules for Code/Syntax Highlighting have been added to our CONTRIBUTING.md
+* Moved: Api17+ stuff into separate DeviceApi17 class to prevent verify failures on older APIs
+* Added: open_cellid_api_key has been added to support optional gradle.properties 
+* Added: Promotion material of the Speaker Identification Field Toolkit (SIFT) added to PAPERS/SysInfo
+* Added: Master Thesis of Adam Kostrzewa about MITM-Attack on GSM added to PAPERS/Thesis
+* Added: IMSI-Catcher Disclosure Request by several experts and researchers added to PAPERS/Law
+* Added: Surveillance Catalogue by NeoSoft AG with different IMSI-Catchers added to PAPERS/SysInfo
+* Fix: Overlapping of AT Command Injector and About page has been solved
+* Fix: Startup error and crash of Cell Info on Android 4.2 have been solved as well
+* Fix: All links on our README have been verified (please let us know if anything broke)
+
+
+
 #### 04.10.2014 - WIP-Internal v0.1.24-alpha-build-12
 
 * Changed: Polished even more internal strings to reflect current functionality of buttons
