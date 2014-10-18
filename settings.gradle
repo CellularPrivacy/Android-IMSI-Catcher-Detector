@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':third_party:RootTools'
