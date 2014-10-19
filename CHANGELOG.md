@@ -1,6 +1,17 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 19.10.2014 - WIP-Internal v0.1.24-alpha-build-14
+
+* Removed: Erased binary JAR files to make our project become fully [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software)! ;-)
+* Changed: Re-configured build to pull artifacts from Maven Central
+* Added: RootTools source so that AT Command Injector and other funky features keep working
+* Added: Credits to [Stericson](https://github.com/Stericson) for his awesome RootTools and his help to our project
+* Added: High Quality Launcher Icons to make our App look crisp on higher density screens
+* Added: Sense Style Icons in High Quality (currently discussing how to continue in Android 5.0)
+* Fix: Corrected database problems due to database connection not being handled correctly
+* Fix: Removed Apache warnings from Proguard so that Travis CI cannot complain
+
 #### 12.10.2014 - WIP-Internal v0.1.24-alpha-build-13
 
 * Removed: Erased leftover PyGTK and NEATO Tutorials from our PAPERS section
