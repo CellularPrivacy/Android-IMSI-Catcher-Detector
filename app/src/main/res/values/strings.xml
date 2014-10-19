@@ -81,19 +81,19 @@
     <string name="device_imei">IMEI:</string>
     <string name="device_version">RIL Version:</string>
     <string name="device_number">Line Number:</string>
-    <string name="network_name">Network Name:</string>
-    <string name="network_code">Network Code:</string>
-    <string name="network_type">Network Type:</string>
-    <string name="network_lac">Network LAC:</string>
-    <string name="network_cellid">Network CID:</string>
+    <string name="network_name">Provider Name:</string>
+    <string name="network_code">Provider Code:</string>
+    <string name="network_type">Type:</string>
+    <string name="network_lac">LAC:</string>
+    <string name="network_cellid">CID:</string>
     <string name="data_activity">Data Activity:</string>
     <string name="data_status">Data Status:</string>
     <string name="network_roaming">Roaming:</string>
-    <string name="network_lte_timing_advance">Timing Advance:</string>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
     <string name="button_refresh">Refresh</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="network_psc">Primary Scrambling Code:</string>
+    <string name="network_psc">PSC:</string>
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">About AIMSICD</string>
@@ -203,7 +203,7 @@
     <string name="database_export_successful">Export Successful</string>
 
     <!-- AT Command Injector -->
-    <string name="at_command_title">AT Command Injector</string>
+    <string name="at_command_title">AT Command Processor</string>
     <string name="response_label">Response:</string>
     <string name="execute_at">Execute</string>
     <string name="serial_device_title">Current Serial Device:</string>
