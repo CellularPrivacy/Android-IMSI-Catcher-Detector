@@ -202,7 +202,7 @@
     </string-array>
     <string name="database_export_successful">Export Successful</string>
 
-    <!-- AT Command Injector -->
+    <!-- AT Command Processor -->
     <string name="at_command_title">AT Command Processor</string>
     <string name="response_label">Response:</string>
     <string name="execute_at">Execute</string>
