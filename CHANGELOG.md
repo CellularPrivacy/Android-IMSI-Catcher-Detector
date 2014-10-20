@@ -370,13 +370,14 @@
 * Complete revamp of our [PAPERS-Directory](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/PAPERS). Make sure to grab your nightly lecture.
 * Another new and fresh Iconset has been added with a [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/20) [SgtObst](https://github.com/SgtObst). Cool! :)
 * New [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/21) adding Service, Boot Completed Receiver, TableView and FemtoCatcher Additions
-* We're travelling towards a really awesome App! To everyone developing here: You're doing a WONDERFUL job! THANK YOU!
+* To everyone developing here: You're doing a WONDERFUL job! THANK YOU!
 
 #### 06.04.2014 - WIP-Release v0.1.3-alpha
 
 * Applause to [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! He submitted a new [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/14) with a complete rewrite of the menu system, implementing the Actionbar, rewrite of the Device class to perform better and change it from a static class, Persistent notification was added and Database helper class was created to provide application wide support.
 * The old Icons of RawPhone have been fully replaced by the great work of [SgtObst](https://github.com/SgtObst). More to come soon!
-* Our developers are currently working **hard** to find viable ways to acquire the ciphering info - if you have **good** ideas or code and are a programmer, perticipate in the [official development thread](http://forum.xda-developers.com/showthread.php?t=1422969) (only technical talk).
+* Our developers are currently working **hard** to find viable ways to acquire the ciphering info
+* If you have **good** ideas or code and are a programmer, perticipate in the [official development thread](http://forum.xda-developers.com/showthread.php?t=1422969) (only technical talk).
 
 #### 02.04.2014
 
@@ -392,7 +393,10 @@
 
 #### 27.03.2014
 
-* A few team members reported that they've been crawled by IP adresses that where not connected to any country (probably   secret agencies) and stalked by members of the famous company Rohde & Schwarz (the leading manufacturer of IMSI-Catchers). We know that with our actions we already have attracked forces out there which get their will through more brutal methods. Thus, we added a small [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER). Just to mention it: I always have the latest copy of everything. Enjoy!
+* Team members have been crawled by IP adresses not connected to any country (probably secret agencies)
+* Members of the famous company Rohde & Schwarz (leading manufacturer of IMSI-Catchers) are watching us
+* We know that with our actions we already have attracked dark forces out there. See our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)!
+* Just to mention it: I always have the latest copy of everything. Enjoy!
 
 #### 25.03.2014 - WIP-Release v0.1.1-alpha
 
