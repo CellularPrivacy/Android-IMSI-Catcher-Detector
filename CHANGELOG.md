@@ -1,6 +1,19 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 20.10.2014 - WIP-Internal v0.1.24-alpha-build-15
+
+* Changed: Restructured CHANGELOG.md to allow better viewing and WIP-Release links
+* Updated: Fresh SCREENSHOTS of the currents state of AIMSICD as well as updated Teaser
+* Updated: Added a few comments to text fields in DbViewerFragment.java
+* Removed: Erased the "Sanity Check" activity of RootTools from the launcher app drawer
+* Removed: Erased thread contention
+* Fixed: Solved problems with unclosed database connection
+* Fixed: Edited strings.xml to fix some string on the Device Details page
+* Fixed: Additional icon in the launcher app drawer created by RootTools
+
+---
+
 #### 19.10.2014 - WIP-Internal v0.1.24-alpha-build-14
 
 * Removed: Erased binary JAR files to make our project become fully [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software)! ;-)
