@@ -145,7 +145,7 @@ public class DbViewerFragment extends Fragment {
                         v.setEnabled(true);
                         getActivity().setProgressBarIndeterminateVisibility(false);
                     }
-                }.execute();
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
@@ -176,7 +176,6 @@ public class DbViewerFragment extends Fragment {
                             = new BaseInflaterAdapter<>(
                             new DefaultLocationCardInflater());
                     int count = tableData.getCount();
-                    Log.d("mcc", "Got records " + count);
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData("Country: " + tableData.getString(0),
                                 "MCC: " + tableData.getString(1),
@@ -185,7 +184,6 @@ public class DbViewerFragment extends Fragment {
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
-                    Log.d("mcc", "Adapter has " + adapter.getCount());
                     return adapter;
                 }
                 case "Silent Sms": {
