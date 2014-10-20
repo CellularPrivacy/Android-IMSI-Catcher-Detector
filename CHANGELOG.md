@@ -162,8 +162,7 @@
 * Fixed: Tweaks Device & Service to address numerous small bugs and NPEs in isolated cases
 * Fixed: Small corrections of strings within AIMSICD, including a proper version formatting
 
-#### 08.07.2014 - [WIP-Release v0.1.23-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.23-alpha)
-#### [Commit 882c0b9](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/882c0b9532dc3b9656e2751da0e6e39bf8088c27)
+#### 08.07.2014 - [WIP-Release v0.1.23-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.23-alpha) ([Commit 882c0b9](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/882c0b9532dc3b9656e2751da0e6e39bf8088c27))
 
 * Updated: General code clean up as well as declaration access tweaks where appropriate
 * Added: Gmaps undocumented API incorporated to translate a GSM CellID into a location value
