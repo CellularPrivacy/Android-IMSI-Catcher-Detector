@@ -561,6 +561,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         mDevice.mCell.getBearing(),
                         mDevice.getNetworkTypeName(),
                         SystemClock.currentThreadTimeMillis());
+                dbHelper.close();
             }
         }
     }
