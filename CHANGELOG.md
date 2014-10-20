@@ -2,7 +2,6 @@
 ----------------------
 
 #### 19.10.2014 - WIP-Internal v0.1.24-alpha-build-14
-#### [Commit a678977](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/a678977ab0794f46a6035ea489d7bc7d3e7f0062)
 
 * Removed: Erased binary JAR files to make our project become fully [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software)! ;-)
 * Changed: Re-configured build to pull artifacts from Maven Central
@@ -16,7 +15,6 @@
 ---
 
 #### 12.10.2014 - WIP-Internal v0.1.24-alpha-build-13
-#### [Commit 0d90198](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/0d90198311dc344451450373ae1d7a4ae3d30556)
 
 * Removed: Erased leftover PyGTK and NEATO Tutorials from our PAPERS section
 * Changed: Unified project name as "AIMSICD-Project" - we erased "IMSI-Cure" and "I'm Secure"
@@ -34,7 +32,6 @@
 ---
 
 #### 04.10.2014 - WIP-Internal v0.1.24-alpha-build-12
-#### [Commit 00b8691](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/00b869191c1a6014c5367c2cffd7644191832603)
 
 * Changed: Polished even more internal strings to reflect current functionality of buttons
 * Changed: Switched to fresh new theme for our website which suits our project much better
@@ -55,7 +52,6 @@
 ---
 
 #### 30.09.2014 - WIP-Internal v0.1.24-alpha-build-11
-#### [Commit 52c5291](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/52c5291ae5cfff6cfdca68bc719568fc4ac82fcd)
 
 * Updated: Some restructuring done to README for better mobile view
 * Updated: Exspressed our teams gratitude to our new developer Toby Kurien in the CREDITS
@@ -66,7 +62,6 @@
 ---
 
 #### 27.09.2014 - WIP-Internal v0.1.24-alpha-build-10
-#### [Commit 4ebf79c](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/4ebf79caf6acb5dff1ebfe0f4413bb9e3149cda3)
 
 * Changed: Extracted Accelerometer, Location Tracking, and RilExecutor into separate classes
 * Changed: Extracted CellTracker from the service and refactored code everywhere
@@ -80,7 +75,6 @@
 ---
 
 #### 26.09.2014 - WIP-Internal v0.1.24-alpha-build-9
-#### [Commit abe77c7](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/abe77c79d57b7168ba0166da3f873767d0e9f959)
 
 * Changed: Re-worked accelerometer detection for better battery savings. Needs lots of testing.
 * Added: More tweaks and different map tile sources for the various map type settings
@@ -89,7 +83,6 @@
 ---
 
 #### 24.09.2014 - WIP-Internal v0.1.24-alpha-build-8
-#### [Commit 6da0eac](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/6da0eac63f32d52c967d606e56b61fd38295ca75#diff-c8cc2dd42271f2bf39c6aa81eb6a5529)
 
 * Removed: Fully removed Google Play Services - WELCOME our new developer @tobykurien! ;-)
 * Updated: Switch from Google Maps to OsmDroid (WIP), much smaller file size of APK
@@ -189,7 +182,7 @@
 
 ---
 
-#### 08.07.2014 - [WIP-Release v0.1.23-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.23-alpha) ([Commit 882c0b9](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/882c0b9532dc3b9656e2751da0e6e39bf8088c27))
+#### 08.07.2014 - [WIP-Release v0.1.23-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.23-alpha)
 
 * Updated: General code clean up as well as declaration access tweaks where appropriate
 * Added: Gmaps undocumented API incorporated to translate a GSM CellID into a location value
@@ -201,7 +194,6 @@
 ---
 
 #### 03.07.2014 - [WIP-Release v0.1.22-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.22-alpha)
-#### [Commit 0d18dd0](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/0d18dd04c051ce80f9976ab4176a3250f9c5dfa1)
 
 * Updated: Drawer UI components now allow removal of all option menu items
 * Updated: Tracking functions are now available through the first section of the drawer
@@ -227,7 +219,6 @@
 ---
 
 #### 28.06.2014 - [WIP-Release v0.1.21-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.21-alpha)
-#### [Commit c8b9376](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/c8b9376d8188b7841ccfbc20d4a2f3deb99f90de)
 
 * Updated: Moved large number of methods out of the service and into the Device class
 * Added: Automatic detection system for possible candidates for AT command serial devices
@@ -240,7 +231,6 @@
 ---
 
 #### 21.06.2014 - [WIP-Release v0.1.20-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.20-alpha)
-#### [Commit d14c2aa](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/d14c2aa07fb9bee573bb6fd2e8e92bb014f94934)
 
 * Changed: Massive revamp of the UI for the application with newer drawer style UI
 * Updated: AT Command Processor is **ENABLED** now - huge THANKS to [E3V3A](https://github.com/E3V3A)! **ROOT REQUIRED!**
@@ -265,7 +255,6 @@
 ---
 
 #### 19.06.2014 - [WIP-Release v0.1.19-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.19-alpha)
-#### [Commit 0dbeb22](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/0dbeb22aa7e576a5e0feed8a428cd45324cb8116)
 
 * Updated: Android API version of Neighbouring Cell Information as it was broken
 * Added: Local Broadcast Receiver handling OpenCellID data and ensure map markers reflect data
@@ -312,7 +301,6 @@
 ---
 
 #### 14.06.2014 - [WIP-Release v0.1.18-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.18-alpha)
-#### [Commit b9ab196](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/b9ab1963cf5e06f8d9188f1ffad22e3aea89923a)
 
 * **ATTENTION**: Backup your Database prior to installing this WIP-Release!
 * Added: Database Restore added to repopulate database tables from exported CSV
@@ -333,7 +321,6 @@
 ---
 
 #### 27.05.2014 - [WIP-Release v0.1.17-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.17-alpha)
-#### [Commit f69a511](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/f69a511af6aed2979e05502111f630252f9b5c9e)
 
 * Updated: Better way of how AIMSICD draws and displays any SIM variable & further error handling
 * Changed: Cell & Location tracking functions now require GPS location services to be enabled
@@ -350,7 +337,6 @@
 ---
 
 #### 21.05.2014 - [WIP-Release v0.1.16-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.16-alpha)
-#### [Commit 4ff881c](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/4ff881caefa26d2e6eb7354d67d5e1a15d7e8761)
 
 * Updated: Disabling Cell tracking will now also disable Location tracking if enabled
 * Updated: Huge code cleanup and updates to a number of areas across a large number of packages
@@ -363,7 +349,6 @@
 ---
 
 #### 10.05.2014 - [WIP-Release v0.1.15-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.15-alpha)
-#### [Commit 9951256](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/995125621f490cc6afd429d54c184061abfa6211)
 
 * Updated: Map Viewer type selection moved into a dedicated Map preference fragment
 * Updated: About Page completed with links functioning correctly
@@ -375,7 +360,6 @@
 ---
 
 #### 06.05.2014 - [WIP-Release v0.1.14-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.14-alpha)
-#### [Commit 0556758](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/05567586fa02ead2c18e1acb095d31f592fd50f4)
 
 * Added: Neighbouring Cell details shown on Cell Information fragment
 * Added: Ciphering Indicator provided through the Samsung MultiRil method by [Alexey Illarionov](https://github.com/illarionov/SamsungRilMulticlient)
@@ -384,14 +368,12 @@
 ---
 
 #### 03.05.2014 - [WIP-Release v0.1.13-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.13-alpha)
-#### [Commit 53852c0](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/53852c0827f1059e11d9dbc4f8e7c7f6995a2d11)
 
 * Added: Exception handling added to all methods that attempt to draw SIM specific information
 
 ---
 
 #### 03.05.2014 - [WIP-Release v0.1.12-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.12-alpha)
-#### [Commit 78d503f](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/78d503fc3ebbba2f40e00d9c91cbe15b607d9fb8)
 
 * Updated: MASSIVE UI update implementing fragments to enable easy navigation through SWIPING! ;-)
 * Updated: Default icon is now selected within the preferences screen
@@ -400,7 +382,6 @@
 ---
 
 #### 03.05.2014 - [WIP-Release v0.1.11-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.11-alpha)
-#### [Commit 35ccd20](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/35ccd20cead58e1fa4b8620016656dca378f3e91)
 
 * Updated: Consolidation of Signal Strength, Data Activity & Data State into one Phone State Listener
 * Updated: Main menu updated to only display FemtoCell detection on CDMA devices only
@@ -411,7 +392,6 @@
 ---
 
 #### 27.04.2014 - [WIP-Release v0.1.10-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.10-alpha)
-#### [Commit c11f86b](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/c11f86bf37ecf7346b6cc8c13600ce1974197d3c)
 
 * Improved: Database Viewer UI tweaked to use a gradient colouring scheme
 * Improved: Map Viewer will fall back to a default location based on MCC and the Countries Capital City
@@ -420,7 +400,6 @@
 ---
 
 #### 25.04.2014 - [WIP-Release v0.1.9-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.9-alpha)
-#### [Commit 772a9b7](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/772a9b7dc6b21bd37140e19e49a809c7fa79456c)
 
 * Improved: Complete rewrite of Database helper functions for better logic of updating/inserting records
 * Changed: Minimum SDK version increased to 16 (JB 4.1)
@@ -436,7 +415,6 @@
 ---
 
 #### 25.04.2014 - [WIP-Release v0.1.8-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.8-alpha)
-#### [Commit a82b0aa](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/a82b0aaee2abbc3110070976d2eb2974df19061e)
 
 * **CAUTION:** This version will erase your existing tracking information! Please backup first.
 * Removed: Removed the CMDProcessor as this was not being utilised at all
@@ -446,8 +424,7 @@
 
 ---
 
-#### 21.04.2014 - [WIP-Release v0.1.7-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.7-alpha) 
-#### [Commit c0ffbf6](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/c0ffbf65b3fb7764d052cafdf169a0811f50e1d9))
+#### 21.04.2014 - [WIP-Release v0.1.7-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.7-alpha)
 
 * Added: Enabled CDMA Femtocell Detection for initial testing. (CDMA devices ONLY!)
 * Added: Missing resources for Actionbar icons
@@ -459,8 +436,7 @@
 
 ---
 
-#### 11.04.2014 - [WIP-Release v0.1.6-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.6-alpha) 
-#### [Commit e99f633](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/e99f6339e26e0c629bb0251dde8b27368ca65179))
+#### 11.04.2014 - [WIP-Release v0.1.6-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.6-alpha)
 
 * Changed: Project changed to Gradle Build System to make use of Android Studio
 * Added: Google Maps API v2 support to enable new features and gain an API Key
@@ -469,8 +445,7 @@
 
 ---
 
-#### 09.04.2014 - [WIP-Release v0.1.5-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.5-alpha) 
-#### [Commit 3d65018](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/3d650181382f3922f8b4d2988ec1e828fc2c6823))
+#### 09.04.2014 - [WIP-Release v0.1.5-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.5-alpha)
 
 * Improved: Universal Compatibility achieved via the [Universal Compatibility Commit](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/24)!
 * Reduced functionality of AIMSICD until methods are discovered to issue AT commands.
@@ -480,8 +455,7 @@
 
 ---
 
-#### 08.04.2014 - [WIP-Release v0.1.4-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.4-alpha) 
-#### [Commit c863c8d](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/c863c8d867182c9052bf31a5d9ca733ee773640f))
+#### 08.04.2014 - [WIP-Release v0.1.4-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.4-alpha)
 
 * Updated: DISCLAIMER to encourage people to talk to us BEFORE hunting our developers
 * Updated: CREDITS to reflect latest contributions (please give me a hint if I missed someone)
@@ -495,8 +469,7 @@
 
 ---
 
-#### 06.04.2014 - [WIP-Release v0.1.3-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.3-alpha) 
-#### [Commit c3e86df](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/c3e86df3c9b1f608b85a5d63545211b733fdae62))
+#### 06.04.2014 - [WIP-Release v0.1.3-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.3-alpha)
 
 * Applause to [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! He submitted a new [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/14) with a complete rewrite of the menu system, implementing the Actionbar, rewrite of the Device class to perform better and change it from a static class, Persistent notification was added and Database helper class was created to provide application wide support.
 * The old Icons of RawPhone have been fully replaced by the great work of [SgtObst](https://github.com/SgtObst). More to come soon!
@@ -513,7 +486,6 @@
 ---
 
 #### 31.03.2014 - [WIP-Release v0.1.2-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.2-alpha)
-#### [Commit fce2155](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/commit/fce21553a0cac939c47faf2adb1750dec4ac9b2a))
 
 * This Release has been signed using the platform keys provided in the AOSP source
 * New [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/7) by [xLaMbChOpSx](https://github.com/xLaMbChOpSx) reducing the target SDK version and update the code.
