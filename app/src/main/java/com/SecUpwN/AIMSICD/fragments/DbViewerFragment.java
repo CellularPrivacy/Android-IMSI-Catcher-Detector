@@ -150,6 +150,11 @@ public class DbViewerFragment extends Fragment {
         }
     }
 
+    // Lat/Lng:     Latitude / Longitude (We use "Lng" instead of "Lon".)
+    // AvgSignal:   Average Signal Strength
+    // RSSI:        Received Signal Strength Indicator (previously "Signal Strength")
+    //              Can have different meanings on different RAN's, e.g. RSCP in UMTS.
+    // RAN:         Radio Access Network (GSM, UMTS, LTE etc.)
     private BaseInflaterAdapter BuildTable(Cursor tableData) {
         if (tableData != null && tableData.getCount() > 0) {
             switch (mTableSelected) {
@@ -160,11 +165,12 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData("CellID: " + tableData.getString(0),
-                                "LAC: " + tableData.getString(1), "MCC: " + tableData.getString(2),
+                                "LAC: " + tableData.getString(1),
+                                "MCC: " + tableData.getString(2),
                                 "MNC: " + tableData.getString(3),
-                                "Latitude: " + tableData.getString(4),
-                                "Longitude: " + tableData.getString(5),
-                                "Average Signal Strength: " + tableData.getString(6),
+                                "Lat: " + tableData.getString(4),
+                                "Lng: " + tableData.getString(5),
+                                "AvgSignal: " + tableData.getString(6),
                                 "Samples: " + tableData.getString(7),
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
@@ -179,8 +185,8 @@ public class DbViewerFragment extends Fragment {
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData("Country: " + tableData.getString(0),
                                 "MCC: " + tableData.getString(1),
-                                "Latitude: " + tableData.getString(2),
-                                "Longitude: " + tableData.getString(3),
+                                "Lat: " + tableData.getString(2),
+                                "Lng: " + tableData.getString(3),
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
@@ -207,10 +213,10 @@ public class DbViewerFragment extends Fragment {
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData("CellID: " + tableData.getString(0),
                                 "LAC: " + tableData.getString(1),
-                                "Network Type: " + tableData.getString(2),
-                                "Latitude: " + tableData.getString(3),
-                                "Longitude: " + tableData.getString(4),
-                                "Signal Strength: " + tableData.getString(5),
+                                "RAN Type: " + tableData.getString(2),
+                                "Lat: " + tableData.getString(3),
+                                "Lng: " + tableData.getString(4),
+                                "RSSI: " + tableData.getString(5),
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
