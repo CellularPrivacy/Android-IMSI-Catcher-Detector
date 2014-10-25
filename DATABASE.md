@@ -1,5 +1,8 @@
 <strong>This is Work in Progress!</strong>
 Thus this is not yet accurate and quite possibly wrong info.
+```html
+<p style='color:red'>This is some red text.</p>
+```
 
 <h2>Introduction</h2>
 
