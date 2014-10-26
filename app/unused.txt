@@ -406,6 +406,9 @@ com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter:
     private static final java.lang.String COLUMN_ID
 com.SecUpwN.AIMSICD.drawer.DrawerMenuSection:
     private static final int SECTION_TYPE
+com.SecUpwN.AIMSICD.fragments.AtCommandFragment:
+    350:372:private void executeCommand()
+com.SecUpwN.AIMSICD.fragments.AtCommandFragment$4
 com.SecUpwN.AIMSICD.rilexecutor.RilExecutor:
     private static final int ID_REQUEST_START_SERVICE_MODE_COMMAND
     private static final int ID_REQUEST_FINISH_SERVICE_MODE_COMMAND

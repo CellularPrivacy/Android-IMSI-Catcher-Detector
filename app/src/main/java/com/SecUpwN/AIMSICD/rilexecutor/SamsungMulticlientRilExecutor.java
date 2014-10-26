@@ -90,15 +90,19 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             ignore.printStackTrace();
         }
 
-        if (!gsmVerRilImpl.matches("Samsung\\s+RIL\\(IPC\\).*")) {
-            return DetectResult.Unavailable("gsm.version.ril-impl = " + gsmVerRilImpl);
-        }
+        // E:V:A comment out for debugging purposes on other non-Samsung RILS
+        // and moved gsm.version.. to catch...
+        // WARNING may have bad consequences...
+        //if (!gsmVerRilImpl.matches("Samsung\\s+RIL\\(IPC\\).*")) {
+        //    return DetectResult.Unavailable("gsm.version.ril-impl = " + gsmVerRilImpl);
+        //}
 
         LocalSocket s = new LocalSocket();
         try {
             s.connect(new LocalSocketAddress(MULTICLIENT_SOCKET));
         } catch (IOException e) {
-            return DetectResult.Unavailable("Multiclient socket is not available");
+            return DetectResult.Unavailable(
+                    "Multiclient socket is not available\n" + "gsm.version.ril-impl = " + gsmVerRilImpl);
         } finally {
             try {
                 s.close();
