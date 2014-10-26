@@ -359,28 +359,34 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
             }
         } else if (selectedItem.getId() == 305) {
-            // send bug log
-            try {
-                Process process = Runtime.getRuntime().exec("logcat -d");
-                BufferedReader bufferedReader = new BufferedReader(
-                        new InputStreamReader(process.getInputStream()));
+            new Thread() {
+                @Override
+                public void run() {
+                    // send bug log
+                    // TODO - clear log using 'logcat -c' on app startup
+                    try {
+                        Process process = Runtime.getRuntime().exec("logcat -d");
+                        BufferedReader bufferedReader = new BufferedReader(
+                                new InputStreamReader(process.getInputStream()));
 
-                StringBuilder log = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    log.append(line);
+                        StringBuilder log = new StringBuilder();
+                        String line;
+                        while ((line = bufferedReader.readLine()) != null) {
+                            log.append(line);
+                        }
+
+                        // show a share intent
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/html");
+                        intent.putExtra(Intent.EXTRA_EMAIL, "some@email.com");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error log");
+                        intent.putExtra(Intent.EXTRA_TEXT, log.toString());
+                        startActivity(Intent.createChooser(intent, "Send error log"));
+                    } catch (IOException e) {
+                        Log.e("main", "Error reading logs", e);
+                    }
                 }
-
-                // show a share intent
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/html");
-                intent.putExtra(Intent.EXTRA_EMAIL, "some@email.com");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error log");
-                intent.putExtra(Intent.EXTRA_TEXT, log.toString());
-                startActivity(Intent.createChooser(intent, "Send error log"));
-            } catch (IOException e) {
-                Log.e("main", "Error reading logs", e);
-            }
+            }.start();
         } else if (selectedItem.getId() == 304) {
             finish();
         }
