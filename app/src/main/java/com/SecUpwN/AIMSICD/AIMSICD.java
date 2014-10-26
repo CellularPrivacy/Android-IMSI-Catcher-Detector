@@ -66,8 +66,12 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -354,7 +358,29 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                 Helpers.sendMsg(mContext,
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
             }
+        } else if (selectedItem.getId() == 305) {
+            // send bug log
+            try {
+                Process process = Runtime.getRuntime().exec("logcat -d");
+                BufferedReader bufferedReader = new BufferedReader(
+                        new InputStreamReader(process.getInputStream()));
 
+                StringBuilder log = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    log.append(line);
+                }
+
+                // show a share intent
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/html");
+                intent.putExtra(Intent.EXTRA_EMAIL, "some@email.com");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error log");
+                intent.putExtra(Intent.EXTRA_TEXT, log.toString());
+                startActivity(Intent.createChooser(intent, "Send error log"));
+            } catch (IOException e) {
+                Log.e("main", "Error reading logs", e);
+            }
         } else if (selectedItem.getId() == 304) {
             finish();
         }
@@ -445,6 +471,8 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                 (302, getString(R.string.cell_lookup), "stat_sys_download_anim0", false, this));
         menu.add(DrawerMenuItem.create
                 (303, getString(R.string.about_aimsicd), "ic_action_about", true, this));
+        menu.add(DrawerMenuItem.create
+                (305, getString(R.string.send_logs), "ic_action_computer", false, this));
         menu.add(DrawerMenuItem.create
                 (304, getString(R.string.quit), "ic_action_remove", false, this));
 
