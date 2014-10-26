@@ -90,67 +90,88 @@ Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereo
 
 ---
 
-### Goals (please read carefully!)
+### Application Goals (please read carefully!)
 
 ### This project: 
 
-* Detects IMSI based device location tracking
-* Provides counter measures against tracking
-* Can provide swarm-wise-decision-based cellular service interruption
-* Can provide secure wifi/wimax alternative data routes through MESH-like networking
+* Detect IMSI based device location tracking
+* Detect and prevent the use of false BTS towers used for illegal interception
+* Detect and prevent the use of broken ciphering algorithms (A5/1) during calls
 * Detect and prevent remote hidden application installation
 * Detect and prevent remote hidden SMS-based SIM attacks
-* Prevent or spoof GPS data
-* Does NOT secure any data transmissions
-* Does NOT prevent already installed rogue application from full access
+* Provide counter measures against tracking
+* Prevent leakage of sensitive GPS data
+* Provide swarm-wise-decision-based cellular service interruption
+* Provide secure wifi/wimax alternative data routes through MESH-like networking
 * Aims to be recommended and added to the [Guardian Project's list of secure Apps](https://guardianproject.info/apps)
 * Aims to be recommended by the [SSD Project of the Electronic Frontier Foundation](https://ssd.eff.org/)
 * Aims to be recommended by [Privacy International](https://www.privacyinternational.org/) (and like-minded organizations)
+* Does **not** secure any data transmissions
+* Does **not** prevent already installed rogue applications from full access and spying
 
 ### Other projects (NOT this one):
 
 * Provide full device encryption
+* Provide secure data transmission (VPN, Tor)
+* Provide secure phone calls (We recommend: [RedPhone](https://github.com/WhisperSystems/RedPhone))
+* Provide secure SMS (We recommend: [TextSecure](https://github.com/WhisperSystems/TextSecure))
 * Provide secure application sand-boxing
-* Provide secure data transmission
-* Provide firewalls (recommended: [AFWall+](https://github.com/ukanth/afwall))
+* Provide application permission control (We recommend: [XPrivacy](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783))
+* Provide firewalls (We recommend: [AFWall+](https://github.com/ukanth/afwall))
 
 ---
 
 # Development Roadmap
 
-In short: We're merely using any possible way to overcome the ridiculous AOS limitations on displaying highly important and relevant network variables and data. One of those is the Ciphering Indicator that has been 3GPP "required" for the last 10-15 years, but which Google and most Network providers choose to ignore. (Since they didn't want to implement better encryption, until very recently.) Another is finding the Timing Advance and various Network (RRC) Timers.
+In order to accomplish the goals set above, we'll need to overcome some of the deeply worrying and unfounded AOS limitations, as imposed by Googles API, in regard to relevant network variables and data. These include highly relevant and important things such as displaying the SIM/phone Ciphering Indicator, which tell you if your calls are being encrypted or not. This has been a required 3GPP feature for the last 15 years, but which Google and most Mobile Network providers have choosen to mostly ignore. Another is finding the *Timing Advance* (TA) and various Network Timers, like those used in *Radio Resource Control* [RRC](http://en.wikipedia.org/wiki/Radio_Resource_Control), that can give very useful information regarding the status of the connections you phone is making. 
 
-1. There are several types of silent SMS, most of which are already detectable and there is nothing strange with that. It does need further testing for a greater variety of devices, and to see what would happen on a real IMSI-Catcher.
+All this can be fairly easily accomplished, given that we can have access to some of the lower level radio related information coming from the *Baseband Processor* (BP). But that is exactly our challange. All the software and information about the interfaces providing this, is hidden from the user and developer by huge amount proprietary OEM *Non Discloseure Agreements* (NDA). But in the last years, there have been great progress in reverse enginering these protocols and interfaces. The use of these open source tools are the basis of our successful development of this app. 
 
-2. Sending AT commands to the baseband processor and use the results to detect anomalies is an ongoing challenge because certain basebands do not expose enough usable information. The whole detection process is strongly hardware dependent, some basebands expose everything (MTK) and others (Qualcomm) expose very little, since they have their own protocols (DM/QMI). But the SIM card filesystem does provide useful info. So a combination of AT commands, SIM card readings and also API access to Service Mode (Samsung) menus, can provide all that we need and more. But it is a rather technical challenge for our developers to do this, and to collect all support material needed. That's where YOU come into play. Check our [open Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues?q=is%3Aopen+is%3Aissue) and help us!
+To summarize the main stages of this development. 
 
-3. OBB support would be crucial, but we're not really proposing this. Very few people would bother going through the pain of finding an appropriate OBB compatible phone, less implementing it as a piggy-back to an Android. So unless some OBB developer serves the required Java + binaries to us on a silver platter, this will not be a feature of AIMSICD.
+A. Using all available network data, implement the correct detection matrix, consisting of a number of items, that each participate in detection of abnormal or abusive network bahaviour. This is the application *Beta* stage. 
 
-Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule Them ALL".
+B. Using all possible interfaces to obtain the many variables in (A). These intefaces include:
+ - QMI/Sahara protocols for using on Qualcomm based devices (*Gobi3000, qmilib*)
+ - Samsung IPC protocol for using on Intel XMM (XGOLD) based devices (*xgoldmon, Replicant*)
+ - Direct use of AOS standard RIL interfaces (*/dev/rild* and */dev/rild-debug*)
+ - SIM ICC interface for accessing SIM EF filesystem to provide deep (*SEEK*)
+ - Scraping *Service Mode* menus, for relevant radio info
+ - Scrape `logcat -b radio` for relevant radio info 
+ - Use AT Command Processor (ATCoP) interface to get/set network parameters/bahviour
 
-##### Make an empty "shell" App that:
+C. Make (A) and (B) transparent across as many Android devices as possible.
 
-* a. collects relevant RF related variables using public API calls. (LAC etc)
-* b. puts them in an SQLite database
-* c. catches hidden SMS's
-* d. catches hidden App installations
+##### ALPHA stage:
+Make a baseline App that contain the basic functionality for collecting and presenting all available network variables and the detection results.
 
-##### Make another empty "shell" App (or module) that:
+* a. Collects relevant RF related variables using public AOS API calls. (LAC, CID, TA etc)
+* b. Collects detailed BTS information from a pulic database such as *OpenCellID* or *Mozilla Location Services*
+* c. Save everything in our SQLite database
+* d. Detect hidden (type-0) SMS's
+* e. Detect hidden App installations (Googles INTSTALL/REMOVE_ASSET)
 
-* e. opens a device **local** terminal root shell
-* f. uses (e.) to connect to modem AT-Command Processor ATCoP via shared memory interface SHM
-* g. displays results from sent AT commands
-* **CRUCIAL** to our project: Please help E:V:A develop a [Native AT Command Injector](http://forum.xda-developers.com/showthread.php?t=1708598)!
+##### BETA stage:
+Improve ALPHA for leveraging and tune our detection matrix/algorithm.
 
-##### [Possibly] Make another App that:
+* f. Implement **any** of the detection schemes we have
+* g. Implement **any** of the interfaces in (**B**) 
+* h. Test AIMSICD in a real IMSI-catcher envrionment 
+* i. Fine-tune our detection matrix.
+* j. Implement our first counter interception measures
+* k. planning alternative data routes through MESH-like networking, when cellular services have been interrupted
+* m. planning swarm-wise-decision-based cellular service analysis (advanced BTS statisitcs)
 
-* h. use the OTG (USB-host-mode) interface to use FTDI serial cable to interface with another OsmocomBB compatible phone (using Android host as a GUI host)
-* i. uses the "[CatcherCatcher](https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/CatcherCatcher)" detector SW on the 2nd phone
-* j. can inject fake 2G GSM location data
-* k. find out how to access L0-L2 data using the ATCoP connection
-* l. use a statistical algorithm on the DB data to detect rogue IMSI-Catchers
-* m. combine all of the above (steps h to l) into a BETA App for testing, add languages
-* n. improve BETA app by adding (many more) IMSI-Catcher counter measures
+##### GOLDEN stage:
+This stage is essentially the completion of this project. However, we expect that long before this happens, the entire network industry will have changed to sucha degree that many new privacy and security issues will have arised. Thus more things to add and maintain in this project. We are of the currecnt understadning that this project is a never ending story, all for the peoples benefit and a more provacy oriented future.
+
+* n. Implement **all** of the detection schemes we have
+* o. Implement **all** of the interfaces in (B) 
+* p. Test AIMSICD in a real IMSI-catcher envrionment
+* q. Continue Fine-tune our detection matrix.
+* r. complete alternative data routes using MESH-like networking, when cellular services have been interrupted
+* s. complete advanced statistical analysis of fake BTS towers
+
 
 ---
 
