@@ -92,7 +92,7 @@ Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereo
 
 ### Application Goals (please read carefully!)
 
-### This project: 
+##### This project: 
 
 * Detect IMSI based device location tracking
 * Detect and prevent the use of false BTS towers used for illegal interception
@@ -106,10 +106,12 @@ Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereo
 * Aims to be recommended and added to the [Guardian Project's list of secure Apps](https://guardianproject.info/apps)
 * Aims to be recommended by the [SSD Project of the Electronic Frontier Foundation](https://ssd.eff.org/)
 * Aims to be recommended by [Privacy International](https://www.privacyinternational.org/) (and like-minded organizations)
+
+
 * Does **not** secure any data transmissions
 * Does **not** prevent already installed rogue applications from full access and spying
 
-### Other projects (NOT this one):
+##### Other projects (NOT this one):
 
 * Provide full device encryption
 * Provide secure data transmission (VPN, Tor)
