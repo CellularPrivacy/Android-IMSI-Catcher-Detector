@@ -14,7 +14,7 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 
 * [Introduction](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction)
 * [IMSI-Catchers](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#want-to-know-what-imsi-catchers-look-like)
-* [Project Goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#this-project)
+* [Project Goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#application-goals-please-read-carefully)
 * [Limitations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#other-projects-not-this-one)
 * [Roadmap](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap)
 * **[WIP-RELEASES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)**
@@ -92,8 +92,6 @@ Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereo
 
 ### Application Goals (please read carefully!)
 
-##### This project: 
-
 * Detect IMSI based device location tracking
 * Detect and prevent the use of false BTS towers used for illegal interception
 * Detect and prevent the use of broken ciphering algorithms (A5/1) during calls
@@ -106,8 +104,6 @@ Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereo
 * Aims to be recommended and added to the [Guardian Project's list of secure Apps](https://guardianproject.info/apps)
 * Aims to be recommended by the [SSD Project of the Electronic Frontier Foundation](https://ssd.eff.org/)
 * Aims to be recommended by [Privacy International](https://www.privacyinternational.org/) (and like-minded organizations)
-
-
 * Does **not** secure any data transmissions
 * Does **not** prevent already installed rogue applications from full access and spying
 
@@ -125,55 +121,54 @@ Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or a combination thereo
 
 # Development Roadmap
 
-In order to accomplish the goals set above, we'll need to overcome some of the deeply worrying and unfounded AOS limitations, as imposed by Googles API, in regard to relevant network variables and data. These include highly relevant and important things such as displaying the SIM/phone Ciphering Indicator, which tell you if your calls are being encrypted or not. This has been a required 3GPP feature for the last 15 years, but which Google and most Mobile Network providers have choosen to mostly ignore. Another is finding the *Timing Advance* (TA) and various Network Timers, like those used in *Radio Resource Control* [RRC](http://en.wikipedia.org/wiki/Radio_Resource_Control), that can give very useful information regarding the status of the connections you phone is making. 
+In order to accomplish the goals set above, we'll need to overcome some of the deeply worrying and unfounded AOS limitations, as imposed by Googles API, in regard to relevant network variables and data. These include highly relevant and important things such as displaying the SIM/phone Ciphering Indicator, which tells you if your calls are being encrypted or not. This has been a required 3GPP feature for the last 15 years, but which Google and most Mobile Network providers have choosen to mostly ignore, although it has been [requested by users since 2009](https://code.google.com/p/android/issues/detail?id=5353). Another is finding the *Timing Advance* (TA) and various Network Timers, like those used in *Radio Resource Control* ([RRC](http://en.wikipedia.org/wiki/Radio_Resource_Control)), that can give very useful information regarding the status of the connections your phone is making. 
 
-All this can be fairly easily accomplished, given that we can have access to some of the lower level radio related information coming from the *Baseband Processor* (BP). But that is exactly our challange. All the software and information about the interfaces providing this, is hidden from the user and developer by huge amount proprietary OEM *Non Discloseure Agreements* (NDA). But in the last years, there have been great progress in reverse enginering these protocols and interfaces. The use of these open source tools are the basis of our successful development of this app. 
+All this can be fairly easily accomplished, given that we can have access to some of the lower level radio related information coming from the *Baseband Processor* (BP). But that is exactly our challenge. All the software and information about the interfaces providing this, is hidden from the user and developers by a huge amount of proprietary OEM *Non Disclosure Agreements* (NDA). But in the last years, there has been great progress in reverse enginering these protocols and interfaces. The use of these open source tools are the basis of our successful development of this app. 
 
-To summarize the main stages of this development. 
+To summarize the main stages of this development: 
 
-A. Using all available network data, implement the correct detection matrix, consisting of a number of items, that each participate in detection of abnormal or abusive network bahaviour. This is the application *Beta* stage. 
+A. Using all available network data, implement the correct detection matrix consisting of a number of items, that each participate in detection of abnormal or abusive network bahaviour. This is the application *Beta* stage. 
 
-B. Using all possible interfaces to obtain the many variables in (A). These intefaces include:
+B. Using all possible interfaces to obtain the many variables in (A). These interfaces include:
  - QMI/Sahara protocols for using on Qualcomm based devices (*Gobi3000, qmilib*)
  - Samsung IPC protocol for using on Intel XMM (XGOLD) based devices (*xgoldmon, Replicant*)
  - Direct use of AOS standard RIL interfaces (*/dev/rild* and */dev/rild-debug*)
- - SIM ICC interface for accessing SIM EF filesystem to provide deep (*SEEK*)
- - Scraping *Service Mode* menus, for relevant radio info
+ - SIM ICC interface for accessing SIM EF filesystem to provide deep access (*SEEK*)
+ - Scraping *Service Mode* menus for relevant radio info
  - Scrape `logcat -b radio` for relevant radio info 
- - Use AT Command Processor (ATCoP) interface to get/set network parameters/bahviour
+ - Use AT Command Processor (ATCoP) interface to get/set network parameters/bahaviour
 
 C. Make (A) and (B) transparent across as many Android devices as possible.
 
 ##### ALPHA stage:
-Make a baseline App that contain the basic functionality for collecting and presenting all available network variables and the detection results.
+Make a baseline App that contains the basic functionality for collecting and presenting all available network variables and the detection results.
 
 * a. Collects relevant RF related variables using public AOS API calls. (LAC, CID, TA etc)
 * b. Collects detailed BTS information from a pulic database such as *OpenCellID* or *Mozilla Location Services*
 * c. Save everything in our SQLite database
-* d. Detect hidden (type-0) SMS's
-* e. Detect hidden App installations (Googles INTSTALL/REMOVE_ASSET)
+* d. Detect hidden/silent (Type-0) SMS's
+* e. Detect hidden App installations (Googles INSTALL/REMOVE_ASSET)
 
 ##### BETA stage:
 Improve ALPHA for leveraging and tune our detection matrix/algorithm.
 
 * f. Implement **any** of the detection schemes we have
 * g. Implement **any** of the interfaces in (**B**) 
-* h. Test AIMSICD in a real IMSI-catcher envrionment 
-* i. Fine-tune our detection matrix.
+* h. Test AIMSICD in a real IMSI-catcher environment 
+* i. Fine-tune our detection matrix
 * j. Implement our first counter interception measures
-* k. planning alternative data routes through MESH-like networking, when cellular services have been interrupted
-* m. planning swarm-wise-decision-based cellular service analysis (advanced BTS statisitcs)
+* k. Planning alternative data routes through MESH-like networking, when cellular services have been interrupted
+* l. Planning swarm-wise decision-based cellular service analysis (advanced BTS statistics)
 
 ##### GOLDEN stage:
-This stage is essentially the completion of this project. However, we expect that long before this happens, the entire network industry will have changed to sucha degree that many new privacy and security issues will have arised. Thus more things to add and maintain in this project. We are of the currecnt understadning that this project is a never ending story, all for the peoples benefit and a more provacy oriented future.
+This stage is essentially the completion of this project. However, we expect that long before this happens, the entire network industry will have changed to such a degree that many new privacy and security issues will have arised. Thus, we will likely have more things to add and maintain in this project. We are of the current understanding that this project is a never ending story, all for the peoples benefit and a more privacy oriented future.
 
-* n. Implement **all** of the detection schemes we have
-* o. Implement **all** of the interfaces in (B) 
-* p. Test AIMSICD in a real IMSI-catcher envrionment
-* q. Continue Fine-tune our detection matrix.
-* r. complete alternative data routes using MESH-like networking, when cellular services have been interrupted
-* s. complete advanced statistical analysis of fake BTS towers
-
+* m. Implement **all** of the detection schemes we have
+* n. Implement **all** of the interfaces in (B) 
+* o. Test AIMSICD in a real IMSI-catcher environment
+* p. Continue Fine-tune our detection matrix
+* q. Complete alternative data routes using MESH-like networking, when cellular services have been interrupted
+* r. Complete advanced statistical analysis of fake BTS towers
 
 ---
 
@@ -193,7 +188,7 @@ Please follow [how to correctly submit Issues](https://github.com/SecUpwN/Androi
 
 Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending [DarkCoin](https://www.darkcoin.io/) to our DONATION ADDRESS: **XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys**
 
-All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will **NOT** reward junk, only awesome stuff. Additionally, donations will be used to support these organizations:
+All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will **NOT** reward junk, only awesome stuff. Additionally, donations will be used to support these organizations (contact us if you want to join our movement):
 
 [![EFF](https://www.eff.org/sites/all/themes/frontier/images/logo_full.png)](https://www.eff.org/)
 [![Guardian Project](https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png)](https://guardianproject.info/)
