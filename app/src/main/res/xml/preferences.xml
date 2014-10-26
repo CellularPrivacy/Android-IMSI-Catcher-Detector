@@ -9,12 +9,12 @@
             android:key="@string/pref_autostart_key"
             android:title="@string/pref_autostart_title"
             android:summary="@string/pref_autostart_summ"
-            android:defaultValue="true" />
+            android:defaultValue="false" />
         <CheckBoxPreference
             android:key="@string/pref_persistservice_key"
             android:title="@string/pref_persistservice_title"
             android:summary="@string/pref_persistservice_summ"
-            android:defaultValue="true" />
+            android:defaultValue="false" />
         <CheckBoxPreference
                 android:key="@string/pref_enable_cell_key"
                 android:title="@string/pref_enable_cell_title"

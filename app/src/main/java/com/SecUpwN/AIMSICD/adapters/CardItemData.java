@@ -86,7 +86,7 @@ public class CardItemData {
         mSignal = "Signal: N/A";
         mAvgSigStr = avgSigStr;
         mSamples = samples;
-        mPsc = "Primary Scrambling Code: N/A";
+        mPsc = "PSC: N/A";
         mCountry = "Country: N/A";
         mTimestamp = "Timestamp: N/A";
         mRecordId = recordId;
@@ -141,7 +141,7 @@ public class CardItemData {
         mAvgSigStr = "Avg Signal: N/A";
         mSamples = "Samples: N/A";
         mTimestamp = timestamp;
-        mPsc = "Primary Scrambling Code: N/A";
+        mPsc = "PSC: N/A";
         mCountry = "Country: N/A";
         mRecordId = recordId;
     }
@@ -158,7 +158,7 @@ public class CardItemData {
         mSignal = signal;
         mAvgSigStr = "Avg Signal: N/A";
         mSamples = "Samples: N/A";
-        mPsc = "Primary Scrambling Code: N/A";
+        mPsc = "PSC: N/A";
         mCountry = "Country: N/A";
         mTimestamp = "Timestamp: N/A";
         mRecordId = recordId;
@@ -176,7 +176,7 @@ public class CardItemData {
         mLng = lng;
         mAvgSigStr = "Avg Signal: N/A";
         mSamples = "Samples: N/A";
-        mPsc = "Primary Scrambling Code: N/A";
+        mPsc = "PSC: N/A";
         mTimestamp = "Timestamp: N/A";
         mRecordId = recordId;
     }

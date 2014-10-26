@@ -35,7 +35,8 @@ public class AIMSICDDbAdapter {
     private final String OPENCELLID_TABLE = "opencellid";
     private final String DEFAULT_MCC_TABLE = "defaultlocation";
     private final String SILENT_SMS_TABLE = "silentsms";
-    private final String DB_NAME = "myCellInfo";
+    // E:V:A private final String DB_NAME = "myCellInfo";
+    private final String DB_NAME = "aimsicd.db";  // old name: "myCellInfo"
 
     private final String[] mTables;
     private final DbHelper mDbHelper;
@@ -595,7 +596,7 @@ public class AIMSICDDbAdapter {
      * @param tableName String representing table name to export
      */
     private void backup(String tableName) {
-        Log.i(TAG, "Database Backup - " + DB_NAME);
+        Log.i(TAG, "Database Backup: " + DB_NAME);
 
         File dir = new File(FOLDER);
         if (!dir.exists()) {

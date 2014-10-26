@@ -142,7 +142,7 @@ public class AtCommandFragment extends Fragment {
             try {
                 shell.close();
             } catch (Exception e) {
-                Log.e("AIMSICD", "Closing shell - " + e);
+                Log.e("AIMSICD", "Closing shell: " + e);
             }
         }
     }
@@ -195,26 +195,32 @@ public class AtCommandFragment extends Fragment {
         public void onClick(View v) {
             if (mAtCommand.getText() != null) {
                 String command = mAtCommand.getText().toString();
-                if (command.toUpperCase().indexOf("AT") == 0) {
-                    Log.i("AIMSICD", "AT Command Detected");
+
+                // E:V:A This need to be fixed, AT commands can often be lowercase,
+                // and it's possible that some OEM AT's are case sensitive.
+                // Let's try to not mix terminal shell access with AT commands.
+                // May still be useful for debugging PID and GID/UID etc.
+
+                //if (command.toUpperCase().indexOf("AT") == 0) {
+                    Log.i("AIMSICD", "AT Command Detected: " + command );
                     executeAT();
-                } else {
-                    Log.i("AIMSICD", "Terminal Command Detected");
-                    executeCommand();
-                }
+                //} else {
+                //    Log.i("AIMSICD", "Terminal Command Detected");
+                //    executeCommand();
+                //}
             }
         }
     }
 
     private int initSerialDevice() {
 
-        //Check for root access
+        // Check for root access
         boolean root = RootTools.isAccessGiven();
         if (!root) {
             return ROOT_UNAVAILABLE;
         }
 
-        //Check busybox is installed
+        // Check if Busybox is installed
         boolean busybox = RootTools.isBusyboxAvailable();
         if (!busybox) {
             return BUSYBOX_UNAVAILABLE;
@@ -226,7 +232,7 @@ public class AtCommandFragment extends Fragment {
             mAtResponse.setText("*** Setting Up... Ignore any errors. ***\n");
 
             mSerialDevices.clear();
-            //Draw Ril Serial Device details from the System Property
+            // Use RIL Serial Device details from the System Property
             String rilDevice = Helpers.getSystemProp(mContext, "rild.libargs", "UNKNOWN");
             mSerialDevice = (rilDevice.equals("UNKNOWN") ? rilDevice : rilDevice.substring(3));
 
@@ -234,8 +240,14 @@ public class AtCommandFragment extends Fragment {
                 mSerialDevices.add(mSerialDevice);
             }
 
+            //==================================================================
+            // WARNING:  Scraping commands can be masked by aliases in: mkshrc
+            //           and elsewhere. To get unaliased versions, use:
+            //           "\<command>"
+            //==================================================================
+
             //Check for ATCI devices and add found location to the serial device list
-            CommandCapture cmd = new CommandCapture(0, "ls /dev/radio | grep atci*") {
+            CommandCapture cmd = new CommandCapture(0, "\\ls /dev/radio | grep atci*") {
 
                 @Override
                 public void commandOutput(int id, String line) {
@@ -243,7 +255,7 @@ public class AtCommandFragment extends Fragment {
                         if (!line.trim().equals("") &&
                                 !mSerialDevices.contains("/dev/radio/" + line.trim())) {
                             mSerialDevices.add("/dev/radio/" + line.trim());
-                            mAtResponse.append("Found: /dev/radio/" + line.trim());
+                            mAtResponse.append("Found: " + line.trim());
                         }
                     }
                 }
@@ -252,7 +264,7 @@ public class AtCommandFragment extends Fragment {
             shell.add(cmd);
             commandWait(shell, cmd);
 
-            //Now try xgold modem config
+            // Now try XMM/XGOLD modem config
             File xgold = new File("/system/etc/ril_xgold_radio.cfg");
             if (xgold.exists() && xgold.isFile()) {
                 cmd = new CommandCapture(1, "cat /system/etc/ril_xgold_radio.cfg | "
@@ -303,7 +315,7 @@ public class AtCommandFragment extends Fragment {
         try {
             shell.add(cmd);
             commandWait(shell, cmd);
-            Log.e("AIMSICD", "setSerialDevice finished on " + mSerialDevice);
+            Log.i("AIMSICD", "setSerialDevice finished on " + mSerialDevice);
         } catch (Exception e) {
             Log.e("AIMSICD", "setSerialDevice " + e);
         }
@@ -313,7 +325,7 @@ public class AtCommandFragment extends Fragment {
         if (mAtCommand.getText() != null) {
             try {
                 CommandCapture cmd = new CommandCapture(EXECUTE_AT,
-                        "echo -e " + mAtCommand.getText().toString().toUpperCase() +"\r > " + mSerialDevice + "\n") {
+                        "echo -e " + mAtCommand.getText().toString() +"\r >" + mSerialDevice + "\n") {
 
                     @Override
                     public void commandOutput(int id, String line) {
@@ -324,11 +336,11 @@ public class AtCommandFragment extends Fragment {
                         }
                     }
                 };
-
+                //Log.i("AIMSICD", "executeAT: " + cmd);
                 shell.add(cmd);
                 commandWait(shell, cmd);
             } catch (Exception e) {
-                Log.e("AIMSICD", "executeAT - " + e);
+                Log.e("AIMSICD", "executeAT: " + e);
             }
         }
 
@@ -361,7 +373,6 @@ public class AtCommandFragment extends Fragment {
 
     /**
      * This below method is part of the RootTools Project: http://code.google.com/p/roottools/
-     *
      * Copyright (c) 2012 Stephen Erickson, Chris Ravenscroft, Dominik Schuermann, Adam Shanks
      *
      * Slightly modified commandWait method as found in RootToolsInternalMethods.java to utilise
