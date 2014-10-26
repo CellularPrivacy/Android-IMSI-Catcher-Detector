@@ -63,7 +63,7 @@
 <ul>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction">Introduction</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#want-to-know-what-imsi-catchers-look-like">IMSI-Catchers</a></li>
-<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#this-project">Project Goals</a></li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#application-goals-please-read-carefully">Project Goals</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#other-projects-not-this-one">Limitations</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap">Roadmap</a></li>
 <li><strong><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases">WIP-RELEASES</a></strong></li>
@@ -155,36 +155,38 @@
 <hr>
 
 <h3>
-<a name="goals-please-read-carefully" class="anchor" href="#goals-please-read-carefully"><span class="octicon octicon-link"></span></a>Goals (please read carefully!)</h3>
-
-<h3>
-<a name="this-project" class="anchor" href="#this-project"><span class="octicon octicon-link"></span></a>This project:</h3>
+<a name="application-goals-please-read-carefully" class="anchor" href="#application-goals-please-read-carefully"><span class="octicon octicon-link"></span></a>Application Goals (please read carefully!)</h3>
 
 <ul>
-<li>Detects IMSI based device location tracking</li>
-<li>Provides counter measures against tracking</li>
-<li>Can provide swarm-wise-decision-based cellular service interruption</li>
-<li>Can provide secure wifi/wimax alternative data routes through MESH-like networking</li>
+<li>Detect IMSI based device location tracking</li>
+<li>Detect and prevent the use of false BTS towers used for illegal interception</li>
+<li>Detect and prevent the use of broken ciphering algorithms (A5/1) during calls</li>
 <li>Detect and prevent remote hidden application installation</li>
 <li>Detect and prevent remote hidden SMS-based SIM attacks</li>
-<li>Prevent or spoof GPS data</li>
-<li>Does NOT secure any data transmissions</li>
-<li>Does NOT prevent already installed rogue application from full access</li>
+<li>Provide counter measures against tracking</li>
+<li>Prevent leakage of sensitive GPS data</li>
+<li>Provide swarm-wise-decision-based cellular service interruption</li>
+<li>Provide secure wifi/wimax alternative data routes through MESH-like networking</li>
 <li>Aims to be recommended and added to the <a href="https://guardianproject.info/apps">Guardian Project's list of secure Apps</a>
 </li>
 <li>Aims to be recommended by the <a href="https://ssd.eff.org/">SSD Project of the Electronic Frontier Foundation</a>
 </li>
 <li>Aims to be recommended by <a href="https://www.privacyinternational.org/">Privacy International</a> (and like-minded organizations)</li>
+<li>Does <strong>not</strong> secure any data transmissions</li>
+<li>Does <strong>not</strong> prevent already installed rogue applications from full access and spying</li>
 </ul>
 
-<h3>
-<a name="other-projects-not-this-one" class="anchor" href="#other-projects-not-this-one"><span class="octicon octicon-link"></span></a>Other projects (NOT this one):</h3>
+<h5>
+<a name="other-projects-not-this-one" class="anchor" href="#other-projects-not-this-one"><span class="octicon octicon-link"></span></a>Other projects (NOT this one):</h5>
 
 <ul>
 <li>Provide full device encryption</li>
+<li>Provide secure data transmission (VPN, Tor)</li>
+<li>Provide secure phone calls (We recommend: <a href="https://github.com/WhisperSystems/RedPhone">RedPhone</a>)</li>
+<li>Provide secure SMS (We recommend: <a href="https://github.com/WhisperSystems/TextSecure">TextSecure</a>)</li>
 <li>Provide secure application sand-boxing</li>
-<li>Provide secure data transmission</li>
-<li>Provide firewalls (recommended: <a href="https://github.com/ukanth/afwall">AFWall+</a>)</li>
+<li>Provide application permission control (We recommend: <a href="http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783">XPrivacy</a>)</li>
+<li>Provide firewalls (We recommend: <a href="https://github.com/ukanth/afwall">AFWall+</a>)</li>
 </ul>
 
 <hr>
@@ -192,48 +194,69 @@
 <h1>
 <a name="development-roadmap" class="anchor" href="#development-roadmap"><span class="octicon octicon-link"></span></a>Development Roadmap</h1>
 
-<p>In short: We're merely using any possible way to overcome the ridiculous AOS limitations on displaying highly important and relevant network variables and data. One of those is the Ciphering Indicator that has been 3GPP "required" for the last 10-15 years, but which Google and most Network providers choose to ignore. (Since they didn't want to implement better encryption, until very recently.) Another is finding the Timing Advance and various Network (RRC) Timers.</p>
+<p>In order to accomplish the goals set above, we'll need to overcome some of the deeply worrying and unfounded AOS limitations, as imposed by Googles API, in regard to relevant network variables and data. These include highly relevant and important things such as displaying the SIM/phone Ciphering Indicator, which tells you if your calls are being encrypted or not. This has been a required 3GPP feature for the last 15 years, but which Google and most Mobile Network providers have choosen to mostly ignore, although it has been <a href="https://code.google.com/p/android/issues/detail?id=5353">requested by users since 2009</a>. Another is finding the <em>Timing Advance</em> (TA) and various Network Timers, like those used in <em>Radio Resource Control</em> (<a href="http://en.wikipedia.org/wiki/Radio_Resource_Control">RRC</a>), that can give very useful information regarding the status of the connections your phone is making. </p>
 
-<ol>
-<li><p>There are several types of silent SMS, most of which are already detectable and there is nothing strange with that. It does need further testing for a greater variety of devices, and to see what would happen on a real IMSI-Catcher.</p></li>
-<li><p>Sending AT commands to the baseband processor and use the results to detect anomalies is an ongoing challenge because certain basebands do not expose enough usable information. The whole detection process is strongly hardware dependent, some basebands expose everything (MTK) and others (Qualcomm) expose very little, since they have their own protocols (DM/QMI). But the SIM card filesystem does provide useful info. So a combination of AT commands, SIM card readings and also API access to Service Mode (Samsung) menus, can provide all that we need and more. But it is a rather technical challenge for our developers to do this, and to collect all support material needed. That's where YOU come into play. Check our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues?q=is%3Aopen+is%3Aissue">open Issues</a> and help us!</p></li>
-<li><p>OBB support would be crucial, but we're not really proposing this. Very few people would bother going through the pain of finding an appropriate OBB compatible phone, less implementing it as a piggy-back to an Android. So unless some OBB developer serves the required Java + binaries to us on a silver platter, this will not be a feature of AIMSICD.</p></li>
-</ol>
+<p>All this can be fairly easily accomplished, given that we can have access to some of the lower level radio related information coming from the <em>Baseband Processor</em> (BP). But that is exactly our challenge. All the software and information about the interfaces providing this, is hidden from the user and developers by a huge amount of proprietary OEM <em>Non Disclosure Agreements</em> (NDA). But in the last years, there has been great progress in reverse enginering these protocols and interfaces. The use of these open source tools are the basis of our successful development of this app. </p>
 
-<p>Below structure does NOT mean we will create 3 Apps. It will be "1 App to Rule Them ALL".</p>
+<p>To summarize the main stages of this development: </p>
 
-<h5>
-<a name="make-an-empty-shell-app-that" class="anchor" href="#make-an-empty-shell-app-that"><span class="octicon octicon-link"></span></a>Make an empty "shell" App that:</h5>
+<p>A. Using all available network data, implement the correct detection matrix consisting of a number of items, that each participate in detection of abnormal or abusive network bahaviour. This is the application <em>Beta</em> stage. </p>
+
+<p>B. Using all possible interfaces to obtain the many variables in (A). These interfaces include:</p>
 
 <ul>
-<li>a. collects relevant RF related variables using public API calls. (LAC etc)</li>
-<li>b. puts them in an SQLite database</li>
-<li>c. catches hidden SMS's</li>
-<li>d. catches hidden App installations</li>
+<li>QMI/Sahara protocols for using on Qualcomm based devices (<em>Gobi3000, qmilib</em>)</li>
+<li>Samsung IPC protocol for using on Intel XMM (XGOLD) based devices (<em>xgoldmon, Replicant</em>)</li>
+<li>Direct use of AOS standard RIL interfaces (<em>/dev/rild</em> and <em>/dev/rild-debug</em>)</li>
+<li>SIM ICC interface for accessing SIM EF filesystem to provide deep access (<em>SEEK</em>)</li>
+<li>Scraping <em>Service Mode</em> menus for relevant radio info</li>
+<li>Scrape <code>logcat -b radio</code> for relevant radio info </li>
+<li>Use AT Command Processor (ATCoP) interface to get/set network parameters/bahaviour</li>
+</ul>
+
+<p>C. Make (A) and (B) transparent across as many Android devices as possible.</p>
+
+<h5>
+<a name="alpha-stage" class="anchor" href="#alpha-stage"><span class="octicon octicon-link"></span></a>ALPHA stage:</h5>
+
+<p>Make a baseline App that contains the basic functionality for collecting and presenting all available network variables and the detection results.</p>
+
+<ul>
+<li>a. Collects relevant RF related variables using public AOS API calls. (LAC, CID, TA etc)</li>
+<li>b. Collects detailed BTS information from a pulic database such as <em>OpenCellID</em> or <em>Mozilla Location Services</em>
+</li>
+<li>c. Save everything in our SQLite database</li>
+<li>d. Detect hidden/silent (Type-0) SMS's</li>
+<li>e. Detect hidden App installations (Googles INSTALL/REMOVE_ASSET)</li>
 </ul>
 
 <h5>
-<a name="make-another-empty-shell-app-or-module-that" class="anchor" href="#make-another-empty-shell-app-or-module-that"><span class="octicon octicon-link"></span></a>Make another empty "shell" App (or module) that:</h5>
+<a name="beta-stage" class="anchor" href="#beta-stage"><span class="octicon octicon-link"></span></a>BETA stage:</h5>
+
+<p>Improve ALPHA for leveraging and tune our detection matrix/algorithm.</p>
 
 <ul>
-<li>e. opens a device <strong>local</strong> terminal root shell</li>
-<li>f. uses (e.) to connect to modem AT-Command Processor ATCoP via shared memory interface SHM</li>
-<li>g. displays results from sent AT commands</li>
-<li>
-<strong>CRUCIAL</strong> to our project: Please help E:V:A develop a <a href="http://forum.xda-developers.com/showthread.php?t=1708598">Native AT Command Injector</a>!</li>
+<li>f. Implement <strong>any</strong> of the detection schemes we have</li>
+<li>g. Implement <strong>any</strong> of the interfaces in (<strong>B</strong>) </li>
+<li>h. Test AIMSICD in a real IMSI-catcher environment </li>
+<li>i. Fine-tune our detection matrix</li>
+<li>j. Implement our first counter interception measures</li>
+<li>k. Planning alternative data routes through MESH-like networking, when cellular services have been interrupted</li>
+<li>l. Planning swarm-wise decision-based cellular service analysis (advanced BTS statistics)</li>
 </ul>
 
 <h5>
-<a name="possibly-make-another-app-that" class="anchor" href="#possibly-make-another-app-that"><span class="octicon octicon-link"></span></a>[Possibly] Make another App that:</h5>
+<a name="golden-stage" class="anchor" href="#golden-stage"><span class="octicon octicon-link"></span></a>GOLDEN stage:</h5>
+
+<p>This stage is essentially the completion of this project. However, we expect that long before this happens, the entire network industry will have changed to such a degree that many new privacy and security issues will have arised. Thus, we will likely have more things to add and maintain in this project. We are of the current understanding that this project is a never ending story, all for the peoples benefit and a more privacy oriented future.</p>
 
 <ul>
-<li>h. use the OTG (USB-host-mode) interface to use FTDI serial cable to interface with another OsmocomBB compatible phone (using Android host as a GUI host)</li>
-<li>i. uses the "<a href="https://opensource.srlabs.de/projects/mobile-network-assessment-tools/wiki/CatcherCatcher">CatcherCatcher</a>" detector SW on the 2nd phone</li>
-<li>j. can inject fake 2G GSM location data</li>
-<li>k. find out how to access L0-L2 data using the ATCoP connection</li>
-<li>l. use a statistical algorithm on the DB data to detect rogue IMSI-Catchers</li>
-<li>m. combine all of the above (steps h to l) into a BETA App for testing, add languages</li>
-<li>n. improve BETA app by adding (many more) IMSI-Catcher counter measures</li>
+<li>m. Implement <strong>all</strong> of the detection schemes we have</li>
+<li>n. Implement <strong>all</strong> of the interfaces in (B) </li>
+<li>o. Test AIMSICD in a real IMSI-catcher environment</li>
+<li>p. Continue Fine-tune our detection matrix</li>
+<li>q. Complete alternative data routes using MESH-like networking, when cellular services have been interrupted</li>
+<li>r. Complete advanced statistical analysis of fake BTS towers</li>
 </ul>
 
 <hr>
@@ -257,7 +280,7 @@
 
 <p>Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending <a href="https://www.darkcoin.io/">DarkCoin</a> to our DONATION ADDRESS: <strong>XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys</strong></p>
 
-<p>All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will <strong>NOT</strong> reward junk, only awesome stuff. Additionally, donations will be used to support these organizations:</p>
+<p>All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of DarkCoins each developer receives will vary with the value of each merged commit. To be perfectly clear: We will <strong>NOT</strong> reward junk, only awesome stuff. Additionally, donations will be used to support these organizations (contact us if you want to join our movement):</p>
 
 <p><a href="https://www.eff.org/"><img src="https://www.eff.org/sites/all/themes/frontier/images/logo_full.png" alt="EFF"></a>
 <a href="https://guardianproject.info/"><img src="https://guardianproject.info/wp-content/uploads/2013/09/cropped-GP_logo+txt_hires_black_on_trans_header.png" alt="Guardian Project"></a>
