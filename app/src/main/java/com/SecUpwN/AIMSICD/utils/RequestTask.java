@@ -136,10 +136,13 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         try {
                             String error = Helpers
                                     .convertStreamToString(urlConnection.getErrorStream());
+                            Helpers.msgLong(mContext, "Download error: " + error);
                             Log.e("AIMSICD", "Download ocid data error: " + error);
                         } catch (Exception e) {
+                            Helpers.msgLong(mContext, "Download error: " + e.getClass().getName() + " - " + e.getMessage());
                             Log.e("AIMSICD", "Download ocid - " + e);
                         }
+                        return "Error";
                     } else {
                         total = urlConnection.getContentLength();
                         publishProgress(progress, total);
