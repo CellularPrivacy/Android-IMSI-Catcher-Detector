@@ -5863,37 +5863,37 @@ com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter -> com.SecUpwN.AIMSICD.adapters.AI
     android.database.sqlite.SQLiteDatabase mDb -> j
     android.content.Context mContext -> k
     int DATABASE_VERSION -> DATABASE_VERSION
-    55:56:com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter open() -> open
-    60:61:void close() -> close
-    64:71:long insertSilentSms(android.os.Bundle) -> insertSilentSms
-    84:109:long insertCell(int,int,int,double,double,int,int,int,double,double,double,java.lang.String,long) -> insertCell
-    119:143:long insertCell(com.SecUpwN.AIMSICD.utils.Cell) -> insertCell
-    156:171:long insertOpenCell(double,double,int,int,int,int,int,int) -> a
-    184:203:long insertLocation(int,int,int,double,double,int,java.lang.String) -> insertLocation
-    210:210:android.database.Cursor getSilentSmsData() -> getSilentSmsData
-    220:220:android.database.Cursor getCellData() -> getCellData
-    230:230:android.database.Cursor getOPCIDSubmitData() -> getOPCIDSubmitData
-    240:240:android.database.Cursor getLocationData() -> getLocationData
-    250:250:android.database.Cursor getOpenCellIDData() -> getOpenCellIDData
-    260:260:android.database.Cursor getDefaultMccLocationData() -> getDefaultMccLocationData
-    268:274:boolean locationExists(int,double,double,int) -> a
-    281:287:boolean cellExists(int) -> a
-    294:300:boolean openCellExists(int) -> b
-    304:318:boolean checkLAC(com.SecUpwN.AIMSICD.utils.Cell) -> checkLAC
-    325:330:void ocidProcessed() -> ocidProcessed
-    333:348:double[] getDefaultLocation(int) -> getDefaultLocation
-    352:354:void cleanseCellTable() -> cleanseCellTable
-    358:397:boolean prepareOpenCellUploadData() -> prepareOpenCellUploadData
-    406:442:void populateDefaultMCC(android.database.sqlite.SQLiteDatabase) -> a
-    449:487:boolean updateOpenCellID() -> updateOpenCellID
-    496:570:boolean restoreDB() -> restoreDB
-    582:588:boolean backupDB() -> backupDB
-    598:635:void backup(java.lang.String) -> a
+    56:57:com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter open() -> open
+    61:62:void close() -> close
+    65:72:long insertSilentSms(android.os.Bundle) -> insertSilentSms
+    85:110:long insertCell(int,int,int,double,double,int,int,int,double,double,double,java.lang.String,long) -> insertCell
+    120:144:long insertCell(com.SecUpwN.AIMSICD.utils.Cell) -> insertCell
+    157:172:long insertOpenCell(double,double,int,int,int,int,int,int) -> a
+    185:204:long insertLocation(int,int,int,double,double,int,java.lang.String) -> insertLocation
+    211:211:android.database.Cursor getSilentSmsData() -> getSilentSmsData
+    221:221:android.database.Cursor getCellData() -> getCellData
+    231:231:android.database.Cursor getOPCIDSubmitData() -> getOPCIDSubmitData
+    241:241:android.database.Cursor getLocationData() -> getLocationData
+    251:251:android.database.Cursor getOpenCellIDData() -> getOpenCellIDData
+    261:261:android.database.Cursor getDefaultMccLocationData() -> getDefaultMccLocationData
+    269:275:boolean locationExists(int,double,double,int) -> a
+    282:288:boolean cellExists(int) -> a
+    295:301:boolean openCellExists(int) -> b
+    305:319:boolean checkLAC(com.SecUpwN.AIMSICD.utils.Cell) -> checkLAC
+    326:331:void ocidProcessed() -> ocidProcessed
+    334:349:double[] getDefaultLocation(int) -> getDefaultLocation
+    353:355:void cleanseCellTable() -> cleanseCellTable
+    359:398:boolean prepareOpenCellUploadData() -> prepareOpenCellUploadData
+    407:443:void populateDefaultMCC(android.database.sqlite.SQLiteDatabase) -> a
+    450:488:boolean updateOpenCellID() -> updateOpenCellID
+    497:571:boolean restoreDB() -> restoreDB
+    583:589:boolean backupDB() -> backupDB
+    599:636:void backup(java.lang.String) -> a
     28:28:void access$000(com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter,android.database.sqlite.SQLiteDatabase) -> a
 com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter$DbHelper -> com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter$DbHelper:
     com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter this$0 -> a
-    652:704:void onCreate(android.database.sqlite.SQLiteDatabase) -> onCreate
-    708:719:void onUpgrade(android.database.sqlite.SQLiteDatabase,int,int) -> onUpgrade
+    653:705:void onCreate(android.database.sqlite.SQLiteDatabase) -> onCreate
+    709:720:void onUpgrade(android.database.sqlite.SQLiteDatabase,int,int) -> onUpgrade
 com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter -> com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter:
     java.util.List m_items -> a
     com.SecUpwN.AIMSICD.adapters.IAdapterViewInflater m_viewInflater -> b
@@ -6116,11 +6116,10 @@ com.SecUpwN.AIMSICD.fragments.AtCommandFragment -> com.SecUpwN.AIMSICD.fragments
     134:136:void onAttach(android.app.Activity) -> onAttach
     140:148:void onDestroy() -> onDestroy
     152:190:void onResume() -> onResume
-    212:298:int initSerialDevice() -> l
-    302:310:void setSerialDevice() -> m
-    313:335:void executeAT() -> n
-    338:360:void executeCommand() -> o
-    372:401:void commandWait(com.stericson.RootTools.execution.Shell,com.stericson.RootTools.execution.Command) -> a
+    218:310:int initSerialDevice() -> l
+    314:322:void setSerialDevice() -> m
+    325:347:void executeAT() -> n
+    383:412:void commandWait(com.stericson.RootTools.execution.Shell,com.stericson.RootTools.execution.Command) -> a
     30:30:int access$302(com.SecUpwN.AIMSICD.fragments.AtCommandFragment,int) -> a
     30:30:java.lang.String access$402(com.SecUpwN.AIMSICD.fragments.AtCommandFragment,java.lang.String) -> a
     30:30:android.widget.Spinner access$500(com.SecUpwN.AIMSICD.fragments.AtCommandFragment) -> a
@@ -6129,29 +6128,25 @@ com.SecUpwN.AIMSICD.fragments.AtCommandFragment -> com.SecUpwN.AIMSICD.fragments
     30:30:void access$700(com.SecUpwN.AIMSICD.fragments.AtCommandFragment) -> d
     30:30:android.widget.EditText access$800(com.SecUpwN.AIMSICD.fragments.AtCommandFragment) -> e
     30:30:void access$900(com.SecUpwN.AIMSICD.fragments.AtCommandFragment) -> f
-    30:30:void access$1000(com.SecUpwN.AIMSICD.fragments.AtCommandFragment) -> g
-    30:30:java.util.List access$1100(com.SecUpwN.AIMSICD.fragments.AtCommandFragment) -> h
-    30:30:android.widget.TextView access$1200(com.SecUpwN.AIMSICD.fragments.AtCommandFragment) -> i
+    30:30:java.util.List access$1000(com.SecUpwN.AIMSICD.fragments.AtCommandFragment) -> g
+    30:30:android.widget.TextView access$1100(com.SecUpwN.AIMSICD.fragments.AtCommandFragment) -> h
 com.SecUpwN.AIMSICD.fragments.AtCommandFragment$1 -> nt:
     com.SecUpwN.AIMSICD.fragments.AtCommandFragment this$0 -> a
-    242:249:void commandOutput(int,java.lang.String) -> commandOutput
+    254:261:void commandOutput(int,java.lang.String) -> commandOutput
 com.SecUpwN.AIMSICD.fragments.AtCommandFragment$2 -> nu:
     com.SecUpwN.AIMSICD.fragments.AtCommandFragment this$0 -> a
-    263:270:void commandOutput(int,java.lang.String) -> commandOutput
+    275:282:void commandOutput(int,java.lang.String) -> commandOutput
 com.SecUpwN.AIMSICD.fragments.AtCommandFragment$3 -> nv:
     com.SecUpwN.AIMSICD.fragments.AtCommandFragment this$0 -> a
-    320:325:void commandOutput(int,java.lang.String) -> commandOutput
-com.SecUpwN.AIMSICD.fragments.AtCommandFragment$4 -> nw:
+    332:337:void commandOutput(int,java.lang.String) -> commandOutput
+com.SecUpwN.AIMSICD.fragments.AtCommandFragment$btnClick -> nw:
     com.SecUpwN.AIMSICD.fragments.AtCommandFragment this$0 -> a
-    345:350:void commandOutput(int,java.lang.String) -> commandOutput
-com.SecUpwN.AIMSICD.fragments.AtCommandFragment$btnClick -> nx:
-    com.SecUpwN.AIMSICD.fragments.AtCommandFragment this$0 -> a
-    196:206:void onClick(android.view.View) -> onClick
-com.SecUpwN.AIMSICD.fragments.AtCommandFragment$spinnerListener -> ny:
+    196:212:void onClick(android.view.View) -> onClick
+com.SecUpwN.AIMSICD.fragments.AtCommandFragment$spinnerListener -> nx:
     com.SecUpwN.AIMSICD.fragments.AtCommandFragment this$0 -> a
     121:124:void onItemSelected(android.widget.AdapterView,android.view.View,int,long) -> onItemSelected
     129:129:void onNothingSelected(android.widget.AdapterView) -> onNothingSelected
-com.SecUpwN.AIMSICD.fragments.AtCommandFragment$timoutSpinnerListener -> nz:
+com.SecUpwN.AIMSICD.fragments.AtCommandFragment$timoutSpinnerListener -> ny:
     com.SecUpwN.AIMSICD.fragments.AtCommandFragment this$0 -> a
     89:108:void onItemSelected(android.widget.AdapterView,android.view.View,int,long) -> onItemSelected
     113:113:void onNothingSelected(android.widget.AdapterView) -> onNothingSelected
@@ -6197,28 +6192,28 @@ com.SecUpwN.AIMSICD.fragments.CellInfoFragment -> com.SecUpwN.AIMSICD.fragments.
     35:35:android.widget.TextView access$1000(com.SecUpwN.AIMSICD.fragments.CellInfoFragment) -> g
     35:35:android.widget.TableRow access$1100(com.SecUpwN.AIMSICD.fragments.CellInfoFragment) -> h
     35:35:boolean access$500(com.SecUpwN.AIMSICD.fragments.CellInfoFragment) -> i
-com.SecUpwN.AIMSICD.fragments.CellInfoFragment$1 -> oa:
+com.SecUpwN.AIMSICD.fragments.CellInfoFragment$1 -> nz:
     com.SecUpwN.AIMSICD.fragments.CellInfoFragment this$0 -> a
     61:63:void run() -> run
-com.SecUpwN.AIMSICD.fragments.CellInfoFragment$2 -> ob:
+com.SecUpwN.AIMSICD.fragments.CellInfoFragment$2 -> oa:
     com.SecUpwN.AIMSICD.fragments.CellInfoFragment this$0 -> a
     140:144:void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
     148:149:void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
-com.SecUpwN.AIMSICD.fragments.CellInfoFragment$3 -> oc:
+com.SecUpwN.AIMSICD.fragments.CellInfoFragment$3 -> ob:
     java.util.List val$list -> a
     com.SecUpwN.AIMSICD.fragments.CellInfoFragment this$0 -> b
     182:187:void run() -> run
-com.SecUpwN.AIMSICD.fragments.CellInfoFragment$4 -> od:
+com.SecUpwN.AIMSICD.fragments.CellInfoFragment$4 -> oc:
     java.util.List val$list -> a
     com.SecUpwN.AIMSICD.fragments.CellInfoFragment this$0 -> b
     225:230:void run() -> run
-com.SecUpwN.AIMSICD.fragments.CellInfoFragment$CellAsyncTask -> oe:
+com.SecUpwN.AIMSICD.fragments.CellInfoFragment$CellAsyncTask -> od:
     com.SecUpwN.AIMSICD.fragments.CellInfoFragment this$0 -> a
     243:253:java.lang.Boolean doInBackground(java.lang.Integer[]) -> a
     258:264:void onPostExecute(java.lang.Boolean) -> a
     240:240:void onPostExecute(java.lang.Object) -> onPostExecute
     240:240:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.SecUpwN.AIMSICD.fragments.CellInfoFragment$btnClick -> of:
+com.SecUpwN.AIMSICD.fragments.CellInfoFragment$btnClick -> oe:
     com.SecUpwN.AIMSICD.fragments.CellInfoFragment this$0 -> a
     156:158:void onClick(android.view.View) -> onClick
 com.SecUpwN.AIMSICD.fragments.DbViewerFragment -> com.SecUpwN.AIMSICD.fragments.DbViewerFragment:
@@ -6241,18 +6236,18 @@ com.SecUpwN.AIMSICD.fragments.DbViewerFragment -> com.SecUpwN.AIMSICD.fragments.
     29:29:java.lang.String access$200(com.SecUpwN.AIMSICD.fragments.DbViewerFragment) -> e
     29:29:com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter access$700(com.SecUpwN.AIMSICD.fragments.DbViewerFragment,android.database.Cursor) -> a
     29:29:android.view.View access$800(com.SecUpwN.AIMSICD.fragments.DbViewerFragment) -> f
-com.SecUpwN.AIMSICD.fragments.DbViewerFragment$1 -> og:
-com.SecUpwN.AIMSICD.fragments.DbViewerFragment$btnClick -> oh:
+com.SecUpwN.AIMSICD.fragments.DbViewerFragment$1 -> of:
+com.SecUpwN.AIMSICD.fragments.DbViewerFragment$btnClick -> og:
     com.SecUpwN.AIMSICD.fragments.DbViewerFragment this$0 -> a
     92:150:void onClick(android.view.View) -> onClick
-com.SecUpwN.AIMSICD.fragments.DbViewerFragment$btnClick$1 -> oi:
+com.SecUpwN.AIMSICD.fragments.DbViewerFragment$btnClick$1 -> oh:
     android.view.View val$v -> a
     com.SecUpwN.AIMSICD.fragments.DbViewerFragment$btnClick this$1 -> b
     101:128:com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter doInBackground(java.lang.Void[]) -> a
     133:147:void onPostExecute(com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter) -> a
     97:97:void onPostExecute(java.lang.Object) -> onPostExecute
     97:97:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.SecUpwN.AIMSICD.fragments.DbViewerFragment$spinnerListener -> oj:
+com.SecUpwN.AIMSICD.fragments.DbViewerFragment$spinnerListener -> oi:
     com.SecUpwN.AIMSICD.fragments.DbViewerFragment this$0 -> a
     78:80:void onItemSelected(android.widget.AdapterView,android.view.View,int,long) -> onItemSelected
     84:85:void onNothingSelected(android.widget.AdapterView) -> onNothingSelected
@@ -6263,7 +6258,7 @@ com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment -> com.SecUpwN.AIMSICD.fr
     28:28:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     33:63:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
     66:74:void setCurrentPage(int) -> setCurrentPage
-com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment$1 -> ok:
+com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment$1 -> oj:
     com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration val$mNavConf -> a
     com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment this$0 -> b
     44:44:void onPageScrolled(int,float,int) -> onPageScrolled
@@ -6287,11 +6282,11 @@ com.SecUpwN.AIMSICD.fragments.DeviceFragment -> com.SecUpwN.AIMSICD.fragments.De
     26:26:boolean access$102(com.SecUpwN.AIMSICD.fragments.DeviceFragment,boolean) -> a
     26:26:void access$200(com.SecUpwN.AIMSICD.fragments.DeviceFragment) -> a
     26:26:android.content.Context access$300(com.SecUpwN.AIMSICD.fragments.DeviceFragment) -> b
-com.SecUpwN.AIMSICD.fragments.DeviceFragment$1 -> ol:
+com.SecUpwN.AIMSICD.fragments.DeviceFragment$1 -> ok:
     com.SecUpwN.AIMSICD.fragments.DeviceFragment this$0 -> a
     93:96:void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
     100:102:void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
-com.SecUpwN.AIMSICD.fragments.DeviceFragment$2 -> om:
+com.SecUpwN.AIMSICD.fragments.DeviceFragment$2 -> ol:
     com.SecUpwN.AIMSICD.fragments.DeviceFragment this$0 -> a
     108:113:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.SecUpwN.AIMSICD.fragments.MapPrefFragment -> com.SecUpwN.AIMSICD.fragments.MapPrefFragment:
@@ -6350,12 +6345,12 @@ com.SecUpwN.AIMSICD.rilexecutor.RilExecutor -> com.SecUpwN.AIMSICD.rilexecutor.R
     28:28:com.SecUpwN.AIMSICD.rilexecutor.OemRilExecutor access$400(com.SecUpwN.AIMSICD.rilexecutor.RilExecutor) -> c
     28:28:java.util.List access$200(com.SecUpwN.AIMSICD.rilexecutor.RilExecutor) -> d
     28:28:android.os.ConditionVariable access$500(com.SecUpwN.AIMSICD.rilexecutor.RilExecutor) -> e
-com.SecUpwN.AIMSICD.rilexecutor.RilExecutor$1 -> on:
-com.SecUpwN.AIMSICD.rilexecutor.RilExecutor$KeyStep -> oo:
+com.SecUpwN.AIMSICD.rilexecutor.RilExecutor$1 -> om:
+com.SecUpwN.AIMSICD.rilexecutor.RilExecutor$KeyStep -> on:
     char keychar -> a
     boolean captureResponse -> b
     com.SecUpwN.AIMSICD.rilexecutor.RilExecutor$KeyStep KEY_START_SERVICE_MODE -> c
-com.SecUpwN.AIMSICD.rilexecutor.RilExecutor$MyHandler -> op:
+com.SecUpwN.AIMSICD.rilexecutor.RilExecutor$MyHandler -> oo:
     int mCurrentType -> b
     int mCurrentSubtype -> c
     java.util.Queue mKeySequence -> d
@@ -6374,11 +6369,11 @@ com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor -> com.SecUpwN.AIM
     int RIL_CLIENT_ERR_UNKNOWN -> RIL_CLIENT_ERR_UNKNOWN
     java.lang.String TAG -> a
     com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor$LocalSocketThread mThread -> b
-    82:110:com.SecUpwN.AIMSICD.rilexecutor.DetectResult detect() -> detect
-    115:121:void start() -> start
-    125:131:void stop() -> stop
-    135:144:void invokeOemRilRequestRaw(byte[],android.os.Message) -> invokeOemRilRequestRaw
-    148:157:void invokeOemRilRequestStrings(java.lang.String[],android.os.Message) -> invokeOemRilRequestStrings
+    82:114:com.SecUpwN.AIMSICD.rilexecutor.DetectResult detect() -> detect
+    119:125:void start() -> start
+    129:135:void stop() -> stop
+    139:148:void invokeOemRilRequestRaw(byte[],android.os.Message) -> invokeOemRilRequestRaw
+    152:161:void invokeOemRilRequestStrings(java.lang.String[],android.os.Message) -> invokeOemRilRequestStrings
     37:37:java.lang.String access$000() -> a
 com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor$LocalSocketThread -> com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor$LocalSocketThread:
     android.net.LocalSocketAddress mSocketPath -> b
@@ -6389,16 +6384,16 @@ com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor$LocalSocketThread 
     java.util.Random mTokenGen -> g
     java.util.Map mMessages -> h
     com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor this$0 -> a
-    190:195:void cancel() -> cancel
-    200:227:void invokeOemRilRequestRaw(byte[],android.os.Message) -> invokeOemRilRequestRaw
-    232:257:void invokeOemRilRequestStrings(java.lang.String[],android.os.Message) -> invokeOemRilRequestStrings
-    260:261:byte[] getHeader(byte[]) -> a
-    270:276:byte[] marshallRequest(int,byte[]) -> a
-    280:286:byte[] marshallRequest(int,java.lang.String[]) -> a
-    294:331:void disconnect() -> disconnect
-    336:389:void run() -> run
-    400:420:void processRxPacket(byte[],int,int) -> a
-    423:470:int processSolicited(android.os.Parcel) -> a
+    194:199:void cancel() -> cancel
+    204:231:void invokeOemRilRequestRaw(byte[],android.os.Message) -> invokeOemRilRequestRaw
+    236:261:void invokeOemRilRequestStrings(java.lang.String[],android.os.Message) -> invokeOemRilRequestStrings
+    264:265:byte[] getHeader(byte[]) -> a
+    274:280:byte[] marshallRequest(int,byte[]) -> a
+    284:290:byte[] marshallRequest(int,java.lang.String[]) -> a
+    298:335:void disconnect() -> disconnect
+    340:393:void run() -> run
+    404:424:void processRxPacket(byte[],int,int) -> a
+    427:474:int processSolicited(android.os.Parcel) -> a
 com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor$RemoteException -> com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor$RemoteException:
 com.SecUpwN.AIMSICD.rilexecutor.StringsResult -> com.SecUpwN.AIMSICD.rilexecutor.StringsResult:
     java.lang.String[] result -> result
@@ -6429,7 +6424,7 @@ com.SecUpwN.AIMSICD.service.AccelerometerMonitor -> com.SecUpwN.AIMSICD.service.
     13:13:float access$300(com.SecUpwN.AIMSICD.service.AccelerometerMonitor) -> d
     13:13:long access$402(com.SecUpwN.AIMSICD.service.AccelerometerMonitor,long) -> a
     13:13:java.lang.Runnable access$500(com.SecUpwN.AIMSICD.service.AccelerometerMonitor) -> e
-com.SecUpwN.AIMSICD.service.AccelerometerMonitor$1 -> oq:
+com.SecUpwN.AIMSICD.service.AccelerometerMonitor$1 -> op:
     com.SecUpwN.AIMSICD.service.AccelerometerMonitor this$0 -> a
     43:78:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
     83:83:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
@@ -6470,19 +6465,19 @@ com.SecUpwN.AIMSICD.service.AimsicdService -> com.SecUpwN.AIMSICD.service.Aimsic
     84:84:com.SecUpwN.AIMSICD.service.AccelerometerMonitor access$400(com.SecUpwN.AIMSICD.service.AimsicdService) -> e
     84:84:boolean access$502(com.SecUpwN.AIMSICD.service.AimsicdService,boolean) -> a
     84:84:void access$600(com.SecUpwN.AIMSICD.service.AimsicdService) -> f
-com.SecUpwN.AIMSICD.service.AimsicdService$1 -> or:
+com.SecUpwN.AIMSICD.service.AimsicdService$1 -> oq:
     com.SecUpwN.AIMSICD.service.AimsicdService this$0 -> a
     121:126:void run() -> run
-com.SecUpwN.AIMSICD.service.AimsicdService$2 -> os:
+com.SecUpwN.AIMSICD.service.AimsicdService$2 -> or:
     com.SecUpwN.AIMSICD.service.AimsicdService this$0 -> a
     197:208:void run() -> run
-com.SecUpwN.AIMSICD.service.AimsicdService$3 -> ot:
+com.SecUpwN.AIMSICD.service.AimsicdService$3 -> os:
     com.SecUpwN.AIMSICD.service.AimsicdService this$0 -> a
     252:254:void onClick(android.content.DialogInterface,int) -> onClick
-com.SecUpwN.AIMSICD.service.AimsicdService$4 -> ou:
+com.SecUpwN.AIMSICD.service.AimsicdService$4 -> ot:
     com.SecUpwN.AIMSICD.service.AimsicdService this$0 -> a
     243:248:void onClick(android.content.DialogInterface,int) -> onClick
-com.SecUpwN.AIMSICD.service.AimsicdService$5 -> ov:
+com.SecUpwN.AIMSICD.service.AimsicdService$5 -> ou:
     com.SecUpwN.AIMSICD.service.AimsicdService this$0 -> a
     265:267:void onLocationChanged(android.location.Location) -> onLocationChanged
     271:274:void onProviderDisabled(java.lang.String) -> onProviderDisabled
@@ -6550,22 +6545,22 @@ com.SecUpwN.AIMSICD.service.CellTracker -> com.SecUpwN.AIMSICD.service.CellTrack
     47:47:android.os.Handler access$500(com.SecUpwN.AIMSICD.service.CellTracker) -> d
     47:47:void access$600(com.SecUpwN.AIMSICD.service.CellTracker,android.telephony.ServiceState) -> a
     47:47:void access$700(com.SecUpwN.AIMSICD.service.CellTracker) -> e
-com.SecUpwN.AIMSICD.service.CellTracker$1 -> ow:
+com.SecUpwN.AIMSICD.service.CellTracker$1 -> ov:
     com.SecUpwN.AIMSICD.service.CellTracker this$0 -> a
     191:198:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.SecUpwN.AIMSICD.service.CellTracker$2 -> ox:
+com.SecUpwN.AIMSICD.service.CellTracker$2 -> ow:
     com.SecUpwN.AIMSICD.service.CellTracker this$0 -> a
     393:427:void onCellLocationChanged(android.telephony.CellLocation) -> onCellLocationChanged
     431:440:void onSignalStrengthsChanged(android.telephony.SignalStrength) -> onSignalStrengthsChanged
     443:465:void onDataActivity(int) -> onDataActivity
     468:486:void onDataConnectionStateChanged(int) -> onDataConnectionStateChanged
-com.SecUpwN.AIMSICD.service.CellTracker$3 -> oy:
+com.SecUpwN.AIMSICD.service.CellTracker$3 -> ox:
     com.SecUpwN.AIMSICD.service.CellTracker this$0 -> a
     716:756:void run() -> run
-com.SecUpwN.AIMSICD.service.CellTracker$4 -> oz:
+com.SecUpwN.AIMSICD.service.CellTracker$4 -> oy:
     com.SecUpwN.AIMSICD.service.CellTracker this$0 -> a
     781:783:void onServiceStateChanged(android.telephony.ServiceState) -> onServiceStateChanged
-com.SecUpwN.AIMSICD.service.CellTracker$5 -> pa:
+com.SecUpwN.AIMSICD.service.CellTracker$5 -> oz:
     com.SecUpwN.AIMSICD.service.CellTracker this$0 -> a
     901:902:void handle() -> a
     906:907:void onServiceStateChanged(android.telephony.ServiceState) -> onServiceStateChanged
@@ -6590,8 +6585,8 @@ com.SecUpwN.AIMSICD.service.LocationTracker -> com.SecUpwN.AIMSICD.service.Locat
     19:19:android.location.Location access$100(com.SecUpwN.AIMSICD.service.LocationTracker) -> a
     19:19:long access$202(com.SecUpwN.AIMSICD.service.LocationTracker,long) -> a
     19:19:android.location.LocationListener access$300(com.SecUpwN.AIMSICD.service.LocationTracker) -> b
-com.SecUpwN.AIMSICD.service.LocationTracker$1 -> pb:
-com.SecUpwN.AIMSICD.service.LocationTracker$MyLocationListener -> pc:
+com.SecUpwN.AIMSICD.service.LocationTracker$1 -> pa:
+com.SecUpwN.AIMSICD.service.LocationTracker$MyLocationListener -> pb:
     com.SecUpwN.AIMSICD.service.LocationTracker this$0 -> a
     107:117:void onLocationChanged(android.location.Location) -> onLocationChanged
     121:122:void onProviderDisabled(java.lang.String) -> onProviderDisabled
@@ -6663,7 +6658,7 @@ com.SecUpwN.AIMSICD.utils.Cell -> com.SecUpwN.AIMSICD.utils.Cell:
     449:449:boolean isValid() -> isValid
     515:515:int describeContents() -> describeContents
     520:526:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.SecUpwN.AIMSICD.utils.Cell$1 -> pd:
+com.SecUpwN.AIMSICD.utils.Cell$1 -> pc:
     529:529:com.SecUpwN.AIMSICD.utils.Cell createFromParcel(android.os.Parcel) -> a
     533:533:com.SecUpwN.AIMSICD.utils.Cell[] newArray(int) -> a
     527:527:java.lang.Object[] newArray(int) -> newArray
@@ -6688,12 +6683,12 @@ com.SecUpwN.AIMSICD.utils.ChildProcess -> com.SecUpwN.AIMSICD.utils.ChildProcess
     127:135:boolean isFinished() -> isFinished
     139:156:int waitFinished() -> waitFinished
     160:163:com.SecUpwN.AIMSICD.utils.CommandResult getResult() -> getResult
-com.SecUpwN.AIMSICD.utils.ChildProcess$ChildReader -> pe:
+com.SecUpwN.AIMSICD.utils.ChildProcess$ChildReader -> pd:
     java.io.InputStream mStream -> a
     java.lang.StringBuffer mBuffer -> b
     com.SecUpwN.AIMSICD.utils.ChildProcess this$0 -> c
     48:63:void run() -> run
-com.SecUpwN.AIMSICD.utils.ChildProcess$ChildWriter -> pf:
+com.SecUpwN.AIMSICD.utils.ChildProcess$ChildWriter -> pe:
     java.io.OutputStream mStream -> a
     java.lang.String mBuffer -> b
     com.SecUpwN.AIMSICD.utils.ChildProcess this$0 -> c
@@ -6718,7 +6713,7 @@ com.SecUpwN.AIMSICD.utils.CommandResult -> com.SecUpwN.AIMSICD.utils.CommandResu
     158:158:java.lang.String toString() -> toString
     180:189:boolean equals(java.lang.Object) -> equals
     198:204:int hashCode() -> hashCode
-com.SecUpwN.AIMSICD.utils.CommandResult$1 -> pg:
+com.SecUpwN.AIMSICD.utils.CommandResult$1 -> pf:
     170:170:com.SecUpwN.AIMSICD.utils.CommandResult createFromParcel(android.os.Parcel) -> a
     174:174:com.SecUpwN.AIMSICD.utils.CommandResult[] newArray(int) -> a
     168:168:java.lang.Object[] newArray(int) -> newArray
@@ -7041,7 +7036,7 @@ com.stericson.RootTools.containers.RootClass -> com.stericson.RootTools.containe
     java.lang.String PATH_TO_DX -> a
     53:55:void displayError(java.lang.Exception) -> a
     306:315:void main(java.lang.String[]) -> main
-com.stericson.RootTools.containers.RootClass$1 -> ph:
+com.stericson.RootTools.containers.RootClass$1 -> pg:
     int[] $SwitchMap$com$stericson$RootTools$containers$RootClass$READ_STATE -> a
 com.stericson.RootTools.containers.RootClass$AnnotationsFinder -> com.stericson.RootTools.containers.RootClass$AnnotationsFinder:
     java.lang.String AVOIDDIRPATH -> a
@@ -7050,15 +7045,15 @@ com.stericson.RootTools.containers.RootClass$AnnotationsFinder -> com.stericson.
     196:226:boolean hasClassAnnotation(java.io.File) -> hasClassAnnotation
     230:273:java.lang.String getPathToDx() -> getPathToDx
     277:298:java.io.File getBuiltPath() -> getBuiltPath
-com.stericson.RootTools.containers.RootClass$AnnotationsFinder$1 -> pi:
+com.stericson.RootTools.containers.RootClass$AnnotationsFinder$1 -> ph:
     java.lang.String val$fileNamePrefix -> a
     com.stericson.RootTools.containers.RootClass$AnnotationsFinder this$0 -> b
     182:182:boolean accept(java.io.File,java.lang.String) -> accept
-com.stericson.RootTools.containers.RootClass$AnnotationsFinder$2 -> pj:
+com.stericson.RootTools.containers.RootClass$AnnotationsFinder$2 -> pi:
     com.stericson.RootTools.containers.RootClass$AnnotationsFinder this$0 -> a
     284:284:boolean accept(java.io.File) -> accept
 com.stericson.RootTools.containers.RootClass$Candidate -> com.stericson.RootTools.containers.RootClass$Candidate:
-com.stericson.RootTools.containers.RootClass$READ_STATE -> pk:
+com.stericson.RootTools.containers.RootClass$READ_STATE -> pj:
     com.stericson.RootTools.containers.RootClass$READ_STATE STARTING -> a
     com.stericson.RootTools.containers.RootClass$READ_STATE FOUND_ANNOTATION -> b
     com.stericson.RootTools.containers.RootClass$READ_STATE[] $VALUES -> c
@@ -7103,11 +7098,11 @@ com.stericson.RootTools.execution.Command -> com.stericson.RootTools.execution.C
     235:239:void terminate(java.lang.String) -> terminate
     242:262:void terminated(java.lang.String) -> terminated
     265:276:void output(int,java.lang.String) -> output
-com.stericson.RootTools.execution.Command$1 -> pl:
-com.stericson.RootTools.execution.Command$CommandHandler -> pm:
+com.stericson.RootTools.execution.Command$1 -> pk:
+com.stericson.RootTools.execution.Command$CommandHandler -> pl:
     com.stericson.RootTools.execution.Command this$0 -> a
     305:319:void handleMessage(android.os.Message) -> handleMessage
-com.stericson.RootTools.execution.Command$ExecutionMonitor -> pn:
+com.stericson.RootTools.execution.Command$ExecutionMonitor -> pm:
     com.stericson.RootTools.execution.Command this$0 -> a
     280:293:void run() -> run
 com.stericson.RootTools.execution.CommandCapture -> com.stericson.RootTools.execution.CommandCapture:
@@ -7197,13 +7192,13 @@ com.stericson.RootTools.execution.Shell -> com.stericson.RootTools.execution.She
     37:37:void access$1400(com.stericson.RootTools.execution.Shell,java.io.Reader) -> a
     37:37:int access$502(com.stericson.RootTools.execution.Shell,int) -> b
     37:37:java.lang.String access$1502(com.stericson.RootTools.execution.Shell,java.lang.String) -> a
-com.stericson.RootTools.execution.Shell$1 -> po:
+com.stericson.RootTools.execution.Shell$1 -> pn:
     com.stericson.RootTools.execution.Shell this$0 -> a
     358:422:void run() -> run
-com.stericson.RootTools.execution.Shell$2 -> pp:
+com.stericson.RootTools.execution.Shell$2 -> po:
     com.stericson.RootTools.execution.Shell this$0 -> a
     428:431:void run() -> run
-com.stericson.RootTools.execution.Shell$3 -> pq:
+com.stericson.RootTools.execution.Shell$3 -> pp:
     com.stericson.RootTools.execution.Shell this$0 -> a
     443:547:void run() -> run
 com.stericson.RootTools.execution.Shell$ShellContext -> com.stericson.RootTools.execution.Shell$ShellContext:
@@ -7231,7 +7226,7 @@ com.stericson.RootTools.execution.Shell$Worker -> com.stericson.RootTools.execut
     com.stericson.RootTools.execution.Shell shell -> shell
     681:707:void run() -> run
     716:731:void setShellOom() -> a
-com.stericson.RootTools.internal.Installer -> pr:
+com.stericson.RootTools.internal.Installer -> pq:
     android.content.Context context -> a
     java.lang.String filesPath -> b
     79:166:boolean installBinary(int,java.lang.String,java.lang.String) -> a
@@ -7299,49 +7294,49 @@ com.stericson.RootTools.internal.RootToolsInternalMethods -> com.stericson.RootT
     1439:1443:void offerSuperUser(android.app.Activity) -> offerSuperUser
     1454:1458:android.content.Intent offerSuperUser(android.app.Activity,int) -> offerSuperUser
     1463:1497:void commandWait(com.stericson.RootTools.execution.Shell,com.stericson.RootTools.execution.Command) -> a
-com.stericson.RootTools.internal.RootToolsInternalMethods$1 -> ps:
+com.stericson.RootTools.internal.RootToolsInternalMethods$1 -> pr:
     java.util.List val$result -> a
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> n
     419:421:void output(int,java.lang.String) -> output
-com.stericson.RootTools.internal.RootToolsInternalMethods$10 -> pt:
+com.stericson.RootTools.internal.RootToolsInternalMethods$10 -> ps:
     java.lang.String val$box -> a
     java.lang.String val$util -> n
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> o
     1204:1215:void output(int,java.lang.String) -> output
-com.stericson.RootTools.internal.RootToolsInternalMethods$11 -> pu:
+com.stericson.RootTools.internal.RootToolsInternalMethods$11 -> pt:
     java.lang.String val$processName -> a
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> n
     1321:1324:void output(int,java.lang.String) -> output
-com.stericson.RootTools.internal.RootToolsInternalMethods$12 -> pv:
+com.stericson.RootTools.internal.RootToolsInternalMethods$12 -> pu:
     java.lang.String val$processName -> a
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> n
     1355:1374:void output(int,java.lang.String) -> output
-com.stericson.RootTools.internal.RootToolsInternalMethods$2 -> pw:
+com.stericson.RootTools.internal.RootToolsInternalMethods$2 -> pv:
     java.lang.String val$binaryName -> a
     java.util.List val$list -> n
     java.lang.String val$path -> o
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> p
     558:565:void commandOutput(int,java.lang.String) -> commandOutput
-com.stericson.RootTools.internal.RootToolsInternalMethods$3 -> px:
+com.stericson.RootTools.internal.RootToolsInternalMethods$3 -> pw:
     java.util.List val$results -> a
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> n
     643:648:void output(int,java.lang.String) -> output
-com.stericson.RootTools.internal.RootToolsInternalMethods$4 -> py:
+com.stericson.RootTools.internal.RootToolsInternalMethods$4 -> px:
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> a
     679:685:void output(int,java.lang.String) -> output
-com.stericson.RootTools.internal.RootToolsInternalMethods$5 -> pz:
+com.stericson.RootTools.internal.RootToolsInternalMethods$5 -> py:
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> a
     748:753:void output(int,java.lang.String) -> output
-com.stericson.RootTools.internal.RootToolsInternalMethods$6 -> qa:
+com.stericson.RootTools.internal.RootToolsInternalMethods$6 -> pz:
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> a
     776:791:void output(int,java.lang.String) -> output
-com.stericson.RootTools.internal.RootToolsInternalMethods$7 -> qb:
+com.stericson.RootTools.internal.RootToolsInternalMethods$7 -> qa:
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> a
     847:874:void output(int,java.lang.String) -> output
-com.stericson.RootTools.internal.RootToolsInternalMethods$8 -> qc:
+com.stericson.RootTools.internal.RootToolsInternalMethods$8 -> qb:
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> a
     1001:1006:void output(int,java.lang.String) -> output
-com.stericson.RootTools.internal.RootToolsInternalMethods$9 -> qd:
+com.stericson.RootTools.internal.RootToolsInternalMethods$9 -> qc:
     java.util.List val$results -> a
     com.stericson.RootTools.internal.RootToolsInternalMethods this$0 -> n
     1070:1075:void output(int,java.lang.String) -> output
@@ -7360,37 +7355,37 @@ com.stericson.RootToolsTests.SanityCheckRootTools -> com.stericson.RootToolsTest
     129:135:void print(java.lang.CharSequence) -> print
     48:48:android.widget.ScrollView access$100(com.stericson.RootToolsTests.SanityCheckRootTools) -> a
     48:48:android.app.ProgressDialog access$300(com.stericson.RootToolsTests.SanityCheckRootTools) -> b
-com.stericson.RootToolsTests.SanityCheckRootTools$1 -> qe:
+com.stericson.RootToolsTests.SanityCheckRootTools$1 -> qd:
     com.stericson.RootToolsTests.SanityCheckRootTools this$0 -> a
     132:133:void run() -> run
-com.stericson.RootToolsTests.SanityCheckRootTools$SanityCheckThread -> qf:
+com.stericson.RootToolsTests.SanityCheckRootTools$SanityCheckThread -> qe:
     android.os.Handler mHandler -> b
     com.stericson.RootToolsTests.SanityCheckRootTools this$0 -> a
     147:348:void run() -> run
     351:357:void visualUpdate(int,java.lang.String) -> a
     139:139:void access$200(com.stericson.RootToolsTests.SanityCheckRootTools$SanityCheckThread,int,java.lang.String) -> a
-com.stericson.RootToolsTests.SanityCheckRootTools$SanityCheckThread$1 -> qg:
+com.stericson.RootToolsTests.SanityCheckRootTools$SanityCheckThread$1 -> qf:
     com.stericson.RootToolsTests.SanityCheckRootTools$SanityCheckThread this$1 -> a
     272:274:void commandOutput(int,java.lang.String) -> commandOutput
-com.stericson.RootToolsTests.SanityCheckRootTools$SanityCheckThread$2 -> qh:
+com.stericson.RootToolsTests.SanityCheckRootTools$SanityCheckThread$2 -> qg:
     boolean _catch -> a
     com.stericson.RootToolsTests.SanityCheckRootTools$SanityCheckThread this$1 -> n
     298:303:void commandOutput(int,java.lang.String) -> commandOutput
     307:321:void commandTerminated(int,java.lang.String) -> commandTerminated
     325:339:void commandCompleted(int,int) -> commandCompleted
-com.stericson.RootToolsTests.SanityCheckRootTools$TestHandler -> qi:
+com.stericson.RootToolsTests.SanityCheckRootTools$TestHandler -> qh:
     com.stericson.RootToolsTests.SanityCheckRootTools this$0 -> a
     369:389:void handleMessage(android.os.Message) -> handleMessage
-eu.lp0.slf4j.android.CallerStackTrace -> qj:
+eu.lp0.slf4j.android.CallerStackTrace -> qi:
     long serialVersionUID -> serialVersionUID
     java.lang.StackTraceElement UNKNOWN -> a
     java.lang.StackTraceElement stackFrame -> b
     46:46:java.lang.String toString() -> toString
-eu.lp0.slf4j.android.CategoryMap -> qk:
+eu.lp0.slf4j.android.CategoryMap -> qj:
     java.util.Map categories -> a
     43:68:eu.lp0.slf4j.android.LoggerConfig get(java.lang.String) -> a
     75:81:void put(java.lang.String,eu.lp0.slf4j.android.LoggerConfig) -> a
-eu.lp0.slf4j.android.LogAdapter -> ql:
+eu.lp0.slf4j.android.LogAdapter -> qk:
     java.util.concurrent.ConcurrentMap nativeLevelMap -> a
     java.lang.String name -> b
     java.lang.String tag -> c
@@ -7477,7 +7472,7 @@ eu.lp0.slf4j.android.LogAdapter -> ql:
     648:651:void error(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object) -> error
     655:658:void error(org.slf4j.Marker,java.lang.String,java.lang.Object[]) -> error
     662:665:void error(org.slf4j.Marker,java.lang.String,java.lang.Throwable) -> error
-eu.lp0.slf4j.android.LogAdapter$1 -> qm:
+eu.lp0.slf4j.android.LogAdapter$1 -> ql:
     int[] $SwitchMap$eu$lp0$slf4j$android$LoggerConfig$ShowName -> a
 eu.lp0.slf4j.android.LogLevel -> eu.lp0.slf4j.android.LogLevel:
     eu.lp0.slf4j.android.LogLevel SUPPRESS -> SUPPRESS
@@ -7490,7 +7485,7 @@ eu.lp0.slf4j.android.LogLevel -> eu.lp0.slf4j.android.LogLevel:
     eu.lp0.slf4j.android.LogLevel[] $VALUES -> a
     32:32:eu.lp0.slf4j.android.LogLevel[] values() -> values
     32:32:eu.lp0.slf4j.android.LogLevel valueOf(java.lang.String) -> valueOf
-eu.lp0.slf4j.android.LoggerConfig -> qn:
+eu.lp0.slf4j.android.LoggerConfig -> qm:
     eu.lp0.slf4j.android.LoggerConfig DEFAULT -> a
     java.lang.String tag -> b
     eu.lp0.slf4j.android.LogLevel level -> c
@@ -7498,7 +7493,7 @@ eu.lp0.slf4j.android.LoggerConfig -> qn:
     java.lang.Boolean showThread -> e
     59:59:boolean isComplete() -> a
     63:88:boolean merge(eu.lp0.slf4j.android.LoggerConfig) -> a
-eu.lp0.slf4j.android.LoggerConfig$ShowName -> qo:
+eu.lp0.slf4j.android.LoggerConfig$ShowName -> qn:
     eu.lp0.slf4j.android.LoggerConfig$ShowName FALSE -> a
     eu.lp0.slf4j.android.LoggerConfig$ShowName SHORT -> b
     eu.lp0.slf4j.android.LoggerConfig$ShowName COMPACT -> c
@@ -7515,7 +7510,7 @@ eu.lp0.slf4j.android.LoggerFactory -> eu.lp0.slf4j.android.LoggerFactory:
     55:74:org.slf4j.Logger getLogger(java.lang.String) -> getLogger
     89:136:java.lang.String createTag(java.lang.String) -> a
     140:155:eu.lp0.slf4j.android.LoggerConfig getConfig(java.lang.String) -> b
-eu.lp0.slf4j.android.LoggingConfig -> qp:
+eu.lp0.slf4j.android.LoggingConfig -> qo:
     eu.lp0.slf4j.android.CategoryMap map -> a
     141:141:eu.lp0.slf4j.android.LoggerConfig get(java.lang.String) -> a
 microsoft.mappoint.TileSystem -> microsoft.mappoint.TileSystem:
@@ -8032,7 +8027,7 @@ org.apache.http.entity.mime.HttpMultipart -> org.apache.http.entity.mime.HttpMul
     177:214:void doWriteTo(org.apache.http.entity.mime.HttpMultipartMode,java.io.OutputStream,boolean) -> a
     224:225:void writeTo(java.io.OutputStream) -> writeTo
     241:258:long getTotalLength() -> getTotalLength
-org.apache.http.entity.mime.HttpMultipart$1 -> qq:
+org.apache.http.entity.mime.HttpMultipart$1 -> qp:
     int[] $SwitchMap$org$apache$http$entity$mime$HttpMultipartMode -> a
 org.apache.http.entity.mime.HttpMultipartMode -> org.apache.http.entity.mime.HttpMultipartMode:
     org.apache.http.entity.mime.HttpMultipartMode STRICT -> STRICT
@@ -8962,11 +8957,11 @@ org.apache.http.pool.AbstractConnPool -> org.apache.http.pool.AbstractConnPool:
     499:507:java.lang.String toString() -> toString
     62:62:void release(java.lang.Object,boolean) -> release
     62:62:org.apache.http.pool.PoolEntry access$000(org.apache.http.pool.AbstractConnPool,java.lang.Object,java.lang.Object,long,java.util.concurrent.TimeUnit,org.apache.http.pool.PoolEntryFuture) -> a
-org.apache.http.pool.AbstractConnPool$1 -> qr:
+org.apache.http.pool.AbstractConnPool$1 -> qq:
     java.lang.Object val$route -> a
     org.apache.http.pool.AbstractConnPool this$0 -> b
     145:145:org.apache.http.pool.PoolEntry createEntry(java.lang.Object) -> a
-org.apache.http.pool.AbstractConnPool$2 -> qs:
+org.apache.http.pool.AbstractConnPool$2 -> qr:
     java.lang.Object val$route -> a
     java.lang.Object val$state -> b
     org.apache.http.pool.AbstractConnPool this$0 -> c
@@ -9009,7 +9004,7 @@ org.apache.http.pool.PoolEntry -> org.apache.http.pool.PoolEntry:
     void close() -> close
     boolean isClosed() -> isClosed
     179:187:java.lang.String toString() -> toString
-org.apache.http.pool.PoolEntryFuture -> qt:
+org.apache.http.pool.PoolEntryFuture -> qs:
     java.util.concurrent.locks.Lock lock -> a
     org.apache.http.concurrent.FutureCallback callback -> b
     java.util.concurrent.locks.Condition condition -> c
@@ -9034,7 +9029,7 @@ org.apache.http.pool.PoolStats -> org.apache.http.pool.PoolStats:
     62:62:int getAvailable() -> getAvailable
     66:66:int getMax() -> getMax
     71:81:java.lang.String toString() -> toString
-org.apache.http.pool.RouteSpecificPool -> qu:
+org.apache.http.pool.RouteSpecificPool -> qt:
     java.lang.Object route -> a
     java.util.Set leased -> b
     java.util.LinkedList available -> c
@@ -9477,7 +9472,7 @@ org.osmdroid.DefaultResourceProxyImpl -> org.osmdroid.DefaultResourceProxyImpl:
     140:154:android.graphics.BitmapFactory$Options getBitmapOptions() -> a
     159:159:android.graphics.drawable.Drawable getDrawable(org.osmdroid.ResourceProxy$bitmap) -> getDrawable
     166:166:float getDisplayMetricsDensity() -> getDisplayMetricsDensity
-org.osmdroid.DefaultResourceProxyImpl$1 -> qv:
+org.osmdroid.DefaultResourceProxyImpl$1 -> qu:
     int[] $SwitchMap$org$osmdroid$ResourceProxy$string -> a
 org.osmdroid.LocationListenerProxy -> org.osmdroid.LocationListenerProxy:
     android.location.LocationManager mLocationManager -> a
@@ -9649,7 +9644,7 @@ org.osmdroid.contributor.GpxToPHPUploader -> org.osmdroid.contributor.GpxToPHPUp
     java.lang.String UPLOADSCRIPT_URL -> UPLOADSCRIPT_URL
     36:81:void uploadAsync(java.util.ArrayList) -> uploadAsync
     23:23:org.slf4j.Logger access$000() -> a
-org.osmdroid.contributor.GpxToPHPUploader$1 -> qw:
+org.osmdroid.contributor.GpxToPHPUploader$1 -> qv:
     java.util.ArrayList val$recordedGeoPoints -> a
     40:79:void run() -> run
 org.osmdroid.contributor.OSMUploader -> org.osmdroid.contributor.OSMUploader:
@@ -9667,7 +9662,7 @@ org.osmdroid.contributor.OSMUploader -> org.osmdroid.contributor.OSMUploader:
     33:33:java.lang.String access$100(java.lang.String) -> a
     33:33:void access$200(java.io.DataOutputStream,java.lang.String,java.io.InputStream,java.lang.String) -> a
     33:33:void access$300(java.io.DataOutputStream,java.lang.String,java.lang.String) -> a
-org.osmdroid.contributor.OSMUploader$1 -> qx:
+org.osmdroid.contributor.OSMUploader$1 -> qw:
     java.util.ArrayList val$recordedGeoPoints -> a
     java.lang.String val$tags -> b
     boolean val$addDateTags -> c
@@ -9719,7 +9714,7 @@ org.osmdroid.events.DelayedMapListener -> org.osmdroid.events.DelayedMapListener
     61:62:boolean onZoom(org.osmdroid.events.ZoomEvent) -> onZoom
     70:77:void dispatch(org.osmdroid.events.MapEvent) -> dispatch
     16:16:org.slf4j.Logger access$000() -> a
-org.osmdroid.events.DelayedMapListener$CallbackTask -> qy:
+org.osmdroid.events.DelayedMapListener$CallbackTask -> qx:
     org.osmdroid.events.MapEvent event -> b
     org.osmdroid.events.DelayedMapListener this$0 -> a
     90:98:void run() -> run
@@ -9748,7 +9743,7 @@ org.osmdroid.http.HttpClientFactory -> org.osmdroid.http.HttpClientFactory:
     org.osmdroid.http.IHttpClientFactory mFactoryInstance -> a
     35:36:void setFactoryInstance(org.osmdroid.http.IHttpClientFactory) -> setFactoryInstance
     39:39:org.apache.http.client.HttpClient createHttpClient() -> createHttpClient
-org.osmdroid.http.HttpClientFactory$1 -> qz:
+org.osmdroid.http.HttpClientFactory$1 -> qy:
     28:30:org.apache.http.client.HttpClient createHttpClient() -> createHttpClient
 org.osmdroid.http.IHttpClientFactory -> org.osmdroid.http.IHttpClientFactory:
     org.apache.http.client.HttpClient createHttpClient() -> createHttpClient
@@ -9849,7 +9844,7 @@ org.osmdroid.tileprovider.MapTileProviderBase -> org.osmdroid.tileprovider.MapTi
     221:222:void setUseDataConnection(boolean) -> setUseDataConnection
     233:256:void rescaleCache(org.osmdroid.views.Projection,int,int,android.graphics.Rect) -> rescaleCache
     36:36:org.slf4j.Logger access$000() -> a
-org.osmdroid.tileprovider.MapTileProviderBase$ScaleTileLooper -> ra:
+org.osmdroid.tileprovider.MapTileProviderBase$ScaleTileLooper -> qz:
     java.util.HashMap mNewTiles -> a
     int mOldZoomLevel -> b
     int mDiff -> c
@@ -9862,10 +9857,10 @@ org.osmdroid.tileprovider.MapTileProviderBase$ScaleTileLooper -> ra:
     293:301:void handleTile(android.graphics.Canvas,int,org.osmdroid.tileprovider.MapTile,int,int) -> handleTile
     306:316:void finaliseLoop() -> finaliseLoop
     void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
-org.osmdroid.tileprovider.MapTileProviderBase$ZoomInTileLooper -> rb:
+org.osmdroid.tileprovider.MapTileProviderBase$ZoomInTileLooper -> ra:
     org.osmdroid.tileprovider.MapTileProviderBase this$0 -> i
     329:370:void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
-org.osmdroid.tileprovider.MapTileProviderBase$ZoomOutTileLooper -> rc:
+org.osmdroid.tileprovider.MapTileProviderBase$ZoomOutTileLooper -> rb:
     org.osmdroid.tileprovider.MapTileProviderBase this$0 -> i
     381:428:void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
 org.osmdroid.tileprovider.MapTileProviderBasic -> org.osmdroid.tileprovider.MapTileProviderBasic:
@@ -10006,8 +10001,8 @@ org.osmdroid.tileprovider.modules.MapTileFileStorageProviderBase -> org.osmdroid
     60:60:void onMediaMounted() -> onMediaMounted
     64:64:void onMediaUnmounted() -> onMediaUnmounted
     13:13:void access$100(org.osmdroid.tileprovider.modules.MapTileFileStorageProviderBase) -> a
-org.osmdroid.tileprovider.modules.MapTileFileStorageProviderBase$1 -> rd:
-org.osmdroid.tileprovider.modules.MapTileFileStorageProviderBase$MyBroadcastReceiver -> re:
+org.osmdroid.tileprovider.modules.MapTileFileStorageProviderBase$1 -> rc:
+org.osmdroid.tileprovider.modules.MapTileFileStorageProviderBase$MyBroadcastReceiver -> rd:
     org.osmdroid.tileprovider.modules.MapTileFileStorageProviderBase this$0 -> a
     75:84:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 org.osmdroid.tileprovider.modules.MapTileFilesystemProvider -> org.osmdroid.tileprovider.modules.MapTileFilesystemProvider:
@@ -10046,7 +10041,7 @@ org.osmdroid.tileprovider.modules.MapTileModuleProviderBase -> org.osmdroid.tile
     169:177:void removeTileFromQueues(org.osmdroid.tileprovider.MapTile) -> a
     27:27:org.slf4j.Logger access$000() -> b
     27:27:void access$100(org.osmdroid.tileprovider.modules.MapTileModuleProviderBase) -> a
-org.osmdroid.tileprovider.modules.MapTileModuleProviderBase$1 -> rf:
+org.osmdroid.tileprovider.modules.MapTileModuleProviderBase$1 -> re:
     long serialVersionUID -> serialVersionUID
     int val$pPendingQueueSize -> a
     org.osmdroid.tileprovider.modules.MapTileModuleProviderBase this$0 -> b
@@ -10084,10 +10079,10 @@ org.osmdroid.tileprovider.modules.TileWriter -> org.osmdroid.tileprovider.module
     28:28:void access$100(org.osmdroid.tileprovider.modules.TileWriter,java.io.File) -> a
     28:28:long access$000() -> a
     28:28:void access$200(org.osmdroid.tileprovider.modules.TileWriter) -> a
-org.osmdroid.tileprovider.modules.TileWriter$1 -> rg:
+org.osmdroid.tileprovider.modules.TileWriter$1 -> rf:
     org.osmdroid.tileprovider.modules.TileWriter this$0 -> a
     53:61:void run() -> run
-org.osmdroid.tileprovider.modules.TileWriter$2 -> rh:
+org.osmdroid.tileprovider.modules.TileWriter$2 -> rg:
     org.osmdroid.tileprovider.modules.TileWriter this$0 -> a
     223:223:int compare(java.io.File,java.io.File) -> a
     220:220:int compare(java.lang.Object,java.lang.Object) -> compare
@@ -10233,7 +10228,7 @@ org.osmdroid.util.BoundingBoxE6 -> org.osmdroid.util.BoundingBoxE6:
     257:261:void writeToParcel(android.os.Parcel,int) -> writeToParcel
     264:268:org.osmdroid.util.BoundingBoxE6 readFromParcel(android.os.Parcel) -> b
     22:22:org.osmdroid.util.BoundingBoxE6 access$000(android.os.Parcel) -> a
-org.osmdroid.util.BoundingBoxE6$1 -> ri:
+org.osmdroid.util.BoundingBoxE6$1 -> rh:
     241:241:org.osmdroid.util.BoundingBoxE6 createFromParcel(android.os.Parcel) -> a
     246:246:org.osmdroid.util.BoundingBoxE6[] newArray(int) -> a
     238:238:java.lang.Object[] newArray(int) -> newArray
@@ -10256,8 +10251,8 @@ org.osmdroid.util.GEMFFile -> org.osmdroid.util.GEMFFile:
     533:534:void acceptAnySource() -> acceptAnySource
     540:546:java.util.Set getZoomLevels() -> getZoomLevels
     555:616:java.io.InputStream getInputStream(int,int,int) -> getInputStream
-org.osmdroid.util.GEMFFile$1 -> rj:
-org.osmdroid.util.GEMFFile$GEMFInputStream -> rk:
+org.osmdroid.util.GEMFFile$1 -> ri:
+org.osmdroid.util.GEMFFile$GEMFInputStream -> rj:
     java.io.RandomAccessFile raf -> a
     int remainingBytes -> b
     org.osmdroid.util.GEMFFile this$0 -> c
@@ -10267,7 +10262,7 @@ org.osmdroid.util.GEMFFile$GEMFInputStream -> rk:
     675:678:int read(byte[],int,int) -> read
     683:687:int read() -> read
     693:693:long skip(long) -> skip
-org.osmdroid.util.GEMFFile$GEMFRange -> rl:
+org.osmdroid.util.GEMFFile$GEMFRange -> rk:
     java.lang.Integer zoom -> a
     java.lang.Integer xMin -> b
     java.lang.Integer xMax -> c
@@ -10308,7 +10303,7 @@ org.osmdroid.util.GeoPoint -> org.osmdroid.util.GeoPoint:
     318:318:java.lang.String toDoubleString() -> toDoubleString
     323:323:java.lang.String toInvertedDoubleString() -> toInvertedDoubleString
     20:20:java.lang.Object clone() -> clone
-org.osmdroid.util.GeoPoint$1 -> rm:
+org.osmdroid.util.GeoPoint$1 -> rl:
     226:226:org.osmdroid.util.GeoPoint createFromParcel(android.os.Parcel) -> a
     231:231:org.osmdroid.util.GeoPoint[] newArray(int) -> a
     223:223:java.lang.Object[] newArray(int) -> newArray
@@ -10439,9 +10434,9 @@ org.osmdroid.views.MapControllerOld -> org.osmdroid.views.MapControllerOld:
     264:264:boolean zoomOutFixing(org.osmdroid.util.GeoPoint) -> zoomOutFixing
     269:269:boolean zoomOutFixing(int,int) -> zoomOutFixing
     22:22:org.osmdroid.views.MapView access$000(org.osmdroid.views.MapControllerOld) -> a
-org.osmdroid.views.MapControllerOld$1 -> rn:
+org.osmdroid.views.MapControllerOld$1 -> rm:
     int[] $SwitchMap$org$osmdroid$views$MapControllerOld$AnimationType -> a
-org.osmdroid.views.MapControllerOld$AbstractAnimationRunner -> ro:
+org.osmdroid.views.MapControllerOld$AbstractAnimationRunner -> rn:
     int mSmoothness -> mSmoothness
     int mTargetLatitudeE6 -> mTargetLatitudeE6
     int mTargetLongitudeE6 -> mTargetLongitudeE6
@@ -10462,19 +10457,19 @@ org.osmdroid.views.MapControllerOld$AnimationType -> org.osmdroid.views.MapContr
     org.osmdroid.views.MapControllerOld$AnimationType[] $VALUES -> a
     316:316:org.osmdroid.views.MapControllerOld$AnimationType[] values() -> values
     316:316:org.osmdroid.views.MapControllerOld$AnimationType valueOf(java.lang.String) -> valueOf
-org.osmdroid.views.MapControllerOld$CosinusalBasedAnimationRunner -> rp:
+org.osmdroid.views.MapControllerOld$CosinusalBasedAnimationRunner -> ro:
     float mStepIncrement -> mStepIncrement
     float mAmountStretch -> mAmountStretch
     float mYOffset -> mYOffset
     float mStart -> mStart
     org.osmdroid.views.MapControllerOld this$0 -> b
     603:629:void onRunAnimation() -> onRunAnimation
-org.osmdroid.views.MapControllerOld$ExponentialDeceleratingAnimationRunner -> rq:
+org.osmdroid.views.MapControllerOld$ExponentialDeceleratingAnimationRunner -> rp:
     org.osmdroid.views.MapControllerOld this$0 -> b
     530:553:void onRunAnimation() -> onRunAnimation
 org.osmdroid.views.MapControllerOld$HalfCosinusalDeceleratingAnimationRunner -> org.osmdroid.views.MapControllerOld$HalfCosinusalDeceleratingAnimationRunner:
     org.osmdroid.views.MapControllerOld this$0 -> c
-org.osmdroid.views.MapControllerOld$LinearAnimationRunner -> rr:
+org.osmdroid.views.MapControllerOld$LinearAnimationRunner -> rq:
     int mPanPerStepLatitudeE6 -> b
     int mPanPerStepLongitudeE6 -> c
     org.osmdroid.views.MapControllerOld this$0 -> d
@@ -10590,7 +10585,7 @@ org.osmdroid.views.MapView -> org.osmdroid.views.MapView:
     61:61:boolean access$400(org.osmdroid.views.MapView) -> b
     61:61:android.widget.ZoomButtonsController access$500(org.osmdroid.views.MapView) -> c
     61:61:org.metalev.multitouch.controller.MultiTouchController access$600(org.osmdroid.views.MapView) -> d
-org.osmdroid.views.MapView$1 -> rs:
+org.osmdroid.views.MapView$1 -> rr:
 org.osmdroid.views.MapView$LayoutParams -> org.osmdroid.views.MapView$LayoutParams:
     int TOP_LEFT -> TOP_LEFT
     int TOP_CENTER -> TOP_CENTER
@@ -10605,12 +10600,12 @@ org.osmdroid.views.MapView$LayoutParams -> org.osmdroid.views.MapView$LayoutPara
     int alignment -> alignment
     int offsetX -> offsetX
     int offsetY -> offsetY
-org.osmdroid.views.MapView$MapViewDoubleClickListener -> rt:
+org.osmdroid.views.MapView$MapViewDoubleClickListener -> rs:
     org.osmdroid.views.MapView this$0 -> a
     1155:1162:boolean onDoubleTap(android.view.MotionEvent) -> onDoubleTap
     1167:1171:boolean onDoubleTapEvent(android.view.MotionEvent) -> onDoubleTapEvent
     1176:1180:boolean onSingleTapConfirmed(android.view.MotionEvent) -> onSingleTapConfirmed
-org.osmdroid.views.MapView$MapViewGestureDetectorListener -> ru:
+org.osmdroid.views.MapView$MapViewGestureDetectorListener -> rt:
     org.osmdroid.views.MapView this$0 -> a
     1088:1098:boolean onDown(android.view.MotionEvent) -> onDown
     1104:1113:boolean onFling(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onFling
@@ -10618,7 +10613,7 @@ org.osmdroid.views.MapView$MapViewGestureDetectorListener -> ru:
     1127:1133:boolean onScroll(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onScroll
     1138:1139:void onShowPress(android.view.MotionEvent) -> onShowPress
     1143:1147:boolean onSingleTapUp(android.view.MotionEvent) -> onSingleTapUp
-org.osmdroid.views.MapView$MapViewZoomListener -> rv:
+org.osmdroid.views.MapView$MapViewZoomListener -> ru:
     org.osmdroid.views.MapView this$0 -> a
     1187:1192:void onZoom(boolean) -> onZoom
     1196:1196:void onVisibilityChanged(boolean) -> onVisibilityChanged
@@ -10716,11 +10711,11 @@ org.osmdroid.views.overlay.ItemizedIconOverlay -> org.osmdroid.views.overlay.Ite
     162:179:boolean activateSelectedItems(android.view.MotionEvent,org.osmdroid.views.MapView,org.osmdroid.views.overlay.ItemizedIconOverlay$ActiveItem) -> a
     187:187:int getDrawnItemsLimit() -> getDrawnItemsLimit
     191:192:void setDrawnItemsLimit(int) -> setDrawnItemsLimit
-org.osmdroid.views.overlay.ItemizedIconOverlay$1 -> rw:
+org.osmdroid.views.overlay.ItemizedIconOverlay$1 -> rv:
     org.osmdroid.views.MapView val$mapView -> a
     org.osmdroid.views.overlay.ItemizedIconOverlay this$0 -> b
     120:124:boolean run(int) -> run
-org.osmdroid.views.overlay.ItemizedIconOverlay$2 -> rx:
+org.osmdroid.views.overlay.ItemizedIconOverlay$2 -> rw:
     org.osmdroid.views.overlay.ItemizedIconOverlay this$0 -> a
     138:142:boolean run(int) -> run
 org.osmdroid.views.overlay.ItemizedIconOverlay$ActiveItem -> org.osmdroid.views.overlay.ItemizedIconOverlay$ActiveItem:
@@ -10752,7 +10747,7 @@ org.osmdroid.views.overlay.ItemizedOverlay -> org.osmdroid.views.overlay.Itemize
     273:273:org.osmdroid.views.overlay.OverlayItem getFocus() -> getFocus
     288:330:android.graphics.drawable.Drawable boundToHotspot(android.graphics.drawable.Drawable,org.osmdroid.views.overlay.OverlayItem$HotspotPlace) -> boundToHotspot
     334:335:void setOnFocusChangeListener(org.osmdroid.views.overlay.ItemizedOverlay$OnFocusChangeListener) -> setOnFocusChangeListener
-org.osmdroid.views.overlay.ItemizedOverlay$1 -> ry:
+org.osmdroid.views.overlay.ItemizedOverlay$1 -> rx:
     int[] $SwitchMap$org$osmdroid$views$overlay$OverlayItem$HotspotPlace -> a
 org.osmdroid.views.overlay.ItemizedOverlay$OnFocusChangeListener -> org.osmdroid.views.overlay.ItemizedOverlay$OnFocusChangeListener:
     void onFocusChanged(org.osmdroid.views.overlay.ItemizedOverlay,org.osmdroid.views.overlay.OverlayItem) -> onFocusChanged
@@ -10767,16 +10762,16 @@ org.osmdroid.views.overlay.ItemizedOverlayControlView -> org.osmdroid.views.over
     86:87:void setPreviousEnabled(boolean) -> setPreviousEnabled
     90:91:void setNavToVisible(int) -> setNavToVisible
     102:133:void initViewListeners() -> a
-org.osmdroid.views.overlay.ItemizedOverlayControlView$1 -> rz:
+org.osmdroid.views.overlay.ItemizedOverlayControlView$1 -> ry:
     org.osmdroid.views.overlay.ItemizedOverlayControlView this$0 -> a
     105:107:void onClick(android.view.View) -> onClick
-org.osmdroid.views.overlay.ItemizedOverlayControlView$2 -> sa:
+org.osmdroid.views.overlay.ItemizedOverlayControlView$2 -> rz:
     org.osmdroid.views.overlay.ItemizedOverlayControlView this$0 -> a
     113:115:void onClick(android.view.View) -> onClick
-org.osmdroid.views.overlay.ItemizedOverlayControlView$3 -> sb:
+org.osmdroid.views.overlay.ItemizedOverlayControlView$3 -> sa:
     org.osmdroid.views.overlay.ItemizedOverlayControlView this$0 -> a
     121:123:void onClick(android.view.View) -> onClick
-org.osmdroid.views.overlay.ItemizedOverlayControlView$4 -> sc:
+org.osmdroid.views.overlay.ItemizedOverlayControlView$4 -> sb:
     org.osmdroid.views.overlay.ItemizedOverlayControlView this$0 -> a
     129:131:void onClick(android.view.View) -> onClick
 org.osmdroid.views.overlay.ItemizedOverlayControlView$ItemizedOverlayControlViewListener -> org.osmdroid.views.overlay.ItemizedOverlayControlView$ItemizedOverlayControlViewListener:
@@ -11035,10 +11030,10 @@ org.osmdroid.views.overlay.OverlayManager -> org.osmdroid.views.overlay.OverlayM
     19:19:java.lang.Object set(int,java.lang.Object) -> set
     19:19:java.lang.Object get(int) -> get
     19:19:java.util.concurrent.CopyOnWriteArrayList access$000(org.osmdroid.views.overlay.OverlayManager) -> a
-org.osmdroid.views.overlay.OverlayManager$1 -> sd:
+org.osmdroid.views.overlay.OverlayManager$1 -> sc:
     org.osmdroid.views.overlay.OverlayManager this$0 -> a
     81:83:java.util.Iterator iterator() -> iterator
-org.osmdroid.views.overlay.OverlayManager$1$1 -> se:
+org.osmdroid.views.overlay.OverlayManager$1$1 -> sd:
     java.util.ListIterator val$i -> a
     org.osmdroid.views.overlay.OverlayManager$1 this$1 -> b
     86:86:boolean hasNext() -> hasNext
@@ -11115,7 +11110,7 @@ org.osmdroid.views.overlay.ScaleBarOverlay -> org.osmdroid.views.overlay.ScaleBa
     482:549:void rebuildBarPath(org.osmdroid.views.Projection) -> a
     561:602:double adjustScaleBarLength(double) -> a
     606:638:java.lang.String scaleBarLengthText(int) -> scaleBarLengthText
-org.osmdroid.views.overlay.ScaleBarOverlay$1 -> sf:
+org.osmdroid.views.overlay.ScaleBarOverlay$1 -> se:
     int[] $SwitchMap$org$osmdroid$views$overlay$ScaleBarOverlay$UnitsOfMeasure -> a
 org.osmdroid.views.overlay.ScaleBarOverlay$UnitsOfMeasure -> org.osmdroid.views.overlay.ScaleBarOverlay$UnitsOfMeasure:
     org.osmdroid.views.overlay.ScaleBarOverlay$UnitsOfMeasure metric -> metric
@@ -11178,7 +11173,7 @@ org.osmdroid.views.overlay.TilesOverlay -> org.osmdroid.views.overlay.TilesOverl
     38:38:android.graphics.drawable.Drawable access$100(org.osmdroid.views.overlay.TilesOverlay) -> b
     38:38:android.graphics.Point access$200(org.osmdroid.views.overlay.TilesOverlay) -> c
     38:38:android.graphics.Rect access$300(org.osmdroid.views.overlay.TilesOverlay) -> d
-org.osmdroid.views.overlay.TilesOverlay$1 -> sg:
+org.osmdroid.views.overlay.TilesOverlay$1 -> sf:
     org.osmdroid.views.overlay.TilesOverlay this$0 -> a
     165:167:void initialiseLoop(int,int) -> initialiseLoop
     170:207:void handleTile(android.graphics.Canvas,int,org.osmdroid.tileprovider.MapTile,int,int) -> handleTile
@@ -11319,7 +11314,7 @@ org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay -> org.osmdroid.views
     516:526:void disableMyLocation() -> disableMyLocation
     534:534:boolean isMyLocationEnabled() -> isMyLocationEnabled
     538:543:boolean runOnFirstFix(java.lang.Runnable) -> runOnFirstFix
-org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay$1 -> sh:
+org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay$1 -> sg:
     android.location.Location val$location -> a
     org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay this$0 -> b
     430:431:void run() -> run
@@ -11613,7 +11608,7 @@ org.slf4j.helpers.NOPMDCAdapter -> org.slf4j.helpers.NOPMDCAdapter:
     53:53:void remove(java.lang.String) -> remove
     56:56:java.util.Map getCopyOfContextMap() -> getCopyOfContextMap
     61:61:void setContextMap(java.util.Map) -> setContextMap
-org.slf4j.helpers.NamedLoggerBase -> si:
+org.slf4j.helpers.NamedLoggerBase -> sh:
     long serialVersionUID -> serialVersionUID
     java.lang.String name -> name
     47:47:java.lang.String getName() -> getName
