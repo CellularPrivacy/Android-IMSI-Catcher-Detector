@@ -28,12 +28,14 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.CellInfo;
+import android.telephony.PhoneStateListener;
+import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -83,6 +85,18 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
     private MyLocationNewOverlay mMyLocationOverlay;
     private CellTowerItemizedOverlay mOpenCellIdOverlay;
 
+    private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
+        @Override
+        public void onServiceStateChanged(ServiceState serviceState) {
+            loadEntries();
+        }
+
+        @Override
+        public void onCellInfoChanged(List<CellInfo> cellInfo) {
+            loadEntries();
+        }
+    };
+
     /**
      * Called when the activity is first created.
      */
@@ -100,6 +114,10 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        TelephonyManager tm = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CELL_LOCATION |
+                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
     }
 
     @Override
@@ -133,6 +151,9 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
             mContext.unbindService(mConnection);
             mBound = false;
         }
+
+        TelephonyManager tm = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
@@ -363,7 +384,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                                     new MarkerData("" + cellID, "" + loc.getLatitude(),"" +
                                             loc.getLongitude(), "" + lac, "" + mcc, "" + mnc, "", false));
 
-                            ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_green));
+                            ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_blue));
                             items.add(ovm);
 
 
@@ -409,6 +430,25 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
 
                 c.close();
                 mDbHelper.close();
+
+                // plot neighbouring cells
+                while (mAimsicdService == null) try { Thread.sleep(100); } catch (Exception e) {};
+                List<Cell> nc = mAimsicdService.getCellTracker().updateNeighbouringCells();
+                for (Cell cell : nc) {
+                    try {
+                        loc = new GeoPoint(cell.getLat(), cell.getLon());
+                        CellTowerOverlayItem ovm = new CellTowerOverlayItem("CellID - " + cell.getCID(),
+                                "",
+                                loc,
+                                new MarkerData("" + cell.getCID(), "" + loc.getLatitude(),"" +
+                                        loc.getLongitude(), "" + cell.getLAC(), "" + cell.getMCC(), "" + cell.getMNC(), "", false));
+
+                        ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_orange));
+                        items.add(ovm);
+                    } catch (Exception e) {
+                        Log.e("map", "Error plotting neightbouring cells", e);
+                    }
+                }
 
                 mMap.getOverlays().remove(mOpenCellIdOverlay);
                 mOpenCellIdOverlay.addItems(items);
@@ -475,9 +515,9 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                         "",
                         location,
                         new MarkerData("" + cellID, "" + location.getLatitude(),"" +
-                                location.getLongitude(), "" + lac, "", "", "", false));
+                                location.getLongitude(), "" + lac, "" + mcc, "" + mnc, "" + samples, false));
 
-                ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_blue));
+                ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_green));
                 items.add(ovm);
             } while (c.moveToNext());
         }
