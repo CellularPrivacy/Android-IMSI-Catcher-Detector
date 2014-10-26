@@ -2053,6 +2053,8 @@ com.SecUpwN.AIMSICD.R$drawable: int ic_drawer
 com.SecUpwN.AIMSICD.R$drawable: int ic_launcher
 com.SecUpwN.AIMSICD.R$drawable: int ic_map_pin_blue
 com.SecUpwN.AIMSICD.R$drawable: int ic_map_pin_green
+com.SecUpwN.AIMSICD.R$drawable: int ic_map_pin_orange
+com.SecUpwN.AIMSICD.R$drawable: int ic_map_pin_red
 com.SecUpwN.AIMSICD.R$drawable: int layer_card_background
 com.SecUpwN.AIMSICD.R$drawable: int layer_card_background_selected
 com.SecUpwN.AIMSICD.R$drawable: int pager_background
@@ -2387,6 +2389,7 @@ com.SecUpwN.AIMSICD.R$string: int release_info
 com.SecUpwN.AIMSICD.R$string: int response_label
 com.SecUpwN.AIMSICD.R$string: int restore_database
 com.SecUpwN.AIMSICD.R$string: int samples_label
+com.SecUpwN.AIMSICD.R$string: int send_logs
 com.SecUpwN.AIMSICD.R$string: int serial_device_prompt
 com.SecUpwN.AIMSICD.R$string: int serial_device_spinner_title
 com.SecUpwN.AIMSICD.R$string: int serial_device_title
