@@ -1,12 +1,15 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
-#### 26.10.2014
+#### 26.10.2014 - WIP-Internal v0.1.24-alpha-build-17
 
+* Changed: Refreshed high quality Sense Style Icons
 * Changed: Database file name changed to aimsicd.db to find it much faster
 * Changed: Some default values have been modified to simplify debugging
 * Changed: msgLong and msgShort changed to always find the mainLooper to display toasts
 * Changed: Map pin icons with new colours as per #166 (neighbouring cells pins in orange)
+* Added: White Style Icons in High Quality
+* Added: Flat Style Icons in High Quality
 * Added: Neighbouring cell info will now be shown with the map if available
 * Added: Phone state listener to update the map when cell info changes
 * Added: Experimental "send bug log" item that reads logcat output and shares via e-mail
@@ -14,6 +17,7 @@
 * Added: New error display for previously-silent error message
 * Added: More code comments to make it easier for other developers to contribute
 * Added: Further attempts to fix the ATCoP (still not working as it should)
+* Fixed: Some strings and comments have received some more polishing
 
 ---
 
