@@ -21,18 +21,18 @@
 
 package com.SecUpwN.AIMSICD.utils;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.service.CellTracker;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.service.CellTracker;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -57,9 +57,14 @@ public class Helpers {
      * @param context Application Context
      * @param msg     Message to send
      */
-    public static void msgLong(Context context, String msg) {
+    public static void msgLong(final Context context, final String msg) {
         if (context != null && msg != null) {
-            Toast.makeText(context, msg.trim(), Toast.LENGTH_LONG).show();
+            new Handler(context.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, msg.trim(), Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
@@ -69,9 +74,14 @@ public class Helpers {
      * @param context Application Context
      * @param msg     Message to send
      */
-    public static void msgShort(Context context, String msg) {
+    public static void msgShort(final Context context, final String msg) {
         if (context != null && msg != null) {
-            Toast.makeText(context, msg.trim(), Toast.LENGTH_SHORT).show();
+            new Handler(context.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, msg.trim(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
