@@ -242,8 +242,8 @@ public class AtCommandFragment extends Fragment {
 
             //==================================================================
             // WARNING:  Scraping commands can be masked by aliases in: mkshrc
-            //           and elsewhere. To get unaliased versions, use:
-            //           "\<command>"
+            //           and even hardcoded in the sh binary or elsewhere.
+            //           To get unaliased versions, use: "\\<command>"
             //==================================================================
 
             //Check for ATCI devices and add found location to the serial device list
