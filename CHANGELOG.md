@@ -1,6 +1,31 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 26.10.2014
+
+* Changed: Database file name changed to aimsicd.db to find it much faster
+* Changed: Some default values have been modified to simplify debugging
+* Changed: msgLong and msgShort changed to always find the mainLooper to display toasts
+* Changed: Map pin icons with new colours as per #166 (neighbouring cells pins in orange)
+* Added: Neighbouring cell info will now be shown with the map if available
+* Added: Phone state listener to update the map when cell info changes
+* Added: Experimental "send bug log" item that reads logcat output and shares via e-mail
+* Added: Threading in "send bug log" (requires new "READ_LOGS" permission, may not work on KitKat+)
+* Added: New error display for previously-silent error message
+* Added: More code comments to make it easier for other developers to contribute
+* Added: Further attempts to fix the ATCoP (still not working as it should)
+
+---
+
+#### 25.10.2014 - WIP-Internal v0.1.24-alpha-build-16
+
+* Added: Paper about the CellSense GSM Positioning System in PAPERS/Technical
+* Added: MODIFY_PHONE_STATE in order to support ICC (SIM) related commands
+* Added: New DATABASE.md info file to document how the DB of AIMSICD works (WIP)
+* Added: New DOCUMENTATION directory for files and images used for documentation
+
+---
+
 #### 20.10.2014 - WIP-Internal v0.1.24-alpha-build-15
 
 * Changed: Restructured CHANGELOG.md to allow better viewing and WIP-Release links
