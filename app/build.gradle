@@ -43,6 +43,35 @@ android {
         abortOnError false
     }
 
+    // .. set up build flavors etc here
+
+    // Instead of "app-release.apk" this method will rewrite the name to
+    // "MyCoolCompany-MyGreatProduct-v<defaultConfig.versionName>-RELEASE.apk"
+    // which is much better suited for archiving and overall handling
+    // To restore the default behavior just delete the whole block below
+    // E:V:A  Not Working, generates: "AIMSICD-null.apk"
+    applicationVariants.all { variant ->
+
+        def apk = variant.outputFile;
+        def newName;
+
+        //newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() + ".apk");
+        newName = apk.name.replace(".apk", "-" + defaultConfig.versionName + ".apk");
+
+        newName = newName
+                .replace("-" + variant.buildType.name, "") // This removes "-release"
+                .replace(project.name, "AIMSICD");         // This replace app with "AIMSICD"
+
+        variant.outputFile = new File(apk.parentFile, newName);
+
+        if (variant.zipAlign) {
+            variant.outputFile = new File(apk.parentFile, newName.replace("-unaligned", ""));
+        }
+
+        logger.info('INFO: Set outputFile to ' + variant.outputFile + " for [" + variant.name + "]");
+    }
+
+
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/LICENSE.txt'
