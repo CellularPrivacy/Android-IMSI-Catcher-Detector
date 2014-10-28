@@ -18,7 +18,10 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-
+   <!-- May be needed (in the future) to access SIM related functions 
+   <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
+   -->
+   
     <application
             android:allowBackup="false"
             android:icon="@drawable/sense_danger"
