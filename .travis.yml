@@ -23,3 +23,17 @@ before_script:
      - adb shell input keyevent 82 &
      
 script: ./gradlew build connectedAndroidTest
+
+env:
+  global:
+# The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+# via the "travis encrypt" command using the project repo's public key
+   - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
+
+addons:
+  coverity_scan:
+    project:
+      name: "SecUpwN/Android-IMSI-Catcher-Detector"
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: master
