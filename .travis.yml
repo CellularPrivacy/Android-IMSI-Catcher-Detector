@@ -34,6 +34,6 @@ addons:
   coverity_scan:
     project:
       name: "SecUpwN/Android-IMSI-Catcher-Detector"
-    build_command_prepend: "mvn clean"
-    build_command:   "mvn -DskipTests=true compile"
+    build_command_prepend: "echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a"
+    build_command:   "./gradlew build connectedAndroidTest"
     branch_pattern: master
