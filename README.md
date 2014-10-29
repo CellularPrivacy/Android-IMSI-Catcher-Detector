@@ -35,6 +35,7 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 * [Sources](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/SOURCES)
 * [Credits](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#credits--greetings)
 * [License](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#license)
+* [Sponsors](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#sponsors)
 * [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#get-in-touch-with-the-core-team)
 * [Recommendations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Recommendations)
 
@@ -184,7 +185,7 @@ Please follow [how to correctly submit Issues](https://github.com/SecUpwN/Androi
 
 ---
 
-# Support
+### Support
 
 Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending [DarkCoin](https://www.darkcoin.io/) to our DONATION ADDRESS: **XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys**
 
@@ -204,11 +205,17 @@ This project is completely licensed [GPL v3+](https://github.com/SecUpwN/Android
 
 ---
 
-# Credits & Greetings
+### Credits & Greetings
 
 Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS). HUGE THANKS!
 
 ---
+
+### Sponsors
+
+We would like to express our gratitude to these great Sponsors:
+
+[![AquaFold](http://www.aquafold.com/images/s_aquadatastudio_426x180.gif)](http://www.aquafold.com) [![Navicat](http://fs1.d-h.st/view/YLA/00146/Navicat.png)](http://www.navicat.com/)
 
 ### Get in touch with the core team!
 
