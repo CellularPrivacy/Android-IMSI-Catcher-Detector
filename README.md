@@ -215,7 +215,7 @@ Our project would not have been possible without [these awesome people](https://
 
 We would like to express our gratitude to these great Sponsors:
 
-[![AquaFold](http://www.aquafold.com/images/s_aquadatastudio_426x180.gif)](http://www.aquafold.com) [![Navicat](http://fs1.d-h.st/view/YLA/00146/Navicat.png)](http://www.navicat.com/)
+[![AquaFold](http://fs1.d-h.st/view/eCq/00146/AquaFold.png)](http://www.aquafold.com) [![Navicat](http://fs1.d-h.st/view/lfT/00146/Navicat.png)](http://www.navicat.com/)
 
 ### Get in touch with the core team!
 
