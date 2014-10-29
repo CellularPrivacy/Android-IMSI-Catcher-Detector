@@ -34,7 +34,7 @@ addons:
   coverity_scan:
     project:
       name: "SecUpwN/Android-IMSI-Catcher-Detector"
-    notification_email: perfect-privacy@secure-mail.biz
+    notification_email: perfect-privacy@secure-mail.biz; xdae3v3a@gmail.com; toby@tobykurien.com
     build_command_prepend: "echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a"
     build_command:   "./gradlew build connectedAndroidTest"
     branch_pattern: master
