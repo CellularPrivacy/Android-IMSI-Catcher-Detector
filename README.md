@@ -1,5 +1,5 @@
 ### Android IMSI-Catcher Detector (AIMSICD)
-[![Build Status](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector.svg)](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector) [![Development Stage](http://img.shields.io/badge/Development_Stage-ALPHA-green.svg)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#alpha-stage) [![GooglePlay](http://img.shields.io/badge/GooglePlay-NOT%20SUPPORTED-red.svg)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/FAQ) [![CovertyScan](https://scan.coverity.com/projects/3346/badge.svg)](https://scan.coverity.com/projects/3346)
+[![Build Status](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector.svg)](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector) [![Development Stage](http://img.shields.io/badge/Development_Stage-ALPHA-brightgreen.svg)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#alpha-stage) [![GooglePlay](http://img.shields.io/badge/GooglePlay-NOT%20SUPPORTED-red.svg)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/FAQ) [![CoverityScan](https://scan.coverity.com/projects/3346/badge.svg)](https://scan.coverity.com/projects/3346)
 --
 Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. Feel free to read the [Press Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Press-Releases) about us, spread the word with our [Media Material](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material) and help us solving [current challenges](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues)!
 
@@ -174,7 +174,7 @@ This stage is essentially the completion of this project. However, we expect tha
 
 ### Disclaimer
 
-For your and our own safety, here's our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER).
+Safety first: Here's our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER).
 
 ---
 
