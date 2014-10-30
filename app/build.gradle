@@ -1,5 +1,39 @@
 apply plugin: 'com.android.application'
 
+//======================================================================
+// TODO: (There must be a simpler way to do this!)
+// These will import versionCode and versionName from AndroidManifest.xml
+// Most important is that these function names are unique. 
+// versionCode can auto update the version number.
+// Then put this function inside the defaultConfig { ... }}
+// See: http://tinyurl.com/kuu2rve
+//======================================================================
+def getManifestVersionCode() {
+     println "Importing with getManifestVersionCode()"
+     def manifestFile = file("AndroidManifest.xml")
+     def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
+     def manifestText = manifestFile.getText()
+     def matcher = pattern.matcher(manifestText)
+     matcher.find()
+     //def version = ++Integer.parseInt(matcher.group(1)) // Update version number
+     def version = Integer.parseInt(matcher.group(1)) 
+     println sprintf("Returning version %d", version)
+     return "$version"
+}
+// TODO: Fix this one
+def getManifestVersionName() {  
+     println "Importing with getManifestVersionName()"
+     def manifestFile = file("AndroidManifest.xml")
+     def pattern = Pattern.compile("versionName=\"(\\.+)\"")
+     def manifestText = manifestFile.getText()
+     def matcher = pattern.matcher(manifestText)
+     matcher.find()
+     //def zname = ++Integer.parseInt(matcher.group(1))
+     println sprintf("Returning version %s", zname)
+     return "$zname"
+}
+//======================================================================
+
 android {
     compileSdkVersion 19
     buildToolsVersion '19.1'
@@ -7,6 +41,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19
+        // versionCode getManifestVersionCode()
+        // versionName getManifestVersionName()
     }
     buildTypes {
         debug {
