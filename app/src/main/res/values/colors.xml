@@ -36,5 +36,6 @@
     <color name="map_evdoA">#ffffff00</color>
     <color name="map_1xrtt">#ff7cfc00</color>
     <color name="map_default">#fff0f8ff</color>
+    <color name="red_text">#a00000</color>
 
 </resources>
