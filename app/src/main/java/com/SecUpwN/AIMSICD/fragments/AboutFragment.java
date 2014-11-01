@@ -4,8 +4,10 @@ import com.SecUpwN.AIMSICD.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -13,6 +15,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class AboutFragment extends Fragment {
@@ -39,55 +42,65 @@ public class AboutFragment extends Fragment {
         TextView versionNumber;
         if (v != null) {
             versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
+            versionNumber.setText(getString(R.string.app_version) + version);
 
-            versionNumber.setText(version);
+            //Status icons link
+            View tv = v.findViewById(R.id.aimsicd_status_icons);
+            setLink(tv, R.string.status_icons_link);
 
             //GitHub WIKI Link
-            TextView tv = (TextView) v.findViewById(R.id.aimsicd_wiki_link);
-            tv.setMovementMethod(LinkMovementMethod.getInstance());
-            tv.setText(Html.fromHtml(getResources().getString(R.string.wiki_link)));
+            tv = v.findViewById(R.id.aimsicd_wiki_link);
+            setLink(tv, R.string.wiki_link);
 
             //Proof of Concept Link
-            tv = (TextView) v.findViewById(R.id.aimsicd_poc_link);
-            tv.setMovementMethod(LinkMovementMethod.getInstance());
-            tv.setText(Html.fromHtml(getResources().getString(R.string.poc_link)));
+            tv = v.findViewById(R.id.aimsicd_poc_link);
+            setLink(tv, R.string.poc_link);
 
             //Disclaimer Link
-            tv = (TextView) v.findViewById(R.id.aimsicd_disclaimer_link);
-            tv.setMovementMethod(LinkMovementMethod.getInstance());
-            tv.setText(Html.fromHtml(getResources().getString(R.string.disclaimer_link)));
+            tv = v.findViewById(R.id.aimsicd_disclaimer_link);
+            setLink(tv, R.string.disclaimer_link);
 
             //GitHub Contribution Link
-            tv = (TextView) v.findViewById(R.id.aimsicd_contribute_link);
-            tv.setMovementMethod(LinkMovementMethod.getInstance());
-            tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_github_link)));
+            tv = v.findViewById(R.id.aimsicd_contribute_link);
+            setLink(tv, R.string.aimsicd_github_link);
 
             //XDA Development Thread Link
-            tv = (TextView) v.findViewById(R.id.aimsicd_visit_xda_link);
-            tv.setMovementMethod(LinkMovementMethod.getInstance());
-            tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_xda_link)));
+//            tv = (TextView) v.findViewById(R.id.aimsicd_visit_xda_link);
+//            tv.setMovementMethod(LinkMovementMethod.getInstance());
+//            tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_xda_link)));
 
             //WIP Release Link
-            tv = (TextView) v.findViewById(R.id.aimsicd_release_link);
-            tv.setMovementMethod(LinkMovementMethod.getInstance());
-            tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_release_link)));
+            tv = v.findViewById(R.id.aimsicd_release_link);
+            setLink(tv, R.string.aimsicd_release_link);
 
             //Changelog Link
-            tv = (TextView) v.findViewById(R.id.aimsicd_changelog_link);
-            tv.setMovementMethod(LinkMovementMethod.getInstance());
-            tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_changelog_link)));
+            tv = v.findViewById(R.id.aimsicd_changelog_link);
+            setLink(tv, R.string.aimsicd_changelog_link);
 
             //License Link
-            tv = (TextView) v.findViewById(R.id.aimsicd_license_link);
-            tv.setMovementMethod(LinkMovementMethod.getInstance());
-            tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_license_link)));
+            tv = v.findViewById(R.id.aimsicd_license_link);
+            setLink(tv, R.string.aimsicd_license_link);
 
-            //License Link
-            tv = (TextView) v.findViewById(R.id.aimsicd_credits_link);
-            tv.setMovementMethod(LinkMovementMethod.getInstance());
-            tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_credits_link)));
+            //Credits Link
+            tv = v.findViewById(R.id.aimsicd_credits_link);
+            setLink(tv, R.string.aimsicd_credits_link);
+
+            //Donations Link
+            tv = v.findViewById(R.id.aimsicd_donations_link);
+            setLink(tv, R.string.aimsicd_donations_link);
         }
         return v;
+    }
+
+    private void setLink(View b, final int link) {
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(getResources().getString(link)));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
