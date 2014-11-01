@@ -1,188 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
         android:id="@+id/aboutView"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/small_padding">
 
-    <TextView
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:textSize="18sp" android:text="@string/about_aimsicd"
-    android:textColor="@color/green_text"
-    android:padding="4dip" android:id="@+id/textView"/>
-
-    <TextView
-            android:id="@+id/aimsicd_about_info"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="@string/aimsicd_about_info"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/textView"/>
-    <TextView
+            android:textColor="@color/green_text"
+            android:textSize="18sp"/>
+
+        <TextView
             android:id="@+id/aimsicd_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/app_version"
+            android:textColor="@color/red_text"
+            android:textSize="18sp"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/empty"
-            android:textColor="@color/medium_blue"
-            android:padding="8dip" android:layout_below="@+id/textView"
-            android:layout_toRightOf="@+id/aimsicd_about_info"
-            android:layout_toEndOf="@+id/aimsicd_about_info"/>
-    <TextView
-            android:id="@+id/aimsicd_about_info2"
-            android:layout_width="wrap_content"
+            android:paddingBottom="@dimen/small_padding"
+            android:paddingTop="@dimen/small_padding"
+            android:text="@string/aimsicd_about_info3"
+            android:textColor="@color/white"/>
+
+        <TableLayout
+            android:id="@+id/aimsicd_status_icons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/aimsicd_about_info2"
-            android:textStyle="italic"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_version"/>
-    <TextView
-            android:id="@+id/aimsicd_wiki"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/wiki_info"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_about_info2"/>
-    <TextView
-            android:id="@+id/aimsicd_wiki_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty"
-            android:textColor="@color/green_text"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_wiki"
-            android:layout_toRightOf="@+id/aimsicd_wiki"
-            android:layout_toEndOf="@+id/aimsicd_wiki"/>
-    <TextView
-            android:id="@+id/aimsicd_poc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/poc_info"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_wiki"/>
-    <TextView
-            android:id="@+id/aimsicd_poc_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty"
-            android:textColor="@color/green_text"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_wiki"
-            android:layout_toRightOf="@+id/aimsicd_poc"
-            android:layout_toEndOf="@+id/aimsicd_poc"/>
-    <TextView
-            android:id="@+id/aimsicd_disclaimer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/disclaimer_info"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_poc"/>
-    <TextView
-            android:id="@+id/aimsicd_disclaimer_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty"
-            android:textColor="@color/green_text"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_poc"
-            android:layout_toRightOf="@+id/aimsicd_disclaimer"
-            android:layout_toEndOf="@+id/aimsicd_disclaimer"/>
-    <TextView
-            android:id="@+id/aimsicd_contribute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/github_info"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_disclaimer"/>
-    <TextView
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_padding">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_idle"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="Idle / Loading."/>
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_high"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="Active tracking near!"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_padding">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_ok"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="Everything OK."/>
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_danger"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="You are being tracked!"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_padding">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_medium"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="Pay Attention!"/>
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_skull"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="Handset manipulated!"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
             android:id="@+id/aimsicd_contribute_link"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/empty"
-            android:textColor="@color/green_text"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_disclaimer"
-            android:layout_toRightOf="@+id/aimsicd_contribute"
-            android:layout_toEndOf="@+id/aimsicd_contribute"/>
+            android:text="@string/about_github"/>
 
-    <TextView
-            android:id="@+id/aimsicd_visit_xda"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/aimsicd_wiki_link"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/xda_info"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_contribute"/>
-    <TextView
-            android:id="@+id/aimsicd_visit_xda_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty"
-            android:textColor="@color/green_text"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_contribute"
-            android:layout_toRightOf="@+id/aimsicd_visit_xda"
-            android:layout_toEndOf="@+id/aimsicd_visit_xda"/>
+            android:text="@string/about_wiki"/>
 
-    <TextView
-            android:id="@+id/aimsicd_release"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/aimsicd_donations_link"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/release_info"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_visit_xda"/>
-    <TextView
-            android:id="@+id/aimsicd_release_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty"
-            android:textColor="@color/green_text"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_visit_xda"
-            android:layout_toRightOf="@+id/aimsicd_release"
-            android:layout_toEndOf="@+id/aimsicd_release"/>
+            android:text="@string/about_donations"/>
 
-    <TextView
-            android:id="@+id/aimsicd_changelog"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/changelog_info"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_release"/>
-    <TextView
-            android:id="@+id/aimsicd_changelog_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty"
-            android:textColor="@color/green_text"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_release"
-            android:layout_toRightOf="@+id/aimsicd_changelog"
-            android:layout_toEndOf="@+id/aimsicd_changelog"/>
+            android:orientation="horizontal">
 
-    <TextView
-            android:id="@+id/aimsicd_license"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/license_info"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_changelog"/>
-    <TextView
-            android:id="@+id/aimsicd_license_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty"
-            android:textColor="@color/green_text"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_changelog"
-            android:layout_toRightOf="@+id/aimsicd_license"
-            android:layout_toEndOf="@+id/aimsicd_license"/>
+            <Button
+                android:id="@+id/aimsicd_poc_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:text="@string/about_poc"/>
 
-    <TextView
-            android:id="@+id/aimsicd_credits"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/credits_info"
-            android:textColor="@color/white"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_license"/>
-    <TextView
-            android:id="@+id/aimsicd_credits_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty"
-            android:textColor="@color/green_text"
-            android:padding="8dip" android:layout_below="@+id/aimsicd_license"
-            android:layout_toRightOf="@+id/aimsicd_credits"
-            android:layout_toEndOf="@+id/aimsicd_credits"/>
+            <Button
+                android:id="@+id/aimsicd_disclaimer_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_disclaimer"/>
+        </LinearLayout>
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/aimsicd_release_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_wip_releases"/>
+
+            <Button
+                android:id="@+id/aimsicd_changelog_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_changelog"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/aimsicd_license_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_license"/>
+
+            <Button
+                android:id="@+id/aimsicd_credits_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_credits"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
