@@ -213,10 +213,10 @@ Our project would not have been possible without [these awesome people](https://
 
 ### Sponsors
 
-We would like to express our gratitude to these great Sponsors:
+Our gratitude flies out to these great Sponsors:
 
 [![AquaFold](http://fs1.d-h.st/view/eCq/00146/AquaFold.png)](http://www.aquafold.com) [![Navicat](http://fs1.d-h.st/view/lfT/00146/Navicat.png)](http://www.navicat.com/)
-[![Scanova](http://fs1.d-h.st/view/8HR/00146/Scanova.png)](http://scnv.io/r/25e7713950)
+[![Scanova](http://fs1.d-h.st/view/pJb/00146/Scanova.png)](http://scnv.io/r/25e7713950)
 
 ### Get in touch with the core team!
 
