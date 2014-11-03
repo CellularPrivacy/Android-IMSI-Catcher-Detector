@@ -52,7 +52,7 @@
     <string name="press_once_again_to_exit">Press again to exit.</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
     <string name="cell_lookup">Lookup Current Cell Details (OpenCellID)</string>
-    <string name="send_logs">Send Bug Log</string>
+    <string name="send_logs">Send Error Log</string>
 
     <string name="no_network_connection_title">No Internet Connection</string>
     <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
