@@ -59,9 +59,6 @@
     connectivity, please enable data connection!</string>
 
     <!-- MAP VIEWER -->
-    <string name="error_google_play_services_title">Map Viewer Unavailable!</string>
-    <string name="error_google_play_services_message">Maps Viewer requires Google Play Services
-        to be installed on your device, you CANNOT continue unless you install Google Play.</string>
     <string name="map_type">Map Display Type</string>
     <string name="get_opencellid">Get OpenCellID Data</string>
 
