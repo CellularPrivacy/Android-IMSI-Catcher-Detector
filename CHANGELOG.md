@@ -1,6 +1,29 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 03.11.2014 - [WIP-Release v0.1.24-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.24-alpha)
+
+* **LAUNCHED:** We are now officially on [Aptoide](http://aimsicd.store.aptoide.com/) and [F-Droid](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD) (builds should appear shortly)
+* **Changed:** Signing Keys have been renewed so you can make sure we officially build the APK :exclamation:
+* Changed: Reworked all Icons to be rendered in best and highest quality possible
+* Changed: Switched to PDFMtEd Inspector to erase metadata since it is safer than just exiftool
+* Updated: Revamped About-Screen through the work of our awesome developer Toby Kurien
+* Updated: Rewrote a major part of the Application Goals and Development Roadmap
+* Updated: Added more great contributors to our CREDITS - huge thanks for all the hard work
+* Added: Skull QR Code in PROMOTION folder to be printed as a sticker (use it wisely, please)
+* Added: Paper about Eavesdropping Method Patent by Rohde & Schwarz in PAPERS/Technical
+* Added: Paper about Court of Appeal judgment invalidating Rohde & Schwarz patent from above
+* Added: New badges for development stage and statement against using GooglePlay
+* Added: Multiple attempts to auto-rename APK file for later automatic releases (WIP)
+* Added: Pseudo code for importing versionCode and versionName from AndroidManifest.xml
+* Added: SIMAlliance permission for reading SIM related features from the Open Mobile API
+* Added: Integrated Coverity Scan to allow testing with static analysis tools
+* Added: New Sponsors have been added to our README - feel invited to visit them
+* Added: E-Mail address has been added to receive Error Logs - only use on heavy crashes
+* Fixed: Many string fixes and small adjustments to make usage of our App much more clear
+
+---
+
 #### 26.10.2014 - WIP-Internal v0.1.24-alpha-build-17
 
 * Changed: Refreshed high quality Sense Style Icons
