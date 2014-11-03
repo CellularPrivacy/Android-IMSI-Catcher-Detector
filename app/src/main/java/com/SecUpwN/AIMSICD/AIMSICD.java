@@ -370,7 +370,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                         // show a share intent
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("text/html");
-                        intent.putExtra(Intent.EXTRA_EMAIL, "some@email.com");
+                        intent.putExtra(Intent.EXTRA_EMAIL, "xdae3v3a@gmail.com");
                         intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error Log");
                         intent.putExtra(Intent.EXTRA_TEXT, log.toString());
                         startActivity(Intent.createChooser(intent, "Send Error Log"));
