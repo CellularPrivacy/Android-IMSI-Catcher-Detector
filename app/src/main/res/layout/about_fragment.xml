@@ -193,7 +193,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/about_wip_releases"/>
+                android:text="@string/about_releases"/>
 
             <Button
                 android:id="@+id/aimsicd_changelog_link"
