@@ -19,7 +19,6 @@
 * Added: SIMAlliance permission for reading SIM related features from the Open Mobile API
 * Added: Integrated Coverity Scan to allow testing with static analysis tools
 * Added: New Sponsors have been added to our README - feel invited to visit them
-* Added: E-Mail address has been added to receive Error Logs - only use on heavy crashes
 * Fixed: Many string fixes and small adjustments to make usage of our App much more clear
 
 ---
