@@ -1,6 +1,9 @@
 # Test changes of this .travis.yml config before submitting them:
 # http://lint.travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector
 
+# Travis CI Settings
+#-------------------
+
 language: android
 
 android:
@@ -24,6 +27,9 @@ before_script:
      
 script: ./gradlew build connectedAndroidTest
 
+# Coverity Scan Settings
+#-----------------------
+
 env:
   global:
 # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
@@ -35,6 +41,5 @@ addons:
     project:
       name: "SecUpwN/Android-IMSI-Catcher-Detector"
     notification_email: perfect-privacy@secure-mail.biz; xdae3v3a@gmail.com; toby@tobykurien.com
-    build_command_prepend: "echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a"
     build_command:   "./gradlew build connectedAndroidTest"
     branch_pattern: master
