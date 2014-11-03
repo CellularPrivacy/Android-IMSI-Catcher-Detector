@@ -74,7 +74,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="Active tracking near!"/>
+                    android:text="Active tracking near yourself!"/>
             </TableRow>
 
             <TableRow
@@ -106,7 +106,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="You are being tracked!"/>
+                    android:text="You are being tracked down!"/>
             </TableRow>
 
             <TableRow
@@ -138,7 +138,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="Handset manipulated!"/>
+                    android:text="RUN! Handset manipulated!"/>
             </TableRow>
 
         </TableLayout>
