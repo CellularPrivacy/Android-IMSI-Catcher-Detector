@@ -95,7 +95,9 @@
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">About AIMSICD</string>
+    <string name="app_version">Version:&#160;</string>
     <string name="aimsicd_about_info">Android IMSI-Catcher Detector (AIMSICD)</string>
+    <string name="aimsicd_about_info3">Android-based project to detect and avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks.</string>
     <string name="about_github">AIMSICD-Project on GitHub</string>
     <string name="about_wiki">Full Documentation (WIKI)</string>
     <string name="about_donations">Anonymous Donations</string>
@@ -108,7 +110,7 @@
     <string name="wiki_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki</string>
     <string name="poc_link">https://en.wikipedia.org/wiki/Proof_of_concept</string>
     <string name="disclaimer_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER</string>
-    <string name="aimsicd_github_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector</string>
+    <string name="aimsicd_github_link">https://secupwn.github.io/Android-IMSI-Catcher-Detector/</string>
     <string name="aimsicd_xda_link">http://forum.xda-developers.com/showthread.php?t=1422969</string>
     <string name="aimsicd_release_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases</string>
     <string name="aimsicd_changelog_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md</string>
@@ -215,6 +217,4 @@
     <string name="sms_title">Silent SMS Intercepted</string>
     <string name="sms_message">Silent SMS Message has been intercepted! \n\nDetails are available through the Database Viewer.</string>
     <string name="table_contains_no_data">Table contains no data to display.</string>
-    <string name="aimsicd_about_info3">Android-based project to detect and avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks.</string>
-    <string name="app_version">Version: </string>
 </resources>
