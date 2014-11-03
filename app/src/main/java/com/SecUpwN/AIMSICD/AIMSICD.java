@@ -362,7 +362,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
             new Thread() {
                 @Override
                 public void run() {
-                    // send bug log
+                    // Send Error Log
                     // TODO - clear log using 'logcat -c' on app startup
                     try {
                         Process process = Runtime.getRuntime().exec("logcat -d");
@@ -379,9 +379,9 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("text/html");
                         intent.putExtra(Intent.EXTRA_EMAIL, "some@email.com");
-                        intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error log");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error Log");
                         intent.putExtra(Intent.EXTRA_TEXT, log.toString());
-                        startActivity(Intent.createChooser(intent, "Send error log"));
+                        startActivity(Intent.createChooser(intent, "Send Error Log"));
                     } catch (IOException e) {
                         Log.e("main", "Error reading logs", e);
                     }
