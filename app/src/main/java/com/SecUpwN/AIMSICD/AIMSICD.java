@@ -282,14 +282,6 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
             trackFemtocell();
         } else if (selectedItem.getId() == 105) {
             showmap();
-//            int status = GooglePlayServicesUtil
-//                    .isGooglePlayServicesAvailable(getApplicationContext());
-//            if (status == ConnectionResult.SUCCESS) {
-//                showmap();
-//            } else {
-//                Helpers.sendMsg(this,
-//                        "Google Play Services is required for the MapViewer and was not found on your device");
-//            }
         } else if (selectedItem.getId() == 202) {
             Intent intent = new Intent(this, PrefActivity.class);
             startActivity(intent);
