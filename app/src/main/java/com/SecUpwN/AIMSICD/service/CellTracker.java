@@ -342,7 +342,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 context.getString(R.string.pref_femto_detection_key), false);
 
         boolean trackCellPref = prefs.getBoolean(
-                context.getString(R.string.pref_enable_cell_key), false);
+                context.getString(R.string.pref_enable_cell_key), true);
 
         boolean monitorCellPref = prefs.getBoolean(
                 context.getString(R.string.pref_enable_cell_monitoring_key), true);
