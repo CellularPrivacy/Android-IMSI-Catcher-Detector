@@ -114,6 +114,7 @@ android {
     lintOptions {
         abortOnError false
     }
+}
 
 // ####################### OLD CODE BEGINS HERE ########################
 //    // .. set up build flavors etc here
@@ -231,7 +232,7 @@ manifestFile.write(manifestContent)
 //----------------------------------------------------------------------
 // Example:
 // 1) Before the build AndroidManfist.xml has versionName=0.1.24-alpha
-// 2) AndroidManifest.xml will be modified to versionName=0.1.24-alpha
+// 2) AndroidManifest.xml will be modified to versionName=0.1.25-alpha
 //======================================================================
 
 // TODO: Fix below pattern to allow our own naming scheme suggested as
