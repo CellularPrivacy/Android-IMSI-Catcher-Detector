@@ -58,7 +58,7 @@ Unfortunately it seems that IMSI-Catchers have been exponentially popular lately
 
 In addition, all IMSI-Catchers can crack A5/1 encryption, which is most commonly used for GSM traffic, on the fly (passively)! A5/3 encryption which is used for securing 3G and is offered as [new security standard for GSM encryption](http://www.telekom.com/media/company/210108) remains secure in practice while susceptible to theoretical attacks. Although 3G and 4G offer sufficient protection from eavesdropping, the security measures can be bypassed by IMSI-Catchers forcing a mobile device into 2G mode and [downgrade encryption to A5/1 or disable it](http://www.septier.com/149.html).
 
-There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the [Issue of not having a convenient display of the Ciphering Indictor](https://code.google.com/p/android/issues/detail?id=5353) has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. **Let's detect and protect against these threats!** Never think you've got "nothing to hide".
+There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the [Issue of not having a convenient display of the Ciphering Indicator](https://code.google.com/p/android/issues/detail?id=5353) has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. **Let's detect and protect against these threats!** Never think you've got "nothing to hide".
 
 Some examples to make you familar with the most common IMSI-Catcher threats:
 
@@ -225,7 +225,7 @@ Our gratitude flies out to these great Sponsors:
 
 |                              Developer                             |         Task           |
 |:------------------------------------------------------------------:|:----------------------:|
-|[E:V:A](mailto:xdae3v3a@gmail.com)                                  |    Project Initiator   |
+|[E:V:A](mailto:a3841c3c@opayq.com)                                  |    Project Initiator   |
 |[xLaMbChOpSx](http://forum.xda-developers.com/member.php?u=4661001) |       Code-Monkey      |
 |[tobykurien](http://tobykurien.com/)                                |       Code-Monkey      |    
 |[He3556](http://forum.xda-developers.com/member.php?u=4600707)      | Vulnerability Analyzer |
