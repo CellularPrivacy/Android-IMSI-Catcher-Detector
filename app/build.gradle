@@ -1,4 +1,39 @@
-apply plugin: 'com.android.application'
+//======================================================================
+// The following commands can be used to initiate a new debug or release:
+// > gradle debug
+// > gradle release
+//----------------------------------------------------------------------
+// gradle debug will run assembleDebug
+// gradle release will run assembleRelease, configure the signing using
+// the signing.properties and increment the build number automatically
+//======================================================================
+
+import java.util.regex.Pattern
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'http://download.crashlytics.com/maven' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+    }
+}
+apply plugin: 'android'
+apply plugin: 'crashlytics'
+
+repositories {
+    mavenCentral()
+    maven { url 'http://download.crashlytics.com/maven' }
+
+} 
+
+// ####################### OLD CODE BEGINS HERE ########################
+
+// apply plugin: 'com.android.application'
 
 //======================================================================
 // TODO: (There must be a simpler way to do this!)
@@ -8,31 +43,32 @@ apply plugin: 'com.android.application'
 // Then put this function inside the defaultConfig { ... }}
 // See: http://tinyurl.com/kuu2rve
 //======================================================================
-def getManifestVersionCode() {
-     println "Importing with getManifestVersionCode()"
-     def manifestFile = file("AndroidManifest.xml")
-     def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
-     def manifestText = manifestFile.getText()
-     def matcher = pattern.matcher(manifestText)
-     matcher.find()
-     //def version = ++Integer.parseInt(matcher.group(1)) // Update version number
-     def version = Integer.parseInt(matcher.group(1)) 
-     println sprintf("Returning version %d", version)
-     return "$version"
-}
-// TODO: Fix this one
-def getManifestVersionName() {  
-     println "Importing with getManifestVersionName()"
-     def manifestFile = file("AndroidManifest.xml")
-     def pattern = Pattern.compile("versionName=\"(\\.+)\"")
-     def manifestText = manifestFile.getText()
-     def matcher = pattern.matcher(manifestText)
-     matcher.find()
-     //def zname = ++Integer.parseInt(matcher.group(1))
-     println sprintf("Returning version %s", zname)
-     return "$zname"
-}
+// def getManifestVersionCode() {
+//     println "Importing with getManifestVersionCode()"
+//     def manifestFile = file("AndroidManifest.xml")
+//     def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
+//     def manifestText = manifestFile.getText()
+//     def matcher = pattern.matcher(manifestText)
+//     matcher.find()
+//     //def version = ++Integer.parseInt(matcher.group(1)) // Update version number
+//     def version = Integer.parseInt(matcher.group(1)) 
+//     println sprintf("Returning version %d", version)
+//     return "$version"
+//}
+// // TODO: Fix this one
+//def getManifestVersionName() {  
+//     println "Importing with getManifestVersionName()"
+//     def manifestFile = file("AndroidManifest.xml")
+//     def pattern = Pattern.compile("versionName=\"(\\.+)\"")
+//     def manifestText = manifestFile.getText()
+//     def matcher = pattern.matcher(manifestText)
+//     matcher.find()
+//     //def zname = ++Integer.parseInt(matcher.group(1))
+//     println sprintf("Returning version %s", zname)
+//     return "$zname"
+// }
 //======================================================================
+// ####################### OLD CODE ENDS HERE ###########################
 
 android {
     compileSdkVersion 19
@@ -79,40 +115,42 @@ android {
         abortOnError false
     }
 
-    // .. set up build flavors etc here
-
-    // Instead of "app-release.apk" this method will rewrite the name to
-    // "MyCoolCompany-MyGreatProduct-v<defaultConfig.versionName>-RELEASE.apk"
-    // which is much better suited for archiving and overall handling
-    // To restore the default behavior just delete the whole block below
-    // E:V:A  Not Working, generates: "AIMSICD-null.apk"
-    applicationVariants.all { variant ->
-
-        def apk = variant.outputFile;
-        def newName;
-
-        //newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() + ".apk");
-        newName = apk.name.replace(".apk", "-" + defaultConfig.versionName + ".apk");
-
-        newName = newName
-                .replace("-" + variant.buildType.name, "") // This removes "-release"
-                .replace(project.name, "AIMSICD");         // This replace app with "AIMSICD"
-
-        variant.outputFile = new File(apk.parentFile, newName);
-
-        if (variant.zipAlign) {
-            variant.outputFile = new File(apk.parentFile, newName.replace("-unaligned", ""));
-        }
-
-        logger.info('INFO: Set outputFile to ' + variant.outputFile + " for [" + variant.name + "]");
-    }
-
-
-    packagingOptions {
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/LICENSE.txt'
-    }
-}
+// ####################### OLD CODE BEGINS HERE ########################
+//    // .. set up build flavors etc here
+//
+//    // Instead of "app-release.apk" this method will rewrite the name to
+//    // "MyCoolCompany-MyGreatProduct-v<defaultConfig.versionName>-RELEASE.apk"
+//    // which is much better suited for archiving and overall handling
+//    // To restore the default behavior just delete the whole block below
+//    // E:V:A  Not Working, generates: "AIMSICD-null.apk"
+//    applicationVariants.all { variant ->
+//
+//        def apk = variant.outputFile;
+//        def newName;
+//
+//        //newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() + ".apk");
+//        newName = apk.name.replace(".apk", "-" + defaultConfig.versionName + ".apk");
+//
+//        newName = newName
+//                .replace("-" + variant.buildType.name, "") // This removes "-release"
+//                .replace(project.name, "AIMSICD");         // This replace app with "AIMSICD"
+//
+//        variant.outputFile = new File(apk.parentFile, newName);
+//
+//        if (variant.zipAlign) {
+//            variant.outputFile = new File(apk.parentFile, newName.replace("-unaligned", ""));
+//        }
+//
+//        logger.info('INFO: Set outputFile to ' + variant.outputFile + " for [" + variant.name + "]");
+//    }
+//
+//
+//    packagingOptions {
+//        exclude 'META-INF/NOTICE.txt'
+//        exclude 'META-INF/LICENSE.txt'
+//    }
+//}
+// ####################### OLD CODE ENDS HERE ###########################
 
 dependencies {
     compile project(':third_party:RootTools')
@@ -122,4 +160,119 @@ dependencies {
     compile 'eu.lp0.slf4j:slf4j-android:1.7+'
     compile 'org.apache.httpcomponents:httpmime:4.2.1'
     compile 'au.com.bytecode:opencsv:2.4'
+    compile 'com.crashlytics.android:crashlytics:1.+'
 }
+
+//======================================================================
+// Release signing by reading signing.properties file containing values:
+//
+// * KEYSTORE_FILE
+// * KEYSTORE_PASSWORD
+// * KEY_ALIAS
+// * KEY_PASSWORD
+//======================================================================
+
+def Properties props = new Properties()
+def propFile = new File("signing.properties")
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null
+            && props.containsKey("KEYSTORE_FILE")
+            && props.containsKey("KEYSTORE_PASSWORD")
+            && props.containsKey("KEY_ALIAS")
+            && props.containsKey("KEY_PASSWORD")) {
+
+        def keystoreFile = new File(props["KEYSTORE_FILE"])
+        if (keystoreFile.canRead()) {
+            android.signingConfigs.release.storeFile = keystoreFile
+            android.signingConfigs.release.storePassword = props["KEYSTORE_PASSWORD"]
+            android.signingConfigs.release.keyAlias = props["KEY_ALIAS"]
+            android.signingConfigs.release.keyPassword = props["KEY_PASSWORD"]
+        } else {
+            println("keystore file not found: " + props["KEYSTORE_FILE"])
+            android.buildTypes.release.signingConfig = null
+        }
+    } else {
+        println("signing.properties found but some entries missing")
+        android.buildTypes.release.signingConfig = null
+    }
+} else {
+    println("signing.properties not found")
+    android.buildTypes.release.signingConfig = null
+}
+
+//======================================================================
+// Takes versionCode in AndroidManifest.xml to incrememt in next release
+//----------------------------------------------------------------------
+// Example:
+// 1) Before the build AndroidManfist.xml has versionCode=24
+// 2) AndroidManifest.xml will be modified to versionCode=25
+//======================================================================
+
+task incrementVersionCode << {
+println(":incrementVersionCode - Incrementing Version Code...")
+def manifestFile = file("src/main/AndroidManifest.xml")
+def patternVersionCode = Pattern.compile("versionCode=\"(\\d+)\"")
+def manifestText = manifestFile.getText()
+def matcherVersionCode = patternVersionCode.matcher(manifestText)
+matcherVersionCode.find()
+def mVersionCode = Integer.parseInt(matcherVersionCode.group(1))
+def mNextVersionCode = mVersionCode + 1
+def manifestContent = matcherVersionCode.replaceAll("versionCode=\"" + mNextVersionCode + "\"")
+println(":incrementVersionCode - current versionCode=" + mVersionCode);
+println(":incrementVersionCode - next versionCode=" + mNextVersionCode);
+manifestFile.write(manifestContent)
+}
+
+//======================================================================
+// Takes versionName in AndroidManifest.xml to increment in next release
+// versionName needs to be in the format [major].[minor].[point]
+//----------------------------------------------------------------------
+// Example:
+// 1) Before the build AndroidManfist.xml has versionName=0.1.24-alpha
+// 2) AndroidManifest.xml will be modified to versionName=0.1.24-alpha
+//======================================================================
+
+// TODO: Fix below pattern to allow our own naming scheme suggested as
+// <versionName> = v<major>.<minor>.<versionCode>-<maturity>-b<build>
+
+task incrementVersionName << {
+    println(":incrementVersionName - Incrementing Version Name...")
+    def manifestFile = file("src/main/AndroidManifest.xml")
+    def patternVersionNumber = Pattern.compile("versionName=\"(\\d+)\\.(\\d+)\\.(\\d+)\"")
+    def manifestText = manifestFile.getText()
+    def matcherVersionNumber = patternVersionNumber.matcher(manifestText)
+    matcherVersionNumber.find()
+    def majorVersion = Integer.parseInt(matcherVersionNumber.group(1))
+    def minorVersion = Integer.parseInt(matcherVersionNumber.group(2))
+    def pointVersion = Integer.parseInt(matcherVersionNumber.group(3))
+    def mVersionName = majorVersion + "." + minorVersion + "." + pointVersion
+    def mNextVersionName = majorVersion + "." + minorVersion + "." + (pointVersion + 1)
+    def manifestContent = matcherVersionNumber.replaceAll("versionName=\"" + mNextVersionName + "\"")
+    println(":incrementVersionName - current versionName=" + mVersionName);
+    println(":incrementVersionName - new versionName=" + mNextVersionName);
+    manifestFile.write(manifestContent)
+}
+
+task release << {
+    println(":release - Build and Version Increment")
+}
+
+task debug << {
+    println(":debug - Build")
+}
+
+incrementVersionName.mustRunAfter build
+incrementVersionCode.mustRunAfter build
+
+debug.dependsOn assembleDebug
+//======================================================================
+// Uncomment to increment versionCode and/or versionName in debug build:
+// debug.dependsOn incrementVersionCode
+// debug.dependsOn incrementVersionName
+//======================================================================
+
+release.dependsOn assembleRelease
+release.dependsOn incrementVersionCode
+release.dependsOn incrementVersionName
