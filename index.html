@@ -39,10 +39,10 @@
         </div>
 
         <h3>
-<a name="android-imsi-catcher-detector" class="anchor" href="#android-imsi-catcher-detector"><span class="octicon octicon-link"></span></a>Android IMSI-Catcher Detector</h3>
+<a id="android-imsi-catcher-detector" class="anchor" href="#android-imsi-catcher-detector" aria-hidden="true"><span class="octicon octicon-link"></span></a>Android IMSI-Catcher Detector</h3>
 
 <h2>
-<a name="---" class="anchor" href="#---"><span class="octicon octicon-link"></span></a>
+<a id="---" class="anchor" href="#---" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a href="https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector"><img src="https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector.svg" alt="Build Status"></a> <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#alpha-stage"><img src="http://img.shields.io/badge/Development_Stage-ALPHA-brightgreen.svg" alt="Development Stage"></a> <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/FAQ"><img src="http://img.shields.io/badge/GooglePlay-NOT%20SUPPORTED-brightgreen.svg" alt="GooglePlay"></a> <a href="https://scan.coverity.com/projects/3346"><img src="https://scan.coverity.com/projects/3346/badge.svg" alt="CoverityScan"></a>
 </h2>
 
@@ -51,12 +51,12 @@
 <hr>
 
 <h2>
-<a name="----1" class="anchor" href="#----1"><span class="octicon octicon-link"></span></a>
+<a id="----1" class="anchor" href="#----1" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a href="http://aimsicd.store.aptoide.com/"><img src="http://fs1.d-h.st/view/FA9x/00146/Aptoide.png" alt="Aptoide"></a>  <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases"><img src="http://fs1.d-h.st/view/c4aK/00146/GitHub.png" alt="GitHub"></a> <a href="https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD"><img src="http://fs1.d-h.st/view/CYB/00146/F-Droid.png" alt="F-Droid"></a>
 </h2>
 
 <h2>
-<a name="" class="anchor" href="#"><span class="octicon octicon-link"></span></a><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons"><img src="https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Banner_Large.png" alt="AIMSICD-Banner"></a>
+<a id="" class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons"><img src="https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Banner_Large.png" alt="AIMSICD-Banner"></a>
 </h2>
 
 <p><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases"><img src="https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Teaser.png" alt="AIMSICD-Teaser"></a></p>
@@ -64,7 +64,7 @@
 <hr>
 
 <h1>
-<a name="index" class="anchor" href="#index"><span class="octicon octicon-link"></span></a>Index</h1>
+<a id="index" class="anchor" href="#index" aria-hidden="true"><span class="octicon octicon-link"></span></a>Index</h1>
 
 <ul>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction">Introduction</a></li>
@@ -98,7 +98,7 @@
 <hr>
 
 <h1>
-<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
 <p>Both law enforcement agencies and criminals use <a href="https://en.wikipedia.org/wiki/IMSI-catcher">IMSI-Catchers</a>, which are false mobile towers acting between the target mobile phone(s) and the service providers real towers. As such it is considered a Man In the Middle (MITM) attack. The FBI or local police might deploy the device at a protest to obtain a record of everyone who attended with a cell phone. In the USA this technology is known under the name "<a href="https://en.wikipedia.org/wiki/Stingray_phone_tracker">StingRay</a>", which is even capable to track the people who are traveling together with an owner of a targeted phone across the country. <a href="http://www.pgsup.com/wp-content/uploads/2010/06/P4230059.jpg">Here</a> you can see alleged StingRay tracking devices mounted to the roof of three SUVs. IMSI-Catchers can allow adversaries to intercept your conversations, text messages, and data. Police can also use them to determine your location, or to find out who is in a given geographic area at what time. Identity thieves might sit with an IMSI-Catcher in a parked car in a residential neighborhood, stealing passwords or credit card information from people nearby who make purchases on their phones.</p>
 
@@ -112,7 +112,7 @@
 
 <p>In addition, all IMSI-Catchers can crack A5/1 encryption, which is most commonly used for GSM traffic, on the fly (passively)! A5/3 encryption which is used for securing 3G and is offered as <a href="http://www.telekom.com/media/company/210108">new security standard for GSM encryption</a> remains secure in practice while susceptible to theoretical attacks. Although 3G and 4G offer sufficient protection from eavesdropping, the security measures can be bypassed by IMSI-Catchers forcing a mobile device into 2G mode and <a href="http://www.septier.com/149.html">downgrade encryption to A5/1 or disable it</a>.</p>
 
-<p>There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the <a href="https://code.google.com/p/android/issues/detail?id=5353">Issue of not having a convenient display of the Ciphering Indictor</a> has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. <strong>Let's detect and protect against these threats!</strong> Never think you've got "nothing to hide".</p>
+<p>There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the <a href="https://code.google.com/p/android/issues/detail?id=5353">Issue of not having a convenient display of the Ciphering Indicator</a> has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. <strong>Let's detect and protect against these threats!</strong> Never think you've got "nothing to hide".</p>
 
 <p>Some examples to make you familar with the most common IMSI-Catcher threats:</p>
 
@@ -131,7 +131,7 @@
 <hr>
 
 <h4>
-<a name="want-to-know-what-imsi-catchers-look-like" class="anchor" href="#want-to-know-what-imsi-catchers-look-like"><span class="octicon octicon-link"></span></a>Want to know what IMSI-Catchers look like?</h4>
+<a id="want-to-know-what-imsi-catchers-look-like" class="anchor" href="#want-to-know-what-imsi-catchers-look-like" aria-hidden="true"><span class="octicon octicon-link"></span></a>Want to know what IMSI-Catchers look like?</h4>
 
 <p>They come in uncountable shapes and sizes:</p>
 
@@ -162,7 +162,7 @@
 <hr>
 
 <h3>
-<a name="application-goals-please-read-carefully" class="anchor" href="#application-goals-please-read-carefully"><span class="octicon octicon-link"></span></a>Application Goals (please read carefully!)</h3>
+<a id="application-goals-please-read-carefully" class="anchor" href="#application-goals-please-read-carefully" aria-hidden="true"><span class="octicon octicon-link"></span></a>Application Goals (please read carefully!)</h3>
 
 <ul>
 <li>Detect IMSI based device location tracking</li>
@@ -184,7 +184,7 @@
 </ul>
 
 <h5>
-<a name="other-projects-not-this-one" class="anchor" href="#other-projects-not-this-one"><span class="octicon octicon-link"></span></a>Other projects (NOT this one):</h5>
+<a id="other-projects-not-this-one" class="anchor" href="#other-projects-not-this-one" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other projects (NOT this one):</h5>
 
 <ul>
 <li>Provide full device encryption</li>
@@ -199,7 +199,7 @@
 <hr>
 
 <h1>
-<a name="development-roadmap" class="anchor" href="#development-roadmap"><span class="octicon octicon-link"></span></a>Development Roadmap</h1>
+<a id="development-roadmap" class="anchor" href="#development-roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development Roadmap</h1>
 
 <p>In order to accomplish the goals set above, we'll need to overcome some of the deeply worrying and unfounded AOS limitations, as imposed by Googles API, in regard to relevant network variables and data. These include highly relevant and important things such as displaying the SIM/phone Ciphering Indicator, which tells you if your calls are being encrypted or not. This has been a required 3GPP feature for the last 15 years, but which Google and most Mobile Network providers have choosen to mostly ignore, although it has been <a href="https://code.google.com/p/android/issues/detail?id=5353">requested by users since 2009</a>. Another is finding the <em>Timing Advance</em> (TA) and various Network Timers, like those used in <em>Radio Resource Control</em> (<a href="http://en.wikipedia.org/wiki/Radio_Resource_Control">RRC</a>), that can give very useful information regarding the status of the connections your phone is making. </p>
 
@@ -224,7 +224,7 @@
 <p>C. Make (A) and (B) transparent across as many Android devices as possible.</p>
 
 <h5>
-<a name="alpha-stage" class="anchor" href="#alpha-stage"><span class="octicon octicon-link"></span></a>ALPHA stage:</h5>
+<a id="alpha-stage" class="anchor" href="#alpha-stage" aria-hidden="true"><span class="octicon octicon-link"></span></a>ALPHA stage:</h5>
 
 <p>Make a baseline App that contains the basic functionality for collecting and presenting all available network variables and the detection results.</p>
 
@@ -238,7 +238,7 @@
 </ul>
 
 <h5>
-<a name="beta-stage" class="anchor" href="#beta-stage"><span class="octicon octicon-link"></span></a>BETA stage:</h5>
+<a id="beta-stage" class="anchor" href="#beta-stage" aria-hidden="true"><span class="octicon octicon-link"></span></a>BETA stage:</h5>
 
 <p>Improve ALPHA for leveraging and tune our detection matrix/algorithm.</p>
 
@@ -253,7 +253,7 @@
 </ul>
 
 <h5>
-<a name="golden-stage" class="anchor" href="#golden-stage"><span class="octicon octicon-link"></span></a>GOLDEN stage:</h5>
+<a id="golden-stage" class="anchor" href="#golden-stage" aria-hidden="true"><span class="octicon octicon-link"></span></a>GOLDEN stage:</h5>
 
 <p>This stage is essentially the completion of this project. However, we expect that long before this happens, the entire network industry will have changed to such a degree that many new privacy and security issues will have arised. Thus, we will likely have more things to add and maintain in this project. We are of the current understanding that this project is a never ending story, all for the peoples benefit and a more privacy oriented future.</p>
 
@@ -269,21 +269,21 @@
 <hr>
 
 <h3>
-<a name="disclaimer" class="anchor" href="#disclaimer"><span class="octicon octicon-link"></span></a>Disclaimer</h3>
+<a id="disclaimer" class="anchor" href="#disclaimer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Disclaimer</h3>
 
 <p>Safety first: Here's our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER">Disclaimer</a>.</p>
 
 <hr>
 
 <h3>
-<a name="bug-tracker" class="anchor" href="#bug-tracker"><span class="octicon octicon-link"></span></a>Bug Tracker</h3>
+<a id="bug-tracker" class="anchor" href="#bug-tracker" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bug Tracker</h3>
 
 <p>Please follow <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues">how to correctly submit Issues</a>!</p>
 
 <hr>
 
 <h3>
-<a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h3>
+<a id="support" class="anchor" href="#support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support</h3>
 
 <p>Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a fully anonymous donation through sending <a href="https://www.darkcoin.io/">DarkCoin</a> to our DONATION ADDRESS: <strong>XxEJvrYtkTZzvMUjtbZwPY34MyCGHSu4ys</strong></p>
 
@@ -298,21 +298,21 @@
 <hr>
 
 <h3>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h3>
 
 <p>This project is completely licensed <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE">GPL v3+</a>.</p>
 
 <hr>
 
 <h3>
-<a name="credits--greetings" class="anchor" href="#credits--greetings"><span class="octicon octicon-link"></span></a>Credits &amp; Greetings</h3>
+<a id="credits--greetings" class="anchor" href="#credits--greetings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits &amp; Greetings</h3>
 
 <p>Our project would not have been possible without <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS">these awesome people</a>. HUGE THANKS!</p>
 
 <hr>
 
 <h3>
-<a name="sponsors" class="anchor" href="#sponsors"><span class="octicon octicon-link"></span></a>Sponsors</h3>
+<a id="sponsors" class="anchor" href="#sponsors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sponsors</h3>
 
 <p>Our gratitude flies out to these great Sponsors:</p>
 
@@ -320,7 +320,7 @@
 <a href="http://scnv.io/r/25e7713950"><img src="http://fs1.d-h.st/view/pJb/00146/Scanova.png" alt="Scanova"></a></p>
 
 <h3>
-<a name="get-in-touch-with-the-core-team" class="anchor" href="#get-in-touch-with-the-core-team"><span class="octicon octicon-link"></span></a>Get in touch with the core team!</h3>
+<a id="get-in-touch-with-the-core-team" class="anchor" href="#get-in-touch-with-the-core-team" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get in touch with the core team!</h3>
 
 <table>
 <thead>
@@ -331,7 +331,7 @@
 </thead>
 <tbody>
 <tr>
-<td align="center"><a href="mailto:xdae3v3a@gmail.com">E:V:A</a></td>
+<td align="center"><a href="mailto:a3841c3c@opayq.com">E:V:A</a></td>
 <td align="center">Project Initiator</td>
 </tr>
 <tr>
