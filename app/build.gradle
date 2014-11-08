@@ -67,11 +67,13 @@ repositories {
 // ####################### OLD CODE ENDS HERE ###########################
 
 android {
-    packagingOptions {
-    exclude 'META-INF/NOTICE.txt'
-    }    
     compileSdkVersion 19
     buildToolsVersion '19.1'
+    
+    packagingOptions {
+        exclude 'META-INF/exclude.txt'
+        exclude 'META-INF/LICENSE'
+    }
 
     defaultConfig {
         minSdkVersion 16
