@@ -13,21 +13,17 @@ import java.util.regex.Pattern
 buildscript {
     repositories {
         mavenCentral()
-        maven { url 'http://download.crashlytics.com/maven' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.+'
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     }
 }
 apply plugin: 'android'
-apply plugin: 'crashlytics'
 
 repositories {
     mavenCentral()
-    maven { url 'http://download.crashlytics.com/maven' }
 
 } 
 
@@ -161,7 +157,6 @@ dependencies {
     compile 'eu.lp0.slf4j:slf4j-android:1.7+'
     compile 'org.apache.httpcomponents:httpmime:4.2.1'
     compile 'au.com.bytecode:opencsv:2.4'
-    compile 'com.crashlytics.android:crashlytics:1.+'
 }
 
 //======================================================================
