@@ -67,6 +67,9 @@ repositories {
 // ####################### OLD CODE ENDS HERE ###########################
 
 android {
+    packagingOptions {
+    exclude 'META-INF/NOTICE.txt'
+    }    
     compileSdkVersion 19
     buildToolsVersion '19.1'
 
