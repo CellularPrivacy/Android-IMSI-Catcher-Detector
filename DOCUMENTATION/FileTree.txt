@@ -1,0 +1,134 @@
+This file contain the tree view of all the relevant App source files,
+it is used to briefly describe what each file is doing and what it is 
+used for. 
+
+Status:	  WIP
+Date:     2014-11-11
+Encoding: UTF-8
+
+tree -I *.png app/src/main/
+
+
+main
+├── AndroidManifest.xml                                         THE AndroidManifest file
+├── assets
+│   └── default_mcc_locations.csv                               Default MCC locations for each country
+├── java
+│   └── com
+│       └── SecUpwN
+│           └── AIMSICD
+│               ├── activities                                          
+│               │   ├── MapPrefActivity.java                            
+│               │   ├── MapViewerOsmDroid.java
+│               │   └── PrefActivity.java
+│               ├── adapters
+│               │   ├── AIMSICDDbAdapter.java
+│               │   ├── BaseInflaterAdapter.java
+│               │   ├── CardItemData.java
+│               │   ├── CellCardInflater.java
+│               │   ├── DefaultLocationCardInflater.java
+│               │   ├── DetailsPagerAdapter.java
+│               │   ├── DrawerMenuAdapter.java
+│               │   ├── IAdapterViewInflater.java
+│               │   ├── OpenCellIdCardInflater.java
+│               │   ├── SilentSmsCardData.java
+│               │   └── SilentSmsCardInflater.java
+│               ├── AIMSICD.java
+│               ├── drawer
+│               │   ├── DrawerMenuActivityConfiguration.java    
+│               │   ├── DrawerMenuItem.java
+│               │   ├── DrawerMenuSection.java
+│               │   └── NavDrawerItem.java
+│               ├── fragments
+│               │   ├── AboutFragment.java
+│               │   ├── AtCommandFragment.java
+│               │   ├── CellInfoFragment.java
+│               │   ├── DbViewerFragment.java
+│               │   ├── DetailsContainerFragment.java
+│               │   ├── DeviceFragment.java
+│               │   ├── MapPrefFragment.java
+│               │   └── PrefFragment.java
+│               ├── receiver
+│               │   ├── BootCompletedReceiver.java
+│               │   └── SmsReceiver.java
+│               ├── rilexecutor
+│               │   ├── DetectResult.java
+│               │   ├── HexDump.java
+│               │   ├── OemRilExecutor.java
+│               │   ├── RawResult.java
+│               │   ├── RilExecutor.java
+│               │   ├── SamsungMulticlientRilExecutor.java
+│               │   └── StringsResult.java
+│               ├── service
+│               │   ├── AccelerometerMonitor.java
+│               │   ├── AimsicdService.java
+│               │   ├── CellTracker.java
+│               │   └── LocationTracker.java
+│               └── utils
+│                   ├── AsyncResponse.java
+│                   ├── Cell.java
+│                   ├── ChildProcess.java
+│                   ├── CMDProcessor.java
+│                   ├── CommandResult.java
+│                   ├── Device.java
+│                   ├── DeviceApi17.java
+│                   ├── GeoLocation.java
+│                   ├── Helpers.java
+│                   ├── LocationServices.java
+│                   ├── OemCommands.java
+│                   ├── RequestTask.java
+│                   ├── StackOverflowXmlParser.java
+│                   └── SystemPropertiesReflection.java
+└── res
+    ├── drawable
+    │   ├── empty_icon.xml
+    │   ├── layer_card_background.xml
+    │   ├── layer_card_background_selected.xml
+    │   ├── pager_background.xml
+    │   ├── progress_bar_states.xml
+    │   ├── selector_card_background.xml
+    │   └── top_shadow.xml
+    ├── drawable-hdpi
+    ├── drawable-ldpi
+    ├── drawable-mdpi
+    ├── drawable-xhdpi
+    ├── drawable-xxhdpi
+    ├── drawable-xxxhdpi
+    ├── layout
+    │   ├── about_fragment.xml
+    │   ├── at_command_fragment.xml
+    │   ├── cell_fragment.xml
+    │   ├── cell_items.xml
+    │   ├── db_view.xml
+    │   ├── default_location_items.xml
+    │   ├── device.xml
+    │   ├── drawer_item.xml
+    │   ├── drawer_layout.xml
+    │   ├── drawer_list_item.xml
+    │   ├── drawer_section.xml
+    │   ├── fragment_details_container.xml
+    │   ├── main.xml
+    │   ├── map.xml
+    │   ├── marker_info_window.xml
+    │   ├── neighbouring_cell_items.xml
+    │   ├── opencelid_items.xml
+    │   ├── silent_sms_items.xml
+    │   ├── sms_fragment.xml
+    │   └── top.xml
+    ├── menu
+    │   └── map_viewer_menu.xml
+    ├── values
+    │   ├── arrays.xml
+    │   ├── colors.xml
+    │   ├── config.xml
+    │   ├── dimens.xml
+    │   ├── strings.xml
+    │   ├── styles.xml
+    │   └── themes.xml
+    ├── values-w820dp
+    │   └── dimens.xml
+    └── xml
+        ├── map_preferences.xml
+        └── preferences.xml
+
+26 directories, 94 files
