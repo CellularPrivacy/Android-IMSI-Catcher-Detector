@@ -3,7 +3,7 @@
 // > gradle debug
 // > gradle release
 //----------------------------------------------------------------------
-// gradle debug will run assembleDebug
+// gradle debug will run assembleDebug to create an APK for debugging
 // gradle release will run assembleRelease, configure the signing using
 // the signing.properties and increment the build number automatically
 //======================================================================
@@ -13,14 +13,13 @@ import java.util.regex.Pattern
 buildscript {
     repositories {
         mavenCentral()
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-
     }
+    
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
@@ -228,20 +227,17 @@ manifestFile.write(manifestContent)
 
 //======================================================================
 // Takes versionName in AndroidManifest.xml to increment in next release
-// versionName needs to be in the format [major].[minor].[point]
+// <versionName> = v<major>.<minor>.<versionCode>-<maturity>-b<build>
 //----------------------------------------------------------------------
 // Example:
 // 1) Before the build AndroidManfist.xml has versionName=0.1.24-alpha
 // 2) AndroidManifest.xml will be modified to versionName=0.1.25-alpha
 //======================================================================
 
-// TODO: Fix below pattern to allow our own naming scheme suggested as
-// <versionName> = v<major>.<minor>.<versionCode>-<maturity>-b<build>
-
 task incrementVersionName << {
     println(":incrementVersionName - Incrementing Version Name...")
     def manifestFile = file("src/main/AndroidManifest.xml")
-    def patternVersionNumber = Pattern.compile("versionName=\"(\\d+)\\.(\\d+)\\.(\\d+)\"")
+    def patternVersionNumber = Pattern.compile("versionName=\"v(\\d+)\\.(\\d+)\\.(\\d+)\"")
     def manifestText = manifestFile.getText()
     def matcherVersionNumber = patternVersionNumber.matcher(manifestText)
     matcherVersionNumber.find()
