@@ -5,18 +5,28 @@
 #-------------------
 
 language: android
+env:
+  global:
+# Initiating clean Gradle output
+    - TERM=dumb
+# Encrypted COVERITY_SCAN_TOKEN
+    - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
+  matrix:
+    - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
+
+# Making sure gradlew has executable permissions
+before_install:
+    - chmod +x gradlew
 
 android:
   components:
-# Uncomment the lines below if you want to
-# use the latest revision of Android SDK Tools
+# We are using the latest revision of Android SDK Tools
      - build-tools-19.1.0
      - platform-tools
      - tools
      - extra
      
-# System Images: Specify at least one system image,
-# if you need to run emulator(s) during your tests
+# System Image we use to run emulator(s) during tests
      - sys-img-armeabi-v7a-android-19
     
   licenses:
@@ -24,27 +34,21 @@ android:
      
 # Emulator Management: Create, Start and Wait
 before_script:
-     - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+     - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
      - emulator -avd test -no-skin -no-audio -no-window &
      - android-wait-for-emulator
      - adb shell input keyevent 82 &
      
-script: ./gradlew build connectedAndroidTest
+script: ./gradlew clean connectedAndroidTest
 
 # Coverity Scan Settings
 #-----------------------
-
-env:
-  global:
-# The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-# via the "travis encrypt" command using the project repo's public key
-   - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
 
 addons:
   coverity_scan:
     project:
       name: "SecUpwN/Android-IMSI-Catcher-Detector"
     notification_email: perfect-privacy@secure-mail.biz; a3841c3c@opayq.com; toby@tobykurien.com
-    build_command_prepend: "mvn clean"
-    build_command: "mvn compile"
+    build_command_prepend: "./gradlew clean"
+    build_command: "./gradlew build"
     branch_pattern: master
