@@ -34,6 +34,8 @@ android:
      
 # Emulator Management: Create, Start and Wait
 before_script:
+     - sudo service mysql stop
+     - sudo service postgresql stop
      - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
      - emulator -avd test -no-skin -no-audio -no-window &
      - android-wait-for-emulator
