@@ -4,7 +4,7 @@
 Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. Feel free to read the [Press Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Press-Releases) about us, spread the word with our [Media Material](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material) and help us solving [current challenges](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues)!
 
 ---
-[![Aptoide](http://fs1.d-h.st/view/FA9x/00146/Aptoide.png)](http://aimsicd.store.aptoide.com/)  [![GitHub](http://fs1.d-h.st/view/c4aK/00146/GitHub.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases) [![F-Droid](http://fs1.d-h.st/view/CYB/00146/F-Droid.png)](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD)
+[![Aptoide](http://fs1.d-h.st/view/8RA/00148/Aptoide.png)](http://aimsicd.store.aptoide.com/)  [![GitHub](http://fs1.d-h.st/view/DFQ/00148/GitHub.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases) [![F-Droid](http://fs1.d-h.st/view/D9m/00148/F-Droid.png)](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD)
 ---
 [![AIMSICD-Banner](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Banner_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
 ---
