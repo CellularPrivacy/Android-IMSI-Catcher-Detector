@@ -60,13 +60,14 @@ In addition, all IMSI-Catchers can crack A5/1 encryption, which is most commonly
 
 There are almost no phones on the market which offer an option to check what kind of encryption is used to secure GSM traffic. And although the [Issue of not having a convenient display of the Ciphering Indicator](https://code.google.com/p/android/issues/detail?id=5353) has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case the phone will not be able to receive or make calls in areas without 3G coverage. This is why the original author named "E:V:A" started this project. **Let's detect and protect against these threats!** Never think you've got "nothing to hide".
 
-Some examples to make you familar with the most common IMSI-Catcher threats:
+Some examples to make you familar with current IMSI-Catcher threats:
 
 * **[NSA-Killings with IMSI-Catcher drones](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)**.
 * [How easy it is to clone phones](http://www.youtube.com/watch?v=Ydo19YOzpzU).
 * Talk by Karsten Nohl and Luca Melette on [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck).
 * [Stingrays: Biggest Technological Threat](https://www.eff.org/deeplinks/2012/10/stingrays-biggest-unknown-technological-threat-cell-phone-privacy).
 * [GSOC reveals hidden IMSI-Catcher](https://www.privacyinternational.org/blog/beirtear-na-imsis-irelands-gsoc-surveillance-inquiry-reveals-use-of-mobile-phone-interception).
+* [Secret U.S. Spy Program on Planes](http://online.wsj.com/news/article_email/americans-cellphones-targeted-in-secret-u-s-spy-program-1415917533-lMyQjAxMTI0NTEwMzAxMTMwWj)
 
 ---
 
@@ -230,7 +231,7 @@ Our gratitude flies out to these great Sponsors:
 |[tobykurien](http://tobykurien.com/)                                |          Code-Monkey         |    
 |[He3556](http://forum.xda-developers.com/member.php?u=4600707)      |    Vulnerability Analyzer    |
 |[Sgt-Obst](http://forum.xda-developers.com/member.php?u=5102584)    |      Graphical Designer      |
-|[andr3jx](mailto: 9414f52d@opayq.com)                               | Chief cook and bottle washer |
+|[andr3jx](mailto:9414f52d@opayq.com)                                | Chief Cook and Bottle Washer |
 |[SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)     |         Public Speaker       |
 
 ---
