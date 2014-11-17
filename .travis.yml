@@ -31,8 +31,8 @@ android:
      - platform-tools
      - tools
      
-# Using the latest BuildTools version for our project
-     - 'build-tools-.+'
+# The BuildTools version we are using for our project
+     - build-tools-19.1.0
      
 # System Image we use to run emulator(s) during tests
      - sys-img-armeabi-v7a-android-19
