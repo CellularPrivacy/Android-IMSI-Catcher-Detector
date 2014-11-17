@@ -1,3 +1,5 @@
+import java.util.regex.Pattern
+
 apply plugin: 'com.android.application'
 
 //======================================================================
@@ -11,27 +13,26 @@ apply plugin: 'com.android.application'
 
 def getManifestVersionCode() {
      println "Importing with getManifestVersionCode()"
-     def manifestFile = file("AndroidManifest.xml")
+     def manifestFile = file("src/main/AndroidManifest.xml")
      def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
      def manifestText = manifestFile.getText()
      def matcher = pattern.matcher(manifestText)
      matcher.find()
-     //def version = ++Integer.parseInt(matcher.group(1)) // Update version number
-     def version = Integer.parseInt(matcher.group(1)) 
+     def version = Integer.parseInt(matcher.group(1))
      println sprintf("Returning version %d", version)
-     return "$version"
+     return version
 }
-// TODO: Fix this one
-def getManifestVersionName() {  
+
+def getManifestVersionName() {
      println "Importing with getManifestVersionName()"
-     def manifestFile = file("AndroidManifest.xml")
-     def pattern = Pattern.compile("versionName=\"(\\.+)\"")
+     def manifestFile = file("src/main/AndroidManifest.xml")
+     def pattern = Pattern.compile("versionName=\"(.+)\"")
      def manifestText = manifestFile.getText()
      def matcher = pattern.matcher(manifestText)
      matcher.find()
-     //def zname = ++Integer.parseInt(matcher.group(1))
+     def zname = matcher.group(1)
      println sprintf("Returning version %s", zname)
-     return "$zname"
+     return zname
 }
 
 //======================================================================
@@ -43,8 +44,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19
-        // versionCode getManifestVersionCode()
-        // versionName getManifestVersionName()
+        versionCode = getManifestVersionCode()
+        versionName = getManifestVersionName()
     }
     buildTypes {
         debug {
@@ -97,8 +98,8 @@ android {
         def apk = variant.outputFile;
         def newName;
 
-        //newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() + ".apk");
-        newName = apk.name.replace(".apk", "-" + defaultConfig.versionName + ".apk");
+        newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() + ".apk");
+        //newName = apk.name.replace(".apk", "-" + defaultConfig.versionName + ".apk");
 
         newName = newName
                 .replace("-" + variant.buildType.name, "") // This removes "-release"
