@@ -1,9 +1,8 @@
-This file contain the tree view of all the relevant App source files,
-it is used to briefly describe what each file is doing and what it is 
-used for. 
+This file contains the tree view of all the relevant App source files
+to briefly describe what each file is doing and what it is used for.
 
 Status:	  WIP
-Date:     2014-11-11
+Date:     2014-11-17
 Encoding: UTF-8
 
 tree -I *.png app/src/main/
