@@ -9,7 +9,7 @@ tree -I *.png app/src/main/
 
 
 main
-├── AndroidManifest.xml                                         THE AndroidManifest file
+├── AndroidManifest.xml                                         The AndroidManifest file
 ├── assets
 │   └── default_mcc_locations.csv                               Default MCC locations for each country
 ├── java
@@ -87,12 +87,12 @@ main
     │   ├── progress_bar_states.xml
     │   ├── selector_card_background.xml
     │   └── top_shadow.xml
-    ├── drawable-hdpi
-    ├── drawable-ldpi
-    ├── drawable-mdpi
-    ├── drawable-xhdpi
-    ├── drawable-xxhdpi
-    ├── drawable-xxxhdpi
+    ├── drawable-hdpi                                           Icons and graphics in size 72x72
+    ├── drawable-ldpi                                           Icons and graphics in size 36x36
+    ├── drawable-mdpi                                           Icons and graphics in size 48x48
+    ├── drawable-xhdpi                                          Icons and graphics in size 96x96
+    ├── drawable-xxhdpi                                         Icons and graphics in size 144x144
+    ├── drawable-xxxhdpi                                        Icons and graphics in size 192x192
     ├── layout
     │   ├── about_fragment.xml
     │   ├── at_command_fragment.xml
@@ -115,19 +115,19 @@ main
     │   ├── sms_fragment.xml
     │   └── top.xml
     ├── menu
-    │   └── map_viewer_menu.xml
+    │   └── map_viewer_menu.xml                                 Menu of the Map Viewer
     ├── values
-    │   ├── arrays.xml
-    │   ├── colors.xml
-    │   ├── config.xml
-    │   ├── dimens.xml
-    │   ├── strings.xml
-    │   ├── styles.xml
+    │   ├── arrays.xml                                          Arrays of the Map Viewer
+    │   ├── colors.xml                                          Colors of the Map Viewer
+    │   ├── config.xml                                          Configuration of the Map
+    │   ├── dimens.xml                                          Dimensions of the Map
+    │   ├── strings.xml                                         Strings of the Map Viewer
+    │   ├── styles.xml                                          Styles of the Map Viewer
     │   └── themes.xml
     ├── values-w820dp
     │   └── dimens.xml
     └── xml
-        ├── map_preferences.xml
+        ├── map_preferences.xml                                 Preferences of the Map
         └── preferences.xml
 
 26 directories, 94 files
