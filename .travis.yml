@@ -19,9 +19,11 @@ env:
   matrix:
     - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 
-# Making sure gradlew has executable permissions
 before_install:
+# Making sure gradlew has executable permissions
     - chmod +x gradlew
+# Updating index before installing packages
+    - sudo apt-get update -qq
 
 android:
   components:
