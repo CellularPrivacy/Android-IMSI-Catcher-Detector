@@ -11,9 +11,6 @@ env:
     - TERM=dumb
 # Inspecting running services
     - ps auxww
-# Enabling more compilation details
-    - Xlint:deprecation
-    - Xlint:unchecked
 # Encrypted COVERITY_SCAN_TOKEN
     - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
   matrix:
@@ -58,7 +55,8 @@ addons:
   coverity_scan:
     project:
       name: "SecUpwN/Android-IMSI-Catcher-Detector"
-    notification_email: perfect-privacy@secure-mail.biz; a3841c3c@opayq.com; toby@tobykurien.com
+    notification_email: annoyed@coverity.notifications
+# Scan results: http://scan.coverity.com/projects/3346
     build_command_prepend: "./gradlew clean"
     build_command: "./gradlew build"
     branch_pattern: master
