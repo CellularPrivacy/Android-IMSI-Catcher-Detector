@@ -10,7 +10,7 @@ env:
 # Initiating clean Gradle output
     - TERM=dumb
 # Inspecting running services
-    - ps aux
+    - ps auxww
 # Enabling more compilation details
     - Xlint:deprecation
     - Xlint:unchecked
