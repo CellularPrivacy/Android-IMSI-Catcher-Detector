@@ -19,8 +19,6 @@ before_install:
     - chmod +x gradlew
 # Updating index before installing packages
     - sudo apt-get update -qq
-# Inspecting running services
-    - ps auxww
 
 android:
   components:
@@ -41,6 +39,8 @@ android:
 before_script:
      - sudo service mysql stop
      - sudo service postgresql stop
+     # Inspecting running services
+     - ps auxww
      - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
      - emulator -avd test -no-skin -no-audio -no-window &
      - android-wait-for-emulator
