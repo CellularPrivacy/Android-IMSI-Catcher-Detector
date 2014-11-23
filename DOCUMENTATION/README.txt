@@ -6,6 +6,8 @@ Welcome to our documentation material!
 This directory shall ONLY contain pictures and files used to document our project.
 Please name all files appropriately and make sure all metadata has been purged!
 
+Full documentation: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki
+
 
 # Removing sensitive information
 --------------------------------
