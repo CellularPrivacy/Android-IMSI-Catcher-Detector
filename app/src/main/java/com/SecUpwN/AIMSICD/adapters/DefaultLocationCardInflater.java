@@ -35,6 +35,7 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
         private final TextView mMcc;
         private final TextView mLat;
         private final TextView mLng;
+        private final TextView mRecordId;
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
@@ -42,6 +43,7 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
             mMcc = (TextView) mRootView.findViewById(R.id.mcc);
             mLat = (TextView) mRootView.findViewById(R.id.lat);
             mLng = (TextView) mRootView.findViewById(R.id.lng);
+            mRecordId = (TextView) mRootView.findViewById(R.id.record_id);
             rootView.setTag(this);
         }
 
@@ -50,6 +52,7 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
             mMcc.setText(item.getMcc());
             mLat.setText(item.getLat());
             mLng.setText(item.getLng());
+            mRecordId.setText(item.getRecordId());
         }
     }
 }
