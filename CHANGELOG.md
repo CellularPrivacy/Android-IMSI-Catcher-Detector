@@ -9,6 +9,7 @@
 * Updated: More small updates of our README containing the history on IMSI-Catchers
 * Updated: Added information about the Secret U.S. Spy Program to our README
 * Updated: Refreshed badges of our official stores to make the align neatly
+* Added: Declared android.permission.ACCESS_SUPERUSER in AndroidManifest.xml
 * Added: AIMSICD Program Modules have been added to our Technical Overview in the WIKI
 * Added: Dependency on ShowcaseView to build.gradle to craft a neat HowTo in holo style
 * Added: New awesome article in German by the 'Piratenpartei' about IMSI-Catchers and us
