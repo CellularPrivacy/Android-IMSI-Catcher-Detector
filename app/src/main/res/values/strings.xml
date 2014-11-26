@@ -10,6 +10,8 @@
     <string name="quit">Quit</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Cancel</string>
+    <string name="text_agree">I Agree</string>
+    <string name="text_disagree">I Disagree</string>
     <string name="empty"></string>
     <string name="gsm_only">GSM Phones Only</string>
 
@@ -22,9 +24,6 @@
         agree and understand that the developers and companies related to this free
         product, can in no way be held responsible for any results or outcome,
         depending on the use of this application.
-
-        \n\n[OK] - I understand and agree
-        \n\n[CANCEL] - I do not agree (and remove this application)
     </string>
 
     <!-- Mobile Network Types -->

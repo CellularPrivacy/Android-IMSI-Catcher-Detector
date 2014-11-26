@@ -17,32 +17,8 @@
 
 package com.SecUpwN.AIMSICD;
 
-import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
-import com.SecUpwN.AIMSICD.activities.PrefActivity;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.adapters.DrawerMenuAdapter;
-import com.SecUpwN.AIMSICD.fragments.AboutFragment;
-import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
-import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
-import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
-import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
-import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
-import com.SecUpwN.AIMSICD.drawer.DrawerMenuItem;
-import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
-import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
-import com.SecUpwN.AIMSICD.service.CellTracker;
-import com.SecUpwN.AIMSICD.utils.AsyncResponse;
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.GeoLocation;
-import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.LocationServices;
-import com.SecUpwN.AIMSICD.utils.RequestTask;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -66,8 +42,27 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
+import com.SecUpwN.AIMSICD.activities.PrefActivity;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.adapters.DrawerMenuAdapter;
+import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
+import com.SecUpwN.AIMSICD.drawer.DrawerMenuItem;
+import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
+import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
+import com.SecUpwN.AIMSICD.fragments.AboutFragment;
+import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
+import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.service.CellTracker;
+import com.SecUpwN.AIMSICD.utils.AsyncResponse;
+import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.GeoLocation;
+import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.LocationServices;
+import com.SecUpwN.AIMSICD.utils.RequestTask;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -111,12 +106,6 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
 
         setContentView(mNavConf.getMainLayout());
 
-        // Bind to LocalService
-        Intent intent = new Intent(this, AimsicdService.class);
-        //Start Service before binding to keep it resident when activity is destroyed
-        startService(intent);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
         mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
         mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
         mActionBar = getActionBar();
@@ -153,11 +142,6 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setHomeButtonEnabled(true);
 
-        //Display the Device Fragment as the Default View
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new DetailsContainerFragment())
-                .commit();
-
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         prefs = mContext.getSharedPreferences(
@@ -169,14 +153,15 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
             final AlertDialog.Builder disclaimer = new AlertDialog.Builder(this)
                     .setTitle(R.string.disclaimer_title)
                     .setMessage(R.string.disclaimer)
-                    .setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.text_agree, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             prefsEditor = prefs.edit();
                             prefsEditor.putBoolean(mDisclaimerAccepted, true);
                             prefsEditor.apply();
+                            startService();
                         }
                     })
-                    .setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.text_disagree, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             prefsEditor = prefs.edit();
                             prefsEditor.putBoolean(mDisclaimerAccepted, false);
@@ -186,12 +171,14 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                                     new Intent(Intent.ACTION_DELETE, packageUri);
                             startActivity(uninstallIntent);
                             finish();
-                            mAimsicdService.onDestroy();
+                            if (mAimsicdService != null) mAimsicdService.onDestroy();
                         }
                     });
 
             AlertDialog disclaimerAlert = disclaimer.create();
             disclaimerAlert.show();
+        } else {
+            startService();
         }
     }
 
@@ -509,19 +496,29 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
         }
     };
 
+    private void startService() {
+        // don't start service if disclaimer is not accepted
+        if (!prefs.getBoolean(mDisclaimerAccepted, false)) return;
+
+        if (!mBound) {
+            // Bind to LocalService
+            Intent intent = new Intent(AIMSICD.this, AimsicdService.class);
+            //Start Service before binding to keep it resident when activity is destroyed
+            startService(intent);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+            //Display the Device Fragment as the Default View
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, new DetailsContainerFragment())
+                    .commit();
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         invalidateOptionsMenu();
-        if (!mBound) {
-            // Bind to LocalService
-            Intent intent = new Intent(this, AimsicdService.class);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        } else {
-            if (mAimsicdService.isTrackingCell()) {
-                mAimsicdService.checkLocationServices();
-            }
-        }
+        startService();
     }
 
     @Override
