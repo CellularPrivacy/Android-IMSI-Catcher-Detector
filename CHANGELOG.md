@@ -1,6 +1,35 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 26.11.2014 - WIP-Internal v0.1.25-alpha-build-1
+
+* Changed: Service now does not start up until our Disclaimer has been accepted
+* Changed: Disclaimer buttons have been simplified to show "I Agree" and "I Disagree"
+* Updated: Fresh screenshots of our currently released App
+* Updated: More small updates of our README containing the history on IMSI-Catchers
+* Updated: Added information about the Secret U.S. Spy Program to our README
+* Updated: Refreshed badges of our official stores to make the align neatly
+* Added: AIMSICD Program Modules have been added to our Technical Overview in the WIKI
+* Added: Dependency on ShowcaseView to build.gradle to craft a neat HowTo in holo style
+* Added: New awesome article in German by the 'Piratenpartei' about IMSI-Catchers and us
+* Added: Banner in SVG format as well as vertical direction to be used in posts and press
+* Added: FileTree in DOCUMENTATION to describe what each file is doing and what it is used for
+* Added: Full display of README in several directories throught our repo
+* Added: Crafted file signing.properties for automatic release signing later on
+* Added: Cryptanalysis of GSM has been added to PAPERS/GSM_Security
+* Added: Slides on A5/1 Cracking from 26C3 have been added to PAPERS/GSM_Security
+* Added: Triton Surveillance Brochure has been added to  PAPERS/SysInfos
+* Added: Link to the Cryptome GSM Files (just in case you feel like hacking your mind)
+* Added: Link to a new awesome Project called the "Android-CipheringIndicator-API"
+* Added: Link to the portal post on XDA-Developers to celebrate our FIRST ANNIVERSARY!
+* Added: Added bloatware removal to README section stating what we **DO NOT** provide
+* Fixed: Eliminated crash that appeared when disagreeing to our Disclaimer
+* Fixed: Newly added APK naming code has been polished to work in the future
+* Fixed: Travis CI builds should be stable and smooth now - what a rough ride!
+* Fixed: Default MCC list now shows record count
+
+---
+
 #### 03.11.2014 - [WIP-Release v0.1.24-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.24-alpha)
 
 * **LAUNCHED:** We are now officially on [Aptoide](http://aimsicd.store.aptoide.com/) and [F-Droid](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD) (builds should appear shortly)
