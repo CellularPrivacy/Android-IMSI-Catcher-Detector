@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
-          android:versionCode="24"
-          android:versionName="0.1.24-alpha">
+          android:versionCode="25"
+          android:versionName="0.1.25-alpha-build-1">
 
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
