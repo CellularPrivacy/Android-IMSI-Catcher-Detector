@@ -4,12 +4,12 @@
 Android-based project to detect and avoid fake base stations ([IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher)) in GSM/UMTS Networks. Feel free to read the [Press Releases](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Press-Releases) about us, spread the word with our [Media Material](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material) and help us solving [current challenges](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues)!
 
 ---
-[![Aptoide](http://fs1.d-h.st/view/8RA/00148/Aptoide.png)](http://aimsicd.store.aptoide.com/)  [![GitHub](http://fs1.d-h.st/view/DFQ/00148/GitHub.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases) [![F-Droid](http://fs1.d-h.st/view/D9m/00148/F-Droid.png)](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD) [![XDA-Developers](http://fs1.d-h.st/view/9u8B/00149/XDA.png)](http://www.xda-developers.com/android/detect-avoid-imsi-catcher-attacks-with-imsi-catcher-detector/) 
+[![Aptoide](http://fs1.d-h.st/view/8RA/00148/Aptoide.png)](http://aimsicd.store.aptoide.com/ "NOTE: Installs Aptoide-App first!")  [![GitHub](http://fs1.d-h.st/view/DFQ/00148/GitHub.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases "GitHub Releases") [![F-Droid](http://fs1.d-h.st/view/D9m/00148/F-Droid.png)](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD "F-Droid Store") [![XDA](http://fs1.d-h.st/view/9u8B/00149/XDA.png)](http://www.xda-developers.com/android/detect-avoid-imsi-catcher-attacks-with-imsi-catcher-detector/ "Portal Post on XDA-Developers") 
 ---
 [![AIMSICD-Banner](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Banner_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
 ---
 
-[![AIMSICD-Teaser](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Teaser.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)
+[![AIMSICD-Teaser](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Teaser.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
 
 ---
 
@@ -62,11 +62,11 @@ There are almost no phones on the market which offer an option to check what kin
 
 Some examples to make you familar with current IMSI-Catcher threats:
 
-* **[NSA-Killings with IMSI-Catcher drones](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)**.
-* [How easy it is to clone phones](http://www.youtube.com/watch?v=Ydo19YOzpzU).
-* [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck).
-* [Stingrays: Biggest Technological Threat](https://www.eff.org/deeplinks/2012/10/stingrays-biggest-unknown-technological-threat-cell-phone-privacy).
-* [GSOC reveals hidden IMSI-Catcher](https://www.privacyinternational.org/blog/beirtear-na-imsis-irelands-gsoc-surveillance-inquiry-reveals-use-of-mobile-phone-interception).
+* **[NSA-Killings with IMSI-Catcher drones](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)**
+* [How easy it is to clone phones](http://www.youtube.com/watch?v=Ydo19YOzpzU)
+* [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck)
+* [Stingrays: Biggest Technological Threat](https://www.eff.org/deeplinks/2012/10/stingrays-biggest-unknown-technological-threat-cell-phone-privacy)
+* [GSOC reveals hidden IMSI-Catcher](https://www.privacyinternational.org/blog/beirtear-na-imsis-irelands-gsoc-surveillance-inquiry-reveals-use-of-mobile-phone-interception)
 * [Secret U.S. Spy Program on Planes](http://online.wsj.com/news/article_email/americans-cellphones-targeted-in-secret-u-s-spy-program-1415917533-lMyQjAxMTI0NTEwMzAxMTMwWj)
 
 ---
