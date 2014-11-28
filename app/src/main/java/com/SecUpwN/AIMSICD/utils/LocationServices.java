@@ -49,7 +49,7 @@ public class LocationServices {
 
         @Override
         protected float[] doInBackground(Integer... params) {
-            try {
+            /*try {
                 String mmapUrl = "http://www.google.com/glm/mmap";
 
                 URL url = new URL(mmapUrl);
@@ -80,7 +80,7 @@ public class LocationServices {
 
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
 
             return new float[] {0.0f,0.0f};
         }
