@@ -5,9 +5,10 @@ To avoid confusion and neglected development commits, please ALWAYS read this gu
 
 #### DEVELOPERS WELCOME!
 
-* Testers are always welcome, but Developers even more. Grab the [latest WIP-Release](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)!
-* Before you test our App, fully read and be aware of our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER).
-* Participate in our official [Discussion](http://forum.xda-developers.com/showthread.php?t=1422969) (highly technical talk only).
+* Testers are always welcome, Developers even more. Grab our [latest Release](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)!
+* Before testing our App, you should read our [WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki) and **must agree** to our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER).
+* Security matters. But **don't be scared** to contribute, check out our note on [Privacy](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Privacy)!
+* You are invited to participate in our official [Discussion](http://forum.xda-developers.com/showthread.php?t=1422969) (highly technical talk only).
 * Help us solving [these existing Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues?state=open)! You might get rewarded for doing so.
 * Can't contribute code, but love our Project? Spread the [link to our website](https://secupwn.github.io/Android-IMSI-Catcher-Detector)!
 
