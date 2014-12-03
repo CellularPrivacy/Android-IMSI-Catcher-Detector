@@ -131,11 +131,11 @@ In order to accomplish the goals set above, we'll need to overcome some of the d
 
 All this can be fairly easily accomplished, given that we can have access to some of the lower level radio related information coming from the *Baseband Processor* (BP). But that is exactly our challenge. All the software and information about the interfaces providing this, is hidden from the user and developers by a huge amount of proprietary OEM *Non Disclosure Agreements* (NDA). But in the last years, there has been great progress in reverse enginering these protocols and interfaces. The use of these open source tools are the basis of our successful development of this app. 
 
-To summarize the main stages of this development: 
+**To summarize the main stages of this development:**
 
-A. Using all available network data, implement the correct detection matrix consisting of a number of items, that each participate in detection of abnormal or abusive network bahaviour. This is the application *Beta* stage. 
+**A.** Using all available network data, implement the correct detection matrix consisting of a number of items, that each participate in detection of abnormal or abusive network bahaviour. This is the application *Beta* stage. 
 
-B. Using all possible interfaces to obtain the many variables in (A). These interfaces include:
+**B.** Using all possible interfaces to obtain the many variables in (A). These interfaces include:
  - QMI/Sahara protocols for using on Qualcomm based devices (*Gobi3000, qmilib*)
  - Samsung IPC protocol for using on Intel XMM (XGOLD) based devices (*xgoldmon, Replicant*)
  - Direct use of AOS standard RIL interfaces (*/dev/rild* and */dev/rild-debug*)
@@ -144,7 +144,7 @@ B. Using all possible interfaces to obtain the many variables in (A). These inte
  - Scrape `logcat -b radio` for relevant radio info 
  - Use AT Command Processor (ATCoP) interface to get/set network parameters/bahaviour
 
-C. Make (A) and (B) transparent across as many Android devices as possible.
+**C.** Make (A) and (B) transparent across as many Android devices as possible.
 
 ##### ALPHA stage:
 Make a baseline App that contains the basic functionality for collecting and presenting all available network variables and the detection results.
@@ -166,7 +166,7 @@ Improve ALPHA for leveraging and tune our detection matrix/algorithm.
 * k. Planning alternative data routes through MESH-like networking, when cellular services have been interrupted
 * l. Planning swarm-wise decision-based cellular service analysis (advanced BTS statistics)
 
-##### GOLDEN stage:
+##### GOLDEN age:
 This stage is essentially the completion of this project. However, we expect that long before this happens, the entire network industry will have changed to such a degree that many new privacy and security issues will have arised. Thus, we will likely have more things to add and maintain in this project. We are of the current understanding that this project is a never ending story, all for the peoples benefit and a more privacy oriented future.
 
 * m. Implement **all** of the detection schemes we have
