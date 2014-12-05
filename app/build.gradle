@@ -39,7 +39,7 @@ def getManifestVersionName() {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.1'
+    buildToolsVersion '21.1.1'
 
     defaultConfig {
         minSdkVersion 16
@@ -57,7 +57,7 @@ android {
         }
         release {
             buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
-            runProguard true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
@@ -94,24 +94,25 @@ android {
 //======================================================================
 
     applicationVariants.all { variant ->
+	variant.outputs.each { output ->
+		def apk = output.outputFile;
+		def newName;
 
-        def apk = variant.outputFile;
-        def newName;
+		newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() + ".apk");
+		//newName = apk.name.replace(".apk", "-" + defaultConfig.versionName + ".apk");
 
-        newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() + ".apk");
-        //newName = apk.name.replace(".apk", "-" + defaultConfig.versionName + ".apk");
+		newName = newName
+		        .replace("-" + variant.buildType.name, "") // This removes "-release"
+		        .replace(project.name, "AIMSICD");         // This replace app with "AIMSICD"
 
-        newName = newName
-                .replace("-" + variant.buildType.name, "") // This removes "-release"
-                .replace(project.name, "AIMSICD");         // This replace app with "AIMSICD"
+		output.outputFile = new File(apk.parentFile, newName);
 
-        variant.outputFile = new File(apk.parentFile, newName);
+		if (output.zipAlign) {
+		    output.outputFile = new File(apk.parentFile, newName.replace("-unaligned", ""));
+		}
 
-        if (variant.zipAlign) {
-            variant.outputFile = new File(apk.parentFile, newName.replace("-unaligned", ""));
-        }
-
-        logger.info('INFO: Set outputFile to ' + variant.outputFile + " for [" + variant.name + "]");
+		logger.info('INFO: Set outputFile to ' + output.outputFile + " for [" + variant.name + "]");
+	}
     }
 
 
