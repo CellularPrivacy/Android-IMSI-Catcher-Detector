@@ -282,7 +282,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
             }
         } else if (selectedItem.getId() == 301) {
-            if (!CellTracker.OCID_API_KEY.equals("NA")) {
+            if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
                     Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
@@ -292,6 +292,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                     Helpers.getOpenCellData(mContext, cell,
                             RequestTask.OPEN_CELL_ID_REQUEST);
                 } else {
+                    Helpers.msgShort(mContext, "Waiting for location...");
                     //Attempt to find location through CID
                     //CID Location Async Output Delegate Interface Implementation
                     LocationServices.LocationAsync locationAsync
@@ -308,7 +309,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
             }
         } else if (selectedItem.getId() == 302) {
-            if (!CellTracker.OCID_API_KEY.equals("NA")) {
+            if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
                 Cell.CellLookUpAsync cellLookUpAsync = new Cell.CellLookUpAsync();
                 cellLookUpAsync.delegate = this;
                 StringBuilder sb = new StringBuilder();
