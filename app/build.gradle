@@ -47,6 +47,7 @@ android {
         versionCode = getManifestVersionCode()
         versionName = getManifestVersionName()
     }
+
     buildTypes {
         debug {
             try {
@@ -124,7 +125,7 @@ android {
 
 dependencies {
     compile project(':third_party:RootTools')
-    compile 'com.github.amlcurran.showcaseview:library:5.0.0'
+//    compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile 'com.android.support:support-v4:19.1.0'
     compile 'org.osmdroid:osmdroid-android:4.2'
     compile 'eu.lp0.slf4j:slf4j-android:1.7+'
