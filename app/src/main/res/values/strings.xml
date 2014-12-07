@@ -51,7 +51,7 @@
     <string name="press_once_again_to_exit">Press again to exit.</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
     <string name="cell_lookup">Lookup Current Cell Details (OpenCellID)</string>
-    <string name="send_logs">Send Error Log</string>
+    <string name="send_logs">Debug Logs</string>
 
     <string name="no_network_connection_title">No Internet Connection</string>
     <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
@@ -224,4 +224,11 @@
     <string name="message_request_api_key">Click Ok to request an API key from OpenCellID.org. This will enable you to download their data and view it in the map. It will also enable you to upload cell data. Note that if you do not upload cell data within 20 days, your API key may become inactive.</string>
     <string name="ocid_api_error">Error getting key: </string>
     <string name="ocid_api_success">Saved new API key</string>
+    <string name="title_debug_logs">Debug Logs</string>
+
+    <!-- Debug logs -->
+    <string name="btn_radio_logs">Radio Logs</string>
+    <string name="btn_app_logs">App Logs</string>
+    <string name="btn_clear_logs">Clear</string>
+    <string name="btn_send_email">Email</string>
 </resources>
