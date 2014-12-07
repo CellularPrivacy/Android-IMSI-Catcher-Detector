@@ -46,6 +46,7 @@ android {
         targetSdkVersion 19
         versionCode = getManifestVersionCode()
         versionName = getManifestVersionName()
+        testApplicationId "com.SecUpwN.AIMSICD.test"
     }
 
     buildTypes {
