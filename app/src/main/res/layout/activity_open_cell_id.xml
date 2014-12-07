@@ -11,10 +11,7 @@
         android:padding="@dimen/small_padding"
         android:text="@string/message_request_api_key"/>
 
-    <View android:layout_width="match_parent"
-           android:layout_height="0.5dp"
-           android:background="?android:dividerVertical"
-           android:paddingTop="12dp"/>
+    <include layout="@layout/inc_buttonbar_divider"/>
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"

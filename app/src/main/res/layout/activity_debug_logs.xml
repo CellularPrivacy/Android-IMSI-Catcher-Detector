@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/debug_log_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textIsSelectable="true"
+            android:padding="@dimen/small_padding"/>
+
+    </ScrollView>
+
+    <include layout="@layout/inc_buttonbar_divider"/>
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnClear"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_clear_logs"/>
+
+        <!-- Sadly, no permission to read radio logs -->
+        <Button
+            android:id="@+id/btnRadioLogs"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_radio_logs"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btnSendEmail"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_send_email"/>
+    </LinearLayout>
+
+</LinearLayout>
