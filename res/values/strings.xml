@@ -1,0 +1,8 @@
+<resources>
+    <string name="title_activity_open_cell_id">OpenCellIdActivity</string>
+
+    <string name="menu_settings">Settings</string>
+
+    <string name="hello_world">Hello world!</string>
+
+</resources>
