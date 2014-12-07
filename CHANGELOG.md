@@ -1,6 +1,30 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 07.12.2014 - WIP-Internal v0.1.25-alpha-build-2
+
+* Updated: Work-in-Progress on the General and Technical Overviews in our WIKI
+* Updated: Clarified some important contribution instructions in `CONTRIBUTING.md`
+* Updated: Minor modifications of the text in our ROADMAP to reflect current work
+* Updated: Gradle config now uses plugin v1.0.X for latest Gradle and Android Studio
+* Changed: Sorted permissions by permission type for better overview and development
+* Updated: Build tools in `.travis.yml` and `build.gradle` updated to latest version
+* Removed: Disabled GAPI which had been used to enable MapViewer without using GPS
+* Removed: Erased assertion for title as it might fail on first-launch (e.g. in Travis-CI)
+* Added: Test for LAC change detection (low-level) has been implemented
+* Added: Dummy instrumentation test for basing future tests on is now integrated
+* Added: Null guard has been added on OCID API key to avoid failures without API key
+* Added: Ability to request a new OCID key right from the from the `PREFERENCES`
+* Added: Granted permission `ACCESS_COARSE_UPDATES` required by `getNeighboringCellInfo`
+* Added: Code comments on incorrect Silent SMS detection (working hard to improve this)
+* Added: Detailled descriptions of the Status Icons of our App as a Work-in-Progress
+* Added: Titles added to download links to notify about prior Aptoide App installation
+* Added: Placed `testApplicationId` into `build.gradle` against more failing Travis CI builds
+* Added: Even more memory to Gradle JVM has been granted to make builds more stable
+* Fixed: Crash on startup due to missing check of `homeOperator` value has been resolved
+
+---
+
 #### 26.11.2014 - WIP-Internal v0.1.25-alpha-build-1
 
 * Changed: Service now does not start up until our Disclaimer has been accepted
