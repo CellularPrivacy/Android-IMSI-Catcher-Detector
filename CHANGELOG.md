@@ -5,7 +5,7 @@
 
 * Updated: Work-in-Progress on the General and Technical Overviews in our WIKI
 * Updated: Clarified some important contribution instructions in `CONTRIBUTING.md`
-* Updated: Minor modifications of the text in our ROADMAP to reflect current work
+* Updated: Minor modifications of our `Development Roadmap` to reflect current travel
 * Updated: Gradle config now uses plugin v1.0.X for latest Gradle and Android Studio
 * Changed: Sorted permissions by permission type for better overview and development
 * Updated: Build tools in `.travis.yml` and `build.gradle` updated to latest version
@@ -14,7 +14,7 @@
 * Added: Test for LAC change detection (low-level) has been implemented
 * Added: Dummy instrumentation test for basing future tests on is now integrated
 * Added: Null guard has been added on OCID API key to avoid failures without API key
-* Added: Ability to request a new OCID key right from the from the `PREFERENCES`
+* Added: Ability to request a new OCID key right from the `PREFERENCES` menu within our App
 * Added: Granted permission `ACCESS_COARSE_UPDATES` required by `getNeighboringCellInfo`
 * Added: Code comments on incorrect Silent SMS detection (working hard to improve this)
 * Added: Detailled descriptions of the Status Icons of our App as a Work-in-Progress
@@ -30,24 +30,24 @@
 * Changed: Service now does not start up until our Disclaimer has been accepted
 * Changed: Disclaimer buttons have been simplified to show "I Agree" and "I Disagree"
 * Updated: Fresh screenshots of our currently released App
-* Updated: More small updates of our README containing the history on IMSI-Catchers
-* Updated: Added information about the Secret U.S. Spy Program to our README
+* Updated: More small updates of our `README` containing the history on IMSI-Catchers
+* Updated: Added information about the Secret U.S. Spy Program to our `README`
 * Updated: Refreshed badges of our official stores to make the align neatly
-* Added: Declared android.permission.ACCESS_SUPERUSER in AndroidManifest.xml
+* Added: Declared `android.permission.ACCESS_SUPERUSER` in `AndroidManifest.xml`
 * Added: AIMSICD Program Modules have been added to our Technical Overview in the WIKI
-* Added: Dependency on ShowcaseView to build.gradle to craft a neat HowTo in holo style
+* Added: Dependency on `ShowcaseView` to `build.gradle` to craft a neat HowTo in holo style
 * Added: New awesome article in German by the 'Piratenpartei' about IMSI-Catchers and us
 * Added: Banner in SVG format as well as vertical direction to be used in posts and press
-* Added: FileTree in DOCUMENTATION to describe what each file is doing and what it is used for
-* Added: Full display of README in several directories throught our repo
-* Added: Crafted file signing.properties for automatic release signing later on
-* Added: Cryptanalysis of GSM has been added to PAPERS/GSM_Security
-* Added: Slides on A5/1 Cracking from 26C3 have been added to PAPERS/GSM_Security
-* Added: Triton Surveillance Brochure has been added to  PAPERS/SysInfos
+* Added: `FileTree` in `DOCUMENTATION` to describe what each file is doing and what it is used for
+* Added: Full display of `README` in several directories throught our repo
+* Added: Crafted file `signing.properties` for automatic release signing later on
+* Added: Cryptanalysis of GSM has been added to `PAPERS/GSM_Security`
+* Added: Slides on A5/1 Cracking from 26C3 have been added to `PAPERS/GSM_Security`
+* Added: Triton Surveillance Brochure has been added to  `PAPERS/SysInfos`
 * Added: Link to the Cryptome GSM Files (just in case you feel like hacking your mind)
-* Added: Link to a new awesome Project called the "Android-CipheringIndicator-API"
+* Added: Link to a new awesome Project called the "[Android-CipheringIndicator-API](https://github.com/PrivacyCollective/Android-CipheringIndicator-API)"
 * Added: Link to the portal post on XDA-Developers to celebrate our FIRST ANNIVERSARY!
-* Added: Added bloatware removal to README section stating what we **DO NOT** provide
+* Added: Added bloatware removal to `README` section stating what we **DO NOT** provide
 * Fixed: Eliminated crash that appeared when disagreeing to our Disclaimer
 * Fixed: Newly added APK naming code has been polished to work in the future
 * Fixed: Travis CI builds should be stable and smooth now - what a rough ride!
@@ -60,19 +60,19 @@
 * **LAUNCHED:** We are now officially on [Aptoide](http://aimsicd.store.aptoide.com/) and [F-Droid](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD) (builds should appear shortly)
 * **Changed:** Signing Keys have been renewed so you can make sure we officially build the APK :exclamation:
 * Changed: Reworked all Icons to be rendered in best and highest quality possible
-* Changed: Switched to PDFMtEd Inspector to erase metadata since it is safer than just exiftool
+* Changed: Switched to `PDFMtEd Inspector` to erase metadata since it is safer than just `exiftool`
 * Updated: Revamped About-Screen through the work of our awesome developer Toby Kurien
-* Updated: Rewrote a major part of the Application Goals and Development Roadmap
-* Updated: Added more great contributors to our CREDITS - huge thanks for all the hard work
-* Added: Skull QR Code in PROMOTION folder to be printed as a sticker (use it wisely, please)
-* Added: Paper about Eavesdropping Method Patent by Rohde & Schwarz in PAPERS/Technical
+* Updated: Rewrote a major part of the `Application Goals` and `Development Roadmap`
+* Updated: Added more great contributors to our `CREDITS` - huge thanks for all the hard work
+* Added: Skull QR Code in `PROMOTION` folder to be printed as a sticker (use it wisely, please)
+* Added: Paper about Eavesdropping Method Patent by Rohde & Schwarz in `PAPERS/Technical`
 * Added: Paper about Court of Appeal judgment invalidating Rohde & Schwarz patent from above
 * Added: New badges for development stage and statement against using GooglePlay
 * Added: Multiple attempts to auto-rename APK file for later automatic releases (WIP)
-* Added: Pseudo code for importing versionCode and versionName from AndroidManifest.xml
+* Added: Pseudo code for importing `versionCode` and `versionName` from `AndroidManifest.xml`
 * Added: SIMAlliance permission for reading SIM related features from the Open Mobile API
 * Added: Integrated Coverity Scan to allow testing with static analysis tools
-* Added: New Sponsors have been added to our README - feel invited to visit them
+* Added: New Sponsors have been added to our `README` - feel invited to visit them
 * Added: E-Mail address has been added to receive Error Logs - only use on heavy crashes
 * Fixed: Many string fixes and small adjustments to make usage of our App much more clear
 
@@ -81,16 +81,16 @@
 #### 26.10.2014 - WIP-Internal v0.1.24-alpha-build-17
 
 * Changed: Refreshed high quality Sense Style Icons
-* Changed: Database file name changed to aimsicd.db to find it much faster
+* Changed: Database file name changed to `aimsicd.db` to find it much faster
 * Changed: Some default values have been modified to simplify debugging
-* Changed: msgLong and msgShort changed to always find the mainLooper to display toasts
+* Changed: `msgLong` and `msgShort` changed to always find the `mainLooper` to display toasts
 * Changed: Map pin icons with new colours as per #166 (neighbouring cells pins in orange)
 * Added: White Style Icons in High Quality
 * Added: Flat Style Icons in High Quality
 * Added: Neighbouring cell info will now be shown with the map if available
 * Added: Phone state listener to update the map when cell info changes
 * Added: Experimental "send bug log" item that reads logcat output and shares via e-mail
-* Added: Threading in "send bug log" (requires new "READ_LOGS" permission, may not work on KitKat+)
+* Added: Threading in "send bug log" (requires new `READ_LOGS` permission, may not work on KitKat+)
 * Added: New error display for previously-silent error message
 * Added: More code comments to make it easier for other developers to contribute
 * Added: Further attempts to fix the ATCoP (still not working as it should)
@@ -100,22 +100,22 @@
 
 #### 25.10.2014 - WIP-Internal v0.1.24-alpha-build-16
 
-* Added: Paper about the CellSense GSM Positioning System in PAPERS/Technical
-* Added: MODIFY_PHONE_STATE in order to support ICC (SIM) related commands
-* Added: New DATABASE.md info file to document how the DB of AIMSICD works (WIP)
-* Added: New DOCUMENTATION directory for files and images used for documentation
+* Added: Paper about the CellSense GSM Positioning System in `PAPERS/Technical`
+* Added: `MODIFY_PHONE_STATE` in order to support ICC (SIM) related commands
+* Added: New `DATABASE.md` info file to document how the DB of AIMSICD works (WIP)
+* Added: New `DOCUMENTATION` directory for files and images used for documentation
 
 ---
 
 #### 20.10.2014 - WIP-Internal v0.1.24-alpha-build-15
 
-* Changed: Restructured CHANGELOG.md to allow better viewing and WIP-Release links
-* Updated: Fresh SCREENSHOTS of the currents state of AIMSICD as well as updated Teaser
-* Updated: Added a few comments to text fields in DbViewerFragment.java
+* Changed: Restructured `CHANGELOG.md` to allow better viewing and WIP-Release links
+* Updated: Fresh `SCREENSHOTS` of the currents state of AIMSICD as well as updated Teaser
+* Updated: Added a few comments to text fields in `DbViewerFragment.java`
 * Removed: Erased the "Sanity Check" activity of RootTools from the launcher app drawer
 * Removed: Erased thread contention
 * Fixed: Solved problems with unclosed database connection
-* Fixed: Edited strings.xml to fix some string on the Device Details page
+* Fixed: Edited `strings.xml` to fix some string on the Device Details page
 * Fixed: Additional icon in the launcher app drawer created by RootTools
 
 ---
@@ -135,15 +135,15 @@
 
 #### 12.10.2014 - WIP-Internal v0.1.24-alpha-build-13
 
-* Removed: Erased leftover PyGTK and NEATO Tutorials from our PAPERS section
+* Removed: Erased leftover PyGTK and NEATO Tutorials from our `PAPERS` section
 * Changed: Unified project name as "AIMSICD-Project" - we erased "IMSI-Cure" and "I'm Secure"
-* Updated: New rules for Code/Syntax Highlighting have been added to our CONTRIBUTING.md
-* Moved: Api17+ stuff into separate DeviceApi17 class to prevent verify failures on older APIs
-* Added: open_cellid_api_key has been added to support optional gradle.properties 
-* Added: Promotion material of the Speaker Identification Field Toolkit (SIFT) added to PAPERS/SysInfo
-* Added: Master Thesis of Adam Kostrzewa about MITM-Attack on GSM added to PAPERS/Thesis
-* Added: IMSI-Catcher Disclosure Request by several experts and researchers added to PAPERS/Law
-* Added: Surveillance Catalogue by NeoSoft AG with different IMSI-Catchers added to PAPERS/SysInfo
+* Updated: New rules for Code/Syntax Highlighting have been added to our `CONTRIBUTING.md`
+* Moved: Api17+ stuff into separate `DeviceApi17` class to prevent verify failures on older APIs
+* Added: `open_cellid_api_key` has been added to support optional `gradle.properties` 
+* Added: Promotion material of the Speaker Identification Field Toolkit (SIFT) added to `PAPERS/SysInfo`
+* Added: Master Thesis of Adam Kostrzewa about MITM-Attack on GSM added to `PAPERS/Thesis`
+* Added: IMSI-Catcher Disclosure Request by several experts and researchers added to `PAPERS/Law`
+* Added: Surveillance Catalogue by NeoSoft AG with different IMSI-Catchers added to `PAPERS/SysInfo`
 * Fixed: Overlapping of AT Command Injector and About page has been solved
 * Fixed: Startup error and crash of Cell Info on Android 4.2 have been solved as well
 * Fixed: All links on our README have been verified (please let us know if anything broke)
@@ -156,9 +156,9 @@
 * Changed: Switched to fresh new theme for our website which suits our project much better
 * Changed: Images like Banners are now being pulled directly from our won GitHub repository
 * Removed: Deleted old code of Map Viewer which had been left in the code structure
-* Updated: Refreshed SCREENSHOTS and added new Images of our cool Map Viewer as well
-* Added: New PROMOTION directory which will be expanded with awesome promotional material
-* Added: GSMK Baseband Firewall Patent uploaded into our PAPERS as a reference
+* Updated: Refreshed `SCREENSHOTS` and added new Images of our cool Map Viewer as well
+* Added: New `PROMOTION` directory which will be expanded with awesome promotional material
+* Added: GSMK Baseband Firewall Patent uploaded into our `PAPERS` as a reference
 * Added: New page on Requirements in our WIKI to enable users to check App dependencies
 * Added: New page in our WIKI on Privacy to ease the minds of scared contributers
 * Added: Support for TRAVIS CI which will continually check if our code builds well
@@ -172,9 +172,9 @@
 
 #### 30.09.2014 - WIP-Internal v0.1.24-alpha-build-11
 
-* Updated: Some restructuring done to README for better mobile view
-* Updated: Exspressed our teams gratitude to our new developer Toby Kurien in the CREDITS
-* Updated: Aligned text in strings.xml, DbViewerFragment, CellTracker and MapViewerOsmDroid
+* Updated: Some restructuring done to `README` for better mobile view
+* Updated: Exspressed our teams gratitude to our new developer Toby Kurien in the `CREDITS`
+* Updated: Aligned text in `strings.xml`, `DbViewerFragment`, `CellTracker` and `MapViewerOsmDroid`
 * Updated: More code cleanup done by our fabulous developer Toby Kurien
 * Added: New page with Media Material in our WIKI for people wanting to spread the word
 
@@ -182,11 +182,11 @@
 
 #### 27.09.2014 - WIP-Internal v0.1.24-alpha-build-10
 
-* Changed: Extracted Accelerometer, Location Tracking, and RilExecutor into separate classes
-* Changed: Extracted CellTracker from the service and refactored code everywhere
-* Changed: Small changes made to README to include General and Technical Overview
+* Changed: Extracted `Accelerometer`, `Location Tracking`, and `RilExecutor` into separate classes
+* Changed: Extracted `CellTracker` from the service and refactored code everywhere
+* Changed: Small changes made to `README` to include General and Technical Overview
 * Updated: Several small changes made to strings.xml for unified style (attempt to unify style)
-* Fixed: Moved RilExecutor to correct package and hooked up RilExecutor into CellInfoFragment
+* Fixed: Moved `RilExecutor` to correct package and hooked up `RilExecutor` into `CellInfoFragment`
 * Fixed: Cleaned up the code to resolve title "Map Viewer" staying after switching tabs
 * Fixed: Corrected Cell Tracking status - code got left out during refactoring
 * Fixed: Corrected regression through which the service did not load correctly on startup
@@ -210,7 +210,7 @@
 * Updated: Cleaned up info window dialog box
 * Added: We've got an official FAQ now. Feel free to check it out in the WIKI.
 * Added: Implemented async map building and cleaned up
-* Added: Implemented MarkerData to cell tower overlay items
+* Added: Implemented `MarkerData` to cell tower overlay items
 * Fixed: Renewed default location usage
 * Fixed: Stable null pointers on a clean install
 
@@ -225,7 +225,7 @@
 * Fixed: Additional check for Google Play Services prior to starting the MapViewer
 * Fixed: Added MCC & MNC details Map Marker display window for local database cell information
 * Fixed: Exit Button will now actually exit the activity instead of doing absolutely nothing at all
-* Fixed: Use GeoLocation Class & store last Location to use it for any methods that require location
+* Fixed: Use `GeoLocation` Class & store last Location to use it for any methods that require location
 
 ---
 
@@ -233,7 +233,7 @@
 
 * Updated: Modifed the OpenCellID methods to enable each user to request and use their own keys
 * Updated: Added small clarifications to Phone Type and RIL Version within Device Information
-* Updated: Added abortOnError false - so that gradle build runs without a problem (thanks @ligi)
+* Updated: Added `abortOnError false` so that gradle build runs without a problem (thanks @ligi)
 
 ---
 
@@ -242,7 +242,7 @@
 * Improved: Several small adjustments of our GitHub Introduction (thanks @andr3jx)
 * Changed: Reverted notification behaviour to correctly launch each Status Icon as meant to be
 * Updated: Better Location Services (GPS) Handling to detect if GPS was actually activated
-* Updated: Rewritten AT Command Injection v2 & RootTools to bring better level of functionality
+* Updated: Rewritten AT Command Injection v2 & `RootTools` to bring better level of functionality
 * Fixed: Corrected Cell Monitoring method to correctly update the notification icon
 
 ---
@@ -281,21 +281,21 @@
 * Updated: Cleaned up some database cursors that were not being closed correctly
 * Added: New preference for contribution of tracked cell information to the OpenCellID project
 * Fixed: Removed code that attempts to draw the MCC & MNC whilst refreshing the device information
-* Fixed: Changed wording within our DISCLAIMER to comply with the GPL and avoid confusion
+* Fixed: Changed wording within our `DISCLAIMER` to comply with the GPL and avoid confusion
 
 ---
 
 #### 08.08.2014 - WIP-Internal v0.1.24-alpha-build-2
 
-* Updated: Too many small improvements of our README (enough editing for now, off to development!)
-* Updated: SOURCES file has been updated with the latest used code snippets
-* Updated: SCREENSHOTS have been updated to reflect the latest UI of HushSMS
+* Updated: Too many small improvements of our `README` (enough editing for now, off to development!)
+* Updated: `SOURCES` file has been updated with the latest used code snippets
+* Updated: `SCREENSHOTS` have been updated to reflect the latest UI of HushSMS
 * Updated: Cell data table has been updated for correct contributions to OpenCellID
 * Updated: Cell Clas & Card UI Updates to support extra data and extended functions
 * Updated: Neighbouring cell methods have been rewritten to improve neighbouring cell functions
 * Removed: Tested Gitter chat has fully been purged due to security issues we cannot support
-* Added: CONTRIBUTIONS has been expanded with some links for help on GitHub Markdown
-* Fixed: getAllCellInfo method has been corrected in a number of it's uses
+* Added: `CONTRIBUTIONS` has been expanded with some links for help on GitHub Markdown
+* Fixed: `getAllCellInfo` method has been corrected in a number of it's uses
 * Fixed: Tweaks Device & Service to address numerous small bugs and NPEs in isolated cases
 * Fixed: Small corrections of strings within AIMSICD, including a proper version formatting
 
@@ -322,11 +322,11 @@
 * Updated: Small updates to methods providing data from the device class
 * Updated: Screenshots updated to reflect latest changes within the UI and menu structure
 * Updated: User Guide updated with new screenshots and explanations on several menus
-* Added: Check for devices that are returning both the CID & LAC as INTEGER.MAX value
+* Added: Check for devices that are returning both the CID & LAC as `INTEGER.MAX` value
 * Added: Spinner for selection of a number of timeout values to assist with AT Command responses
 * Fixed: Missing check for bound service added to the MapViewer to address NPE
-* Fixed: Method getAllCellInfo is encountering an unknown CellInfo type, added log to display the error
-* Fixed: Corrected RequestTask class to correctly show progress bar for downloading OpenCellID data
+* Fixed: Method `getAllCellInfo` is encountering an unknown CellInfo type, added log to display the error
+* Fixed: Corrected `RequestTask` class to correctly show progress bar for downloading OpenCellID data
 
 ---
 
@@ -342,8 +342,8 @@
 * Updated: Moved large number of methods out of the service and into the Device class
 * Added: Automatic detection system for possible candidates for AT command serial devices
 * Added: Shell class added to provide ongoing root shell for correct execution of AT Commands
-* Added: System will attempt to draw the system property [rild.libargs] for the AT serial device
-* Added: ATCI* devices will be checked within /dev/radio on MTK devices with the MT6282 chip
+* Added: System will attempt to draw the system property `rild.libargs` for the AT serial device
+* Added: ATCI* devices will be checked within `/dev/radio/` on MTK devices with the MT6282 chip
 * Fixed: Consistent background colour for text items correcting strange look in several menus
 * Fixed: Corrected some items to achieve correct display on different screen sizes
 
@@ -432,9 +432,9 @@
 
 #### 13.06.2014
 
-* Updated: Major revamp of our README, making it much fresher and structured
+* Updated: Major revamp of our `README`, making it much fresher and structured
 * Updated: Reworked our WIKI and instructions on how to correctly submit Issues
-* Changed: StyleGuide is now CONTRIBUTING.md - will be shown when opening Issues
+* Changed: `StyleGuide` is now `CONTRIBUTING.md` - will be shown when opening Issues
 * Added: We now accept [ANONYMOUS DONATIONS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) through [DarkCoin](https://www.darkcoin.io/)! ;-)
 
 ---
@@ -459,7 +459,7 @@
 
 * Updated: Disabling Cell tracking will now also disable Location tracking if enabled
 * Updated: Huge code cleanup and updates to a number of areas across a large number of packages
-* Updated: Extension of the Samsung MultiRil to attempt hooking of the OemHookStrings method
+* Updated: Extension of the Samsung MultiRil to attempt hooking of the `OemHookStrings` method
 * Removed: Unnecessary compatibility library (positive reduction in size of the APK)
 * Added: AT Command Injector (currently disabled until further testing has been completed)
 * Added: Code comments to a variety of methods
@@ -523,7 +523,7 @@
 * Improved: Complete rewrite of Database helper functions for better logic of updating/inserting records
 * Changed: Minimum SDK version increased to 16 (JB 4.1)
 * Removed: Erased depreciated methods that were required to support Android versions < JB4.1
-* Removed: SupportMapFragment usage in MapViewer allowing the use of the standard MapFragment
+* Removed: `SupportMapFragment` usage in MapViewer allowing the use of the standard MapFragment
 * Removed: Erased some unneeded imports and cleaned up little bits of code
 * Updated: Preferences screen to use the newer Preference Fragment
 * Updated: OpenCellID data is now stored within its own table (assists in IMSI-Catcher detection)
@@ -536,9 +536,9 @@
 #### 25.04.2014 - [WIP-Release v0.1.8-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.8-alpha)
 
 * **CAUTION:** This version will erase your existing tracking information! Please backup first.
-* Removed: Removed the CMDProcessor as this was not being utilised at all
+* Removed: Removed the `CMDProcessor` as this was not being utilised at all
 * Added: Confirmation dialog once the database export has been successful
-* Added: Lots of code & method  comments so eventually a nice JavaDoc page could be created
+* Added: Lots of code & method comments so eventually a nice JavaDoc page could be created
 * Added: CellInfo details to retrieve the LTE Timing Advance data (not activated yet)
 
 ---
@@ -576,11 +576,11 @@
 
 #### 08.04.2014 - [WIP-Release v0.1.4-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.4-alpha)
 
-* Updated: DISCLAIMER to encourage people to talk to us BEFORE hunting our developers
-* Updated: CREDITS to reflect latest contributions (please give me a hint if I missed someone)
-* Removed: folder 'MERGESOURCE' to clean up unused code and avoid confusion
+* Updated: `DISCLAIMER` to encourage people to talk to us BEFORE hunting our developers
+* Updated: `CREDITS` to reflect latest contributions (please give me a hint if I missed someone)
+* Removed: Purged folder `MERGESOURCE` to clean up unused code and avoid confusion
 * Added: [SOURCES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/SOURCES). Please actively use it. Know where your code comes from.
-* Removed: Erased TODO and created WANTED_FEATURES. Hit us with your ideas there!
+* Removed: Erased `TODO` and created `WANTED_FEATURES`. Hit us with your ideas there!
 * Complete revamp of our [PAPERS-Directory](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/PAPERS). Make sure to grab your nightly lecture.
 * Another new and fresh Iconset has been added with a [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/20) [SgtObst](https://github.com/SgtObst). Cool! :)
 * New [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/21) adding Service, Boot Completed Receiver, TableView and FemtoCatcher Additions
@@ -600,7 +600,7 @@
 #### 02.04.2014
 
 * Thanks to the creative work of [SgtObst](https://github.com/SgtObst), we now have FRESH and NEW ICONS for AIMSICD! ;-)
-* Added a TODO for collecting the things that are planned to be added in the long run.
+* Added a `TODO` for collecting the things that are planned to be added in the long run.
 
 ---
 
@@ -644,7 +644,7 @@
 
 #### 16.03.2014
 
-* Beautified README.md and added [TextSecure](https://github.com/WhisperSystems/TextSecure) to the links worth checking out
+* Beautified `README.md` and added [TextSecure](https://github.com/WhisperSystems/TextSecure) to the links worth checking out
 * Finalized article for [Kuketz IT-Security Blog](http://www.kuketz-blog.de/), last review to be done by Mike Kuketz
 * App Icon + Banner for article and GitHub **WANTED**, ideas welcome in our [Development Thread](http://forum.xda-developers.com/showthread.php?t=1422969)!
 
@@ -671,7 +671,7 @@
 
 #### 11.01.2014
 
-* Creation of folder 'MERGESOURCE' for source code of apps to be added to 'AIMSICD'
+* Creation of folder `MERGESOURCE` for source code of apps to be added to 'AIMSICD'
 * Added source code of app '[RawPhone](https://play.google.com/store/apps/details?id=com.jofrepalau.rawphone)' to be used in the base of our own app
 
 ---
@@ -679,7 +679,7 @@
 #### 23.11.2013
 
 * XDA member '[SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)' is still fire and flame for the project, this GitHub is born
-* Added important files of abandoned GitHub-Projects, polished up our own GitHub
+* Added important files of abandoned GitHub-Projects, polished up our own Repository
 
 ---
 
