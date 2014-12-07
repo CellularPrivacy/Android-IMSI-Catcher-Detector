@@ -98,10 +98,14 @@ public class Device {
                         String homeOperator = Helpers.getSystemProp(context,
                                 "ro.cdma.home.operator.numeric", "UNKNOWN");
                         if (!homeOperator.contains("UNKNOWN")) {
-                            if (mCell.getMCC() == Integer.MAX_VALUE)
-                                mCell.setMCC(Integer.valueOf(homeOperator.substring(0, 3)));
-                            if (mCell.getMNC() == Integer.MAX_VALUE)
-                                mCell.setMNC(Integer.valueOf(homeOperator.substring(3, 5)));
+                            try {
+                                if (mCell.getMCC() == Integer.MAX_VALUE)
+                                    mCell.setMCC(Integer.valueOf(homeOperator.substring(0, 3)));
+                                if (mCell.getMNC() == Integer.MAX_VALUE)
+                                    mCell.setMNC(Integer.valueOf(homeOperator.substring(3, 5)));
+                            } catch (Exception e) {
+                                Log.i(TAG, "homeOperator parse exception - " + e.getMessage());
+                            }
                         }
                     }
                 }
