@@ -85,6 +85,7 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".AIMSICD"/>
         </activity>
+
         <activity
                 android:name=".activities.PrefActivity"
                 android:exported="true"
@@ -94,6 +95,14 @@
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activities.OpenCellIdActivity"
+            android:icon="@drawable/ic_action_settings"
+            android:label="@string/title_ocid_key"
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:parentActivityName=".activities.PrefActivity">
         </activity>
 
         <activity

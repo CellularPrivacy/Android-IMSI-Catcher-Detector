@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +37,13 @@ import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.DeviceApi17;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -245,10 +253,49 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void getOcidKey() {
         final String OCID_KEY = context.getString(R.string.pref_ocid_key);
         OCID_API_KEY = prefs.getString(OCID_KEY, BuildConfig.OPEN_CELLID_API_KEY);
-        if (OCID_API_KEY.trim().length() == 0) {
-            OCID_API_KEY = BuildConfig.OPEN_CELLID_API_KEY;
+        if (OCID_API_KEY == null) {
+            OCID_API_KEY = "NA"; // avoid null api key
         }
     }
+
+    /**
+     * Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
+     * @author andrej
+     * @return null or newly generated key
+     */
+    public static String requestNewOCIDKey() throws Exception {
+        String responseFromServer = null;
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet("http://opencellid.org/gsmCell/user/generateApiKey");
+        HttpResponse result = httpclient.execute(httpGet);
+        StatusLine status = result.getStatusLine();
+
+        if (status.getStatusCode() == 200) {
+            if (result.getEntity() != null) {
+                InputStream is = result.getEntity().getContent();
+                ByteArrayOutputStream content = new ByteArrayOutputStream();
+                // Read response into a buffered stream
+                int readBytes = 0;
+                byte[] sBuffer = new byte[4096];
+                while ((readBytes = is.read(sBuffer)) != -1) {
+                    content.write(sBuffer, 0, readBytes);
+                }
+                responseFromServer = content.toString();
+                result.getEntity().consumeContent();
+            }
+            Log.d("OCID", responseFromServer);
+
+            return responseFromServer;
+        } else {
+            httpclient = null;
+            httpGet = null;
+            result = null;
+
+            Log.d("OCID", "OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
+            throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
+        }
+    }
+
 
     /**
      * Updates Neighbouring Cell details
