@@ -86,7 +86,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private Context context;
     private final Handler timerHandler = new Handler();
 
-    CellTracker(Context context) {
+    public CellTracker(Context context) {
         this.context = context;
 
         //TelephonyManager provides system details
@@ -973,4 +973,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             handle();
         }
     };
+
+    /**
+     * Getter for use in tests only
+     */
+    public Cell getMonitorCell() {
+        return mMonitorCell;
+    }
 }
