@@ -27,6 +27,18 @@ public class SmsReceiver extends BroadcastReceiver {
                      * 3GPP TS 23.040 9.2.3.9 specifies that Type Zero messages are indicated
                      * by TP_PID field set to value 0x40
                      */
+
+                    /**
+                     * Bug: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/178
+                     *
+                     * Log:
+                     * --------- beginning of /dev/log/mainI/AIMSICD_SmsReceiver(28544):
+                     * Pdu data: firstByte = 8 mti = 0 TP_PID = 128
+                     * I/AIMSICD_SmsReceiver(28544): Type 0 Message received, Sender: +38631XXXXXX
+                     * Message: t
+                     * I/CellTracker(28544): neighbouringCellInfo Size - 1
+                     * I/CellTracker(28544): neighbouringCellInfo - CID:-1 LAC:-1 RSSI:-85 PSC:183
+                     */
                     int firstByte = smsPdu[0] & 0xff;
                     int mti = firstByte & 0x3;
                     int pID = smsPdu[1] & 0xc0;
