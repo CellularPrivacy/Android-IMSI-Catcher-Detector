@@ -173,6 +173,8 @@
     <string name="pref_enable_cell_monitoring_key">pref_enable_cell_monitoring</string>
     <string name="pref_enable_cell_monitoring_title">Cell Monitoring</string>
     <string name="pref_enable_cell_monitoring_summ">Enable Automatic Cell Monitoring</string>
+    <string name="pref_request_ocid_key">Request API Key</string>
+    <string name="pref_ocid_requestkey_summary">Request a new API key for OpenCellId</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
@@ -216,4 +218,10 @@
     <string name="sms_title">Silent SMS Intercepted</string>
     <string name="sms_message">Silent SMS Message has been intercepted! \n\nDetails are available through the Database Viewer.</string>
     <string name="table_contains_no_data">Table contains no data to display.</string>
+
+    <!-- Request OpenCellID Key -->
+    <string name="title_ocid_key">OpenCellID API Key</string>
+    <string name="message_request_api_key">Click Ok to request an API key from OpenCellID.org. This will enable you to download their data and view it in the map. It will also enable you to upload cell data. Note that if you do not upload cell data within 20 days, your API key may become inactive.</string>
+    <string name="ocid_api_error">Error getting key: </string>
+    <string name="ocid_api_success">Saved new API key</string>
 </resources>

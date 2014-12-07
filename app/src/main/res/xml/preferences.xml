@@ -3,77 +3,85 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="@string/pref_system_title"
-        android:key="pref_key_system_settings">
+        android:key="pref_key_system_settings"
+        android:title="@string/pref_system_title">
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="@string/pref_autostart_key"
-            android:title="@string/pref_autostart_title"
             android:summary="@string/pref_autostart_summ"
-            android:defaultValue="true" />
+            android:title="@string/pref_autostart_title"/>
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="@string/pref_persistservice_key"
-            android:title="@string/pref_persistservice_title"
             android:summary="@string/pref_persistservice_summ"
-            android:defaultValue="true" />
+            android:title="@string/pref_persistservice_title"/>
         <CheckBoxPreference
-                android:key="@string/pref_enable_cell_key"
-                android:title="@string/pref_enable_cell_title"
-                android:summary="@string/pref_enable_cell_summ"
-                android:defaultValue="true" />
+            android:defaultValue="true"
+            android:key="@string/pref_enable_cell_key"
+            android:summary="@string/pref_enable_cell_summ"
+            android:title="@string/pref_enable_cell_title"/>
         <CheckBoxPreference
-                android:key="@string/pref_enable_cell_monitoring_key"
-                android:title="@string/pref_enable_cell_monitoring_title"
-                android:summary="@string/pref_enable_cell_monitoring_summ"
-                android:defaultValue="true" />
+            android:defaultValue="true"
+            android:key="@string/pref_enable_cell_monitoring_key"
+            android:summary="@string/pref_enable_cell_monitoring_summ"
+            android:title="@string/pref_enable_cell_monitoring_title"/>
         <ListPreference
-                android:key="@string/pref_refresh_key"
-                android:title="@string/pref_refresh_title"
-                android:summary="@string/pref_refresh_summ"
-                android:dialogTitle="@string/pref_refresh_title"
-                android:entries="@array/pref_refresh_entries"
-                android:entryValues="@array/pref_refresh_values"
-                android:defaultValue="1"/>
+            android:defaultValue="1"
+            android:dialogTitle="@string/pref_refresh_title"
+            android:entries="@array/pref_refresh_entries"
+            android:entryValues="@array/pref_refresh_values"
+            android:key="@string/pref_refresh_key"
+            android:summary="@string/pref_refresh_summ"
+            android:title="@string/pref_refresh_title"/>
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/pref_protection_title"
-        android:key="pref_key_protection_settings">
+        android:key="pref_key_protection_settings"
+        android:title="@string/pref_protection_title">
         <CheckBoxPreference
+            android:defaultValue="false"
             android:key="@string/pref_femto_detection_key"
-            android:title="@string/pref_femto_title"
             android:summary="@string/pref_femto_summ"
-            android:defaultValue="false" />
+            android:title="@string/pref_femto_title"/>
         <CheckBoxPreference
+            android:defaultValue="false"
             android:key="@string/pref_femto_action_key"
-            android:title="@string/pref_femto_action_title"
             android:summary="@string/pref_femto_action_summ"
-            android:defaultValue="false" />
-        </PreferenceCategory>
+            android:title="@string/pref_femto_action_title"/>
+    </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/pref_ui_title"
-        android:key="pref_key_ui_settings">
+        android:key="pref_key_ui_settings"
+        android:title="@string/pref_ui_title">
         <ListPreference
-            android:key="@string/pref_ui_icons_key"
-            android:title="@string/pref_ui_icons_title"
+            android:defaultValue="sense"
             android:dialogTitle="@string/pref_ui_icons_summ"
             android:entries="@array/pref_ui_icons_entries"
             android:entryValues="@array/pref_ui_icons_values"
-            android:defaultValue="sense"/>
+            android:key="@string/pref_ui_icons_key"
+            android:title="@string/pref_ui_icons_title"/>
     </PreferenceCategory>
 
     <PreferenceCategory
-            android:title="@string/pref_ocid_title"
-            android:key="pref_key_ocid_settings">
+        android:key="pref_key_ocid_settings"
+        android:title="@string/pref_ocid_title">
+        <Preference
+            android:title="@string/pref_request_ocid_key"
+            android:summary="@string/pref_ocid_requestkey_summary">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.SecUpwN.AIMSICD.activities.OpenCellIdActivity"
+                android:targetPackage="com.SecUpwN.AIMSICD"/>
+        </Preference>
         <EditTextPreference
             android:key="@string/pref_ocid_key"
-            android:title="@string/pref_ocid_key_title"
-            android:summary="@string/pref_ocid_key_summ" />
+            android:summary="@string/pref_ocid_key_summ"
+            android:title="@string/pref_ocid_key_title"/>
         <CheckBoxPreference
-                android:key="@string/pref_ocid_upload"
-                android:title="@string/pref_ui_ocid_upload_title"
-                android:summary="@string/pref_ui_ocid_upload_summ"
-                android:defaultValue="false" />
+            android:defaultValue="false"
+            android:key="@string/pref_ocid_upload"
+            android:summary="@string/pref_ui_ocid_upload_summ"
+            android:title="@string/pref_ui_ocid_upload_title"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

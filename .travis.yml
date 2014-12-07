@@ -29,7 +29,7 @@ android:
      - tools
      
 # The BuildTools version we are using for our project
-     - build-tools-19.1.0
+     - build-tools-21.1.1
      
 # System Image we use to run emulator(s) during tests
      - sys-img-armeabi-v7a-android-19
