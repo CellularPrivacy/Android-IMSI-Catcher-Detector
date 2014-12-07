@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".OpenCellIdActivity"
+                  android:label="@string/title_activity_open_cell_id"
+            >
+        </activity>
+    </application>
+
+</manifest>
