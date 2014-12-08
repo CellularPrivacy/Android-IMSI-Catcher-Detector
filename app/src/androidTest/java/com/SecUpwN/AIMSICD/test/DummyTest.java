@@ -3,7 +3,6 @@ package com.SecUpwN.AIMSICD.test;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.R;
 
 /**
  * Created by toby on 2014/12/07.

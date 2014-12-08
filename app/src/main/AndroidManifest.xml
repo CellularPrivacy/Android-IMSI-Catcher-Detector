@@ -106,6 +106,13 @@
         </activity>
 
         <activity
+            android:name=".activities.DebugLogs"
+            android:icon="@drawable/ic_action_settings"
+            android:label="@string/title_debug_logs"
+            android:parentActivityName=".AIMSICD">
+        </activity>
+
+        <activity
                 android:name=".activities.MapPrefActivity"
                 android:exported="true"
                 android:icon="@drawable/ic_action_settings"
@@ -115,10 +122,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-
-        <!--meta-data
-                android:name="com.google.android.maps.v2.API_KEY"
-                android:value="AIzaSyDI1lvgpBmNhQS33JfJA4w8GAmrtFeg078"/-->
 
     </application>
 

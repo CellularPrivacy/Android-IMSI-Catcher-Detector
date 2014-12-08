@@ -58,7 +58,7 @@ public class OpenCellIdActivity extends Activity {
                                 @Override
                                 public void run() {
                                     pd.dismiss();
-                                    Helpers.msgShort(OpenCellIdActivity.this,
+                                    Helpers.msgLong(OpenCellIdActivity.this,
                                             getString(R.string.ocid_api_error)
                                                     + e.getClass().getName() + " - " + e.getMessage());
                                 }
