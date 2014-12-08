@@ -51,11 +51,8 @@
     <string name="press_once_again_to_exit">Press again to exit.</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
     <string name="cell_lookup">Lookup Current Cell Details (OpenCellID)</string>
-<<<<<<< HEAD
-    <string name="send_logs">Debugging</string>
-=======
+    <string name="send_logs">Send Error Logs</string>
     <string name="debugging">Debugging</string>
->>>>>>> c54c0ed186753b4e843feb8db5557ec36a90b350
 
     <string name="no_network_connection_title">No Internet Connection</string>
     <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
