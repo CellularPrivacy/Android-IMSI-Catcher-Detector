@@ -313,9 +313,8 @@ public class AIMSICDDbAdapter {
     public boolean checkLAC(Cell cell) {
         Cursor cursor = mDb.query(CELL_TABLE, new String[]{"Lac"}, "CellID=" + cell.getCID(),
                 null,null,null,null);
-Log.d("lac", "got " + cursor.getCount());
+
         while (cursor.moveToNext()) {
-Log.d("lac", "checking " + cell.getLAC() + " == " + cursor.getInt(0));
             if (cell.getLAC() != cursor.getInt(0)) {
                 Log.i(TAG, "CHANGING LAC!!! - Current LAC: " + cell.getLAC() +
                         " Database LAC: " + cursor.getInt(0));
