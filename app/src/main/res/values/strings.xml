@@ -51,7 +51,7 @@
     <string name="press_once_again_to_exit">Press again to exit.</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
     <string name="cell_lookup">Lookup Current Cell Details (OpenCellID)</string>
-    <string name="send_logs">Debug Logs</string>
+    <string name="send_logs">Debugging</string>
 
     <string name="no_network_connection_title">No Internet Connection</string>
     <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
@@ -231,4 +231,8 @@
     <string name="btn_app_logs">App Logs</string>
     <string name="btn_clear_logs">Clear</string>
     <string name="btn_send_email">Email</string>
+    <string name="btn_copy_to_clipboard">Copy</string>
+    <string name="msg_copied_to_clipboard">Logs copied to clipboard</string>
+    <string name="btn_stop_logs">Stop</string>
+    <string name="btn_start_logs">Start</string>
 </resources>
