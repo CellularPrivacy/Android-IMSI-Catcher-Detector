@@ -33,23 +33,22 @@
             android:layout_weight="1"
             android:text="@string/btn_clear_logs"/>
 
-        <!-- Sadly, no permission to read radio logs -->
         <Button
-            android:id="@+id/btnRadioLogs"
+            android:id="@+id/btnCopy"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/btn_radio_logs"
-            android:visibility="gone"/>
+            android:text="@string/btn_copy_to_clipboard"/>
 
         <Button
-            android:id="@+id/btnSendEmail"
+            android:id="@+id/btnStopLogs"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/btn_send_email"/>
+            android:text="@string/btn_stop_logs"/>
+
     </LinearLayout>
 
 </LinearLayout>
