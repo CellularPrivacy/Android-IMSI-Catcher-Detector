@@ -44,6 +44,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.SecUpwN.AIMSICD.activities.DebugLogs;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
@@ -339,34 +340,8 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
                         "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
             }
         } else if (selectedItem.getId() == 305) {
-            new Thread() {
-                @Override
-                public void run() {
-                    // Send Error Log
-                    // TODO - clear log using 'logcat -c' on app startup
-                    try {
-                        Process process = Runtime.getRuntime().exec("logcat -d");
-                        BufferedReader bufferedReader = new BufferedReader(
-                                new InputStreamReader(process.getInputStream()));
-
-                        StringBuilder log = new StringBuilder();
-                        String line;
-                        while ((line = bufferedReader.readLine()) != null) {
-                            log.append(line);
-                        }
-
-                        // show a share intent
-                        Intent intent = new Intent(Intent.ACTION_SEND);
-                        intent.setType("text/html");
-                        intent.putExtra(Intent.EXTRA_EMAIL, "a3841c3c@opayq.com");
-                        intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error Log");
-                        intent.putExtra(Intent.EXTRA_TEXT, log.toString());
-                        startActivity(Intent.createChooser(intent, "Send Error Log"));
-                    } catch (IOException e) {
-                        Log.e("main", "Error reading logs", e);
-                    }
-                }
-            }.start();
+            Intent i = new Intent(this, DebugLogs.class);
+            startActivity(i);
         } else if (selectedItem.getId() == 304) {
             finish();
         }
@@ -458,7 +433,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
         menu.add(DrawerMenuItem.create
                 (303, getString(R.string.about_aimsicd), "ic_action_about", true, this));
         menu.add(DrawerMenuItem.create
-                (305, getString(R.string.send_logs), "ic_action_computer", false, this));
+                (305, getString(R.string.debugging), "ic_action_computer", false, this));
         menu.add(DrawerMenuItem.create
                 (304, getString(R.string.quit), "ic_action_remove", false, this));
 

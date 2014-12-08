@@ -280,7 +280,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 while ((readBytes = is.read(sBuffer)) != -1) {
                     content.write(sBuffer, 0, readBytes);
                 }
-                responseFromServer = content.toString();
+                responseFromServer = content.toString("UTF-8");
                 result.getEntity().consumeContent();
             }
             Log.d("OCID", responseFromServer);
