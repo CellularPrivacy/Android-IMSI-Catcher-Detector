@@ -195,7 +195,7 @@ public class DebugLogs extends Activity {
         public void run() {
             while (updateLogs) {
                 try {
-                    Log.d("log_thread", "running");
+                    //Log.d("log_thread", "running");
                     final String logs = getLogs();
                     runOnUiThread(new Runnable() {
                         @Override
