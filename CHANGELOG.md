@@ -1,6 +1,15 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 09.12.2014 - WIP-Internal v0.1.25-alpha-build-3
+
+* Improved: OpenCellId error messages now displays for longer period of time
+* Improved: Specified UTF-8 charset for requesting key from OpenCellID server
+* Changed: `Send Error Log` expanded into menu `Debugging` (Work-in-Progress)
+* Added: Debug Logs screen to view, clear, copy, and e-mail enhanced app logs
+
+---
+
 #### 07.12.2014 - WIP-Internal v0.1.25-alpha-build-2
 
 * Updated: Work-in-Progress on the General and Technical Overviews in our WIKI
