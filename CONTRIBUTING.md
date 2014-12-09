@@ -28,9 +28,23 @@ Here are some useful links to help you with correctly structuring and formatting
 
 * We **love** developers! Earn our respect through [creating pull requests](https://help.github.com/articles/using-pull-requests)!
 * If you added foreign code, please reference it in our [SOURCES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/SOURCES).
+* ALWAYS respect the [LICENSE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE) this project is licensed with.
 * If you submit a commit, please make sure to explain its pull request poperly.
 * :exclamation: Add comments to your own and existing code to make it understandable!
-* ALWAYS respect the [LICENSE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE) this project is licensed with.
+
+**For example:**  Put something like this in the header of the file: *DeviceApi17.java*
+```java
+...
+import java.util.List;
+// -------------------------------------------------------------------
+// Author:      E:V:A
+// First:       2014-10-20
+// Last:        2014-10-22
+// Description: Used to separate API 17 stuff from newer APIs >17.
+// Used in:     CellTracker.java, Device.java
+// -------------------------------------------------------------------
+...
+```
 
 #### On Bugs and Suggestions
 
