@@ -433,7 +433,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
         menu.add(DrawerMenuItem.create
                 (303, getString(R.string.about_aimsicd), "ic_action_about", true, this));
         menu.add(DrawerMenuItem.create
-                (305, getString(R.string.debugging), "ic_action_computer", false, this));
+                (305, getString(R.string.send_logs), "ic_action_computer", false, this));
         menu.add(DrawerMenuItem.create
                 (304, getString(R.string.quit), "ic_action_remove", false, this));
 
