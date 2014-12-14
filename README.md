@@ -62,7 +62,8 @@ There are almost no phones on the market which offer an option to check what kin
 
 Some examples to make you familar with current IMSI-Catcher threats:
 
-* **[NSA-Killings with IMSI-Catcher drones](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)**
+* **[Norwegian politicians phones spied on](http://www.ibtimes.co.uk/newspaper-discovers-someone-listening-norwegian-politicians-phone-calls-1479385)**
+* [NSA-Killings with IMSI-Catcher drones](https://firstlook.org/theintercept/article/2014/02/10/the-nsas-secret-role/)
 * [How easy it is to clone phones](http://www.youtube.com/watch?v=Ydo19YOzpzU)
 * [28c3: Defending mobile phones](http://youtu.be/YWdHSJsEOck)
 * [Stingrays: Biggest Technological Threat](https://www.eff.org/deeplinks/2012/10/stingrays-biggest-unknown-technological-threat-cell-phone-privacy)
