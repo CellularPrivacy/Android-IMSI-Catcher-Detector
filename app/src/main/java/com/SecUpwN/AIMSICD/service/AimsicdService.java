@@ -195,11 +195,11 @@ public class AimsicdService extends Service {
         @Override
         public void run() {
             if (mCellTracker.isTrackingCell()) {
-                Log.d("power", "Checking to see if GPS should be disabled");
+                //Log.d("power", "Checking to see if GPS should be disabled");
                 // if no movement in a while, shut off GPS. Gets re-enabled when there is movement
                 if (mAccelerometerMonitor.notMovedInAWhile() ||
                         mLocationTracker.notMovedInAWhile()) {
-                    Log.d("power", "Disabling GPS");
+                    //Log.d("power", "Disabling GPS");
                     mLocationTracker.stop();
                 }
 
