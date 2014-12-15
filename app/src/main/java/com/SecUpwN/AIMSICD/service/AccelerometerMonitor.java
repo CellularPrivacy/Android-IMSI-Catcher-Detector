@@ -65,7 +65,7 @@ public class AccelerometerMonitor {
 
                     if (deltaX > 0 || deltaY > 0 || deltaZ > 0) {
                         // movement detected
-                        Log.d("sensor", "Movement detected, enabling GPS");
+                        //Log.d("sensor", "Movement detected, enabling GPS");
 
                         // disable the movement sensor to save power
                         stop();
