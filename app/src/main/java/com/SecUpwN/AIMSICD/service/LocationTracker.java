@@ -104,7 +104,7 @@ public class LocationTracker {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Override
         public void onLocationChanged(Location loc) {
-            Log.d("location", "Got location " + loc);
+            //Log.d("location", "Got location " + loc);
             if (lastLocation != null &&
                     lastLocation.getLongitude() == loc.getLongitude() &&
                     lastLocation.getLatitude() == loc.getLatitude()) {
