@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 
 /**
@@ -23,7 +25,7 @@ public class LocationTracker {
     /**
      * Location listener stuff
      */
-    private Context context;
+    private AimsicdService context;
     private SharedPreferences prefs;
     private static LocationManager lm;
     private LocationListener mLocationListener;
@@ -34,8 +36,8 @@ public class LocationTracker {
     private static final float GPS_MIN_UPDATE_DISTANCE = 10;
 
 
-    LocationTracker(Context context, LocationListener extLocationListener) {
-        this.context = context;
+    LocationTracker(AimsicdService service, LocationListener extLocationListener) {
+        this.context = service;
         this.extLocationListener = extLocationListener;
 
         lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -45,8 +47,7 @@ public class LocationTracker {
     }
 
     public void start() {
-        // when accelerometer movement detected:
-        // re-enable GPS, see timerRunner for when this gets switched off
+        lastKnownLocation();
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
                 GPS_MIN_UPDATE_DISTANCE, mLocationListener);
     }
@@ -88,10 +89,26 @@ public class LocationTracker {
                 if (coords != null) {
                     String[] coord = coords.split(":");
                     loc = GeoLocation.fromDegrees(Double.valueOf(coord[0]), Double.valueOf(coord[1]));
+                } else {
+                    // get location from MCC
+                    try {
+                        Cell cell = context.getCell();
+                        if (cell != null) {
+                            Log.d("location", "Looking up MCC " + cell.getMCC());
+                            AIMSICDDbAdapter mDbHelper = new AIMSICDDbAdapter(context);
+                            mDbHelper.open();
+                            double[] defLoc = mDbHelper.getDefaultLocation(cell.getMCC());
+                            mDbHelper.close();
+                            loc = GeoLocation.fromDegrees(defLoc[0], defLoc[1]);
+                        }
+                    } catch (Exception e) {
+                        Log.e("location", "Unable to get location from MCC", e);
+                    }
                 }
             }
         }
 
+        if (loc != null) Log.i("location", "Last known location " + loc.toString());
         return loc;
     }
 
