@@ -197,22 +197,24 @@ public class DebugLogs extends Activity {
                 try {
                     //Log.d("log_thread", "running");
                     final String logs = getLogs();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // update log display
-                            logView.setText(logs);
+                    if (!logs.equals(logView.getText().toString())) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // update log display
+                                logView.setText(logs);
 
-                            // scroll to the bottom of the log display
-                            final ScrollView scroll = ((ScrollView)logView.getParent());
-                            scroll.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    scroll.fullScroll(View.FOCUS_DOWN);
-                                }
-                            });
-                        }
-                    });
+                                // scroll to the bottom of the log display
+                                final ScrollView scroll = ((ScrollView)logView.getParent());
+                                scroll.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        scroll.fullScroll(View.FOCUS_DOWN);
+                                    }
+                                });
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     Log.e("DebugLogs", "Error updating logs", e);
                 }
