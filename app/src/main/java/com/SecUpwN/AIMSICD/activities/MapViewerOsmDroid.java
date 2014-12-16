@@ -180,6 +180,15 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
             mBound = true;
+
+            // set up map
+            GeoLocation lastKnown = mAimsicdService.lastKnownLocation();
+            if (lastKnown != null) {
+                mMap.getController().setZoom(16);
+                mMap.getController().animateTo(new GeoPoint(
+                        lastKnown.getLatitudeInDegrees(),
+                        lastKnown.getLongitudeInDegrees()));
+            }
         }
 
         @Override
