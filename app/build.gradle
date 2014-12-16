@@ -5,7 +5,7 @@ apply plugin: 'com.android.application'
 //======================================================================
 // TODO: (There must be a simpler way to do this!)
 // These will import versionCode and versionName from AndroidManifest.xml
-// Most important is that these function names are unique. 
+// Most important is that these function names are unique.
 // versionCode can auto update the version number.
 // Then put this function inside the defaultConfig { ... }}
 // See: http://tinyurl.com/kuu2rve

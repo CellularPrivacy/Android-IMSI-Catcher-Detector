@@ -77,6 +77,7 @@ public class OpenCellIdActivity extends Activity {
                         Helpers.msgShort(OpenCellIdActivity.this, getString(R.string.ocid_api_success));
 
                         pd.dismiss();
+                        finish();
                     }
                 }.execute();
             }
