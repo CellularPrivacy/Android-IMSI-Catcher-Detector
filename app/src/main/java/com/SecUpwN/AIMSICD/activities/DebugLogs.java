@@ -158,7 +158,7 @@ public class DebugLogs extends Activity {
      * @throws IOException
      */
     private String getLogs() throws IOException {
-        Process process = Runtime.getRuntime().exec("logcat -d -v brief" + (isRadioLogs ? " -b radio" : ""));
+        Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v brief" + (isRadioLogs ? " -b radio" : ""));
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
 
@@ -197,22 +197,24 @@ public class DebugLogs extends Activity {
                 try {
                     //Log.d("log_thread", "running");
                     final String logs = getLogs();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // update log display
-                            logView.setText(logs);
+                    if (!logs.equals(logView.getText().toString())) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // update log display
+                                logView.setText(logs);
 
-                            // scroll to the bottom of the log display
-                            final ScrollView scroll = ((ScrollView)logView.getParent());
-                            scroll.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    scroll.fullScroll(View.FOCUS_DOWN);
-                                }
-                            });
-                        }
-                    });
+                                // scroll to the bottom of the log display
+                                final ScrollView scroll = ((ScrollView)logView.getParent());
+                                scroll.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        scroll.fullScroll(View.FOCUS_DOWN);
+                                    }
+                                });
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     Log.e("DebugLogs", "Error updating logs", e);
                 }
