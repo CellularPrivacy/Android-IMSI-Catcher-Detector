@@ -62,12 +62,10 @@ import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +79,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
     private Editor prefsEditor;
     private String mDisclaimerAccepted;
     private AimsicdService mAimsicdService;
+    private boolean isViewingGUI;
 
     private DrawerLayout mDrawerLayout;
     private ActionBar mActionBar;
@@ -186,7 +185,8 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
+        final String iconType = prefs.getString(mContext.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType)));
         mDrawerToggle.syncState();
     }
 
@@ -494,7 +494,44 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
     public void onResume() {
         super.onResume();
         invalidateOptionsMenu();
+        isViewingGUI = true;
         startService();
+        startStatusWatcher();
+    }
+
+    private void startStatusWatcher() {
+        final String iconType = prefs.getString(mContext.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int lastIcon = Icon.getIcon(Icon.Type.valueOf(iconType));
+                Log.d(TAG, "StatusWatcher starting polling");
+                while(isViewingGUI) {
+                    final int thisIcon = Icon.getIcon(Icon.Type.valueOf(iconType));
+                    if(thisIcon != lastIcon) {
+                        lastIcon = thisIcon;
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mActionBar.setIcon(thisIcon);
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.d(TAG, "StatusWatcher stopped polling");
+            }
+        }).start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isViewingGUI = false;
     }
 
     @Override
