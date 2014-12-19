@@ -1,7 +1,9 @@
 package com.SecUpwN.AIMSICD.utils;
 
 /**
- * Created by thu on 12/19/14.
+ * Class that sets, holds and returns current system status
+ *
+ * @author Tor Henning Ueland
  */
 public class Status {
     public static Type currentStatus;
