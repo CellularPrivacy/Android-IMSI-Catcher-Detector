@@ -102,19 +102,24 @@ public class DbViewerFragment extends Fragment {
                         Cursor result = null;
 
                         switch (mTableSelected) {
-                            case "Cell Data":
+                            // unique BTS we have been connected to in the past
+                            // EVA: Was "Cell Data" // Table: cellinfo
+                            case "Unique BTS Data":
                                 result = mDb.getCellData();
                                 break;
-                            case "Location Data":
+                            // All BTS measurements we have done since start
+                            // EVA: Was "Location Data" // Table: locationinfo
+                            case "BTS measurements":
                                 result =  mDb.getLocationData();
                                 break;
-                            case "OpenCellID Data":
+                            // EVA: Was "OpenCellID Data" // Table: opencellid
+                            case "Imported OCID Data":
                                 result =  mDb.getOpenCellIDData();
                                 break;
                             case "Default MCC Locations":
                                 result =  mDb.getDefaultMccLocationData();
                                 break;
-                            case "Silent Sms":
+                            case "Silent SMS":
                                 result =  mDb.getSilentSmsData();
                                 break;
                         }
@@ -155,21 +160,26 @@ public class DbViewerFragment extends Fragment {
     // RSSI:        Received Signal Strength Indicator (previously "Signal Strength")
     //              Can have different meanings on different RAN's, e.g. RSCP in UMTS.
     // RAN:         Radio Access Network (GSM, UMTS, LTE etc.)
+    // 2014-12-18 E:V:A
+    //  1. Although "RAN" is more correct here, we'll use "RAT",
+    //     which is the more common terminology. Thus reverting.
+    //  2. Since Signal is not an "indicator" we should just call it "RSS" or "RXS"
     private BaseInflaterAdapter BuildTable(Cursor tableData) {
         if (tableData != null && tableData.getCount() > 0) {
             switch (mTableSelected) {
-                case "OpenCellID Data": {
+                // Was: "OpenCellID Data" New: "Imported OCID Data"
+                case "Imported OCID Data": {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>(
                             new OpenCellIdCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData("CellID: " + tableData.getString(0),
+                        CardItemData data = new CardItemData("CID: " + tableData.getString(0),
                                 "LAC: " + tableData.getString(1),
                                 "MCC: " + tableData.getString(2),
                                 "MNC: " + tableData.getString(3),
                                 "Lat: " + tableData.getString(4),
-                                "Lng: " + tableData.getString(5),
+                                "Lon: " + tableData.getString(5),
                                 "AvgSignal: " + tableData.getString(6),
                                 "Samples: " + tableData.getString(7),
                                 "" + (tableData.getPosition() + 1) + " / " + count);
@@ -186,13 +196,13 @@ public class DbViewerFragment extends Fragment {
                         CardItemData data = new CardItemData("Country: " + tableData.getString(0),
                                 "MCC: " + tableData.getString(1),
                                 "Lat: " + tableData.getString(2),
-                                "Lng: " + tableData.getString(3),
+                                "Lon: " + tableData.getString(3),
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     return adapter;
                 }
-                case "Silent Sms": {
+                case "Silent SMS": {
                     BaseInflaterAdapter<SilentSmsCardData> adapter
                             = new BaseInflaterAdapter<>(
                             new SilentSmsCardInflater());
@@ -211,12 +221,12 @@ public class DbViewerFragment extends Fragment {
                             new CellCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData("CellID: " + tableData.getString(0),
+                        CardItemData data = new CardItemData("CID: " + tableData.getString(0),
                                 "LAC: " + tableData.getString(1),
-                                "RAN Type: " + tableData.getString(2),
+                                "RAT: " + tableData.getString(2),
                                 "Lat: " + tableData.getString(3),
-                                "Lng: " + tableData.getString(4),
-                                "RSSI: " + tableData.getString(5),
+                                "Lon: " + tableData.getString(4),
+                                "RSS: " + tableData.getString(5),
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
