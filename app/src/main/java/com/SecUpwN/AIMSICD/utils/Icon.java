@@ -3,7 +3,10 @@ package com.SecUpwN.AIMSICD.utils;
 import com.SecUpwN.AIMSICD.R;
 
 /**
- * Created by thu on 12/19/14.
+ * Class that holds and returns the correct icon based on requested icon format and
+ * current system status.
+ *
+ * @author Tor Henning Ueland
  */
 public class Icon {
     public enum Type {
