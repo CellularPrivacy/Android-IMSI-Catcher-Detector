@@ -39,6 +39,9 @@ public class SmsReceiver extends BroadcastReceiver {
                      * I/CellTracker(28544): neighbouringCellInfo Size - 1
                      * I/CellTracker(28544): neighbouringCellInfo - CID:-1 LAC:-1 RSSI:-85 PSC:183
                      */
+
+                    // E:V:A  We may also need to consider catching WAP PUSH SMS messages
+                    // as they can also be hidden from user.
                     int firstByte = smsPdu[0] & 0xff;
                     int mti = firstByte & 0x3;
                     int pID = smsPdu[1] & 0xc0;

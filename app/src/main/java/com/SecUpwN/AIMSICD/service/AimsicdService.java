@@ -156,7 +156,6 @@ public class AimsicdService extends Service {
         return mRilExecutor;
     }
 
-
     public CellTracker getCellTracker() {
         return mCellTracker;
     }
