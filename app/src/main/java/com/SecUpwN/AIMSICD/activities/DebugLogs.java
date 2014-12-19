@@ -135,6 +135,8 @@ public class DebugLogs extends Activity {
             public void run() {
                 // Send Error Log
                 // TODO - clear log using 'logcat -c' on app startup
+                // EVA:  just make sure you specify each buffer to be cleared:
+                // logcat -c -b main -b system -b radio -b events
                 try {
                     String log = getLogs();
 
@@ -177,12 +179,14 @@ public class DebugLogs extends Activity {
      * @return
      * @throws IOException
      */
+    // EVA:  make sure you specify each buffer to be cleared:
+    // logcat -c -b main -b system -b radio -b events
     private void clearLogs() throws IOException {
         new Thread() {
             @Override
             public void run() {
                 try {
-                    Runtime.getRuntime().exec("logcat -c");
+                    Runtime.getRuntime().exec("logcat -c -b main -b system -b radio -b events");
                 } catch (Exception e) {
                     Log.e("DebugLogs", "Error clearing logs", e);
                 }

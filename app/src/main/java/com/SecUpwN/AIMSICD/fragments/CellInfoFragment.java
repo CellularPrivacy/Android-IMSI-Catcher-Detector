@@ -91,7 +91,7 @@ public class CellInfoFragment extends Fragment {
             mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
-        //Refresh display if preference is not set to manual
+        // Refresh display if preference is not set to manual
         if (CellTracker.REFRESH_RATE != 0) {
             timerHandler.postDelayed(timerRunnable, 0);
             Helpers.msgShort(mContext, "Refreshing every "
