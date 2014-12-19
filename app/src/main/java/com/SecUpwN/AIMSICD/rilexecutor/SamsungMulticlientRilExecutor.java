@@ -57,7 +57,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
     // E:V:A:  2014-12-19  We need debugging on, until further notice.
     //  WARNING: Could fill your logcat if running app long!
     // private static final boolean DBG = BuildConfig.DEBUG;
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
 
     // TODO: EVA: We should add AIMSICD to this TAG
     private static final String TAG = SamsungMulticlientRilExecutor.class.getSimpleName();
