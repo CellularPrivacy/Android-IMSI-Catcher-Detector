@@ -1,5 +1,6 @@
 package com.SecUpwN.AIMSICD.service;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -36,6 +37,8 @@ import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.DeviceApi17;
 import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.Icon;
+import com.SecUpwN.AIMSICD.utils.Status;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -301,6 +304,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * Updates Neighbouring Cell details
      */
     public List<Cell> updateNeighbouringCells() {
+
         List<Cell> neighboringCells = new ArrayList<>();
 
         List<NeighboringCellInfo> neighboringCellInfo;
@@ -632,18 +636,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         String tickerText;
         String contentText = "Phone Type " + mDevice.getPhoneType();
 
-        String iconType = prefs.getString(
-                context.getString(R.string.pref_ui_icons_key), "sense");
-
-        int status;
-
         if (mFemtoDetected || mTypeZeroSmsDetected) {
-            status = 4; //ALARM
+            Status.setCurrentStatus(Status.Type.ALARM);
         } else if (mChangedLAC) {
-            status = 3; //MEDIUM
+            Status.setCurrentStatus(Status.Type.MEDIUM);
             contentText = "Hostile Service Area: Changing LAC Detected!";
         } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
-            status = 2; //NORMAL
+            Status.setCurrentStatus(Status.Type.NORMAL);
             if (mTrackingFemtocell) {
                 contentText = "FemtoCell Detection Active.";
             } else if (mTrackingCell) {
@@ -652,75 +651,24 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 contentText = "Cell Monitoring Active.";
             }
         } else {
-            status = 1; //IDLE
+            Status.setCurrentStatus(Status.Type.IDLE);
         }
-
-        int icon = R.drawable.sense_idle;
-
-        switch (status) {
-            case 1: //IDLE
-                switch (iconType) {
-                    case "flat":
-                        icon = R.drawable.flat_idle;
-                        break;
-                    case "sense":
-                        icon = R.drawable.sense_idle;
-                        break;
-                    case "white":
-                        icon = R.drawable.white_idle;
-                        break;
-                }
+        switch (Status.getStatus()) {
+            case IDLE: //IDLE
                 contentText = "Phone Type " + mDevice.getPhoneType();
-                tickerText = context.getResources().getString(R.string.app_name_short)
-                        + " - Status: Idle.";
+                tickerText = context.getResources().getString(R.string.app_name_short) + " - Status: Idle.";
                 break;
-            case 2: //NORMAL
-                switch (iconType) {
-                    case "flat":
-                        icon = R.drawable.flat_ok;
-                        break;
-                    case "sense":
-                        icon = R.drawable.sense_ok;
-                        break;
-                    case "white":
-                        icon = R.drawable.white_ok;
-                        break;
-                }
-                tickerText = context.getResources().getString(R.string.app_name_short)
-                        + " - Status: Good. No Threats Detected.";
+            case NORMAL: //NORMAL
+                tickerText = context.getResources().getString(R.string.app_name_short) + " - Status: Good. No Threats Detected.";
                 break;
-            case 3: //MEDIUM
-                switch (iconType) {
-                    case "flat":
-                        icon = R.drawable.flat_medium;
-                        break;
-                    case "sense":
-                        icon = R.drawable.sense_medium;
-                        break;
-                    case "white":
-                        icon = R.drawable.white_medium;
-                        break;
-                }
-                tickerText = context.getResources().getString(R.string.app_name_short)
-                        + " - Hostile Service Area: Changing LAC Detected!";
+            case MEDIUM: //MEDIUM
+                tickerText = context.getResources().getString(R.string.app_name_short) + " - Hostile Service Area: Changing LAC Detected!";
                 if (mChangedLAC) {
                     contentText = "Hostile Service Area: Changing LAC Detected!";
                 }
                 break;
-            case 4: //DANGER
-                switch (iconType) {
-                    case "flat":
-                        icon = R.drawable.flat_danger;
-                        break;
-                    case "sense":
-                        icon = R.drawable.sense_danger;
-                        break;
-                    case "white":
-                        icon = R.drawable.white_danger;
-                        break;
-                }
-                tickerText = context.getResources().getString(R.string.app_name_short)
-                        + " - ALERT!! Threat Detected!";
+            case ALARM: //DANGER
+                tickerText = context.getResources().getString(R.string.app_name_short) + " - ALERT!! Threat Detected!";
                 if (mFemtoDetected) {
                     contentText = "ALERT!! FemtoCell Connection Threat Detected!";
                 } else if (mTypeZeroSmsDetected) {
@@ -729,7 +677,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                 break;
             default:
-                icon = R.drawable.sense_idle;
                 tickerText = context.getResources().getString(R.string.app_name);
                 break;
         }
@@ -739,9 +686,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
         Notification mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(icon)
+                        .setSmallIcon(Icon.getIcon(Icon.Type.valueOf(iconType)))
                         .setTicker(tickerText)
                         .setContentTitle(context.getResources().getString(R.string.app_name))
                         .setContentText(contentText)
@@ -749,7 +697,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         .setAutoCancel(false)
                         .setContentIntent(contentIntent)
                         .build();
-
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
