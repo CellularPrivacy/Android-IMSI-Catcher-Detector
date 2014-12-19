@@ -43,6 +43,14 @@ public class DebugLogs extends Activity {
         btnStop = (Button) findViewById(R.id.btnStopLogs);
         btnCopy = (Button) findViewById(R.id.btnCopy);
 
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                logView.setFocusable(false);
+            }
+        });
+
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
