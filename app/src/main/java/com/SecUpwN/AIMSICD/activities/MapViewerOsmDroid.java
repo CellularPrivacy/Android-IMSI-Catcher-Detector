@@ -328,8 +328,13 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                 LinkedList<CellTowerOverlayItem> items = new LinkedList<>();
 
                 mDbHelper.open();
-                Cursor c = mDbHelper.getCellData();
-                if (c.moveToFirst()) {
+                Cursor c = null;
+                try {
+                    c = mDbHelper.getCellData();
+                }catch(IllegalStateException ix) {
+                    Log.e(TAG, ix.getMessage(), ix);
+                }
+                if (c != null && c.moveToFirst()) {
                     do {
                         final int cellID = c.getInt(0);
                         final int lac = c.getInt(1);
