@@ -490,6 +490,9 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
         }
     }
 
+    /**
+     * Triggered when GUI is opened
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -499,24 +502,32 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
         startStatusWatcher();
     }
 
+
+    /**
+     * Starts to look for status changes, if status has changed, change in-app icon, this is
+     * only running while the app is open.
+     */
     private void startStatusWatcher() {
         final String iconType = prefs.getString(mContext.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                int lastIcon = Icon.getIcon(Icon.Type.valueOf(iconType));
                 Log.d(TAG, "StatusWatcher starting polling");
+                int lastIcon = Icon.getIcon(Icon.Type.valueOf(iconType));
+                mActionBar.setIcon(lastIcon);
                 while(isViewingGUI) {
                     final int thisIcon = Icon.getIcon(Icon.Type.valueOf(iconType));
+
+                    //Check for change, only start GUI thread IF we actually need to
                     if(thisIcon != lastIcon) {
                         lastIcon = thisIcon;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mActionBar.setIcon(thisIcon);
+                            }
+                        });
                     }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mActionBar.setIcon(thisIcon);
-                        }
-                    });
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -528,6 +539,10 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
         }).start();
     }
 
+
+    /**
+     * Triggered when GUI is closed/put to background
+     */
     @Override
     public void onPause() {
         super.onPause();
