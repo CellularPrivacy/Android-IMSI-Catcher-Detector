@@ -1,3 +1,15 @@
+/*  This was introduced by Aussie in the Pull Request Commit: 
+ * https://github.com/xLaMbChOpSx/Android-IMSI-Catcher-Detector/commit/6d8719ab356a3ecbd0b526a9ded0cabb17ab2021
+ * 
+ * Where he writes: 
+ * ""
+ * Advanced Cell Fragment added to display the Neighbouring Cell information in two ways firstly
+ * through telephony manager methods which does not work on Samsung Devices, a fallback is available
+ * through the methods developed by Alexey and will display if these are successful.
+ * Ciphering Indicator also uses Alexey's methods and will display on Samsung devices.
+ * ""
+ */
+
 package com.SecUpwN.AIMSICD.fragments;
 
 import android.app.Activity;
