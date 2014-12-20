@@ -514,7 +514,6 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
             public void run() {
                 Log.d(TAG, "StatusWatcher starting polling");
                 int lastIcon = Icon.getIcon(Icon.Type.valueOf(iconType));
-                mActionBar.setIcon(lastIcon);
                 while(isViewingGUI) {
                     final int thisIcon = Icon.getIcon(Icon.Type.valueOf(iconType));
 
