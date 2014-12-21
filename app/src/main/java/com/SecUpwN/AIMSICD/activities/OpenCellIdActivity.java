@@ -1,6 +1,5 @@
 package com.SecUpwN.AIMSICD.activities;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -8,14 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
 
-public class OpenCellIdActivity extends Activity {
+public class OpenCellIdActivity extends BaseActivity {
     Button btnOk;
     Button btnCancel;
     private SharedPreferences prefs;

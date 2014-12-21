@@ -79,6 +79,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
     private SharedPreferences prefs;
     private AimsicdService mAimsicdService;
     private boolean mBound;
+    private boolean isViewingGUI;
 
     private GeoPoint loc = null;
     private final Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
@@ -124,6 +125,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
     public void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+        isViewingGUI = true;
 
         prefs = this.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
@@ -161,6 +163,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
     @Override
     protected void onPause() {
         super.onPause();
+        isViewingGUI = false;
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 

@@ -1,6 +1,5 @@
 package com.SecUpwN.AIMSICD.service;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -11,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -311,9 +309,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         neighboringCellInfo = tm.getNeighboringCellInfo();
         if (neighboringCellInfo.size() == 0) {
             // try to poll the neighboring cells for a few seconds
-            neighboringCellBlockingQueue =
-                    new LinkedBlockingQueue<>(100);
+            neighboringCellBlockingQueue = new LinkedBlockingQueue<>(100);
             Log.i(TAG, "neighbouringCellInfo empty - start polling");
+            //Log.i(TAG, "signal: "+mDevice.getSignalDBm());
 
             //LISTEN_CELL_INFO added in API 17
             if (Build.VERSION.SDK_INT > 16) {
@@ -488,6 +486,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 //Use lowest signal to be conservative
                 mDevice.setSignalDbm((cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm);
             }
+
+            //Send it to signal tracker
         }
 
         public void onDataActivity(int direction) {
@@ -637,12 +637,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         String contentText = "Phone Type " + mDevice.getPhoneType();
 
         if (mFemtoDetected || mTypeZeroSmsDetected) {
-            Status.setCurrentStatus(Status.Type.ALARM);
+            Status.setCurrentStatus(Status.Type.ALARM, this.context);
         } else if (mChangedLAC) {
-            Status.setCurrentStatus(Status.Type.MEDIUM);
+            Status.setCurrentStatus(Status.Type.MEDIUM, this.context);
             contentText = "Hostile Service Area: Changing LAC Detected!";
         } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
-            Status.setCurrentStatus(Status.Type.NORMAL);
+            Status.setCurrentStatus(Status.Type.NORMAL, this.context);
             if (mTrackingFemtocell) {
                 contentText = "FemtoCell Detection Active.";
             } else if (mTrackingCell) {
@@ -651,7 +651,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 contentText = "Cell Monitoring Active.";
             }
         } else {
-            Status.setCurrentStatus(Status.Type.IDLE);
+            Status.setCurrentStatus(Status.Type.IDLE, this.context);
         }
         switch (Status.getStatus()) {
             case IDLE: //IDLE
