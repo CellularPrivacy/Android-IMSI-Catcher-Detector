@@ -68,7 +68,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPreferenceChangeListener {
+public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
     private final String TAG = "AIMSICD_MapViewer";
     public static final String updateOpenCellIDMarkers = "update_opencell_markers";
