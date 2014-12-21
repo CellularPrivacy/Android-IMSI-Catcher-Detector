@@ -8,7 +8,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 
-public class MapPrefActivity extends Activity {
+public class MapPrefActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
