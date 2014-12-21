@@ -44,6 +44,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.SecUpwN.AIMSICD.activities.BaseActivity;
 import com.SecUpwN.AIMSICD.activities.DebugLogs;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
@@ -69,7 +70,7 @@ import com.SecUpwN.AIMSICD.utils.RequestTask;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AIMSICD extends FragmentActivity implements AsyncResponse {
+public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     private final String TAG = "AIMSICD";
 
@@ -79,7 +80,6 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
     private Editor prefsEditor;
     private String mDisclaimerAccepted;
     private AimsicdService mAimsicdService;
-    private boolean isViewingGUI;
 
     private DrawerLayout mDrawerLayout;
     private ActionBar mActionBar;
@@ -144,8 +144,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        prefs = mContext.getSharedPreferences(
-                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        prefs = mContext.getSharedPreferences( AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
 
         mDisclaimerAccepted = getResources().getString(R.string.disclaimer_accepted);
 
@@ -497,45 +496,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
     public void onResume() {
         super.onResume();
         invalidateOptionsMenu();
-        isViewingGUI = true;
         startService();
-        startStatusWatcher();
-    }
-
-
-    /**
-     * Starts to look for status changes, if status has changed, change in-app icon, this is
-     * only running while the app is open.
-     */
-    private void startStatusWatcher() {
-        final String iconType = prefs.getString(mContext.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "StatusWatcher starting polling");
-                int lastIcon = Icon.getIcon(Icon.Type.valueOf(iconType));
-                while(isViewingGUI) {
-                    final int thisIcon = Icon.getIcon(Icon.Type.valueOf(iconType));
-
-                    //Check for change, only start GUI thread IF we actually need to
-                    if(thisIcon != lastIcon) {
-                        lastIcon = thisIcon;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mActionBar.setIcon(thisIcon);
-                            }
-                        });
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d(TAG, "StatusWatcher stopped polling");
-            }
-        }).start();
     }
 
 
@@ -545,7 +506,6 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
     @Override
     public void onPause() {
         super.onPause();
-        isViewingGUI = false;
     }
 
     @Override
