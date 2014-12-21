@@ -15,6 +15,10 @@ public class Icon {
         WHITE,
     }
 
+    /*
+     * Returns a icon of the Type $t, what kind of icon is returned is decided
+     * from what the current status is.
+     */
     public static int getIcon(Type t) {
         switch(t) {
             case FLAT:
