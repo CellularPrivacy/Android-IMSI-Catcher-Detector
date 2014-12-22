@@ -566,6 +566,7 @@ public class Device {
     public void setSignalDbm(int signalDbm) {
         mCell.setDBM(signalDbm);
     }
+    public int getSignalDBm() { return mCell.getDBM();}
 
     /**
      * Update Network Type

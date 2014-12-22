@@ -1,6 +1,5 @@
 package com.SecUpwN.AIMSICD.activities;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
@@ -21,7 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class DebugLogs extends Activity {
+public class DebugLogs extends BaseActivity {
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
     private boolean isRadioLogs = false;
@@ -42,6 +41,14 @@ public class DebugLogs extends Activity {
         btnClear = (Button) findViewById(R.id.btnClear);
         btnStop = (Button) findViewById(R.id.btnStopLogs);
         btnCopy = (Button) findViewById(R.id.btnCopy);
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                logView.setFocusable(false);
+            }
+        });
 
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
