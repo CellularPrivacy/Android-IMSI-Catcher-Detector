@@ -395,7 +395,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                                     break;
                             }
 
-                            CellTowerOverlayItem ovm = new CellTowerOverlayItem("CellID - " + cellID,
+                            CellTowerOverlayItem ovm = new CellTowerOverlayItem("Cell ID: " + cellID,
                                     "",
                                     loc,
                                     new MarkerData("" + cellID, "" + loc.getLatitude(),"" +
@@ -454,7 +454,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 for (Cell cell : nc) {
                     try {
                         loc = new GeoPoint(cell.getLat(), cell.getLon());
-                        CellTowerOverlayItem ovm = new CellTowerOverlayItem("CellID - " + cell.getCID(),
+                        CellTowerOverlayItem ovm = new CellTowerOverlayItem("Cell ID: " + cell.getCID(),
                                 "",
                                 loc,
                                 new MarkerData("" + cell.getCID(), "" + loc.getLatitude(),"" +
@@ -463,7 +463,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_orange));
                         items.add(ovm);
                     } catch (Exception e) {
-                        Log.e("map", "Error plotting neightbouring cells", e);
+                        Log.e("map", "Error plotting neighbouring cells", e);
                     }
                 }
 
@@ -528,7 +528,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 // Add map marker for CellID
 
 
-                CellTowerOverlayItem ovm = new CellTowerOverlayItem("CellID - " + cellID,
+                CellTowerOverlayItem ovm = new CellTowerOverlayItem("Cell ID: " + cellID,
                         "",
                         location,
                         new MarkerData("" + cellID, "" + location.getLatitude(),"" +

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
           android:versionCode="25"
-          android:versionName="0.1.25-alpha-build-3">
+          android:versionName="0.1.25-alpha-b4">
 
    <!-- PERMISSIONS ARE SORTED BY TYPE - PLEASE KEEP THIS STRUCTURE. THANK YOU. /> -->
 
@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     
     <uses-permission android:name="android.permission.INTERNET"/>
     

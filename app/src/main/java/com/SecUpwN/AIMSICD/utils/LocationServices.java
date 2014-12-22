@@ -29,7 +29,7 @@ public class LocationServices {
 
         dataOutputStream.writeInt(0); // MNC?
         dataOutputStream.writeInt(0); // MCC?
-        dataOutputStream.writeInt(3); // Radio Access Type (3=GSM, 5=UMTS)
+        dataOutputStream.writeInt(3); // RAT  = Radio Access Type (3=GSM, 5=UMTS)
 
         dataOutputStream.writeShort(0); // length of provider name
 
@@ -38,8 +38,8 @@ public class LocationServices {
         dataOutputStream.writeInt(lac); // LAC
         dataOutputStream.writeInt(mnc); // MNC
         dataOutputStream.writeInt(mcc); // MCC
-        dataOutputStream.writeInt(-1); // always -1
-        dataOutputStream.writeInt(0); // rx level
+        dataOutputStream.writeInt(-1);  // always -1
+        dataOutputStream.writeInt(0);   // rx level
 
         dataOutputStream.flush();
     }

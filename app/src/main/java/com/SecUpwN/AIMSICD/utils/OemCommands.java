@@ -23,6 +23,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/*
+ * These are the OEM commands used by the MulticlientRil ServiceMode menu scraper,
+ * and possibly elsewhere. OEM commands (as the name suggests) are device dependent
+ * and these particular ones are for Samsung Galaxy S2, AFAIK.
+ * -- E:V:A
+ */
 public class OemCommands {
 
     private static final String TAG = "AIMSICD_OemCommands";
