@@ -89,7 +89,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     public CellTracker(Context context) {
         this.context = context;
-        //TelephonyManager provides system details
+        // TelephonyManager provides system details
         tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         prefs = context.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
@@ -749,7 +749,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     };
 
     /*
-     * The below code section was copied and modified from
+     * The below code section was copied and modified with permission from
      * Femtocatcher https://github.com/iSECPartners/femtocatcher
      *
      * Copyright (C) 2013 iSEC Partners

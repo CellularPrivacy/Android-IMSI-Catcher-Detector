@@ -112,7 +112,7 @@ public class Device {
                 break;
         }
 
-        //SIM Information
+        // SIM Information
         int simState = tm.getSimState();
         switch (simState) {
 
@@ -173,7 +173,7 @@ public class Device {
                 mSimCountry = "N/A";
             }
         } catch (Exception e) {
-            //SIM methods can cause Exceptions on some devices
+            // SIM methods can cause Exceptions on some devices
             mSimCountry = "N/A";
             Log.e(TAG, "getSimCountry " + e);
         }
@@ -205,7 +205,7 @@ public class Device {
                 mSimOperator = "N/A";
             }
         } catch (Exception e) {
-            //SIM methods can cause Exceptions on some devices
+            // SIM methods can cause Exceptions on some devices
             mSimOperator = "N/A";
             Log.e(TAG, "getSimOperator " + e);
         }
@@ -293,7 +293,7 @@ public class Device {
                 mSimSerial = "N/A";
             }
         } catch (Exception e) {
-            //SIM methods can cause Exceptions on some devices
+            // SIM methods can cause Exceptions on some devices
             mSimSerial = "N/A";
             Log.e(TAG, "getSimSerial " + e);
         }
@@ -619,6 +619,8 @@ public class Device {
 
         // If it's been more than two minutes since the current location, use the new location
         // because the user has likely moved
+        // E:V:A  2014-12-19  This may be a bad assumption, unless we also include
+        // movement detection (accelerometer)... Remove comment if ok.
         if (isSignificantlyNewer) {
             return true;
             // If the new location is more than two minutes older, it must be worse
