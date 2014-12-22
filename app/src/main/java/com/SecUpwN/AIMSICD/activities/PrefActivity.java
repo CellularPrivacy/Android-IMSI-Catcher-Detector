@@ -8,7 +8,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 
-public class PrefActivity extends Activity {
+public class PrefActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

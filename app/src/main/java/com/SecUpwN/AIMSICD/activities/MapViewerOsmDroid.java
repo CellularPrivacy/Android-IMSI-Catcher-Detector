@@ -68,7 +68,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPreferenceChangeListener {
+public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
     private final String TAG = "AIMSICD_MapViewer";
     public static final String updateOpenCellIDMarkers = "update_opencell_markers";
@@ -79,6 +79,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
     private SharedPreferences prefs;
     private AimsicdService mAimsicdService;
     private boolean mBound;
+    private boolean isViewingGUI;
 
     private GeoPoint loc = null;
     private final Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
@@ -124,6 +125,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
     public void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+        isViewingGUI = true;
 
         prefs = this.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
@@ -161,6 +163,7 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
     @Override
     protected void onPause() {
         super.onPause();
+        isViewingGUI = false;
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
@@ -328,8 +331,13 @@ public class MapViewerOsmDroid extends FragmentActivity implements OnSharedPrefe
                 LinkedList<CellTowerOverlayItem> items = new LinkedList<>();
 
                 mDbHelper.open();
-                Cursor c = mDbHelper.getCellData();
-                if (c.moveToFirst()) {
+                Cursor c = null;
+                try {
+                    c = mDbHelper.getCellData();
+                }catch(IllegalStateException ix) {
+                    Log.e(TAG, ix.getMessage(), ix);
+                }
+                if (c != null && c.moveToFirst()) {
                     do {
                         final int cellID = c.getInt(0);
                         final int lac = c.getInt(1);
