@@ -97,7 +97,7 @@
     <string name="app_version">Version:&#160;</string>
     <string name="aimsicd_about_info">Android IMSI-Catcher Detector (AIMSICD)</string>
     <string name="aimsicd_about_info3">Android-based project to detect and avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks.</string>
-    <string name="about_github">AIMSICD-Project on GitHub</string>
+    <string name="about_github">AIMSICD on GitHub</string>
     <string name="about_wiki">Full Documentation (WIKI)</string>
     <string name="about_donations">Anonymous Donations</string>
     <string name="about_poc">THIS IS A PoC</string>
@@ -174,7 +174,7 @@
     <string name="pref_enable_cell_monitoring_title">Cell Monitoring</string>
     <string name="pref_enable_cell_monitoring_summ">Enable Automatic Cell Monitoring</string>
     <string name="pref_request_ocid_key">Request API Key</string>
-    <string name="pref_ocid_requestkey_summary">Request a new API key for OpenCellId</string>
+    <string name="pref_ocid_requestkey_summary">Request a new API key for OpenCellID</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
@@ -183,7 +183,8 @@
     <string name="pref_map_type_summ">Display Map in different styles</string>
     
     <!-- MAP INFOWINDOW -->
-    <string name="cell_id_label">Cell ID: </string>
+    <string name="cell_id_label">CID: </string>
+    <string name="lac_label">LAC: </string>
     <string name="mcc_label">MCC: </string>
     <string name="mnc_label">MNC: </string>
     <string name="samples_label">Samples:</string>
@@ -195,9 +196,9 @@
     <string name="load_table_data">Load Data</string>
     <string name="table_names_prompt">Select Table</string>
     <string-array name="table_names">
-        <item>Cell Data</item>
-        <item>Location Data</item>
-        <item>OpenCellID Data</item>
+        <item>Unique BTS Data</item>
+        <item>BTS measurements</item>
+        <item>Imported OCID Data</item>
         <item>Default MCC Locations</item>
         <item>Silent SMS</item>
     </string-array>

@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 
-/**
+/*
  * Class to handle Ril and Samsung MultiRil implementation. Used by the Aimsicd Service.
  */
 public class RilExecutor {
@@ -32,6 +32,25 @@ public class RilExecutor {
     /*
      * Samsung MultiRil Implementation
      */
+
+    // E:V:A  2014-12-18
+    // This function as implemented here , only works on Samsung Galaxy S2 GT-I9100
+    // and possibly on the S3 GT-I9300 and the P7100. It currently depend on:
+    //  1. baseband is an Intel XMM modem
+    //  2. gsm.version.ril-impl = "Samsung RIL (IPC) v2.0"
+    // However, it should be possible to extend this to the latest devices
+    // and those also using Qualcomm basebands
+    //
+    // Q: How does it work?
+    // A: It uses the internal BP ServiceMode function on the BP and forwards the info
+    // to the AP ServiceMode wrapper App. that is known by various other names, such as:
+    //
+    // FactoryTest, FactoryTest_FB, serviceModeApp_FB, ServiceModeApp_RIL,
+    // SecFactoryPhoneTest, Factory_RIL, ServiceMode etc etc.
+    //
+    // The protocol to make these forwarded messages are through IPC messages via
+    // the RIL QMI interface on /dev/socket/rild | ril-debug ...or something like that.
+
     private static final int ID_REQUEST_START_SERVICE_MODE_COMMAND = 1;
     private static final int ID_REQUEST_FINISH_SERVICE_MODE_COMMAND = 2;
     private static final int ID_REQUEST_PRESS_A_KEY = 3;
@@ -59,7 +78,7 @@ public class RilExecutor {
         } else {
             mRequestExecutor.start();
             mMultiRilCompatible = true;
-            //Sumsung MultiRil Initialization
+            // Samsung MultiRil Initialization
             mHandlerThread = new HandlerThread("ServiceModeSeqHandler");
             mHandlerThread.start();
 
@@ -167,9 +186,7 @@ public class RilExecutor {
     private static class KeyStep {
 
         public final char keychar;
-
         public final boolean captureResponse;
-
         public KeyStep(char keychar, boolean captureResponse) {
             this.keychar = keychar;
             this.captureResponse = captureResponse;
@@ -181,9 +198,7 @@ public class RilExecutor {
     private class MyHandler implements Handler.Callback {
 
         private int mCurrentType;
-
         private int mCurrentSubtype;
-
         private Queue<KeyStep> mKeySequence;
 
         @Override

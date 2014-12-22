@@ -11,7 +11,7 @@ import android.util.Log;
  * Class to handle monitoring the Accelerometer to enable/disable GPS for battery saving
  */
 public class AccelerometerMonitor {
-    // how long with no movement detected, before we assume we are not moving
+    // How long with no movement detected, before we assume we are not moving
     public static final long MOVEMENT_THRESHOLD_MS = 20*1000;
     private final float ACCELEROMETER_NOISE = 2.0f; // amount of sensor noise to ignore
 
@@ -32,6 +32,9 @@ public class AccelerometerMonitor {
      * Set up the accelerometer so that when movement is detected, the GPS is enabled.
      * GPS is normally disabled to save battery power.
      */
+    // TODO:
+    // E:V:A  We might need to loop this once and wait a few seconds, to prevent
+    //        GPS from starting by accidental vibrations.
     private void setupAccelerometer(Context context) {
         // set up accelerometer sensor
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
