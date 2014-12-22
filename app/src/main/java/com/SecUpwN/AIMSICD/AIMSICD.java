@@ -44,6 +44,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.SecUpwN.AIMSICD.activities.BaseActivity;
 import com.SecUpwN.AIMSICD.activities.DebugLogs;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
@@ -62,16 +63,14 @@ import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AIMSICD extends FragmentActivity implements AsyncResponse {
+public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     private final String TAG = "AIMSICD";
 
@@ -145,8 +144,7 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        prefs = mContext.getSharedPreferences(
-                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        prefs = mContext.getSharedPreferences( AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
 
         mDisclaimerAccepted = getResources().getString(R.string.disclaimer_accepted);
 
@@ -186,7 +184,8 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
+        final String iconType = prefs.getString(mContext.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType)));
         mDrawerToggle.syncState();
     }
 
@@ -490,11 +489,23 @@ public class AIMSICD extends FragmentActivity implements AsyncResponse {
         }
     }
 
+    /**
+     * Triggered when GUI is opened
+     */
     @Override
     public void onResume() {
         super.onResume();
         invalidateOptionsMenu();
         startService();
+    }
+
+
+    /**
+     * Triggered when GUI is closed/put to background
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     @Override
