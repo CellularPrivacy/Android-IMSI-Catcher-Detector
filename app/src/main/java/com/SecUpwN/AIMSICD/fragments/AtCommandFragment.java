@@ -144,6 +144,7 @@ public class AtCommandFragment extends Fragment {
             } catch (Exception e) {
                 Log.e("AIMSICD", "Closing shell: " + e);
             }
+            Log.i("AIMSICD", "AT Shell Closed");
         }
     }
 
@@ -246,7 +247,9 @@ public class AtCommandFragment extends Fragment {
             //           To get unaliased versions, use: "\\<command>"
             //==================================================================
 
-            //Check for ATCI devices and add found location to the serial device list
+            // MTK: Check for ATCI devices and add found location to the serial device list
+            // XMM: Unknown
+            // QC: /dev/smd[0-7]
             CommandCapture cmd = new CommandCapture(0, "\\ls /dev/radio | grep atci*") {
 
                 @Override
@@ -324,6 +327,8 @@ public class AtCommandFragment extends Fragment {
     private void executeAT() {
         if (mAtCommand.getText() != null) {
             try {
+                // E:V:A  It seem that MTK devices doesn't need "\r" but QC devices do.
+                // We need a device-type check here, perhaps: gsm.version.ril-impl.
                 CommandCapture cmd = new CommandCapture(EXECUTE_AT,
                         "echo -e " + mAtCommand.getText().toString() +"\r >" + mSerialDevice + "\n") {
 
@@ -336,11 +341,11 @@ public class AtCommandFragment extends Fragment {
                         }
                     }
                 };
-                //Log.i("AIMSICD", "executeAT: " + cmd);
+                Log.i("AIMSICD", "Trying to executeAT: " + cmd);
                 shell.add(cmd);
                 commandWait(shell, cmd);
             } catch (Exception e) {
-                Log.e("AIMSICD", "executeAT: " + e);
+                Log.e("AIMSICD", "Failed to executeAT: " + e);
             }
         }
 
@@ -363,10 +368,11 @@ public class AtCommandFragment extends Fragment {
 
                 };
 
+                Log.i("AIMSICD", "Trying to executeCommand: " + cmd);
                 shell.add(cmd);
                 commandWait(shell, cmd);
             } catch (Exception e) {
-                Log.e("AIMSICD", "executeCommand - " + e);
+                Log.e("AIMSICD", "Failed to executeCommand: " + e);
             }
         }
     }

@@ -36,6 +36,52 @@
     </TableRow>
 
     <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/lac_label" android:text="@string/lac_label"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/lac" android:text="@string/empty"
+            android:textSize="15sp"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="start"/>
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/mcc_label" android:text="@string/mcc_label"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/mcc" android:text="@string/empty"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="start"/>
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/mnc_label" android:text="@string/mnc_label"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/mnc" android:text="@string/empty"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="start"/>
+    </TableRow>
+
+    <TableRow
             android:tag="device">
 
         <TextView
@@ -61,36 +107,6 @@
 
         <TextView
                 android:id="@+id/lng" android:text="@string/empty"
-                android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="start"/>
-    </TableRow>
-
-    <TableRow
-            android:tag="device">
-
-        <TextView
-                android:id="@+id/mcc_label" android:text="@string/mcc_label"
-                android:textColor="@color/white"
-                android:padding="2dip" android:gravity="end"
-                android:layout_gravity="end"/>
-
-        <TextView
-                android:id="@+id/mcc" android:text="@string/empty"
-                android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="start"/>
-    </TableRow>
-
-    <TableRow
-            android:tag="device">
-
-        <TextView
-                android:id="@+id/mnc_label" android:text="@string/mnc_label"
-                android:textColor="@color/white"
-                android:padding="2dip" android:gravity="end"
-                android:layout_gravity="end"/>
-
-        <TextView
-                android:id="@+id/mnc" android:text="@string/empty"
                 android:textColor="@color/medium_blue"
                 android:padding="2dip" android:gravity="start"/>
     </TableRow>
