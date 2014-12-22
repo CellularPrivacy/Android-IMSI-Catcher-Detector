@@ -20,6 +20,7 @@ public class SignalStrengthMonitor {
     private static int sleepTimeBetweenSignalRegistration = 2; //seconds
     private static int sleepTimeBetweenCalculations = 30; //seconds
     private static int minimumNumberOfSamplesNeeded = 10;
+    private static int minimumIdleTime              = 10; //seconds
 
     private HashMap<Integer, Long> lastRegistration = new HashMap<>();
     private HashMap<Integer, ArrayList<Integer>> toCalculate = new HashMap<>();
@@ -57,7 +58,6 @@ public class SignalStrengthMonitor {
     private boolean deviceIsMoving() {
         return false;
     }
-
 
     /**
      * Uses previously saved calculations and signal measurements to guesstimate if a given signal
