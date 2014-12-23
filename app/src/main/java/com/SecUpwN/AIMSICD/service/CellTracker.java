@@ -89,7 +89,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     public CellTracker(Context context) {
         this.context = context;
-
         // TelephonyManager provides system details
         tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         prefs = context.getSharedPreferences(
@@ -97,7 +96,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         prefs.registerOnSharedPreferenceChangeListener(this);
         loadPreferences();
         setNotification();
-
 
         PHONE_TYPE = tm.getPhoneType();
 
