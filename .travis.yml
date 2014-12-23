@@ -21,8 +21,6 @@ env:
 before_install:
 # Making sure gradlew has executable permissions
     - chmod +x gradlew
-# Updating index before installing packages
-    - apt-get update -qq
 
 android:
   components:
