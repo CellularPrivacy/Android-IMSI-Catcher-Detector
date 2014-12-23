@@ -231,7 +231,7 @@ Our gratitude flies out to our great Sponsors:
 |[E:V:A](mailto:a3841c3c@opayq.com)                                  |       Project Initiator      |
 |[xLaMbChOpSx](http://forum.xda-developers.com/member.php?u=4661001) |          Code-Monkey         |
 |[tobykurien](http://tobykurien.com/)                                |          Code-Monkey         |    
-|[He3556](http://forum.xda-developers.com/member.php?u=4600707)      |    Vulnerability Analyzer    |
+|[He3556](mailto:info@dm-development.de)                             |    Vulnerability Analyzer    |
 |[Sgt-Obst](http://forum.xda-developers.com/member.php?u=5102584)    |      Graphical Designer      |
 |[andr3jx](mailto:9414f52d@opayq.com)                                | Chief Cook and Bottle Washer |
 |[SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)     |         Public Speaker       |
