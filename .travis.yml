@@ -7,6 +7,8 @@
 language: android
 env:
   global:
+# Using the new Container-Based Infrastructure
+    - sudo: false 
 # Initiating clean Gradle output
     - TERM=dumb
 # Giving even more memory to Gradle JVM
@@ -20,7 +22,7 @@ before_install:
 # Making sure gradlew has executable permissions
     - chmod +x gradlew
 # Updating index before installing packages
-    - sudo apt-get update -qq
+    - apt-get update -qq
 
 android:
   components:
@@ -39,8 +41,8 @@ android:
      
 # Emulator Management: Create, Start and Wait
 before_script:
-     - sudo service mysql stop
-     - sudo service postgresql stop
+     - service mysql stop
+     - service postgresql stop
      # Inspecting running services
      - ps auxww
      - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
