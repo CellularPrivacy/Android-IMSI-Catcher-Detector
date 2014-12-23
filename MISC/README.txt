@@ -1,1 +1,1 @@
-This folder contains miscellaneous items, like PC screenshots of Java, Android Studio, Installation Instructions and other items not directly releted to the APP itself but needed in documentation and explanation.
+This folder contains miscellaneous items, like PC screenshots of Java, Android Studio, Installation Instructions and other items not directly related to the APP itself but ncessary in documentation and explanation. Please make sure if your files really belong here.
