@@ -13,8 +13,8 @@ env:
     - cache: false
 # Initiating clean Gradle output
     - TERM=dumb
-# Giving even more memory to Gradle JVM
-    - GRADLE_OPTS="-Xmx2048m -XX:MaxPermSize=1024m"
+# Amount of memory granted to Gradle JVM
+    - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
 # Encrypted COVERITY_SCAN_TOKEN
     - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
   matrix:
