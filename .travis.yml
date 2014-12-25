@@ -18,7 +18,7 @@ env:
 # Encrypted COVERITY_SCAN_TOKEN
     - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
   matrix:
-    - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
 
 before_install:
 # Making sure gradlew has executable permissions
@@ -34,7 +34,7 @@ android:
      - build-tools-21.1.1
      
 # System Image we use to run emulator(s) during tests
-     - sys-img-armeabi-v7a-android-19
+     - sys-img-armeabi-v7a-android-17
     
   licenses:
      - 'android-sdk-license-.+'
