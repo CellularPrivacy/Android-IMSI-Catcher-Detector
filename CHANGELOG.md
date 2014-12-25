@@ -1,6 +1,34 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 19.12.2014 - WIP-Internal v0.1.25-alpha-build-4
+
+* Improved: Consistent icon usage based on current security status
+* Improved: Icon and status-checking moved to dedicated static classes
+* Improved: OpenCellId dialog now closes automatically on success
+* Improved: MapViewer now defaults to MCC location on startup
+* Removed: Debug Log has been purged to make logfiles smaller
+* Removed: Some redudant icon update code has been purged
+* Changed: Limited log output to 1000 lines to avoid hanging
+* Changed: Numerous code comments and changes on DB Viewer tables
+* Changed: Base activity class for icon updates moved to Broadcasts
+* Changed: `MapViewerOsmDroid.java` now uses same BaseActivity
+* Changed: Switched to new Container-Based Infrastructure in Travis CI
+* Changed: Many small changes and improvements made to `.travis.yml`
+* Added:`CHANGE_NETWORK_STATE` to change RAT and some other things
+* Added: Example on code comments added to `CONTRIBUTING.md`
+* Added: Espionage on Norwegian Politicians added to `README`
+* Added: Cellular Exploitation talk added to `PAPERS/GSM_Security`
+* Added: New directory `MISC` for miscellaneous unrelated items
+* Added: Comment about origin added to `CellInfoFragment.java`
+* Added: Getter function for DBM for future use added to `Device.java`
+* Fixed: Missing store banners within our `README` have been re-added
+* Fixed: Debugging view has been fixed to not jump up and down
+* Fixed: Text labels in Map View and DB Viewer now display correctly
+* Fixed: Randomly occuring app crash on map page has been erased
+
+---
+
 #### 09.12.2014 - WIP-Internal v0.1.25-alpha-build-3
 
 * Improved: OpenCellId error messages now displays for longer period of time
