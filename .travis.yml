@@ -1,24 +1,30 @@
 # Test changes of this .travis.yml config before submitting them:
 # http://lint.travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector
+# ---------------------------------------------------------------
+# Encrypt Travis CI settings using this tool by Konstantin Haase:
+# https://rkh.github.io/travis-encrypt/public/index.html
+# ---------------------------------------------------------------
 
 # Travis CI Settings
 #-------------------
 
 language: android
+# Turning off caching to avoid caching Issues
+cache: false
+# Using the new Container-Based Infrastructure
+sudo: false
 env:
   global:
-# Using the new Container-Based Infrastructure
-    - sudo: false
-# Turning off caching to avoid caching Issues
-    - cache: false
 # Initiating clean Gradle output
     - TERM=dumb
 # Amount of memory granted to Gradle JVM
     - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
-# Encrypted COVERITY_SCAN_TOKEN
-    - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
   matrix:
     - ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
+# Encrypted Coverity Scan Token
+    - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
+# Encrypted internal chat Token
+    - secure: "iK3JS6SwzkRZs+STzvK18vFrEtiEwPMZs3EM8Mj452CBqD6bL+Tw1cHuFZEHubYWi2FxgelPkXAJZZZlUPaZEJj2OGMuwadp1+0V+z55vbhNngej5W3garwPglC+IrhDD2mGy0UHNaG/XsQ4Sk/z4Urc4d+WPpQJRabnMW3TvxQ="
 
 before_install:
 # Making sure gradlew has executable permissions
@@ -29,10 +35,8 @@ android:
 # We are using the latest revision of Android SDK Tools
      - platform-tools
      - tools
-     
 # The BuildTools version we are using for our project
      - build-tools-21.1.1
-     
 # System Image we use to run emulator(s) during tests
      - sys-img-armeabi-v7a-android-17
     
