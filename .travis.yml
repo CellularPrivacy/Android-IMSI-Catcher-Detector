@@ -20,7 +20,12 @@ env:
 # Amount of memory granted to Gradle JVM
     - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
   matrix:
-    - ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-17
+    - ANDROID_ABI=armeabi-v7a
+
+# Encrypted Tokens
+#-----------------
+
 # Encrypted Coverity Scan Token
     - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
 # Encrypted internal chat Token
