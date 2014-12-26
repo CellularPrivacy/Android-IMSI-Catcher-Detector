@@ -19,7 +19,7 @@ env:
     - TERM=dumb
 # Amount of memory granted to Gradle JVM
     - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
-  matrix:
+# General Android settings used in builds
     - ANDROID_TARGET=android-17
     - ANDROID_ABI=armeabi-v7a
 
