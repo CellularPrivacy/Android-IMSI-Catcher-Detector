@@ -17,18 +17,23 @@ import java.util.HashMap;
  *
  * @author Tor Henning Ueland
  */
-public class SignalStrengthTracker implements SensorEventListener {
+public class SignalStrengthTracker {
 
     public static final String TAG = "SignalStrengthMonitor";
-    private static int sleepTimeBetweenSignalRegistration = 2; //seconds
-    private static int sleepTimeBetweenCalculations = 30; //seconds
+    private static int sleepTimeBetweenSignalRegistration = 10; //seconds
+    private static int sleepTimeBetweenCalculations = 60; //seconds
     private static int minimumNumberOfSamplesNeeded = 10;
-    private static int minimumIdleTime              = 10; //seconds
+    private static int minimumIdleTime              = 60; //seconds
 
     private HashMap<Integer, Long> lastRegistration = new HashMap<>();
     private HashMap<Integer, ArrayList<Integer>> toCalculate = new HashMap<>();
     private long lastCalculationTime = 0;
     private long lastMovementDetected = 0l;
+
+    public SignalStrengthTracker() {
+        lastMovementDetected = System.currentTimeMillis();
+        lastCalculationTime = System.currentTimeMillis();
+    }
 
     /**
      * Registers a new cell signal strength for future calculation,
@@ -39,28 +44,35 @@ public class SignalStrengthTracker implements SensorEventListener {
      */
     public void registerSignalStrength(int cellID, int signalStrength) {
 
+        long now = System.currentTimeMillis();
+
         if(deviceIsMoving()) {
-            Log.i(TAG, "Ignored signal strength sample for cell ID #"+cellID+" as the device is currently moving around.");
+            Log.i(TAG, "Ignored signal strength sample for cell ID #"+cellID+" as the device is currently moving around, will not accept anything for another "+((minimumIdleTime*1000) - (now - lastMovementDetected))+"ms");
+            return;
         }
 
-        long now = System.currentTimeMillis();
         if(!lastRegistration.containsKey(cellID) || now-(sleepTimeBetweenSignalRegistration*1000) > lastRegistration.get(cellID)) {
-            long diff = now - lastRegistration.get(cellID);
+            long diff = -1;
+            if(lastRegistration.get(cellID) != null) {
+                diff = now - lastRegistration.get(cellID);
+            }
             lastRegistration.put(cellID, now);
             if(toCalculate.get(cellID) == null) {
                 toCalculate.put(cellID, new ArrayList<Integer>(1));
             }
-            Log.i(TAG, "Scheduling signal strength calculation from cell #" + cellID + "@" + signalStrength + "DB, last registration was "+diff+"ms ago");
+            Log.i(TAG, "Scheduling signal strength calculation from cell #" + cellID + " @ " + signalStrength + "DB, last registration was "+diff+"ms ago");
             toCalculate.get(cellID).add(signalStrength);
+            lastRegistration.put(cellID, now);
         }
 
         if(now-(sleepTimeBetweenCalculations*1000) > lastCalculationTime) {
             Log.i(TAG, "Calculating cell signal averages, last calculation was "+(now-lastCalculationTime)+"ms ago");
+            lastCalculationTime = now;
         }
     }
 
     private boolean deviceIsMoving() {
-        return System.currentTimeMillis() - lastMovementDetected > minimumIdleTime*1000;
+        return System.currentTimeMillis() - lastMovementDetected < minimumIdleTime*1000;
     }
 
     /**
@@ -79,15 +91,8 @@ public class SignalStrengthTracker implements SensorEventListener {
         return false;
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        if(sensorEvent.sensor.equals(Sensor.TYPE_ACCELEROMETER)) {
-            lastMovementDetected = System.currentTimeMillis();
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
+    public void onSensorChanged() {
+        //Log.d(TAG, "We are moving...");
+        lastMovementDetected = System.currentTimeMillis();
     }
 }
