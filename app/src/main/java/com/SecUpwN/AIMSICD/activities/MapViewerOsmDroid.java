@@ -633,6 +633,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
                     tv = (TextView) v.findViewById(R.id.cell_id);
                     tv.setText(data.cellID);
+                    tv = (TextView) v.findViewById(R.id.lac);
+                    tv.setText(data.lac);
                     tv = (TextView) v.findViewById(R.id.lat);
                     tv.setText(String.valueOf(data.lat));
                     tv = (TextView) v.findViewById(R.id.lng);
