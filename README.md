@@ -193,9 +193,7 @@ Please follow [how to correctly submit Issues](https://github.com/SecUpwN/Androi
 
 ### Support
 
-Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a (fully anonymous) donation.
-
-:exclamation: We are currently resonsidering donations in [Issue 74](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/74). Join the discussion!
+Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a (fully anonymous) donation. We are currently resonsidering donations in [Issue 74](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/74). Join the discussion!
 
 All collected donations shall be split into appropriate pieces and directly sent to developers who contribute useful code. The amount of donation each developer receives will vary with the value of each merged commit. To be perfectly clear: We will **NOT** reward junk, only awesome stuff. Additionally, donations will be used to support these organizations (contact us if you want to join our movement):
 
@@ -232,6 +230,7 @@ Our gratitude flies out to our great Sponsors:
 |:------------------------------------------------------------------:|:----------------------------:|
 |[E:V:A](mailto:a3841c3c@opayq.com)                                  |       Project Initiator      |
 |[xLaMbChOpSx](http://forum.xda-developers.com/member.php?u=4661001) |          Code-Monkey         |
+|[Ueland](http://h3x.no/)                                            |      Bug Smashing Hammer     |
 |[tobykurien](http://tobykurien.com/)                                |          Code-Monkey         |    
 |[He3556](mailto:info@dm-development.de)                             |    Vulnerability Analyzer    |
 |[Sgt-Obst](http://forum.xda-developers.com/member.php?u=5102584)    |      Graphical Designer      |
