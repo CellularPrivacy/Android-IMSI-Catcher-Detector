@@ -31,7 +31,7 @@ env:
 # Encrypted internal chat Token
 notifications:
   hipchat:
-    - secure: "TJ89RpmoyCcBewxS8uzhqU9dupJ0HBpCn8wZw4lUs+v5G3OLa8bu19SDeNcCW1rlmt4SGzogz1kmrYD9Ekjde4kiwZXr959n9dfZd5zqxWgl/nZFmo9oRj/03Rdthuda9diozXM72lj44/KEAYZ/FE5YYIrPJyREDOkp4FCzDJM="
+    - secure: "I2XmQkFCyKZHW2NeClYyl3FND80YkqLtYo+Rn3ftS4xjEg6VfGgDv6AlvQ+b+oZg7RZI6nKia9OLZxAxVBOHw6UcJJnurJx4hfAIBZAihIiNpZPj1c9wGgv4D+M6zi3rgbJRZ2Tz6IKJvHC+CD3LApeJR9kH15lDWbD7YZ0UI7E="
 
 before_install:
 # Making sure gradlew has executable permissions
