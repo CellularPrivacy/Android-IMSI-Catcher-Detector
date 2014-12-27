@@ -1,5 +1,8 @@
-package com.SecUpwN.AIMSICD.utils;
+package com.SecUpwN.AIMSICD.service;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.HashMap;
  *
  * @author Tor Henning Ueland
  */
-public class SignalStrengthMonitor {
+public class SignalStrengthTracker implements SensorEventListener {
 
     public static final String TAG = "SignalStrengthMonitor";
     private static int sleepTimeBetweenSignalRegistration = 2; //seconds
@@ -25,6 +28,7 @@ public class SignalStrengthMonitor {
     private HashMap<Integer, Long> lastRegistration = new HashMap<>();
     private HashMap<Integer, ArrayList<Integer>> toCalculate = new HashMap<>();
     private long lastCalculationTime = 0;
+    private long lastMovementDetected = 0l;
 
     /**
      * Registers a new cell signal strength for future calculation,
@@ -56,7 +60,7 @@ public class SignalStrengthMonitor {
     }
 
     private boolean deviceIsMoving() {
-        return false;
+        return System.currentTimeMillis() - lastMovementDetected > minimumIdleTime*1000;
     }
 
     /**
@@ -73,5 +77,17 @@ public class SignalStrengthMonitor {
             Log.i(TAG, "Cannot check if the signal strength for cell ID #"+cellID+" as the device is currently moving around.");
         }
         return false;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if(sensorEvent.sensor.equals(Sensor.TYPE_ACCELEROMETER)) {
+            lastMovementDetected = System.currentTimeMillis();
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 }
