@@ -116,7 +116,7 @@ public class AimsicdService extends Service {
 
     public void onCreate() {
 
-        signalStrengthTracker = new SignalStrengthTracker();
+        signalStrengthTracker = new SignalStrengthTracker(getBaseContext());
 
         mAccelerometerMonitor = new AccelerometerMonitor(this, new Runnable() {
             @Override

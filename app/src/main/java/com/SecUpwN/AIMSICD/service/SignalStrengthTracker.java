@@ -1,9 +1,12 @@
 package com.SecUpwN.AIMSICD.service;
 
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.util.Log;
+
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,18 +24,23 @@ public class SignalStrengthTracker {
 
     public static final String TAG = "SignalStrengthMonitor";
     private static int sleepTimeBetweenSignalRegistration = 10; //seconds
-    private static int sleepTimeBetweenCalculations = 60; //seconds
+    private static int sleepTimeBetweenPersistation = 60; //seconds
     private static int minimumNumberOfSamplesNeeded = 10;
     private static int minimumIdleTime              = 60; //seconds
+    private static int maximumNumberOfDaysSaved     = 90; //days
+    private static int mysteriousSignalDifference   = 10; //DB
 
     private HashMap<Integer, Long> lastRegistration = new HashMap<>();
     private HashMap<Integer, ArrayList<Integer>> toCalculate = new HashMap<>();
-    private long lastCalculationTime = 0;
+    private HashMap<Integer, Integer> averageSignalCache = new HashMap<>();
+    private long lastPersistTime = 0;
     private long lastMovementDetected = 0l;
+    private AIMSICDDbAdapter mDbHelper;
 
-    public SignalStrengthTracker() {
+    public SignalStrengthTracker(Context context) {
         lastMovementDetected = System.currentTimeMillis();
-        lastCalculationTime = System.currentTimeMillis();
+        lastPersistTime = System.currentTimeMillis();
+        mDbHelper = new AIMSICDDbAdapter(context);
     }
 
     /**
@@ -65,10 +73,27 @@ public class SignalStrengthTracker {
             lastRegistration.put(cellID, now);
         }
 
-        if(now-(sleepTimeBetweenCalculations*1000) > lastCalculationTime) {
-            Log.i(TAG, "Calculating cell signal averages, last calculation was "+(now-lastCalculationTime)+"ms ago");
-            lastCalculationTime = now;
+        if(now-(sleepTimeBetweenPersistation*1000) > lastPersistTime) {
+            Log.i(TAG, "Saving cell signal data, last save was "+(now-lastPersistTime)+"ms ago");
+            cleanupOldData();
+            persistData();
+            lastPersistTime = now;
         }
+    }
+
+    private void persistData() {
+        for(int cellID : toCalculate.keySet()) {
+            for(int signal : toCalculate.get(cellID)) {
+                mDbHelper.addSignalStrength(cellID, signal, lastRegistration.get(cellID));
+            }
+        }
+        toCalculate.clear();
+    }
+
+    private void cleanupOldData() {
+        long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved*86400))*1000);
+        mDbHelper.cleanseCellStrengthTables(maxTime);
+        averageSignalCache.clear();
     }
 
     private boolean deviceIsMoving() {
@@ -87,8 +112,21 @@ public class SignalStrengthTracker {
         //If moving, return false
         if(deviceIsMoving()) {
             Log.i(TAG, "Cannot check if the signal strength for cell ID #"+cellID+" as the device is currently moving around.");
+            return false;
         }
-        return false;
+
+        //Do we have enough samples?
+        int samplesForCell = mDbHelper.countSignalMeasurements(cellID);
+        if(samplesForCell < minimumNumberOfSamplesNeeded) {
+            return false;
+        }
+
+        int storedAvg = mDbHelper.getAverageSignalStrength(cellID);
+        if(storedAvg > signalStrength) {
+            return storedAvg - signalStrength > mysteriousSignalDifference;
+        } else {
+            return signalStrength-  storedAvg > mysteriousSignalDifference;
+        }
     }
 
     public void onSensorChanged() {
