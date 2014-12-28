@@ -685,7 +685,7 @@ public class AIMSICDDbAdapter {
             /*
              * Cell Signal Measurements
              */
-            database.execSQL("create table " + CELL_SIGNAL_TABLE + " (" + COLUMN_ID + " integer primary key autoincrement, cellID INTEGER, signal INTEGER timestamp INTEGER);");
+            database.execSQL("create table " + CELL_SIGNAL_TABLE + " (" + COLUMN_ID + " integer primary key autoincrement, cellID INTEGER, signal INTEGER, timestamp INTEGER);");
             database.execSQL("create index cellID_index ON "+CELL_SIGNAL_TABLE+" (cellID);");
             database.execSQL("create index cellID_timestamp ON "+CELL_SIGNAL_TABLE+" (timestamp);");
 

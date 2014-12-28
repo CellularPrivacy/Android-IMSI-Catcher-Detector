@@ -23,11 +23,10 @@ import java.util.HashMap;
 public class SignalStrengthTracker {
 
     public static final String TAG = "SignalStrengthMonitor";
-    private static int sleepTimeBetweenSignalRegistration = 10; //seconds
-    private static int sleepTimeBetweenPersistation = 60; //seconds
-    private static int minimumNumberOfSamplesNeeded = 10;
-    private static int minimumIdleTime              = 60; //seconds
-    private static int maximumNumberOfDaysSaved     = 90; //days
+    private static int sleepTimeBetweenSignalRegistration = 30; //seconds
+    private static int sleepTimeBetweenPersistation = 900; //seconds
+    private static int minimumIdleTime              = 30; //seconds
+    private static int maximumNumberOfDaysSaved     = 60; //days
     private static int mysteriousSignalDifference   = 10; //DB
 
     private HashMap<Integer, Long> lastRegistration = new HashMap<>();
@@ -82,17 +81,21 @@ public class SignalStrengthTracker {
     }
 
     private void persistData() {
+        mDbHelper.open();
         for(int cellID : toCalculate.keySet()) {
             for(int signal : toCalculate.get(cellID)) {
                 mDbHelper.addSignalStrength(cellID, signal, lastRegistration.get(cellID));
             }
         }
+        mDbHelper.close();
         toCalculate.clear();
     }
 
     private void cleanupOldData() {
         long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved*86400))*1000);
+        mDbHelper.open();
         mDbHelper.cleanseCellStrengthTables(maxTime);
+        mDbHelper.close();
         averageSignalCache.clear();
     }
 
@@ -115,18 +118,29 @@ public class SignalStrengthTracker {
             return false;
         }
 
-        //Do we have enough samples?
-        int samplesForCell = mDbHelper.countSignalMeasurements(cellID);
-        if(samplesForCell < minimumNumberOfSamplesNeeded) {
-            return false;
+        int storedAvg;
+
+        //Cached?
+        if(averageSignalCache.get(cellID) != null) {
+            storedAvg = averageSignalCache.get(cellID);
+            Log.d(TAG, "Cached average for cell ID #"+cellID+" is "+storedAvg);
+        } else {
+            //Not cached, check DB
+            mDbHelper.open();
+            storedAvg = mDbHelper.getAverageSignalStrength(cellID);
+            averageSignalCache.put(cellID, storedAvg);
+            Log.d(TAG, "Cached average in DB for cell ID #"+cellID+" is "+storedAvg);
+            mDbHelper.close();
         }
 
-        int storedAvg = mDbHelper.getAverageSignalStrength(cellID);
+        boolean result;
         if(storedAvg > signalStrength) {
-            return storedAvg - signalStrength > mysteriousSignalDifference;
+            result = storedAvg - signalStrength > mysteriousSignalDifference;
         } else {
-            return signalStrength-  storedAvg > mysteriousSignalDifference;
+            result = signalStrength-  storedAvg > mysteriousSignalDifference;
         }
+        Log.d(TAG, "Signal strength mystery check for cell ID #"+cellID+" is "+result+", avg:"+storedAvg+", this signal: "+signalStrength);
+        return result;
     }
 
     public void onSensorChanged() {
