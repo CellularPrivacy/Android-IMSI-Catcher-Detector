@@ -489,6 +489,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             //Send it to signal tracker
             signalStrengthTracker.registerSignalStrength(mDevice.mCell.getCID(), mDevice.getSignalDBm());
+            //signalStrengthTracker.isMysterious(mDevice.mCell.getCID(), mDevice.getSignalDBm());
         }
 
         public void onDataActivity(int direction) {
