@@ -80,6 +80,9 @@ public class SignalStrengthTracker {
         }
     }
 
+    /*
+        Move data from temp cache into DB
+     */
     private void persistData() {
         mDbHelper.open();
         for(int cellID : toCalculate.keySet()) {
@@ -91,6 +94,9 @@ public class SignalStrengthTracker {
         toCalculate.clear();
     }
 
+    /*
+        Remove data from DB older than N days (days * number of seconds in a day)*seconds to milliseconds
+     */
     private void cleanupOldData() {
         long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved*86400))*1000);
         mDbHelper.open();
@@ -105,8 +111,7 @@ public class SignalStrengthTracker {
 
     /**
      * Uses previously saved calculations and signal measurements to guesstimate if a given signal
-     * strength for a given cell ID looks mysterious or not. This requires enough samples for the
-     * given cel ID to give any sane result and will return false if not.
+     * strength for a given cell ID looks mysterious or not.
      * @param cellID
      * @param signalStrength
      */
