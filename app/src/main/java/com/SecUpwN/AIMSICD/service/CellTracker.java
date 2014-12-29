@@ -59,6 +59,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private final int NOTIFICATION_ID = 1;
 
     private static TelephonyManager tm;
+    private final SignalStrengthTracker signalStrengthTracker;
     private PhoneStateListener mPhoneStateListener;
     private SharedPreferences prefs;
 
@@ -87,8 +88,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private Context context;
     private final Handler timerHandler = new Handler();
 
-    public CellTracker(Context context) {
+    public CellTracker(Context context, SignalStrengthTracker sst) {
         this.context = context;
+        this.signalStrengthTracker = sst;
         // TelephonyManager provides system details
         tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         prefs = context.getSharedPreferences(
@@ -486,6 +488,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             }
 
             //Send it to signal tracker
+            signalStrengthTracker.registerSignalStrength(mDevice.mCell.getCID(), mDevice.getSignalDBm());
+            //signalStrengthTracker.isMysterious(mDevice.mCell.getCID(), mDevice.getSignalDBm());
         }
 
         public void onDataActivity(int direction) {
