@@ -1,6 +1,18 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 29.12.2014 - WIP-Internal v0.1.25-alpha-build-5
+
+* Improved: LAC is now shown in the InfoWindow on the MapViewer
+* Changed: We do **NOT** support DarkCoin donation at the moment. Discuss [#74](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/74)!
+* Added: New `SignalStrengthTracker` to detect abnormal and suspicious behavior
+* Added: Notifications about Travis CI builds and GitHub in our internal chats
+* Added: More [similiar projects](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Similar-Projects) arised. We are thankful, but we won't give up!
+* Fixed: Looping builds and error messages from Travis CI should be gone now
+* Fixed: Several small errors arising with new code have been purged ahead of time
+
+---
+
 #### 19.12.2014 - WIP-Internal v0.1.25-alpha-build-4
 
 * Improved: Consistent icon usage based on current security status
