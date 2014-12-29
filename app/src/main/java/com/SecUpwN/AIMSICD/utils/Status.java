@@ -10,12 +10,20 @@ import android.support.v4.content.LocalBroadcastManager;
  * @author Tor Henning Ueland
  */
 public class Status {
+    // E:V:A 2014-12-29
+    // The current available status types are located here:
+    // https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
+    // They're (or should be) based on the detection scores here:
+    // ...TBA...
     public static Type currentStatus;
     public enum Type {
-        ALARM,
-        MEDIUM,
-        NORMAL,
-        IDLE,
+        ALARM, // Which is this?
+        // RUN, // BLACK
+        // DANGEROUS, // RED
+        // HIGH, // ORANGE
+        MEDIUM, // YELLOW
+        NORMAL, // GREEN
+        IDLE, // GREY
     }
 
     /*

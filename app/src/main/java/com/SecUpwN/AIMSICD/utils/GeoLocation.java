@@ -25,10 +25,10 @@ public class GeoLocation {
     private double degLat; // latitude in degrees
     private double degLon; // longitude in degrees
 
-    private static final double MIN_LAT = Math.toRadians(-90d); // -PI/2
-    private static final double MAX_LAT = Math.toRadians(90d); // PI/2
+    private static final double MIN_LAT = Math.toRadians(-90d);  // -PI/2
+    private static final double MAX_LAT = Math.toRadians(90d);   // PI/2
     private static final double MIN_LON = Math.toRadians(-180d); // -PI
-    private static final double MAX_LON = Math.toRadians(180d); // PI
+    private static final double MAX_LON = Math.toRadians(180d);  // PI
 
     private GeoLocation() {
     }

@@ -40,11 +40,13 @@ public class OemCommands {
     public static final char OEM_SM_END_MODE_MESSAGE = 2;
     public static final char OEM_SM_PROCESS_KEY_MESSAGE = 3;
     public static final char OEM_SM_GET_DISPLAY_DATA_MESSAGE = 4;
+
     public static final char OEM_SM_TYPE_TEST_MANUAL = 1;
     public static final char OEM_SM_TYPE_TEST_AUTO = 2;
     public static final char OEM_SM_TYPE_NAM_EDIT = 3;
     public static final char OEM_SM_TYPE_MONITOR = 4;
     public static final char OEM_SM_TYPE_PHONE_TEST = 5;
+
     public static final char OEM_SM_TYPE_SUB_ENTER = 0;
     public static final char OEM_SM_TYPE_SUB_SW_VERSION_ENTER = 1;
     public static final char OEM_SM_TYPE_SUB_FTA_SW_VERSION_ENTER = 2;
@@ -61,6 +63,7 @@ public class OemCommands {
     public static final char OEM_SM_TYPE_SUB_FACTORY_RESET_ENTER = 13;
     public static final char OEM_SM_TYPE_SUB_FACTORY_PRECONFIG_ENTER = 14;
     public static final char OEM_SM_TYPE_SUB_TFS4_EXPLORE_ENTER = 15;
+    // E:V:A  What is 16?
     public static final char OEM_SM_TYPE_SUB_RSC_FILE_VERSION_ENTER = 17;
     public static final char OEM_SM_TYPE_SUB_USB_DRIVER_ENTER = 18;
     public static final char OEM_SM_TYPE_SUB_USB_UART_DIAG_CONTROL_ENTER = 19;
@@ -78,6 +81,7 @@ public class OemCommands {
     public static final char OEM_SM_TYPE_SUB_GET_SELLOUT_SMS_INFO_ENTER = 31;
     public static final char OEM_SM_TYPE_SUB_TST_AUTO_ANSWER_ENTER = 32;
     public static final char OEM_SM_TYPE_SUB_TST_NV_RESET_ENTER = 33;
+
     public static final char OEM_SM_TYPE_SUB_TST_FTA_SW_VERSION_ENTER = 4098;
     public static final char OEM_SM_TYPE_SUB_TST_FTA_HW_VERSION_ENTER = 4099;
 
