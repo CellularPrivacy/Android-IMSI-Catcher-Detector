@@ -4,7 +4,7 @@
           android:versionCode="25"
           android:versionName="0.1.25-alpha-b5">
 
-   <!-- PERMISSIONS ARE SORTED BY TYPE - PLEASE KEEP THIS STRUCTURE. THANK YOU. /> -->
+    <!-- PERMISSIONS ARE SORTED BY TYPE - PLEASE KEEP THIS STRUCTURE. THANK YOU. /> -->
 
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -32,9 +32,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     
     <!-- SPECIAL PERMISSIONS TO BE ADDED AFTER THIS LINE. /> -->
-    
-   <!-- May be needed (in the future) to access SIM related functions 
-   <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/> -->
+    <!-- To list all available (used) Android permissions on a device, use:
+         # `pm list permissions -g`  -->
+         
+    <!-- May be needed (in the future) to access SIM related functions 
+    <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/> -->
    
     <application
             android:allowBackup="false"
