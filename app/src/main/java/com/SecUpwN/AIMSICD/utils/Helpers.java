@@ -148,7 +148,7 @@ public class Helpers {
                     //New GeoLocation object to find bounding Coordinates
                     GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
-                    //Calculate the Bounding Coordinates in a 50 mile radius
+                    //Calculate the Bounding Coordinates in a 100 mile radius
                     //0 = min 1 = max
                     GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
                     String boundParameter;
@@ -299,7 +299,7 @@ public class Helpers {
     public static List<String> unpackListOfStrings(byte aob[]) {
 
         if (aob.length == 0) {
-            Log.v(TAG, "Length = 0");
+            Log.v(TAG, "invokeOemRilRequestRaw: string list response Length = 0");
             return Collections.emptyList();
         }
 
@@ -342,7 +342,7 @@ public class Helpers {
     public static List<String> unpackByteListOfStrings(byte aob[]) {
 
         if (aob.length == 0) {
-            Log.v(TAG, "Length = 0");
+            Log.v(TAG, "invokeOemRilRequestRaw: byte list response Length = 0");
             return Collections.emptyList();
         }
 
@@ -386,7 +386,7 @@ public class Helpers {
         try {
             result = SystemPropertiesReflection.get(context, prop);
         } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "Failed to get prop: " + prop);
+            Log.e(TAG, "Failed to get system property: " + prop);
         }
         return result == null ? def : result;
     }
