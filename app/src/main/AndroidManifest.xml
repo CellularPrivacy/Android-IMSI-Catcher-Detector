@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
           android:versionCode="25"
-          android:versionName="0.1.25-alpha-b4">
+          android:versionName="0.1.25-alpha-b5">
 
    <!-- PERMISSIONS ARE SORTED BY TYPE - PLEASE KEEP THIS STRUCTURE. THANK YOU. /> -->
 
