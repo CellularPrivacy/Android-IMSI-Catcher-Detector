@@ -96,6 +96,7 @@ public class AimsicdService extends Service {
 
     private CellTracker mCellTracker;
     private AccelerometerMonitor mAccelerometerMonitor;
+    private SignalStrengthTracker signalStrengthTracker;
     private LocationTracker mLocationTracker;
     private RilExecutor mRilExecutor;
 
@@ -114,11 +115,16 @@ public class AimsicdService extends Service {
     }
 
     public void onCreate() {
+
+        signalStrengthTracker = new SignalStrengthTracker(getBaseContext());
+
         mAccelerometerMonitor = new AccelerometerMonitor(this, new Runnable() {
             @Override
             public void run() {
                 // movement detected, so enable GPS
                 mLocationTracker.start();
+                signalStrengthTracker.onSensorChanged();
+
 
                 // check again in a while to see if GPS should be disabled
                 // this runnable also re-enables this movement sensor
@@ -128,7 +134,7 @@ public class AimsicdService extends Service {
 
         mLocationTracker = new LocationTracker(this, mLocationListener);
         mRilExecutor = new RilExecutor(this);
-        mCellTracker = new CellTracker(this);
+        mCellTracker = new CellTracker(this, signalStrengthTracker);
 
         Log.i(TAG, "Service launched successfully.");
     }

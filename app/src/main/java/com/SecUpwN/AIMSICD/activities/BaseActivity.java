@@ -12,6 +12,7 @@ import android.util.Log;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Icon;
+import com.SecUpwN.AIMSICD.utils.Status;
 
 /**
  * Base activity class, handles code that is shared between all activites
@@ -39,8 +40,8 @@ public class BaseActivity extends FragmentActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "StatusWatcher recieved status change, updating icon");
-            updateIcon(context);
+            Log.d(TAG, "StatusWatcher recieved status change to " + Status.getStatus().name()+", updating icon");
+                    updateIcon(context);
         }
     };
 

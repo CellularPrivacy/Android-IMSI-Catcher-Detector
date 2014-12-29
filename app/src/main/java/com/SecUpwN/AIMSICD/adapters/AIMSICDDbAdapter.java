@@ -35,6 +35,7 @@ public class AIMSICDDbAdapter {
     private final String OPENCELLID_TABLE = "opencellid";
     private final String DEFAULT_MCC_TABLE = "defaultlocation";
     private final String SILENT_SMS_TABLE = "silentsms";
+    private final String CELL_SIGNAL_TABLE = "cellSignal";
     // E:V:A private final String DB_NAME = "myCellInfo";
     private final String DB_NAME = "aimsicd.db";  // old name: "myCellInfo"
 
@@ -644,6 +645,31 @@ public class AIMSICDDbAdapter {
         Log.i(TAG, "exporting database complete");
     }
 
+    public void cleanseCellStrengthTables(long maxTime) {
+        Log.d(TAG, "Cleaning "+CELL_SIGNAL_TABLE+" WHERE timestamp < "+maxTime);
+        mDb.execSQL("DELETE FROM "+CELL_SIGNAL_TABLE+" WHERE timestamp < "+maxTime);
+    }
+
+    public void addSignalStrength(int cellID, int signal, Long timestamp) {
+        ContentValues row = new ContentValues();
+        row.put("cellID", cellID);
+        row.put("signal", signal);
+        row.put("timestamp", timestamp);
+        mDb.insert(CELL_SIGNAL_TABLE, null, row);
+    }
+
+    public int countSignalMeasurements(int cellID) {
+        Cursor c = mDb.rawQuery("SELECT COUNT(cellID) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID="+cellID, new String[0]);
+        c.moveToFirst();
+        return c.getInt(0);
+    }
+
+    public int getAverageSignalStrength(int cellID) {
+        Cursor c = mDb.rawQuery("SELECT AVG(signal) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID="+cellID, new String[0]);
+        c.moveToFirst();
+        return c.getInt(0);
+    }
+
     /**
      * DbHelper class for the SQLite Database functions
      */
@@ -655,6 +681,13 @@ public class AIMSICDDbAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase database) {
+
+            /*
+             * Cell Signal Measurements
+             */
+            database.execSQL("create table " + CELL_SIGNAL_TABLE + " (" + COLUMN_ID + " integer primary key autoincrement, cellID INTEGER, signal INTEGER, timestamp INTEGER);");
+            database.execSQL("create index cellID_index ON "+CELL_SIGNAL_TABLE+" (cellID);");
+            database.execSQL("create index cellID_timestamp ON "+CELL_SIGNAL_TABLE+" (timestamp);");
 
             /*
              * Silent Sms Database
@@ -724,6 +757,7 @@ public class AIMSICDDbAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + OPENCELLID_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + SILENT_SMS_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + DEFAULT_MCC_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + CELL_SIGNAL_TABLE);
 
             onCreate(db);
         }
