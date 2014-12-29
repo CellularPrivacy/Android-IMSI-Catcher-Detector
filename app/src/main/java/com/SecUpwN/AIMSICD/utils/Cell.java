@@ -14,15 +14,16 @@ import java.util.List;
 public class Cell implements Parcelable {
 
     //Cell Specific Variables
-    private int cid;
-    private int lac;
-    private int mcc;
-    private int mnc;
-    private int dbm;
-    private int psc;
-    private int rssi;
-    private int timingAdvance;
-    private int sid;
+    private int cid;  // Cell Idenfication code
+    private int lac;  // Location Area Code
+    private int mcc;  // Mobile Country Code
+    private int mnc;  // Mobile Network Code
+    private int dbm;  // [dBm] RX signal "power"
+    private int psc;  // Primary Scrambling Code
+    private int rssi; // Relative Signal Strength Indicator [dBm, asu etc.]
+    private int timingAdvance;       // Timing Advance [LTE,GSM]
+    //private int propagationDelay;  // Propagation Delay [LTE]
+    private int sid;                 // Cell-ID for [CDMA]
     private long timestamp;
 
     //Tracked Cell Specific Variables
@@ -389,7 +390,7 @@ public class Cell implements Parcelable {
     /**
      * Received Signal Strength
      *
-     * @return Received Signal Strength (RSSI)
+     * @return Received Signal Strength Indicator (RSSI)
      */
     public int getRssi() {
         return this.rssi;

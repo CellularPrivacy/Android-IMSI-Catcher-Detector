@@ -170,7 +170,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
         public void cancel() {
             if (DBG) {
-                Log.i(TAG, "SamsungMulticlientRil cancel()"); // EVA: Was Log.v()
+                Log.v(TAG, "SamsungMulticlientRil cancel()");
             }
             synchronized (this) {
                 mCancelRequested.set(true);
@@ -199,8 +199,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             byte req[] = marshallRequest(token, data);
 
             if (DBG) {
-                // EVA: Was Log.v()
-                Log.i(TAG,
+                Log.v(TAG,
                         String.format("invokeOemRilRequestRaw() token: 0x%X, header: %s, req: %s ",
                                 token, HexDump.toHexString(getHeader(req)),
                                 HexDump.toHexString(req))
@@ -232,8 +231,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             byte[] req = marshallRequest(token, strings);
 
             if (DBG) {
-                // EVA: Was Log.v()
-                Log.i(TAG, String.format(
+                Log.v(TAG, String.format(
                         "invokeOemRilRequestStrings() token: 0x%X, header: %s, req: %s ",
                         token, HexDump.toHexString(getHeader(req)), HexDump.toHexString(req)));
             }
@@ -274,9 +272,9 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
         }
 
         public synchronized void disconnect() {
-            // EVA: Was Log.v()
+
             if (DBG) {
-                Log.i(TAG, "Local disconnect()");
+                Log.v(TAG, "Local disconnect()");
             }
 
             if (mSocket == null) {
@@ -342,7 +340,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                     rcvd = mInputStream.read(buf, endpos, buf.length - endpos);
                     if (rcvd < 0) {
                         if (DBG) {
-                            Log.e(TAG, "EOF reached"); // Was Log.v()
+                            Log.v(TAG, "EOF reached");
                         }
                         break;
                     }
@@ -381,8 +379,8 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             Parcel p;
 
             if (DBG) {
-                // EVA: Was Log.v()
-                Log.i(TAG,
+
+                Log.v(TAG,
                         "received " + length + " bytes: " + HexDump.toHexString(data, pos, length));
             }
 
@@ -394,13 +392,13 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                 responseType = p.readInt();
                 switch (responseType) {
                     case RESPONSE_UNSOLICITED:
-                        Log.i(TAG, "Unsolicited response "); // EVA: Was Log.v()
+                        Log.v(TAG, "Unsolicited response ");
                         break;
                     case RESPONSE_SOLICITED:
                         processSolicited(p);
                         break;
                     default:
-                        Log.i(TAG, "Invalid response type: " + responseType); // EVA: Was Log.v()
+                        Log.v(TAG, "Invalid response type: " + responseType);
                         break;
                 }
             } finally {
@@ -419,8 +417,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                 int err = p.readInt();
 
                 if (DBG) {
-                    // EVA: Was Log.v()
-                    Log.i(TAG, String.format("processSolicited() token: 0x%X err: %d", token, err));
+                    Log.v(TAG, String.format("processSolicited() token: 0x%X err: %d", token, err));
                 }
 
                 if (err != RIL_CLIENT_ERR_SUCCESS) {

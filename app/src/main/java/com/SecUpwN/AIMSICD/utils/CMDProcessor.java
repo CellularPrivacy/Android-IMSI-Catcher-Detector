@@ -71,6 +71,8 @@ public final class CMDProcessor {
     }
 
     public static boolean canSU() {
+        // E:V:A Need fixing:
+        //  - Result not shown in pop-up...
         CommandResult r = runShellCommand("id");
         StringBuilder out = new StringBuilder(0);
         out.append(r.getStdout());
