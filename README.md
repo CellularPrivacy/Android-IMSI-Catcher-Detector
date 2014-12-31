@@ -51,7 +51,7 @@ There are almost no phones on the market which offer an option to check what kin
 
 They come in uncountable shapes and sizes:
 
-[![IMSI-Catchers](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/IMSI-Catchers.png "IMSI-Catchers ready to spy on you")](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector)
+[![IMSI-Catchers](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/DOCUMENTATION/IMSI-Catchers/IMSI-Catchers.png "IMSI-Catchers ready to spy on you")](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector)
 
 * Current IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html).
 * The smartphone takes up the most space. IMSI-Catchers will even get smaller!
