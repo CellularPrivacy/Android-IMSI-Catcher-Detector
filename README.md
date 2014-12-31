@@ -21,7 +21,7 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 #  Index
 * [Introduction](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction)
 * [IMSI-Catchers](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#want-to-know-what-imsi-catchers-look-like)
-* [Project Goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#application-goals-please-read-carefully)
+* [Project Goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#application-goals)
 * [Limitations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#this-project-does-not)
 * [Roadmap](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#development-roadmap)
 * **[DOWNLOADS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases)**
@@ -41,9 +41,9 @@ In the USA the IMSI-Catcher technology is known under the name "[StingRay](https
 
 [![Vehicular Intercom System](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/DOCUMENTATION/IMSI-Catchers/VehicularIntercomSystem.jpg "Comfortable spying in a so-called 'Vehicular Intercom System'")](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector)
 
-Why are IMSI-Catchers exponentially [popular lately](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki#some-attacks-imsi-catchers-are-capable-of)? Because without our App you would not even notice that you're under attack! IMSI-Catchers, StingRays, GSM/UMTS Interceptors (or whichever names they invent) are perfectly stealth spying devices, crafted from the wet dreams of bastards like governments and criminals all alike. You think you have "[nothing to hide](https://en.wikipedia.org/wiki/Nothing_to_hide_argument)"? Think again! Anyone can now buy an IMSI-Catcher or [build a cheap one](http://www.engadget.com/2010/07/31/hacker-intercepts-phone-calls-with-homebuilt-1-500-imsi-catcher/) on his own. Sending spam and phishing SMS via fake base stations is already a lucrative [underground market](http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-papers/wp-the-mobile-cybercriminal-underground-market-in-china.pdf)), particularly in Russia, [China](http://www.ecns.cn/business/2014/03-26/106525.shtml) and Brazil. In addition, all IMSI-Catchers can crack A5/1 encryption, which is most commonly used for GSM traffic, on the fly (passively)! A5/3 encryption which is used for securing 3G and is offered as [new security standard for GSM encryption](http://www.telekom.com/media/company/210108) remains secure in practice while susceptible to theoretical attacks. Although 3G and 4G offer sufficient protection from eavesdropping, the security measures can be bypassed by IMSI-Catchers forcing a mobile device into 2G mode and [downgrade encryption to A5/1 or disable it](http://www.septier.com/149.html). For further reading on the algorithms, check out the [Cryptome GSM Files](http://cryptome.org/gsm-a5-files.htm).
+Why are IMSI-Catchers exponentially [popular lately](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki#some-attacks-imsi-catchers-are-capable-of)? Because without our App you would not even notice that you're under attack! IMSI-Catchers, StingRays, GSM/UMTS Interceptors (or whichever names they invent) are perfectly stealth spying devices, crafted from the wet dreams of bastards like governments and criminals all alike. You think you have "[nothing to hide](https://en.wikipedia.org/wiki/Nothing_to_hide_argument)"? Think again! Anyone can now buy an IMSI-Catcher or [build a cheap one](http://www.engadget.com/2010/07/31/hacker-intercepts-phone-calls-with-homebuilt-1-500-imsi-catcher/) on their own. Sending spam and phishing SMS via fake base stations is already a lucrative [underground market](http://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-papers/wp-the-mobile-cybercriminal-underground-market-in-china.pdf)), particularly in Russia, [China](http://www.ecns.cn/business/2014/03-26/106525.shtml) and Brazil. In addition, all IMSI-Catchers can crack A5/1 encryption, which is most commonly used for GSM traffic, on the fly (passively)! A5/3 encryption which is used for securing 3G and is offered as [new security standard for GSM encryption](http://www.telekom.com/media/company/210108) remains secure in practice while susceptible to theoretical attacks. Although 3G and 4G offer sufficient protection from eavesdropping, the security measures can be bypassed by IMSI-Catchers forcing a mobile device into 2G mode and [downgrade encryption to A5/1 or disable it](http://www.septier.com/149.html). For further reading on the algorithms, check out the [Cryptome GSM Files](http://cryptome.org/gsm-a5-files.htm).
 
-There are almost no phones on the market which offer an option to check what kind of encryption is used to "secure" GSM traffic (which is in fact already broken beyond repair). The ones you may find are very expensive and not open source. And although the [Issue of not having a convenient display of the Ciphering Indicator](https://code.google.com/p/android/issues/detail?id=5353) has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The open source project "[Android-CipheringIndicator-API](https://github.com/PrivacyCollective/Android-CipheringIndicator-API)" aims to craft an API which fixes this Issue and merge the resulting API into the Android AOSP branch. But currently, the only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case, the phone will not be able to receive or make calls in areas without 3G coverage. This is why we started development on this App: **To protect YOU.** Join our development, even the smallest pull requests are very welcome!
+There are almost no phones on the market which offer an option to check what kind of encryption is used to "secure" GSM traffic (which is in fact already broken beyond repair). The ones you may find are very expensive and not open source. And although the [Issue of not having a convenient display of the Ciphering Indicator](https://code.google.com/p/android/issues/detail?id=5353) has been assigned to Google since 2009, it seems they're getting paid (or are forced to) blatantly ignoring it. The open source project "[Android-CipheringIndicator-API](https://github.com/PrivacyCollective/Android-CipheringIndicator-API)" aims to craft an API which fixes this Issue and merge the resulting API into the Android AOSP branch. But currently, the only way to protect a mobile device from downgrade attacks is to disable 2G if this option is available. In this case, the phone will not be able to receive or make calls in areas without 3G coverage. This is why we started development on this App: **To protect YOU.** Use our App and join development on GitHub - even the smallest pull requests are very welcome!
 
 ---
 
@@ -54,7 +54,6 @@ They come in uncountable shapes and sizes:
 [![IMSI-Catchers](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/IMSI-Catchers.png "IMSI-Catchers ready to spy on you")](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector)
 
 * Current IMSI-Catchers can be as **tiny** as the portable [Septier IMSI-Catcher Mini](http://www.septier.com/368.html).
-
 * The smartphone takes up the most space. IMSI-Catchers will even get smaller!
 
 [![Septier IMSI-Catcher Mini](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/DOCUMENTATION/IMSI-Catchers/IMSI-Catcher_Mini.png "Israeli IMSI-Catcher company Septier calls it 'GUARDIAN'")](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector)
@@ -72,7 +71,7 @@ Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or any combination ther
 
 ---
 
-### Application Goals (please read carefully!)
+# Application Goals
 
 * Detect IMSI based device location tracking
 * Detect and prevent the use of false BTS towers used for illegal interception
@@ -107,7 +106,7 @@ In order to accomplish the goals set above, we'll need to overcome some of the d
 
 All this can be fairly easily accomplished, given that we can have access to some of the lower level radio related information coming from the *Baseband Processor* (BP). But that is exactly our challenge. All the software and information about the interfaces providing this, is hidden from the user and developers by a huge amount of proprietary OEM *Non Disclosure Agreements* (NDA). But in the last years, there has been great progress in reverse enginering these protocols and interfaces. The use of these open source tools are the basis of our successful development of this App. 
 
-**To summarize the main stages of this development:**
+**Summary of the main development stages:**
 
 **A.** Using all available network data, implement the correct detection matrix consisting of a number of items, that each participate in detection of abnormal or abusive network bahaviour. This is the application *[Beta](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/README.md#beta-stage)* stage. 
 
