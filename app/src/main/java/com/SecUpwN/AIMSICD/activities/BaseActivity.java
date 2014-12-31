@@ -51,7 +51,9 @@ public class BaseActivity extends FragmentActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType)));
+                if(getActionBar() != null) {
+                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType)));
+                }
             }
         });
     }
