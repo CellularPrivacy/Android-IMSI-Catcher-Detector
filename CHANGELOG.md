@@ -1,6 +1,19 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 01.01.2015 - WIP-Release v0.1.25-alpha-build-6
+
+* Improved: **HAPPY NEW YEAR EVERYONE!** We are going to change Release Cycles for you! ;-)
+* Improved: Made `README` easier to read and updated links, hint me on further improvements!
+* Changed: Reverted log level in `SamsungMulticlientRilExecutor` from `i` to `v`
+* Updated: Gave proper credit in `CREDITS` to the latest awesome additions to our team
+* Added: New directory for external pictures and pictures of photographed IMSI-Catchers
+* Added: We now have a fresh [Glossary of Terms](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Glossary-of-Terms) to make it easier for you to contribute
+* Fixed: Cell signal strength has been fixed to not always show 99db
+* Fixed: `NullPointerException` when `getActionBar()` returns `null` has been purged
+
+---
+
 #### 29.12.2014 - WIP-Internal v0.1.25-alpha-build-5
 
 * Improved: LAC is now shown in the InfoWindow on the MapViewer
