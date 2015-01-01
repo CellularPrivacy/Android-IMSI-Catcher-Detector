@@ -1,7 +1,7 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
-#### 01.01.2015 - WIP-Release v0.1.25-alpha-build-6
+#### 01.01.2015 - [WIP-Release v0.1.25-alpha-build-6](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b6)
 
 * Improved: **HAPPY NEW YEAR EVERYONE!** We are going to change Release Cycles for you! ;-)
 * Improved: Made `README` easier to read and updated links, hint me on further improvements!
