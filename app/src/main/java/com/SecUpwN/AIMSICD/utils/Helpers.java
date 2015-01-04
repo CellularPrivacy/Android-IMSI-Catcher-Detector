@@ -113,7 +113,7 @@ public class Helpers {
     }
 
     /**
-     * Checks Network connectivity is available to download OpenCellID data
+     * Checks if Network connectivity is available to download OpenCellID data
      */
     public static Boolean isNetAvailable(Context context) {
 

@@ -46,6 +46,8 @@
     <string name="untrack_femtocell">Stop Tracking Femtocell</string>
     <string name="show_map">Show Map</string>
     <string name="backup_database">Backup Database</string>
+    <!-- TODO: -->
+    <string name="clear_database">Clear/Reset Database</string>
     <string name="restore_database">Restore Database</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit.</string>

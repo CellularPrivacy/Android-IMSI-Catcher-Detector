@@ -27,17 +27,25 @@ import au.com.bytecode.opencsv.CSVWriter;
 
 public class AIMSICDDbAdapter {
 
+    /*
+     * This handles the AMISICD DataBase tables:
+     * As of 2015-01-01 we'll be slowly migrating from the old DB structure
+     * to the new one as detailed here:
+     * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215
+     *
+     * As you work on these tables, please try to implement the new tables by
+     * first changing the table names and then the table columns.
+     */
     private final String TAG = "AISMICD_DbAdaptor";
     public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
     private static final String COLUMN_ID = "_id";
-    private final String LOCATION_TABLE = "locationinfo";
-    private final String CELL_TABLE = "cellinfo";
-    private final String OPENCELLID_TABLE = "opencellid";
+    private final String LOCATION_TABLE = "locationinfo";   // DBi_measure
+    private final String CELL_TABLE = "cellinfo";           // DBi_bts
+    private final String OPENCELLID_TABLE = "opencellid";   // DBe_import
     private final String DEFAULT_MCC_TABLE = "defaultlocation";
     private final String SILENT_SMS_TABLE = "silentsms";
-    private final String CELL_SIGNAL_TABLE = "cellSignal";
-    // E:V:A private final String DB_NAME = "myCellInfo";
-    private final String DB_NAME = "aimsicd.db";  // old name: "myCellInfo"
+    private final String CELL_SIGNAL_TABLE = "cellSignal";  // ???
+    private final String DB_NAME = "aimsicd.db";
 
     private final String[] mTables;
     private final DbHelper mDbHelper;
@@ -215,7 +223,7 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Returns Silent Sms database contents
+     * Returns Silent SMS database contents
      */
     public Cursor getSilentSmsData() {
         return mDb.query(SILENT_SMS_TABLE, new String[]{"Address", "Display", "Class", "ServiceCtr",
@@ -225,7 +233,7 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Returns Cell Information database contents
+     * Returns Cell Information (DBi_bts) database contents
      */
     public Cursor getCellData() {
         return mDb.query(CELL_TABLE, new String[]{"CellID", "Lac", "Net", "Lat", "Lng",
@@ -245,7 +253,7 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Returns Location Information database contents
+     * Returns Location Information (DBi_meas) database contents
      */
     public Cursor getLocationData() {
         return mDb.query(LOCATION_TABLE, new String[]{"CellID", "Lac", "Net", "Lat", "Lng",
@@ -255,7 +263,7 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Returns OpenCellID database contents
+     * Returns OpenCellID (DBe_import) database contents
      */
     public Cursor getOpenCellIDData() {
         return mDb.query(OPENCELLID_TABLE, new String[]{"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng",
@@ -265,7 +273,7 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Returns Default MCC Locations database contents
+     * Returns Default MCC Locations (defaultlocation) database contents
      */
     public Cursor getDefaultMccLocationData() {
         return mDb.query(DEFAULT_MCC_TABLE, new String[]{"Country", "Mcc", "Lat", "Lng"},
@@ -410,7 +418,7 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Populates the Default Mcc Location table using the CSV file found in the
+     * Populates the Default MCC Location table using the CSV file found in the
      * application ASSETS folder
      */
     private void populateDefaultMCC(SQLiteDatabase db) {
@@ -500,7 +508,7 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Imports CSV file export data into the database
+     * Imports a previously exported CSV file into the database
      */
     public boolean restoreDB() {
         try {
@@ -605,6 +613,8 @@ public class AIMSICDDbAdapter {
      *
      * @param tableName String representing table name to export
      */
+    // TODO: We should have a better file selector here, where the user can select his
+    //       own location for storing the backup files.
     private void backup(String tableName) {
         Log.i(TAG, "Database Backup: " + DB_NAME);
 

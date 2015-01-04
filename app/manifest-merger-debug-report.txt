@@ -1,0 +1,241 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
+	package
+		ADDED from AndroidManifest.xml:3:11
+	android:versionName
+		ADDED from AndroidManifest.xml:5:11
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionCode
+		ADDED from AndroidManifest.xml:4:11
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-permission#android.permission.ACCESS_SUPERUSER
+ADDED from AndroidManifest.xml:9:5
+	android:name
+		ADDED from AndroidManifest.xml:9:22
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from AndroidManifest.xml:10:5
+	android:name
+		ADDED from AndroidManifest.xml:10:22
+uses-permission#android.permission.ACCESS_COARSE_UPDATES
+ADDED from AndroidManifest.xml:11:5
+	android:name
+		ADDED from AndroidManifest.xml:11:22
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from AndroidManifest.xml:12:5
+	android:name
+		ADDED from AndroidManifest.xml:12:22
+uses-permission#android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+ADDED from AndroidManifest.xml:13:5
+	android:name
+		ADDED from AndroidManifest.xml:13:22
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:14:5
+	android:name
+		ADDED from AndroidManifest.xml:14:22
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from AndroidManifest.xml:15:5
+	android:name
+		ADDED from AndroidManifest.xml:15:22
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from AndroidManifest.xml:17:5
+	android:name
+		ADDED from AndroidManifest.xml:17:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:19:5
+	android:name
+		ADDED from AndroidManifest.xml:19:22
+uses-permission#android.permission.MODIFY_PHONE_STATE
+ADDED from AndroidManifest.xml:21:5
+	android:name
+		ADDED from AndroidManifest.xml:21:22
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:23:5
+	android:name
+		ADDED from AndroidManifest.xml:23:22
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from AndroidManifest.xml:24:5
+	android:name
+		ADDED from AndroidManifest.xml:24:22
+uses-permission#android.permission.READ_LOGS
+ADDED from AndroidManifest.xml:25:5
+	android:name
+		ADDED from AndroidManifest.xml:25:22
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from AndroidManifest.xml:27:5
+	android:name
+		ADDED from AndroidManifest.xml:27:22
+uses-permission#android.permission.RECEIVE_SMS
+ADDED from AndroidManifest.xml:28:5
+	android:name
+		ADDED from AndroidManifest.xml:28:22
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from AndroidManifest.xml:30:5
+	android:name
+		ADDED from AndroidManifest.xml:30:22
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:32:5
+	android:name
+		ADDED from AndroidManifest.xml:32:22
+application
+ADDED from AndroidManifest.xml:41:5
+MERGED from Android-IMSI-Catcher-Detector.third_party:RootTools:unspecified:9:5
+	android:label
+		ADDED from AndroidManifest.xml:44:13
+	android:allowBackup
+		ADDED from AndroidManifest.xml:42:13
+	android:icon
+		ADDED from AndroidManifest.xml:43:13
+	android:theme
+		ADDED from AndroidManifest.xml:45:13
+activity#com.SecUpwN.AIMSICD.AIMSICD
+ADDED from AndroidManifest.xml:47:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:51:17
+	android:label
+		ADDED from AndroidManifest.xml:50:17
+	android:exported
+		ADDED from AndroidManifest.xml:49:17
+	android:name
+		ADDED from AndroidManifest.xml:48:17
+intent-filter#android.intent.action.DELETE+android.intent.action.MAIN+android.intent.action.VIEW+android.intent.category.DEVELOPMENT_PREFERENCE+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:52:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:53:17
+	android:name
+		ADDED from AndroidManifest.xml:53:25
+action#android.intent.action.VIEW
+ADDED from AndroidManifest.xml:54:17
+	android:name
+		ADDED from AndroidManifest.xml:54:25
+action#android.intent.action.DELETE
+ADDED from AndroidManifest.xml:55:17
+	android:name
+		ADDED from AndroidManifest.xml:55:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:57:17
+	android:name
+		ADDED from AndroidManifest.xml:57:27
+category#android.intent.category.DEVELOPMENT_PREFERENCE
+ADDED from AndroidManifest.xml:58:17
+	android:name
+		ADDED from AndroidManifest.xml:58:27
+service#com.SecUpwN.AIMSICD.service.AimsicdService
+ADDED from AndroidManifest.xml:62:9
+	android:exported
+		ADDED from AndroidManifest.xml:65:17
+	android:enabled
+		ADDED from AndroidManifest.xml:64:17
+	android:name
+		ADDED from AndroidManifest.xml:63:17
+receiver#com.SecUpwN.AIMSICD.receiver.BootCompletedReceiver
+ADDED from AndroidManifest.xml:68:9
+	android:name
+		ADDED from AndroidManifest.xml:68:19
+intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:69:13
+action#android.intent.action.BOOT_COMPLETED
+ADDED from AndroidManifest.xml:70:17
+	android:name
+		ADDED from AndroidManifest.xml:70:25
+category#android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:72:17
+	android:name
+		ADDED from AndroidManifest.xml:72:27
+receiver#com.SecUpwN.AIMSICD.receiver.SmsReceiver
+ADDED from AndroidManifest.xml:76:9
+	android:permission
+		ADDED from AndroidManifest.xml:77:19
+	android:name
+		ADDED from AndroidManifest.xml:76:19
+intent-filter#android.provider.Telephony.SMS_RECEIVED
+ADDED from AndroidManifest.xml:78:13
+	android:priority
+		ADDED from AndroidManifest.xml:78:28
+action#android.provider.Telephony.SMS_RECEIVED
+ADDED from AndroidManifest.xml:79:17
+	android:name
+		ADDED from AndroidManifest.xml:79:25
+activity#com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid
+ADDED from AndroidManifest.xml:83:9
+	android:label
+		ADDED from AndroidManifest.xml:86:17
+	android:exported
+		ADDED from AndroidManifest.xml:85:17
+	android:parentActivityName
+		ADDED from AndroidManifest.xml:87:17
+	android:name
+		ADDED from AndroidManifest.xml:84:17
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from AndroidManifest.xml:88:13
+	android:name
+		ADDED from AndroidManifest.xml:89:21
+	android:value
+		ADDED from AndroidManifest.xml:90:21
+activity#com.SecUpwN.AIMSICD.activities.PrefActivity
+ADDED from AndroidManifest.xml:93:9
+	android:label
+		ADDED from AndroidManifest.xml:97:17
+	android:icon
+		ADDED from AndroidManifest.xml:96:17
+	android:exported
+		ADDED from AndroidManifest.xml:95:17
+	android:parentActivityName
+		ADDED from AndroidManifest.xml:98:17
+	android:name
+		ADDED from AndroidManifest.xml:94:17
+intent-filter#android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:99:13
+activity#com.SecUpwN.AIMSICD.activities.OpenCellIdActivity
+ADDED from AndroidManifest.xml:104:9
+	android:label
+		ADDED from AndroidManifest.xml:107:13
+	android:icon
+		ADDED from AndroidManifest.xml:106:13
+	android:theme
+		ADDED from AndroidManifest.xml:108:13
+	android:parentActivityName
+		ADDED from AndroidManifest.xml:109:13
+	android:name
+		ADDED from AndroidManifest.xml:105:13
+activity#com.SecUpwN.AIMSICD.activities.DebugLogs
+ADDED from AndroidManifest.xml:112:9
+	android:label
+		ADDED from AndroidManifest.xml:115:13
+	android:icon
+		ADDED from AndroidManifest.xml:114:13
+	android:parentActivityName
+		ADDED from AndroidManifest.xml:116:13
+	android:name
+		ADDED from AndroidManifest.xml:113:13
+activity#com.SecUpwN.AIMSICD.activities.MapPrefActivity
+ADDED from AndroidManifest.xml:119:9
+	android:label
+		ADDED from AndroidManifest.xml:123:17
+	android:icon
+		ADDED from AndroidManifest.xml:122:17
+	android:exported
+		ADDED from AndroidManifest.xml:121:17
+	android:parentActivityName
+		ADDED from AndroidManifest.xml:124:17
+	android:name
+		ADDED from AndroidManifest.xml:120:17
+uses-sdk
+INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from Android-IMSI-Catcher-Detector.third_party:RootTools:unspecified:5:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+activity#com.stericson.RootToolsTests.SanityCheckRootTools
+ADDED from Android-IMSI-Catcher-Detector.third_party:RootTools:unspecified:10:9
+	android:label
+		ADDED from Android-IMSI-Catcher-Detector.third_party:RootTools:unspecified:12:13
+	android:name
+		ADDED from Android-IMSI-Catcher-Detector.third_party:RootTools:unspecified:11:13
