@@ -74,7 +74,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="Active tracking near yourself!"/>
+                    android:text="Active tracking near you!"/>
             </TableRow>
 
             <TableRow
@@ -125,7 +125,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="Pay Attention!"/>
+                    android:text="Insecure Service Area"/>
 
                 <ImageView
                     android:layout_width="48dp"
