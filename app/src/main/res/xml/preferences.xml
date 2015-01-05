@@ -6,12 +6,12 @@
         android:key="pref_key_system_settings"
         android:title="@string/pref_system_title">
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="@string/pref_autostart_key"
             android:summary="@string/pref_autostart_summ"
             android:title="@string/pref_autostart_title"/>
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="@string/pref_persistservice_key"
             android:summary="@string/pref_persistservice_summ"
             android:title="@string/pref_persistservice_title"/>
