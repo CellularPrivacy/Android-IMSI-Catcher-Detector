@@ -276,7 +276,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             new RequestTask(mContext, RequestTask.BACKUP_DATABASE).execute();
         } else if (selectedItem.getId() == 204) {
             if (CellTracker.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
-                Helpers.msgShort(mContext, "Unable to restore backup from previous database version"
+                Helpers.msgLong(mContext, "Unable to restore backup from previous database version"
                         + " due to structural changes!");
             } else {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
@@ -285,7 +285,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
-                    Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
+                    Helpers.msgLong(mContext, "Contacting opencellid.org for data...\nThis may "
+                            + "take up to a minute.");
                     Cell cell = new Cell();
                     cell.setLon(loc.getLongitudeInDegrees());
                     cell.setLat(loc.getLatitudeInDegrees());
@@ -360,12 +361,13 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public void processFinish(float[] location) {
         Log.i(TAG, "processFinish - location[0]=" + location[0] + " location[1]=" + location[1]);
         if (location[0] != 0.0f && location[1] != 0.0f) {
-            Helpers.msgShort(mContext, "Contacting OpenCellID.org for data...");
+            Helpers.msgLong(mContext, "Contacting opencellid.org for data...\nThis may "
+                    + "take up to a minute.");
             Helpers.getOpenCellData(mContext, mAimsicdService.getCell(),
                     RequestTask.OPEN_CELL_ID_REQUEST);
         } else {
-            Helpers.msgShort(mContext,
-                    "Unable to determine your last location. \nEnable Location Services and try again.");
+            Helpers.msgLong(mContext,
+                    "Unable to determine your last location.\nEnable Location Services and try again.");
         }
     }
 
@@ -424,6 +426,11 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 (203, getString(R.string.backup_database), "ic_action_import_export", false, this));
         menu.add(DrawerMenuItem.create
                 (204, getString(R.string.restore_database), "ic_action_import_export", false, this));
+        // E:V:A
+        // TODO: placeholder for "Reset/Clear DataBase"
+        // menu.add(DrawerMenuItem.create
+        //  (205?, getString(R.string.reset_database), "ic_action_clear", false, this));
+
         menu.add(DrawerMenuSection.create(300, "Application"));
         menu.add(DrawerMenuItem.create
                 (301, getString(R.string.get_opencellid), "stat_sys_download_anim0", false, this));

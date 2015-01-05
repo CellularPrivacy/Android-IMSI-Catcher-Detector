@@ -53,6 +53,7 @@ public class Helpers {
 
     /**
      * Long toast message
+     * (Predefined in AOS to 3500 ms = 3.5 sec)
      *
      * @param context Application Context
      * @param msg     Message to send
@@ -70,6 +71,7 @@ public class Helpers {
 
     /**
      * Short toast message
+     * (Predefined in AOS to 2000 ms = 2 sec)
      *
      * @param context Application Context
      * @param msg     Message to send

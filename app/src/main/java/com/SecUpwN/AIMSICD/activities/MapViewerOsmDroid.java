@@ -211,6 +211,9 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         }
     }
 
+    // E:V:A 20150105
+    // TODO: Remove HYBRID and SATELLITE MAP choices as they don't work!
+    // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/228
     private void setupMapType(int mapType) {
         mMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
         switch (mapType) {
@@ -287,7 +290,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 if (mBound) {
                     GeoLocation lastKnown = mAimsicdService.lastKnownLocation();
                     if (lastKnown != null) {
-                        Helpers.msgShort(this, "Contacting OpenCellID.org for data...");
+                        Helpers.msgLong(mContext,
+                            "Contacting opencellid.org for data...\nThis may take up to a minute.");
                         Cell cell;
                         cell = mAimsicdService.getCell();
                         cell.setLon(lastKnown.getLongitudeInDegrees());
@@ -298,14 +302,15 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     }
                 }
                 if (loc != null) {
-                    Helpers.msgShort(this, "Contacting OpenCellID.org for data...");
+                    Helpers.msgLong(this,
+                            "Contacting opencellid.org for data...\nThis may take up to a minute.");
                     Cell cell = new Cell();
                     cell.setLat(loc.getLatitude());
                     cell.setLon(loc.getLongitude());
                     Helpers.getOpenCellData(mContext, cell,
                             RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
                 } else {
-                    Helpers.msgShort(mContext,
+                    Helpers.msgLong(mContext,
                             "Unable to determine your last location. \nEnable Location Services and try again.");
                 }
                 return true;
@@ -449,16 +454,21 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mDbHelper.close();
 
                 // plot neighbouring cells
-                while (mAimsicdService == null) try { Thread.sleep(100); } catch (Exception e) {};
+                while (mAimsicdService == null) try { Thread.sleep(100); } catch (Exception e) {}
                 List<Cell> nc = mAimsicdService.getCellTracker().updateNeighbouringCells();
                 for (Cell cell : nc) {
                     try {
                         loc = new GeoPoint(cell.getLat(), cell.getLon());
                         CellTowerOverlayItem ovm = new CellTowerOverlayItem("Cell ID: " + cell.getCID(),
-                                "",
-                                loc,
-                                new MarkerData("" + cell.getCID(), "" + loc.getLatitude(),"" +
-                                        loc.getLongitude(), "" + cell.getLAC(), "" + cell.getMCC(), "" + cell.getMNC(), "", false));
+                                "", loc,
+                                new MarkerData(
+                                            "" + cell.getCID(),
+                                            "" + loc.getLatitude(),
+                                            "" + loc.getLongitude(),
+                                            "" + cell.getLAC(),
+                                            "" + cell.getMCC(),
+                                            "" + cell.getMNC(),
+                                            "", false));
 
                         ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_orange));
                         items.add(ovm);
@@ -490,7 +500,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                             mMap.getController().setZoom(16);
                             mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
                         } else {
-                            //Use Mcc to move camera to an approximate location near Countries Capital
+                            //Use MCC to move camera to an approximate location near Countries Capital
                             loc = defaultLoc;
 
                             mMap.getController().setZoom(13);
@@ -529,8 +539,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
 
                 CellTowerOverlayItem ovm = new CellTowerOverlayItem("Cell ID: " + cellID,
-                        "",
-                        location,
+                        "", location,
                         new MarkerData("" + cellID, "" + location.getLatitude(),"" +
                                 location.getLongitude(), "" + lac, "" + mcc, "" + mnc, "" + samples, false));
 
@@ -557,9 +566,14 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         public final String samples;
         public final boolean openCellID;
 
-        MarkerData(String cell_id, String latitude, String longitude,
-                String local_area_code, String mobile_country_code, String mobile_network_code,
-                String samples_taken, boolean openCellID_Data) {
+        MarkerData(String cell_id,
+                   String latitude,
+                   String longitude,
+                   String local_area_code,
+                   String mobile_country_code,
+                   String mobile_network_code,
+                   String samples_taken,
+                   boolean openCellID_Data) {
             cellID = cell_id;
             lat = latitude;
             lng = longitude;
