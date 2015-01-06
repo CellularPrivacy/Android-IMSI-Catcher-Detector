@@ -20,9 +20,9 @@ import java.util.HashMap;
 public class SignalStrengthTracker {
 
     public static final String TAG = "SignalStrengthMonitor";
-    private static int sleepTimeBetweenSignalRegistration = 30; //seconds
-    private static int sleepTimeBetweenPersistation = 120; //seconds
-    private static int minimumIdleTime              = 10; //seconds
+    private static int sleepTimeBetweenSignalRegistration = 60; //seconds
+    private static int sleepTimeBetweenPersistation = 900; //seconds
+    private static int minimumIdleTime              = 30; //seconds
     private static int maximumNumberOfDaysSaved     = 60; //days
     private static int mysteriousSignalDifference   = 10; //DB
 
