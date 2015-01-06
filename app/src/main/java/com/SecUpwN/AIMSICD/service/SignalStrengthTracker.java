@@ -146,6 +146,9 @@ public class SignalStrengthTracker {
         lastMovementDetected = System.currentTimeMillis();
     }
 
+    /**
+     * Internal class only used here to keep a result object in hand for future persisting in DB
+     */
     private class SignalResult {
         public int cellID;
         public int signal;
