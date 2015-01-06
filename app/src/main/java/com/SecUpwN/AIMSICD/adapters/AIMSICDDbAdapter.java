@@ -44,7 +44,7 @@ public class AIMSICDDbAdapter {
     private final String OPENCELLID_TABLE = "opencellid";   // DBe_import
     private final String DEFAULT_MCC_TABLE = "defaultlocation";
     private final String SILENT_SMS_TABLE = "silentsms";
-    private final String CELL_SIGNAL_TABLE = "cellSignal";  // ???
+    private final String CELL_SIGNAL_TABLE = "cellSignal";  // cell tower signal strength collected by the device
     private final String DB_NAME = "aimsicd.db";
 
     private final String[] mTables;
@@ -53,6 +53,7 @@ public class AIMSICDDbAdapter {
     private final Context mContext;
 
     public static final int DATABASE_VERSION = 8;
+    private Cursor signalStrengthMeasurementDatA;
 
     public AIMSICDDbAdapter(Context context) {
         mContext = context;
@@ -684,6 +685,10 @@ public class AIMSICDDbAdapter {
         Cursor c = mDb.rawQuery("SELECT AVG(signal) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID="+cellID, new String[0]);
         c.moveToFirst();
         return c.getInt(0);
+    }
+
+    public Cursor getSignalStrengthMeasurementData() {
+        return mDb.rawQuery("SELECT cellID, signal, timestamp FROM " + CELL_SIGNAL_TABLE +" ORDER BY timestamp DESC", new String[0]);
     }
 
     /**
