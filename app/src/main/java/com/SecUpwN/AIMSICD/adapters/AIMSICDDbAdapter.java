@@ -110,13 +110,13 @@ public class AIMSICDDbAdapter {
 
             if (cellExists(cellID)) {
                 //DETECTION 1 
-                Log.i(TAG, "Cell info updated in local db: " + cell.getCID());
+                Log.v(TAG, "Cell info updated in local db: " + cell.getCID());
                 return mDb.update(CELL_TABLE, cellValues,
                         "CellID=?",
                         new String[]{Integer.toString(cellID)});
             } else {
                 //DETECTION 1
-                Log.i(TAG, "New Cell found, insert into local db:: " + cell.getCID());
+                Log.v(TAG, "New Cell found, insert into local db:: " + cell.getCID());
                 return mDb.insert(CELL_TABLE, null, cellValues);
             }
         }
@@ -148,13 +148,13 @@ public class AIMSICDDbAdapter {
 
             if (cellExists(cell.getCID())) {
                 //DETECTION 1
-                Log.i(TAG, "Cell already in OCID DB (db update): " + cellID);
+                Log.v(TAG, "Cell already in OCID DB (db update): " + cellID);
                 return mDb.update(CELL_TABLE, cellValues,
                         "CellID=?",
                         new String[]{Integer.toString(cell.getCID())});
             } else {
                 //DETECTION 1 (Alert! unknown Cell - not in OCID DB)
-                Log.i(TAG, "ALERT!! Cell -NOT- in OCID DB (db insert): " + cellID);
+                Log.v(TAG, "ALERT!! Cell -NOT- in OCID DB (db insert): " + cellID);
                 return mDb.insert(CELL_TABLE, null, cellValues);
             }
         }
