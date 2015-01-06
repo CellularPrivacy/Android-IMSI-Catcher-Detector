@@ -1,6 +1,18 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 06.01.2015 - [WIP-Release v0.1.25-alpha-build-7](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b7)
+
+* News-Alert: It has been **proven** that IMSI-Catchers are currently being deployed and used **at all demonstrations** for and against PEGIDA in Germany to identify participants and spy on their mobile phones!
+* Remember: If you're going to participate in **ANY** demonstration, **LEAVE YOUR PHONE AT HOME!**
+* Improved: `PAPERS` moved to [SpiderOak](https://spideroak.com/browse/share/AIMSICD/GitHub/PAPERS/), repo cleaned to ~35 MB - please **refork** our project!
+* Improved: After you have reforked our project, please follow our new instructions in [Building](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Building)
+* Changed: Map pins are now round dots and use `msgLong` instead of `msgShort` for toaster message
+* Changed: Persistent service is now disabled at startup by default to avoid dev annoyance
+* Added: Minor code comments for easier development (Android Developers: submit your pull requests)
+
+---
+
 #### 01.01.2015 - [WIP-Release v0.1.25-alpha-build-6](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b6)
 
 * Improved: **HAPPY NEW YEAR EVERYONE!** We are going to change Release Cycles for you! ;-)
