@@ -6,7 +6,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
-
+/**
+ *
+ * Inflater class used in DB viewer (for Measured cell strength measurements)
+ *
+ * @author Tor Henning Ueland
+ */
 public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<MeasuredCellStrengthCardData> {
 
     @Override

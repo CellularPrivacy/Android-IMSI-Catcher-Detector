@@ -1,7 +1,12 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 import java.text.SimpleDateFormat;
-
+/**
+ *
+ * Data card class used in DB viewer (for Measured cell strength measurements)
+ *
+ * @author Tor Henning Ueland
+ */
 public class MeasuredCellStrengthCardData {
 
     private final long timestamp;
