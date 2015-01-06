@@ -1,9 +1,6 @@
 package com.SecUpwN.AIMSICD.service;
 
 import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.util.Log;
 
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
@@ -23,14 +20,14 @@ import java.util.HashMap;
 public class SignalStrengthTracker {
 
     public static final String TAG = "SignalStrengthMonitor";
-    private static int sleepTimeBetweenSignalRegistration = 30; //seconds
+    private static int sleepTimeBetweenSignalRegistration = 60; //seconds
     private static int sleepTimeBetweenPersistation = 900; //seconds
     private static int minimumIdleTime              = 30; //seconds
     private static int maximumNumberOfDaysSaved     = 60; //days
     private static int mysteriousSignalDifference   = 10; //DB
 
     private HashMap<Integer, Long> lastRegistration = new HashMap<>();
-    private HashMap<Integer, ArrayList<Integer>> toCalculate = new HashMap<>();
+    private ArrayList<SignalResult> dataToPersist = new ArrayList<>();
     private HashMap<Integer, Integer> averageSignalCache = new HashMap<>();
     private long lastPersistTime = 0;
     private long lastMovementDetected = 0l;
@@ -63,12 +60,10 @@ public class SignalStrengthTracker {
             if(lastRegistration.get(cellID) != null) {
                 diff = now - lastRegistration.get(cellID);
             }
-            lastRegistration.put(cellID, now);
-            if(toCalculate.get(cellID) == null) {
-                toCalculate.put(cellID, new ArrayList<Integer>(1));
-            }
             Log.i(TAG, "Scheduling signal strength calculation from cell #" + cellID + " @ " + signalStrength + "DB, last registration was "+diff+"ms ago");
-            toCalculate.get(cellID).add(signalStrength);
+            lastRegistration.put(cellID, now);
+            SignalResult row = new SignalResult(cellID, signalStrength, now);
+            dataToPersist.add(row);
             lastRegistration.put(cellID, now);
         }
 
@@ -85,13 +80,11 @@ public class SignalStrengthTracker {
      */
     private void persistData() {
         mDbHelper.open();
-        for(int cellID : toCalculate.keySet()) {
-            for(int signal : toCalculate.get(cellID)) {
-                mDbHelper.addSignalStrength(cellID, signal, lastRegistration.get(cellID));
-            }
+        for(SignalResult sr : dataToPersist) {
+            mDbHelper.addSignalStrength(sr.cellID, sr.signal, sr.timestamp);
         }
         mDbHelper.close();
-        toCalculate.clear();
+        dataToPersist.clear();
     }
 
     /*
@@ -151,5 +144,20 @@ public class SignalStrengthTracker {
     public void onSensorChanged() {
         //Log.d(TAG, "We are moving...");
         lastMovementDetected = System.currentTimeMillis();
+    }
+
+    /**
+     * Internal class only used here to keep a result object in hand for future persisting in DB
+     */
+    private class SignalResult {
+        public int cellID;
+        public int signal;
+        public long timestamp;
+
+        SignalResult(int cellID, int signal, long timestamp) {
+            this.cellID = cellID;
+            this.signal = signal;
+            this.timestamp = timestamp;
+        }
     }
 }

@@ -1,23 +1,11 @@
 package com.SecUpwN.AIMSICD.fragments;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
-import com.SecUpwN.AIMSICD.adapters.CardItemData;
-import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
-import com.SecUpwN.AIMSICD.adapters.DefaultLocationCardInflater;
-import com.SecUpwN.AIMSICD.adapters.OpenCellIdCardInflater;
-import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
-import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
-import com.SecUpwN.AIMSICD.utils.Helpers;
-
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +13,18 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
+import com.SecUpwN.AIMSICD.adapters.CardItemData;
+import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
+import com.SecUpwN.AIMSICD.adapters.DefaultLocationCardInflater;
+import com.SecUpwN.AIMSICD.adapters.MeasuredCellStrengthCardData;
+import com.SecUpwN.AIMSICD.adapters.MeasuredCellStrengthCardInflater;
+import com.SecUpwN.AIMSICD.adapters.OpenCellIdCardInflater;
+import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
+import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
 
 public class DbViewerFragment extends Fragment {
 
@@ -122,6 +122,8 @@ public class DbViewerFragment extends Fragment {
                             case "Silent SMS":
                                 result =  mDb.getSilentSmsData();
                                 break;
+                            case "Measured cell signal strengths":
+                                result = mDb.getSignalStrengthMeasurementData();
                         }
 
                         BaseInflaterAdapter adapter = null;
@@ -211,6 +213,16 @@ public class DbViewerFragment extends Fragment {
                                 tableData.getString(1), tableData.getString(2),
                                 tableData.getString(3),
                                 tableData.getString(4), tableData.getLong(5));
+                        adapter.addItem(data, false);
+                    }
+                    return adapter;
+                }
+                case "Measured cell signal strengths": {
+                    BaseInflaterAdapter<MeasuredCellStrengthCardData> adapter
+                            = new BaseInflaterAdapter<>(
+                            new MeasuredCellStrengthCardInflater());
+                    while (tableData.moveToNext()) {
+                        MeasuredCellStrengthCardData data = new MeasuredCellStrengthCardData(tableData.getInt(0), tableData.getInt(1), tableData.getLong(2));
                         adapter.addItem(data, false);
                     }
                     return adapter;
