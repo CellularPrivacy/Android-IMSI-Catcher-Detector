@@ -1,7 +1,26 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
-#### 06.01.2015 - [WIP-Release v0.1.25-alpha-build-7](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b7)
+#### 06.01.2015 - [WIP-Release v0.1.25-alpha-build-9](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b9)
+
+* Improved: Better saving of timestamp for signal detection
+* Changed: Re-adjusted some levels for Signal Strength Tracker
+* Added: Implemented Database Viewer for measured Cell Signal Strength
+* Added: Some more code documentation to understand the current changes
+* Fixed: Cell signal strength should now be viewable in Database Viewer
+
+---
+
+#### 06.01.2015 - WIP-Internal v0.1.25-alpha-build-8
+
+* Changed: Logging changed from changed `Log.i` to `Log.v` (4 rows deleted to avoid errors)
+* Added: Logging for CellID to ChangingLAC, found new Cell that is not in OCID
+* Added: Logging for Cell updating in local DB & Cell inserted into local DB
+* Added: Logging for deleting Cell from local DB
+
+---
+
+#### 06.01.2015 - WIP-Internal v0.1.25-alpha-build-7
 
 * News-Alert: It has been **proven** that IMSI-Catchers are currently being deployed and used **at all demonstrations** for and against PEGIDA in Germany to identify participants and spy on their mobile phones!
 * Remember: If you're going to participate in **ANY** demonstration, **LEAVE YOUR PHONE AT HOME!**
