@@ -17,11 +17,9 @@
 
 package com.SecUpwN.AIMSICD.activities;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -31,7 +29,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.CellInfo;
 import android.telephony.PhoneStateListener;
@@ -41,12 +38,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.map.CellTowerItemizedOverlay;
+import com.SecUpwN.AIMSICD.map.CellTowerOverlayItem;
+import com.SecUpwN.AIMSICD.map.MarkerData;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
@@ -58,12 +55,9 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.ResourceProxyImpl;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -545,141 +539,6 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         mMap.getOverlays().remove(mOpenCellIdOverlay);
         mOpenCellIdOverlay.addItems(items);
         mMap.getOverlays().add(mOpenCellIdOverlay);
-    }
-
-    public class MarkerData {
-
-        public final String cellID;
-        public final String lat;
-        public final String lng;
-        public final String lac;
-        private final String mcc;
-        private final String mnc;
-        private final String samples;
-        public final boolean openCellID;
-
-        MarkerData(String cell_id,
-                   String latitude,
-                   String longitude,
-                   String local_area_code,
-                   String mobile_country_code,
-                   String mobile_network_code,
-                   String samples_taken,
-                   boolean openCellID_Data) {
-            cellID = cell_id;
-            lat = latitude;
-            lng = longitude;
-            lac = local_area_code;
-            mcc = mobile_country_code;
-            mnc = mobile_network_code;
-            samples = samples_taken;
-            openCellID = openCellID_Data;
-        }
-
-        public String getMCC() {
-            if (mcc == null) return "000";
-            if (mcc.length() >= 3) return mcc;
-            return ("000" + mcc).substring(mcc.length());
-        }
-
-        public String getMNC() {
-            if (mnc == null) return "00";
-            if (mnc.length() >= 2) return mnc;
-            return ("00" + mnc).substring(mnc.length());
-        }
-
-        public String getPC() {
-            return getMCC() + getMNC();
-        }
-
-        public String getSamples() {
-            if (samples == null) return "0";
-            return samples;
-        }
-    }
-
-    public class CellTowerOverlayItem extends OverlayItem {
-        MarkerData mMarkerData;
-
-        public CellTowerOverlayItem(String aTitle, String aSnippet, GeoPoint aGeoPoint, MarkerData data) {
-            super(aTitle, aSnippet, aGeoPoint);
-            mMarkerData = data;
-        }
-
-        public MarkerData getMarkerData() {
-            return mMarkerData;
-        }
-    }
-
-    public class CellTowerItemizedOverlay extends ItemizedIconOverlay<CellTowerOverlayItem> {
-        protected Context mContext;
-
-        public CellTowerItemizedOverlay(final Context context, final List<CellTowerOverlayItem> aList) {
-            super(context, aList, new OnItemGestureListener<CellTowerOverlayItem>() {
-                @Override public boolean onItemSingleTapUp(final int index, final CellTowerOverlayItem item) {
-                    return false;
-                }
-                @Override public boolean onItemLongPress(final int index, final CellTowerOverlayItem item) {
-                    return false;
-                }
-            } );
-
-            mContext = context;
-        }
-
-        @Override
-        protected boolean onSingleTapUpHelper(final int index, final CellTowerOverlayItem item, final MapView mapView) {
-            // TODO - show as info window
-            AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-            dialog.setTitle(item.getTitle());
-            dialog.setView(getInfoContents(item.getMarkerData()));
-            dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            dialog.show();
-            return true;
-        }
-
-        // Defines the contents of the InfoWindow
-        public View getInfoContents(MarkerData data) {
-
-            TextView tv;
-
-            // Getting view from the layout file info_window_layout
-            View v = getLayoutInflater().inflate(R.layout.marker_info_window, null);
-
-            if (v != null) {
-                if (data != null) {
-                    if (data.openCellID) {
-                        TableRow tr = (TableRow) v.findViewById(R.id.open_cell_label);
-                        tr.setVisibility(View.VISIBLE);
-                    }
-
-                    tv = (TextView) v.findViewById(R.id.cell_id);
-                    tv.setText(data.cellID);
-                    tv = (TextView) v.findViewById(R.id.lac);
-                    tv.setText(data.lac);
-                    tv = (TextView) v.findViewById(R.id.lat);
-                    tv.setText(String.valueOf(data.lat));
-                    tv = (TextView) v.findViewById(R.id.lng);
-                    tv.setText(String.valueOf(data.lng));
-                    tv = (TextView) v.findViewById(R.id.mcc);
-                    tv.setText(data.getMCC());
-                    tv = (TextView) v.findViewById(R.id.mnc);
-                    tv.setText(data.getMNC());
-                    tv = (TextView) v.findViewById(R.id.pc);
-                    tv.setText(data.getPC());
-                    tv = (TextView) v.findViewById(R.id.samples);
-                    tv.setText(data.getSamples());
-                }
-            }
-
-            // Returning the view containing InfoWindow contents
-            return v;
-        }
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
