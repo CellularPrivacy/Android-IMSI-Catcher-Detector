@@ -1,6 +1,12 @@
-package com.stericson.RootTools.containers;
+package com.stericson.RootShell.containers;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -8,7 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/* #ANNOTATIONS @SupportedAnnotationTypes("com.stericson.RootTools.containers.RootClass.Candidate") */
+/* #ANNOTATIONS @SupportedAnnotationTypes("com.stericson.RootShell.containers.RootClass.Candidate") */
 /* #ANNOTATIONS @SupportedSourceVersion(SourceVersion.RELEASE_6) */
 public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
 
@@ -22,7 +28,12 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
     */
 
     static String PATH_TO_DX = "/Users/Chris/Projects/android-sdk-macosx/build-tools/18.0.1/dx";
-    enum READ_STATE { STARTING, FOUND_ANNOTATION; };
+
+    enum READ_STATE {
+        STARTING, FOUND_ANNOTATION;
+    }
+
+    ;
 
     public RootClass(String[] args) throws ClassNotFoundException, NoSuchMethodException,
             IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -41,9 +52,14 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
         classConstructor.newInstance(actualArgs);
     }
 
-    public @interface Candidate {};
+    public @interface Candidate {
+
+    }
+
+    ;
 
     public class RootArgs {
+
         public String args[];
     }
 
@@ -60,6 +76,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
     static public class AnnotationsFinder {
 
         private final String AVOIDDIRPATH = "stericson" + File.separator + "RootTools" + File.separator;
+
         private List<File> classFiles;
 
         public AnnotationsFinder() throws IOException {
@@ -68,50 +85,49 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
             lookup(new File("src"), classFiles);
             System.out.println("Done discovering annotations. Building jar file.");
             File builtPath = getBuiltPath();
-            if(null != builtPath) {
+            if (null != builtPath) {
                 // Android! Y U no have com.google.common.base.Joiner class?
                 String rc1 = "com" + File.separator
                         + "stericson" + File.separator
-                        + "RootTools" + File.separator
+                        + "RootShell" + File.separator
                         + "containers" + File.separator
                         + "RootClass.class";
                 String rc2 = "com" + File.separator
                         + "stericson" + File.separator
-                        + "RootTools" + File.separator
+                        + "RootShell" + File.separator
                         + "containers" + File.separator
                         + "RootClass$RootArgs.class";
                 String rc3 = "com" + File.separator
                         + "stericson" + File.separator
-                        + "RootTools" + File.separator
+                        + "RootShell" + File.separator
                         + "containers" + File.separator
                         + "RootClass$AnnotationsFinder.class";
                 String rc4 = "com" + File.separator
                         + "stericson" + File.separator
-                        + "RootTools" + File.separator
+                        + "RootShell" + File.separator
                         + "containers" + File.separator
                         + "RootClass$AnnotationsFinder$1.class";
                 String rc5 = "com" + File.separator
                         + "stericson" + File.separator
-                        + "RootTools" + File.separator
+                        + "RootShell" + File.separator
                         + "containers" + File.separator
                         + "RootClass$AnnotationsFinder$2.class";
-                String [] cmd;
+                String[] cmd;
                 boolean onWindows = (-1 != System.getProperty("os.name").toLowerCase().indexOf("win"));
-                if(onWindows) {
+                if (onWindows) {
                     StringBuilder sb = new StringBuilder(
                             " " + rc1 + " " + rc2 + " " + rc3 + " " + rc4 + " " + rc5
                     );
-                    for(File file:classFiles) {
+                    for (File file : classFiles) {
                         sb.append(" " + file.getPath());
                     }
-                    cmd = new String[] {
+                    cmd = new String[]{
                             "cmd", "/C",
                             "jar cvf" +
-                            " anbuild.jar" +
-                            sb.toString()
+                                    " anbuild.jar" +
+                                    sb.toString()
                     };
-                }
-                else {
+                } else {
                     ArrayList<String> al = new ArrayList<String>();
                     al.add("jar");
                     al.add("cf");
@@ -121,7 +137,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                     al.add(rc3);
                     al.add(rc4);
                     al.add(rc5);
-                    for(File file:classFiles) {
+                    for (File file : classFiles) {
                         al.add(file.getPath());
                     }
                     cmd = al.toArray(new String[al.size()]);
@@ -130,24 +146,24 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                 jarBuilder.directory(builtPath);
                 try {
                     jarBuilder.start().waitFor();
-                } catch (IOException e) {} catch (InterruptedException e) {}
-                
+                } catch (IOException e) {
+                } catch (InterruptedException e) {
+                }
+
                 File rawFolder = new File("res/raw");
                 if (!rawFolder.exists()) {
-                	rawFolder.mkdirs();
+                    rawFolder.mkdirs();
                 }
-                
-                
+
                 System.out.println("Done building jar file. Creating dex file.");
-                if(onWindows) {
-                    cmd = new String[] {
+                if (onWindows) {
+                    cmd = new String[]{
                             "cmd", "/C",
                             "dx --dex --output=res/raw/anbuild.dex "
-                            + builtPath + File.separator + "anbuild.jar"
+                                    + builtPath + File.separator + "anbuild.jar"
                     };
-                }
-                else {
-                    cmd = new String[] {
+                } else {
+                    cmd = new String[]{
                             getPathToDx(),
                             "--dex",
                             "--output=res/raw/anbuild.dex",
@@ -157,7 +173,9 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                 ProcessBuilder dexBuilder = new ProcessBuilder(cmd);
                 try {
                     dexBuilder.start().waitFor();
-                } catch (IOException e) {} catch (InterruptedException e) {}
+                } catch (IOException e) {
+                } catch (InterruptedException e) {
+                }
             }
             System.out.println("All done. ::: anbuild.dex should now be in your project's res/raw/ folder :::");
         }
@@ -165,15 +183,14 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
         protected void lookup(File path, List<File> fileList) {
             String desourcedPath = path.toString().replace("src/", "");
             File[] files = path.listFiles();
-            for(File file:files) {
-                if(file.isDirectory()) {
-                    if(-1 == file.getAbsolutePath().indexOf(AVOIDDIRPATH)) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    if (-1 == file.getAbsolutePath().indexOf(AVOIDDIRPATH)) {
                         lookup(file, fileList);
                     }
-                }
-                else {
-                    if(file.getName().endsWith(".java")) {
-                        if(hasClassAnnotation(file)) {
+                } else {
+                    if (file.getName().endsWith(".java")) {
+                        if (hasClassAnnotation(file)) {
                             final String fileNamePrefix = file.getName().replace(".java", "");
                             final File compiledPath = new File(getBuiltPath().toString() + File.separator + desourcedPath);
                             File[] classAndInnerClassFiles = compiledPath.listFiles(new FilenameFilter() {
@@ -182,8 +199,8 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                                     return filename.startsWith(fileNamePrefix);
                                 }
                             });
-                            for(final File matchingFile:classAndInnerClassFiles) {
-                                fileList.add(new File(desourcedPath + File.separator +  matchingFile.getName()));
+                            for (final File matchingFile : classAndInnerClassFiles) {
+                                fileList.add(new File(desourcedPath + File.separator + matchingFile.getName()));
                             }
 
                         }
@@ -198,19 +215,19 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line;
-                while(null != (line = reader.readLine())) {
-                    switch(readState) {
+                while (null != (line = reader.readLine())) {
+                    switch (readState) {
                         case STARTING:
-                            if(-1 < line.indexOf("@RootClass.Candidate"))
+                            if (-1 < line.indexOf("@RootClass.Candidate")) {
                                 readState = READ_STATE.FOUND_ANNOTATION;
+                            }
                             break;
                         case FOUND_ANNOTATION:
                             Matcher m = p.matcher(line);
-                            if(m.find()) {
+                            if (m.find()) {
                                 System.out.println(" Found annotated class: " + m.group(0));
                                 return true;
-                            }
-                            else {
+                            } else {
                                 System.err.println("Error: unmatched annotation in " +
                                         file.getAbsolutePath());
                                 readState = READ_STATE.STARTING;
@@ -228,46 +245,46 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
 
         protected String getPathToDx() throws IOException {
             String androidHome = System.getenv("ANDROID_HOME");
-            if(null == androidHome) {
+            if (null == androidHome) {
                 throw new IOException("Error: you need to set $ANDROID_HOME globally");
             }
             String dxPath = null;
             File[] files = new File(androidHome + File.separator + "build-tools").listFiles();
             int recentSdkVersion = 0;
-            for(File file:files) {
-                
-            	String fileName = null;
-            	if (file.getName().contains("-")) {
-            		String[] splitFileName = file.getName().split("-");
-            		if (splitFileName[1].contains("W")) {
-            			char[] fileNameChars = splitFileName[1].toCharArray();
-            			fileName = String.valueOf(fileNameChars[0]);
-            		} else {
-            			fileName = splitFileName[1];
-            		}
-            	} else {
-            		fileName = file.getName();
-            	}
-            	
-            	int sdkVersion;
-                
+            for (File file : files) {
+
+                String fileName = null;
+                if (file.getName().contains("-")) {
+                    String[] splitFileName = file.getName().split("-");
+                    if (splitFileName[1].contains("W")) {
+                        char[] fileNameChars = splitFileName[1].toCharArray();
+                        fileName = String.valueOf(fileNameChars[0]);
+                    } else {
+                        fileName = splitFileName[1];
+                    }
+                } else {
+                    fileName = file.getName();
+                }
+
+                int sdkVersion;
+
                 String[] sdkVersionBits = fileName.split("[.]");
                 sdkVersion = Integer.parseInt(sdkVersionBits[0]) * 10000;
-                if(sdkVersionBits.length > 1) {
+                if (sdkVersionBits.length > 1) {
                     sdkVersion += Integer.parseInt(sdkVersionBits[1]) * 100;
-                    if(sdkVersionBits.length > 2) {
+                    if (sdkVersionBits.length > 2) {
                         sdkVersion += Integer.parseInt(sdkVersionBits[2]);
                     }
                 }
-                if(sdkVersion > recentSdkVersion) {
+                if (sdkVersion > recentSdkVersion) {
                     String tentativePath = file.getAbsolutePath() + File.separator + "dx";
-                    if(new File(tentativePath).exists()) {
-                    recentSdkVersion = sdkVersion;
+                    if (new File(tentativePath).exists()) {
+                        recentSdkVersion = sdkVersion;
                         dxPath = tentativePath;
                     }
                 }
             }
-            if(dxPath == null) {
+            if (dxPath == null) {
                 throw new IOException("Error: unable to find dx binary in $ANDROID_HOME");
             }
             return dxPath;
@@ -277,20 +294,20 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
             File foundPath = null;
 
             File ideaPath = new File("out" + File.separator + "production"); // IntelliJ
-            if(ideaPath.isDirectory()) {
+            if (ideaPath.isDirectory()) {
                 File[] children = ideaPath.listFiles(new FileFilter() {
                     @Override
                     public boolean accept(File pathname) {
                         return pathname.isDirectory();
                     }
                 });
-                if(children.length > 0) {
+                if (children.length > 0) {
                     foundPath = new File(ideaPath.getAbsolutePath() + File.separator + children[0].getName());
                 }
             }
-            if(null == foundPath) {
+            if (null == foundPath) {
                 File eclipsePath = new File("bin" + File.separator + "classes"); // Eclipse IDE
-                if(eclipsePath.isDirectory()) {
+                if (eclipsePath.isDirectory()) {
                     foundPath = eclipsePath;
                 }
             }
@@ -299,14 +316,13 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
         }
 
 
-    };
+    }
 
-    public static void main (String [] args) {
+    public static void main(String[] args) {
         try {
-            if(args.length == 0) {
+            if (args.length == 0) {
                 new AnnotationsFinder();
-            }
-            else {
+            } else {
                 new RootClass(args);
             }
         } catch (Exception e) {
