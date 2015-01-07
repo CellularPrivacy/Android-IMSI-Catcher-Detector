@@ -6,6 +6,7 @@
         <activity
                 android:name="com.stericson.RootShellTests.SanityCheckRootShell"
                 android:label="@string/app_name">
+
         </activity>
 
     </application>

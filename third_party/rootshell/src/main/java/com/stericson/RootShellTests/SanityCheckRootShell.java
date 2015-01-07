@@ -314,7 +314,7 @@ public class SanityCheckRootShell extends Activity
                     @Override
                     public void commandTerminated(int id, String reason)
                     {
-                        synchronized (SanityCheckRootShell.this)
+                        synchronized (com.stericson.RootShellTests.SanityCheckRootShell.this)
                         {
 
                             _catch = true;
@@ -337,7 +337,7 @@ public class SanityCheckRootShell extends Activity
                     @Override
                     public void commandCompleted(int id, int exitCode)
                     {
-                        synchronized (SanityCheckRootShell.this)
+                        synchronized (com.stericson.RootShellTests.SanityCheckRootShell.this)
                         {
                             _catch = true;
 

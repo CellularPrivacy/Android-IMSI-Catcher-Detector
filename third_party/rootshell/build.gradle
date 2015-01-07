@@ -2,27 +2,17 @@ apply plugin: 'android-library'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '21.1.1'
+    buildToolsVersion "21.1.2"
+
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 11
         targetSdkVersion 19
     }
-    sourceSets {
-        main {
-            assets.srcDirs = ['src/main/assets']
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-    productFlavors {
-    }
-
-    lintOptions {
-        abortOnError false
-    }
-}
-
-dependencies {
 }
