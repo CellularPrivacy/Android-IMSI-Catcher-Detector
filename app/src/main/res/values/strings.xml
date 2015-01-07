@@ -113,8 +113,7 @@
     <string name="aimsicd_about_info">Android IMSI-Catcher Detector (AIMSICD)</string>
     <string name="aimsicd_about_info3">Android-based project to detect and avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks.</string>
     <string name="about_github">AIMSICD on GitHub</string>
-    <string name="about_wiki">Full Documentation (WIKI)</string>
-    <string name="about_donations">Anonymous Donations</string>
+    <string name="about_wiki">Documentation (WIKI)</string>
     <string name="about_poc">THIS IS A PoC</string>
     <string name="about_disclaimer">DISCLAIMER</string>
     <string name="about_releases">RELEASES</string>
@@ -131,7 +130,6 @@
     <string name="aimsicd_license_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE</string>
     <string name="aimsicd_credits_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS</string>
     <string name="status_icons_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons</string>
-    <string name="aimsicd_donations_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations</string>
 
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Network ID:</string>
