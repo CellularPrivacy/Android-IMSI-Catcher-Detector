@@ -230,7 +230,6 @@ public class AtCommandFragment extends Fragment {
          * and implement the callback commandFinished/commandTerminated to determine when to continue on.
          */
         RootShell.handlerEnabled = false;
-        RootShell.debugMode = true;
 
         // Check for root access
         boolean root = RootShell.isAccessGiven();
