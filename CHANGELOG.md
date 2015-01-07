@@ -1,6 +1,18 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 07.01.2015 - WIP-Internal v0.1.25-alpha-build-11
+
+* Improved: Log View will be immediately cleared when pressing button
+* Improved: Shorter time taken to plot OpenCellId markers on map
+* Removed: Hybrid and Satellite Maps have been removed to avoid bugs
+* Changed: Refactored code out of `MapViewerOsmDroid` for easier maintenance
+* Added: More location providers added to improve location acquire time
+* Added: `PC` and `MNC/MCC` zero-padding has been implemented
+
+
+---
+
 #### 07.01.2015 - WIP-Internal v0.1.25-alpha-build-10
 
 * Improved: Checked App against spelling errors and also erase some
