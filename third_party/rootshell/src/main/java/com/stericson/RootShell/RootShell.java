@@ -268,9 +268,9 @@ public class RootShell {
      *
      * @param shellPath a <code>String</code> to Indicate the path to the shell that you want to open.
      * @param timeout   an <code>int</code> to Indicate the length of time before giving up on opening a shell.
-     * @throws java.util.concurrent.TimeoutException
+     * @throws TimeoutException
      * @throws com.stericson.RootShell.exceptions.RootDeniedException
-     * @throws java.io.IOException
+     * @throws IOException
      */
     public static Shell getCustomShell(String shellPath, int timeout) throws IOException, TimeoutException, RootDeniedException
     {
@@ -349,7 +349,7 @@ public class RootShell {
 
     /**
      * @return <code>true</code> if your app has been given root access.
-     * @throws java.util.concurrent.TimeoutException if this operation times out. (cannot determine if access is given)
+     * @throws TimeoutException if this operation times out. (cannot determine if access is given)
      */
     public static boolean isAccessGiven() {
         final Set<String> ID = new HashSet<String>();

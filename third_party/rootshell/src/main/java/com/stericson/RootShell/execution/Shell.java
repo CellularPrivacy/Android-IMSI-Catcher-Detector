@@ -93,7 +93,7 @@ public class Shell {
 
     private ShellType shellType = null;
 
-    private ShellContext shellContext = ShellContext.NORMAL;
+    private ShellContext shellContext = Shell.ShellContext.NORMAL;
 
     private String error = "";
 

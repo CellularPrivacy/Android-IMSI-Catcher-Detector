@@ -1,2 +1,2 @@
-include ':app', ':RootShell'
-project(':RootShell').projectDir = new File('third_party/RootShell')
+include ':app'
+include ':third_party:RootShell'
