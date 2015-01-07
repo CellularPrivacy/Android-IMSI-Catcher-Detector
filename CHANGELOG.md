@@ -1,6 +1,17 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 07.01.2015 - WIP-Internal v0.1.25-alpha-build-10
+
+* Improved: Checked App against spelling errors and also erase some
+* Removed: Bad map options have been disabled by commenting out code
+* Changed: Many text string changes for clarification and simplicity
+* Changed: Signal strength and date strings changed in DBV for clarity
+* Changed: LAC detection strings have also been simplified in the log
+* Added: Placeholders for upcoming UI/UX redesign have been added
+
+---
+
 #### 06.01.2015 - [WIP-Release v0.1.25-alpha-build-9](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b9)
 
 * Improved: Better saving of timestamp for signal detection
