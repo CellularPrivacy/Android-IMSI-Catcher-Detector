@@ -294,6 +294,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         return true;
                     }
                 }
+
                 if (loc != null) {
                     Helpers.msgLong(this,
                             "Contacting opencellid.org for data...\nThis may take up to a minute.");
@@ -306,6 +307,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     Helpers.msgLong(mContext,
                             "Unable to determine your last location. \nEnable Location Services and try again.");
                 }
+
                 return true;
             }
             default:
@@ -318,6 +320,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
      * only entries which have a location (lon, lat) are used.
      */
     private void loadEntries() {
+
         new AsyncTask<Void,Void,GeoPoint>() {
             @Override
             protected GeoPoint doInBackground(Void... voids) {
@@ -326,6 +329,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 int color;
 
                 mOpenCellIdOverlay.removeAllItems();
+                loadOpenCellIDMarkers();
+
                 LinkedList<CellTowerOverlayItem> items = new LinkedList<>();
 
                 mDbHelper.open();
@@ -501,15 +506,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         }
                     }
                 }
-
-                new Thread() {
-                    @Override
-                    public void run() {
-                        loadOpenCellIDMarkers();
-                    }
-                }.start();
             }
-        }.execute();
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private void loadOpenCellIDMarkers() {
