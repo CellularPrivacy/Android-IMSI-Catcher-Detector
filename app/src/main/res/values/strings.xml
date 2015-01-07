@@ -6,7 +6,7 @@
     <string name="device_info">Phone/SIM Details</string>
     <string name="map_view">Antenna Map Viewer</string>
     <string name="db_viewer">Database Viewer</string>
-    <string name="strength">Signal strength</string>
+    <string name="strength">Signal Strength</string>
     <string name="quit">Quit</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Cancel</string>
@@ -103,8 +103,8 @@
     <string name="network_roaming">Roaming:</string>
     <string name="network_lte_timing_advance">TA (LTE):</string>
     <string name="button_refresh">Refresh</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_open">Open Navigation Drawer</string>
+    <string name="drawer_close">Close Navigation Drawer</string>
     <string name="network_psc">PSC:</string>
 
     <!-- ABOUT LAYOUT -->
@@ -154,12 +154,12 @@
     <string name="pref_enable_cell_key">pref_enable_cell</string>
     <string name="pref_enable_cell_title">Cell Tracking</string>
     <string name="pref_enable_cell_summ">Enable Automatic Cell Tracking</string>
-    <string name="pref_femto_title">FemtoCell Detection</string>
+    <string name="pref_femto_title">Femtocell Detection</string>
     <string name="pref_femto_summ">(currently CDMA Phones ONLY)</string>
     <string name="pref_femto_detection_key">pref_femto_detection</string>
-    <string name="pref_femto_action_title">FemtoCell Protection</string>
+    <string name="pref_femto_action_title">Femtocell Protection</string>
     <string name="pref_femto_action_key">pref_femto_action</string>
-    <string name="pref_femto_action_summ">Enforce Airplane Mode when FemtoCell detected (re-enable network manually)</string>
+    <string name="pref_femto_action_summ">Enforce Airplane Mode when Femtocell detected (re-enable network manually)</string>
     <string name="pref_ui_title">Interface Settings</string>
     <string name="pref_ui_icons_title">Icons</string>
     <string name="pref_ui_icons_key">pref_ui_icons</string>
