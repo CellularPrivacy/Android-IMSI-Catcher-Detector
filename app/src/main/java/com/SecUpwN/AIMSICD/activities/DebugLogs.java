@@ -141,9 +141,6 @@ public class DebugLogs extends BaseActivity {
             @Override
             public void run() {
                 // Send Error Log
-                // TODO - clear log using 'logcat -c' on app startup
-                // EVA:  just make sure you specify each buffer to be cleared:
-                // logcat -c -b main -b system -b radio -b events
                 try {
                     String log = getLogs();
 
@@ -186,8 +183,6 @@ public class DebugLogs extends BaseActivity {
      * @return
      * @throws IOException
      */
-    // EVA:  make sure you specify each buffer to be cleared:
-    // logcat -c -b main -b system -b radio -b events
     private void clearLogs() throws IOException {
         new Thread() {
             @Override
@@ -197,6 +192,13 @@ public class DebugLogs extends BaseActivity {
                 } catch (Exception e) {
                     Log.e("DebugLogs", "Error clearing logs", e);
                 }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        logView.setText("");
+                    }
+                });
             }
         }.start();
     }
