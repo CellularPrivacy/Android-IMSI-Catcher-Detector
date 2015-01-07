@@ -202,6 +202,7 @@
     <string name="lac_label">LAC: </string>
     <string name="mcc_label">MCC: </string>
     <string name="mnc_label">MNC: </string>
+    <string name="pc_label">PC: </string>
     <string name="samples_label">Samples: </string>
     <string name="open_cell_id_label">OpenCellID Data</string>
     <string name="lat_label">Lat: </string>
