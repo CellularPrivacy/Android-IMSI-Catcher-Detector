@@ -12,7 +12,7 @@ public class MeasuredCellStrengthCardData {
     private final long timestamp;
     private final int signal;
     private final int cellID;
-    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public MeasuredCellStrengthCardData(int cellID, int signal, long timestamp) {
         this.cellID = cellID;
@@ -21,14 +21,15 @@ public class MeasuredCellStrengthCardData {
     }
 
     public String getCellID() {
-        return "Cell ID: "+cellID;
+        return "CID: "+cellID;
     }
 
+    // This is probably not dBm but ASU ?
     public String getSignal() {
-        return"Signal Strength: "+signal+"DB";
+        return"RSS: "+signal+" dBm";
     }
 
     public String getTimestamp() {
-        return "Recorded: "+formatter.format(timestamp);
+        return "Timestamp: "+formatter.format(timestamp);
     }
 }

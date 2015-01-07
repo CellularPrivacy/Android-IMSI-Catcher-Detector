@@ -220,14 +220,17 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
             case 0:
                 mMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE); //setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 break;
-            case 1:
-                mMap.setTileSource(TileSourceFactory.MAPNIK); //.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                break;
-            case 2:
-                mMap.setTileSource(TileSourceFactory.MAPQUESTAERIAL); //.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                break;
+            //case 1:
+            //    mMap.setTileSource(TileSourceFactory.MAPNIK); //.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            //    break;
+            //case 2:
+            //    mMap.setTileSource(TileSourceFactory.MAPQUESTAERIAL); //.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            //    break;
             case 3:
                 mMap.setTileSource(TileSourceFactory.CYCLEMAP); //.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                break;
+            default:
+                mMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE); //setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 break;
         }
     }
@@ -236,8 +239,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
      * Initialises the Map and sets initial options
      */
     private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the
-        // map.
+        // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             mMap = (MapView) findViewById(R.id.mapview);
 
