@@ -50,6 +50,10 @@ public class LocationTracker {
         lastKnownLocation();
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
                 GPS_MIN_UPDATE_DISTANCE, mLocationListener);
+        lm.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, GPS_MIN_UPDATE_TIME,
+                GPS_MIN_UPDATE_DISTANCE, mLocationListener);
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, GPS_MIN_UPDATE_TIME,
+                GPS_MIN_UPDATE_DISTANCE, mLocationListener);
     }
 
     public void stop() {
