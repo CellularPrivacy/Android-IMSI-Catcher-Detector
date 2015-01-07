@@ -75,7 +75,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
     // and immediately re-generate the necessary jar file.
     static public class AnnotationsFinder {
 
-        private final String AVOIDDIRPATH = "stericson" + File.separator + "RootTools" + File.separator;
+        private final String AVOIDDIRPATH = "stericson" + File.separator + "RootShell" + File.separator;
 
         private List<File> classFiles;
 

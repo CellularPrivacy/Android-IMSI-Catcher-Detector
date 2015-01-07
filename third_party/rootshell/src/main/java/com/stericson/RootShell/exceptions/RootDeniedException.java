@@ -1,5 +1,5 @@
 /* 
- * This file is part of the RootShell Project: http://code.google.com/p/roottools/
+ * This file is part of the RootShell Project: https://github.com/Stericson/RootShell
  *  
  * Copyright (c) 2014 Stephen Erickson, Chris Ravenscroft
  *  

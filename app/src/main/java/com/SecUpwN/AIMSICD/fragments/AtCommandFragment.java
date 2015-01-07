@@ -427,7 +427,7 @@ public class AtCommandFragment extends Fragment {
     }
 
     /**
-     * This below method is part of the RootTools Project: http://code.google.com/p/roottools/
+     * This below method is part of the RootTools Project: https://github.com/Stericson/RootTools
      * Copyright (c) 2012 Stephen Erickson, Chris Ravenscroft, Dominik Schuermann, Adam Shanks
      *
      * Slightly modified commandWait method as found in RootToolsInternalMethods.java to utilise
