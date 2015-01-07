@@ -330,12 +330,14 @@ public class AIMSICDDbAdapter {
 
         while (cursor.moveToNext()) {
             if (cell.getLAC() != cursor.getInt(0)) {
-                 Log.i(TAG, "ALERT!! CHANGING LAC: " + cell.getCID() + " Current LAC: " + cell.getLAC() +
-                        " Database LAC: " + cursor.getInt(0));
+                 Log.i(TAG, "ALERT: Changing LAC on CID: " + cell.getCID()
+                         + " Current LAC: " + cell.getLAC()
+                         + " Database LAC: " + cursor.getInt(0));
                 cursor.close();
                 return false;
-            } else {  Log.v(TAG, "LAC checked - no changes: " + cell.getCID() + " - "+ cell.getLAC() +
-                    " LAC (db): " + cursor.getInt(0) );
+            } else {
+                Log.v(TAG, "LAC checked - no changes: " + cell.getCID() + " - "+ cell.getLAC() +
+                    " LAC (DB): " + cursor.getInt(0) );
             }
         }
 

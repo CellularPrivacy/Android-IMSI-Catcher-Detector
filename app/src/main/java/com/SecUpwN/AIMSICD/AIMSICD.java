@@ -614,6 +614,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     /**
      * Cell Information Monitoring - Enable/Disable
      */
+    // TODO: Wrong Spelling, should be "monitorcell"
     private void monitercell() {
         if (mAimsicdService.isMonitoringCell()) {
             mAimsicdService.setCellMonitoring(false);
