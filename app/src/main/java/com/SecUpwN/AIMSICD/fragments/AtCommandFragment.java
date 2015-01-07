@@ -2,10 +2,9 @@ package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.stericson.RootTools.RootTools;
-import com.stericson.RootTools.execution.Command;
-import com.stericson.RootTools.execution.CommandCapture;
-import com.stericson.RootTools.execution.Shell;
+import com.stericson.RootShell.RootShell;
+import com.stericson.RootShell.execution.Command;
+import com.stericson.RootShell.execution.Shell;
 
 import android.app.Activity;
 import android.content.Context;
@@ -215,20 +214,38 @@ public class AtCommandFragment extends Fragment {
 
     private int initSerialDevice() {
 
+        /**
+         * Because of how RootShell is being used the handler has to be disabled.
+         *
+         * With the handler disabled absolutely NO UI work can be done in the callback methods
+         * since they will be called on a separate thread.
+         *
+         * To work around this, either:
+         *
+         * Execute all Shell commands in a thread, such as AsyncTask
+         *
+         * OR
+         *
+         * Stop using commandWait (which is a no no...you should never sleep on the main UI thread)
+         * and implement the callback commandFinished/commandTerminated to determine when to continue on.
+         */
+        RootShell.handlerEnabled = false;
+        RootShell.debugMode = true;
+
         // Check for root access
-        boolean root = RootTools.isAccessGiven();
+        boolean root = RootShell.isAccessGiven();
         if (!root) {
             return ROOT_UNAVAILABLE;
         }
 
         // Check if Busybox is installed
-        boolean busybox = RootTools.isBusyboxAvailable();
+        boolean busybox = RootShell.isBusyboxAvailable();
         if (!busybox) {
             return BUSYBOX_UNAVAILABLE;
         }
 
         try {
-            shell = RootTools.getShell(true);
+            shell = RootShell.getShell(true);
 
             mAtResponse.setText("*** Setting Up... Ignore any errors. ***\n");
 
@@ -250,7 +267,7 @@ public class AtCommandFragment extends Fragment {
             // MTK: Check for ATCI devices and add found location to the serial device list
             // XMM: Unknown
             // QC: /dev/smd[0-7]
-            CommandCapture cmd = new CommandCapture(0, "\\ls /dev/radio | grep atci*") {
+            Command cmd = new Command(0, "\\ls /dev/radio | grep atci*") {
 
                 @Override
                 public void commandOutput(int id, String line) {
@@ -261,6 +278,8 @@ public class AtCommandFragment extends Fragment {
                             mAtResponse.append("Found: " + line.trim());
                         }
                     }
+
+                    super.commandOutput(id, line);
                 }
             };
 
@@ -270,7 +289,7 @@ public class AtCommandFragment extends Fragment {
             // Now try XMM/XGOLD modem config
             File xgold = new File("/system/etc/ril_xgold_radio.cfg");
             if (xgold.exists() && xgold.isFile()) {
-                cmd = new CommandCapture(1, "cat /system/etc/ril_xgold_radio.cfg | "
+                cmd = new Command(1, "cat /system/etc/ril_xgold_radio.cfg | "
                         + "grep -E \"atport*|dataport*\"") {
 
                     @Override
@@ -282,6 +301,9 @@ public class AtCommandFragment extends Fragment {
                                 mAtResponse.append(line.substring(place, line.length() - 1));
                             }
                         }
+
+                        super.commandOutput(id, line);
+
                     }
                 };
 
@@ -314,7 +336,7 @@ public class AtCommandFragment extends Fragment {
     }
 
     private void setSerialDevice() {
-        CommandCapture cmd = new CommandCapture(SET_DEVICE, "cat " + mSerialDevice + " \u0026\n");
+        Command cmd = new Command(SET_DEVICE, "cat " + mSerialDevice + " \u0026\n");
         try {
             shell.add(cmd);
             commandWait(shell, cmd);
@@ -325,25 +347,39 @@ public class AtCommandFragment extends Fragment {
     }
 
     private void executeAT() {
+
         if (mAtCommand.getText() != null) {
+
+            /**
+             * Can't touch the main UI from the callback,
+             * add the response to the SB and then add to the main UI.
+             *
+             * See note at method "initSerialDevice"
+             */
+            final StringBuilder response = new StringBuilder();
+
             try {
                 // E:V:A  It seem that MTK devices doesn't need "\r" but QC devices do.
                 // We need a device-type check here, perhaps: gsm.version.ril-impl.
-                CommandCapture cmd = new CommandCapture(EXECUTE_AT,
+                Command cmd = new Command(EXECUTE_AT,
                         "echo -e " + mAtCommand.getText().toString() +"\r >" + mSerialDevice + "\n") {
 
                     @Override
                     public void commandOutput(int id, String line) {
                         if (id == EXECUTE_AT) {
                             if (!line.trim().equals("")) {
-                                mAtResponse.append(line + "\n");
+                                response.append(line + "\n");
                             }
                         }
+
+                        super.commandOutput(id, line);
                     }
                 };
                 Log.i("AIMSICD", "Trying to executeAT: " + cmd);
                 shell.add(cmd);
                 commandWait(shell, cmd);
+
+                mAtResponse.append(response.toString());
             } catch (Exception e) {
                 Log.e("AIMSICD", "Failed to executeAT: " + e);
             }
@@ -353,17 +389,28 @@ public class AtCommandFragment extends Fragment {
 
     private void executeCommand() {
         if (mAtCommand.getText() != null) {
+
+            /**
+             * Can't touch the main UI from the callback,
+             * add the response to the SB and then add to the main UI.
+             *
+             * See note at method "initSerialDevice"
+             */
+            final StringBuilder response = new StringBuilder();
+
             try {
-                CommandCapture cmd = new CommandCapture(EXECUTE_COMMAND,
+                Command cmd = new Command(EXECUTE_COMMAND,
                         mAtCommand.getText().toString() + "\n") {
 
                     @Override
                     public void commandOutput(int id, String line) {
                         if (id == EXECUTE_COMMAND) {
                             if (!line.trim().equals("")) {
-                                mAtResponse.append(line + "\n");
+                                response.append(line + "\n");
                             }
                         }
+
+                        super.commandOutput(id, line);
                     }
 
                 };
@@ -371,6 +418,9 @@ public class AtCommandFragment extends Fragment {
                 Log.i("AIMSICD", "Trying to executeCommand: " + cmd);
                 shell.add(cmd);
                 commandWait(shell, cmd);
+
+                mAtResponse.append(response.toString());
+
             } catch (Exception e) {
                 Log.e("AIMSICD", "Failed to executeCommand: " + e);
             }

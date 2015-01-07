@@ -1,1 +1,2 @@
-include ':app', ':third_party:RootTools'
+include ':app', ':RootShell'
+project(':RootShell').projectDir = new File('third_party/RootShell')
