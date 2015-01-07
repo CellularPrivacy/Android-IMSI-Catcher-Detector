@@ -84,10 +84,6 @@ public class AboutFragment extends Fragment {
             //Credits Link
             tv = v.findViewById(R.id.aimsicd_credits_link);
             setLink(tv, R.string.aimsicd_credits_link);
-
-            //Donations Link
-            tv = v.findViewById(R.id.aimsicd_donations_link);
-            setLink(tv, R.string.aimsicd_donations_link);
         }
         return v;
     }
