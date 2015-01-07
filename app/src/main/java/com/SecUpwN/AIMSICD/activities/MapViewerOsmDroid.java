@@ -63,6 +63,7 @@ import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -552,9 +553,9 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         public final String lat;
         public final String lng;
         public final String lac;
-        public final String mcc;
-        public final String mnc;
-        public final String samples;
+        private final String mcc;
+        private final String mnc;
+        private final String samples;
         public final boolean openCellID;
 
         MarkerData(String cell_id,
@@ -573,6 +574,27 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
             mnc = mobile_network_code;
             samples = samples_taken;
             openCellID = openCellID_Data;
+        }
+
+        public String getMCC() {
+            if (mcc == null) return "000";
+            if (mcc.length() >= 3) return mcc;
+            return ("000" + mcc).substring(mcc.length());
+        }
+
+        public String getMNC() {
+            if (mnc == null) return "00";
+            if (mnc.length() >= 2) return mnc;
+            return ("00" + mnc).substring(mnc.length());
+        }
+
+        public String getPC() {
+            return getMCC() + getMNC();
+        }
+
+        public String getSamples() {
+            if (samples == null) return "0";
+            return samples;
         }
     }
 
@@ -645,11 +667,13 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     tv = (TextView) v.findViewById(R.id.lng);
                     tv.setText(String.valueOf(data.lng));
                     tv = (TextView) v.findViewById(R.id.mcc);
-                    tv.setText(data.mcc);
+                    tv.setText(data.getMCC());
                     tv = (TextView) v.findViewById(R.id.mnc);
-                    tv.setText(data.mnc);
+                    tv.setText(data.getMNC());
+                    tv = (TextView) v.findViewById(R.id.pc);
+                    tv.setText(data.getPC());
                     tv = (TextView) v.findViewById(R.id.samples);
-                    tv.setText(data.samples);
+                    tv.setText(data.getSamples());
                 }
             }
 
