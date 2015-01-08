@@ -1,6 +1,15 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 08.01.2015 - WIP-Internal v0.1.25-alpha-build-12
+
+* Removed: Button for Anonymous Donations has been removed as it is not needed
+* Changed: Switched from RootTools to RootShell to slim down and refresh code
+* Updated: Many smaller updates of strings for even more clearness on meanings
+* Added: New map pins to reflect new connection defintions from the Map Viewer
+
+---
+
 #### 07.01.2015 - WIP-Internal v0.1.25-alpha-build-11
 
 * Improved: Log View will be immediately cleared when pressing button
