@@ -10,47 +10,34 @@ import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
 
+import org.osmdroid.bonuspack.overlays.Marker;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.ItemizedIconOverlay;
-
-import java.util.List;
+import org.osmdroid.views.overlay.OverlayItem;
 
 /**
- * Overlay class for OSMDroid map to display BTS pins
+ * BTS pin item
  */
-public class CellTowerItemizedOverlay extends ItemizedIconOverlay<CellTowerOverlayItem> {
-    protected Context mContext;
+public class CellTowerMarker extends Marker {
+    private Context mContext;
+    private MarkerData mMarkerData;
 
-    public CellTowerItemizedOverlay(final Context context, final List<CellTowerOverlayItem> aList) {
-        super(context, aList, new OnItemGestureListener<CellTowerOverlayItem>() {
-            @Override
-            public boolean onItemSingleTapUp(final int index, final CellTowerOverlayItem item) {
-                return false;
-            }
-
-            @Override
-            public boolean onItemLongPress(final int index, final CellTowerOverlayItem item) {
-                return false;
-            }
-        });
+    public CellTowerMarker(Context context, MapView mapView, String aTitle, String aSnippet, GeoPoint aGeoPoint, MarkerData data) {
+        super(mapView);
 
         mContext = context;
+
+        mTitle = aTitle;
+        mSnippet = aSnippet;
+        mPosition = aGeoPoint;
+
+        mMarkerData = data;
+
+        mOnMarkerClickListener = new OnCellTowerMarkerClickListener();
     }
 
-    @Override
-    protected boolean onSingleTapUpHelper(final int index, final CellTowerOverlayItem item, final MapView mapView) {
-        // TODO - show as info window
-        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-        dialog.setTitle(item.getTitle());
-        dialog.setView(getInfoContents(item.getMarkerData()));
-        dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        dialog.show();
-        return true;
+    public MarkerData getMarkerData() {
+        return mMarkerData;
     }
 
     // Defines the contents of the InfoWindow
@@ -89,5 +76,24 @@ public class CellTowerItemizedOverlay extends ItemizedIconOverlay<CellTowerOverl
 
         // Returning the view containing InfoWindow contents
         return v;
+    }
+
+    public class OnCellTowerMarkerClickListener implements OnMarkerClickListener {
+        @Override
+        public boolean onMarkerClick(Marker marker, MapView mapView) {
+            CellTowerMarker cellTowerMarker = (CellTowerMarker) marker;
+            AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+            dialog.setTitle(cellTowerMarker.getTitle());
+            dialog.setView(getInfoContents(cellTowerMarker.getMarkerData()));
+            dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            dialog.show();
+
+            return true;
+        }
     }
 }

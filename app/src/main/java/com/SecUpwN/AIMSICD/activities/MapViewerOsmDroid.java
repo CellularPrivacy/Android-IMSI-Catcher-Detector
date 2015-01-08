@@ -26,6 +26,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -41,8 +42,8 @@ import android.view.MenuItem;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.map.CellTowerItemizedOverlay;
-import com.SecUpwN.AIMSICD.map.CellTowerOverlayItem;
+import com.SecUpwN.AIMSICD.map.CellTowerGridMarkerClusterer;
+import com.SecUpwN.AIMSICD.map.CellTowerMarker;
 import com.SecUpwN.AIMSICD.map.MarkerData;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Cell;
@@ -79,7 +80,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     private GeoPoint loc = null;
     private final Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
     private MyLocationNewOverlay mMyLocationOverlay;
-    private CellTowerItemizedOverlay mOpenCellIdOverlay;
+    private CellTowerGridMarkerClusterer mCellTowerGridMarkerClusterer;
 
     private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
         @Override
@@ -100,11 +101,11 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "Starting MapViewer");
         super.onCreate(savedInstanceState);
+        mContext = this;
 
         setContentView(R.layout.map);
         setUpMapIfNeeded();
 
-        mContext = this;
         mDbHelper = new AIMSICDDbAdapter(mContext);
 
         // Bind to LocalService
@@ -246,8 +247,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mMyLocationOverlay.setDrawAccuracyEnabled(true);
                 mMap.getOverlays().add(mMyLocationOverlay);
 
-                mOpenCellIdOverlay = new CellTowerItemizedOverlay(MapViewerOsmDroid.this,
-                        new LinkedList<CellTowerOverlayItem>());
+                mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(MapViewerOsmDroid.this);
+                mCellTowerGridMarkerClusterer.setIcon(((BitmapDrawable)mContext.getResources().getDrawable(R.drawable.ic_map_pin_orange)).getBitmap());
             } else {
                 Helpers.msgShort(this, "Unable to create map!");
             }
@@ -323,10 +324,10 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 int signal;
                 int color;
 
-                mOpenCellIdOverlay.removeAllItems();
+                mCellTowerGridMarkerClusterer.getItems().clear();
                 loadOpenCellIDMarkers();
 
-                LinkedList<CellTowerOverlayItem> items = new LinkedList<>();
+                LinkedList<CellTowerMarker> items = new LinkedList<>();
 
                 mDbHelper.open();
                 Cursor c = null;
@@ -393,13 +394,15 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                                     break;
                             }
 
-                            CellTowerOverlayItem ovm = new CellTowerOverlayItem("Cell ID: " + cellID,
+                            CellTowerMarker ovm = new CellTowerMarker(mContext,
+                                    mMap,
+                                    "Cell ID: " + cellID,
                                     "",
                                     loc,
                                     new MarkerData("" + cellID, "" + loc.getLatitude(),"" +
                                             loc.getLongitude(), "" + lac, "" + mcc, "" + mnc, "", false));
 
-                            ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_blue));
+                            ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_blue));
                             items.add(ovm);
 
 
@@ -452,7 +455,9 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 for (Cell cell : nc) {
                     try {
                         loc = new GeoPoint(cell.getLat(), cell.getLon());
-                        CellTowerOverlayItem ovm = new CellTowerOverlayItem("Cell ID: " + cell.getCID(),
+                        CellTowerMarker ovm = new CellTowerMarker(mContext,
+                                mMap,
+                                "Cell ID: " + cell.getCID(),
                                 "", loc,
                                 new MarkerData(
                                             "" + cell.getCID(),
@@ -463,16 +468,16 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                                             "" + cell.getMNC(),
                                             "", false));
 
-                        ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_orange));
+                        ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_orange));
                         items.add(ovm);
                     } catch (Exception e) {
                         Log.e("map", "Error plotting neighbouring cells", e);
                     }
                 }
 
-                mMap.getOverlays().remove(mOpenCellIdOverlay);
-                mOpenCellIdOverlay.addItems(items);
-                mMap.getOverlays().add(mOpenCellIdOverlay);
+                mMap.getOverlays().remove(mCellTowerGridMarkerClusterer);
+                mCellTowerGridMarkerClusterer.addAll(items);
+                mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
 
                 return ret;
             }
@@ -507,7 +512,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
     private void loadOpenCellIDMarkers() {
         //Check if OpenCellID data exists and if so load this now
-        LinkedList<CellTowerOverlayItem> items = new LinkedList<>();
+        LinkedList<CellTowerMarker> items = new LinkedList<>();
 
         mDbHelper.open();
         Cursor c = mDbHelper.getOpenCellIDData();
@@ -524,21 +529,23 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 // Add map marker for CellID
 
 
-                CellTowerOverlayItem ovm = new CellTowerOverlayItem("Cell ID: " + cellID,
+                CellTowerMarker ovm = new CellTowerMarker(mContext,
+                        mMap,
+                        "Cell ID: " + cellID,
                         "", location,
                         new MarkerData("" + cellID, "" + location.getLatitude(),"" +
                                 location.getLongitude(), "" + lac, "" + mcc, "" + mnc, "" + samples, false));
 
-                ovm.setMarker(getResources().getDrawable(R.drawable.ic_map_pin_green));
+                ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_green));
                 items.add(ovm);
             } while (c.moveToNext());
         }
         c.close();
         mDbHelper.close();
 
-        mMap.getOverlays().remove(mOpenCellIdOverlay);
-        mOpenCellIdOverlay.addItems(items);
-        mMap.getOverlays().add(mOpenCellIdOverlay);
+        mMap.getOverlays().remove(mCellTowerGridMarkerClusterer);
+        mCellTowerGridMarkerClusterer.addAll(items);
+        mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
