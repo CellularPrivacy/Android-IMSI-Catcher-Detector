@@ -1,7 +1,7 @@
 /* 
- * This file is part of the RootTools Project: http://code.google.com/p/roottools/
+ * This file is part of the RootShell Project: http://code.google.com/p/RootShell/
  *  
- * Copyright (c) 2012 Stephen Erickson, Chris Ravenscroft, Dominik Schuermann, Adam Shanks
+ * Copyright (c) 2014 Stephen Erickson, Chris Ravenscroft
  *  
  * This code is dual-licensed under the terms of the Apache License Version 2.0 and
  * the terms of the General Public License (GPL) Version 2.
@@ -20,7 +20,9 @@
  * limitations under that License.
  */
 
-package com.stericson.RootTools.execution;
+package com.stericson.RootShell.execution;
+
+import com.stericson.RootShell.RootShell;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -30,46 +32,56 @@ import android.os.Message;
 
 import java.io.IOException;
 
-import com.stericson.RootTools.RootTools;
+public class Command {
 
-public abstract class Command {
+    //directly modified by JavaCommand
+    protected boolean javaCommand = false;
+    protected Context context = null;
+
+    public int totalOutput = 0;
+
+    public int totalOutputProcessed = 0;
 
     ExecutionMonitor executionMonitor = null;
+
     Handler mHandler = null;
+
     boolean executing = false;
 
     String[] command = {};
-    boolean javaCommand = false;
-    Context context = null;
-    boolean finished = false;
-    boolean terminated = false;
-    boolean handlerEnabled = true;
-    int exitCode = -1;
-    int id = 0;
-    int timeout = RootTools.default_Command_Timeout;
 
-    public abstract void commandOutput(int id, String line);
-    public abstract void commandTerminated(int id, String reason);
-    public abstract void commandCompleted(int id, int exitCode);
+    boolean finished = false;
+
+    boolean terminated = false;
+
+    boolean handlerEnabled = true;
+
+    int exitCode = -1;
+
+    int id = 0;
+
+    int timeout = RootShell.defaultCommandTimeout;
 
     /**
      * Constructor for executing a normal shell command
-     * @param id the id of the command being executed
+     *
+     * @param id      the id of the command being executed
      * @param command the command, or commands, to be executed.
      */
     public Command(int id, String... command) {
         this.command = command;
         this.id = id;
 
-        createHandler(RootTools.handlerEnabled);
+        createHandler(RootShell.handlerEnabled);
     }
 
     /**
      * Constructor for executing a normal shell command
-     * @param id the id of the command being executed
+     *
+     * @param id             the id of the command being executed
      * @param handlerEnabled when true the handler will be used to call the
      *                       callback methods if possible.
-     * @param command the command, or commands, to be executed.
+     * @param command        the command, or commands, to be executed.
      */
     public Command(int id, boolean handlerEnabled, String... command) {
         this.command = command;
@@ -80,7 +92,8 @@ public abstract class Command {
 
     /**
      * Constructor for executing a normal shell command
-     * @param id the id of the command being executed
+     *
+     * @param id      the id of the command being executed
      * @param timeout the time allowed before the shell will give up executing the command
      *                and throw a TimeoutException.
      * @param command the command, or commands, to be executed.
@@ -90,49 +103,25 @@ public abstract class Command {
         this.id = id;
         this.timeout = timeout;
 
-        createHandler(RootTools.handlerEnabled);
+        createHandler(RootShell.handlerEnabled);
     }
 
-    /**
-     * Constructor for executing Java commands rather than binaries
-     * @param javaCommand when True, it is a java command.
-     * @param context     needed to execute java command.
-     */
-    public Command(int id, boolean javaCommand, Context context, String... command) {
-        this(id, command);
-        this.javaCommand = javaCommand;
-        this.context = context;
+    //If you override this you MUST make a final call
+    //to the super method. The super call should be the last line of this method.
+    public void commandOutput(int id, String line) {
+        RootShell.log("Command", "ID: " + id + ", " + line);
+        totalOutputProcessed++;
     }
 
-    /**
-     * Constructor for executing Java commands rather than binaries
-     * @param javaCommand when True, it is a java command.
-     * @param context     needed to execute java command.
-     */
-    public Command(int id, boolean handlerEnabled, boolean javaCommand, Context context, String... command) {
-        this(id, handlerEnabled, command);
-        this.javaCommand = javaCommand;
-        this.context = context;
+    public void commandTerminated(int id, String reason) {
+        //pass
     }
 
-    /**
-     * Constructor for executing Java commands rather than binaries
-     * @param javaCommand when True, it is a java command.
-     * @param context     needed to execute java command.
-     */
-    public Command(int id, int timeout, boolean javaCommand, Context context, String... command) {
-        this(id, timeout, command);
-        this.javaCommand = javaCommand;
-        this.context = context;
+    public void commandCompleted(int id, int exitcode) {
+        //pass
     }
 
-    protected void finishCommand() {
-        executing = false;
-        finished = true;
-        this.notifyAll();
-    }
-
-    protected void commandFinished() {
+    protected final void commandFinished() {
         if (!terminated) {
             synchronized (this) {
                 if (mHandler != null && handlerEnabled) {
@@ -141,12 +130,11 @@ public abstract class Command {
                     bundle.putInt(CommandHandler.ACTION, CommandHandler.COMMAND_COMPLETED);
                     msg.setData(bundle);
                     mHandler.sendMessage(msg);
-                }
-                else {
+                } else {
                     commandCompleted(id, exitCode);
                 }
 
-                RootTools.log("Command " + id + " finished.");
+                RootShell.log("Command " + id + " finished.");
                 finishCommand();
             }
         }
@@ -157,90 +145,74 @@ public abstract class Command {
         this.handlerEnabled = handlerEnabled;
 
         if (Looper.myLooper() != null && handlerEnabled) {
-            RootTools.log("CommandHandler created");
+            RootShell.log("CommandHandler created");
             mHandler = new CommandHandler();
-        }
-        else {
-            RootTools.log("CommandHandler not created");
+        } else {
+            RootShell.log("CommandHandler not created");
         }
     }
 
-    public String getCommand() {
+    protected final void finishCommand() {
+        executing = false;
+        finished = true;
+        this.notifyAll();
+    }
+
+
+    public final String getCommand() {
         StringBuilder sb = new StringBuilder();
 
-        if(javaCommand) {
-            String filePath = context.getFilesDir().getPath();
-            for (int i = 0; i < command.length; i++) {
-
-                if(i > 0)
-                {
-                    sb.append('\n');
-                }
-
-                /*
-                 * TODO Make withFramework optional for applications
-                 * that do not require access to the fw. -CFR
-                 */
-                sb.append(
-                        "dalvikvm -cp " + filePath + "/anbuild.dex"
-                        + " com.android.internal.util.WithFramework"
-                        + " com.stericson.RootTools.containers.RootClass "
-                        + command[i]);
+        for (int i = 0; i < command.length; i++) {
+            if (i > 0) {
+                sb.append('\n');
             }
-        }
-        else {
-            for (int i = 0; i < command.length; i++) {
-                if(i > 0)
-                {
-                    sb.append('\n');
-                }
 
-                sb.append(command[i]);
-            }
+            sb.append(command[i]);
         }
+
         return sb.toString();
     }
 
-    public boolean isExecuting() {
+    public final boolean isExecuting() {
         return executing;
     }
 
-    public boolean isHandlerEnabled() {
+    public final boolean isHandlerEnabled() {
         return handlerEnabled;
     }
 
-    public boolean isFinished() {
+    public final boolean isFinished() {
         return finished;
     }
 
-    public int getExitCode() {
+    public final int getExitCode() {
         return this.exitCode;
     }
 
-    protected void setExitCode(int code) {
+    protected final void setExitCode(int code) {
         synchronized (this) {
             exitCode = code;
         }
     }
 
-    protected void startExecution() {
+    protected final void startExecution() {
         executionMonitor = new ExecutionMonitor();
         executionMonitor.setPriority(Thread.MIN_PRIORITY);
         executionMonitor.start();
         executing = true;
     }
 
-    public void terminate(String reason) {
+    public final void terminate(String reason) {
         try {
             Shell.closeAll();
-            RootTools.log("Terminating all shells.");
+            RootShell.log("Terminating all shells.");
             terminated(reason);
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
     }
 
-    protected void terminated(String reason) {
+    protected final void terminated(String reason) {
         synchronized (Command.this) {
-
 
             if (mHandler != null && handlerEnabled) {
                 Message msg = mHandler.obtainMessage();
@@ -249,19 +221,20 @@ public abstract class Command {
                 bundle.putString(CommandHandler.TEXT, reason);
                 msg.setData(bundle);
                 mHandler.sendMessage(msg);
-            }
-            else {
+            } else {
                 commandTerminated(id, reason);
             }
 
-            RootTools.log("Command " + id + " did not finish because it was terminated. Termination reason: " + reason);
+            RootShell.log("Command " + id + " did not finish because it was terminated. Termination reason: " + reason);
             setExitCode(-1);
             terminated = true;
             finishCommand();
         }
     }
 
-    protected void output(int id, String line) {
+    protected final void output(int id, String line) {
+        totalOutput++;
+
         if (mHandler != null && handlerEnabled) {
             Message msg = mHandler.obtainMessage();
             Bundle bundle = new Bundle();
@@ -269,24 +242,35 @@ public abstract class Command {
             bundle.putString(CommandHandler.TEXT, line);
             msg.setData(bundle);
             mHandler.sendMessage(msg);
-        }
-        else {
+        } else {
             commandOutput(id, line);
         }
     }
 
+    public final void resetCommand()
+    {
+        this.finished = false;
+        this.totalOutput = 0;
+        this.totalOutputProcessed = 0;
+        this.executing = false;
+        this.terminated = false;
+        this.exitCode = -1;
+    }
+
     private class ExecutionMonitor extends Thread {
+
         public void run() {
             while (!finished) {
 
                 synchronized (Command.this) {
                     try {
                         Command.this.wait(timeout);
-                    } catch (InterruptedException e) {}
+                    } catch (InterruptedException e) {
+                    }
                 }
 
                 if (!finished) {
-                    RootTools.log("Timeout Exception has occurred.");
+                    RootShell.log("Timeout Exception has occurred.");
                     terminate("Timeout Exception");
                 }
             }
@@ -294,14 +278,18 @@ public abstract class Command {
     }
 
     private class CommandHandler extends Handler {
+
         static final public String ACTION = "action";
+
         static final public String TEXT = "text";
 
         static final public int COMMAND_OUTPUT = 0x01;
+
         static final public int COMMAND_COMPLETED = 0x02;
+
         static final public int COMMAND_TERMINATED = 0x03;
 
-        public void handleMessage(Message msg) {
+        public final void handleMessage(Message msg) {
             int action = msg.getData().getInt(ACTION);
             String text = msg.getData().getString(TEXT);
 
