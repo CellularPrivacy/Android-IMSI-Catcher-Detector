@@ -211,10 +211,10 @@
     <string name="table_names_prompt">Select Table</string>
     <string-array name="table_names">
         <item>Unique BTS Data</item>
-        <item>BTS measurements</item>
+        <item>BTS Measurements</item>
         <item>Imported OCID Data</item>
         <item>Default MCC Locations</item>
-        <item>Silent SMS</item>
+        <item>Silent/Stealth SMS</item>
         <item>Measured Signal Strengths</item>
     </string-array>
     <string name="database_export_successful">Export Successful</string>
