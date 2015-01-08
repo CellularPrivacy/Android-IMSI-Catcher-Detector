@@ -125,7 +125,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="Insecure Service Area"/>
+                    android:text="Insecure Service Area. Change place!"/>
 
                 <ImageView
                     android:layout_width="48dp"
