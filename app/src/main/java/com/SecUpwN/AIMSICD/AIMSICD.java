@@ -211,7 +211,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         }
 
         final String PERSIST_SERVICE = mContext.getString(R.string.pref_persistservice_key);
-        boolean persistService = prefs.getBoolean(PERSIST_SERVICE, true);
+        boolean persistService = prefs.getBoolean(PERSIST_SERVICE, false);
         if (!persistService) {
             Intent intent = new Intent(mContext, AimsicdService.class);
             stopService(intent);
