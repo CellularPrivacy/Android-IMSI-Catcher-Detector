@@ -100,6 +100,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Finish main activity if Quit was selected from NavDrawer
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
+
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         mNavConf = getNavDrawerConfiguration();
@@ -343,7 +349,31 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             Intent i = new Intent(this, DebugLogs.class);
             startActivity(i);
         } else if (selectedItem.getId() == 304) {
-            finish();
+            if (mBound) {
+                unbindService(mConnection);
+                mBound = false;
+            }
+
+            final String PERSIST_SERVICE = mContext.getString(R.string.pref_persistservice_key);
+            boolean persistService = prefs.getBoolean(PERSIST_SERVICE, true);
+            if (!persistService) {
+                Intent intent = new Intent(mContext, AimsicdService.class);
+                stopService(intent);
+            }
+
+            /**
+             * Upon selection of Quit, all activities on top of the main will be closed
+             *
+             * Taken from StackOverflow:
+             * http://stackoverflow.com/questions/14001963/finish-all-activities-at-a-time
+             */
+            //Create an intent towards the main activity
+            Intent intent = new Intent(getApplicationContext(), AIMSICD.class);
+            //Set flag to close all activities above main upon start
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //Tell main to exit
+            intent.putExtra("EXIT", true);
+            startActivity(intent);
         }
 
         mDrawerList.setItemChecked(position, true);
