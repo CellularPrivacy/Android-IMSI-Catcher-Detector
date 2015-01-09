@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -56,6 +57,10 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.ResourceProxyImpl;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ScaleBarOverlay;
+import org.osmdroid.views.overlay.SimpleLocationOverlay;
+import org.osmdroid.views.overlay.compass.CompassOverlay;
+import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
@@ -79,7 +84,10 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
     private GeoPoint loc = null;
     private final Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
+
     private MyLocationNewOverlay mMyLocationOverlay;
+    private CompassOverlay mCompassOverlay;
+    private ScaleBarOverlay mScaleBarOverlay;
     private CellTowerGridMarkerClusterer mCellTowerGridMarkerClusterer;
 
     private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
@@ -138,6 +146,14 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
         loadPreferences();
         loadEntries();
+
+        if (mCompassOverlay != null) {
+            mCompassOverlay.enableCompass();
+        }
+
+        if (mMyLocationOverlay != null) {
+            mMyLocationOverlay.enableMyLocation();
+        }
     }
 
     @Override
@@ -161,6 +177,14 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         super.onPause();
         isViewingGUI = false;
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+
+        if (mCompassOverlay != null) {
+            mCompassOverlay.disableCompass();
+        }
+
+        if (mMyLocationOverlay != null) {
+            mMyLocationOverlay.disableMyLocation();
+        }
     }
 
     private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -235,7 +259,15 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mMap.setBuiltInZoomControls(true);
                 mMap.setMultiTouchControls(true);
 
-                ResourceProxyImpl resProxyImp = new ResourceProxyImpl(MapViewerOsmDroid.this);
+                mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), mMap);
+
+                mScaleBarOverlay = new ScaleBarOverlay(this);
+                mScaleBarOverlay.setScaleBarOffset(getResources().getDisplayMetrics().widthPixels / 2, 10);
+                mScaleBarOverlay.setCentred(true);
+
+                mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(MapViewerOsmDroid.this);
+                mCellTowerGridMarkerClusterer.setIcon(((BitmapDrawable)mContext.getResources().getDrawable(R.drawable.ic_map_pin_orange)).getBitmap());
+
                 GpsMyLocationProvider imlp = new GpsMyLocationProvider(
                         MapViewerOsmDroid.this.getBaseContext());
                 imlp.setLocationUpdateMinDistance(1000);
@@ -245,10 +277,12 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         imlp,
                         mMap);
                 mMyLocationOverlay.setDrawAccuracyEnabled(true);
-                mMap.getOverlays().add(mMyLocationOverlay);
 
-                mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(MapViewerOsmDroid.this);
-                mCellTowerGridMarkerClusterer.setIcon(((BitmapDrawable)mContext.getResources().getDrawable(R.drawable.ic_map_pin_orange)).getBitmap());
+                mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
+                mMap.getOverlays().add(mMyLocationOverlay);
+                mMap.getOverlays().add(mCompassOverlay);
+                mMap.getOverlays().add(mScaleBarOverlay);
+
             } else {
                 Helpers.msgShort(this, "Unable to create map!");
             }
@@ -475,9 +509,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     }
                 }
 
-                mMap.getOverlays().remove(mCellTowerGridMarkerClusterer);
                 mCellTowerGridMarkerClusterer.addAll(items);
-                mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
 
                 return ret;
             }
@@ -514,6 +546,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         //Check if OpenCellID data exists and if so load this now
         LinkedList<CellTowerMarker> items = new LinkedList<>();
 
+        Drawable cellTowerMarkerIcon = getResources().getDrawable(R.drawable.ic_map_pin_green);
+
         mDbHelper.open();
         Cursor c = mDbHelper.getOpenCellIDData();
         if (c.moveToFirst()) {
@@ -536,16 +570,14 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         new MarkerData("" + cellID, "" + location.getLatitude(),"" +
                                 location.getLongitude(), "" + lac, "" + mcc, "" + mnc, "" + samples, false));
 
-                ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_green));
+                ovm.setIcon(cellTowerMarkerIcon);
                 items.add(ovm);
             } while (c.moveToNext());
         }
         c.close();
         mDbHelper.close();
 
-        mMap.getOverlays().remove(mCellTowerGridMarkerClusterer);
         mCellTowerGridMarkerClusterer.addAll(items);
-        mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
