@@ -258,6 +258,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
             if (mMap != null) {
                 mMap.setBuiltInZoomControls(true);
                 mMap.setMultiTouchControls(true);
+                mMap.setMinZoomLevel(3);
 
                 mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), mMap);
 
