@@ -482,7 +482,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 if(signalStrength.getGsmSignalStrength() <= 2 || signalStrength.getGsmSignalStrength() ==  NeighboringCellInfo.UNKNOWN_RSSI) {
                     //Unknown signal strength, get it another way
                     String[] bits = signalStrength.toString().split(" ");
-                    dbm = Integer.parseInt(bits[9].substring(1));
+                    dbm = Integer.parseInt(bits[9]);
                 } else {
                     dbm = signalStrength.getGsmSignalStrength();
                 }
