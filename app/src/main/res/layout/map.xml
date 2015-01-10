@@ -10,5 +10,21 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         />
+        
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="© OpenStreetMap contributors"
+        android:textStyle="normal"
+        android:singleLine="true"
+        android:linksClickable="true"
+        android:longClickable="false"
+        android:inputType="text|textUri"
+        android:numeric="signed" />
+
 
 </RelativeLayout>

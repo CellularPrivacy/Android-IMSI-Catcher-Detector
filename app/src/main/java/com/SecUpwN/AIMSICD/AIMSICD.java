@@ -31,7 +31,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -100,6 +99,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Finish main activity if Quit was selected from NavDrawer
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
+
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         mNavConf = getNavDrawerConfiguration();
@@ -206,7 +211,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         }
 
         final String PERSIST_SERVICE = mContext.getString(R.string.pref_persistservice_key);
-        boolean persistService = prefs.getBoolean(PERSIST_SERVICE, true);
+        boolean persistService = prefs.getBoolean(PERSIST_SERVICE, false);
         if (!persistService) {
             Intent intent = new Intent(mContext, AimsicdService.class);
             stopService(intent);
@@ -343,7 +348,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             Intent i = new Intent(this, DebugLogs.class);
             startActivity(i);
         } else if (selectedItem.getId() == 304) {
-            finish();
+            quit();
         }
 
         mDrawerList.setItemChecked(position, true);
@@ -614,6 +619,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     /**
      * Cell Information Monitoring - Enable/Disable
      */
+    // TODO: Wrong Spelling, should be "monitorcell"
     private void monitercell() {
         if (mAimsicdService.isMonitoringCell()) {
             mAimsicdService.setCellMonitoring(false);
@@ -631,5 +637,25 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         } else {
             mAimsicdService.setTrackingFemtocell(true);
         }
+    }
+
+    /**
+     * Method to entirely quit the app and stop services
+     * Fixes issue: #246
+     */
+    private void quit(){
+        /**
+         * Upon selection of Quit, all activities on top of the main will be closed
+         *
+         * Taken from StackOverflow:
+         * http://stackoverflow.com/questions/14001963/finish-all-activities-at-a-time
+         */
+        //Create an intent towards the main activity
+        Intent intent = new Intent(getApplicationContext(), AIMSICD.class);
+        //Set flag to close all activities above main upon start
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //Tell main to exit
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
     }
 }

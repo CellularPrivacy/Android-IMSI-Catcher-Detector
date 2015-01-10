@@ -125,7 +125,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="Insecure Service Area"/>
+                    android:text="Insecure Service Area. Change place!"/>
 
                 <ImageView
                     android:layout_width="48dp"
@@ -154,12 +154,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_wiki"/>
-
-        <Button
-            android:id="@+id/aimsicd_donations_link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_donations"/>
 
         <LinearLayout
             android:layout_width="match_parent"

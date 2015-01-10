@@ -3,10 +3,10 @@
 
     <string name="app_name_short">AIMSICD</string>
     <string name="app_name">Android IMSI-Catcher Detector</string>
-    <string name="device_info">Device Details</string>
-    <string name="map_view">Map Viewer</string>
+    <string name="device_info">Phone/SIM Details</string>
+    <string name="map_view">Antenna Map Viewer</string>
     <string name="db_viewer">Database Viewer</string>
-    <string name="strength">Signal strength</string>
+    <string name="strength">Signal Strength</string>
     <string name="quit">Quit</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Cancel</string>
@@ -38,21 +38,34 @@
     <string name="evoA"># EVO-A</string>
 
     <!-- MENU -->
-    <string name="monitor_cell">Monitor Cell Details</string>
+
+    <!--  Changes by E:V:A @ 2015-01-07 -->
+    <!-- string name="monitor_cell">Monitor Cell Details</string>
     <string name="unmonitor_cell">Stop Monitoring Cell Details</string>
     <string name="track_cell">Track Cell Details \n(GPS Required)</string>
     <string name="untrack_cell">Stop Tracking Cell Details</string>
     <string name="track_femtocell">Track Femtocell</string>
+    <string name="untrack_femtocell">Stop Tracking Femtocell</string -->
+
+    <string name="monitor_cell">Start AIMSICD monitoring</string>
+    <string name="unmonitor_cell">Stop AIMSICD monitoring</string>
+    <!-- This should be "Toggle 2G-only network lock" ?? -->
+    <string name="track_cell">Start Tracking Cell Details \n(GPS Required)</string>
+    <string name="untrack_cell">Stop Tracking Cell Details</string>
+    <string name="track_femtocell">Track Femtocell</string>
     <string name="untrack_femtocell">Stop Tracking Femtocell</string>
+
     <string name="show_map">Show Map</string>
     <string name="backup_database">Backup Database</string>
     <!-- TODO: -->
     <string name="clear_database">Clear/Reset Database</string>
+
     <string name="restore_database">Restore Database</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit.</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
-    <string name="cell_lookup">Lookup Current Cell Details (OpenCellID)</string>
+    <!-- string name="cell_lookup">Lookup Current Cell Details (OpenCellID)</string -->
+    <string name="cell_lookup">All Current Cell Details (ACD)</string>
     <string name="send_logs">Debugging</string>
 
     <string name="no_network_connection_title">No Internet Connection</string>
@@ -61,7 +74,7 @@
 
     <!-- MAP VIEWER -->
     <string name="map_type">Map Display Type</string>
-    <string name="get_opencellid">Get OpenCellID Data</string>
+    <string name="get_opencellid">Download Local OCID Data</string>
 
     <!-- LAYOUT -->
     <string name="device_info_title">Device Information</string>
@@ -90,8 +103,8 @@
     <string name="network_roaming">Roaming:</string>
     <string name="network_lte_timing_advance">TA (LTE):</string>
     <string name="button_refresh">Refresh</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_open">Open Navigation Drawer</string>
+    <string name="drawer_close">Close Navigation Drawer</string>
     <string name="network_psc">PSC:</string>
 
     <!-- ABOUT LAYOUT -->
@@ -100,8 +113,7 @@
     <string name="aimsicd_about_info">Android IMSI-Catcher Detector (AIMSICD)</string>
     <string name="aimsicd_about_info3">Android-based project to detect and avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks.</string>
     <string name="about_github">AIMSICD on GitHub</string>
-    <string name="about_wiki">Full Documentation (WIKI)</string>
-    <string name="about_donations">Anonymous Donations</string>
+    <string name="about_wiki">Documentation (WIKI)</string>
     <string name="about_poc">THIS IS A PoC</string>
     <string name="about_disclaimer">DISCLAIMER</string>
     <string name="about_releases">RELEASES</string>
@@ -118,7 +130,6 @@
     <string name="aimsicd_license_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE</string>
     <string name="aimsicd_credits_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS</string>
     <string name="status_icons_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons</string>
-    <string name="aimsicd_donations_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations</string>
 
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Network ID:</string>
@@ -143,12 +154,12 @@
     <string name="pref_enable_cell_key">pref_enable_cell</string>
     <string name="pref_enable_cell_title">Cell Tracking</string>
     <string name="pref_enable_cell_summ">Enable Automatic Cell Tracking</string>
-    <string name="pref_femto_title">FemtoCell Detection</string>
+    <string name="pref_femto_title">Femtocell Detection</string>
     <string name="pref_femto_summ">(currently CDMA Phones ONLY)</string>
     <string name="pref_femto_detection_key">pref_femto_detection</string>
-    <string name="pref_femto_action_title">FemtoCell Protection</string>
+    <string name="pref_femto_action_title">Femtocell Protection</string>
     <string name="pref_femto_action_key">pref_femto_action</string>
-    <string name="pref_femto_action_summ">Enforce Airplane Mode when FemtoCell detected (re-enable network manually)</string>
+    <string name="pref_femto_action_summ">Enforce Airplane Mode when Femtocell detected (re-enable network manually)</string>
     <string name="pref_ui_title">Interface Settings</string>
     <string name="pref_ui_icons_title">Icons</string>
     <string name="pref_ui_icons_key">pref_ui_icons</string>
@@ -175,8 +186,8 @@
     <string name="pref_enable_cell_monitoring_key">pref_enable_cell_monitoring</string>
     <string name="pref_enable_cell_monitoring_title">Cell Monitoring</string>
     <string name="pref_enable_cell_monitoring_summ">Enable Automatic Cell Monitoring</string>
-    <string name="pref_request_ocid_key">Request API Key</string>
-    <string name="pref_ocid_requestkey_summary">Request a new API key for OpenCellID</string>
+    <string name="pref_request_ocid_key">Request OCID API Key</string>
+    <string name="pref_ocid_requestkey_summary">Request a new API key for OpenCellID data access</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
@@ -189,26 +200,27 @@
     <string name="lac_label">LAC: </string>
     <string name="mcc_label">MCC: </string>
     <string name="mnc_label">MNC: </string>
-    <string name="samples_label">Samples:</string>
+    <string name="pc_label">PC: </string>
+    <string name="samples_label">Samples: </string>
     <string name="open_cell_id_label">OpenCellID Data</string>
     <string name="lat_label">Lat: </string>
-    <string name="lng_label">Lng: </string>
+    <string name="lng_label">Lon: </string>
 
     <!-- Database Viewer -->
     <string name="load_table_data">Load Data</string>
     <string name="table_names_prompt">Select Table</string>
     <string-array name="table_names">
         <item>Unique BTS Data</item>
-        <item>BTS measurements</item>
+        <item>BTS Measurements</item>
         <item>Imported OCID Data</item>
         <item>Default MCC Locations</item>
-        <item>Silent SMS</item>
-        <item>Measured cell signal strengths</item>
+        <item>Silent/Stealth SMS</item>
+        <item>Measured Signal Strengths</item>
     </string-array>
     <string name="database_export_successful">Export Successful</string>
 
     <!-- AT Command Processor -->
-    <string name="at_command_title">AT Command Processor</string>
+    <string name="at_command_title">AT Command Interface</string>
     <string name="response_label">Response:</string>
     <string name="execute_at">Execute</string>
     <string name="serial_device_title">Current Serial Device:</string>
@@ -216,7 +228,7 @@
     <string name="serial_device_spinner_title">Detected Devices:</string>
     <string name="timeout_spinner_title">Timeout:</string>
     <string name="timeout_spinner_prompt">Select Timeout</string>
-    <string name="command_hint">Enter Command…</string>
+    <string name="command_hint">Enter AT command here.</string>
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Silent SMS Intercepted</string>
