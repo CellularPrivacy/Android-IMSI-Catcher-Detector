@@ -1,7 +1,7 @@
 /* 
- * This file is part of the RootTools Project: http://code.google.com/p/roottools/
+ * This file is part of the RootShell Project: https://github.com/Stericson/RootShell
  *  
- * Copyright (c) 2012 Stephen Erickson, Chris Ravenscroft, Dominik Schuermann, Adam Shanks
+ * Copyright (c) 2014 Stephen Erickson, Chris Ravenscroft
  *  
  * This code is dual-licensed under the terms of the Apache License Version 2.0 and
  * the terms of the General Public License (GPL) Version 2.
@@ -20,7 +20,7 @@
  * limitations under that License.
  */
 
-package com.stericson.RootTools.exceptions;
+package com.stericson.RootShell.exceptions;
 
 public class RootDeniedException extends Exception {
 

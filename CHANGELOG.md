@@ -1,7 +1,58 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
-#### 06.01.2015 - [WIP-Release v0.1.25-alpha-build-7](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b7)
+#### 08.01.2015 - WIP-Internal v0.1.25-alpha-build-12
+
+* Removed: Button for Anonymous Donations has been removed as it is not needed
+* Changed: Switched from RootTools to RootShell to slim down and refresh code
+* Updated: Many smaller updates of strings for even more clearness on meanings
+* Added: New map pins to reflect new connection defintions from the Map Viewer
+
+---
+
+#### 07.01.2015 - WIP-Internal v0.1.25-alpha-build-11
+
+* Improved: Log View will be immediately cleared when pressing button
+* Improved: Shorter time taken to plot OpenCellId markers on map
+* Removed: Hybrid and Satellite Maps have been removed to avoid bugs
+* Changed: Refactored code out of `MapViewerOsmDroid` for easier maintenance
+* Added: More location providers added to improve location acquire time
+* Added: `PC` and `MNC/MCC` zero-padding has been implemented
+
+
+---
+
+#### 07.01.2015 - WIP-Internal v0.1.25-alpha-build-10
+
+* Improved: Checked App against spelling errors and also erase some
+* Removed: Bad map options have been disabled by commenting out code
+* Changed: Many text string changes for clarification and simplicity
+* Changed: Signal strength and date strings changed in DBV for clarity
+* Changed: LAC detection strings have also been simplified in the log
+* Added: Placeholders for upcoming UI/UX redesign have been added
+
+---
+
+#### 06.01.2015 - [WIP-Release v0.1.25-alpha-build-9](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b9)
+
+* Improved: Better saving of timestamp for signal detection
+* Changed: Re-adjusted some levels for Signal Strength Tracker
+* Added: Implemented Database Viewer for measured Cell Signal Strength
+* Added: Some more code documentation to understand the current changes
+* Fixed: Cell signal strength should now be viewable in Database Viewer
+
+---
+
+#### 06.01.2015 - WIP-Internal v0.1.25-alpha-build-8
+
+* Changed: Logging changed from changed `Log.i` to `Log.v` (4 rows deleted to avoid errors)
+* Added: Logging for CellID to ChangingLAC, found new Cell that is not in OCID
+* Added: Logging for Cell updating in local DB & Cell inserted into local DB
+* Added: Logging for deleting Cell from local DB
+
+---
+
+#### 06.01.2015 - WIP-Internal v0.1.25-alpha-build-7
 
 * News-Alert: It has been **proven** that IMSI-Catchers are currently being deployed and used **at all demonstrations** for and against PEGIDA in Germany to identify participants and spy on their mobile phones!
 * Remember: If you're going to participate in **ANY** demonstration, **LEAVE YOUR PHONE AT HOME!**

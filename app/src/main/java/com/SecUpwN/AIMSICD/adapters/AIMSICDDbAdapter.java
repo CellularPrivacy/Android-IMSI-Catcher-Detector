@@ -220,6 +220,7 @@ public class AIMSICDDbAdapter {
      * @return
      */
     public int deleteCell(int cellId) {
+        Log.i(TAG, "Cell deleted: " + cellId);
         return mDb.delete(CELL_TABLE, "CellID = ?", new String[]{ String.valueOf(cellId) });
     }
 
@@ -289,6 +290,7 @@ public class AIMSICDDbAdapter {
                 cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal,
                 null);
         boolean exists = cursor.getCount() > 0;
+        Log.i(TAG, "Cell exists in location table?: " + exists);
         cursor.close();
 
         return exists;
@@ -302,6 +304,7 @@ public class AIMSICDDbAdapter {
                 null);
 
         boolean exists = cursor.getCount() > 0;
+        Log.i(TAG, "Cell exists in local DB?: " + exists);
         cursor.close();
 
         return exists;
@@ -315,6 +318,7 @@ public class AIMSICDDbAdapter {
                 cellID, null);
 
         boolean exists = cursor.getCount() > 0;
+        Log.i(TAG, "Cell exists in OCID?: " + exists);
         cursor.close();
 
         return exists;
@@ -326,10 +330,14 @@ public class AIMSICDDbAdapter {
 
         while (cursor.moveToNext()) {
             if (cell.getLAC() != cursor.getInt(0)) {
-                Log.i(TAG, "CHANGING LAC!!! - Current LAC: " + cell.getLAC() +
-                        " Database LAC: " + cursor.getInt(0));
+                 Log.i(TAG, "ALERT: Changing LAC on CID: " + cell.getCID()
+                         + " Current LAC: " + cell.getLAC()
+                         + " Database LAC: " + cursor.getInt(0));
                 cursor.close();
                 return false;
+            } else {
+                Log.v(TAG, "LAC checked - no changes: " + cell.getCID() + " - "+ cell.getLAC() +
+                    " LAC (DB): " + cursor.getInt(0) );
             }
         }
 

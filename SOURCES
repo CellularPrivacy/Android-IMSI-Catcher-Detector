@@ -6,6 +6,9 @@ Please also have a look at our own LICENSE, our DISCLAIMER as well as our CREDIT
 
 Our project utilized the following sources and libraries listed below:
 
+* Self-written code by our very own developers and contributors
+- Yes, imagine that! Sounds impossible, right? Contribute, too!
+
 * RawPhone by Jofre Palau
 - https://github.com/jofrep/Android-RawPhone
 
@@ -27,9 +30,9 @@ Our project utilized the following sources and libraries listed below:
 * Code snippets written by Louis Teboul (a.k.a Androguide)
 - https://github.com/Androguide and http://androguide.fr/
 
-* RootTools written by Stephen Erickson
-- https://github.com/Stericson/RootTools
+* RootShell written by Stephen Erickson
+- https://github.com/Stericson/RootShell
 
-* Self-written code by our very own developers and contributors
-- Yes, imagine that! Sounds impossible, right? Contribute, too!
+* © OpenStreetMap contributors
+- http://www.openstreetmap.org/copyright/en
 

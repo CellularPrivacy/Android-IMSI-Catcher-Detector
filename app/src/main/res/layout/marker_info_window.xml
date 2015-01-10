@@ -82,6 +82,21 @@
     </TableRow>
 
     <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/pc_label" android:text="@string/pc_label"
+            android:textColor="@color/white"
+            android:padding="2dip" android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/pc" android:text="@string/empty"
+            android:textColor="@color/medium_blue"
+            android:padding="2dip" android:gravity="start"/>
+    </TableRow>
+
+    <TableRow
             android:tag="device">
 
         <TextView

@@ -122,7 +122,7 @@ public class DbViewerFragment extends Fragment {
                             case "Silent SMS":
                                 result =  mDb.getSilentSmsData();
                                 break;
-                            case "Measured cell signal strengths":
+                            case "Measured Signal Strengths":
                                 result = mDb.getSignalStrengthMeasurementData();
                         }
 
@@ -157,7 +157,7 @@ public class DbViewerFragment extends Fragment {
         }
     }
 
-    // Lat/Lng:     Latitude / Longitude (We use "Lng" instead of "Lon".)
+    // Lat/Lng:     Latitude / Longitude (We should use "Lon" instead of "Lng".)
     // AvgSignal:   Average Signal Strength
     // RSSI:        Received Signal Strength Indicator (previously "Signal Strength")
     //              Can have different meanings on different RAN's, e.g. RSCP in UMTS.
@@ -217,12 +217,13 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
-                case "Measured cell signal strengths": {
+                case "Measured Signal Strengths": {
                     BaseInflaterAdapter<MeasuredCellStrengthCardData> adapter
                             = new BaseInflaterAdapter<>(
                             new MeasuredCellStrengthCardInflater());
                     while (tableData.moveToNext()) {
-                        MeasuredCellStrengthCardData data = new MeasuredCellStrengthCardData(tableData.getInt(0), tableData.getInt(1), tableData.getLong(2));
+                        MeasuredCellStrengthCardData data = new MeasuredCellStrengthCardData(
+                                tableData.getInt(0), tableData.getInt(1), tableData.getLong(2));
                         adapter.addItem(data, false);
                     }
                     return adapter;
