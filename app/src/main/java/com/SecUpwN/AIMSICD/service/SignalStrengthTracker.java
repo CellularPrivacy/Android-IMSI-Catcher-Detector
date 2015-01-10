@@ -21,21 +21,20 @@ public class SignalStrengthTracker {
 
     public static final String TAG = "SignalStrengthMonitor";
     private static int sleepTimeBetweenSignalRegistration = 60; //seconds
-    private static int sleepTimeBetweenPersistation = 900; //seconds
     private static int minimumIdleTime              = 30; //seconds
     private static int maximumNumberOfDaysSaved     = 60; //days
     private static int mysteriousSignalDifference   = 10; //DB
-
-    private HashMap<Integer, Long> lastRegistration = new HashMap<>();
-    private ArrayList<SignalResult> dataToPersist = new ArrayList<>();
+    private static int sleepTimeBetweenCleanup      = 3600; //Once per hour
+    private Long lastRegistrationTime;  //Timestamp for last registration to DB
+    private Long lastCleanupTime;       //Timestamp for last cleanup of DB
     private HashMap<Integer, Integer> averageSignalCache = new HashMap<>();
-    private long lastPersistTime = 0;
     private long lastMovementDetected = 0l;
     private AIMSICDDbAdapter mDbHelper;
 
     public SignalStrengthTracker(Context context) {
         lastMovementDetected = System.currentTimeMillis();
-        lastPersistTime = System.currentTimeMillis();
+        lastRegistrationTime = System.currentTimeMillis();
+        lastCleanupTime      = System.currentTimeMillis();
         mDbHelper = new AIMSICDDbAdapter(context);
     }
 
@@ -55,36 +54,20 @@ public class SignalStrengthTracker {
             return;
         }
 
-        if(!lastRegistration.containsKey(cellID) || now-(sleepTimeBetweenSignalRegistration*1000) > lastRegistration.get(cellID)) {
-            long diff = -1;
-            if(lastRegistration.get(cellID) != null) {
-                diff = now - lastRegistration.get(cellID);
-            }
-            Log.i(TAG, "Scheduling signal strength calculation from cell #" + cellID + " @ " + signalStrength + "DB, last registration was "+diff+"ms ago");
-            lastRegistration.put(cellID, now);
-            SignalResult row = new SignalResult(cellID, signalStrength, now);
-            dataToPersist.add(row);
-            lastRegistration.put(cellID, now);
+        if(now-(sleepTimeBetweenSignalRegistration*1000) > lastRegistrationTime) {
+            long diff = now - lastRegistrationTime;
+            Log.i(TAG, "Scheduling signal strength calculation from cell #" + cellID + " @ " + signalStrength + " dBm, last registration was "+diff+"ms ago");
+            lastRegistrationTime = now;
+
+            mDbHelper.open();
+            mDbHelper.addSignalStrength(cellID, signalStrength, now);
+            mDbHelper.close();
         }
 
-        if(now-(sleepTimeBetweenPersistation*1000) > lastPersistTime) {
-            Log.i(TAG, "Saving cell signal data, last save was "+(now-lastPersistTime)+"ms ago");
+        if(now-(sleepTimeBetweenCleanup*1000) > lastCleanupTime) {
+            Log.i(TAG, "Removing up old signal strength entries");
             cleanupOldData();
-            persistData();
-            lastPersistTime = now;
         }
-    }
-
-    /*
-        Move data from temp cache into DB
-     */
-    private void persistData() {
-        mDbHelper.open();
-        for(SignalResult sr : dataToPersist) {
-            mDbHelper.addSignalStrength(sr.cellID, sr.signal, sr.timestamp);
-        }
-        mDbHelper.close();
-        dataToPersist.clear();
     }
 
     /*
@@ -144,20 +127,5 @@ public class SignalStrengthTracker {
     public void onSensorChanged() {
         //Log.d(TAG, "We are moving...");
         lastMovementDetected = System.currentTimeMillis();
-    }
-
-    /**
-     * Internal class only used here to keep a result object in hand for future persisting in DB
-     */
-    private class SignalResult {
-        public int cellID;
-        public int signal;
-        public long timestamp;
-
-        SignalResult(int cellID, int signal, long timestamp) {
-            this.cellID = cellID;
-            this.signal = signal;
-            this.timestamp = timestamp;
-        }
     }
 }
