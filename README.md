@@ -189,7 +189,7 @@ This project is completely licensed [GPL v3+](https://github.com/SecUpwN/Android
 
 ### Credits & Greetings
 
-Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS). HUGE THANKS!
+Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/app/src/main/assets/CREDITS). HUGE THANKS!
 
 ---
 
