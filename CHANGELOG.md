@@ -1,6 +1,22 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 10.01.2015 - WIP-Internal v0.1.25-alpha-build-13
+
+* Improved: AIMSICD now stores data straight in DB instead of waiting too long 
+* Updated: Some more string changes as well as a hint on Insecure Service Area
+* Changed: Better zooming available with max zoom level `3` in Antenna Map Viewer
+* Added: osmbonuspack dependency to interact with OpenStreetMap data in our App
+* Added: Basic clustering implementation for correct sizing of the new map pins
+* Added: Scale bar and compass have been implemented into the Antenna Map Viewer
+* Added: Copyright for OpenStreetMaps and THANK YOU to @ziem added to `CREDITS`
+* Fixed: App now really quits all activities when pressing the `Quit` button
+* Fixed: Having to check and uncheck Persistent Service in Preferences is solved
+* Fixed: dBm values were considered positive when they were negative is solved
+* Fixed: Many smaller fixes and enhancements for the `SignalStrengthTracker`
+
+---
+
 #### 08.01.2015 - WIP-Internal v0.1.25-alpha-build-12
 
 * Removed: Button for Anonymous Donations has been removed as it is not needed
