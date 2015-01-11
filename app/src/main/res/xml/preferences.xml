@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <!-- WARNING: Do not change default values in this file, without also updating the code where
+         the preference is used -->
     <PreferenceCategory
         android:key="pref_key_system_settings"
         android:title="@string/pref_system_title">
@@ -84,4 +85,4 @@
             android:title="@string/pref_ui_ocid_upload_title"/>
     </PreferenceCategory>
 
-</PreferenceScreen>
+used</PreferenceScreen>
