@@ -1,6 +1,16 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 12.01.2015 - WIP-Internal v0.1.25-alpha-build-14
+
+* Removed: Purged unnecessary and misplaced folder containing older map pins
+* Changed: Merged `SOURCES` into `CREDITS` to show it in our App in the future
+* Updated: Some smaller changes made to descriptions in `about_fragment.xml`
+* Added: We are now officially to be found on [Hackaday](https://hackaday.io/project/3824-android-imsi-catcher-detector), awaiting more developers
+* Fixed: App should now not automatically restart once `Quit` has been pressed
+
+---
+
 #### 10.01.2015 - WIP-Internal v0.1.25-alpha-build-13
 
 * Improved: AIMSICD now stores data straight in DB instead of waiting too long 
