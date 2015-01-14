@@ -22,6 +22,7 @@
         android:textStyle="normal"
         android:singleLine="true"
         android:linksClickable="true"
+        android:textColor="#ff454545"
         android:longClickable="false"
         android:inputType="text|textUri"
         android:numeric="signed" />
