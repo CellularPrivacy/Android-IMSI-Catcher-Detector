@@ -1,4 +1,4 @@
-### Android IMSI-Catcher Detector (AIMSICD)
+### Android IMSI-Catcher Detector (#AIMSICD)
 
 [![Build Status](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector.svg)](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector) [![Development Status](http://img.shields.io/badge/Development_Status-ALPHA-brightgreen.svg)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status) [![GooglePlay](http://img.shields.io/badge/GooglePlay-NOT%20SUPPORTED-brightgreen.svg)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/FAQ#q-why-wont-you-upload-your-app-to-the-google-play-store) [![CoverityScan](https://scan.coverity.com/projects/3346/badge.svg)](https://scan.coverity.com/projects/3346)
 --
@@ -6,17 +6,18 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 
 ---
 
-[![Aptoide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/Aptoide.png)](http://aimsicd.store.aptoide.com/ "NOTE: Installs Aptoide-App first!")  [![GitHub](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/GitHub.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases "GitHub Releases") [![F-Droid](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/F-Droid.png)](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD "F-Droid Store") [![XDA](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/XDA.png)](http://www.xda-developers.com/android/detect-avoid-imsi-catcher-attacks-with-imsi-catcher-detector/ "Portal Post on XDA-Developers") [![Hackaday](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/Hackaday.png)](https://hackaday.io/project/3824-android-imsi-catcher-detector "Project Post on Hackaday")
+[![AIMSICD-Banner](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/raw/AIMSICD-Banner_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
 
 ---
 
-[![AIMSICD-Banner](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Banner_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
+[![AIMSICD-Teaser](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/raw/AIMSICD-Teaser.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
 
 ---
 
-[![AIMSICD-Teaser](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/AIMSICD-Teaser.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
-
+[![Aptoide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/Aptoide.png)](http://aimsicd.store.aptoide.com/ "NOTE: Installs Aptoide-App first!")  [![GitHub](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/GitHub.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases "GitHub Releases") [![F-Droid](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/F-Droid.png)](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD "F-Droid Store") 
 ---
+[![XDA](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/XDA.png)](http://www.xda-developers.com/android/detect-avoid-imsi-catcher-attacks-with-imsi-catcher-detector/ "Portal Post on XDA-Developers") [![Hackaday](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/Hackaday.png)](https://hackaday.io/project/3824-android-imsi-catcher-detector "Project Post on Hackaday")
+[![Twitter](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/Twitter.png)](https://twitter.com/AIMSICD "Official Twitter-Account")
 
 #  Index
 * [Introduction](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction)
