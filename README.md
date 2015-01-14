@@ -6,11 +6,11 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 
 ---
 
-[![AIMSICD-Banner](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/raw/AIMSICD-Banner_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
+[![AIMSICD-Banner](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/PROMOTION/AIMSICD-Banner_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
 
 ---
 
-[![AIMSICD-Teaser](https://raw.githubusercontent.com/SecUpwN/Android-IMSI-Catcher-Detector/master/PROMOTION/raw/AIMSICD-Teaser.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
+[![AIMSICD-Teaser](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/PROMOTION/AIMSICD-Teaser.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
 
 ---
 
