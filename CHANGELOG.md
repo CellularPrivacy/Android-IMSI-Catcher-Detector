@@ -1,6 +1,16 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 14.01.2015 - [WIP-Release v0.1.25-alpha-build-15](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b15)
+
+* News-Alert: We have gone viral with our [official Twitter-Account](https://www.twotter.com/AIMSICD)! Follow and tweet about us!
+* Changed: Color of text for credits of OpenStreetMaps changed within Antenna Map Viewer
+* Removed: Deprecated Screenshots have been purged to clean up our repository
+* Added: Leaked screenshots of IMSI-Catcher Software has been added to Glossary of Terms
+* Added: Logcat-Alert when new Cell is not in OCID DB - which is likely an IMSI-Catcher
+
+---
+
 #### 12.01.2015 - WIP-Internal v0.1.25-alpha-build-14
 
 * Removed: Purged unnecessary and misplaced folder containing older map pins
