@@ -3,7 +3,7 @@
 
 #### 14.01.2015 - [WIP-Release v0.1.25-alpha-build-15](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b15)
 
-* News-Alert: We have gone viral with our [official Twitter-Account](https://www.twotter.com/AIMSICD)! Follow and tweet about us!
+* News-Alert: We have gone viral with our [official Twitter-Account](https://www.twitter.com/AIMSICD)! Follow and tweet about us!
 * Changed: Color of text for credits of OpenStreetMaps changed within Antenna Map Viewer
 * Removed: Deprecated Screenshots have been purged to clean up our repository
 * Added: Leaked screenshots of IMSI-Catcher Software has been added to Glossary of Terms
