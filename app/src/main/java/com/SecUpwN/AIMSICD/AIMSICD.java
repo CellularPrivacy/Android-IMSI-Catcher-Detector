@@ -348,7 +348,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             Intent i = new Intent(this, DebugLogs.class);
             startActivity(i);
         } else if (selectedItem.getId() == 304) {
-            quit();
+            finish();
         }
 
         mDrawerList.setItemChecked(position, true);
@@ -639,23 +639,4 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         }
     }
 
-    /**
-     * Method to entirely quit the app and stop services
-     * Fixes issue: #246
-     */
-    private void quit(){
-        /**
-         * Upon selection of Quit, all activities on top of the main will be closed
-         *
-         * Taken from StackOverflow:
-         * http://stackoverflow.com/questions/14001963/finish-all-activities-at-a-time
-         */
-        //Create an intent towards the main activity
-        Intent intent = new Intent(getApplicationContext(), AIMSICD.class);
-        //Set flag to close all activities above main upon start
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //Tell main to exit
-        intent.putExtra("EXIT", true);
-        startActivity(intent);
-    }
 }
