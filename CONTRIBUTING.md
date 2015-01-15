@@ -29,7 +29,7 @@ Here are some useful links to help you with correctly structuring and formatting
 * We **love** developers! Earn our respect through [creating pull requests](https://help.github.com/articles/using-pull-requests)!
 * If you added foreign code, please reference it in our [SOURCES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/SOURCES).
 * ALWAYS respect the [LICENSE](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE) this project is licensed with.
-* If you submit a commit, please make sure to explain its pull request poperly.
+* If you submit a commit, please make sure to explain its pull request properly.
 * :exclamation: Add comments to your own and existing code to make it understandable!
 
 **For example:**  Put something like this in the header of the file: *DeviceApi17.java*
