@@ -11,7 +11,13 @@ import java.util.HashMap;
 /**
  *
  * Class that calculates cell signal strength averages and decides if a given cell + strength
- * appears to be mysteriously (low or high)
+ * appears to be mysteriously (low or high). Signal strengths are shown in units of:
+ * See:
+ * http://wiki.opencellid.org/wiki/API#Filtering_of_data
+ * GSM     RSSI in dBm in the range of [-51 to -113] or ASU in the range of [0 to 31]
+ * UMTS    RSCP in dBm in the range of [-25 to -121] or ASU in the range of [-5 to 91]
+ * LTE     RSRP in dBm in the range of [-45 to -137] or ASU in the range of [0 to 95]
+ * CDMA    RSSI in dBm in the range of [-75 to -100] or ASU in the range of [1 to 16]
  *
  * https://cloud.githubusercontent.com/assets/2507905/4428863/c85c8366-45d4-11e4-89da-c650cdb56caf.jpg
  *
@@ -20,11 +26,11 @@ import java.util.HashMap;
 public class SignalStrengthTracker {
 
     public static final String TAG = "SignalStrengthMonitor";
-    private static int sleepTimeBetweenSignalRegistration = 60; //seconds
-    private static int minimumIdleTime              = 30; //seconds
-    private static int maximumNumberOfDaysSaved     = 60; //days
-    private static int mysteriousSignalDifference   = 10; //DB
-    private static int sleepTimeBetweenCleanup      = 3600; //Once per hour
+    private static int sleepTimeBetweenSignalRegistration = 60; // [seconds]
+    private static int minimumIdleTime              = 30; // [seconds]
+    private static int maximumNumberOfDaysSaved     = 60; // [days] = 2 months
+    private static int mysteriousSignalDifference   = 10; // [dBm] or [ASU]?
+    private static int sleepTimeBetweenCleanup      = 3600; // Once per hour
     private Long lastRegistrationTime;  //Timestamp for last registration to DB
     private Long lastCleanupTime;       //Timestamp for last cleanup of DB
     private HashMap<Integer, Integer> averageSignalCache = new HashMap<>();

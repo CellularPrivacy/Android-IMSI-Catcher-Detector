@@ -163,7 +163,7 @@ public class DbViewerFragment extends Fragment {
     //              Can have different meanings on different RAN's, e.g. RSCP in UMTS.
     // RAN:         Radio Access Network (GSM, UMTS, LTE etc.)
     // 2014-12-18 E:V:A
-    //  1. Although "RAN" is more correct here, we'll use "RAT",
+    //  1. Although "RAN" is more correct here, we'll use "RAT" (Radio Access Technology),
     //     which is the more common terminology. Thus reverting.
     //  2. Since Signal is not an "indicator" we should just call it "RSS" or "RXS"
     private BaseInflaterAdapter BuildTable(Cursor tableData) {

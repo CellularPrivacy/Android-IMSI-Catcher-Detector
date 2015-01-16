@@ -25,6 +25,7 @@ public class MeasuredCellStrengthCardData {
     }
 
     // This is probably not dBm but ASU ?
+    // Please see: http://wiki.opencellid.org/wiki/API#Filtering_of_data
     public String getSignal() {
         return"RSS: "+signal+" dBm";
     }
