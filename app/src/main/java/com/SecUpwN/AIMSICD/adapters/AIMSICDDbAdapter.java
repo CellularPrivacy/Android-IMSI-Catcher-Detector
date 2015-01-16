@@ -38,13 +38,26 @@ public class AIMSICDDbAdapter {
      */
     private final String TAG = "AISMICD_DbAdaptor";
     public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
-    private static final String COLUMN_ID = "_id";
-    private final String LOCATION_TABLE = "locationinfo";   // DBi_measure
-    private final String CELL_TABLE = "cellinfo";           // DBi_bts
-    private final String OPENCELLID_TABLE = "opencellid";   // DBe_import
-    private final String DEFAULT_MCC_TABLE = "defaultlocation";
-    private final String SILENT_SMS_TABLE = "silentsms";
-    private final String CELL_SIGNAL_TABLE = "cellSignal";  // cell tower signal strength collected by the device
+    private static final String COLUMN_ID = "_id";              // ToDo: "id"
+    private final String LOCATION_TABLE = "locationinfo";       // TABLE_DBI_MEASURE:DBi_measure (volatile)
+    private final String CELL_TABLE = "cellinfo";               // TABLE_DBI_BTS:DBi_bts (physical)
+    private final String OPENCELLID_TABLE = "opencellid";       // TABLE_DBE_IMPORT:DBe_import
+    private final String DEFAULT_MCC_TABLE = "defaultlocation"; // TABLE_DEFAUKT_MCC:defaultlocation
+    private final String SILENT_SMS_TABLE = "silentsms";        // TABLE_SILENT_SMS:silentsms
+
+    /*
+     * Some placeholders for the use of the new tables:
+     *
+     *  TABLE_DBE_CAPABILITIES:DBe_capabilities
+     *  TABLE_DETECTION_FLAGS:DetectionFlags
+     *  TABLE_EVENT_LOG:EventLog
+     *  TABLE_COUNTERMEASURES:CounterMeasures
+     *  TABLE_SECTORTYPE:SectorType
+     */
+
+    // cell tower signal strength collected by the device
+    // ToDo: Remove this table and use "rx_signal" in the "TABLE_DBI_MEASURE:DBi_measure" table..
+    private final String CELL_SIGNAL_TABLE = "cellSignal";      //
     private final String DB_NAME = "aimsicd.db";
 
     private final String[] mTables;

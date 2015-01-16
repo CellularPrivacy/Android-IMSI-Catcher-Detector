@@ -136,23 +136,34 @@ public class Helpers {
     }
 
     /**
-     * Requests Cell data from OpenCellID.org, calculating a 100 mile bounding radius
-     * and requesting all Cell ID information in that area.
+     * Requests Cell data from OpenCellID.org (OCID).
+     *
+     * The free OCID API has a download limit of 1000 BTSs for each download.
+     * Thus we need to carefully select the area we choose to download and make sure it is
+     * centered on the current GPS location. (It is also possible to query the number of
+     * cells in a particular bounding box (bbox), and use that.)
+     *
+     * The bbox is described in the OCID API here:
+     *   http://wiki.opencellid.org/wiki/API#Getting_the_list_of_cells_in_a_specified_area
+     *
+     * In an urban area, we could try to limit ourselves to an area of ~10 Km.
+     * The (GSM) Timing Advance is limiting us to 35 Km.
+     *
      *
      * @param cell Current Cell Information
      */
     public static void getOpenCellData(Context context, Cell cell, char type) {
         if (Helpers.isNetAvailable(context)) {
             if (!CellTracker.OCID_API_KEY.equals("NA")) {
-                double earthRadius = 6371.01;
+                double earthRadius = 6371.01; // [Km]
 
                 if (cell.getLat() != 0.0 && cell.getLon() != 0.0) {
                     //New GeoLocation object to find bounding Coordinates
                     GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
-                    //Calculate the Bounding Coordinates in a 100 mile radius
+                    //Calculate the Bounding Box Coordinates in a 10 Km radius
                     //0 = min 1 = max
-                    GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(100, earthRadius);
+                    GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(10, earthRadius);
                     String boundParameter;
 
                     //Request OpenCellID data for Bounding Coordinates
