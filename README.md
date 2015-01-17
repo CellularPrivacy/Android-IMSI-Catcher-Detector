@@ -69,7 +69,10 @@ They come in uncountable shapes and sizes:
 
 [![IMSI-Catcher Vehicle](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/DOCUMENTATION/IMSI-Catchers/CellularMonitoringVehicle.jpg "Inside an IMSI-Catcher Van")](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector)
 
-Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or any combination thereof.
+* Search for "GSM Interceptor", "IMSI-Catcher", "StingRay" or "Cell Site Simulator".
+* Pay close attention wherever you go: Cell Towers can be [hidden everywhere](http://www.robertvoit.com/bilder/serie1_new_trees/)!
+
+[![Disguised Cell Tower](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/DOCUMENTATION/IMSI-Catchers/DisguisedCellTower.jpg "Disguised Real Cell Tower")](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector)
 
 ---
 
