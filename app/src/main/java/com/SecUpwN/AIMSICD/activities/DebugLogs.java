@@ -164,7 +164,8 @@ public class DebugLogs extends BaseActivity {
      * @throws IOException
      */
     private String getLogs() throws IOException {
-        Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v brief" + (isRadioLogs ? " -b radio" : ""));
+        //Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v brief" + (isRadioLogs ? " -b radio" : ""));
+        Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v time" + (isRadioLogs ? " -b radio" : "") + " *:v" );
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
 
