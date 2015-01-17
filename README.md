@@ -204,14 +204,6 @@ Our gratitude flies out to our great Sponsors:
 
 ### Get in touch with the core team!
 
-|                              Developer                             |              Task            |
-|:------------------------------------------------------------------:|:----------------------------:|
-|[E:V:A](mailto:a3841c3c@opayq.com)                                  |       Project Initiator      |
-|[Ueland](http://h3x.no/)                                            |      Bug Smashing Hammer     |
-|[tobykurien](http://tobykurien.com/)                                |          Code-Monkey         |    
-|[He3556](mailto:info@dm-development.de)                             |    Vulnerability Analyzer    |
-|[Sgt-Obst](http://forum.xda-developers.com/member.php?u=5102584)    |      Graphical Designer      |
-|[andr3jx](mailto:9414f52d@opayq.com)                                | Chief Cook and Bottle Washer |
-|[SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)     |         Public Speaker       |
+You will find our current team members [here](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
 
 ---
