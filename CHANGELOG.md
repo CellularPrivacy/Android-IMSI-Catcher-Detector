@@ -1,15 +1,21 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 17.01.2015 - WIP-Internal v0.1.25-alpha-build-17
+
+* Updated: Added @d-mariano to our `CREDITS` because he has been of awesome help
+* Moved: Contact details of the team members have been moved into [WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact) for better editing
+* Fixed: Minor typos in `CHANGELOG.md` and `CONTRIBUTING.md` have been removed
+* Fixed: Persistent Service does not have to be checked and unchecked after fresh install
+
+---
+
 #### 17.01.2015 - WIP-Internal v0.1.25-alpha-build-16
 
 * Improved: Log strings for LAC detection and code layout for better visibility
-* Updated: Added @d-mariano to our `CREDITS` because he has been of awesome help
 * Added: Many comments for the pending DB update which will help understanding it
-* Moved: Contact details of the team members have been moved into [WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact) for better editing
+* Fixed: String changes in strings.xml causing DB Viewer failure have been reverted
 * Fixed: Missing BTS Issue due to OCID download limitation of 1000 has been resolved
-* Fixed: Minor typos in `CHANGELOG.md` and `CONTRIBUTING.md` have been removed
-* Fixed: Persistent Service does not have to be checked and unchecked after fresh install
 
 ---
 
