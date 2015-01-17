@@ -102,17 +102,20 @@ public class DbViewerFragment extends Fragment {
                         Cursor result = null;
 
                         switch (mTableSelected) {
-                            // unique BTS we have been connected to in the past
+                            // The unique BTSs we have been connected to in the past
                             // EVA: Was "Cell Data" // Table: cellinfo
+                            //      ToBe: "DBi_bts"
                             case "Unique BTS Data":
                                 result = mDb.getCellData();
                                 break;
                             // All BTS measurements we have done since start
                             // EVA: Was "Location Data" // Table: locationinfo
-                            case "BTS measurements":
+                            //      ToBe: "DBi_measure"
+                            case "BTS Measurements":
                                 result =  mDb.getLocationData();
                                 break;
                             // EVA: Was "OpenCellID Data" // Table: opencellid
+                            //      ToBe: "DBe_import"
                             case "Imported OCID Data":
                                 result =  mDb.getOpenCellIDData();
                                 break;
@@ -122,8 +125,18 @@ public class DbViewerFragment extends Fragment {
                             case "Silent SMS":
                                 result =  mDb.getSilentSmsData();
                                 break;
+                            //      ToBe merged into "DBi_measure:rx_signal"
                             case "Measured Signal Strengths":
                                 result = mDb.getSignalStrengthMeasurementData();
+
+                            // Table: "EventLog"
+                            //case "EventLog":
+                            //    result = mDb.getEventLogData();
+
+                            // Table: "DetectionFlags"
+                            //case "DetectionFlags":
+                            //    result = mDb.getDetectionFlagsData();
+
                         }
 
                         BaseInflaterAdapter adapter = null;
@@ -176,7 +189,8 @@ public class DbViewerFragment extends Fragment {
                             new OpenCellIdCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData("CID: " + tableData.getString(0),
+                        CardItemData data = new CardItemData(
+                                "CID: " + tableData.getString(0),
                                 "LAC: " + tableData.getString(1),
                                 "MCC: " + tableData.getString(2),
                                 "MNC: " + tableData.getString(3),
@@ -195,7 +209,8 @@ public class DbViewerFragment extends Fragment {
                             new DefaultLocationCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData("Country: " + tableData.getString(0),
+                        CardItemData data = new CardItemData(
+                                "Country: " + tableData.getString(0),
                                 "MCC: " + tableData.getString(1),
                                 "Lat: " + tableData.getString(2),
                                 "Lon: " + tableData.getString(3),
@@ -208,22 +223,31 @@ public class DbViewerFragment extends Fragment {
                     BaseInflaterAdapter<SilentSmsCardData> adapter
                             = new BaseInflaterAdapter<>(
                             new SilentSmsCardInflater());
+                    //int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         SilentSmsCardData data = new SilentSmsCardData(tableData.getString(0),
-                                tableData.getString(1), tableData.getString(2),
+                                tableData.getString(1),
+                                tableData.getString(2),
                                 tableData.getString(3),
-                                tableData.getString(4), tableData.getLong(5));
+                                tableData.getString(4),
+                                tableData.getLong(5));
+                                //"" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     return adapter;
                 }
+                // ToDo: merge into "DBi_measure:rx_signal"
                 case "Measured Signal Strengths": {
                     BaseInflaterAdapter<MeasuredCellStrengthCardData> adapter
                             = new BaseInflaterAdapter<>(
                             new MeasuredCellStrengthCardInflater());
+                    //int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         MeasuredCellStrengthCardData data = new MeasuredCellStrengthCardData(
-                                tableData.getInt(0), tableData.getInt(1), tableData.getLong(2));
+                                tableData.getInt(0),
+                                tableData.getInt(1),
+                                tableData.getLong(2));
+                                //"" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     return adapter;
@@ -234,7 +258,8 @@ public class DbViewerFragment extends Fragment {
                             new CellCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData("CID: " + tableData.getString(0),
+                        CardItemData data = new CardItemData(
+                                "CID: " + tableData.getString(0),
                                 "LAC: " + tableData.getString(1),
                                 "RAT: " + tableData.getString(2),
                                 "Lat: " + tableData.getString(3),
