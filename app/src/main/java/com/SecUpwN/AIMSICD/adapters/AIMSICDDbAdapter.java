@@ -39,21 +39,25 @@ public class AIMSICDDbAdapter {
     private final String TAG = "AISMICD_DbAdaptor";
     public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
     private static final String COLUMN_ID = "_id";              // ToDo: "id"
+
     private final String LOCATION_TABLE = "locationinfo";       // TABLE_DBI_MEASURE:DBi_measure (volatile)
     private final String CELL_TABLE = "cellinfo";               // TABLE_DBI_BTS:DBi_bts (physical)
     private final String OPENCELLID_TABLE = "opencellid";       // TABLE_DBE_IMPORT:DBe_import
     private final String DEFAULT_MCC_TABLE = "defaultlocation"; // TABLE_DEFAUKT_MCC:defaultlocation
     private final String SILENT_SMS_TABLE = "silentsms";        // TABLE_SILENT_SMS:silentsms
 
-    /*
-     * Some placeholders for the use of the new tables:
-     *
-     *  TABLE_DBE_CAPABILITIES:DBe_capabilities
-     *  TABLE_DETECTION_FLAGS:DetectionFlags
-     *  TABLE_EVENT_LOG:EventLog
-     *  TABLE_COUNTERMEASURES:CounterMeasures
-     *  TABLE_SECTORTYPE:SectorType
-     */
+    // Some placeholders for the use of the new tables:
+
+    // private final String TABLE_DBE_IMPORT       = "DBe_import";       // External: BTS import table
+    // private final String TABLE_DBE_CAPABILITIES = "DBe_capabilities"  // External: MNO & BTS network capabilities
+    // private final String TABLE_DBI_BTS          = "DBi_bts";          // Internal: (physical) BTS data
+    // private final String TABLE_DBI_MEASURE      = "DBi_measure";      // Internal: (volatile) network measurements
+    // private final String TABLE_DEFAULT_MCC      = "defaultlocation";  // Deafult MCC for each country
+    // private final String TABLE_DETECTION_FLAGS  = "DetectionFlags"    // Detection Flag description, settings and scoring table
+    // private final String TABLE_EVENT_LOG        = "EventLog"          // Detection and general EventLog (persistent)
+    // private final String TABLE_SECTORTYPE       = "SectorType"        // BTS tower sector configuration (Many CID, same BTS)
+    // private final String TABLE_SILENT_SMS       = "silentsms";        // Silent SMS details
+    // private final String TABLE_CMEASURES        = "CounterMeasures"   // Counter Measures thresholds and description
 
     // cell tower signal strength collected by the device
     // ToDo: Remove this table and use "rx_signal" in the "TABLE_DBI_MEASURE:DBi_measure" table..
@@ -192,13 +196,13 @@ public class AIMSICDDbAdapter {
         cellIDValues.put("Samples", samples);
 
         if (openCellExists(cellID)) {
-             Log.v(TAG, "Cell already in OCID DB (db update): " + cellID);
+             Log.v(TAG, "CID already in OCID DB (db update): " + cellID);
             return mDb.update(OPENCELLID_TABLE, cellIDValues,
                     "CellID=?",
                     new String[]{Integer.toString(cellID)});
         } else {
             //DETECTION 1
-            Log.v(TAG, "ALERT: Cell -NOT- in OCID DB (db insert): " + cellID);
+            Log.v(TAG, "ALERT: CID -NOT- in OCID DB (db insert): " + cellID);
             return mDb.insert(OPENCELLID_TABLE, null, cellIDValues);
         }
     }
@@ -348,16 +352,19 @@ public class AIMSICDDbAdapter {
         Cursor cursor = mDb.query(CELL_TABLE, new String[]{"Lac"}, "CellID=" + cell.getCID(),
                 null,null,null,null);
 
+        // 2015-01-17 E:V:A
+        // Not clear: Is the CELL_TABLE LAC the one imported from OCID or something else?
+        // If it IS, then it's "DBe_imported", if it is NOT, then I have no idea...
         while (cursor.moveToNext()) {
             if (cell.getLAC() != cursor.getInt(0)) {
                  Log.i(TAG, "ALERT: Changing LAC on CID: " + cell.getCID()
-                         + " Current LAC: " + cell.getLAC()
-                         + " Database LAC: " + cursor.getInt(0));
+                         + " Current LAC(DBi): " + cell.getLAC()
+                         + " Database LAC(DBe): " + cursor.getInt(0));
                 cursor.close();
                 return false;
             } else {
-                Log.v(TAG, "LAC checked - no changes: " + cell.getCID() + " - "+ cell.getLAC() +
-                    " LAC (DB): " + cursor.getInt(0) );
+                Log.v(TAG, "LAC checked - no change.  CID:" + cell.getCID() + " LAC(DBi):"+ cell.getLAC() +
+                    " LAC(DBe): " + cursor.getInt(0) );
             }
         }
 

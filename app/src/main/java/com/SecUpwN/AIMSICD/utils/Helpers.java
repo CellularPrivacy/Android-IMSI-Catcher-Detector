@@ -168,9 +168,9 @@ public class Helpers {
 
                     //Request OpenCellID data for Bounding Coordinates
                     boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
-                            + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
-                            + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
-                            + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
+                                   + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
+                                   + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
+                                   + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
                     StringBuilder sb = new StringBuilder();
                     sb.append("http://www.opencellid.org/cell/getInArea?key=")
@@ -211,8 +211,7 @@ public class Helpers {
         }
         try {
             String result = new String(byteArray, "ASCII");
-            result = String.copyValueOf(result.toCharArray(), 0,
-                    byteArray.length);
+            result = String.copyValueOf(result.toCharArray(), 0, byteArray.length);
             return result;
         } catch (UnsupportedEncodingException e) {
             return null;
@@ -238,7 +237,7 @@ public class Helpers {
             return null;
         }
 
-        // Replace all invisible chars to '.'
+        // Replace all invisible chars with '.'
         for (int i = 0; i < dataLength; i++) {
             if ((byteArray[i] == 0x0D) || (byteArray[i] == 0x0A)) {
                 byteArray[i] = 0;

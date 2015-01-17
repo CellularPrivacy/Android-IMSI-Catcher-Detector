@@ -231,7 +231,7 @@
         <item>BTS Measurements</item>
         <item>Imported OCID Data</item>
         <item>Default MCC Locations</item>
-        <item>Silent/Stealth SMS</item>
+        <item>Silent SMS</item>
         <item>Measured Signal Strengths</item>
     </string-array>
     <string name="database_export_successful">Export Successful</string>
