@@ -80,6 +80,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private boolean mTrackingFemtocell;
     private boolean mFemtoDetected;
     private boolean mChangedLAC;
+    private boolean mCellIdNotInOpenDb;
     private Cell mMonitorCell;
     private boolean mTypeZeroSmsDetected;
     private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
@@ -642,7 +643,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * Set or update the Notification
      */
     void setNotification() {
-
         String tickerText;
         String contentText = "Phone Type " + mDevice.getPhoneType();
 
@@ -651,6 +651,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else if (mChangedLAC) {
             Status.setCurrentStatus(Status.Type.MEDIUM, this.context);
             contentText = "Hostile Service Area: Changing LAC Detected!";
+        } else if(mCellIdNotInOpenDb){
+            Status.setCurrentStatus(Status.Type.MEDIUM, this.context);
+            contentText = "Cell ID does not exist in OpenCellID Database!";
         } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
             Status.setCurrentStatus(Status.Type.NORMAL, this.context);
             if (mTrackingFemtocell) {
@@ -672,9 +675,30 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 tickerText = context.getResources().getString(R.string.app_name_short) + " - Status: Good. No Threats Detected.";
                 break;
             case MEDIUM: //MEDIUM
-                tickerText = context.getResources().getString(R.string.app_name_short) + " - Hostile Service Area: Changing LAC Detected!";
+                /**
+                 * New Issue (Noticed from #91):
+                 *      Problem:
+                 *          Having multiple notifications will cause an issue with
+                 *      notifications themselves AND tickerText.  It seems that the
+                 *      most recent notification raised would overwrite any previous,
+                 *      notification or tickerText.  This results in loss of information
+                 *      for any notification before the last one.
+                 *
+                 *      Solution?:
+                 *          Perhaps arranging a queue implementation to deal with text
+                 *      being passed into tickerText only when any previous text has
+                 *      been entirely displayed.
+                 **/
+                //Initialize tickerText as the app name string
+                tickerText = context.getResources().getString(R.string.app_name_short);
                 if (mChangedLAC) {
+                    //Append changing LAC text
+                    tickerText += " - Hostile Service Area: Changing LAC Detected!";
                     contentText = "Hostile Service Area: Changing LAC Detected!";
+                }else if (mCellIdNotInOpenDb) {
+                    //Append Cell ID not existing in external db text
+                    tickerText += " - Cell ID does not exist in OpenCellID Database!";
+                    contentText = "Cell ID does not exist in OpenCellID Database!";
                 }
                 break;
             case ALARM: //DANGER
@@ -730,6 +754,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             setNotification();
                         } else {
                             mChangedLAC = false;
+                        }
+                        //Check if CellID is in OpenCell database (issue #91)
+                        if (!dbHelper.openCellExists(mMonitorCell.getCID())){
+                            mCellIdNotInOpenDb = true;
+                            setNotification();
+                        } else {
+                            mCellIdNotInOpenDb = false;
                         }
                         dbHelper.close();
                     }

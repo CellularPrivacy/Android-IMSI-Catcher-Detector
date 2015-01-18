@@ -320,7 +320,7 @@ public class AIMSICDDbAdapter {
     /**
      * Checks to see if Cell already exists in OpenCellID database
      */
-    boolean openCellExists(int cellID) {
+    public boolean openCellExists(int cellID) {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE + " WHERE CellID = " +
                 cellID, null);
 
