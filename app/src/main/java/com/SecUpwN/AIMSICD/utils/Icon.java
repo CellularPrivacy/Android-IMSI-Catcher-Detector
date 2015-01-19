@@ -19,9 +19,13 @@ public class Icon {
      * Returns a icon of the Type $t, what kind of icon is returned is decided
      * from what the current status is.
      */
-    // TODO:  Seem we're missing the other colors here: ORANGE and BLACK (skull)
-    //  See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
-    // E:V:A 2015-01-04
+    // TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
+    // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
+    // Change names from "IDLE,NORMAL,MEDIUM,ALARM" to:"GRAY,GREEN,YELLOW,ORANGE,RED,BLACK",
+    // to reflect detection Icon colors.
+    // Dependencies:  Status.java, CellTracker.java, Icon.java ( + others?)
+    // They should be based on the detection scores here: <TBA>
+    // -- E:V:A 2015-01-19
     public static int getIcon(Type t) {
         switch(t) {
             case FLAT:
