@@ -10,11 +10,13 @@ import android.support.v4.content.LocalBroadcastManager;
  * @author Tor Henning Ueland
  */
 public class Status {
-    // E:V:A 2014-12-29
-    // The current available status types are located here:
-    // https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
-    // They're (or should be) based on the detection scores here:
-    // ...TBA...
+    // TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
+    // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
+    // Change names from "IDLE,NORMAL,MEDIUM,ALARM" to:"GRAY,GREEN,YELLOW,ORANGE,RED,BLACK",
+    // to reflect detection Icon colors.
+    // Dependencies:  Status.java, CellTracker.java, Icon.java ( + others?)
+    // They should be based on the detection scores here: <TBA>
+    // -- E:V:A 2015-01-19
     public static Type currentStatus;
     public enum Type {
         ALARM, // Which is this?

@@ -147,7 +147,8 @@ public class DebugLogs extends BaseActivity {
                     // show a share intent
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/html");
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "a3841c3c@opayq.com" });
+                    // This is a masked email to one of our developers. In case of spam re-mask.
+                    intent.putExtra(Intent.EXTRA_EMAIL, "a3841c3c@opayq.com");
                     intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error Log");
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
@@ -164,8 +165,8 @@ public class DebugLogs extends BaseActivity {
      * @throws IOException
      */
     private String getLogs() throws IOException {
-        //Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v brief" + (isRadioLogs ? " -b radio" : ""));
-        Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v time" + (isRadioLogs ? " -b radio" : "") + " *:v" );
+        // + " *:v" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
+        Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v time" + (isRadioLogs ? " -b radio" : "") + " *:d" );
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
 
