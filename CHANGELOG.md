@@ -1,6 +1,16 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 19.01.2015 - WIP-Internal v0.1.25-alpha-build-18
+
+* Changed: `-v brief` to `-v time` to get timestamps for debugging time critical Issues
+* Added: Implemented `*:v` to ensure we also get verbose messages for better debugging
+* Added: Picture and link to disguised Cell Towers (just to make you aware that these exist)
+* Fixed: Bug report E-Mail address was previously not automatically added (in K-9 Mail)
+* Fixed: Lack of notification and tickerText when cellID not existing in the OCID database
+
+---
+
 #### 17.01.2015 - WIP-Internal v0.1.25-alpha-build-17
 
 * Updated: Added @d-mariano to our `CREDITS` because he has been of awesome help
