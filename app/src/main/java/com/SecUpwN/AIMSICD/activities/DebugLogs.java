@@ -147,7 +147,7 @@ public class DebugLogs extends BaseActivity {
                     // show a share intent
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/html");
-                    intent.putExtra(Intent.EXTRA_EMAIL, "");
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "a3841c3c@opayq.com" });
                     intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error Log");
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
