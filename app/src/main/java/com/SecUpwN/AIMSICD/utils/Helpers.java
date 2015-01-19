@@ -311,6 +311,7 @@ public class Helpers {
     public static List<String> unpackListOfStrings(byte aob[]) {
 
         if (aob.length == 0) {
+            // WARNING: This one is very chatty!
             Log.v(TAG, "invokeOemRilRequestRaw: string list response Length = 0");
             return Collections.emptyList();
         }
@@ -354,6 +355,7 @@ public class Helpers {
     public static List<String> unpackByteListOfStrings(byte aob[]) {
 
         if (aob.length == 0) {
+            // WARNING: This one is very chatty!
             Log.v(TAG, "invokeOemRilRequestRaw: byte list response Length = 0");
             return Collections.emptyList();
         }
