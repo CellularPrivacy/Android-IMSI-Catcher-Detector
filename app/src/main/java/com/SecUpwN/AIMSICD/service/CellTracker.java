@@ -162,10 +162,20 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     public void stop() {
+        if(isMonitoringCell()) {
+            setCellMonitoring(false);
+        }
+        if(isTrackingCell()){
+            setCellTracking(false);
+        }
+        if(isTrackingFemtocell()){
+            stopTrackingFemto();
+        }
         cancelNotification();
         tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
         context.unregisterReceiver(mMessageReceiver);
+
     }
 
     /**

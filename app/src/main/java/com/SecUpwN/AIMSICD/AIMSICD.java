@@ -58,6 +58,7 @@ import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
+import com.SecUpwN.AIMSICD.service.SignalStrengthTracker;
 import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
@@ -99,11 +100,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Finish main activity if Quit was selected from NavDrawer
-        if (getIntent().getBooleanExtra("EXIT", false)) {
-            finish();
-        }
 
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
@@ -213,8 +209,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         final String PERSIST_SERVICE = mContext.getString(R.string.pref_persistservice_key);
         boolean persistService = prefs.getBoolean(PERSIST_SERVICE, false);
         if (!persistService) {
-            Intent intent = new Intent(mContext, AimsicdService.class);
-            stopService(intent);
+            stopService(new Intent(mContext, AimsicdService.class));
         }
     }
 
