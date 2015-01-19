@@ -264,6 +264,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
      * @author andrej
      * @return null or newly generated key
+     *
+     * TODO: We need to check for better HTTP request error handling.
+     * See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/267
      */
     public static String requestNewOCIDKey() throws Exception {
         String responseFromServer = null;
@@ -286,8 +289,30 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 result.getEntity().consumeContent();
             }
             Log.d("OCID", responseFromServer);
-
             return responseFromServer;
+
+        } else if (status.getStatusCode() == 503) {
+        // Check for HTTP error code 503 which is returned when user is trying to request
+        // a new API key within 24 hours of the last request.
+        // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
+            //
+            //Helpers.msgLong(context,
+            //        "Only one new API key request per 24 hours!\nPlease try again later.");
+            if (result.getEntity() != null) {
+                InputStream is = result.getEntity().getContent();
+                ByteArrayOutputStream content = new ByteArrayOutputStream();
+                // Read response into a buffered stream
+                int readBytes = 0;
+                byte[] sBuffer = new byte[4096];
+                while ((readBytes = is.read(sBuffer)) != -1) {
+                    content.write(sBuffer, 0, readBytes);
+                }
+                responseFromServer = content.toString("UTF-8");
+                result.getEntity().consumeContent();
+            }
+            Log.d("OCID Reached 24hr API key limit:", responseFromServer);
+            return responseFromServer;
+
         } else {
             httpclient = null;
             httpGet = null;
@@ -640,7 +665,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     * Set or update the Notification
+     * Set or update the Detection/Status Notification
+     *
+     * TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
+     * See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
+     * Change names from "IDLE,NORMAL,MEDIUM,ALARM" to:"GRAY,GREEN,YELLOW,ORANGE,RED,BLACK",
+     * to reflect detection Icon colors.
+     * Dependencies:  Status.java, CellTracker.java, Icon.java ( + others?)
+     * They should be based on the detection scores here: <TBA>
+     * -- E:V:A 2015-01-19
      */
     void setNotification() {
         String tickerText;
@@ -701,7 +734,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     contentText = "Cell ID does not exist in OpenCellID Database!";
                 }
                 break;
-            case ALARM: //DANGER
+            case ALARM: //DANGER (Is this RED?)
                 tickerText = context.getResources().getString(R.string.app_name_short) + " - ALERT!! Threat Detected!";
                 if (mFemtoDetected) {
                     contentText = "ALERT!! FemtoCell Connection Threat Detected!";
