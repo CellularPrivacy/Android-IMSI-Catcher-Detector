@@ -86,7 +86,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
 
     private final AIMSICDDbAdapter dbHelper;
-    private Context context;
+    // TEST to fix toast in OCID api key was:
+    // private Context context;
+    private static Context context;
     private final Handler timerHandler = new Handler();
 
     public CellTracker(Context context, SignalStrengthTracker sst) {
@@ -94,8 +96,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         this.signalStrengthTracker = sst;
         // TelephonyManager provides system details
         tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        prefs = context.getSharedPreferences(
-                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        prefs = context.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         prefs.registerOnSharedPreferenceChangeListener(this);
         loadPreferences();
         setNotification();
@@ -187,9 +188,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if (track) {
             tm.listen(mCellSignalListener,
                     PhoneStateListener.LISTEN_CELL_LOCATION |
-                            PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |
-                            PhoneStateListener.LISTEN_DATA_ACTIVITY |
-                            PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
+                    PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |
+                    PhoneStateListener.LISTEN_DATA_ACTIVITY |
+                    PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
             );
             mTrackingCell = true;
             Helpers.msgShort(context, "Tracking Cell Information.");
@@ -272,7 +273,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     /**
      * Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
-     * @author andrej
+     *
      * @return null or newly generated key
      *
      * TODO: We need to check for better HTTP request error handling.
@@ -305,9 +306,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         // Check for HTTP error code 503 which is returned when user is trying to request
         // a new API key within 24 hours of the last request.
         // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
-            //
-            //Helpers.msgLong(context,
-            //        "Only one new API key request per 24 hours!\nPlease try again later.");
+
+            Helpers.msgLong(context,
+                    "Only one new API key request per 24 hours!\nPlease try again later.");
             if (result.getEntity() != null) {
                 InputStream is = result.getEntity().getContent();
                 ByteArrayOutputStream content = new ByteArrayOutputStream();
@@ -355,9 +356,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             } else {
                 tm.listen(phoneStatelistener,
                         PhoneStateListener.LISTEN_CELL_LOCATION |
-                                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
-                                | PhoneStateListener.LISTEN_SERVICE_STATE |
-                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+                        PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
+                        PhoneStateListener.LISTEN_SERVICE_STATE |
+                        PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
             }
 
             for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
@@ -391,16 +392,21 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         Log.i(TAG, "neighbouringCellInfo Size - " + neighboringCellInfo.size());
         for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
-            Log.i(TAG, "neighbouringCellInfo - CID:" + neighbourCell.getCid() +
-                    " LAC:" + neighbourCell.getLac() + " RSSI:" + neighbourCell.getRssi() +
-                    " PSC:" + neighbourCell.getPsc());
+            Log.i(TAG,
+                    "neighbouringCellInfo -" +
+                    " LAC:" + neighbourCell.getLac() +
+                    " CID:" + neighbourCell.getCid() +
+                    " PSC:" + neighbourCell.getPsc() +
+                    " RSSI:" + neighbourCell.getRssi() );
 
-            final Cell cell = new Cell(neighbourCell.getCid(), neighbourCell.getLac(),
-                    neighbourCell.getRssi(), neighbourCell.getPsc(),
+            final Cell cell = new Cell(
+                    neighbourCell.getCid(),
+                    neighbourCell.getLac(),
+                    neighbourCell.getRssi(),
+                    neighbourCell.getPsc(),
                     neighbourCell.getNetworkType(), false);
             neighboringCells.add(cell);
         }
-
         return neighboringCells;
     }
 
@@ -483,10 +489,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
                     if (gsmCellLocation != null) {
                         mDevice.setCellInfo(
-                                gsmCellLocation.toString() + mDevice.getDataActivityTypeShort()
-                                        + "|"
-                                        + mDevice.getDataStateShort() + "|" + mDevice
-                                        .getNetworkTypeName() + "|");
+                                gsmCellLocation.toString() +
+                                mDevice.getDataActivityTypeShort() + "|" +
+                                mDevice.getDataStateShort() + "|" +
+                                mDevice.getNetworkTypeName() + "|");
                         mDevice.mCell.setLAC(gsmCellLocation.getLac());
                         mDevice.mCell.setCID(gsmCellLocation.getCid());
                         if (gsmCellLocation.getPsc() != -1)
@@ -498,9 +504,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                     if (cdmaCellLocation != null) {
                         mDevice.setCellInfo(
-                                cdmaCellLocation.toString() + mDevice.getDataActivityTypeShort()
-                                        + "|" + mDevice.getDataStateShort() + "|" + mDevice
-                                        .getNetworkTypeName() + "|");
+                                cdmaCellLocation.toString() +
+                                mDevice.getDataActivityTypeShort() + "|" +
+                                mDevice.getDataStateShort() + "|" +
+                                mDevice.getNetworkTypeName() + "|");
                         mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());
                         mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());
                         mDevice.mCell.setSID(cdmaCellLocation.getSystemId());
@@ -515,7 +522,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             //Update Signal Strength
             if (signalStrength.isGsm()) {
                 int dbm;
-                if(signalStrength.getGsmSignalStrength() <= 2 || signalStrength.getGsmSignalStrength() ==  NeighboringCellInfo.UNKNOWN_RSSI) {
+                if(signalStrength.getGsmSignalStrength() <= 2 ||
+                   signalStrength.getGsmSignalStrength() ==  NeighboringCellInfo.UNKNOWN_RSSI)
+                {
                     //Unknown signal strength, get it another way
                     String[] bits = signalStrength.toString().split(" ");
                     dbm = Integer.parseInt(bits[9]);
@@ -609,15 +618,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             if (cellLocation != null) {
                 switch (mDevice.getPhoneID()) {
                     case TelephonyManager.PHONE_TYPE_GSM:
-                        GsmCellLocation gsmCellLocation
-                                = (GsmCellLocation) cellLocation;
+                        GsmCellLocation gsmCellLocation = (GsmCellLocation) cellLocation;
                         mDevice.mCell.setCID(gsmCellLocation.getCid());
                         mDevice.mCell.setLAC(gsmCellLocation.getLac());
                         mDevice.mCell.setPSC(gsmCellLocation.getPsc());
                         break;
                     case TelephonyManager.PHONE_TYPE_CDMA:
-                        CdmaCellLocation cdmaCellLocation
-                                = (CdmaCellLocation) cellLocation;
+                        CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cellLocation;
                         mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());
                         mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());
                         mDevice.mCell.setSID(cdmaCellLocation.getSystemId());
@@ -637,24 +644,32 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             //Store last known location in preference
             SharedPreferences.Editor prefsEditor;
             prefsEditor = prefs.edit();
-            prefsEditor.putString(context.getString(R.string.data_last_lat_lon),
-                    String.valueOf(loc.getLatitude()) + ":" + String
-                            .valueOf(loc.getLongitude()));
+            prefsEditor.putString(context.getString(R.string.data_last_lat_lon), String.valueOf(loc.getLatitude()) +
+                                  ":" + String.valueOf(loc.getLongitude()));
             prefsEditor.apply();
 
             if (mTrackingCell) {
                 dbHelper.open();
-                dbHelper.insertLocation(mDevice.mCell.getLAC(),
-                        mDevice.mCell.getCID(), mDevice.mCell.getNetType(),
+                dbHelper.insertLocation(
+                        mDevice.mCell.getLAC(),
+                        mDevice.mCell.getCID(),
+                        mDevice.mCell.getNetType(),
                         mDevice.mCell.getLat(),
-                        mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
+                        mDevice.mCell.getLon(),
+                        mDevice.mCell.getDBM(),
                         mDevice.getCellInfo());
 
-                dbHelper.insertCell(mDevice.mCell.getLAC(), mDevice.mCell.getCID(),
-                        mDevice.mCell.getNetType(), mDevice.mCell.getLat(),
-                        mDevice.mCell.getLon(), mDevice.mCell.getDBM(),
-                        mDevice.mCell.getMCC(), mDevice.mCell.getMNC(),
-                        mDevice.mCell.getAccuracy(), mDevice.mCell.getSpeed(),
+                dbHelper.insertCell(
+                        mDevice.mCell.getLAC(),
+                        mDevice.mCell.getCID(),
+                        mDevice.mCell.getNetType(),
+                        mDevice.mCell.getLat(),
+                        mDevice.mCell.getLon(),
+                        mDevice.mCell.getDBM(),
+                        mDevice.mCell.getMCC(),
+                        mDevice.mCell.getMNC(),
+                        mDevice.mCell.getAccuracy(),
+                        mDevice.mCell.getSpeed(),
                         mDevice.mCell.getBearing(),
                         mDevice.getNetworkTypeName(),
                         SystemClock.currentThreadTimeMillis());
@@ -745,11 +760,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 }
                 break;
             case ALARM: //DANGER (Is this RED?)
-                tickerText = context.getResources().getString(R.string.app_name_short) + " - ALERT!! Threat Detected!";
+                tickerText = context.getResources().getString(R.string.app_name_short) + " - ALERT: Some Threat Detected!"; // Hmm, this is vague!
                 if (mFemtoDetected) {
-                    contentText = "ALERT!! FemtoCell Connection Threat Detected!";
+                    contentText = "ALERT: FemtoCell Connection Detected!";
                 } else if (mTypeZeroSmsDetected) {
-                    contentText = "ALERT!! Type Zero Silent SMS Intercepted!";
+                    contentText = "ALERT: Type-0 Silent SMS Intercepted!";
                 }
 
                 break;
@@ -798,7 +813,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         } else {
                             mChangedLAC = false;
                         }
-                        //Check if CellID is in OpenCell database (issue #91)
+                        //Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
                         if (!dbHelper.openCellExists(mMonitorCell.getCID())){
                             mCellIdNotInOpenDb = true;
                             setNotification();
@@ -842,8 +857,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
 
     /**
-     * Start FemtoCell detection tracking
-     * CDMA Devices ONLY
+     * Start FemtoCell detection tracking (For CDMA Devices ONLY!)
      */
     public void startTrackingFemto() {
 
@@ -963,9 +977,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
     private boolean isEvDoNetwork(int networkType) {
         return (networkType == TelephonyManager.NETWORK_TYPE_EVDO_0) ||
-                (networkType == TelephonyManager.NETWORK_TYPE_EVDO_A) ||
-                (networkType == TelephonyManager.NETWORK_TYPE_EVDO_B) ||
-                (networkType == TelephonyManager.NETWORK_TYPE_EHRPD);
+               (networkType == TelephonyManager.NETWORK_TYPE_EVDO_A) ||
+               (networkType == TelephonyManager.NETWORK_TYPE_EVDO_B) ||
+               (networkType == TelephonyManager.NETWORK_TYPE_EHRPD);
     }
     /*
      * The above code section was copied and modified from

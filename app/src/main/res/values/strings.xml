@@ -236,9 +236,7 @@
     </string-array>
     <string name="database_export_successful">Export Successful</string>
 
-
-
-    <!-- AT Command Processor -->
+    <!-- AT Command Interface  -->
     <string name="at_command_title">AT Command Interface</string>
     <string name="response_label">Response:</string>
     <string name="execute_at">Execute</string>
@@ -259,9 +257,9 @@
     <string name="message_request_api_key">Click Ok to request an API key from OpenCellID.org. This will enable you to download their data and view it in the map. It will also enable you to upload cell data. Note that if you do not upload cell data within 20 days, your API key may become inactive.</string>
     <string name="ocid_api_error">Error getting key: </string>
     <string name="ocid_api_success">Saved new API key</string>
-    <string name="title_debug_logs">Debug Logs</string>
 
     <!-- Debug logs -->
+    <string name="title_debug_logs">Debug Logs</string>
     <string name="btn_radio_logs">Radio Logs</string>
     <string name="btn_app_logs">App Logs</string>
     <string name="btn_clear_logs">Clear</string>
