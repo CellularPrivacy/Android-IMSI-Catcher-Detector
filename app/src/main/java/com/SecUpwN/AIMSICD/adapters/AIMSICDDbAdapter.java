@@ -163,12 +163,11 @@ public class AIMSICDDbAdapter {
             cellValues.put("MeasurementTaken", cell.getTimestamp());
 
             if (cellExists(cell.getCID())) {
-                Log.v(TAG, "Cell info updated in local db: " + cell.getCID());
+                Log.v(TAG, "CID info updated in local db (DBi): " + cell.getCID());
                 return mDb.update(CELL_TABLE, cellValues,
-                        "CellID=?",
-                        new String[]{Integer.toString(cell.getCID())});
+                        "CellID=?", new String[]{Integer.toString(cell.getCID())});
             } else {
-                Log.v(TAG, "New Cell found, insert into local db:: " + cell.getCID());
+                Log.v(TAG, "New CID found, insert into local db (DBi):: " + cell.getCID());
                 return mDb.insert(CELL_TABLE, null, cellValues);
             }
         }
@@ -198,10 +197,12 @@ public class AIMSICDDbAdapter {
         if (openCellExists(cellID)) {
              Log.v(TAG, "CID already in OCID DB (db update): " + cellID);
             return mDb.update(OPENCELLID_TABLE, cellIDValues,
-                    "CellID=?",
-                    new String[]{Integer.toString(cellID)});
+                    "CellID=?", new String[]{Integer.toString(cellID)});
         } else {
-            //DETECTION 1
+            //DETECTION 1  ???
+            // TODO: Why are we inserting this into DBe_import?
+            // This doesn't sound right, unless importing OCID
+            // --E:V:A
             Log.v(TAG, "ALERT: CID -NOT- in OCID DB (db insert): " + cellID);
             return mDb.insert(OPENCELLID_TABLE, null, cellIDValues);
         }
@@ -249,7 +250,7 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Returns Silent SMS database contents
+     * Returns Silent SMS database (silentsms) contents
      */
     public Cursor getSilentSmsData() {
         return mDb.query(SILENT_SMS_TABLE, new String[]{"Address", "Display", "Class", "ServiceCtr",
@@ -410,6 +411,7 @@ public class AIMSICDDbAdapter {
 
     public boolean prepareOpenCellUploadData() {
         boolean result;
+        // Where is this? /sdcard/? Maybe change name to "OCIDupload/"?
         File dir = new File(FOLDER + "OpenCellID/");
         if (!dir.exists()) {
             result = dir.mkdirs();
@@ -428,8 +430,7 @@ public class AIMSICDDbAdapter {
             open();
             Cursor c = getOPCIDSubmitData();
 
-            csvWrite.writeNext(
-                    "mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act");
+            csvWrite.writeNext("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act");
             String[] rowData = new String[c.getColumnCount()];
             int size = c.getColumnCount();
             AIMSICD.mProgressBar.setProgress(0);
@@ -446,7 +447,7 @@ public class AIMSICDDbAdapter {
             c.close();
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "Error creating OpenCellID Upload Data " + e);
+            Log.e(TAG, "Error creating OpenCellID Upload Data: " + e);
             return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
@@ -492,7 +493,7 @@ public class AIMSICDDbAdapter {
 
 
         } catch (Exception e) {
-            Log.e(TAG, "Error populating Default Mcc Data - " + e);
+            Log.e(TAG, "Error populating Default MCC Data: " + e);
         }
     }
 
@@ -536,7 +537,7 @@ public class AIMSICDDbAdapter {
             }
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "Error parsing OpenCellID data - " + e.getMessage());
+            Log.e(TAG, "Error parsing OpenCellID data: " + e.getMessage());
             return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
@@ -628,9 +629,16 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Backup the database tables to CSV files
+     * Backup the database tables to CSV files (or monolithic dump file)
      *
      * @return boolean indicating backup outcome
+     *
+     * TODO: Change backup from using CSV files to using a complete SQLite dump
+     * This might require using a shell command:
+     *   # sqlite3 aimsicd.db '.dump' | gzip -c >aimsicd.dump.gz
+     * To re-import use:
+     *   # zcat aimsicd.dump.gz | sqlite3 aimsicd.db
+     *
      */
     public boolean backupDB() {
         try {

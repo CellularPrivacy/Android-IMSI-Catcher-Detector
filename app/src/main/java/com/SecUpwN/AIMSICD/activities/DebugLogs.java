@@ -166,7 +166,8 @@ public class DebugLogs extends BaseActivity {
      */
     private String getLogs() throws IOException {
         // + " *:v" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
-        Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v time" + (isRadioLogs ? " -b radio" : "") + " *:d" );
+        // Silent Samsung Galaxy class spam debug: " AbsListView:S"
+        Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v time" + (isRadioLogs ? " -b radio" : "") + "AbsListView:s *:d" );
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
 
