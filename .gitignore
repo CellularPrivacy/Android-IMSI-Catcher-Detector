@@ -61,3 +61,5 @@ Thumbs.db
 /*/build
 gradle.properties
 signing.properties
+import-summary.txt
+manifest-merger*.txt
