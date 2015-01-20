@@ -1,6 +1,15 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 20.01.2015 - WIP-Internal v0.1.25-alpha-build-20
+
+* Improved: Silenced spammy Samsung Galaxy class debug logcat entries from DebugLog
+* Updated: Added `import-summary.txt` and `manifest-merger*.txt` to `.gitignore`
+* Fixed: Finally solved `CellTracker.java` not stopping correctly when pressing `Quit`
+* Fixed: Erased a typo in DebugLog and added even more comments to the current code
+
+---
+
 #### 19.01.2015 - WIP-Internal v0.1.25-alpha-build-19
 
 * Changed: Reformatted a bunch of code for law and order
