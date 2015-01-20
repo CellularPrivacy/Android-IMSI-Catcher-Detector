@@ -179,6 +179,7 @@ public class DbViewerFragment extends Fragment {
     //  1. Although "RAN" is more correct here, we'll use "RAT" (Radio Access Technology),
     //     which is the more common terminology. Thus reverting.
     //  2. Since Signal is not an "indicator" we should just call it "RSS" or "RXS"
+    //
     private BaseInflaterAdapter BuildTable(Cursor tableData) {
         if (tableData != null && tableData.getCount() > 0) {
             switch (mTableSelected) {
@@ -223,7 +224,8 @@ public class DbViewerFragment extends Fragment {
                             new SilentSmsCardInflater());
                     //int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        SilentSmsCardData data = new SilentSmsCardData(tableData.getString(0),
+                        SilentSmsCardData data = new SilentSmsCardData(
+                                tableData.getString(0),
                                 tableData.getString(1),
                                 tableData.getString(2),
                                 tableData.getString(3),

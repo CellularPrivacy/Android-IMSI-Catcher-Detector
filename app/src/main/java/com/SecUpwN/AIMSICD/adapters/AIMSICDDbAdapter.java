@@ -100,14 +100,16 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Inserts Cell Details into Database
+     * Inserts (API?) Cell Details into Database (cellinfo) TABLE_DBI_BTS:DBi_bts/measure
      *
      * @return row id or -1 if error
+     *
+     * TODO: This should become TABLE_DBI_BTS: DBi_bts | measure
+     *
      */
-    public long insertCell(int lac, int cellID,
-            int netType, double latitude, double longitude,
-            int signalInfo, int mcc, int mnc, double accuracy,
-            double speed, double direction, String networkType, long measurementTaken) {
+    public long insertCell(int lac, int cellID, int netType, double latitude, double longitude,
+            int signalInfo, int mcc, int mnc, double accuracy, double speed, double direction,
+            String networkType, long measurementTaken) {
 
         if (cellID != -1 && (latitude != 0.0 && longitude != 0.0)) {
             //Populate Content Values for Insert or Update
@@ -140,9 +142,11 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Inserts Cell Details into Database
+     * Inserts (API?) Cell Details into Database (cellinfo) TABLE_DBI_BTS:DBi_bts/measure
      *
      * @return row id or -1 if error
+     *
+     * TODO: This should become TABLE_DBI_BTS: DBi_bts | measure
      */
     public long insertCell(Cell cell) {
 
@@ -175,13 +179,12 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Inserts OpenCellID Details into Database
+     * Inserts OCID (CSV?) details into Database (opencellid) DBe_import
      *
      * @return row id or -1 if error
      */
-    long insertOpenCell(double latitude, double longitude,
-            int mcc, int mnc, int lac, int cellID, int avgSigStr,
-            int samples) {
+    long insertOpenCell(double latitude, double longitude, int mcc, int mnc, int lac,
+                        int cellID, int avgSigStr, int samples) {
 
         //Populate Content Values for Insert or Update
         ContentValues cellIDValues = new ContentValues();
@@ -209,9 +212,11 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Inserts Location Details into Database
+     * Inserts API location details into the measurement Database (locationinfo)
      *
      * @return row id or -1 if error
+     *
+     * TODO: TABLE_DBI_MEASURE:DBi_measure
      */
     public long insertLocation(int lac, int cellID,
             int netType, double latitude, double longitude,
@@ -226,7 +231,7 @@ public class AIMSICDDbAdapter {
             locationValues.put("Lat", latitude);
             locationValues.put("Lng", longitude);
             locationValues.put("Signal", signalInfo);
-            locationValues.put("Connection", cellInfo);
+            locationValues.put("Connection", cellInfo); // This is funny, with multiple items...
 
             if (locationExists(cellID, latitude, longitude, signalInfo)) {
                 return mDb.update(LOCATION_TABLE, locationValues, "CellID=?",
@@ -283,8 +288,8 @@ public class AIMSICDDbAdapter {
      * Returns Location Information (DBi_meas) database contents
      */
     public Cursor getLocationData() {
-        return mDb.query(LOCATION_TABLE, new String[]{"CellID", "Lac", "Net", "Lat", "Lng",
-                        "Signal"},
+        return mDb.query( LOCATION_TABLE,
+                new String[]{"CellID", "Lac", "Net", "Lat", "Lng", "Signal"},
                 null, null, null, null, null
         );
     }
@@ -293,8 +298,8 @@ public class AIMSICDDbAdapter {
      * Returns OpenCellID (DBe_import) database contents
      */
     public Cursor getOpenCellIDData() {
-        return mDb.query(OPENCELLID_TABLE, new String[]{"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng",
-                        "AvgSigStr", "Samples"},
+        return mDb.query(OPENCELLID_TABLE,
+                new String[]{"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng", "AvgSigStr", "Samples"},
                 null, null, null, null, null
         );
     }
@@ -303,7 +308,8 @@ public class AIMSICDDbAdapter {
      * Returns Default MCC Locations (defaultlocation) database contents
      */
     public Cursor getDefaultMccLocationData() {
-        return mDb.query(DEFAULT_MCC_TABLE, new String[]{"Country", "Mcc", "Lat", "Lng"},
+        return mDb.query(DEFAULT_MCC_TABLE,
+                new String[]{"Country", "Mcc", "Lat", "Lng"},
                 null, null, null, null, null);
     }
 
@@ -353,43 +359,49 @@ public class AIMSICDDbAdapter {
         Cursor cursor = mDb.query(CELL_TABLE, new String[]{"Lac"}, "CellID=" + cell.getCID(),
                 null,null,null,null);
 
-        // 2015-01-17 E:V:A
-        // Not clear: Is the CELL_TABLE LAC the one imported from OCID or something else?
-        // If it IS, then it's "DBe_imported", if it is NOT, then I have no idea...
+        // 2015-01-20
+        // This is using the LAC found by API and comparing to LAC found from a previous
+        // measurement in the "DBi_measure". This is NOT depending on "DBe_import".
+        // This works for now...but we probably should consider populating "DBi_measure"
+        // as soon as API get a new LAC. Then the detection can be done by SQL.
+        // -- E:V:A
         while (cursor.moveToNext()) {
             if (cell.getLAC() != cursor.getInt(0)) {
-                 Log.i(TAG, "ALERT: Changing LAC on CID: " + cell.getCID()
-                         + " Current LAC(DBi): " + cell.getLAC()
-                         + " Database LAC(DBe): " + cursor.getInt(0));
+                //Log.i(TAG, "ALERT: Changing LAC on CID: " + cell.getCID()
+                //        + " Current LAC(DBi): " + cell.getLAC()
+                //        + " Database LAC(DBe): " + cursor.getInt(0));
+                Log.i(TAG, "ALERT: Changing LAC on CID: " + cell.getCID()
+                        + " LAC(API): " + cell.getLAC()
+                        + " LAC(DBi): " + cursor.getInt(0) );
                 cursor.close();
                 return false;
             } else {
-                Log.v(TAG, "LAC checked - no change.  CID:" + cell.getCID() + " LAC(DBi):"+ cell.getLAC() +
-                    " LAC(DBe): " + cursor.getInt(0) );
+                //Log.v(TAG, "LAC checked - no change.  CID:" + cell.getCID() + " LAC(DBi):"+ cell.getLAC() +
+                //    " LAC(DBe): " + cursor.getInt(0) );
+                Log.v(TAG, "LAC checked - no change on CID:" + cell.getCID()
+                        + " LAC(API): " + cell.getLAC()
+                        + " LAC(DBi): " + cursor.getInt(0) );
             }
         }
 
         cursor.close();
-
         return true;
     }
 
     /**
-     * Updates Cell records to indicate OpenCellID contribution has been made
+     * Updates Cell (cellinfo) records to indicate OpenCellID contribution has been made
+     * TODO: This should be done on TABLE_DBI_MEASURE::DBi_measure:isSubmitted
      */
     public void ocidProcessed() {
         ContentValues ocidValues = new ContentValues();
-        ocidValues.put("OCID_SUBMITTED", 1);
-
-        mDb.update(CELL_TABLE, ocidValues, "OCID_SUBMITTED<>?",
-                new String[]{"1"});
+        ocidValues.put("OCID_SUBMITTED", 1); // isSubmitted
+        mDb.update(CELL_TABLE, ocidValues, "OCID_SUBMITTED<>?", new String[]{"1"}); //isSubmitted
     }
 
     public double[] getDefaultLocation(int mcc) {
         double[] loc = new double[2];
-
-        Cursor cursor = mDb.rawQuery("SELECT Lat, Lng FROM " + DEFAULT_MCC_TABLE + " WHERE Mcc = " +
-                mcc, null);
+        Cursor cursor = mDb.rawQuery("SELECT Lat, Lng FROM " +
+                DEFAULT_MCC_TABLE + " WHERE Mcc = " + mcc, null);
 
         if (cursor.moveToFirst()) {
             loc[0] = Double.parseDouble(cursor.getString(0));
@@ -398,9 +410,7 @@ public class AIMSICDDbAdapter {
             loc[0] = 0.0;
             loc[1] = 0.0;
         }
-
         cursor.close();
-
         return loc;
     }
 
@@ -411,7 +421,8 @@ public class AIMSICDDbAdapter {
 
     public boolean prepareOpenCellUploadData() {
         boolean result;
-        // Where is this? /sdcard/? Maybe change name to "OCIDupload/"?
+        // Q: Where is this? A: It is wherever your device has mounted its SDCard.
+        // For example:  /data/media/0/AIMSICD/OpenCellID
         File dir = new File(FOLDER + "OpenCellID/");
         if (!dir.exists()) {
             result = dir.mkdirs();
@@ -487,10 +498,8 @@ public class AIMSICDDbAdapter {
                 defaultMccValues.put("Mcc", csvMcc.get(i)[1]);
                 defaultMccValues.put("Lng", csvMcc.get(i)[2]);
                 defaultMccValues.put("Lat", csvMcc.get(i)[3]);
-
                 db.insert(DEFAULT_MCC_TABLE, null, defaultMccValues);
             }
-
 
         } catch (Exception e) {
             Log.e(TAG, "Error populating Default MCC Data: " + e);
@@ -498,8 +507,18 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Parses the downloaded CSV from OpenCellID and adds Map Marker to identify known
-     * Cell ID's
+     * Parses the downloaded CSV from OpenCellID and uses it to populate "DBe_import".
+     * ("opencellid" table.)
+     *
+     * Why are we only populating 8 items out of 19?
+     *
+     * From downloaded OCID CSV file:  (19 items)
+     *   # head -2 opencellid.csv
+     *   lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,tac,pci,sid,nid,bid
+     *   54.63376,25.160243,246,3,20,1294,0,-1,1,1,GSM,,,,,,,,
+     *
+     * To table: <TBA>
+     *
      */
     public boolean updateOpenCellID() {
         String fileName = Environment.getExternalStorageDirectory()
@@ -524,14 +543,15 @@ public class AIMSICDDbAdapter {
                     for (int i = 1; i < lines; i++) {
                         AIMSICD.mProgressBar.setProgress(i);
                         //Insert details into OpenCellID Database
-                        insertOpenCell(Double.parseDouble(csvCellID.get(i)[0]),
-                                Double.parseDouble(csvCellID.get(i)[1]),
-                                Integer.parseInt(csvCellID.get(i)[2]),
-                                Integer.parseInt(csvCellID.get(i)[3]),
-                                Integer.parseInt(csvCellID.get(i)[4]),
-                                Integer.parseInt(csvCellID.get(i)[5]),
-                                Integer.parseInt(csvCellID.get(i)[6]),
-                                Integer.parseInt(csvCellID.get(i)[7]));
+                        insertOpenCell( Double.parseDouble(csvCellID.get(i)[0]), // gps_lat
+                                        Double.parseDouble(csvCellID.get(i)[1]), // gps_lon
+                                        Integer.parseInt(csvCellID.get(i)[2]),   // MCC
+                                        Integer.parseInt(csvCellID.get(i)[3]),   // MNC
+                                        Integer.parseInt(csvCellID.get(i)[4]),   // LAC
+                                        Integer.parseInt(csvCellID.get(i)[5]),   // CID
+                                        Integer.parseInt(csvCellID.get(i)[6]),   // avg_signal
+                                        Integer.parseInt(csvCellID.get(i)[7])    //
+                        );
                     }
                 }
             }
@@ -547,7 +567,7 @@ public class AIMSICDDbAdapter {
     /**
      * Imports a previously exported CSV file into the database
      */
-    public boolean restoreDB() {
+    public boolean restoreDB() { // Rename to importDB ? (See Log TAG below)
         try {
             for (String table : mTables) {
                 File file = new File(FOLDER + "aimsicd-" + table + ".csv");
@@ -567,7 +587,8 @@ public class AIMSICDDbAdapter {
                             AIMSICD.mProgressBar.setProgress(i);
                             switch (table) {
                                 case CELL_TABLE:
-                                    insertCell(Integer.parseInt(records.get(i)[1]),
+                                    insertCell(
+                                            Integer.parseInt(records.get(i)[1]),
                                             Integer.parseInt(records.get(i)[2]),
                                             Integer.parseInt(records.get(i)[3]),
                                             Double.parseDouble(records.get(i)[4]),
@@ -582,7 +603,8 @@ public class AIMSICDDbAdapter {
                                             Long.valueOf(records.get(i)[11]));
                                     break;
                                 case LOCATION_TABLE:
-                                    insertLocation(Integer.parseInt(records.get(i)[1]),
+                                    insertLocation(
+                                            Integer.parseInt(records.get(i)[1]),
                                             Integer.parseInt(records.get(i)[2]),
                                             Integer.parseInt(records.get(i)[3]),
                                             Double.parseDouble(records.get(i)[4]),
@@ -591,7 +613,8 @@ public class AIMSICDDbAdapter {
                                             String.valueOf(records.get(i)[7]));
                                     break;
                                 case OPENCELLID_TABLE:
-                                    insertOpenCell(Double.parseDouble(records.get(i)[1]),
+                                    insertOpenCell(
+                                            Double.parseDouble(records.get(i)[1]),
                                             Double.parseDouble(records.get(i)[2]),
                                             Integer.parseInt(records.get(i)[3]),
                                             Integer.parseInt(records.get(i)[4]),
@@ -603,12 +626,9 @@ public class AIMSICDDbAdapter {
                                 case SILENT_SMS_TABLE:
                                     Bundle bundle = new Bundle();
                                     bundle.putString("address", String.valueOf(records.get(i)[1]));
-                                    bundle.putString("display_address",
-                                            String.valueOf(records.get(i)[2]));
-                                    bundle.putString("message_class",
-                                            String.valueOf(records.get(i)[3]));
-                                    bundle.putString("service_centre",
-                                            String.valueOf(records.get(i)[4]));
+                                    bundle.putString("display_address", String.valueOf(records.get(i)[2]));
+                                    bundle.putString("message_class", String.valueOf(records.get(i)[3]));
+                                    bundle.putString("service_centre", String.valueOf(records.get(i)[4]));
                                     bundle.putString("message", String.valueOf(records.get(i)[5]));
                                     insertSilentSms(bundle);
                                     break;
@@ -640,7 +660,7 @@ public class AIMSICDDbAdapter {
      *   # zcat aimsicd.dump.gz | sqlite3 aimsicd.db
      *
      */
-    public boolean backupDB() {
+    public boolean backupDB() { // Rename to exportDB ? (See Log TAG below)
         try {
             for (String table : mTables) {
                 backup(table);
@@ -713,13 +733,13 @@ public class AIMSICDDbAdapter {
     }
 
     public int countSignalMeasurements(int cellID) {
-        Cursor c = mDb.rawQuery("SELECT COUNT(cellID) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID="+cellID, new String[0]);
+        Cursor c = mDb.rawQuery("SELECT COUNT(cellID) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID=" + cellID, new String[0]);
         c.moveToFirst();
         return c.getInt(0);
     }
 
     public int getAverageSignalStrength(int cellID) {
-        Cursor c = mDb.rawQuery("SELECT AVG(signal) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID="+cellID, new String[0]);
+        Cursor c = mDb.rawQuery("SELECT AVG(signal) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID=" + cellID, new String[0]);
         c.moveToFirst();
         return c.getInt(0);
     }
@@ -742,8 +762,10 @@ public class AIMSICDDbAdapter {
 
             /*
              * Cell Signal Measurements
+             * TODO move table into column "DBi_measure::rx_signal"
              */
-            database.execSQL("create table " + CELL_SIGNAL_TABLE + " (" + COLUMN_ID + " integer primary key autoincrement, cellID INTEGER, signal INTEGER, timestamp INTEGER);");
+            database.execSQL("create table " +
+                    CELL_SIGNAL_TABLE + " (" + COLUMN_ID + " integer primary key autoincrement, cellID INTEGER, signal INTEGER, timestamp INTEGER);");
             database.execSQL("create index cellID_index ON "+CELL_SIGNAL_TABLE+" (cellID);");
             database.execSQL("create index cellID_timestamp ON "+CELL_SIGNAL_TABLE+" (timestamp);");
 
@@ -759,6 +781,7 @@ public class AIMSICDDbAdapter {
 
              /*
               * Location Tracking Database
+              * TODO: rename to TABLE_DBI_MEASURE ("DBi_measure")
               */
             String LOC_DATABASE_CREATE = "create table " +
                     LOCATION_TABLE + " (" + COLUMN_ID +
@@ -769,6 +792,7 @@ public class AIMSICDDbAdapter {
 
             /*
              * Cell Information Tracking Database
+             * TODO: rename to TABLE_DBI_BTS ("DBi_bts")
              */
             String CELL_DATABASE_CREATE = "create table " +
                     CELL_TABLE + " (" + COLUMN_ID +
@@ -781,6 +805,7 @@ public class AIMSICDDbAdapter {
 
             /*
              * OpenCellID Cell Information Database
+             * TODO: rename to TABLE_DBE_IMPORT ("DBe_import".)
              */
             String OPENCELLID_DATABASE_CREATE = "create table " +
                     OPENCELLID_TABLE + " (" + COLUMN_ID +
