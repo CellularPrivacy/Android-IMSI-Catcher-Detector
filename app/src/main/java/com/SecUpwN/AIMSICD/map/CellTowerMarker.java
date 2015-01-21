@@ -24,7 +24,6 @@ public class CellTowerMarker extends Marker {
 
     public CellTowerMarker(Context context, MapView mapView, String aTitle, String aSnippet, GeoPoint aGeoPoint, MarkerData data) {
         super(mapView);
-
         mContext = context;
 
         mTitle = aTitle;
@@ -32,7 +31,6 @@ public class CellTowerMarker extends Marker {
         mPosition = aGeoPoint;
 
         mMarkerData = data;
-
         mOnMarkerClickListener = new OnCellTowerMarkerClickListener();
     }
 
@@ -40,7 +38,14 @@ public class CellTowerMarker extends Marker {
         return mMarkerData;
     }
 
-    // Defines the contents of the InfoWindow
+    /**
+     * Defines the contents of the InfoWindow
+     *
+     * The info window could be more advanced, if possible, by using
+     * more available items as explained in the related issue here:
+     * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
+     *
+     */
     public View getInfoContents(MarkerData data) {
 
         TextView tv;
@@ -55,21 +60,24 @@ public class CellTowerMarker extends Marker {
                     tr.setVisibility(View.VISIBLE);
                 }
 
-                tv = (TextView) v.findViewById(R.id.cell_id);
+                tv = (TextView) v.findViewById(R.id.cell_id); // CID
                 tv.setText(data.cellID);
-                tv = (TextView) v.findViewById(R.id.lac);
+                tv = (TextView) v.findViewById(R.id.lac); // LAC
                 tv.setText(data.lac);
-                tv = (TextView) v.findViewById(R.id.lat);
+                tv = (TextView) v.findViewById(R.id.lat); // LAT
                 tv.setText(String.valueOf(data.lat));
-                tv = (TextView) v.findViewById(R.id.lng);
+                tv = (TextView) v.findViewById(R.id.lng); // LON
                 tv.setText(String.valueOf(data.lng));
-                tv = (TextView) v.findViewById(R.id.mcc);
+
+                // TODO replace MCC & MNC with PC:
+                tv = (TextView) v.findViewById(R.id.mcc); // MCC
                 tv.setText(data.getMCC());
-                tv = (TextView) v.findViewById(R.id.mnc);
+                tv = (TextView) v.findViewById(R.id.mnc); // MNC
                 tv.setText(data.getMNC());
-                tv = (TextView) v.findViewById(R.id.pc);
+
+                tv = (TextView) v.findViewById(R.id.pc);  // MNC+MCC
                 tv.setText(data.getPC());
-                tv = (TextView) v.findViewById(R.id.samples);
+                tv = (TextView) v.findViewById(R.id.samples); // Samples
                 tv.setText(data.getSamples());
             }
         }
