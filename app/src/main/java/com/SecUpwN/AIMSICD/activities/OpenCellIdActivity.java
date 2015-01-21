@@ -13,6 +13,9 @@ import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 
 
+/*
+ * TODO: A couple of comments here would be good...
+ */
 public class OpenCellIdActivity extends BaseActivity {
     Button btnOk;
     Button btnCancel;
@@ -23,11 +26,9 @@ public class OpenCellIdActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_cell_id);
 
-        prefs = getSharedPreferences(
-                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        prefs = getSharedPreferences( AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         btnOk = (Button) findViewById(R.id.btnOk);
         btnCancel = (Button) findViewById(R.id.btnCancel);
-
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,13 +53,14 @@ public class OpenCellIdActivity extends BaseActivity {
                         try {
                             return CellTracker.requestNewOCIDKey();
                         } catch (final Exception e) {
-                            runOnUiThread(new Runnable() {
+                            runOnUiThread( new Runnable() {
                                 @Override
                                 public void run() {
-                                    pd.dismiss();
-                                    Helpers.msgLong(OpenCellIdActivity.this,
-                                            getString(R.string.ocid_api_error)
-                                                    + e.getClass().getName() + " - " + e.getMessage());
+                                pd.dismiss();
+                                Helpers.msgLong(OpenCellIdActivity.this,
+                                                getString(R.string.ocid_api_error)
+                                                + e.getClass().getName()
+                                                + " - " + e.getMessage());
                                 }
                             });
                             return null;
@@ -68,7 +70,6 @@ public class OpenCellIdActivity extends BaseActivity {
                     @Override
                     protected void onPostExecute(String s) {
                         if (s == null) return;
-
                         final String OCID_KEY = getString(R.string.pref_ocid_key);
                         prefs.edit().putString(OCID_KEY, s).commit();
                         CellTracker.OCID_API_KEY = s;

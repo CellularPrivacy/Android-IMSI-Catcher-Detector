@@ -38,7 +38,7 @@ public class AIMSICDDbAdapter {
      */
     private final String TAG = "AISMICD_DbAdaptor";
     public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
-    private static final String COLUMN_ID = "_id";              // ToDo: "id"
+    private static final String COLUMN_ID = "_id";              // Underscore is no longer required...
 
     private final String LOCATION_TABLE = "locationinfo";       // TABLE_DBI_MEASURE:DBi_measure (volatile)
     private final String CELL_TABLE = "cellinfo";               // TABLE_DBI_BTS:DBi_bts (physical)
