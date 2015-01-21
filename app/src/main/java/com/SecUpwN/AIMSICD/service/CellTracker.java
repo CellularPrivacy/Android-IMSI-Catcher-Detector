@@ -132,6 +132,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     /**
      * Cell Information Monitoring
+     * TODO: What exactly are we monitoring here??
+     *
      *
      * @param monitor Enable/Disable monitoring
      */
@@ -182,6 +184,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     /**
      * Cell Information Tracking and database logging
      *
+     * TODO: This is the "Tracking cell information" that need better explanation
+     * and clarification. (What exactly are we "tracking" here? The GPS, the LAC/CID,
+     * and where doe it go?)
+     *
+     *
      * @param track Enable/Disable tracking
      */
     public void setCellTracking(boolean track) {
@@ -205,7 +212,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         setNotification();
     }
 
-
     private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -222,9 +228,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_UI_ICONS = context.getString(R.string.pref_ui_icons_key);
         final String FEMTO_DECTECTION = context.getString(R.string.pref_femto_detection_key);
-        final String REFRESH = context.getString(R.string.pref_refresh_key);
+        final String REFRESH = context.getString(R.string.pref_refresh_key); // Refresh rate of ??? in [seconds]?
         final String DB_VERSION = context.getString(R.string.pref_last_database_backup_version);
-        final String OCID_UPLOAD = context.getString(R.string.pref_ocid_upload);
+        final String OCID_UPLOAD = context.getString(R.string.pref_ocid_upload); // BOOLEAN to enable OCID data upload
         final String OCID_KEY = context.getString(R.string.pref_ocid_key);
 
         if (key.equals(KEY_UI_ICONS)) {
@@ -325,6 +331,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             return responseFromServer;
 
         } else {
+
+            // TODO add code here or elsewhere to check for NO network exceptions...
+            // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/293
             httpclient = null;
             httpGet = null;
             result = null;
@@ -363,34 +372,33 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
                 try {
-                    Log.i(TAG, "neighbouringCellInfo empty - try " + i);
-                    NeighboringCellInfo info = neighboringCellBlockingQueue
-                            .poll(1, TimeUnit.SECONDS);
+                    Log.i(TAG, "neighbouringCellInfo empty: trying " + i);
+                    NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
                         if (neighboringCellInfo.size() > 0) {
-                            Log.i(TAG, "neighbouringCellInfo empty - try " + i
-                                    + " succeeded time based");
+                            // Can we think of a better log message here?
+                            Log.i(TAG, "neighbouringCellInfo found on " + i + " try. (time based)");
                             break;
                         } else {
                             continue;
                         }
                     }
                     ArrayList<NeighboringCellInfo> cellInfoList =
-                            new ArrayList<>(
-                                    neighboringCellBlockingQueue.size() + 1);
+                            new ArrayList<>(neighboringCellBlockingQueue.size() + 1);
                     while (info != null) {
                         cellInfoList.add(info);
                         info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     }
                     neighboringCellInfo = cellInfoList;
                 } catch (InterruptedException e) {
+                    // Maybe a more valuable message here?
                     // normal
                 }
             }
         }
 
-        Log.i(TAG, "neighbouringCellInfo Size - " + neighboringCellInfo.size());
+        Log.i(TAG, "neighbouringCellInfo size: " + neighboringCellInfo.size());
         for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
             Log.i(TAG,
                     "neighbouringCellInfo -" +
@@ -416,6 +424,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if (neighboringCellInfo.size() == 0) {
             return;
         }
+        // Does this make sense? Is it empty or not?
         Log.i(TAG, "neighbouringCellInfo empty - event based polling succeeded!");
         tm.listen(phoneStatelistener, PhoneStateListener.LISTEN_NONE);
         neighboringCellBlockingQueue.addAll(neighboringCellInfo);
@@ -429,25 +438,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * Process User Preferences
      */
     private void loadPreferences() {
-        boolean trackFemtoPref = prefs.getBoolean(
-                context.getString(R.string.pref_femto_detection_key), false);
+        boolean trackFemtoPref = prefs.getBoolean( context.getString(R.string.pref_femto_detection_key), false);
+        boolean trackCellPref = prefs.getBoolean( context.getString(R.string.pref_enable_cell_key), true);
+        boolean monitorCellPref = prefs.getBoolean( context.getString(R.string.pref_enable_cell_monitoring_key), true);
 
-        boolean trackCellPref = prefs.getBoolean(
-                context.getString(R.string.pref_enable_cell_key), true);
+        LAST_DB_BACKUP_VERSION = prefs.getInt( context.getString(R.string.pref_last_database_backup_version), 1);
+        OCID_UPLOAD_PREF = prefs.getBoolean( context.getString(R.string.pref_ocid_upload), false);
+        CELL_TABLE_CLEANSED = prefs.getBoolean( context.getString(R.string.pref_cell_table_cleansed), false);
 
-        boolean monitorCellPref = prefs.getBoolean(
-                context.getString(R.string.pref_enable_cell_monitoring_key), true);
-
-        LAST_DB_BACKUP_VERSION = prefs.getInt(
-                context.getString(R.string.pref_last_database_backup_version), 1);
-
-        OCID_UPLOAD_PREF = prefs.getBoolean(
-                context.getString(R.string.pref_ocid_upload), false);
-
-        CELL_TABLE_CLEANSED = prefs.getBoolean(context.getString(R.string.pref_cell_table_cleansed),
-                false);
-
-        String refreshRate = prefs.getString(context.getString(R.string.pref_refresh_key), "1");
+        String refreshRate = prefs.getString( context.getString(R.string.pref_refresh_key), "1");
         if (refreshRate.isEmpty()) {
             refreshRate = "1";
         }
@@ -539,7 +538,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 //Use lowest signal to be conservative
                 mDevice.setSignalDbm((cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm);
             }
-
             //Send it to signal tracker
             signalStrengthTracker.registerSignalStrength(mDevice.mCell.getCID(), mDevice.getSignalDBm());
             //signalStrengthTracker.isMysterious(mDevice.mCell.getCID(), mDevice.getSignalDBm());
@@ -849,7 +847,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
     };
 
-    /*
+    /**
      * The below code section was copied and modified with permission from
      * Femtocatcher https://github.com/iSECPartners/femtocatcher
      *
@@ -880,8 +878,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     * Stop FemtoCell detection tracking
-     * CDMA Devices ONLY
+     * Stop FemtoCell detection tracking (For CDMA Devices ONLY!)
      */
     public void stopTrackingFemto() {
         if (mPhoneStateListener != null) {
@@ -922,7 +919,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         boolean evDoNetwork = isEvDoNetwork(networkType);
 
         /* If it is not an evDo network check the network ID range.
-         * If it is connected to femtocell, the nid should be lie between [0xfa, 0xff)
+         * If it is connected to Femtocell, the NID should be between [0xfa, 0xff)
          */
         if (!evDoNetwork) {
             /* get network ID */
