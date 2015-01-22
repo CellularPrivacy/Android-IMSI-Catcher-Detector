@@ -48,12 +48,27 @@ public class LocationTracker {
 
     public void start() {
         lastKnownLocation();
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
-                GPS_MIN_UPDATE_DISTANCE, mLocationListener);
-        lm.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, GPS_MIN_UPDATE_TIME,
-                GPS_MIN_UPDATE_DISTANCE, mLocationListener);
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, GPS_MIN_UPDATE_TIME,
-                GPS_MIN_UPDATE_DISTANCE, mLocationListener);
+
+        try {
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
+                    GPS_MIN_UPDATE_DISTANCE, mLocationListener);
+        } catch (IllegalArgumentException e) {
+            // provider doesn't exist, so ignore
+        }
+
+        try {
+            lm.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, GPS_MIN_UPDATE_TIME,
+                    GPS_MIN_UPDATE_DISTANCE, mLocationListener);
+        } catch (IllegalArgumentException e) {
+            // provider doesn't exist, so ignore
+        }
+
+        try {
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, GPS_MIN_UPDATE_TIME,
+                    GPS_MIN_UPDATE_DISTANCE, mLocationListener);
+        } catch (IllegalArgumentException e) {
+            // provider doesn't exist, so ignore
+        }
     }
 
     public void stop() {
