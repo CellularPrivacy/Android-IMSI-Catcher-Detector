@@ -51,6 +51,7 @@
             android:padding="2dip" android:gravity="start"/>
     </TableRow>
 
+<!-- Remove these once PC = MCC+MNC is done
     <TableRow
         android:tag="device">
 
@@ -80,6 +81,7 @@
             android:textColor="@color/medium_blue"
             android:padding="2dip" android:gravity="start"/>
     </TableRow>
+ END remove -->
 
     <TableRow
         android:tag="device">

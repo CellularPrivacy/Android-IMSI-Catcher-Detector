@@ -192,16 +192,17 @@ public class DbViewerFragment extends Fragment {
         if (tableData != null && tableData.getCount() > 0) {
             switch (mTableSelected) {
                 /*
-                 * Was: "OpenCellID Data"   New: "Imported OCID Data"
-                 *
                  * Table: DBi_import
+                 *
                  *   CSV:  lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,  tac,pci,sid,nid,bid
+                 *
                  *   old:   opencellid
                  *          _id|Lat|Lng|Mcc|Mnc|Lac|CellID|AvgSigStr|Samples|Timestamp
                  *
                  *   new:   DBe_import
                  *          _id,DBsource,RAT,MCC,MNC,LAC,CID,PSC,gps_lat,gps_lon,isGPSexact,avg_range,avg_signal,samples,time_first,time_last,rej_cause
                  *
+                 *  Thus for OCID data we cannot use: time_first or time_last.
                  *
                  */
                 // Table:   DBe_import
@@ -210,6 +211,8 @@ public class DbViewerFragment extends Fragment {
                             = new BaseInflaterAdapter<>( new OpenCellIdCardInflater() );
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
+                        // The getString(i) index refer to the table column in the "DBe_import" table
+                        //                     OLD  opencelid(i)        // New "DBe_import" column name
                         CardItemData data = new CardItemData(
                                 "CID: " + tableData.getString(0),       //
                                 "LAC: " + tableData.getString(1),       //
@@ -218,7 +221,7 @@ public class DbViewerFragment extends Fragment {
                                 "Lat: " + tableData.getString(4),       //
                                 "Lon: " + tableData.getString(5),       //
                                 "AvgSignal: " + tableData.getString(6), //
-                                "Samples: " + tableData.getString(7),   // NOTE: #7 was range from ocid csv
+                                "Samples: " + tableData.getString(7),   // NOTE: #7 is range from ocid csv
                                 //"PSC: " + tableData.getString(7),     // PSC
                                 //"first: " + tableData.getString(7),   // time_first
                                 //"last: " + tableData.getString(7),    // time_last
