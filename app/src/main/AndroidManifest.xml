@@ -48,7 +48,7 @@
                 android:name=".AIMSICD"
                 android:exported="true"
                 android:label="@string/app_name_short"
-                android:screenOrientation="portrait">
+                android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
@@ -59,10 +59,61 @@
             </intent-filter>
         </activity>
 
+        <activity
+                android:name=".activities.MapViewerOsmDroid"
+                android:exported="true"
+                android:label="@string/map_view"
+                android:parentActivityName=".AIMSICD"
+                android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".AIMSICD"/>
+        </activity>
+
+        <activity
+                android:name=".activities.PrefActivity"
+                android:exported="true"
+                android:icon="@drawable/ic_action_settings"
+                android:label="@string/preferences"
+                android:parentActivityName=".AIMSICD"
+                android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activities.OpenCellIdActivity"
+            android:icon="@drawable/ic_action_settings"
+            android:label="@string/title_ocid_key"
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:parentActivityName=".activities.PrefActivity"
+            android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+        </activity>
+
+        <activity
+            android:name=".activities.DebugLogs"
+            android:icon="@drawable/ic_action_settings"
+            android:label="@string/title_debug_logs"
+            android:parentActivityName=".AIMSICD"
+            android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+        </activity>
+
+        <activity
+                android:name=".activities.MapPrefActivity"
+                android:exported="true"
+                android:icon="@drawable/ic_action_settings"
+                android:label="@string/preferences"
+                android:parentActivityName=".AIMSICD">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
         <service
-                android:name=".service.AimsicdService"
-                android:enabled="true"
-                android:exported="false">
+            android:name=".service.AimsicdService"
+            android:enabled="true"
+            android:exported="false">
         </service>
 
         <receiver android:name=".receiver.BootCompletedReceiver">
@@ -79,53 +130,6 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
-
-        <activity
-                android:name=".activities.MapViewerOsmDroid"
-                android:exported="true"
-                android:label="@string/map_view"
-                android:parentActivityName=".AIMSICD">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".AIMSICD"/>
-        </activity>
-
-        <activity
-                android:name=".activities.PrefActivity"
-                android:exported="true"
-                android:icon="@drawable/ic_action_settings"
-                android:label="@string/preferences"
-                android:parentActivityName=".AIMSICD">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".activities.OpenCellIdActivity"
-            android:icon="@drawable/ic_action_settings"
-            android:label="@string/title_ocid_key"
-            android:theme="@android:style/Theme.Holo.Dialog"
-            android:parentActivityName=".activities.PrefActivity">
-        </activity>
-
-        <activity
-            android:name=".activities.DebugLogs"
-            android:icon="@drawable/ic_action_settings"
-            android:label="@string/title_debug_logs"
-            android:parentActivityName=".AIMSICD">
-        </activity>
-
-        <activity
-                android:name=".activities.MapPrefActivity"
-                android:exported="true"
-                android:icon="@drawable/ic_action_settings"
-                android:label="@string/preferences"
-                android:parentActivityName=".AIMSICD">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
 
     </application>
 
