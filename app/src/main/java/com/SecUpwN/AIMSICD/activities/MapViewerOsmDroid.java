@@ -69,6 +69,30 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *  Description:    TODO: add details
+ *
+ *  Variables:      TODO: add a list of variables that can be tuned (Max/MinZoom factors etc)
+ *
+ *  Current Issues:
+ *
+ *      [ ] Map is not immediately updated with the BTS info. It take a "long" time ( >10 seconds)
+ *          before map is updated. Any way to shorten this?
+ *      [ ] See: #272 #250 #228
+ *      [ ] Some pins remain clustered even on the greatest zoom, this is probably
+ *          due to over sized icons.
+ *      [ ] pin icons are too big. We need to reduce pin dot diameter by ~50%
+ *
+ *
+ *  ChangeLog:
+ *
+ *      <date>  <name>  <description>
+ *      2015-01-22  E:V:A   Changed:    setLocationUpdateMinTime:    60000 to 10000 ms
+ *                                      setLocationUpdateMinDistance: 1000 to 100 meters
+ *
+ *
+ */
+
 public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
     private final String TAG = "AIMSICD_MapViewer";
@@ -196,6 +220,9 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
     /**
      * Service Connection to bind the activity to the service
+     *
+     * This seem to setup the connection and animates the map window movement to the
+     * last known location.
      */
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -204,7 +231,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
             mBound = true;
 
-            // set up map
+            // setup map
             GeoLocation lastKnown = mAimsicdService.lastKnownLocation();
             if (lastKnown != null) {
                 mMap.getController().setZoom(16);
@@ -233,6 +260,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
     private void setupMapType(int mapType) {
         mMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+        // There are two other map types (hybrid and satellite), but we don't use them
+        // as they are redundant (hybrid) and broken (satellite).
         switch (mapType) {
             case 0:
                 mMap.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE); //setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -266,17 +295,15 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mScaleBarOverlay.setScaleBarOffset(getResources().getDisplayMetrics().widthPixels / 2, 10);
                 mScaleBarOverlay.setCentred(true);
 
+                // Sets cluster pin color
                 mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(MapViewerOsmDroid.this);
-                mCellTowerGridMarkerClusterer.setIcon(((BitmapDrawable)mContext.getResources().getDrawable(R.drawable.ic_map_pin_orange)).getBitmap());
+                mCellTowerGridMarkerClusterer.setIcon(((BitmapDrawable)mContext.getResources().
+                        getDrawable(R.drawable.ic_map_pin_orange)).getBitmap());
 
-                GpsMyLocationProvider imlp = new GpsMyLocationProvider(
-                        MapViewerOsmDroid.this.getBaseContext());
-                imlp.setLocationUpdateMinDistance(1000);
-                imlp.setLocationUpdateMinTime(60000);
-                mMyLocationOverlay = new MyLocationNewOverlay(
-                        MapViewerOsmDroid.this.getBaseContext(),
-                        imlp,
-                        mMap);
+                GpsMyLocationProvider imlp = new GpsMyLocationProvider(MapViewerOsmDroid.this.getBaseContext());
+                imlp.setLocationUpdateMinDistance(100); // [m]  // Set the minimum distance for location updates
+                imlp.setLocationUpdateMinTime(10000);   // [ms] // Set the minimum time interval for location updates
+                mMyLocationOverlay = new MyLocationNewOverlay(MapViewerOsmDroid.this.getBaseContext(), imlp, mMap);
                 mMyLocationOverlay.setDrawAccuracyEnabled(true);
 
                 mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
@@ -320,8 +347,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         cell = mAimsicdService.getCell();
                         cell.setLon(lastKnown.getLongitudeInDegrees());
                         cell.setLat(lastKnown.getLatitudeInDegrees());
-                        Helpers.getOpenCellData(mContext, cell,
-                                RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
+                        Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                         return true;
                     }
                 }
@@ -332,13 +358,11 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     Cell cell = new Cell();
                     cell.setLat(loc.getLatitude());
                     cell.setLon(loc.getLongitude());
-                    Helpers.getOpenCellData(mContext, cell,
-                            RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
+                    Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                 } else {
                     Helpers.msgLong(mContext,
-                            "Unable to determine your last location. \nEnable Location Services and try again.");
+                        "Unable to determine your last location.\nEnable Location Services and try again.");
                 }
-
                 return true;
             }
             default:
@@ -347,6 +371,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     }
 
     /**
+     * TODO: check and document this. Who made this?
      * Loads Signal Strength Database details to plot on the map,
      * only entries which have a location (lon, lat) are used.
      */
@@ -355,7 +380,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         new AsyncTask<Void,Void,GeoPoint>() {
             @Override
             protected GeoPoint doInBackground(Void... voids) {
-                final int SIGNAL_SIZE_RATIO = 15;
+                final int SIGNAL_SIZE_RATIO = 15;  // What is this??
                 int signal;
                 int color;
 
@@ -367,29 +392,32 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mDbHelper.open();
                 Cursor c = null;
                 try {
+                    // Todo: Grab cell data ... from where?
                     c = mDbHelper.getCellData();
                 }catch(IllegalStateException ix) {
                     Log.e(TAG, ix.getMessage(), ix);
                 }
                 if (c != null && c.moveToFirst()) {
                     do {
-                        final int cellID = c.getInt(0);
-                        final int lac = c.getInt(1);
-                        final int net = c.getInt(2);
-                        final int mcc = c.getInt(6);
-                        final int mnc = c.getInt(7);
-                        final double dlat = Double.parseDouble(c.getString(3));
-                        final double dlng = Double.parseDouble(c.getString(4));
+                        final int cellID = c.getInt(0);  // CID
+                        final int lac = c.getInt(1);     // LAC
+                        final int net = c.getInt(2);     // RAT
+                        final int mcc = c.getInt(6);     // MCC
+                        final int mnc = c.getInt(7);     // MNC
+                        final double dlat = Double.parseDouble(c.getString(3)); // Lat
+                        final double dlng = Double.parseDouble(c.getString(4)); // Lon
                         if (dlat == 0.0 && dlng == 0.0) {
                             continue;
                         }
-                        signal = c.getInt(5);
-                        if (signal <= 0) {
+                        signal = c.getInt(5);  // signal
+                        if (signal <= 0) {  // Huh!? What's going on here?
                             signal = 20;
                         }
 
                         if ((dlat != 0.0) || (dlng != 0.0)) {
                             loc = new GeoPoint(dlat, dlng);
+
+                            // TODO: write in text what these colors are. It's damn hard to guess!
                             switch (net) {
                                 case TelephonyManager.NETWORK_TYPE_UNKNOWN:
                                     color = 0xF0F8FF;
@@ -429,14 +457,19 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                                     break;
                             }
 
-                            CellTowerMarker ovm = new CellTowerMarker(mContext,
-                                    mMap,
+                            CellTowerMarker ovm = new CellTowerMarker(mContext, mMap,
                                     "Cell ID: " + cellID,
-                                    "",
-                                    loc,
-                                    new MarkerData("" + cellID, "" + loc.getLatitude(),"" +
-                                            loc.getLongitude(), "" + lac, "" + mcc, "" + mnc, "", false));
-
+                                    "",  loc,
+                                    new MarkerData(
+                                            "" + cellID,
+                                            "" + loc.getLatitude(),
+                                            "" + loc.getLongitude(),
+                                            "" + lac,
+                                            "" + mcc,
+                                            "" + mnc,
+                                            "", false)
+                            );
+                            // The pin of our current position
                             ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_blue));
                             items.add(ovm);
 
@@ -490,8 +523,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 for (Cell cell : nc) {
                     try {
                         loc = new GeoPoint(cell.getLat(), cell.getLon());
-                        CellTowerMarker ovm = new CellTowerMarker(mContext,
-                                mMap,
+                        CellTowerMarker ovm = new CellTowerMarker(mContext,mMap,
                                 "Cell ID: " + cell.getCID(),
                                 "", loc,
                                 new MarkerData(
@@ -503,6 +535,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                                             "" + cell.getMNC(),
                                             "", false));
 
+                        // The pin of other BTS
                         ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_orange));
                         items.add(ovm);
                     } catch (Exception e) {
@@ -543,10 +576,12 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    // TODO: Consider changing this funtion name to:  <something else>
     private void loadOpenCellIDMarkers() {
         //Check if OpenCellID data exists and if so load this now
         LinkedList<CellTowerMarker> items = new LinkedList<>();
 
+        // DBe_import tower pins.
         Drawable cellTowerMarkerIcon = getResources().getDrawable(R.drawable.ic_map_pin_green);
 
         mDbHelper.open();
@@ -564,12 +599,18 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 // Add map marker for CellID
 
 
-                CellTowerMarker ovm = new CellTowerMarker(mContext,
-                        mMap,
+                CellTowerMarker ovm = new CellTowerMarker(mContext, mMap,
                         "Cell ID: " + cellID,
                         "", location,
-                        new MarkerData("" + cellID, "" + location.getLatitude(),"" +
-                                location.getLongitude(), "" + lac, "" + mcc, "" + mnc, "" + samples, false));
+                        new MarkerData(
+                                "" + cellID,
+                                "" + location.getLatitude(),
+                                "" + location.getLongitude(),
+                                "" + lac,
+                                "" + mcc,
+                                "" + mnc,
+                                "" + samples,
+                                false));
 
                 ovm.setIcon(cellTowerMarkerIcon);
                 items.add(ovm);

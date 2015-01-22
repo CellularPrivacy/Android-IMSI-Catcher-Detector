@@ -37,6 +37,48 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
+/**
+ *
+ * Description:
+ *
+ *      This class is the request handler for Downloading and Uploading of BTS data and
+ *      the backing up of the database. The download function currently requests a CVS file
+ *      from OCID though an API query. The parsing of this CVS file is done in the
+ *      "AIMSICDDbAdapter.java" adapter, which put the downloaded data into the
+ *      "DBe_import" table. This should be a read-only table, in the sense that no new
+ *      BTS or info should be added there. The indexing there can be very tricky when
+ *      later displayed in "DbViewerFragment.java", as they are different.
+ *
+ * Criticism:
+ *
+ *      From the original look of it. It seem to first upload newly found BTSs to OCID,
+ *      then it immediately attempts to download a new OCID data set, probably expecting
+ *      to see the new BTS in that data. (If this description is correct?)
+ *
+ *      This is NOT correct behaviour as:
+ *
+ *   1) OCID data takes at least a few minutes before updating their DBs with the
+ *      newly uploaded CSV data file.
+ *   2) It doesn't make sense to re-download data that is already populated in the
+ *      DBi_bts and and DBi_measure tables.
+ *   3) This is very bad because if there are fake BTS found by AIMSICD, then we're
+ *      uploading them and thus making users of AIMSICD believe these are good cells.
+ *      Basically we'd be corrupting the OCID data.
+ *
+ * ChangeLog:
+ *
+ *      2015-01-21 E:V:A   Moved code blocks, added placeholder code, disabled upload
+ *
+ *  To Fix:
+ *
+ *      [ ] add request task "DBE_UPLOAD_REQUEST"
+ *      [ ] Explain why BACKUP/RESTORE_DATABASE is in here?
+ *      [ ] Think about what "lookup cell info" (CELL_LOOKUP) should do
+ *      [ ] Fix or explain why this is named as "doInBackground" since it is not actually
+ *          doing this in the background. (App is blocked while downloading.)
+ *
+ */
 public class RequestTask extends AsyncTask<String, Integer, String> {
 
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
@@ -44,7 +86,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     //public static final char DBE_UPLOAD_REQUEST = 3;            // TODO: OCID upload request from "APPLICATION" drawer title
     public static final char BACKUP_DATABASE = 3;
     public static final char RESTORE_DATABASE = 4;
-    public static final char CELL_LOOKUP = 5;                   // TODO: What's this! ??
+    public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
 
 
     private final AIMSICDDbAdapter mDbAdapter;
@@ -57,30 +99,6 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
         mDbAdapter = new AIMSICDDbAdapter(mContext);
     }
 
-    /**
-     *  ???
-     * TODO: It is unclear what this is attempting to do. Please add more comments.
-     *
-     * From the original look of it. It seem to first upload newly found BTSs to OCID,
-     * then it immediately attempts to download a new OCID data set, probably expecting
-     * to see the new BTS in that data. (If this description is correct?)
-     *
-     * This is NOT correct behaviour as:
-     *   1) OCID data takes at least a few minutes before updating their DBs with the
-     *      newly uploaded CSV data file.
-     *   2) It doesn't make sense to re-download data that is already populated in the
-     *      DBi_bts and and DBi_measure tables.
-     *   3) This is very bad because if there are fake BTS found by AIMSICD, then we're
-     *      uploading them and thus making users of AIMSICD believe these are good cells.
-     *      Basically we'd be corrupting the OCID data.
-     *
-     * So is this function dependent?
-     *
-     * ChangeLog:
-     *
-     *      2015-01-21 E:V:A   Moved code blocks, added placeholder code, disabled upload
-     *
-     */
 
     @Override
     protected String doInBackground(String... commandString) {
@@ -241,7 +259,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     }
                     mDbAdapter.close();
                 } else {
-                    Helpers.msgShort(mContext, "Error retrieving OpenCellID data");
+                    Helpers.msgShort(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
                 }
                 break;
             case DBE_DOWNLOAD_REQUEST_FROM_MAP:
@@ -255,7 +273,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         mDbAdapter.close();
                     }
                 } else {
-                    Helpers.msgShort(mContext, "Error retrieving OpenCellID data");
+                    Helpers.msgShort(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
                 }
                 break;
 
