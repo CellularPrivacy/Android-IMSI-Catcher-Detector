@@ -29,6 +29,7 @@ public class AIMSICDDbAdapter {
 
     /*
      * This handles the AMISICD DataBase tables:
+     *
      * As of 2015-01-01 we'll be slowly migrating from the old DB structure
      * to the new one as detailed here:
      * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215
@@ -147,9 +148,15 @@ public class AIMSICDDbAdapter {
      * @return row id or -1 if error
      *
      * TODO: This should become TABLE_DBI_BTS: DBi_bts | measure
+     * and we might wanna rename "insertCell" to "addMeasurement" ??
+     *
      */
     public long insertCell(Cell cell) {
 
+        // I'm not convinced we should not add a BTS even if Lat/Lon is 0?
+        // since lat/lon can be 0 if no location have been found.
+        // --E:V:A
+        //
         if (cell.getCID() != Integer.MAX_VALUE && (cell.getLat() != 0.0 && cell.getLon() != 0.0)) {
             //Populate Content Values for Insert or Update
             ContentValues cellValues = new ContentValues();
@@ -182,6 +189,9 @@ public class AIMSICDDbAdapter {
      * Inserts OCID (CSV?) details into Database (opencellid) DBe_import
      *
      * @return row id or -1 if error
+     *
+     * TODO: Is this where CSV data is populating the opencellid table?
+     *
      */
     long insertOpenCell(double latitude, double longitude, int mcc, int mnc, int lac,
                         int cellID, int avgSigStr, int samples) {
@@ -195,6 +205,7 @@ public class AIMSICDDbAdapter {
         cellIDValues.put("Lac", lac);
         cellIDValues.put("CellID", cellID);
         cellIDValues.put("AvgSigStr", avgSigStr);
+        //cellIDValues.put("Range", range );
         cellIDValues.put("Samples", samples);
 
         if (openCellExists(cellID)) {
@@ -246,8 +257,10 @@ public class AIMSICDDbAdapter {
 
     /**
      * Delete cell info - for use in tests
+     *
      * @param cellId
      * @return
+     *
      */
     public int deleteCell(int cellId) {
         Log.i(TAG, "Cell deleted: " + cellId);
@@ -363,7 +376,7 @@ public class AIMSICDDbAdapter {
         // This is using the LAC found by API and comparing to LAC found from a previous
         // measurement in the "DBi_measure". This is NOT depending on "DBe_import".
         // This works for now...but we probably should consider populating "DBi_measure"
-        // as soon as API get a new LAC. Then the detection can be done by SQL.
+        // as soon as the API gets a new LAC. Then the detection can be done by SQL.
         // -- E:V:A
         while (cursor.moveToNext()) {
             if (cell.getLAC() != cursor.getInt(0)) {
@@ -414,8 +427,12 @@ public class AIMSICDDbAdapter {
         return loc;
     }
 
+    // TODO: What is this used for??
+    // Seem to remove all but the last row, unless its invalid?
     public void cleanseCellTable() {
+        // This (seem?) to remove all but the last row in the "cellinfo" table
         mDb.execSQL("DELETE FROM " + CELL_TABLE + " WHERE " + COLUMN_ID + " NOT IN (SELECT MAX(" + COLUMN_ID + ") FROM " + CELL_TABLE + " GROUP BY CellID)");
+        // This removes all cells with trouble CID numbers (MAX, -1)
         mDb.execSQL("DELETE FROM " + CELL_TABLE + " WHERE CellID = " + Integer.MAX_VALUE + " OR CellID = -1");
     }
 
@@ -517,8 +534,16 @@ public class AIMSICDDbAdapter {
      *   lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,tac,pci,sid,nid,bid
      *   54.63376,25.160243,246,3,20,1294,0,-1,1,1,GSM,,,,,,,,
      *
-     * To table: <TBA>
+     *  Unfortunately there are 2 important missing items in the OCID CSV file:
+     *   - "time_first"
+     *   - "time_last"
      *
+     *   In addition the OCID data often contain unexplained negative values for one or both of:
+     *    - "samples"
+     *    - "range"
+     *
+     *   Also we should probably change this function name from:
+     *     "updateOpenCellID" to "populateDBe_import"
      */
     public boolean updateOpenCellID() {
         String fileName = Environment.getExternalStorageDirectory()
@@ -542,15 +567,29 @@ public class AIMSICDDbAdapter {
                     int lines = csvCellID.size();
                     for (int i = 1; i < lines; i++) {
                         AIMSICD.mProgressBar.setProgress(i);
-                        //Insert details into OpenCellID Database
+
+                        // Insert details into OpenCellID Database
+                        // Beware of negative values of "range" and "samples"!!
                         insertOpenCell( Double.parseDouble(csvCellID.get(i)[0]), // gps_lat
                                         Double.parseDouble(csvCellID.get(i)[1]), // gps_lon
                                         Integer.parseInt(csvCellID.get(i)[2]),   // MCC
                                         Integer.parseInt(csvCellID.get(i)[3]),   // MNC
                                         Integer.parseInt(csvCellID.get(i)[4]),   // LAC
-                                        Integer.parseInt(csvCellID.get(i)[5]),   // CID
-                                        Integer.parseInt(csvCellID.get(i)[6]),   // avg_signal
-                                        Integer.parseInt(csvCellID.get(i)[7])    //
+                                        Integer.parseInt(csvCellID.get(i)[5]),   // CID (cellid) ?
+                                        Integer.parseInt(csvCellID.get(i)[6]),   // avg_signal [dBm]
+                                        //Integer.parseInt(csvCellID.get(i)[7]), // avg_range [m]
+                                        Integer.parseInt(csvCellID.get(i)[8])    // samples
+                                        //Integer.parseInt(csvCellID.get(i)[9]), // isGPSexact
+                                        //Integer.parseInt(csvCellID.get(i)[10]), // RAT
+                                        //Integer.parseInt(csvCellID.get(i)[11]), // --- RNC
+                                        //Integer.parseInt(csvCellID.get(i)[12]), // --- (cid) ?
+                                        //Integer.parseInt(csvCellID.get(i)[13]), // --- PSC
+                                        //Integer.parseInt(csvCellID.get(i)[14]), // --- TAC
+                                        //Integer.parseInt(csvCellID.get(i)[15]), // --- PCI
+                                        //Integer.parseInt(csvCellID.get(i)[16]), // --- SID
+                                        //Integer.parseInt(csvCellID.get(i)[17]), // --- NID
+                                        //Integer.parseInt(csvCellID.get(i)[18]), // --- BID
+
                         );
                     }
                 }
@@ -567,7 +606,9 @@ public class AIMSICDDbAdapter {
     /**
      * Imports a previously exported CSV file into the database
      */
-    public boolean restoreDB() { // Rename to importDB ? (See Log TAG below)
+
+    // Rename to importDB ? (See Log TAG below)
+    public boolean restoreDB() {
         try {
             for (String table : mTables) {
                 File file = new File(FOLDER + "aimsicd-" + table + ".csv");
@@ -586,50 +627,55 @@ public class AIMSICDDbAdapter {
                         for (int i = 1; i < lines; i++) {
                             AIMSICD.mProgressBar.setProgress(i);
                             switch (table) {
+
+                                // TODO: Please add // comments to describe each field!!
                                 case CELL_TABLE:
                                     insertCell(
-                                            Integer.parseInt(records.get(i)[1]),
-                                            Integer.parseInt(records.get(i)[2]),
-                                            Integer.parseInt(records.get(i)[3]),
-                                            Double.parseDouble(records.get(i)[4]),
-                                            Double.parseDouble(records.get(i)[5]),
-                                            Integer.parseInt(records.get(i)[6]),
-                                            Integer.valueOf(records.get(i)[7]),
-                                            Integer.valueOf(records.get(i)[8]),
-                                            Double.valueOf(records.get(i)[9]),
-                                            Double.valueOf(records.get(i)[10]),
-                                            Double.valueOf(records.get(i)[11]),
-                                            String.valueOf(records.get(i)[10]),
-                                            Long.valueOf(records.get(i)[11]));
+                                            Integer.parseInt(records.get(i)[1]),    //
+                                            Integer.parseInt(records.get(i)[2]),    //
+                                            Integer.parseInt(records.get(i)[3]),    //
+                                            Double.parseDouble(records.get(i)[4]),  //
+                                            Double.parseDouble(records.get(i)[5]),  //
+                                            Integer.parseInt(records.get(i)[6]),    //
+                                            Integer.valueOf(records.get(i)[7]),     //
+                                            Integer.valueOf(records.get(i)[8]),     //
+                                            Double.valueOf(records.get(i)[9]),      //
+                                            Double.valueOf(records.get(i)[10]),     //
+                                            Double.valueOf(records.get(i)[11]),     //
+                                            String.valueOf(records.get(i)[10]),     //
+                                            Long.valueOf(records.get(i)[11]));      //
                                     break;
+
                                 case LOCATION_TABLE:
                                     insertLocation(
-                                            Integer.parseInt(records.get(i)[1]),
-                                            Integer.parseInt(records.get(i)[2]),
-                                            Integer.parseInt(records.get(i)[3]),
-                                            Double.parseDouble(records.get(i)[4]),
-                                            Double.parseDouble(records.get(i)[5]),
-                                            Integer.parseInt(records.get(i)[6]),
-                                            String.valueOf(records.get(i)[7]));
+                                            Integer.parseInt(records.get(i)[1]),    //
+                                            Integer.parseInt(records.get(i)[2]),    //
+                                            Integer.parseInt(records.get(i)[3]),    //
+                                            Double.parseDouble(records.get(i)[4]),  //
+                                            Double.parseDouble(records.get(i)[5]),  //
+                                            Integer.parseInt(records.get(i)[6]),    //
+                                            String.valueOf(records.get(i)[7]));     //
                                     break;
+
                                 case OPENCELLID_TABLE:
                                     insertOpenCell(
-                                            Double.parseDouble(records.get(i)[1]),
-                                            Double.parseDouble(records.get(i)[2]),
-                                            Integer.parseInt(records.get(i)[3]),
-                                            Integer.parseInt(records.get(i)[4]),
-                                            Integer.parseInt(records.get(i)[5]),
-                                            Integer.parseInt(records.get(i)[6]),
-                                            Integer.parseInt(records.get(i)[7]),
-                                            Integer.parseInt(records.get(i)[8]));
+                                            Double.parseDouble(records.get(i)[1]),  //
+                                            Double.parseDouble(records.get(i)[2]),  //
+                                            Integer.parseInt(records.get(i)[3]),    //
+                                            Integer.parseInt(records.get(i)[4]),    //
+                                            Integer.parseInt(records.get(i)[5]),    //
+                                            Integer.parseInt(records.get(i)[6]),    //
+                                            Integer.parseInt(records.get(i)[7]),    //
+                                            Integer.parseInt(records.get(i)[8]));   //
                                     break;
+
                                 case SILENT_SMS_TABLE:
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("address", String.valueOf(records.get(i)[1]));
+                                    bundle.putString("address",         String.valueOf(records.get(i)[1]));
                                     bundle.putString("display_address", String.valueOf(records.get(i)[2]));
-                                    bundle.putString("message_class", String.valueOf(records.get(i)[3]));
-                                    bundle.putString("service_centre", String.valueOf(records.get(i)[4]));
-                                    bundle.putString("message", String.valueOf(records.get(i)[5]));
+                                    bundle.putString("message_class",   String.valueOf(records.get(i)[3]));
+                                    bundle.putString("service_centre",  String.valueOf(records.get(i)[4]));
+                                    bundle.putString("message",         String.valueOf(records.get(i)[5]));
                                     insertSilentSms(bundle);
                                     break;
                             }
@@ -660,7 +706,9 @@ public class AIMSICDDbAdapter {
      *   # zcat aimsicd.dump.gz | sqlite3 aimsicd.db
      *
      */
-    public boolean backupDB() { // Rename to exportDB ? (See Log TAG below)
+
+    // Rename to exportDB ? (See Log TAG below)
+    public boolean backupDB() {
         try {
             for (String table : mTables) {
                 backup(table);
@@ -677,15 +725,14 @@ public class AIMSICDDbAdapter {
      *
      * @param tableName String representing table name to export
      */
-    // TODO: We should have a better file selector here, where the user can select his
-    //       own location for storing the backup files.
+
+    // TODO: We should consider having a better file selector here, so that
+    // the user can select his own location for storing the backup files.
     private void backup(String tableName) {
         Log.i(TAG, "Database Backup: " + DB_NAME);
 
         File dir = new File(FOLDER);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
+        if (!dir.exists()) { dir.mkdirs(); }
         File file = new File(dir, "aimsicd-" + tableName + ".csv");
 
         try {
@@ -710,15 +757,18 @@ public class AIMSICDDbAdapter {
 
             csvWrite.close();
             c.close();
+
         } catch (Exception e) {
-            Log.e(TAG, "Error exporting table " + tableName + " " + e);
+            Log.e(TAG, "Error exporting table: " + tableName + " " + e);
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
         }
 
-        Log.i(TAG, "exporting database complete");
+        Log.i(TAG, "Database Export complete.");
     }
 
+    // =======================================================================================
+    // TODO: @Tor, please add some comments, even if trivial.
     public void cleanseCellStrengthTables(long maxTime) {
         Log.d(TAG, "Cleaning "+CELL_SIGNAL_TABLE+" WHERE timestamp < "+maxTime);
         mDb.execSQL("DELETE FROM "+CELL_SIGNAL_TABLE+" WHERE timestamp < "+maxTime);
@@ -747,6 +797,8 @@ public class AIMSICDDbAdapter {
     public Cursor getSignalStrengthMeasurementData() {
         return mDb.rawQuery("SELECT cellID, signal, timestamp FROM " + CELL_SIGNAL_TABLE +" ORDER BY timestamp DESC", new String[0]);
     }
+    // =======================================================================================
+
 
     /**
      * DbHelper class for the SQLite Database functions
