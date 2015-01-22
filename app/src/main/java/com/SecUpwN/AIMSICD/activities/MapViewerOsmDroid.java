@@ -321,7 +321,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         cell.setLon(lastKnown.getLongitudeInDegrees());
                         cell.setLat(lastKnown.getLatitudeInDegrees());
                         Helpers.getOpenCellData(mContext, cell,
-                                RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
+                                RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                         return true;
                     }
                 }
@@ -333,7 +333,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     cell.setLat(loc.getLatitude());
                     cell.setLon(loc.getLongitude());
                     Helpers.getOpenCellData(mContext, cell,
-                            RequestTask.OPEN_CELL_ID_REQUEST_FROM_MAP);
+                            RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                 } else {
                     Helpers.msgLong(mContext,
                             "Unable to determine your last location. \nEnable Location Services and try again.");

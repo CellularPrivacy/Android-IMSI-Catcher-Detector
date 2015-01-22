@@ -191,15 +191,20 @@ public class DbViewerFragment extends Fragment {
     private BaseInflaterAdapter BuildTable(Cursor tableData) {
         if (tableData != null && tableData.getCount() > 0) {
             switch (mTableSelected) {
-                // Was: "OpenCellID Data" New: "Imported OCID Data"
-                // Table: DBi_import
-                //   CSV:  lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,  tac,pci,sid,nid,bid
-                //   old:   opencellid
-                //          _id|Lat|Lng|Mcc|Mnc|Lac|CellID|AvgSigStr|Samples|Timestamp
-                //
-                //   new:   DBe_import
-                //          _id,DBsource,RAT,MCC,MNC,LAC,CID,PSC,gps_lat,gps_lon,isGPSexact,avg_range,avg_signal,samples,time_first,time_last,rej_cause
-
+                /*
+                 * Was: "OpenCellID Data"   New: "Imported OCID Data"
+                 *
+                 * Table: DBi_import
+                 *   CSV:  lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,  tac,pci,sid,nid,bid
+                 *   old:   opencellid
+                 *          _id|Lat|Lng|Mcc|Mnc|Lac|CellID|AvgSigStr|Samples|Timestamp
+                 *
+                 *   new:   DBe_import
+                 *          _id,DBsource,RAT,MCC,MNC,LAC,CID,PSC,gps_lat,gps_lon,isGPSexact,avg_range,avg_signal,samples,time_first,time_last,rej_cause
+                 *
+                 *
+                 */
+                // Table:   DBe_import
                 case "Imported OCID Data": {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>( new OpenCellIdCardInflater() );
@@ -212,7 +217,7 @@ public class DbViewerFragment extends Fragment {
                                 tableData.getString(4),
                                 tableData.getString(5),
                                 tableData.getString(6),
-                                tableData.getString(7),
+                                tableData.getString(7),     //NOTE: #7 was range from ocid csv
                                 (tableData.getPosition() + 1) + " / " + count);
                                 //"PSC: " + tableData.getString(7),     // PSC
                                 //"first: " + tableData.getString(7),   // time_first
@@ -223,6 +228,8 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
+                // Table:   defaultlocation
                 case "Default MCC Locations": {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>( new DefaultLocationCardInflater() );
@@ -237,6 +244,8 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
+                // Table:   silentsms
                 case "Silent SMS": {
                     BaseInflaterAdapter<SilentSmsCardData> adapter
                             = new BaseInflaterAdapter<>( new SilentSmsCardInflater() );
@@ -254,6 +263,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
                 // ToDo: merge into "DBi_measure:rx_signal"
                 case "Measured Signal Strengths": {
                     BaseInflaterAdapter<MeasuredCellStrengthCardData> adapter
@@ -270,6 +280,7 @@ public class DbViewerFragment extends Fragment {
                     return adapter;
                 }
 /*
+                // Table:   EventLog
                 case "EventLog Data": {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>( new EventLogCardInflater() );
@@ -292,6 +303,7 @@ public class DbViewerFragment extends Fragment {
                 }
 
                 // Maybe we can skip this one?
+                // Table:   DetectionFlags
                 case "DetectionFlags Data": {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>( new DetectionFlagsCardInflater() );
@@ -317,7 +329,7 @@ public class DbViewerFragment extends Fragment {
                     return adapter;
                 }
 
-                // "Unique BTS Data" (DBi_bts)
+                // Table:   DBi_bts
                 case "Unique BTS Data": {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>( new DBi_btsCardInflater() );
@@ -347,6 +359,8 @@ public class DbViewerFragment extends Fragment {
                  * This is an advanced table, but we can simplify and leave out many
                  * items that we do not have and need.
                  *
+                 *
+                // Table:   DBi_measure
                 case "BTS Measurements": {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>( new DBi_measureCardInflater() );
@@ -384,14 +398,14 @@ public class DbViewerFragment extends Fragment {
 
                 /**
                  * TODO:
-                 * This is the default for all other tables,
-                 * so since we have different info in the new tables
-                 * we need to create individual entries (instead of default)
-                 * for these:
+                 * This is the default for all other tables, so since we have different
+                 * info in the new tables we need to create individual entries
+                 * (instead of default) for these:
                  *
                  *  - "Unique BTS Data" (DBi_bts)
                  *  - "BTS Measurements" (DBi_measure)
                  *
+                 * Once implemented, remove this or make different default.
                  */
                 default: {
                     BaseInflaterAdapter<CardItemData> adapter

@@ -39,11 +39,12 @@ import java.net.URL;
 
 public class RequestTask extends AsyncTask<String, Integer, String> {
 
-    public static final char OPEN_CELL_ID_REQUEST = 1;
-    public static final char OPEN_CELL_ID_REQUEST_FROM_MAP = 2;
+    public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
+    public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
+    //public static final char DBE_UPLOAD_REQUEST = 3;            // TODO: OCID upload request from "APPLICATION" drawer title
     public static final char BACKUP_DATABASE = 3;
     public static final char RESTORE_DATABASE = 4;
-    public static final char CELL_LOOKUP = 5;
+    public static final char CELL_LOOKUP = 5;                   // TODO: What's this! ??
 
 
     private final AIMSICDDbAdapter mDbAdapter;
@@ -56,16 +57,43 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
         mDbAdapter = new AIMSICDDbAdapter(mContext);
     }
 
+    /**
+     *  ???
+     * TODO: It is unclear what this is attempting to do. Please add more comments.
+     *
+     * From the original look of it. It seem to first upload newly found BTSs to OCID,
+     * then it immediately attempts to download a new OCID data set, probably expecting
+     * to see the new BTS in that data. (If this description is correct?)
+     *
+     * This is NOT correct behaviour as:
+     *   1) OCID data takes at least a few minutes before updating their DBs with the
+     *      newly uploaded CSV data file.
+     *   2) It doesn't make sense to re-download data that is already populated in the
+     *      DBi_bts and and DBi_measure tables.
+     *   3) This is very bad because if there are fake BTS found by AIMSICD, then we're
+     *      uploading them and thus making users of AIMSICD believe these are good cells.
+     *      Basically we'd be corrupting the OCID data.
+     *
+     * So is this function dependent?
+     *
+     * ChangeLog:
+     *
+     *      2015-01-21 E:V:A   Moved code blocks, added placeholder code, disabled upload
+     *
+     */
+
     @Override
     protected String doInBackground(String... commandString) {
+
+        // We need to create a separate case for UPLOADING to DBe (OCID, MLS etc)
         switch (mType) {
-            case OPEN_CELL_ID_REQUEST:
-            case OPEN_CELL_ID_REQUEST_FROM_MAP:
-                int count;
+/*
+            // UPLOADING !!
+            case DBE_UPLOAD_REQUEST:   // OCID upload request from "APPLICATION" drawer title
                 try {
                     if (CellTracker.OCID_UPLOAD_PREF) {
                         boolean prepared = mDbAdapter.prepareOpenCellUploadData();
-                        Log.i("AIMSICD", "OCID prepared - " + String.valueOf(prepared));
+                        Log.i("AIMSICD", "OCID upload data prepared - " + String.valueOf(prepared));
                         if (prepared) {
                             File file = new File(Environment.getExternalStorageDirectory()
                                     + "/AIMSICD/OpenCellID/aimsicd-ocid-data.csv");
@@ -74,10 +102,10 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             MultipartEntity mpEntity = new MultipartEntity();
                             FileInputStream fin = new FileInputStream(file);
                             String csv = Helpers.convertStreamToString(fin);
+
                             mpEntity.addPart("key", new StringBody(CellTracker.OCID_API_KEY));
                             mpEntity.addPart("datafile", new InputStreamBody(
-                                    new ByteArrayInputStream(csv.getBytes()), "text/csv",
-                                    "aimsicd-ocid-data.csv"));
+                                    new ByteArrayInputStream(csv.getBytes()), "text/csv", "aimsicd-ocid-data.csv"));
 
                             ByteArrayOutputStream bAOS = new ByteArrayOutputStream();
                             publishProgress(50,100);
@@ -100,7 +128,9 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             response = httpclient.execute(httppost);
                             publishProgress(80,100);
                             if (response!= null) {
-                                Log.i("AIMSICD", "OCID Upload Response: " + response.getStatusLine().getStatusCode() + " - " + response.getStatusLine());
+                                Log.i("AIMSICD", "OCID Upload Response: "
+                                        + response.getStatusLine().getStatusCode() + " - "
+                                        + response.getStatusLine());
                                 mDbAdapter.ocidProcessed();
                                 publishProgress(95,100);
                             }
@@ -110,43 +140,42 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 } catch (Exception e) {
                     Log.i("AIMSICD", "Upload OpenCellID data - " + e.getMessage());
                 }
-
+*/
+            // DOWNLOADING...
+            case DBE_DOWNLOAD_REQUEST:          // OCID download request from "APPLICATION" drawer title
+            case DBE_DOWNLOAD_REQUEST_FROM_MAP: // OCID download request from "Antenna Map Viewer"
+                int count;
                 try {
                     int total;
                     int progress = 0;
-                    File dir = new File(
-                            Environment.getExternalStorageDirectory()
-                                    + "/AIMSICD/OpenCellID/"
-                    );
-                    if (!dir.exists()) {
-                        dir.mkdirs();
-                    }
+
+                    File dir = new File(Environment.getExternalStorageDirectory()+ "/AIMSICD/OpenCellID/");
+                    if (!dir.exists()) { dir.mkdirs(); }
                     File file = new File(dir, "opencellid.csv");
 
                     URL url = new URL(commandString[0]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
-                    urlConnection.setConnectTimeout(20000);
-                    urlConnection.setReadTimeout(20000);
-
+                    urlConnection.setConnectTimeout(20000);// [ms] 20 s
+                    urlConnection.setReadTimeout(20000); // [ms] 20 s
                     urlConnection.setDoInput(true);
                     urlConnection.connect();
 
                     if (urlConnection.getResponseCode() != 200) {
                         try {
-                            String error = Helpers
-                                    .convertStreamToString(urlConnection.getErrorStream());
+                            String error = Helpers.convertStreamToString(urlConnection.getErrorStream());
                             Helpers.msgLong(mContext, "Download error: " + error);
-                            Log.e("AIMSICD", "Download ocid data error: " + error);
+                            Log.e("AIMSICD", "Download OCID data error: " + error);
                         } catch (Exception e) {
-                            Helpers.msgLong(mContext, "Download error: " + e.getClass().getName() + " - " + e.getMessage());
-                            Log.e("AIMSICD", "Download ocid - " + e);
+                            Helpers.msgLong(mContext, "Download error: "
+                                    + e.getClass().getName() + " - "
+                                    + e.getMessage());
+                            Log.e("AIMSICD", "Download OCID - " + e);
                         }
                         return "Error";
                     } else {
                         total = urlConnection.getContentLength();
                         publishProgress(progress, total);
-
                         FileOutputStream output = new FileOutputStream(file, false);
                         InputStream input = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -155,23 +184,22 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             // writing data to file
                             output.write(data, 0, count);
                             progress += count;
-
                             publishProgress(progress, total);
                         }
-
                         // flushing output
                         output.flush();
                         output.close();
                     }
 
                     urlConnection.disconnect();
-
                     return "Successful";
+
                 } catch (MalformedURLException e) {
                     return null;
                 } catch (IOException e) {
                     return null;
                 }
+
             case BACKUP_DATABASE:
                 mDbAdapter.open();
                 if (mDbAdapter.backupDB()) {
@@ -180,6 +208,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 }
                 mDbAdapter.close();
                 return null;
+
             case RESTORE_DATABASE:
                 mDbAdapter.open();
                 if (mDbAdapter.restoreDB()) {
@@ -193,7 +222,6 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
         return null;
     }
 
-
     protected void onProgressUpdate(Integer... values) {
         AIMSICD.mProgressBar.setMax(values[1]);
         AIMSICD.mProgressBar.setProgress(values[0]);
@@ -205,7 +233,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
         AIMSICD.mProgressBar.setProgress(0);
 
         switch (mType) {
-            case OPEN_CELL_ID_REQUEST:
+            case DBE_DOWNLOAD_REQUEST:
                 if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
                     if (mDbAdapter.updateOpenCellID()) {
@@ -216,7 +244,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     Helpers.msgShort(mContext, "Error retrieving OpenCellID data");
                 }
                 break;
-            case OPEN_CELL_ID_REQUEST_FROM_MAP:
+            case DBE_DOWNLOAD_REQUEST_FROM_MAP:
                 if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
                     if (mDbAdapter.updateOpenCellID()) {
@@ -230,6 +258,11 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     Helpers.msgShort(mContext, "Error retrieving OpenCellID data");
                 }
                 break;
+
+            //case DBE_UPLOAD_REQUEST:
+            //    // blah blah
+            //    break;
+
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
                     Helpers.msgShort(mContext, "Restore database completed successfully");
@@ -237,6 +270,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     Helpers.msgShort(mContext, "Error restoring database");
                 }
                 break;
+
             case BACKUP_DATABASE:
                 if (result != null && result.equals("Successful")) {
                     SharedPreferences prefs;
