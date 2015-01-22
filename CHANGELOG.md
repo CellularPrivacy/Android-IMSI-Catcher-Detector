@@ -1,6 +1,27 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 22.01.2015 - WIP-Internal v0.1.25-alpha-build-22
+
+* Changed: `setLocationUpdateMinTime` in OpenStreetMap from 60 to 10 s
+* Changed: `setLocationUpdateMinDistance` in OSM from 1000 to 100 meters
+* Added: Even more code comments, TODO's and code formatting to digg into
+
+---
+
+#### 22.01.2015 - WIP-Internal v0.1.25-alpha-build-21
+
+* Improved: Teweaked some log messages for a better output and clearer evaluation
+* Removed: Commented out "Upload" code in the OCID download request handler
+* Changed: Task request strings from `OPEN_CELL_ID_REQUEST` to `DBE_DOWNLOAD_REQUEST`
+* Added: Lots of code placeholders to import CSV columns from OCID data and display them
+* Added: Created `aimsicd.sql` as new SQL to create all new tables in the new structure
+* Added: Created `CreateDBe_import.sql` which will be used to import the new Databases
+* Added: More comments and basic code reformat for Database Viewer to support new tables
+* Fixed: Clarified "range" vs "samples" confusion in Database Viewer
+
+---
+
 #### 20.01.2015 - WIP-Internal v0.1.25-alpha-build-20
 
 * Improved: Silenced spammy Samsung Galaxy class debug logcat entries from DebugLog
