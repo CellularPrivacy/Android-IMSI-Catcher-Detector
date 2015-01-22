@@ -259,7 +259,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     }
                     mDbAdapter.close();
                 } else {
-                    Helpers.msgShort(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
+                    Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
                 }
                 break;
             case DBE_DOWNLOAD_REQUEST_FROM_MAP:
@@ -273,7 +273,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         mDbAdapter.close();
                     }
                 } else {
-                    Helpers.msgShort(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
+                    Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
                 }
                 break;
 
@@ -285,7 +285,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 if (result != null && result.equals("Successful")) {
                     Helpers.msgShort(mContext, "Restore database completed successfully");
                 } else {
-                    Helpers.msgShort(mContext, "Error restoring database");
+                    Helpers.msgLong(mContext, "Error restoring database");
                 }
                 break;
 
@@ -305,7 +305,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                                     + AIMSICDDbAdapter.FOLDER);
                     builder.create().show();
                 } else {
-                    Helpers.msgShort(mContext, "Error backing up database");
+                    Helpers.msgLong(mContext, "Error backing up database");
                 }
         }
     }

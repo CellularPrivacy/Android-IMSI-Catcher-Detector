@@ -25,59 +25,81 @@ import java.util.List;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
+
+/**
+ * Brief:   Handles the AMISICD DataBase tables (creation, population, updates,
+ *
+ * Description:
+ *
+ *      This class handle all the AMISICD DataBase maintenance operations, like
+ *      creation, population, updates, backup, restore and various selections.
+ *
+ * Current Issues:
+ *
+ *      As of 2015-01-01 we will start migrating from the old DB structure
+ *      to the new one as detailed here:
+ *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215
+ *      Please try to work on only one table at the time, before pushing
+ *      new PRs.
+ *
+ *  ChangeLog:
+ *
+ *      2015-01-22  E:V:A   Started DBe_import migration
+ *
+ *  Notes:
+ *
+ *
+ *
+ */
+
 public class AIMSICDDbAdapter {
 
-    /*
-     * This handles the AMISICD DataBase tables:
-     *
-     * As of 2015-01-01 we'll be slowly migrating from the old DB structure
-     * to the new one as detailed here:
-     * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215
-     *
-     * As you work on these tables, please try to implement the new tables by
-     * first changing the table names and then the table columns.
-     */
-    private final String TAG = "AISMICD_DbAdaptor";
     public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
-    private static final String COLUMN_ID = "_id";              // Underscore is no longer required...
+    public static final int DATABASE_VERSION = 8;
 
-    private final String LOCATION_TABLE = "locationinfo";       // TABLE_DBI_MEASURE:DBi_measure (volatile)
-    private final String CELL_TABLE = "cellinfo";               // TABLE_DBI_BTS:DBi_bts (physical)
-    private final String OPENCELLID_TABLE = "opencellid";       // TABLE_DBE_IMPORT:DBe_import
-    private final String DEFAULT_MCC_TABLE = "defaultlocation"; // TABLE_DEFAUKT_MCC:defaultlocation
-    private final String SILENT_SMS_TABLE = "silentsms";        // TABLE_SILENT_SMS:silentsms
+    private final String TAG = "AISMICD_DbAdaptor";
+    private final String DB_NAME = "aimsicd.db";
+    private static final String COLUMN_ID   = "_id"; // Underscore is no longer required...
 
-    // Some placeholders for the use of the new tables:
-
-    // private final String TABLE_DBE_IMPORT       = "DBe_import";       // External: BTS import table
-    // private final String TABLE_DBE_CAPABILITIES = "DBe_capabilities"  // External: MNO & BTS network capabilities
-    // private final String TABLE_DBI_BTS          = "DBi_bts";          // Internal: (physical) BTS data
-    // private final String TABLE_DBI_MEASURE      = "DBi_measure";      // Internal: (volatile) network measurements
-    // private final String TABLE_DEFAULT_MCC      = "defaultlocation";  // Deafult MCC for each country
-    // private final String TABLE_DETECTION_FLAGS  = "DetectionFlags"    // Detection Flag description, settings and scoring table
-    // private final String TABLE_EVENT_LOG        = "EventLog"          // Detection and general EventLog (persistent)
-    // private final String TABLE_SECTORTYPE       = "SectorType"        // BTS tower sector configuration (Many CID, same BTS)
-    // private final String TABLE_SILENT_SMS       = "silentsms";        // Silent SMS details
-    // private final String TABLE_CMEASURES        = "CounterMeasures"   // Counter Measures thresholds and description
+    private final String LOCATION_TABLE     = "locationinfo";    // TABLE_DBI_MEASURE:DBi_measure (volatile)
+    private final String CELL_TABLE         = "cellinfo";        // TABLE_DBI_BTS:DBi_bts (physical)
+    private final String OPENCELLID_TABLE   = "opencellid";      // TABLE_DBE_IMPORT:DBe_import
+    private final String DEFAULT_MCC_TABLE  = "defaultlocation"; // TABLE_DEFAULT_MCC:defaultlocation
+    private final String SILENT_SMS_TABLE   = "silentsms";       // TABLE_SILENT_SMS:silentsms
 
     // cell tower signal strength collected by the device
     // ToDo: Remove this table and use "rx_signal" in the "TABLE_DBI_MEASURE:DBi_measure" table..
-    private final String CELL_SIGNAL_TABLE = "cellSignal";      //
-    private final String DB_NAME = "aimsicd.db";
+    private final String CELL_SIGNAL_TABLE  = "cellSignal";      // TABLE_DBI_MEASURE::DBi_measure:rx_signal
+
+    // Some placeholders for the use of the new tables:
+
+    // private final String TABLE_DBE_IMPORT  = "DBe_import";       // External: BTS import table
+    // private final String TABLE_DBE_CAPAB   = "DBe_capabilities"  // External: MNO & BTS network capabilities
+    // private final String TABLE_DBI_BTS     = "DBi_bts";          // Internal: (physical) BTS data
+    // private final String TABLE_DBI_MEASURE = "DBi_measure";      // Internal: (volatile) network measurements
+    // private final String TABLE_DEFAULT_MCC = "defaultlocation";  // Default MCC for each country
+    // private final String TABLE_DET_FLAGS   = "DetectionFlags"    // Detection Flag description, settings and scoring table
+    // private final String TABLE_EVENTLOG    = "EventLog"          // Detection and general EventLog (persistent)
+    // private final String TABLE_SECTORTYPE  = "SectorType"        // BTS tower sector configuration (Many CID, same BTS)
+    // private final String TABLE_SILENTSMS   = "silentsms";        // Silent SMS details
+    // private final String TABLE_CMEASURES   = "CounterMeasures"   // Counter Measures thresholds and description
 
     private final String[] mTables;
     private final DbHelper mDbHelper;
     private SQLiteDatabase mDb;
     private final Context mContext;
 
-    public static final int DATABASE_VERSION = 8;
     private Cursor signalStrengthMeasurementDatA;
 
     public AIMSICDDbAdapter(Context context) {
         mContext = context;
         mDbHelper = new DbHelper(context);
-        mTables = new String[]{LOCATION_TABLE, CELL_TABLE, OPENCELLID_TABLE,
-                SILENT_SMS_TABLE};
+        mTables = new String[]{
+                LOCATION_TABLE,
+                CELL_TABLE,
+                OPENCELLID_TABLE,
+                SILENT_SMS_TABLE
+        };
     }
 
     public AIMSICDDbAdapter open() throws SQLException {
@@ -389,7 +411,7 @@ public class AIMSICDDbAdapter {
                 cursor.close();
                 return false;
             } else {
-                //Log.v(TAG, "LAC checked - no change.  CID:" + cell.getCID() + " LAC(DBi):"+ cell.getLAC() +
+                //Log.v(TAG, "LAC checked - no change.  CID:" + cell.getCID() + " LAC(DBi):" + cell.getLAC() +
                 //    " LAC(DBe): " + cursor.getInt(0) );
                 Log.v(TAG, "LAC checked - no change on CID:" + cell.getCID()
                         + " LAC(API): " + cell.getLAC()
@@ -893,6 +915,17 @@ public class AIMSICDDbAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + SILENT_SMS_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + DEFAULT_MCC_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + CELL_SIGNAL_TABLE);
+
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBE_IMPORT);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBE_CAPABILITIES);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBI_BTS);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBI_MEASURE);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEFAULT_MCC);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DETECTION_FLAGS);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENT_LOG);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_SECTORTYPE);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_SILENT_SMS);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_CMEASURES);
 
             onCreate(db);
         }

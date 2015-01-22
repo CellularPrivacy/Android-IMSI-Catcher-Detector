@@ -690,13 +690,18 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     /**
      * Set or update the Detection/Status Notification
      *
-     * TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
-     * See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
-     * Change names from "IDLE,NORMAL,MEDIUM,ALARM" to:"GRAY,GREEN,YELLOW,ORANGE,RED,BLACK",
-     * to reflect detection Icon colors.
-     * Dependencies:  Status.java, CellTracker.java, Icon.java ( + others?)
-     * They should be based on the detection scores here: <TBA>
-     * -- E:V:A 2015-01-19
+     *  Description:    TODO: Please add details!
+     *
+     *  Issues:
+     *
+     *      TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
+     *      See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
+     *      Change names from "IDLE,NORMAL,MEDIUM,ALARM" to:"GRAY,GREEN,YELLOW,ORANGE,RED,BLACK",
+     *      to reflect detection Icon colors. They should be based on the detection scores here:
+     *      <TBA>
+     *
+     * Dependencies:    Status.java, CellTracker.java, Icon.java ( + others?)
+     *
      */
     void setNotification() {
         String tickerText;
@@ -723,14 +728,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             Status.setCurrentStatus(Status.Type.IDLE, this.context);
         }
         switch (Status.getStatus()) {
-            case IDLE: //IDLE
+            case IDLE: // GRAY
                 contentText = "Phone Type " + mDevice.getPhoneType();
                 tickerText = context.getResources().getString(R.string.app_name_short) + " - Status: Idle.";
                 break;
-            case NORMAL: //NORMAL
+
+            case NORMAL: // GREEN
                 tickerText = context.getResources().getString(R.string.app_name_short) + " - Status: Good. No Threats Detected.";
                 break;
-            case MEDIUM: //MEDIUM
+
+            case MEDIUM: // YELLOW or ORANGE?
                 /**
                  * New Issue (Noticed from #91):
                  *      Problem:
@@ -757,7 +764,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     contentText = "Cell ID does not exist in OpenCellID Database!";
                 }
                 break;
-            case ALARM: //DANGER (Is this RED?)
+
+            case ALARM: // ORANGE, RED or BLACK ?
                 tickerText = context.getResources().getString(R.string.app_name_short) + " - ALERT: Some Threat Detected!"; // Hmm, this is vague!
                 if (mFemtoDetected) {
                     contentText = "ALERT: FemtoCell Connection Detected!";
@@ -771,6 +779,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 break;
         }
 
+        // TODO: Explanation (see above)
         Intent notificationIntent = new Intent(context, AIMSICD.class);
         notificationIntent.putExtra("silent_sms", mTypeZeroSmsDetected);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
@@ -793,6 +802,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
 
+    /**
+     * Description:     TODO: Please add
+     *
+     * Variables:
+     *                  There is a "timer" here (REFRESH_RATE), what exactly is it timing?
+     *
+     */
     private final Runnable timerRunnable = new Runnable() {
 
         @Override
@@ -838,6 +854,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     }
             }
 
+
             if (REFRESH_RATE != 0) {
                 timerHandler.postDelayed(this, REFRESH_RATE);
             } else {
@@ -847,6 +864,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
     };
 
+
+//=================================================================================================
     /**
      * The below code section was copied and modified with permission from
      * Femtocatcher https://github.com/iSECPartners/femtocatcher
@@ -983,33 +1002,31 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * Femtocatcher https://github.com/iSECPartners/femtocatcher
      *
      * Copyright (C) 2013 iSEC Partners
+     *
      */
+//=================================================================================================
+
 
     final PhoneStateListener phoneStatelistener = new PhoneStateListener() {
         private void handle() {
             handlePhoneStateChange();
         }
-
         @Override
         public void onServiceStateChanged(ServiceState serviceState) {
             handle();
         }
-
         @Override
         public void onDataConnectionStateChanged(int state) {
             handle();
         }
-
         @Override
         public void onDataConnectionStateChanged(int state, int networkType) {
             handle();
         }
-
         @Override
         public void onSignalStrengthsChanged(SignalStrength signalStrength) {
             handle();
         }
-
         @Override
         public void onCellInfoChanged(List<CellInfo> cellInfo) {
             handle();
@@ -1018,6 +1035,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     /**
      * Getter for use in tests only
+     * TODO: What tests?
      */
     public Cell getMonitorCell() {
         return mMonitorCell;
