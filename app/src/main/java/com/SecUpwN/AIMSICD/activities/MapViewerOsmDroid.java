@@ -86,9 +86,8 @@ import java.util.Map;
  *
  *  ChangeLog:
  *
- *      <date>  <name>  <description>
- *      2015-01-22  E:V:A   Changed:    setLocationUpdateMinTime:    60000 to 10000 ms
- *                                      setLocationUpdateMinDistance: 1000 to 100 meters
+ *      2015-01-22  E:V:A   Changed: setLocationUpdateMinTime:    60000 to 10000 ms
+ *                                   setLocationUpdateMinDistance: 1000 to 100 meters
  *
  *
  */
@@ -498,7 +497,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Helpers.msgShort(MapViewerOsmDroid.this, "No tracked locations found to show on map.");
+                            Helpers.msgLong(MapViewerOsmDroid.this, "No tracked locations found to show on map.");
                         }
                     });
                 }

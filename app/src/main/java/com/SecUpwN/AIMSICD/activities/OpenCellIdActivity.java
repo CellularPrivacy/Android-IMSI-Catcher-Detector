@@ -58,9 +58,8 @@ public class OpenCellIdActivity extends BaseActivity {
                                 public void run() {
                                 pd.dismiss();
                                 Helpers.msgLong(OpenCellIdActivity.this,
-                                                getString(R.string.ocid_api_error)
-                                                + e.getClass().getName()
-                                                + " - " + e.getMessage());
+                                                getString(R.string.ocid_api_error) + e.getClass().getName() +
+                                                " - " + e.getMessage());
                                 }
                             });
                             return null;
