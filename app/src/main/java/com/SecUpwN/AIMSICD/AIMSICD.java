@@ -262,7 +262,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         }
 
         if (selectedItem.getId() == 901) {
-            monitercell();
+            monitorcell();
         } else if (selectedItem.getId() == 902) {
             trackcell();
         } else if (selectedItem.getId() == 903) {
@@ -285,13 +285,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
-                    Helpers.msgLong(mContext, "Contacting opencellid.org for data...\nThis may "
-                            + "take up to a minute.");
+                    Helpers.msgLong(mContext, "Contacting opencellid.org for data...\n"
+                            + "This may take up to a minute.");
                     Cell cell = new Cell();
                     cell.setLon(loc.getLongitudeInDegrees());
                     cell.setLat(loc.getLatitudeInDegrees());
-                    Helpers.getOpenCellData(mContext, cell,
-                            RequestTask.OPEN_CELL_ID_REQUEST);
+                    Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
                 } else {
                     Helpers.msgShort(mContext, "Waiting for location...");
                     //Attempt to find location through CID
@@ -307,15 +306,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 }
             } else {
                 Helpers.sendMsg(mContext,
-                        "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
+                      "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
             }
         } else if (selectedItem.getId() == 302) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
                 Cell.CellLookUpAsync cellLookUpAsync = new Cell.CellLookUpAsync();
                 cellLookUpAsync.delegate = this;
                 StringBuilder sb = new StringBuilder();
-                sb.append("http://www.opencellid.org/cell/get?key=")
-                        .append(CellTracker.OCID_API_KEY);
+                sb.append("http://www.opencellid.org/cell/get?key=").append(CellTracker.OCID_API_KEY);
 
                 if (mAimsicdService.getCell().getMCC() != Integer.MAX_VALUE) {
                     sb.append("&mcc=").append(mAimsicdService.getCell().getMCC());
@@ -361,10 +359,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public void processFinish(float[] location) {
         Log.i(TAG, "processFinish - location[0]=" + location[0] + " location[1]=" + location[1]);
         if (location[0] != 0.0f && location[1] != 0.0f) {
-            Helpers.msgLong(mContext, "Contacting opencellid.org for data...\nThis may "
-                    + "take up to a minute.");
-            Helpers.getOpenCellData(mContext, mAimsicdService.getCell(),
-                    RequestTask.OPEN_CELL_ID_REQUEST);
+            Helpers.msgLong(mContext, "Contacting opencellid.org for data...\n"
+                    + "This may take up to a minute.");
+            Helpers.getOpenCellData(mContext, mAimsicdService.getCell(), RequestTask.DBE_DOWNLOAD_REQUEST);
         } else {
             Helpers.msgLong(mContext,
                     "Unable to determine your last location.\nEnable Location Services and try again.");
@@ -400,48 +397,36 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         List<NavDrawerItem> menu = new ArrayList<>();
 
         menu.add(DrawerMenuSection.create(900, "Tracking"));
-        menu.add(DrawerMenuItem.create
-                (901, getString(R.string.monitor_cell), "untrack_cell", false, this));
-        menu.add(DrawerMenuItem.create
-                (902, getString(R.string.track_cell), "untrack_cell", false, this));
+        // TODO: Clarify names and usage...
+        menu.add(DrawerMenuItem.create(901, getString(R.string.monitor_cell), "untrack_cell", false, this));    // Toggle "AIMSICD Monitoring"
+        menu.add(DrawerMenuItem.create(902, getString(R.string.track_cell), "untrack_cell", false, this));      // Toggle "Track Cell Details"
         if (CellTracker.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
-            menu.add(DrawerMenuItem.create
-                    (903, getString(R.string.track_femtocell), "ic_action_network_cell", false, this));
+            menu.add(DrawerMenuItem.create(903, getString(R.string.track_femtocell), "ic_action_network_cell", false, this)); // Track FemtoCell
         }
         menu.add(DrawerMenuSection.create(100, "Main"));
-        menu.add(DrawerMenuItem
-                .create(101, getString(R.string.device_info), "ic_action_phone", true, this));
-        menu.add(DrawerMenuItem.create
-                (102, getString(R.string.cell_info_title), "cell_tower", true, this));
-        menu.add(DrawerMenuItem.create
-                (103, getString(R.string.at_command_title), "ic_action_computer", true, this));
-        menu.add(DrawerMenuItem.create
-                (104, getString(R.string.db_viewer), "ic_action_storage", true, this));
-        menu.add(DrawerMenuItem.create
-                (105, getString(R.string.map_view), "ic_action_map", false, this));
+        menu.add(DrawerMenuItem.create(101, getString(R.string.device_info), "ic_action_phone", true, this));           // Phone/SIM Details
+        menu.add(DrawerMenuItem.create(102, getString(R.string.cell_info_title), "cell_tower", true, this));            // Cell Information (Neighboring cells etc)
+        menu.add(DrawerMenuItem.create(103, getString(R.string.at_command_title), "ic_action_computer", true, this));   // AT Command Interface
+        menu.add(DrawerMenuItem.create(104, getString(R.string.db_viewer), "ic_action_storage", true, this));           // Database Viewer
+        menu.add(DrawerMenuItem.create(105, getString(R.string.map_view), "ic_action_map", false, this));               // Antenna Map Viewer
+
         menu.add(DrawerMenuSection.create(200, "Settings"));
-        menu.add(DrawerMenuItem.create
-                (202, getString(R.string.preferences), "ic_action_settings", false, this));
-        menu.add(DrawerMenuItem.create
-                (203, getString(R.string.backup_database), "ic_action_import_export", false, this));
-        menu.add(DrawerMenuItem.create
-                (204, getString(R.string.restore_database), "ic_action_import_export", false, this));
-        // E:V:A
-        // TODO: placeholder for "Reset/Clear DataBase"
-        // menu.add(DrawerMenuItem.create
-        //  (205?, getString(R.string.reset_database), "ic_action_clear", false, this));
+        menu.add(DrawerMenuItem.create(202, getString(R.string.preferences), "ic_action_settings", false, this));            // Preferences
+        menu.add(DrawerMenuItem.create(203, getString(R.string.backup_database), "ic_action_import_export", false, this));   // Backup Database
+        menu.add(DrawerMenuItem.create(204, getString(R.string.restore_database), "ic_action_import_export", false, this));  // Restore Database
+        // TODO:  menu.add(DrawerMenuItem.create(205?, getString(R.string.reset_database), "ic_action_clear", false, this)); // "Reset/Clear DataBase"
 
         menu.add(DrawerMenuSection.create(300, "Application"));
-        menu.add(DrawerMenuItem.create
-                (301, getString(R.string.get_opencellid), "stat_sys_download_anim0", false, this));
-        menu.add(DrawerMenuItem.create
-                (302, getString(R.string.cell_lookup), "stat_sys_download_anim0", false, this));
-        menu.add(DrawerMenuItem.create
-                (303, getString(R.string.about_aimsicd), "ic_action_about", true, this));
-        menu.add(DrawerMenuItem.create
-                (305, getString(R.string.send_logs), "ic_action_computer", false, this));
-        menu.add(DrawerMenuItem.create
-                (304, getString(R.string.quit), "ic_action_remove", false, this));
+        // TODO: Change name to "Download Local BTS data"
+        menu.add(DrawerMenuItem.create(301, getString(R.string.get_opencellid), "stat_sys_download_anim0", false, this));   // "Download Local OCID data"
+        // TODO: Upload DBi_measure + DBi_bts to OCID or MLS
+        //menu.add(DrawerMenuItem.create(301?, getString(R.string.upload_bts), "stat_sys_upload_anim0", false, this));      // "Upload Local BTS data"
+
+
+        menu.add(DrawerMenuItem.create(302, getString(R.string.cell_lookup), "stat_sys_download_anim0", false, this));  // Lookup "All Current Cell Details (ACD)"
+        menu.add(DrawerMenuItem.create(303, getString(R.string.about_aimsicd), "ic_action_about", true, this));         // About
+        menu.add(DrawerMenuItem.create(305, getString(R.string.send_logs), "ic_action_computer", false, this));         // Debugging
+        menu.add(DrawerMenuItem.create(304, getString(R.string.quit), "ic_action_remove", false, this));                // Quit
 
         DrawerMenuActivityConfiguration navDrawerActivityConfiguration = new DrawerMenuActivityConfiguration();
         navDrawerActivityConfiguration.setMainLayout(R.layout.main);
@@ -450,8 +435,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         navDrawerActivityConfiguration.setNavItems(menu);
         navDrawerActivityConfiguration.setDrawerOpenDesc(R.string.drawer_open);
         navDrawerActivityConfiguration.setDrawerCloseDesc(R.string.drawer_close);
-        navDrawerActivityConfiguration.setBaseAdapter(
-                new DrawerMenuAdapter(this, R.layout.drawer_item, menu ));
+        navDrawerActivityConfiguration.setBaseAdapter( new DrawerMenuAdapter(this, R.layout.drawer_item, menu ));
         return navDrawerActivityConfiguration;
     }
 
@@ -575,7 +559,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     /**
-     * Exit application if back pressed twice
+     * Exit application if Back button is pressed twice
      */
     @Override
     public void onBackPressed() {
@@ -602,6 +586,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     /**
      * Cell Information Tracking - Enable/Disable
+     *
+     * TODO: Clarify usage and what functions we would like this to provide.
+     *  - Are we toggling GPS location tracking?
+     *  - Are we logging measurement data into DBi?
+     *  - Are we locking phone to 2/3/4G operation?
+     *
      */
     private void trackcell() {
         if (mAimsicdService.isTrackingCell()) {
@@ -613,9 +603,15 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     /**
      * Cell Information Monitoring - Enable/Disable
+     *
+     * TODO: Clarify usage and what functions we would like this to provide.
+     * - Are we temporarily disabling AIMSICD monitoring? (IF yes, why not just Quit?)
+     * - Are we ignoring Detection alarms?
+     * - Are we logging something?
+     *
      */
     // TODO: Wrong Spelling, should be "monitorcell"
-    private void monitercell() {
+    private void monitorcell() {
         if (mAimsicdService.isMonitoringCell()) {
             mAimsicdService.setCellMonitoring(false);
         } else {
