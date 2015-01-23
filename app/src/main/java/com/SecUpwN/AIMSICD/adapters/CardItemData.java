@@ -7,18 +7,30 @@ import com.SecUpwN.AIMSICD.utils.Device;
  *  Description:    TODO: A few comments please!
  *                  TODO: Where is this used exactly?
  *
- *  We often talk about "Network Type", when we actually refer to:
- *  "RAN" = Radio Access Network (cellular communaitcation only)
- *  "RAT" = Radio Access Technology (any wireless communication technology, like WiMax etc.)
+ *  Dependencies:
  *
- *  As for this application, we shall use the terms:
- *  "Type" for the text values like ( UMTS/WCDMA, HSDPA, CDMA, LTE etc)  and
- *  "RAT" for the numerical equivalent (As obtained by AOS API?)
+ *  Usage:
+ *
+ *  Issues:
+ *
+ *  ChangeLog:
  *
  *
+ *  -----------------------------------------------------------------------------------------
+ *  Notes:
+ *
+ *   We often talk about "Network Type", when we actually refer to:
+ *   "RAN" = Radio Access Network (cellular communaitcation only)
+ *   "RAT" = Radio Access Technology (any wireless communication technology, like WiMax etc.)
+ *
+ *   As for this application, we shall use the terms:
+ *   "Type" for the text values like ( UMTS/WCDMA, HSDPA, CDMA, LTE etc)  and
+ *   "RAT" for the numerical equivalent (As obtained by AOS API?)
+ *
+ * ------------------------------------------------------------------------------------------
  */
 public class CardItemData {
-
+    // OLD (in old DB tables)
     private final String mCellID;
     private final String mLac;
     private final String mMcc;
@@ -33,6 +45,22 @@ public class CardItemData {
     private final String mPsc;
     private final String mTimestamp;
     private final String mRecordId;
+
+    // NEW (in new DB tables)
+/*
+    private final String mtime;
+    private final String mLAC;
+    private final String mCID;
+    private final String mPSC;
+    private final String mgpsd_lat;
+    private final String mgpsd_lon;
+    private final String mgpsd_accur;
+    private final String mDF_id;
+    private final String mDF_description;
+*/
+
+
+    // OLD items in old DB table structure
 
     public CardItemData(Cell cell, String recordId) {
         if (cell.getCID() != Integer.MAX_VALUE && cell.getCID() != -1) {

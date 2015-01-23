@@ -216,19 +216,22 @@ public class DbViewerFragment extends Fragment {
                         // OLD opencelid(i)  
                         // New "DBe_import" column name
                         CardItemData data = new CardItemData(tableData.getString(0),
+                                //"Source: " + tableData.getString(0),      // DBsource
+                                //"RAT: " + tableData.getString(0),         // RAT
                                 tableData.getString(1),
                                 tableData.getString(2),
                                 tableData.getString(3),
+                                //"PSC: " + tableData.getString(&), 
                                 tableData.getString(4),
                                 tableData.getString(5),
+                                //"isexact: " + tableData.getString(7),
+                                //Range: " + tableData.GetString(7)
                                 tableData.getString(6),
                                 tableData.getString(7),     //NOTE: #7 was range from ocid csv
-                                (tableData.getPosition() + 1) + " / " + count);
-                                //"PSC: " + tableData.getString(7),     // PSC
                                 //"first: " + tableData.getString(7),   // time_first
                                 //"last: " + tableData.getString(7),    // time_last
-                                //"isExact: " + tableData.getString(7), // isGPSexact
                                 //"reject: " + tableData.getString(7),  // rej_cause
+                                (tableData.getPosition() + 1) + " / " +count);
                         adapter.addItem(data, false);
                     }
                     return adapter;
@@ -240,10 +243,11 @@ public class DbViewerFragment extends Fragment {
                             = new BaseInflaterAdapter<>( new DefaultLocationCardInflater() );
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData(tableData.getString(0),
-                                tableData.getString(1),
-                                tableData.getString(2),
-                                tableData.getString(3),
+                        CardItemData data = new CardItemData(
+                                tableData.getString(0),     // Country --> country
+                                tableData.getString(1),     // Mcc --> MCC
+                                tableData.getString(2),     // Lat --> lat
+                                tableData.getString(3),     // Lng -- > lon
                                 (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
@@ -285,7 +289,7 @@ public class DbViewerFragment extends Fragment {
                     return adapter;
                 }
 
-                // Table:   EventLog
+/*                // Table:   EventLog
                 case "EventLog Data": {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>( new EventLogCardInflater() );
@@ -306,6 +310,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+*/
 /*
                 // Maybe we can skip this one?
                 // Table:   DetectionFlags

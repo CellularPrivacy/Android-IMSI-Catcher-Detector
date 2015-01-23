@@ -7,11 +7,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
+/**
+ * Brief:   TODO: Please explain its use.
+ *
+ * Description:
+ *
+ *      This class handle all the AMISICD DataBase ... TODO: Add info here !
+ *
+ *
+ *
+ *  Issues:     TODO:  !! === I'm not sure this is the right place... == !! --E:V:A
+ *
+ *  ChangeLog:
+ *
+ *
+ *  Notes:
+ *
+ */
 public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
 
     @Override
-    public View inflate(final BaseInflaterAdapter<CardItemData> adapter, final int pos,
-            View convertView, ViewGroup parent) {
+    public View inflate(final BaseInflaterAdapter<CardItemData> adapter,
+                        final int pos, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
         if (convertView == null) {
@@ -30,6 +48,7 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
 
     private class ViewHolder {
 
+        // OLD (in old DB tables)
         private final View mRootView;
         private final TextView mCellID;
         private final TextView mCellIDLabel;
@@ -49,9 +68,22 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
         private final TextView mLngLabel;
         private final TextView mSignal;
         private final TextView mSignalLabel;
-
         private final TextView mRecordId;
 
+        /*// NEW (in new DB tables)
+        private final View mRootView;
+        private final TextView mtime;
+        private final TextView mLAC;
+        private final TextView mCID;
+        private final TextView mPSC;
+        private final TextView mgpsd_lat;
+        private final TextView mgpsd_lon;
+        private final TextView mgpsd_accur;
+        private final TextView mDF_id;
+        private final TextView mDF_description;
+        */
+
+        // OLD (in old DB tables)
         public ViewHolder(View rootView) {
 
             // Initialize and hide TextViews as well as their labels
@@ -93,6 +125,10 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
             mSignalLabel = (TextView) mRootView.findViewById(R.id.signalLabel);
             mSignalLabel.setVisibility(View.GONE);
             mRecordId = (TextView) mRootView.findViewById(R.id.record_id);
+
+            // NEW (in new DB tables)
+
+
             rootView.setTag(this);
         }
 
