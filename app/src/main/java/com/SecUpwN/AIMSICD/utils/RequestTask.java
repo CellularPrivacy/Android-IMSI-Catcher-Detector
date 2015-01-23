@@ -277,6 +277,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 }
                 break;
 
+            // TODO: Do we need the DBE_UPLOAD_REQUEST here?
             //case DBE_UPLOAD_REQUEST:
             //    // blah blah
             //    break;
@@ -296,13 +297,11 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
                     SharedPreferences.Editor prefsEditor;
                     prefsEditor = prefs.edit();
-                    prefsEditor.putInt(mContext.getString(R.string.pref_last_database_backup_version),
-                            AIMSICDDbAdapter.DATABASE_VERSION);
+                    prefsEditor.putInt(mContext.getString(R.string.pref_last_database_backup_version), AIMSICDDbAdapter.DATABASE_VERSION);
                     prefsEditor.apply();
                     final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle(R.string.database_export_successful)
-                            .setMessage("Database Backup successfully saved to:\n"
-                                    + AIMSICDDbAdapter.FOLDER);
+                    builder.setTitle(R.string.database_export_successful).setMessage(
+                            "Database Backup successfully saved to:\n" + AIMSICDDbAdapter.FOLDER);
                     builder.create().show();
                 } else {
                     Helpers.msgLong(mContext, "Error backing up database");

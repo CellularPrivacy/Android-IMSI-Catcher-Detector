@@ -3,6 +3,20 @@ package com.SecUpwN.AIMSICD.adapters;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Device;
 
+/**
+ *  Description:    TODO: A few comments please!
+ *                  TODO: Where is this used exactly?
+ *
+ *  We often talk about "Network Type", when we actually refer to:
+ *  "RAN" = Radio Access Network (cellular communaitcation only)
+ *  "RAT" = Radio Access Technology (any wireless communication technology, like WiMax etc.)
+ *
+ *  As for this application, we shall use the terms:
+ *  "Type" for the text values like ( UMTS/WCDMA, HSDPA, CDMA, LTE etc)  and
+ *  "RAT" for the numerical equivalent (As obtained by AOS API?)
+ *
+ *
+ */
 public class CardItemData {
 
     private final String mCellID;

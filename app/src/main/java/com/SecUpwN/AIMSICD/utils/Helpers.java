@@ -45,7 +45,18 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class Helpers {
+/**
+ *
+ * Description:     TODO: Please add some comments about this class
+ *
+ * Dependencies:    TODO: Write a few words about where the content of this is used.
+ *
+ * Issues:
+ *
+ * ChangeLog:
+ *
+ */
+ public class Helpers {
 
     private static final String TAG = "AIMSICD_Helpers";
 
