@@ -7,6 +7,23 @@ import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
 
+/**
+ *  Brief:   TODO: Please explain its use.
+ *
+ *  Description:
+ *
+ *      This class handle all the AMISICD DataBase ... TODO: Add info here !
+ *
+ *  Dependencies:   CardItemData.java
+ *
+ *  Issues:
+ *
+ *  ChangeLog:
+ *
+ *
+ *  Notes:
+ *
+ */
 public class EventLogCardInflater implements IAdapterViewInflater<CardItemData> {
 
     @Override
@@ -44,15 +61,16 @@ public class EventLogCardInflater implements IAdapterViewInflater<CardItemData> 
         public ViewHolder(View rootView) {
             mRootView = rootView;
             //
-            mtime =     (TextView) mRootView.findViewById(R.id.time);
-            mLAC =      (TextView) mRootView.findViewById(R.id.LAC);
-            mCID =      (TextView) mRootView.findViewById(R.id.CID);
-            mPSC =      (TextView) mRootView.findViewById(R.id.PSC);
-            mgpsd_lat = (TextView) mRootView.findViewById(R.id.gpsd_lat);
-            mgpsd_lon = (TextView) mRootView.findViewById(R.id.gpsd_lon);
-            mgpsd_accur =       (TextView) mRootView.findViewById(R.id.gpsd_accur);
-            mDF_id =            (TextView) mRootView.findViewById(R.id.DF_id);
+            mtime =         (TextView) mRootView.findViewById(R.id.time);
+            mLAC =          (TextView) mRootView.findViewById(R.id.LAC);
+            mCID =          (TextView) mRootView.findViewById(R.id.CID);
+            mPSC =          (TextView) mRootView.findViewById(R.id.PSC);
+            mgpsd_lat =     (TextView) mRootView.findViewById(R.id.gpsd_lat);
+            mgpsd_lon =     (TextView) mRootView.findViewById(R.id.gpsd_lon);
+            mgpsd_accur =   (TextView) mRootView.findViewById(R.id.gpsd_accur);
+            mDF_id =        (TextView) mRootView.findViewById(R.id.DF_id);
             mDF_description =   (TextView) mRootView.findViewById(R.id.DF_description);
+
             rootView.setTag(this);
         }
 
