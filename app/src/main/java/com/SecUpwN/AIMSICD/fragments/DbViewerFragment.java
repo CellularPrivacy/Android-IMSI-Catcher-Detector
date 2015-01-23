@@ -128,10 +128,11 @@ public class DbViewerFragment extends Fragment {
                             //      ToBe merged into "DBi_measure:rx_signal"
                             case "Measured Signal Strengths":
                                 result = mDb.getSignalStrengthMeasurementData();
+                                break;
 
                             // Table: "EventLog"
-                            //case "EventLog":
-                            //    result = mDb.getEventLogData();
+                            case "EventLog":
+                                result = mDb.getEventLogData();
 
                             // Table: "DetectionFlags"
                             //case "DetectionFlags":
@@ -284,7 +285,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
-/*
+
                 // Table:   EventLog
                 case "EventLog Data": {
                     BaseInflaterAdapter<CardItemData> adapter
@@ -292,10 +293,10 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData(
-                                "time: " + tableData.getString(0),
-                                "LAC: " + tableData.getString(1),
-                                "CID: " + tableData.getString(2),
-                                "PSC: " + tableData.getString(3),
+                                "time: " + tableData.getString(0),  // time
+                                "LAC: " + tableData.getString(1),   // LAC
+                                "CID: " + tableData.getString(2),   // CID
+                                "PSC: " + tableData.getString(3),   // PSC
                                 "Lat: " + tableData.getString(4),   // gpsd_lat
                                 "Lon: " + tableData.getString(5),   // gpsd_lon
                                 "accu: " + tableData.getString(6),  // gpsd_accu (accuracy in [m])
@@ -306,7 +307,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
-
+/*
                 // Maybe we can skip this one?
                 // Table:   DetectionFlags
                 case "DetectionFlags Data": {

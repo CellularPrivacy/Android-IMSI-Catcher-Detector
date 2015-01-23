@@ -51,7 +51,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Class to handle tracking of cell information
+ *  Class to handle tracking of cell information
+ *
+ *  Description:  TODO: add more info
+ *
+ *  Issues:
+ *
+ *  ChangeLog
+ *
  */
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String TAG = "CellTracker";
@@ -228,9 +235,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_UI_ICONS = context.getString(R.string.pref_ui_icons_key);
         final String FEMTO_DECTECTION = context.getString(R.string.pref_femto_detection_key);
-        final String REFRESH = context.getString(R.string.pref_refresh_key); // Refresh rate of ??? in [seconds]?
+        final String REFRESH = context.getString(R.string.pref_refresh_key);        // Refresh rate of ??? in [seconds]?
         final String DB_VERSION = context.getString(R.string.pref_last_database_backup_version);
-        final String OCID_UPLOAD = context.getString(R.string.pref_ocid_upload); // BOOLEAN to enable OCID data upload
+        final String OCID_UPLOAD = context.getString(R.string.pref_ocid_upload);    // BOOLEAN to enable OCID data upload
         final String OCID_KEY = context.getString(R.string.pref_ocid_key);
 
         if (key.equals(KEY_UI_ICONS)) {
@@ -436,20 +443,25 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     /**
      * Process User Preferences
+     *
+     * Description:  TODO: add more info
+     *
+     *      Handles the Preferences as set in the XXXXX file
+     *
+     *
      */
     private void loadPreferences() {
-        boolean trackFemtoPref = prefs.getBoolean( context.getString(R.string.pref_femto_detection_key), false);
-        boolean trackCellPref = prefs.getBoolean( context.getString(R.string.pref_enable_cell_key), true);
+        boolean trackFemtoPref  = prefs.getBoolean( context.getString(R.string.pref_femto_detection_key), false);
+        boolean trackCellPref   = prefs.getBoolean( context.getString(R.string.pref_enable_cell_key), true);
         boolean monitorCellPref = prefs.getBoolean( context.getString(R.string.pref_enable_cell_monitoring_key), true);
 
-        LAST_DB_BACKUP_VERSION = prefs.getInt( context.getString(R.string.pref_last_database_backup_version), 1);
-        OCID_UPLOAD_PREF = prefs.getBoolean( context.getString(R.string.pref_ocid_upload), false);
-        CELL_TABLE_CLEANSED = prefs.getBoolean( context.getString(R.string.pref_cell_table_cleansed), false);
+        LAST_DB_BACKUP_VERSION  = prefs.getInt(     context.getString(R.string.pref_last_database_backup_version), 1);
+        OCID_UPLOAD_PREF        = prefs.getBoolean( context.getString(R.string.pref_ocid_upload), false);
+        CELL_TABLE_CLEANSED     = prefs.getBoolean( context.getString(R.string.pref_cell_table_cleansed), false);
 
-        String refreshRate = prefs.getString( context.getString(R.string.pref_refresh_key), "1");
-        if (refreshRate.isEmpty()) {
-            refreshRate = "1";
-        }
+        // TODO: Explain what this rate is doing...
+        String refreshRate      = prefs.getString(  context.getString(R.string.pref_refresh_key), "1");
+        if (refreshRate.isEmpty()) { refreshRate = "1";  }
 
         int rate = Integer.parseInt(refreshRate);
         long t;
@@ -461,70 +473,88 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 t = (rate * 1L);
                 break;
         }
-        REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
 
+        REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
         getOcidKey();
 
-        if (trackFemtoPref) {
-            startTrackingFemto();
-        }
-
-        if (trackCellPref) {
-            setCellTracking(true);
-        }
-
-        if (monitorCellPref) {
-            setCellMonitoring(true);
-        }
+        if (trackFemtoPref) {   startTrackingFemto(); }
+        if (trackCellPref) {    setCellTracking(true); }
+        if (monitorCellPref) {  setCellMonitoring(true); }
     }
 
+
+    /**
+     * Description:  TODO: add more info
+     *
+     *    This SEEM TO add entries to the "locationinfo" DB table in the??
+     *
+     *    Issues:
+     *
+     *    [ ] We see that "Connection" items are messed up. What is the purpose of these?
+     *
+     *    $ sqlite3.exe -header -csv aimsicd.db 'select * from locationinfo;'
+     *      _id,Lac,CellID,Net,Lat,Lng,Signal,Connection,Timestamp
+     *      1,10401,6828111,10, 54.6787,25.2869, 24, "[10401,6828111,126]No|Di|HSPA|", "2015-01-21 20:45:10"
+     *
+     *    [ ]
+     *
+     *    ChangeLog:
+     *
+     *          2015-01-22  E:V:A   Changed what appears to be a typo in the character
+     *                              following getNetworkTypeName(), "|" to "]"
+     *
+     */
     private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
         public void onCellLocationChanged(CellLocation location) {
-            mDevice.setNetID(tm);
-            mDevice.getNetworkTypeName();
+            mDevice.setNetID(tm);           // ??
+            mDevice.getNetworkTypeName();   // RAT??
 
             switch (mDevice.getPhoneID()) {
+
                 case TelephonyManager.PHONE_TYPE_GSM:
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
                     if (gsmCellLocation != null) {
                         mDevice.setCellInfo(
                                 gsmCellLocation.toString() +
-                                mDevice.getDataActivityTypeShort() + "|" +
-                                mDevice.getDataStateShort() + "|" +
-                                mDevice.getNetworkTypeName() + "|");
-                        mDevice.mCell.setLAC(gsmCellLocation.getLac());
-                        mDevice.mCell.setCID(gsmCellLocation.getCid());
+                                mDevice.getDataActivityTypeShort() + "|" +  // ??
+                                mDevice.getDataStateShort() + "|" +         // ??
+                                mDevice.getNetworkTypeName() + "]"          // ??
+                        );
+                        mDevice.mCell.setLAC(gsmCellLocation.getLac());     // LAC
+                        mDevice.mCell.setCID(gsmCellLocation.getCid());     // CID
                         if (gsmCellLocation.getPsc() != -1)
-                            mDevice.mCell.setPSC(gsmCellLocation.getPsc());
+                            mDevice.mCell.setPSC(gsmCellLocation.getPsc()); // PSC
 
                     }
                     break;
+
                 case TelephonyManager.PHONE_TYPE_CDMA:
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                     if (cdmaCellLocation != null) {
                         mDevice.setCellInfo(
-                                cdmaCellLocation.toString() +
-                                mDevice.getDataActivityTypeShort() + "|" +
-                                mDevice.getDataStateShort() + "|" +
-                                mDevice.getNetworkTypeName() + "|");
-                        mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());
-                        mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());
-                        mDevice.mCell.setSID(cdmaCellLocation.getSystemId());
-                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());
-                        mDevice.setNetworkName(tm.getNetworkOperatorName());
+                                cdmaCellLocation.toString() +               // ??
+                                mDevice.getDataActivityTypeShort() + "|" +  // ??
+                                mDevice.getDataStateShort() + "|" +         // ??
+                                mDevice.getNetworkTypeName() + "]"          // ??
+                        );
+                        mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());      // NID
+                        mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());  // BID
+                        mDevice.mCell.setSID(cdmaCellLocation.getSystemId());       // SID
+                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());   // <== BUG!?    // MNC
+                        mDevice.setNetworkName(tm.getNetworkOperatorName());        // ??
                     }
             }
 
         }
 
         public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-            //Update Signal Strength
+            // Update Signal Strength
             if (signalStrength.isGsm()) {
                 int dbm;
                 if(signalStrength.getGsmSignalStrength() <= 2 ||
                    signalStrength.getGsmSignalStrength() ==  NeighboringCellInfo.UNKNOWN_RSSI)
                 {
-                    //Unknown signal strength, get it another way
+                    // Unknown signal strength, get it another way
                     String[] bits = signalStrength.toString().split(" ");
                     dbm = Integer.parseInt(bits[9]);
                 } else {
@@ -535,10 +565,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 int evdoDbm = signalStrength.getEvdoDbm();
                 int cdmaDbm = signalStrength.getCdmaDbm();
 
-                //Use lowest signal to be conservative
+                // Use lowest signal to be conservative
                 mDevice.setSignalDbm((cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm);
             }
-            //Send it to signal tracker
+            // Send it to signal tracker
             signalStrengthTracker.registerSignalStrength(mDevice.mCell.getCID(), mDevice.getSignalDBm());
             //signalStrengthTracker.isMysterious(mDevice.mCell.getCID(), mDevice.getSignalDBm());
         }
@@ -596,8 +626,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         setNotification();
         if (state) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage(R.string.sms_message)
-                    .setTitle(R.string.sms_title);
+            builder.setMessage(R.string.sms_message).setTitle(R.string.sms_title);
             AlertDialog alert = builder.create();
             alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             alert.show();
@@ -605,7 +634,26 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
     }
 
-    public void onLocationChanged(Location loc) {
+    /**
+     * Description:  TODO: add more info
+     *
+     *    This SEEM TO add entries to the "locationinfo" DB table ???
+     *
+     * From "locationinfo":
+     *
+     *      $ sqlite3.exe -header aimsicd.db 'select * from locationinfo;'
+     *      _id|Lac|CellID|Net|Lat|Lng|Signal|Connection|Timestamp
+     *      1|10401|6828xxx|10|54.67874392|25.28693531|24|[10401,6828320,126]No|Di|HSPA||2015-01-21 20:45:10
+     *
+     *  From "cellinfo":
+     *
+     *      $ sqlite3.exe -header aimsicd.db 'select * from cellinfo;'
+     *      _id|Lac|CellID|Net|Lat|Lng|Signal|Mcc|Mnc|Accuracy|Speed|Direction|NetworkType|MeasurementTaken|OCID_SUBMITTED|Timestamp
+     *      1|10401|6828xxx|10|54.67874392|25.28693531|24|246|2|69.0|0.0|0.0|HSPA|82964|0|2015-01-21 20:45:10
+     *
+     *    Issues:
+     */
+     public void onLocationChanged(Location loc) {
 
         if (Build.VERSION.SDK_INT > 16) {
             DeviceApi17.loadCellInfo(tm, mDevice.mCell);
@@ -617,60 +665,66 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 switch (mDevice.getPhoneID()) {
                     case TelephonyManager.PHONE_TYPE_GSM:
                         GsmCellLocation gsmCellLocation = (GsmCellLocation) cellLocation;
-                        mDevice.mCell.setCID(gsmCellLocation.getCid());
-                        mDevice.mCell.setLAC(gsmCellLocation.getLac());
-                        mDevice.mCell.setPSC(gsmCellLocation.getPsc());
+                        mDevice.mCell.setCID(gsmCellLocation.getCid()); // CID
+                        mDevice.mCell.setLAC(gsmCellLocation.getLac()); // LAC
+                        mDevice.mCell.setPSC(gsmCellLocation.getPsc()); // PSC
                         break;
                     case TelephonyManager.PHONE_TYPE_CDMA:
                         CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cellLocation;
-                        mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());
-                        mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());
-                        mDevice.mCell.setSID(cdmaCellLocation.getSystemId());
-                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());
+                        mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId()); // BSID ??
+                        mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());     // NID
+                        mDevice.mCell.setSID(cdmaCellLocation.getSystemId());      // SID
+                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId()); // <== BUG!??     // MNC
                 }
             }
         }
 
         if (loc != null && (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0)) {
-            mDevice.mCell.setLon(loc.getLongitude());
-            mDevice.mCell.setLat(loc.getLatitude());
-            mDevice.mCell.setSpeed(loc.getSpeed());
-            mDevice.mCell.setAccuracy(loc.getAccuracy());
-            mDevice.mCell.setBearing(loc.getBearing());
-            mDevice.setLastLocation(loc);
+            mDevice.mCell.setLon(loc.getLongitude());       // gpsd_lon
+            mDevice.mCell.setLat(loc.getLatitude());        // gpsd_lat
+            mDevice.mCell.setSpeed(loc.getSpeed());         // speed
+            mDevice.mCell.setAccuracy(loc.getAccuracy());   // gpsd_accu
+            mDevice.mCell.setBearing(loc.getBearing());     // -- [deg]??
+            mDevice.setLastLocation(loc);                   //
 
             //Store last known location in preference
             SharedPreferences.Editor prefsEditor;
             prefsEditor = prefs.edit();
-            prefsEditor.putString(context.getString(R.string.data_last_lat_lon), String.valueOf(loc.getLatitude()) +
-                                  ":" + String.valueOf(loc.getLongitude()));
+            prefsEditor.putString(context.getString(R.string.data_last_lat_lon),
+                    String.valueOf(loc.getLatitude()) + ":" +
+                    String.valueOf(loc.getLongitude()));
             prefsEditor.apply();
 
             if (mTrackingCell) {
                 dbHelper.open();
-                dbHelper.insertLocation(
-                        mDevice.mCell.getLAC(),
-                        mDevice.mCell.getCID(),
-                        mDevice.mCell.getNetType(),
-                        mDevice.mCell.getLat(),
-                        mDevice.mCell.getLon(),
-                        mDevice.mCell.getDBM(),
-                        mDevice.getCellInfo());
 
+                // LOCATION_TABLE (locationinfo)    ==>  DBi_measure + DBi_bts
+                dbHelper.insertLocation(
+                        mDevice.mCell.getLAC(),     // Lac
+                        mDevice.mCell.getCID(),     // CellID
+                        mDevice.mCell.getNetType(), // Net
+                        mDevice.mCell.getLat(),     // Lat
+                        mDevice.mCell.getLon(),     // Lng
+                        mDevice.mCell.getDBM(),     // Signal
+                        mDevice.getCellInfo()       // Connection
+                );
+
+                // CELL_TABLE (cellinfo))           ==>  DBi_measure + DBi_bts
                 dbHelper.insertCell(
-                        mDevice.mCell.getLAC(),
-                        mDevice.mCell.getCID(),
-                        mDevice.mCell.getNetType(),
-                        mDevice.mCell.getLat(),
-                        mDevice.mCell.getLon(),
-                        mDevice.mCell.getDBM(),
-                        mDevice.mCell.getMCC(),
-                        mDevice.mCell.getMNC(),
-                        mDevice.mCell.getAccuracy(),
-                        mDevice.mCell.getSpeed(),
-                        mDevice.mCell.getBearing(),
-                        mDevice.getNetworkTypeName(),
-                        SystemClock.currentThreadTimeMillis());
+                        mDevice.mCell.getLAC(),     // Lac
+                        mDevice.mCell.getCID(),     // CellID
+                        mDevice.mCell.getNetType(), // Net
+                        mDevice.mCell.getLat(),     // Lat
+                        mDevice.mCell.getLon(),     // Lng
+                        mDevice.mCell.getDBM(),     // Signal
+                        mDevice.mCell.getMCC(),     // Mcc
+                        mDevice.mCell.getMNC(),     // Mnc
+                        mDevice.mCell.getAccuracy(),// Accuracy
+                        mDevice.mCell.getSpeed(),   // Speed
+                        mDevice.mCell.getBearing(), // Direction
+                        mDevice.getNetworkTypeName(), // NetworkType
+                        SystemClock.currentThreadTimeMillis() // MeasurementTaken
+                );
                 dbHelper.close();
             }
         }
@@ -694,13 +748,37 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      *  Issues:
      *
-     *      TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
-     *      See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
+     *  [ ] TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
+     *      See:  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
+     *      and:  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/11#issuecomment-44670204
+     *
      *      Change names from "IDLE,NORMAL,MEDIUM,ALARM" to:"GRAY,GREEN,YELLOW,ORANGE,RED,BLACK",
      *      to reflect detection Icon colors. They should be based on the detection scores here:
      *      <TBA>
      *
-     * Dependencies:    Status.java, CellTracker.java, Icon.java ( + others?)
+     *  [ ] We need to standardize the "contentText" and "tickerText" format
+     *
+     *  [ ] From #91: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91
+     *
+     *      Problem:
+     *          Having multiple notifications will cause an issue with
+     *      notifications themselves AND tickerText.  It seems that the
+     *      most recent notification raised would overwrite any previous,
+     *      notification or tickerText.  This results in loss of information
+     *      for any notification before the last one.
+     *
+     *      Possible Solution:
+     *          Perhaps arranging a queue implementation to deal with text
+     *      being passed into tickerText only when any previous text has
+     *      been entirely displayed.
+     *
+     *
+     *  Dependencies:    Status.java, CellTracker.java, Icon.java ( + others?)
+     *
+     *  ChangeLog:
+     *
+     *     2015-01-22   E:V:A  Added placeholder for "Missing Neighboring Cells Alert"
+     *
      *
      */
     void setNotification() {
@@ -727,6 +805,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else {
             Status.setCurrentStatus(Status.Type.IDLE, this.context);
         }
+
         switch (Status.getStatus()) {
             case IDLE: // GRAY
                 contentText = "Phone Type " + mDevice.getPhoneType();
@@ -737,28 +816,20 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 tickerText = context.getResources().getString(R.string.app_name_short) + " - Status: Good. No Threats Detected.";
                 break;
 
-            case MEDIUM: // YELLOW or ORANGE?
-                /**
-                 * New Issue (Noticed from #91):
-                 *      Problem:
-                 *          Having multiple notifications will cause an issue with
-                 *      notifications themselves AND tickerText.  It seems that the
-                 *      most recent notification raised would overwrite any previous,
-                 *      notification or tickerText.  This results in loss of information
-                 *      for any notification before the last one.
-                 *
-                 *      Solution?:
-                 *          Perhaps arranging a queue implementation to deal with text
-                 *      being passed into tickerText only when any previous text has
-                 *      been entirely displayed.
-                 **/
-                //Initialize tickerText as the app name string
+            case MEDIUM: // YELLOW
+                // Initialize tickerText as the app name string
+                // See multiple detection comments above.
                 tickerText = context.getResources().getString(R.string.app_name_short);
                 if (mChangedLAC) {
                     //Append changing LAC text
                     tickerText += " - Hostile Service Area: Changing LAC Detected!";
                     contentText = "Hostile Service Area: Changing LAC Detected!";
-                }else if (mCellIdNotInOpenDb) {
+                // See #264
+                //} else if (NoNCL)  {
+                //    tickerText += " - BTS doesn't provide any neighbors!";
+                //    contentText = "CID: " + cellid + " is not providing a neighboring cell list!";
+
+                } else if (mCellIdNotInOpenDb) {
                     //Append Cell ID not existing in external db text
                     tickerText += " - Cell ID does not exist in OpenCellID Database!";
                     contentText = "Cell ID does not exist in OpenCellID Database!";
