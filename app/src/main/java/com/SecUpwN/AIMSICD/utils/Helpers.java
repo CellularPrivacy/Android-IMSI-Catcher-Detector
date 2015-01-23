@@ -185,7 +185,7 @@ import java.util.List;
     *  ChangeLog:
     *
     *      2015-01-22   E:V:A   Removed some restrictive payload items, leaving MCC.
-    *
+    *      2015-01-23   E:V:A   Tightened the BBOX from 10 to 5 Km, because of above.
     *
     */
     public static void getOpenCellData(Context context, Cell cell, char type) {
@@ -197,8 +197,8 @@ import java.util.List;
                     //New GeoLocation object to find bounding Coordinates
                     GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
-                    //Calculate the Bounding Box Coordinates in a 10 Km radius //0 = min 1 = max
-                    GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(10, earthRadius);
+                    //Calculate the Bounding Box Coordinates in a 5 Km radius //0 = min 1 = max
+                    GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(5, earthRadius);
                     String boundParameter;
 
                     //Request OpenCellID data for Bounding Coordinates //0 = min 1 = max

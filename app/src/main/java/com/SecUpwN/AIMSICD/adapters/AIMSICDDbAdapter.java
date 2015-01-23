@@ -59,15 +59,24 @@ import au.com.bytecode.opencsv.CSVWriter;
  *  For damn good reasons, we should try to stay with mDb.rawQuery() and NOT with mDb.query().
  *  In fact we should try to avoid the entire AOS SQLite API as much as possible, to keep our
  *  queries and SQL related clean, portable and neat. That's what most developers understand.
- *  See: http://stackoverflow.com/questions/1122679/querying-and-working-with-cursors-in-sqlite-on-android
+ *
+ *  See:
+ *  [1] http://stackoverflow.com/questions/1122679/querying-and-working-with-cursors-in-sqlite-on-android
+ *  [2] http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#rawQuery%28java.lang.String,%20java.lang.String%5B%5D%29
  *  ===============================================================================================
  *
- *  +   We can use:
+ *  +   Some examples we can use:
  *
- *      rawQuery example:
+ *   1) "Proper" style:
  *      rawQuery("SELECT id, name FROM people WHERE name = ? AND id = ?", new String[] {"David", "2"});
  *
- *      database.execSQL()
+ *   2) Hack style: (avoiding the use of "?")
+ *      String q = "SELECT * FROM customer WHERE _id = " + customerDbId  ;
+ *      Cursor mCursor = mDb.rawQuery(q, null);
+ *
+ *   3) Info on execSQL():
+ *      Execute a single SQL statement that is NOT a SELECT/INSERT/UPDATE/DELETE staement.
+ *      Suggested use with: ALTER, CREATE or DROP.
  *
  *  +   A few words about DB "Cursors":
  *      http://developer.android.com/reference/android/database/Cursor.html
@@ -87,7 +96,7 @@ public class AIMSICDDbAdapter {
     private final String LOCATION_TABLE     = "locationinfo";    // TABLE_DBI_MEASURE:DBi_measure (volatile)
     private final String CELL_TABLE         = "cellinfo";        // TABLE_DBI_BTS:DBi_bts (physical)
     private final String OPENCELLID_TABLE   = "opencellid";      // TABLE_DBE_IMPORT:DBe_import
-    private final String DEFAULT_MCC_TABLE  = "defaultlocation"; // TABLE_DEFAULT_MCC:defaultlocation
+    private final String TABLE_DEFAULT_MCC  = "defaultlocation"; // TABLE_DEFAULT_MCC:defaultlocation
     private final String SILENT_SMS_TABLE   = "silentsms";       // TABLE_SILENT_SMS:silentsms
 
     // cell tower signal strength collected by the device
@@ -128,7 +137,7 @@ public class AIMSICDDbAdapter {
                 TABLE_DBE_CAPAB,
                 TABLE_DBI_BTS,
                 TABLE_DBI_MEASURE,
-                TABLE_DEFAULT_MCC,
+                TABLE_DEFAULT_MCC,  // Why isn't this in here?
                 TABLE_DET_FLAGS,*/
                 TABLE_EVENTLOG,
                 /*TABLE_SECTORTYPE,
@@ -399,7 +408,7 @@ public class AIMSICDDbAdapter {
      * Returns Default MCC Locations (defaultlocation) database contents
      */
     public Cursor getDefaultMccLocationData() {
-        return mDb.query(DEFAULT_MCC_TABLE,
+        return mDb.query(TABLE_DEFAULT_MCC,
                 new String[]{"Country", "Mcc", "Lat", "Lng"},
                 null, null, null, null, null);
     }
@@ -495,7 +504,7 @@ public class AIMSICDDbAdapter {
 
     public double[] getDefaultLocation(int mcc) {
         double[] loc = new double[2];
-        Cursor cursor = mDb.rawQuery("SELECT Lat, Lng FROM " + DEFAULT_MCC_TABLE + " WHERE Mcc = " + mcc, null);
+        Cursor cursor = mDb.rawQuery("SELECT Lat, Lng FROM " + TABLE_DEFAULT_MCC + " WHERE Mcc = " + mcc, null);
 
         if (cursor.moveToFirst()) {
             loc[0] = Double.parseDouble(cursor.getString(0));
@@ -601,7 +610,7 @@ public class AIMSICDDbAdapter {
                 defaultMccValues.put("Mcc", csvMcc.get(i)[1]);
                 defaultMccValues.put("Lng", csvMcc.get(i)[2]);
                 defaultMccValues.put("Lat", csvMcc.get(i)[3]);
-                db.insert(DEFAULT_MCC_TABLE, null, defaultMccValues);
+                db.insert(TABLE_DEFAULT_MCC, null, defaultMccValues);
             }
 
         } catch (Exception e) {
@@ -920,7 +929,7 @@ public class AIMSICDDbAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + CELL_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + OPENCELLID_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + SILENT_SMS_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + DEFAULT_MCC_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEFAULT_MCC);
             db.execSQL("DROP TABLE IF EXISTS " + CELL_SIGNAL_TABLE);
 
             // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBE_IMPORT);
@@ -1047,12 +1056,12 @@ public class AIMSICDDbAdapter {
             database.execSQL(OPENCELLID_DATABASE_CREATE);
 
             /**
-             *  Table:      DEFAULT_MCC_TABLE
+             *  Table:      TABLE_DEFAULT_MCC
              *  What:       MCC Location Database
              *  Columns:    _id,Country,Mcc,Lat,Lng
              */
             String DEFAULT_MCC_DATABASE_CREATE = "create table " +
-                    DEFAULT_MCC_TABLE + " (" + COLUMN_ID +
+                    TABLE_DEFAULT_MCC + " (" + COLUMN_ID +
                     " integer primary key autoincrement, " +
                     "Country VARCHAR, " +
                     "Mcc INTEGER, " + 
