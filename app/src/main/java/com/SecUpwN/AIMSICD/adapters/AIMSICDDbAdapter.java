@@ -863,14 +863,13 @@ public class AIMSICDDbAdapter {
     }
 
     /*****************************************************************************************
-     *  What:           DbHelper class for the SQLite Database functions
+     *  What:           TODO:  @Tor, please add some comments, even if trivial.
      *
-     *  Description:    This class creates all the tables and DB structure in aimsicd.db when
-     *                  AIMSICD is first started or updated when DB version changed.
+     *  Description:
      *
      *  Issues:
      *
-     *  TODO:           @Tor, please add some comments, even if trivial.
+     *
      *
      ******************************************************************************************/
 
