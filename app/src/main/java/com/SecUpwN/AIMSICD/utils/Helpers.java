@@ -47,11 +47,21 @@ import java.util.List;
 
 /**
  *
- * Description:     TODO: Please add some comments about this class
+ * Description:     This class contain many various functions to:
+ *
+ *                  - present Toast messages
+ *                  - getTimestamp
+ *                  - Check network connectivity
+ *                  - Download CSV file with BTS data via HTTP API from OCID servers
+ *                  - Convert ByteToString
+ *                  - unpackListOfStrings
+ *                  - Check if SD is writeable
+ *                  - get System properties
+ *                  - Check for SU and BusyBox
  *
  * Dependencies:    TODO: Write a few words about where the content of this is used.
  *
- * Issues:
+ * Issues:          AS complaints that several of these methods are not used...
  *
  * ChangeLog:
  *
@@ -186,6 +196,8 @@ import java.util.List;
     *
     *      2015-01-22   E:V:A   Removed some restrictive payload items, leaving MCC.
     *      2015-01-23   E:V:A   Tightened the BBOX from 10 to 5 Km, because of above.
+    *      2015-01-24   E:V:A   Re-imposed the MNC constraint.
+    *                           TODO: Inform user that BTSs from other networks are not shown.
     *
     */
     public static void getOpenCellData(Context context, Cell cell, char type) {
@@ -201,7 +213,7 @@ import java.util.List;
                     GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(5, earthRadius);
                     String boundParameter;
 
-                    //Request OpenCellID data for Bounding Coordinates //0 = min 1 = max
+                    //Request OpenCellID data for Bounding Coordinates (0 = min, 1 = max)
                     boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
@@ -215,9 +227,9 @@ import java.util.List;
                     if (cell.getMCC() != Integer.MAX_VALUE) {
                         sb.append("&mcc=").append(cell.getMCC());
                     }
-                    //if (cell.getMNC() != Integer.MAX_VALUE) {
-                    //    sb.append("&mnc=").append(cell.getMNC());
-                    //}
+                    if (cell.getMNC() != Integer.MAX_VALUE) {
+                        sb.append("&mnc=").append(cell.getMNC());
+                    }
                     //if (cell.getLAC() != Integer.MAX_VALUE) {
                     //    sb.append("&lac=").append(cell.getLAC());
                     //}
@@ -256,8 +268,7 @@ import java.util.List;
      * @param dataLength length of byte array
      * @return String array copy of passed byte array
      */
-    public static List<String> ByteArrayToStringList(byte[] byteArray,
-            int dataLength) {
+    public static List<String> ByteArrayToStringList(byte[] byteArray, int dataLength) {
         if (byteArray == null) {
             return null;
         }
@@ -303,7 +314,6 @@ import java.util.List;
             result.add(ByteToString(mBlockData));
             i += blockLength;
         }
-
         if (result.size() <= 0) {
             return null;
         }
@@ -369,12 +379,10 @@ import java.util.List;
             }
             display[i] = new String(aob, offset, byteCount).trim();
         }
-
         int newLength = display.length;
         while (newLength > 0 && TextUtils.isEmpty(display[newLength - 1])) {
             newLength -= 1;
         }
-
         return Arrays.asList(Arrays.copyOf(display, newLength));
     }
 
@@ -390,9 +398,7 @@ import java.util.List;
             Log.v(TAG, "invokeOemRilRequestRaw: byte-list response Length = 0");
             return Collections.emptyList();
         }
-
         int lines = aob.length / CHARS_PER_LINE;
-
         String[] display = new String[lines];
         for (int i = 0; i < lines; i++) {
             int offset, byteCount;
@@ -403,7 +409,6 @@ import java.util.List;
                 Log.e(TAG, "Unexpected EOF");
                 break;
             }
-
             while (aob[offset + byteCount] != 0 && (byteCount < CHARS_PER_LINE)) {
                 byteCount += 1;
                 if (offset + byteCount >= aob.length) {
@@ -413,12 +418,10 @@ import java.util.List;
             }
             display[i] = new String(aob, offset, byteCount).trim();
         }
-
         int newLength = display.length;
         while (newLength > 0 && TextUtils.isEmpty(display[newLength - 1])) {
             newLength -= 1;
         }
-
         return Arrays.asList(Arrays.copyOf(display, newLength));
     }
 
