@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/mainView"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-              android:background="@color/black"
-    android:padding="12dp">
+            android:id="@+id/mainView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:padding="12dp">
 
     <TableRow
-            android:id="@+id/open_cell_label"
-            android:gravity="center_horizontal"
-            android:visibility="gone"
-            android:tag="device">
+        android:id="@+id/open_cell_label"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        android:tag="device">
+
         <TextView
                 android:textSize="16sp" android:text="@string/open_cell_id_label"
                 android:layout_span="2"
@@ -19,7 +20,7 @@
     </TableRow>
 
     <TableRow
-            android:tag="device">
+        android:tag="device">
 
         <TextView
                 android:id="@+id/cell_id_label" android:text="@string/cell_id_label"
@@ -51,7 +52,8 @@
             android:padding="2dip" android:gravity="start"/>
     </TableRow>
 
-<!-- Remove these once PC = MCC+MNC is done
+<!-- Remove these once PC = MCC+MNC is done and make sure you comment out
+     the code in CellTowerMarker.java too. -->
     <TableRow
         android:tag="device">
 
@@ -81,7 +83,7 @@
             android:textColor="@color/medium_blue"
             android:padding="2dip" android:gravity="start"/>
     </TableRow>
- END remove -->
+ <!-- END remove -->
 
     <TableRow
         android:tag="device">
@@ -99,7 +101,7 @@
     </TableRow>
 
     <TableRow
-            android:tag="device">
+        android:tag="device">
 
         <TextView
                 android:id="@+id/lat_label" android:text="@string/lat_label"
@@ -114,7 +116,7 @@
     </TableRow>
 
     <TableRow
-            android:tag="device">
+        android:tag="device">
 
         <TextView
                 android:id="@+id/lng_label" android:text="@string/lng_label"
@@ -129,7 +131,7 @@
     </TableRow>
 
     <TableRow
-            android:tag="device">
+        android:tag="device">
 
         <TextView
                 android:id="@+id/samples_label" android:text="@string/samples_label"

@@ -241,7 +241,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_UI_ICONS =     context.getString(R.string.pref_ui_icons_key);
-        final String FEMTO_DECTECTION = context.getString(R.string.pref_femto_detection_key);
+        final String FEMTO_DETECTION = context.getString(R.string.pref_femto_detection_key);
         final String REFRESH =          context.getString(R.string.pref_refresh_key);        // Refresh rate of ??? in [seconds]?
         final String DB_VERSION =       context.getString(R.string.pref_last_database_backup_version);
         final String OCID_UPLOAD =      context.getString(R.string.pref_ocid_upload);    // BOOLEAN to enable OCID data upload
@@ -250,8 +250,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if (key.equals(KEY_UI_ICONS)) {
             //Update Notification to display selected icon type
             setNotification();
-        } else if (key.equals(FEMTO_DECTECTION)) {
-            boolean trackFemtoPref = sharedPreferences.getBoolean(FEMTO_DECTECTION, false);
+        } else if (key.equals(FEMTO_DETECTION)) {
+            boolean trackFemtoPref = sharedPreferences.getBoolean(FEMTO_DETECTION, false);
             if (trackFemtoPref) {
                 startTrackingFemto();
             } else {
@@ -502,13 +502,21 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *      _id,Lac,CellID,Net,Lat,Lng,Signal,Connection,Timestamp
      *      1,10401,6828111,10, 54.6787,25.2869, 24, "[10401,6828111,126]No|Di|HSPA|", "2015-01-21 20:45:10"
      *
-     *    [ ]
+     *    [ ] TODO: CDMA has to extract the MCC and MNC using something like:
+     *
+     *    	String mccMnc = phoneMgr.getNetworkOperator();
+     *      String cdmaMcc = "";
+     *      String cdmaMnc = "";
+     *      if (mccMnc != null && mccMnc.length() >= 5) {
+     *          cdmaMcc = mccMnc.substring(0, 3);
+     *          cdmaMnc = mccMnc.substring(3, 5);
+     }      }
      *
      *    ChangeLog:
      *
      *          2015-01-22  E:V:A   Changed what appears to be a typo in the character
      *                              following getNetworkTypeName(), "|" to "]"
-     *         2015-01-24  E:V:A    WTF!? Changed back ^ to "|" (Where is this parsed?)
+     *          2015-01-24  E:V:A    WTF!? Changed back ^ to "|". (Where is this info parsed?)
      *
      */
     private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
@@ -523,7 +531,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
                     if (gsmCellLocation != null) {
                         mDevice.setCellInfo(
-                                gsmCellLocation.toString() +                //
+                                gsmCellLocation.toString() +                // ??
                                 mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
                                 mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
                                 mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
@@ -548,7 +556,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());      // NID
                         mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());  // BID
                         mDevice.mCell.setSID(cdmaCellLocation.getSystemId());       // SID
-                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());       // <== BUG!?    // MNC
+                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());       // <== BUG!? See issue above! // MNC
                         mDevice.setNetworkName(tm.getNetworkOperatorName());        // ??
                     }
             }
@@ -852,7 +860,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     //Append changing LAC text
                     tickerText += " - Hostile Service Area: Changing LAC Detected!";
                     contentText = "Hostile Service Area: Changing LAC Detected!";
-                // See #264
+                // See #264 and ask He3556
                 //} else if (NoNCL)  {
                 //    tickerText += " - BTS doesn't provide any neighbors!";
                 //    contentText = "CID: " + cellid + " is not providing a neighboring cell list!";
@@ -902,10 +910,22 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
 
     /**
-     * Description:     TODO: Please add
+     *  Description:     TODO: Please add
      *
-     * Variables:
+     *  Possible explanation:
+     *
+     *                  This is a polling mechanism for getting the LAC/CID and location
+     *                  info for the currently connected cell.
+     *
+     *  Variables:
      *                  There is a "timer" here (REFRESH_RATE), what exactly is it timing?
+     *                  "Every REFRESH_RATE seconds, get connected cell details."
+     *
+     *  see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91#issuecomment-64391732
+     *
+     *  Issues:         We might wanna use a listener to do this?
+     *                  Are there any reasons why not using a listener?
+     *
      *
      */
     private final Runnable timerRunnable = new Runnable() {
@@ -1010,7 +1030,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private void getServiceStateInfo(ServiceState s) {
         if (s != null) {
             if (IsConnectedToCdmaFemto(s)) {
-                Helpers.msgShort(context, "ALERT!! FemtoCell Connection Detected!!");
+                Helpers.msgShort(context, "ALERT! FemtoCell Connection Detected.");
                 mFemtoDetected = true;
                 setNotification();
                 //toggleRadio();

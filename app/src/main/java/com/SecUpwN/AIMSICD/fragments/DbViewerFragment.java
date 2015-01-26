@@ -213,23 +213,23 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         // The getString(i) index refer to the table column in the "DBe_import" table
-                        //                     OLD  opencellid(i)       // New "DBe_import" column name
+                        //                         OLD  opencellid(i)       // New "DBe_import" column name
                         CardItemData data = new CardItemData(
                                 //"Source: " + tableData.getString(0),      // DBsource
-                                //"RAT: " + tableData.getString(0),         // RAT
+                                //"RAT: "    + tableData.getString(0),      // RAT
                                 "CID: "     + tableData.getString(0),       //
                                 "LAC: "     + tableData.getString(1),       //
                                 "MCC: "     + tableData.getString(2),       //
                                 "MNC: "     + tableData.getString(3),       //
-                                //"PSC: " + tableData.getString(7),         // PSC
+                                //"PSC: "    + tableData.getString(7),      // PSC
                                 "Lat: "     + tableData.getString(4),       // gps_lat
                                 "Lon: "     + tableData.getString(5),       // gps_lon
                                 //"isExact: " + tableData.getString(7),     // isGPSexact
-                                //"Range: " + tableData.getString(7),       // avg_range //
+                                //"Range: "  + tableData.getString(7),      // avg_range //
                                 "AvgSignal: " + tableData.getString(6),     // avg_signal
                                 "Samples: " + tableData.getString(7),       // samples // NOTE: #7 is range from ocid csv
-                                //"first: " + tableData.getString(7),       // time_first
-                                //"last: " + tableData.getString(7),        // time_last
+                                //"first: "  + tableData.getString(7),      // time_first
+                                //"last: "   + tableData.getString(7),      // time_last
                                 //"reject: " + tableData.getString(7),      // rej_cause
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
