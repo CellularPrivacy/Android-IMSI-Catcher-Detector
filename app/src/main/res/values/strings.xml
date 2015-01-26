@@ -216,6 +216,7 @@
         <item>Default MCC Locations</item>
         <item>Silent SMS</item>
         <item>Measured Signal Strengths</item>
+        <item>EventLog</item>
     </string-array>
     <string name="database_export_successful">Export Successful</string>
 

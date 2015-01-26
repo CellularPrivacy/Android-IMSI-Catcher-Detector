@@ -45,6 +45,10 @@ public class CellTowerMarker extends Marker {
      * more available items as explained in the related issue here:
      * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
      *
+     * Dependency:  marker_info_window.xml
+     *              MarkerData.java
+     *              marker_info_window.xml
+     *
      */
     public View getInfoContents(MarkerData data) {
 
@@ -55,6 +59,7 @@ public class CellTowerMarker extends Marker {
 
         if (v != null) {
             if (data != null) {
+                // We would also like to show this in HEX: "CID: 65535 (0xFFFF)"
                 if (data.openCellID) {
                     TableRow tr = (TableRow) v.findViewById(R.id.open_cell_label);
                     tr.setVisibility(View.VISIBLE);
@@ -62,7 +67,7 @@ public class CellTowerMarker extends Marker {
 
                 tv = (TextView) v.findViewById(R.id.cell_id); // CID
                 tv.setText(data.cellID);
-                tv = (TextView) v.findViewById(R.id.lac); // LAC
+                tv = (TextView) v.findViewById(R.id.lac);  // LAC
                 tv.setText(data.lac);
                 tv = (TextView) v.findViewById(R.id.lat); // LAT
                 tv.setText(String.valueOf(data.lat));
@@ -70,10 +75,10 @@ public class CellTowerMarker extends Marker {
                 tv.setText(String.valueOf(data.lng));
 
                 // TODO replace MCC & MNC with PC:
-                tv = (TextView) v.findViewById(R.id.mcc); // MCC
-                tv.setText(data.getMCC());
-                tv = (TextView) v.findViewById(R.id.mnc); // MNC
-                tv.setText(data.getMNC());
+                //tv = (TextView) v.findViewById(R.id.mcc); // MCC
+                //tv.setText(data.getMCC());
+                //tv = (TextView) v.findViewById(R.id.mnc); // MNC
+                //tv.setText(data.getMNC());
 
                 tv = (TextView) v.findViewById(R.id.pc);  // MNC+MCC
                 tv.setText(data.getPC());
@@ -81,7 +86,6 @@ public class CellTowerMarker extends Marker {
                 tv.setText(data.getSamples());
             }
         }
-
         // Returning the view containing InfoWindow contents
         return v;
     }
