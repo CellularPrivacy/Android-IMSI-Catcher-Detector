@@ -230,6 +230,7 @@ import java.util.List;
                     if (cell.getMNC() != Integer.MAX_VALUE) {
                         sb.append("&mnc=").append(cell.getMNC());
                     }
+                    // We need DBe_import filtering, if we wanna keep these lines commented out...
                     //if (cell.getLAC() != Integer.MAX_VALUE) {
                     //    sb.append("&lac=").append(cell.getLAC());
                     //}
