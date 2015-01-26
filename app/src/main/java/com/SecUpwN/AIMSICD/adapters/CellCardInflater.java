@@ -69,7 +69,7 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
         private final TextView mPSC;
         private final TextView mgpsd_lat;
         private final TextView mgpsd_lon;
-        private final TextView mgpsd_accur;
+        private final TextView mgpsd_accu;
         private final TextView mDF_id;
         private final TextView mDF_description;
         */

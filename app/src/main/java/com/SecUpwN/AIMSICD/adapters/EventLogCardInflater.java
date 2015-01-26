@@ -8,15 +8,19 @@ import android.widget.TextView;
 import com.SecUpwN.AIMSICD.R;
 
 /**
- *  Brief:   TODO: Please explain its use.
+ *  Brief:          TODO: Please explain its use.
  *
  *  Description:
  *
- *      This class handle all the AMISICD DataBase ... TODO: Add info here !
+ *      This class handle the EventLog DB table ... TODO: Add info here !
+ *
+ *  Template:       OpenCellIdCardInflater.java
  *
  *  Dependencies:   CardItemData.java
+ *                  eventlog_items.xml
  *
  *  Issues:
+ *          [ ]  TODO: Do we need an EvenLogCardData.java ???
  *
  *  ChangeLog:
  *
@@ -33,7 +37,7 @@ public class EventLogCardInflater implements IAdapterViewInflater<CardItemData> 
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            convertView = inflater.inflate(R.layout.opencelid_items, parent, false);
+            convertView = inflater.inflate(R.layout.eventlog_items, parent, false);
             holder = new ViewHolder(convertView);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -54,9 +58,9 @@ public class EventLogCardInflater implements IAdapterViewInflater<CardItemData> 
         private final TextView mPSC;
         private final TextView mgpsd_lat;
         private final TextView mgpsd_lon;
-        private final TextView mgpsd_accur;
+//        private final TextView mgpsd_accu;
         private final TextView mDF_id;
-        private final TextView mDF_description;
+//        private final TextView mDF_desc;
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
@@ -67,23 +71,23 @@ public class EventLogCardInflater implements IAdapterViewInflater<CardItemData> 
             mPSC =          (TextView) mRootView.findViewById(R.id.PSC);
             mgpsd_lat =     (TextView) mRootView.findViewById(R.id.gpsd_lat);
             mgpsd_lon =     (TextView) mRootView.findViewById(R.id.gpsd_lon);
-            mgpsd_accur =   (TextView) mRootView.findViewById(R.id.gpsd_accur);
-            mDF_id =        (TextView) mRootView.findViewById(R.id.DF_id);
-            mDF_description =   (TextView) mRootView.findViewById(R.id.DF_description);
+//            mgpsd_accu =    (TextView) mRootView.findViewById(R.id.gpsd_accu); // need fix
+            mDF_id =        (TextView) mRootView.findViewById(R.id.DF_id);// need fix
+//            mDF_desc =   (TextView) mRootView.findViewById(R.id.DF_desc);// need fix
 
             rootView.setTag(this);
         }
 
         public void updateDisplay(CardItemData item) {
-            mtime.setText(item.getCellID());
-            mLAC.setText(item.getLac());
-            mCID.setText(item.getMcc());
-            mPSC.setText(item.getMnc());
-            mgpsd_lat.setText(item.getLat());
-            mgpsd_lon.setText(item.getLng());
-            mgpsd_accur.setText(item.getAvgSigStr());
-            mDF_id.setText(item.getSamples());
-            mDF_description.setText(item.getRecordId());
+            mtime.setText(      item.getTimestamp());          // need fix ?
+            mLAC.setText(       item.getLac());
+            mCID.setText(       item.getCellID());
+            mPSC.setText(       item.getPsc());
+            mgpsd_lat.setText(  item.getLat());
+            mgpsd_lon.setText(  item.getLng());
+//            mgpsd_accu.setText( item.getAccu());            // need fix
+//            mDF_id.setText(     item.getDFid());            // need fix
+//            mDF_desc.setText(item.getDescription()); // need fix
         }
     }
 }
