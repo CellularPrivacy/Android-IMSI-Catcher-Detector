@@ -215,19 +215,20 @@ public class DbViewerFragment extends Fragment {
                         // The getString(i) index refers to the table column in the "DBe_import" table
                         // OLD opencelid(i)  
                         // New "DBe_import" column name
-                        CardItemData data = new CardItemData(tableData.getString(0),
+                        CardItemData data = new CardItemData(
                                 //"Source: " + tableData.getString(0),      // DBsource
                                 //"RAT: " + tableData.getString(0),         // RAT
-                                tableData.getString(1),
+                                tableData.getString(0),
+                                tableData.getString(1), 
                                 tableData.getString(2),
                                 tableData.getString(3),
-                                //"PSC: " + tableData.getString(&), 
-                                tableData.getString(4),
-                                tableData.getString(5),
-                                //"isexact: " + tableData.getString(7),
-                                //Range: " + tableData.GetString(7)
-                                tableData.getString(6),
-                                tableData.getString(7),     //NOTE: #7 was range from ocid csv
+                                //"PSC: " + tableData.getString(&),     // PSC
+                                tableData.getString(4),                 // gps_lat
+                                tableData.getString(5),                 // gps_lon
+                                //"isexact: " + tableData.getString(7), // isGPSexact
+                                //Range: " + tableData.GetString(7)     // avg_range
+                                tableData.getString(6),                 // avg_signal
+                                tableData.getString(7),                 // samples //NOTE: #7 was range from ocid csv
                                 //"first: " + tableData.getString(7),   // time_first
                                 //"last: " + tableData.getString(7),    // time_last
                                 //"reject: " + tableData.getString(7),  // rej_cause
