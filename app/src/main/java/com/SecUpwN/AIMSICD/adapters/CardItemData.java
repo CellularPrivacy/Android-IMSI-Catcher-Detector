@@ -9,11 +9,19 @@ import com.SecUpwN.AIMSICD.utils.Device;
  *
  *  Dependencies:
  *
+ *
  *  Usage:
+ *
+ *          Used to define methods in:
+ *                  OpenCellIdCardInflater.java
+ *                  EventLogCardInflater.java
+ *
  *
  *  Issues:
  *
  *  ChangeLog:
+ *
+ *          2015-01-26  E:V:A   Added HEX string to CID.
  *
  *
  *  -----------------------------------------------------------------------------------------
@@ -54,7 +62,7 @@ public class CardItemData {
     private final String mPSC;
     private final String mgpsd_lat;
     private final String mgpsd_lon;
-    private final String mgpsd_accur;
+    private final String mgpsd_accu;
     private final String mDF_id;
     private final String mDF_description;
 */
@@ -63,8 +71,9 @@ public class CardItemData {
     // OLD items in old DB table structure
 
     public CardItemData(Cell cell, String recordId) {
+
         if (cell.getCID() != Integer.MAX_VALUE && cell.getCID() != -1) {
-            mCellID = String.valueOf(cell.getCID());
+            mCellID = cell.getCID() + "  (0x" + Integer.toHexString(cell.getCID()) +")";
         } else {
             mCellID = "N/A";
         }
@@ -106,6 +115,10 @@ public class CardItemData {
         } else {
             mSignal = "N/A";
         }
+        // NEW (in new DB tables)
+
+
+        // end New
 
         mLat = "N/A";
         mLng = "N/A";
@@ -114,6 +127,11 @@ public class CardItemData {
         mCountry = "N/A";
         mTimestamp = "N/A";
         mRecordId = recordId;
+
+        // NEW (in new DB tables)
+
+        // end New
+
     }
 
     public CardItemData(String cellID, String lac, String mcc, String mnc, String lat, String lng,
@@ -278,4 +296,12 @@ public class CardItemData {
     public String getTimestamp() {
         return mTimestamp;
     }
+
+    // NEW (in new DB tables)
+    // EventLog
+
+    //public String getAccu() {
+    //    return mAccu;
+    //}
+
 }
