@@ -206,6 +206,23 @@
     <string name="lat_label">Lat: </string>
     <string name="lng_label">Lon: </string>
 
+    <!-- Database Viewer Cell Labels -->
+    <string name="cidLabel">CID: </string>
+    <string name="lacLabel">LAC: </string>
+    <string name="mccLabel">MCC: </string>
+    <string name="mncLabel">MNC: </string>
+    <string name="netLabel">Net Type: </string>
+    <string name="pscLabel">PSC: </string>
+    <string name="rssiLabel">RSSI: </string>
+    <string name="latLabel">Latitude: </string>
+    <string name="lonLabel">Longitude: </string>
+    <string name="dbmLabel">Dbm: </string>
+    <string name="avgSigLabel">Avg Signal: </string>
+    <string name="samplesLabel">Samples: </string>
+    <string name="countryLabel">Country: </string>
+    <string name="timestampLabel">Timestamp: </string>
+
+
     <!-- Database Viewer -->
     <string name="load_table_data">Load Data</string>
     <string name="table_names_prompt">Select Table</string>
@@ -218,6 +235,8 @@
         <item>Measured Signal Strengths</item>
     </string-array>
     <string name="database_export_successful">Export Successful</string>
+
+
 
     <!-- AT Command Processor -->
     <string name="at_command_title">AT Command Interface</string>

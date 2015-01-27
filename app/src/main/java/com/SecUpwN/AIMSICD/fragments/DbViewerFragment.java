@@ -195,11 +195,11 @@ public class DbViewerFragment extends Fragment {
                             new DefaultLocationCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData("Country: " + tableData.getString(0),
-                                "MCC: " + tableData.getString(1),
-                                "Lat: " + tableData.getString(2),
-                                "Lon: " + tableData.getString(3),
-                                "" + (tableData.getPosition() + 1) + " / " + count);
+                        CardItemData data = new CardItemData(tableData.getString(0),
+                                tableData.getString(1),
+                                tableData.getString(2),
+                                tableData.getString(3),
+                                (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     return adapter;
