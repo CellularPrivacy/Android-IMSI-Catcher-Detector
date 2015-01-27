@@ -195,7 +195,7 @@ public class DebugLogs extends BaseActivity {
      * @throws IOException
      */
     public String getProp() throws IOException {
-        return runProcess(new String[]{ "/system/bin/getprop" });
+        return runProcess("/system/bin/getprop");
     }
 
     /**
@@ -207,11 +207,18 @@ public class DebugLogs extends BaseActivity {
     private String getLogs() throws IOException {
         // + " *:v" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
         // Silent Samsung Galaxy devices spam debug: " AbsListView:S PackageInfo:S"
-        return runProcess(new String[]{
+        return runProcess(
             "logcat -t 100 -d -v time" +
                     (isRadioLogs ? " -b radio" : "") +
                     " AbsListView:S PackageInfo:S *:D"
-        });
+        );
+    }
+
+    /**
+     * Run a shell command and return the results
+     */
+    private String runProcess(String command) throws IOException {
+        return runProcess(new String[]{ command });
     }
 
     /**
