@@ -78,7 +78,7 @@ public class DebugLogs extends BaseActivity {
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try  {
+                try {
                     clearLogs();
                     //Log.d("DebugLogs", "Logcat clearing disabled!");
                 } catch (Exception e) {
@@ -177,7 +177,7 @@ public class DebugLogs extends BaseActivity {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/html");
                     // This is a masked email to one of our developers. In case of spam re-mask.
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "a3841c3c@opayq.com" });
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"a3841c3c@opayq.com"});
                     intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error Log");
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
@@ -190,31 +190,41 @@ public class DebugLogs extends BaseActivity {
 
     /**
      * Read getprop and return the sorted result as a string
+     *
      * @return
      * @throws IOException
      */
-    private String getProp() throws IOException {
-        Process process = Runtime.getRuntime().exec("getprop |sort" );
-        BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(process.getInputStream()));
-        StringBuilder log = new StringBuilder();
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            log.append(line);
-            log.append("\n");
-        }
-        return log.toString();
+    public String getProp() throws IOException {
+        return runProcess(new String[]{ "/system/bin/getprop" });
     }
 
     /**
      * Read logcat and return as a string
+     *
      * @return
      * @throws IOException
      */
     private String getLogs() throws IOException {
         // + " *:v" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
         // Silent Samsung Galaxy devices spam debug: " AbsListView:S PackageInfo:S"
-        Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v time" + (isRadioLogs ? " -b radio" : "") + " AbsListView:S PackageInfo:S *:D" );
+        return runProcess(new String[]{
+            "logcat -t 100 -d -v time" +
+                    (isRadioLogs ? " -b radio" : "") +
+                    " AbsListView:S PackageInfo:S *:D"
+        });
+    }
+
+    /**
+     * Run a shell command and return the results
+     * @param command
+     * @return
+     * @throws IOException
+     */
+    private String runProcess(String[] command) throws IOException {
+        Process process = null;
+        if (command.length == 1) process = Runtime.getRuntime().exec(command[0]);
+        else Runtime.getRuntime().exec(command);
+
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
 
