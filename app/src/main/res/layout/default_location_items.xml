@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>uto-merging app/src/main/res/layout/cell_items.xml
 <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -55,6 +55,11 @@
                     android:gravity="start"
                     android:textColor="@color/medium_blue" />
             </TableRow>
+        </TableLayout>
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
             <TableRow>
                 <TextView
                     android:id="@+id/latLabel"
