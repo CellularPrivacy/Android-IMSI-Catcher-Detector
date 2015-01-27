@@ -70,6 +70,17 @@ import com.SecUpwN.AIMSICD.utils.RequestTask;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * Description:     TODO: Please add some comments about this class
+ *
+ * Dependencies:    TODO: Write a few words about where the content of this is used.
+ *
+ * Issues:
+ *
+ * ChangeLog:
+ *
+ */
 public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     private final String TAG = "AIMSICD";
@@ -293,6 +304,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                     Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
                 } else {
                     Helpers.msgShort(mContext, "Waiting for location...");
+
+                    // TODO: Is this implemented?? --E:V:A (2015-01-22)
                     //Attempt to find location through CID
                     //CID Location Async Output Delegate Interface Implementation
                     LocationServices.LocationAsync locationAsync
