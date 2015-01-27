@@ -2,6 +2,7 @@ package com.SecUpwN.AIMSICD.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.AndroidTestCase;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
@@ -24,6 +25,7 @@ public class GetProp extends ActivityInstrumentationTestCase2<DebugLogs> {
         DebugLogs activity = (DebugLogs) getActivity();
         try { Thread.sleep(1000); } catch (Exception e) {}
         String props = activity.getProp();
+        Log.d("getprop", props);
         assertTrue(props.trim().length() > 0);
     }
 }
