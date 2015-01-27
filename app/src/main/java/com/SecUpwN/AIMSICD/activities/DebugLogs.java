@@ -20,6 +20,31 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ *  Description:    This class is providing for the Debug log feature in the swipe menu.
+ *                  It reads the last 1000 lines from the Logcat ring buffers: main and radio.
+ *
+ *  Issues:
+ *
+ *          [ ]     Are we clearing logcat when starting it? If we are, we miss all previous errors
+ *                  if any has occurred. We need to clear the logcat when app starts. Also there
+ *                  is no reason to clear it if we only catch the last 1000 lines anyway.
+ *
+ *
+ *
+ *  ToDo:
+ *          see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/301
+ *          1)  Add extra text in Email, asking the user to provide more info about problem.
+ *          2)  Add the output of "getprop |sort".
+ *
+ *
+ *  ChangeLog:
+ *
+ *          2015-01-27  E:V:A   Added "getprop|sort" info to log.
+ *
+ */
+
+
 public class DebugLogs extends BaseActivity {
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
@@ -55,6 +80,7 @@ public class DebugLogs extends BaseActivity {
             public void onClick(View view) {
                 try  {
                     clearLogs();
+                    //Log.d("DebugLogs", "Logcat clearing disabled!");
                 } catch (Exception e) {
                     Log.e("DebugLogs", "Error clearing logs", e);
                 }
@@ -142,7 +168,10 @@ public class DebugLogs extends BaseActivity {
             public void run() {
                 // Send Error Log
                 try {
-                    String log = getLogs();
+                    String helpUs = "For best help, please describe the problem you had, before sending us these logs.\n";
+                    String log = helpUs +
+                            "\n\n" + "GETPROP:" + "\n\n" + getProp() +
+                            "\n\n" + "LOGCAT:" + "\n\n" + getLogs() + helpUs;
 
                     // show a share intent
                     Intent intent = new Intent(Intent.ACTION_SEND);
@@ -157,6 +186,24 @@ public class DebugLogs extends BaseActivity {
                 }
             }
         }.start();
+    }
+
+    /**
+     * Read getprop and return the sorted result as a string
+     * @return
+     * @throws IOException
+     */
+    private String getProp() throws IOException {
+        Process process = Runtime.getRuntime().exec("getprop |sort" );
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(process.getInputStream()));
+        StringBuilder log = new StringBuilder();
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            log.append(line);
+            log.append("\n");
+        }
+        return log.toString();
     }
 
     /**
@@ -177,7 +224,6 @@ public class DebugLogs extends BaseActivity {
             log.append(line);
             log.append("\n");
         }
-
         return log.toString();
     }
 
