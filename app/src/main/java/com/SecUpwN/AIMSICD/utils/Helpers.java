@@ -45,7 +45,28 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class Helpers {
+/**
+ *
+ * Description:     This class contain many various functions to:
+ *
+ *                  - present Toast messages
+ *                  - getTimestamp
+ *                  - Check network connectivity
+ *                  - Download CSV file with BTS data via HTTP API from OCID servers
+ *                  - Convert ByteToString
+ *                  - unpackListOfStrings
+ *                  - Check if SD is writeable
+ *                  - get System properties
+ *                  - Check for SU and BusyBox
+ *
+ * Dependencies:    TODO: Write a few words about where the content of this is used.
+ *
+ * Issues:          AS complaints that several of these methods are not used...
+ *
+ * ChangeLog:
+ *
+ */
+ public class Helpers {
 
     private static final String TAG = "AIMSICD_Helpers";
 
@@ -135,23 +156,50 @@ public class Helpers {
         return false;
     }
 
-    /**
-     * Requests Cell data from OpenCellID.org (OCID).
-     *
-     * The free OCID API has a download limit of 1000 BTSs for each download.
-     * Thus we need to carefully select the area we choose to download and make sure it is
-     * centered on the current GPS location. (It is also possible to query the number of
-     * cells in a particular bounding box (bbox), and use that.)
-     *
-     * The bbox is described in the OCID API here:
-     *   http://wiki.opencellid.org/wiki/API#Getting_the_list_of_cells_in_a_specified_area
-     *
-     * In an urban area, we could try to limit ourselves to an area of ~10 Km.
-     * The (GSM) Timing Advance is limiting us to 35 Km.
-     *
-     *
-     * @param cell Current Cell Information
-     */
+   /**
+    * Requests Cell data from OpenCellID.org (OCID).
+    *
+    * @param cell Current Cell Information
+    *
+    * The free OCID API has a download limit of 1000 BTSs for each download.
+    * Thus we need to carefully select the area we choose to download and make sure it is
+    * centered on the current GPS location. (It is also possible to query the number of
+    * cells in a particular bounding box (bbox), and use that.)
+    *
+    * The bbox is described in the OCID API here:
+    *   http://wiki.opencellid.org/wiki/API#Getting_the_list_of_cells_in_a_specified_area
+    *
+    * In an urban area, we could try to limit ourselves to an area of ~10 Km.
+    * The (GSM) Timing Advance is limiting us to 35 Km.
+    *
+    * The OCID API payload:
+    *
+    *     required:   <apiKey>&BBOX=<latmin>,<lonmin>,<latmax>,<lonmax>
+    *     optional:   &mcc=<mcc>&mnc=<mnc>&lac=<lac>&radio=<radio>
+    *                 &limit=<limit>&offset=<offset>&format=<format>
+    *
+    *  Our API query is using:  (Lat1,Lon1, Lat2,Lon2, mcc,mnc,lac)
+    *
+    *  Issues:
+    *
+    *      [ ] A too restrictive payload leads to many missing BTS in area, but a too liberal
+    *          payload would return many less relevant ones and would cause us to reach the
+    *          OCID API 1000 BTS download limit much faster. The solution would be to make the
+    *          BBOX smaller, but that in turn, would result in the loss of some more distant,
+    *          but still available towers. Possibly making them appears as RED, even when they
+    *          are neither fake nor IMSI-catchers. However, a more realistic BTS picture is
+    *          more useful, especially when sharing that info across different devices using
+    *          on different RAT and MNO.
+
+    *
+    *  ChangeLog:
+    *
+    *      2015-01-22   E:V:A   Removed some restrictive payload items, leaving MCC.
+    *      2015-01-23   E:V:A   Tightened the BBOX from 10 to 5 Km, because of above.
+    *      2015-01-24   E:V:A   Re-imposed the MNC constraint.
+    *                           TODO: Inform user that BTSs from other networks are not shown.
+    *
+    */
     public static void getOpenCellData(Context context, Cell cell, char type) {
         if (Helpers.isNetAvailable(context)) {
             if (!CellTracker.OCID_API_KEY.equals("NA")) {
@@ -161,12 +209,11 @@ public class Helpers {
                     //New GeoLocation object to find bounding Coordinates
                     GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
-                    //Calculate the Bounding Box Coordinates in a 10 Km radius
-                    //0 = min 1 = max
-                    GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(10, earthRadius);
+                    //Calculate the Bounding Box Coordinates in a 5 Km radius //0 = min 1 = max
+                    GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(5, earthRadius);
                     String boundParameter;
 
-                    //Request OpenCellID data for Bounding Coordinates
+                    //Request OpenCellID data for Bounding Coordinates (0 = min, 1 = max)
                     boundParameter = String.valueOf(boundingCoords[0].getLatitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
@@ -180,22 +227,18 @@ public class Helpers {
                     if (cell.getMCC() != Integer.MAX_VALUE) {
                         sb.append("&mcc=").append(cell.getMCC());
                     }
-
                     if (cell.getMNC() != Integer.MAX_VALUE) {
                         sb.append("&mnc=").append(cell.getMNC());
                     }
-
-                    if (cell.getLAC() != Integer.MAX_VALUE) {
-                        sb.append("&lac=").append(cell.getLAC());
-                    }
+                    //if (cell.getLAC() != Integer.MAX_VALUE) {
+                    //    sb.append("&lac=").append(cell.getLAC());
+                    //}
 
                     sb.append("&format=csv");
-
                     new RequestTask(context, type).execute(sb.toString());
                 }
             } else {
-                Helpers.sendMsg(context,
-                        "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
+                Helpers.sendMsg(context, "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
             }
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -225,8 +268,7 @@ public class Helpers {
      * @param dataLength length of byte array
      * @return String array copy of passed byte array
      */
-    public static List<String> ByteArrayToStringList(byte[] byteArray,
-            int dataLength) {
+    public static List<String> ByteArrayToStringList(byte[] byteArray, int dataLength) {
         if (byteArray == null) {
             return null;
         }
@@ -272,7 +314,6 @@ public class Helpers {
             result.add(ByteToString(mBlockData));
             i += blockLength;
         }
-
         if (result.size() <= 0) {
             return null;
         }
@@ -338,12 +379,10 @@ public class Helpers {
             }
             display[i] = new String(aob, offset, byteCount).trim();
         }
-
         int newLength = display.length;
         while (newLength > 0 && TextUtils.isEmpty(display[newLength - 1])) {
             newLength -= 1;
         }
-
         return Arrays.asList(Arrays.copyOf(display, newLength));
     }
 
@@ -356,12 +395,10 @@ public class Helpers {
 
         if (aob.length == 0) {
             // WARNING: This one is very chatty!
-            Log.v(TAG, "invokeOemRilRequestRaw: byte list response Length = 0");
+            Log.v(TAG, "invokeOemRilRequestRaw: byte-list response Length = 0");
             return Collections.emptyList();
         }
-
         int lines = aob.length / CHARS_PER_LINE;
-
         String[] display = new String[lines];
         for (int i = 0; i < lines; i++) {
             int offset, byteCount;
@@ -372,7 +409,6 @@ public class Helpers {
                 Log.e(TAG, "Unexpected EOF");
                 break;
             }
-
             while (aob[offset + byteCount] != 0 && (byteCount < CHARS_PER_LINE)) {
                 byteCount += 1;
                 if (offset + byteCount >= aob.length) {
@@ -382,12 +418,10 @@ public class Helpers {
             }
             display[i] = new String(aob, offset, byteCount).trim();
         }
-
         int newLength = display.length;
         while (newLength > 0 && TextUtils.isEmpty(display[newLength - 1])) {
             newLength -= 1;
         }
-
         return Arrays.asList(Arrays.copyOf(display, newLength));
     }
 

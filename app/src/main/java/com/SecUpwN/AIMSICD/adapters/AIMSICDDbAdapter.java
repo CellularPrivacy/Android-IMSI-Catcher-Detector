@@ -25,59 +25,125 @@ import java.util.List;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
+
+/**
+ * Brief:   Handles the AMISICD DataBase tables (creation, population, updates,
+ *
+ * Description:
+ *
+ *      This class handle all the AMISICD DataBase maintenance operations, like
+ *      creation, population, updates, backup, restore and various selections.
+ *
+ *
+ *
+ * Current Issues:
+ *
+ *      As of 2015-01-01 we will start migrating from the old DB structure
+ *      to the new one as detailed here:
+ *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215
+ *      Please try to work on only one table at the time, before pushing
+ *      new PRs.
+ *
+ *      [ ] We'd like to Export the entire DB (like a dump), so we need ...
+ *
+ *  ChangeLog:
+ *
+ *      2015-01-22  E:V:A   Started DBe_import migration
+ *      2015-01-23  E:V:A   ~~changed silent sms column names~~ NOT!
+ *                          Added EventLog table
+ *                          
+ *
+ *  Notes:
+ *
+ *  ======  !! IMPORTANT !!  ======================================================================
+ *  For damn good reasons, we should try to stay with mDb.rawQuery() and NOT with mDb.query().
+ *  In fact we should try to avoid the entire AOS SQLite API as much as possible, to keep our
+ *  queries and SQL related clean, portable and neat. That's what most developers understand.
+ *
+ *  See:
+ *  [1] http://stackoverflow.com/questions/1122679/querying-and-working-with-cursors-in-sqlite-on-android
+ *  [2] http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#rawQuery%28java.lang.String,%20java.lang.String%5B%5D%29
+ *  ===============================================================================================
+ *
+ *  +   Some examples we can use:
+ *
+ *   1) "Proper" style:
+ *      rawQuery("SELECT id, name FROM people WHERE name = ? AND id = ?", new String[] {"David", "2"});
+ *
+ *   2) Hack style: (avoiding the use of "?")
+ *      String q = "SELECT * FROM customer WHERE _id = " + customerDbId  ;
+ *      Cursor mCursor = mDb.rawQuery(q, null);
+ *
+ *   3) Info on execSQL():
+ *      Execute a single SQL statement that is NOT a SELECT/INSERT/UPDATE/DELETE staement.
+ *      Suggested use with: ALTER, CREATE or DROP.
+ *
+ *  +   A few words about DB "Cursors":
+ *      http://developer.android.com/reference/android/database/Cursor.html
+ *      http://stackoverflow.com/questions/3861558/what-are-the-benefits-of-using-database-cursor
+ *      
+ */
+
 public class AIMSICDDbAdapter {
 
-    /*
-     * This handles the AMISICD DataBase tables:
-     *
-     * As of 2015-01-01 we'll be slowly migrating from the old DB structure
-     * to the new one as detailed here:
-     * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215
-     *
-     * As you work on these tables, please try to implement the new tables by
-     * first changing the table names and then the table columns.
-     */
-    private final String TAG = "AISMICD_DbAdaptor";
     public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
-    private static final String COLUMN_ID = "_id";              // Underscore is no longer required...
+    public static final int DATABASE_VERSION = 8; // Is this "pragma user_version;" ?
 
-    private final String LOCATION_TABLE = "locationinfo";       // TABLE_DBI_MEASURE:DBi_measure (volatile)
-    private final String CELL_TABLE = "cellinfo";               // TABLE_DBI_BTS:DBi_bts (physical)
-    private final String OPENCELLID_TABLE = "opencellid";       // TABLE_DBE_IMPORT:DBe_import
-    private final String DEFAULT_MCC_TABLE = "defaultlocation"; // TABLE_DEFAUKT_MCC:defaultlocation
-    private final String SILENT_SMS_TABLE = "silentsms";        // TABLE_SILENT_SMS:silentsms
+    private final String TAG = "AISMICD_DbAdaptor";
+    private final String DB_NAME = "aimsicd.db";
+    private static final String COLUMN_ID   = "_id"; // Underscore is no longer required...
 
-    // Some placeholders for the use of the new tables:
-
-    // private final String TABLE_DBE_IMPORT       = "DBe_import";       // External: BTS import table
-    // private final String TABLE_DBE_CAPABILITIES = "DBe_capabilities"  // External: MNO & BTS network capabilities
-    // private final String TABLE_DBI_BTS          = "DBi_bts";          // Internal: (physical) BTS data
-    // private final String TABLE_DBI_MEASURE      = "DBi_measure";      // Internal: (volatile) network measurements
-    // private final String TABLE_DEFAULT_MCC      = "defaultlocation";  // Deafult MCC for each country
-    // private final String TABLE_DETECTION_FLAGS  = "DetectionFlags"    // Detection Flag description, settings and scoring table
-    // private final String TABLE_EVENT_LOG        = "EventLog"          // Detection and general EventLog (persistent)
-    // private final String TABLE_SECTORTYPE       = "SectorType"        // BTS tower sector configuration (Many CID, same BTS)
-    // private final String TABLE_SILENT_SMS       = "silentsms";        // Silent SMS details
-    // private final String TABLE_CMEASURES        = "CounterMeasures"   // Counter Measures thresholds and description
+    private final String LOCATION_TABLE     = "locationinfo";    // TABLE_DBI_MEASURE:DBi_measure (volatile)
+    private final String CELL_TABLE         = "cellinfo";        // TABLE_DBI_BTS:DBi_bts (physical)
+    private final String OPENCELLID_TABLE   = "opencellid";      // TABLE_DBE_IMPORT:DBe_import
+    private final String TABLE_DEFAULT_MCC  = "defaultlocation"; // TABLE_DEFAULT_MCC:defaultlocation
+    private final String SILENT_SMS_TABLE   = "silentsms";       // TABLE_SILENT_SMS:silentsms
 
     // cell tower signal strength collected by the device
     // ToDo: Remove this table and use "rx_signal" in the "TABLE_DBI_MEASURE:DBi_measure" table..
-    private final String CELL_SIGNAL_TABLE = "cellSignal";      //
-    private final String DB_NAME = "aimsicd.db";
+    private final String CELL_SIGNAL_TABLE  = "cellSignal";      // TABLE_DBI_MEASURE::DBi_measure:rx_signal
+
+    // Some placeholders for the use of the new tables:
+
+    // private final String TABLE_DBE_IMPORT  = "DBe_import";       // External: BTS import table
+    // private final String TABLE_DBE_CAPAB   = "DBe_capabilities"; // External: MNO & BTS network capabilities
+    // private final String TABLE_DBI_BTS     = "DBi_bts";          // Internal: (physical) BTS data
+    // private final String TABLE_DBI_MEASURE = "DBi_measure";      // Internal: (volatile) network measurements
+    // private final String TABLE_DEFAULT_MCC = "defaultlocation";  // Default MCC for each country
+    // private final String TABLE_DET_FLAGS   = "DetectionFlags";   // Detection Flag description, settings and scoring table
+    private final String TABLE_EVENTLOG    = "EventLog";          // Detection and general EventLog (persistent)
+    // private final String TABLE_SECTORTYPE  = "SectorType";       // BTS tower sector configuration (Many CID, same BTS)
+    // private final String TABLE_SILENTSMS   = "silentsms";        // Silent SMS details
+    // private final String TABLE_CMEASURES   = "CounterMeasures";  // Counter Measures thresholds and description
 
     private final String[] mTables;
     private final DbHelper mDbHelper;
     private SQLiteDatabase mDb;
     private final Context mContext;
 
-    public static final int DATABASE_VERSION = 8;
     private Cursor signalStrengthMeasurementDatA;
 
     public AIMSICDDbAdapter(Context context) {
         mContext = context;
         mDbHelper = new DbHelper(context);
-        mTables = new String[]{LOCATION_TABLE, CELL_TABLE, OPENCELLID_TABLE,
-                SILENT_SMS_TABLE};
+        mTables = new String[]{
+                // Oldies...
+                LOCATION_TABLE,
+                CELL_TABLE,
+                OPENCELLID_TABLE,
+                SILENT_SMS_TABLE,
+                // New...
+                /*TABLE_DBE_IMPORT,
+                TABLE_DBE_CAPAB,
+                TABLE_DBI_BTS,
+                TABLE_DBI_MEASURE,
+                TABLE_DEFAULT_MCC,  // Why isn't this in here?
+                TABLE_DET_FLAGS,*/
+                TABLE_EVENTLOG,
+                /*TABLE_SECTORTYPE,
+                TABLE_SILENTSMS,
+                TABLE_CMEASURES*/
+        };
     }
 
     public AIMSICDDbAdapter open() throws SQLException {
@@ -91,11 +157,11 @@ public class AIMSICDDbAdapter {
 
     public long insertSilentSms(Bundle bundle) {
         ContentValues smsValues = new ContentValues();
-        smsValues.put("Address", bundle.getString("address"));
-        smsValues.put("Display", bundle.getString("display_address"));
-        smsValues.put("Class", bundle.getString("class"));
-        smsValues.put("ServiceCtr", bundle.getString("service_centre"));
-        smsValues.put("Message", bundle.getString("message"));
+        smsValues.put("Address",    bundle.getString("address"));           // address
+        smsValues.put("Display",    bundle.getString("display_address"));   // display
+        smsValues.put("Class",      bundle.getString("class"));             // class
+        smsValues.put("ServiceCtr", bundle.getString("service_centre"));    // SMSC
+        smsValues.put("Message",    bundle.getString("message"));           // message
 
         return mDb.insert(SILENT_SMS_TABLE, null, smsValues);
     }
@@ -258,6 +324,8 @@ public class AIMSICDDbAdapter {
     /**
      * Delete cell info - for use in tests
      *
+     * TODO: What tests?
+     *
      * @param cellId
      * @return
      *
@@ -267,6 +335,23 @@ public class AIMSICDDbAdapter {
         return mDb.delete(CELL_TABLE, "CellID = ?", new String[]{ String.valueOf(cellId) });
     }
 
+
+
+    // ====================================================================
+    // mDbquery statements (get)        SELECT
+    // ====================================================================
+    
+    
+    // =========== NEW ============================================================================
+    // TODO: 
+    public Cursor getEventLogData() {
+        return mDb.query(TABLE_EVENTLOG, new String[]{"time", "LAC", "CID", "PSC", "gpsd_lat","gpsd_lon", "gpsd_accu", "DF_id", "DF_description"},
+                null, null, null, null, null
+        );
+    }
+
+
+    // =========== OLD ============================================================================
     /**
      * Returns Silent SMS database (silentsms) contents
      */
@@ -289,6 +374,8 @@ public class AIMSICDDbAdapter {
 
     /**
      * Returns Cell Information for contribution to the OpenCellID Project
+     *
+     * Function:    Seem to Return a list of all rows where OCID_SUBMITTED is not 1.
      */
     public Cursor getOPCIDSubmitData() {
         return mDb.query(CELL_TABLE, new String[]{ "Lng", "Lat", "Mcc", "Mnc", "Lac", "CellID",
@@ -321,11 +408,14 @@ public class AIMSICDDbAdapter {
      * Returns Default MCC Locations (defaultlocation) database contents
      */
     public Cursor getDefaultMccLocationData() {
-        return mDb.query(DEFAULT_MCC_TABLE,
+        return mDb.query(TABLE_DEFAULT_MCC,
                 new String[]{"Country", "Mcc", "Lat", "Lng"},
                 null, null, null, null, null);
     }
 
+// ====================================================================
+
+    
     /**
      * Checks to see if Location already exists in database
      */
@@ -344,7 +434,7 @@ public class AIMSICDDbAdapter {
      * Checks to see if Cell already exists in database
      */
     boolean cellExists(int cellID) {
-        Cursor cursor = mDb.rawQuery("SELECT 1 FROM " + CELL_TABLE + " WHERE CellID = " + cellID,
+        Cursor cursor = mDb.rawQuery("SELECT 1 FROM " + CELL_TABLE + " WHERE CellID = " + cellID, 
                 null);
 
         boolean exists = cursor.getCount() > 0;
@@ -358,9 +448,9 @@ public class AIMSICDDbAdapter {
      * Checks to see if Cell already exists in OpenCellID database
      */
     public boolean openCellExists(int cellID) {
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE + " WHERE CellID = " +
-                cellID, null);
-
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE + " WHERE CellID = " + cellID, 
+                null);
+        
         boolean exists = cursor.getCount() > 0;
         Log.i(TAG, "Cell exists in OCID?: " + exists);
         cursor.close();
@@ -389,7 +479,7 @@ public class AIMSICDDbAdapter {
                 cursor.close();
                 return false;
             } else {
-                //Log.v(TAG, "LAC checked - no change.  CID:" + cell.getCID() + " LAC(DBi):"+ cell.getLAC() +
+                //Log.v(TAG, "LAC checked - no change.  CID:" + cell.getCID() + " LAC(DBi):" + cell.getLAC() +
                 //    " LAC(DBe): " + cursor.getInt(0) );
                 Log.v(TAG, "LAC checked - no change on CID:" + cell.getCID()
                         + " LAC(API): " + cell.getLAC()
@@ -404,17 +494,17 @@ public class AIMSICDDbAdapter {
     /**
      * Updates Cell (cellinfo) records to indicate OpenCellID contribution has been made
      * TODO: This should be done on TABLE_DBI_MEASURE::DBi_measure:isSubmitted
+     * 
      */
     public void ocidProcessed() {
         ContentValues ocidValues = new ContentValues();
         ocidValues.put("OCID_SUBMITTED", 1); // isSubmitted
-        mDb.update(CELL_TABLE, ocidValues, "OCID_SUBMITTED<>?", new String[]{"1"}); //isSubmitted
+        mDb.update(CELL_TABLE, ocidValues, "OCID_SUBMITTED<>?", new String[]{"1"}); // isSubmitted
     }
 
     public double[] getDefaultLocation(int mcc) {
         double[] loc = new double[2];
-        Cursor cursor = mDb.rawQuery("SELECT Lat, Lng FROM " +
-                DEFAULT_MCC_TABLE + " WHERE Mcc = " + mcc, null);
+        Cursor cursor = mDb.rawQuery("SELECT Lat, Lng FROM " + TABLE_DEFAULT_MCC + " WHERE Mcc = " + mcc, null);
 
         if (cursor.moveToFirst()) {
             loc[0] = Double.parseDouble(cursor.getString(0));
@@ -436,10 +526,15 @@ public class AIMSICDDbAdapter {
         mDb.execSQL("DELETE FROM " + CELL_TABLE + " WHERE CellID = " + Integer.MAX_VALUE + " OR CellID = -1");
     }
 
+    /**
+     * Prepares the CSV file used to upload to OCID server.
+     * 
+     */
     public boolean prepareOpenCellUploadData() {
         boolean result;
-        // Q: Where is this? A: It is wherever your device has mounted its SDCard.
-        // For example:  /data/media/0/AIMSICD/OpenCellID
+        // Q: Where is this? 
+        // A: It is wherever your device has mounted its SDCard.
+        //    For example:  /data/media/0/AIMSICD/OpenCellID
         File dir = new File(FOLDER + "OpenCellID/");
         if (!dir.exists()) {
             result = dir.mkdirs();
@@ -515,7 +610,7 @@ public class AIMSICDDbAdapter {
                 defaultMccValues.put("Mcc", csvMcc.get(i)[1]);
                 defaultMccValues.put("Lng", csvMcc.get(i)[2]);
                 defaultMccValues.put("Lat", csvMcc.get(i)[3]);
-                db.insert(DEFAULT_MCC_TABLE, null, defaultMccValues);
+                db.insert(TABLE_DEFAULT_MCC, null, defaultMccValues);
             }
 
         } catch (Exception e) {
@@ -542,8 +637,8 @@ public class AIMSICDDbAdapter {
      *    - "samples"
      *    - "range"
      *
-     *   Also we should probably change this function name from:
-     *     "updateOpenCellID" to "populateDBe_import"
+     *   TODO:  Also we should probably change this function name from:
+     *          "updateOpenCellID" to "populateDBe_import"
      */
     public boolean updateOpenCellID() {
         String fileName = Environment.getExternalStorageDirectory()
@@ -767,14 +862,23 @@ public class AIMSICDDbAdapter {
         Log.i(TAG, "Database Export complete.");
     }
 
-    // =======================================================================================
-    // TODO: @Tor, please add some comments, even if trivial.
+    /*****************************************************************************************
+     *  What:           TODO:  @Tor, please add some comments, even if trivial.
+     *
+     *  Description:
+     *
+     *  Issues:
+     *
+     *
+     *
+     ******************************************************************************************/
+
     public void cleanseCellStrengthTables(long maxTime) {
-        Log.d(TAG, "Cleaning "+CELL_SIGNAL_TABLE+" WHERE timestamp < "+maxTime);
-        mDb.execSQL("DELETE FROM "+CELL_SIGNAL_TABLE+" WHERE timestamp < "+maxTime);
+        Log.d(TAG, "Cleaning " + CELL_SIGNAL_TABLE + " WHERE timestamp < " + maxTime);
+        mDb.execSQL("DELETE FROM " + CELL_SIGNAL_TABLE + " WHERE timestamp < " + maxTime);
     }
 
-    public void addSignalStrength(int cellID, int signal, Long timestamp) {
+    public void addSignalStrength( int cellID, int signal, Long timestamp ) {
         ContentValues row = new ContentValues();
         row.put("cellID", cellID);
         row.put("signal", signal);
@@ -800,102 +904,199 @@ public class AIMSICDDbAdapter {
     // =======================================================================================
 
 
-    /**
-     * DbHelper class for the SQLite Database functions
-     */
+    /*****************************************************************************************
+     *  What:           DbHelper class for the SQLite Database functions
+     *
+     *  Description:    This class creates all the tables and DB structure in aimsicd.db when
+     *                  AIMSICD is first started or updated when DB version changed.
+     *
+     *  Issues:
+     *
+     ******************************************************************************************/
     public class DbHelper extends SQLiteOpenHelper {
 
         DbHelper(Context context) {
             super(context, DB_NAME, null, DATABASE_VERSION);
         }
-
-        @Override
-        public void onCreate(SQLiteDatabase database) {
-
-            /*
-             * Cell Signal Measurements
-             * TODO move table into column "DBi_measure::rx_signal"
-             */
-            database.execSQL("create table " +
-                    CELL_SIGNAL_TABLE + " (" + COLUMN_ID + " integer primary key autoincrement, cellID INTEGER, signal INTEGER, timestamp INTEGER);");
-            database.execSQL("create index cellID_index ON "+CELL_SIGNAL_TABLE+" (cellID);");
-            database.execSQL("create index cellID_timestamp ON "+CELL_SIGNAL_TABLE+" (timestamp);");
-
-            /*
-             * Silent Sms Database
-             */
-            String SMS_DATABASE_CREATE = "create table " +
-                    SILENT_SMS_TABLE + " (" + COLUMN_ID +
-                    " integer primary key autoincrement, Address VARCHAR, Display VARCHAR, Class VARCHAR, "
-                    + "ServiceCtr VARCHAR, Message VARCHAR, " +
-                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-            database.execSQL(SMS_DATABASE_CREATE);
-
-             /*
-              * Location Tracking Database
-              * TODO: rename to TABLE_DBI_MEASURE ("DBi_measure")
-              */
-            String LOC_DATABASE_CREATE = "create table " +
-                    LOCATION_TABLE + " (" + COLUMN_ID +
-                    " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
-                    "Net VARCHAR, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Connection VARCHAR, " +
-                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-            database.execSQL(LOC_DATABASE_CREATE);
-
-            /*
-             * Cell Information Tracking Database
-             * TODO: rename to TABLE_DBI_BTS ("DBi_bts")
-             */
-            String CELL_DATABASE_CREATE = "create table " +
-                    CELL_TABLE + " (" + COLUMN_ID +
-                    " integer primary key autoincrement, Lac INTEGER, CellID INTEGER, " +
-                    "Net INTEGER, Lat VARCHAR, Lng VARCHAR, Signal INTEGER, Mcc INTEGER, Mnc INTEGER, " +
-                    "Accuracy REAL, Speed REAL, Direction REAL, NetworkType VARCHAR, " +
-                    "MeasurementTaken VARCHAR, OCID_SUBMITTED INTEGER DEFAULT 0, " +
-                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-            database.execSQL(CELL_DATABASE_CREATE);
-
-            /*
-             * OpenCellID Cell Information Database
-             * TODO: rename to TABLE_DBE_IMPORT ("DBe_import".)
-             */
-            String OPENCELLID_DATABASE_CREATE = "create table " +
-                    OPENCELLID_TABLE + " (" + COLUMN_ID +
-                    " integer primary key autoincrement, Lat VARCHAR, Lng VARCHAR, Mcc INTEGER, " +
-                    "Mnc INTEGER, Lac INTEGER, CellID INTEGER, AvgSigStr INTEGER, Samples INTEGER, "
-                    + "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
-            database.execSQL(OPENCELLID_DATABASE_CREATE);
-
-            /*
-             * Default MCC Location Database
-             */
-            String DEFAULT_MCC_DATABASE_CREATE = "create table " +
-                    DEFAULT_MCC_TABLE + " (" + COLUMN_ID +
-                    " integer primary key autoincrement, Country VARCHAR, Mcc INTEGER, "
-                    + "Lat VARCHAR, Lng VARCHAR);";
-            database.execSQL(DEFAULT_MCC_DATABASE_CREATE);
-
-            /*
-             * Repopulate the default MCC location table
-             */
-            populateDefaultMCC(database);
-        }
-
+        
+        // This function drops all tables when SQLIte version has been upped
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(TAG,
-                    "Upgrading database from version " + oldVersion + " to "
-                            + newVersion + ", which will destroy all old data"
-            );
+            Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", and destroy all old data.");
+
             db.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + CELL_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + OPENCELLID_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + SILENT_SMS_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + DEFAULT_MCC_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEFAULT_MCC);
             db.execSQL("DROP TABLE IF EXISTS " + CELL_SIGNAL_TABLE);
+
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBE_IMPORT);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBE_CAPAB);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBI_BTS);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBI_MEASURE);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEFAULT_MCC);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DET_FLAGS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTLOG);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_SECTORTYPE);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_SILENTSMS);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_CMEASURES);
 
             onCreate(db);
         }
+
+        // Create aimsicd.db table structure 
+        @Override
+        public void onCreate(SQLiteDatabase database) {
+
+            //=============================================================
+            //  OLD tables
+            //=============================================================
+            
+            /**
+             *  Table:      CELL_SIGNAL_TABLE
+             *  What:       Cell Signal Measurements
+             *  Columns:    _id,cellID,signal,timestamp
+             *  
+             *  TODO:     move table into column "DBi_measure::rx_signal"
+             */
+            database.execSQL("create table " + 
+                    CELL_SIGNAL_TABLE + " (" + COLUMN_ID + 
+                    " integer primary key autoincrement, " +
+                    "cellID INTEGER, signal INTEGER, " +
+                    "timestamp INTEGER);");
+            database.execSQL("create index cellID_index ON " + CELL_SIGNAL_TABLE + " (cellID);");
+            database.execSQL("create index cellID_timestamp ON " + CELL_SIGNAL_TABLE + " (timestamp);");
+
+            /**
+             *  Table:      SILENT_SMS_TABLE
+             *  What:       Silent Sms Database
+             *  Columns:    _id,Address,Display,Class,ServiceCtr,Message,Timestamp
+             * 
+             *  TODO:
+             */
+            String SMS_DATABASE_CREATE = "create table " +
+                    SILENT_SMS_TABLE + " (" + COLUMN_ID +
+                    " integer primary key autoincrement, " +
+                    "Address VARCHAR, " +
+                    "Display VARCHAR, " +
+                    "Class VARCHAR, "
+                    + "ServiceCtr VARCHAR, " +
+                    "Message VARCHAR, " +
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
+            database.execSQL(SMS_DATABASE_CREATE);
+
+            /**
+             *  Table:      LOCATION_TABLE
+             *  What:       Location Tracking Database
+             *  Columns:    _id,Lac,CellID,Net,Lat,Lng,Signal,Connection,Timestamp
+             * 
+             *  TODO: rename to TABLE_DBI_MEASURE ("DBi_measure")
+             */
+            String LOC_DATABASE_CREATE = "create table " +
+                    LOCATION_TABLE + " (" + COLUMN_ID +
+                    " integer primary key autoincrement, " +
+                    "Lac INTEGER, CellID INTEGER, " +
+                    "Net VARCHAR, " +
+                    "Lat VARCHAR, " +
+                    "Lng VARCHAR, " +
+                    "Signal INTEGER, " +
+                    "Connection VARCHAR, " +
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
+            database.execSQL(LOC_DATABASE_CREATE);
+
+            /**
+             *  Table:      CELL_TABLE
+             *  What:       Cell Information Tracking Database
+             *  Columns:    _id,Lac,CellID,Net,Lat,Lng,Signal,Mcc,Mnc,Accuracy,Speed,Direction,NetworkType,MeasurementTaken,OCID_SUBMITTED,Timestamp
+             *
+             * TODO: rename to TABLE_DBI_BTS ("DBi_bts")
+             */
+            String CELL_DATABASE_CREATE = "create table " +
+                    CELL_TABLE + " (" + COLUMN_ID +
+                    " integer primary key autoincrement, " +
+                    "Lac INTEGER, " +
+                    "CellID INTEGER, " +
+                    "Net INTEGER, " +
+                    "Lat VARCHAR, " +
+                    "Lng VARCHAR, " +
+                    "Signal INTEGER, " +
+                    "Mcc INTEGER, " +
+                    "Mnc INTEGER, " +
+                    "Accuracy REAL, " +
+                    "Speed REAL, " +
+                    "Direction REAL, " +
+                    "NetworkType VARCHAR, " +
+                    "MeasurementTaken VARCHAR, " +
+                    "OCID_SUBMITTED INTEGER DEFAULT 0, " +
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
+            database.execSQL(CELL_DATABASE_CREATE);
+
+
+            /**
+             *  Table:      OPENCELLID_TABLE
+             *  What:       OpenCellID Cell Information Database
+             *  Columns:    _id,Lat,Lng,Mcc,Mnc,Lac,CellID,AvgSigStr,Samples,Timestamp
+             *
+             * TODO: rename to TABLE_DBE_IMPORT ("DBe_import".)
+             */
+            String OPENCELLID_DATABASE_CREATE = "create table " +
+                    OPENCELLID_TABLE + " (" + COLUMN_ID +
+                    " integer primary key autoincrement, " +
+                    "Lat VARCHAR, " +
+                    "Lng VARCHAR, " +
+                    "Mcc INTEGER, " +
+                    "Mnc INTEGER, " +
+                    "Lac INTEGER, " +
+                    "CellID INTEGER, " +
+                    "AvgSigStr INTEGER, " +
+                    "Samples INTEGER, " + 
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
+            database.execSQL(OPENCELLID_DATABASE_CREATE);
+
+            /**
+             *  Table:      TABLE_DEFAULT_MCC
+             *  What:       MCC Location Database
+             *  Columns:    _id,Country,Mcc,Lat,Lng
+             */
+            String DEFAULT_MCC_DATABASE_CREATE = "create table " +
+                    TABLE_DEFAULT_MCC + " (" + COLUMN_ID +
+                    " integer primary key autoincrement, " +
+                    "Country VARCHAR, " +
+                    "Mcc INTEGER, " + 
+                    "Lat VARCHAR, " +
+                    "Lng VARCHAR);";
+            database.execSQL(DEFAULT_MCC_DATABASE_CREATE);
+
+            //=============================================================
+            //  NEW tables
+            //=============================================================
+
+            /**
+             *  Table:      TABLE_EVENTLOG (EventLog)
+             *  What:       Event Log Database
+             *  Columns:    
+             */
+            String TABLE_EVENTLOG_CREATE = 
+            "CREATE TABLE EventLog  (" +
+                    "_id            INTEGER PRIMARY KEY AUTOINCREMENT," + 
+                    "time     		TEXT NOT NULL,"  +
+                    "LAC           	INTEGER NOT NULL," +
+                    "CID           	INTEGER NOT NULL," +
+                    "PSC           	INTEGER," +
+                    "gpsd_lat      	TEXT," +
+                    "gpsd_lon      	TEXT," +
+                    "gpsd_accu     	INTEGER," +
+                    "DF_id         	INTEGER," +
+                    "DF_description	TEXT" +
+            ");";
+            database.execSQL(TABLE_EVENTLOG_CREATE);
+
+            
+            // Repopulate the default MCC location table
+            populateDefaultMCC(database);
+        }
+
     }
 
 }

@@ -128,10 +128,11 @@ public class DbViewerFragment extends Fragment {
                             //      ToBe merged into "DBi_measure:rx_signal"
                             case "Measured Signal Strengths":
                                 result = mDb.getSignalStrengthMeasurementData();
+                                break;
 
                             // Table: "EventLog"
-                            //case "EventLog":
-                            //    result = mDb.getEventLogData();
+                            case "EventLog":
+                                result = mDb.getEventLogData();
 
                             // Table: "DetectionFlags"
                             //case "DetectionFlags":
@@ -192,16 +193,17 @@ public class DbViewerFragment extends Fragment {
         if (tableData != null && tableData.getCount() > 0) {
             switch (mTableSelected) {
                 /*
-                 * Was: "OpenCellID Data"   New: "Imported OCID Data"
-                 *
                  * Table: DBi_import
+                 *
                  *   CSV:  lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,  tac,pci,sid,nid,bid
+                 *
                  *   old:   opencellid
                  *          _id|Lat|Lng|Mcc|Mnc|Lac|CellID|AvgSigStr|Samples|Timestamp
                  *
                  *   new:   DBe_import
                  *          _id,DBsource,RAT,MCC,MNC,LAC,CID,PSC,gps_lat,gps_lon,isGPSexact,avg_range,avg_signal,samples,time_first,time_last,rej_cause
                  *
+                 *  Thus for OCID data we cannot use: time_first or time_last.
                  *
                  */
                 // Table:   DBe_import
@@ -210,20 +212,25 @@ public class DbViewerFragment extends Fragment {
                             = new BaseInflaterAdapter<>( new OpenCellIdCardInflater() );
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
+                        // The getString(i) index refer to the table column in the "DBe_import" table
+                        //                         OLD  opencellid(i)       // New "DBe_import" column name
                         CardItemData data = new CardItemData(
-                                "CID: " + tableData.getString(0),       //
-                                "LAC: " + tableData.getString(1),       //
-                                "MCC: " + tableData.getString(2),       //
-                                "MNC: " + tableData.getString(3),       //
-                                "Lat: " + tableData.getString(4),       //
-                                "Lon: " + tableData.getString(5),       //
-                                "AvgSignal: " + tableData.getString(6), //
-                                "Samples: " + tableData.getString(7),   // NOTE: #7 was range from ocid csv
-                                //"PSC: " + tableData.getString(7),     // PSC
-                                //"first: " + tableData.getString(7),   // time_first
-                                //"last: " + tableData.getString(7),    // time_last
-                                //"isExact: " + tableData.getString(7), // isGPSexact
-                                //"reject: " + tableData.getString(7),  // rej_cause
+                                //"Source: " + tableData.getString(0),      // DBsource
+                                //"RAT: "    + tableData.getString(0),      // RAT
+                                "CID: "     + tableData.getString(0),       //
+                                "LAC: "     + tableData.getString(1),       //
+                                "MCC: "     + tableData.getString(2),       //
+                                "MNC: "     + tableData.getString(3),       //
+                                //"PSC: "    + tableData.getString(7),      // PSC
+                                "Lat: "     + tableData.getString(4),       // gps_lat
+                                "Lon: "     + tableData.getString(5),       // gps_lon
+                                //"isExact: " + tableData.getString(7),     // isGPSexact
+                                //"Range: "  + tableData.getString(7),      // avg_range //
+                                "AvgSignal: " + tableData.getString(6),     // avg_signal
+                                "Samples: " + tableData.getString(7),       // samples // NOTE: #7 is range from ocid csv
+                                //"first: "  + tableData.getString(7),      // time_first
+                                //"last: "   + tableData.getString(7),      // time_last
+                                //"reject: " + tableData.getString(7),      // rej_cause
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
@@ -237,10 +244,10 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData(
-                                "Country: " + tableData.getString(0),
-                                "MCC: " + tableData.getString(1),
-                                "Lat: " + tableData.getString(2),
-                                "Lon: " + tableData.getString(3),
+                                "Country: " + tableData.getString(0),// Country --> country
+                                "MCC: " + tableData.getString(1),   // Mcc --> MCC
+                                "Lat: " + tableData.getString(2),   // Lat --> lat
+                                "Lon: " + tableData.getString(3),   // Lng --> lon
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
@@ -281,18 +288,18 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
-/*
-                // Table:   EventLog
+
+/*                // Table:   EventLog
                 case "EventLog Data": {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>( new EventLogCardInflater() );
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData(
-                                "time: " + tableData.getString(0),
-                                "LAC: " + tableData.getString(1),
-                                "CID: " + tableData.getString(2),
-                                "PSC: " + tableData.getString(3),
+                                "time: " + tableData.getString(0),  // time
+                                "LAC: " + tableData.getString(1),   // LAC
+                                "CID: " + tableData.getString(2),   // CID
+                                "PSC: " + tableData.getString(3),   // PSC
                                 "Lat: " + tableData.getString(4),   // gpsd_lat
                                 "Lon: " + tableData.getString(5),   // gpsd_lon
                                 "accu: " + tableData.getString(6),  // gpsd_accu (accuracy in [m])
@@ -303,7 +310,8 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
-
+*/
+/*
                 // Maybe we can skip this one?
                 // Table:   DetectionFlags
                 case "DetectionFlags Data": {

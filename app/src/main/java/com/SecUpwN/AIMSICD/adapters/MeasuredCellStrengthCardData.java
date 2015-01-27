@@ -20,14 +20,21 @@ public class MeasuredCellStrengthCardData {
         this.timestamp = timestamp;
     }
 
+    
+    // Let's try to get it in HEX as well
     public String getCellID() {
-        return "CID: "+cellID;
+        return "CID: "+cellID + "  (0x" + Integer.toHexString(cellID) +")";
     }
+
+    //original
+    // public String getCellID() {
+    //    return "CID: "+cellID;
+    //}
 
     // This is probably not dBm but ASU ?
     // Please see: http://wiki.opencellid.org/wiki/API#Filtering_of_data
     public String getSignal() {
-        return"RSS: "+signal+" dBm";
+        return "RSS: "+signal+" dBm";
     }
 
     public String getTimestamp() {

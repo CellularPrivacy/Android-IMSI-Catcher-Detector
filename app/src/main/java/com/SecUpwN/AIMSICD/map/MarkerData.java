@@ -1,7 +1,7 @@
 package com.SecUpwN.AIMSICD.map;
 
 /**
- * Class to hold data for displaying in BTS pin popup dialog
+ * Class to hold data for displaying in BTS pin popup dialog ??
  *
  * TODO: Consider adding more details, similar as for the DB Viewer UI:
  * see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
