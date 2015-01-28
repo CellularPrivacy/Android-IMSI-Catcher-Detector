@@ -34,13 +34,18 @@ import java.io.InputStreamReader;
  *
  *  ToDo:
  *          see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/301
+ *
  *          1)  Add extra text in Email, asking the user to provide more info about problem.
- *          2)  Add the output of "getprop |sort".
+ *
+ *          2)  Add the output of "getprop |sort". But Java CLI processes doesn't handle pipes.
+ *              Try with:  Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
  *
  *
  *  ChangeLog:
  *
  *          2015-01-27  E:V:A   Added "getprop|sort" info to log.
+ *          2015-01-28  Toby    Fixed "getprop" info to log (but not sorted)
+ *
  *
  */
 
