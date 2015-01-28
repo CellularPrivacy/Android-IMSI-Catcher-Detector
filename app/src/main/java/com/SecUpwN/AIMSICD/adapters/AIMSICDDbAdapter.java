@@ -14,11 +14,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +48,7 @@ import au.com.bytecode.opencsv.CSVWriter;
  *      new PRs.
  *
  *      [ ] We'd like to Export the entire DB (like a dump), so we need ...
+ *      [ ] Clarify the difference between cell.getCID() and CellID (see insertCell() below.)
  *
  *  ChangeLog:
  *
@@ -75,7 +79,7 @@ import au.com.bytecode.opencsv.CSVWriter;
  *      Cursor mCursor = mDb.rawQuery(q, null);
  *
  *   3) Info on execSQL():
- *      Execute a single SQL statement that is NOT a SELECT/INSERT/UPDATE/DELETE staement.
+ *      Execute a single SQL statement that is NOT a SELECT/INSERT/UPDATE/DELETE statement.
  *      Suggested use with: ALTER, CREATE or DROP.
  *
  *  +   A few words about DB "Cursors":
@@ -89,12 +93,15 @@ public class AIMSICDDbAdapter {
     public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
     public static final int DATABASE_VERSION = 8; // Is this "pragma user_version;" ?
 
+    private final Boolean MONO_DB_DUMP = true; // Also back-up DB with one monolithic dump file?
+
     private final String TAG = "AISMICD_DbAdaptor";
     private final String DB_NAME = "aimsicd.db";
     private static final String COLUMN_ID   = "_id"; // Underscore is no longer required...
 
     private final String LOCATION_TABLE     = "locationinfo";    // TABLE_DBI_MEASURE:DBi_measure (volatile)
     private final String CELL_TABLE         = "cellinfo";        // TABLE_DBI_BTS:DBi_bts (physical)
+    //private final String OPENCELLID_TABLE   = "opencellid";      // TABLE_DBE_IMPORT:DBe_import
     private final String OPENCELLID_TABLE   = "opencellid";      // TABLE_DBE_IMPORT:DBe_import
     private final String TABLE_DEFAULT_MCC  = "defaultlocation"; // TABLE_DEFAULT_MCC:defaultlocation
     private final String SILENT_SMS_TABLE   = "silentsms";       // TABLE_SILENT_SMS:silentsms
@@ -121,8 +128,21 @@ public class AIMSICDDbAdapter {
     private SQLiteDatabase mDb;
     private final Context mContext;
 
-    private Cursor signalStrengthMeasurementDatA;
+    private Cursor signalStrengthMeasurementDatA; // AS says this is never used. Can we remove it?
 
+
+    /**
+     * Description:
+     *              These tables are the ones that can be individually backed-up or restored in
+     *              the backupDB() and restoreDB(). That's why the pre-loaded tables are NOT
+     *              backed up, nor restored. They are:
+     *                      TABLE_DEFAULT_MCC
+     *                      TABLE_DET_FLAGS
+     *                      TABLE_DBE_CAPAB
+     *                      TABLE_SECTORTYPE
+     *
+     * @param context   Tables that can be used in:  backupDB() and restoreDB()
+     */
     public AIMSICDDbAdapter(Context context) {
         mContext = context;
         mDbHelper = new DbHelper(context);
@@ -134,13 +154,9 @@ public class AIMSICDDbAdapter {
                 SILENT_SMS_TABLE,
                 // New...
                 /*TABLE_DBE_IMPORT,
-                TABLE_DBE_CAPAB,
                 TABLE_DBI_BTS,
                 TABLE_DBI_MEASURE,
-                TABLE_DEFAULT_MCC,  // Why isn't this in here?
-                TABLE_DET_FLAGS,*/
                 TABLE_EVENTLOG,
-                /*TABLE_SECTORTYPE,
                 TABLE_SILENTSMS,
                 TABLE_CMEASURES*/
         };
@@ -197,9 +213,7 @@ public class AIMSICDDbAdapter {
 
             if (cellExists(cellID)) {
                 Log.v(TAG, "Cell info updated in local db: " + cellID);
-                return mDb.update(CELL_TABLE, cellValues,
-                        "CellID=?",
-                        new String[]{Integer.toString(cellID)});
+                return mDb.update( CELL_TABLE, cellValues, "CellID=?", new String[]{Integer.toString(cellID)} );
             } else {
                 Log.v(TAG, "New Cell found, insert into local db:: " + cellID);
                 return mDb.insert(CELL_TABLE, null, cellValues);
@@ -241,8 +255,7 @@ public class AIMSICDDbAdapter {
 
             if (cellExists(cell.getCID())) {
                 Log.v(TAG, "CID info updated in local db (DBi): " + cell.getCID());
-                return mDb.update(CELL_TABLE, cellValues,
-                        "CellID=?", new String[]{Integer.toString(cell.getCID())});
+                return mDb.update(CELL_TABLE, cellValues,"CellID=?", new String[]{Integer.toString(cell.getCID())});
             } else {
                 Log.v(TAG, "New CID found, insert into local db (DBi):: " + cell.getCID());
                 return mDb.insert(CELL_TABLE, null, cellValues);
@@ -275,7 +288,7 @@ public class AIMSICDDbAdapter {
         cellIDValues.put("Samples", samples);
 
         if (openCellExists(cellID)) {
-             Log.v(TAG, "CID already in OCID DB (db update): " + cellID);
+            Log.v(TAG, "CID already in OCID DB (db update): " + cellID);
             return mDb.update(OPENCELLID_TABLE, cellIDValues,
                     "CellID=?", new String[]{Integer.toString(cellID)});
         } else {
@@ -326,8 +339,8 @@ public class AIMSICDDbAdapter {
      *
      * TODO: What tests?
      *
-     * @param cellId
-     * @return
+     * @param cellId    This method deletes a cell with CID from CELL_TABLE
+     * @return result of deleting that CID
      *
      */
     public int deleteCell(int cellId) {
@@ -345,7 +358,8 @@ public class AIMSICDDbAdapter {
     // =========== NEW ============================================================================
     // TODO: 
     public Cursor getEventLogData() {
-        return mDb.query(TABLE_EVENTLOG, new String[]{"time", "LAC", "CID", "PSC", "gpsd_lat","gpsd_lon", "gpsd_accu", "DF_id", "DF_description"},
+        return mDb.query(TABLE_EVENTLOG,
+                new String[]{"time", "LAC", "CID", "PSC", "gpsd_lat","gpsd_lon", "gpsd_accu", "DF_id", "DF_desc"},
                 null, null, null, null, null
         );
     }
@@ -356,8 +370,8 @@ public class AIMSICDDbAdapter {
      * Returns Silent SMS database (silentsms) contents
      */
     public Cursor getSilentSmsData() {
-        return mDb.query(SILENT_SMS_TABLE, new String[]{"Address", "Display", "Class", "ServiceCtr",
-                        "Message", "Timestamp"},
+        return mDb.query(SILENT_SMS_TABLE,
+                new String[]{"Address", "Display", "Class", "ServiceCtr", "Message", "Timestamp"},
                 null, null, null, null, COLUMN_ID + " DESC"
         );
     }
@@ -366,8 +380,9 @@ public class AIMSICDDbAdapter {
      * Returns Cell Information (DBi_bts) database contents
      */
     public Cursor getCellData() {
-        return mDb.query(CELL_TABLE, new String[]{"CellID", "Lac", "Net", "Lat", "Lng",
-                        "Signal", "Mcc", "Mnc", "Accuracy", "Speed", "Direction"},
+        return mDb.query( CELL_TABLE,
+                new String[]{"CellID", "Lac", "Net", "Lat", "Lng", "Signal", "Mcc", "Mnc",
+                        "Accuracy", "Speed", "Direction"},
                 null, null, null, null, null
         );
     }
@@ -378,9 +393,10 @@ public class AIMSICDDbAdapter {
      * Function:    Seem to Return a list of all rows where OCID_SUBMITTED is not 1.
      */
     public Cursor getOPCIDSubmitData() {
-        return mDb.query(CELL_TABLE, new String[]{ "Lng", "Lat", "Mcc", "Mnc", "Lac", "CellID",
-                        "Signal", "Timestamp", "Accuracy", "Speed", "Direction", "NetworkType"},
-                "OCID_SUBMITTED <> 1", null, null, null, null
+        return mDb.query( CELL_TABLE,
+                new String[]{ "Lng", "Lat", "Mcc", "Mnc", "Lac", "CellID", "Signal", "Timestamp",
+                        "Accuracy", "Speed", "Direction", "NetworkType"}, "OCID_SUBMITTED <> 1",
+                null, null, null, null
         );
     }
 
@@ -398,7 +414,7 @@ public class AIMSICDDbAdapter {
      * Returns OpenCellID (DBe_import) database contents
      */
     public Cursor getOpenCellIDData() {
-        return mDb.query(OPENCELLID_TABLE,
+        return mDb.query( OPENCELLID_TABLE,
                 new String[]{"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng", "AvgSigStr", "Samples"},
                 null, null, null, null, null
         );
@@ -408,59 +424,56 @@ public class AIMSICDDbAdapter {
      * Returns Default MCC Locations (defaultlocation) database contents
      */
     public Cursor getDefaultMccLocationData() {
-        return mDb.query(TABLE_DEFAULT_MCC,
-                new String[]{"Country", "Mcc", "Lat", "Lng"},
-                null, null, null, null, null);
+        return mDb.query( TABLE_DEFAULT_MCC,
+                new String[]{"Country", "Mcc", "Lat", "Lng"}, null, null, null, null, null);
     }
 
 // ====================================================================
 
     
     /**
-     * Checks to see if Location already exists in database
+     *  Description:    This checks if a cell with a given (CID,Lat,Lon,Signal) already exists
+     *                  in the "locationinfo" (DBi_measure) database.
      */
     boolean locationExists(int cellID, double lat, double lng, int signal) {
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + LOCATION_TABLE + " WHERE CellID = " +
-                cellID + " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal,
-                null);
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + LOCATION_TABLE +
+                        " WHERE CellID = " + cellID +
+                        " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal, null);
         boolean exists = cursor.getCount() > 0;
         Log.i(TAG, "Cell exists in location table?: " + exists);
         cursor.close();
-
         return exists;
     }
 
     /**
-     * Checks to see if Cell already exists in database
+     *  Description:    This checks if a cell with a given CID already exists
+     *                  in the "cellinfo" (DBi_bts) database.
      */
     boolean cellExists(int cellID) {
-        Cursor cursor = mDb.rawQuery("SELECT 1 FROM " + CELL_TABLE + " WHERE CellID = " + cellID, 
-                null);
-
+        Cursor cursor = mDb.rawQuery("SELECT 1 FROM " + CELL_TABLE +
+                        " WHERE CellID = " + cellID, null);
         boolean exists = cursor.getCount() > 0;
         Log.i(TAG, "Cell exists in local DB?: " + exists);
         cursor.close();
-
         return exists;
     }
 
     /**
-     * Checks to see if Cell already exists in OpenCellID database
+     *  Description:    This checks if a cell with a given CID already exists
+     *                  in the "opencellid" (DBe_import) database.
      */
     public boolean openCellExists(int cellID) {
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE + " WHERE CellID = " + cellID, 
-                null);
-        
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE +
+                        " WHERE CellID = " + cellID, null);
         boolean exists = cursor.getCount() > 0;
         Log.i(TAG, "Cell exists in OCID?: " + exists);
         cursor.close();
-
         return exists;
     }
 
     public boolean checkLAC(Cell cell) {
-        Cursor cursor = mDb.query(CELL_TABLE, new String[]{"Lac"}, "CellID=" + cell.getCID(),
-                null,null,null,null);
+        Cursor cursor = mDb.query( CELL_TABLE,
+                new String[]{"Lac"}, "CellID=" + cell.getCID(), null,null,null,null);
 
         // 2015-01-20
         // This is using the LAC found by API and comparing to LAC found from a previous
@@ -486,7 +499,6 @@ public class AIMSICDDbAdapter {
                         + " LAC(DBi): " + cursor.getInt(0) );
             }
         }
-
         cursor.close();
         return true;
     }
@@ -580,6 +592,10 @@ public class AIMSICDDbAdapter {
     /**
      * Populates the Default MCC Location table using the CSV file found in the
      * application ASSETS folder
+     *
+     * Issues:  TODO: Check if we got a Lat/Lng confusion...
+     *                  -- Seem ok, but the order is weird..
+     *                  ~~ E:V:A
      */
     private void populateDefaultMCC(SQLiteDatabase db) {
         AssetManager mngr = mContext.getAssets();
@@ -608,8 +624,8 @@ public class AIMSICDDbAdapter {
             for (int i = 1; i < csvMcc.size(); i++) {
                 defaultMccValues.put("Country", csvMcc.get(i)[0]);
                 defaultMccValues.put("Mcc", csvMcc.get(i)[1]);
-                defaultMccValues.put("Lng", csvMcc.get(i)[2]);
-                defaultMccValues.put("Lat", csvMcc.get(i)[3]);
+                defaultMccValues.put("Lng", csvMcc.get(i)[2]); // Lat bug?
+                defaultMccValues.put("Lat", csvMcc.get(i)[3]); // Lng bug?
                 db.insert(TABLE_DEFAULT_MCC, null, defaultMccValues);
             }
 
@@ -619,10 +635,12 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Parses the downloaded CSV from OpenCellID and uses it to populate "DBe_import".
-     * ("opencellid" table.)
+     *  Description:    Parses the downloaded CSV from OpenCellID and uses it to populate "DBe_import".
+     *                  ("opencellid" table.)
      *
-     * Why are we only populating 8 items out of 19?
+     *  Issues:
+     *
+     *          [ ]     Why are we only populating 8 items out of 19?
      *
      * From downloaded OCID CSV file:  (19 items)
      *   # head -2 opencellid.csv
@@ -698,11 +716,16 @@ public class AIMSICDDbAdapter {
         }
     }
 
-    /**
-     * Imports a previously exported CSV file into the database
-     */
+    //=============================================================================================
+    // Database Backup and Restore
+    //=============================================================================================
 
-    // Rename to importDB ? (See Log TAG below)
+    /**
+     *  Description:    Imports a previously exported CSV file into the database
+     *
+     *  Issue:
+     *                  Rename to importDB ? (See Log TAG below)
+     */
     public boolean restoreDB() {
         try {
             for (String table : mTables) {
@@ -790,27 +813,69 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Backup the database tables to CSV files (or monolithic dump file)
+     *  Description:    Dumps the entire aimsicd.db to a dump file called "aimsicd_dump.db".
+     *
+     *  Requires:       java.io.BufferedReader;
+     *                  java.io.IOException;
+     *                  java.io.InputStreamReader;
+     *
+     *  Dev Status:     INCOMPLETE !!  Either fix or do not try to use..
+     *
+     *  Template:       DebugLogs.java
+     *
+     *  Author:         E:V:A
+     *
+     *                  TODO: Change backup from using CSV files to/also using a complete SQLite dump
+     *
+     *        This might require using a shell command:
+     *            # sqlite3 aimsicd.db '.dump' | gzip -c >aimsicd.dump.gz
+     *        To re-import use:
+     *            # zcat aimsicd.dump.gz | sqlite3 aimsicd.db
+     *
+     *
+     * @return
+     */
+    private void dumpDB()  {
+        File dir = new File(FOLDER);
+        //if (!dir.exists()) { dir.mkdirs(); }
+        File file = new File(dir, "aimsicd_dump.db");
+
+        // We probably also need to test if we have the sqlite3 binary. (See Busbox checking code.)
+        // Apparently pipes doesn't work from Java... (No idea why!?)
+        //String execString = "/system/xbin/sqlite3 " + dir + "aimsicd.db '.dump' | gzip -c >" + file;
+        String execString = "/system/xbin/sqlite3 " + dir + "aimsicd.db '.dump' >" + file;
+
+        try {
+            Log.i(TAG, "dumpDB() Attempting to dump DB to: " + file + "\nUsing: \"" + execString + "\"\n");
+            // We may need SU here and cd...
+            Process process = Runtime.getRuntime().exec(execString);
+
+        } catch (Exception e) {
+            Log.e(TAG, "dumpDB() Failed to export DB dump file: " + e);
+        }
+        Log.i(TAG, "dumpDB() Database dumped to: " + file);
+
+    }
+
+
+    /**
+     *  Description:    Backup the database tables to CSV files (or monolithic dump file)
      *
      * @return boolean indicating backup outcome
      *
-     * TODO: Change backup from using CSV files to using a complete SQLite dump
-     * This might require using a shell command:
-     *   # sqlite3 aimsicd.db '.dump' | gzip -c >aimsicd.dump.gz
-     * To re-import use:
-     *   # zcat aimsicd.dump.gz | sqlite3 aimsicd.db
      *
      */
-
-    // Rename to exportDB ? (See Log TAG below)
     public boolean backupDB() {
         try {
             for (String table : mTables) {
                 backup(table);
             }
+            if (MONO_DB_DUMP) {
+                dumpDB();
+            }
             return true;
         } catch (Exception ioe) {
-            Log.e(TAG, "exportDB() " + ioe);
+            Log.e(TAG, "backupDB() " + ioe);
             return false;
         }
     }
@@ -827,7 +892,7 @@ public class AIMSICDDbAdapter {
         Log.i(TAG, "Database Backup: " + DB_NAME);
 
         File dir = new File(FOLDER);
-        if (!dir.exists()) { dir.mkdirs(); }
+        if (!dir.exists()) { dir.mkdirs(); }  // We should probably add some more error handling here.
         File file = new File(dir, "aimsicd-" + tableName + ".csv");
 
         try {
@@ -911,6 +976,11 @@ public class AIMSICDDbAdapter {
      *                  AIMSICD is first started or updated when DB version changed.
      *
      *  Issues:
+     *              [ ] Migrate table creation to use an SQL file import instead.
+     *                  This will simplify the maintenance of the tables and the
+     *                  create create process.
+     *
+     *              [ ]
      *
      ******************************************************************************************/
     public class DbHelper extends SQLiteOpenHelper {
@@ -919,31 +989,6 @@ public class AIMSICDDbAdapter {
             super(context, DB_NAME, null, DATABASE_VERSION);
         }
         
-        // This function drops all tables when SQLIte version has been upped
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", and destroy all old data.");
-
-            db.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + CELL_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + OPENCELLID_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + SILENT_SMS_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEFAULT_MCC);
-            db.execSQL("DROP TABLE IF EXISTS " + CELL_SIGNAL_TABLE);
-
-            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBE_IMPORT);
-            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBE_CAPAB);
-            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBI_BTS);
-            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBI_MEASURE);
-            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEFAULT_MCC);
-            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DET_FLAGS);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTLOG);
-            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_SECTORTYPE);
-            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_SILENTSMS);
-            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_CMEASURES);
-
-            onCreate(db);
-        }
 
         // Create aimsicd.db table structure 
         @Override
@@ -1084,17 +1129,52 @@ public class AIMSICDDbAdapter {
                     "LAC           	INTEGER NOT NULL," +
                     "CID           	INTEGER NOT NULL," +
                     "PSC           	INTEGER," +
-                    "gpsd_lat      	TEXT," +
-                    "gpsd_lon      	TEXT," +
+                    "gpsd_lat      	REAL," +
+                    "gpsd_lon      	REAL," +
                     "gpsd_accu     	INTEGER," +
                     "DF_id         	INTEGER," +
-                    "DF_description	TEXT" +
+                    "DF_desc	    TEXT" +
             ");";
             database.execSQL(TABLE_EVENTLOG_CREATE);
 
-            
-            // Repopulate the default MCC location table
+            // Re-populate the default MCC location table
             populateDefaultMCC(database);
+
+            // NEW ====================================================
+            // Populate the Silent SMS table with test entry
+            //populateSilentSMS(database);
+
+            // Populate the Silent SMS table with test entry
+            //populateSilentSMS(database);
+
+
+        }
+
+        // This function drops all tables when SQLIte version has been upped,
+        // and then calls the table create process.
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", and destroy all old data.");
+
+            db.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + CELL_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + OPENCELLID_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + SILENT_SMS_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEFAULT_MCC);
+            db.execSQL("DROP TABLE IF EXISTS " + CELL_SIGNAL_TABLE);
+
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBE_IMPORT);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBE_CAPAB);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBI_BTS);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DBI_MEASURE);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEFAULT_MCC);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_DET_FLAGS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTLOG);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_SECTORTYPE);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_SILENTSMS);
+            // 	db.execSQL("DROP TABLE IF EXISTS " + TABLE_CMEASURES);
+
+            onCreate(db);
         }
 
     }

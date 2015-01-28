@@ -174,7 +174,7 @@ import java.util.List;
     *
     * The OCID API payload:
     *
-    *     required:   <apiKey>&BBOX=<latmin>,<lonmin>,<latmax>,<lonmax>
+    *     required:   key=<apiKey>&BBOX=<latmin>,<lonmin>,<latmax>,<lonmax>
     *     optional:   &mcc=<mcc>&mnc=<mnc>&lac=<lac>&radio=<radio>
     *                 &limit=<limit>&offset=<offset>&format=<format>
     *
@@ -190,7 +190,27 @@ import java.util.List;
     *          are neither fake nor IMSI-catchers. However, a more realistic BTS picture is
     *          more useful, especially when sharing that info across different devices using
     *          on different RAT and MNO.
-
+    *
+    *      [ ] We need a smarter way to handle the downloading of the BTS data. The OCID API
+    *          allows for finding how many cells are contained in a query. We can the use this
+    *          info to loop the max query size to get all those cells. The Query format is:
+    *
+    *       GET:        http://<WebServiceURL>/cell/getInAreaSize
+    *
+    *       The OCID API payload:
+    *
+    *       required:     key=<apiKey>&BBOX=<latmin>,<lonmin>,<latmax>,<lonmax>
+    *       optional:     &mcc=<mcc>&mnc=<mnc>&lac=<lac>&radio=<radio>&format=<format>
+    *
+    *       result:       JSON:
+    *                           {
+    *                              "count": 123
+    *                           }
+    *
+    *
+    *
+    *
+    *
     *
     *  ChangeLog:
     *
@@ -230,6 +250,7 @@ import java.util.List;
                     if (cell.getMNC() != Integer.MAX_VALUE) {
                         sb.append("&mnc=").append(cell.getMNC());
                     }
+                    // We need DBe_import filtering, if we wanna keep these lines commented out...
                     //if (cell.getLAC() != Integer.MAX_VALUE) {
                     //    sb.append("&lac=").append(cell.getLAC());
                     //}
@@ -478,11 +499,11 @@ import java.util.List;
         }
         try {
             if (!CMDProcessor.runSuCommand("busybox mount").success()) {
-                Log.e(TAG, "Busybox is there but it is borked! ");
+                Log.e(TAG, "Busybox is there but is broken!");
                 return false;
             }
         } catch (NullPointerException e) {
-            Log.e(TAG, "NullpointerException thrown while testing busybox", e);
+            Log.e(TAG, "NullpointerException thrown while testing Busybox:", e);
             return false;
         }
         return true;

@@ -11,10 +11,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+
+/**
+ *  Description:    TODO:  What've got here...
+ *
+ *
+ */
 public class Cell implements Parcelable {
 
     //Cell Specific Variables
-    private int cid;  // Cell Idenfication code
+    private int cid;  // Cell Identification code
     private int lac;  // Location Area Code
     private int mcc;  // Mobile Country Code
     private int mnc;  // Mobile Network Code
@@ -457,6 +463,8 @@ public class Cell implements Parcelable {
         return this.getCID() != Integer.MAX_VALUE && this.getLAC() != Integer.MAX_VALUE;
     }
 
+
+    // What is this doing ??? (And from where is it called?)
     public static class CellLookUpAsync extends AsyncTask<String, Void, List<Cell>> {
         public AsyncResponse delegate=null;
 
@@ -525,12 +533,22 @@ public class Cell implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[] {String.valueOf(this.cid),
-                String.valueOf(this.lac), String.valueOf(this.mcc), String.valueOf(this.mnc),
-                String.valueOf(this.dbm), String.valueOf(this.psc), String.valueOf(this.rssi),
-                String.valueOf(this.timingAdvance), String.valueOf(this.sid), String.valueOf(this.netType),
-                String.valueOf(this.lon), String.valueOf(this.lat), String.valueOf(this.speed),
-                String.valueOf(this.accuracy), String.valueOf(this.bearing)});
+        dest.writeStringArray(new String[] {
+                String.valueOf(this.cid),
+                String.valueOf(this.lac),
+                String.valueOf(this.mcc),
+                String.valueOf(this.mnc),
+                String.valueOf(this.dbm),
+                String.valueOf(this.psc),
+                String.valueOf(this.rssi),
+                String.valueOf(this.timingAdvance),
+                String.valueOf(this.sid),
+                String.valueOf(this.netType),
+                String.valueOf(this.lon),
+                String.valueOf(this.lat),
+                String.valueOf(this.speed),
+                String.valueOf(this.accuracy),
+                String.valueOf(this.bearing)});
     }
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Cell createFromParcel(Parcel in) {

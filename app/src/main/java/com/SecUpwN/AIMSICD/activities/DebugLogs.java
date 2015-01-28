@@ -20,6 +20,36 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ *  Description:    This class is providing for the Debug log feature in the swipe menu.
+ *                  It reads the last 1000 lines from the Logcat ring buffers: main and radio.
+ *
+ *  Issues:
+ *
+ *          [ ]     Are we clearing logcat when starting it? If we are, we miss all previous errors
+ *                  if any has occurred. We need to clear the logcat when app starts. Also there
+ *                  is no reason to clear it if we only catch the last 1000 lines anyway.
+ *
+ *
+ *
+ *  ToDo:
+ *          see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/301
+ *
+ *          1)  Add extra text in Email, asking the user to provide more info about problem.
+ *
+ *          2)  Add the output of "getprop |sort". But Java CLI processes doesn't handle pipes.
+ *              Try with:  Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
+ *
+ *
+ *  ChangeLog:
+ *
+ *          2015-01-27  E:V:A   Added "getprop|sort" info to log.
+ *          2015-01-28  Toby    Fixed "getprop" info to log (but not sorted)
+ *
+ *
+ */
+
+
 public class DebugLogs extends BaseActivity {
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
@@ -53,8 +83,9 @@ public class DebugLogs extends BaseActivity {
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try  {
+                try {
                     clearLogs();
+                    //Log.d("DebugLogs", "Logcat clearing disabled!");
                 } catch (Exception e) {
                     Log.e("DebugLogs", "Error clearing logs", e);
                 }
@@ -142,13 +173,16 @@ public class DebugLogs extends BaseActivity {
             public void run() {
                 // Send Error Log
                 try {
-                    String log = getLogs();
+                    String helpUs = "For best help, please describe the problem you had, before sending us these logs.\n";
+                    String log = helpUs +
+                            "\n\n" + "GETPROP:" + "\n\n" + getProp() +
+                            "\n\n" + "LOGCAT:" + "\n\n" + getLogs() + helpUs;
 
                     // show a share intent
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/html");
                     // This is a masked email to one of our developers. In case of spam re-mask.
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "a3841c3c@opayq.com" });
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"a3841c3c@opayq.com"});
                     intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error Log");
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
@@ -160,14 +194,49 @@ public class DebugLogs extends BaseActivity {
     }
 
     /**
+     * Read getprop and return the sorted result as a string
+     *
+     * @return
+     * @throws IOException
+     */
+    public String getProp() throws IOException {
+        return runProcess("/system/bin/getprop");
+    }
+
+    /**
      * Read logcat and return as a string
+     *
      * @return
      * @throws IOException
      */
     private String getLogs() throws IOException {
         // + " *:v" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
         // Silent Samsung Galaxy devices spam debug: " AbsListView:S PackageInfo:S"
-        Process process = Runtime.getRuntime().exec("logcat -t 1000 -d -v time" + (isRadioLogs ? " -b radio" : "") + " AbsListView:S PackageInfo:S *:D" );
+        return runProcess(
+            "logcat -t 100 -d -v time" +
+                    (isRadioLogs ? " -b radio" : "") +
+                    " AbsListView:S PackageInfo:S *:D"
+        );
+    }
+
+    /**
+     * Run a shell command and return the results
+     */
+    private String runProcess(String command) throws IOException {
+        return runProcess(new String[]{ command });
+    }
+
+    /**
+     * Run a shell command and return the results
+     * @param command
+     * @return
+     * @throws IOException
+     */
+    private String runProcess(String[] command) throws IOException {
+        Process process = null;
+        if (command.length == 1) process = Runtime.getRuntime().exec(command[0]);
+        else Runtime.getRuntime().exec(command);
+
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
 
@@ -177,7 +246,6 @@ public class DebugLogs extends BaseActivity {
             log.append(line);
             log.append("\n");
         }
-
         return log.toString();
     }
 

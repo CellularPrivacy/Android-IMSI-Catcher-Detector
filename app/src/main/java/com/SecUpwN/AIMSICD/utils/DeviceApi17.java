@@ -102,10 +102,11 @@ public class DeviceApi17 {
 
     public static void startListening(TelephonyManager tm, PhoneStateListener listener) {
         tm.listen(listener,
-                PhoneStateListener.LISTEN_CELL_INFO
-                        | PhoneStateListener.LISTEN_CELL_LOCATION |
-                        PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
-                        | PhoneStateListener.LISTEN_SERVICE_STATE |
-                        PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+                PhoneStateListener.LISTEN_CELL_INFO |
+                PhoneStateListener.LISTEN_CELL_LOCATION |
+                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
+                PhoneStateListener.LISTEN_SERVICE_STATE |
+                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS
+        );
     }
 }
