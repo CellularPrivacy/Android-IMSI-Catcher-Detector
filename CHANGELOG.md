@@ -1,6 +1,43 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 28.01.2015 - WIP-Internal v0.1.25-alpha-build-25
+
+* News-Alert: **We are improving things - please work on branch `Development`!**
+* Added: `dumpDB()` to the DB backup function to make amonolithic DB dump file
+* Added: Info message in DebugLogs and attempted to include `getprops`
+* Added: A few more extra comments for developers to check out aand improve
+* Fixed: Refactored and cleaned copied `getprop` code for debug the E-Mails
+
+---
+
+#### 27.01.2015 - WIP-Internal v0.1.25-alpha-build-24
+
+* Changed: Reverted `]` to `|` in `getNetworkTypeName()`
+* Changed: Some (code) formatting of `marker_info_window` items
+* Removed: Purged black background line in "Neighboring Cells" window
+* Removed: Commented out `MCC/MNC` in pin info detail to be replaced by ProviderCode
+* Added: HEX value has been added to `CID` in Cell Strength table (DB Viewer)
+* Added: Re-introduced the OCID `MNC` restriction on CSV data
+* Added: EventLog has been added to selector in strings - please to improve this!
+* Fixed: Name typo in Cell Tracker (`FEMTO_DECTECTION`) has been resolved
+
+---
+
+#### 23.01.2015 - WIP-Internal v0.1.25-alpha-build-23
+
+* Changed: Moved service and receivers to the bottom to make file easier to maintain
+* Changed: Error messages are now using `msgLong` instead of `msgShort`
+* Changed: Reduced OCID data radius from 10 to 5 Km, still saturating DB limit
+* Removed: Commented out `MCC` and `MNC` from Map Viewer pin info XML
+* Removed: Commented out discovered bug prone to the EventLog table code
+* Added: Exception handling for devices where certain providers may not be available
+* Added: Handling of rotation for all activities, and removed the forced portrait mode
+* Added: Attemppt to add EventLog `eventlog_items.xml` and `EvenLogCardInflater.java`
+* Added: More code comments and placeholders for developers to continue work upon
+
+---
+
 #### 22.01.2015 - WIP-Internal v0.1.25-alpha-build-22
 
 * Changed: `setLocationUpdateMinTime` in OpenStreetMap from 60 to 10 s
