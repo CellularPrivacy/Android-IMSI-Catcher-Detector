@@ -55,11 +55,6 @@
                     android:gravity="start"
                     android:textColor="@color/medium_blue" />
             </TableRow>
-        </TableLayout>
-        <TableLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
             <TableRow>
                 <TextView
                     android:id="@+id/latLabel"

@@ -423,7 +423,8 @@ public class DbViewerFragment extends Fragment {
                             = new BaseInflaterAdapter<>( new CellCardInflater() );
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData(tableData.getString(0),
+                        CardItemData data = new CardItemData(
+                                tableData.getString(0),
                                 tableData.getString(1),
                                 tableData.getString(2),
                                 tableData.getString(3),
