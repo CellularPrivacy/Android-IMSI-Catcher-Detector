@@ -840,11 +840,13 @@ public class AIMSICDDbAdapter {
         //if (!dir.exists()) { dir.mkdirs(); }
         File file = new File(dir, "aimsicd_dump.db");
 
-        // We probably also need to test if we have the sqlite3 binary...
-        String execString = "/system/xbin/sqlite3 " + dir + "aimsicd.db '.dump' | gzip -c >" + file;
+        // We probably also need to test if we have the sqlite3 binary. (See Busbox checking code.)
+        // Apparently pipes doesn't work from Java... (No idea why!?)
+        //String execString = "/system/xbin/sqlite3 " + dir + "aimsicd.db '.dump' | gzip -c >" + file;
+        String execString = "/system/xbin/sqlite3 " + dir + "aimsicd.db '.dump' >" + file;
 
         try {
-            Log.i(TAG, "dumpDB() Attempting to dump DB to: " + file + "\nUsing: " + execString + "\n");
+            Log.i(TAG, "dumpDB() Attempting to dump DB to: " + file + "\nUsing: \"" + execString + "\"\n");
             // We may need SU here and cd...
             Process process = Runtime.getRuntime().exec(execString);
 
@@ -873,7 +875,7 @@ public class AIMSICDDbAdapter {
             }
             return true;
         } catch (Exception ioe) {
-            Log.e(TAG, "backupDB() " + ioe); // Re-label this ?
+            Log.e(TAG, "backupDB() " + ioe);
             return false;
         }
     }
