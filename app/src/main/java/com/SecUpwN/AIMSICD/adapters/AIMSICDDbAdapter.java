@@ -14,14 +14,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -815,9 +812,7 @@ public class AIMSICDDbAdapter {
     /**
      *  Description:    Dumps the entire aimsicd.db to a dump file called "aimsicd_dump.db".
      *
-     *  Requires:       java.io.BufferedReader;
-     *                  java.io.IOException;
-     *                  java.io.InputStreamReader;
+     *  Requires:
      *
      *  Dev Status:     INCOMPLETE !!  Either fix or do not try to use..
      *
