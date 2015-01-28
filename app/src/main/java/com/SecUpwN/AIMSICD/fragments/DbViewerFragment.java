@@ -176,15 +176,15 @@ public class DbViewerFragment extends Fragment {
                             new OpenCellIdCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData("CID: " + tableData.getString(0),
-                                "LAC: " + tableData.getString(1),
-                                "MCC: " + tableData.getString(2),
-                                "MNC: " + tableData.getString(3),
-                                "Lat: " + tableData.getString(4),
-                                "Lon: " + tableData.getString(5),
-                                "AvgSignal: " + tableData.getString(6),
-                                "Samples: " + tableData.getString(7),
-                                "" + (tableData.getPosition() + 1) + " / " + count);
+                        CardItemData data = new CardItemData(tableData.getString(0),
+                                tableData.getString(1),
+                                tableData.getString(2),
+                                tableData.getString(3),
+                                tableData.getString(4),
+                                tableData.getString(5),
+                                tableData.getString(6),
+                                tableData.getString(7),
+                                (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     return adapter;
@@ -234,13 +234,13 @@ public class DbViewerFragment extends Fragment {
                             new CellCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData("CID: " + tableData.getString(0),
-                                "LAC: " + tableData.getString(1),
-                                "RAT: " + tableData.getString(2),
-                                "Lat: " + tableData.getString(3),
-                                "Lon: " + tableData.getString(4),
-                                "RSS: " + tableData.getString(5),
-                                "" + (tableData.getPosition() + 1) + " / " + count);
+                        CardItemData data = new CardItemData(tableData.getString(0),
+                                tableData.getString(1),
+                                tableData.getString(2),
+                                tableData.getString(3),
+                                tableData.getString(4),
+                                tableData.getString(5),
+                                (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     return adapter;

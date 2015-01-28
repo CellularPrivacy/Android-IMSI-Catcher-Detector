@@ -27,11 +27,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/countryLabel"
+                    android:gravity="end"
+                    android:padding="2dip"
                     android:textColor="@color/white" />
                 <TextView
                     android:id="@+id/country"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
                     android:textColor="@color/medium_blue" />
             </TableRow>
             <TableRow>
@@ -40,29 +44,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/mccLabel"
+                    android:gravity="end"
+                    android:padding="2dip"
                     android:textColor="@color/white" />
                 <TextView
                     android:id="@+id/mcc"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
                     android:textColor="@color/medium_blue" />
             </TableRow>
-        </TableLayout>
-        <TableLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
             <TableRow>
                 <TextView
                     android:id="@+id/latLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/latLabel"
+                    android:gravity="end"
+                    android:padding="2dip"
                     android:textColor="@color/white" />
                 <TextView
                     android:id="@+id/lat"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
                     android:textColor="@color/medium_blue" />
             </TableRow>
             <TableRow>
@@ -71,11 +78,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lonLabel"
+                    android:gravity="end"
+                    android:padding="2dip"
                     android:textColor="@color/white" />
                 <TextView
                     android:id="@+id/lng"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
                     android:textColor="@color/medium_blue" />
             </TableRow>
         </TableLayout>
@@ -85,6 +96,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/medium_blue"
-        android:layout_gravity="end"
-        android:gravity="top|end"/>
+        android:layout_gravity="bottom|end"
+        android:gravity="bottom|end"/>
 </FrameLayout>

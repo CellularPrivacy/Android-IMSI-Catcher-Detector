@@ -8,50 +8,120 @@
         android:descendantFocusability="beforeDescendants">
 
     <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingRight="15dp"
-            android:background="@drawable/selector_card_background"
-            android:descendantFocusability="afterDescendants">
-
-        <TextView
-                android:id="@+id/cellID"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/medium_blue" />
-        <TextView
-                android:id="@+id/psc"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/medium_blue" />
-        <TextView
-                android:id="@+id/lac"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/medium_blue" />
-        <TextView
-                android:id="@+id/mcc"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/medium_blue" />
-        <TextView
-                android:id="@+id/mnc"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/medium_blue" />
-        <TextView
-                android:id="@+id/signalDbm"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/medium_blue" />
-        <TextView
-                android:id="@+id/record_id"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/medium_blue" android:gravity="end"/>
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/selector_card_background"
+        android:descendantFocusability="afterDescendants">
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TableRow>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="@string/cidLabel"
+                    android:textColor="@color/white"
+                    android:gravity="end"/>
+                <TextView
+                    android:id="@+id/cellID"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/medium_blue" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/pscLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pscLabel"
+                    android:gravity="end"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/psc"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/medium_blue" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/lacLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lacLabel"
+                    android:gravity="end"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/lac"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/medium_blue" />
+            </TableRow>
+        </TableLayout>
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <TextView
+                    android:id="@+id/mccLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mccLabel"
+                    android:gravity="end"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/mcc"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/medium_blue" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/mncLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mncLabel"
+                    android:gravity="end"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/mnc"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/medium_blue" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/signalDbmLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="@string/dbmLabel"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/signalDbm"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/medium_blue" />
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/record_id"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:textColor="@color/medium_blue"
+        android:gravity="end"/>
 </FrameLayout>
