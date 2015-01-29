@@ -450,6 +450,12 @@ import java.util.List;
         return CMDProcessor.runSuCommand("getprop " + prop).getStdout();
     }
 
+    public static String setProp(String prop, String value) {
+        // We might wanna return the success of this. From mksh it is given by "$?" (0=ok, 1=fail)
+        //return CMDProcessor.runSuCommand("setprop " + prop + " " + value);
+        return CMDProcessor.runSuCommand("setprop " + prop + " " + value + "; echo \"$?\"").getStdout();
+    }
+
     public static String getSystemProp(Context context, String prop, String def) {
         String result = null;
         try {
