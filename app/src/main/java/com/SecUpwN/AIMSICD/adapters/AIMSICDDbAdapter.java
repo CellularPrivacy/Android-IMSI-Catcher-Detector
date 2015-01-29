@@ -41,8 +41,8 @@ import au.com.bytecode.opencsv.CSVWriter;
  *      As of 2015-01-01 we will start migrating from the old DB structure
  *      to the new one as detailed here:
  *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215
- *      Please try to work on only one table at the time, before pushing
- *      new PRs.
+ *      Please try to work on only one table at the time, before making
+ *      new PRs or committing to "develop" branch.
  *
  *      [ ] We'd like to Export the entire DB (like a dump), so we need ...
  *      [ ] Clarify the difference between cell.getCID() and CellID (see insertCell() below.)
@@ -76,8 +76,8 @@ import au.com.bytecode.opencsv.CSVWriter;
  *      Cursor mCursor = mDb.rawQuery(q, null);
  *
  *   3) Info on execSQL():
- *      Execute a single SQL statement that is NOT a SELECT/INSERT/UPDATE/DELETE statement.
- *      Suggested use with: ALTER, CREATE or DROP.
+ *      Execute a single SQL statement that is NOT a SELECT or when passed with an argument a
+ *      SELECT/INSERT/UPDATE/DELETE statement. Suggested use with: ALTER, CREATE or DROP.
  *
  *  +   A few words about DB "Cursors":
  *      http://developer.android.com/reference/android/database/Cursor.html
@@ -167,6 +167,12 @@ public class AIMSICDDbAdapter {
     public void close() {
         mDbHelper.close();
     }
+
+
+    // ====================================================================
+    //      Populate the DB tables  (INSERT)
+    // ====================================================================
+
 
     public long insertSilentSms(Bundle bundle) {
         ContentValues smsValues = new ContentValues();
@@ -348,7 +354,7 @@ public class AIMSICDDbAdapter {
 
 
     // ====================================================================
-    // mDbquery statements (get)        SELECT
+    //      mDb.query statements (get)        SELECT
     // ====================================================================
     
     
@@ -425,7 +431,9 @@ public class AIMSICDDbAdapter {
                 new String[]{"Country", "Mcc", "Lat", "Lng"}, null, null, null, null, null);
     }
 
-// ====================================================================
+    // ====================================================================
+    //      Various DB operations
+    // ====================================================================
 
     
     /**
@@ -639,7 +647,8 @@ public class AIMSICDDbAdapter {
      *
      *          [ ]     Why are we only populating 8 items out of 19?
      *
-     * From downloaded OCID CSV file:  (19 items)
+     *                  From downloaded OCID CSV file:  (19 items)
+     *
      *   # head -2 opencellid.csv
      *   lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,tac,pci,sid,nid,bid
      *   54.63376,25.160243,246,3,20,1294,0,-1,1,1,GSM,,,,,,,,
@@ -922,17 +931,82 @@ public class AIMSICDDbAdapter {
         Log.i(TAG, "Database Export complete.");
     }
 
-    /*****************************************************************************************
-     *  What:           TODO:  @Tor, please add some comments, even if trivial.
+
+    // ====================================================================
+    //      Cleanup and filtering of DB tables
+    // ====================================================================
+
+    /**
+     *  What:           This is the DBe_import data consistency check
      *
-     *  Description:
+     *  Description:    This method checks each imported BTS data for consistency
+     *                  and correctness according to general 3GPP LAC/CID/RAT rules
+     *                  and according to the app settings:
+     *
+     *                  tf_settings         (currently hard-coded)
+     *                  min_gps_precision   (currently hard-coded)
+     *
+     *                  So there are really two steps in this procedure:
+     *                  a) Remove false BTS from DBe_import
+     *                  b) Mark unsafe BTSs in the DBe_import with "ref_cause" value.
+     *
+     *                  See:    #253    http://tinyurl.com/lybrfxb
+     *                          #203    http://tinyurl.com/mzgjdcz
+     *
+     *                  We filter:
      *
      *  Issues:
      *
+     *          [ ] OPENCELLID_TABLE doesn't have a "Net" entry! WTF!
+     *          [ ] Look into "long CID" and "Short CID" for UMTS/LTE...
+     *              http://wiki.opencellid.org/wiki/FAQ
+     *
+     *          The formula for the long cell ID is as follows:
+     *              Long CID = 65536 * RNC + CID
+     *
+     *          If you have the Long CID, you can get RNC and CID in the following way:
+     *              RNC = Long CID / 65536 (integer division)
+     *              CID = Long CID mod 65536 (modulo operation)
      *
      *
-     ******************************************************************************************/
+     */
+    //public void checkDBe( String tf_settings, int min_gps_precision ) {
+    public void checkDBe() {
+        // We hard-code these for now, but should be in the settings eventually
+        int tf_settings=30;         // [days] Minimum acceptable number of days since "time_first" seen.
+        int min_gps_precision=50;   // [m]    Minimum acceptable GPS accuracy in meters.
 
+        String sqlq;                // SQL Query string
+        Log.d("checkDBe()", "Attempting to delete bad import data from DBe_import table...");
+
+        // =========== LAC ===========
+        sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE Lac <= 0";
+        mDb.rawQuery(sqlq, null);
+        // Delete cells with CDMA (4) LAC not in [1,65534]
+        sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE Lac > 65534 AND Net=4";
+        mDb.rawQuery(sqlq, null);
+        // Delete cells with GSM/UMTS/LTE (1/2/3/13 ??) (or all others?) LAC not in [1,65533]
+        sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE Lac > 65533 AND Net!=4";
+        mDb.rawQuery(sqlq, null);
+
+        // =========== CID ===========
+        sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE CellID <= 0";
+        mDb.rawQuery(sqlq, null);
+        // Delete cells with UMTS/LTE (3,13) CID not in [1,268435455] (0xFFF FFFF)
+        sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE CellID > 268435455 AND (Net=3 OR Net=13)";
+        mDb.rawQuery(sqlq, null);
+        // Delete cells with GSM/CDMA (1-3,4) CID not in [1,65534]
+        sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE CellID > 65534 AND (Net!=3 OR Net!=13)";
+        mDb.rawQuery(sqlq, null);
+
+        Log.i("checkDBe()", "Deleted entries from DBe_import table with bad LAC/CID...");
+    }
+
+
+
+    // =======================================================================================
+    //      Signal Strengths Table
+    // =======================================================================================
     public void cleanseCellStrengthTables(long maxTime) {
         Log.d(TAG, "Cleaning " + CELL_SIGNAL_TABLE + " WHERE timestamp < " + maxTime);
         mDb.execSQL("DELETE FROM " + CELL_SIGNAL_TABLE + " WHERE timestamp < " + maxTime);
@@ -1078,7 +1152,8 @@ public class AIMSICDDbAdapter {
              *  What:       OpenCellID Cell Information Database
              *  Columns:    _id,Lat,Lng,Mcc,Mnc,Lac,CellID,AvgSigStr,Samples,Timestamp
              *
-             * TODO: rename to TABLE_DBE_IMPORT ("DBe_import".)
+             * TODO:    (1) rename to TABLE_DBE_IMPORT ("DBe_import".)
+             * TODO:    (2) add more items from CSV file to table.
              */
             String OPENCELLID_DATABASE_CREATE = "create table " +
                     OPENCELLID_TABLE + " (" + COLUMN_ID +
