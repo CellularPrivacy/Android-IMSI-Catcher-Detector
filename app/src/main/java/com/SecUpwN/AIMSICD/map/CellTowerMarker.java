@@ -32,6 +32,8 @@ public class CellTowerMarker extends Marker {
 
         mMarkerData = data;
         mOnMarkerClickListener = new OnCellTowerMarkerClickListener();
+
+        mInfoWindow = null;
     }
 
     public MarkerData getMarkerData() {
