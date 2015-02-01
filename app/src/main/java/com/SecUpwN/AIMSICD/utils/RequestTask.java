@@ -245,6 +245,23 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
         AIMSICD.mProgressBar.setProgress(values[0]);
     }
 
+
+    /**
+     *  Description:    This is where we:
+     *                  1) Check the success for OCID data download
+     *                  2) call the updateOpenCellID() to populate the DBe_import table
+     *                  3) call the checkDBe() to cleanup bad cells from imported data
+     *                  4) present a failure/success toast message
+     *                  5) set a system property to indicate that data has been downlaoded:
+     *                      "setprop aimsicd.ocid_downloaded true"
+     *
+     *  Issues:
+     *                  [ ] checkDBe() is incomplete, due to missing RAT column in DBe_import
+     *
+     *
+     * @param result
+     */
+    // This is where we call the updateOPenCellID() to populate the DBe_import table
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
@@ -257,7 +274,10 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     if (mDbAdapter.updateOpenCellID()) {
                         Helpers.msgShort(mContext, "OpenCellID data successfully received");
                     }
+
+                    mDbAdapter.checkDBe();
                     mDbAdapter.close();
+                    Helpers.setProp("aimsicd.ocid_downloaded", "true");
                 } else {
                     Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
                 }
@@ -268,9 +288,11 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     if (mDbAdapter.updateOpenCellID()) {
                         Intent intent = new Intent(MapViewerOsmDroid.updateOpenCellIDMarkers);
                         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-                        Helpers.msgShort(mContext, "OpenCellID data successfully received and "
-                                + "Map Markers updated");
+                        Helpers.msgShort(mContext, "OpenCellID data successfully received.\nMap Markers updated.");
+
+                        mDbAdapter.checkDBe();
                         mDbAdapter.close();
+                        Helpers.setProp("aimsicd.ocid_downloaded", "true");
                     }
                 } else {
                     Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
@@ -306,6 +328,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 } else {
                     Helpers.msgLong(mContext, "Error backing up database");
                 }
+                //break;
         }
     }
 }

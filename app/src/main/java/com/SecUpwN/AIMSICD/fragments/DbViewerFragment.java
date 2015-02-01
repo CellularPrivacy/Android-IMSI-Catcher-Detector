@@ -212,26 +212,27 @@ public class DbViewerFragment extends Fragment {
                             = new BaseInflaterAdapter<>( new OpenCellIdCardInflater() );
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
-                        // The getString(i) index refer to the table column in the "DBe_import" table
-                        //                         OLD  opencellid(i)       // New "DBe_import" column name
+                        // The getString(i) index refers to the table column in the "DBe_import" table
+                        // OLD opencelid(i)  
+                        // New "DBe_import" column name
                         CardItemData data = new CardItemData(
                                 //"Source: " + tableData.getString(0),      // DBsource
-                                //"RAT: "    + tableData.getString(0),      // RAT
-                                "CID: "     + tableData.getString(0),       //
-                                "LAC: "     + tableData.getString(1),       //
-                                "MCC: "     + tableData.getString(2),       //
-                                "MNC: "     + tableData.getString(3),       //
-                                //"PSC: "    + tableData.getString(7),      // PSC
-                                "Lat: "     + tableData.getString(4),       // gps_lat
-                                "Lon: "     + tableData.getString(5),       // gps_lon
-                                //"isExact: " + tableData.getString(7),     // isGPSexact
-                                //"Range: "  + tableData.getString(7),      // avg_range //
-                                "AvgSignal: " + tableData.getString(6),     // avg_signal
-                                "Samples: " + tableData.getString(7),       // samples // NOTE: #7 is range from ocid csv
-                                //"first: "  + tableData.getString(7),      // time_first
-                                //"last: "   + tableData.getString(7),      // time_last
-                                //"reject: " + tableData.getString(7),      // rej_cause
-                                "" + (tableData.getPosition() + 1) + " / " + count);
+                                //"RAT: " + tableData.getString(0),         // RAT
+                                tableData.getString(0),
+                                tableData.getString(1), 
+                                tableData.getString(2),
+                                tableData.getString(3),
+                                //"PSC: " + tableData.getString(&),     // PSC
+                                tableData.getString(4),                 // gps_lat
+                                tableData.getString(5),                 // gps_lon
+                                //"isexact: " + tableData.getString(7), // isGPSexact
+                                //Range: " + tableData.GetString(7)     // avg_range
+                                tableData.getString(6),                 // avg_signal
+                                tableData.getString(7),                 // samples //NOTE: #7 was range from ocid csv
+                                //"first: " + tableData.getString(7),   // time_first
+                                //"last: " + tableData.getString(7),    // time_last
+                                //"reject: " + tableData.getString(7),  // rej_cause
+                                (tableData.getPosition() + 1) + " / " +count);
                         adapter.addItem(data, false);
                     }
                     return adapter;
@@ -244,11 +245,11 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData(
-                                "Country: " + tableData.getString(0),// Country --> country
-                                "MCC: " + tableData.getString(1),   // Mcc --> MCC
-                                "Lat: " + tableData.getString(2),   // Lat --> lat
-                                "Lon: " + tableData.getString(3),   // Lng --> lon
-                                "" + (tableData.getPosition() + 1) + " / " + count);
+                                tableData.getString(0),     // Country --> country
+                                tableData.getString(1),     // Mcc --> MCC
+                                tableData.getString(2),     // Lat --> lat
+                                tableData.getString(3),     // Lng -- > lon
+                                (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     return adapter;
@@ -284,6 +285,7 @@ public class DbViewerFragment extends Fragment {
                                 tableData.getInt(1),
                                 tableData.getLong(2));
                                 //"" + (tableData.getPosition() + 1) + " / " + count);
+
                         adapter.addItem(data, false);
                     }
                     return adapter;
@@ -423,17 +425,113 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         CardItemData data = new CardItemData(
-                                "CID: " + tableData.getString(0),
-                                "LAC: " + tableData.getString(1),
-                                "RAT: " + tableData.getString(2),
-                                "Lat: " + tableData.getString(3),
-                                "Lon: " + tableData.getString(4),
-                                "RSS: " + tableData.getString(5),
+                                tableData.getString(0),
+                                tableData.getString(1),
+                                tableData.getString(2),
+                                tableData.getString(3),
+                                tableData.getString(4),
+                                tableData.getString(5),
+                                (tableData.getPosition() + 1) + " / " + count);
+                        adapter.addItem(data, false);
+                    }
+                    return adapter;
+                }
+
+/*
+                // Maybe we can skip this one?
+                // Table:   DetectionFlags
+                case "DetectionFlags Data": {
+                    BaseInflaterAdapter<CardItemData> adapter
+                            = new BaseInflaterAdapter<>( new DetectionFlagsCardInflater() );
+                    int count = tableData.getCount();
+                    while (tableData.moveToNext()) {
+                        CardItemData data = new CardItemData(
+                                "code: " + tableData.getString(0),
+                                "name: " + tableData.getString(1),
+                                "description: " + tableData.getString(2),
+                                "p1: " + tableData.getString(3),
+                                "p2: " + tableData.getString(4),
+                                "p3: " + tableData.getString(5),
+                                "p1_fine: " + tableData.getString(6),
+                                "p2_fine: " + tableData.getString(7),
+                                "p3_fine: " + tableData.getString(8),
+                                "app_text: " + tableData.getString(8),
+                                "func_use: " + tableData.getString(8),
+                                "istatus: " + tableData.getString(8),
+                                "CM_id: " + tableData.getString(8),
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     return adapter;
                 }
+
+                // Table:   DBi_bts
+                case "Unique BTS Data": {
+                    BaseInflaterAdapter<CardItemData> adapter
+                            = new BaseInflaterAdapter<>( new DBi_btsCardInflater() );
+                    int count = tableData.getCount();
+                    while (tableData.moveToNext()) {
+                        CardItemData data = new CardItemData(
+                                "RAT: " + tableData.getString(0),
+                                "MCC: " + tableData.getString(1),
+                                "MNC: " + tableData.getString(2),
+                                "LAC: " + tableData.getString(3),
+                                "CID: " + tableData.getString(4),
+                                "PSC: " + tableData.getString(5),
+                                "T3212: " + tableData.getString(6),
+                                "A5x: " + tableData.getString(7),
+                                "ST_id: " + tableData.getString(8),
+                                "time_first: " + tableData.getString(9),
+                                "time_first: " + tableData.getString(10),
+                                "" + (tableData.getPosition() + 1) + " / " + count);
+                        adapter.addItem(data, false);
+                    }
+                    return adapter;
+                }
+
+                /**
+                 * "BTS Measurements" (DBi_measure)
+                 *
+                 * This is an advanced table, but we can simplify and leave out many
+                 * items that we do not have and need.
+                 *
+                 *
+                // Table:   DBi_measure
+                case "BTS Measurements": {
+                    BaseInflaterAdapter<CardItemData> adapter
+                            = new BaseInflaterAdapter<>( new DBi_measureCardInflater() );
+                    int count = tableData.getCount();
+                    while (tableData.moveToNext()) {
+                        CardItemData data = new CardItemData(
+                                "bts_id: " + tableData.getString(0),
+                                "nc_list: " + tableData.getString(0),
+                                "time: " + tableData.getString(0),
+                                "gpsd_lat: " + tableData.getString(4),      // gpsd_lat (device)
+                                "gpsd_lon: " + tableData.getString(5),      // gpsd_lon (device)
+                                "gpsd_accu: " + tableData.getString(6),     // gpsd_accu (accuracy in [m])
+                                "gpse_lat: " + tableData.getString(4),      // gpse_lat (exact)
+                                "gpse_lon: " + tableData.getString(5),      // gpse_lat (exact)
+                                //"speed: " + tableData.getString(1),       //
+                                //"bb_power: " + tableData.getString(1),    // BP power usage
+                                //"bb_rf_temp: " + tableData.getString(1),  // BP RF temperture
+                                "tx_power: " + tableData.getString(1),      // TX power
+                                "rx_signal: " + tableData.getString(1),     // RX signal [dBm]
+                                //"rx_stype: " + tableData.getString(1),    // RX signal type [dBm, ASU, RSSI etc]?
+                                //"BCCH: " + tableData.getString(1),        // BCCH
+                                "TMSI: " + tableData.getString(1),          // TMSI
+                                "TA: " + tableData.getString(1),            // Timing Advance (GSM/LTE)
+                                "PD: " + tableData.getString(1),            // Propagation Delay ? (LTE)
+                                "BER: " + tableData.getString(1),           // Bit Error Rate
+                                "AvgEcNo: " + tableData.getString(1),       // Avg Ec/No
+                                "isSubmitted: " + tableData.getString(1),   // BOOL Submitted to OCID/MLS?
+                                //"isNeighbour: " + tableData.getString(1), // BOOL ??is BTS a neighbor?
+                                "" + (tableData.getPosition() + 1) + " / " + count);
+                        adapter.addItem(data, false);
+                    }
+                    return adapter;
+                }
+*/
+
             }
         } else {
             return null;

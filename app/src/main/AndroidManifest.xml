@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
           android:versionCode="25"
-          android:versionName="0.1.25-alpha-b25">
+          android:versionName="0.1.25-alpha-b26">
 
     <!-- PERMISSIONS ARE SORTED BY TYPE - PLEASE KEEP THIS STRUCTURE. THANK YOU. /> -->
 
@@ -17,8 +17,6 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     
     <uses-permission android:name="android.permission.INTERNET"/>
-    
-    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
     
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
