@@ -73,45 +73,49 @@ public class CardItemData {
     public CardItemData(Cell cell, String recordId) {
 
         if (cell.getCID() != Integer.MAX_VALUE && cell.getCID() != -1) {
+<<<<<<< HEAD
             mCellID = "CID: " + cell.getCID() + "  (0x" + Integer.toHexString(cell.getCID()) +")";
+=======
+            mCellID = cell.getCID() + "  (0x" + Integer.toHexString(cell.getCID()) +")";
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
         } else {
             mCellID = "N/A";
         }
 
         if (cell.getLAC() != Integer.MAX_VALUE && cell.getLAC() != -1) {
-            mLac = "LAC: " + cell.getLAC();
+            mLac = String.valueOf(cell.getLAC());
         } else {
             mLac = "N/A";
         }
 
         if (cell.getMCC() != Integer.MAX_VALUE && cell.getMCC() != 0) {
-            mMcc = "MCC: " + cell.getMCC();
+            mMcc = String.valueOf(cell.getMCC());
         } else {
             mMcc = "N/A";
         }
 
         if (cell.getMNC() != Integer.MAX_VALUE && cell.getMNC() != 0) {
-            mMnc = "MNC: " + cell.getMNC();
+            mMnc = String.valueOf(cell.getMNC());
         } else {
             mMnc = "N/A";
         }
 
         if (cell.getNetType() != Integer.MAX_VALUE && cell.getNetType() != -1) {
-            mNet = "Type: " + cell.getNetType() + " - " + Device.getNetworkTypeName(cell.getNetType());
+            mNet = cell.getNetType() + " - " + Device.getNetworkTypeName(cell.getNetType());
         } else {
             mNet = "N/A";
         }
 
         if (cell.getPSC() != Integer.MAX_VALUE && cell.getPSC() != -1) {
-            mPsc = "PSC: " + cell.getPSC();
+            mPsc = String.valueOf(cell.getPSC());
         } else {
             mPsc = "N/A";
         }
 
         if (cell.getRssi() != Integer.MAX_VALUE && cell.getRssi() != -1) {
-            mSignal = "RSSI: " + cell.getRssi();
+            mSignal = String.valueOf(cell.getRssi());
         } else if (cell.getDBM() != Integer.MAX_VALUE && cell.getDBM() != -1) {
-            mSignal = "Dbm: " + cell.getDBM();
+            mSignal = String.valueOf(cell.getDBM());
         } else {
             mSignal = "N/A";
         }
@@ -140,33 +144,33 @@ public class CardItemData {
         mLac = lac;
         mMcc = mcc;
         mMnc = mnc;
-        mNet = "Network Type: N/A";
+        mNet = "N/A";
         mLat = lat;
         mLng = lng;
-        mSignal = "Signal: N/A";
+        mSignal = "N/A";
         mAvgSigStr = avgSigStr;
         mSamples = samples;
-        mPsc = "PSC: N/A";
-        mCountry = "Country: N/A";
-        mTimestamp = "Timestamp: N/A";
+        mPsc = "N/A";
+        mCountry = "N/A";
+        mTimestamp = "N/A";
         mRecordId = recordId;
     }
 
     public CardItemData(String cellID, String psc, String mcc, String mnc, String signal,
             String recordId) {
         mCellID = cellID;
-        mLac = "LAC: N/A";
+        mLac = "N/A";
         mMcc = mcc;
         mMnc = mnc;
-        mLat = "Latitude: N/A";
-        mLng = "Longitude: N/A";
-        mNet = "Network Type: N/A";
-        mAvgSigStr = "Avg Signal: N/A";
-        mSamples = "Samples: N/A";
+        mLat = "N/A";
+        mLng = "N/A";
+        mNet = "N/A";
+        mAvgSigStr = "N/A";
+        mSamples = "N/A";
         mSignal = signal;
         mPsc = psc;
-        mCountry = "Country: N/A";
-        mTimestamp = "Timestamp: N/A";
+        mCountry = "N/A";
+        mTimestamp = "N/A";
         mRecordId = recordId;
     }
 
@@ -176,15 +180,15 @@ public class CardItemData {
         mLac = lac;
         mMcc = mcc;
         mMnc = mnc;
-        mLat = "Latitude: N/A";
-        mLng = "Longitude: N/A";
-        mNet = "Network Type: N/A";
+        mLat = "N/A";
+        mLng = "N/A";
+        mNet = "N/A";
         mSignal = signal;
         mPsc = psc;
-        mAvgSigStr = "Avg Signal: N/A";
-        mSamples = "Samples: N/A";
+        mAvgSigStr = "N/A";
+        mSamples = "N/A";
         mTimestamp = timestamp;
-        mCountry = "Country: N/A";
+        mCountry = "N/A";
         mRecordId = recordId;
     }
 
@@ -194,15 +198,15 @@ public class CardItemData {
         mLac = lac;
         mMcc = mcc;
         mMnc = mnc;
-        mLat = "Latitude: N/A";
-        mLng = "Longitude: N/A";
-        mNet = "Network Type: N/A";
+        mLat = "N/A";
+        mLng = "N/A";
+        mNet = "N/A";
         mSignal = signal;
-        mAvgSigStr = "Avg Signal: N/A";
-        mSamples = "Samples: N/A";
+        mAvgSigStr = "N/A";
+        mSamples = "N/A";
         mTimestamp = timestamp;
-        mPsc = "PSC: N/A";
-        mCountry = "Country: N/A";
+        mPsc = "N/A";
+        mCountry = "N/A";
         mRecordId = recordId;
     }
 
@@ -211,33 +215,33 @@ public class CardItemData {
         mCellID = cellID;
         mLac = lac;
         mNet = net;
-        mMcc = "MCC: N/A";
-        mMnc = "MNC: N/A";
+        mMcc = "N/A";
+        mMnc = "N/A";
         mLat = lat;
         mLng = lng;
         mSignal = signal;
-        mAvgSigStr = "Avg Signal: N/A";
-        mSamples = "Samples: N/A";
-        mPsc = "PSC: N/A";
-        mCountry = "Country: N/A";
-        mTimestamp = "Timestamp: N/A";
+        mAvgSigStr = "N/A";
+        mSamples = "N/A";
+        mPsc = "N/A";
+        mCountry = "N/A";
+        mTimestamp = "N/A";
         mRecordId = recordId;
     }
 
     public CardItemData(String country, String mcc, String lat, String lng, String recordId) {
-        mCellID = "CellID: N/A";
-        mLac = "LAC: N/A";
+        mCellID = "N/A";
+        mLac = "N/A";
         mCountry = country;
         mMcc = mcc;
-        mMnc = "MNC: N/A";
-        mNet = "Network Type: N/A";
-        mSignal = "Signal: N/A";
+        mMnc = "N/A";
+        mNet = "N/A";
+        mSignal = "N/A";
         mLat = lat;
         mLng = lng;
-        mAvgSigStr = "Avg Signal: N/A";
-        mSamples = "Samples: N/A";
-        mPsc = "PSC: N/A";
-        mTimestamp = "Timestamp: N/A";
+        mAvgSigStr = "N/A";
+        mSamples = "N/A";
+        mPsc = "N/A";
+        mTimestamp = "N/A";
         mRecordId = recordId;
     }
 
@@ -304,4 +308,8 @@ public class CardItemData {
     //    return mAccu;
     //}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5

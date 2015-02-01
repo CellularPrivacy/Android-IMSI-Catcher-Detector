@@ -1,6 +1,7 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+<<<<<<< HEAD
 #### 28.01.2015 - WIP-Internal v0.1.25-alpha-build-25
 
 * News-Alert: **We are improving things - please work on branch `Development`!**
@@ -38,6 +39,8 @@
 
 ---
 
+=======
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
 #### 22.01.2015 - WIP-Internal v0.1.25-alpha-build-22
 
 * Changed: `setLocationUpdateMinTime` in OpenStreetMap from 60 to 10 s

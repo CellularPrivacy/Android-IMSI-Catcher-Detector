@@ -15,11 +15,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +45,13 @@ import au.com.bytecode.opencsv.CSVWriter;
  *      As of 2015-01-01 we will start migrating from the old DB structure
  *      to the new one as detailed here:
  *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215
+<<<<<<< HEAD
  *      Please try to work on only one table at the time, before making
  *      new PRs or committing to "develop" branch.
+=======
+ *      Please try to work on only one table at the time, before pushing
+ *      new PRs.
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
  *
  *      [ ] We'd like to Export the entire DB (like a dump), so we need ...
  *      [ ] Clarify the difference between cell.getCID() and CellID (see insertCell() below.)
@@ -77,8 +85,13 @@ import au.com.bytecode.opencsv.CSVWriter;
  *      Cursor mCursor = mDb.rawQuery(q, null);
  *
  *   3) Info on execSQL():
+<<<<<<< HEAD
  *      Execute a single SQL statement that is NOT a SELECT or when passed with an argument a
  *      SELECT/INSERT/UPDATE/DELETE statement. Suggested use with: ALTER, CREATE or DROP.
+=======
+ *      Execute a single SQL statement that is NOT a SELECT/INSERT/UPDATE/DELETE statement.
+ *      Suggested use with: ALTER, CREATE or DROP.
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
  *
  *  +   A few words about DB "Cursors":
  *      http://developer.android.com/reference/android/database/Cursor.html
@@ -276,6 +289,7 @@ public class AIMSICDDbAdapter {
      * TODO: Is this where CSV data is populating the opencellid table?
      *
      */
+<<<<<<< HEAD
     long insertOpenCell(double latitude,
                         double longitude,
                         int mcc,
@@ -289,6 +303,10 @@ public class AIMSICDDbAdapter {
                         String RAT      // new
                         //int rej_cause // new
                         ) {
+=======
+    long insertOpenCell(double latitude, double longitude, int mcc, int mnc, int lac,
+                        int cellID, int avgSigStr, int samples) {
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
 
         //Populate Content Values for Insert or Update
         ContentValues cellIDValues = new ContentValues();
@@ -299,7 +317,11 @@ public class AIMSICDDbAdapter {
         cellIDValues.put("Lac", lac);
         cellIDValues.put("CellID", cellID);
         cellIDValues.put("AvgSigStr", avgSigStr);
+<<<<<<< HEAD
         cellIDValues.put("avg_range", range );          // new
+=======
+        //cellIDValues.put("Range", range );
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
         cellIDValues.put("Samples", samples);
         cellIDValues.put("isGPSexact", isGPSexact );    // new
         cellIDValues.put("Type", RAT );                 // new
@@ -369,7 +391,11 @@ public class AIMSICDDbAdapter {
 
 
     // ====================================================================
+<<<<<<< HEAD
     //      mDb.query statements (get)        SELECT
+=======
+    // mDbquery statements (get)        SELECT
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
     // ====================================================================
     
     
@@ -443,7 +469,10 @@ public class AIMSICDDbAdapter {
     public Cursor getOpenCellIDData() {
         return mDb.query( OPENCELLID_TABLE,
                 new String[]{"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng", "AvgSigStr", "Samples"},
+<<<<<<< HEAD
                 // avg_range, rej_cause, Type
+=======
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
                 null, null, null, null, null
         );
     }
@@ -456,9 +485,13 @@ public class AIMSICDDbAdapter {
                 new String[]{"Country", "Mcc", "Lat", "Lng"}, null, null, null, null, null);
     }
 
+<<<<<<< HEAD
     // ====================================================================
     //      Various DB operations
     // ====================================================================
+=======
+// ====================================================================
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
 
     
     /**
@@ -668,6 +701,7 @@ public class AIMSICDDbAdapter {
      *  Description:    Parses the downloaded CSV from OpenCellID and uses it to populate "DBe_import".
      *                  ("opencellid" table.)
      *
+<<<<<<< HEAD
      *
      *  Dependency:     RequestTask.java :: onPostExecute()
      *                  insertOpenCell()
@@ -683,6 +717,13 @@ public class AIMSICDDbAdapter {
      *              a)  We do not include "rej_cause" in backups.
      *              b)
      *
+=======
+     *  Issues:
+     *
+     *          [ ]     Why are we only populating 8 items out of 19?
+     *
+     * From downloaded OCID CSV file:  (19 items)
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
      *   # head -2 opencellid.csv
      *   lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,tac,pci,sid,nid,bid
      *   54.63376,25.160243,246,3,20,1294,0,-1,1,1,GSM,,,,,,,,
@@ -722,7 +763,11 @@ public class AIMSICDDbAdapter {
                     for (int i = 1; i < lines; i++) {
                         AIMSICD.mProgressBar.setProgress(i);
 
+<<<<<<< HEAD
                         // Insert details into OpenCellID Database using:  insertOpenCell()
+=======
+                        // Insert details into OpenCellID Database
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
                         // Beware of negative values of "range" and "samples"!!
                         insertOpenCell( Double.parseDouble(csvCellID.get(i)[0]), // gps_lat
                                         Double.parseDouble(csvCellID.get(i)[1]), // gps_lon
@@ -731,10 +776,17 @@ public class AIMSICDDbAdapter {
                                         Integer.parseInt(csvCellID.get(i)[4]),   // LAC
                                         Integer.parseInt(csvCellID.get(i)[5]),   // CID (cellid) ?
                                         Integer.parseInt(csvCellID.get(i)[6]),   // avg_signal [dBm]
+<<<<<<< HEAD
                                         Integer.parseInt(csvCellID.get(i)[7]),   // avg_range [m]
                                         Integer.parseInt(csvCellID.get(i)[8]),   // samples
                                         Integer.parseInt(csvCellID.get(i)[9]),   // isGPSexact
                                         String.valueOf(csvCellID.get(i)[10])     // RAT
+=======
+                                        //Integer.parseInt(csvCellID.get(i)[7]), // avg_range [m]
+                                        Integer.parseInt(csvCellID.get(i)[8])    // samples
+                                        //Integer.parseInt(csvCellID.get(i)[9]), // isGPSexact
+                                        //Integer.parseInt(csvCellID.get(i)[10]), // RAT
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
                                         //Integer.parseInt(csvCellID.get(i)[11]), // --- RNC
                                         //Integer.parseInt(csvCellID.get(i)[12]), // --- (cid) ?
                                         //Integer.parseInt(csvCellID.get(i)[13]), // --- PSC
@@ -818,6 +870,7 @@ public class AIMSICDDbAdapter {
 
                                 case OPENCELLID_TABLE:
                                     insertOpenCell(
+<<<<<<< HEAD
                                             // not sure about the naming of these, need CHECK!
                                             Double.parseDouble(records.get(i)[1]),  // lat
                                             Double.parseDouble(records.get(i)[2]),  // lng
@@ -832,6 +885,16 @@ public class AIMSICDDbAdapter {
                                             String.valueOf(records.get(i)[11])      // new  RAT
                                             //Integer.parseInt(records.get(i)[10]),   // new  rej_cause
                                     );
+=======
+                                            Double.parseDouble(records.get(i)[1]),  //
+                                            Double.parseDouble(records.get(i)[2]),  //
+                                            Integer.parseInt(records.get(i)[3]),    //
+                                            Integer.parseInt(records.get(i)[4]),    //
+                                            Integer.parseInt(records.get(i)[5]),    //
+                                            Integer.parseInt(records.get(i)[6]),    //
+                                            Integer.parseInt(records.get(i)[7]),    //
+                                            Integer.parseInt(records.get(i)[8]));   //
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
                                     break;
 
                                 case SILENT_SMS_TABLE:
@@ -862,7 +925,13 @@ public class AIMSICDDbAdapter {
     /**
      *  Description:    Dumps the entire aimsicd.db to a dump file called "aimsicd_dump.db".
      *
+<<<<<<< HEAD
      *  Requires:
+=======
+     *  Requires:       java.io.BufferedReader;
+     *                  java.io.IOException;
+     *                  java.io.InputStreamReader;
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
      *
      *  Dev Status:     INCOMPLETE !!  Either fix or do not try to use..
      *
@@ -881,6 +950,7 @@ public class AIMSICDDbAdapter {
      * @return
      */
     private void dumpDB()  {
+<<<<<<< HEAD
         File dumpdir = new File(FOLDER);
         //if (!dir.exists()) { dir.mkdirs(); }
         File file = new File(dumpdir, "aimsicd_dump.db");
@@ -903,6 +973,21 @@ public class AIMSICDDbAdapter {
             CMDProcessor.runSuCommand(execString);
             //CMDProcessor.runSuCommand(execString).getStdout(); // Need import!
             //Process process = Runtime.getRuntime().exec(execString);
+=======
+        File dir = new File(FOLDER);
+        //if (!dir.exists()) { dir.mkdirs(); }
+        File file = new File(dir, "aimsicd_dump.db");
+
+        // We probably also need to test if we have the sqlite3 binary. (See Busbox checking code.)
+        // Apparently pipes doesn't work from Java... (No idea why!?)
+        //String execString = "/system/xbin/sqlite3 " + dir + "aimsicd.db '.dump' | gzip -c >" + file;
+        String execString = "/system/xbin/sqlite3 " + dir + "aimsicd.db '.dump' >" + file;
+
+        try {
+            Log.i(TAG, "dumpDB() Attempting to dump DB to: " + file + "\nUsing: \"" + execString + "\"\n");
+            // We may need SU here and cd...
+            Process process = Runtime.getRuntime().exec(execString);
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
 
         } catch (Exception e) {
             Log.e(TAG, "dumpDB() Failed to export DB dump file: " + e);
@@ -979,6 +1064,7 @@ public class AIMSICDDbAdapter {
         }
 
         Log.i(TAG, "Database Export complete.");
+<<<<<<< HEAD
     }
 
 
@@ -1102,6 +1188,21 @@ public class AIMSICDDbAdapter {
     // =======================================================================================
     //      Signal Strengths Table
     // =======================================================================================
+=======
+    }
+
+    /*****************************************************************************************
+     *  What:           TODO:  @Tor, please add some comments, even if trivial.
+     *
+     *  Description:
+     *
+     *  Issues:
+     *
+     *
+     *
+     ******************************************************************************************/
+
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
     public void cleanseCellStrengthTables(long maxTime) {
         Log.d(TAG, "Cleaning " + CELL_SIGNAL_TABLE + " WHERE timestamp < " + maxTime);
         mDb.execSQL("DELETE FROM " + CELL_SIGNAL_TABLE + " WHERE timestamp < " + maxTime);
@@ -1247,6 +1348,7 @@ public class AIMSICDDbAdapter {
              *  What:       OpenCellID Cell Information Database
              *  Columns:    _id,Lat,Lng,Mcc,Mnc,Lac,CellID,AvgSigStr,Samples,Timestamp
              *
+<<<<<<< HEAD
              *  Additional items (CSV):
              *              lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,tac,pci,sid,nid,bid
              *  We need:
@@ -1262,6 +1364,9 @@ public class AIMSICDDbAdapter {
              *
              * TODO:    (1) rename to TABLE_DBE_IMPORT ("DBe_import".)
              * TODO:    (2) add more items from CSV file to table.
+=======
+             * TODO: rename to TABLE_DBE_IMPORT ("DBe_import".)
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
              */
             String OPENCELLID_DATABASE_CREATE = "create table " +
                     OPENCELLID_TABLE + " (" + COLUMN_ID +
@@ -1273,6 +1378,7 @@ public class AIMSICDDbAdapter {
                     "Lac INTEGER, " +
                     "CellID INTEGER, " +
                     "AvgSigStr INTEGER, " +
+<<<<<<< HEAD
                     "avg_range INTEGER, " +     // new
                     "Samples INTEGER, " +
                     "isGPSexact INTEGER, " +    // new
@@ -1281,6 +1387,10 @@ public class AIMSICDDbAdapter {
                     "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp" +
                     //"Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp, " +
                     ");";
+=======
+                    "Samples INTEGER, " + 
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp);";
+>>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
             database.execSQL(OPENCELLID_DATABASE_CREATE);
 
             /**
