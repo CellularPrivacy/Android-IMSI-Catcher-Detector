@@ -156,8 +156,6 @@
 
         </TableLayout>
     </LinearLayout>
-<<<<<<< HEAD
-=======
     <TextView
         android:id="@+id/record_id"
         android:layout_width="wrap_content"
@@ -165,5 +163,4 @@
         android:layout_gravity="bottom|end"
         android:textColor="@color/medium_blue"
         android:gravity="bottom|end"/>
->>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
 </FrameLayout>

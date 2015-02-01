@@ -67,10 +67,7 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
         private final TextView mLng;
         private final TextView mLngLabel;
         private final TextView mSignal;
-<<<<<<< HEAD
-=======
         private final TextView mSignalLabel;
->>>>>>> 9a5273c939b3aac7123413b19a552c7858335fe5
         private final TextView mRecordId;
 
         /*// NEW (in new DB tables)
