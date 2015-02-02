@@ -194,25 +194,36 @@ public class AIMSICDDbAdapter {
      * TODO: This should become TABLE_DBI_BTS: DBi_bts | measure
      *
      */
-    public long insertCell(int lac, int cellID, int netType, double latitude, double longitude,
-            int signalInfo, int mcc, int mnc, double accuracy, double speed, double direction,
-            String networkType, long measurementTaken) {
+    public long insertCell( int lac,
+                            int cellID,
+                            int netType,
+                            double latitude,
+                            double longitude,
+                            int signalInfo,
+                            int mcc,
+                            int mnc,
+                            double accuracy,
+                            double speed,
+                            double direction,
+                            String networkType,
+                            long measurementTaken
+                            ) {
 
         if (cellID != -1 && (latitude != 0.0 && longitude != 0.0)) {
             //Populate Content Values for Insert or Update
             ContentValues cellValues = new ContentValues();
-            cellValues.put("Lac", lac);
-            cellValues.put("CellID", cellID);
-            cellValues.put("Net", netType);
-            cellValues.put("Lat", latitude);
-            cellValues.put("Lng", longitude);
-            cellValues.put("Signal", signalInfo);
-            cellValues.put("Mcc", mcc);
-            cellValues.put("Mnc", mnc);
-            cellValues.put("Accuracy", accuracy);
-            cellValues.put("Speed", speed);
-            cellValues.put("Direction", direction);
-            cellValues.put("NetworkType", networkType);
+            cellValues.put("Lac",           lac);
+            cellValues.put("CellID",        cellID);
+            cellValues.put("Net",           netType);
+            cellValues.put("Lat",           latitude);
+            cellValues.put("Lng",           longitude);
+            cellValues.put("Signal",        signalInfo);
+            cellValues.put("Mcc",           mcc);
+            cellValues.put("Mnc",           mnc);
+            cellValues.put("Accuracy",      accuracy);
+            cellValues.put("Speed",         speed);
+            cellValues.put("Direction",     direction);
+            cellValues.put("NetworkType",   networkType);
             cellValues.put("MeasurementTaken", measurementTaken);
 
             if (cellExists(cellID)) {
@@ -227,7 +238,9 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Inserts (API?) Cell Details into Database (cellinfo) TABLE_DBI_BTS:DBi_bts/measure
+     *  Description:    Inserts (API?) Cell Details into TABLE_DBI_BTS:DBi_bts/measure (cellinfo)
+     *
+     *  Issues:         See insertOpenCell() below...
      *
      * @return row id or -1 if error
      *
@@ -237,23 +250,23 @@ public class AIMSICDDbAdapter {
      */
     public long insertCell(Cell cell) {
 
-        // I'm not convinced we should not add a BTS even if Lat/Lon is 0?
-        // since lat/lon can be 0 if no location have been found.
+        // I think we might need to add an BTS even if Lat/Lon is 0,
+        // since lat/lon can be 0 if no location have been found. (Can they?)
         // --E:V:A
         //
         if (cell.getCID() != Integer.MAX_VALUE && (cell.getLat() != 0.0 && cell.getLon() != 0.0)) {
-            //Populate Content Values for Insert or Update
+            // Populate the named DB table columns with the values provided
             ContentValues cellValues = new ContentValues();
-            cellValues.put("Lac", cell.getLAC());
-            cellValues.put("CellID", cell.getCID());
-            cellValues.put("Net", cell.getNetType());
-            cellValues.put("Lat", cell.getLat());
-            cellValues.put("Lng", cell.getLon());
-            cellValues.put("Signal", cell.getDBM());
-            cellValues.put("Mcc", cell.getMCC());
-            cellValues.put("Mnc", cell.getMNC());
-            cellValues.put("Accuracy", cell.getAccuracy());
-            cellValues.put("Speed", cell.getSpeed());
+            cellValues.put("Lac",       cell.getLAC());
+            cellValues.put("CellID",    cell.getCID());
+            cellValues.put("Net",       cell.getNetType());
+            cellValues.put("Lat",       cell.getLat());
+            cellValues.put("Lng",       cell.getLon());
+            cellValues.put("Signal",    cell.getDBM());
+            cellValues.put("Mcc",       cell.getMCC());
+            cellValues.put("Mnc",       cell.getMNC());
+            cellValues.put("Accuracy",  cell.getAccuracy());
+            cellValues.put("Speed",     cell.getSpeed());
             cellValues.put("Direction", cell.getBearing());
             cellValues.put("MeasurementTaken", cell.getTimestamp());
 
@@ -269,7 +282,18 @@ public class AIMSICDDbAdapter {
     }
 
     /**
-     * Inserts OCID (CSV?) details into Database (opencellid) DBe_import
+     *  Description:    This method is used to insert and populate the downloaded or previously
+     *                  backed up OCID details into the DBe_import (opencellid) database table.
+     *                  It also prevents adding multiple entries of the same cell-id, when OCID
+     *                  downloads are repeated.
+     *
+     *  Issues:     [ ] None, but see GH issue #303 for a smarter OCID download handler.
+     *
+     *  Notes:      [ ] Move to:  CellTracker.java  see:
+     *                  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/290#issuecomment-72303486
+     *
+     *              [ ] OCID CellID is of the "long form" when available...
+     *
      *
      * @return row id or -1 if error
      *
@@ -290,39 +314,30 @@ public class AIMSICDDbAdapter {
                         //int rej_cause // new
                         ) {
 
-        //Populate Content Values for Insert or Update
+        // Populate the named DB table columns with the values provided
         ContentValues cellIDValues = new ContentValues();
-        cellIDValues.put("Lat", latitude);
-        cellIDValues.put("Lng", longitude);
-        cellIDValues.put("Mcc", mcc);
-        cellIDValues.put("Mnc", mnc);
-        cellIDValues.put("Lac", lac);
-        cellIDValues.put("CellID", cellID);
-        cellIDValues.put("AvgSigStr", avgSigStr);
-        cellIDValues.put("avg_range", range );          // new
-        cellIDValues.put("Samples", samples);
-        cellIDValues.put("isGPSexact", isGPSexact );    // new
-        cellIDValues.put("Type", RAT );                 // new
-        //cellIDValues.put("rej_cause", rej_cause );    // new
+        cellIDValues.put("Lat",         latitude);
+        cellIDValues.put("Lng",         longitude);
+        cellIDValues.put("Mcc",         mcc);
+        cellIDValues.put("Mnc",         mnc);
+        cellIDValues.put("Lac",         lac);
+        cellIDValues.put("CellID",      cellID); // OCID CellID is of the long form when available
+        cellIDValues.put("AvgSigStr",   avgSigStr);
+        cellIDValues.put("avg_range",   range );       // new
+        cellIDValues.put("Samples",     samples);
+        cellIDValues.put("isGPSexact",  isGPSexact );  // new
+        cellIDValues.put("Type",        RAT );         // new
+        //cellIDValues.put("rej_cause", rej_cause );   // new
 
-        // TODO: Do we need to remove this as well? (See below.)
+        // Ensure we don't save multiple cell-id entries into DB, when re-downloading OCID data.
         if (openCellExists(cellID)) {
-            Log.v(TAG, "CID already in OCID DB (db update): " + cellID);
-            return mDb.update(OPENCELLID_TABLE, cellIDValues,
-                    "CellID=?", new String[]{Integer.toString(cellID)});
-        /*
-        // Move to:  CellTracker.java  see:
-        // https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/290#issuecomment-72303486
+            // It's probably better to skip than update...
+            Log.v(TAG, "CID already found in DBe_import! Skipping: " + cellID );
+            //return mDb.update(OPENCELLID_TABLE, cellIDValues, "CellID=?", new String[]{Integer.toString(cellID)});
+            return 1;
         } else {
-            //DETECTION 1  ???
-            // TODO: Why are we inserting this into DBe_import?
-            // This doesn't sound right, unless importing OCID
-            // --E:V:A
-            Log.v(TAG, "ALERT: CID -NOT- in OCID DB (db insert): " + cellID);
             return mDb.insert(OPENCELLID_TABLE, null, cellIDValues);
-            */
         }
-        return 1; // URGENT: Remove after above fix! TODO: Remove after above fix!
     }
 
     /**
@@ -332,19 +347,24 @@ public class AIMSICDDbAdapter {
      *
      * TODO: TABLE_DBI_MEASURE:DBi_measure
      */
-    public long insertLocation(int lac, int cellID,
-            int netType, double latitude, double longitude,
-            int signalInfo, String cellInfo) {
+    public long insertLocation( int lac,
+                                int cellID,
+                                int netType,
+                                double latitude,
+                                double longitude,
+                                int signalInfo,
+                                String cellInfo
+                                ) {
 
         if (latitude != 0.0 && longitude != 0.0) {
             //Populate Content Values for Insert or Update
             ContentValues locationValues = new ContentValues();
-            locationValues.put("Lac", lac);
-            locationValues.put("CellID", cellID);
-            locationValues.put("Net", netType);
-            locationValues.put("Lat", latitude);
-            locationValues.put("Lng", longitude);
-            locationValues.put("Signal", signalInfo);
+            locationValues.put("Lac",       lac);
+            locationValues.put("CellID",    cellID);
+            locationValues.put("Net",       netType);
+            locationValues.put("Lat",       latitude);
+            locationValues.put("Lng",       longitude);
+            locationValues.put("Signal",    signalInfo);
             locationValues.put("Connection", cellInfo); // This is funny, with multiple items...
 
             if (locationExists(cellID, latitude, longitude, signalInfo)) {

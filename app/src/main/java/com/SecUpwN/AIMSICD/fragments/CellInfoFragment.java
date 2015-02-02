@@ -232,13 +232,11 @@ public class CellInfoFragment extends Fragment {
     }
 
     void updateStockNeighbouringCells() {
-        mNeighbouringTotal
-                .setText(String.valueOf(neighboringCells.size()));
+        mNeighbouringTotal.setText(String.valueOf(neighboringCells.size()));
         if (neighboringCells.size() != 0) {
 
             BaseInflaterAdapter<CardItemData> adapter
-                    = new BaseInflaterAdapter<>(
-                    new CellCardInflater());
+                    = new BaseInflaterAdapter<>( new CellCardInflater() );
             int i = 1;
             int total = neighboringCells.size();
             for (Cell cell : neighboringCells) {
