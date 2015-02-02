@@ -91,8 +91,8 @@ public class Device {
                     if (cdmaCellLocation != null) {
                         mCell.setCID(cdmaCellLocation.getBaseStationId());
                         mCell.setLAC(cdmaCellLocation.getNetworkId());
-                        mCell.setSID(cdmaCellLocation.getSystemId());
-                        mCell.setMNC(cdmaCellLocation.getSystemId());
+                        mCell.setSID(cdmaCellLocation.getSystemId()); // one of these must be a bug !!
+                        mCell.setMNC(cdmaCellLocation.getSystemId()); // todo: check! (Also CellTracker.java)
 
                         //Retrieve MCC through System Property
                         String homeOperator = Helpers.getSystemProp(context,
@@ -623,7 +623,7 @@ public class Device {
         // movement detection (accelerometer)... Remove comment if ok.
         if (isSignificantlyNewer) {
             return true;
-            // If the new location is more than two minutes older, it must be worse
+            // If the last location is more than two minutes old, it must be worse
         } else if (isSignificantlyOlder) {
             return false;
         }
