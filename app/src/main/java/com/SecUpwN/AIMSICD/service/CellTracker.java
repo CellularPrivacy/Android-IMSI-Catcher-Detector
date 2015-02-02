@@ -55,7 +55,15 @@ import java.util.concurrent.TimeUnit;
  *
  *  Description:  TODO: add more info
  *
- *  Issues:
+ *  Note:       The refresh rate is set in two different places:
+ *                  onSharedPreferenceChanged()
+ *                  loadPreferences()
+ *
+ *  ToDo:       Currently the automatic refresh rate is hard-coded to 15 seconds,
+ *              in 2 different places above. We may consider have this more transparent
+ *              in a static variable. It is also used in timerRunnable where it
+ *              default to 25 seconds.
+ *
  *
  *  ChangeLog
  *
@@ -71,7 +79,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private SharedPreferences prefs;
 
     public static int PHONE_TYPE;               //
-    public static long REFRESH_RATE;            //
+    public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
     public static int LAST_DB_BACKUP_VERSION;   //
     public static boolean OCID_UPLOAD_PREF;     //
     public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
@@ -219,7 +227,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
             mDevice.mCell.setLon(0.0);
             mDevice.mCell.setLat(0.0);
-            mDevice.setCellInfo("[0,0]|nn|nn|");
+            mDevice.setCellInfo("[0,0]|nn|nn|"); //default entries into "locationinfo"::Connection
             mTrackingCell = false;
             Helpers.msgShort(context, "Stopped tracking Cell Information.");
         }
@@ -239,10 +247,20 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
     };
 
+
+    /**
+     *  Description:    This (seem to?) handle the Setting choices and/or default preferences
+     *                  from file...
+     *
+     *  TODO:   Check!!
+     *
+     * @param sharedPreferences
+     * @param key
+     */
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_UI_ICONS =     context.getString(R.string.pref_ui_icons_key);
-        final String FEMTO_DETECTION = context.getString(R.string.pref_femto_detection_key);
-        final String REFRESH =          context.getString(R.string.pref_refresh_key);        // Refresh rate of ??? in [seconds]?
+        final String FEMTO_DETECTION =  context.getString(R.string.pref_femto_detection_key);
+        final String REFRESH =          context.getString(R.string.pref_refresh_key);    // Manual Refresh
         final String DB_VERSION =       context.getString(R.string.pref_last_database_backup_version);
         final String OCID_UPLOAD =      context.getString(R.string.pref_ocid_upload);    // BOOLEAN to enable OCID data upload
         final String OCID_KEY =         context.getString(R.string.pref_ocid_key);
@@ -260,14 +278,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else if (key.equals(REFRESH)) {
             String refreshRate = sharedPreferences.getString(REFRESH, "1");
             if (refreshRate.isEmpty()) {
-                refreshRate = "1";
+                refreshRate = "1"; // Set default refresh rate to automatic "1", manual is "0".
             }
+
 
             int rate = Integer.parseInt(refreshRate);
             long t;
             switch (rate) {
                 case 1:
-                    t = 15L;
+                    t = 15L; // Automatic refresh rate is 15 seconds
                     break;
                 default:
                     t = (rate * 1L);
@@ -450,10 +469,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     /**
      * Process User Preferences
      *
-     * Description:  TODO: add more info
+     * Description:     Seem to Handle the default Settings/Preferences as set in:
+     *                  preferences.xml...
      *
-     *      Handles the Preferences as set in the XXXXX file
-     *
+     *  TODO:           Please add more info and corrections
      *
      */
     private void loadPreferences() {
@@ -467,13 +486,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         // TODO: Explain what this rate is doing...
         String refreshRate      = prefs.getString(  context.getString(R.string.pref_refresh_key), "1");
+        // Default to Automatic ("1")
         if (refreshRate.isEmpty()) { refreshRate = "1";  }
 
         int rate = Integer.parseInt(refreshRate);
         long t;
         switch (rate) {
             case 1:
-                t = 15L;
+                t = 15L; // Automatic refresh rate is 15 seconds
                 break;
             default:
                 t = (rate * 1L);
@@ -946,8 +966,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         } else {
                             mChangedLAC = false;
                         }
-                        //Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
+                        // Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
+                        // See news in: issue #290  and compare to AIMSICDDbAdapter.java
+                        // if ok then remove/change these comments.
                         if (!dbHelper.openCellExists(mMonitorCell.getCID())){
+                            Log.v(TAG, "ALERT: CID -NOT- in OCID DB: " + mMonitorCell.getCID());
+                            // TODO: Do we need to re-insert this CID somewhere? (Probably not? --E:V:A)
                             mCellIdNotInOpenDb = true;
                             setNotification();
                         } else {

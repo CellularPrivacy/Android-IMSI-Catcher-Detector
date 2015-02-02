@@ -305,10 +305,14 @@ public class AIMSICDDbAdapter {
         cellIDValues.put("Type", RAT );                 // new
         //cellIDValues.put("rej_cause", rej_cause );    // new
 
+        // TODO: Do we need to remove this as well? (See below.)
         if (openCellExists(cellID)) {
             Log.v(TAG, "CID already in OCID DB (db update): " + cellID);
             return mDb.update(OPENCELLID_TABLE, cellIDValues,
                     "CellID=?", new String[]{Integer.toString(cellID)});
+        /*
+        // Move to:  CellTracker.java  see:
+        // https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/290#issuecomment-72303486
         } else {
             //DETECTION 1  ???
             // TODO: Why are we inserting this into DBe_import?
@@ -316,6 +320,7 @@ public class AIMSICDDbAdapter {
             // --E:V:A
             Log.v(TAG, "ALERT: CID -NOT- in OCID DB (db insert): " + cellID);
             return mDb.insert(OPENCELLID_TABLE, null, cellIDValues);
+            */
         }
     }
 

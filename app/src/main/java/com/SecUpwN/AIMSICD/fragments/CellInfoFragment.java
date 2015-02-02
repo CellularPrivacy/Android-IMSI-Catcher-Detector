@@ -44,6 +44,25 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ *  Description:    This class updates the CellInfo fragment. This is also known as
+ *                  the Neighboring Cells info, which is using the MultiRilClient to
+ *                  show neighboring cells on the older Samsung Galaxy S2/3 series.
+ *                  It's refresh rate is controlled in the settings by:
+ *
+ *                  arrays.xml:
+ *                      pref_refresh_entries    (the names)
+ *                      pref_refresh_values     (the values in seconds)
+ *
+ *
+ *  Dependencies:   Seem that this is intimately connected to: CellTracker.java service...
+ *
+ *
+ *  TODO:   1)  Use IF to not run the MultiRilClient on non supprted devices. As this cause
+ *              excessive logcat spam.
+ *  TODO:   2) Might wanna make the refresh rate lower/higher depending on support
+ *
+ */
 public class CellInfoFragment extends Fragment {
 
     public static final int STOCK_REQUEST = 1;
@@ -103,7 +122,9 @@ public class CellInfoFragment extends Fragment {
             mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
-        // Refresh display if preference is not set to manual
+        // Refresh display if preference (pref_refresh_values) is not set to manual (0)
+        // For automatic it is "1" and defined in:
+        //    CellTracker.java :: onSharedPreferenceChanged()
         if (CellTracker.REFRESH_RATE != 0) {
             timerHandler.postDelayed(timerRunnable, 0);
             Helpers.msgShort(mContext, "Refreshing every "
@@ -119,12 +140,13 @@ public class CellInfoFragment extends Fragment {
                 container, false);
         if (view != null) {
             lv = (ListView) view.findViewById(R.id.list_view);
-            mNeighbouringCells = (TextView) view.findViewById(R.id.neighbouring_cells);
-            mNeighbouringTotal = (TextView) view.findViewById(R.id.neighbouring_number);
-            mNeighbouringTotalView = (TableRow) view.findViewById(R.id.neighbouring_total);
-            mCipheringIndicatorLabel = (TextView) view.findViewById(R.id.ciphering_indicator_title);
-            mCipheringIndicator = (TextView) view.findViewById(R.id.ciphering_indicator);
+            mNeighbouringCells =        (TextView) view.findViewById(R.id.neighbouring_cells);
+            mNeighbouringTotal =        (TextView) view.findViewById(R.id.neighbouring_number);
+            mNeighbouringTotalView =    (TableRow) view.findViewById(R.id.neighbouring_total);
+            mCipheringIndicatorLabel =  (TextView) view.findViewById(R.id.ciphering_indicator_title);
+            mCipheringIndicator =       (TextView) view.findViewById(R.id.ciphering_indicator);
 
+            // We can also manually refresh by hitting the button
             Button refresh = (Button) view.findViewById(R.id.button_refresh);
             refresh.setOnClickListener(new btnClick());
         }
