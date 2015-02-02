@@ -322,6 +322,7 @@ public class AIMSICDDbAdapter {
             return mDb.insert(OPENCELLID_TABLE, null, cellIDValues);
             */
         }
+        return 1; // URGENT: Remove after above fix! TODO: Remove after above fix!
     }
 
     /**
