@@ -378,6 +378,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     /**
      * Updates Neighbouring Cell details
+     *
+     *  Description:    TODO: add more details...
+     *
+     *
      */
     public List<Cell> updateNeighbouringCells() {
 
@@ -430,7 +434,40 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             }
         }
 
-        Log.i(TAG, "neighbouringCellInfo size: " + neighboringCellInfo.size());
+        Log.d(TAG, "neighbouringCellInfo size: " + neighboringCellInfo.size());
+
+        /**
+         *  Description:
+         *
+         *  2015-02-02 E:V:A
+         *   Not sure where to place this test, but let's try it here.
+         *
+         *   Warning! this may be lagging and messing up polling function, since it
+         *   require SU on each setProp()...
+         *
+         *  Issue:
+         *          [ ] We need a timer or "something" to reverse a positive detection once
+         *              we're out and away from the fake BTS cell.
+         *          [ ] We need to add this to EvenLog
+         *          [ ] We need to add detection tickers etc...
+         *          [ ]  Attention to the spelling of "neighbor" (USA) Vs. "neighbour" (Eng world)
+         *
+         */
+        /*
+        Integer ncls = neighboringCellInfo.size(); // NC list size
+        String nclp = Helpers.getProp("aimsicd.nc_list_present"); //This should be boolean?
+
+        if ( ncls > 0 && nclp == "false" ) {
+            Helpers.setProp("aimsicd.nc_list_present", "true");
+            Log.d(TAG, "neighbouringCellInfo size: " + ncls );
+        } else if ( ncls = 0 && nclp=="true" )  {
+            // Detection 7a
+            //Log.i(TAG, "ALERT: No neighboring cells detected for CID: " + mDevice.mCell.gsmCellLocation.getCid() );
+            //Helpers.setProp("aimsicd.nc_list_present", "false");
+        }
+        */
+        // END -- NC list check
+
         for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
             Log.i(TAG,
                     "neighbouringCellInfo -" +
