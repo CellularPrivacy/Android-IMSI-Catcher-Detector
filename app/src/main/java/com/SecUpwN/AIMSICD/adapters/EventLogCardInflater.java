@@ -28,10 +28,10 @@ import com.SecUpwN.AIMSICD.R;
  *  Notes:
  *
  */
-public class EventLogCardInflater implements IAdapterViewInflater<CardItemData> {
+public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemData> {
 
     @Override
-    public View inflate(final BaseInflaterAdapter<CardItemData> adapter,
+    public View inflate(final BaseInflaterAdapter<EventLogItemData> adapter,
                         final int pos, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
@@ -43,7 +43,7 @@ public class EventLogCardInflater implements IAdapterViewInflater<CardItemData> 
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final CardItemData item = adapter.getTItem(pos);
+        final EventLogItemData item = adapter.getTItem(pos);
         holder.updateDisplay(item);
 
         return convertView;
@@ -58,9 +58,10 @@ public class EventLogCardInflater implements IAdapterViewInflater<CardItemData> 
         private final TextView mPSC;
         private final TextView mgpsd_lat;
         private final TextView mgpsd_lon;
-//        private final TextView mgpsd_accu;
+        private final TextView mgpsd_accur;
         private final TextView mDF_id;
-//        private final TextView mDF_desc;
+        private final TextView mDF_description;
+        private final TextView mRecordId;
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
@@ -71,23 +72,25 @@ public class EventLogCardInflater implements IAdapterViewInflater<CardItemData> 
             mPSC =          (TextView) mRootView.findViewById(R.id.PSC);
             mgpsd_lat =     (TextView) mRootView.findViewById(R.id.gpsd_lat);
             mgpsd_lon =     (TextView) mRootView.findViewById(R.id.gpsd_lon);
-//            mgpsd_accu =    (TextView) mRootView.findViewById(R.id.gpsd_accu); // need fix
-            mDF_id =        (TextView) mRootView.findViewById(R.id.DF_id);// need fix
-//            mDF_desc =   (TextView) mRootView.findViewById(R.id.DF_desc);// need fix
+            mgpsd_accur =   (TextView) mRootView.findViewById(R.id.gpsd_accur);
+            mDF_id =        (TextView) mRootView.findViewById(R.id.DF_id);
+            mDF_description =   (TextView) mRootView.findViewById(R.id.DF_description);
+            mRecordId =      (TextView) mRootView.findViewById(R.id.record_id);
 
             rootView.setTag(this);
         }
 
-        public void updateDisplay(CardItemData item) {
+        public void updateDisplay(EventLogItemData item) {
             mtime.setText(      item.getTimestamp());          // need fix ?
             mLAC.setText(       item.getLac());
             mCID.setText(       item.getCellID());
             mPSC.setText(       item.getPsc());
             mgpsd_lat.setText(  item.getLat());
             mgpsd_lon.setText(  item.getLng());
-//            mgpsd_accu.setText( item.getAccu());            // need fix
-//            mDF_id.setText(     item.getDFid());            // need fix
-//            mDF_desc.setText(item.getDescription()); // need fix
+            mgpsd_accur.setText(item.getgpsd_accur());
+            mDF_id.setText(item.getDF_id());
+            mDF_description.setText(item.getmDF_description());
+            mRecordId.setText(item.getRecordId());
         }
     }
 }
