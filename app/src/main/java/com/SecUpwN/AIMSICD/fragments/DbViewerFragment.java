@@ -20,6 +20,8 @@ import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.CardItemData;
 import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
 import com.SecUpwN.AIMSICD.adapters.DefaultLocationCardInflater;
+import com.SecUpwN.AIMSICD.adapters.EventLogCardInflater;
+import com.SecUpwN.AIMSICD.adapters.EventLogItemData;
 import com.SecUpwN.AIMSICD.adapters.MeasuredCellStrengthCardData;
 import com.SecUpwN.AIMSICD.adapters.MeasuredCellStrengthCardInflater;
 import com.SecUpwN.AIMSICD.adapters.OpenCellIdCardInflater;
@@ -284,6 +286,29 @@ public class DbViewerFragment extends Fragment {
                                 tableData.getInt(1),
                                 tableData.getLong(2));
                                 //"" + (tableData.getPosition() + 1) + " / " + count);
+                        adapter.addItem(data, false);
+                    }
+                    return adapter;
+                }
+
+                // Table:   EventLog Table is displayed with EventLogCardInflater and EventLogItemData
+                case "EventLog": {
+                    BaseInflaterAdapter<EventLogItemData> adapter
+                            = new BaseInflaterAdapter<>( new EventLogCardInflater() );
+
+                    int count = tableData.getCount();
+                    while (tableData.moveToNext()) {
+                        EventLogItemData data = new EventLogItemData(
+                                "Time: " + tableData.getDouble(0),  // time
+                                "CID: " + tableData.getInt(2),   // CID
+                                "LAC: " + tableData.getInt(1),   // LAC
+                                "PSC: " + tableData.getInt(3),   // PSC
+                                "Lat: " + tableData.getDouble(4),   // gpsd_lat
+                                "Lon: " + tableData.getDouble(5),   // gpsd_lon
+                                "Accuracy: " + tableData.getDouble(6),  // gpsd_accu (accuracy in [m])
+                                "Detection ID: " + tableData.getInt(7),    // DF_id
+                                "Event: " + tableData.getString(8), // DF_description
+                                "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
                     return adapter;
