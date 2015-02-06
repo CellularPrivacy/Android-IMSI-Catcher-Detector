@@ -554,7 +554,9 @@ public class AIMSICDDbAdapter {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE +
                         " WHERE CellID = " + cellID, null);
         boolean exists = cursor.getCount() > 0;
-        Log.v(TAG, "CID: " + cellID + " exists in OCID (DBe_import)?: " + exists);
+
+        if (exists == false) {  Log.v(TAG, "CID: " + cellID + " exists in OCID (DBe_import)?: " + exists);
+            insertDetection(1234, 001, cellID, 111, 1.1, 2.2, 3, 2, "CellID not found in OCID Database");  }
         cursor.close();
         return exists;
     }
@@ -562,7 +564,7 @@ public class AIMSICDDbAdapter {
     public boolean checkLAC(Cell cell) {
         Cursor cursor = mDb.query( CELL_TABLE,
                 new String[]{"CellID", "Lac", "Net", "Lat", "Lng", "Signal", "Mcc", "Mnc",
-                        "Accuracy", "Speed", "Direction"},
+                        "Accuracy", "Speed", "Direction", "Timestamp"},
                         "CellID=" + cell.getCID(),
                         null,null,null,null);
 
@@ -580,6 +582,8 @@ public class AIMSICDDbAdapter {
                 Log.i(TAG, "ALERT: Changing LAC on CID: " + cell.getCID()
                         + " LAC(API): " + cell.getLAC()
                         + " LAC(DBi): " + cursor.getInt(1) );
+                insertDetection(cursor.getInt(11), cell.getLAC(), cell.getCID(), cell.getPSC(), cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(8), 1, "Changing LAC");
+
                 cursor.close();
                 return false;
             } else {
@@ -590,7 +594,7 @@ public class AIMSICDDbAdapter {
                         + " LAC(DBi): " + cursor.getInt(1) );
             // **** only for testing EventLog Table - until correct values are saved in table EventLog
             //insertDetection(cell.getTimestamp(), cell.getLAC(), cell.getCID(), cell.getPSC(), cell.getLat(), cell.getLon(), cell.getAccuracy(), 0, "LAC checked - no changes");
-            insertDetection(1234, cell.getLAC(), cell.getCID(), cell.getPSC(), cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(8), 99, "write test into EventLog_Table see LacCheck routine");
+            //insertDetection(cursor.getInt(11), cell.getLAC(), cell.getCID(), cell.getPSC(), cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(8), 99, "write test into EventLog_Table see LacCheck routine");
             }
         }
         cursor.close();
