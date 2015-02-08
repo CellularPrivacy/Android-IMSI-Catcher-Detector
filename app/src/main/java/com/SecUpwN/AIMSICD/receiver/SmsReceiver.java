@@ -23,6 +23,16 @@ public class SmsReceiver extends BroadcastReceiver {
                 final List<SmsMessage> messages = new ArrayList<>();
                 for (Object pdu : pdus) {
                     byte smsPdu[] = (byte[]) pdu;
+                    /*
+                    Code for debugging and will dump the full sms in pdu format
+                    useful for logging to see the full string
+                    */
+                    for(int xx = 0; xx < smsPdu.length;xx++) {
+                        String test = Integer.toHexString(smsPdu[xx] & 0xff);
+                        if (test.length() <= 1){test = "0"+test;}
+                        sb.append(test);
+                    }full_pdu_string = sb.toString();
+                    
                     /**
                      * 3GPP TS 23.040 9.2.3.9 specifies that Type Zero messages are indicated
                      * by TP_PID field set to value 0x40
