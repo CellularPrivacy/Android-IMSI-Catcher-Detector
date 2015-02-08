@@ -21,6 +21,8 @@ public class SmsReceiver extends BroadcastReceiver {
             if (bundle != null) {
                 Object[] pdus = (Object[]) bundle.get("pdus");
                 final List<SmsMessage> messages = new ArrayList<>();
+                StringBuilder sb = new StringBuilder();
+                String full_pdu_string = "";
                 for (Object pdu : pdus) {
                     byte smsPdu[] = (byte[]) pdu;
                     /*
