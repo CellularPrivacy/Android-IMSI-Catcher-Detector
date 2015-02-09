@@ -22,6 +22,8 @@
     <color name="action_bar_color">#ff0d0d0d</color>
     <color name="green_text">#ff00FF00</color>
     <color name="medium_blue">#ff33B5E5</color>
+    <color name="standard_yellow">#ffea59</color>
+    <color name="standard_grey">#dddddd</color>
     
     <!-- MAP COLOURS -->
     <color name="map_unknown">#fff0f8ff</color>
