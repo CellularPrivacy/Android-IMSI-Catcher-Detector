@@ -150,11 +150,11 @@ public class AIMSICDDbAdapter {
                 CELL_TABLE,
                 OPENCELLID_TABLE,
                 SILENT_SMS_TABLE,
+                TABLE_EVENTLOG,
                 // New...
                 /*TABLE_DBE_IMPORT,
                 TABLE_DBI_BTS,
                 TABLE_DBI_MEASURE,
-                TABLE_EVENTLOG,
                 TABLE_SILENTSMS,
                 TABLE_CMEASURES*/
         };
@@ -392,6 +392,38 @@ public class AIMSICDDbAdapter {
         return mDb.delete(CELL_TABLE, "CellID = ?", new String[]{ String.valueOf(cellId) });
     }
 
+    /**
+     * Inserts Logs about Detections into Database, EventLog_Table
+     *
+     * @return row id or -1 if error
+     */
+     public long insertDetection(long Time,
+                                 int LAC,
+                                 int CID,
+                                 int PSC,
+                                 double latitude,
+                                 double longitude,
+                                 double accu,
+                                 int DF_id,
+                                 String DF_description) {
+
+        //Populate Content Values for Insert or Update
+        ContentValues detectionValues = new ContentValues();
+        detectionValues.put("time", Time);
+        detectionValues.put("LAC", LAC);
+        detectionValues.put("CID", CID);
+        detectionValues.put("PSC", PSC);
+        detectionValues.put("gpsd_lat", latitude);
+        detectionValues.put("gpsd_lon", longitude);
+        detectionValues.put("gpsd_accu", accu);
+        detectionValues.put("DF_id", DF_id);
+        detectionValues.put("DF_description", DF_description);
+
+        Log.v(TAG, "Insert Detection into EventLog Table: " + CID);
+        return mDb.insert(TABLE_EVENTLOG, null, detectionValues);
+     }
+
+
 
 
     // ====================================================================
@@ -403,7 +435,7 @@ public class AIMSICDDbAdapter {
     // TODO: 
     public Cursor getEventLogData() {
         return mDb.query(TABLE_EVENTLOG,
-                new String[]{"time", "LAC", "CID", "PSC", "gpsd_lat","gpsd_lon", "gpsd_accu", "DF_id", "DF_desc"},
+                new String[]{"time", "LAC", "CID", "PSC", "gpsd_lat","gpsd_lon", "gpsd_accu", "DF_id", "DF_description"},
                 null, null, null, null, null
         );
     }
@@ -522,14 +554,19 @@ public class AIMSICDDbAdapter {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE +
                         " WHERE CellID = " + cellID, null);
         boolean exists = cursor.getCount() > 0;
-        Log.v(TAG, "CID: " + cellID + " exists in OCID (DBe_import)?: " + exists);
+
+        if (exists == false) {  Log.v(TAG, "CID: " + cellID + " exists in OCID (DBe_import)?: " + exists);
+            insertDetection(1234, 001, cellID, 111, 1.1, 2.2, 3, 2, "CellID not found in OCID Database");  }
         cursor.close();
         return exists;
     }
 
     public boolean checkLAC(Cell cell) {
         Cursor cursor = mDb.query( CELL_TABLE,
-                new String[]{"Lac"}, "CellID=" + cell.getCID(), null,null,null,null);
+                new String[]{"CellID", "Lac", "Net", "Lat", "Lng", "Signal", "Mcc", "Mnc",
+                        "Accuracy", "Speed", "Direction", "Timestamp"},
+                        "CellID=" + cell.getCID(),
+                        null,null,null,null);
 
         // 2015-01-20
         // This is using the LAC found by API and comparing to LAC found from a previous
@@ -538,13 +575,15 @@ public class AIMSICDDbAdapter {
         // as soon as the API gets a new LAC. Then the detection can be done by SQL.
         // -- E:V:A
         while (cursor.moveToNext()) {
-            if (cell.getLAC() != cursor.getInt(0)) {
+            if (cell.getLAC() != cursor.getInt(1)) {
                 //Log.i(TAG, "ALERT: Changing LAC on CID: " + cell.getCID()
                 //        + " Current LAC(DBi): " + cell.getLAC()
                 //        + " Database LAC(DBe): " + cursor.getInt(0));
                 Log.i(TAG, "ALERT: Changing LAC on CID: " + cell.getCID()
                         + " LAC(API): " + cell.getLAC()
-                        + " LAC(DBi): " + cursor.getInt(0) );
+                        + " LAC(DBi): " + cursor.getInt(1) );
+                insertDetection(cursor.getInt(11), cell.getLAC(), cell.getCID(), cell.getPSC(), cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(8), 1, "Changing LAC");
+
                 cursor.close();
                 return false;
             } else {
@@ -552,7 +591,10 @@ public class AIMSICDDbAdapter {
                 //    " LAC(DBe): " + cursor.getInt(0) );
                 Log.v(TAG, "LAC checked - no change on CID:" + cell.getCID()
                         + " LAC(API): " + cell.getLAC()
-                        + " LAC(DBi): " + cursor.getInt(0) );
+                        + " LAC(DBi): " + cursor.getInt(1) );
+            // **** only for testing EventLog Table - until correct values are saved in table EventLog
+            //insertDetection(cell.getTimestamp(), cell.getLAC(), cell.getCID(), cell.getPSC(), cell.getLat(), cell.getLon(), cell.getAccuracy(), 0, "LAC checked - no changes");
+            //insertDetection(cursor.getInt(11), cell.getLAC(), cell.getCID(), cell.getPSC(), cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(8), 99, "write test into EventLog_Table see LacCheck routine");
             }
         }
         cursor.close();
@@ -1332,7 +1374,7 @@ public class AIMSICDDbAdapter {
              *  What:       Event Log Database
              *  Columns:    
              */
-            String TABLE_EVENTLOG_CREATE = 
+            /*String TABLE_EVENTLOG_CREATE =
             "CREATE TABLE EventLog  (" +
                     "_id            INTEGER PRIMARY KEY AUTOINCREMENT," + 
                     "time     		TEXT NOT NULL,"  +
@@ -1345,6 +1387,21 @@ public class AIMSICDDbAdapter {
                     "DF_id         	INTEGER," +
                     "DF_desc	    TEXT" +
             ");";
+            database.execSQL(TABLE_EVENTLOG_CREATE);
+            */
+            // Implementation of he3556
+            String TABLE_EVENTLOG_CREATE = "create table " +
+                    TABLE_EVENTLOG + " (" + COLUMN_ID +
+                    " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "time     		TIMESTAMP NOT NULL DEFAULT current_timestamp,"  +
+                    "LAC           	INTEGER NOT NULL," +
+                    "CID           	INTEGER NOT NULL," +
+                    "PSC           	INTEGER," +
+                    "gpsd_lat      	DOUBLE," +
+                    "gpsd_lon      	DOUBLE," +
+                    "gpsd_accu     	DOUBLE," +
+                    "DF_id         	INTEGER," +
+                    "DF_description	TEXT" + ");";
             database.execSQL(TABLE_EVENTLOG_CREATE);
 
             // Re-populate the default MCC location table
