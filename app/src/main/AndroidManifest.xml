@@ -59,7 +59,7 @@
     <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
     <uses-permission android:name="android.permission.SET_PROCESS_LIMIT"/>
     <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_GSERVICES"/>
+    <!--uses-permission android:name="android.permission.WRITE_GSERVICES"/ -->
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
 
     <!-- possibly deprecated -->

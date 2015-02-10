@@ -330,7 +330,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 InputStream is = result.getEntity().getContent();
                 ByteArrayOutputStream content = new ByteArrayOutputStream();
                 // Read response into a buffered stream
-                int readBytes = 0;
+                int readBytes;
                 byte[] sBuffer = new byte[4096];
                 while ((readBytes = is.read(sBuffer)) != -1) {
                     content.write(sBuffer, 0, readBytes);
