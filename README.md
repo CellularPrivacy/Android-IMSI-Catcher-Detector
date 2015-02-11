@@ -65,7 +65,7 @@ They come in uncountable shapes and sizes:
 
 [![Taksim Square](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/DOCUMENTATION/IMSI-Catchers/IMSI-Catcher_TaksimSquare.jpg "IMSI-Catcher during the riots on Taksim Square")](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector)
 
-* Todays IMSI-Catchers can be [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/) or are hidden in GSM Interceptor vehicles:
+* Todays IMSI-Catchers can be [body-worn](http://arstechnica.com/security/2013/09/the-body-worn-imsi-catcher-for-all-your-covert-phone-snooping-needs/) or are hidden in [GSM Interceptor vehicles](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Unmasked-Spies):
 
 [![IMSI-Catcher Vehicle](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/DOCUMENTATION/IMSI-Catchers/CellularMonitoringVehicle.jpg "Inside an IMSI-Catcher Van")](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector)
 
@@ -106,6 +106,8 @@ They come in uncountable shapes and sizes:
 ---
 
 # Development Roadmap
+
+:warning: Please closely follow our [CONTRIBUTING GUIDELINES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/edit/master/CONTRIBUTING.md)!
 
 In order to accomplish the goals set above, we'll need to overcome some of the deeply worrying and unfounded AOS limitations, as imposed by Googles API, in regard to relevant network variables and data. These include highly relevant and important things such as displaying the SIM/phone Ciphering Indicator, which tells you if your calls are being encrypted or not. This has been a required 3GPP feature for the last 15 years, but which Google and most Mobile Network providers have choosen to mostly ignore, although it has been [requested by users since 2009](https://code.google.com/p/android/issues/detail?id=5353). Another is finding the *Timing Advance* (TA) and various Network Timers, like those used in *Radio Resource Control* ([RRC](http://en.wikipedia.org/wiki/Radio_Resource_Control)), that can give very useful information regarding the status of the connections your phone is making.
 
