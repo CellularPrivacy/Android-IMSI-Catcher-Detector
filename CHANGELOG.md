@@ -1,6 +1,42 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 09.02.2015 - WIP-Internal v0.1.25-alpha-build-28
+
+* Changed: Save EventLog action now takes place in aa more convenient location
+* Added: New EventLog table with working DB View of EL-Table and Export of .csv
+* Added: New file `EventLogItemData.java` and some editing to the table styling
+* Added: Debugging code to dump full SMS in PDU format and easier string parsing
+
+---
+
+#### 04.02.2015 - WIP-Internal v0.1.25-alpha-build-27
+
+* Changed: Logcat entry of CID alert moved from `AIMSICDDbAdapter` to `CellTracker`
+* Added: Some pseudo code to start the detection of checking the BTS for the NC List
+* Added: Code comments mentioning possible bug on CDMA SID/MNC Info
+* Added: Missing SMS/MMS/WAP etc. Android permissions have now been added
+* Added: Non-public (3rd party) Android permissions have been added as well
+* Added: OEM / Samsung related permissions and comments on `SmsReceiver` permissions
+* Added: Some minor code cosmetics making everything more understandable
+* Added: Skipping the re-import of same CIDs into `DBe_import`
+* Fixed: Missing bonuspack_bubble Error in logcat has been resolved
+
+---
+
+#### 29.01.2015 - WIP-Internal v0.1.25-alpha-build-26
+
+* Updated: Completed `amisicd.db` backup to `aimsicd_dump.db` on the SD card
+* Updated: `CONTRIBUTING.md` is now forcing to use our `development` branch
+* Removed: Unused import statements have been purged to clean up the code
+* Added: `checkDBe()` added for removing bad cells from OCID import table
+* Added: Several DBe LAC/CID consistency checks via the new `checkDBe()`
+* Added: Boolean (true/false) system property to show status of OCID download
+* Added: New columns in `DBe_import` table: `avg_range`, `isGPSexact` and `Type`
+* Added: German public notice to be displayed on all black boards in town
+
+---
+
 #### 28.01.2015 - WIP-Internal v0.1.25-alpha-build-25
 
 * News-Alert: **We are improving things - please work on branch `Development`!**
