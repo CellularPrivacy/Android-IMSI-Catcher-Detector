@@ -22,30 +22,23 @@ import java.io.InputStreamReader;
 
 /**
  *  Description:    This class is providing for the Debug log feature in the swipe menu.
- *                  It reads the last 1000 lines from the Logcat ring buffers: main and radio.
+ *                  It reads the last 500 lines from the Logcat ring buffers: main and radio.
  *
  *  Issues:
  *
  *          [ ]     Are we clearing logcat when starting it? If we are, we miss all previous errors
  *                  if any has occurred. We need to clear the logcat when app starts. Also there
- *                  is no reason to clear it if we only catch the last 1000 lines anyway.
+ *                  is no reason to clear it if we only catch the last 500 lines anyway.
  *
- *
- *
- *  ToDo:
- *          see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/301
- *
- *          1)  Add extra text in Email, asking the user to provide more info about problem.
- *
- *          2)  Add the output of "getprop |sort". But Java CLI processes doesn't handle pipes.
- *              Try with:  Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
+ *          [ ]     Add the output of "getprop |sort". But Java CLI processes doesn't handle pipes.
+ *                  Try with:  Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
  *
  *
  *  ChangeLog:
  *
  *          2015-01-27  E:V:A   Added "getprop|sort" info to log.
  *          2015-01-28  Toby    Fixed "getprop" info to log (but not sorted)
- *
+ *          2015-02-11  E:V:A   Increased to 500 lines and removed "-d" and incl. radio log
  *
  */
 
@@ -53,7 +46,7 @@ import java.io.InputStreamReader;
 public class DebugLogs extends BaseActivity {
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
-    private boolean isRadioLogs = false;
+    private boolean isRadioLogs = true;
 
     private TextView logView = null;
     private Button btnClear = null;
@@ -196,6 +189,8 @@ public class DebugLogs extends BaseActivity {
     /**
      * Read getprop and return the sorted result as a string
      *
+     * TODO: Need a way to sort properties for easy reading
+     *
      * @return
      * @throws IOException
      */
@@ -204,17 +199,20 @@ public class DebugLogs extends BaseActivity {
     }
 
     /**
-     * Read logcat and return as a string
+     *  Description:    Read logcat and return as a string
      *
-     * @return
-     * @throws IOException
+     *  Notes:
+     *
+     *  1) " *:V" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
+     *  2) Need to silent some spammy Samsung Galaxy's:     " AbsListView:S PackageInfo:S"
+     *  3) Need to silent some Qualcomm QMI:                " RILQ:S"
+     *  4) "-d" is not necessary when using "-t".
+     *
      */
     private String getLogs() throws IOException {
-        // + " *:v" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
-        // Silent Samsung Galaxy devices spam debug: " AbsListView:S PackageInfo:S"
         return runProcess(
-            "logcat -t 100 -d -v time" +
-                    (isRadioLogs ? " -b radio" : "") +
+            "logcat -t 500 -v time -b main" +
+                    (isRadioLogs ? " -b radio RILQ:S" : "") +
                     " AbsListView:S PackageInfo:S *:D"
         );
     }

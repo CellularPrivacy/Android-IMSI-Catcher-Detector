@@ -55,11 +55,14 @@ import java.util.List;
  *                  - Download CSV file with BTS data via HTTP API from OCID servers
  *                  - Convert ByteToString
  *                  - unpackListOfStrings
- *                  - Check if SD is writeable
+ *                  - Check if SD is writable
  *                  - get System properties
  *                  - Check for SU and BusyBox
  *
  * Dependencies:    TODO: Write a few words about where the content of this is used.
+ *
+ *                  get/setprop:    SystemPropertiesReflection.java
+ *
  *
  * Issues:          AS complaints that several of these methods are not used...
  *
@@ -206,8 +209,6 @@ import java.util.List;
     *                           {
     *                              "count": 123
     *                           }
-    *
-    *
     *
     *
     *
@@ -450,12 +451,6 @@ import java.util.List;
         return CMDProcessor.runSuCommand("getprop " + prop).getStdout();
     }
 
-    public static String setProp(String prop, String value) {
-        // We might wanna return the success of this. From mksh it is given by "$?" (0=ok, 1=fail)
-        //return CMDProcessor.runSuCommand("setprop " + prop + " " + value);
-        return CMDProcessor.runSuCommand("setprop " + prop + " " + value + "; echo \"$?\"").getStdout();
-    }
-
     public static String getSystemProp(Context context, String prop, String def) {
         String result = null;
         try {
@@ -465,6 +460,38 @@ import java.util.List;
         }
         return result == null ? def : result;
     }
+
+    // Use this when invoking from SU shell (not recommended!)
+    public static String setProp(String prop, String value) {
+        // We might wanna return the success of this. From mksh it is given by "$?" (0=ok, 1=fail)
+        //return CMDProcessor.runSuCommand("setprop " + prop + " " + value);
+        return CMDProcessor.runSuCommand("setprop " + prop + " " + value + "; echo \"$?\"").getStdout();
+    }
+
+    /**
+     * Use this to setprop using reflection of native android.os.SystemProperties class
+     *      IllegalArgumentException if the key exceeds 32 characters
+     *      IllegalArgumentException if the value exceeds 92 characters
+     *
+     * Generally speaking this cannot be done unless the app is running under system UID:
+     *
+     * " When you reflect the android.os.SystemProperties and make the call then you will
+     *   make the request as the UID of the application and it will be rejected as the
+     *   properties service has an ACL of allowed UIDs to write to particular key domains,
+     *   see: /system/core/init/property_service.c "
+     */
+    /*  Something wrong here...
+    public static String setSystemProp(Context context, String prop, String value, String def) {
+        String result = null;
+        try {
+            result = SystemPropertiesReflection.set(context, prop, value);
+        } catch (IllegalArgumentException iae) {
+            Log.e(TAG, "Failed to get system property: " + prop);
+        }
+        return result == null ? def : result;
+    }
+    */
+
 
     /**
      * Checks device for SuperUser permission
