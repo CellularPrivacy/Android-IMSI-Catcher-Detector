@@ -17,7 +17,7 @@ import java.util.List;
 /**
  *  Description:    The SMS receiver class that handles the SMS PDU data
  *
- *  Dependencies:
+ *  Dependencies:   AndroidManifest.xml (receiver)
  *
  *  Permissions:    To read and intercept various SMS/MMS/WAP push messages, we need
  *                  at least 3 different Android permissions:
@@ -27,7 +27,7 @@ import java.util.List;
  *                  android.permission.RECEIVE_SMS
  *                  android.permission.RECEIVE_WAP_PUSH
  *
- *                  To read silent SMS from logcat, we also need:
+ *                  To read silent SMS from radio logcat, we also need:
  *
  *                  android.permission.READ_LOGS
  *
@@ -44,6 +44,7 @@ import java.util.List;
  *              [ ] TODO: Add silent MMS check ? -- Is this correctly understood?
  *              [ ] TODO: Add silent WAP PUSH check
  *              [ ] TODO: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/178
+ *              [ ] Possible blocking issue due to AndroidManifest.xml permissions
  *              [ ]  Status Report Indication (TP-SRI) -- requested ?
  *              [ ]  Validity period (TP-VP) -- too short ?
  *              [ ]  The service centre time stamp (TP-SCTS) -- wrong date?
@@ -73,7 +74,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 for (Object pdu : pdus) {
                     byte smsPdu[] = (byte[]) pdu;
 
-                    // Dump the full SMS in PDU format (HEX string) to Logcat
+                    // Dump the full SMS in PDU format (HEX string) to logcat
                     try {
                         for(int xx = 0; xx < smsPdu.length; xx++) {
                             String test = Integer.toHexString(smsPdu[xx] & 0xff);
@@ -88,10 +89,12 @@ public class SmsReceiver extends BroadcastReceiver {
                     // We may also need to consider catching WAP PUSH SMS messages
                     // as they can also be hidden from user. -- E:V:A
                     int firstByte = smsPdu[0] & 0xff;
-                    int mti = firstByte & 0x3;
-                    int pID = smsPdu[1] & 0xc0; // 192
-                    Log.i("AIMSICD_SmsReceiver", "PDU Data: firstByte = " + firstByte +
-                            " mti = " + mti + " TP_PID = " + pID);
+                    int mti = firstByte & 0x3;  //   3 = 0000 0011      (bits 0-1)
+                    //int mms = firstByte & 0x4;  //   4 = 0000 0100    (bit 3)
+                    //int sri = firstByte & 0x10; //  16 = 0001 0000    (bit 5)
+                    int pID = smsPdu[1] & 0xc0; // 192 = 1100 0000
+                    Log.i("AIMSICD_SmsReceiver", "PDU Data: firstByte: " + firstByte +
+                            " TP-MTI: " + mti + " TP-PID: " + pID);
                     // Need checking! --EVA
                     if (pID == 0x40 && mti == 0) {
                         messages.add(SmsMessage.createFromPdu((byte[]) pdu));
@@ -115,7 +118,6 @@ public class SmsReceiver extends BroadcastReceiver {
                     }
                 }
             }
-
         } catch (NullPointerException npe) {
             Log.e("SmsReceiver", "Exception smsReceiver" + npe);
         }

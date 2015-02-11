@@ -233,7 +233,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
             // setup map
             GeoLocation lastKnown = mAimsicdService.lastKnownLocation();
             if (lastKnown != null) {
-                mMap.getController().setZoom(16);
+                mMap.getController().setZoom(16); // Initial Zoom level
                 mMap.getController().animateTo(new GeoPoint(
                         lastKnown.getLatitudeInDegrees(),
                         lastKnown.getLongitudeInDegrees()));
@@ -247,6 +247,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         }
     };
 
+    // Load the default map type from preferences
     private void loadPreferences() {
         String mapTypePref = getResources().getString(R.string.pref_map_type_key);
         prefs = mContext.getSharedPreferences(
@@ -275,7 +276,13 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     }
 
     /**
-     * Initialises the Map and sets initial options
+     * Description:     Initialises the Map and sets initial options such as:
+     *                      Zoom leveles and controls
+     *                      Compass
+     *                      ScaleBar
+     *                      Cluster Pin colors
+     *                      Location update settings
+     *
      */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
@@ -371,15 +378,18 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
     /**
      * TODO: check and document this. Who made this?
-     * Loads Signal Strength Database details to plot on the map,
-     * only entries which have a location (lon, lat) are used.
+     *
+     *  Description:    Loads Signal Strength Database details to plot on the map,
+     *                  only entries which have a location (lon, lat) are used.
+     *
+     *
      */
     private void loadEntries() {
 
         new AsyncTask<Void,Void,GeoPoint>() {
             @Override
             protected GeoPoint doInBackground(Void... voids) {
-                final int SIGNAL_SIZE_RATIO = 15;  // What is this??
+                final int SIGNAL_SIZE_RATIO = 15;  // A scale factor to draw BTS Signal circles
                 int signal;
                 int color;
 
@@ -391,7 +401,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mDbHelper.open();
                 Cursor c = null;
                 try {
-                    // Todo: Grab cell data ... from where?
+                    // Grab cell data from CELLINFO_TABLE (DBi_bts)
                     c = mDbHelper.getCellData();
                 }catch(IllegalStateException ix) {
                     Log.e(TAG, ix.getMessage(), ix);
@@ -409,7 +419,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                             continue;
                         }
                         signal = c.getInt(5);  // signal
-                        if (signal <= 0) {  // Huh!? What's going on here?
+                        // Huh!? What's going on here?
+                        if (signal <= 0) {
                             signal = 20;
                         }
 
@@ -575,7 +586,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    // TODO: Consider changing this funtion name to:  <something else>
+    // TODO: Consider changing this function name to:  <something else>
     private void loadOpenCellIDMarkers() {
         //Check if OpenCellID data exists and if so load this now
         LinkedList<CellTowerMarker> items = new LinkedList<>();

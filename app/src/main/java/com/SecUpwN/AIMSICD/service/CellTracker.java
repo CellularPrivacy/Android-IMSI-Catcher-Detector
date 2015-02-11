@@ -208,8 +208,18 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *          DATA_ACTIVITY:
      *          DATA_CONNECTION_STATE:
      *
-     *          TODO:
+     *  TODO:   We also need to listen and log for:
      *
+     *      [ ]     LISTEN_CALL_STATE:
+     *                  CALL_STATE_IDLE
+     *                  CALL_STATE_OFFHOOK
+     *                  CALL_STATE_RINGING
+     *
+     *      [ ]     LISTEN_SERVICE_STATE:
+     *                  STATE_EMERGENCY_ONLY
+     *                  STATE_IN_SERVICE
+     *                  STATE_OUT_OF_SERVICE
+     *                  STATE_POWER_OFF
      *
      * @param track Enable/Disable tracking
      */
@@ -218,8 +228,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             tm.listen(mCellSignalListener,
                     PhoneStateListener.LISTEN_CELL_LOCATION |           // gpsd_lat/lon ?
                     PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |        // rx_signal
-                    PhoneStateListener.LISTEN_DATA_ACTIVITY |           //
-                    PhoneStateListener.LISTEN_DATA_CONNECTION_STATE     //
+                    PhoneStateListener.LISTEN_DATA_ACTIVITY |           // No,In,Ou,IO,Do
+                    PhoneStateListener.LISTEN_DATA_CONNECTION_STATE     // Di,Ct,Cd,Su
+                    // LISTEN_CALL_STATE ?
+                    // LISTEN_SERVICE_STATE ?
             );
             mTrackingCell = true;
             Helpers.msgShort(context, "Tracking Cell Information.");
@@ -260,9 +272,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_UI_ICONS =     context.getString(R.string.pref_ui_icons_key);
         final String FEMTO_DETECTION =  context.getString(R.string.pref_femto_detection_key);
-        final String REFRESH =          context.getString(R.string.pref_refresh_key);    // Manual Refresh
+        final String REFRESH =          context.getString(R.string.pref_refresh_key);      // Manual Refresh
         final String DB_VERSION =       context.getString(R.string.pref_last_database_backup_version);
-        final String OCID_UPLOAD =      context.getString(R.string.pref_ocid_upload);    // BOOLEAN to enable OCID data upload
+        final String OCID_UPLOAD =      context.getString(R.string.pref_ocid_upload);  // BOOLEAN to enable OCID data upload
         final String OCID_KEY =         context.getString(R.string.pref_ocid_key);
 
         if (key.equals(KEY_UI_ICONS)) {
