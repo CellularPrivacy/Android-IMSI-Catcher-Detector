@@ -5,7 +5,7 @@ To avoid confusion and neglected development commits, please ALWAYS read this gu
 
 #### DEVELOPERS WELCOME!
 
-* Development takes place on our new branch [development](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/development), keeping `master` clean!
+:warning: PULL REQUESTS shall go to branch [development](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/development), please keep our `master` clean!
 * Can't code? No problem! Test our [latest Release](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases) (even better: compile from `master`)!
 * Before testing our App, you should read our [WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki) and **must agree** to our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER).
 * Security matters. But **don't be scared** to contribute, check out our note on [Privacy](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Privacy)!
