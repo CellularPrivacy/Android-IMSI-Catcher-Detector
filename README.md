@@ -107,7 +107,7 @@ They come in uncountable shapes and sizes:
 
 # Development Roadmap
 
-:warning: Please closely follow our [CONTRIBUTING GUIDELINES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/edit/master/CONTRIBUTING.md)!
+* Please follow our [CONTRIBUTING GUIDELINES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/edit/master/CONTRIBUTING.md)!
 
 In order to accomplish the goals set above, we'll need to overcome some of the deeply worrying and unfounded AOS limitations, as imposed by Googles API, in regard to relevant network variables and data. These include highly relevant and important things such as displaying the SIM/phone Ciphering Indicator, which tells you if your calls are being encrypted or not. This has been a required 3GPP feature for the last 15 years, but which Google and most Mobile Network providers have choosen to mostly ignore, although it has been [requested by users since 2009](https://code.google.com/p/android/issues/detail?id=5353). Another is finding the *Timing Advance* (TA) and various Network Timers, like those used in *Radio Resource Control* ([RRC](http://en.wikipedia.org/wiki/Radio_Resource_Control)), that can give very useful information regarding the status of the connections your phone is making.
 
