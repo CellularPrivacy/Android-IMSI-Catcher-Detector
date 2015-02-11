@@ -17,7 +17,7 @@ Android-based project to detect and avoid fake base stations ([IMSI-Catchers](ht
 [![Aptoide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/Aptoide.png)](http://aimsicd.store.aptoide.com/ "NOTE: Installs Aptoide-App first!")  [![GitHub](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/GitHub.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases "GitHub Releases") [![F-Droid](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/F-Droid.png)](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD "F-Droid Store") 
 ---
 [![XDA](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/XDA.png)](http://www.xda-developers.com/android/detect-avoid-imsi-catcher-attacks-with-imsi-catcher-detector/ "Portal Post on XDA-Developers") [![Hackaday](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/Hackaday.png)](https://hackaday.io/project/3824-android-imsi-catcher-detector "Project Post on Hackaday")
-[![Twitter](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/Twitter.png)](https://twitter.com/AIMSICD "Official Twitter-Account")
+[![Twitter](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/Twitter.png)](https://twitter.com/AIMSICD "Official Twitter-Account") [![Gun.io](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/master/MISC/external/gunio.png)](https://gun.io/blog/android-imsi-catcher-detector/ "Blog Post on Gun.io")
 
 #  Index
 * [Introduction](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#introduction)
