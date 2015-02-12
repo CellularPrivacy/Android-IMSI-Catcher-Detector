@@ -99,23 +99,23 @@ public class ChildProcess {
     private ChildWriter mChildStdinWriter;
     private ChildReader mChildStdoutReader;
     private ChildReader mChildStderrReader;
-    private StringBuffer mChildStdout;
-    private StringBuffer mChildStderr;
+    final private StringBuffer mChildStdout;
+    final private StringBuffer mChildStderr;
     private int mExitValue;
     private long mEndTime;
 
     public ChildProcess(String[] cmdarray, String childStdin) {
         mStartTime = nanoTime();
+        mChildStdout = new StringBuffer();
+        mChildStderr = new StringBuffer();
         try {
             mChildProc = Runtime.getRuntime().exec(cmdarray);
             if (childStdin != null) {
                 mChildStdinWriter = new ChildWriter(mChildProc.getOutputStream(), childStdin);
                 mChildStdinWriter.start();
             }
-            mChildStdout = new StringBuffer();
             mChildStdoutReader = new ChildReader(mChildProc.getInputStream(), mChildStdout);
             mChildStdoutReader.start();
-            mChildStderr = new StringBuffer();
             mChildStderrReader = new ChildReader(mChildProc.getErrorStream(), mChildStderr);
             mChildStderrReader.start();
         } catch (IOException e) {
