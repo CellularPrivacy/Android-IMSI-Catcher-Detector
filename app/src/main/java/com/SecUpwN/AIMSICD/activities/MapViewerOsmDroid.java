@@ -80,15 +80,22 @@ import java.util.Map;
  *          before map is updated. Any way to shorten this?
  *      [ ] See: #272 #250 #228
  *      [ ] Some pins remain clustered even on the greatest zoom, this is probably
- *          due to over sized icons.
+ *          due to over sized icons, or too low zoom level.
  *      [ ] pin icons are too big. We need to reduce pin dot diameter by ~50%
+ *      [ ] Need a manaual way to add GPS coordinates of current location (see code comments below)
+ *      [ ]
  *
+ *  Notes:
+ *          a) Latest OSM version can use MaxZoomLevel of 21, please see:
+ *              https://github.com/osmdroid/osmdroid/issues/49
+ *              https://github.com/osmdroid/osmdroid/issues/81
+ *              https://code.google.com/p/osmbonuspack/issues/detail?id=102
  *
  *  ChangeLog:
  *
  *      2015-01-22  E:V:A   Changed: setLocationUpdateMinTime:    60000 to 10000 ms
  *                                   setLocationUpdateMinDistance: 1000 to 100 meters
- *
+ *      2015-02-12  E:V:A   Added:   mMap.setMaxZoomLevel(19);
  *
  */
 
@@ -277,7 +284,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
     /**
      * Description:     Initialises the Map and sets initial options such as:
-     *                      Zoom leveles and controls
+     *                      Zoom levels and controls
      *                      Compass
      *                      ScaleBar
      *                      Cluster Pin colors
@@ -294,6 +301,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mMap.setBuiltInZoomControls(true);
                 mMap.setMultiTouchControls(true);
                 mMap.setMinZoomLevel(3);
+                mMap.setMaxZoomLevel(19); // Latest OSM can go to 21!
 
                 mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), mMap);
 
@@ -377,8 +385,6 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     }
 
     /**
-     * TODO: check and document this. Who made this?
-     *
      *  Description:    Loads Signal Strength Database details to plot on the map,
      *                  only entries which have a location (lon, lat) are used.
      *
@@ -401,13 +407,14 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mDbHelper.open();
                 Cursor c = null;
                 try {
-                    // Grab cell data from CELLINFO_TABLE (DBi_bts)
+                    // Grab cell data from CELL_TABLE (cellinfo) --> DBi_bts
                     c = mDbHelper.getCellData();
                 }catch(IllegalStateException ix) {
                     Log.e(TAG, ix.getMessage(), ix);
                 }
                 if (c != null && c.moveToFirst()) {
                     do {
+                        // The indexing here is that of the Cursor and not the DB table itself
                         final int cellID = c.getInt(0);  // CID
                         final int lac = c.getInt(1);     // LAC
                         final int net = c.getInt(2);     // RAT
@@ -419,7 +426,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                             continue;
                         }
                         signal = c.getInt(5);  // signal
-                        // Huh!? What's going on here?
+                        // In case of missing or negative signal, set a default fake signal,
+                        // so that we can still draw signal circles.  ?
                         if (signal <= 0) {
                             signal = 20;
                         }
@@ -428,6 +436,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                             loc = new GeoPoint(dlat, dlng);
 
                             // TODO: write in text what these colors are. It's damn hard to guess!
+                            // TODO: Remove if not used!! --E:V:A
                             switch (net) {
                                 case TelephonyManager.NETWORK_TYPE_UNKNOWN:
                                     color = 0xF0F8FF;
@@ -558,6 +567,14 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 return ret;
             }
 
+            /**
+             *  TODO:  We need a manual way to add our own location in case:
+             *          a) GPS is jammed or not working
+             *          b) WiFi location is not used
+             *          c) Default MCC is too far off
+             *
+             * @param defaultLoc
+             */
             @Override
             protected void onPostExecute(GeoPoint defaultLoc) {
                 if (loc != null && (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0)) {
@@ -577,7 +594,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                             //Use MCC to move camera to an approximate location near Countries Capital
                             loc = defaultLoc;
 
-                            mMap.getController().setZoom(13);
+                            mMap.getController().setZoom(12);
                             mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
                         }
                     }
@@ -588,7 +605,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
     // TODO: Consider changing this function name to:  <something else>
     private void loadOpenCellIDMarkers() {
-        //Check if OpenCellID data exists and if so load this now
+        // Check if OpenCellID data exists and if so load this now
         LinkedList<CellTowerMarker> items = new LinkedList<>();
 
         // DBe_import tower pins.
@@ -598,17 +615,19 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         Cursor c = mDbHelper.getOpenCellIDData();
         if (c.moveToFirst()) {
             do {
-                final double dlat = Double.parseDouble(c.getString(4));
-                final double dlng = Double.parseDouble(c.getString(5));
+                // The indexing here is that of the Cursor and not the DB table itself:
+                // CellID,Lac,Mcc,Mnc,Lat,Lng,AvgSigStr,Samples
                 final int cellID = c.getInt(0);
                 final int lac = c.getInt(1);
-                final GeoPoint location = new GeoPoint(dlat, dlng);
                 final int mcc = c.getInt(2);
                 final int mnc = c.getInt(3);
+                final double dlat = Double.parseDouble(c.getString(4));
+                final double dlng = Double.parseDouble(c.getString(5));
+                final GeoPoint location = new GeoPoint(dlat, dlng);
+                //
                 final int samples = c.getInt(7);
+
                 // Add map marker for CellID
-
-
                 CellTowerMarker ovm = new CellTowerMarker(mContext, mMap,
                         "Cell ID: " + cellID,
                         "", location,
