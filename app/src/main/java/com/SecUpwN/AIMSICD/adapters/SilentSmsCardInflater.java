@@ -40,22 +40,22 @@ public class SilentSmsCardInflater implements IAdapterViewInflater<SilentSmsCard
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
-            mAddress = (TextView) mRootView.findViewById(R.id.address);
-            mDisplayAddress = (TextView) mRootView.findViewById(R.id.display_address);
-            mMessageClass = (TextView) mRootView.findViewById(R.id.message_class);
-            mServiceCentre = (TextView) mRootView.findViewById(R.id.service_centre);
-            mMessageBody = (TextView) mRootView.findViewById(R.id.message_body);
-            mTimestamp = (TextView) mRootView.findViewById(R.id.message_timestamp);
+            mAddress =          (TextView) mRootView.findViewById(R.id.address);
+            mDisplayAddress =   (TextView) mRootView.findViewById(R.id.display_address);
+            mMessageClass =     (TextView) mRootView.findViewById(R.id.message_class);
+            mServiceCentre =    (TextView) mRootView.findViewById(R.id.service_centre);
+            mMessageBody =      (TextView) mRootView.findViewById(R.id.message_body);
+            mTimestamp =        (TextView) mRootView.findViewById(R.id.message_timestamp);
             rootView.setTag(this);
         }
 
         public void updateDisplay(SilentSmsCardData item) {
-            mAddress.setText(item.getAddress());
+            mAddress.setText(       item.getAddress());
             mDisplayAddress.setText(item.getDisplayAddress());
-            mMessageClass.setText(item.getMessageClass());
-            mServiceCentre.setText(item.getServiceCentre());
-            mMessageBody.setText(item.getMessage());
-            mTimestamp.setText(item.getTimestamp());
+            mMessageClass.setText(  item.getMessageClass());
+            mServiceCentre.setText( item.getServiceCentre());
+            mMessageBody.setText(   item.getMessage());
+            mTimestamp.setText(     item.getTimestamp());
         }
     }
 }
