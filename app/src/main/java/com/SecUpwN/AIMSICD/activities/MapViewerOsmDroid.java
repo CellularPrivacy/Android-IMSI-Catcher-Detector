@@ -82,7 +82,7 @@ import java.util.Map;
  *      [ ] Some pins remain clustered even on the greatest zoom, this is probably
  *          due to over sized icons, or too low zoom level.
  *      [ ] pin icons are too big. We need to reduce pin dot diameter by ~50%
- *      [ ] Need a manaual way to add GPS coordinates of current location (see code comments below)
+ *      [ ] Need a manual way to add GPS coordinates of current location (see code comments below)
  *      [ ]
  *
  *  Notes:

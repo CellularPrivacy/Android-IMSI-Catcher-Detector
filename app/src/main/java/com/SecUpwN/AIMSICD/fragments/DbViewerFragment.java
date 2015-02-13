@@ -263,12 +263,12 @@ public class DbViewerFragment extends Fragment {
                     //int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         SilentSmsCardData data = new SilentSmsCardData(
-                                tableData.getString(0),
-                                tableData.getString(1),
-                                tableData.getString(2),
-                                tableData.getString(3),
-                                tableData.getString(4),
-                                tableData.getLong(5));
+                                tableData.getString(0), // Address
+                                tableData.getString(1), // Display
+                                tableData.getString(2), // Class
+                                tableData.getString(3), // ServiceCtr
+                                tableData.getString(4), // Message
+                                tableData.getLong(5));  // Timestamp
                                 //"" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
@@ -291,7 +291,8 @@ public class DbViewerFragment extends Fragment {
                     return adapter;
                 }
 
-                // Table:   EventLog Table is displayed with EventLogCardInflater and EventLogItemData
+                // Table:   EventLog
+                // Where:   Table is displayed with EventLogCardInflater and EventLogItemData
                 case "EventLog": {
                     BaseInflaterAdapter<EventLogItemData> adapter
                             = new BaseInflaterAdapter<>( new EventLogCardInflater() );
@@ -299,15 +300,15 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         EventLogItemData data = new EventLogItemData(
-                                "Time: " + tableData.getDouble(0),  // time
-                                "CID: " + tableData.getInt(2),   // CID
-                                "LAC: " + tableData.getInt(1),   // LAC
-                                "PSC: " + tableData.getInt(3),   // PSC
-                                "Lat: " + tableData.getDouble(4),   // gpsd_lat
-                                "Lon: " + tableData.getDouble(5),   // gpsd_lon
-                                "Accuracy: " + tableData.getDouble(6),  // gpsd_accu (accuracy in [m])
-                                "Detection ID: " + tableData.getInt(7),    // DF_id
-                                "Event: " + tableData.getString(8), // DF_description
+                                "Time: "    + tableData.getString(0),   // time
+                                "LAC: "     + tableData.getInt(1),      // LAC
+                                "CID: "     + tableData.getInt(2),      // CID
+                                "PSC: "     + tableData.getInt(3),      // PSC
+                                "Lat: "     + tableData.getDouble(4),   // gpsd_lat
+                                "Lon: "     + tableData.getDouble(5),   // gpsd_lon
+                                "Accuracy: "+ tableData.getInt(6),      // gpsd_accu (accuracy in [m])
+                                "DetID: "   + tableData.getInt(7),      // DF_id
+                                "Event: "   + tableData.getString(8),   // DF_desc
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }

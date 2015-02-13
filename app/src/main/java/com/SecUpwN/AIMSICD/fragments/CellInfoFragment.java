@@ -58,8 +58,8 @@ import java.util.concurrent.TimeUnit;
  *  Dependencies:   Seem that this is intimately connected to: CellTracker.java service...
  *
  *
- *  TODO:   1)  Use IF to not run the MultiRilClient on non supported devices. As this cause
- *              excessive logcat spam.
+ *  TODO:   1)  Use an IF check, in order not to run the MultiRilClient on non supported devices
+ *              as this will cause excessive logcat spam.
  *  TODO:   2) Might wanna make the refresh rate lower/higher depending on support
  *
  */
