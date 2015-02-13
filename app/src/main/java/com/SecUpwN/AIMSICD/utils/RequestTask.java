@@ -66,28 +66,32 @@ import java.net.URL;
  *      uploading them and thus making users of AIMSICD believe these are good cells.
  *      Basically we'd be corrupting the OCID data.
  *
+ *
+ * Issues:
+ *          [ ] There is no onPreExecure here...perhaps that's why the progress bar is not shown?
+ *              see:  http://developer.android.com/reference/android/os/AsyncTask.html
+ *
  * ChangeLog:
  *
  *      2015-01-21 E:V:A   Moved code blocks, added placeholder code, disabled upload
+ *      2015-02-13 E:V:A   Added onPreExecute() and super keywords & Logs (to be removed when working)
  *
  *  To Fix:
  *
  *      [ ] add request task "DBE_UPLOAD_REQUEST"
  *      [ ] Explain why BACKUP/RESTORE_DATABASE is in here?
  *      [ ] Think about what "lookup cell info" (CELL_LOOKUP) should do
- *      [ ] Fix or explain why this is named as "doInBackground" since it is not actually
- *          doing this in the background. (App is blocked while downloading.)
+ *      [ ] App is blocked while downloading.
  *
  */
 public class RequestTask extends AsyncTask<String, Integer, String> {
 
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
-    //public static final char DBE_UPLOAD_REQUEST = 3;            // TODO: OCID upload request from "APPLICATION" drawer title
+    //public static final char DBE_UPLOAD_REQUEST = 3;  // TODO: OCID upload request from "APPLICATION" drawer title
     public static final char BACKUP_DATABASE = 3;
     public static final char RESTORE_DATABASE = 4;
-    public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
-
+    public static final char CELL_LOOKUP = 5;           // TODO: "All Current Cell Details (ACD)"
 
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
@@ -168,14 +172,14 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     int progress = 0;
 
                     File dir = new File(Environment.getExternalStorageDirectory()+ "/AIMSICD/OpenCellID/");
-                    if (!dir.exists()) { dir.mkdirs(); }
+                    if (!dir.exists()) { dir.mkdirs(); } // need a try{} catch{}
                     File file = new File(dir, "opencellid.csv");
 
                     URL url = new URL(commandString[0]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.setConnectTimeout(20000);// [ms] 20 s
-                    urlConnection.setReadTimeout(20000); // [ms] 20 s
+                    urlConnection.setReadTimeout(20000);   // [ms] 20 s
                     urlConnection.setDoInput(true);
                     urlConnection.connect();
 
@@ -193,7 +197,9 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         return "Error";
                     } else {
                         total = urlConnection.getContentLength();
+                        Log.d("AIMSICD","RequestTask:doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
                         publishProgress(progress, total);
+
                         FileOutputStream output = new FileOutputStream(file, false);
                         InputStream input = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -208,7 +214,6 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         output.flush();
                         output.close();
                     }
-
                     urlConnection.disconnect();
                     return "Successful";
 
@@ -240,11 +245,23 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
         return null;
     }
 
-    protected void onProgressUpdate(Integer... values) {
-        AIMSICD.mProgressBar.setMax(values[1]);
-        AIMSICD.mProgressBar.setProgress(values[0]);
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        Log.d("AIMSICD","RequestTask:onPreExecute Started");
+        //progress.show();
     }
 
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        super.onProgressUpdate(values);
+        // Silence or Remove when working:
+        Log.v("AIMSICD","RequestTask:onProgressUpdate values[0]: " + values[0] +
+                                                    " values[1]: " + values[1]);
+        //setProgressPercent(progress[0]); ??
+        AIMSICD.mProgressBar.setProgress(values[0]);    // progress
+        AIMSICD.mProgressBar.setMax(values[1]);         // total
+    }
 
     /**
      *  Description:    This is where we:
@@ -252,16 +269,16 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
      *                  2) call the updateOpenCellID() to populate the DBe_import table
      *                  3) call the checkDBe() to cleanup bad cells from imported data
      *                  4) present a failure/success toast message
-     *                  5) set a system property to indicate that data has been downlaoded:
+     *                  5) set a system property to indicate that data has been downloaded:
      *                      "setprop aimsicd.ocid_downloaded true"
      *
      *  Issues:
      *                  [ ] checkDBe() is incomplete, due to missing RAT column in DBe_import
+     *                  [ ] using setprop with SU on command line is very slow... We need
+     *                      another method to same this.
      *
-     *
-     * @param result
      */
-    // This is where we call the updateOPenCellID() to populate the DBe_import table
+    // This is where we call the updateOpenCellID() to populate the DBe_import table
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
@@ -282,6 +299,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
                 }
                 break;
+
             case DBE_DOWNLOAD_REQUEST_FROM_MAP:
                 if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
