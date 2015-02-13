@@ -93,7 +93,8 @@ public class AIMSICDDbAdapter {
 
     private final Boolean MONO_DB_DUMP = true; // Also back-up DB with one monolithic dump file?
 
-    private final String TAG = "AISMICD_DbAdaptor";
+    private final String TAG = "AISMICD";
+    private final String mTAG = "DbAdapter";
     private final String DB_NAME = "aimsicd.db";
     private static final String COLUMN_ID   = "_id"; // Underscore is no longer required...
 
@@ -226,10 +227,10 @@ public class AIMSICDDbAdapter {
             cellValues.put("MeasurementTaken", measurementTaken);
 
             if (cellExists(cellID)) {
-                Log.v(TAG, "Cell info updated in local db: " + cellID);
+                Log.v(TAG, mTAG + ": Cell info updated in local db: " + cellID);
                 return mDb.update( CELL_TABLE, cellValues, "CellID=?", new String[]{Integer.toString(cellID)} );
             } else {
-                Log.v(TAG, "New Cell found, insert into local db:: " + cellID);
+                Log.v(TAG,  mTAG + ": New Cell found, insert into local db:: " + cellID);
                 return mDb.insert(CELL_TABLE, null, cellValues);
             }
         }
@@ -270,10 +271,10 @@ public class AIMSICDDbAdapter {
             cellValues.put("MeasurementTaken", cell.getTimestamp());
 
             if (cellExists(cell.getCID())) {
-                Log.v(TAG, "CID info updated in local db (DBi): " + cell.getCID());
+                Log.v(TAG,  mTAG + ": CID info updated in local db (DBi): " + cell.getCID());
                 return mDb.update(CELL_TABLE, cellValues,"CellID=?", new String[]{Integer.toString(cell.getCID())});
             } else {
-                Log.v(TAG, "New CID found, insert into local db (DBi):: " + cell.getCID());
+                Log.v(TAG,  mTAG + ": New CID found, insert into local db (DBi):: " + cell.getCID());
                 return mDb.insert(CELL_TABLE, null, cellValues);
             }
         }
@@ -328,9 +329,9 @@ public class AIMSICDDbAdapter {
         // Ensure we don't save multiple cell-id entries into DB, when re-downloading OCID data.
         if (openCellExists(cellID)) {
             // For performance it is probably better to skip than update? Also if OCID was recently corrupted?
-            Log.v(TAG, "CID already found in DBe_import! Skipping: " + cellID );
+            Log.v(TAG,  mTAG + ": CID already found in DBe_import! Skipping: " + cellID );
             return 1;
-            //Log.v(TAG, "CID already found in DBe_import! Updating: " + cellID );
+            //Log.v(TAG,  mTAG + ": CID already found in DBe_import! Updating: " + cellID );
             //return mDb.update(OPENCELLID_TABLE, cellIDValues, "CellID=?", new String[]{Integer.toString(cellID)});
         } else {
             return mDb.insert(OPENCELLID_TABLE, null, cellIDValues);
@@ -362,8 +363,10 @@ public class AIMSICDDbAdapter {
             locationValues.put("Lat",       latitude);
             locationValues.put("Lng",       longitude);
             locationValues.put("Signal",    signalInfo);
-            locationValues.put("Connection", cellInfo); // This is has multiple items...
+            locationValues.put("Connection", cellInfo); // has multiple items...
 
+            // TODO:    This is a strange check, why are we checking for Lat,Lon,Signal?
+            // URGENT:  This need to be thought about...
             if (locationExists(cellID, latitude, longitude, signalInfo)) {
                 return mDb.update(LOCATION_TABLE, locationValues, "CellID=?",
                         new String[]{Integer.toString(cellID)});
@@ -383,7 +386,7 @@ public class AIMSICDDbAdapter {
      *
      */
     public int deleteCell(int cellId) {
-        Log.i(TAG, "Cell deleted: " + cellId);
+        Log.i(TAG,  mTAG + ": Deleted CID: " + cellId);
         return mDb.delete(CELL_TABLE, "CellID = ?", new String[]{ String.valueOf(cellId) });
     }
 
@@ -391,11 +394,11 @@ public class AIMSICDDbAdapter {
      * Description:     Inserts log data into the EventLog table
      *
      * Notes:           Table item order:
-     *                  Time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
+     *                  time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
      *
      * @return row id or -1 if error
      */
-     public long insertDetection(long Time,
+     public long insertDetection(//long Time,
                                  int LAC,
                                  int CID,
                                  int PSC,
@@ -407,7 +410,7 @@ public class AIMSICDDbAdapter {
 
         // Populate Content Values for Insert or Update using column names
         ContentValues detectionValues = new ContentValues();
-        detectionValues.put("time",         Time);
+        //detectionValues.put("time",         Time);
         detectionValues.put("LAC",          LAC);
         detectionValues.put("CID",          CID);
         detectionValues.put("PSC",          PSC);
@@ -417,7 +420,7 @@ public class AIMSICDDbAdapter {
         detectionValues.put("DF_id",        DF_id);
         detectionValues.put("DF_description", DF_description);
 
-        Log.v(TAG, "Insert Detection into EventLog Table: " + CID);
+        Log.v(TAG, mTAG + ": Insert Detection into EventLog Table: " + CID);
         return mDb.insert(TABLE_EVENTLOG, null, detectionValues);
      }
 
@@ -453,7 +456,7 @@ public class AIMSICDDbAdapter {
      */
     public Cursor getEventLogData() {
         return mDb.query(TABLE_EVENTLOG,
-                new String[]{"time", "LAC", "CID", "PSC", "gpsd_lat","gpsd_lon", "gpsd_accu", "DF_id", "DF_description"},
+                new String[]{"time", "LAC", "CID", "PSC", "gpsd_lat","gpsd_lon", "gpsd_accu", "DF_id", "DF_desc"},
                 null, null, null, null, null
         );
     }
@@ -543,7 +546,7 @@ public class AIMSICDDbAdapter {
      *  Description:    This checks if a cell with a given (CID,Lat,Lon,Signal) already exists
      *                  in the "locationinfo" (DBi_measure) database.
      *
-     *  Used:           ??
+     *  Used:           insertLocation()
      *
      *  Notes:          a) seem excessive to select on lat,lon and signal...
      */
@@ -552,7 +555,6 @@ public class AIMSICDDbAdapter {
                         " WHERE CellID = " + cellID +
                         " AND Lat = " + lat + " AND Lng = " + lng + " AND Signal = " + signal, null);
         boolean exists = cursor.getCount() > 0;
-        Log.i(TAG, "Cell exists in location table?: " + exists);
         cursor.close();
         return exists;
     }
@@ -565,7 +567,7 @@ public class AIMSICDDbAdapter {
         Cursor cursor = mDb.rawQuery("SELECT 1 FROM " + CELL_TABLE +
                         " WHERE CellID = " + cellID, null);
         boolean exists = cursor.getCount() > 0;
-        Log.v(TAG, "Does CID: " + cellID + " exist in DBi_bts? " + exists);
+        //Log.v(TAG, mTAG + ": Does CID: " + cellID + " exist in DBi_bts? " + exists);
         cursor.close();
         return exists;
     }
@@ -578,14 +580,7 @@ public class AIMSICDDbAdapter {
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE +
                         " WHERE CellID = " + cellID, null);
         boolean exists = cursor.getCount() > 0;
-
-        if (!exists) {
-            Log.v(TAG, "Does CID: " + cellID + " exist in DBe_import? " + exists);
-            // This is probably not the right place to do detection. --E:V:A
-            // TODO: remove
-            // Time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
-            insertDetection(1234, 001, cellID, 111, 1.1, 2.2, 3, 2, "CellID not found in OCID Database");
-        }
+        //Log.v(TAG, mTAG + ": Does CID: " + cellID + " exist in DBe_import? " + exists);
         cursor.close();
         return exists;
     }
@@ -600,21 +595,26 @@ public class AIMSICDDbAdapter {
      *                  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215
      *                  where it is referred to as "Detection Module" (DET)...
      *
-     *  Notes:
-     *              2015-01-20:
+     *              [ ] Seem we're querying too much, when we only need items: 1,3,4,8,11
+     *                  (Try to avoid over query to improve performance.)
+     *
+     *              [ ]  V V V V
+     *
      *              This is using the LAC found by API and comparing to LAC found from a previous
      *              measurement in the "DBi_measure". This is NOT depending on "DBe_import".
      *              This works for now...but we probably should consider populating "DBi_measure"
-     *              as soon as the API gets a new LAC. Then the detection can be done by SQL.
-     *              -- E:V:A
+     *              as soon as the API gets a new LAC. Then the detection can be done by SQL,
+     *              and by just comparing last 2 LAC entries for same CID.
+     *
      *
      */
     public boolean checkLAC(Cell cell) {
         Cursor cursor = mDb.query(CELL_TABLE,
-                new String[]{"CellID", "Lac", "Net", "Lat", "Lng", "Signal", "Mcc", "Mnc",
+                        // TODO: We only need:  Lac,Lat,Lng,Accuracy,Timestamp
+                        new String[]{"CellID", "Lac", "Net", "Lat", "Lng", "Signal", "Mcc", "Mnc",
                         "Accuracy", "Speed", "Direction", "Timestamp"},
-                "CellID=" + cell.getCID(),
-                null, null, null, null);
+                        "CellID=" + cell.getCID(),
+                        null, null, null, null);
 
         while (cursor.moveToNext()) {
             // 1=LAC, 8=Accuracy, 11=Time
@@ -623,27 +623,21 @@ public class AIMSICDDbAdapter {
                 //        + " Current LAC(DBi): " + cell.getLAC()
                 //        + " Database LAC(DBe): " + cursor.getInt(0));
                 Log.i(TAG, "ALERT: Changing LAC on CID: " + cell.getCID()
-                        + " LAC(API): " + cell.getLAC()
-                        + " LAC(DBi): " + cursor.getInt(1) );
+                            + " LAC(API): " + cell.getLAC()
+                            + " LAC(DBi): " + cursor.getInt(1) );
 
-                // Insert data into EventLog table
-                // Time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
-                insertDetection(cursor.getInt(11), cell.getLAC(), cell.getCID(), cell.getPSC(),
-                                cursor.getDouble(3), cursor.getDouble(4),
-                                cursor.getInt(8), 1, "Changing LAC");
+                // Insert detection data into EventLog table
+                // Time,LAC,CID,PSC,  gpsd_lat,gpsd_lon,gpsd_accu,  DF_id,DF_desc
+                insertDetection(cell.getLAC(), cell.getCID(), cell.getPSC(),
+                                cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(8),
+                                1, "Changing LAC");
 
                 cursor.close();
                 return false;
             } else {
-                //Log.v(TAG, "LAC checked - no change.  CID:" + cell.getCID() + " LAC(DBi):" + cell.getLAC() +
-                //    " LAC(DBe): " + cursor.getInt(0) );
                 Log.v(TAG, "LAC checked - no change on CID:" + cell.getCID()
-                        + " LAC(API): " + cell.getLAC()
-                        + " LAC(DBi): " + cursor.getInt(1) );
-
-            // **** only for testing EventLog Table - until correct values are saved in table EventLog
-            //insertDetection(cell.getTimestamp(), cell.getLAC(), cell.getCID(), cell.getPSC(), cell.getLat(), cell.getLon(), cell.getAccuracy(), 0, "LAC checked - no changes");
-            //insertDetection(cursor.getInt(11), cell.getLAC(), cell.getCID(), cell.getPSC(), cursor.getDouble(3), cursor.getDouble(4), cursor.getInt(8), 99, "write test into EventLog_Table see LacCheck routine");
+                            + " LAC(API): " + cell.getLAC()
+                            + " LAC(DBi): " + cursor.getInt(1) );
             }
         }
         cursor.close();
@@ -676,8 +670,12 @@ public class AIMSICDDbAdapter {
         return loc;
     }
 
-    // TODO: What is this used for??
-    // Seem to remove all but the last row, unless its invalid?
+    /**
+     *  Description:    Remove all but the last row, unless its CID is invalid...
+     *
+     *  Note:           Q: What is this used for?
+     *                  A: It used in the SignalStrengthTracker
+     */
     public void cleanseCellTable() {
         // This removes all but the last row in the "cellinfo" table
         mDb.execSQL("DELETE FROM " + CELL_TABLE + " WHERE " + COLUMN_ID + " NOT IN (SELECT MAX(" + COLUMN_ID + ") FROM " + CELL_TABLE + " GROUP BY CellID)");
@@ -730,7 +728,7 @@ public class AIMSICDDbAdapter {
             c.close();
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "Error creating OpenCellID Upload Data: " + e);
+            Log.e(TAG, mTAG + ": Error creating OpenCellID Upload Data: " + e);
             return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
@@ -779,7 +777,7 @@ public class AIMSICDDbAdapter {
             }
 
         } catch (Exception e) {
-            Log.e(TAG, "Error populating Default MCC Data: " + e);
+            Log.e(TAG, mTAG + ": Error populating Default MCC Data: " + e);
         }
     }
 
@@ -818,25 +816,30 @@ public class AIMSICDDbAdapter {
      */
     public boolean updateOpenCellID() {
         String fileName = Environment.getExternalStorageDirectory()
-                + "/AIMSICD/OpenCellID/opencellid.csv";
+                                        + "/AIMSICD/OpenCellID/opencellid.csv";
         File file = new File(fileName);
         try {
             if (file.exists()) {
                 CSVReader csvReader = new CSVReader(new FileReader(file));
                 List<String[]> csvCellID = new ArrayList<>();
                 String next[];
+
                 int count = 0;
-                AIMSICD.mProgressBar.setProgress(0);
-                AIMSICD.mProgressBar.setMax(csvCellID.size());
-                Log.i(TAG, "updateOpenCellID: OCID CSV size (lines?): " + csvCellID.size() );
+                int csvSize = csvCellID.size(); // This might not work...
+                Log.i(TAG, mTAG + ":updateOpenCellID: OCID CSV size (csvSize): " + csvSize );
+
+                //AIMSICD.mProgressBar.setProgress(0);
+                //AIMSICD.mProgressBar.setMax(csvSize);
                 while ((next = csvReader.readNext()) != null) {
                     csvCellID.add(next);
-                    AIMSICD.mProgressBar.setProgress(count++);
+                    //AIMSICD.mProgressBar.setProgress(count++);
                 }
 
-                AIMSICD.mProgressBar.setProgress(0);
                 if (!csvCellID.isEmpty()) {
                     int lines = csvCellID.size();
+                    Log.i(TAG, mTAG + ":updateOpenCellID: OCID CSV size (lines): " + lines );
+                    AIMSICD.mProgressBar.setProgress(0);
+                    AIMSICD.mProgressBar.setMax(lines);
                     for (int i = 1; i < lines; i++) {
                         AIMSICD.mProgressBar.setProgress(i);
 
@@ -868,7 +871,7 @@ public class AIMSICDDbAdapter {
             }
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "Error parsing OpenCellID data: " + e.getMessage());
+            Log.e(TAG, mTAG + ": Error parsing OpenCellID data: " + e.getMessage());
             return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
@@ -914,7 +917,6 @@ public class AIMSICDDbAdapter {
                             AIMSICD.mProgressBar.setProgress(i);
                             switch (table) {
 
-                                // TODO: Please add // comments to describe each field!!
                                 case CELL_TABLE:
                                     insertCell(
                                             // Bug here? (10,11,12,13)?
@@ -983,7 +985,7 @@ public class AIMSICDDbAdapter {
             }
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "restoreDB() " + e);
+            Log.e(TAG, mTAG + ": restoreDB() " + e);
             return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
@@ -1027,16 +1029,16 @@ public class AIMSICDDbAdapter {
         String execString = "/system/xbin/sqlite3 " + aimdir + "aimsicd.db '.backup " + file + "'";
 
         try {
-            Log.i(TAG, "dumpDB() Attempting to dump DB to: " + file + "\nUsing: \"" + execString + "\"\n");
+            Log.i(TAG, mTAG + ":dumpDB() Attempting to dump DB to: " + file + "\nUsing: \"" + execString + "\"\n");
             // We need SU here and cd...
             CMDProcessor.runSuCommand(execString);
             //CMDProcessor.runSuCommand(execString).getStdout(); // Need import!
             //Process process = Runtime.getRuntime().exec(execString);
 
         } catch (Exception e) {
-            Log.e(TAG, "dumpDB() Failed to export DB dump file: " + e);
+            Log.e(TAG, mTAG + ":dumpDB() Failed to export DB dump file: " + e);
         }
-        Log.i(TAG, "dumpDB() Database dumped to: " + file);
+        Log.i(TAG, mTAG + ":dumpDB() Database dumped to: " + file);
 
     }
 
@@ -1060,7 +1062,7 @@ public class AIMSICDDbAdapter {
             }
             return true;
         } catch (Exception ioe) {
-            Log.e(TAG, "backupDB() " + ioe);
+            Log.e(TAG, mTAG + ":backupDB() Error: " + ioe);
             return false;
         }
     }
@@ -1074,7 +1076,7 @@ public class AIMSICDDbAdapter {
      * @param tableName String representing table name to export
      */
     private void backup(String tableName) {
-        Log.i(TAG, "Database Backup: " + DB_NAME);
+        Log.i(TAG, mTAG + ": Database Backup: " + DB_NAME);
 
         File dir = new File(FOLDER);
         if (!dir.exists()) { dir.mkdirs(); }  // We should probably add some more error handling here.
@@ -1083,7 +1085,7 @@ public class AIMSICDDbAdapter {
         try {
             file.createNewFile();
             CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
-            Log.d(TAG, "table name " + tableName);
+            Log.d(TAG, mTAG + ": table name " + tableName);
             open();
             Cursor c = mDb.rawQuery("SELECT * FROM " + tableName, new String[0]);
 
@@ -1104,12 +1106,12 @@ public class AIMSICDDbAdapter {
             c.close();
 
         } catch (Exception e) {
-            Log.e(TAG, "Error exporting table: " + tableName + " " + e);
+            Log.e(TAG, mTAG + ": Error exporting table: " + tableName + " " + e);
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
         }
 
-        Log.i(TAG, "Database Export complete.");
+        Log.i(TAG, mTAG + ": Database Export complete.");
     }
 
 
@@ -1174,7 +1176,7 @@ public class AIMSICDDbAdapter {
         //===  DELETE bad cells from BTS data
         //=============================================================
 
-        Log.d("checkDBe()", "Attempting to delete bad import data from DBe_import table...");
+        Log.d(TAG, mTAG + ":checkDBe() Attempting to delete bad import data from DBe_import table...");
 
         // =========== samples ===========
         sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE Samples < 1";
@@ -1210,7 +1212,7 @@ public class AIMSICDDbAdapter {
         //sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE CellID > 65534 AND (Net!=3 OR Net!=13)";
         //mDb.rawQuery(sqlq, null);
 
-        Log.i("checkDBe()", "Deleted BTS entries from DBe_import table with bad LAC/CID...");
+        Log.i(TAG, mTAG + ":checkDBe() Deleted BTS entries from DBe_import table with bad LAC/CID...");
 
         //=============================================================
         //===  UPDATE "rej_cause" in BTS data (DBe_import)
@@ -1234,7 +1236,7 @@ public class AIMSICDDbAdapter {
     //      Signal Strengths Table
     // =======================================================================================
     public void cleanseCellStrengthTables(long maxTime) {
-        Log.d(TAG, "Cleaning " + CELL_SIGNAL_TABLE + " WHERE timestamp < " + maxTime);
+        Log.d(TAG, mTAG + ": Cleaning " + CELL_SIGNAL_TABLE + " WHERE timestamp < " + maxTime);
         mDb.execSQL("DELETE FROM " + CELL_SIGNAL_TABLE + " WHERE timestamp < " + maxTime);
     }
 
@@ -1331,7 +1333,7 @@ public class AIMSICDDbAdapter {
                     "Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);";
             database.execSQL(SMS_DATABASE_CREATE);
 
-            // Populate the Silent SMS table with a test entry
+            // Populate the Silent SMS table with a dummy entry
             String ZeroSMS = "INSERT INTO " + SILENT_SMS_TABLE +
                     " (Address,Display,Class,ServiceCtr,Message) " +
                     "VALUES ('ADREZZ','DizzPlay','CLAZZ','SMSC','DaTestMessage');";
@@ -1447,7 +1449,7 @@ public class AIMSICDDbAdapter {
             /**
              *  Table:      TABLE_EVENTLOG (EventLog)
              *  What:       Event Log Database
-             *  Columns:    
+             *  Columns:    time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
              */
             /*String TABLE_EVENTLOG_CREATE =
             "CREATE TABLE EventLog  (" +
@@ -1474,10 +1476,19 @@ public class AIMSICDDbAdapter {
                     "PSC           	INTEGER," +
                     "gpsd_lat      	REAL," +
                     "gpsd_lon      	REAL," +
-                    "gpsd_accu     	REAL," +
+                    "gpsd_accu     	INTEGER," +
                     "DF_id         	INTEGER," +
-                    "DF_description	TEXT" + ");";
+                    "DF_desc    	TEXT" + ");";
             database.execSQL(TABLE_EVENTLOG_CREATE);
+
+            // Populate the EventLog table with a dummy entry
+            // time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
+            //insertDetection(1234,1,543210,111,1.1,2.2,3.3,2,"CellID not found in OCID Database");
+
+            String ZeroEvent = "INSERT INTO " + TABLE_EVENTLOG +
+                    " (LAC,CID,PSC, gpsd_lat,gpsd_lon,gpsd_accu, DF_id,DF_desc) " +
+                    "VALUES (12345,543210,111, 54.6,25.2,100, 2,'CellID not found in OCID Database');";
+            database.execSQL(ZeroEvent);
 
             // Re-populate the default MCC location table
             populateDefaultMCC(database);
@@ -1493,7 +1504,7 @@ public class AIMSICDDbAdapter {
         // and then calls the table create process.
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion
+            Log.w(TAG, mTAG + ": Upgrading database from version " + oldVersion + " to " + newVersion
                         + ", and destroy all old data.");
 
             db.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE);
