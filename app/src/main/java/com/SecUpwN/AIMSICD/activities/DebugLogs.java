@@ -38,7 +38,8 @@ import java.io.InputStreamReader;
  *
  *          2015-01-27  E:V:A   Added "getprop|sort" info to log.
  *          2015-01-28  Toby    Fixed "getprop" info to log (but not sorted)
- *          2015-02-11  E:V:A   Increased to 500 lines and removed "-d" and incl. radio log
+ *          2015-02-11  E:V:A   Increased to 500 lines and removed "-d" and
+ *                              incl. radio log, but not working. Permission problem?
  *
  */
 
@@ -167,9 +168,8 @@ public class DebugLogs extends BaseActivity {
                 // Send Error Log
                 try {
                     String helpUs = "For best help, please describe the problem you had, before sending us these logs.\n";
-                    String log = helpUs +
-                            "\n\n" + "GETPROP:" + "\n\n" + getProp() +
-                            "\n\n" + "LOGCAT:" + "\n\n" + getLogs() + helpUs;
+                    String log = helpUs + "\n\n" + "GETPROP:" + "\n\n" + getProp() +
+                                          "\n\n" + "LOGCAT:" + "\n\n" + getLogs() + "\n\n" + helpUs;
 
                     // show a share intent
                     Intent intent = new Intent(Intent.ACTION_SEND);
@@ -204,16 +204,19 @@ public class DebugLogs extends BaseActivity {
      *  Notes:
      *
      *  1) " *:V" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
+     *          ==> Now disabled!
      *  2) Need to silent some spammy Samsung Galaxy's:     " AbsListView:S PackageInfo:S"
      *  3) Need to silent some Qualcomm QMI:                " RILQ:S"
-     *  4) "-d" is not necessary when using "-t".
+     *  4) Need to silent some Qualcomm GPS:                " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S"
+     *  5) "-d" is not necessary when using "-t".
      *
      */
     private String getLogs() throws IOException {
         return runProcess(
-            "logcat -t 500 -v time -b main" +
+            "logcat -t 500 -v brief -b main" +
                     (isRadioLogs ? " -b radio RILQ:S" : "") +
-                    " AbsListView:S PackageInfo:S *:D"
+                    " AbsListView:S PackageInfo:S" +
+                    " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S" + " *:D"
         );
     }
 

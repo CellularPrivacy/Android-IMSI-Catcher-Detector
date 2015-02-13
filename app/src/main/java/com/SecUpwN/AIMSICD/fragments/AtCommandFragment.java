@@ -226,14 +226,15 @@ public class AtCommandFragment extends Fragment {
         public void onClick(View v) {
             if (mAtCommand.getText() != null) {
                 String command = mAtCommand.getText().toString();
-                if (command.toUpperCase().indexOf("AT") == 0) {
+
+                //if (command.toUpperCase().indexOf("AT") == 0) {
                 //if (command.indexOf("AT") == 0 || command.indexOf("at") == 0) {
                     Log.i("AIMSICD", "AT Command Detected: " + command );
                     executeAT();
-                } else {
-                    Log.i("AIMSICD", "Terminal Command Detected");
-                    executeCommand();
-                }
+                //} else {
+                //    Log.i("AIMSICD", "Terminal Command Detected");
+                //    executeCommand();
+                //}
             }
         }
     }
@@ -301,12 +302,11 @@ public class AtCommandFragment extends Fragment {
             //==================================================================
 
             // QC: Check for /dev/smd[0-7] devices
-            Command cmd = new Command(0, "\\ls /dev/smd*") {
+            Command cmd = new Command(0, "\\ls /dev/smd[0-7]") {
                 @Override
                 public void commandOutput(int id, String line) {
                     if (id == 0) {
-                        if (!line.trim().equals("") &&
-                                !mSerialDevices.contains("/dev/" + line.trim())) {
+                        if (!line.trim().equals("") && !mSerialDevices.contains("/dev/" + line.trim())) {
                             mSerialDevices.add("/dev/" + line.trim());
                             mAtResponse.append("Found: " + line.trim());
                         }
@@ -314,18 +314,15 @@ public class AtCommandFragment extends Fragment {
                     super.commandOutput(id, line);
                 }
             };
-
             shell.add(cmd);
             commandWait(shell, cmd);
 
-            /*
             // MTK: Check for ATCI devices and add found location to the serial device list
-            Command cmd = new Command(0, "\\ls /dev/radio | grep atci*") {
+            cmd = new Command(1, "\\ls /dev/radio | grep atci*") {
                 @Override
                 public void commandOutput(int id, String line) {
                     if (id == 0) {
-                        if (!line.trim().equals("") &&
-                                !mSerialDevices.contains("/dev/radio/" + line.trim())) {
+                        if (!line.trim().equals("") && !mSerialDevices.contains("/dev/radio/" + line.trim())) {
                             mSerialDevices.add("/dev/radio/" + line.trim());
                             mAtResponse.append("Found: " + line.trim());
                         }
@@ -333,15 +330,14 @@ public class AtCommandFragment extends Fragment {
                     super.commandOutput(id, line);
                 }
             };
-
             shell.add(cmd);
             commandWait(shell, cmd);
-            */
+
 
             // Now try XMM/XGOLD modem config
             File xgold = new File("/system/etc/ril_xgold_radio.cfg");
             if (xgold.exists() && xgold.isFile()) {
-                cmd = new Command(1, "cat /system/etc/ril_xgold_radio.cfg | "
+                cmd = new Command(2, "cat /system/etc/ril_xgold_radio.cfg | "
                                             + "grep -E \"atport*|dataport*\"") {
 
                     @Override
@@ -356,7 +352,6 @@ public class AtCommandFragment extends Fragment {
                         super.commandOutput(id, line);
                     }
                 };
-
                 shell.add(cmd);
                 commandWait(shell, cmd);
             }
@@ -461,7 +456,6 @@ public class AtCommandFragment extends Fragment {
 
                         super.commandOutput(id, line);
                     }
-
                 };
 
                 Log.i("AIMSICD", "Trying to executeCommand: " + cmd);
