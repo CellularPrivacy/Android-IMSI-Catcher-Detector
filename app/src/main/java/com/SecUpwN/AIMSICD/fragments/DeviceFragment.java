@@ -120,6 +120,9 @@ public class DeviceFragment extends Fragment {
             mAimsicdService.getCellTracker().refreshDevice();
             Device mDevice = mAimsicdService.getCellTracker().getDevice();
             switch (mDevice.getPhoneID()) {
+
+                case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
+                case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
                 case TelephonyManager.PHONE_TYPE_GSM: {
                     content = (TextView) mView.findViewById(R.id.network_lac);
                     content.setText(String.valueOf(mAimsicdService.getCell().getLAC()));
@@ -129,6 +132,7 @@ public class DeviceFragment extends Fragment {
                     content.setText(String.valueOf(mAimsicdService.getCell().getCID()));
                     break;
                 }
+
                 case TelephonyManager.PHONE_TYPE_CDMA: {
                     tr = (TableRow) mView.findViewById(R.id.cdma_netid);
                     tr.setVisibility(View.VISIBLE);
