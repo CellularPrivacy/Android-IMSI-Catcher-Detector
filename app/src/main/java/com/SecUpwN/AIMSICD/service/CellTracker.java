@@ -378,7 +378,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 responseFromServer = content.toString("UTF-8");
                 result.getEntity().consumeContent();
             }
-            Log.d("OCID Reached 24hr API key limit:", responseFromServer);
+            Log.d("AIMSICD", "CellTracker: OCID Reached 24hr API key limit: " + responseFromServer);
             return responseFromServer;
 
         } else {
@@ -389,7 +389,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             httpGet = null;
             result = null;
 
-            Log.d("OCID", "OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
+            Log.d("AIMSICD", "CellTracker: OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
             throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
         }
     }
@@ -427,13 +427,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
                 try {
-                    Log.i(TAG, mTAG + ": neighbouringCellInfo empty: trying " + i);
+                    Log.d(TAG, mTAG + ": neighbouringCellInfo empty: trying " + i);
                     NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
                         if (neighboringCellInfo.size() > 0) {
                             // Can we think of a better log message here?
-                            Log.i(TAG, mTAG + ": neighbouringCellInfo found on " + i + " try. (time based)");
+                            Log.d(TAG, mTAG + ": neighbouringCellInfo found on " + i + " try. (time based)");
                             break;
                         } else {
                             continue;
@@ -458,7 +458,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         /**
          *  Description:    This snippet sets a global variable (now property) to indicate
          *                  if Neighboring cells info CAN be obtained or has been obtained
-         *                  previously. If it has been amd suddenly there are none, we can
+         *                  previously. If it has been and suddenly there are none, we can
          *                  raise a flag of CID being suspicious.
          *
          *                  The logic is:
@@ -1077,15 +1077,19 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         // Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
                         // See news in: issue #290  and compare to AIMSICDDbAdapter.java
                         // if ok then remove/change these comments.
-                        if (!dbHelper.openCellExists(mMonitorCell.getCID())){
-                            Log.v(TAG, mTAG + ": ALERT: CID -NOT- in OCID DB: " + mMonitorCell.getCID());
-                            // TODO: Do we need to re-insert this CID somewhere? (Probably not? --E:V:A)
-                            mCellIdNotInOpenDb = true;
-                            setNotification();
-                        } else {
-                            mCellIdNotInOpenDb = false;
+                        if ( Boolean.valueOf( Helpers.getProp("aimsicd.ocid_downloaded") ) ) {
+                            if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
+                                Log.i(TAG, "ALERT: New CID -NOT- found in DBe_import: " + mMonitorCell.getCID());
+
+                                // Code Place-holder: TODO: Add to EventLog table!!
+
+                                mCellIdNotInOpenDb = true;
+                                setNotification();
+                            } else {
+                                mCellIdNotInOpenDb = false;
+                            }
+                            dbHelper.close();
                         }
-                        dbHelper.close();
                     }
                     break;
 
