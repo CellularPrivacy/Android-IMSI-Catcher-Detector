@@ -24,6 +24,10 @@ import java.io.InputStreamReader;
  *  Description:    This class is providing for the Debug log feature in the swipe menu.
  *                  It reads the last 500 lines from the Logcat ring buffers: main and radio.
  *
+ *  Dependencies:
+ *                  menu/activity_debug_logs.xml **
+ *                  layout/activity_debug_logs.xml
+ *                  values/strings.xml
  *  Issues:
  *
  *          [ ]     Are we clearing logcat when starting it? If we are, we miss all previous errors
@@ -33,6 +37,9 @@ import java.io.InputStreamReader;
  *          [ ]     Add the output of "getprop |sort". But Java CLI processes doesn't handle pipes.
  *                  Try with:  Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
  *
+ *          [ ]     Apparently the button for radio log has been added to the strings.xml,
+ *                  but never implemented here. We need to add the buffer selector button
+ *                  to the top bar, next to email icon button. **
  *
  *  ChangeLog:
  *
@@ -47,12 +54,13 @@ import java.io.InputStreamReader;
 public class DebugLogs extends BaseActivity {
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
-    private boolean isRadioLogs = true;
+    private boolean isRadioLogs = true; // Including this, should be a toggle.
 
     private TextView logView = null;
     private Button btnClear = null;
     private Button btnCopy = null;
     private Button btnStop = null;
+    //private Button btnRadio = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +73,7 @@ public class DebugLogs extends BaseActivity {
         btnClear = (Button) findViewById(R.id.btnClear);
         btnStop = (Button) findViewById(R.id.btnStopLogs);
         btnCopy = (Button) findViewById(R.id.btnCopy);
-
+        //btnRadio = (Button) findViewById(R.id.btnRadio);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -81,7 +89,7 @@ public class DebugLogs extends BaseActivity {
                     clearLogs();
                     //Log.d("DebugLogs", "Logcat clearing disabled!");
                 } catch (Exception e) {
-                    Log.e("DebugLogs", "Error clearing logs", e);
+                    Log.e("AIMSICD", "DebugLogs: Error clearing logs", e);
                 }
             }
         });
@@ -107,6 +115,23 @@ public class DebugLogs extends BaseActivity {
                 }
             }
         });
+
+        /*
+        // logcat radio buffer toggle on/off
+        btnRadio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isRadioLogs) {
+                    isRadioLogs = false;
+                    btnRadio.setText(getString(R.string.btn_radio_logs));
+                } else {
+                    isRadioLogs = true;
+                    btnRadio.setText(getString(R.string.btn_main_logs));
+                }
+            }
+        });
+        */
+
     }
 
     @Override
@@ -127,7 +152,7 @@ public class DebugLogs extends BaseActivity {
             logUpdater = new LogUpdaterThread();
             logUpdater.start();
         } catch (Exception e) {
-            Log.e("DebugLogs", "Error starting log updater thread", e);
+            Log.e("AIMSICD", "DebugLogs: Error starting log updater thread", e);
         }
         btnStop.setText(getString(R.string.btn_stop_logs));
     }
@@ -180,7 +205,7 @@ public class DebugLogs extends BaseActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
                 } catch (IOException e) {
-                    Log.e("DebugLogs", "Error reading logs", e);
+                    Log.e("AIMSICD", "DebugLogs: Error reading logs", e);
                 }
             }
         }.start();
@@ -229,6 +254,7 @@ public class DebugLogs extends BaseActivity {
 
     /**
      * Run a shell command and return the results
+     *
      * @param command
      * @return
      * @throws IOException
@@ -262,7 +288,7 @@ public class DebugLogs extends BaseActivity {
                 try {
                     Runtime.getRuntime().exec("logcat -c -b main -b system -b radio -b events");
                 } catch (Exception e) {
-                    Log.e("DebugLogs", "Error clearing logs", e);
+                    Log.e("AIMSICD", "DebugLogs: Error clearing logs", e);
                 }
 
                 runOnUiThread(new Runnable() {
@@ -301,7 +327,7 @@ public class DebugLogs extends BaseActivity {
                         });
                     }
                 } catch (Exception e) {
-                    Log.e("DebugLogs", "Error updating logs", e);
+                    Log.e("AIMSICD", "DebugLogs: Error updating logs", e);
                 }
                 try { Thread.sleep(1000); } catch (Exception e) {}
             }
