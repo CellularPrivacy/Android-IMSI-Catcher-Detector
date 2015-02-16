@@ -244,12 +244,13 @@
 
     <!-- Debug logs -->
     <string name="title_debug_logs">Debug Logs</string>
-    <string name="btn_radio_logs">Radio Logs</string>
-    <string name="btn_app_logs">App Logs</string>
+    <string name="btn_radio_logs">Radio</string>
+    <string name="btn_main_logs">Main</string>
     <string name="btn_clear_logs">Clear</string>
     <string name="btn_send_email">Email</string>
     <string name="btn_copy_to_clipboard">Copy</string>
     <string name="msg_copied_to_clipboard">Logs copied to clipboard</string>
     <string name="btn_stop_logs">Stop</string>
     <string name="btn_start_logs">Start</string>
+
 </resources>
