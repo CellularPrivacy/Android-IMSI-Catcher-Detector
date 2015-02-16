@@ -481,8 +481,7 @@ import java.util.List;
     // Use this when invoking from SU shell (not recommended!)
     public static String setProp(String prop, String value) {
         // We might wanna return the success of this. From mksh it is given by "$?" (0=ok, 1=fail)
-        //return CMDProcessor.runSuCommand("setprop " + prop + " " + value);
-        return CMDProcessor.runSuCommand("setprop " + prop + " " + value + "; echo \"$?\"").getStdout();
+        return CMDProcessor.runSuCommand("setprop " + prop + " " + value).getStdout();
     }
 
     /**
@@ -503,7 +502,7 @@ import java.util.List;
         try {
             result = SystemPropertiesReflection.set(context, prop, value);
         } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "Failed to get system property: " + prop);
+            Log.e(TAG, "Failed to Set system property: " + prop);
         }
         return result == null ? def : result;
     }
