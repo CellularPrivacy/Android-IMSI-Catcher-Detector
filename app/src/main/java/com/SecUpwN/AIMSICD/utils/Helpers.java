@@ -464,10 +464,6 @@ import java.util.List;
         return Arrays.asList(Arrays.copyOf(display, newLength));
     }
 
-    public static String getProp(String prop) {
-        return CMDProcessor.runSuCommand("getprop " + prop).getStdout();
-    }
-
     public static String getSystemProp(Context context, String prop, String def) {
         String result = null;
         try {

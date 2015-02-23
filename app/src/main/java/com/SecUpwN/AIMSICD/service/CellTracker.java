@@ -1077,7 +1077,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         // Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
                         // See news in: issue #290  and compare to AIMSICDDbAdapter.java
                         // if ok then remove/change these comments.
-                        if ( Boolean.valueOf( Helpers.getProp("aimsicd.ocid_downloaded") ) ) {
+                        if ( Boolean.valueOf( Helpers.getSystemProp(CellTracker.this.context, "aimsicd.ocid_downloaded", "false") ) ) {
                             if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
                                 Log.i(TAG, "ALERT: New CID -NOT- found in DBe_import: " + mMonitorCell.getCID());
 
