@@ -228,14 +228,8 @@ public class AtCommandFragment extends Fragment {
         public void onClick(View v) {
             if (mAtCommand.getText() != null) {
                 String command = mAtCommand.getText().toString();
-                if (command.toUpperCase().indexOf("AT") == 0) {
-	            //if (command.indexOf("AT") == 0 || command.indexOf("at") == 0) {
-		            Log.i("AIMSICD", "AT Command Detected: " + command );
-		            executeAT();
-                } else {
-                    Log.i("AIMSICD", "Terminal Command Detected");
-                    executeCommand();
-                }
+                Log.i("AIMSICD", "AT Command Detected: " + command);
+                executeAT();
             }
         }
     }
@@ -383,8 +377,7 @@ public class AtCommandFragment extends Fragment {
             try {
                 mCommandTerminal = new TtyPrivFile(mSerialDevice);
             } catch (IOException e) {
-                // XXX
-                throw new RuntimeException(e);
+                mAtResponse.append(e.toString());
             }
         }
     }
@@ -396,29 +389,32 @@ public class AtCommandFragment extends Fragment {
         if (cmd != null && cmd.length() != 0) {
             //Log.d("AIMSICD", "executeAT: attempting to send: " + cmd.toString() );
             openSerialDevice();
-            mCommandTerminal.send(cmd.toString(), new Handler(Looper.getMainLooper()) {
-                @Override
-                public void handleMessage(Message message) {
-                    if (message.obj instanceof List) {
-                        List<String> lines = ((List<String>) message.obj);
-                        StringBuffer response = new StringBuffer();
-                        for (String line : lines) {
-                            response.append(line);
-                            response.append('\n');
-                        }
-                        if (response.length() != 0) {
-                            mAtResponse.append(response);
-                        }
+            if (mCommandTerminal != null) { // if openSerialDevice() did not fail
+                mCommandTerminal.send(cmd.toString(), new Handler(Looper.getMainLooper()) {
+                    @Override
+                    public void handleMessage(Message message) {
+                        if (message.obj instanceof List) {
+                            List<String> lines = ((List<String>) message.obj);
+                            StringBuffer response = new StringBuffer();
+                            for (String line : lines) {
+                                response.append(line);
+                                response.append('\n');
+                            }
+                            if (response.length() != 0) {
+                                mAtResponse.append(response);
+                            }
 
-                    } else if (message.obj instanceof IOException) {
-                        mAtResponse.append("IOException: "+((IOException)message.obj).getMessage()+"\n");
+                        } else if (message.obj instanceof IOException) {
+                            mAtResponse.append("IOException: " + ((IOException) message.obj).getMessage() + "\n");
+                        }
                     }
-                }
-            }.obtainMessage());
+                }.obtainMessage());
+            }
         }
 
     }
 
+    // old shell command support
     private void executeCommand() {
         if (mAtCommand.getText() != null) {
 

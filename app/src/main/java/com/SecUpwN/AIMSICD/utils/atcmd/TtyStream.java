@@ -15,23 +15,23 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-    /**
-     *  Description:    ...
-     *
-     *  Issues:     [ ]
-     *
-     *              [ ]
-     *
-     *
-     *  Notes:
-     *
-     *
-     *  ChangeLog:
-     *
-     */
+/**
+ *  Description:    ...
+ *
+ *  Issues:     [ ]
+ *
+ *              [ ]
+ *
+ *
+ *  Notes:
+ *
+ *
+ *  ChangeLog:
+ *
+ */
 
-    /*package*/
-    class TtyStream extends AtCommandTerminal {
+/*package*/
+class TtyStream extends AtCommandTerminal {
 
     protected InputStream mInputStream;
     protected OutputStream mOutputStream;
@@ -94,6 +94,16 @@ import java.util.concurrent.LinkedBlockingQueue;
                      * We can fake it using the BufferedReader, ignoring blank lines.
                      */
 
+                    // TODO error case (on Qcom at least): this thread gets hung waiting for a
+                    // response if garbage commands are issued (e.g., "ls", which I was using to
+                    // make sure shell commands were removed.)  It seems local echo will not echo
+                    // that back, but it will echo back valid commands right away (even slow ones
+                    // like AT+COPS=?).  So maybe enable echo and see if we get a quick echo back.
+                    // If not, assume the command was not recognized and bail out of the read loop
+                    // below.
+                    // We could also have a timeout where we hope/assume a response isn't coming,
+                    // and move on to process the next command.
+
                     // dispatch response lines until done
                     String line;
                     List<String> lines = new ArrayList<>();
@@ -114,8 +124,8 @@ import java.util.concurrent.LinkedBlockingQueue;
                     	// ignore empty lines
                     } while (!(line.equals("OK") || line.equals("ERROR") || line.startsWith("+CME ERROR")));
 
-                    // XXX remove this logging, could have sensitive info
-                    Log.d(TAG, "IO< " + lines);
+                    // XXX this logging could have sensitive info
+                    //Log.d(TAG, "IO< " + lines);
 
                     if (resultMessage != null) {
                         resultMessage.obj = lines;
@@ -136,8 +146,8 @@ import java.util.concurrent.LinkedBlockingQueue;
     @Override
     public void send(String s, Message resultMessage) {
         try {
-            // XXX remove this logging, could have sensitive info
-            Log.d(TAG, "IO> " + s);
+            // XXX this logging could have sensitive info
+            //Log.d(TAG, "IO> " + s);
             mWriteQ.add(Pair.create(s.getBytes("ASCII"), resultMessage));
         } catch (UnsupportedEncodingException e) {
             // we assume that if a String is being used for convenience, it must be ASCII
