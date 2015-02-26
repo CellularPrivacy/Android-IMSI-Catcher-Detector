@@ -655,10 +655,14 @@ public class AIMSICDDbAdapter {
         File file = new File(dir, "aimsicd-ocid-data.csv");
 
         try {
-            result = file.createNewFile();
-            if (!result) {
-                return false;
+            if (!file.exists()) {
+                result = file.createNewFile();
+                if (!result) {
+                    return false;
+                }
+
             }
+
             CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
             open();
             Cursor c = getOPCIDSubmitData();

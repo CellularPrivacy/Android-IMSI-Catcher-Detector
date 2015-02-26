@@ -37,6 +37,7 @@ import com.SecUpwN.AIMSICD.utils.DeviceApi17;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.Status;
+import com.SecUpwN.AIMSICD.utils.RequestTask;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -1011,6 +1012,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             // TODO: Do we need to re-insert this CID somewhere? (Probably not? --E:V:A)
                             mCellIdNotInOpenDb = true;
                             setNotification();
+                            // Request uploading here?
+                            new RequestTask(context, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute(""); // no string needed for csv based upload
                         } else {
                             mCellIdNotInOpenDb = false;
                         }
