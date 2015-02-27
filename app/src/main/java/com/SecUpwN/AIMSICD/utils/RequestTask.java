@@ -83,7 +83,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
-    //public static final char DBE_UPLOAD_REQUEST = 3;            // TODO: OCID upload request from "APPLICATION" drawer title
+    public static final char DBE_UPLOAD_REQUEST = 6;            // TODO: OCID upload request from "APPLICATION" drawer title
     public static final char BACKUP_DATABASE = 3;
     public static final char RESTORE_DATABASE = 4;
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
@@ -105,7 +105,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
         // We need to create a separate case for UPLOADING to DBe (OCID, MLS etc)
         switch (mType) {
-/*
+
             // UPLOADING !!
             case DBE_UPLOAD_REQUEST:   // OCID upload request from "APPLICATION" drawer title
                 try {
@@ -144,21 +144,26 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             publishProgress(60,100);
                             httppost.setEntity(bArrEntity);
                             response = httpclient.execute(httppost);
+
                             publishProgress(80,100);
                             if (response!= null) {
                                 Log.i("AIMSICD", "OCID Upload Response: "
                                         + response.getStatusLine().getStatusCode() + " - "
-                                        + response.getStatusLine());
-                                mDbAdapter.ocidProcessed();
+                                        + response.getStatusLine() + " - " + response.getEntity().getContent().toString());
+                                if (response.getStatusLine().getStatusCode() == org.apache.http.HttpStatus.SC_OK)
+                                    mDbAdapter.ocidProcessed(); // Update only if status code was OK
                                 publishProgress(95,100);
                             }
 
                         }
+                        return "Successful";
                     }
+                    return null;
                 } catch (Exception e) {
                     Log.i("AIMSICD", "Upload OpenCellID data - " + e.getMessage());
+                    return null;
                 }
-*/
+
             // DOWNLOADING...
             case DBE_DOWNLOAD_REQUEST:          // OCID download request from "APPLICATION" drawer title
             case DBE_DOWNLOAD_REQUEST_FROM_MAP: // OCID download request from "Antenna Map Viewer"
