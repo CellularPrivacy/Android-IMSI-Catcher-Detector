@@ -62,21 +62,14 @@ import java.util.concurrent.TimeUnit;
  *  ToDo:       Currently the automatic refresh rate is hard-coded to 15 seconds,
  *              in 2 different places above. We may consider have this more transparent
  *              in a static variable. It is also used in timerRunnable where it
- *              defaults to 25 seconds.
+ *              default to 25 seconds.
  *
  *
  *  ChangeLog
  *
  */
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-    // "public static" or "private" ??   2015-02-13 E:V:A
-    //public static final String TAG = "CellTracker";
-    //private final String TAG = "AISMICD";
-    //private final String mTAG = "CellTracker";
-    public static final String TAG = "AISMICD";
-    public static final String mTAG = "CellTracker";
-
+    public static final String TAG = "CellTracker";
     public static String OCID_API_KEY = null;   // see getOcidKey()
     private final int NOTIFICATION_ID = 1;      // ?
 
@@ -124,7 +117,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         loadPreferences();
         setNotification();
 
-        PHONE_TYPE = tm.getPhoneType();  //PHONE_TYPE_GSM /CDMA /SIP /NONE
+        PHONE_TYPE = tm.getPhoneType();  //PHONE_TYPE_GSM /CDMA /SIP
 
         dbHelper = new AIMSICDDbAdapter(context);
         if (!CELL_TABLE_CLEANSED) {
@@ -279,9 +272,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_UI_ICONS =     context.getString(R.string.pref_ui_icons_key);
         final String FEMTO_DETECTION =  context.getString(R.string.pref_femto_detection_key);
-        final String REFRESH =          context.getString(R.string.pref_refresh_key);      // Manual Refresh
+        final String REFRESH =          context.getString(R.string.pref_refresh_key);    // Manual Refresh
         final String DB_VERSION =       context.getString(R.string.pref_last_database_backup_version);
-        final String OCID_UPLOAD =      context.getString(R.string.pref_ocid_upload);  // BOOLEAN to enable OCID data upload
+        final String OCID_UPLOAD =      context.getString(R.string.pref_ocid_upload);    // BOOLEAN to enable OCID data upload
         final String OCID_KEY =         context.getString(R.string.pref_ocid_key);
 
         if (key.equals(KEY_UI_ICONS)) {
@@ -349,7 +342,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 InputStream is = result.getEntity().getContent();
                 ByteArrayOutputStream content = new ByteArrayOutputStream();
                 // Read response into a buffered stream
-                int readBytes;
+                int readBytes = 0;
                 byte[] sBuffer = new byte[4096];
                 while ((readBytes = is.read(sBuffer)) != -1) {
                     content.write(sBuffer, 0, readBytes);
@@ -378,7 +371,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 responseFromServer = content.toString("UTF-8");
                 result.getEntity().consumeContent();
             }
-            Log.d("AIMSICD", "CellTracker: OCID Reached 24hr API key limit: " + responseFromServer);
+            Log.d("OCID Reached 24hr API key limit:", responseFromServer);
             return responseFromServer;
 
         } else {
@@ -389,16 +382,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             httpGet = null;
             result = null;
 
-            Log.d("AIMSICD", "CellTracker: OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
+            Log.d("OCID", "OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
             throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
         }
     }
 
 
     /**
-     *  Description:    Updates Neighbouring Cell details
+     * Updates Neighbouring Cell details
      *
-     *  TODO: add more details...
+     *  Description:    TODO: add more details...
      *
      *
      */
@@ -411,7 +404,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if (neighboringCellInfo.size() == 0) {
             // try to poll the neighboring cells for a few seconds
             neighboringCellBlockingQueue = new LinkedBlockingQueue<>(100);
-            Log.i(TAG, mTAG + ": neighbouringCellInfo empty - start polling");
+            Log.i(TAG, "neighbouringCellInfo empty - start polling");
             //Log.i(TAG, "signal: " + mDevice.getSignalDBm());
 
             //LISTEN_CELL_INFO added in API 17
@@ -427,13 +420,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
                 try {
-                    Log.d(TAG, mTAG + ": neighbouringCellInfo empty: trying " + i);
+                    Log.i(TAG, "neighbouringCellInfo empty: trying " + i);
                     NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
                         if (neighboringCellInfo.size() > 0) {
                             // Can we think of a better log message here?
-                            Log.d(TAG, mTAG + ": neighbouringCellInfo found on " + i + " try. (time based)");
+                            Log.i(TAG, "neighbouringCellInfo found on " + i + " try. (time based)");
                             break;
                         } else {
                             continue;
@@ -453,37 +446,23 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             }
         }
 
-        Log.d(TAG, mTAG + ": neighbouringCellInfo size: " + neighboringCellInfo.size());
+        Log.d(TAG, "neighbouringCellInfo size: " + neighboringCellInfo.size());
 
         /**
-         *  Description:    This snippet sets a global variable (now property) to indicate
-         *                  if Neighboring cells info CAN be obtained or has been obtained
-         *                  previously. If it has been and suddenly there are none, we can
-         *                  raise a flag of CID being suspicious.
+         *  Description:
          *
-         *                  The logic is:
+         *  2015-02-02 E:V:A
+         *   Not sure where to place this test, but let's try it here.
          *
-         *                      IF NC has never been seen on device:
-         *                          - NC list is NOT supported on this AOS/HW, so we do nothing.
-         *                      IF NC has been seen before,
-         *                          - NC list IS supported on this AOS/HW, so we set:
-         *                              nc_list_present : "true"
-         *                      IF NC list has been seen before AND current CID doesn't provide
-         *                      one, we raise an alarm or flag.
-         *
-         *
-         *  Notes:      a)  Not sure where to place this test, but let's try it here..
-         *              b)  Warning! this may be lagging and messing up polling function,
-         *                  since it require SU on each setProp()... and this is running
-         *                  all the time...
+         *   Warning! this may be lagging and messing up polling function, since it
+         *   require SU on each setProp()...
          *
          *  Issue:
          *          [ ] We need a timer or "something" to reverse a positive detection once
          *              we're out and away from the fake BTS cell.
-         *          [ ] We need to add this to EventLog
+         *          [ ] We need to add this to EvenLog
          *          [ ] We need to add detection tickers etc...
-         *          [ ] Attention to the spelling of "neighbor" (USA) Vs. "neighbour" (Eng world)
-         *          [ ] We need to use a global and persistent variable and not a system property
+         *          [ ]  Attention to the spelling of "neighbor" (USA) Vs. "neighbour" (Eng world)
          *
          */
         /*
@@ -492,22 +471,18 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         if ( ncls > 0 && nclp == "false" ) {
             Helpers.setProp("aimsicd.nc_list_present", "true");
-            Log.d(TAG, mTAG + ": neighbouringCellInfo size: " + ncls );
+            Log.d(TAG, "neighbouringCellInfo size: " + ncls );
         } else if ( ncls = 0 && nclp=="true" )  {
             // Detection 7a
-            //Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID: " + mDevice.mCell.gsmCellLocation.getCid() );
-
-            //  ADD alert to EventLog table HERE !!
-
-            //Helpers.setProp("aimsicd.nc_list_present", "false"); // Maybe not needed...
+            //Log.i(TAG, "ALERT: No neighboring cells detected for CID: " + mDevice.mCell.gsmCellLocation.getCid() );
+            //Helpers.setProp("aimsicd.nc_list_present", "false");
         }
         */
         // END -- NC list check
 
-        // Add NC list to ?? cellinfo ??  --->  DBi_measure:nc_list
         for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
             Log.i(TAG,
-                    mTAG + ": neighbouringCellInfo -" +
+                    "neighbouringCellInfo -" +
                     " LAC:" + neighbourCell.getLac() +
                     " CID:" + neighbourCell.getCid() +
                     " PSC:" + neighbourCell.getPsc() +
@@ -531,7 +506,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             return;
         }
         // Does this make sense? Is it empty or not?
-        Log.i(TAG, mTAG + ": neighbouringCellInfo empty - event based polling succeeded!");
+        Log.i(TAG, "neighbouringCellInfo empty - event based polling succeeded!");
         tm.listen(phoneStatelistener, PhoneStateListener.LISTEN_NONE);
         neighboringCellBlockingQueue.addAll(neighboringCellInfo);
     }
@@ -543,8 +518,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     /**
      * Process User Preferences
      *
-     * Description:     Handles the default Settings/Preferences as set in:
-     *                      preferences.xml
+     * Description:     Seem to Handle the default Settings/Preferences as set in:
+     *                  preferences.xml...
      *
      *  TODO:           Please add more info and corrections
      *
@@ -558,6 +533,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         OCID_UPLOAD_PREF        = prefs.getBoolean( context.getString(R.string.pref_ocid_upload), false);
         CELL_TABLE_CLEANSED     = prefs.getBoolean( context.getString(R.string.pref_cell_table_cleansed), false);
 
+        // TODO: Explain what this rate is doing...
         String refreshRate      = prefs.getString(  context.getString(R.string.pref_refresh_key), "1");
         // Default to Automatic ("1")
         if (refreshRate.isEmpty()) { refreshRate = "1";  }
@@ -585,7 +561,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     /**
      * Description:  TODO: add more info
      *
-     *    This SEEM TO add entries to the "locationinfo" DB table in the ??
+     *    This SEEM TO add entries to the "locationinfo" DB table in the??
      *
      *    Issues:
      *
@@ -609,7 +585,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      *          2015-01-22  E:V:A   Changed what appears to be a typo in the character
      *                              following getNetworkTypeName(), "|" to "]"
-     *          2015-01-24  E:V:A   FC WTF!? Changed back ^ to "|". (Where is this info parsed?)
+     *          2015-01-24  E:V:A    WTF!? Changed back ^ to "|". (Where is this info parsed?)
      *
      */
     private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
@@ -619,8 +595,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             switch (mDevice.getPhoneID()) {
 
-                case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
-                case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
+                // case TelephonyManager.PHONE_TYPE_SIP:
                 case TelephonyManager.PHONE_TYPE_GSM:
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
                     if (gsmCellLocation != null) {
@@ -793,16 +768,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             CellLocation cellLocation = tm.getCellLocation();
             if (cellLocation != null) {
                 switch (mDevice.getPhoneID()) {
-
-                    case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
-                    case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
                     case TelephonyManager.PHONE_TYPE_GSM:
                         GsmCellLocation gsmCellLocation = (GsmCellLocation) cellLocation;
                         mDevice.mCell.setCID(gsmCellLocation.getCid()); // CID
                         mDevice.mCell.setLAC(gsmCellLocation.getLac()); // LAC
                         mDevice.mCell.setPSC(gsmCellLocation.getPsc()); // PSC
                         break;
-
                     case TelephonyManager.PHONE_TYPE_CDMA:
                         CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cellLocation;
                         mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId()); // BSID ??
@@ -959,7 +930,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     tickerText += " - Hostile Service Area: Changing LAC Detected!";
                     contentText = "Hostile Service Area: Changing LAC Detected!";
                 // See #264 and ask He3556
-                //} else if (mNoNCList)  {
+                //} else if (NoNCL)  {
                 //    tickerText += " - BTS doesn't provide any neighbors!";
                 //    contentText = "CID: " + cellid + " is not providing a neighboring cell list!";
 
@@ -1008,32 +979,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
 
     /**
-     *  Description:    (From xLaMbChOpSx commit comment)
+     *  Description:     TODO: Please add
      *
-     *      Initial implementation for detection method 1 to compare the CID & LAC with the Cell
-     *      Information Table contents as an initial implementation for detection of a changed LAC,
-     *      once OCID issues (API key use etc) have been finalised this detection method can be
-     *      extended to include checking of external data.
-     *
-     *      This initial implementation is activated through the drawer menu item titled
-     *      "Monitor Cell Information" which will invoke timed runnable that will poll the Cell
-     *      Location details using the selected refresh rate OR default to 25 seconds if
-     *      Automatic/Manual has been selected, once testing is complete this can be enabled as a
-     *      passive detection method which can could be controlled through a user preference.
-     *
-     *      As I have no real way of testing this I require testing by other project members who
-     *      do have access to equipment or an environment where a changing LAC can be simulated
-     *      thus confirming the accuracy of this implementation.
-     *
-     *      Presently this will only invoke the MEDIUM threat level through the notification and
-     *      does not fully implement the capturing and score based method as per the issue details
-     *      once further testing is complete the alert and tracking of information can be refined.
-     *
-     *      See:
-     *        https://github.com/xLaMbChOpSx/Android-IMSI-Catcher-Detector/commit/43ae77e2a0cad10dfd50f92da5a998f9ece95b38
-     *        https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91#issuecomment-64391732
-     *
-     *  Short explanation:
+     *  Possible explanation:
      *
      *                  This is a polling mechanism for getting the LAC/CID and location
      *                  info for the currently connected cell.
@@ -1042,30 +990,23 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *                  There is a "timer" here (REFRESH_RATE), what exactly is it timing?
      *                  "Every REFRESH_RATE seconds, get connected cell details."
      *
-     *  Notes:
-     *              a) Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
-     *                 See news in: issue #290  and compare to AIMSICDDbAdapter.java
+     *  see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91#issuecomment-64391732
      *
-     *  Issues:     [ ] We shouldn't do any detection here!
-     *              [ ] We might wanna use a listener to do this?
+     *  Issues:         We might wanna use a listener to do this?
      *                  Are there any reasons why not using a listener?
      *
-     *  ChangeLog:
+     *
      */
     private final Runnable timerRunnable = new Runnable() {
 
         @Override
         public void run() {
             switch (mDevice.getPhoneID()) {
-
-                case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
-                case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
                 case TelephonyManager.PHONE_TYPE_GSM:
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
                     if (gsmCellLocation != null) {
                         mMonitorCell.setLAC(gsmCellLocation.getLac());
                         mMonitorCell.setCID(gsmCellLocation.getCid());
-
                         dbHelper.open();
                         boolean lacOK = dbHelper.checkLAC(mMonitorCell);
                         if (!lacOK) {
@@ -1090,15 +1031,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             }
                             dbHelper.close();
                         }
+                        dbHelper.close();
                     }
                     break;
-
                 case TelephonyManager.PHONE_TYPE_CDMA:
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
                     if (cdmaCellLocation != null) {
                         mMonitorCell.setLAC(cdmaCellLocation.getNetworkId());
                         mMonitorCell.setCID(cdmaCellLocation.getBaseStationId());
-
                         dbHelper.open();
                         boolean lacOK = dbHelper.checkLAC(mMonitorCell);
                         if (!lacOK) {
@@ -1111,6 +1051,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     }
             }
 
+
             if (REFRESH_RATE != 0) {
                 timerHandler.postDelayed(this, REFRESH_RATE);
             } else {
@@ -1122,11 +1063,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
 
 //=================================================================================================
-// The below code section was copied and modified with permission from
-// Femtocatcher at:  https://github.com/iSECPartners/femtocatcher
-//
-// Copyright (C) 2013 iSEC Partners
-//=================================================================================================
+    /**
+     * The below code section was copied and modified with permission from
+     * Femtocatcher https://github.com/iSECPartners/femtocatcher
+     *
+     * Copyright (C) 2013 iSEC Partners
+     */
 
     /**
      * Start FemtoCell detection tracking (For CDMA Devices ONLY!)
@@ -1142,7 +1084,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         mTrackingFemtocell = true;
         mPhoneStateListener = new PhoneStateListener() {
             public void onServiceStateChanged(ServiceState s) {
-                Log.d(TAG, mTAG + ": Service State changed!");
+                Log.d(TAG, "Service State changed!");
                 getServiceStateInfo(s);
             }
         };
@@ -1159,7 +1101,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
             mTrackingFemtocell = false;
             setNotification();
-            Log.v(TAG, mTAG + ": Stopped tracking FemtoCell connections.");
+            Log.v(TAG, "Stopped tracking FemtoCell connections.");
         }
     }
 
@@ -1207,11 +1149,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     return !((networkID < FEMTO_NID_MIN) || (networkID >= FEMTO_NID_MAX));
 
                 } else {
-                    Log.v(TAG, mTAG + ": Cell location info is null.");
+                    Log.v(TAG, "Cell location info is null.");
                     return false;
                 }
             } else {
-                Log.v(TAG, mTAG + ": Telephony Manager is null.");
+                Log.v(TAG, "Telephony Manager is null.");
                 return false;
             }
         }
@@ -1230,11 +1172,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     int FEMTO_NID_MIN = 0xfa;
                     return !((networkID < FEMTO_NID_MIN) || (networkID >= FEMTO_NID_MAX));
                 } else {
-                    Log.v(TAG, mTAG + ": Cell location info is null.");
+                    Log.v(TAG, "Cell location info is null.");
                     return false;
                 }
             } else {
-                Log.v(TAG, mTAG + ": Telephony Manager is null.");
+                Log.v(TAG, "Telephony Manager is null.");
                 return false;
             }
         }
@@ -1252,16 +1194,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                (networkType == TelephonyManager.NETWORK_TYPE_EVDO_B) ||
                (networkType == TelephonyManager.NETWORK_TYPE_EHRPD);
     }
-
-//=================================================================================================
-// END Femtocatcher code
-//=================================================================================================
-
-    /**
-     * Description:     TODO:
+    /*
+     * The above code section was copied and modified from
+     * Femtocatcher https://github.com/iSECPartners/femtocatcher
      *
+     * Copyright (C) 2013 iSEC Partners
      *
      */
+//=================================================================================================
+
+
     final PhoneStateListener phoneStatelistener = new PhoneStateListener() {
         private void handle() {
             handlePhoneStateChange();
