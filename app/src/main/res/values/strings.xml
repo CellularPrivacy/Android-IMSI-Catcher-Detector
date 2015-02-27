@@ -74,7 +74,7 @@
 
     <!-- MAP VIEWER -->
     <string name="map_type">Map Display Type</string>
-    <string name="get_opencellid">Download Local OCID Data</string>
+    <string name="get_opencellid">Download Local BTS Data</string>
 
     <!-- LAYOUT -->
     <string name="device_info_title">Device Information</string>
@@ -106,6 +106,9 @@
     <string name="drawer_open">Open Navigation Drawer</string>
     <string name="drawer_close">Close Navigation Drawer</string>
     <string name="network_psc">PSC:</string>
+
+    <!-- Upload BTS to OpenCellID -->
+    <string name="upload_bts">Upload Local BTS Data</string>
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">About AIMSICD</string>

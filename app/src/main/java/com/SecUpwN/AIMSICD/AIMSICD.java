@@ -270,6 +270,10 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new AboutFragment()).commit();
                 break;
+            case 306:
+                // Request uploading here?
+                new RequestTask(mContext, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute(""); // no string needed for csv based upload
+                break;
         }
 
         if (selectedItem.getId() == 901) {
@@ -430,12 +434,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         // TODO:  menu.add(DrawerMenuItem.create(205?, getString(R.string.reset_database), "ic_action_clear", false, this)); // "Reset/Clear DataBase"
 
         menu.add(DrawerMenuSection.create(300, "Application"));
-        // TODO: Change name to "Download Local BTS data"
-        menu.add(DrawerMenuItem.create(301, getString(R.string.get_opencellid), "stat_sys_download_anim0", false, this));   // "Download Local OCID data"
+        menu.add(DrawerMenuItem.create(301, getString(R.string.get_opencellid), "stat_sys_download_anim0", false, this));   // "Download Local BTS data"
         // TODO: Upload DBi_measure + DBi_bts to OCID or MLS
-        //menu.add(DrawerMenuItem.create(301?, getString(R.string.upload_bts), "stat_sys_upload_anim0", false, this));      // "Upload Local BTS data"
-
-
+        menu.add(DrawerMenuItem.create(306, getString(R.string.upload_bts), "stat_sys_upload_anim0", false, this));      // "Upload Local BTS data"
         menu.add(DrawerMenuItem.create(302, getString(R.string.cell_lookup), "stat_sys_download_anim0", false, this));  // Lookup "All Current Cell Details (ACD)"
         menu.add(DrawerMenuItem.create(303, getString(R.string.about_aimsicd), "ic_action_about", true, this));         // About
         menu.add(DrawerMenuItem.create(305, getString(R.string.send_logs), "ic_action_computer", false, this));         // Debugging
