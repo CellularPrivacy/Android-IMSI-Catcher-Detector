@@ -113,7 +113,8 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
             // UPLOADING !!
             case DBE_UPLOAD_REQUEST:   // OCID upload request from "APPLICATION" drawer title
                 try {
-                    if (CellTracker.OCID_UPLOAD_PREF) {
+                    // TODO: Remove OCID_UPLOAD_PREF?
+                    //if (CellTracker.OCID_UPLOAD_PREF) {
                         boolean prepared = mDbAdapter.prepareOpenCellUploadData();
                         Log.i("AIMSICD", "OCID upload data prepared - " + String.valueOf(prepared));
                         if (prepared) {
@@ -161,8 +162,8 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                         }
                         return "Successful";
-                    }
-                    return null;
+                    //}
+                    //return null;
                 } catch (Exception e) {
                     Log.i("AIMSICD", "Upload OpenCellID data - " + e.getMessage());
                 }
