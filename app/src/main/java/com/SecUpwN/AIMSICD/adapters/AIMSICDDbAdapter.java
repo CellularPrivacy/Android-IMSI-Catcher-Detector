@@ -466,11 +466,11 @@ public class AIMSICDDbAdapter {
     /**
      * Returns Cell Information for contribution to the OpenCellID Project
      *
-     * Function:    Seem to Return a list of all rows where OCID_SUBMITTED is not 1.
+     * Function:    Return a list of all rows which were not submitted to OpenCellID Project
      */
     public Cursor getOPCIDSubmitData() {
         return mDb.query( CELL_TABLE,
-                new String[]{ "Lng", "Lat", "Mcc", "Mnc", "Lac", "CellID", "Signal", "Timestamp",
+                new String[]{"Mcc", "Mnc", "Lac", "CellID", "Lng", "Lat", "Signal", "Timestamp",
                         "Accuracy", "Speed", "Direction", "NetworkType"}, "OCID_SUBMITTED <> 1",
                 null, null, null, null
         );
@@ -642,7 +642,7 @@ public class AIMSICDDbAdapter {
      */
     public boolean prepareOpenCellUploadData() {
         boolean result;
-        // Q: Where is this? 
+        // Q: Where is this?
         // A: It is wherever your device has mounted its SDCard.
         //    For example:  /data/media/0/AIMSICD/OpenCellID
         File dir = new File(FOLDER + "OpenCellID/");
@@ -655,34 +655,39 @@ public class AIMSICDDbAdapter {
         File file = new File(dir, "aimsicd-ocid-data.csv");
 
         try {
-            if (!file.exists()) {
-                result = file.createNewFile();
-                if (!result) {
-                    return false;
+            open(); // open Database
+            Cursor c = getOPCIDSubmitData(); // get data not submitted yet
+
+           if(c.getCount() > 0) { // check if we have something to upload
+
+                if (!file.exists()) {
+                    result = file.createNewFile();
+                    if (!result) {
+                        return false;
+                    }
+
                 }
 
-            }
+                CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
 
-            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
-            open();
-            Cursor c = getOPCIDSubmitData();
-
-            csvWrite.writeNext("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act");
-            String[] rowData = new String[c.getColumnCount()];
-            int size = c.getColumnCount();
-            AIMSICD.mProgressBar.setProgress(0);
-            AIMSICD.mProgressBar.setMax(size);
-            while (c.moveToNext()) {
-                for (int i = 0; i < size; i++) {
-                    rowData[i] = c.getString(i);
-                    AIMSICD.mProgressBar.setProgress(i);
+                csvWrite.writeNext("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act");
+                String[] rowData = new String[c.getColumnCount()];
+                int size = c.getColumnCount();
+                AIMSICD.mProgressBar.setProgress(0);
+                AIMSICD.mProgressBar.setMax(size);
+                while (c.moveToNext()) {
+                    for (int i = 0; i < size; i++) {
+                        rowData[i] = c.getString(i);
+                        AIMSICD.mProgressBar.setProgress(i);
+                    }
+                    csvWrite.writeNext(rowData);
                 }
-                csvWrite.writeNext(rowData);
-            }
 
-            csvWrite.close();
-            c.close();
-            return true;
+                csvWrite.close();
+                c.close();
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             Log.e(TAG, "Error creating OpenCellID Upload Data: " + e);
             return false;

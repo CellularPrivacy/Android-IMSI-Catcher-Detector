@@ -144,18 +144,21 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             publishProgress(60,100);
                             httppost.setEntity(bArrEntity);
                             response = httpclient.execute(httppost);
+
                             publishProgress(80,100);
                             if (response!= null) {
                                 Log.i("AIMSICD", "OCID Upload Response: "
                                         + response.getStatusLine().getStatusCode() + " - "
-                                        + response.getStatusLine());
-                                //mDbAdapter.ocidProcessed();
+                                        + response.getStatusLine() + " - " + response.getEntity().getContent().toString());
+                                if (response.getStatusLine().getStatusCode() == org.apache.http.HttpStatus.SC_OK)
+                                    mDbAdapter.ocidProcessed(); // Update only if status code was OK
                                 publishProgress(95,100);
                             }
 
                         }
+                        return "Successful";
                     }
-                    return "Succesful";
+                    return null;
                 } catch (Exception e) {
                     Log.i("AIMSICD", "Upload OpenCellID data - " + e.getMessage());
                     return null;
