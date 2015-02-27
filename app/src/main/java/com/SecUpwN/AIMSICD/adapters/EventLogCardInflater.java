@@ -16,11 +16,10 @@ import com.SecUpwN.AIMSICD.R;
  *
  *  Template:       OpenCellIdCardInflater.java
  *
- *  Dependencies:   CardItemData.java
+ *  Dependencies:   EventLogItemData.java
  *                  eventlog_items.xml
  *
  *  Issues:
- *          [ ]  TODO: Do we need an EvenLogCardData.java ???
  *
  *  ChangeLog:
  *
@@ -58,9 +57,9 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
         private final TextView mPSC;
         private final TextView mgpsd_lat;
         private final TextView mgpsd_lon;
-        private final TextView mgpsd_accur;
+        private final TextView mgpsd_accu;
         private final TextView mDF_id;
-        private final TextView mDF_description;
+        private final TextView mDF_desc;
         private final TextView mRecordId;
 
         public ViewHolder(View rootView) {
@@ -72,10 +71,10 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
             mPSC =          (TextView) mRootView.findViewById(R.id.PSC);
             mgpsd_lat =     (TextView) mRootView.findViewById(R.id.gpsd_lat);
             mgpsd_lon =     (TextView) mRootView.findViewById(R.id.gpsd_lon);
-            mgpsd_accur =   (TextView) mRootView.findViewById(R.id.gpsd_accur);
+            mgpsd_accu =    (TextView) mRootView.findViewById(R.id.gpsd_accu);
             mDF_id =        (TextView) mRootView.findViewById(R.id.DF_id);
-            mDF_description =   (TextView) mRootView.findViewById(R.id.DF_description);
-            mRecordId =      (TextView) mRootView.findViewById(R.id.record_id);
+            mDF_desc =      (TextView) mRootView.findViewById(R.id.DF_desc);
+            mRecordId =     (TextView) mRootView.findViewById(R.id.record_id);
 
             rootView.setTag(this);
         }
@@ -87,10 +86,10 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
             mPSC.setText(       item.getPsc());
             mgpsd_lat.setText(  item.getLat());
             mgpsd_lon.setText(  item.getLng());
-            mgpsd_accur.setText(item.getgpsd_accur());
-            mDF_id.setText(item.getDF_id());
-            mDF_description.setText(item.getmDF_description());
-            mRecordId.setText(item.getRecordId());
+            mgpsd_accu.setText( item.getgpsd_accu());
+            mDF_id.setText(     item.getDF_id());
+            mDF_desc.setText(   item.getDF_desc());
+            mRecordId.setText(  item.getRecordId());
         }
     }
 }

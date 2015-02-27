@@ -37,7 +37,6 @@ import com.SecUpwN.AIMSICD.utils.DeviceApi17;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.Status;
-import com.SecUpwN.AIMSICD.utils.RequestTask;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -209,8 +208,18 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *          DATA_ACTIVITY:
      *          DATA_CONNECTION_STATE:
      *
-     *          TODO:
+     *  TODO:   We also need to listen and log for:
      *
+     *      [ ]     LISTEN_CALL_STATE:
+     *                  CALL_STATE_IDLE
+     *                  CALL_STATE_OFFHOOK
+     *                  CALL_STATE_RINGING
+     *
+     *      [ ]     LISTEN_SERVICE_STATE:
+     *                  STATE_EMERGENCY_ONLY
+     *                  STATE_IN_SERVICE
+     *                  STATE_OUT_OF_SERVICE
+     *                  STATE_POWER_OFF
      *
      * @param track Enable/Disable tracking
      */
@@ -219,8 +228,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             tm.listen(mCellSignalListener,
                     PhoneStateListener.LISTEN_CELL_LOCATION |           // gpsd_lat/lon ?
                     PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |        // rx_signal
-                    PhoneStateListener.LISTEN_DATA_ACTIVITY |           //
-                    PhoneStateListener.LISTEN_DATA_CONNECTION_STATE     //
+                    PhoneStateListener.LISTEN_DATA_ACTIVITY |           // No,In,Ou,IO,Do
+                    PhoneStateListener.LISTEN_DATA_CONNECTION_STATE     // Di,Ct,Cd,Su
+                    // LISTEN_CALL_STATE ?
+                    // LISTEN_SERVICE_STATE ?
             );
             mTrackingCell = true;
             Helpers.msgShort(context, "Tracking Cell Information.");
@@ -1007,15 +1018,18 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         // Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
                         // See news in: issue #290  and compare to AIMSICDDbAdapter.java
                         // if ok then remove/change these comments.
-                        if (!dbHelper.openCellExists(mMonitorCell.getCID())){
-                            Log.v(TAG, "ALERT: CID -NOT- in OCID DB: " + mMonitorCell.getCID());
-                            // TODO: Do we need to re-insert this CID somewhere? (Probably not? --E:V:A)
-                            mCellIdNotInOpenDb = true;
-                            setNotification();
-                            // Request uploading here?
-                            new RequestTask(context, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute(""); // no string needed for csv based upload
-                        } else {
-                            mCellIdNotInOpenDb = false;
+                        if ( Boolean.valueOf( Helpers.getSystemProp(CellTracker.this.context, "aimsicd.ocid_downloaded", "false") ) ) {
+                            if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
+                                Log.i(TAG, "ALERT: New CID -NOT- found in DBe_import: " + mMonitorCell.getCID());
+
+                                // Code Place-holder: TODO: Add to EventLog table!!
+
+                                mCellIdNotInOpenDb = true;
+                                setNotification();
+                            } else {
+                                mCellIdNotInOpenDb = false;
+                            }
+                            dbHelper.close();
                         }
                         dbHelper.close();
                     }

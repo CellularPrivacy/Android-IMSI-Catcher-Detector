@@ -22,30 +22,31 @@ import java.io.InputStreamReader;
 
 /**
  *  Description:    This class is providing for the Debug log feature in the swipe menu.
- *                  It reads the last 1000 lines from the Logcat ring buffers: main and radio.
+ *                  It reads the last 500 lines from the Logcat ring buffers: main and radio.
  *
+ *  Dependencies:
+ *                  menu/activity_debug_logs.xml **
+ *                  layout/activity_debug_logs.xml
+ *                  values/strings.xml
  *  Issues:
  *
  *          [ ]     Are we clearing logcat when starting it? If we are, we miss all previous errors
  *                  if any has occurred. We need to clear the logcat when app starts. Also there
- *                  is no reason to clear it if we only catch the last 1000 lines anyway.
+ *                  is no reason to clear it if we only catch the last 500 lines anyway.
  *
+ *          [ ]     Add the output of "getprop |sort". But Java CLI processes doesn't handle pipes.
+ *                  Try with:  Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
  *
- *
- *  ToDo:
- *          see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/301
- *
- *          1)  Add extra text in Email, asking the user to provide more info about problem.
- *
- *          2)  Add the output of "getprop |sort". But Java CLI processes doesn't handle pipes.
- *              Try with:  Collections.sort(list, String.CASE_INSENSITIVE_ORDER)
- *
+ *          [ ]     Apparently the button for radio log has been added to the strings.xml,
+ *                  but never implemented here. We need to add the buffer selector button
+ *                  to the top bar, next to email icon button. **
  *
  *  ChangeLog:
  *
  *          2015-01-27  E:V:A   Added "getprop|sort" info to log.
  *          2015-01-28  Toby    Fixed "getprop" info to log (but not sorted)
- *
+ *          2015-02-11  E:V:A   Increased to 500 lines and removed "-d" and
+ *                              incl. radio log, but not working. Permission problem?
  *
  */
 
@@ -53,12 +54,13 @@ import java.io.InputStreamReader;
 public class DebugLogs extends BaseActivity {
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
-    private boolean isRadioLogs = false;
+    private boolean isRadioLogs = true; // Including this, should be a toggle.
 
     private TextView logView = null;
     private Button btnClear = null;
     private Button btnCopy = null;
     private Button btnStop = null;
+    //private Button btnRadio = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class DebugLogs extends BaseActivity {
         btnClear = (Button) findViewById(R.id.btnClear);
         btnStop = (Button) findViewById(R.id.btnStopLogs);
         btnCopy = (Button) findViewById(R.id.btnCopy);
-
+        //btnRadio = (Button) findViewById(R.id.btnRadio);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -87,7 +89,7 @@ public class DebugLogs extends BaseActivity {
                     clearLogs();
                     //Log.d("DebugLogs", "Logcat clearing disabled!");
                 } catch (Exception e) {
-                    Log.e("DebugLogs", "Error clearing logs", e);
+                    Log.e("AIMSICD", "DebugLogs: Error clearing logs", e);
                 }
             }
         });
@@ -113,6 +115,23 @@ public class DebugLogs extends BaseActivity {
                 }
             }
         });
+
+        /*
+        // logcat radio buffer toggle on/off
+        btnRadio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isRadioLogs) {
+                    isRadioLogs = false;
+                    btnRadio.setText(getString(R.string.btn_radio_logs));
+                } else {
+                    isRadioLogs = true;
+                    btnRadio.setText(getString(R.string.btn_main_logs));
+                }
+            }
+        });
+        */
+
     }
 
     @Override
@@ -133,7 +152,7 @@ public class DebugLogs extends BaseActivity {
             logUpdater = new LogUpdaterThread();
             logUpdater.start();
         } catch (Exception e) {
-            Log.e("DebugLogs", "Error starting log updater thread", e);
+            Log.e("AIMSICD", "DebugLogs: Error starting log updater thread", e);
         }
         btnStop.setText(getString(R.string.btn_stop_logs));
     }
@@ -174,9 +193,8 @@ public class DebugLogs extends BaseActivity {
                 // Send Error Log
                 try {
                     String helpUs = "For best help, please describe the problem you had, before sending us these logs.\n";
-                    String log = helpUs +
-                            "\n\n" + "GETPROP:" + "\n\n" + getProp() +
-                            "\n\n" + "LOGCAT:" + "\n\n" + getLogs() + helpUs;
+                    String log = helpUs + "\n\n" + "GETPROP:" + "\n\n" + getProp() +
+                                          "\n\n" + "LOGCAT:" + "\n\n" + getLogs() + "\n\n" + helpUs;
 
                     // show a share intent
                     Intent intent = new Intent(Intent.ACTION_SEND);
@@ -187,7 +205,7 @@ public class DebugLogs extends BaseActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
                 } catch (IOException e) {
-                    Log.e("DebugLogs", "Error reading logs", e);
+                    Log.e("AIMSICD", "DebugLogs: Error reading logs", e);
                 }
             }
         }.start();
@@ -195,6 +213,8 @@ public class DebugLogs extends BaseActivity {
 
     /**
      * Read getprop and return the sorted result as a string
+     *
+     * TODO: Need a way to sort properties for easy reading
      *
      * @return
      * @throws IOException
@@ -204,18 +224,24 @@ public class DebugLogs extends BaseActivity {
     }
 
     /**
-     * Read logcat and return as a string
+     *  Description:    Read logcat and return as a string
      *
-     * @return
-     * @throws IOException
+     *  Notes:
+     *
+     *  1) " *:V" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
+     *          ==> Now disabled!
+     *  2) Need to silent some spammy Samsung Galaxy's:     " AbsListView:S PackageInfo:S"
+     *  3) Need to silent some Qualcomm QMI:                " RILQ:S"
+     *  4) Need to silent some Qualcomm GPS:                " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S"
+     *  5) "-d" is not necessary when using "-t".
+     *
      */
     private String getLogs() throws IOException {
-        // + " *:v" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
-        // Silent Samsung Galaxy devices spam debug: " AbsListView:S PackageInfo:S"
         return runProcess(
-            "logcat -t 100 -d -v time" +
-                    (isRadioLogs ? " -b radio" : "") +
-                    " AbsListView:S PackageInfo:S *:D"
+            "logcat -t 500 -v brief -b main" +
+                    (isRadioLogs ? " -b radio RILQ:S" : "") +
+                    " AbsListView:S PackageInfo:S" +
+                    " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S" + " *:D"
         );
     }
 
@@ -228,6 +254,7 @@ public class DebugLogs extends BaseActivity {
 
     /**
      * Run a shell command and return the results
+     *
      * @param command
      * @return
      * @throws IOException
@@ -261,7 +288,7 @@ public class DebugLogs extends BaseActivity {
                 try {
                     Runtime.getRuntime().exec("logcat -c -b main -b system -b radio -b events");
                 } catch (Exception e) {
-                    Log.e("DebugLogs", "Error clearing logs", e);
+                    Log.e("AIMSICD", "DebugLogs: Error clearing logs", e);
                 }
 
                 runOnUiThread(new Runnable() {
@@ -300,7 +327,7 @@ public class DebugLogs extends BaseActivity {
                         });
                     }
                 } catch (Exception e) {
-                    Log.e("DebugLogs", "Error updating logs", e);
+                    Log.e("AIMSICD", "DebugLogs: Error updating logs", e);
                 }
                 try { Thread.sleep(1000); } catch (Exception e) {}
             }

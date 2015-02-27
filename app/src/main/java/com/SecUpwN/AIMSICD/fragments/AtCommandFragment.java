@@ -1,15 +1,13 @@
 package com.SecUpwN.AIMSICD.fragments;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.stericson.RootShell.RootShell;
-import com.stericson.RootShell.execution.Command;
-import com.stericson.RootShell.execution.Shell;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +20,49 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.atcmd.AtCommandTerminal;
+import com.SecUpwN.AIMSICD.utils.atcmd.TtyPrivFile;
+import com.stericson.RootShell.RootShell;
+import com.stericson.RootShell.execution.Command;
+import com.stericson.RootShell.execution.Shell;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ *  Description:    This is the AT Command Interface or AT Command Processor (ATCoP) that
+ *                  allow the user to communicate directly to the baseband processor (BP),
+ *                  via old-school AT commands. This can be very useful for debugging radio
+ *                  related network problems on those devices that are using this interface.
+ *                  The most common baseband hardware that allow for this are those made by
+ *                  Qualcomm (MSM) or Mediatek (MTK). Intel XMM based devices have been found
+ *                  very difficult or impossible to use this, especailly on Samsung devices.
+ *
+ *  Requirements:   1) You need to have supported hardware that already has an AT serial device
+ *                  enumerated in the Android /dev tree. Some common ones are:
+ *                      Qualcomm:   /dev/smd[0,7]
+ *                      MTK:        /dev/radio/atci[0-9]
+ *                      XMM:        TBA
+ *
+ *                  2) You need to be rooted as this interface is using a persistent root shell.
+ *
+ *  Issues:
+ *              [ ] Need to increase time for long AT commands like "AT+COPS=?" (~30 sec)
+ *              [ ] Need a "no" timeout to watch output for while, or let's make it 10 minutes.
+ *                  Perhaps with a manual stop?
+ *
+ *  ChangeLog:
+ *              2015-02-11  E:V:A       Testing to add back some old working code
+ *              2015-02-16  scintill    Made some code changes and added /utils/atcmd/...
+ *              2015-02-11  E:V:A       Added 10 minutes timeout
+ *
+ *
+ */
 public class AtCommandFragment extends Fragment {
 
     //Return value constants
@@ -36,8 +73,6 @@ public class AtCommandFragment extends Fragment {
 
     private final int EXECUTE_AT = 200;
     private final int EXECUTE_COMMAND = 201;
-
-    private final int SET_DEVICE = 300;
 
     private Context mContext;
     private String mSerialDevice;
@@ -53,7 +88,7 @@ public class AtCommandFragment extends Fragment {
     private Spinner mSerialDeviceSpinner;
     private TextView mSerialDeviceSpinnerLabel;
 
-    private Shell shell;
+    private AtCommandTerminal mCommandTerminal;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,8 +104,7 @@ public class AtCommandFragment extends Fragment {
             atCommandExecute.setOnClickListener(new btnClick());
             mSerialDeviceSpinner = (Spinner) view.findViewById(R.id.serial_device_spinner);
             mSerialDeviceSpinner.setOnItemSelectedListener(new spinnerListener());
-            mSerialDeviceSpinnerLabel = (TextView) view
-                    .findViewById(R.id.serial_device_spinner_title);
+            mSerialDeviceSpinnerLabel = (TextView) view.findViewById(R.id.serial_device_spinner_title);
             Spinner timoutSpinner = (Spinner) view.findViewById(R.id.timeout_spinner);
             timoutSpinner.setOnItemSelectedListener(new timoutSpinnerListener());
             timoutSpinner.setSelection(1);
@@ -86,20 +120,24 @@ public class AtCommandFragment extends Fragment {
         public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
                 int position, long id) {
             switch (position) {
+                // Don't forget to also change the arrays.xml
                 case 0: //2 seconds
                     mTimeout = 2000;
                     break;
                 case 1: //5 seconds
                     mTimeout = 5000;
                     break;
-                case 2: //8 seconds
-                    mTimeout = 8000;
-                    break;
-                case 3: //10 seconds
+                case 2: //10 seconds
                     mTimeout = 10000;
                     break;
-                case 4: //15 seconds
-                    mTimeout = 15000;
+                case 3: //20 seconds
+                    mTimeout = 20000;
+                    break;
+                case 4: //30 seconds
+                    mTimeout = 30000;
+                    break;
+                case 5: // No timeout, when watching output...
+                    mTimeout = 600000; // Well, ok, 10 min
                     break;
                 default:
                     mTimeout = 5000;
@@ -137,13 +175,8 @@ public class AtCommandFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (shell != null) {
-            try {
-                shell.close();
-            } catch (Exception e) {
-                Log.e("AIMSICD", "Closing shell: " + e);
-            }
-            Log.i("AIMSICD", "AT Shell Closed");
+        if (mCommandTerminal != null) {
+            mCommandTerminal.dispose();
         }
     }
 
@@ -158,31 +191,31 @@ public class AtCommandFragment extends Fragment {
                 mAtCommandLayout.setVisibility(View.VISIBLE);
                 break;
             case ROOT_UNAVAILABLE:
-                String rootUnavailable = "Unable to acquire ROOT access on your device. \n\n" +
-                        "AT Command Injection requires ROOT Terminal access. \n\n" +
-                        "Please check your device is ROOTED and try again";
+                String rootUnavailable = "Unable to acquire ROOT access on your device. \n\n"
+                        + "AT Command Injection requires ROOT Terminal access. \n\n"
+                        + "Please check your device is ROOTED and try again";
                 mAtCommandError.setText(rootUnavailable);
                 break;
             case BUSYBOX_UNAVAILABLE:
-                String busyboxUnavailable = "Unable to detect Busybox on your device. \n\n" +
-                        "AT Command Injection requires Busybox components to function correctly. \n\n"
+                String busyboxUnavailable = "Unable to detect Busybox on your device. \n\n"
+                        + "AT Command Injection requires Busybox components to function correctly. \n\n"
                         + "Please check your device has Busybox installed and try again";
                 mAtCommandError.setText(busyboxUnavailable);
                 break;
             case SERIAL_INIT_ERROR:
                 String error =
                         "An unknown error has occurred trying to acquire the Serial Device.\n\n"
-                                + "Please check your logcat for any errors and post them to Github "
-                                + "or XDA, links to both of these locations can be found within the "
-                                + "About section of the application.";
+                        + "Please check your logcat for any errors and post them to Github "
+                        + "or XDA, links to both of these locations can be found within the "
+                        + "About section of the application.";
                 mAtCommandError.setText(error);
                 break;
             default:
                 String unknownError =
                         "An unknown error has occurred trying to initialise the AT Command Injector.\n\n"
-                                + "Please check your logcat for any errors and post them to Github or "
-                                + "XDA, links to both of these locations can be found within the "
-                                + "About section of the application.";
+                        + "Please check your logcat for any errors and post them to Github or "
+                        + "XDA, links to both of these locations can be found within the "
+                        + "About section of the application.";
                 mAtCommandError.setText(unknownError);
                 break;
         }
@@ -195,39 +228,38 @@ public class AtCommandFragment extends Fragment {
         public void onClick(View v) {
             if (mAtCommand.getText() != null) {
                 String command = mAtCommand.getText().toString();
-
-                // E:V:A This need to be fixed, AT commands can often be lowercase,
-                // and it's possible that some OEM AT's are case sensitive.
-                // Let's try to not mix terminal shell access with AT commands.
-                // May still be useful for debugging PID and GID/UID etc.
-
-                //if (command.toUpperCase().indexOf("AT") == 0) {
-                    Log.i("AIMSICD", "AT Command Detected: " + command );
-                    executeAT();
-                //} else {
-                //    Log.i("AIMSICD", "Terminal Command Detected");
-                //    executeCommand();
-                //}
+                Log.i("AIMSICD", "AT Command Detected: " + command);
+                executeAT();
             }
         }
     }
 
+    /**
+     *  Description:    This is looking for possible serial devices that may be used for ATCoP.
+     *
+     *  Issues:         This is generally not working since it is very HW and SW dependent.
+     *
+     *
+     * @return
+     */
     private int initSerialDevice() {
 
         /**
-         * Because of how RootShell is being used the handler has to be disabled.
+         * NOTE:
          *
-         * With the handler disabled absolutely NO UI work can be done in the callback methods
-         * since they will be called on a separate thread.
+         *      Because of how RootShell is being used the handler has to be disabled.
          *
-         * To work around this, either:
+         *      With the handler disabled absolutely NO UI work can be done in the callback methods
+         *      since they will be called on a separate thread.
          *
-         * Execute all Shell commands in a thread, such as AsyncTask
+         *      To work around this, either:
          *
-         * OR
+         *      a) Execute all Shell commands in a thread, such as AsyncTask
+         *          OR
+         *      b) Stop using commandWait (which is a no no...you should never sleep on the
+         *         main UI thread) and implement the callback commandFinished/commandTerminated
+         *         to determine when to continue on.
          *
-         * Stop using commandWait (which is a no no...you should never sleep on the main UI thread)
-         * and implement the callback commandFinished/commandTerminated to determine when to continue on.
          */
         RootShell.handlerEnabled = false;
 
@@ -244,17 +276,20 @@ public class AtCommandFragment extends Fragment {
         }
 
         try {
-            shell = RootShell.getShell(true);
-
-            mAtResponse.setText("*** Setting Up... Ignore any errors. ***\n");
-
+            mAtResponse.setText("*** Looking for AT serial devices...\n");
             mSerialDevices.clear();
-            // Use RIL Serial Device details from the System Property
-            String rilDevice = Helpers.getSystemProp(mContext, "rild.libargs", "UNKNOWN");
-            mSerialDevice = (rilDevice.equals("UNKNOWN") ? rilDevice : rilDevice.substring(3));
 
-            if (!mSerialDevice.equals("UNKNOWN")) {
-                mSerialDevices.add(mSerialDevice);
+            // THIS IS A BAD IDEA       TODO: Consider removing
+            // Use RIL Serial Device details from the System Property
+            try {
+                String rilDevice = Helpers.getSystemProp(mContext, "rild.libargs", "UNKNOWN");
+                mSerialDevice = (rilDevice.equals("UNKNOWN") ? rilDevice : rilDevice.substring(3));
+
+                if (!mSerialDevice.equals("UNKNOWN")) {
+                    mSerialDevices.add(mSerialDevice);
+                }
+            } catch (StringIndexOutOfBoundsException e) {
+                // ignore, move on
             }
 
             //==================================================================
@@ -263,33 +298,34 @@ public class AtCommandFragment extends Fragment {
             //           To get unaliased versions, use: "\\<command>"
             //==================================================================
 
-            // MTK: Check for ATCI devices and add found location to the serial device list
-            // XMM: Unknown
-            // QC: /dev/smd[0-7]
-            Command cmd = new Command(0, "\\ls /dev/radio | grep atci*") {
-
-                @Override
-                public void commandOutput(int id, String line) {
-                    if (id == 0) {
-                        if (!line.trim().equals("") &&
-                                !mSerialDevices.contains("/dev/radio/" + line.trim())) {
-                            mSerialDevices.add("/dev/radio/" + line.trim());
-                            mAtResponse.append("Found: " + line.trim());
+            for (File file : new File("/dev").listFiles()) {
+                String name = file.getName();
+                boolean add = false;
+                // QC: /dev/smd[0-7]
+                if (name.matches("^smd.$")) {
+                    add = true;
+                } else if (name.equals("radio")) {
+                    // MTK: /dev/radio/*atci*
+                    for (File subfile : file.listFiles()) {
+                        String subname = subfile.getName();
+                        if (subname.contains("atci")) {
+                            add = true;
+                            file = subfile;
                         }
                     }
-
-                    super.commandOutput(id, line);
                 }
-            };
 
-            shell.add(cmd);
-            commandWait(shell, cmd);
+                if (add) {
+                    mSerialDevices.add(file.getAbsolutePath());
+                    mAtResponse.append("Found: " + file.getAbsolutePath() + "\n");
+                }
+            }
 
             // Now try XMM/XGOLD modem config
             File xgold = new File("/system/etc/ril_xgold_radio.cfg");
             if (xgold.exists() && xgold.isFile()) {
-                cmd = new Command(1, "cat /system/etc/ril_xgold_radio.cfg | "
-                        + "grep -E \"atport*|dataport*\"") {
+                Command cmd = new Command(1, "\\cat /system/etc/ril_xgold_radio.cfg | "
+                                            + "\\grep -E \"atport*|dataport*\"") {
 
                     @Override
                     public void commandOutput(int id, String line) {
@@ -297,28 +333,23 @@ public class AtCommandFragment extends Fragment {
                             if (!line.trim().equals("") && line.contains("/dev/")) {
                                 int place = line.indexOf("=") + 1;
                                 mSerialDevices.add(line.substring(place, line.length() - 1));
-                                mAtResponse.append(line.substring(place, line.length() - 1));
+                                mAtResponse.append("Found: "+line.substring(place, line.length() - 1)+"\n");
                             }
                         }
-
                         super.commandOutput(id, line);
-
                     }
                 };
 
+                Shell shell = RootShell.getShell(true);
                 shell.add(cmd);
                 commandWait(shell, cmd);
-
             }
 
         } catch (Exception e) {
-            Log.e("AIMSICD", "initSerialDevice " + e);
+            Log.e("AIMSICD", "ATCoP: initSerialDevice " + e);
         }
 
-
         if (!mSerialDevices.isEmpty()) {
-            mSerialDevice = mSerialDevices.get(0);
-            setSerialDevice();
             String[] entries = new String[mSerialDevices.size()];
             entries = mSerialDevices.toArray(entries);
             ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(mContext,
@@ -335,57 +366,55 @@ public class AtCommandFragment extends Fragment {
     }
 
     private void setSerialDevice() {
-        Command cmd = new Command(SET_DEVICE, "cat " + mSerialDevice + " \u0026\n");
-        try {
-            shell.add(cmd);
-            commandWait(shell, cmd);
-            Log.i("AIMSICD", "setSerialDevice finished on " + mSerialDevice);
-        } catch (Exception e) {
-            Log.e("AIMSICD", "setSerialDevice " + e);
+        if (mCommandTerminal != null) {
+            mCommandTerminal.dispose();
+            mCommandTerminal = null;
+        }
+    }
+
+    private void openSerialDevice() {
+        if (mCommandTerminal == null) {
+            try {
+                mCommandTerminal = new TtyPrivFile(mSerialDevice);
+            } catch (IOException e) {
+                mAtResponse.append(e.toString());
+            }
         }
     }
 
     private void executeAT() {
-
-        if (mAtCommand.getText() != null) {
-
-            /**
-             * Can't touch the main UI from the callback,
-             * add the response to the SB and then add to the main UI.
-             *
-             * See note at method "initSerialDevice"
-             */
-            final StringBuilder response = new StringBuilder();
-
-            try {
-                // E:V:A  It seem that MTK devices doesn't need "\r" but QC devices do.
-                // We need a device-type check here, perhaps: gsm.version.ril-impl.
-                Command cmd = new Command(EXECUTE_AT,
-                        "echo -e " + mAtCommand.getText().toString() +"\r >" + mSerialDevice + "\n") {
-
+        // It seem that MTK devices doesn't need "\r" but QC devices do.
+        // We need a device-type check here, perhaps: gsm.version.ril-impl.
+        Editable cmd = mAtCommand.getText();
+        if (cmd != null && cmd.length() != 0) {
+            //Log.d("AIMSICD", "executeAT: attempting to send: " + cmd.toString() );
+            openSerialDevice();
+            if (mCommandTerminal != null) { // if openSerialDevice() did not fail
+                mCommandTerminal.send(cmd.toString(), new Handler(Looper.getMainLooper()) {
                     @Override
-                    public void commandOutput(int id, String line) {
-                        if (id == EXECUTE_AT) {
-                            if (!line.trim().equals("")) {
-                                response.append(line + "\n");
+                    public void handleMessage(Message message) {
+                        if (message.obj instanceof List) {
+                            List<String> lines = ((List<String>) message.obj);
+                            StringBuffer response = new StringBuffer();
+                            for (String line : lines) {
+                                response.append(line);
+                                response.append('\n');
                             }
+                            if (response.length() != 0) {
+                                mAtResponse.append(response);
+                            }
+
+                        } else if (message.obj instanceof IOException) {
+                            mAtResponse.append("IOException: " + ((IOException) message.obj).getMessage() + "\n");
                         }
-
-                        super.commandOutput(id, line);
                     }
-                };
-                Log.i("AIMSICD", "Trying to executeAT: " + cmd);
-                shell.add(cmd);
-                commandWait(shell, cmd);
-
-                mAtResponse.append(response.toString());
-            } catch (Exception e) {
-                Log.e("AIMSICD", "Failed to executeAT: " + e);
+                }.obtainMessage());
             }
         }
 
     }
 
+    // old shell command support
     private void executeCommand() {
         if (mAtCommand.getText() != null) {
 
@@ -415,6 +444,7 @@ public class AtCommandFragment extends Fragment {
                 };
 
                 Log.i("AIMSICD", "Trying to executeCommand: " + cmd);
+                Shell shell = RootShell.getShell(true);
                 shell.add(cmd);
                 commandWait(shell, cmd);
 

@@ -466,11 +466,11 @@ public class AIMSICDDbAdapter {
     /**
      * Returns Cell Information for contribution to the OpenCellID Project
      *
-     * Function:    Return a list of all rows which were not submitted to OpenCellID Project
+     * Function:    Seem to Return a list of all rows where OCID_SUBMITTED is not 1.
      */
     public Cursor getOPCIDSubmitData() {
         return mDb.query( CELL_TABLE,
-                new String[]{"Mcc", "Mnc", "Lac", "CellID", "Lng", "Lat", "Signal", "Timestamp",
+                new String[]{ "Lng", "Lat", "Mcc", "Mnc", "Lac", "CellID", "Signal", "Timestamp",
                         "Accuracy", "Speed", "Direction", "NetworkType"}, "OCID_SUBMITTED <> 1",
                 null, null, null, null
         );
@@ -642,7 +642,7 @@ public class AIMSICDDbAdapter {
      */
     public boolean prepareOpenCellUploadData() {
         boolean result;
-        // Q: Where is this?
+        // Q: Where is this? 
         // A: It is wherever your device has mounted its SDCard.
         //    For example:  /data/media/0/AIMSICD/OpenCellID
         File dir = new File(FOLDER + "OpenCellID/");

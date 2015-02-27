@@ -1,8 +1,4 @@
-/**   Copyright (C) 2013  Louis Teboul (a.k.a Androguide)
- *
- *    admin@pimpmyrom.org  || louisteboul@gmail.com
- *    http://pimpmyrom.org || http://androguide.fr
- *    71 quai Clémenceau, 69300 Caluire-et-Cuire, FRANCE.
+/**   Copyright (C) 2013  Louis Teboul <louisteboul@gmail.com>
  *
  *     This program is free software; you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -14,9 +10,9 @@
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
  *
- *      You should have received a copy of the GNU General Public License along
- *      with this program; if not, write to the Free Software Foundation, Inc.,
- *      51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *     You should have received a copy of the GNU General Public License along
+ *     with this program; if not, write to the Free Software Foundation, Inc.,
+ *     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  **/
 
 package com.SecUpwN.AIMSICD.utils;
@@ -29,7 +25,20 @@ import java.lang.reflect.Method;
 import dalvik.system.DexFile;
 
 /**
- * Class using reflection to grant access to the private hidden android.os.SystemProperties class
+ *  Description:    Class using reflection to grant access to the private hidden
+ *                  android.os.SystemProperties class
+ *
+ *  Dependency:     SystemProperties.java
+ *
+ *  Usage:          Helpers.java
+ *
+ *  Issues:
+ *              [ ]  Can simplify the code according to below link
+ *
+ *  Notes:
+ *
+ *    https://github.com/android/platform_frameworks_base/blob/master/core/java/android/os/SystemProperties.java
+ *    http://stackoverflow.com/a/28402378/1147688
  */
 public class SystemPropertiesReflection {
 
@@ -51,7 +60,6 @@ public class SystemPropertiesReflection {
         String ret = "";
 
         try {
-
             ClassLoader cl = context.getClassLoader();
             Class<?> SystemProperties = cl.loadClass("android.os.SystemProperties");
 
@@ -72,7 +80,6 @@ public class SystemPropertiesReflection {
             throw iAE;
         } catch (Exception e) {
             ret = "";
-            //TODO
         }
 
         return ret;
@@ -114,7 +121,6 @@ public class SystemPropertiesReflection {
             throw iAE;
         } catch (Exception e) {
             ret = def;
-            //TODO
         }
 
         return ret;
@@ -126,8 +132,7 @@ public class SystemPropertiesReflection {
      *
      * @param key the key to lookup
      * @param def a default value to return
-     * @return the key parsed as an integer, or def if the key isn't found or
-     * cannot be parsed
+     * @return the key parsed as an integer, or def if the key isn't found or cannot be parsed
      * @throws IllegalArgumentException if the key exceeds 32 characters
      */
     public static Integer getInt(Context context, String key, int def)
@@ -159,7 +164,6 @@ public class SystemPropertiesReflection {
             throw iAE;
         } catch (Exception e) {
             ret = def;
-            //TODO
         }
 
         return ret;
@@ -205,7 +209,6 @@ public class SystemPropertiesReflection {
             throw iAE;
         } catch (Exception e) {
             ret = def;
-            //TODO
         }
 
         return ret;
@@ -256,7 +259,6 @@ public class SystemPropertiesReflection {
             throw iAE;
         } catch (Exception e) {
             ret = def;
-            //TODO
         }
 
         return ret;
@@ -267,7 +269,7 @@ public class SystemPropertiesReflection {
      * Set the value for the given key.
      *
      * @throws IllegalArgumentException if the key exceeds 32 characters
-     * @throws IllegalArgumentException if the value exceeds 92 characters
+     *                          OR      if the value exceeds 92 characters
      */
     public static void set(Context context, String key, String val)
             throws IllegalArgumentException {
@@ -298,8 +300,7 @@ public class SystemPropertiesReflection {
 
         } catch (IllegalArgumentException iAE) {
             throw iAE;
-        } catch (Exception e) {
-            //TODO
+        } catch (Exception ignored) {
         }
 
     }

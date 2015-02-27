@@ -43,14 +43,14 @@ public class OpenCellIdCardInflater implements IAdapterViewInflater<CardItemData
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
-            mCellID = (TextView) mRootView.findViewById(R.id.cellID);
-            mLac = (TextView) mRootView.findViewById(R.id.lac);
-            mMcc = (TextView) mRootView.findViewById(R.id.mcc);
-            mMnc = (TextView) mRootView.findViewById(R.id.mnc);
-            mLat = (TextView) mRootView.findViewById(R.id.lat);
-            mLng = (TextView) mRootView.findViewById(R.id.lng);
+            mCellID =   (TextView) mRootView.findViewById(R.id.cellID);
+            mLac =      (TextView) mRootView.findViewById(R.id.lac);
+            mMcc =      (TextView) mRootView.findViewById(R.id.mcc);
+            mMnc =      (TextView) mRootView.findViewById(R.id.mnc);
+            mLat =      (TextView) mRootView.findViewById(R.id.lat);
+            mLng =      (TextView) mRootView.findViewById(R.id.lng);
             mAvgSigStr = (TextView) mRootView.findViewById(R.id.avgSigStr);
-            mSamples = (TextView) mRootView.findViewById(R.id.samples);
+            mSamples =  (TextView) mRootView.findViewById(R.id.samples);
             mRecordId = (TextView) mRootView.findViewById(R.id.record_id);
             rootView.setTag(this);
         }

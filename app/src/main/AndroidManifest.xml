@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
           android:versionCode="25"
-          android:versionName="0.1.25-alpha-b28">
+          android:versionName="0.1.25-alpha-b30">
 
     <!-- If we ever wanna make this a system app, we can add the following 2 lines above:
           coreApp="true"
@@ -59,7 +59,7 @@
     <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
     <uses-permission android:name="android.permission.SET_PROCESS_LIMIT"/>
     <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_GSERVICES"/>
+    <!--uses-permission android:name="android.permission.WRITE_GSERVICES"/ -->
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
 
     <!-- possibly deprecated -->
@@ -169,7 +169,6 @@
         <receiver android:name=".receiver.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
