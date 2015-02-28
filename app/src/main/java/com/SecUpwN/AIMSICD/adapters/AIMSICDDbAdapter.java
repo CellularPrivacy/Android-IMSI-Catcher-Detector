@@ -53,7 +53,7 @@ import au.com.bytecode.opencsv.CSVWriter;
  *      2015-01-22  E:V:A   Started DBe_import migration
  *      2015-01-23  E:V:A   ~~changed silent sms column names~~ NOT!
  *                          Added EventLog table
- *                          
+ *
  *
  *  Notes:
  *
@@ -83,7 +83,7 @@ import au.com.bytecode.opencsv.CSVWriter;
  *  +   A few words about DB "Cursors":
  *      http://developer.android.com/reference/android/database/Cursor.html
  *      http://stackoverflow.com/questions/3861558/what-are-the-benefits-of-using-database-cursor
- *      
+ *
  */
 
 public class AIMSICDDbAdapter {
@@ -493,7 +493,7 @@ public class AIMSICDDbAdapter {
      */
     public Cursor getOPCIDSubmitData() {
         return mDb.query( CELL_TABLE,
-                new String[]{ "Lng", "Lat", "Mcc", "Mnc", "Lac", "CellID", "Signal", "Timestamp",
+                new String[]{"Mcc", "Mnc", "Lac", "CellID", "Lng", "Lat", "Signal", "Timestamp",
                         "Accuracy", "Speed", "Direction", "NetworkType"}, "OCID_SUBMITTED <> 1",
                 null, null, null, null
         );
@@ -541,7 +541,7 @@ public class AIMSICDDbAdapter {
     //      Various DB operations
     // ====================================================================
 
-    
+
     /**
      *  Description:    This checks if a cell with a given (CID,Lat,Lon,Signal) already exists
      *                  in the "locationinfo" (DBi_measure) database.
@@ -647,7 +647,7 @@ public class AIMSICDDbAdapter {
     /**
      * Updates Cell (cellinfo) records to indicate OpenCellID contribution has been made
      * TODO: This should be done on TABLE_DBI_MEASURE::DBi_measure:isSubmitted
-     * 
+     *
      */
     public void ocidProcessed() {
         ContentValues ocidValues = new ContentValues();
@@ -703,30 +703,37 @@ public class AIMSICDDbAdapter {
         File file = new File(dir, "aimsicd-ocid-data.csv");
 
         try {
-            result = file.createNewFile();
-            if (!result) {
-                return false;
-            }
-            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
-            open();
-            Cursor c = getOPCIDSubmitData();
+            open(); // open Database
+            Cursor c = getOPCIDSubmitData(); // get data not submitted yet
 
-            csvWrite.writeNext("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act");
-            String[] rowData = new String[c.getColumnCount()];
-            int size = c.getColumnCount();
-            AIMSICD.mProgressBar.setProgress(0);
-            AIMSICD.mProgressBar.setMax(size);
-            while (c.moveToNext()) {
-                for (int i = 0; i < size; i++) {
-                    rowData[i] = c.getString(i);
-                    AIMSICD.mProgressBar.setProgress(i);
+            if(c.getCount() > 0) { // check if we have something to upload
+                if (!file.exists()) {
+                    result = file.createNewFile();
+                    if (!result) {
+                        return false;
+                    }
+
+                    CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+
+                    csvWrite.writeNext("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act");
+                    String[] rowData = new String[c.getColumnCount()];
+                    int size = c.getColumnCount();
+                    AIMSICD.mProgressBar.setProgress(0);
+                    AIMSICD.mProgressBar.setMax(size);
+                    while (c.moveToNext()) {
+                        for (int i = 0; i < size; i++) {
+                            rowData[i] = c.getString(i);
+                            AIMSICD.mProgressBar.setProgress(i);
+                        }
+                        csvWrite.writeNext(rowData);
+                    }
+
+                    csvWrite.close();
+                    c.close();
                 }
-                csvWrite.writeNext(rowData);
-            }
-
-            csvWrite.close();
-            c.close();
-            return true;
+                return true;
+             }
+             return false;
         } catch (Exception e) {
             Log.e(TAG, mTAG + ": Error creating OpenCellID Upload Data: " + e);
             return false;
@@ -1290,7 +1297,7 @@ public class AIMSICDDbAdapter {
         DbHelper(Context context) {
             super(context, DB_NAME, null, DATABASE_VERSION);
         }
-        
+
 
         // Create aimsicd.db table structure 
         @Override
@@ -1299,16 +1306,16 @@ public class AIMSICDDbAdapter {
             //=============================================================
             //  OLD tables
             //=============================================================
-            
+
             /**
              *  Table:      CELL_SIGNAL_TABLE
              *  What:       Cell Signal Measurements
              *  Columns:    _id,cellID,signal,timestamp
-             *  
+             *
              *  TODO:     move table into column "DBi_measure::rx_signal"
              */
             database.execSQL("CREATE TABLE " +
-                    CELL_SIGNAL_TABLE + " (" + COLUMN_ID + 
+                    CELL_SIGNAL_TABLE + " (" + COLUMN_ID +
                     " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "cellID INTEGER, signal INTEGER, " +
                     "timestamp INTEGER);");
@@ -1319,7 +1326,7 @@ public class AIMSICDDbAdapter {
              *  Table:      SILENT_SMS_TABLE
              *  What:       Silent Sms Database
              *  Columns:    _id,Address,Display,Class,ServiceCtr,Message,Timestamp
-             * 
+             *
              *  TODO: rename to TABLE_SILENTSMS
              */
             String SMS_DATABASE_CREATE = "CREATE TABLE " +
@@ -1344,7 +1351,7 @@ public class AIMSICDDbAdapter {
              *  Table:      LOCATION_TABLE
              *  What:       Location Tracking Database
              *  Columns:    _id,Lac,CellID,Net,Lat,Lng,Signal,Connection,Timestamp
-             * 
+             *
              *  TODO: rename to TABLE_DBI_MEASURE ("DBi_measure")
              */
             String LOC_DATABASE_CREATE = "CREATE TABLE " +
@@ -1437,7 +1444,7 @@ public class AIMSICDDbAdapter {
                     TABLE_DEFAULT_MCC + " (" + COLUMN_ID +
                     " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "Country VARCHAR, " +
-                    "Mcc INTEGER, " + 
+                    "Mcc INTEGER, " +
                     "Lat VARCHAR, " +
                     "Lng VARCHAR);";
             database.execSQL(DEFAULT_MCC_DATABASE_CREATE);
