@@ -88,7 +88,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
-    //public static final char DBE_UPLOAD_REQUEST = 3;  // TODO: OCID upload request from "APPLICATION" drawer title
+    public static final char DBE_UPLOAD_REQUEST = 6;  // TODO: OCID upload request from "APPLICATION" drawer title
     public static final char BACKUP_DATABASE = 3;
     public static final char RESTORE_DATABASE = 4;
     public static final char CELL_LOOKUP = 5;           // TODO: "All Current Cell Details (ACD)"
@@ -109,11 +109,12 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
         // We need to create a separate case for UPLOADING to DBe (OCID, MLS etc)
         switch (mType) {
-/*
+
             // UPLOADING !!
             case DBE_UPLOAD_REQUEST:   // OCID upload request from "APPLICATION" drawer title
                 try {
-                    if (CellTracker.OCID_UPLOAD_PREF) {
+                    // TODO: Remove OCID_UPLOAD_PREF?
+                    //if (CellTracker.OCID_UPLOAD_PREF) {
                         boolean prepared = mDbAdapter.prepareOpenCellUploadData();
                         Log.i("AIMSICD", "OCID upload data prepared - " + String.valueOf(prepared));
                         if (prepared) {
@@ -153,16 +154,20 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                                 Log.i("AIMSICD", "OCID Upload Response: "
                                         + response.getStatusLine().getStatusCode() + " - "
                                         + response.getStatusLine());
-                                mDbAdapter.ocidProcessed();
+                                if (response.getStatusLine().getStatusCode() == org.apache.http.HttpStatus.SC_OK) {
+                                    mDbAdapter.ocidProcessed();
+                                }
                                 publishProgress(95,100);
                             }
 
                         }
-                    }
+                        return "Successful";
+                    //}
+                    //return null;
                 } catch (Exception e) {
                     Log.i("AIMSICD", "Upload OpenCellID data - " + e.getMessage());
                 }
-*/
+
             // DOWNLOADING...
             case DBE_DOWNLOAD_REQUEST:          // OCID download request from "APPLICATION" drawer title
             case DBE_DOWNLOAD_REQUEST_FROM_MAP: // OCID download request from "Antenna Map Viewer"
