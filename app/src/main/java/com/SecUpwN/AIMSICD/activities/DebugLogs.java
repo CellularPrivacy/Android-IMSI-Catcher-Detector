@@ -47,6 +47,7 @@ import java.io.InputStreamReader;
  *          2015-01-28  Toby    Fixed "getprop" info to log (but not sorted)
  *          2015-02-11  E:V:A   Increased to 500 lines and removed "-d" and
  *                              incl. radio log, but not working. Permission problem?
+ *          2015-02-24  E:V:A   Silent some spam logs on HTC devices.
  *
  */
 
@@ -234,6 +235,7 @@ public class DebugLogs extends BaseActivity {
      *  3) Need to silent some Qualcomm QMI:                " RILQ:S"
      *  4) Need to silent some Qualcomm GPS:                " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S"
      *  5) "-d" is not necessary when using "-t".
+     *  6) Need to silent some spammy HTC's:                "QC-QMI:S AudioPolicyManager:S"
      *
      */
     private String getLogs() throws IOException {
@@ -241,7 +243,8 @@ public class DebugLogs extends BaseActivity {
             "logcat -t 500 -v brief -b main" +
                     (isRadioLogs ? " -b radio RILQ:S" : "") +
                     " AbsListView:S PackageInfo:S" +
-                    " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S" + " *:D"
+                    " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S" +
+                    " QC-QMI:S AudioPolicyManager:S" + " *:D"
         );
     }
 
