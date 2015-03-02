@@ -75,6 +75,7 @@ import java.net.URL;
  *
  *      2015-01-21 E:V:A   Moved code blocks, added placeholder code, disabled upload
  *      2015-02-13 E:V:A   Added onPreExecute() and super keywords & Logs (to be removed when working)
+ *      2015-03-02 Kai Renken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
  *
  *  To Fix:
  *
@@ -113,8 +114,6 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
             // UPLOADING !!
             case DBE_UPLOAD_REQUEST:   // OCID upload request from "APPLICATION" drawer title
                 try {
-                    // TODO: Remove OCID_UPLOAD_PREF?
-                    //if (CellTracker.OCID_UPLOAD_PREF) {
                         boolean prepared = mDbAdapter.prepareOpenCellUploadData();
                         Log.i("AIMSICD", "OCID upload data prepared - " + String.valueOf(prepared));
                         if (prepared) {
@@ -159,11 +158,12 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                                 }
                                 publishProgress(95,100);
                             }
-
+                            return "Successful";
+                        } else {
+                            Helpers.msgLong(mContext, "No data for publishing available");
+                            return null;
                         }
-                        return "Successful";
-                    //}
-                    //return null;
+
                 } catch (Exception e) {
                     Log.i("AIMSICD", "Upload OpenCellID data - " + e.getMessage());
                 }

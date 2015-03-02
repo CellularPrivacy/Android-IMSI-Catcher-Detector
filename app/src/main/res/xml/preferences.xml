@@ -78,11 +78,6 @@
             android:key="@string/pref_ocid_key"
             android:summary="@string/pref_ocid_key_summ"
             android:title="@string/pref_ocid_key_title"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="@string/pref_ocid_upload"
-            android:summary="@string/pref_ui_ocid_upload_summ"
-            android:title="@string/pref_ui_ocid_upload_title"/>
     </PreferenceCategory>
 
 used</PreferenceScreen>
