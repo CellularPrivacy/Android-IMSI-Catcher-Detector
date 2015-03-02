@@ -145,16 +145,15 @@ import java.util.List;
 
     /**
      * Checks if Network connectivity is available to download OpenCellID data
+     * Requires:        android:name="android.permission.ACCESS_NETWORK_STATE"
      */
     public static Boolean isNetAvailable(Context context) {
 
         try {
-            ConnectivityManager connectivityManager = (ConnectivityManager)
+            ConnectivityManager cM = (ConnectivityManager)
                     context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo wifiInfo = connectivityManager
-                    .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            NetworkInfo mobileInfo =
-                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo wifiInfo =   cM.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo mobileInfo = cM.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (wifiInfo != null && mobileInfo != null) {
                 return wifiInfo.isConnected() || mobileInfo.isConnected();
             }
