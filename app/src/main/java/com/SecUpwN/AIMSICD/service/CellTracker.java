@@ -67,6 +67,9 @@ import java.util.concurrent.TimeUnit;
  *
  *  ChangeLog
  *
+ *  2015-03-02 Kai Renken   remove OCID_UPLOAD_PREF: Upload is done manual, so this is not needed
+ *                          anymore.
+ *
  */
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -88,7 +91,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public static int PHONE_TYPE;               //
     public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
     public static int LAST_DB_BACKUP_VERSION;   //
-    public static boolean OCID_UPLOAD_PREF;     //
     public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
 
     private boolean CELL_TABLE_CLEANSED;
@@ -281,7 +283,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         final String FEMTO_DETECTION =  context.getString(R.string.pref_femto_detection_key);
         final String REFRESH =          context.getString(R.string.pref_refresh_key);      // Manual Refresh
         final String DB_VERSION =       context.getString(R.string.pref_last_database_backup_version);
-        final String OCID_UPLOAD =      context.getString(R.string.pref_ocid_upload);  // BOOLEAN to enable OCID data upload
         final String OCID_KEY =         context.getString(R.string.pref_ocid_key);
 
         if (key.equals(KEY_UI_ICONS)) {
@@ -314,8 +315,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
         } else if (key.equals(DB_VERSION)) {
             LAST_DB_BACKUP_VERSION = sharedPreferences.getInt(DB_VERSION, 1);
-        } else if (key.equals(OCID_UPLOAD)) {
-            OCID_UPLOAD_PREF = sharedPreferences.getBoolean(OCID_UPLOAD, false);
         } else if (key.equals(OCID_KEY)) {
             getOcidKey();
         }
@@ -555,7 +554,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         boolean monitorCellPref = prefs.getBoolean( context.getString(R.string.pref_enable_cell_monitoring_key), true);
 
         LAST_DB_BACKUP_VERSION  = prefs.getInt(     context.getString(R.string.pref_last_database_backup_version), 1);
-        OCID_UPLOAD_PREF        = prefs.getBoolean( context.getString(R.string.pref_ocid_upload), false);
         CELL_TABLE_CLEANSED     = prefs.getBoolean( context.getString(R.string.pref_cell_table_cleansed), false);
 
         String refreshRate      = prefs.getString(  context.getString(R.string.pref_refresh_key), "1");
