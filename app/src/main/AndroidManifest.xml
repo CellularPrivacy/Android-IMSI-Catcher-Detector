@@ -8,7 +8,8 @@
           coreApp="true"
           android:sharedUserId="android.uid.system"> -->
 
-    <!-- PERMISSIONS ARE SORTED BY NAME and "TYPE" - PLEASE KEEP THIS STRUCTURE. -->
+    <!-- PERMISSIONS ARE SORTED BY AOS PERMISSION AND 3rd PARTY ACCESS. KEEP THIS! -->
+    <!-- https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Permissions -->
 
     <!-- Normal Android third-party permissions -->
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
@@ -65,7 +66,6 @@
     <!-- possibly deprecated -->
     <uses-permission android:name="android.permission.RECEIVE_EMERGENCY_BROADCAST"/>
     <uses-permission android:name="android.permission.READ_NETWORK_USAGE_HISTORY"/>
-
 
     <!-- These are OEM / Samsung Permissions -->
     <uses-permission android:name="android.phone.receiveDetailedCallState"/>
