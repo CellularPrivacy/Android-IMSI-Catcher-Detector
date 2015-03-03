@@ -134,6 +134,9 @@
     <string name="aimsicd_credits_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS</string>
     <string name="status_icons_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons</string>
 
+
+
+
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Network ID:</string>
     <string name="network_sysid">System ID:</string>
