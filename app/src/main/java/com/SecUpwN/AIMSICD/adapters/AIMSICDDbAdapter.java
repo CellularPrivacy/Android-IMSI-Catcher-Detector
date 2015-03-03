@@ -91,6 +91,7 @@ public class AIMSICDDbAdapter {
     public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
     public static final int DATABASE_VERSION = 8; // Is this "pragma user_version;" ?
 
+    // TODO: This should be implemented as a SharedPreference...
     private final Boolean MONO_DB_DUMP = true; // Also back-up DB with one monolithic dump file?
 
     private final String TAG = "AISMICD";
@@ -900,7 +901,8 @@ public class AIMSICDDbAdapter {
      *
      *  Exported CSV format: TODO:
      *
-     *
+     *  Notes:      1) Restoring the DB can be done from a monolithic SQLite3 DB by (check!):
+     *                  # sqlite3 aimsicd.db <aimsicd.dump
      *
      *
      */
@@ -1054,7 +1056,7 @@ public class AIMSICDDbAdapter {
      *  Description:    Backup the database tables to CSV files (or monolithic dump file)
      *
      *  Depends:        On the Boolean MONO_DB_DUMP to indicate if we want to try to
-     *                  dump a monilitic DB using the rooted shell + sqlite3 binary
+     *                  dump a monolithic DB using the rooted shell + sqlite3 binary
      *                  method above.
      *
      * @return boolean indicating backup outcome
