@@ -81,9 +81,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     // "public static" or "private" ??   2015-02-13 E:V:A
     //public static final String TAG = "CellTracker";
-    //private final String TAG = "AISMICD";
+    //private final String TAG = "AIMSICD";
     //private final String mTAG = "CellTracker";
-    public static final String TAG = "AISMICD";
+    public static final String TAG = "AIMSICD";
     public static final String mTAG = "CellTracker";
 
     public static String OCID_API_KEY = null;   // see getOcidKey()
