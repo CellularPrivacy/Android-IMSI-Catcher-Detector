@@ -37,6 +37,7 @@ import com.SecUpwN.AIMSICD.utils.DeviceApi17;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.Status;
+import com.SecUpwN.AIMSICD.utils.TinyDB;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -64,11 +65,16 @@ import java.util.concurrent.TimeUnit;
  *              in a static variable. It is also used in timerRunnable where it
  *              defaults to 25 seconds.
  *
+ *              [ ] Use TinyDB.java to simplify Shared Preferences usage
+ *
  *
  *  ChangeLog
  *
- *  2015-03-02 Kai Renken   remove OCID_UPLOAD_PREF: Upload is done manual, so this is not needed
- *                          anymore.
+ *  2015-03-02  kairenken   removed OCID_UPLOAD_PREF. (Upload is done manually.)
+ *  2015-03-02  E:V:A       Added TinyDB import for SharedPreferences alternative
+ *  2015-03-03  E:V:A       Replaced getSystemProp with TinyDB Boolean "ocid_downloaded" in Runnable()
+ *
+ *
  *
  */
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -87,6 +93,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private final SignalStrengthTracker signalStrengthTracker;
     private PhoneStateListener mPhoneStateListener;
     private SharedPreferences prefs;
+    // We can also use this to simplify SharedPreferences usage above.
+    //TinyDB tinydb = new TinyDB(context);
 
     public static int PHONE_TYPE;               //
     public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
@@ -1042,7 +1050,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      *  Notes:
      *              a) Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
-     *                 See news in: issue #290  and compare to AIMSICDDbAdapter.java
+     *                 See news in: issue #290 and compare to AIMSICDDbAdapter.java
      *
      *  Issues:     [ ] We shouldn't do any detection here!
      *              [ ] We might wanna use a listener to do this?
@@ -1075,9 +1083,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         // Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
                         // See news in: issue #290  and compare to AIMSICDDbAdapter.java
                         // if ok then remove/change these comments.
+                        // TODO: We want to replace getSystemProp with a SharedPreference:
+                        // tinydb.getBoolean("ocid_downloaded");
+                        //if ( tinydb.getBoolean("ocid_downloaded") ) {
                         if ( Boolean.valueOf( Helpers.getSystemProp(CellTracker.this.context, "aimsicd.ocid_downloaded", "false") ) ) {
                             if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
-                                Log.i(TAG, "ALERT: New CID -NOT- found in DBe_import: " + mMonitorCell.getCID());
+                                //Log.i(TAG, "ALERT: New CID -NOT- found in DBe_import: " + mMonitorCell.getCID());
+                                Log.i(TAG, "ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
 
                                 // Code Place-holder: TODO: Add to EventLog table!!
 
