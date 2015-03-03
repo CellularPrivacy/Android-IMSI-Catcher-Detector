@@ -1,21 +1,5 @@
 package com.SecUpwN.AIMSICD.utils;
 
-import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.service.CellTracker;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.InputStreamBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +8,15 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.service.CellTracker;
+//import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.TinyDB;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -37,6 +30,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  *
@@ -73,9 +74,10 @@ import java.net.URL;
  *
  * ChangeLog:
  *
- *      2015-01-21 E:V:A   Moved code blocks, added placeholder code, disabled upload
- *      2015-02-13 E:V:A   Added onPreExecute() and super keywords & Logs (to be removed when working)
- *      2015-03-02 Kai Renken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
+ *      2015-01-21  E:V:A       Moved code blocks, added placeholder code, disabled upload
+ *      2015-02-13  E:V:A       Added onPreExecute() and super keywords & Logs (to be removed when working)
+ *      2015-03-01  kairenken   Fixed "DBE_UPLOAD_REQUEST" + button
+ *      2015-03-02  kairenken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
  *
  *  To Fix:
  *
@@ -89,10 +91,10 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
-    public static final char DBE_UPLOAD_REQUEST = 6;  // TODO: OCID upload request from "APPLICATION" drawer title
-    public static final char BACKUP_DATABASE = 3;
-    public static final char RESTORE_DATABASE = 4;
-    public static final char CELL_LOOKUP = 5;           // TODO: "All Current Cell Details (ACD)"
+    public static final char DBE_UPLOAD_REQUEST = 6;            // OCID upload request from "APPLICATION" drawer title
+    public static final char BACKUP_DATABASE = 3;               //
+    public static final char RESTORE_DATABASE = 4;              //
+    public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
 
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
@@ -103,6 +105,17 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
         mContext = context;
         mDbAdapter = new AIMSICDDbAdapter(mContext);
     }
+
+    // TODO: THIS IS JUNK, please remove when fixed!
+    //public static Context context;
+    // We can also use this to simplify SharedPreferences usage.
+    //TinyDB tinydb = new TinyDB(context);
+    /*private TinyDB(Context incomingContext){
+        //this.mContext = incomingContext;
+        // if that gives an error remove "this".
+        mContext = incomingContext;
+    }*/
+    //TinyDB.tinydb = new TinyDB(context);
 
 
     @Override
@@ -281,7 +294,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
      *                  [ ] checkDBe() is incomplete, due to missing RAT column in DBe_import
      *                  [ ] using setprop with SU on command line is very slow... We need
      *                      another method to same this.
-     *
+     *                  [ ] Replace above setprop with TinyDB SharedPreference instead.
      */
     // This is where we call the updateOpenCellID() to populate the DBe_import table
     @Override
@@ -299,7 +312,8 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                     mDbAdapter.checkDBe();
                     mDbAdapter.close();
-                    Helpers.setProp("aimsicd.ocid_downloaded", "true");
+                    Helpers.setProp("aimsicd.ocid_downloaded", "true"); //TODO
+                    //tinydb.putBoolean("ocid_downloaded", true); //TODO
                 } else {
                     Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
                 }
@@ -315,7 +329,8 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                         mDbAdapter.checkDBe();
                         mDbAdapter.close();
-                        Helpers.setProp("aimsicd.ocid_downloaded", "true");
+                        Helpers.setProp("aimsicd.ocid_downloaded", "true"); //TODO
+                        //tinydb.putBoolean("ocid_downloaded", true); //TODO
                     }
                 } else {
                     Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
@@ -337,13 +352,15 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
             case BACKUP_DATABASE:
                 if (result != null && result.equals("Successful")) {
+                    // TODO: Replace this code with TinyDB:
+                    // tinydb.putString("pref_last_database_backup_version", AIMSICDDbAdapter.DATABASE_VERSION); //TODO
                     SharedPreferences prefs;
-                    prefs = mContext.getSharedPreferences(
-                            AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+                    prefs = mContext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
                     SharedPreferences.Editor prefsEditor;
                     prefsEditor = prefs.edit();
                     prefsEditor.putInt(mContext.getString(R.string.pref_last_database_backup_version), AIMSICDDbAdapter.DATABASE_VERSION);
                     prefsEditor.apply();
+
                     final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setTitle(R.string.database_export_successful).setMessage(
                             "Database Backup successfully saved to:\n" + AIMSICDDbAdapter.FOLDER);
