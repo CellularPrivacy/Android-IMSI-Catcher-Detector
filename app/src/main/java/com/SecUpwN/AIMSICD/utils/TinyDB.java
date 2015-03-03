@@ -48,8 +48,10 @@ import android.util.Log;
  *    https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo/
  *
  *  Usage:
+ *      import com.SecUpwN.AIMSICD.utils.TinyDB;
+ *      ...
+ *      TinyDB tinydb = new TinyDB(context); //Possibly mContext if already declared.
  *
- *      TinyDB tinydb = new TinyDB(context);
  *      tinydb.putInt("clickCount", 2);
  *      tinydb.putFloat("xPoint", 3.6f);
  *      tinydb.putLong("userCount", 39832L);

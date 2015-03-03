@@ -69,7 +69,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *
  *
  * Issues:
- *          [ ] There is no onPreExecure here...perhaps that's why the progress bar is not shown?
+ *          [ ] There is no onPreExecute here...perhaps that's why the progress bar is not shown?
  *              see:  http://developer.android.com/reference/android/os/AsyncTask.html
  *
  * ChangeLog:
@@ -78,6 +78,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *      2015-02-13  E:V:A       Added onPreExecute() and super keywords & Logs (to be removed when working)
  *      2015-03-01  kairenken   Fixed "DBE_UPLOAD_REQUEST" + button
  *      2015-03-02  kairenken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
+ *      2015-03-03  E:V:A       Replaced dirty SharedPreferences code with TinyDB
  *
  *  To Fix:
  *
@@ -105,18 +106,6 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
         mContext = context;
         mDbAdapter = new AIMSICDDbAdapter(mContext);
     }
-
-    // TODO: THIS IS JUNK, please remove when fixed!
-    //public static Context context;
-    // We can also use this to simplify SharedPreferences usage.
-    //TinyDB tinydb = new TinyDB(context);
-    /*private TinyDB(Context incomingContext){
-        //this.mContext = incomingContext;
-        // if that gives an error remove "this".
-        mContext = incomingContext;
-    }*/
-    //TinyDB.tinydb = new TinyDB(context);
-
 
     @Override
     protected String doInBackground(String... commandString) {
@@ -287,20 +276,22 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
      *                  2) call the updateOpenCellID() to populate the DBe_import table
      *                  3) call the checkDBe() to cleanup bad cells from imported data
      *                  4) present a failure/success toast message
-     *                  5) set a system property to indicate that data has been downloaded:
-     *                      "setprop aimsicd.ocid_downloaded true"
+     *                  5) set a shared preference to indicate that data has been downloaded:
+     *                      "ocid_downloaded true"
      *
      *  Issues:
      *                  [ ] checkDBe() is incomplete, due to missing RAT column in DBe_import
-     *                  [ ] using setprop with SU on command line is very slow... We need
+     *                  [x] using setprop with SU on command line is very slow... We need
      *                      another method to same this.
-     *                  [ ] Replace above setprop with TinyDB SharedPreference instead.
+     *                  [x] Replace above setprop with TinyDB SharedPreference instead.
+     *
      */
     // This is where we call the updateOpenCellID() to populate the DBe_import table
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         AIMSICD.mProgressBar.setProgress(0);
+        TinyDB tinydb = new TinyDB(mContext);
 
         switch (mType) {
             case DBE_DOWNLOAD_REQUEST:
@@ -312,8 +303,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                     mDbAdapter.checkDBe();
                     mDbAdapter.close();
-                    Helpers.setProp("aimsicd.ocid_downloaded", "true"); //TODO
-                    //tinydb.putBoolean("ocid_downloaded", true); //TODO
+                    tinydb.putBoolean("ocid_downloaded", true);
                 } else {
                     Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
                 }
@@ -329,8 +319,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                         mDbAdapter.checkDBe();
                         mDbAdapter.close();
-                        Helpers.setProp("aimsicd.ocid_downloaded", "true"); //TODO
-                        //tinydb.putBoolean("ocid_downloaded", true); //TODO
+                        tinydb.putBoolean("ocid_downloaded", true);
                     }
                 } else {
                     Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
@@ -352,14 +341,10 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
             case BACKUP_DATABASE:
                 if (result != null && result.equals("Successful")) {
-                    // TODO: Replace this code with TinyDB:
-                    // tinydb.putString("pref_last_database_backup_version", AIMSICDDbAdapter.DATABASE_VERSION); //TODO
-                    SharedPreferences prefs;
-                    prefs = mContext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-                    SharedPreferences.Editor prefsEditor;
-                    prefsEditor = prefs.edit();
-                    prefsEditor.putInt(mContext.getString(R.string.pref_last_database_backup_version), AIMSICDDbAdapter.DATABASE_VERSION);
-                    prefsEditor.apply();
+
+                    // strings.xml: pref_last_db_backup_version
+                    //tinydb.putInt(mContext.getString(R.string.pref_last_database_backup_version), AIMSICDDbAdapter.DATABASE_VERSION); //TODO
+                    tinydb.putInt("pref_last_db_backup_version", AIMSICDDbAdapter.DATABASE_VERSION);
 
                     final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setTitle(R.string.database_export_successful).setMessage(
