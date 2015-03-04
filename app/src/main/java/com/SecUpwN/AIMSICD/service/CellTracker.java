@@ -38,6 +38,7 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.Status;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
+//import com.SecUpwN.AIMSICD.service.AimsicdService;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -59,6 +60,11 @@ import java.util.concurrent.TimeUnit;
  *  Note:       The refresh rate is set in two different places:
  *                  onSharedPreferenceChanged()
  *                  loadPreferences()
+ *
+ *              For proper TinyDB implementation use something like:
+ *              https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo/issues/6
+ *
+ *
  *
  *  ToDo:       Currently the automatic refresh rate is hard-coded to 15 seconds,
  *              in 2 different places above. We may consider have this more transparent
@@ -247,8 +253,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |        // rx_signal
                     PhoneStateListener.LISTEN_DATA_ACTIVITY |           // No,In,Ou,IO,Do
                     PhoneStateListener.LISTEN_DATA_CONNECTION_STATE     // Di,Ct,Cd,Su
-                    // LISTEN_CALL_STATE ?
-                    // LISTEN_SERVICE_STATE ?
+                    // PhoneStateListener.LISTEN_CALL_STATE ?
+                    // PhoneStateListener.LISTEN_SERVICE_STATE ?
             );
             mTrackingCell = true;
             Helpers.msgShort(context, "Tracking Cell Information.");
@@ -278,7 +284,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
 
     /**
-     *  Description:    This handles the settings/choices and default preferences
+     *  Description:    This handles the settings/choices and default preferences, when changed.
      *                  From the default file:
      *                          preferences.xml
      *                  And saved in the file:
@@ -345,8 +351,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      * @return null or newly generated key
      *
-     * TODO: We need to check for better HTTP request error handling.
-     * See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/267
      */
     public static String requestNewOCIDKey() throws Exception {
         String responseFromServer = null;
@@ -373,7 +377,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         } else if (status.getStatusCode() == 503) {
         // Check for HTTP error code 503 which is returned when user is trying to request
-        // a new API key within 24 hours of the last request.
+        // a new API key within 24 hours of the last request. (See GH issue #267)
         // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
 
             Helpers.msgLong(context, "Only one new API key request per 24 hours!\nPlease try again later.");
@@ -415,10 +419,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
     public List<Cell> updateNeighbouringCells() {
 
-        List<Cell> neighboringCells = new ArrayList<>();
+        //TinyDB tinydb = new TinyDB(context);
 
+        List<Cell> neighboringCells = new ArrayList<>();
         List<NeighboringCellInfo> neighboringCellInfo;
         neighboringCellInfo = tm.getNeighboringCellInfo();
+
         if (neighboringCellInfo.size() == 0) {
             // try to poll the neighboring cells for a few seconds
             neighboringCellBlockingQueue = new LinkedBlockingQueue<>(100);
@@ -497,22 +503,23 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
          *          [ ] We need to use a global and persistent variable and not a system property
          *
          */
-        /*
-        Integer ncls = neighboringCellInfo.size(); // NC list size
-        String nclp = Helpers.getProp("aimsicd.nc_list_present"); //This should be boolean?
 
-        if ( ncls > 0 && nclp == "false" ) {
-            Helpers.setProp("aimsicd.nc_list_present", "true");
+        /*Integer ncls = neighboringCellInfo.size(); // NC list size
+        Boolean nclp = tinydb.getBoolean("nc_list_present"); // NC list present? (Check for NULL?)
+
+        if ( ncls > 0 && !nclp ) {
+            tinydb.putBoolean("nc_list_present", true);
             Log.d(TAG, mTAG + ": neighbouringCellInfo size: " + ncls );
-        } else if ( ncls = 0 && nclp=="true" )  {
+        } else if ( ncls == 0 && nclp )  {
             // Detection 7a
             //Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID: " + mDevice.mCell.gsmCellLocation.getCid() );
+            //Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID: " + String.valueOf(mAimsicdService.getCell().getCID() ) );
+            Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID:  FIX_ME!! "); // We need the connected CID here!
 
             //  ADD alert to EventLog table HERE !!
 
-            //Helpers.setProp("aimsicd.nc_list_present", "false"); // Maybe not needed...
-        }
-        */
+            //tinydb.putBoolean("nc_list_present", false); // Maybe not needed...
+        }*/
         // END -- NC list check
 
         // Add NC list to ?? cellinfo ??  --->  DBi_measure:nc_list
@@ -554,8 +561,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     /**
      * Process User Preferences
      *
-     * Description:     Handles the default Settings/Preferences as set in:
+     * Description:     This loads the default Settings/Preferences as set in:
      *                      preferences.xml
+     *                  and:
+     *                      /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
      *
      *  TODO:           Please add more info and corrections
      *
