@@ -94,7 +94,7 @@ public class AIMSICDDbAdapter {
     // TODO: This should be implemented as a SharedPreference...
     private final Boolean MONO_DB_DUMP = true; // Also back-up DB with one monolithic dump file?
 
-    private final String TAG = "AISMICD";
+    private final String TAG = "AIMSICD";
     private final String mTAG = "DbAdapter";
     private final String DB_NAME = "aimsicd.db";
     private static final String COLUMN_ID   = "_id"; // Underscore is no longer required...
