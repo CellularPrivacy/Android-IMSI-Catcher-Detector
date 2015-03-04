@@ -78,10 +78,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *      2015-02-13  E:V:A       Added onPreExecute() and super keywords & Logs (to be removed when working)
  *      2015-03-01  kairenken   Fixed "DBE_UPLOAD_REQUEST" + button
  *      2015-03-02  kairenken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
- *      2015-03-03  E:V:A       Replaced dirty SharedPreferences code with TinyDB and Upload result Toast msg.
+ *      2015-03-03  E:V:A       Replaced dirty SharedPreferences code with TinyDB
  *
  *  To Fix:
  *
+ *      [ ] add request task "DBE_UPLOAD_REQUEST"
  *      [ ] Explain why BACKUP/RESTORE_DATABASE is in here?
  *      [ ] Think about what "lookup cell info" (CELL_LOOKUP) should do
  *      [ ] App is blocked while downloading.
@@ -92,8 +93,8 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
     public static final char DBE_UPLOAD_REQUEST = 6;            // OCID upload request from "APPLICATION" drawer title
-    public static final char BACKUP_DATABASE = 3;               // Backup DB to CSV and AIMSICD_dump.db
-    public static final char RESTORE_DATABASE = 4;              // Restore DB from CSV files
+    public static final char BACKUP_DATABASE = 3;               //
+    public static final char RESTORE_DATABASE = 4;              //
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
 
     private final AIMSICDDbAdapter mDbAdapter;
@@ -166,7 +167,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         }
 
                 } catch (Exception e) {
-                    Log.e("AIMSICD", "Upload OpenCellID data Exception - " + e.getMessage());
+                    Log.i("AIMSICD", "Upload OpenCellID data - " + e.getMessage());
                 }
 
             // DOWNLOADING...
@@ -271,7 +272,6 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
     /**
      *  Description:    This is where we:
-     *
      *                  1) Check the success for OCID data download
      *                  2) call the updateOpenCellID() to populate the DBe_import table
      *                  3) call the checkDBe() to cleanup bad cells from imported data
@@ -281,8 +281,12 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
      *
      *  Issues:
      *                  [ ] checkDBe() is incomplete, due to missing RAT column in DBe_import
+     *                  [x] using setprop with SU on command line is very slow... We need
+     *                      another method to same this.
+     *                  [x] Replace above setprop with TinyDB SharedPreference instead.
      *
      */
+    // This is where we call the updateOpenCellID() to populate the DBe_import table
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
@@ -322,13 +326,10 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 }
                 break;
 
-            case DBE_UPLOAD_REQUEST:
-                if (result != null && result.equals("Successful")) {
-                    Helpers.msgShort(mContext, "Uploaded BTS data to OCID successfully");
-                } else {
-                    Helpers.msgLong(mContext, "Error in uploading BTS data to OCID servers!");
-                }
-                break;
+            // TODO: Do we need the DBE_UPLOAD_REQUEST here?
+            //case DBE_UPLOAD_REQUEST:
+            //    // blah blah
+            //    break;
 
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
