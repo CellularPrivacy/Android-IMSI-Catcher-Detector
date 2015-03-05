@@ -76,7 +76,8 @@ import java.util.List;
  */
  public class Helpers {
 
-    private static final String TAG = "AIMSICD_Helpers";
+    private static final String TAG = "AIMSICD";
+    private static final String mTAG = "Helpers";
 
     private static final int CHARS_PER_LINE = 34;
 
@@ -253,8 +254,8 @@ import java.util.List;
                                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
-                    Log.i(TAG, "OCID BBOX is set to: " + boundParameter
-                                + "  using a radius of " + radius + " Km.");
+                    Log.i(TAG, mTAG + ":OCID BBOX is set to: " + boundParameter
+                                + "  with radius " + radius + " Km.");
 
                     StringBuilder sb = new StringBuilder();
                     sb.append("http://www.opencellid.org/cell/getInArea?key=")
@@ -372,12 +373,12 @@ import java.util.List;
             if (Environment.MEDIA_MOUNTED.equals(state)) {
                 // We can read and write the media
                 mExternalStorageAvailable = true;
-                Log.i(TAG, "External storage card is readable.");
+                Log.i(TAG, mTAG + ": External storage card is readable.");
             } else {
                 mExternalStorageAvailable = false;
             }
         } catch (Exception ex) {
-            Log.e(TAG, "isSdWritable - " + ex.getMessage());
+            Log.e(TAG, mTAG + ":isSdWritable - " + ex.getMessage());
         }
         return mExternalStorageAvailable;
     }
@@ -468,7 +469,7 @@ import java.util.List;
         try {
             result = SystemPropertiesReflection.get(context, prop);
         } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "Failed to get system property: " + prop);
+            Log.e(TAG, mTAG + ": Failed to get system property: " + prop);
         }
         return result == null ? def : result;
     }
@@ -497,7 +498,7 @@ import java.util.List;
         try {
             result = SystemPropertiesReflection.set(context, prop, value);
         } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "Failed to Set system property: " + prop);
+            Log.e(TAG, mTAG + ": Failed to Set system property: " + prop);
         }
         return result == null ? def : result;
     }
@@ -513,19 +514,19 @@ import java.util.List;
     public static boolean checkSu() {
         if (!new File("/system/bin/su").exists()
                 && !new File("/system/xbin/su").exists()) {
-            Log.e(TAG, "su binary does not exist!!!");
+            Log.e(TAG, mTAG + ": su binary does not exist!!!");
             return false; // tell caller to bail...
         }
         try {
             if (CMDProcessor.runSuCommand("ls /data/app-private").success()) {
-                Log.i(TAG, " SU exists and we have permission");
+                Log.i(TAG, mTAG + ": SU exists and we have permission");
                 return true;
             } else {
-                Log.i(TAG, " SU exists but we don't have permission");
+                Log.i(TAG, mTAG + ": SU exists but we don't have permission");
                 return false;
             }
         } catch (NullPointerException e) {
-            Log.e(TAG, "NullPointer throw while looking for su binary: ", e);
+            Log.e(TAG, mTAG + ": NPE while looking for su binary: ", e);
             return false;
         }
     }
@@ -538,16 +539,16 @@ import java.util.List;
     public static boolean checkBusybox() {
         if (!new File("/system/bin/busybox").exists()
                 && !new File("/system/xbin/busybox").exists()) {
-            Log.e(TAG, "Busybox not in xbin or bin!");
+            Log.e(TAG, mTAG + ": Busybox not in xbin or bin!");
             return false;
         }
         try {
             if (!CMDProcessor.runSuCommand("busybox mount").success()) {
-                Log.e(TAG, "Busybox is there but is broken!");
+                Log.e(TAG, mTAG + ": Busybox is there but is broken!");
                 return false;
             }
         } catch (NullPointerException e) {
-            Log.e(TAG, "NullpointerException thrown while testing Busybox: ", e);
+            Log.e(TAG, mTAG + ": NPE while testing Busybox: ", e);
             return false;
         }
         return true;

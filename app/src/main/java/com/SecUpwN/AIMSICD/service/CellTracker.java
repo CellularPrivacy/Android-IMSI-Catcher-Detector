@@ -85,12 +85,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    // "public static" or "private" ??   2015-02-13 E:V:A
-    //public static final String TAG = "CellTracker";
-    //private final String TAG = "AIMSICD";
-    //private final String mTAG = "CellTracker";
-    public static final String TAG = "AIMSICD";
-    public static final String mTAG = "CellTracker";
+    private final String TAG = "AIMSICD";
+    private final String mTAG = "CellTracker";
 
     public static String OCID_API_KEY = null;   // see getOcidKey()
     private final int NOTIFICATION_ID = 1;      // ?
@@ -473,7 +469,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         Log.d(TAG, mTAG + ": neighbouringCellInfo size: " + neighboringCellInfo.size());
 
         /**
-         *  Description:    This snippet sets a global variable (now property) to indicate
+         *  Description:    This snippet sets a global variable (SharedPreference) to indicate
          *                  if Neighboring cells info CAN be obtained or has been obtained
          *                  previously. If it has been and suddenly there are none, we can
          *                  raise a flag of CID being suspicious.
@@ -498,7 +494,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
          *          [ ] We need to add this to EventLog
          *          [ ] We need to add detection tickers etc...
          *          [ ] Attention to the spelling of "neighbor" (USA) Vs. "neighbour" (Eng world)
-         *          [ ] We need to use a global and persistent variable and not a system property
+         *          [x] We need to use a global and persistent variable and not a system property
          *
          */
 
