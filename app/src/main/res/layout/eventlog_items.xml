@@ -55,7 +55,7 @@
                 android:textColor="@color/standard_grey" />
 
             <TextView
-                android:id="@+id/gpsd_accur"
+                android:id="@+id/gpsd_accu"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/standard_grey" />
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/standard_yellow"/>
         <TextView
-            android:id="@+id/DF_description"
+            android:id="@+id/DF_desc"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/standard_yellow"/>

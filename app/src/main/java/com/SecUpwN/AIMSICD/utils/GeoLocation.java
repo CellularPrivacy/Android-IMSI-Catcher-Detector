@@ -1,19 +1,14 @@
 package com.SecUpwN.AIMSICD.utils;
 
 /**
- * <p>
- * Represents a point on the surface of a sphere. (The Earth is almost
- * spherical.)
- * </p>
- * <p>
- * To create an instance, call one of the static methods fromDegrees() or
- * fromRadians().
- * </p>
- * <p>
- * This code was originally published at <a
- * href="http://JanMatuschek.de/LatitudeLongitudeBoundingCoordinates#Java">
- * http://JanMatuschek.de/LatitudeLongitudeBoundingCoordinates#Java</a>.
- * </p>
+ * Description:
+ *              This util is used to calculate various points on a sphere from GPS coordinates
+ *
+ *              Represents a point on the surface of a sphere. (The Earth is almost spherical.)
+ *              To create an instance, call one of the static methods fromDegrees() or fromRadians().
+ *
+ *              This code was originally published at:
+ *              http://JanMatuschek.de/LatitudeLongitudeBoundingCoordinates#Java
  *
  * @author Jan Philip Matuschek
  * @version 22 September 2010
@@ -109,6 +104,7 @@ public class GeoLocation {
      * @param radius the radius of the sphere, e.g. the average radius for a
      *               spherical approximation of the figure of the Earth is
      *               approximately 6371.01 kilometers.
+     *
      * @return the distance, measured in the same unit as the radius argument.
      */
     public double distanceTo(GeoLocation location, double radius) {
@@ -118,40 +114,40 @@ public class GeoLocation {
     }
 
     /**
-     * <p>
-     * Computes the bounding coordinates of all points on the surface of a
-     * sphere that have a great circle distance to the point represented by this
-     * GeoLocation instance that is less or equal to the distance argument.
-     * </p>
-     * <p>
-     * For more information about the formulae used in this method visit <a
-     * href="http://JanMatuschek.de/LatitudeLongitudeBoundingCoordinates">
-     * http://JanMatuschek.de/LatitudeLongitudeBoundingCoordinates</a>.
-     * </p>
+     * Description:
+     *
+     *      Computes the bounding coordinates of all points on the surface of a
+     *      sphere that have a great circle distance to the point represented by this
+     *      GeoLocation instance that is less or equal to the distance argument.
+     *
      *
      * @param distance the distance from the point represented by this
-     *                 GeoLocation instance. Must me measured in the same unit as the
-     *                 radius argument.
+     *                 GeoLocation instance. Must me measured in the same
+     *                 unit as the radius argument.
+     *
      * @param radius   the radius of the sphere, e.g. the average radius for a
      *                 spherical approximation of the figure of the Earth is
      *                 approximately 6371.01 kilometers.
+     *
      * @return an array of two GeoLocation objects such that:
-     * <ul>
-     * <li>The latitude of any point within the specified distance is
-     * greater or equal to the latitude of the first array element and
-     * smaller or equal to the latitude of the second array element.</li>
-     * <li>If the longitude of the first array element is smaller or
-     * equal to the longitude of the second element, then the longitude
-     * of any point within the specified distance is greater or equal to
-     * the longitude of the first array element and smaller or equal to
-     * the longitude of the second array element.</li>
-     * <li>If the longitude of the first array element is greater than
-     * the longitude of the second element (this is the case if the
-     * 180th meridian is within the distance), then the longitude of any
-     * point within the specified distance is greater or equal to the
-     * longitude of the first array element <strong>or</strong> smaller
-     * or equal to the longitude of the second array element.</li>
-     * </ul>
+     *
+     *      The latitude of any point within the specified distance is
+     *      greater or equal to the latitude of the first array element and
+     *      smaller or equal to the latitude of the second array element.
+     *
+     *      If the longitude of the first array element is smaller or
+     *      equal to the longitude of the second element, then the longitude
+     *      of any point within the specified distance is greater or equal to
+     *      the longitude of the first array element and smaller or equal to
+     *      the longitude of the second array element.
+     *
+     *      If the longitude of the first array element is greater than
+     *      the longitude of the second element (this is the case if the
+     *      180th meridian is within the distance), then the longitude of any
+     *      point within the specified distance is greater or equal to the
+     *      longitude of the first array element OR smaller
+     *      or equal to the longitude of the second array element.
+     *
      */
     public GeoLocation[] boundingCoordinates(double distance, double radius) {
 

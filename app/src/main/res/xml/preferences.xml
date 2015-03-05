@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- WARNING: Do not change default values in this file, without also updating the code where
-         the preference is used -->
+    <!-- WARNING: Do not change default values in this file, without also
+                  updating the code where the preference is used -->
     <PreferenceCategory
         android:key="pref_key_system_settings"
         android:title="@string/pref_system_title">
@@ -78,11 +78,6 @@
             android:key="@string/pref_ocid_key"
             android:summary="@string/pref_ocid_key_summ"
             android:title="@string/pref_ocid_key_title"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="@string/pref_ocid_upload"
-            android:summary="@string/pref_ui_ocid_upload_summ"
-            android:title="@string/pref_ui_ocid_upload_title"/>
     </PreferenceCategory>
 
 used</PreferenceScreen>

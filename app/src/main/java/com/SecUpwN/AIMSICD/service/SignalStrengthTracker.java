@@ -9,23 +9,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ *  Description:    Class that calculates cell signal strength averages and decides if a
+ *                  given cell + strength appears to be mysteriously (low or high).
+ *                  Signal strengths are shown in units of:
  *
- * Class that calculates cell signal strength averages and decides if a given cell + strength
- * appears to be mysteriously (low or high). Signal strengths are shown in units of:
- * See:
- * http://wiki.opencellid.org/wiki/API#Filtering_of_data
- * GSM     RSSI in dBm in the range of [-51 to -113] or ASU in the range of [0 to 31]
- * UMTS    RSCP in dBm in the range of [-25 to -121] or ASU in the range of [-5 to 91]
- * LTE     RSRP in dBm in the range of [-45 to -137] or ASU in the range of [0 to 95]
- * CDMA    RSSI in dBm in the range of [-75 to -100] or ASU in the range of [1 to 16]
+ *          See:    http://wiki.opencellid.org/wiki/API#Filtering_of_data
  *
- * https://cloud.githubusercontent.com/assets/2507905/4428863/c85c8366-45d4-11e4-89da-c650cdb56caf.jpg
+ *      GSM     RSSI in dBm in the range of [-51 to -113] or ASU in the range of [0 to 31]
+ *      UMTS    RSCP in dBm in the range of [-25 to -121] or ASU in the range of [-5 to 91]
+ *      LTE     RSRP in dBm in the range of [-45 to -137] or ASU in the range of [0 to 95]
+ *      CDMA    RSSI in dBm in the range of [-75 to -100] or ASU in the range of [1 to 16]
+ *
+ *      https://cloud.githubusercontent.com/assets/2507905/4428863/c85c8366-45d4-11e4-89da-c650cdb56caf.jpg
  *
  * @author Tor Henning Ueland
  */
 public class SignalStrengthTracker {
 
-    public static final String TAG = "SignalStrengthMonitor";
+    public static final String TAG = "AIMSICD_SignalStrengthTracker";
     private static int sleepTimeBetweenSignalRegistration = 60; // [seconds]
     private static int minimumIdleTime              = 30; // [seconds]
     private static int maximumNumberOfDaysSaved     = 60; // [days] = 2 months
@@ -48,6 +49,7 @@ public class SignalStrengthTracker {
      * Registers a new cell signal strength for future calculation,
      * only values older than $sleepTimeBetweenSignalRegistration seconds
      * since last registration is saved for processing.
+     *
      * @param cellID
      * @param signalStrength
      */
@@ -56,13 +58,16 @@ public class SignalStrengthTracker {
         long now = System.currentTimeMillis();
 
         if(deviceIsMoving()) {
-            Log.i(TAG, "Ignored signal strength sample for cell ID #"+cellID+" as the device is currently moving around, will not accept anything for another "+((minimumIdleTime*1000) - (now - lastMovementDetected))+"ms");
+            Log.i(TAG, "Ignored signal strength sample for CID: " + cellID +
+                    " as the device is currently moving around, will not accept anything for another " +
+                    ((minimumIdleTime*1000) - (now - lastMovementDetected)) + " ms.");
             return;
         }
 
-        if(now-(sleepTimeBetweenSignalRegistration*1000) > lastRegistrationTime) {
+        if( now - (sleepTimeBetweenSignalRegistration*1000) > lastRegistrationTime) {
             long diff = now - lastRegistrationTime;
-            Log.i(TAG, "Scheduling signal strength calculation from cell #" + cellID + " @ " + signalStrength + " dBm, last registration was "+diff+"ms ago");
+            Log.i(TAG, "Scheduling signal strength calculation from CID: " + cellID +
+                    " @ " + signalStrength + " dBm. Last registration was " + diff + "ms ago.");
             lastRegistrationTime = now;
 
             mDbHelper.open();
@@ -71,13 +76,14 @@ public class SignalStrengthTracker {
         }
 
         if(now-(sleepTimeBetweenCleanup*1000) > lastCleanupTime) {
-            Log.i(TAG, "Removing up old signal strength entries");
+            Log.i(TAG, "Removing old signal strength entries");
             cleanupOldData();
         }
     }
 
-    /*
-        Remove data from DB older than N days (days * number of seconds in a day)*seconds to milliseconds
+    /**
+     *  Remove Signal Strength data from DB, that is older than N days:
+     *  (days * number of seconds in a day) * seconds to milliseconds
      */
     private void cleanupOldData() {
         long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved*86400))*1000);
@@ -94,6 +100,7 @@ public class SignalStrengthTracker {
     /**
      * Uses previously saved calculations and signal measurements to guesstimate if a given signal
      * strength for a given cell ID looks mysterious or not.
+     *
      * @param cellID
      * @param signalStrength
      */
@@ -101,7 +108,8 @@ public class SignalStrengthTracker {
 
         //If moving, return false
         if(deviceIsMoving()) {
-            Log.i(TAG, "Cannot check if the signal strength for cell ID #"+cellID+" as the device is currently moving around.");
+            Log.i(TAG, "Cannot check signal strength for CID: " + cellID +
+                        " as the device is currently moving around.");
             return false;
         }
 
@@ -110,13 +118,13 @@ public class SignalStrengthTracker {
         //Cached?
         if(averageSignalCache.get(cellID) != null) {
             storedAvg = averageSignalCache.get(cellID);
-            Log.d(TAG, "Cached average for cell ID #"+cellID+" is "+storedAvg);
+            Log.d(TAG, "Cached average SS for CID: " + cellID + " is: " + storedAvg);
         } else {
             //Not cached, check DB
             mDbHelper.open();
             storedAvg = mDbHelper.getAverageSignalStrength(cellID);
             averageSignalCache.put(cellID, storedAvg);
-            Log.d(TAG, "Cached average in DB for cell ID #"+cellID+" is "+storedAvg);
+            Log.d(TAG, "Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
             mDbHelper.close();
         }
 
@@ -124,9 +132,10 @@ public class SignalStrengthTracker {
         if(storedAvg > signalStrength) {
             result = storedAvg - signalStrength > mysteriousSignalDifference;
         } else {
-            result = signalStrength-  storedAvg > mysteriousSignalDifference;
+            result = signalStrength - storedAvg > mysteriousSignalDifference;
         }
-        Log.d(TAG, "Signal strength mystery check for cell ID #"+cellID+" is "+result+", avg:"+storedAvg+", this signal: "+signalStrength);
+        Log.d(TAG, "Signal Strength mystery check for CID: " + cellID +
+                " is " + result + ", avg:" + storedAvg + ", this signal: " + signalStrength);
         return result;
     }
 

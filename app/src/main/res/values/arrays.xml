@@ -50,8 +50,10 @@
     <string-array name="timeout_spinner_values">
         <item>"2 sec"</item>
         <item>"5 sec"</item>
-        <item>"8 sec"</item>
         <item>"10 sec"</item>
-        <item>"15 sec"</item>
+        <item>"20 sec"</item>
+        <item>"30 sec"</item>
+        <item>"10 min"</item>
+        <!-- item>"None"</item>  (for no timeout and watching -->
     </string-array>
 </resources>
