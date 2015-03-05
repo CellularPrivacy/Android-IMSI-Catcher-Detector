@@ -419,7 +419,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
     public List<Cell> updateNeighbouringCells() {
 
-        //TinyDB tinydb = new TinyDB(context);
+        TinyDB tinydb = new TinyDB(context);
 
         List<Cell> neighboringCells = new ArrayList<>();
         List<NeighboringCellInfo> neighboringCellInfo;
@@ -502,22 +502,28 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
          *
          */
 
-        /*Integer ncls = neighboringCellInfo.size(); // NC list size
-        Boolean nclp = tinydb.getBoolean("nc_list_present"); // NC list present? (Check for NULL?)
+        Integer ncls = neighboringCellInfo.size(); // NC list size
+        Boolean nclp = tinydb.getBoolean("nc_list_present"); // NC list present? (default is false)
 
-        if ( ncls > 0 && !nclp ) {
+        //if ( ncls > 0 && !nclp ) {
+        if ( ncls > 0 ) {
             tinydb.putBoolean("nc_list_present", true);
             Log.d(TAG, mTAG + ": neighbouringCellInfo size: " + ncls );
+            Log.d(TAG, mTAG + ": Setting nc_list_present to: true" );
         } else if ( ncls == 0 && nclp )  {
             // Detection 7a
-            //Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID: " + mDevice.mCell.gsmCellLocation.getCid() );
-            //Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID: " + String.valueOf(mAimsicdService.getCell().getCID() ) );
-            Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID:  FIX_ME!! "); // We need the connected CID here!
+            //String ZID = String.valueOf(mDevice.mCell.getCID() );
+            Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID() );
 
-            //  ADD alert to EventLog table HERE !!
+            //  TODO: ADD alert to EventLog table HERE !!
 
-            //tinydb.putBoolean("nc_list_present", false); // Maybe not needed...
-        }*/
+        } else  {
+            //if ( ncls == 0 && !nclp )
+            // Todo: remove cid string when working.
+            Log.d(TAG, mTAG + ": NC list not supported by AOS on this device. Nothing to do. CID: " + mDevice.mCell.getCID() );
+            Log.d(TAG, mTAG + ": Setting nc_list_present to: false" );  // Maybe not needed...
+            tinydb.putBoolean("nc_list_present", false);                // Maybe not needed...
+        }
         // END -- NC list check
 
         // Add NC list to ?? cellinfo ??  --->  DBi_measure:nc_list
