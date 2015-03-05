@@ -181,7 +181,9 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
-
+        <activity android:name=".activities.CreditsRollActivity"
+            android:theme="@android:style/Theme.Black"
+            android:screenOrientation="portrait"> </activity>
     </application>
 
 </manifest>
