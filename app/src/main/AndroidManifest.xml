@@ -2,13 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
           android:versionCode="25"
-          android:versionName="0.1.25-alpha-b28">
+          android:versionName="0.1.25-alpha-b34">
 
     <!-- If we ever wanna make this a system app, we can add the following 2 lines above:
           coreApp="true"
           android:sharedUserId="android.uid.system"> -->
 
-    <!-- PERMISSIONS ARE SORTED BY NAME and "TYPE" - PLEASE KEEP THIS STRUCTURE. -->
+    <!-- PERMISSIONS ARE SORTED BY AOS PERMISSION AND 3rd PARTY ACCESS. KEEP THIS! -->
+    <!-- https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Permissions -->
 
     <!-- Normal Android third-party permissions -->
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
@@ -59,13 +60,12 @@
     <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
     <uses-permission android:name="android.permission.SET_PROCESS_LIMIT"/>
     <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_GSERVICES"/>
+    <!--uses-permission android:name="android.permission.WRITE_GSERVICES"/ -->
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
 
     <!-- possibly deprecated -->
     <uses-permission android:name="android.permission.RECEIVE_EMERGENCY_BROADCAST"/>
     <uses-permission android:name="android.permission.READ_NETWORK_USAGE_HISTORY"/>
-
 
     <!-- These are OEM / Samsung Permissions -->
     <uses-permission android:name="android.phone.receiveDetailedCallState"/>
@@ -169,7 +169,6 @@
         <receiver android:name=".receiver.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>

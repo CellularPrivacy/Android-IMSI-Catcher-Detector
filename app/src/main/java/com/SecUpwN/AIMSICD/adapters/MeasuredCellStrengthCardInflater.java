@@ -10,6 +10,9 @@ import com.SecUpwN.AIMSICD.R;
  *
  * Inflater class used in DB viewer (for Measured cell strength measurements)
  *
+ * Template:    SilentSmsCardInflater.java
+ * TODO:        Fix variable names!!
+ *
  * @author Tor Henning Ueland
  */
 public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<MeasuredCellStrengthCardData> {
@@ -42,17 +45,17 @@ public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<Me
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
-            mAddress = (TextView) mRootView.findViewById(R.id.address);
-            mDisplayAddress = (TextView) mRootView.findViewById(R.id.display_address);
-            mMessageClass = (TextView) mRootView.findViewById(R.id.message_class);
+            mAddress =          (TextView) mRootView.findViewById(R.id.address);
+            mDisplayAddress =   (TextView) mRootView.findViewById(R.id.display_address);
+            mMessageClass =     (TextView) mRootView.findViewById(R.id.message_class);
 
             rootView.setTag(this);
         }
 
         public void updateDisplay(MeasuredCellStrengthCardData item) {
-            mAddress.setText(item.getCellID());
+            mAddress.setText(       item.getCellID());
             mDisplayAddress.setText(item.getSignal());
-            mMessageClass.setText(item.getTimestamp());
+            mMessageClass.setText(  item.getTimestamp());
         }
     }
 }

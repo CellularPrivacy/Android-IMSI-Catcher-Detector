@@ -15,7 +15,7 @@ import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.Status;
 
 /**
- * Base activity class, handles code that is shared between all activites
+ * Base activity class, handles code that is shared between all activities
  *
  * @author Tor Henning Ueland
  */
@@ -40,7 +40,7 @@ public class BaseActivity extends FragmentActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "StatusWatcher recieved status change to " + Status.getStatus().name()+", updating icon");
+            Log.d(TAG, "StatusWatcher received status change to " + Status.getStatus().name()+", updating icon");
                     updateIcon(context);
         }
     };

@@ -84,7 +84,10 @@ import com.SecUpwN.AIMSICD.utils.GeoLocation;
 public class AimsicdService extends Service {
 
     private final String TAG = "AIMSICD_Service";
+    //private final String TAG = "AIMSICD";
+    //private final String mTAG = "AimsicdService";
 
+    // /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
     public static final String UPDATE_DISPLAY = "UPDATE_DISPLAY";
 

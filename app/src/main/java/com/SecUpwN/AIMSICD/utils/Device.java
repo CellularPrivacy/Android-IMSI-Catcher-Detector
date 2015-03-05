@@ -61,6 +61,9 @@ public class Device {
             mCell = new Cell();
 
         switch (mPhoneID) {
+
+            case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
+            case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
             case TelephonyManager.PHONE_TYPE_GSM:
                 mPhoneType = "GSM";
                 mMncmcc = tm.getNetworkOperator();
@@ -84,6 +87,7 @@ public class Device {
                     }
                 }
                 break;
+
             case TelephonyManager.PHONE_TYPE_CDMA:
                 mPhoneType = "CDMA";
                 if (!mCell.isValid()) {

@@ -1,8 +1,5 @@
-/**   Copyright (C) 2013  Louis Teboul (a.k.a Androguide)
- *
- *    admin@pimpmyrom.org  || louisteboul@gmail.com
- *    http://pimpmyrom.org || http://androguide.fr
- *    71 quai Clémenceau, 69300 Caluire-et-Cuire, FRANCE.
+/**
+ *     Copyright (C) 2013  Louis Teboul    <louisteboul@gmail.com>
  *
  *     This program is free software; you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -14,9 +11,9 @@
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
  *
- *      You should have received a copy of the GNU General Public License along
- *      with this program; if not, write to the Free Software Foundation, Inc.,
- *      51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *     You should have received a copy of the GNU General Public License along
+ *     with this program; if not, write to the Free Software Foundation, Inc.,
+ *     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  **/
 
 package com.SecUpwN.AIMSICD.utils;
@@ -55,11 +52,22 @@ import java.util.List;
  *                  - Download CSV file with BTS data via HTTP API from OCID servers
  *                  - Convert ByteToString
  *                  - unpackListOfStrings
- *                  - Check if SD is writeable
+ *                  - Check if SD is writable
  *                  - get System properties
  *                  - Check for SU and BusyBox
  *
- * Dependencies:    TODO: Write a few words about where the content of this is used.
+ * Dependencies:    This is used all over the place, the non-trivial ones are in:
+ *
+ *                      AIMSICD.java
+ *                      AtCommandFragment.java
+ *                      Device.java
+ *                      MapViewerOsmDroid.java
+ *                      RequestTask.java
+ *                      RilExecutor.java
+ *
+ *
+ *                  get/setprop:    SystemPropertiesReflection.java
+ *
  *
  * Issues:          AS complaints that several of these methods are not used...
  *
@@ -137,16 +145,15 @@ import java.util.List;
 
     /**
      * Checks if Network connectivity is available to download OpenCellID data
+     * Requires:        android:name="android.permission.ACCESS_NETWORK_STATE"
      */
     public static Boolean isNetAvailable(Context context) {
 
         try {
-            ConnectivityManager connectivityManager = (ConnectivityManager)
+            ConnectivityManager cM = (ConnectivityManager)
                     context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo wifiInfo = connectivityManager
-                    .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            NetworkInfo mobileInfo =
-                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo wifiInfo =   cM.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo mobileInfo = cM.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (wifiInfo != null && mobileInfo != null) {
                 return wifiInfo.isConnected() || mobileInfo.isConnected();
             }
@@ -157,28 +164,28 @@ import java.util.List;
     }
 
    /**
-    * Requests Cell data from OpenCellID.org (OCID).
+    * Description:      Requests Cell data from OpenCellID.org (OCID).
     *
-    * @param cell Current Cell Information
+    * Notes:
     *
-    * The free OCID API has a download limit of 1000 BTSs for each download.
-    * Thus we need to carefully select the area we choose to download and make sure it is
-    * centered on the current GPS location. (It is also possible to query the number of
-    * cells in a particular bounding box (bbox), and use that.)
+    *       The free OCID API has a download limit of 1000 BTSs for each download.
+    *       Thus we need to carefully select the area we choose to download and make sure it is
+    *       centered on the current GPS location. (It is also possible to query the number of
+    *       cells in a particular bounding box (bbox), and use that.)
     *
-    * The bbox is described in the OCID API here:
-    *   http://wiki.opencellid.org/wiki/API#Getting_the_list_of_cells_in_a_specified_area
+    *       The bbox is described in the OCID API here:
+    *       http://wiki.opencellid.org/wiki/API#Getting_the_list_of_cells_in_a_specified_area
     *
-    * In an urban area, we could try to limit ourselves to an area of ~10 Km.
-    * The (GSM) Timing Advance is limiting us to 35 Km.
+    *       In an urban area, we could try to limit ourselves to an area radius of ~2 Km.
+    *       The (GSM) Timing Advance is limiting us to 35 Km.
     *
-    * The OCID API payload:
+    *       The OCID API payload:
     *
-    *     required:   key=<apiKey>&BBOX=<latmin>,<lonmin>,<latmax>,<lonmax>
-    *     optional:   &mcc=<mcc>&mnc=<mnc>&lac=<lac>&radio=<radio>
-    *                 &limit=<limit>&offset=<offset>&format=<format>
+    *       required:   key=<apiKey>&BBOX=<latmin>,<lonmin>,<latmax>,<lonmax>
+    *       optional:   &mcc=<mcc>&mnc=<mnc>&lac=<lac>&radio=<radio>
+    *                   &limit=<limit>&offset=<offset>&format=<format>
     *
-    *  Our API query is using:  (Lat1,Lon1, Lat2,Lon2, mcc,mnc,lac)
+    *       Our API query is using:  (Lat1,Lon1, Lat2,Lon2, mcc,mnc,lac)
     *
     *  Issues:
     *
@@ -195,42 +202,49 @@ import java.util.List;
     *          allows for finding how many cells are contained in a query. We can the use this
     *          info to loop the max query size to get all those cells. The Query format is:
     *
-    *       GET:        http://<WebServiceURL>/cell/getInAreaSize
+    *          GET:        http://<WebServiceURL>/cell/getInAreaSize
     *
-    *       The OCID API payload:
+    *          The OCID API payload:
     *
-    *       required:     key=<apiKey>&BBOX=<latmin>,<lonmin>,<latmax>,<lonmax>
-    *       optional:     &mcc=<mcc>&mnc=<mnc>&lac=<lac>&radio=<radio>&format=<format>
+    *          required:     key=<apiKey>&BBOX=<latmin>,<lonmin>,<latmax>,<lonmax>
+    *          optional:     &mcc=<mcc>&mnc=<mnc>&lac=<lac>&radio=<radio>&format=<format>
     *
-    *       result:       JSON:
-    *                           {
-    *                              "count": 123
-    *                           }
+    *          result:       JSON:
+    *                              {
+    *                                count: 123
+    *                              }
     *
+    *      [x]  Q:  How is the BBOX actually calculated from the "radius"?
+    *           A:  It's calculated as an inscribed circle to a square of 2*R on each side.
+    *               See ./utils/GeoLocation.java
     *
+    *  Dependencies:    GeoLocation.java
     *
-    *
-    *
+    *  Used:
     *
     *  ChangeLog:
     *
     *      2015-01-22   E:V:A   Removed some restrictive payload items, leaving MCC.
     *      2015-01-23   E:V:A   Tightened the BBOX from 10 to 5 Km, because of above.
     *      2015-01-24   E:V:A   Re-imposed the MNC constraint.
-    *                           TODO: Inform user that BTSs from other networks are not shown.
+    *      2015-02-13   E:V:A   Tightened the BBOX from 5 to 2 Km, and added it to Log.
+    *
+    *
+    * @param cell Current Cell Information
     *
     */
     public static void getOpenCellData(Context context, Cell cell, char type) {
         if (Helpers.isNetAvailable(context)) {
             if (!CellTracker.OCID_API_KEY.equals("NA")) {
                 double earthRadius = 6371.01; // [Km]
+                int radius = 2; // Use a 2 Km radius with center at GPS location.
 
                 if (cell.getLat() != 0.0 && cell.getLon() != 0.0) {
                     //New GeoLocation object to find bounding Coordinates
                     GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
-                    //Calculate the Bounding Box Coordinates in a 5 Km radius //0 = min 1 = max
-                    GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(5, earthRadius);
+                    //Calculate the Bounding Box Coordinates using an N Km "radius" //0=min, 1=max
+                    GeoLocation[] boundingCoords = currentLoc.boundingCoordinates(radius, earthRadius);
                     String boundParameter;
 
                     //Request OpenCellID data for Bounding Coordinates (0 = min, 1 = max)
@@ -238,6 +252,9 @@ import java.util.List;
                                    + String.valueOf(boundingCoords[0].getLongitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
+
+                    Log.i(TAG, "OCID BBOX is set to: " + boundParameter
+                                + "  using a radius of " + radius + " Km.");
 
                     StringBuilder sb = new StringBuilder();
                     sb.append("http://www.opencellid.org/cell/getInArea?key=")
@@ -374,7 +391,7 @@ import java.util.List;
 
         if (aob.length == 0) {
             // WARNING: This one is very chatty!
-            Log.v(TAG, "invokeOemRilRequestRaw: string list response Length = 0");
+            //Log.v(TAG, "invokeOemRilRequestRaw: string list response Length = 0");
             return Collections.emptyList();
         }
 
@@ -416,7 +433,7 @@ import java.util.List;
 
         if (aob.length == 0) {
             // WARNING: This one is very chatty!
-            Log.v(TAG, "invokeOemRilRequestRaw: byte-list response Length = 0");
+            //Log.v(TAG, "invokeOemRilRequestRaw: byte-list response Length = 0");
             return Collections.emptyList();
         }
         int lines = aob.length / CHARS_PER_LINE;
@@ -446,16 +463,6 @@ import java.util.List;
         return Arrays.asList(Arrays.copyOf(display, newLength));
     }
 
-    public static String getProp(String prop) {
-        return CMDProcessor.runSuCommand("getprop " + prop).getStdout();
-    }
-
-    public static String setProp(String prop, String value) {
-        // We might wanna return the success of this. From mksh it is given by "$?" (0=ok, 1=fail)
-        //return CMDProcessor.runSuCommand("setprop " + prop + " " + value);
-        return CMDProcessor.runSuCommand("setprop " + prop + " " + value + "; echo \"$?\"").getStdout();
-    }
-
     public static String getSystemProp(Context context, String prop, String def) {
         String result = null;
         try {
@@ -465,6 +472,37 @@ import java.util.List;
         }
         return result == null ? def : result;
     }
+
+    // Use this when invoking from SU shell (not recommended!)
+    public static String setProp(String prop, String value) {
+        // We might wanna return the success of this. From mksh it is given by "$?" (0=ok, 1=fail)
+        return CMDProcessor.runSuCommand("setprop " + prop + " " + value).getStdout();
+    }
+
+    /**
+     * Use this to setprop using reflection of native android.os.SystemProperties class
+     *      IllegalArgumentException if the key exceeds 32 characters
+     *      IllegalArgumentException if the value exceeds 92 characters
+     *
+     * Generally speaking this cannot be done unless the app is running under system UID:
+     *
+     * " When you reflect the android.os.SystemProperties and make the call then you will
+     *   make the request as the UID of the application and it will be rejected as the
+     *   properties service has an ACL of allowed UIDs to write to particular key domains,
+     *   see: /system/core/init/property_service.c "
+     */
+    /*  Something wrong here...
+    public static String setSystemProp(Context context, String prop, String value, String def) {
+        String result = null;
+        try {
+            result = SystemPropertiesReflection.set(context, prop, value);
+        } catch (IllegalArgumentException iae) {
+            Log.e(TAG, "Failed to Set system property: " + prop);
+        }
+        return result == null ? def : result;
+    }
+    */
+
 
     /**
      * Checks device for SuperUser permission
@@ -487,7 +525,7 @@ import java.util.List;
                 return false;
             }
         } catch (NullPointerException e) {
-            Log.e(TAG, "NullPointer throw while looking for su binary", e);
+            Log.e(TAG, "NullPointer throw while looking for su binary: ", e);
             return false;
         }
     }
@@ -509,7 +547,7 @@ import java.util.List;
                 return false;
             }
         } catch (NullPointerException e) {
-            Log.e(TAG, "NullpointerException thrown while testing Busybox:", e);
+            Log.e(TAG, "NullpointerException thrown while testing Busybox: ", e);
             return false;
         }
         return true;

@@ -1,21 +1,5 @@
 package com.SecUpwN.AIMSICD.utils;
 
-import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.service.CellTracker;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.InputStreamBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +8,15 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.service.CellTracker;
+//import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.utils.TinyDB;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -37,6 +30,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  *
@@ -66,28 +67,34 @@ import java.net.URL;
  *      uploading them and thus making users of AIMSICD believe these are good cells.
  *      Basically we'd be corrupting the OCID data.
  *
+ *
+ * Issues:
+ *          [ ] There is no onPreExecute here...perhaps that's why the progress bar is not shown?
+ *              see:  http://developer.android.com/reference/android/os/AsyncTask.html
+ *
  * ChangeLog:
  *
- *      2015-01-21 E:V:A   Moved code blocks, added placeholder code, disabled upload
+ *      2015-01-21  E:V:A       Moved code blocks, added placeholder code, disabled upload
+ *      2015-02-13  E:V:A       Added onPreExecute() and super keywords & Logs (to be removed when working)
+ *      2015-03-01  kairenken   Fixed "DBE_UPLOAD_REQUEST" + button
+ *      2015-03-02  kairenken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
+ *      2015-03-03  E:V:A       Replaced dirty SharedPreferences code with TinyDB and Upload result Toast msg.
  *
  *  To Fix:
  *
- *      [ ] add request task "DBE_UPLOAD_REQUEST"
  *      [ ] Explain why BACKUP/RESTORE_DATABASE is in here?
  *      [ ] Think about what "lookup cell info" (CELL_LOOKUP) should do
- *      [ ] Fix or explain why this is named as "doInBackground" since it is not actually
- *          doing this in the background. (App is blocked while downloading.)
+ *      [ ] App is blocked while downloading.
  *
  */
 public class RequestTask extends AsyncTask<String, Integer, String> {
 
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
-    //public static final char DBE_UPLOAD_REQUEST = 3;            // TODO: OCID upload request from "APPLICATION" drawer title
-    public static final char BACKUP_DATABASE = 3;
-    public static final char RESTORE_DATABASE = 4;
+    public static final char DBE_UPLOAD_REQUEST = 6;            // OCID upload request from "APPLICATION" drawer title
+    public static final char BACKUP_DATABASE = 3;               // Backup DB to CSV and AIMSICD_dump.db
+    public static final char RESTORE_DATABASE = 4;              // Restore DB from CSV files
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
-
 
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
@@ -99,17 +106,15 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
         mDbAdapter = new AIMSICDDbAdapter(mContext);
     }
 
-
     @Override
     protected String doInBackground(String... commandString) {
 
         // We need to create a separate case for UPLOADING to DBe (OCID, MLS etc)
         switch (mType) {
-/*
+
             // UPLOADING !!
             case DBE_UPLOAD_REQUEST:   // OCID upload request from "APPLICATION" drawer title
                 try {
-                    if (CellTracker.OCID_UPLOAD_PREF) {
                         boolean prepared = mDbAdapter.prepareOpenCellUploadData();
                         Log.i("AIMSICD", "OCID upload data prepared - " + String.valueOf(prepared));
                         if (prepared) {
@@ -149,16 +154,21 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                                 Log.i("AIMSICD", "OCID Upload Response: "
                                         + response.getStatusLine().getStatusCode() + " - "
                                         + response.getStatusLine());
-                                mDbAdapter.ocidProcessed();
+                                if (response.getStatusLine().getStatusCode() == org.apache.http.HttpStatus.SC_OK) {
+                                    mDbAdapter.ocidProcessed();
+                                }
                                 publishProgress(95,100);
                             }
-
+                            return "Successful";
+                        } else {
+                            Helpers.msgLong(mContext, "No data for publishing available");
+                            return null;
                         }
-                    }
+
                 } catch (Exception e) {
-                    Log.i("AIMSICD", "Upload OpenCellID data - " + e.getMessage());
+                    Log.e("AIMSICD", "Upload OpenCellID data Exception - " + e.getMessage());
                 }
-*/
+
             // DOWNLOADING...
             case DBE_DOWNLOAD_REQUEST:          // OCID download request from "APPLICATION" drawer title
             case DBE_DOWNLOAD_REQUEST_FROM_MAP: // OCID download request from "Antenna Map Viewer"
@@ -168,14 +178,14 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     int progress = 0;
 
                     File dir = new File(Environment.getExternalStorageDirectory()+ "/AIMSICD/OpenCellID/");
-                    if (!dir.exists()) { dir.mkdirs(); }
+                    if (!dir.exists()) { dir.mkdirs(); } // need a try{} catch{}
                     File file = new File(dir, "opencellid.csv");
 
                     URL url = new URL(commandString[0]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.setConnectTimeout(20000);// [ms] 20 s
-                    urlConnection.setReadTimeout(20000); // [ms] 20 s
+                    urlConnection.setReadTimeout(20000);   // [ms] 20 s
                     urlConnection.setDoInput(true);
                     urlConnection.connect();
 
@@ -193,7 +203,9 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         return "Error";
                     } else {
                         total = urlConnection.getContentLength();
+                        Log.d("AIMSICD","RequestTask:doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
                         publishProgress(progress, total);
+
                         FileOutputStream output = new FileOutputStream(file, false);
                         InputStream input = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -208,7 +220,6 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         output.flush();
                         output.close();
                     }
-
                     urlConnection.disconnect();
                     return "Successful";
 
@@ -240,32 +251,43 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
         return null;
     }
 
-    protected void onProgressUpdate(Integer... values) {
-        AIMSICD.mProgressBar.setMax(values[1]);
-        AIMSICD.mProgressBar.setProgress(values[0]);
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        Log.d("AIMSICD","RequestTask:onPreExecute Started");
+        //progress.show();
     }
 
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        super.onProgressUpdate(values);
+        // Silence or Remove when working:
+        Log.v("AIMSICD","RequestTask:onProgressUpdate values[0]: " + values[0] +
+                                                    " values[1]: " + values[1]);
+        //setProgressPercent(progress[0]); ??
+        AIMSICD.mProgressBar.setProgress(values[0]);    // progress
+        AIMSICD.mProgressBar.setMax(values[1]);         // total
+    }
 
     /**
      *  Description:    This is where we:
+     *
      *                  1) Check the success for OCID data download
      *                  2) call the updateOpenCellID() to populate the DBe_import table
      *                  3) call the checkDBe() to cleanup bad cells from imported data
      *                  4) present a failure/success toast message
-     *                  5) set a system property to indicate that data has been downlaoded:
-     *                      "setprop aimsicd.ocid_downloaded true"
+     *                  5) set a shared preference to indicate that data has been downloaded:
+     *                      "ocid_downloaded true"
      *
      *  Issues:
      *                  [ ] checkDBe() is incomplete, due to missing RAT column in DBe_import
      *
-     *
-     * @param result
      */
-    // This is where we call the updateOPenCellID() to populate the DBe_import table
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         AIMSICD.mProgressBar.setProgress(0);
+        TinyDB tinydb = new TinyDB(mContext);
 
         switch (mType) {
             case DBE_DOWNLOAD_REQUEST:
@@ -277,11 +299,12 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                     mDbAdapter.checkDBe();
                     mDbAdapter.close();
-                    Helpers.setProp("aimsicd.ocid_downloaded", "true");
+                    tinydb.putBoolean("ocid_downloaded", true);
                 } else {
                     Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
                 }
                 break;
+
             case DBE_DOWNLOAD_REQUEST_FROM_MAP:
                 if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
@@ -292,17 +315,20 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                         mDbAdapter.checkDBe();
                         mDbAdapter.close();
-                        Helpers.setProp("aimsicd.ocid_downloaded", "true");
+                        tinydb.putBoolean("ocid_downloaded", true);
                     }
                 } else {
                     Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
                 }
                 break;
 
-            // TODO: Do we need the DBE_UPLOAD_REQUEST here?
-            //case DBE_UPLOAD_REQUEST:
-            //    // blah blah
-            //    break;
+            case DBE_UPLOAD_REQUEST:
+                if (result != null && result.equals("Successful")) {
+                    Helpers.msgShort(mContext, "Uploaded BTS data to OCID successfully");
+                } else {
+                    Helpers.msgLong(mContext, "Error in uploading BTS data to OCID servers!");
+                }
+                break;
 
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
@@ -314,13 +340,11 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
             case BACKUP_DATABASE:
                 if (result != null && result.equals("Successful")) {
-                    SharedPreferences prefs;
-                    prefs = mContext.getSharedPreferences(
-                            AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-                    SharedPreferences.Editor prefsEditor;
-                    prefsEditor = prefs.edit();
-                    prefsEditor.putInt(mContext.getString(R.string.pref_last_database_backup_version), AIMSICDDbAdapter.DATABASE_VERSION);
-                    prefsEditor.apply();
+
+                    // strings.xml: pref_last_db_backup_version
+                    //tinydb.putInt(mContext.getString(R.string.pref_last_database_backup_version), AIMSICDDbAdapter.DATABASE_VERSION); //TODO
+                    tinydb.putInt("pref_last_db_backup_version", AIMSICDDbAdapter.DATABASE_VERSION);
+
                     final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setTitle(R.string.database_export_successful).setMessage(
                             "Database Backup successfully saved to:\n" + AIMSICDDbAdapter.FOLDER);
