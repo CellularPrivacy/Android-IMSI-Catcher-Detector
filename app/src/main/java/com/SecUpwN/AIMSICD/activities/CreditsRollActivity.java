@@ -70,9 +70,10 @@ public class CreditsRollActivity extends Activity implements SeekBar.OnSeekBarCh
             }
         });
 
-        Toast.makeText(this, "Tap the empty space to animate the credits roll, or use the scrollbar",
-                Toast.LENGTH_SHORT)
-                .show();
+        if (!mScrolling) {
+            mCreditsRollView.setText(MiscUtils.setAssetsString(getApplicationContext()));
+            animateScroll();
+        }
     }
 
     @Override
