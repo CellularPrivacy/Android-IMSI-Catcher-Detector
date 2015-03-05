@@ -1,6 +1,83 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 05.03.2015 - [WIP-Release v0.1.25-alpha-build-34](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b34)
+
+* Updated: `SCREENSHOTS` have been updated to reflect the latest changes of UI/UX
+* Added: Some more small comments for better understanding of the added `TinyDB`
+* Fixed: Inceremented Database Version to avoid crashes due to changed DB tables
+
+---
+
+#### 03.03.2015 - WIP-Internal v0.1.25-alpha-build-33
+
+* Updated: `CREDITS` now do also reflect the current list of thanked people
+* Changed: Replaced dirty `SharedPreferences` code with neat TinyDB one-liners
+* Added: Placeholder for the NC Detection (code is commented out, needs testing)
+* Added: `DBE_UPLOAD_REQUEST` Upload result Toast msg as feedback for uploading
+* Fixed: Spelling mistakes have been corrected, code comments have been updated
+
+---
+
+#### 03.03.2015 - WIP-Internal v0.1.25-alpha-build-32
+
+* Changed: Replaced get/setProp calls with using the simple TinyDB implementation
+* Changed: Alert tag changed to `ALERT: Connected to unknown CID not in DBe_import:`
+* Added: Link to our WIKI regarding the usage of so many deep-core permissions
+
+---
+
+#### 03.03.2015 - WIP-Internal v0.1.25-alpha-build-31
+
+* Updated: List of team members has been reviewed to reflect current changes
+* Updated: Referenced X-Cell Technologies within our own Glossary of Terms
+
+---
+
+#### 16.02.2015 - WIP-Internal v0.1.25-alpha-build-30
+
+* Changed: Cleanup of various old junk and unneeded code comments, silenced spam logs on HTC
+* Changed: ATCoP timout values from the selector have been adjusted to now also be 10 min
+* Removed: ATCoP shell command support has been purged - SecUpwN lost ALL DATA of his phone
+* Added: New TinyDB (courtesy of @kcochibili) for easy use of shared & persistent variables
+* Added: Logging if no data available for upload, removed `OCID_UPLOAD_PREF` from `Preferences`
+* Added: Button to upload local BTS Data to OCID and fix issues from former commits
+* Added: Code for future toggle button for radio buffer in the Debug Logger logcat buffer
+* Added: Easily selectable serial device list is now available in AT Command Interface
+* Fixed: AT Command Processor Interface has finally been fixed - THANKS to @scintill!
+* Fixed: False yellow flag has now been fixed by waiting until OCID DB has been downloaded
+* Fixed: Ugly setprop log/toast message appearing every 10 seconds has now been resolved
+* Fixed: Trivial code shortening in `Helpers` as well as corrected spelling of some items
+
+---
+
+#### 13.02.2015 - WIP-Internal v0.1.25-alpha-build-29
+
+* Changed: Debug Log to include radio, removed `-d` flag, increased lines to 500
+* Changed: Attempted fix on the AT Command fragment which suffers a freezer bug
+* Changed: Attempted fix to false positives of silent SMS detection in `SmsReceiver`
+* Changed: Tightened the BBOX from 5 to 2 Km and added it to the Logging as well
+* Changed: Adjusted `SignalStrengthTracker` formatting and changed a few comments
+* Changed: Reformatted code of SignalStrength table and added a few more comments
+* Changed: Cleaned up some code and TAGs as well as ProgressBar in `DbAdapter`
+* Removed: Time from logcat in DebugLogs activity has been purged for cleaner view
+* Removed: The spooky Google permission `WRITE_GSERVICES` has been completely purged
+* Added: Interface to `AtCommandFragment` (but now AT Interface crashes constantly)
+* Added: Additional case in `TelephonyManager`: `PHONE_TYPE_NONE` and `PHONE_TYPE_SIP`
+* Added: `onPreExecute()` and super keywords & Logs and posssible ProgressBar fix
+* Added: Place holders for TP-MMS/SRI and `rej_cause` place holders to `DBe_import`
+* Added: Dummy entry has been written to SilentSMS table, UpperCase of SQL statements
+* Added: Comments in `CellTracker` for `LISTEN_CALL_STATE` and `LISTEN_SERVICE_STATE`
+* Added: Tried to add a working `setSystemProp` by reflection (still not working)
+* Added: `setMaxZoomLevel(19)` to OSM in hoping to fix zoom level
+* Added: A few more pictures of potential IMSI-Catchers that we've seen in action
+* Added: New blog post on Gun.io to introduce our project to more Freelancers
+* Fixed: The null deref on unrooted-device exec failure has now been resolved
+* Fixed: Shortened DB names and fixed Timestamp of our new EventLog table
+* Fixed: Network Information is not shown empty any longer on certain conditions
+
+---
+
 #### 09.02.2015 - WIP-Internal v0.1.25-alpha-build-28
 
 * Changed: Save EventLog action now takes place in aa more convenient location
