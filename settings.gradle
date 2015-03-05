@@ -1,1 +1,1 @@
-include ':app', 'third_party:rootshell', 'third_party:CreditsRoll'
+include ':app', 'third_party:rootshell'
