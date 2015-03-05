@@ -1,6 +1,7 @@
 package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,13 +22,14 @@ import android.widget.TextView;
 public class AboutFragment extends Fragment {
 
     private Context mContext;
-
+    Button btncredits;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.about_fragment, container, false);
         String version;
+        btncredits = (Button) v.findViewById(R.id.aimsicd_credits_link);
 
         PackageManager manager = mContext.getPackageManager();
         try {
@@ -82,8 +84,8 @@ public class AboutFragment extends Fragment {
             setLink(tv, R.string.aimsicd_license_link);
 
             //Credits Link
-            tv = v.findViewById(R.id.aimsicd_credits_link);
-            setLink(tv, R.string.aimsicd_credits_link);
+            //tv = v.findViewById(R.id.aimsicd_credits_link);
+            //setLink(tv, R.string.aimsicd_credits_link);
         }
         return v;
     }
@@ -97,6 +99,20 @@ public class AboutFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        btncredits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Intent i = new Intent(mContext, CreditsRollActivity.class);
+                    startActivity(i);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     @Override
