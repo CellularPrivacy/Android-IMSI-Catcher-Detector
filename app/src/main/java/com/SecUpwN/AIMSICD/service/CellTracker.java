@@ -490,9 +490,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
          *
          *
          *  Notes:      a)  Not sure where to place this test, but let's try it here..
-         *              b)  Warning! this may be lagging and messing up polling function,
-         *                  since it require SU on each setProp()... and this is running
-         *                  all the time...
+         *              b)  In TinyDB, the getBoolean() returns "false" by default, if empty.
          *
          *  Issue:
          *          [ ] We need a timer or "something" to reverse a positive detection once
