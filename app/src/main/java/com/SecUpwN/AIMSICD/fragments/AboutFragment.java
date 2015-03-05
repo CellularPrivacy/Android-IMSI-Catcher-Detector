@@ -3,8 +3,6 @@ package com.SecUpwN.AIMSICD.fragments;
 import com.SecUpwN.AIMSICD.R;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -94,22 +92,9 @@ public class AboutFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (link !=  R.string.aimsicd_credits_link) {
-                    Intent intent;
-                    intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse(getResources().getString(link)));
-                    startActivity(intent);
-                } else {
-                    try {
-                        getFragmentManager().beginTransaction()
-                                .replace(R.id.content_frame, new CreditFragment()).commit();
-                    } catch (Exception e) {
-                        //Log.i()
-                        e.toString();
-                        Exception foo = e;
-                    }
-                }
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(getResources().getString(link)));
+                startActivity(intent);
             }
         });
     }
@@ -122,4 +107,6 @@ public class AboutFragment extends Fragment {
 
     public AboutFragment() {
     }
+
+
 }
