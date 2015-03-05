@@ -19,11 +19,11 @@ public class MiscUtils {
         StringBuilder buildassets = new StringBuilder();
         try{
             reader = new BufferedReader(new InputStreamReader(context.getAssets().open("CREDITS")));
-            String rline = reader.readLine().replace("'","\\'");
+            String rline = reader.readLine().replace("'","\\'").replace("\\n","");
 
             while (rline != null ){
-                buildassets.append(rline);
-                rline = reader.readLine().replace("'","\\'");
+                buildassets.append(rline).append("\n");
+                rline = reader.readLine().replace("'","\\'").replace("\\n","");
             }
         }catch (Exception ee){
             System.out.println("Out>>> " + ee);
