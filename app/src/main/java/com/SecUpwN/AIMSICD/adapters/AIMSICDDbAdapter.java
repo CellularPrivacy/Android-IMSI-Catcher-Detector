@@ -89,7 +89,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 public class AIMSICDDbAdapter {
 
     public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
-    public static final int DATABASE_VERSION = 8; // Is this "pragma user_version;" ?
+    public static final int DATABASE_VERSION = 9; // Is this "pragma user_version;" ?
 
     // TODO: This should be implemented as a SharedPreference...
     private final Boolean MONO_DB_DUMP = true; // Also back-up DB with one monolithic dump file?
