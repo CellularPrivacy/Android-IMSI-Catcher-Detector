@@ -246,9 +246,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if (track) {
             tm.listen(mCellSignalListener,
                     PhoneStateListener.LISTEN_CELL_LOCATION |           // gpsd_lat/lon ?
-                    PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |        // rx_signal
-                    PhoneStateListener.LISTEN_DATA_ACTIVITY |           // No,In,Ou,IO,Do
-                    PhoneStateListener.LISTEN_DATA_CONNECTION_STATE     // Di,Ct,Cd,Su
+                            PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |        // rx_signal
+                            PhoneStateListener.LISTEN_DATA_ACTIVITY |           // No,In,Ou,IO,Do
+                            PhoneStateListener.LISTEN_DATA_CONNECTION_STATE     // Di,Ct,Cd,Su
                     // PhoneStateListener.LISTEN_CALL_STATE ?
                     // PhoneStateListener.LISTEN_SERVICE_STATE ?
             );
@@ -372,9 +372,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             return responseFromServer;
 
         } else if (status.getStatusCode() == 503) {
-        // Check for HTTP error code 503 which is returned when user is trying to request
-        // a new API key within 24 hours of the last request. (See GH issue #267)
-        // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
+            // Check for HTTP error code 503 which is returned when user is trying to request
+            // a new API key within 24 hours of the last request. (See GH issue #267)
+            // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
 
             Helpers.msgLong(context, "Only one new API key request per 24 hours!\nPlease try again later.");
             if (result.getEntity() != null) {
@@ -433,9 +433,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             } else {
                 tm.listen(phoneStatelistener,
                         PhoneStateListener.LISTEN_CELL_LOCATION |
-                        PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
-                        PhoneStateListener.LISTEN_SERVICE_STATE |
-                        PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+                                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
+                                PhoneStateListener.LISTEN_SERVICE_STATE |
+                                PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
             }
 
             for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
@@ -526,10 +526,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
             Log.i(TAG,
                     mTAG + ": neighbouringCellInfo -" +
-                    " LAC:" + neighbourCell.getLac() +
-                    " CID:" + neighbourCell.getCid() +
-                    " PSC:" + neighbourCell.getPsc() +
-                    " RSSI:" + neighbourCell.getRssi() );
+                            " LAC:" + neighbourCell.getLac() +
+                            " CID:" + neighbourCell.getCid() +
+                            " PSC:" + neighbourCell.getPsc() +
+                            " RSSI:" + neighbourCell.getRssi() );
 
             final Cell cell = new Cell(
                     neighbourCell.getCid(),
@@ -645,9 +645,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     if (gsmCellLocation != null) {
                         mDevice.setCellInfo(
                                 gsmCellLocation.toString() +                // ??
-                                mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
-                                mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
+                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
+                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
+                                        mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
                         );
                         mDevice.mCell.setLAC(gsmCellLocation.getLac());     // LAC
                         mDevice.mCell.setCID(gsmCellLocation.getCid());     // CID
@@ -662,9 +662,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     if (cdmaCellLocation != null) {
                         mDevice.setCellInfo(
                                 cdmaCellLocation.toString() +               // ??
-                                mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
-                                mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
+                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
+                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
+                                        mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
                         );
                         mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());      // NID
                         mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());  // BID
@@ -698,7 +698,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             if (signalStrength.isGsm()) {
                 int dbm;
                 if(signalStrength.getGsmSignalStrength() <= 2 ||
-                   signalStrength.getGsmSignalStrength() ==  NeighboringCellInfo.UNKNOWN_RSSI)
+                        signalStrength.getGsmSignalStrength() ==  NeighboringCellInfo.UNKNOWN_RSSI)
                 {
                     // Unknown signal strength, get it another way
                     String[] bits = signalStrength.toString().split(" ");
@@ -802,7 +802,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *  Issues:
      *
      */
-     public void onLocationChanged(Location loc) {
+    public void onLocationChanged(Location loc) {
 
         if (Build.VERSION.SDK_INT > 16) {
             DeviceApi17.loadCellInfo(tm, mDevice.mCell);
@@ -845,7 +845,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             prefsEditor = prefs.edit();
             prefsEditor.putString(context.getString(R.string.data_last_lat_lon),
                     String.valueOf(loc.getLatitude()) + ":" +
-                    String.valueOf(loc.getLongitude()));
+                            String.valueOf(loc.getLongitude()));
             prefsEditor.apply();
 
             if (mTrackingCell) {
@@ -977,10 +977,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     //Append changing LAC text
                     tickerText += " - Hostile Service Area: Changing LAC Detected!";
                     contentText = "Hostile Service Area: Changing LAC Detected!";
-                // See #264 and ask He3556
-                //} else if (mNoNCList)  {
-                //    tickerText += " - BTS doesn't provide any neighbors!";
-                //    contentText = "CID: " + cellid + " is not providing a neighboring cell list!";
+                    // See #264 and ask He3556
+                    //} else if (mNoNCList)  {
+                    //    tickerText += " - BTS doesn't provide any neighbors!";
+                    //    contentText = "CID: " + cellid + " is not providing a neighboring cell list!";
 
                 } else if (mCellIdNotInOpenDb) {
                     //Append Cell ID not existing in external db text
@@ -1268,9 +1268,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
     private boolean isEvDoNetwork(int networkType) {
         return (networkType == TelephonyManager.NETWORK_TYPE_EVDO_0) ||
-               (networkType == TelephonyManager.NETWORK_TYPE_EVDO_A) ||
-               (networkType == TelephonyManager.NETWORK_TYPE_EVDO_B) ||
-               (networkType == TelephonyManager.NETWORK_TYPE_EHRPD);
+                (networkType == TelephonyManager.NETWORK_TYPE_EVDO_A) ||
+                (networkType == TelephonyManager.NETWORK_TYPE_EVDO_B) ||
+                (networkType == TelephonyManager.NETWORK_TYPE_EHRPD);
     }
 
 //=================================================================================================

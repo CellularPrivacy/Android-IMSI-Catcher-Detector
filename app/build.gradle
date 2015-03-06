@@ -128,6 +128,7 @@ dependencies {
     //    compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':third_party:rootshell')
+    compile files ('libs/nineoldandroids-2.4.0.jar')
     compile 'com.android.support:support-v4:19.1.0'
     compile 'org.osmdroid:osmdroid-android:4.2'
     compile 'eu.lp0.slf4j:slf4j-android:1.7+'
