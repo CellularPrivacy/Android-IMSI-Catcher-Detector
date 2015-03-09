@@ -251,11 +251,15 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, mDetailsFrag).commit();
                 mDetailsFrag.setCurrentPage(0);
+                // exception: title here does not match nav drawer label
+                selectedItem.setLabel(getString(R.string.app_name_short));
                 break;
             case 102:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, mDetailsFrag).commit();
                 mDetailsFrag.setCurrentPage(1);
+                // exception: title here does not match nav drawer label
+                selectedItem.setLabel(getString(R.string.app_name_short));
                 break;
             case 103:
                 getSupportFragmentManager().beginTransaction()
@@ -265,6 +269,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, mDetailsFrag).commit();
                 mDetailsFrag.setCurrentPage(2);
+                // exception: title here does not match nav drawer label
+                selectedItem.setLabel(getString(R.string.app_name_short));
                 break;
             case 303:
                 getSupportFragmentManager().beginTransaction()
