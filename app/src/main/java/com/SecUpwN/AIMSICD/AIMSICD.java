@@ -235,6 +235,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     /** Swaps fragments in the main content view */
     void selectItem(int position) {
         NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
+        String title = selectedItem.getLabel();
 
         /**
          * This is a work-around for Issue 42601
@@ -252,14 +253,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                         .replace(R.id.content_frame, mDetailsFrag).commit();
                 mDetailsFrag.setCurrentPage(0);
                 // exception: title here does not match nav drawer label
-                selectedItem.setLabel(getString(R.string.app_name_short));
+                title = getString(R.string.app_name_short);
                 break;
             case 102:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, mDetailsFrag).commit();
                 mDetailsFrag.setCurrentPage(1);
                 // exception: title here does not match nav drawer label
-                selectedItem.setLabel(getString(R.string.app_name_short));
+                title = getString(R.string.app_name_short);
                 break;
             case 103:
                 getSupportFragmentManager().beginTransaction()
@@ -270,7 +271,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                         .replace(R.id.content_frame, mDetailsFrag).commit();
                 mDetailsFrag.setCurrentPage(2);
                 // exception: title here does not match nav drawer label
-                selectedItem.setLabel(getString(R.string.app_name_short));
+                title = getString(R.string.app_name_short);
                 break;
             case 303:
                 getSupportFragmentManager().beginTransaction()
@@ -370,7 +371,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mDrawerList.setItemChecked(position, true);
 
         if ( selectedItem.updateActionBarTitle()) {
-            setTitle(selectedItem.getLabel());
+            setTitle(title);
         }
 
         if ( this.mDrawerLayout.isDrawerOpen(this.mDrawerList)) {
