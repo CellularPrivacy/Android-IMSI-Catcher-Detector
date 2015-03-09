@@ -96,6 +96,9 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     public static final char RESTORE_DATABASE = 4;              // Restore DB from CSV files
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
 
+    public static final String TAG = "AIMSICD";
+    public static final String mTAG = "RequestTask";
+
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
     private final char mType;
@@ -116,7 +119,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
             case DBE_UPLOAD_REQUEST:   // OCID upload request from "APPLICATION" drawer title
                 try {
                         boolean prepared = mDbAdapter.prepareOpenCellUploadData();
-                        Log.i("AIMSICD", "OCID upload data prepared - " + String.valueOf(prepared));
+                        Log.i(TAG, mTAG + ": OCID upload data prepared - " + String.valueOf(prepared));
                         if (prepared) {
                             File file = new File(Environment.getExternalStorageDirectory()
                                     + "/AIMSICD/OpenCellID/aimsicd-ocid-data.csv");
@@ -151,7 +154,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             response = httpclient.execute(httppost);
                             publishProgress(80,100);
                             if (response!= null) {
-                                Log.i("AIMSICD", "OCID Upload Response: "
+                                Log.i(TAG, mTAG + ": OCID Upload Response: "
                                         + response.getStatusLine().getStatusCode() + " - "
                                         + response.getStatusLine());
                                 if (response.getStatusLine().getStatusCode() == org.apache.http.HttpStatus.SC_OK) {
@@ -166,7 +169,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         }
 
                 } catch (Exception e) {
-                    Log.e("AIMSICD", "Upload OpenCellID data Exception - " + e.getMessage());
+                    Log.e(TAG, mTAG + ": Upload OpenCellID data Exception - " + e.getMessage());
                 }
 
             // DOWNLOADING...
@@ -193,18 +196,26 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                         try {
                             String error = Helpers.convertStreamToString(urlConnection.getErrorStream());
                             Helpers.msgLong(mContext, "Download error: " + error);
-                            Log.e("AIMSICD", "Download OCID data error: " + error);
+                            Log.e(TAG, mTAG + ": Download OCID data error: " + error);
                         } catch (Exception e) {
                             Helpers.msgLong(mContext, "Download error: "
                                     + e.getClass().getName() + " - "
                                     + e.getMessage());
-                            Log.e("AIMSICD", "Download OCID - " + e);
+                            Log.e(TAG, mTAG + ": Download OCID exception: " + e);
                         }
                         return "Error";
                     } else {
+                        // http://stackoverflow.com/questions/10439829/urlconnection-getcontentlength-returns-1
+                        // This returns "-1" for streamed response (Chunked Transfer Encoding)
                         total = urlConnection.getContentLength();
-                        Log.d("AIMSICD","RequestTask:doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
-                        publishProgress(progress, total);
+                        if (total == -1 ) {
+                            Log.d(TAG, mTAG + ":doInBackground DBE_DOWNLOAD_REQUEST total not returned!");
+                            total = 1024; // Let's set it arbitrarily to something other than "-1"
+                        } else {
+                            Log.d(TAG, mTAG + ":doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
+                            //publishProgress(progress, total);
+                            publishProgress((int) (0.25*total), total); // Let's show something!
+                        }
 
                         FileOutputStream output = new FileOutputStream(file, false);
                         InputStream input = new BufferedInputStream(urlConnection.getInputStream());
@@ -254,7 +265,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        Log.d("AIMSICD","RequestTask:onPreExecute Started");
+        Log.d(TAG, mTAG + ":onPreExecute Started");
         //progress.show();
     }
 
@@ -262,8 +273,8 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
         // Silence or Remove when working:
-        Log.v("AIMSICD","RequestTask:onProgressUpdate values[0]: " + values[0] +
-                                                    " values[1]: " + values[1]);
+        Log.v(TAG, mTAG + ":onProgressUpdate values[0]: " + values[0] +
+                                           " values[1]: " + values[1]);
         //setProgressPercent(progress[0]); ??
         AIMSICD.mProgressBar.setProgress(values[0]);    // progress
         AIMSICD.mProgressBar.setMax(values[1]);         // total

@@ -22,11 +22,13 @@ import android.util.Log;
 import java.util.List;
 
 /**
- * Created by toby on 10/10/14.
+ *  Description:    TODO
+ *
+ *  Created by toby on 10/10/14.
  */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class DeviceApi17 {
-    public static final String TAG = "DeviceApi18";
+    public static final String TAG = "DeviceApi17";
 
     public static void loadCellInfo(TelephonyManager tm, Cell mCell) {
         try {
@@ -34,20 +36,22 @@ public class DeviceApi17 {
             if (cellInfoList != null) {
                 for (final CellInfo info : cellInfoList) {
                     mCell = new Cell();
-                    //Network type
+                    //Network Type
                     mCell.setNetType(tm.getNetworkType());
+
                     if (info instanceof CellInfoGsm) {
                         final CellSignalStrengthGsm gsm = ((CellInfoGsm) info)
                                 .getCellSignalStrength();
                         final CellIdentityGsm identityGsm = ((CellInfoGsm) info)
                                 .getCellIdentity();
                         //Signal Strength
-                        mCell.setDBM(gsm.getDbm());
+                        mCell.setDBM(gsm.getDbm()); // [dBm]
                         //Cell Identity
                         mCell.setCID(identityGsm.getCid());
                         mCell.setMCC(identityGsm.getMcc());
                         mCell.setMNC(identityGsm.getMnc());
                         mCell.setLAC(identityGsm.getLac());
+
                     } else if (info instanceof CellInfoCdma) {
                         final CellSignalStrengthCdma cdma = ((CellInfoCdma) info)
                                 .getCellSignalStrength();
@@ -60,6 +64,7 @@ public class DeviceApi17 {
                         mCell.setMNC(identityCdma.getSystemId());
                         mCell.setLAC(identityCdma.getNetworkId());
                         mCell.setSID(identityCdma.getSystemId());
+
                     } else if (info instanceof CellInfoLte) {
                         final CellSignalStrengthLte lte = ((CellInfoLte) info)
                                 .getCellSignalStrength();
@@ -72,6 +77,7 @@ public class DeviceApi17 {
                         mCell.setMCC(identityLte.getMcc());
                         mCell.setMNC(identityLte.getMnc());
                         mCell.setCID(identityLte.getCi());
+
                     } else if  (info instanceof CellInfoWcdma) {
                         final CellSignalStrengthWcdma wcdma = ((CellInfoWcdma) info)
                                 .getCellSignalStrength();
@@ -85,17 +91,18 @@ public class DeviceApi17 {
                         mCell.setMNC(identityWcdma.getMnc());
                         mCell.setCID(identityWcdma.getCid());
                         mCell.setPSC(identityWcdma.getPsc());
+
                     } else {
-                        Log.i(TAG, "Unknown type of cell signal!" + "ClassName: " +
-                                info.getClass().getSimpleName() + " ToString: " +
-                                info.toString());
+                        Log.i(TAG, "Unknown type of cell signal! "
+                                + "ClassName: " + info.getClass().getSimpleName()
+                                + " ToString: " + info.toString());
                     }
                     if (mCell.isValid())
                         break;
                 }
             }
         } catch (NullPointerException npe) {
-            Log.e(TAG, "Unable to obtain cell signal information", npe);
+            Log.e(TAG, "loadCellInfo: Unable to obtain cell signal information: ", npe);
         }
 
     }
