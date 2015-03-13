@@ -1,9 +1,11 @@
 package com.SecUpwN.AIMSICD.adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
 import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
 import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
@@ -12,9 +14,11 @@ import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
  * Adapter to allow swiping between various detail fragments
  */
 public class DetailsPagerAdapter extends FragmentPagerAdapter {
+    Context context;
 
-    public DetailsPagerAdapter(FragmentManager fm) {
+    public DetailsPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.context = context;
     }
 
     @Override
@@ -38,6 +42,17 @@ public class DetailsPagerAdapter extends FragmentPagerAdapter {
         }
 
         return -1;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0: return context.getString(R.string.device_info);
+            case 1: return context.getString(R.string.cell_info_title);
+            case 2: return context.getString(R.string.db_viewer);
+        }
+
+        return "";
     }
 
     @Override

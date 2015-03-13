@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
           android:versionCode="25"
-          android:versionName="0.1.25-alpha-b34">
+          android:versionName="0.1.25-alpha-b35">
 
     <!-- If we ever wanna make this a system app, we can add the following 2 lines above:
           coreApp="true"
@@ -181,7 +181,9 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
-
+        <activity android:name=".activities.CreditsRollActivity"
+            android:theme="@android:style/Theme.Black"
+            android:screenOrientation="portrait"> </activity>
     </application>
 
 </manifest>
