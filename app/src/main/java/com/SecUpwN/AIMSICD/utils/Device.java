@@ -11,6 +11,7 @@ import android.util.Log;
 public class Device {
 
     private final String TAG = "AIMSICD";
+    private final String mTAG = "Device";
 
     /*
      * Device Declarations
@@ -74,7 +75,7 @@ public class Device {
                         if (mCell.getMNC() == Integer.MAX_VALUE)
                             mCell.setMNC(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
                     } catch (Exception e) {
-                        Log.i(TAG, "MncMcc parse exception - " + e.getMessage());
+                        Log.i(TAG, mTAG + ":MncMcc parse exception - " + e.getMessage());
                     }
                 }
                 mNetName = tm.getNetworkOperatorName();
@@ -108,7 +109,7 @@ public class Device {
                                 if (mCell.getMNC() == Integer.MAX_VALUE)
                                     mCell.setMNC(Integer.valueOf(homeOperator.substring(3, 5)));
                             } catch (Exception e) {
-                                Log.i(TAG, "homeOperator parse exception - " + e.getMessage());
+                                Log.i(TAG, mTAG + ":homeOperator parse exception - " + e.getMessage());
                             }
                         }
                     }
@@ -179,7 +180,7 @@ public class Device {
         } catch (Exception e) {
             // SIM methods can cause Exceptions on some devices
             mSimCountry = "N/A";
-            Log.e(TAG, "getSimCountry " + e);
+            Log.e(TAG, mTAG + ":getSimCountry " + e);
         }
 
         if (mSimCountry.isEmpty()) {
@@ -211,7 +212,7 @@ public class Device {
         } catch (Exception e) {
             // SIM methods can cause Exceptions on some devices
             mSimOperator = "N/A";
-            Log.e(TAG, "getSimOperator " + e);
+            Log.e(TAG, mTAG + ":getSimOperator " + e);
         }
 
         if (mSimOperator.isEmpty()) {
@@ -269,7 +270,7 @@ public class Device {
         } catch (Exception e) {
             //Some devices don't like this method
             mSimSubs = "N/A";
-            Log.e(TAG, "getSimSubs " + e);
+            Log.e(TAG, mTAG + ":getSimSubs " + e);
         }
 
         if (mSimSubs.isEmpty()) {
@@ -299,7 +300,7 @@ public class Device {
         } catch (Exception e) {
             // SIM methods can cause Exceptions on some devices
             mSimSerial = "N/A";
-            Log.e(TAG, "getSimSerial " + e);
+            Log.e(TAG, mTAG + ":getSimSerial " + e);
         }
 
         if (mSimSerial.isEmpty()) {

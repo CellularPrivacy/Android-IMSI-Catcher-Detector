@@ -1,8 +1,11 @@
 package com.SecUpwN.AIMSICD.fragments;
 
 
+import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,34 +36,18 @@ public class DetailsContainerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final DrawerMenuActivityConfiguration mNavConf = ((AIMSICD) getActivity()).getNavDrawerConfiguration();
-        adapter = new DetailsPagerAdapter(getChildFragmentManager());
+        adapter = new DetailsPagerAdapter(getChildFragmentManager(), getActivity());
+
+        PagerTabStrip tabStrip = (PagerTabStrip) view.findViewById(R.id.details_pager_tab_strip);
+        tabStrip.setBackgroundColor(Color.BLACK);
 
         vp = (ViewPager) view.findViewById(R.id.details_pager);
         vp.setAdapter(adapter);
-        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                int navId = (int) adapter.getItemId(position);
-                NavDrawerItem selectedItem = mNavConf.getNavItems().get(navId);
-                Log.d("nav", "selected Item " + selectedItem.getLabel());
-                getActivity().getActionBar().setTitle(selectedItem.getLabel());
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         if (initialPage >= 0) {
             vp.setCurrentItem(initialPage);
         }
-    }
+   }
 
     public void setCurrentPage(int page) {
         if (adapter == null) {
