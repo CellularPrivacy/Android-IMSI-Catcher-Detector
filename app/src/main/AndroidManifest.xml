@@ -182,7 +182,7 @@
             </intent-filter>
         </receiver>
         <activity android:name=".activities.CreditsRollActivity"
-            android:theme="@android:style/Theme.Black"
+            android:theme="@android:style/Theme.Dialog"
             android:screenOrientation="portrait"> </activity>
     </application>
 
