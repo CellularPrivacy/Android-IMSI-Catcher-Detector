@@ -32,6 +32,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,8 +55,7 @@ public class CustomPopUp extends Activity {
             mode = extras.getInt("display_mode");
         }
 
-
-
+        setFinishOnTouchOutside(true);
         switch (mode){
             case 0:
                 createPopUp(
@@ -120,9 +120,13 @@ public class CustomPopUp extends Activity {
         }
 
 
-
-
-
     }
 
+    public boolean onTouchEvent(MotionEvent event) {
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+            finish();
+        }
+        return true;
+    }
 }
