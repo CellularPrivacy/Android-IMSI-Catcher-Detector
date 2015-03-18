@@ -6,11 +6,11 @@
     To create a new dialog add this to the case block
 
             case 6://your case value for your custom popup
-                setTitle("My Title");
-                about_icon_holder.setImageResource(R.drawable.white_skull);
-                about_tv_status.setText("Your Header");
-                about_tv_data.setText("This is a test");
-                break;
+                 createPopUp(
+                        "YOUR TITLE",
+                        "YOUR HEADER",
+                        "YOUR DATA"
+                        ,getResources().getDrawable(R.drawable.sense_idle));//set your icon
 
                 to call from any activity use:
 
@@ -26,6 +26,9 @@
 package com.SecUpwN.AIMSICD.activities;
 
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,38 +58,71 @@ public class CustomPopUp extends Activity {
 
         switch (mode){
             case 0:
-                about_icon_holder.setImageResource(R.drawable.sense_idle);
-                about_tv_status.setText("Status\tIdle");
-                about_tv_data.setText(R.string.detail_info_idle);
-                break;
+                createPopUp(
+                        null,
+                        "Status\tIdle",
+                        getResources().getString(R.string.detail_info_idle)
+                        ,getResources().getDrawable(R.drawable.sense_idle));
+                    break;
+
             case 1:
-                about_icon_holder.setImageResource(R.drawable.sense_ok);
-                about_tv_status.setText("Status\tNormal");
-                about_tv_data.setText(R.string.detail_info_nomral);
+                createPopUp(
+                        null,
+                        "Status\tNormal",
+                        getResources().getString(R.string.detail_info_nomral)
+                        ,getResources().getDrawable(R.drawable.sense_ok));
                 break;
             case 2:
-                about_icon_holder.setImageResource(R.drawable.sense_medium);
-                about_tv_status.setText("Status\tMedium");
-                about_tv_data.setText(R.string.detail_info_medium);
+                createPopUp(
+                        null,
+                        "Status\tMedium",
+                        getResources().getString(R.string.detail_info_medium)
+                        ,getResources().getDrawable(R.drawable.sense_medium));
                 break;
             case 3:
-                about_icon_holder.setImageResource(R.drawable.sense_high);
-                about_tv_status.setText("Status\tHigh");
-                about_tv_data.setText(R.string.detail_info_high);
+                createPopUp(
+                        null,
+                        "Status\tHigh",
+                        getResources().getString(R.string.detail_info_high)
+                        ,getResources().getDrawable(R.drawable.sense_high));
                 break;
             case 4:
-                about_icon_holder.setImageResource(R.drawable.sense_danger);
-                about_tv_status.setText("Status\tDanger");
-                about_tv_data.setText(R.string.detail_info_danger);
+                createPopUp(
+                        null,
+                        "Status\tDanger",
+                        getResources().getString(R.string.detail_info_danger)
+                        ,getResources().getDrawable(R.drawable.sense_danger));
                 break;
             case 5:
-                about_icon_holder.setImageResource(R.drawable.sense_skull);
-                about_tv_status.setText("Status\tRun");
-                about_tv_data.setText(R.string.detail_info_run);
+                createPopUp(
+                        null,
+                        "Status\tRun",
+                        getResources().getString(R.string.detail_info_run)
+                        ,getResources().getDrawable(R.drawable.sense_skull));
                 break;
 
         }
     }
 
+    public void createPopUp(String title,String header,String data,Drawable icon){
+        if(title != null){
+            setTitle(title);
+        }
+
+        if(header != null){
+            about_tv_status.setText(header);
+        }
+        if(data != null){
+            about_tv_data.setText(data);
+        }
+        if(icon != null){
+            about_icon_holder.setImageDrawable(icon);
+        }
+
+
+
+
+
+    }
 
 }
