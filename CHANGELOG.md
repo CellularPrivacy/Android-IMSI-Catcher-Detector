@@ -1,6 +1,17 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 13.03.2015 - [WIP-Release v0.1.25-alpha-build-35](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b35)
+
+* Changed: Tried to fix the progress bar in the `RequestTask` Download Request
+* Updated: Polished CellTracker from junk comments, added TAGs to Helpers and Device
+* Added: New tab strip across the view pager to make it obvious that it can be swiped
+* Added: New CreditsRoll with awesome Star Wars theme in the About-Menu of our AIMSICD
+* Fixed: NC detection logic and added more Logs to be removed or verbose, once working
+* Fixed: Better log function in `CellTracker.java` and corrected TAG in `DeviceAPI17`
+
+---
+
 #### 05.03.2015 - [WIP-Release v0.1.25-alpha-build-34](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b34)
 
 * Updated: `SCREENSHOTS` have been updated to reflect the latest changes of UI/UX
