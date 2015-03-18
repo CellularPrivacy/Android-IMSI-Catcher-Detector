@@ -23,8 +23,7 @@
         defeated by other means, not yet understood to the developers. Thus you also
         agree and understand that the developers and companies related to this free
         product, can in no way be held responsible for any results or outcome,
-        depending on the use of this application.
-    </string>
+        depending on the use of this application.</string>
 
     <!-- Mobile Network Types -->
     <string name="gprs"># GPRS</string>
@@ -39,13 +38,16 @@
 
     <!-- MENU -->
 
-    <!--  Changes by E:V:A @ 2015-01-07 -->
-    <!-- string name="monitor_cell">Monitor Cell Details</string>
+
+    <!-- Changes by E:V:A @ 2015-01-07 -->
+    <!--
+    string name="monitor_cell">Monitor Cell Details</string>
     <string name="unmonitor_cell">Stop Monitoring Cell Details</string>
     <string name="track_cell">Track Cell Details \n(GPS Required)</string>
     <string name="untrack_cell">Stop Tracking Cell Details</string>
     <string name="track_femtocell">Track Femtocell</string>
-    <string name="untrack_femtocell">Stop Tracking Femtocell</string -->
+    <string name="untrack_femtocell">Stop Tracking Femtocell</string
+    -->
 
     <string name="monitor_cell">Start AIMSICD monitoring</string>
     <string name="unmonitor_cell">Stop AIMSICD monitoring</string>
@@ -54,12 +56,10 @@
     <string name="untrack_cell">Stop Tracking Cell Details</string>
     <string name="track_femtocell">Track Femtocell</string>
     <string name="untrack_femtocell">Stop Tracking Femtocell</string>
-
     <string name="show_map">Show Map</string>
     <string name="backup_database">Backup Database</string>
     <!-- TODO: -->
     <string name="clear_database">Clear/Reset Database</string>
-
     <string name="restore_database">Restore Database</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit.</string>
@@ -67,7 +67,6 @@
     <!-- string name="cell_lookup">Lookup Current Cell Details (OpenCellID)</string -->
     <string name="cell_lookup">All Current Cell Details (ACD)</string>
     <string name="send_logs">Debugging</string>
-
     <string name="no_network_connection_title">No Internet Connection</string>
     <string name="no_network_connection_message">Unable to download OpenCellID data without Internet
     connectivity, please enable data connection!</string>
@@ -112,7 +111,7 @@
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">About AIMSICD</string>
-    <string name="app_version">Version:&#160;</string>
+    <string name="app_version">Version: </string>
     <string name="aimsicd_about_info">Android IMSI-Catcher Detector (AIMSICD)</string>
     <string name="aimsicd_about_info3">Android-based project to detect and avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks.</string>
     <string name="about_github">AIMSICD on GitHub</string>
@@ -194,7 +193,7 @@
     <string name="pref_map_type_key">pref_map_type</string>
     <string name="pref_map_type_title">Map Type</string>
     <string name="pref_map_type_summ">Display Map in different styles</string>
-    
+
     <!-- MAP INFOWINDOW -->
     <string name="cell_id_label">CID: </string>
     <string name="lac_label">LAC: </string>
@@ -209,6 +208,7 @@
     <!-- Database Viewer -->
     <string name="load_table_data">Load Data</string>
     <string name="table_names_prompt">Select Table</string>
+
     <string-array name="table_names">
         <item>Unique BTS Data</item>
         <item>BTS Measurements</item>
@@ -218,9 +218,10 @@
         <item>Measured Signal Strengths</item>
         <item>EventLog</item>
     </string-array>
+
     <string name="database_export_successful">Export Successful</string>
 
-    <!-- AT Command Interface  -->
+    <!-- AT Command Interface -->
     <string name="at_command_title">AT Command Interface</string>
     <string name="response_label">Response:</string>
     <string name="execute_at">Execute</string>
@@ -252,5 +253,13 @@
     <string name="msg_copied_to_clipboard">Logs copied to clipboard</string>
     <string name="btn_stop_logs">Stop</string>
     <string name="btn_start_logs">Start</string>
+    <string name="title_activity_about_pop_up">DETAILED EXPLANATION</string>
 
+    <!-- Detailed Info Strings -->
+    <string name="detail_info_idle">App is idling or loading. No protection and detection measures are enabled. Please open the Navigation Drawer and enable them in section TRACKING.</string>
+    <string name="detail_info_nomral">No threats detected or found. Your network is using A5/3 or better.</string>
+    <string name="detail_info_medium">Insecure Service Area: At least 1 new or unknown BTS is in operation in this vicinity, or using an encryption less than A5/3</string>
+    <string name="detail_info_high">Hostile Service Actions Detected: An IMSI-Catcher is actively tracking users.</string>
+    <string name="detail_info_danger">Hostile Tracking Detected: An FBTS is actively tracking YOU. Leave this place!</string>
+    <string name="detail_info_run">Hostile Manipulation: Someone is trying to remotely manipulate your handset, YOU are the TARGET!</string>
 </resources>
