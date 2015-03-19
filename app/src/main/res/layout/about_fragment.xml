@@ -18,7 +18,7 @@
             android:gravity="center_horizontal"
             android:text="@string/aimsicd_about_info"
             android:textColor="@color/green_text"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/aimsicd_version"
@@ -27,7 +27,7 @@
             android:gravity="center_horizontal"
             android:text="@string/app_version"
             android:textColor="@color/red_text"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,7 +35,8 @@
             android:paddingBottom="@dimen/small_padding"
             android:paddingTop="@dimen/small_padding"
             android:text="@string/aimsicd_about_info3"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:gravity="center_vertical|center_horizontal" />
 
         <TextView
             android:layout_width="match_parent"
