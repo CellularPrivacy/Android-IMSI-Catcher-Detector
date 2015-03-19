@@ -1,6 +1,9 @@
 package com.SecUpwN.AIMSICD.utils;
 
 import android.content.Context;
+import android.content.Intent;
+
+import com.SecUpwN.AIMSICD.activities.CustomPopUp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -40,5 +43,12 @@ public class MiscUtils {
 
 
         return buildassets.toString();
+    }
+
+    public static void startPopUpInfo(Context context,int mode){
+        Intent i = new Intent(context, CustomPopUp.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("display_mode",mode);
+        context.startActivity(i);
     }
 }
