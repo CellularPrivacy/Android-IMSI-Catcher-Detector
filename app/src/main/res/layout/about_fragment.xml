@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Click icons for detailed information"
-            android:textColor="@color/white"
+            android:textColor="@color/green_text"
             android:id="@+id/textView2"
             android:gravity="center_vertical|center_horizontal"
             android:textSize="14dp" />
