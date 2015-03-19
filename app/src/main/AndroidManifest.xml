@@ -182,8 +182,14 @@
             </intent-filter>
         </receiver>
         <activity android:name=".activities.CreditsRollActivity"
-            android:theme="@android:style/Theme.Black"
+            android:theme="@android:style/Theme.Dialog"
             android:screenOrientation="portrait"> </activity>
+
+        <activity
+            android:name=".activities.CustomPopUp"
+            android:label="@string/title_activity_about_pop_up"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
     </application>
 
 </manifest>
