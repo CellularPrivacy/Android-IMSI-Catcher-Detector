@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+
+        <shape>
+            <!-- Make corners round  -->
+            <corners android:radius="7dp" />
+            <solid
+                android:color="#000000"/>
+            <!-- Border Color  -->
+            <stroke android:width="1dip" android:color="#33BBFF" />
+            <padding
+                android:left="4dp"
+                android:top="4dp"
+                android:right="4dp"
+                android:bottom="4dp" />
+        </shape>
+    </item>
+</selector>
