@@ -60,7 +60,7 @@ public class CustomPopUp extends Activity {
             case 0:
                 createPopUp(
                         null,
-                        "Status\tIdle",
+                        "Status:\tIDLE",
                         getResources().getString(R.string.detail_info_idle)
                         ,getResources().getDrawable(R.drawable.sense_idle));
                 break;
@@ -68,35 +68,35 @@ public class CustomPopUp extends Activity {
             case 1:
                 createPopUp(
                         null,
-                        "Status\tNormal",
+                        "Status:\tNORMAL",
                         getResources().getString(R.string.detail_info_nomral)
                         ,getResources().getDrawable(R.drawable.sense_ok));
                 break;
             case 2:
                 createPopUp(
                         null,
-                        "Status\tMedium",
+                        "Status:\tMEDIUM",
                         getResources().getString(R.string.detail_info_medium)
                         ,getResources().getDrawable(R.drawable.sense_medium));
                 break;
             case 3:
                 createPopUp(
                         null,
-                        "Status\tHigh",
+                        "Status:\tHIGH",
                         getResources().getString(R.string.detail_info_high)
                         ,getResources().getDrawable(R.drawable.sense_high));
                 break;
             case 4:
                 createPopUp(
                         null,
-                        "Status\tDanger",
+                        "Status:\tDANGER",
                         getResources().getString(R.string.detail_info_danger)
                         ,getResources().getDrawable(R.drawable.sense_danger));
                 break;
             case 5:
                 createPopUp(
                         null,
-                        "Status\tRun",
+                        "Status:\tRUN!",
                         getResources().getString(R.string.detail_info_run)
                         ,getResources().getDrawable(R.drawable.sense_skull));
                 break;
