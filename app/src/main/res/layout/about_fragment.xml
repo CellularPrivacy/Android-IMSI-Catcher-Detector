@@ -286,7 +286,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="LICENSE" />
+                    android:text="LICENCE"
+                    android:id="@+id/tvli" />
 
                 <ImageView
                     android:layout_width="wrap_content"
