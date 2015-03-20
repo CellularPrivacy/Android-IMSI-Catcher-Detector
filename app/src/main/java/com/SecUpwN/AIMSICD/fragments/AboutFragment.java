@@ -21,14 +21,13 @@ import android.widget.TextView;
 public class AboutFragment extends Fragment {
 
     private Context mContext;
-    Button btncredits;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.about_fragment, container, false);
         String version;
-        btncredits = (Button) v.findViewById(R.id.aimsicd_credits_link);
 
         PackageManager manager = mContext.getPackageManager();
         try {
@@ -45,106 +44,64 @@ public class AboutFragment extends Fragment {
             versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
             versionNumber.setText(getString(R.string.app_version) + version);
 
-            //Status icons link
-            View tv = v.findViewById(R.id.aimsicd_status_icons);
-            //setLink(tv, R.string.status_icons_link);
+            View tv;
 
-            //GitHub WIKI Link
-            tv = v.findViewById(R.id.aimsicd_wiki_link);
-            setLink(tv, R.string.wiki_link);
-
-            //Proof of Concept Link
-            tv = v.findViewById(R.id.aimsicd_poc_link);
-            setLink(tv, R.string.poc_link);
-
-            //Disclaimer Link
-            tv = v.findViewById(R.id.aimsicd_disclaimer_link);
-            setLink(tv, R.string.disclaimer_link);
-
-            //GitHub Contribution Link
-            tv = v.findViewById(R.id.aimsicd_contribute_link);
+            //links
+            tv = v.findViewById(R.id.img_about_github);
             setLink(tv, R.string.aimsicd_github_link);
 
-            //XDA Development Thread Link
-//            tv = (TextView) v.findViewById(R.id.aimsicd_visit_xda_link);
-//            tv.setMovementMethod(LinkMovementMethod.getInstance());
-//            tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_xda_link)));
+            tv = v.findViewById(R.id.img_about_wiki);
+            setLink(tv, R.string.wiki_link);
 
-            //WIP Release Link
-            tv = v.findViewById(R.id.aimsicd_release_link);
+            tv = v.findViewById(R.id.img_about_poc);
+            setLink(tv, R.string.poc_link);
+
+            tv = v.findViewById(R.id.img_about_disclaim);
+            setLink(tv, R.string.disclaimer_link);
+
+            tv = v.findViewById(R.id.img_about_releases);
             setLink(tv, R.string.aimsicd_release_link);
 
-            //Changelog Link
-            tv = v.findViewById(R.id.aimsicd_changelog_link);
+            tv = v.findViewById(R.id.img_about_changelog);
             setLink(tv, R.string.aimsicd_changelog_link);
 
-            //License Link
-            tv = v.findViewById(R.id.aimsicd_license_link);
+            tv = v.findViewById(R.id.img_about_gnu);
             setLink(tv, R.string.aimsicd_license_link);
 
-            //Credits Link
-            //tv = v.findViewById(R.id.aimsicd_credits_link);
-            //setLink(tv, R.string.aimsicd_credits_link);
+            tv = v.findViewById(R.id.img_about_credits);
+            buttonAction(tv);
 
-            View imgView_idle = v.findViewById(R.id.imgView_idle);
-            imgView_idle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            // Detailed pop ups
+            tv = v.findViewById(R.id.imgView_idle);
+            setPopUp(tv,0);
 
-                    MiscUtils.startPopUpInfo(mContext, 0);
-                }
-            });
+            tv = v.findViewById(R.id.imgView_normal);
+            setPopUp(tv,1);
 
-            View imgView_normal = v.findViewById(R.id.imgView_normal);
-            imgView_normal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            tv = v.findViewById(R.id.imgView_medium);
+            setPopUp(tv,2);
 
-                    MiscUtils.startPopUpInfo(mContext, 1);
-                }
-            });
+            tv = v.findViewById(R.id.imgView_high);
+            setPopUp(tv,3);
 
-            View imgView_medium = v.findViewById(R.id.imgView_medium);
-            imgView_medium.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            tv = v.findViewById(R.id.imgView_danger);
+            setPopUp(tv,4);
 
-                    MiscUtils.startPopUpInfo(mContext, 2);
-                }
-            });
-
-            View imgView_high = v.findViewById(R.id.imgView_high);
-            imgView_high.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    MiscUtils.startPopUpInfo(mContext, 3);
-                }
-            });
-
-            View imgView_danger = v.findViewById(R.id.imgView_danger);
-            imgView_danger.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    MiscUtils.startPopUpInfo(mContext, 4);
-                }
-            });
-
-            View imgView_run = v.findViewById(R.id.imgView_run);
-            imgView_run.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    MiscUtils.startPopUpInfo(mContext, 5);
-                }
-            });
+            tv= v.findViewById(R.id.imgView_run);
+            setPopUp(tv,5);
         }
         return v;
     }
-
-    private void setLink(View b, final int link) {
-        b.setOnClickListener(new View.OnClickListener() {
+    private void setPopUp(View view1, final int mode) {
+        view1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MiscUtils.startPopUpInfo(mContext, mode);
+            }
+        });
+    }
+    private void setLink(View view2, final int link) {
+        view2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_VIEW,
@@ -152,8 +109,10 @@ public class AboutFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
 
-        btncredits.setOnClickListener(new View.OnClickListener() {
+    private void buttonAction(View view3) {
+        view3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
