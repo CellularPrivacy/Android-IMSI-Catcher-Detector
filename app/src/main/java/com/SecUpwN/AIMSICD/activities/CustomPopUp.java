@@ -29,22 +29,26 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
 
 public class CustomPopUp extends Activity {
-    TextView about_tv_status,about_tv_data;
+    TextView tv_popup_title,about_tv_status,about_tv_data;
     ImageView about_icon_holder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.about_pop_up);
 
         about_icon_holder = (ImageView)findViewById(R.id.about_icon_holder);
         about_tv_status = (TextView)findViewById(R.id.about_tv_status);
         about_tv_data = (TextView)findViewById(R.id.about_tv_data);
+        tv_popup_title = (TextView)findViewById(R.id.tv_popup_title);
+
         int mode = 0; //default
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -102,7 +106,7 @@ public class CustomPopUp extends Activity {
 
     public void createPopUp(String title,String header,String data,Drawable icon){
         if(title != null){
-            setTitle(title);
+            tv_popup_title.setText(title);
         }
 
         if(header != null){

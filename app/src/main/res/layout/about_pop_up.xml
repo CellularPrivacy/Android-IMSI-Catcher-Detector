@@ -15,6 +15,23 @@
 
         <TableLayout
             android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/title_activity_about_pop_up"
+                android:id="@+id/tv_popup_title"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="@color/green_text"
+                android:textSize="16dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp">
 
@@ -22,7 +39,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingBottom="10dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -65,5 +84,7 @@
                     android:textSize="16dp" />
             </TableRow>
         </TableLayout>
+
     </LinearLayout>
+
 </RelativeLayout>
