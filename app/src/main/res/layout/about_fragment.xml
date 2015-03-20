@@ -18,7 +18,7 @@
             android:gravity="center_horizontal"
             android:text="@string/aimsicd_about_info"
             android:textColor="@color/green_text"
-            android:textSize="16sp"/>
+            android:textSize="13sp"/>
 
         <TextView
             android:id="@+id/aimsicd_version"
@@ -27,16 +27,17 @@
             android:gravity="center_horizontal"
             android:text="@string/app_version"
             android:textColor="@color/red_text"
-            android:textSize="16sp"/>
+            android:textSize="13sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/small_padding"
-            android:paddingTop="@dimen/small_padding"
+            android:paddingBottom="1dp"
+            android:paddingTop="1dp"
             android:text="@string/aimsicd_about_info3"
             android:textColor="@color/white"
-            android:gravity="center_vertical|center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="13dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -45,15 +46,16 @@
             android:textColor="@color/green_text"
             android:id="@+id/textView2"
             android:gravity="center_vertical|center_horizontal"
-            android:textSize="14dp" />
+            android:textSize="12dp"
+            android:background="@xml/borderdesign" />
 
         <TableLayout
-            android:id="@+id/aimsicd_status_icons"
+            android:id="@+id/tableLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="@xml/borderdesign"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true" >
 
             <TableRow
                 android:layout_width="match_parent"
@@ -157,88 +159,153 @@
                     android:text="RUN! Handset manipulated!"/>
             </TableRow>
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="6dp" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:src="@drawable/github_about_ic"
+                    android:id="@+id/img_about_github"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="AIMSICD Github" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:src="@drawable/wiki_about_ic"
+                    android:id="@+id/img_about_wiki"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="Documentation (Wiki)" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="6dp" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:src="@drawable/poc_about_ic"
+                    android:id="@+id/img_about_poc"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="This is a POC" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:src="@drawable/disclaimer_about_ic"
+                    android:id="@+id/img_about_disclaim"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="Disclaimer"
+                    android:id="@+id/tvtv" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="6dp" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:src="@drawable/document_about_ic"
+                    android:id="@+id/img_about_releases"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="RELEASES" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:src="@drawable/document_about_ic"
+                    android:id="@+id/img_about_changelog"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="CHANGELOG" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="6dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:src="@drawable/gnu_about_ic"
+                    android:id="@+id/img_about_gnu"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="LICENCE"
+                    android:id="@+id/tvli" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:src="@drawable/document_about_ic"
+                    android:id="@+id/img_about_credits"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="CREDITS" />
+            </TableRow>
+
         </TableLayout>
 
-        <Button
-            android:id="@+id/aimsicd_contribute_link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_github"
-            android:textSize="14dp" />
-
-        <Button
-            android:id="@+id/aimsicd_wiki_link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_wiki"
-            android:textSize="14dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/aimsicd_poc_link"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:singleLine="true"
-                android:ellipsize="start"
-                android:text="@string/about_poc"
-                android:textSize="14dp" />
-
-            <Button
-                android:id="@+id/aimsicd_disclaimer_link"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/about_disclaimer"
-                android:textSize="14dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/aimsicd_release_link"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/about_releases"
-                android:textSize="14dp" />
-
-            <Button
-                android:id="@+id/aimsicd_changelog_link"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/about_changelog"
-                android:textSize="14dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/aimsicd_license_link"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/about_license"
-                android:textSize="14dp" />
-
-            <Button
-                android:id="@+id/aimsicd_credits_link"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/about_credits"
-                android:textSize="14dp" />
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>
