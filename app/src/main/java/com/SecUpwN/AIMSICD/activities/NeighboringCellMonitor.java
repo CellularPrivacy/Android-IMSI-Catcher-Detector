@@ -14,7 +14,7 @@ package com.SecUpwN.AIMSICD.activities;
  *          NeighboringCellMonitor  NC_MONITOR = new NeighboringCellMonitor(context);
  *          NC_MONITOR.startMonitoring();
  *
- *          This Solves this issue #346 but whoever is coded the Cell Tracker needs
+ *          This Solves this issue #346 but whoever coded the Cell Tracker needs
  *          to impliment his code in this class to update DB and Neighboring cells
  *          activity.
  *
