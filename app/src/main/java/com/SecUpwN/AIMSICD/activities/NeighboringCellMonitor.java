@@ -113,11 +113,11 @@ public class NeighboringCellMonitor extends PhoneStateListener {
             int nid = cdmaTypeCell.getNetworkId();
 
          /*   if((nid < 0xfa) || (nid >= 0xff)) {
-                //not a femeto cell
+                //not a femtocell
 
             }
             else {
-                //connected to femeto cell
+                //connected to femtocell
             }
             */
         }
