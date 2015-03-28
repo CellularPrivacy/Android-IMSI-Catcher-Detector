@@ -1,6 +1,13 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 28.03.2015 - WIP-Internal v0.1.25-alpha-build-37
+
+* Updated: Reformatted `CREDITS` to look much better within our `CreditsRoll`
+* Fixed: Neighbouring Cell List should now get updated outside the MapViewer
+
+---
+
 #### 20.03.2015 - WIP-Internal v0.1.25-alpha-build-36
 
 * Changed: Simplified `CONTRIBUTING.md` for a much easier entry into development
