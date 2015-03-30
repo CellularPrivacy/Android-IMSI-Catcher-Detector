@@ -11,7 +11,7 @@ Feel invited to develop with us using these steps:
 2. Download your fork using a Git Cient like [SmartGit](http://www.syntevo.com/smartgit/) (all platforms).
 3. Pick [an Issue](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues) you'd like to work on. Introduce yourself in that Issue.
 4. Work on resolving the Issue you picked using your local code copy.
-5. Add [Javadoc Standard Comments](https://source.android.com/source/code-style.html#java-style-rules) to document your code changes.
+5. Add [Code Comments](https://source.android.com/source/code-style.html#java-style-rules) for documentation and follow our [Style Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Style-Guide).
 6. Test your changes and submit a [pull request](https://help.github.com/articles/using-pull-requests/) when we shall add it.
 7. Monitor our [Current Development Status and Development Cycle](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status).
 8. Don't be shy to ask if you need help. Ask in your Issue or [contact us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
