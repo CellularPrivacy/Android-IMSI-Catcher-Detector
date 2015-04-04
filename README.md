@@ -20,12 +20,12 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 
 ### Index
 
-* [What it does](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/README.md#what-it-does)
-* [Why to use it](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/README.md#why-to-use-it)
+* [What it does](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#what-it-does)
+* [Why to use it](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#why-to-use-it)
 * [**Contributing**](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md)
 * [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues)
 * [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/DISCLAIMER)
-* [Warnings](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/README.md#warnings)
+* [Warnings](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#warnings)
 * [Donations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#support)
 * [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact)
 * [WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
