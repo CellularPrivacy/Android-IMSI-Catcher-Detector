@@ -52,9 +52,9 @@ We are planning many more [detection methods](https://github.com/SecUpwN/Android
 
 ### Why to use it
 
-The FBI or local police regularly deploys IMSI-Catchers hidden in vehicles at protests to obtain a record of everyone who attended with a cell phone (leave your phones at home by all means if you really have to attend). IMSI-Catchers also allow adversaries to intercept your conversations, text messages, and data. Police can use them to determine your location, or to find out who is in a given geographic area at what time. Identity thieves can use freely [available tools](http://www.nsaplayset.org/) to monitor and manipulate GSM communications from a parked car in your residential neighborhood, stealing passwords or credit card data from people nearby who make purchases on their phones.
+The FBI or local police regularly deploys IMSI-Catchers hidden in vehicles at protests to obtain a record of everyone who attended with a cell phone (leave your phones at home by all means if you really have to attend). IMSI-Catchers also allow adversaries to intercept your conversations, text messages, and data. Police can use them to determine your location, or to find out who is in a given geographic area at what time. Identity thieves can use freely [available tools](http://www.nsaplayset.org/) to monitor and manipulate communications from a parked car in your residential neighborhood, stealing passwords or credit card data from people nearby who make purchases on their phones.
 
-The reason IMSI-Catchers are so commonly used is that it is very easy to get away with using them traceless. This app aims to make it possible to detect the IMSI-Catchers, so that using them becomes a risky proposition. It also aims to make you (the user) safer, by alerting on possible interception and tracking.
+The reason IMSI-Catchers are so commonly used is that it is very easy to get away with using them traceless. This app aims to make it possible to detect the IMSI-Catchers, so that using them becomes a risky proposition. It also aims to make users safer, by alerting on possible interception and tracking.
 
 ---
 
