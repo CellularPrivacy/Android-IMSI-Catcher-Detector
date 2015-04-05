@@ -36,7 +36,7 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 
 ### What it does
 
-AIMSICD attempts to detect IMSI-Catchers through various methods. Currently implemented (or being worked on):
+AIMSICD attempts to detect IMSI-Catchers through various methods such as these:
     
 - Check [tower information consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/253) against known information
 - [Signal strength monitoring](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/97)
@@ -46,7 +46,7 @@ AIMSICD attempts to detect IMSI-Catchers through various methods. Currently impl
 - Look for [silent SMS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/69)
 - Prevent [silent app installations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/151)
 
-We are planning many more [detection methods](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/230), so feel free to join the discussion and [help us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md) implement them. Monitor our [development status](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status).
+We are planning many more [detection methods](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/230), so feel free to join the discussion and [help us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md) implement them. See our [development status](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status).
 
 ---
 
@@ -54,7 +54,7 @@ We are planning many more [detection methods](https://github.com/SecUpwN/Android
 
 The FBI or local police regularly deploys IMSI-Catchers hidden in vehicles at protests to obtain a record of everyone who attended with a cell phone (leave your phones at home by all means if you really have to attend). IMSI-Catchers also allow adversaries to intercept your conversations, text messages, and data. Police can use them to determine your location, or to find out who is in a given geographic area at what time. Identity thieves can use freely [available tools](http://www.nsaplayset.org/) to monitor and manipulate GSM communications from a parked car in your residential neighborhood, stealing passwords or credit card information from people nearby who make purchases on their phones.
 
-The reason IMSI-Catchers are so commonly used is that it is very easy to get away with using them since they leave no traces. This app aims to make it possible to detect the IMSI-Catchers, so that using them becomes a risky proposition. It also aims to make you (the user) safer, by alerting you to possible interception and tracking.
+The reason IMSI-Catchers are so commonly used is that it is very easy to get away with using them. They leave no traces. This app aims to make it possible to detect the IMSI-Catchers, so that using them becomes a risky proposition. It also aims to make you (the user) safer, by alerting you to possible interception and tracking.
 
 ---
 
@@ -67,12 +67,12 @@ This app does **not**:
 * Provide secure phone calls (see [RedPhone](https://github.com/WhisperSystems/RedPhone))
 * Provide secure SMS (see [SMSSecure](https://github.com/SMSSecure/SMSSecure))
 * Provide secure application sand-boxing
-* Provide app permission control (see [XPrivacy](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783))
+* Provide app permission control ([XPrivacy](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783))
 * Provide firewalls (see [AFWall+](https://github.com/ukanth/afwall))
-* Prevent already installed rogue applications from full access and spying
 * Provide [ROOT](http://www.xda-developers.com/root) and remove bloatware
+* Prevent already installed rogue applications from full access and spying
 
-The efficiency of this app has not yet been verified against real IMSI-Catchers. If you can help with this, please get in touch with us. Before using our App, completely read, understand and agree to our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)!
+The efficiency of this app has not yet been verified against real IMSI-Catchers. If you can help with this, please get in touch with us. Before using our App, understand and agree to our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)!
 
 ---
 
@@ -86,7 +86,7 @@ Please follow [how to correctly submit Issues](https://github.com/SecUpwN/Androi
 
 Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a (fully anonymous) [donation](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations).
 
-All collected donations shall be split into appropriate pieces and directly sent to developers who contribute useful code (at our discretion). Additionally, donations will be used to support these privacy-defending organizations (contact us if you are a like-minded organization):
+All collected donations shall be split into appropriate pieces and directly sent to developers who contribute useful code (at our discretion). Additionally, donations will be used to support these privacy organizations (contact us if you are a like-minded organization):
 
 [![EFF](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/EFF.png)](https://www.eff.org/)
 [![Guardian Project](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/GuardianProject.png)](https://guardianproject.info/)
