@@ -3,7 +3,7 @@
 
 To avoid confusion and rejected development commits, please use this guide!
 
-#### DEVELOPERS
+#### DEVELOPING
 
 Feel invited to develop with us using these steps:
 
@@ -18,7 +18,7 @@ Feel invited to develop with us using these steps:
 
 ---
 
-#### TESTERS
+#### TESTING
 
 Can't code (yet)? No problem, we love you too!
 
@@ -27,6 +27,15 @@ Can't code (yet)? No problem, we love you too!
 3. Test our App on demonstrations and riots (warning: [Privacy](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Privacy/) at risk). 
 4. Test all functions of our App and check for possible translation bugs.
 5. Spread [our website](https://secupwn.github.io/Android-IMSI-Catcher-Detector), [tweet about us](https://twitter.com/AIMSICD) or use any other [Media Material](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material).
+
+---
+
+#### SEEKING
+
+Special positions we are currently seeking skilled people for:
+
+* Fixing the identified [Coverity Scan Defects](https://scan.coverity.com/projects/3346) of our app.
+* Whistleblower working for an IMSI-Catcher producer.
 
 ---
 
@@ -44,6 +53,6 @@ Useful links to help you with correctly formatting posts.
 
 ---
 
-#### BUG REPORTS
+#### DEBUGGING
 
 * Please follow our instructions on [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues).
