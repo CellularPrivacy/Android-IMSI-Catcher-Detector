@@ -71,6 +71,7 @@
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md"><strong>Contributing</strong></a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues">Bug Tracker</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#warnings">Warnings</a></li>
+<li><a href="https://spideroak.com/browse/share/AIMSICD/GitHub">Research</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#support">Support</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact">Contact</a></li>
 <li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki">WIKI</a></li>
@@ -84,23 +85,24 @@
 <h3>
 <a id="what-it-does" class="anchor" href="#what-it-does" aria-hidden="true"><span class="octicon octicon-link"></span></a>What it does</h3>
 
-<p>AIMSICD attempts to detect IMSI-Catchers through various methods such as these:</p>
+<p>AIMSICD attempts to detect IMSI-Catchers through <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/230">detection methods</a> such as these:</p>
 
 <ul>
 <li>Check <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/253">tower information consistency</a>
 </li>
-<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/97">Signal strength monitoring</a></li>
-<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/6">Detect FemtoCells</a></li>
-<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91">LAC/Cell ID Consistency</a></li>
+<li>Check <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91">LAC/Cell ID consistency</a>
+</li>
 <li>Check <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/264">Neighbouring Cell Info</a>
+</li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/97">Signal strength monitoring</a></li>
+<li>Prevent <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/151">silent app installations</a>
 </li>
 <li>Look for <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/69">silent SMS</a>
 </li>
-<li>Prevent <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/151">silent app installations</a>
-</li>
+<li><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/6">Detect FemtoCells</a></li>
 </ul>
 
-<p>We are planning many more <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/230">detection methods</a>, so feel free to join the discussion and <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md">help us</a> implement them. See our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status">development status</a>.</p>
+<p>Have a look at our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status#application-goals">application goals</a>. Feel invited to join the discussion and <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md">help us</a> implement them. See our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status">development status</a>.</p>
 
 <hr>
 
@@ -116,21 +118,21 @@
 <h3>
 <a id="warnings" class="anchor" href="#warnings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Warnings</h3>
 
-<p>This app does <strong>not</strong>:</p>
+<p><a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status"><img src="https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/DOCUMENTATION/Warning.png" alt="Warning"></a></p>
+
+<p>You must agree to our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER">Disclaimer</a>! This app does <strong>not</strong>:</p>
 
 <ul>
-<li>Provide full device encryption</li>
-<li>Provide secure data transmission (see <a href="https://www.torproject.org/">Tor</a>)</li>
 <li>Provide secure phone calls (see <a href="https://github.com/WhisperSystems/RedPhone">RedPhone</a>)</li>
-<li>Provide secure SMS (see <a href="https://github.com/SMSSecure/SMSSecure">SMSSecure</a>)</li>
-<li>Provide secure application sand-boxing</li>
+<li>Provide secure data transmission (see <a href="https://www.torproject.org/">Tor</a>)</li>
 <li>Provide app permission control (<a href="http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783">XPrivacy</a>)</li>
-<li>Provide firewalls (see <a href="https://github.com/ukanth/afwall">AFWall+</a>)</li>
+<li>Provide secure application sand-boxing</li>
+<li>Provide secure SMS (see <a href="https://github.com/SMSSecure/SMSSecure">SMSSecure</a>)</li>
 <li>Provide <a href="http://www.xda-developers.com/root">ROOT</a> and remove bloatware</li>
+<li>Provide firewalls (see <a href="https://github.com/ukanth/afwall">AFWall+</a>)</li>
+<li>Provide full device encryption</li>
 <li>Prevent already installed rogue applications from full access and spying</li>
 </ul>
-
-<p>The efficiency of this app has not yet been verified against real IMSI-Catchers. If you can help with this, please get in touch with us. Before using our App, you must agree to our <a href="https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER">Disclaimer</a>!</p>
 
 <hr>
 
