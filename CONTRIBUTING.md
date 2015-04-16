@@ -34,6 +34,7 @@ Can't code (yet)? No problem, we love you too!
 
 Special positions we are currently seeking skilled people for:
 
+* People with equipment to verify our app (e.g. OpenBTS).
 * Fixing the identified [Coverity Scan Defects](https://scan.coverity.com/projects/3346) of our app.
 * Whistleblower working for an IMSI-Catcher producer.
 
