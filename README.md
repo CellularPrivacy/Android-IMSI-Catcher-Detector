@@ -25,6 +25,7 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 * [**Contributing**](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md)
 * [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues)
 * [Warnings](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#warnings)
+* [Research](https://spideroak.com/browse/share/AIMSICD/GitHub)
 * [Support](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#support)
 * [Contact](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact)
 * [WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
@@ -36,17 +37,17 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 
 ### What it does
 
-AIMSICD attempts to detect IMSI-Catchers through various methods such as these:
+AIMSICD attempts to detect IMSI-Catchers through [detection methods](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/230) such as these:
     
 - Check [tower information consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/253)
-- [Signal strength monitoring](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/97)
-- [Detect FemtoCells](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/6)
-- [LAC/Cell ID Consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91)
+- Check [LAC/Cell ID consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91)
 - Check [Neighbouring Cell Info](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/264)
-- Look for [silent SMS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/69)
+- [Signal strength monitoring](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/97)
 - Prevent [silent app installations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/151)
+- Look for [silent SMS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/69)
+- [Detect FemtoCells](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/6)
 
-We are planning many more [detection methods](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/230), so feel free to join the discussion and [help us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md) implement them. See our [development status](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status).
+Have a look at our [application goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status#application-goals). Feel invited to join the discussion and [help us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md) implement them. See our [development status](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status).
 
 ---
 
@@ -60,19 +61,19 @@ The reason IMSI-Catchers are so commonly used is that it is very easy to get awa
 
 ### Warnings
 
-This app does **not**:
+[![Warning](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/DOCUMENTATION/Warning.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status)
 
-* Provide full device encryption
-* Provide secure data transmission (see [Tor](https://www.torproject.org/))
+You must agree to our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)! This app does **not**:
+
 * Provide secure phone calls (see [RedPhone](https://github.com/WhisperSystems/RedPhone))
-* Provide secure SMS (see [SMSSecure](https://github.com/SMSSecure/SMSSecure))
-* Provide secure application sand-boxing
+* Provide secure data transmission (see [Tor](https://www.torproject.org/))
 * Provide app permission control ([XPrivacy](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783))
-* Provide firewalls (see [AFWall+](https://github.com/ukanth/afwall))
+* Provide secure application sand-boxing
+* Provide secure SMS (see [SMSSecure](https://github.com/SMSSecure/SMSSecure))
 * Provide [ROOT](http://www.xda-developers.com/root) and remove bloatware
+* Provide firewalls (see [AFWall+](https://github.com/ukanth/afwall))
+* Provide full device encryption
 * Prevent already installed rogue applications from full access and spying
-
-The efficiency of this app has not yet been verified against real IMSI-Catchers. If you can help with this, please get in touch with us. Before using our App, you must agree to our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)!
 
 ---
 
