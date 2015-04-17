@@ -1,6 +1,22 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 28.03.2015 - WIP-Internal v0.1.25-alpha-build-37
+
+* Updated: Reformatted `CREDITS` to look much better within our `CreditsRoll`
+* Fixed: Neighbouring Cell List should now get updated outside the MapViewer
+
+---
+
+#### 20.03.2015 - WIP-Internal v0.1.25-alpha-build-36
+
+* Changed: Simplified `CONTRIBUTING.md` for a much easier entry into development
+* Added: Enabled automatic builds of internal testing APKs via Buildozer
+* Added: New Custom Pop Class in `AndroidManifest.xml` for popups in About-Tab
+* Added: Status-Icons in About-Tab are now clickable and show Detailed Explanations
+
+---
+
 #### 13.03.2015 - [WIP-Release v0.1.25-alpha-build-35](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b35)
 
 * Changed: Tried to fix the progress bar in the `RequestTask` Download Request

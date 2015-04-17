@@ -193,7 +193,7 @@ public class DebugLogs extends BaseActivity {
             public void run() {
                 // Send Error Log
                 try {
-                    String helpUs = "For best help, please describe the problem you had, before sending us these logs.\n";
+                    String helpUs = "For best help, please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!\n";
                     String log = helpUs + "\n\n" + "GETPROP:" + "\n\n" + getProp() +
                                           "\n\n" + "LOGCAT:" + "\n\n" + getLogs() + "\n\n" + helpUs;
 
@@ -201,7 +201,7 @@ public class DebugLogs extends BaseActivity {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/html");
                     // This is a masked email to one of our developers. In case of spam re-mask.
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"a3841c3c@opayq.com"});
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"SecUpwN[-AT-]protonmail.ch"});
                     intent.putExtra(Intent.EXTRA_SUBJECT, "AIMSICD Error Log");
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));

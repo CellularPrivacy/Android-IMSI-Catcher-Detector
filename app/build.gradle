@@ -39,7 +39,7 @@ def getManifestVersionName() {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '21.1.1'
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         minSdkVersion 16
@@ -94,28 +94,28 @@ android {
 // To restore the default behavior just delete the whole block below
 // WARNING by E:V:A: This is NOT Working, generates: "AIMSICD-null.apk"
 //======================================================================
-
-    applicationVariants.all { variant ->
-	variant.outputs.each { output ->
-		def apk = output.outputFile;
-		def newName;
-
-		newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() + ".apk");
-		//newName = apk.name.replace(".apk", "-" + defaultConfig.versionName + ".apk");
-
-		newName = newName
-		        .replace("-" + variant.buildType.name, "") // This removes "-release"
-		        .replace(project.name, "AIMSICD");         // This replace app with "AIMSICD"
-
-		output.outputFile = new File(apk.parentFile, newName);
-
-		if (output.zipAlign) {
-		    output.outputFile = new File(apk.parentFile, newName.replace("-unaligned", ""));
-		}
-
-		logger.info('INFO: Set outputFile to ' + output.outputFile + " for [" + variant.name + "]");
-	}
-    }
+//
+//    applicationVariants.all { variant ->
+//	variant.outputs.each { output ->
+//		def apk = output.outputFile;
+//		def newName;
+//
+//		newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() + ".apk");
+//		//newName = apk.name.replace(".apk", "-" + defaultConfig.versionName + ".apk");
+//
+//		newName = newName
+//		        .replace("-" + variant.buildType.name, "") // This removes "-release"
+//		        .replace(project.name, "AIMSICD");         // This replace app with "AIMSICD"
+//
+//		output.outputFile = new File(apk.parentFile, newName);
+//
+//		if (output.zipAlign) {
+//		    output.outputFile = new File(apk.parentFile, newName.replace("-unaligned", ""));
+//		}
+//
+//		logger.info('INFO: Set outputFile to ' + output.outputFile + " for [" + variant.name + "]");
+//	}
+//    }
 
 
     packagingOptions {
@@ -128,10 +128,13 @@ dependencies {
     //    compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':third_party:rootshell')
-    compile files ('libs/nineoldandroids-2.4.0.jar')
     compile 'com.android.support:support-v4:19.1.0'
     compile 'org.osmdroid:osmdroid-android:4.2'
     compile 'eu.lp0.slf4j:slf4j-android:1.7+'
     compile 'org.apache.httpcomponents:httpmime:4.2.1'
     compile 'au.com.bytecode:opencsv:2.4'
+    compile files('libs/osmbonuspack_v5.0.jar')
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+    compile 'com.google.code.gson:gson:2.2.4'
 }

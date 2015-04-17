@@ -2,6 +2,7 @@ package com.SecUpwN.AIMSICD.fragments;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
+import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,8 +12,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +47,7 @@ public class AboutFragment extends Fragment {
 
             //Status icons link
             View tv = v.findViewById(R.id.aimsicd_status_icons);
-            setLink(tv, R.string.status_icons_link);
+            //setLink(tv, R.string.status_icons_link);
 
             //GitHub WIKI Link
             tv = v.findViewById(R.id.aimsicd_wiki_link);
@@ -86,6 +85,60 @@ public class AboutFragment extends Fragment {
             //Credits Link
             //tv = v.findViewById(R.id.aimsicd_credits_link);
             //setLink(tv, R.string.aimsicd_credits_link);
+
+            View imgView_idle = v.findViewById(R.id.imgView_idle);
+            imgView_idle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    MiscUtils.startPopUpInfo(mContext, 0);
+                }
+            });
+
+            View imgView_normal = v.findViewById(R.id.imgView_normal);
+            imgView_normal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    MiscUtils.startPopUpInfo(mContext, 1);
+                }
+            });
+
+            View imgView_medium = v.findViewById(R.id.imgView_medium);
+            imgView_medium.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    MiscUtils.startPopUpInfo(mContext, 2);
+                }
+            });
+
+            View imgView_high = v.findViewById(R.id.imgView_high);
+            imgView_high.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    MiscUtils.startPopUpInfo(mContext, 3);
+                }
+            });
+
+            View imgView_danger = v.findViewById(R.id.imgView_danger);
+            imgView_danger.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    MiscUtils.startPopUpInfo(mContext, 4);
+                }
+            });
+
+            View imgView_run = v.findViewById(R.id.imgView_run);
+            imgView_run.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    MiscUtils.startPopUpInfo(mContext, 5);
+                }
+            });
         }
         return v;
     }

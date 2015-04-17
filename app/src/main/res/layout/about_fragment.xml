@@ -18,7 +18,7 @@
             android:gravity="center_horizontal"
             android:text="@string/aimsicd_about_info"
             android:textColor="@color/green_text"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/aimsicd_version"
@@ -27,7 +27,7 @@
             android:gravity="center_horizontal"
             android:text="@string/app_version"
             android:textColor="@color/red_text"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,7 +35,17 @@
             android:paddingBottom="@dimen/small_padding"
             android:paddingTop="@dimen/small_padding"
             android:text="@string/aimsicd_about_info3"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Click Status Icons below for Detailed Information"
+            android:textColor="@color/green_text"
+            android:id="@+id/textView2"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="14dp" />
 
         <TableLayout
             android:id="@+id/aimsicd_status_icons"
@@ -53,7 +63,8 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/sense_idle"/>
+                    android:src="@drawable/sense_idle"
+                    android:id="@+id/imgView_idle" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -66,7 +77,8 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/sense_high"/>
+                    android:src="@drawable/sense_high"
+                    android:id="@+id/imgView_high" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -85,7 +97,8 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/sense_ok"/>
+                    android:src="@drawable/sense_ok"
+                    android:id="@+id/imgView_normal" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -98,7 +111,8 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/sense_danger"/>
+                    android:src="@drawable/sense_danger"
+                    android:id="@+id/imgView_danger" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -117,7 +131,8 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/sense_medium"/>
+                    android:src="@drawable/sense_medium"
+                    android:id="@+id/imgView_medium" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -130,7 +145,8 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/sense_skull"/>
+                    android:src="@drawable/sense_skull"
+                    android:id="@+id/imgView_run" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -147,13 +163,15 @@
             android:id="@+id/aimsicd_contribute_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_github"/>
+            android:text="@string/about_github"
+            android:textSize="14dp" />
 
         <Button
             android:id="@+id/aimsicd_wiki_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_wiki"/>
+            android:text="@string/about_wiki"
+            android:textSize="14dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -167,14 +185,16 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:ellipsize="start"
-                android:text="@string/about_poc"/>
+                android:text="@string/about_poc"
+                android:textSize="14dp" />
 
             <Button
                 android:id="@+id/aimsicd_disclaimer_link"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/about_disclaimer"/>
+                android:text="@string/about_disclaimer"
+                android:textSize="14dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -187,14 +207,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/about_releases"/>
+                android:text="@string/about_releases"
+                android:textSize="14dp" />
 
             <Button
                 android:id="@+id/aimsicd_changelog_link"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/about_changelog"/>
+                android:text="@string/about_changelog"
+                android:textSize="14dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -207,14 +229,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/about_license"/>
+                android:text="@string/about_license"
+                android:textSize="14dp" />
 
             <Button
                 android:id="@+id/aimsicd_credits_link"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/about_credits"/>
+                android:text="@string/about_credits"
+                android:textSize="14dp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
