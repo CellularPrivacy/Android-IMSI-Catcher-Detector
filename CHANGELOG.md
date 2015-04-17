@@ -1,6 +1,32 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 17.04.2015 - WIP-Internal v0.1.25-alpha-build-40
+
+* Updated: We've completely cleaned our GitHub repo. **Please re-fork us now!**
+* Added: Permission `INTERACT_ACROSS_USERS_FULL` to allow building on phones
+* Added: Re-created branch `development` to finally continue work on real Issues
+
+---
+
+#### 17.04.2015 - WIP-Internal v0.1.25-alpha-build-39
+
+Updated: Renewed `buildToolsVersion` across the project to keep them current
+
+---
+
+#### 17.04.2015 - WIP-Internal v0.1.25-alpha-build-38
+
+* Changed: Replaced `.jar` files by gradle dependencies where possible
+* Changed: Simplified `README` and made everything much developer-friendly
+* Changed: Sending debugging logs via our app, now **requires** a description
+* Changed: Moved all large folders into our [SpiderOak storage](https://spideroak.com/browse/share/AIMSICD/GitHub) to clean up
+* Added: New [Style Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Style-Guide) to unify look and feel of our app in the near future
+* Added: New section `SEEKING` in `CONTRIBUTING.md` for special positions
+* Added: Warning banner to make people aware of possible false alarms
+
+---
+
 #### 28.03.2015 - WIP-Internal v0.1.25-alpha-build-37
 
 * Updated: Reformatted `CREDITS` to look much better within our `CreditsRoll`
