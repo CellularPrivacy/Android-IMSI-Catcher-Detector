@@ -47,7 +47,7 @@ AIMSICD attempts to detect IMSI-Catchers through [detection methods](https://git
 * Look for [silent SMS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/69)
 * [Detect FemtoCells](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/6)
 
-See our [application goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status#application-goals) and [development status](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status)!
+See our [app goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status#application-goals) and [development status](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status)!
 
 ---
 
@@ -69,8 +69,8 @@ Please read our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Det
 * Provide secure data transmission (see [Tor](https://www.torproject.org/))
 * Provide app permission control ([XPrivacy](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783))
 * Provide secure application sand-boxing
-* Provide secure SMS (see [SMSSecure](https://github.com/SMSSecure/SMSSecure))
 * Provide [ROOT](http://www.xda-developers.com/root) and remove bloatware
+* Provide secure SMS (see [SMSSecure](https://github.com/SMSSecure/SMSSecure))
 * Provide firewalls (see [AFWall+](https://github.com/ukanth/afwall))
 * Provide full device encryption
 * Prevent already installed rogue applications from full access and spying
