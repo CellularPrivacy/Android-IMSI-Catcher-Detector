@@ -156,6 +156,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        /**
+         * Test that the progress bar shows
+         */
+        mProgressBar.setIndeterminate(true);
+        mProgressBar.setVisibility(View.VISIBLE);
+
         prefs = mContext.getSharedPreferences( AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
 
         mDisclaimerAccepted = getResources().getString(R.string.disclaimer_accepted);
