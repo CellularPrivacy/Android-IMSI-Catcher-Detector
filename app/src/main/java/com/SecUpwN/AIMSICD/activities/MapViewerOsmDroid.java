@@ -302,7 +302,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mMap.setMultiTouchControls(true);
                 mMap.setMinZoomLevel(3);
                 mMap.setMaxZoomLevel(19); // Latest OSM can go to 21!
-
+                mMap.getTileProvider().createTileCache();
                 mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), mMap);
 
                 mScaleBarOverlay = new ScaleBarOverlay(this);
