@@ -651,4 +651,26 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         }
     }
 
+    public void showProgressbar(final boolean indeterminate, final int max, final int progress) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mProgressBar.setIndeterminate(indeterminate);
+                if (max > 0) mProgressBar.setMax(max);
+                if (max > 0 && progress >= 0) mProgressBar.setProgress(progress);
+                mProgressBar.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    public void hideProgressbar() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mProgressBar.setMax(0);
+                mProgressBar.setProgress(0);
+                mProgressBar.setVisibility(View.GONE);
+            }
+        });
+    }
 }
