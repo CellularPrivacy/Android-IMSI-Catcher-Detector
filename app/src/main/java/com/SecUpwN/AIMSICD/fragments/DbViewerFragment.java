@@ -27,6 +27,7 @@ import com.SecUpwN.AIMSICD.adapters.MeasuredCellStrengthCardInflater;
 import com.SecUpwN.AIMSICD.adapters.OpenCellIdCardInflater;
 import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
 import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
+import com.SecUpwN.AIMSICD.constants.Examples;
 
 public class DbViewerFragment extends Fragment {
 
@@ -270,6 +271,7 @@ public class DbViewerFragment extends Fragment {
                                 tableData.getString(4), // Message
                                 tableData.getLong(5));  // Timestamp
                                 //"" + (tableData.getPosition() + 1) + " / " + count);
+                        data.setIsFakeData(isExample(data));
                         adapter.addItem(data, false);
                     }
                     return adapter;
@@ -310,6 +312,7 @@ public class DbViewerFragment extends Fragment {
                                 "DetID: "   + tableData.getInt(7),      // DF_id
                                 "Event: "   + tableData.getString(8),   // DF_desc
                                 "" + (tableData.getPosition() + 1) + " / " + count);
+                        data.setIsFakeData(isExample(data));
                         adapter.addItem(data, false);
                     }
                     return adapter;
@@ -465,4 +468,22 @@ public class DbViewerFragment extends Fragment {
             return null;
         }
     }
+
+    private boolean isExample(EventLogItemData pEventLogItemData) {
+        return pEventLogItemData != null &&
+                pEventLogItemData.getLac().contains(Examples.EVENT_LOG_DATA.LAC) &&
+                pEventLogItemData.getCellID().contains(Examples.EVENT_LOG_DATA.CID) &&
+                pEventLogItemData.getPsc().contains(Examples.EVENT_LOG_DATA.PSC) &&
+                pEventLogItemData.getLat().contains(Examples.EVENT_LOG_DATA.GPSD_LAT) &&
+                pEventLogItemData.getLng().contains(Examples.EVENT_LOG_DATA.GPSD_LON) &&
+                pEventLogItemData.getgpsd_accu().contains(Examples.EVENT_LOG_DATA.GPSD_ACCU) &&
+                pEventLogItemData.getDF_id().contains(Examples.EVENT_LOG_DATA.DF_ID);
+    }
+
+    private boolean isExample(SilentSmsCardData pSilentSmsCardData) {
+        return pSilentSmsCardData != null &&
+                pSilentSmsCardData.getAddress().contains(Examples.SILENT_SMS_CARD_DATA.ADDRESS) &&
+                pSilentSmsCardData.getDisplayAddress().contains(Examples.SILENT_SMS_CARD_DATA.DISPLAY);
+    }
+
 }

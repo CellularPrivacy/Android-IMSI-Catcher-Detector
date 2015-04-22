@@ -10,6 +10,7 @@ public class SilentSmsCardData {
     private final String mServiceCentre;
     private final String mMessage;
     private final long mTimestamp;
+    private boolean mIsFakeData;
 
     public SilentSmsCardData(String address, String displayAddress, String messageClass,
             String serviceCentre, String messageBody, long timestamp) {
@@ -70,5 +71,13 @@ public class SilentSmsCardData {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
         String dateString = formatter.format(mTimestamp);
         return "Timestamp: " + dateString;
+    }
+
+    public boolean isFakeData() {
+        return mIsFakeData;
+    }
+
+    public void setIsFakeData(boolean pIsFakeData) {
+        mIsFakeData = pIsFakeData;
     }
 }

@@ -61,6 +61,7 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
         private final TextView mDF_id;
         private final TextView mDF_desc;
         private final TextView mRecordId;
+        private final TextView mExample;
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
@@ -75,6 +76,7 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
             mDF_id =        (TextView) mRootView.findViewById(R.id.DF_id);
             mDF_desc =      (TextView) mRootView.findViewById(R.id.DF_desc);
             mRecordId =     (TextView) mRootView.findViewById(R.id.record_id);
+            mExample =      (TextView) mRootView.findViewById(R.id.example);
 
             rootView.setTag(this);
         }
@@ -90,6 +92,12 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
             mDF_id.setText(     item.getDF_id());
             mDF_desc.setText(   item.getDF_desc());
             mRecordId.setText(  item.getRecordId());
+            if(item.isFakeData()) {
+                mExample.setText(mRootView.getContext().getString(R.string.example))  ;
+                mExample.setVisibility(View.VISIBLE);
+            } else {
+                mExample.setVisibility(View.GONE);
+            }
         }
     }
 }

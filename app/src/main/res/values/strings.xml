@@ -262,5 +262,6 @@
     <string name="detail_info_danger">Hostile Tracking Detected: An FBTS or IMSIC is actively tracking YOU and preventing your phone from connecting through your normal encrypted mobile provider. If you\'re in danger or repercussions, destroy your phone + SIM and report it as recently stolen.</string>
     <string name="detail_info_run">Hostile Manipulation: Someone is trying to remotely manipulate your handset. Destroy (or sell) your phone and get a new one somewhere far away (don\'t carry your old phone to the changing place). Use a new (anonymous) SIM card, change calling behavior and warn your friends by talking to them in real life, NOT by calling them.</string>
 
+    <string name="example" translatable="false">EXAMPLE!</string>
 
 </resources>

@@ -26,5 +26,6 @@
     <color name="map_1xrtt">#ff7cfc00</color>       <!-- light green -->
     <color name="map_default">#fff0f8ff</color>     <!-- almost white -->
     <color name="red_text">#a00000</color>          <!-- deep red -->
+    <color name="bright_red_text">#ffff0000</color>          <!-- bright red -->
 
 </resources>
