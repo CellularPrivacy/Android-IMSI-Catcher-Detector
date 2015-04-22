@@ -178,11 +178,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void setCellMonitoring(boolean monitor) {
         if (monitor) {
             mMonitoringCell = true;
-
-            Helpers.msgShort(context, "Monitoring Cell Information.");
+            Helpers.msgShort(context, context.getString(R.string.monitoring_cell_information));
         } else {
             mMonitoringCell = false;
-            Helpers.msgShort(context, "Stopped monitoring Cell Information.");
+            Helpers.msgShort(context, context.getString(R.string.stopped_monitoring_cell_information));
         }
         setNotification();
     }
@@ -257,14 +256,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     // PhoneStateListener.LISTEN_SERVICE_STATE ?
             );
             mTrackingCell = true;
-            Helpers.msgShort(context, "Tracking Cell Information.");
+            Helpers.msgShort(context, context.getString(R.string.tracking_cell_information));
         } else {
             tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
             mDevice.mCell.setLon(0.0);
             mDevice.mCell.setLat(0.0);
             mDevice.setCellInfo("[0,0]|nn|nn|"); //default entries into "locationinfo"::Connection
             mTrackingCell = false;
-            Helpers.msgShort(context, "Stopped tracking Cell Information.");
+            Helpers.msgShort(context, context.getString(R.string.stopped_tracking_cell_information));
         }
         setNotification();
     }
@@ -380,7 +379,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             // a new API key within 24 hours of the last request. (See GH issue #267)
             // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
 
-            Helpers.msgLong(context, "Only one new API key request per 24 hours!\nPlease try again later.");
+            Helpers.msgLong(context, context.getString(R.string.only_one_api_per_day));
             if (result.getEntity() != null) {
                 InputStream is = result.getEntity().getContent();
                 ByteArrayOutputStream content = new ByteArrayOutputStream();
@@ -537,7 +536,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
          *
          */
         //TinyDB tinydb = new TinyDB(context);
-        Integer ncls = tm.getNeighboringCellInfo().size(); // NC list size
+        Integer ncls = 0;
+        if(tm != null) //https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/383
+            ncls = tm.getNeighboringCellInfo().size(); // NC list size
         Boolean nclp = tinydb.getBoolean("nc_list_present"); // NC list present? (default is false)
 
         //if ( ncls > 0 && !nclp ) {
@@ -1073,18 +1074,18 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             Status.setCurrentStatus(Status.Type.ALARM, this.context);
         } else if (mChangedLAC) {
             Status.setCurrentStatus(Status.Type.MEDIUM, this.context);
-            contentText = "Hostile Service Area: Changing LAC Detected!";
+            contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
         } else if(mCellIdNotInOpenDb){
             Status.setCurrentStatus(Status.Type.MEDIUM, this.context);
-            contentText = "Cell ID does not exist in OpenCellID Database!";
+            contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
         } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
             Status.setCurrentStatus(Status.Type.NORMAL, this.context);
             if (mTrackingFemtocell) {
-                contentText = "FemtoCell Detection Active.";
+                contentText = context.getString(R.string.femtocell_detection_active);
             } else if (mTrackingCell) {
-                contentText = "Cell Tracking Active.";
+                contentText = context.getString(R.string.cell_tracking_active);
             } else {
-                contentText = "Cell Monitoring Active.";
+                contentText = context.getString(R.string.cell_monitoring_active);
             }
         } else {
             Status.setCurrentStatus(Status.Type.IDLE, this.context);
@@ -1092,12 +1093,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         switch (Status.getStatus()) {
             case IDLE: // GRAY
-                contentText = "Phone Type " + mDevice.getPhoneType();
-                tickerText = context.getResources().getString(R.string.app_name_short) + " - Status: Idle.";
+                contentText = context.getString(R.string.phone_type) + mDevice.getPhoneType();
+                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_idle);
                 break;
 
             case NORMAL: // GREEN
-                tickerText = context.getResources().getString(R.string.app_name_short) + " - Status: Good. No Threats Detected.";
+                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_good);
                 break;
 
             case MEDIUM: // YELLOW
@@ -1106,8 +1107,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 tickerText = context.getResources().getString(R.string.app_name_short);
                 if (mChangedLAC) {
                     //Append changing LAC text
-                    tickerText += " - Hostile Service Area: Changing LAC Detected!";
-                    contentText = "Hostile Service Area: Changing LAC Detected!";
+                    contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
+                    tickerText += " - " + contentText;
                     // See #264 and ask He3556
                     //} else if (mNoNCList)  {
                     //    tickerText += " - BTS doesn't provide any neighbors!";
@@ -1115,17 +1116,17 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                 } else if (mCellIdNotInOpenDb) {
                     //Append Cell ID not existing in external db text
-                    tickerText += " - Cell ID does not exist in OpenCellID Database!";
-                    contentText = "Cell ID does not exist in OpenCellID Database!";
+                    contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
+                    tickerText += " - " + contentText;
                 }
                 break;
 
             case ALARM: // ORANGE, RED or BLACK ?
-                tickerText = context.getResources().getString(R.string.app_name_short) + " - ALERT: Some Threat Detected!"; // Hmm, this is vague!
+                tickerText = context.getResources().getString(R.string.app_name_short) + " - " + context.getString(R.string.alert_threat_detected); // Hmm, this is vague!
                 if (mFemtoDetected) {
-                    contentText = "ALERT: FemtoCell Connection Detected!";
+                    contentText = context.getString(R.string.aletr_femtocell_connection_detected);
                 } else if (mTypeZeroSmsDetected) {
-                    contentText = "ALERT: Type-0 Silent SMS Intercepted!";
+                    contentText = context.getString(R.string.alert_silent_sms_intercepted);
                 }
 
                 break;
@@ -1173,14 +1174,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         /* Check if it is a CDMA phone */
         if (mDevice.getPhoneID() != TelephonyManager.PHONE_TYPE_CDMA) {
-            Helpers.msgShort(context, "AIMSICD can only detect FemtoCell connections on CDMA devices.");
+            Helpers.msgShort(context, context.getString(R.string.femtocell_only_on_cdma_devices));
             return;
         }
 
         mTrackingFemtocell = true;
         mPhoneStateListener = new PhoneStateListener() {
             public void onServiceStateChanged(ServiceState s) {
-                Log.d(TAG, mTAG + ": Service State changed!");
+                Log.d(TAG, mTAG + context.getString(R.string.service_state_changed));
                 getServiceStateInfo(s);
             }
         };
@@ -1197,14 +1198,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
             mTrackingFemtocell = false;
             setNotification();
-            Log.v(TAG, mTAG + ": Stopped tracking FemtoCell connections.");
+            Log.v(TAG, mTAG + context.getString(R.string.stopped_tracking_femtocell));
         }
     }
 
     private void getServiceStateInfo(ServiceState s) {
         if (s != null) {
             if (IsConnectedToCdmaFemto(s)) {
-                Helpers.msgShort(context, "ALERT! FemtoCell Connection Detected.");
+                Helpers.msgShort(context, context.getString(R.string.alert_femtocell_tracking_detected));
                 mFemtoDetected = true;
                 setNotification();
                 //toggleRadio();

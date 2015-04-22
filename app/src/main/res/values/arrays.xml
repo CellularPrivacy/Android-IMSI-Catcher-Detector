@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="pref_ui_icons_entries">
-        <item>"Flat"</item>
-        <item>"Sense"</item>
-        <item>"White"</item>
+        <item>@string/ui_icon_flat</item>
+        <item>@string/ui_icon_sense</item>
+        <item>@string/ui_icon_white</item>
     </string-array>
 
     <string-array name="pref_ui_icons_values">
@@ -13,8 +13,8 @@
     </string-array>
 
     <string-array name="pref_map_type_entries">
-        <item>"Normal"</item>
-        <item>"Terrain"</item>
+        <item>@string/map_type_normal</item>
+        <item>@string/map_type_terrain</item>
     </string-array>
 
     <string-array name="pref_map_type_values">
@@ -22,17 +22,16 @@
         <item>"1"</item>
     </string-array>
 
-
     <string-array name="pref_refresh_entries">
-        <item>"Manual"</item>
-        <item>"Automatic"</item>
-        <item>"2s"</item>
-        <item>"5s"</item>
-        <item>"10s"</item>
-        <item>"25s"</item>
-        <item>"45s"</item>
-        <item>"1 min"</item>
-        <item>"5 min"</item>
+        <item>@string/pref_refresh_manual</item>
+        <item>@string/pref_refresh_automatic</item>
+        <item>@string/pref_refresh_2s</item>
+        <item>@string/pref_refresh_5s</item>
+        <item>@string/pref_refresh_10s</item>
+        <item>@string/pref_refresh_25s</item>
+        <item>@string/pref_refresh_45s</item>
+        <item>@string/pref_refresh_1_min</item>
+        <item>@string/pref_refresh_5_min</item>
     </string-array>
 
     <string-array name="pref_refresh_values">
@@ -48,12 +47,12 @@
     </string-array>
 
     <string-array name="timeout_spinner_values">
-        <item>"2 sec"</item>
-        <item>"5 sec"</item>
-        <item>"10 sec"</item>
-        <item>"20 sec"</item>
-        <item>"30 sec"</item>
-        <item>"10 min"</item>
+        <item>@string/timeout_spinner_2_sec</item>
+        <item>@string/timeout_spinner_5_sec</item>
+        <item>@string/timeout_spinner_10_sec</item>
+        <item>@string/timeout_spinner_20_sec</item>
+        <item>@string/timeout_spinner_30_sec</item>
+        <item>@string/timeout_spinner_10_min</item>
         <!-- item>"None"</item>  (for no timeout and watching -->
     </string-array>
 </resources>

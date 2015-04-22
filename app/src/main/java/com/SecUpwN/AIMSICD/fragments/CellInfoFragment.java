@@ -127,8 +127,8 @@ public class CellInfoFragment extends Fragment {
         //    CellTracker.java :: onSharedPreferenceChanged()
         if (CellTracker.REFRESH_RATE != 0) {
             timerHandler.postDelayed(timerRunnable, 0);
-            Helpers.msgShort(mContext, "Refreshing every "
-                    + TimeUnit.MILLISECONDS.toSeconds(CellTracker.REFRESH_RATE) + " seconds.");
+            Helpers.msgShort(mContext, mContext.getString(R.string.refreshing_every) + " " +
+                    TimeUnit.MILLISECONDS.toSeconds(CellTracker.REFRESH_RATE) + " " + mContext.getString(R.string.seconds));
         }
     }
 
@@ -187,7 +187,7 @@ public class CellInfoFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Helpers.msgShort(mContext, "Refreshing now...");
+            Helpers.msgShort(mContext, mAimsicdService.getString(R.string.refreshing_now));
             updateUI();
         }
     }
