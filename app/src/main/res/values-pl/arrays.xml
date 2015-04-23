@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_white">Białe</string>
+    <string name="map_type_terrain">Teren</string>
+    <string name="map_type_normal">Normaly</string>
+    <string name="pref_refresh_manual">Ręcznie</string>
+    <string name="pref_refresh_2s">2 sek</string>
+    <string name="pref_refresh_5s">5 sek</string>
+    <string name="pref_refresh_10s">10 sek</string>
+    <string name="pref_refresh_25s">25 sek</string>
+    <string name="pref_refresh_45s">45 sek</string>
+    <string name="pref_refresh_1_min">1 min</string>
+    <string name="pref_refresh_5_min">5 min</string>
+</resources>

@@ -420,27 +420,27 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         List<NavDrawerItem> menu = new ArrayList<>();
 
-        menu.add(DrawerMenuSection.create(900, "Tracking"));
+        menu.add(DrawerMenuSection.create(900, getString(R.string.tracking)));
         // TODO: Clarify names and usage...
         menu.add(DrawerMenuItem.create(901, getString(R.string.monitor_cell), "untrack_cell", false, this));    // Toggle "AIMSICD Monitoring"
         menu.add(DrawerMenuItem.create(902, getString(R.string.track_cell), "untrack_cell", false, this));      // Toggle "Track Cell Details"
         if (CellTracker.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
             menu.add(DrawerMenuItem.create(903, getString(R.string.track_femtocell), "ic_action_network_cell", false, this)); // Track FemtoCell
         }
-        menu.add(DrawerMenuSection.create(100, "Main"));
+        menu.add(DrawerMenuSection.create(100, getString(R.string.main)));
         menu.add(DrawerMenuItem.create(101, getString(R.string.device_info), "ic_action_phone", true, this));           // Phone/SIM Details
         menu.add(DrawerMenuItem.create(102, getString(R.string.cell_info_title), "cell_tower", true, this));            // Cell Information (Neighboring cells etc)
         menu.add(DrawerMenuItem.create(103, getString(R.string.at_command_title), "ic_action_computer", true, this));   // AT Command Interface
         menu.add(DrawerMenuItem.create(104, getString(R.string.db_viewer), "ic_action_storage", true, this));           // Database Viewer
         menu.add(DrawerMenuItem.create(105, getString(R.string.map_view), "ic_action_map", false, this));               // Antenna Map Viewer
 
-        menu.add(DrawerMenuSection.create(200, "Settings"));
+        menu.add(DrawerMenuSection.create(200, getString(R.string.settings)));
         menu.add(DrawerMenuItem.create(202, getString(R.string.preferences), "ic_action_settings", false, this));            // Preferences
         menu.add(DrawerMenuItem.create(203, getString(R.string.backup_database), "ic_action_import_export", false, this));   // Backup Database
         menu.add(DrawerMenuItem.create(204, getString(R.string.restore_database), "ic_action_import_export", false, this));  // Restore Database
         // TODO:  menu.add(DrawerMenuItem.create(205?, getString(R.string.reset_database), "ic_action_clear", false, this)); // "Reset/Clear DataBase"
 
-        menu.add(DrawerMenuSection.create(300, "Application"));
+        menu.add(DrawerMenuSection.create(300, getString(R.string.application)));
         menu.add(DrawerMenuItem.create(301, getString(R.string.get_opencellid), "stat_sys_download_anim0", false, this));   // "Download Local BTS data"
         // TODO: Upload DBi_measure + DBi_bts to OCID or MLS
         menu.add(DrawerMenuItem.create(306, getString(R.string.upload_bts), "stat_sys_upload_anim0", false, this));      // "Upload Local BTS data"
