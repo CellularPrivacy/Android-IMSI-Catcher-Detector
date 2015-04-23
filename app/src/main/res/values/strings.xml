@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name_short">AIMSICD</string>
-    <string name="app_name">Android IMSI-Catcher Detector</string>
+    <!-- Drawer -->
+    <string name="tracking">Tracking</string>
+
+    <string name="app_name_short" translatable="false">AIMSICD</string>
+    <string name="app_name" translatable="false">Android IMSI-Catcher Detector</string>
     <string name="device_info">Phone/SIM Details</string>
     <string name="map_view">Antenna Map Viewer</string>
     <string name="db_viewer">Database Viewer</string>
@@ -12,7 +15,7 @@
     <string name="text_cancel">Cancel</string>
     <string name="text_agree">I Agree</string>
     <string name="text_disagree">I Disagree</string>
-    <string name="empty"></string>
+    <string name="empty" translatable="false"></string>
     <string name="gsm_only">GSM Phones Only</string>
 
     <!-- DISCLAIMER -->
@@ -27,15 +30,15 @@
     </string>
 
     <!-- Mobile Network Types -->
-    <string name="gprs"># GPRS</string>
-    <string name="edge"># EDGE</string>
-    <string name="umts"># UMTS</string>
-    <string name="hsdpa"># HSDPA</string>
-    <string name="hsupa"># HSUPA</string>
-    <string name="hspa"># HSPA</string>
-    <string name="cdma"># CDMA</string>
-    <string name="evo0"># EVO-0</string>
-    <string name="evoA"># EVO-A</string>
+    <string name="gprs" translatable="false"># GPRS</string>
+    <string name="edge" translatable="false"># EDGE</string>
+    <string name="umts" translatable="false"># UMTS</string>
+    <string name="hsdpa" translatable="false"># HSDPA</string>
+    <string name="hsupa" translatable="false"># HSUPA</string>
+    <string name="hspa" translatable="false"># HSPA</string>
+    <string name="cdma" translatable="false"># CDMA</string>
+    <string name="evo0" translatable="false"># EVO-0</string>
+    <string name="evoA" translatable="false"># EVO-A</string>
 
     <!-- MENU -->
 
@@ -113,7 +116,7 @@
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">About AIMSICD</string>
     <string name="app_version">Version:&#160;</string>
-    <string name="aimsicd_about_info">Android IMSI-Catcher Detector (AIMSICD)</string>
+    <string name="aimsicd_about_info" translatable="false">Android IMSI-Catcher Detector (AIMSICD)</string>
     <string name="aimsicd_about_info3">Android-based project to detect and avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks.</string>
     <string name="about_github">AIMSICD on GitHub</string>
     <string name="about_wiki">Documentation (WIKI)</string>
@@ -123,16 +126,16 @@
     <string name="about_changelog">CHANGELOG</string>
     <string name="about_license">LICENSE</string>
     <string name="about_credits">CREDITS</string>
-    <string name="wiki_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki</string>
     <string name="poc_link">https://en.wikipedia.org/wiki/Proof_of_concept</string>
-    <string name="disclaimer_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER</string>
-    <string name="aimsicd_github_link">https://secupwn.github.io/Android-IMSI-Catcher-Detector/</string>
-    <string name="aimsicd_xda_link">http://forum.xda-developers.com/showthread.php?t=1422969</string>
-    <string name="aimsicd_release_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases</string>
-    <string name="aimsicd_changelog_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md</string>
-    <string name="aimsicd_license_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE</string>
-    <string name="aimsicd_credits_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS</string>
-    <string name="status_icons_link">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons</string>
+    <string name="wiki_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki</string>
+    <string name="disclaimer_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER</string>
+    <string name="aimsicd_github_link" translatable="false">https://secupwn.github.io/Android-IMSI-Catcher-Detector/</string>
+    <string name="aimsicd_xda_link" translatable="false">http://forum.xda-developers.com/showthread.php?t=1422969</string>
+    <string name="aimsicd_release_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases</string>
+    <string name="aimsicd_changelog_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md</string>
+    <string name="aimsicd_license_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE</string>
+    <string name="aimsicd_credits_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS</string>
+    <string name="status_icons_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons</string>
 
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Network ID:</string>
@@ -148,50 +151,46 @@
     <!-- PREFERENCES -->
     <string name="pref_system_title">System Settings</string>
     <string name="pref_autostart_title">Auto Start</string>
-    <string name="pref_autostart_key">pref_autostart</string>
     <string name="pref_autostart_summ">Automatically start service on boot</string>
     <string name="pref_persistservice_title">Persistent Service</string>
-    <string name="pref_persistservice_key">pref_persistservice_service</string>
     <string name="pref_persistservice_summ">Service will continue to run after exiting the application (uncheck to fully close)</string>
     <string name="pref_protection_title">Protection Settings</string>
-    <string name="pref_enable_cell_key">pref_enable_cell</string>
     <string name="pref_enable_cell_title">Cell Tracking</string>
     <string name="pref_enable_cell_summ">Enable Automatic Cell Tracking</string>
     <string name="pref_femto_title">Femtocell Detection</string>
     <string name="pref_femto_summ">(currently CDMA Phones ONLY)</string>
-    <string name="pref_femto_detection_key">pref_femto_detection</string>
     <string name="pref_femto_action_title">Femtocell Protection</string>
-    <string name="pref_femto_action_key">pref_femto_action</string>
     <string name="pref_femto_action_summ">Enforce Airplane Mode when Femtocell detected (re-enable network manually)</string>
     <string name="pref_ui_title">Interface Settings</string>
     <string name="pref_ui_icons_title">Icons</string>
-    <string name="pref_ui_icons_key">pref_ui_icons</string>
     <string name="pref_ui_icons_summ">Icon Theme Selection</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_setting">SettingActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="map_pref_type">map_pref_type</string>
-    <string name="disclaimer_accepted">disclaimer_accepted</string>
-    <string name="pref_refresh_key">pref_refresh</string>
     <string name="pref_refresh_title">Refresh Rate</string>
     <string name="pref_refresh_summ">Control the frequency of device updates</string>
-    <string name="pref_last_database_backup_version">pref_last_db_backup_version</string>
     <string name="pref_ocid_title">OpenCellID Settings</string>
-    <string name="pref_cell_table_cleansed">pref_cell_table_cleansed</string>
-    <string name="pref_ocid_key">pref_ocid_key</string>
     <string name="pref_ocid_key_title">OpenCellID API Key</string>
     <string name="pref_ocid_key_summ">Enter your OpenCellID API Key here</string>
-    <string name="data_last_lat_lon">data_last_lat_lon</string>
-    <string name="pref_enable_cell_monitoring_key">pref_enable_cell_monitoring</string>
+    <string name="pref_enable_cell_monitoring_key" translatable="false">pref_enable_cell_monitoring</string>
     <string name="pref_enable_cell_monitoring_title">Cell Monitoring</string>
     <string name="pref_enable_cell_monitoring_summ">Enable Automatic Cell Monitoring</string>
     <string name="pref_request_ocid_key">Request OCID API Key</string>
     <string name="pref_ocid_requestkey_summary">Request a new API key for OpenCellID data access</string>
+    <string name="pref_enable_cell_key" translatable="false">pref_enable_cell_key</string>
+    <string name="pref_refresh_key" translatable="false">pref_refresh_key</string>
+    <string name="pref_femto_detection_key" translatable="false">pref_femto_detection_key</string>
+    <string name="pref_ui_icons_key" translatable="false">pref_ui_icons_key</string>
+    <string name="pref_ocid_key" translatable="false">pref_ocid_key</string>
+    <string name="pref_autostart_key" translatable="false">pref_autostart</string>
+    <string name="disclaimer_accepted" translatable="false">disclaimer_accepted</string>
+    <string name="data_last_lat_lon">data_last_lat_lon</string>
+    <string name="pref_cell_table_cleansed" translatable="false">pref_cell_table_cleansed</string>
+    <string name="pref_last_database_backup_version" translatable="false">pref_last_db_backup_version</string>
+    <string name="pref_femto_action_key" translatable="false">pref_femto_action</string>
+    <string name="pref_persistservice_key" translatable="false">pref_persistservice_service</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
-    <string name="pref_map_type_key">pref_map_type</string>
+    <string name="pref_map_type_key" translatable="false">pref_map_type</string>
     <string name="pref_map_type_title">Map Type</string>
     <string name="pref_map_type_summ">Display Map in different styles</string>
     
@@ -209,7 +208,7 @@
     <!-- Database Viewer -->
     <string name="load_table_data">Load Data</string>
     <string name="table_names_prompt">Select Table</string>
-    <string-array name="table_names">
+    <string-array name="table_names" value="en">
         <item>Unique BTS Data</item>
         <item>BTS Measurements</item>
         <item>Imported OCID Data</item>
@@ -233,12 +232,12 @@
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Silent SMS Intercepted</string>
-    <string name="sms_message">Silent SMS Message has been intercepted! \n\nDetails are available through the Database Viewer.</string>
+    <string name="sms_message">Silent SMS Message has been intercepted!\n\nDetails are available through the Database Viewer.</string>
     <string name="table_contains_no_data">Table contains no data to display.</string>
 
     <!-- Request OpenCellID Key -->
     <string name="title_ocid_key">OpenCellID API Key</string>
-    <string name="message_request_api_key">Click Ok to request an API key from OpenCellID.org. This will enable you to download their data and view it in the map. It will also enable you to upload cell data. Note that if you do not upload cell data within 20 days, your API key may become inactive.</string>
+    <string name="message_request_api_key">Click OK to request an API key from OpenCellID.org. This will enable you to download their data and view it in the map. It will also enable you to upload cell data. Note that if you do not upload cell data within 20 days, your API key may become inactive.</string>
     <string name="ocid_api_error">Error getting key: </string>
     <string name="ocid_api_success">Saved new API key</string>
 
@@ -264,4 +263,54 @@
 
     <string name="example" translatable="false">EXAMPLE!</string>
 
+    <!-- UI icon preferences -->
+    <string name="ui_icon_flat">Flat</string>
+    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_white">White</string>
+    <string name="map_type_terrain">Terrain</string>
+    <string name="map_type_normal">Normal</string>
+    <string name="pref_refresh_manual">Manual</string>
+    <string name="pref_refresh_automatic">Automatic</string>
+    <string name="pref_refresh_2s">2s</string>
+    <string name="pref_refresh_5s">5s</string>
+    <string name="pref_refresh_10s">10s</string>
+    <string name="pref_refresh_25s">25s</string>
+    <string name="pref_refresh_45s">45s</string>
+    <string name="pref_refresh_1_min">1 min</string>
+    <string name="pref_refresh_5_min">5 min</string>
+    <string name="timeout_spinner_2_sec">2 sec</string>
+    <string name="timeout_spinner_5_sec">5 sec</string>
+    <string name="timeout_spinner_10_sec">10 sec</string>
+    <string name="timeout_spinner_20_sec">20 sec</string>
+    <string name="timeout_spinner_30_sec">30 sec</string>
+    <string name="timeout_spinner_10_min">10 mi</string>
+    <string name="main">Main</string>
+    <string name="settings">Settings</string>
+    <string name="application">Application</string>
+    <string name="monitoring_cell_information">Monitoring Cell Information.</string>
+    <string name="stopped_monitoring_cell_information">Stopped monitoring Cell Information.</string>
+    <string name="tracking_cell_information">Tracking Cell Information.</string>
+    <string name="stopped_tracking_cell_information">Stopped tracking Cell Information.</string>
+    <string name="only_one_api_per_day">Only one new API key request per 24 hours!\nPlease try again later.</string>
+    <string name="cell_id_doesnt_exist_in_db">Cell ID does not exist in OpenCellID Database!</string>
+    <string name="hostile_service_area_changing_lac_detected">Hostile Service Area: Changing LAC Detected!</string>
+    <string name="femtocell_detection_active">FemtoCell Detection Active.</string>
+    <string name="cell_tracking_active">Cell Tracking Active.</string>
+    <string name="cell_monitoring_active">Cell Monitoring Active.</string>
+    <string name="phone_type">Phone Type</string>
+    <string name="status_idle"> - Status: Idle.</string>
+    <string name="status_good">- Status: Good. No Threats Detected.</string>
+    <string name="alert_threat_detected">ALERT: Some Threat Detected!</string>
+    <string name="aletr_femtocell_connection_detected">ALERT: FemtoCell Connection Detected!</string>
+    <string name="alert_silent_sms_intercepted">ALERT: Type-0 Silent SMS Intercepted!</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD can only detect FemtoCell connections on CDMA devices.</string>
+    <string name="service_state_changed">Service State changed!</string>
+    <string name="stopped_tracking_femtocell">: Stopped tracking FemtoCell connections.</string>
+    <string name="alert_femtocell_tracking_detected">ALERT! FemtoCell Tracking Detected.</string>
+    <string name="refreshing_every">Refreshing every</string>
+    <string name="refreshing_now">Refreshing now...</string>
+    <string name="seconds"> seconds.</string>
+    <string name="contacting_opencellid_for_data">Contacting opencellid.org for data...\nThis may take up to a minute.</string>
+    <string name="unable_to_determine_last_location">Unable to determine your last location.\nEnable Location Services and try again.</string>
+    <string name="no_tracked_locations_found">No tracked locations found to show on map.</string>
 </resources>

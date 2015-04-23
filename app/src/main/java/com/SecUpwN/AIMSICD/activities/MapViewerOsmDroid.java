@@ -55,10 +55,8 @@ import com.SecUpwN.AIMSICD.utils.RequestTask;
 import org.osmdroid.api.Marker;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.util.ResourceProxyImpl;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
-import org.osmdroid.views.overlay.SimpleLocationOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
@@ -356,7 +354,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     GeoLocation lastKnown = mAimsicdService.lastKnownLocation();
                     if (lastKnown != null) {
                         Helpers.msgLong(mContext,
-                            "Contacting opencellid.org for data...\nThis may take up to a minute.");
+                            getString(R.string.contacting_opencellid_for_data));
                         Cell cell;
                         cell = mAimsicdService.getCell();
                         cell.setLon(lastKnown.getLongitudeInDegrees());
@@ -368,14 +366,14 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
                 if (loc != null) {
                     Helpers.msgLong(this,
-                            "Contacting opencellid.org for data...\nThis may take up to a minute.");
+                            getString(R.string.contacting_opencellid_for_data));
                     Cell cell = new Cell();
                     cell.setLat(loc.getLatitude());
                     cell.setLon(loc.getLongitude());
                     Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                 } else {
                     Helpers.msgLong(mContext,
-                        "Unable to determine your last location.\nEnable Location Services and try again.");
+                        getString(R.string.unable_to_determine_last_location));
                 }
                 return true;
             }
@@ -517,7 +515,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Helpers.msgLong(MapViewerOsmDroid.this, "No tracked locations found to show on map.");
+                            Helpers.msgLong(MapViewerOsmDroid.this, getString(R.string.no_tracked_locations_found));
                         }
                     });
                 }
@@ -543,7 +541,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     try {
                         loc = new GeoPoint(cell.getLat(), cell.getLon());
                         CellTowerMarker ovm = new CellTowerMarker(mContext,mMap,
-                                "Cell ID: " + cell.getCID(),
+                                getString(R.string.cell_id_label) + cell.getCID(),
                                 "", loc,
                                 new MarkerData(
                                             "" + cell.getCID(),
