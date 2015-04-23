@@ -537,7 +537,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
          */
         //TinyDB tinydb = new TinyDB(context);
         Integer ncls = 0;
-        if(tm != null) //https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/383
+        if(tm != null && tm.getNeighboringCellInfo() != null) //https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/383
             ncls = tm.getNeighboringCellInfo().size(); // NC list size
         Boolean nclp = tinydb.getBoolean("nc_list_present"); // NC list present? (default is false)
 
