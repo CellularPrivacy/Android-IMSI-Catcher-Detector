@@ -1,8 +1,10 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.constants.Examples;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.CMDProcessor;
+import com.SecUpwN.AIMSICD.constants.Examples.EVENT_LOG_DATA;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -1412,7 +1414,9 @@ public class AIMSICDDbAdapter {
             // Populate the Silent SMS table with a dummy entry
             String ZeroSMS = "INSERT INTO " + SILENT_SMS_TABLE +
                     " (Address,Display,Class,ServiceCtr,Message) " +
-                    "VALUES ('ADREZZ','DizzPlay','CLAZZ','SMSC','DaTestMessage');";
+                    "VALUES ('"+
+                    Examples.SILENT_SMS_CARD_DATA.ADDRESS +"','"+
+                    Examples.SILENT_SMS_CARD_DATA.DISPLAY+"','CLAZZ','SMSC','DaTestMessage');";
             database.execSQL(ZeroSMS);
 
 
@@ -1563,7 +1567,14 @@ public class AIMSICDDbAdapter {
 
             String ZeroEvent = "INSERT INTO " + TABLE_EVENTLOG +
                     " (LAC,CID,PSC, gpsd_lat,gpsd_lon,gpsd_accu, DF_id,DF_desc) " +
-                    "VALUES (12345,543210,111, 54.6,25.2,100, 2,'CellID not found in OCID Database');";
+                    "VALUES ("+
+                    EVENT_LOG_DATA.LAC+","+
+                    EVENT_LOG_DATA.CID+","+
+                    EVENT_LOG_DATA.PSC+","+
+                    EVENT_LOG_DATA.GPSD_LAT+","+
+                    EVENT_LOG_DATA.GPSD_LON+","+
+                    EVENT_LOG_DATA.GPSD_ACCU+","+
+                    EVENT_LOG_DATA.DF_ID+",'CellID not found in OCID Database');";
             database.execSQL(ZeroEvent);
 
             // Re-populate the default MCC location table

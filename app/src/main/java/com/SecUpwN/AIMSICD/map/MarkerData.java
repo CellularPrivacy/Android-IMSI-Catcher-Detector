@@ -59,7 +59,7 @@ public class MarkerData {
     }
 
     public String getSamples() {
-        if (samples == null) return "0";
+        if (samples == null || (!openCellID && samples.isEmpty())) return "0";
         return samples;
     }
 }
