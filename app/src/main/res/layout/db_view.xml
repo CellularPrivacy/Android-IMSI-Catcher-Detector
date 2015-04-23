@@ -31,6 +31,8 @@
             android:layout_height="wrap_content"
             android:headerDividersEnabled="false"
             android:footerDividersEnabled="false"
+            android:overScrollMode="never"
+            android:fadingEdgeLength="0dp"
             android:listSelector="@android:color/transparent"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@null"
