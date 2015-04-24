@@ -7,7 +7,9 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:overScrollMode="never"
+        android:fadingEdgeLength="0dp">
 
         <TextView
             android:id="@+id/debug_log_view"

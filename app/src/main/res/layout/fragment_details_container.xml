@@ -6,6 +6,8 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/details_pager"
+        android:overScrollMode="never"
+        android:fadingEdgeLength="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

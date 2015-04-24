@@ -7,29 +7,32 @@
         android:layout_height="match_parent">
 
     <!-- The main content view -->
-    <FrameLayout android:layout_width="match_parent"
+    <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content">
         <FrameLayout
                 android:id="@+id/content_frame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_below="@+id/progressBar"/>
         <ProgressBar
+            android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
-            android:progressDrawable="@drawable/progress_bar_states"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:layout_marginTop="0.01dp"/>
-    </FrameLayout>
+            android:layout_marginTop="0.01dp"
+            android:progressDrawable="@drawable/progress_bar_states"/>
+    </RelativeLayout>
 
     <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer"
               android:layout_width="240dp"
               android:layout_height="match_parent"
               android:layout_gravity="start"
+              android:background="#111"
               android:choiceMode="singleChoice"
               android:divider="@android:color/transparent"
-              android:dividerHeight="0dp"
-              android:background="#111"/>
+              android:overScrollMode="never"
+              android:fadingEdgeLength="0dp"
+              android:dividerHeight="0dp"/>
 
 </android.support.v4.widget.DrawerLayout>
