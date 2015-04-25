@@ -420,34 +420,42 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         List<NavDrawerItem> menu = new ArrayList<>();
 
+        //Section Main
+        menu.add(DrawerMenuSection.create(100, getString(R.string.main)));
+        menu.add(DrawerMenuItem.create(102, getString(R.string.cell_info_title), "cell_tower", true, this));            // Cell Information (Neighboring cells etc)
+        menu.add(DrawerMenuItem.create(101, getString(R.string.device_info), "ic_action_phone", true, this));           // Phone/SIM Details
+        menu.add(DrawerMenuItem.create(302, getString(R.string.cell_lookup), "stat_sys_download_anim0", false, this));  // Lookup "All Current Cell Details (ACD)"
+        menu.add(DrawerMenuItem.create(104, getString(R.string.db_viewer), "ic_action_storage", true, this));           // Database Viewer
+        menu.add(DrawerMenuItem.create(105, getString(R.string.map_view), "ic_action_map", false, this));               // Antenna Map Viewer
+        menu.add(DrawerMenuItem.create(103, getString(R.string.at_command_title), "ic_action_computer", true, this));   // AT Command Interface
+
+        //Section Tracking
         menu.add(DrawerMenuSection.create(900, getString(R.string.tracking)));
-        // TODO: Clarify names and usage...
         menu.add(DrawerMenuItem.create(901, getString(R.string.monitor_cell), "untrack_cell", false, this));    // Toggle "AIMSICD Monitoring"
         menu.add(DrawerMenuItem.create(902, getString(R.string.track_cell), "untrack_cell", false, this));      // Toggle "Track Cell Details"
         if (CellTracker.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
             menu.add(DrawerMenuItem.create(903, getString(R.string.track_femtocell), "ic_action_network_cell", false, this)); // Track FemtoCell
         }
-        menu.add(DrawerMenuSection.create(100, getString(R.string.main)));
-        menu.add(DrawerMenuItem.create(101, getString(R.string.device_info), "ic_action_phone", true, this));           // Phone/SIM Details
-        menu.add(DrawerMenuItem.create(102, getString(R.string.cell_info_title), "cell_tower", true, this));            // Cell Information (Neighboring cells etc)
-        menu.add(DrawerMenuItem.create(103, getString(R.string.at_command_title), "ic_action_computer", true, this));   // AT Command Interface
-        menu.add(DrawerMenuItem.create(104, getString(R.string.db_viewer), "ic_action_storage", true, this));           // Database Viewer
-        menu.add(DrawerMenuItem.create(105, getString(R.string.map_view), "ic_action_map", false, this));               // Antenna Map Viewer
 
+        //Section Settings
         menu.add(DrawerMenuSection.create(200, getString(R.string.settings)));
         menu.add(DrawerMenuItem.create(202, getString(R.string.preferences), "ic_action_settings", false, this));            // Preferences
         menu.add(DrawerMenuItem.create(203, getString(R.string.backup_database), "ic_action_import_export", false, this));   // Backup Database
         menu.add(DrawerMenuItem.create(204, getString(R.string.restore_database), "ic_action_import_export", false, this));  // Restore Database
         // TODO:  menu.add(DrawerMenuItem.create(205?, getString(R.string.reset_database), "ic_action_clear", false, this)); // "Reset/Clear DataBase"
+        // TODO:  menu.add(DrawerMenuItem.create(206?, getString(R.string.export_database_to_csv), "ic_action_export_db_to_csv", false, this)); // "Export DataBase to CSV files"
+        // TODO:  menu.add(DrawerMenuItem.create(207?, getString(R.string.import_database_from_csv), "ic_action_import_db_from_csv", false, this)); // "Import DataBase from CSV file(s)"
 
+        //Section Application
         menu.add(DrawerMenuSection.create(300, getString(R.string.application)));
         menu.add(DrawerMenuItem.create(301, getString(R.string.get_opencellid), "stat_sys_download_anim0", false, this));   // "Download Local BTS data"
-        // TODO: Upload DBi_measure + DBi_bts to OCID or MLS
         menu.add(DrawerMenuItem.create(306, getString(R.string.upload_bts), "stat_sys_upload_anim0", false, this));      // "Upload Local BTS data"
-        menu.add(DrawerMenuItem.create(302, getString(R.string.cell_lookup), "stat_sys_download_anim0", false, this));  // Lookup "All Current Cell Details (ACD)"
+        // TODO:  menu.add(DrawerMenuItem.create(302?, getString(R.string.add_get_ocid_api_key), "ic_action_add_get_ocid_api_key", false, this)); // "Add/Get OCID API key"
         menu.add(DrawerMenuItem.create(303, getString(R.string.about_aimsicd), "ic_action_about", true, this));         // About
         menu.add(DrawerMenuItem.create(305, getString(R.string.send_logs), "ic_action_computer", false, this));         // Debugging
+        // TODO:  menu.add(DrawerMenuItem.create(302?, getString(R.string.faq), "ic_action_show_faq", false, this)); // "Help/FAQ"
         menu.add(DrawerMenuItem.create(304, getString(R.string.quit), "ic_action_remove", false, this));                // Quit
+
 
         DrawerMenuActivityConfiguration navDrawerActivityConfiguration = new DrawerMenuActivityConfiguration();
         navDrawerActivityConfiguration.setMainLayout(R.layout.main);
@@ -530,12 +538,18 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         }
 
         NavDrawerItem femtoTrackingItem = null;
+        NavDrawerItem cellMonitoringItem = null;
+        NavDrawerItem cellTrackingItem = null;
 
         List<NavDrawerItem> menuItems = mNavConf.getNavItems();
-        NavDrawerItem cellMonitoringItem = menuItems.get(1);
-        NavDrawerItem cellTrackingItem = menuItems.get(2);
-        if (CellTracker.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
-            femtoTrackingItem = menuItems.get(3);
+        for(NavDrawerItem lItem:menuItems) {
+            if(lItem.getId() == 901) {
+                cellMonitoringItem = lItem;
+            } else if(lItem.getId() == 902) {
+                cellTrackingItem = lItem;
+            } else if(lItem.getId() == 903) {
+                femtoTrackingItem = lItem;
+            }
         }
 
         if (mBound) {
