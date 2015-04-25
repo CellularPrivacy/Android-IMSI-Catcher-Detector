@@ -33,6 +33,7 @@
               android:divider="@android:color/transparent"
               android:overScrollMode="never"
               android:fadingEdgeLength="0dp"
+              android:scrollbars="none"
               android:dividerHeight="0dp"/>
 
 </android.support.v4.widget.DrawerLayout>

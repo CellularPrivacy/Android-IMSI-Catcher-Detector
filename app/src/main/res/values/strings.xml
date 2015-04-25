@@ -42,19 +42,8 @@
 
     <!-- MENU -->
 
-    <!--  Changes by E:V:A @ 2015-01-07 -->
-    <!-- string name="monitor_cell">Monitor Cell Details</string>
-    <string name="unmonitor_cell">Stop Monitoring Cell Details</string>
-    <string name="track_cell">Track Cell Details \n(GPS Required)</string>
-    <string name="untrack_cell">Stop Tracking Cell Details</string>
-    <string name="track_femtocell">Track Femtocell</string>
-    <string name="untrack_femtocell">Stop Tracking Femtocell</string -->
-
-    <string name="monitor_cell">Start AIMSICD monitoring</string>
-    <string name="unmonitor_cell">Stop AIMSICD monitoring</string>
-    <!-- This should be "Toggle 2G-only network lock" ?? -->
-    <string name="track_cell">Start Tracking Cell Details \n(GPS Required)</string>
-    <string name="untrack_cell">Stop Tracking Cell Details</string>
+    <string name="toggle_aimsicd_monitoring">Toggle AIMSICD monitoring</string>
+    <string name="toggle_2g_only_network_lock">Toggle 2G-only network lock</string>
     <string name="track_femtocell">Track Femtocell</string>
     <string name="untrack_femtocell">Stop Tracking Femtocell</string>
 
@@ -83,7 +72,7 @@
     <string name="device_info_title">Device Information</string>
     <string name="sim_info_title">SIM Information</string>
     <string name="network_info">Network Information</string>
-    <string name="cell_info_title">Cell Information</string>
+    <string name="cell_info_title">Current Threat Level</string>
     <string name="neighbouring_cells_title">Neighbouring Cells</string>
     <string name="ciphering_indicator_title">Ciphering Indicator</string>
     <string name="neighbouring_cells_num_title">Total:</string>
