@@ -15,7 +15,6 @@
     <string name="about_releases">Wydania</string>
     <string name="about_wiki">Dokumentacja (WIKI)</string>
     <string name="action_settings">Ustawienia</string>
-    <string name="aimsicd_about_info"></string>
     <string name="aimsicd_about_info3">Projekt na Android pozwalający wykrywać fałszywe stacje bazowe (IMSI-catchery)</string>
     <string name="btn_main_logs">Główne</string>
     <string name="btn_radio_logs">Radio</string>
@@ -30,7 +29,6 @@
     <string name="clear_database">Wyczyść bazę danych</string>
     <string name="command_hint">Wpisz komendę AT tutaj</string>
     <string name="data_activity">Aktywność bazy danych</string>
-    <string name="data_last_lat_lon"></string>
     <string name="data_status">Status danych</string>
     <string name="database_export_successful">Eksport powiódł się</string>
     <string name="db_viewer">Podgląd bazy danych</string>
@@ -78,7 +76,6 @@
     <string name="ui_icon_flat">Płaskie</string>
     <string name="title_debug_logs">Logi</string>
     <string name="title_ocid_key">Klucz API OpenCellID</string>
-    <string name="track_cell">Rozpocznij śledzneie komórek\n(Wymagany GPS)</string>
     <string name="network_roaming">Roaming:</string>
     <string name="network_psc">PCS:</string>
     <string name="network_netid">ID sieci:</string>
@@ -89,7 +86,6 @@
     <string name="network_baseid">ID stacji bazowej:</string>
     <string name="network_cdma_lat">Szerokość geograficzna:</string>
     <string name="network_cdma_long">Wysokośc geograficzna:</string>
-    <string name="monitor_cell">Rozpocznij monitoring</string>
     <string name="msg_copied_to_clipboard">Skopiowano logi do schowka</string>
     <string name="map_view">Widok mapy</string>
     <string name="no_network_connection_title">Brak połączenia z Internetem</string>
@@ -139,12 +135,9 @@
     <string name="table_names_prompt">Wybierz tabelę</string>
     <string name="table_contains_no_data">Brak danych do wyświetlenia</string>
     <string name="track_femtocell">Śledź Femtocell</string>
-    <string name="unmonitor_cell">Zakończ monitoring</string>
-    <string name="untrack_cell">Zakończ śledzenie komórek</string>
     <string name="untrack_femtocell">Zakończ śledzenie Femtocell</string>
     <string name="update_opencelldata">Aktualizuj dane OpenCellID</string>
     <string name="upload_bts">Wyślij dane o lokalnych komórkach</string>
-    <string name="title_activity_setting"></string>
     <string name="serial_device_title">Obecny numer seryjny urządznia:</string>
     <string name="pref_refresh_summ">Kontroluj częstotliwość odświeżania danych</string>
     <string name="tracking">Śledzenie</string>
@@ -173,7 +166,7 @@
     <string name="only_one_api_per_day">Możesz pobrać tylko jeden klucz OCID na dobę.\nSpróbuj później</string>
     <string name="cell_monitoring_active">Monitoring komórek aktywny</string>
     <string name="phone_type">Rodzaj telefonu</string>
-    <string name="status_idle">Oczekuję...</string>
+    <string name="status_idle">Oczekuję&#8230;</string>
     <string name="status_good">Brak zagrożeń. Wszystko OK.</string>
     <string name="alert_threat_detected">UWAGA! Wykryto zagrożenie!</string>
     <string name="aletr_femtocell_connection_detected">UWAGA! Wykryto połączenie FemtoCell!</string>
@@ -186,12 +179,16 @@
     <string name="cell_tracking_active">Śledzenie komórek aktywne</string>
     <string name="cell_id_doesnt_exist_in_db">ID komórki nie istnieje w bazie danych OpenCellID</string>
     <string name="application">Aplikacja</string>
-    <string name="hsdpa" translatable="false"></string>
     <string name="hostile_service_area_changing_lac_detected">Niezabezpieczona okolica: LAC został zmieniony</string>
     <string name="refreshing_every">Odświeżanie co</string>
     <string name="refreshing_now">Odświeżam</string>
     <string name="seconds">sekund</string>
     <string name="unable_to_determine_last_location">Nie udalo się określić Twojej ostatniej lokalizacji. Włącz lokalizację w ustawieniach telefonu.</string>
     <string name="no_tracked_locations_found">Brak zapisanych lokalizacji do pokazania</string>
-    <string name="contacting_opencellid_for_data">Łączenie z OpenCellID by uzyskać potrzebne dane.\nTo może zająć chwilę...</string>
+    <string name="contacting_opencellid_for_data">Łączenie z OpenCellID by uzyskać potrzebne dane.\nTo może zająć chwilę&#8230;</string>
+
+    <!--TODO need a translation into Polish -->
+    <string name="toggle_aimsicd_monitoring">Toggle AIMSICD monitoring</string>
+    <string name="toggle_2g_only_network_lock">Toggle 2G-only network lock</string>
+
 </resources>
