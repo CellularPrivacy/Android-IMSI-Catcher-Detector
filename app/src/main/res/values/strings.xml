@@ -197,14 +197,14 @@
     <!-- Database Viewer -->
     <string name="load_table_data">Load Data</string>
     <string name="table_names_prompt">Select Table</string>
-    <string-array name="table_names" value="en">
-        <item>Unique BTS Data</item>
-        <item>BTS Measurements</item>
-        <item>Imported OCID Data</item>
-        <item>Default MCC Locations</item>
-        <item>Silent SMS</item>
-        <item>Measured Signal Strengths</item>
-        <item>EventLog</item>
+    <string-array name="table_names">
+        <item>@string/unique_bts_data</item>
+        <item>@string/bts_measurements</item>
+        <item>@string/imported_ocid_data</item>
+        <item>@string/default_mmc_locations</item>
+        <item>@string/silent_sms</item>
+        <item>@string/measured_signal_strengths</item>
+        <item>@string/eventlog</item>
     </string-array>
     <string name="database_export_successful">Export Successful</string>
 
@@ -353,6 +353,16 @@
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Get an API key for using the Open Cell ID database to upload and download data&#8230;</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
+    <string name="this_might_take_a_minute">This may take up to a minute.</string>
+    <string name="waiting_for_location">Waiting for location...</string>
+    <string name="unable_to_restore_backup_from_previous_database_version">Unable to restore backup from previous database version due to structural changes!</string>
+    <string name="unique_bts_data">Unique BTS Data</string>
+    <string name="bts_measurements">BTS Measurements</string>
+    <string name="imported_ocid_data">Imported OCID Data</string>
+    <string name="default_mmc_locations">Default MCC Locations</string>
+    <string name="silent_sms">Silent SMS</string>
+    <string name="eventlog">EventLog</string>
+    <string name="measured_signal_strengths">Measured Signal Strengths</string>
 
 
 </resources>
