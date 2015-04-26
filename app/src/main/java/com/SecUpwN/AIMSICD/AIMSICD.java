@@ -298,8 +298,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             new RequestTask(mContext, RequestTask.BACKUP_DATABASE).execute();
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESTORE_DB) {
             if (CellTracker.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
-                Helpers.msgLong(mContext, "Unable to restore backup from previous database version"
-                        + " due to structural changes!");
+                Helpers.msgLong(mContext, getString(R.string.unable_to_restore_backup_from_previous_database_version));
             } else {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
             }
@@ -307,14 +306,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
-                    Helpers.msgLong(mContext, "Contacting opencellid.org for data...\n"
-                            + "This may take up to a minute.");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data)
+                            + getString(R.string.this_might_take_a_minute));
                     Cell cell = new Cell();
                     cell.setLon(loc.getLongitudeInDegrees());
                     cell.setLat(loc.getLatitudeInDegrees());
                     Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
                 } else {
-                    Helpers.msgShort(mContext, "Waiting for location...");
+                    Helpers.msgShort(mContext, getString(R.string.waiting_for_location));
 
                     // TODO: Is this implemented?? --E:V:A (2015-01-22)
                     //Attempt to find location through CID
@@ -329,8 +328,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                             mAimsicdService.getCell().getMCC());
                 }
             } else {
-                Helpers.sendMsg(mContext,
-                      "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
+                Helpers.sendMsg(mContext, mContext.getString(R.string.no_opencellid_key_detected));
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.MAIN.ACD) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
@@ -358,8 +356,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 sb.append("&format=xml");
                 cellLookUpAsync.execute(sb.toString());
             } else {
-                Helpers.sendMsg(mContext,
-                        "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
+                Helpers.sendMsg(mContext, mContext.getString(R.string.no_opencellid_key_detected));
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.SEND_DEBUGGING_LOG) {
             Intent i = new Intent(this, DebugLogs.class);
@@ -383,12 +380,10 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public void processFinish(float[] location) {
         Log.i(TAG, "processFinish - location[0]=" + location[0] + " location[1]=" + location[1]);
         if (location[0] != 0.0f && location[1] != 0.0f) {
-            Helpers.msgLong(mContext, "Contacting opencellid.org for data...\n"
-                    + "This may take up to a minute.");
+            Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data));
             Helpers.getOpenCellData(mContext, mAimsicdService.getCell(), RequestTask.DBE_DOWNLOAD_REQUEST);
         } else {
-            Helpers.msgLong(mContext,
-                    "Unable to determine your last location.\nEnable Location Services and try again.");
+            Helpers.msgLong(mContext, mContext.getString(R.string.unable_to_determine_last_location));
         }
     }
 

@@ -232,4 +232,26 @@
     <string name="unknown_error_initialising_at_command_injector">Wystąpił nieznany błąd przy uruchamianiu inteface komend AT. Prosimy o sprawdzenie logów i przesłanie ich do nas na Github. Link do Githuba znajedziesz w sekcji \'O aplikacji\'.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Wystąpił nieznany bład przy próbie uzyskania Serial Device. Prosimy o sprawdzenie logów i przesłanie ich do nas na Github. Link do Githuba znajedziesz w sekcji \'O aplikacji\'.</string>
     <string name="uploaded_bts_data_successfully">Dane do OpenCellID zostały przesłane.</string>
+    <string name="unable_to_restore_backup_from_previous_database_version">Nie udało się odzyskać kopii z poprzedniej wersji bazy danych.</string>
+    <string name="waiting_for_location">Oczekiwanie na lokalizację...</string>
+    <string name="this_might_take_a_minute">To może zająć chwilę.</string>
+    <string name="default_mmc_locations">Domyślne lokalizacje MMC</string>
+    <string name="bts_measurements">Pomiary BTS</string>
+    <string name="eventlog">Logi zdarzeń</string>
+    <string name="imported_ocid_data">Importowane dane OpenCellID</string>
+    <string name="measured_signal_strengths">Pomiary siły sygnałów</string>
+    <string name="unique_bts_data">Unikalne dane BTS</string>
+    <string name="ui_icon_white">Białe</string>
+    <string name="ui_icon_sense">Sense</string>
+    <string name="silent_sms">Silent SMS</string>
+    <string name="pref_refresh_manual">Ręcznie</string>
+    <string name="pref_refresh_45s">45 sek</string>
+    <string name="pref_refresh_2s">2 sek</string>
+    <string name="pref_refresh_25s">25 sek</string>
+    <string name="pref_refresh_1_min">1 min</string>
+    <string name="pref_refresh_10s">10 sek</string>
+    <string name="pref_refresh_5_min">5 min</string>
+    <string name="pref_refresh_5s">5 sek</string>
+    <string name="map_type_normal">Zwyczajna</string>
+    <string name="map_type_terrain">Teren</string>
 </resources>
