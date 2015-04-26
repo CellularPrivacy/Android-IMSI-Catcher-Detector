@@ -5,8 +5,6 @@ package com.SecUpwN.AIMSICD.constants;
  */
 public class Examples {
 
-
-
     /**
      * Constants of examples for EventLogItemData
      * <p>Relates to {@link com.SecUpwN.AIMSICD.adapters.EventLogItemData}<br />

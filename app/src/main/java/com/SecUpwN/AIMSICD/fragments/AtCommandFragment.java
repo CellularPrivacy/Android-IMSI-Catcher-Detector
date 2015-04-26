@@ -191,32 +191,16 @@ public class AtCommandFragment extends Fragment {
                 mAtCommandLayout.setVisibility(View.VISIBLE);
                 break;
             case ROOT_UNAVAILABLE:
-                String rootUnavailable = "Unable to acquire ROOT access on your device. \n\n"
-                        + "AT Command Injection requires ROOT Terminal access. \n\n"
-                        + "Please check your device is ROOTED and try again";
-                mAtCommandError.setText(rootUnavailable);
+                mAtCommandError.setText(mContext.getString(R.string.unable_to_acquire_root_access));
                 break;
             case BUSYBOX_UNAVAILABLE:
-                String busyboxUnavailable = "Unable to detect Busybox on your device. \n\n"
-                        + "AT Command Injection requires Busybox components to function correctly. \n\n"
-                        + "Please check your device has Busybox installed and try again";
-                mAtCommandError.setText(busyboxUnavailable);
+                mAtCommandError.setText(mContext.getString(R.string.unable_to_detect_busybox));
                 break;
             case SERIAL_INIT_ERROR:
-                String error =
-                        "An unknown error has occurred trying to acquire the Serial Device.\n\n"
-                        + "Please check your logcat for any errors and post them to Github "
-                        + "or XDA, links to both of these locations can be found within the "
-                        + "About section of the application.";
-                mAtCommandError.setText(error);
+                mAtCommandError.setText(mContext.getString(R.string.unknown_error_trying_to_acquire_serial_device));
                 break;
             default:
-                String unknownError =
-                        "An unknown error has occurred trying to initialise the AT Command Injector.\n\n"
-                        + "Please check your logcat for any errors and post them to Github or "
-                        + "XDA, links to both of these locations can be found within the "
-                        + "About section of the application.";
-                mAtCommandError.setText(unknownError);
+                mAtCommandError.setText(mContext.getString(R.string.unknown_error_initialising_at_command_injector));
                 break;
         }
 

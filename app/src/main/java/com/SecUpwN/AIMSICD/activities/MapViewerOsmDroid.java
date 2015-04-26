@@ -324,7 +324,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mMap.getOverlays().add(mScaleBarOverlay);
 
             } else {
-                Helpers.msgShort(this, "Unable to create map!");
+                Helpers.msgShort(this, getString(R.string.unable_to_create_map));
             }
         }
     }

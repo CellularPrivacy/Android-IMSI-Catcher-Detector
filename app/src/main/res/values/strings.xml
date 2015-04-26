@@ -52,7 +52,7 @@
     <!-- TODO: -->
     <string name="clear_database">Clear/Reset Database</string>
 
-    <string name="restore_database">Restore Database</string>
+    <string name="restore_database">Restore database.</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit.</string>
     <string name="update_opencelldata">Update OpenCellID Data</string>
@@ -298,8 +298,61 @@
     <string name="alert_femtocell_tracking_detected">ALERT! FemtoCell Tracking Detected.</string>
     <string name="refreshing_every">Refreshing every</string>
     <string name="refreshing_now">Refreshing now&#8230;</string>
-    <string name="seconds"> seconds.</string>
-    <string name="contacting_opencellid_for_data">Contacting opencellid.org for data&#8230;\nThis may take up to a minute.</string>
+    <string name="seconds">seconds.</string>
+    <string name="contacting_opencellid_for_data">Contacting OpenCellID for data&#8230;\nThis may take up to a minute.</string>
     <string name="unable_to_determine_last_location">Unable to determine your last location.\nEnable Location Services and try again.</string>
     <string name="no_tracked_locations_found">No tracked locations found to show on map.</string>
+    <string name="no_data_for_publishing">No data for publishing available.</string>
+    <string name="download_error">Download error:</string>
+    <string name="opencellid_data_successfully_received">OpenCellID data successfully received.</string>
+    <string name="error_retrieving_opencellid_data">Error retrieving OpenCellID data.\nCheck your network!</string>
+    <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data successfully received.\nMap Markers updated.</string>
+    <string name="uploaded_bts_data_successfully">Uploaded BTS data to OCID successfully.</string>
+    <string name="error_uploading_bts_data">Error in uploading BTS data to OCID servers!</string>
+    <string name="restore_database_completed">Restore database completed successfully.</string>
+    <string name="error_restoring_database">Error restoring database.</string>
+    <string name="database_backup_successfully_saved_to">Database backup successfully saved to:</string>
+    <string name="error_backing_up_data">Error backing up database.</string>
+    <string name="no_opencellid_key_detected">No OpenCellID API Key detected!\nPlease enter your key in settings first.</string>
+    <string name="refreshing_display">Refreshing display</string>
+    <string name="unable_to_acquire_root_access">Unable to acquire ROOT access on your device.\nAT Command Injection requires ROOT Terminal access.\nPlease check your device is ROOTED and try again</string>
+    <string name="unable_to_detect_busybox">Unable to detect Busybox on your device.\nAT Command Injection requires Busybox components to function correctly.\nPlease check your device has Busybox installed and try again</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">An unknown error has occurred trying to acquire the Serial Device.\nPlease check your logcat for any errors and post them to Github\nor XDA, links to both of these locations can be found within the\nAbout section of the application.</string>
+    <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them to Github or\nXDA, links to both of these locations can be found within the\nAbout section of the application.</string>
+    <string name="getting_ocid_api_key">Getting OpenCellID API key...</string>
+    <string name="unable_to_create_map">Unable to create map!</string>
+    <string name="describe_the_problem_you_had">For best help, please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!\n</string>
+    <string name="status">Status:</string>
+    <string name="idle">IDLE</string>
+    <string name="normal">NORMAL</string>
+    <string name="medium">MEDIUM</string>
+    <string name="high">HIGH</string>
+    <string name="danger">DANGER</string>
+    <string name="run">RUN!</string>
+
+    <!-- Section Main-->
+    <string name="help_main_current_threat_level">AIMSICD status, neighboring cells, ciphering method indicator.</string>
+    <string name="help_main_phone_sim_details">SIM network provider details, IMEI, TMSI.</string>
+    <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OCID and highlight the differences.</string>
+    <string name="help_main_database_viewer">View the different DB tables we have.</string>
+    <string name="help_main_antenna_map_view">A map showing color coded antennas of nearby cells.</string>
+    <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor.</string>
+
+    <!-- Section Tracking-->
+    <string name="help_tracking_toggle_aimsicd">This starts/stops AIMSICD monitoring and collecting cell details into internal database tables (DBi).</string>
+    <string name="help_tracking_toggle_2g_only_network_lock">Start - Set phone to use 2G mode only, for tracking. Stop -  Use default Network Type (RAT) settings or Automatic.</string>
+
+    <!-- Section Settings-->
+    <string name="help_settings_preferences">AIMSICD settings and preferences such as polling times and service behaviour etc.</string>
+    <string name="help_settings_backup_db">Backup AIMSICD SQLite3 DB to SD-card.</string>
+    <string name="help_settings_restore_db">Restore AIMSICD SQLite3 DB from SD-card.</string>
+    <string name="help_settings_reset_db">Clear and reset all or specified DB table(s).</string>
+    <string name="help_settings_export_db_to_csv">Export DB tables into individual CSV files.</string>
+    <string name="help_settings_import_db_from_csv">Import DB table(s) from individual CSV file(s).</string>
+
+    <!-- Section Application-->
+    <string name="help_app_add_get_ocid_api_key">Get an API key for using the Open Cell ID database to upload and download data&#8230;</string>
+    <string name="help_app_about">Status Icons and Project explained.</string>
+
+
 </resources>
