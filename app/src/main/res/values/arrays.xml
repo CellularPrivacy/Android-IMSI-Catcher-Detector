@@ -6,7 +6,7 @@
         <item>@string/ui_icon_white</item>
     </string-array>
 
-    <string-array name="pref_ui_icons_values">
+    <string-array name="pref_ui_icons_values" translatable="false">
         <item>"flat"</item>
         <item>"sense"</item>
         <item>"white"</item>
@@ -17,7 +17,7 @@
         <item>@string/map_type_terrain</item>
     </string-array>
 
-    <string-array name="pref_map_type_values">
+    <string-array name="pref_map_type_values" translatable="false">
         <item>"0"</item>
         <item>"1"</item>
     </string-array>
@@ -34,7 +34,7 @@
         <item>@string/pref_refresh_5_min</item>
     </string-array>
 
-    <string-array name="pref_refresh_values">
+    <string-array name="pref_refresh_values" translatable="false">
         <item>"0"</item>
         <item>"1"</item>
         <item>"2"</item>

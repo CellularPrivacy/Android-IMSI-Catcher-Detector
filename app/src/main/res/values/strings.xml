@@ -171,7 +171,7 @@
     <string name="pref_ocid_key" translatable="false">pref_ocid_key</string>
     <string name="pref_autostart_key" translatable="false">pref_autostart</string>
     <string name="disclaimer_accepted" translatable="false">disclaimer_accepted</string>
-    <string name="data_last_lat_lon">data_last_lat_lon</string>
+    <string name="data_last_lat_lon" translatable="false">data_last_lat_lon</string>
     <string name="pref_cell_table_cleansed" translatable="false">pref_cell_table_cleansed</string>
     <string name="pref_last_database_backup_version" translatable="false">pref_last_db_backup_version</string>
     <string name="pref_femto_action_key" translatable="false">pref_femto_action</string>
@@ -297,9 +297,9 @@
     <string name="stopped_tracking_femtocell">: Stopped tracking FemtoCell connections.</string>
     <string name="alert_femtocell_tracking_detected">ALERT! FemtoCell Tracking Detected.</string>
     <string name="refreshing_every">Refreshing every</string>
-    <string name="refreshing_now">Refreshing now...</string>
+    <string name="refreshing_now">Refreshing now&#8230;</string>
     <string name="seconds"> seconds.</string>
-    <string name="contacting_opencellid_for_data">Contacting opencellid.org for data...\nThis may take up to a minute.</string>
+    <string name="contacting_opencellid_for_data">Contacting opencellid.org for data&#8230;\nThis may take up to a minute.</string>
     <string name="unable_to_determine_last_location">Unable to determine your last location.\nEnable Location Services and try again.</string>
     <string name="no_tracked_locations_found">No tracked locations found to show on map.</string>
 </resources>
