@@ -193,7 +193,7 @@ public class DebugLogs extends BaseActivity {
             public void run() {
                 // Send Error Log
                 try {
-                    String helpUs = "For best help, please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!\n";
+                    String helpUs = getString(R.string.describe_the_problem_you_had);
                     String log = helpUs + "\n\n" + "GETPROP:" + "\n\n" + getProp() +
                                           "\n\n" + "LOGCAT:" + "\n\n" + getLogs() + "\n\n" + helpUs;
 

@@ -53,6 +53,5 @@
         <item>@string/timeout_spinner_20_sec</item>
         <item>@string/timeout_spinner_30_sec</item>
         <item>@string/timeout_spinner_10_min</item>
-        <!-- item>"None"</item>  (for no timeout and watching -->
     </string-array>
 </resources>

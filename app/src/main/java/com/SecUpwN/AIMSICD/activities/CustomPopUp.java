@@ -60,43 +60,43 @@ public class CustomPopUp extends Activity {
             case 0:
                 createPopUp(
                         null,
-                        "Status:\tIDLE",
-                        getResources().getString(R.string.detail_info_idle)
-                        ,getResources().getDrawable(R.drawable.sense_idle));
+                        getString(R.string.status) + "\t" + getString(R.string.idle),
+                        getResources().getString(R.string.detail_info_idle),
+                        getResources().getDrawable(R.drawable.sense_idle));
                 break;
 
             case 1:
                 createPopUp(
                         null,
-                        "Status:\tNORMAL",
-                        getResources().getString(R.string.detail_info_nomral)
-                        ,getResources().getDrawable(R.drawable.sense_ok));
+                        getString(R.string.status) + "\t" + getString(R.string.normal),
+                        getResources().getString(R.string.detail_info_nomral),
+                        getResources().getDrawable(R.drawable.sense_ok));
                 break;
             case 2:
                 createPopUp(
                         null,
-                        "Status:\tMEDIUM",
-                        getResources().getString(R.string.detail_info_medium)
-                        ,getResources().getDrawable(R.drawable.sense_medium));
+                        getString(R.string.status) + "\t" + getString(R.string.medium),
+                        getResources().getString(R.string.detail_info_medium),
+                        getResources().getDrawable(R.drawable.sense_medium));
                 break;
             case 3:
                 createPopUp(
                         null,
-                        "Status:\tHIGH",
-                        getResources().getString(R.string.detail_info_high)
-                        ,getResources().getDrawable(R.drawable.sense_high));
+                        getString(R.string.status) + "\t" + getString(R.string.high),
+                        getResources().getString(R.string.detail_info_high),
+                        getResources().getDrawable(R.drawable.sense_high));
                 break;
             case 4:
                 createPopUp(
                         null,
-                        "Status:\tDANGER",
-                        getResources().getString(R.string.detail_info_danger)
-                        ,getResources().getDrawable(R.drawable.sense_danger));
+                        getString(R.string.status) + "\t" + getString(R.string.danger),
+                        getResources().getString(R.string.detail_info_danger),
+                        getResources().getDrawable(R.drawable.sense_danger));
                 break;
             case 5:
                 createPopUp(
                         null,
-                        "Status:\tRUN!",
+                        getString(R.string.status) + "\t" + getString(R.string.run),
                         getResources().getString(R.string.detail_info_run)
                         ,getResources().getDrawable(R.drawable.sense_skull));
                 break;

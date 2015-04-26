@@ -2,7 +2,6 @@ package com.SecUpwN.AIMSICD.activities;
 
 import com.SecUpwN.AIMSICD.fragments.PrefFragment;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
