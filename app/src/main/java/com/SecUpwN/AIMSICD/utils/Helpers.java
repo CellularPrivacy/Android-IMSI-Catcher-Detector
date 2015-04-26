@@ -277,7 +277,7 @@ import java.util.List;
                     new RequestTask(context, type).execute(sb.toString());
                 }
             } else {
-                Helpers.sendMsg(context, "No OpenCellID API Key detected! \nPlease enter your key in settings first.");
+                Helpers.sendMsg(context, context.getString(R.string.no_opencellid_key_detected));
             }
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);

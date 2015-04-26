@@ -37,7 +37,7 @@ public class OpenCellIdActivity extends BaseActivity {
         });
 
         final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Getting OCID API Key...");
+        pd.setMessage(getString(R.string.getting_ocid_api_key));
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override

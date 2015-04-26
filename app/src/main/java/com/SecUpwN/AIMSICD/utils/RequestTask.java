@@ -164,7 +164,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             }
                             return "Successful";
                         } else {
-                            Helpers.msgLong(mContext, "No data for publishing available");
+                            Helpers.msgLong(mContext, mContext.getString(R.string.no_data_for_publishing));
                             return null;
                         }
 
@@ -195,10 +195,10 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     if (urlConnection.getResponseCode() != 200) {
                         try {
                             String error = Helpers.convertStreamToString(urlConnection.getErrorStream());
-                            Helpers.msgLong(mContext, "Download error: " + error);
+                            Helpers.msgLong(mContext, mContext.getString(R.string.download_error) + " " + error);
                             Log.e(TAG, mTAG + ": Download OCID data error: " + error);
                         } catch (Exception e) {
-                            Helpers.msgLong(mContext, "Download error: "
+                            Helpers.msgLong(mContext, mContext.getString(R.string.download_error) + " "
                                     + e.getClass().getName() + " - "
                                     + e.getMessage());
                             Log.e(TAG, mTAG + ": Download OCID exception: " + e);
@@ -305,14 +305,14 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
                     if (mDbAdapter.updateOpenCellID()) {
-                        Helpers.msgShort(mContext, "OpenCellID data successfully received");
+                        Helpers.msgShort(mContext, mContext.getString(R.string.opencellid_data_successfully_received));
                     }
 
                     mDbAdapter.checkDBe();
                     mDbAdapter.close();
                     tinydb.putBoolean("ocid_downloaded", true);
                 } else {
-                    Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.error_retrieving_opencellid_data));
                 }
                 break;
 
@@ -322,30 +322,30 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     if (mDbAdapter.updateOpenCellID()) {
                         Intent intent = new Intent(MapViewerOsmDroid.updateOpenCellIDMarkers);
                         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-                        Helpers.msgShort(mContext, "OpenCellID data successfully received.\nMap Markers updated.");
+                        Helpers.msgShort(mContext, mContext.getString(R.string.opencellid_data_successfully_received_markers_updated));
 
                         mDbAdapter.checkDBe();
                         mDbAdapter.close();
                         tinydb.putBoolean("ocid_downloaded", true);
                     }
                 } else {
-                    Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.error_retrieving_opencellid_data));
                 }
                 break;
 
             case DBE_UPLOAD_REQUEST:
                 if (result != null && result.equals("Successful")) {
-                    Helpers.msgShort(mContext, "Uploaded BTS data to OCID successfully");
+                    Helpers.msgShort(mContext, mContext.getString(R.string.uploaded_bts_data_successfully));
                 } else {
-                    Helpers.msgLong(mContext, "Error in uploading BTS data to OCID servers!");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.error_uploading_bts_data));
                 }
                 break;
 
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
-                    Helpers.msgShort(mContext, "Restore database completed successfully");
+                    Helpers.msgShort(mContext, mContext.getString(R.string.restore_database_completed));
                 } else {
-                    Helpers.msgLong(mContext, "Error restoring database");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.error_restoring_database));
                 }
                 break;
 
@@ -358,10 +358,10 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                     final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setTitle(R.string.database_export_successful).setMessage(
-                            "Database Backup successfully saved to:\n" + AIMSICDDbAdapter.FOLDER);
+                            mContext.getString(R.string.database_backup_successfully_saved_to) + "\n" + AIMSICDDbAdapter.FOLDER);
                     builder.create().show();
                 } else {
-                    Helpers.msgLong(mContext, "Error backing up database");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.error_backing_up_data));
                 }
                 //break;
         }

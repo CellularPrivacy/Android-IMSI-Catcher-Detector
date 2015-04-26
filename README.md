@@ -21,7 +21,7 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 ### Index
 
 * [What it does](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#what-it-does)
-* [Why to use it](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#why-to-use-it)
+* [Why use it](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#why-use-it)
 * [**Contributing**](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md)
 * [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues)
 * [Warnings](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#warnings)
@@ -51,11 +51,11 @@ See our [app goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wik
 
 ---
 
-### Why to use it
+### Why use it
 
-The FBI or local police regularly deploys IMSI-Catchers hidden in vehicles at protests to obtain a record of everyone who attended with a cell phone (leave your phones at home by all means if you really have to attend). IMSI-Catchers also allow adversaries to intercept your conversations, text messages, and data. Police can use them to determine your location, or to find out who is in a given geographic area at what time. Identity thieves can use freely [available tools](http://www.nsaplayset.org/) to monitor and manipulate communications from a parked car in your residential neighborhood, stealing passwords or credit card data from people nearby who make purchases on their phones.
+The FBI or local police regularly deploys IMSI-Catchers hidden in vehicles at protests to obtain a record of everyone who attended with a cell phone (leave your phones at home by all means if you really have to attend). IMSI-Catchers also allow adversaries to intercept your conversations, text messages, and data. Police can use them to determine your location or to find out who is in a given geographic area at what time. Identity thieves can use freely [available tools](http://www.nsaplayset.org/) to monitor and manipulate communications from a parked car in your residential neighborhood; notably for stealing passwords or credit card data from people nearby who make purchases on their phones.
 
-The reason IMSI-Catchers are so commonly used is that it is very easy to get away with using them traceless. This app aims to make it possible to detect the IMSI-Catchers, so that using them becomes a risky proposition. It also aims to make users safer, by alerting on possible interception and tracking.
+The reason IMSI-Catchers are so commonly used is that it is very easy to get away with using them traceless. This app aims to make it possible to detect the IMSI-Catchers so that using them becomes a risky proposition. It also aims to make users safer by alerting on possible interception and tracking.
 
 ---
 
