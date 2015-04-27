@@ -63,6 +63,7 @@ before_script:
      - adb shell input keyevent 82 &
      
 script: ./gradlew connectedAndroidTest --info
+        ./gradlew lintVitalRelease
 
 # Coverity Scan Settings
 #-----------------------
