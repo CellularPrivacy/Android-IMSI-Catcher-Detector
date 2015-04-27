@@ -25,8 +25,8 @@ import java.util.HashMap;
  * @author Tor Henning Ueland
  */
 public class SignalStrengthTracker {
-
-    public static final String TAG = "AIMSICD_SignalStrengthTracker";
+    //FIXME The logging tag can be at most 23 characters, was 29 (AIMSICD_SignalStrengthTracker)
+    public static final String TAG = "AIMSICD_SignalStrength";
     private static int sleepTimeBetweenSignalRegistration = 60; // [seconds]
     private static int minimumIdleTime              = 30; // [seconds]
     private static int maximumNumberOfDaysSaved     = 60; // [days] = 2 months

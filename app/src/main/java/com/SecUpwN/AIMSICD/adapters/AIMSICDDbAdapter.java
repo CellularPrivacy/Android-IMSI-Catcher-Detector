@@ -1329,13 +1329,17 @@ public class AIMSICDDbAdapter {
     public int countSignalMeasurements(int cellID) {
         Cursor c = mDb.rawQuery("SELECT COUNT(cellID) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID=" + cellID, new String[0]);
         c.moveToFirst();
-        return c.getInt(0);
+        int lAnswer = c.getInt(0);
+        c.close();
+        return lAnswer;
     }
 
     public int getAverageSignalStrength(int cellID) {
         Cursor c = mDb.rawQuery("SELECT AVG(signal) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID=" + cellID, new String[0]);
         c.moveToFirst();
-        return c.getInt(0);
+        int lAnswer = c.getInt(0);
+        c.close();
+        return lAnswer;
     }
 
     public Cursor getSignalStrengthMeasurementData() {

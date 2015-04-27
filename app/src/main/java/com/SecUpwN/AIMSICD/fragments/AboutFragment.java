@@ -21,7 +21,7 @@ import android.widget.TextView;
 public class AboutFragment extends Fragment {
 
     private Context mContext;
-    Button btncredits;
+    private Button btncredits;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

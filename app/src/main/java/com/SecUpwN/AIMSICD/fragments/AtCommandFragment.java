@@ -418,7 +418,7 @@ public class AtCommandFragment extends Fragment {
                     public void commandOutput(int id, String line) {
                         if (id == EXECUTE_COMMAND) {
                             if (!line.trim().equals("")) {
-                                response.append(line + "\n");
+                                response.append(line).append("\n");
                             }
                         }
 
