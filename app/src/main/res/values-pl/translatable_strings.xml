@@ -254,16 +254,15 @@
     <string name="map_type_normal">Zwyczajna</string>
     <string name="map_type_terrain">Teren</string>
 
-    <string name="open_cell_id_button_cancel">Cancel</string>
+    <string name="open_cell_id_button_cancel">Anuluj</string>
     <string name="open_cell_id_button_ok">OK</string>
-    <string name="about_desc_icon_idle">Idle / Loading.</string>
-    <string name="about_desc_icon_active_tracking_near">Active tracking close to you!</string>
-    <string name="about_desc_icon_ok">Everything OK.</string>
-    <string name="about_desc_icon_tracked_down">You are being tracked down!</string>
-    <string name="about_desc_icon_insecure_area">Insecure Service Area. Leave it!</string>
-    <string name="about_desc_icon_run">RUN! Handset manipulated!</string>
-    <string name="about_desc_icon_title">Click Status Icons below for Detailed Information</string>
-
+    <string name="about_desc_icon_idle">Działanie aplikacji zostało wstrzymane.</string>
+    <string name="about_desc_icon_active_tracking_near">Wykryto śledzenie: w pobliżu aktywny jest FBTS lub IMSIC!</string>
+    <string name="about_desc_icon_ok">Wszystko OK.</string>
+    <string name="about_desc_icon_tracked_down">Jesteś śledzony!</string>
+    <string name="about_desc_icon_insecure_area">Ta okolica nie jest bezpieczna. Powinieneś się oddalić!</string>
+    <string name="about_desc_icon_run">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem.</string>
+    <string name="about_desc_icon_title">Kliknij na ikonę by uzyskać więcej informacji.</string>
 
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
