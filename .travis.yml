@@ -62,8 +62,9 @@ before_script:
      - android-wait-for-emulator
      - adb shell input keyevent 82 &
      
-script: ./gradlew connectedAndroidTest --info
-        ./gradlew lintVitalRelease
+script:
+- ./gradlew connectedAndroidTest --info
+- ./gradlew lintVitalRelease
 
 # Coverity Scan Settings
 #-----------------------
