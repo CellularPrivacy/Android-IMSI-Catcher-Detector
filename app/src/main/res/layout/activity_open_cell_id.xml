@@ -20,7 +20,7 @@
 
         <Button
             android:id="@+id/btnCancel"
-            android:text="Cancel"
+            android:text="@string/open_cell_id_button_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -28,7 +28,7 @@
 
         <Button
             android:id="@+id/btnOk"
-            android:text="Ok"
+            android:text="@string/open_cell_id_button_ok"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

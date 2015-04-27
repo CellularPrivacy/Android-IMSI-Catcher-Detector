@@ -55,7 +55,7 @@ public class AboutFragment extends Fragment {
 
             //Proof of Concept Link
             tv = v.findViewById(R.id.aimsicd_poc_link);
-            setLink(tv, R.string.poc_link);
+            setLink(tv, R.string.contribute_link);
 
             //Disclaimer Link
             tv = v.findViewById(R.id.aimsicd_disclaimer_link);

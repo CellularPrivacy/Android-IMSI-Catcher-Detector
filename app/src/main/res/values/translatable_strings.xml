@@ -95,13 +95,20 @@
     <string name="aimsicd_about_info3">Android-based project to detect and avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks.</string>
     <string name="about_github">AIMSICD on GitHub</string>
     <string name="about_wiki">Documentation (WIKI)</string>
-    <string name="about_poc">THIS IS A PoC</string>
+    <string name="about_contribute">CONTRIBUTE</string>
     <string name="about_disclaimer">DISCLAIMER</string>
     <string name="about_releases">RELEASES</string>
     <string name="about_changelog">CHANGELOG</string>
     <string name="about_license">LICENSE</string>
     <string name="about_credits">CREDITS</string>
-    <string name="poc_link">https://en.wikipedia.org/wiki/Proof_of_concept</string>
+    <string name="about_desc_icon_idle">Idle / Loading.</string>
+    <string name="about_desc_icon_active_tracking_near">Active tracking close to you!</string>
+    <string name="about_desc_icon_ok">Everything OK.</string>
+    <string name="about_desc_icon_tracked_down">You are being tracked down!</string>
+    <string name="about_desc_icon_insecure_area">Insecure Service Area. Leave it!</string>
+    <string name="about_desc_icon_run">RUN! Handset manipulated!</string>
+    <string name="about_desc_icon_title">Click Status Icons below for Detailed Information</string>
+
 
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Network ID:</string>
@@ -213,6 +220,8 @@
     <string name="detail_info_danger">Hostile Tracking Detected: An FBTS or IMSIC is actively tracking YOU and preventing your phone from connecting through your normal encrypted mobile provider. If you\'re in danger or repercussions, destroy your phone + SIM and report it as recently stolen.</string>
     <string name="detail_info_run">Hostile Manipulation: Someone is trying to remotely manipulate your handset. Destroy (or sell) your phone and get a new one somewhere far away (don\'t carry your old phone to the changing place). Use a new (anonymous) SIM card, change calling behavior and warn your friends by talking to them in real life, NOT by calling them.</string>
 
+    <string name="open_cell_id_button_cancel">Cancel</string>
+    <string name="open_cell_id_button_ok">OK</string>
 
     <!-- UI icon preferences -->
     <string name="ui_icon_flat">Flat</string>
