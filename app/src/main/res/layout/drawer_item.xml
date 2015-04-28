@@ -27,7 +27,6 @@
         android:layout_toRightOf="@id/drawer_menu_item_icon"
         android:layout_toStartOf="@+id/drawer_menu_item_info_button"
         android:gravity="center_vertical"
-        android:text="TextView"
         android:textColor="#FFFFFF" />
         <ImageView
             android:id="@+id/drawer_menu_item_info_button"

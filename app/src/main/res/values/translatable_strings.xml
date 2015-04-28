@@ -4,8 +4,6 @@
     <!-- Drawer -->
     <string name="tracking">Tracking</string>
 
-    <string name="app_name_short" translatable="false">AIMSICD</string>
-    <string name="app_name" translatable="false">Android IMSI-Catcher Detector</string>
     <string name="device_info">Phone/SIM Details</string>
     <string name="map_view">Antenna Map Viewer</string>
     <string name="db_viewer">Database Viewer</string>
@@ -15,7 +13,6 @@
     <string name="text_cancel">Cancel</string>
     <string name="text_agree">I Agree</string>
     <string name="text_disagree">I Disagree</string>
-    <string name="empty" translatable="false"></string>
     <string name="gsm_only">GSM Phones Only</string>
 
     <!-- DISCLAIMER -->
@@ -29,16 +26,6 @@
         depending on the use of this application.
     </string>
 
-    <!-- Mobile Network Types -->
-    <string name="gprs" translatable="false"># GPRS</string>
-    <string name="edge" translatable="false"># EDGE</string>
-    <string name="umts" translatable="false"># UMTS</string>
-    <string name="hsdpa" translatable="false"># HSDPA</string>
-    <string name="hsupa" translatable="false"># HSUPA</string>
-    <string name="hspa" translatable="false"># HSPA</string>
-    <string name="cdma" translatable="false"># CDMA</string>
-    <string name="evo0" translatable="false"># EVO-0</string>
-    <string name="evoA" translatable="false"># EVO-A</string>
 
     <!-- MENU -->
 
@@ -105,26 +92,23 @@
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">About AIMSICD</string>
     <string name="app_version">Version:&#160;</string>
-    <string name="aimsicd_about_info" translatable="false">Android IMSI-Catcher Detector (AIMSICD)</string>
     <string name="aimsicd_about_info3">Android-based project to detect and avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks.</string>
     <string name="about_github">AIMSICD on GitHub</string>
     <string name="about_wiki">Documentation (WIKI)</string>
-    <string name="about_poc">THIS IS A PoC</string>
+    <string name="about_contribute">CONTRIBUTE</string>
     <string name="about_disclaimer">DISCLAIMER</string>
     <string name="about_releases">RELEASES</string>
     <string name="about_changelog">CHANGELOG</string>
     <string name="about_license">LICENSE</string>
     <string name="about_credits">CREDITS</string>
-    <string name="poc_link">https://en.wikipedia.org/wiki/Proof_of_concept</string>
-    <string name="wiki_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki</string>
-    <string name="disclaimer_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER</string>
-    <string name="aimsicd_github_link" translatable="false">https://secupwn.github.io/Android-IMSI-Catcher-Detector/</string>
-    <string name="aimsicd_xda_link" translatable="false">http://forum.xda-developers.com/showthread.php?t=1422969</string>
-    <string name="aimsicd_release_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases</string>
-    <string name="aimsicd_changelog_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md</string>
-    <string name="aimsicd_license_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE</string>
-    <string name="aimsicd_credits_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS</string>
-    <string name="status_icons_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons</string>
+    <string name="about_desc_icon_idle">Idle / Loading.</string>
+    <string name="about_desc_icon_active_tracking_near">Active tracking close to you!</string>
+    <string name="about_desc_icon_ok">Everything OK.</string>
+    <string name="about_desc_icon_tracked_down">You are being tracked down!</string>
+    <string name="about_desc_icon_insecure_area">Insecure Service Area. Leave it!</string>
+    <string name="about_desc_icon_run">RUN! Handset manipulated!</string>
+    <string name="about_desc_icon_title">Click Status Icons below for Detailed Information</string>
+
 
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Network ID:</string>
@@ -159,27 +143,13 @@
     <string name="pref_ocid_title">OpenCellID Settings</string>
     <string name="pref_ocid_key_title">OpenCellID API Key</string>
     <string name="pref_ocid_key_summ">Enter your OpenCellID API Key here</string>
-    <string name="pref_enable_cell_monitoring_key" translatable="false">pref_enable_cell_monitoring</string>
     <string name="pref_enable_cell_monitoring_title">Cell Monitoring</string>
     <string name="pref_enable_cell_monitoring_summ">Enable Automatic Cell Monitoring</string>
     <string name="pref_request_ocid_key">Request OCID API Key</string>
     <string name="pref_ocid_requestkey_summary">Request a new API key for OpenCellID data access</string>
-    <string name="pref_enable_cell_key" translatable="false">pref_enable_cell_key</string>
-    <string name="pref_refresh_key" translatable="false">pref_refresh_key</string>
-    <string name="pref_femto_detection_key" translatable="false">pref_femto_detection_key</string>
-    <string name="pref_ui_icons_key" translatable="false">pref_ui_icons_key</string>
-    <string name="pref_ocid_key" translatable="false">pref_ocid_key</string>
-    <string name="pref_autostart_key" translatable="false">pref_autostart</string>
-    <string name="disclaimer_accepted" translatable="false">disclaimer_accepted</string>
-    <string name="data_last_lat_lon" translatable="false">data_last_lat_lon</string>
-    <string name="pref_cell_table_cleansed" translatable="false">pref_cell_table_cleansed</string>
-    <string name="pref_last_database_backup_version" translatable="false">pref_last_db_backup_version</string>
-    <string name="pref_femto_action_key" translatable="false">pref_femto_action</string>
-    <string name="pref_persistservice_key" translatable="false">pref_persistservice_service</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
-    <string name="pref_map_type_key" translatable="false">pref_map_type</string>
     <string name="pref_map_type_title">Map Type</string>
     <string name="pref_map_type_summ">Display Map in different styles</string>
     
@@ -250,7 +220,8 @@
     <string name="detail_info_danger">Hostile Tracking Detected: An FBTS or IMSIC is actively tracking YOU and preventing your phone from connecting through your normal encrypted mobile provider. If you\'re in danger or repercussions, destroy your phone + SIM and report it as recently stolen.</string>
     <string name="detail_info_run">Hostile Manipulation: Someone is trying to remotely manipulate your handset. Destroy (or sell) your phone and get a new one somewhere far away (don\'t carry your old phone to the changing place). Use a new (anonymous) SIM card, change calling behavior and warn your friends by talking to them in real life, NOT by calling them.</string>
 
-    <string name="example" translatable="false">EXAMPLE!</string>
+    <string name="open_cell_id_button_cancel">Cancel</string>
+    <string name="open_cell_id_button_ok">OK</string>
 
     <!-- UI icon preferences -->
     <string name="ui_icon_flat">Flat</string>
@@ -319,7 +290,7 @@
     <string name="unable_to_detect_busybox">Unable to detect Busybox on your device.\nAT Command Injection requires Busybox components to function correctly.\nPlease check your device has Busybox installed and try again</string>
     <string name="unknown_error_trying_to_acquire_serial_device">An unknown error has occurred trying to acquire the Serial Device.\nPlease check your logcat for any errors and post them to Github\nor XDA, links to both of these locations can be found within the\nAbout section of the application.</string>
     <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them to Github or\nXDA, links to both of these locations can be found within the\nAbout section of the application.</string>
-    <string name="getting_ocid_api_key">Getting OpenCellID API key...</string>
+    <string name="getting_ocid_api_key">Getting OpenCellID API key&#8230;</string>
     <string name="unable_to_create_map">Unable to create map!</string>
     <string name="describe_the_problem_you_had">For best help, please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!\n</string>
     <string name="status">Status:</string>
@@ -354,7 +325,7 @@
     <string name="help_app_add_get_ocid_api_key">Get an API key for using the Open Cell ID database to upload and download data&#8230;</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
     <string name="this_might_take_a_minute">This may take up to a minute.</string>
-    <string name="waiting_for_location">Waiting for location...</string>
+    <string name="waiting_for_location">Waiting for location&#8230;</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Unable to restore backup from previous database version due to structural changes!</string>
     <string name="unique_bts_data">Unique BTS Data</string>
     <string name="bts_measurements">BTS Measurements</string>
@@ -364,5 +335,36 @@
     <string name="eventlog">EventLog</string>
     <string name="measured_signal_strengths">Measured Signal Strengths</string>
 
+    <string-array name="pref_ui_icons_entries">
+        <item>@string/ui_icon_flat</item>
+        <item>@string/ui_icon_sense</item>
+        <item>@string/ui_icon_white</item>
+    </string-array>
+
+    <string-array name="pref_map_type_entries">
+        <item>@string/map_type_normal</item>
+        <item>@string/map_type_terrain</item>
+    </string-array>
+
+    <string-array name="pref_refresh_entries">
+        <item>@string/pref_refresh_manual</item>
+        <item>@string/pref_refresh_automatic</item>
+        <item>@string/pref_refresh_2s</item>
+        <item>@string/pref_refresh_5s</item>
+        <item>@string/pref_refresh_10s</item>
+        <item>@string/pref_refresh_25s</item>
+        <item>@string/pref_refresh_45s</item>
+        <item>@string/pref_refresh_1_min</item>
+        <item>@string/pref_refresh_5_min</item>
+    </string-array>
+
+    <string-array name="timeout_spinner_values">
+        <item>@string/timeout_spinner_2_sec</item>
+        <item>@string/timeout_spinner_5_sec</item>
+        <item>@string/timeout_spinner_10_sec</item>
+        <item>@string/timeout_spinner_20_sec</item>
+        <item>@string/timeout_spinner_30_sec</item>
+        <item>@string/timeout_spinner_10_min</item>
+    </string-array>
 
 </resources>

@@ -5,7 +5,7 @@
     <string name="about_credits">Twórcy</string>
     <string name="about_disclaimer">Ostrzeżenie</string>
     <string name="about_github">AIMSICD na Githubie</string>
-    <string name="about_poc">To jest dowód koncepcji</string>
+    <string name="about_contribute">CONTRIBUTE</string>
     <string name="about_license">Licencja</string>
     <string name="app_version">Wersja:&#160;</string>
     <string name="btn_clear_logs">Wyczyść</string>
@@ -53,7 +53,6 @@
     <string name="pc_label">PC:</string>
     <string name="pref_autostart_title">Uruchamiaj automatycznie</string>
     <string name="pref_autostart_summ">Uruchamiaj po włączeniu systemu </string>
-    <string name="poc_link">https://pl.wikipedia.org/wiki/Kod_proof-of-concept</string>
     <string name="pref_refresh_automatic">Automatycznie</string>
     <string name="pref_ui_icons_title">Ikony</string>
     <string name="preferences">Ustawienia</string>
@@ -217,7 +216,7 @@
     <string name="help_settings_import_db_from_csv">Importuj do bazy danych z plików CSV.</string>
     <string name="help_settings_preferences">Ustawienia AIMSICD, czas odświeżania i zachowanie serwisów.</string>
     <string name="help_tracking_toggle_2g_only_network_lock">Start - ustawia telefon w trybie 2G w celu śledzenia. Stop - ustawia domyślny typ sieci ub automatyczny.</string>
-    <string name="help_tracking_toggle_aimsicd"></string>
+    <string name="help_tracking_toggle_aimsicd">Rozpoczyna/zatrzymuje zbieranie danych przez AIMSICD do lokalnej bazy danych.</string>
     <string name="danger">ZAGROŻENIE</string>
     <string name="database_backup_successfully_saved_to">Kopia zapasowa zapisana do:</string>
     <string name="describe_the_problem_you_had">W celu uzyskania pomocy opisz swój problem. Problemy bez opisu są automatycznie ignorowane.</string>
@@ -233,7 +232,7 @@
     <string name="unknown_error_trying_to_acquire_serial_device">Wystąpił nieznany bład przy próbie uzyskania Serial Device. Prosimy o sprawdzenie logów i przesłanie ich do nas na Github. Link do Githuba znajedziesz w sekcji \'O aplikacji\'.</string>
     <string name="uploaded_bts_data_successfully">Dane do OpenCellID zostały przesłane.</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Nie udało się odzyskać kopii z poprzedniej wersji bazy danych.</string>
-    <string name="waiting_for_location">Oczekiwanie na lokalizację...</string>
+    <string name="waiting_for_location">Oczekiwanie na lokalizację&#8230;</string>
     <string name="this_might_take_a_minute">To może zająć chwilę.</string>
     <string name="default_mmc_locations">Domyślne lokalizacje MMC</string>
     <string name="bts_measurements">Pomiary BTS</string>
@@ -254,4 +253,48 @@
     <string name="pref_refresh_5s">5 sek</string>
     <string name="map_type_normal">Zwyczajna</string>
     <string name="map_type_terrain">Teren</string>
+
+    <string name="open_cell_id_button_cancel">Anuluj</string>
+    <string name="open_cell_id_button_ok">OK</string>
+    <string name="about_desc_icon_idle">Działanie aplikacji zostało wstrzymane.</string>
+    <string name="about_desc_icon_active_tracking_near">Wykryto śledzenie: w pobliżu aktywny jest FBTS lub IMSIC!</string>
+    <string name="about_desc_icon_ok">Wszystko OK.</string>
+    <string name="about_desc_icon_tracked_down">Jesteś śledzony!</string>
+    <string name="about_desc_icon_insecure_area">Ta okolica nie jest bezpieczna. Powinieneś się oddalić!</string>
+    <string name="about_desc_icon_run">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem.</string>
+    <string name="about_desc_icon_title">Kliknij na ikonę by uzyskać więcej informacji.</string>
+
+    <string-array name="pref_ui_icons_entries">
+        <item>@string/ui_icon_flat</item>
+        <item>@string/ui_icon_sense</item>
+        <item>@string/ui_icon_white</item>
+    </string-array>
+
+    <string-array name="pref_map_type_entries">
+        <item>@string/map_type_normal</item>
+        <item>@string/map_type_terrain</item>
+    </string-array>
+
+    <string-array name="pref_refresh_entries">
+        <item>@string/pref_refresh_manual</item>
+        <item>@string/pref_refresh_automatic</item>
+        <item>@string/pref_refresh_2s</item>
+        <item>@string/pref_refresh_5s</item>
+        <item>@string/pref_refresh_10s</item>
+        <item>@string/pref_refresh_25s</item>
+        <item>@string/pref_refresh_45s</item>
+        <item>@string/pref_refresh_1_min</item>
+        <item>@string/pref_refresh_5_min</item>
+    </string-array>
+
+    <string-array name="timeout_spinner_values">
+        <item>@string/timeout_spinner_2_sec</item>
+        <item>@string/timeout_spinner_5_sec</item>
+        <item>@string/timeout_spinner_10_sec</item>
+        <item>@string/timeout_spinner_20_sec</item>
+        <item>@string/timeout_spinner_30_sec</item>
+        <item>@string/timeout_spinner_10_min</item>
+    </string-array>
+
+
 </resources>

@@ -306,8 +306,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
-                    Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data)
-                            + getString(R.string.this_might_take_a_minute));
+                    Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data));
                     Cell cell = new Cell();
                     cell.setLon(loc.getLongitudeInDegrees());
                     cell.setLat(loc.getLatitudeInDegrees());

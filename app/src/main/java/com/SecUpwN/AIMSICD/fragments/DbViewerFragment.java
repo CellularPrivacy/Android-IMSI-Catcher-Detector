@@ -237,6 +237,9 @@ public class DbViewerFragment extends Fragment {
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
+                    if(!tableData.isClosed()) {
+                        tableData.close();
+                    }
                     return adapter;
                 }
 
@@ -253,6 +256,9 @@ public class DbViewerFragment extends Fragment {
                                 "Lon: " + tableData.getString(3),   // Lng --> lon
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
+                    }
+                    if(!tableData.isClosed()) {
+                        tableData.close();
                     }
                     return adapter;
                 }
@@ -274,6 +280,9 @@ public class DbViewerFragment extends Fragment {
                         data.setIsFakeData(isExample(data));
                         adapter.addItem(data, false);
                     }
+                    if(!tableData.isClosed()) {
+                        tableData.close();
+                    }
                     return adapter;
                 }
 
@@ -289,6 +298,9 @@ public class DbViewerFragment extends Fragment {
                                 tableData.getLong(2));
                                 //"" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
+                    }
+                    if(!tableData.isClosed()) {
+                        tableData.close();
                     }
                     return adapter;
                 }
@@ -314,6 +326,9 @@ public class DbViewerFragment extends Fragment {
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         data.setIsFakeData(isExample(data));
                         adapter.addItem(data, false);
+                    }
+                    if(!tableData.isClosed()) {
+                        tableData.close();
                     }
                     return adapter;
                 }
@@ -460,6 +475,9 @@ public class DbViewerFragment extends Fragment {
                                 "RSS: " + tableData.getString(5),
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
+                    }
+                    if(!tableData.isClosed()) {
+                        tableData.close();
                     }
                     return adapter;
                 }

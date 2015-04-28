@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Click Status Icons below for Detailed Information"
+            android:text="@string/about_desc_icon_title"
             android:textColor="@color/green_text"
             android:id="@+id/textView2"
             android:gravity="center_vertical|center_horizontal"
@@ -75,7 +75,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="Idle / Loading."/>
+                    android:text="@string/about_desc_icon_idle"/>
 
                 <ImageView
                     android:layout_width="48dp"
@@ -89,7 +89,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="Active tracking close to you!"/>
+                    android:text="@string/about_desc_icon_active_tracking_near"/>
             </TableRow>
 
             <TableRow
@@ -109,7 +109,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="Everything OK."/>
+                    android:text="@string/about_desc_icon_ok"/>
 
                 <ImageView
                     android:layout_width="48dp"
@@ -123,7 +123,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="You are being tracked down!"/>
+                    android:text="@string/about_desc_icon_tracked_down"/>
             </TableRow>
 
             <TableRow
@@ -143,7 +143,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="Insecure Service Area. Leave it!"/>
+                    android:text="@string/about_desc_icon_insecure_area"/>
 
                 <ImageView
                     android:layout_width="48dp"
@@ -157,7 +157,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/small_padding"
-                    android:text="RUN! Handset manipulated!"/>
+                    android:text="@string/about_desc_icon_run"/>
             </TableRow>
 
         </TableLayout>
@@ -182,22 +182,23 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/aimsicd_poc_link"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:singleLine="true"
-                android:ellipsize="start"
-                android:text="@string/about_poc"
-                android:textSize="14dp" />
-
-            <Button
                 android:id="@+id/aimsicd_disclaimer_link"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/about_disclaimer"
                 android:textSize="14dp" />
+
+            <Button
+                android:id="@+id/aimsicd_poc_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:text="@string/about_contribute"
+                android:textSize="14dp" />
+
         </LinearLayout>
 
         <LinearLayout
