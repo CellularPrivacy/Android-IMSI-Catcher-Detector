@@ -46,9 +46,8 @@ android:
      - build-tools-21.1.2
 # System Image we use to run emulator(s) during tests
      - sys-img-armeabi-v7a-android-17
-
 # Additional components
-    - extra-android-m2repository
+     - extra-android-m2repository
 
   licenses:
      - 'android-sdk-license-.+'
