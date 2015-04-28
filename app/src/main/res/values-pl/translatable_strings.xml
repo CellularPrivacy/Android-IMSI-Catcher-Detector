@@ -14,11 +14,7 @@
     <string name="backup_database">Kopia zapasowa bazy danych</string>
     <string name="about_releases">Wydania</string>
     <string name="about_wiki">Dokumentacja (WIKI)</string>
-    <string name="action_settings">Ustawienia</string>
     <string name="aimsicd_about_info3">Projekt na Android pozwalający wykrywać fałszywe stacje bazowe (IMSI-catchery)</string>
-    <string name="btn_main_logs">Główne</string>
-    <string name="btn_radio_logs">Radio</string>
-    <string name="btn_send_email">Email</string>
     <string name="btn_start_logs">Rozpocznij</string>
     <string name="btn_stop_logs">Zakończ</string>
     <string name="button_refresh">Odśwież</string>
@@ -35,13 +31,11 @@
     <string name="device_imei">IMEI:</string>
     <string name="device_info">Szczegóły telefonu/SIM</string>
     <string name="device_info_title">Informacje o urządzeniu</string>
-    <string name="device_number">Numer linii:</string>
     <string name="device_type">Rodzaj telefonu</string>
     <string name="device_version">Wersja RIL:</string>
     <string name="disclaimer">Rozumiem, że AIMSICD jest aplikacją eksperymentalną</string>
     <string name="execute_at">Wykonaj</string>
     <string name="get_opencellid">Pobierz dane lokalnej stacji</string>
-    <string name="gsm_only">Tylko dla telefonów z GSM</string>
     <string name="mcc_label">MCC:</string>
     <string name="mnc_label">MNC:</string>
     <string name="neighbouring_cells_num_title">Razem:</string>
@@ -83,8 +77,6 @@
     <string name="network_info">Informacje o sieci</string>
     <string name="network_code">Kod dostawcy:</string>
     <string name="network_baseid">ID stacji bazowej:</string>
-    <string name="network_cdma_lat">Szerokość geograficzna:</string>
-    <string name="network_cdma_long">Wysokośc geograficzna:</string>
     <string name="msg_copied_to_clipboard">Skopiowano logi do schowka</string>
     <string name="map_view">Widok mapy</string>
     <string name="no_network_connection_title">Brak połączenia z Internetem</string>
@@ -92,14 +84,12 @@
     <string name="ocid_api_success">Zapisano nowy klucz</string>
     <string name="open_cell_id_label">Dane OpenCellID</string>
     <string name="sim_country">Kraj:</string>
-    <string name="show_map">Pokaż mapę</string>
     <string name="sim_operator_id">ID operatora:</string>
     <string name="sim_info_title">Informacje o SIM</string>
     <string name="sim_imsi">IMSI:</string>
     <string name="sim_operator_name">Nazwa operatora:</string>
     <string name="sim_serial">Numer seryjny:</string>
     <string name="message_request_api_key">Wybierz OK by pobrać klucz API z OpenCellID.org. Pozwoli Ci to na pobranie danych i wyświetlanie ich na mapie, oraz na wysyłanie zebranych danych. Jeśli nie wyślesz żadanych danych w ciągu 20dni, Twój klucz może zostać zdezaktywowany.</string>
-    <string name="map_type">Rodzaj mapy</string>
     <string name="location_error_title">Serwis lokalizacji wyłączony</string>
     <string name="load_table_data">Wczytaj dane</string>
     <string name="lng_label">Wys.:</string>
@@ -129,13 +119,10 @@
     <string name="restore_database">Odzyskaj bazę danych.</string>
     <string name="serial_device_prompt">Wybierz numer seryjny urządzenia</string>
     <string name="sms_title">Przechwycono SilentSMS</string>
-    <string name="strength">Siła sygnału</string>
     <string name="sms_message">Przechwycono SilentSMS!\n\nWięcej infromacji w widoku bazy danych!</string>
     <string name="table_names_prompt">Wybierz tabelę</string>
     <string name="table_contains_no_data">Brak danych do wyświetlenia</string>
-    <string name="track_femtocell">Śledź Femtocell</string>
-    <string name="untrack_femtocell">Zakończ śledzenie Femtocell</string>
-    <string name="update_opencelldata">Aktualizuj dane OpenCellID</string>
+    <string name="toggle_femtocell">Śledź Femtocell</string>
     <string name="upload_bts">Wyślij dane o lokalnych komórkach</string>
     <string name="serial_device_title">Obecny numer seryjny urządznia:</string>
     <string name="pref_refresh_summ">Kontroluj częstotliwość odświeżania danych</string>
@@ -233,7 +220,6 @@
     <string name="uploaded_bts_data_successfully">Dane do OpenCellID zostały przesłane.</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Nie udało się odzyskać kopii z poprzedniej wersji bazy danych.</string>
     <string name="waiting_for_location">Oczekiwanie na lokalizację&#8230;</string>
-    <string name="this_might_take_a_minute">To może zająć chwilę.</string>
     <string name="default_mmc_locations">Domyślne lokalizacje MMC</string>
     <string name="bts_measurements">Pomiary BTS</string>
     <string name="eventlog">Logi zdarzeń</string>
@@ -263,6 +249,11 @@
     <string name="about_desc_icon_insecure_area">Ta okolica nie jest bezpieczna. Powinieneś się oddalić!</string>
     <string name="about_desc_icon_run">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem.</string>
     <string name="about_desc_icon_title">Kliknij na ikonę by uzyskać więcej informacji.</string>
+
+    <string name="help_app_download_local_bst">Downloads the OCID Database.</string>
+    <string name="help_app_upload_local_bst">Uploads your BTS to OCID DB.</string>
+    <string name="help_app_debugging">Collect and send error logs.</string>
+    <string name="help_app_quit">Exit this app.</string>
 
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>

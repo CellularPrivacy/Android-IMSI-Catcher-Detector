@@ -2,29 +2,13 @@
 
 <resources>
     <color name="white">#ffffffff</color>
-    <color name="off_white">#ffdedede</color>
     <color name="black">#ff000000</color>
-    <color name="light_blue">#ffccffff</color>
-    <color name="cb_shader_alpha">#44ccffff</color>
     <color name="action_bar_color">#ff0d0d0d</color>
     <color name="green_text">#ff00FF00</color>
     <color name="medium_blue">#ff33B5E5</color>
     <color name="standard_yellow">#ffea59</color>
     <color name="standard_grey">#dddddd</color>
     
-    <!-- MAP COLOURS -->
-    <color name="map_unknown">#fff0f8ff</color>     <!-- almost white -->
-    <color name="map_gprs">#ffa9a9a9</color>        <!-- grey -->
-    <color name="map_edge">#ff87cefa</color>        <!-- bluish -->
-    <color name="map_umts">#ff7cfc00</color>        <!-- light green -->
-    <color name="map_hsdpa">#ffff6347</color>       <!-- redish -->
-    <color name="map_hsupa">#ffff00ff</color>       <!-- pink -->
-    <color name="map_hspa">#ff238e6b</color>        <!-- dark green -->
-    <color name="map_cdma">#ff8a2be2</color>        <!-- purple -->
-    <color name="map_evdo0">#ffff69b4</color>       <!-- orange -->
-    <color name="map_evdoA">#ffffff00</color>       <!-- yellow -->
-    <color name="map_1xrtt">#ff7cfc00</color>       <!-- light green -->
-    <color name="map_default">#fff0f8ff</color>     <!-- almost white -->
     <color name="red_text">#a00000</color>          <!-- deep red -->
     <color name="bright_red_text">#ffff0000</color>          <!-- bright red -->
 
