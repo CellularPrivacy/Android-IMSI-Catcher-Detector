@@ -52,7 +52,6 @@ import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
-import org.osmdroid.api.Marker;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -62,10 +61,8 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  *  Description:    TODO: add details
@@ -74,7 +71,7 @@ import java.util.Map;
  *
  *  Current Issues:
  *
- *      [ ] Map is not immediately updated with the BTS info. It take a "long" time ( >10 seconds)
+ *      [x] Map is not immediately updated with the BTS info. It take a "long" time ( >10 seconds)
  *          before map is updated. Any way to shorten this?
  *      [ ] See: #272 #250 #228
  *      [ ] Some pins remain clustered even on the greatest zoom, this is probably
@@ -108,10 +105,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     private SharedPreferences prefs;
     private AimsicdService mAimsicdService;
     private boolean mBound;
-    private boolean isViewingGUI;
 
     private GeoPoint loc = null;
-    private final Map<Marker, MarkerData> mMarkerMap = new HashMap<>();
 
     private MyLocationNewOverlay mMyLocationOverlay;
     private CompassOverlay mCompassOverlay;
@@ -157,7 +152,6 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     public void onResume() {
         super.onResume();
         setUpMapIfNeeded();
-        isViewingGUI = true;
 
         prefs = this.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
@@ -203,7 +197,6 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     @Override
     protected void onPause() {
         super.onPause();
-        isViewingGUI = false;
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
 
         if (mCompassOverlay != null) {
@@ -395,7 +388,6 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
             protected GeoPoint doInBackground(Void... voids) {
                 final int SIGNAL_SIZE_RATIO = 15;  // A scale factor to draw BTS Signal circles
                 int signal;
-                int color;
 
                 mCellTowerGridMarkerClusterer.getItems().clear();
                 loadOpenCellIDMarkers();
@@ -433,46 +425,6 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         if ((dlat != 0.0) || (dlng != 0.0)) {
                             loc = new GeoPoint(dlat, dlng);
 
-                            // TODO: write in text what these colors are. It's damn hard to guess!
-                            // TODO: Remove if not used!! --E:V:A
-                            switch (net) {
-                                case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-                                    color = 0xF0F8FF;
-                                    break;
-                                case TelephonyManager.NETWORK_TYPE_GPRS:
-                                    color = 0xA9A9A9;
-                                    break;
-                                case TelephonyManager.NETWORK_TYPE_EDGE:
-                                    color = 0x87CEFA;
-                                    break;
-                                case TelephonyManager.NETWORK_TYPE_UMTS:
-                                    color = 0x7CFC00;
-                                    break;
-                                case TelephonyManager.NETWORK_TYPE_HSDPA:
-                                    color = 0xFF6347;
-                                    break;
-                                case TelephonyManager.NETWORK_TYPE_HSUPA:
-                                    color = 0xFF00FF;
-                                    break;
-                                case TelephonyManager.NETWORK_TYPE_HSPA:
-                                    color = 0x238E6B;
-                                    break;
-                                case TelephonyManager.NETWORK_TYPE_CDMA:
-                                    color = 0x8A2BE2;
-                                    break;
-                                case TelephonyManager.NETWORK_TYPE_EVDO_0:
-                                    color = 0xFF69B4;
-                                    break;
-                                case TelephonyManager.NETWORK_TYPE_EVDO_A:
-                                    color = 0xFFFF00;
-                                    break;
-                                case TelephonyManager.NETWORK_TYPE_1xRTT:
-                                    color = 0x7CFC00;
-                                    break;
-                                default:
-                                    color = 0xF0F8FF;
-                                    break;
-                            }
 
                             CellTowerMarker ovm = new CellTowerMarker(mContext, mMap,
                                     "Cell ID: " + cellID,
@@ -491,23 +443,6 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                             items.add(ovm);
 
 
-//                    // Add Signal radius circle based on signal strength
-//                    circleOptions = new CircleOptions()
-//                            .center(loc)
-//                            .radius(signal * SIGNAL_SIZE_RATIO)
-//                            .fillColor(color)
-//                            .strokeColor(color)
-//                            .visible(true);
-//
-//                    mMap.addCircle(circleOptions);
-//
-//                    // Add map marker for CellID
-//                    Marker marker = mMap.addMarker(new MarkerOptions()
-//                            .position(loc)
-//                            .draggable(false)
-//                            .title("CellID - " + cellID));
-//                    mMarkerMap.put(marker, new MarkerData("" + cellID, "" + loc.latitude,
-//                            "" + loc.longitude, "" + lac, "", "", "", false));
                         }
 
                     } while (c.moveToNext());
@@ -530,8 +465,9 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         Log.e("map", "Error getting default location!", e);
                     }
                 }
-
-                c.close();
+                if(c != null && !c.isClosed()) {
+                    c.close();
+                }
                 mDbHelper.close();
 
                 // plot neighbouring cells

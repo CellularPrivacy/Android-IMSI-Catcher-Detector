@@ -1131,7 +1131,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                 break;
             default:
-                tickerText = context.getResources().getString(R.string.app_name);
+                tickerText = context.getResources().getString(R.string.main_app_name);
                 break;
         }
 
@@ -1146,7 +1146,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(Icon.getIcon(Icon.Type.valueOf(iconType)))
                         .setTicker(tickerText)
-                        .setContentTitle(context.getResources().getString(R.string.app_name))
+                        .setContentTitle(context.getResources().getString(R.string.main_app_name))
                         .setContentText(contentText)
                         .setOngoing(true)
                         .setAutoCancel(false)

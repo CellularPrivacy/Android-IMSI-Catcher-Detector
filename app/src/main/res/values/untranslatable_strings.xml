@@ -4,29 +4,17 @@
     <string name="empty" translatable="false"></string>
 
     <string name="app_name_short" translatable="false">AIMSICD</string>
+    <string name="main_app_name" translatable="false">Android IMSI-Catcher Detector</string>
 
-    <!-- Mobile Network Types -->
-    <string name="gprs" translatable="false"># GPRS</string>
-    <string name="edge" translatable="false"># EDGE</string>
-    <string name="umts" translatable="false"># UMTS</string>
-    <string name="hsdpa" translatable="false"># HSDPA</string>
-    <string name="hsupa" translatable="false"># HSUPA</string>
-    <string name="hspa" translatable="false"># HSPA</string>
-    <string name="cdma" translatable="false"># CDMA</string>
-    <string name="evo0" translatable="false"># EVO-0</string>
-    <string name="evoA" translatable="false"># EVO-A</string>
 
     <string name="aimsicd_about_info" translatable="false">Android IMSI-Catcher Detector (AIMSICD)</string>
     <string name="wiki_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki</string>
     <string name="contribute_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md</string>
     <string name="disclaimer_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER</string>
     <string name="aimsicd_github_link" translatable="false">https://secupwn.github.io/Android-IMSI-Catcher-Detector/</string>
-    <string name="aimsicd_xda_link" translatable="false">http://forum.xda-developers.com/showthread.php?t=1422969</string>
     <string name="aimsicd_release_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases</string>
     <string name="aimsicd_changelog_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CHANGELOG.md</string>
     <string name="aimsicd_license_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE</string>
-    <string name="aimsicd_credits_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CREDITS</string>
-    <string name="status_icons_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons</string>
 
     <string name="pref_enable_cell_monitoring_key" translatable="false">pref_enable_cell_monitoring</string>
     <string name="pref_enable_cell_key" translatable="false">pref_enable_cell_key</string>

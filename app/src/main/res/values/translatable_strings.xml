@@ -7,13 +7,11 @@
     <string name="device_info">Phone/SIM Details</string>
     <string name="map_view">Antenna Map Viewer</string>
     <string name="db_viewer">Database Viewer</string>
-    <string name="strength">Signal Strength</string>
     <string name="quit">Quit</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Cancel</string>
     <string name="text_agree">I Agree</string>
     <string name="text_disagree">I Disagree</string>
-    <string name="gsm_only">GSM Phones Only</string>
 
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">DISCLAIMER</string>
@@ -31,10 +29,8 @@
 
     <string name="toggle_aimsicd_monitoring">Toggle AIMSICD monitoring</string>
     <string name="toggle_2g_only_network_lock">Toggle 2G-only network lock</string>
-    <string name="track_femtocell">Track Femtocell</string>
-    <string name="untrack_femtocell">Stop Tracking Femtocell</string>
+    <string name="toggle_femtocell">Toggle Femtocell</string>
 
-    <string name="show_map">Show Map</string>
     <string name="backup_database">Backup Database</string>
     <!-- TODO: -->
     <string name="clear_database">Clear/Reset Database</string>
@@ -42,8 +38,6 @@
     <string name="restore_database">Restore database.</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit.</string>
-    <string name="update_opencelldata">Update OpenCellID Data</string>
-    <!-- string name="cell_lookup">Lookup Current Cell Details (OpenCellID)</string -->
     <string name="cell_lookup">All Current Cell Details (ACD)</string>
     <string name="send_logs">Debugging</string>
 
@@ -52,7 +46,6 @@
     connectivity, please enable data connection!</string>
 
     <!-- MAP VIEWER -->
-    <string name="map_type">Map Display Type</string>
     <string name="get_opencellid">Download Local BTS Data</string>
 
     <!-- LAYOUT -->
@@ -71,7 +64,6 @@
     <string name="device_type">Phone Type:</string>
     <string name="device_imei">IMEI:</string>
     <string name="device_version">RIL Version:</string>
-    <string name="device_number">Line Number:</string>
     <string name="network_name">Provider Name:</string>
     <string name="network_code">Provider Code:</string>
     <string name="network_type">Type:</string>
@@ -114,8 +106,6 @@
     <string name="network_netid">Network ID:</string>
     <string name="network_sysid">System ID:</string>
     <string name="network_baseid">Base Station ID:</string>
-    <string name="network_cdma_long">Longitude:</string>
-    <string name="network_cdma_lat">Latitude:</string>
 
     <!-- LOCATION HELPER -->
     <string name="location_error_title">Location Services Disabled</string>
@@ -137,7 +127,6 @@
     <string name="pref_ui_title">Interface Settings</string>
     <string name="pref_ui_icons_title">Icons</string>
     <string name="pref_ui_icons_summ">Icon Theme Selection</string>
-    <string name="action_settings">Settings</string>
     <string name="pref_refresh_title">Refresh Rate</string>
     <string name="pref_refresh_summ">Control the frequency of device updates</string>
     <string name="pref_ocid_title">OpenCellID Settings</string>
@@ -202,10 +191,7 @@
 
     <!-- Debug logs -->
     <string name="title_debug_logs">Debug Logs</string>
-    <string name="btn_radio_logs">Radio</string>
-    <string name="btn_main_logs">Main</string>
     <string name="btn_clear_logs">Clear</string>
-    <string name="btn_send_email">Email</string>
     <string name="btn_copy_to_clipboard">Copy</string>
     <string name="msg_copied_to_clipboard">Logs copied to clipboard</string>
     <string name="btn_stop_logs">Stop</string>
@@ -324,7 +310,10 @@
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Get an API key for using the Open Cell ID database to upload and download data&#8230;</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
-    <string name="this_might_take_a_minute">This may take up to a minute.</string>
+    <string name="help_app_download_local_bst">Downloads the OCID Database.</string>
+    <string name="help_app_upload_local_bst">Uploads your BTS to OCID DB.</string>
+    <string name="help_app_debugging">Collect and send error logs.</string>
+    <string name="help_app_quit">Exit this app.</string>
     <string name="waiting_for_location">Waiting for location&#8230;</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Unable to restore backup from previous database version due to structural changes!</string>
     <string name="unique_bts_data">Unique BTS Data</string>
