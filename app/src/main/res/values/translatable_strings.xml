@@ -292,7 +292,7 @@
     <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them to Github or\nXDA, links to both of these locations can be found within the\nAbout section of the application.</string>
     <string name="getting_ocid_api_key">Getting OpenCellID API key&#8230;</string>
     <string name="unable_to_create_map">Unable to create map!</string>
-    <string name="describe_the_problem_you_had">For best help, please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!\n</string>
+    <string name="describe_the_problem_you_had">ATTENTION! Please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!\n</string>
     <string name="status">Status:</string>
     <string name="idle">IDLE</string>
     <string name="normal">NORMAL</string>
