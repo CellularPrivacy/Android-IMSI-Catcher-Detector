@@ -1,6 +1,71 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### 27.04.2015 - WIP-Internal v0.1.25-alpha-build-47
+
+* Changed: Transformed more strings for translation, some cosmetic changes in java code
+* Changed: Merged `arrays.xml` to `strings.xml` (in `values-XX`) for easier translations
+* Changed: Merged helpers to `strings.xml` and improved polish translation even more
+* Changed: Files of resources were renamed properly, 'about' fragment has been changed
+* Removed: Deleted unused imports (done automatically by Android Studio) and resources
+* Added: Task `lintVitalRelease` has been added into `.travis.yml` for clean checks
+
+---
+
+#### 26.04.2015 - WIP-Internal v0.1.25-alpha-build-46
+
+* Updated: Some updates to the translation instructions, a few more changes to come
+* Updated: Version of library `slf4j-android` as well as `README` have been updated
+* Changed: Re-ordered menu to a preferred layout in conjunction with UI/UX redesign
+* Added: New Info-Buttons for getting help from within our app and without internet
+* Added: Component `extra-android-m2repository` has been added to `.travis.yml`
+* Fixed: NPE on `tm.getNeighboringCellInfo()` when neighboring cell is `null`
+* Fixed: Progress bar is now showing correctly again and does not overlap things
+* Fixed: Errors with strings after running `lintVitalRelease` in Gradle were fixed
+
+---
+
+#### 23.04.2015 - WIP-Internal v0.1.25-alpha-build-45
+
+* Added: Translation instructions have been added and updated in `CONTRIBUTING.md`
+* Fixed: Clarified examples in EventLog and DB Viewer with red `EXAMPLE!` warning
+
+---
+
+#### 23.04.2015 - WIP-Internal v0.1.25-alpha-build-44
+
+* Changed: Moved strings from a few classes and from `array.xml` to `strings.xml`
+* Added: Enabled app to be translatable and start up in users native system language
+* Added: Polish translation and empty `values-de` folder for German language files
+* Fixed: Re-labelled BTS pin-info samples as "0" when being empty (BLUE)
+
+---
+
+#### 21.04.2015 - WIP-Internal v0.1.25-alpha-build-43
+
+* Updated: Version of the `osmbonuspack` library for maps has been updated
+* Fixed: Ability of caching the tiles has been switched on, fixed slow speed
+
+---
+
+#### 21.04.2015 - WIP-Internal v0.1.25-alpha-build-42
+
+* Updated: Compressed all Images and Icons to make our app even smaller
+* Changed: Moved progress bar to overlay content and made it visible for debugging
+* Added:  Included methods to show and the hide progress bar and added test
+
+---
+
+#### 18.04.2015 - WIP-Internal v0.1.25-alpha-build-41
+
+* Updated: `CREDITS` have been updated with the wonderful BFG Repo-Cleaner
+* Removed: Purged `NeighboringCellMonitor.java` since we don't need it anymore
+* Changed: Moved check LAC code into `compareLac()` to check on every cell change
+* Changed: Moved check from `updateNeighbouringCells` to `checkForNeighbourCells()`
+* Fixed: Neighbouring cell list is now also updated outside the MapViewer
+
+---
+
 #### 17.04.2015 - WIP-Internal v0.1.25-alpha-build-40
 
 * Updated: We've completely cleaned our GitHub repo. **Please re-fork us now!**
