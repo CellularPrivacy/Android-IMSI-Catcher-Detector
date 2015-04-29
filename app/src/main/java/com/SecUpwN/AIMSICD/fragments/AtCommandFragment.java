@@ -260,7 +260,7 @@ public class AtCommandFragment extends Fragment {
         }
 
         try {
-            mAtResponse.setText("*** Looking for AT serial devices...\n");
+            mAtResponse.setText(R.string.at_command_response_looking);
             mSerialDevices.clear();
 
             // THIS IS A BAD IDEA       TODO: Consider removing
@@ -301,7 +301,7 @@ public class AtCommandFragment extends Fragment {
 
                 if (add) {
                     mSerialDevices.add(file.getAbsolutePath());
-                    mAtResponse.append("Found: " + file.getAbsolutePath() + "\n");
+                    mAtResponse.append(getString(R.string.at_command_response_found) + file.getAbsolutePath() + "\n");
                 }
             }
 
@@ -317,7 +317,7 @@ public class AtCommandFragment extends Fragment {
                             if (!line.trim().equals("") && line.contains("/dev/")) {
                                 int place = line.indexOf("=") + 1;
                                 mSerialDevices.add(line.substring(place, line.length() - 1));
-                                mAtResponse.append("Found: "+line.substring(place, line.length() - 1)+"\n");
+                                mAtResponse.append(getString(R.string.at_command_response_found)+line.substring(place, line.length() - 1)+"\n");
                             }
                         }
                         super.commandOutput(id, line);
@@ -343,7 +343,7 @@ public class AtCommandFragment extends Fragment {
             mSerialDeviceSpinnerLabel.setVisibility(View.VISIBLE);
         }
 
-        mAtResponse.append("*** Setup Complete ***\n");
+        mAtResponse.append(getString(R.string.at_command_response_setup_complete));
         mAtResponse.setVisibility(View.VISIBLE);
 
         return SERIAL_INIT_OK;

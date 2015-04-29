@@ -937,7 +937,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void onLocationChanged(Location loc) {
 
         if (Build.VERSION.SDK_INT > 16) {
-            DeviceApi17.loadCellInfo(tm, mDevice.mCell);
+            DeviceApi17.loadCellInfo(tm, mDevice);
         }
 
         if (!mDevice.mCell.isValid()) {

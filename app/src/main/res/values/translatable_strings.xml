@@ -324,6 +324,9 @@
     <string name="eventlog">EventLog</string>
     <string name="measured_signal_strengths">Measured Signal Strengths</string>
 
+    <string name="at_command_response_looking">*** Looking for AT serial devices&#8230;\n</string>
+    <string name="at_command_response_found">Found:&#032;</string>""
+    <string name="at_command_response_setup_complete">*** Setup Complete ***\n</string>""
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
         <item>@string/ui_icon_sense</item>
