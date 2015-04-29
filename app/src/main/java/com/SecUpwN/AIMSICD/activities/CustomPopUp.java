@@ -69,7 +69,7 @@ public class CustomPopUp extends Activity {
                 createPopUp(
                         null,
                         getString(R.string.status) + "\t" + getString(R.string.normal),
-                        getResources().getString(R.string.detail_info_nomral),
+                        getResources().getString(R.string.detail_info_normal),
                         getResources().getDrawable(R.drawable.sense_ok));
                 break;
             case 2:

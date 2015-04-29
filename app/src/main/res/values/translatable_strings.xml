@@ -38,7 +38,7 @@
     <string name="restore_database">Restore Database</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit.</string>
-    <string name="cell_lookup">All Current Cell Details (ACD)</string>
+    <string name="cell_lookup">All Current Cell Details</string>
     <string name="send_logs">Debugging</string>
 
     <string name="no_network_connection_title">No Internet Connection</string>
@@ -46,7 +46,7 @@
     connectivity, please enable data connection!</string>
 
     <!-- MAP VIEWER -->
-    <string name="get_opencellid">Download Local BTS Data</string>
+    <string name="get_opencellid">Download BTS Data</string>
 
     <!-- LAYOUT -->
     <string name="device_info_title">Device Information</string>
@@ -79,7 +79,7 @@
     <string name="network_psc">PSC:</string>
 
     <!-- Upload BTS to OpenCellID -->
-    <string name="upload_bts">Upload Local BTS Data</string>
+    <string name="upload_bts">Upload BTS Data</string>
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">About AIMSICD</string>
@@ -135,7 +135,7 @@
     <string name="pref_enable_cell_monitoring_title">Cell Monitoring</string>
     <string name="pref_enable_cell_monitoring_summ">Enable Automatic Cell Monitoring</string>
     <string name="pref_request_ocid_key">Request OCID API Key</string>
-    <string name="pref_ocid_requestkey_summary">Request a new API key for OpenCellID data access</string>
+    <string name="pref_ocid_requestkey_summary">Request API key for OpenCellID data access</string>
 
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Map Viewer Preferences</string>
@@ -200,7 +200,7 @@
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILED EXPLANATION</string>
     <string name="detail_info_idle">App is idling or loading. No protection and detection measures are enabled. Please open the Navigation Drawer and enable them in section TRACKING.</string>
-    <string name="detail_info_nomral">No threats detected or found. Our App is constantly checking your network based upon the protection measures you\'ve set in the Navigation Drawer and Preferences.</string>
+    <string name="detail_info_normal">No threats detected or found. Our App is constantly checking your network based upon the protection measures you\'ve set in the Navigation Drawer and Preferences.</string>
     <string name="detail_info_medium">Insecure Service Area: At least 1 new or unknown BTS is in operation in this vicinity, or using an insecure (broken) encryption algorithm lower than A5/3 [Detection is WIP]. Expect that any phone calls/SMS made in this area can be intercepted and recorded. You better leave this place now.</string>
     <string name="detail_info_high">Hostile Service Actions Detected: An IMSI-Catcher (IMSIC) or fake BTS (FBTS) is actively tracking users. Active scanning takes place in this area. You should avoid this place, especially if there are political unrest. Take out your battery or kill your phone.</string>
     <string name="detail_info_danger">Hostile Tracking Detected: An FBTS or IMSIC is actively tracking YOU and preventing your phone from connecting through your normal encrypted mobile provider. If you\'re in danger or repercussions, destroy your phone + SIM and report it as recently stolen.</string>
@@ -292,17 +292,17 @@
     <string name="help_main_phone_sim_details">SIM network provider details, IMEI, TMSI.</string>
     <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OCID and highlight the differences.</string>
     <string name="help_main_database_viewer">View the different DB tables we have.</string>
-    <string name="help_main_antenna_map_view">A map showing color coded antennas of nearby cells.</string>
-    <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor.</string>
+    <string name="help_main_antenna_map_view">Map of color coded antennas nearby.</string>
+    <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
 
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_aimsicd">This starts/stops AIMSICD monitoring and collecting cell details into internal database tables (DBi).</string>
-    <string name="help_tracking_toggle_2g_only_network_lock">Start - Set phone to use 2G mode only, for tracking. Stop -  Use default Network Type (RAT) settings or Automatic.</string>
+    <string name="help_tracking_toggle_aimsicd">Start/stop AIMSICD monitoring and collect cell details into internal database tables (DBi).</string>
+    <string name="help_tracking_toggle_2g_only_network_lock">Start to set phone to use 2G mode only, for tracking. Stop to use default Network Type (RAT) settings or Automatic.</string>
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">AIMSICD settings and preferences such as polling times and service behaviour etc.</string>
-    <string name="help_settings_backup_db">Backup AIMSICD SQLite3 DB to SD-card.</string>
-    <string name="help_settings_restore_db">Restore AIMSICD SQLite3 DB from SD-card.</string>
+    <string name="help_settings_backup_db">Backup AIMSICD SQLite3 DB to SD-Card.</string>
+    <string name="help_settings_restore_db">Restore AIMSICD SQLite3 DB from SD-Card.</string>
     <string name="help_settings_reset_db">Clear and reset all or specified DB table(s).</string>
     <string name="help_settings_export_db_to_csv">Export DB tables into individual CSV files.</string>
     <string name="help_settings_import_db_from_csv">Import DB table(s) from individual CSV file(s).</string>
@@ -311,7 +311,7 @@
     <string name="help_app_add_get_ocid_api_key">Get an API key for using the Open Cell ID database to upload and download data&#8230;</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
     <string name="help_app_download_local_bst">Downloads the OCID Database.</string>
-    <string name="help_app_upload_local_bst">Uploads your BTS to OCID DB.</string>
+    <string name="help_app_upload_local_bst">Uploads your BTS to the OCID Database.</string>
     <string name="help_app_debugging">Collect and send error logs.</string>
     <string name="help_app_quit">Exit this app.</string>
     <string name="waiting_for_location">Waiting for location&#8230;</string>

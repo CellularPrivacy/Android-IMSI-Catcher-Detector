@@ -140,7 +140,7 @@
     <string name="drawer_close">Zamknij menu</string>
     <string name="drawer_open">Otwórz menu</string>
     <string name="detail_info_idle">Aplikacja jest bezczynna. Włącz śledzenie w menu.</string>
-    <string name="detail_info_nomral">Nie wykryto żadnych zagrożeń.</string>
+    <string name="detail_info_normal">Nie wykryto żadnych zagrożeń.</string>
     <string name="detail_info_run">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
     <string name="detail_info_medium">Ta okolica nie jest bezpieczna: wykryto co najmniej jedną nieznaną stację bazową lub używane jest szyfrowanie słabsze niż A5/3. Wszystkie wiadomości i rozmowy w tym rejonie mogą być przechwycone.</string>
     <string name="detail_info_danger">Wykryto śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci! Pozbądź się swojego telefou, zniszcz kartę SIM i zgłoś ją jako zagubioną</string>
