@@ -35,7 +35,7 @@
     <!-- TODO: -->
     <string name="clear_database">Clear/Reset Database</string>
 
-    <string name="restore_database">Restore database.</string>
+    <string name="restore_database">Restore Database</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit.</string>
     <string name="cell_lookup">All Current Cell Details (ACD)</string>
