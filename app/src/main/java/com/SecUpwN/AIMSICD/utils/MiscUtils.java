@@ -13,9 +13,7 @@ import java.io.InputStreamReader;
  * paulkinsella29@yahoo.ie
  */
 
-
 public class MiscUtils {
-
 
     public static String setAssetsString(Context context){
         BufferedReader reader = null;
@@ -28,19 +26,17 @@ public class MiscUtils {
                 buildassets.append(rline).append("\n");
                 rline = reader.readLine().replace("'","\\'").replace("\\n","");
             }
-        }catch (Exception ee){
-            System.out.println("Out>>> " + ee);
+        } catch (Exception ee){
+            ee.printStackTrace();
         }finally {
             if(reader != null){
                 try {
                     reader.close();
-                }catch (Exception ee){
-                    System.out.println("Out>>> " + ee);
+                } catch (Exception ee){
+                    ee.printStackTrace();
                 }
             }
         }
-
-
 
         return buildassets.toString();
     }

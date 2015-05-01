@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="AIMSICD"
         android:textSize="16dp"
         android:textColor="#ffffc92a"
         app:angle="35"

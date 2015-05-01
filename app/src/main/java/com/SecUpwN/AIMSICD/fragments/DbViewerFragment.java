@@ -27,6 +27,7 @@ import com.SecUpwN.AIMSICD.adapters.MeasuredCellStrengthCardInflater;
 import com.SecUpwN.AIMSICD.adapters.OpenCellIdCardInflater;
 import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
 import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
+import com.SecUpwN.AIMSICD.constants.Examples;
 
 public class DbViewerFragment extends Fragment {
 
@@ -73,7 +74,9 @@ public class DbViewerFragment extends Fragment {
 
         @Override
         public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
             mTableSelected = String.valueOf(tblSpinner.getSelectedItem());
+
             mMadeSelection = true;
         }
 
@@ -103,43 +106,36 @@ public class DbViewerFragment extends Fragment {
                         mDb.open();
                         Cursor result = null;
 
-                        switch (mTableSelected) {
+                        //TODO Table: "DetectionFlags"
+                        //case "DetectionFlags":
+                        //result = mDb.getDetectionFlagsData();
+
+
+                        if(getString(R.string.unique_bts_data).equalsIgnoreCase(mTableSelected)) {
                             // The unique BTSs we have been connected to in the past
                             // EVA: Was "Cell Data" // Table: cellinfo
                             //      ToBe: "DBi_bts"
-                            case "Unique BTS Data":
-                                result = mDb.getCellData();
-                                break;
+
+                            result = mDb.getCellData();
+                        } else if(getString(R.string.bts_measurements).equalsIgnoreCase(mTableSelected)) {
                             // All BTS measurements we have done since start
                             // EVA: Was "Location Data" // Table: locationinfo
                             //      ToBe: "DBi_measure"
-                            case "BTS Measurements":
-                                result =  mDb.getLocationData();
-                                break;
+                            result = mDb.getLocationData();
+                        } else if(getString(R.string.imported_ocid_data).equalsIgnoreCase(mTableSelected)) {
                             // EVA: Was "OpenCellID Data" // Table: opencellid
                             //      ToBe: "DBe_import"
-                            case "Imported OCID Data":
-                                result =  mDb.getOpenCellIDData();
-                                break;
-                            case "Default MCC Locations":
-                                result =  mDb.getDefaultMccLocationData();
-                                break;
-                            case "Silent SMS":
+                            result =  mDb.getOpenCellIDData();
+                        } else if(getString(R.string.default_mmc_locations).equalsIgnoreCase(mTableSelected)) {
+                            result =  mDb.getDefaultMccLocationData();
+                        } else if(getString(R.string.silent_sms).equalsIgnoreCase(mTableSelected)) {
                                 result =  mDb.getSilentSmsData();
-                                break;
+                        } else if(getString(R.string.measured_signal_strengths).equalsIgnoreCase(mTableSelected)) {
                             //      ToBe merged into "DBi_measure:rx_signal"
-                            case "Measured Signal Strengths":
                                 result = mDb.getSignalStrengthMeasurementData();
-                                break;
-
+                        } else if(getString(R.string.eventlog).equalsIgnoreCase(mTableSelected)) {
                             // Table: "EventLog"
-                            case "EventLog":
-                                result = mDb.getEventLogData();
-
-                            // Table: "DetectionFlags"
-                            //case "DetectionFlags":
-                            //    result = mDb.getDetectionFlagsData();
-
+                            result = mDb.getEventLogData();
                         }
 
                         BaseInflaterAdapter adapter = null;
@@ -193,7 +189,7 @@ public class DbViewerFragment extends Fragment {
      */
     private BaseInflaterAdapter BuildTable(Cursor tableData) {
         if (tableData != null && tableData.getCount() > 0) {
-            switch (mTableSelected) {
+            if (getString(R.string.imported_ocid_data).equalsIgnoreCase(mTableSelected)) {
                 /*
                  * Table: DBi_import
                  *
@@ -209,111 +205,121 @@ public class DbViewerFragment extends Fragment {
                  *
                  */
                 // Table:   DBe_import
-                case "Imported OCID Data": {
-                    BaseInflaterAdapter<CardItemData> adapter
-                            = new BaseInflaterAdapter<>( new OpenCellIdCardInflater() );
-                    int count = tableData.getCount();
-                    while (tableData.moveToNext()) {
-                        // The getString(i) index refer to the table column in the "DBe_import" table
-                        //                         OLD  opencellid(i)       // New "DBe_import" column name
-                        CardItemData data = new CardItemData(
-                                //"Source: " + tableData.getString(0),      // DBsource
-                                //"RAT: "    + tableData.getString(0),      // RAT
-                                "CID: "     + tableData.getString(0),       //
-                                "LAC: "     + tableData.getString(1),       //
-                                "MCC: "     + tableData.getString(2),       //
-                                "MNC: "     + tableData.getString(3),       //
-                                //"PSC: "    + tableData.getString(7),      // PSC
-                                "Lat: "     + tableData.getString(4),       // gps_lat
-                                "Lon: "     + tableData.getString(5),       // gps_lon
-                                //"isExact: " + tableData.getString(7),     // isGPSexact
-                                //"Range: "  + tableData.getString(7),      // avg_range //
-                                "AvgSignal: " + tableData.getString(6),     // avg_signal
-                                "Samples: " + tableData.getString(7),       // samples // NOTE: #7 is range from ocid csv
-                                //"first: "  + tableData.getString(7),      // time_first
-                                //"last: "   + tableData.getString(7),      // time_last
-                                //"reject: " + tableData.getString(7),      // rej_cause
-                                "" + (tableData.getPosition() + 1) + " / " + count);
-                        adapter.addItem(data, false);
-                    }
-                    return adapter;
+
+                BaseInflaterAdapter<CardItemData> adapter
+                        = new BaseInflaterAdapter<>(new OpenCellIdCardInflater());
+                int count = tableData.getCount();
+                while (tableData.moveToNext()) {
+                    // The getString(i) index refer to the table column in the "DBe_import" table
+                    //                         OLD  opencellid(i)       // New "DBe_import" column name
+                    CardItemData data = new CardItemData(
+                            //"Source: " + tableData.getString(0),      // DBsource
+                            //"RAT: "    + tableData.getString(0),      // RAT
+                            "CID: " + tableData.getString(0),       //
+                            "LAC: " + tableData.getString(1),       //
+                            "MCC: " + tableData.getString(2),       //
+                            "MNC: " + tableData.getString(3),       //
+                            //"PSC: "    + tableData.getString(7),      // PSC
+                            "Lat: " + tableData.getString(4),       // gps_lat
+                            "Lon: " + tableData.getString(5),       // gps_lon
+                            //"isExact: " + tableData.getString(7),     // isGPSexact
+                            //"Range: "  + tableData.getString(7),      // avg_range //
+                            "AvgSignal: " + tableData.getString(6),     // avg_signal
+                            "Samples: " + tableData.getString(7),       // samples // NOTE: #7 is range from ocid csv
+                            //"first: "  + tableData.getString(7),      // time_first
+                            //"last: "   + tableData.getString(7),      // time_last
+                            //"reject: " + tableData.getString(7),      // rej_cause
+                            "" + (tableData.getPosition() + 1) + " / " + count);
+                    adapter.addItem(data, false);
                 }
+                if (!tableData.isClosed()) {
+                    tableData.close();
+                }
+                return adapter;
+            } else if (getString(R.string.default_mmc_locations).equalsIgnoreCase(mTableSelected)) {
 
                 // Table:   defaultlocation
-                case "Default MCC Locations": {
-                    BaseInflaterAdapter<CardItemData> adapter
-                            = new BaseInflaterAdapter<>( new DefaultLocationCardInflater() );
-                    int count = tableData.getCount();
-                    while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData(
-                                "Country: " + tableData.getString(0),// Country --> country
-                                "MCC: " + tableData.getString(1),   // Mcc --> MCC
-                                "Lat: " + tableData.getString(2),   // Lat --> lat
-                                "Lon: " + tableData.getString(3),   // Lng --> lon
-                                "" + (tableData.getPosition() + 1) + " / " + count);
-                        adapter.addItem(data, false);
-                    }
-                    return adapter;
+                BaseInflaterAdapter<CardItemData> adapter
+                        = new BaseInflaterAdapter<>(new DefaultLocationCardInflater());
+                int count = tableData.getCount();
+                while (tableData.moveToNext()) {
+                    CardItemData data = new CardItemData(
+                            "Country: " + tableData.getString(0),// Country --> country
+                            "MCC: " + tableData.getString(1),   // Mcc --> MCC
+                            "Lat: " + tableData.getString(2),   // Lat --> lat
+                            "Lon: " + tableData.getString(3),   // Lng --> lon
+                            "" + (tableData.getPosition() + 1) + " / " + count);
+                    adapter.addItem(data, false);
                 }
-
+                if (!tableData.isClosed()) {
+                    tableData.close();
+                }
+                return adapter;
+            } else if (getString(R.string.silent_sms).equalsIgnoreCase(mTableSelected)) {
                 // Table:   silentsms
-                case "Silent SMS": {
-                    BaseInflaterAdapter<SilentSmsCardData> adapter
-                            = new BaseInflaterAdapter<>( new SilentSmsCardInflater() );
-                    //int count = tableData.getCount();
-                    while (tableData.moveToNext()) {
-                        SilentSmsCardData data = new SilentSmsCardData(
-                                tableData.getString(0), // Address
-                                tableData.getString(1), // Display
-                                tableData.getString(2), // Class
-                                tableData.getString(3), // ServiceCtr
-                                tableData.getString(4), // Message
-                                tableData.getLong(5));  // Timestamp
-                                //"" + (tableData.getPosition() + 1) + " / " + count);
-                        adapter.addItem(data, false);
-                    }
-                    return adapter;
+                BaseInflaterAdapter<SilentSmsCardData> adapter
+                        = new BaseInflaterAdapter<>(new SilentSmsCardInflater());
+                //int count = tableData.getCount();
+                while (tableData.moveToNext()) {
+                    SilentSmsCardData data = new SilentSmsCardData(
+                            tableData.getString(0), // Address
+                            tableData.getString(1), // Display
+                            tableData.getString(2), // Class
+                            tableData.getString(3), // ServiceCtr
+                            tableData.getString(4), // Message
+                            tableData.getLong(5));  // Timestamp
+                    //"" + (tableData.getPosition() + 1) + " / " + count);
+                    data.setIsFakeData(isExample(data));
+                    adapter.addItem(data, false);
                 }
-
+                if (!tableData.isClosed()) {
+                    tableData.close();
+                }
+                return adapter;
+            } else if (getString(R.string.measured_signal_strengths).equalsIgnoreCase(mTableSelected)) {
                 // ToDo: merge into "DBi_measure:rx_signal"
-                case "Measured Signal Strengths": {
-                    BaseInflaterAdapter<MeasuredCellStrengthCardData> adapter
-                            = new BaseInflaterAdapter<>( new MeasuredCellStrengthCardInflater() );
-                    //int count = tableData.getCount();
-                    while (tableData.moveToNext()) {
-                        MeasuredCellStrengthCardData data = new MeasuredCellStrengthCardData(
-                                tableData.getInt(0),
-                                tableData.getInt(1),
-                                tableData.getLong(2));
-                                //"" + (tableData.getPosition() + 1) + " / " + count);
-                        adapter.addItem(data, false);
-                    }
-                    return adapter;
+                BaseInflaterAdapter<MeasuredCellStrengthCardData> adapter
+                        = new BaseInflaterAdapter<>(new MeasuredCellStrengthCardInflater());
+                //int count = tableData.getCount();
+                while (tableData.moveToNext()) {
+                    MeasuredCellStrengthCardData data = new MeasuredCellStrengthCardData(
+                            tableData.getInt(0),
+                            tableData.getInt(1),
+                            tableData.getLong(2));
+                    //"" + (tableData.getPosition() + 1) + " / " + count);
+                    adapter.addItem(data, false);
                 }
+                if (!tableData.isClosed()) {
+                    tableData.close();
+                }
+                return adapter;
+            } else if (getString(R.string.eventlog).equalsIgnoreCase(mTableSelected)) {
 
                 // Table:   EventLog
                 // Where:   Table is displayed with EventLogCardInflater and EventLogItemData
-                case "EventLog": {
-                    BaseInflaterAdapter<EventLogItemData> adapter
-                            = new BaseInflaterAdapter<>( new EventLogCardInflater() );
+                BaseInflaterAdapter<EventLogItemData> adapter
+                        = new BaseInflaterAdapter<>(new EventLogCardInflater());
 
-                    int count = tableData.getCount();
-                    while (tableData.moveToNext()) {
-                        EventLogItemData data = new EventLogItemData(
-                                "Time: "    + tableData.getString(0),   // time
-                                "LAC: "     + tableData.getInt(1),      // LAC
-                                "CID: "     + tableData.getInt(2),      // CID
-                                "PSC: "     + tableData.getInt(3),      // PSC
-                                "Lat: "     + tableData.getDouble(4),   // gpsd_lat
-                                "Lon: "     + tableData.getDouble(5),   // gpsd_lon
-                                "Accuracy: "+ tableData.getInt(6),      // gpsd_accu (accuracy in [m])
-                                "DetID: "   + tableData.getInt(7),      // DF_id
-                                "Event: "   + tableData.getString(8),   // DF_desc
-                                "" + (tableData.getPosition() + 1) + " / " + count);
-                        adapter.addItem(data, false);
-                    }
-                    return adapter;
+                int count = tableData.getCount();
+                while (tableData.moveToNext()) {
+                    EventLogItemData data = new EventLogItemData(
+                            "Time: " + tableData.getString(0),   // time
+                            "LAC: " + tableData.getInt(1),      // LAC
+                            "CID: " + tableData.getInt(2),      // CID
+                            "PSC: " + tableData.getInt(3),      // PSC
+                            "Lat: " + tableData.getDouble(4),   // gpsd_lat
+                            "Lon: " + tableData.getDouble(5),   // gpsd_lon
+                            "Accuracy: " + tableData.getInt(6),      // gpsd_accu (accuracy in [m])
+                            "DetID: " + tableData.getInt(7),      // DF_id
+                            "Event: " + tableData.getString(8),   // DF_desc
+                            "" + (tableData.getPosition() + 1) + " / " + count);
+                    data.setIsFakeData(isExample(data));
+                    adapter.addItem(data, false);
                 }
+                if (!tableData.isClosed()) {
+                    tableData.close();
+                }
+                return adapter;
 
 /*                // Table:   EventLog
                 case "EventLog Data": {
@@ -433,17 +439,17 @@ public class DbViewerFragment extends Fragment {
 */
 
                 /**
-                 * TODO:
-                 * This is the default for all other tables, so since we have different
-                 * info in the new tables we need to create individual entries
-                 * (instead of default) for these:
-                 *
-                 *  - "Unique BTS Data" (DBi_bts)
-                 *  - "BTS Measurements" (DBi_measure)
-                 *
-                 * Once implemented, remove this or make different default.
-                 */
-                default: {
+                * TODO:
+                * This is the default for all other tables, so since we have different
+                * info in the new tables we need to create individual entries
+                * (instead of default) for these:
+                *
+                *  - "Unique BTS Data" (DBi_bts)
+                *  - "BTS Measurements" (DBi_measure)
+                *
+                * Once implemented, remove this or make different default.
+                */
+            } else {
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>( new CellCardInflater() );
                     int count = tableData.getCount();
@@ -458,11 +464,31 @@ public class DbViewerFragment extends Fragment {
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data, false);
                     }
+                    if(!tableData.isClosed()) {
+                        tableData.close();
+                    }
                     return adapter;
                 }
-            }
         } else {
             return null;
         }
     }
+
+    private boolean isExample(EventLogItemData pEventLogItemData) {
+        return pEventLogItemData != null &&
+                pEventLogItemData.getLac().contains(Examples.EVENT_LOG_DATA.LAC) &&
+                pEventLogItemData.getCellID().contains(Examples.EVENT_LOG_DATA.CID) &&
+                pEventLogItemData.getPsc().contains(Examples.EVENT_LOG_DATA.PSC) &&
+                pEventLogItemData.getLat().contains(Examples.EVENT_LOG_DATA.GPSD_LAT) &&
+                pEventLogItemData.getLng().contains(Examples.EVENT_LOG_DATA.GPSD_LON) &&
+                pEventLogItemData.getgpsd_accu().contains(Examples.EVENT_LOG_DATA.GPSD_ACCU) &&
+                pEventLogItemData.getDF_id().contains(Examples.EVENT_LOG_DATA.DF_ID);
+    }
+
+    private boolean isExample(SilentSmsCardData pSilentSmsCardData) {
+        return pSilentSmsCardData != null &&
+                pSilentSmsCardData.getAddress().contains(Examples.SILENT_SMS_CARD_DATA.ADDRESS) &&
+                pSilentSmsCardData.getDisplayAddress().contains(Examples.SILENT_SMS_CARD_DATA.DISPLAY);
+    }
+
 }

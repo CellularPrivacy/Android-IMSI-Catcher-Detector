@@ -50,4 +50,16 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/medium_blue"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/example"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
+        android:paddingEnd="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/bright_red_text"
+        android:gravity="end"
+        android:layout_gravity="end"/>
+
 </FrameLayout>

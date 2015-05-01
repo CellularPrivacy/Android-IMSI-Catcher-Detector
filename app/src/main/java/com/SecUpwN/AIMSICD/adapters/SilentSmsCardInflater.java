@@ -37,6 +37,7 @@ public class SilentSmsCardInflater implements IAdapterViewInflater<SilentSmsCard
         private final TextView mServiceCentre;
         private final TextView mMessageBody;
         private final TextView mTimestamp;
+        private final TextView mExample;
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
@@ -46,6 +47,7 @@ public class SilentSmsCardInflater implements IAdapterViewInflater<SilentSmsCard
             mServiceCentre =    (TextView) mRootView.findViewById(R.id.service_centre);
             mMessageBody =      (TextView) mRootView.findViewById(R.id.message_body);
             mTimestamp =        (TextView) mRootView.findViewById(R.id.message_timestamp);
+            mExample =          (TextView) mRootView.findViewById(R.id.example);
             rootView.setTag(this);
         }
 
@@ -56,6 +58,13 @@ public class SilentSmsCardInflater implements IAdapterViewInflater<SilentSmsCard
             mServiceCentre.setText( item.getServiceCentre());
             mMessageBody.setText(   item.getMessage());
             mTimestamp.setText(     item.getTimestamp());
+            if(item.isFakeData()) {
+                mExample.setText(mRootView.getContext().getString(R.string.example))  ;
+                mExample.setVisibility(View.VISIBLE);
+            } else {
+                mExample.setVisibility(View.GONE);
+            }
+
         }
     }
 }

@@ -21,7 +21,7 @@ import android.widget.TextView;
 public class AboutFragment extends Fragment {
 
     private Context mContext;
-    Button btncredits;
+    private Button btncredits;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class AboutFragment extends Fragment {
 
             //Proof of Concept Link
             tv = v.findViewById(R.id.aimsicd_poc_link);
-            setLink(tv, R.string.poc_link);
+            setLink(tv, R.string.contribute_link);
 
             //Disclaimer Link
             tv = v.findViewById(R.id.aimsicd_disclaimer_link);

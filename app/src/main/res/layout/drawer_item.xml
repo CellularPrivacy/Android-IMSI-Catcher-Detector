@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/activatedBackgroundIndicator"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/activatedBackgroundIndicator"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:textAppearance="?android:attr/textAppearanceListItemSmall">
 
     <ImageView
-            android:id="@+id/drawer_menu_item_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:contentDescription="icon"/>
+        android:id="@+id/drawer_menu_item_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/empty"
+        android:scaleType="fitXY" />
 
     <TextView
-            android:id="@+id/drawer_menu_item_label"
-            android:layout_width="match_parent"
+        android:id="@+id/drawer_menu_item_label"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_toLeftOf="@+id/drawer_menu_item_info_button"
+        android:layout_toRightOf="@id/drawer_menu_item_icon"
+        android:layout_toStartOf="@+id/drawer_menu_item_info_button"
+        android:gravity="center_vertical"
+        android:textColor="#FFFFFF" />
+        <ImageView
+            android:id="@+id/drawer_menu_item_info_button"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toRightOf="@id/drawer_menu_item_icon"
-            android:layout_toEndOf="@id/drawer_menu_item_icon"
-            android:gravity="center_vertical"
-            android:text="TextView"
-            android:textColor="#FFFFFF"/>
+            android:padding="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:contentDescription="@string/empty"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_info"
+            android:layout_gravity="center" />
 
 </RelativeLayout>

@@ -89,8 +89,11 @@
             android:footerDividersEnabled="false"
             android:listSelector="@android:color/transparent"
             android:cacheColorHint="@android:color/transparent"
+            android:overScrollMode="never"
+            android:fadingEdgeLength="0dp"
             android:divider="@null"
             android:dividerHeight="10dp"
-            android:layout_below="@+id/cellView"/>
+            android:layout_below="@+id/cellView"
+            android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

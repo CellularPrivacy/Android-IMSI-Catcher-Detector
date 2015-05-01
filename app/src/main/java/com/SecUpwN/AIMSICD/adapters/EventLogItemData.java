@@ -1,9 +1,5 @@
 package com.SecUpwN.AIMSICD.adapters;
 
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.Device;
-import java.text.SimpleDateFormat;
-
 /**
  *  Description:    Class to show data of table "EventLog" in "Database Viewer"
  *
@@ -46,6 +42,7 @@ public class EventLogItemData {
     private final String mDF_id;
     private final String mDF_desc;
     private final String mRecordId;
+    private boolean mIsFakeData;
 
 
 
@@ -60,18 +57,42 @@ public class EventLogItemData {
                             String DF_id,
                             String DF_desc,
                             String recordId) {
-        mTimestamp = time;
-        mLac = LAC;
-        mCellID = CID;
-        mPsc = PSC;
-        mLat = gpsd_lat;
-        mLng = gpsd_lon;
-        mgpsd_accu = gpsd_accu;
-        mDF_id = DF_id;
-        mDF_desc = DF_desc;
-        mRecordId = recordId;
+        this(time,
+                LAC,
+                CID,
+                PSC,
+                gpsd_lat,
+                gpsd_lon,
+                gpsd_accu,
+                DF_id,
+                DF_desc,
+                recordId,
+                false);
     }
 
+    public EventLogItemData(String pTime,
+                            String pLAC,
+                            String pCID,
+                            String pPSC,
+                            String pGpsd_lat,
+                            String pGpsd_lon,
+                            String pGpsd_accu,
+                            String pDF_id,
+                            String pDF_desc,
+                            String pRecordId,
+                            boolean pIsFakeData) {
+        mTimestamp = pTime;
+        mLac = pLAC;
+        mCellID = pCID;
+        mPsc = pPSC;
+        mLat = pGpsd_lat;
+        mLng = pGpsd_lon;
+        mgpsd_accu = pGpsd_accu;
+        mDF_id = pDF_id;
+        mDF_desc = pDF_desc;
+        mRecordId = pRecordId;
+        mIsFakeData = pIsFakeData;
+    }
 
     public String getTimestamp() {
         return mTimestamp;
@@ -113,4 +134,11 @@ public class EventLogItemData {
         return mRecordId;
     }
 
+    public boolean isFakeData() {
+        return mIsFakeData;
+    }
+
+    public void setIsFakeData(boolean pIsFakeData) {
+        mIsFakeData = pIsFakeData;
+    }
 }

@@ -130,10 +130,12 @@ dependencies {
     compile project(':third_party:rootshell')
     compile 'com.android.support:support-v4:19.1.0'
     compile 'org.osmdroid:osmdroid-android:4.2'
-    compile 'eu.lp0.slf4j:slf4j-android:1.7+'
+    //https://github.com/lp0/slf4j-android
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'eu.lp0.slf4j:slf4j-android:1.7.12-0'
     compile 'org.apache.httpcomponents:httpmime:4.2.1'
     compile 'au.com.bytecode:opencsv:2.4'
-    compile files('libs/osmbonuspack_v5.0.jar')
+    compile files('libs/osmbonuspack_v5.1.jar')
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'org.apache.commons:commons-lang3:3.3.2'
     compile 'com.google.code.gson:gson:2.2.4'

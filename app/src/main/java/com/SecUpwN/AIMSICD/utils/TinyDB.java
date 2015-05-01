@@ -243,9 +243,7 @@ public class TinyDB {
         // separating the items in the list
         String[] mylist = TextUtils
                 .split(preferences.getString(key, ""), "‚‗‚");
-        ArrayList<String> gottenlist = new ArrayList<String>(
-                Arrays.asList(mylist));
-        return gottenlist;
+        return new ArrayList<>(Arrays.asList(mylist));
     }
 
     public void putListInt(String key, ArrayList<Integer> marray) {
@@ -264,9 +262,9 @@ public class TinyDB {
         // separating the items in the list
         String[] mylist = TextUtils
                 .split(preferences.getString(key, ""), "‚‗‚");
-        ArrayList<String> gottenlist = new ArrayList<String>(
+        ArrayList<String> gottenlist = new ArrayList<>(
                 Arrays.asList(mylist));
-        ArrayList<Integer> gottenlist2 = new ArrayList<Integer>();
+        ArrayList<Integer> gottenlist2 = new ArrayList<>();
         for (int i = 0; i < gottenlist.size(); i++) {
             gottenlist2.add(Integer.parseInt(gottenlist.get(i)));
         }
@@ -290,9 +288,9 @@ public class TinyDB {
         // separating the items in the list
         String[] mylist = TextUtils
                 .split(preferences.getString(key, ""), "â€šâ€—â€š");
-        ArrayList<String> gottenlist = new ArrayList<String>(
+        ArrayList<String> gottenlist = new ArrayList<>(
                 Arrays.asList(mylist));
-        ArrayList<Double> gottenlist2 = new ArrayList<Double>();
+        ArrayList<Double> gottenlist2 = new ArrayList<>();
         for (int i = 0; i < gottenlist.size(); i++) {
             gottenlist2.add(Double.parseDouble(gottenlist.get(i)));
         }
@@ -301,7 +299,7 @@ public class TinyDB {
     }
 
     public void putListBoolean(String key, ArrayList<Boolean> marray){
-        ArrayList<String> origList = new ArrayList<String>();
+        ArrayList<String> origList = new ArrayList<>();
         for(Boolean b : marray){
             if(b){
                 origList.add("true");
@@ -314,7 +312,7 @@ public class TinyDB {
 
     public ArrayList<Boolean> getListBoolean(String key) {
         ArrayList<String> origList = getList(key);
-        ArrayList<Boolean> mBools = new ArrayList<Boolean>();
+        ArrayList<Boolean> mBools = new ArrayList<>();
         for(String b : origList){
             if(b.equals("true")){
                 mBools.add(true);

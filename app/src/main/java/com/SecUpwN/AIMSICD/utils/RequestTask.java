@@ -89,6 +89,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 public class RequestTask extends AsyncTask<String, Integer, String> {
 
+    //Calling from the menu more extensive(more difficult for sever),
+    // we have to give more time for the server response
+    public static final int REQUEST_TIMEOUT_MAPS = 20000;       // [ms] 20 s Calling from map
+    public static final int REQUEST_TIMEOUT_MENU = 40000;       // [ms] 40 s Calling from menu
+
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
     public static final char DBE_UPLOAD_REQUEST = 6;            // OCID upload request from "APPLICATION" drawer title
@@ -102,11 +107,13 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
     private final char mType;
+    private int mTimeOut;
 
     public RequestTask(Context context, char type) {
         mType = type;
         mContext = context;
         mDbAdapter = new AIMSICDDbAdapter(mContext);
+        mTimeOut = REQUEST_TIMEOUT_MAPS;
     }
 
     @Override
@@ -164,7 +171,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             }
                             return "Successful";
                         } else {
-                            Helpers.msgLong(mContext, "No data for publishing available");
+                            Helpers.msgLong(mContext, mContext.getString(R.string.no_data_for_publishing));
                             return null;
                         }
 
@@ -174,6 +181,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
             // DOWNLOADING...
             case DBE_DOWNLOAD_REQUEST:          // OCID download request from "APPLICATION" drawer title
+                mTimeOut = REQUEST_TIMEOUT_MENU;
             case DBE_DOWNLOAD_REQUEST_FROM_MAP: // OCID download request from "Antenna Map Viewer"
                 int count;
                 try {
@@ -187,18 +195,18 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     URL url = new URL(commandString[0]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
-                    urlConnection.setConnectTimeout(20000);// [ms] 20 s
-                    urlConnection.setReadTimeout(20000);   // [ms] 20 s
+                    urlConnection.setConnectTimeout(mTimeOut);
+                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 20 s
                     urlConnection.setDoInput(true);
                     urlConnection.connect();
 
                     if (urlConnection.getResponseCode() != 200) {
                         try {
                             String error = Helpers.convertStreamToString(urlConnection.getErrorStream());
-                            Helpers.msgLong(mContext, "Download error: " + error);
+                            Helpers.msgLong(mContext, mContext.getString(R.string.download_error) + " " + error);
                             Log.e(TAG, mTAG + ": Download OCID data error: " + error);
                         } catch (Exception e) {
-                            Helpers.msgLong(mContext, "Download error: "
+                            Helpers.msgLong(mContext, mContext.getString(R.string.download_error) + " "
                                     + e.getClass().getName() + " - "
                                     + e.getMessage());
                             Log.e(TAG, mTAG + ": Download OCID exception: " + e);
@@ -235,8 +243,10 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     return "Successful";
 
                 } catch (MalformedURLException e) {
+                    e.printStackTrace();
                     return null;
                 } catch (IOException e) {
+                    e.printStackTrace();
                     return null;
                 }
 
@@ -305,14 +315,14 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                 if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
                     if (mDbAdapter.updateOpenCellID()) {
-                        Helpers.msgShort(mContext, "OpenCellID data successfully received");
+                        Helpers.msgShort(mContext, mContext.getString(R.string.opencellid_data_successfully_received));
                     }
 
                     mDbAdapter.checkDBe();
                     mDbAdapter.close();
                     tinydb.putBoolean("ocid_downloaded", true);
                 } else {
-                    Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.error_retrieving_opencellid_data));
                 }
                 break;
 
@@ -322,30 +332,30 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     if (mDbAdapter.updateOpenCellID()) {
                         Intent intent = new Intent(MapViewerOsmDroid.updateOpenCellIDMarkers);
                         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-                        Helpers.msgShort(mContext, "OpenCellID data successfully received.\nMap Markers updated.");
+                        Helpers.msgShort(mContext, mContext.getString(R.string.opencellid_data_successfully_received_markers_updated));
 
                         mDbAdapter.checkDBe();
                         mDbAdapter.close();
                         tinydb.putBoolean("ocid_downloaded", true);
                     }
                 } else {
-                    Helpers.msgLong(mContext, "Error retrieving OpenCellID data.\nCheck your network!");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.error_retrieving_opencellid_data));
                 }
                 break;
 
             case DBE_UPLOAD_REQUEST:
                 if (result != null && result.equals("Successful")) {
-                    Helpers.msgShort(mContext, "Uploaded BTS data to OCID successfully");
+                    Helpers.msgShort(mContext, mContext.getString(R.string.uploaded_bts_data_successfully));
                 } else {
-                    Helpers.msgLong(mContext, "Error in uploading BTS data to OCID servers!");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.error_uploading_bts_data));
                 }
                 break;
 
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
-                    Helpers.msgShort(mContext, "Restore database completed successfully");
+                    Helpers.msgShort(mContext, mContext.getString(R.string.restore_database_completed));
                 } else {
-                    Helpers.msgLong(mContext, "Error restoring database");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.error_restoring_database));
                 }
                 break;
 
@@ -358,10 +368,10 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
                     final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setTitle(R.string.database_export_successful).setMessage(
-                            "Database Backup successfully saved to:\n" + AIMSICDDbAdapter.FOLDER);
+                            mContext.getString(R.string.database_backup_successfully_saved_to) + "\n" + AIMSICDDbAdapter.FOLDER);
                     builder.create().show();
                 } else {
-                    Helpers.msgLong(mContext, "Error backing up database");
+                    Helpers.msgLong(mContext, mContext.getString(R.string.error_backing_up_data));
                 }
                 //break;
         }

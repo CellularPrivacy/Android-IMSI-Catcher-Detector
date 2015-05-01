@@ -1,8 +1,10 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.constants.Examples;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.CMDProcessor;
+import com.SecUpwN.AIMSICD.constants.Examples.EVENT_LOG_DATA;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,6 +16,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.util.SparseArray;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -298,6 +301,7 @@ public class AIMSICDDbAdapter {
      * @return row id or -1 if error
      *
      */
+
     long insertOpenCell(double latitude,
                         double longitude,
                         int mcc,
@@ -310,6 +314,51 @@ public class AIMSICDDbAdapter {
                         int isGPSexact, // new
                         String RAT      // new
                         //int rej_cause // new
+    ) {
+        return insertOpenCell(
+                latitude,
+                longitude,
+                mcc,
+                mnc,
+                lac,
+                cellID,
+                avgSigStr,
+                range,
+                samples,
+                isGPSexact,
+                RAT,
+                true);
+    }
+
+    /**
+     *  Description:    This method is used to insert and populate the downloaded or previously
+     *                  backed up OCID details into the DBe_import (opencellid) database table.
+     *                  It also prevents adding multiple entries of the same cell-id, when OCID
+     *                  downloads are repeated.
+     *
+     *  Issues:     [ ] None, but see GH issue #303 for a smarter OCID download handler.
+     *
+     *  Notes:       a) Move to:  CellTracker.java  see:
+     *                  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/290#issuecomment-72303486
+     *               b) OCID CellID is of the "long form" (>65535) when available...
+     *               c) is also used to where CSV data is populating the opencellid table.
+     *
+     * @return row id or -1 if error
+     *
+     */
+    long insertOpenCell(double latitude,
+                        double longitude,
+                        int mcc,
+                        int mnc,
+                        int lac,
+                        int cellID,
+                        int avgSigStr,
+                        int range,      // new
+                        int samples,
+                        int isGPSexact, // new
+                        String RAT,      // new
+                        //int rej_cause // new
+                        boolean isNeedCheckExists
                         ) {
 
         // Populate the named DB table columns with the values provided
@@ -328,7 +377,7 @@ public class AIMSICDDbAdapter {
         //cellIDValues.put("rej_cause", rej_cause );   // new
 
         // Ensure we don't save multiple cell-id entries into DB, when re-downloading OCID data.
-        if (openCellExists(cellID)) {
+        if (isNeedCheckExists && openCellExists(cellID)) {
             // For performance it is probably better to skip than update? Also if OCID was recently corrupted?
             Log.v(TAG,  mTAG + ": CID already found in DBe_import! Skipping: " + cellID );
             return 1;
@@ -831,10 +880,13 @@ public class AIMSICDDbAdapter {
                 CSVReader csvReader = new CSVReader(new FileReader(file));
                 List<String[]> csvCellID = new ArrayList<>();
                 String next[];
-
+                //FIXME Erase after refactoring.
+                // These three lines below are useless.
+                /*
                 int count = 0;
                 int csvSize = csvCellID.size(); // This might not work...
                 Log.i(TAG, mTAG + ":updateOpenCellID: OCID CSV size (csvSize): " + csvSize );
+                */
 
                 //AIMSICD.mProgressBar.setProgress(0);
                 //AIMSICD.mProgressBar.setMax(csvSize);
@@ -846,11 +898,27 @@ public class AIMSICDDbAdapter {
                 if (!csvCellID.isEmpty()) {
                     int lines = csvCellID.size();
                     Log.i(TAG, mTAG + ":updateOpenCellID: OCID CSV size (lines): " + lines );
+
+                    String lQuery = "SELECT CellID, COUNT(CellID) FROM "+OPENCELLID_TABLE+" GROUP BY CellID;";
+                    Cursor lCursor = mDb.rawQuery(lQuery, null);
+                    SparseArray<Boolean> lPresentCellID = new SparseArray<>();
+                    if(lCursor.getCount() > 0) {
+                        while(lCursor.moveToNext()) {
+                            lPresentCellID.put(lCursor.getInt(0), true );
+                        }
+                    }
+                    lCursor.close();
+
                     AIMSICD.mProgressBar.setProgress(0);
                     AIMSICD.mProgressBar.setMax(lines);
                     for (int i = 1; i < lines; i++) {
                         AIMSICD.mProgressBar.setProgress(i);
 
+                        // Inserted into the table only unique values CID
+                        // without opening additional redundant cursor before each insert.
+                        if(lPresentCellID.get(Integer.parseInt(csvCellID.get(i)[5]), false)) {
+                            continue;
+                        }
                         // Insert details into OpenCellID Database using:  insertOpenCell()
                         // Beware of negative values of "range" and "samples"!!
                         insertOpenCell( Double.parseDouble(csvCellID.get(i)[0]), // gps_lat
@@ -863,7 +931,8 @@ public class AIMSICDDbAdapter {
                                         Integer.parseInt(csvCellID.get(i)[7]),   // avg_range [m]
                                         Integer.parseInt(csvCellID.get(i)[8]),   // samples
                                         Integer.parseInt(csvCellID.get(i)[9]),   // isGPSexact
-                                        String.valueOf(csvCellID.get(i)[10])     // RAT
+                                        String.valueOf(csvCellID.get(i)[10]),     // RAT
+                                        false
                                         //Integer.parseInt(csvCellID.get(i)[11]), // --- RNC
                                         //Integer.parseInt(csvCellID.get(i)[12]), // --- (cid) ?
                                         //Integer.parseInt(csvCellID.get(i)[13]), // --- PSC
@@ -1260,13 +1329,17 @@ public class AIMSICDDbAdapter {
     public int countSignalMeasurements(int cellID) {
         Cursor c = mDb.rawQuery("SELECT COUNT(cellID) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID=" + cellID, new String[0]);
         c.moveToFirst();
-        return c.getInt(0);
+        int lAnswer = c.getInt(0);
+        c.close();
+        return lAnswer;
     }
 
     public int getAverageSignalStrength(int cellID) {
         Cursor c = mDb.rawQuery("SELECT AVG(signal) FROM " + CELL_SIGNAL_TABLE +" WHERE cellID=" + cellID, new String[0]);
         c.moveToFirst();
-        return c.getInt(0);
+        int lAnswer = c.getInt(0);
+        c.close();
+        return lAnswer;
     }
 
     public Cursor getSignalStrengthMeasurementData() {
@@ -1345,7 +1418,9 @@ public class AIMSICDDbAdapter {
             // Populate the Silent SMS table with a dummy entry
             String ZeroSMS = "INSERT INTO " + SILENT_SMS_TABLE +
                     " (Address,Display,Class,ServiceCtr,Message) " +
-                    "VALUES ('ADREZZ','DizzPlay','CLAZZ','SMSC','DaTestMessage');";
+                    "VALUES ('"+
+                    Examples.SILENT_SMS_CARD_DATA.ADDRESS +"','"+
+                    Examples.SILENT_SMS_CARD_DATA.DISPLAY+"','CLAZZ','SMSC','DaTestMessage');";
             database.execSQL(ZeroSMS);
 
 
@@ -1496,7 +1571,14 @@ public class AIMSICDDbAdapter {
 
             String ZeroEvent = "INSERT INTO " + TABLE_EVENTLOG +
                     " (LAC,CID,PSC, gpsd_lat,gpsd_lon,gpsd_accu, DF_id,DF_desc) " +
-                    "VALUES (12345,543210,111, 54.6,25.2,100, 2,'CellID not found in OCID Database');";
+                    "VALUES ("+
+                    EVENT_LOG_DATA.LAC+","+
+                    EVENT_LOG_DATA.CID+","+
+                    EVENT_LOG_DATA.PSC+","+
+                    EVENT_LOG_DATA.GPSD_LAT+","+
+                    EVENT_LOG_DATA.GPSD_LON+","+
+                    EVENT_LOG_DATA.GPSD_ACCU+","+
+                    EVENT_LOG_DATA.DF_ID+",'CellID not found in OCID Database');";
             database.execSQL(ZeroEvent);
 
             // Re-populate the default MCC location table

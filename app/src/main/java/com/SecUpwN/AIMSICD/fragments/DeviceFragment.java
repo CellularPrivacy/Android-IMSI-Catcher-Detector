@@ -107,7 +107,7 @@ public class DeviceFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             final Bundle bundle = intent.getExtras();
             if (bundle != null && bundle.getBoolean("update")) {
-                Helpers.msgShort(mContext, "Refreshing display");
+                Helpers.msgShort(mContext, context.getString(R.string.refreshing_display));
                 updateUI();
             }
         }

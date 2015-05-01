@@ -55,7 +55,7 @@ public class Device {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             mNetType = getNetworkTypeName();
-            DeviceApi17.loadCellInfo(tm, mCell);
+            DeviceApi17.loadCellInfo(tm, this);
         }
 
         if (mCell == null)

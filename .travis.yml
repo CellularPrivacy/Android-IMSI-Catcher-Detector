@@ -46,7 +46,9 @@ android:
      - build-tools-21.1.2
 # System Image we use to run emulator(s) during tests
      - sys-img-armeabi-v7a-android-17
-    
+# Additional components
+     - extra-android-m2repository
+
   licenses:
      - 'android-sdk-license-.+'
      
@@ -59,7 +61,9 @@ before_script:
      - android-wait-for-emulator
      - adb shell input keyevent 82 &
      
-script: ./gradlew connectedAndroidTest --info
+script:
+     - ./gradlew connectedAndroidTest --info
+     - ./gradlew lintVitalRelease
 
 # Coverity Scan Settings
 #-----------------------

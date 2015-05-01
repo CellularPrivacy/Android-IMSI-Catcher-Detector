@@ -30,7 +30,7 @@ public class DrawerMenuSection implements NavDrawerItem {
         this.label = label;
     }
 
-    public void setIcon(int icon) {
+    public void setmIconId(int icon) {
         this.icon = icon;
     }
 

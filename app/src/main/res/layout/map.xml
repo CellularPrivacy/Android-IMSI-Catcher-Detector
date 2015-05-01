@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="© OpenStreetMap contributors"
+        android:text="@string/osm_contributors"
         android:textStyle="normal"
         android:singleLine="true"
         android:linksClickable="true"

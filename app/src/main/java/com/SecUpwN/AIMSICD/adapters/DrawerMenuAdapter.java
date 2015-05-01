@@ -1,30 +1,53 @@
 package com.SecUpwN.AIMSICD.adapters;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
-import com.SecUpwN.AIMSICD.drawer.DrawerMenuItem;
-import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.constants.DrawerMenu;
+import com.SecUpwN.AIMSICD.drawer.DrawerMenuItem;
+import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
+import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
 
 import java.util.List;
 
 public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
 
-    private final List<NavDrawerItem> drawerItemList;
     private final LayoutInflater inflater;
+    private final View.OnClickListener mInfoButtonListener;
+    private final Toast mToast;
+    private final Animation mBounceHelpButtonAnimation;
 
 
+    @SuppressLint("ShowToast")
     public DrawerMenuAdapter(Context context, int textViewResourceId, List<NavDrawerItem> objects ) {
         super(context, textViewResourceId, objects);
-        drawerItemList = objects;
         inflater = LayoutInflater.from(context);
+
+        mToast = Toast.makeText(context.getApplicationContext(), "", Toast.LENGTH_LONG);
+        mInfoButtonListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View pView) {
+                pView.startAnimation(mBounceHelpButtonAnimation);
+                if (pView.getTag() != null && pView.getTag() instanceof Integer)
+                    showHelpToast((Integer) pView.getTag());
+            }
+        };
+        mBounceHelpButtonAnimation = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.action_button_help);
+    }
+
+    private void showHelpToast(Integer pToastValueId) {
+        mToast.setText(getContext().getString(pToastValueId));
+        mToast.show();
     }
 
     @Override
@@ -51,10 +74,12 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
                     .findViewById( R.id.drawer_menu_item_label );
             ImageView iconView = (ImageView) convertView
                     .findViewById( R.id.drawer_menu_item_icon );
+            ImageView lInfoButton = (ImageView) convertView.findViewById(R.id.drawer_menu_item_info_button);
 
             navMenuItemHolder = new NavMenuItemHolder();
             navMenuItemHolder.itemName = labelView ;
             navMenuItemHolder.itemIcon = iconView ;
+            navMenuItemHolder.itemInfoButton = lInfoButton;
 
             convertView.setTag(navMenuItemHolder);
         }
@@ -64,7 +89,16 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
         }
 
         navMenuItemHolder.itemName.setText(menuItem.getLabel());
-        navMenuItemHolder.itemIcon.setImageResource(menuItem.getIcon());
+        navMenuItemHolder.itemIcon.setImageResource(menuItem.getIconId());
+        if (menuItem.isShowInfoButton()) {
+            navMenuItemHolder.itemInfoButton.setTag(menuItem.getHelpStringId());
+            navMenuItemHolder.itemInfoButton.setVisibility(View.VISIBLE);
+            navMenuItemHolder.itemInfoButton.setOnClickListener(mInfoButtonListener);
+        } else {
+            navMenuItemHolder.itemInfoButton.setTag(menuItem.getHelpStringId());
+            navMenuItemHolder.itemInfoButton.setVisibility(View.INVISIBLE);
+            navMenuItemHolder.itemInfoButton.setOnClickListener(null);
+        }
 
         return convertView ;
     }
@@ -96,7 +130,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return DrawerMenu.COUNT_OF_MENU_TYPE;
     }
 
     @Override
@@ -113,6 +147,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
     private static class NavMenuItemHolder {
         TextView itemName;
         ImageView itemIcon;
+        ImageView itemInfoButton;
     }
 
     private class NavMenuSectionHolder {

@@ -12,9 +12,22 @@ Feel invited to develop with us using these steps:
 3. Pick [an Issue](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues) you'd like to work on. Introduce yourself in that Issue.
 4. Work on resolving the Issue you picked using your local code copy.
 5. Add [Code Comments](https://source.android.com/source/code-style.html#java-style-rules) for documentation and follow our [Style Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Style-Guide).
-6. Test your changes and submit a [pull request](https://help.github.com/articles/using-pull-requests/) when we shall add it.
-7. Monitor our [Current Development Status and Development Cycle](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status).
-8. Don't be shy to ask if you need help. Ask in your Issue or [contact us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
+6. Increase the build number `*-alpha-bXX` in `android:versionName`.
+7. Test your changes and submit a [pull request](https://help.github.com/articles/using-pull-requests/) when we shall add it.
+8. Monitor our [Current Development Status and Development Cycle](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status).
+9. Don't be shy to ask if you need help. Ask in your Issue or [contact us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
+
+---
+
+#### TRANSLATING
+
+Let our app start up in your native language!
+
+* Copy file [translatable_strings.xml](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/development/app/src/main/res/values/translatable_strings.xml) into your values-[code](https://en.wikipedia.org/wiki/ISO_639-1) folder.
+* Example: `app/src/main/res/values-de/translatable_strings.xml`
+* Translate the xml-file with an Editor, Android Studio or IntelliJ IDEA.
+6. Increase the build number `*-alpha-bXX` in `android:versionName`.
+7. Test your changes and submit a [pull request](https://help.github.com/articles/using-pull-requests/) when we shall add it.
 
 ---
 
@@ -35,6 +48,7 @@ Can't code (yet)? No problem, we love you too!
 Special positions we are currently seeking skilled people for:
 
 * People with equipment to verify our app (e.g. OpenBTS).
+* People with a CryptoPhone for double app verification.
 * Fixing the identified [Coverity Scan Defects](https://scan.coverity.com/projects/3346) of our app.
 * Whistleblower working for an IMSI-Catcher producer.
 
