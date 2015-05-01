@@ -23,7 +23,7 @@ Feel invited to develop with us using these steps:
 
 Let our app start up in your native language!
 
-* Copy file `translatable_strings.xml` into your values-[code](https://en.wikipedia.org/wiki/ISO_639-1) folder.
+* Copy file [translatable_strings.xml](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/raw/development/app/src/main/res/values/translatable_strings.xml) into your values-[code](https://en.wikipedia.org/wiki/ISO_639-1) folder.
 * Example: `app/src/main/res/values-de/translatable_strings.xml`
 * Translate the xml-file with an Editor, Android Studio or IntelliJ IDEA.
 6. Increase the build number `*-alpha-bXX` in `android:versionName`.
