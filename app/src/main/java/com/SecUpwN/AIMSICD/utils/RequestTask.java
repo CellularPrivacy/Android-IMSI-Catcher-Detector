@@ -89,6 +89,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 public class RequestTask extends AsyncTask<String, Integer, String> {
 
+    //Calling from the menu more extensive(more difficult for sever),
+    // we have to give more time for the server response
+    public static final int REQUEST_TIMEOUT_MAPS = 20000;       // [ms] 20 s Calling from map
+    public static final int REQUEST_TIMEOUT_MENU = 40000;       // [ms] 40 s Calling from menu
+
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
     public static final char DBE_UPLOAD_REQUEST = 6;            // OCID upload request from "APPLICATION" drawer title
@@ -102,11 +107,13 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     private final AIMSICDDbAdapter mDbAdapter;
     private final Context mContext;
     private final char mType;
+    private int mTimeOut;
 
     public RequestTask(Context context, char type) {
         mType = type;
         mContext = context;
         mDbAdapter = new AIMSICDDbAdapter(mContext);
+        mTimeOut = REQUEST_TIMEOUT_MAPS;
     }
 
     @Override
@@ -174,6 +181,7 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
 
             // DOWNLOADING...
             case DBE_DOWNLOAD_REQUEST:          // OCID download request from "APPLICATION" drawer title
+                mTimeOut = REQUEST_TIMEOUT_MENU;
             case DBE_DOWNLOAD_REQUEST_FROM_MAP: // OCID download request from "Antenna Map Viewer"
                 int count;
                 try {
@@ -187,8 +195,8 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     URL url = new URL(commandString[0]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
-                    urlConnection.setConnectTimeout(20000);// [ms] 20 s
-                    urlConnection.setReadTimeout(20000);   // [ms] 20 s
+                    urlConnection.setConnectTimeout(mTimeOut);
+                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 20 s
                     urlConnection.setDoInput(true);
                     urlConnection.connect();
 
@@ -235,8 +243,10 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     return "Successful";
 
                 } catch (MalformedURLException e) {
+                    e.printStackTrace();
                     return null;
                 } catch (IOException e) {
+                    e.printStackTrace();
                     return null;
                 }
 

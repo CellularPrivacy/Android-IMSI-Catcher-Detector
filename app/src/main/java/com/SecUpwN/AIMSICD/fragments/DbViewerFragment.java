@@ -106,6 +106,11 @@ public class DbViewerFragment extends Fragment {
                         mDb.open();
                         Cursor result = null;
 
+                        //TODO Table: "DetectionFlags"
+                        //case "DetectionFlags":
+                        //result = mDb.getDetectionFlagsData();
+
+
                         if(getString(R.string.unique_bts_data).equalsIgnoreCase(mTableSelected)) {
                             // The unique BTSs we have been connected to in the past
                             // EVA: Was "Cell Data" // Table: cellinfo
