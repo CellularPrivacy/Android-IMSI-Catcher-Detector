@@ -1,6 +1,18 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [01.05.2015 - WIP-Release v0.1.26-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.26-alpha-b00)
+
+* Updated: Added [agilob](https://github.com/agilob) and [DimaKoz](https://github.com/DimaKoz) into our `CREDITS` for their awesome work
+* Updated: Improved descriptions of menu and removed unused resources and a dot
+* Updated: Translation instructions have been updated to reflect the latest procedure
+* Changed: Intensified warning for dropped support for logfiles without a description
+* Added: Translation into Russian has been started, improved Polish translations
+* Fixed: Nuked error in Database Viewer getting data in languages other than English
+* Fixed: Corrected spelling of string name and added small screen improvements
+
+---
+
 #### 27.04.2015 - WIP-Internal v0.1.25-alpha-build-47
 
 * Changed: Transformed more strings for translation, some cosmetic changes in java code
