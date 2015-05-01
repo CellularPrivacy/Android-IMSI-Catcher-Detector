@@ -23,9 +23,9 @@ Feel invited to develop with us using these steps:
 
 Let our app start up in your native language!
 
-* Copy `strings.xml` and `arrays.xml` into your values-[code](https://en.wikipedia.org/wiki/ISO_639-1) folder.
-* Example for German: `app/src/main/res/values-de/strings.xml`
-* Translate the both with an Editor, Android Studio or IntelliJ IDEA.
+* Copy file `translatable_strings.xml` into your values-[code](https://en.wikipedia.org/wiki/ISO_639-1) folder.
+* Example: `app/src/main/res/values-de/translatable_strings.xml`
+* Translate the xml-file with an Editor, Android Studio or IntelliJ IDEA.
 6. Increase the build number `*-alpha-bXX` in `android:versionName`.
 7. Test your changes and submit a [pull request](https://help.github.com/articles/using-pull-requests/) when we shall add it.
 
