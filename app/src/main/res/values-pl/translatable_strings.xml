@@ -249,14 +249,13 @@
     <string name="about_desc_icon_insecure_area">Ta okolica nie jest bezpieczna. Powinieneś się oddalić!</string>
     <string name="about_desc_icon_run">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem.</string>
     <string name="about_desc_icon_title">Kliknij na ikonę by uzyskać więcej informacji.</string>
-    <!-- need to transate -->
-    <string name="help_app_download_local_bst">Downloads the OCID Database.</string>
-    <string name="help_app_upload_local_bst">Uploads your BTS to OCID DB.</string>
-    <string name="help_app_debugging">Collect and send error logs.</string>
-    <string name="help_app_quit">Exit this app.</string>
-    <string name="at_command_response_looking">*** Looking for AT serial devices&#8230;\n</string>
-    <string name="at_command_response_found">Found:&#032;</string>""
-    <string name="at_command_response_setup_complete">*** Setup Complete ***\n</string>""
+    <string name="help_app_download_local_bst">Pobierz bazę danych OCPID.</string>
+    <string name="help_app_upload_local_bst">Wyślij dane o lokalnych BTS do OCID.</string>
+    <string name="help_app_debugging">Wczytaj i wyślij logi.</string>
+    <string name="help_app_quit">Zakończ działanie aplikacji.</string>
+    <string name="at_command_response_looking">*** Wykrywanie urządzeń AT&#8230;\n</string>
+    <string name="at_command_response_found">Wykryto:&#032;</string>""
+    <string name="at_command_response_setup_complete">*** Konfiguracja zakończona ***\n</string>""
 
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
