@@ -41,6 +41,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.map.CellTowerGridMarkerClusterer;
@@ -76,7 +77,7 @@ import java.util.List;
  *      [ ] See: #272 #250 #228
  *      [ ] Some pins remain clustered even on the greatest zoom, this is probably
  *          due to over sized icons, or too low zoom level.
- *      [ ] pin icons are too big. We need to reduce pin dot diameter by ~50%
+ *      [x] pin icons are too big. We need to reduce pin dot diameter by ~50%
  *      [ ] Need a manual way to add GPS coordinates of current location (see code comments below)
  *      [ ]
  *
@@ -440,6 +441,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                             );
                             // The pin of our current position
                             ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_blue));
+
                             items.add(ovm);
 
 
@@ -532,6 +534,13 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                             mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
                         }
                     }
+                }
+                if(mCellTowerGridMarkerClusterer != null) {
+                    if(BuildConfig.DEBUG && mCellTowerGridMarkerClusterer.getItems() != null) {
+                        Log.v(TAG, "CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                    }
+                    //Drawing markers of cell tower immediately as possible
+                    mCellTowerGridMarkerClusterer.invalidate();
                 }
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
