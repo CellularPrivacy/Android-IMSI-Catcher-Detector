@@ -760,6 +760,7 @@ public class AIMSICDDbAdapter {
                 if (!file.exists()) {
                     result = file.createNewFile();
                     if (!result) {
+                        c.close();
                         return false;
                     }
 
@@ -1258,7 +1259,7 @@ public class AIMSICDDbAdapter {
 
         // =========== samples ===========
         sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE Samples < 1";
-        mDb.rawQuery(sqlq, null);
+        mDb.execSQL(sqlq);
 
         // =========== range (DBe_import::avg_range) ===========
         // TODO: OCID data marks many good BTS with a negative range so we can't use this yet.
@@ -1267,25 +1268,25 @@ public class AIMSICDDbAdapter {
 
         // =========== LAC ===========
         sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE Lac < 1";
-        mDb.rawQuery(sqlq, null);
+        mDb.execSQL(sqlq);
 
         // We should delete cells with CDMA (4) LAC not in [1,65534] but we can simplify this to:
         // Delete ANY cells with a LAC not in [1,65534]
         sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE Lac > 65534";
-        mDb.rawQuery(sqlq, null);
+        mDb.execSQL(sqlq);
         // Delete cells with GSM/UMTS/LTE (1/2/3/13 ??) (or all others?) LAC not in [1,65533]
         //sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE Lac > 65533 AND Type!='CDMA'";
         //mDb.rawQuery(sqlq, null);
 
         // =========== CID ===========
         sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE CellID < 1";
-        mDb.rawQuery(sqlq, null);
+        mDb.execSQL(sqlq);
 
         // We should delete cells with UMTS/LTE (3,13) CID not in [1,268435455] (0xFFF FFFF) but
         // we can simplify this to:
         // Delete ANY cells with a CID not in [1,268435455]
         sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE CellID > 268435455";
-        mDb.rawQuery(sqlq, null);
+        mDb.execSQL(sqlq);
         // Delete cells with GSM/CDMA (1-3,4) CID not in [1,65534]
         //sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE CellID > 65534 AND (Net!=3 OR Net!=13)";
         //mDb.rawQuery(sqlq, null);

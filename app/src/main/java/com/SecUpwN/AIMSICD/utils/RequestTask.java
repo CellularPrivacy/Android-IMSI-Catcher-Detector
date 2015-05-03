@@ -1,5 +1,6 @@
 package com.SecUpwN.AIMSICD.utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +11,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 //import com.SecUpwN.AIMSICD.utils.Helpers;
@@ -87,7 +90,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *      [ ] App is blocked while downloading.
  *
  */
-public class RequestTask extends AsyncTask<String, Integer, String> {
+public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     //Calling from the menu more extensive(more difficult for sever),
     // we have to give more time for the server response
@@ -105,14 +108,15 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     public static final String mTAG = "RequestTask";
 
     private final AIMSICDDbAdapter mDbAdapter;
-    private final Context mContext;
+    private final Context mAppContext;
     private final char mType;
     private int mTimeOut;
 
     public RequestTask(Context context, char type) {
+        super((Activity)context);
         mType = type;
-        mContext = context;
-        mDbAdapter = new AIMSICDDbAdapter(mContext);
+        mAppContext = context.getApplicationContext();
+        mDbAdapter = new AIMSICDDbAdapter(mAppContext);
         mTimeOut = REQUEST_TIMEOUT_MAPS;
     }
 
@@ -171,12 +175,13 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                             }
                             return "Successful";
                         } else {
-                            Helpers.msgLong(mContext, mContext.getString(R.string.no_data_for_publishing));
+                            Helpers.msgLong(mAppContext, mAppContext.getString(R.string.no_data_for_publishing));
                             return null;
                         }
 
                 } catch (Exception e) {
                     Log.e(TAG, mTAG + ": Upload OpenCellID data Exception - " + e.getMessage());
+                    e.printStackTrace();
                 }
 
             // DOWNLOADING...
@@ -203,13 +208,14 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     if (urlConnection.getResponseCode() != 200) {
                         try {
                             String error = Helpers.convertStreamToString(urlConnection.getErrorStream());
-                            Helpers.msgLong(mContext, mContext.getString(R.string.download_error) + " " + error);
+                            Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_error) + " " + error);
                             Log.e(TAG, mTAG + ": Download OCID data error: " + error);
                         } catch (Exception e) {
-                            Helpers.msgLong(mContext, mContext.getString(R.string.download_error) + " "
+                            Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_error) + " "
                                     + e.getClass().getName() + " - "
                                     + e.getMessage());
                             Log.e(TAG, mTAG + ": Download OCID exception: " + e);
+                            e.printStackTrace();
                         }
                         return "Error";
                     } else {
@@ -308,21 +314,21 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         AIMSICD.mProgressBar.setProgress(0);
-        TinyDB tinydb = new TinyDB(mContext);
+        TinyDB tinydb = TinyDB.getInstance();
 
         switch (mType) {
             case DBE_DOWNLOAD_REQUEST:
                 if (result != null && result.equals("Successful")) {
                     mDbAdapter.open();
                     if (mDbAdapter.updateOpenCellID()) {
-                        Helpers.msgShort(mContext, mContext.getString(R.string.opencellid_data_successfully_received));
+                        Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received));
                     }
 
                     mDbAdapter.checkDBe();
                     mDbAdapter.close();
                     tinydb.putBoolean("ocid_downloaded", true);
                 } else {
-                    Helpers.msgLong(mContext, mContext.getString(R.string.error_retrieving_opencellid_data));
+                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_retrieving_opencellid_data));
                 }
                 break;
 
@@ -331,31 +337,33 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     mDbAdapter.open();
                     if (mDbAdapter.updateOpenCellID()) {
                         Intent intent = new Intent(MapViewerOsmDroid.updateOpenCellIDMarkers);
-                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-                        Helpers.msgShort(mContext, mContext.getString(R.string.opencellid_data_successfully_received_markers_updated));
+                        LocalBroadcastManager.getInstance(mAppContext).sendBroadcast(intent);
+                        Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received_markers_updated));
 
                         mDbAdapter.checkDBe();
                         mDbAdapter.close();
                         tinydb.putBoolean("ocid_downloaded", true);
                     }
                 } else {
-                    Helpers.msgLong(mContext, mContext.getString(R.string.error_retrieving_opencellid_data));
+                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_retrieving_opencellid_data));
                 }
+                showHideMapProgressBar(false);
+                TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
                 break;
 
             case DBE_UPLOAD_REQUEST:
                 if (result != null && result.equals("Successful")) {
-                    Helpers.msgShort(mContext, mContext.getString(R.string.uploaded_bts_data_successfully));
+                    Helpers.msgShort(mAppContext, mAppContext.getString(R.string.uploaded_bts_data_successfully));
                 } else {
-                    Helpers.msgLong(mContext, mContext.getString(R.string.error_uploading_bts_data));
+                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_uploading_bts_data));
                 }
                 break;
 
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
-                    Helpers.msgShort(mContext, mContext.getString(R.string.restore_database_completed));
+                    Helpers.msgShort(mAppContext, mAppContext.getString(R.string.restore_database_completed));
                 } else {
-                    Helpers.msgLong(mContext, mContext.getString(R.string.error_restoring_database));
+                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_restoring_database));
                 }
                 break;
 
@@ -365,15 +373,50 @@ public class RequestTask extends AsyncTask<String, Integer, String> {
                     // strings.xml: pref_last_db_backup_version
                     //tinydb.putInt(mContext.getString(R.string.pref_last_database_backup_version), AIMSICDDbAdapter.DATABASE_VERSION); //TODO
                     tinydb.putInt("pref_last_db_backup_version", AIMSICDDbAdapter.DATABASE_VERSION);
+                    Activity lActivity = getActivity();
 
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle(R.string.database_export_successful).setMessage(
-                            mContext.getString(R.string.database_backup_successfully_saved_to) + "\n" + AIMSICDDbAdapter.FOLDER);
-                    builder.create().show();
+                    if(lActivity != null) {//Activity may be detached or destroyed
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
+                        builder.setTitle(R.string.database_export_successful).setMessage(
+                                lActivity.getString(R.string.database_backup_successfully_saved_to) + "\n" + AIMSICDDbAdapter.FOLDER);
+                        builder.create().show();
+                    }
                 } else {
-                    Helpers.msgLong(mContext, mContext.getString(R.string.error_backing_up_data));
+                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_backing_up_data));
                 }
                 //break;
+        }
+    }
+
+    @Override
+    protected void onActivityDetached() {
+        if (mType == DBE_DOWNLOAD_REQUEST_FROM_MAP) {
+            showHideMapProgressBar(false);
+        }
+    }
+
+    @Override
+    protected void onActivityAttached() {
+        if (mType == DBE_DOWNLOAD_REQUEST_FROM_MAP) {
+            showHideMapProgressBar(true);
+        }
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        if (mType == DBE_DOWNLOAD_REQUEST_FROM_MAP) {
+            showHideMapProgressBar(false);
+        }
+    }
+
+    private void showHideMapProgressBar(boolean pFlag) {
+        Activity lActivity = getActivity();
+        if(BuildConfig.DEBUG && lActivity == null) {
+            Log.v(TAG, "BaseTask showHideMapProgressBar() activity is null");
+        }
+        if (lActivity != null && lActivity instanceof MapViewerOsmDroid) {
+            ((MapViewerOsmDroid) lActivity).setRefreshActionButtonState(pFlag);
         }
     }
 }

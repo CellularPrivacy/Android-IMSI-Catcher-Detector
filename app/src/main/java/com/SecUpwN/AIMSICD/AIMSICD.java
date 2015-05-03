@@ -669,4 +669,16 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             }
         });
     }
+
+    public void onStop() {
+        super.onStop();
+        ((AppAIMSICD) getApplication()).detach(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((AppAIMSICD) getApplication()).attach(this);
+    }
+
 }
