@@ -48,9 +48,11 @@ import android.util.Log;
  *    https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo/
  *
  *  Usage:
+ *
+ *  1)
  *      import com.SecUpwN.AIMSICD.utils.TinyDB;
  *      ...
- *      TinyDB tinydb = new TinyDB(context); //Possibly mContext if already declared.
+ *      TinyDB tinydb = TinyDB.getInstance(); //Possibly mContext if already declared in AppAIMSICD via method init(AppContext).
  *
  *      tinydb.putInt("clickCount", 2);
  *      tinydb.putFloat("xPoint", 3.6f);
@@ -59,6 +61,14 @@ import android.util.Log;
  *      tinydb.putBoolean("isUserMale", true);
  *      tinydb.putList("MyUsers", mUsersArray);
  *      tinydb.putImagePNG("DropBox/WorkImages", "MeAtlunch.png", lunchBitmap);
+ *
+ *  2)
+ *      import com.SecUpwN.AIMSICD.utils.TinyDB;
+ *      ...
+ *      TinyDB.getInstance().putInt("clickCount", 2);
+ *      TinyDB.getInstance().putFloat("xPoint", 3.6f);
+ *
+ *      and etc.
  *
  *
  */
@@ -69,7 +79,9 @@ public class TinyDB {
     File mFolder = null;
     public static String lastImagePath = "";
 
-    public TinyDB(Context appContext) {
+    private TinyDB() {}
+
+    public void init(Context appContext) {
         mContext = appContext;
         preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
     }
@@ -371,6 +383,14 @@ public class TinyDB {
 
     public void unregisterOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
         preferences.unregisterOnSharedPreferenceChangeListener(listener);
+    }
+
+    private static class InstanceHolder {
+        private static final TinyDB INSTANCE = new TinyDB();
+    }
+
+    public static TinyDB getInstance() {
+        return InstanceHolder.INSTANCE;
     }
 
 }

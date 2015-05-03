@@ -94,7 +94,8 @@
             android:allowBackup="false"
             android:icon="@drawable/sense_danger"
             android:label="@string/main_app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:name=".AppAIMSICD">
 
         <activity
                 android:name=".AIMSICD"

@@ -41,9 +41,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
 import com.SecUpwN.AIMSICD.map.CellTowerGridMarkerClusterer;
 import com.SecUpwN.AIMSICD.map.CellTowerMarker;
 import com.SecUpwN.AIMSICD.map.MarkerData;
@@ -52,6 +54,7 @@ import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
+import com.SecUpwN.AIMSICD.utils.TinyDB;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -113,6 +116,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     private CompassOverlay mCompassOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
     private CellTowerGridMarkerClusterer mCellTowerGridMarkerClusterer;
+    private Menu mOptionsMenu;
 
     private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
         @Override
@@ -325,6 +329,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.mOptionsMenu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.map_viewer_menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -353,6 +358,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         cell = mAimsicdService.getCell();
                         cell.setLon(lastKnown.getLongitudeInDegrees());
                         cell.setLat(lastKnown.getLatitudeInDegrees());
+                        setRefreshActionButtonState(true);
+                        TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
                         Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                         return true;
                     }
@@ -364,6 +371,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     Cell cell = new Cell();
                     cell.setLat(loc.getLatitude());
                     cell.setLon(loc.getLongitude());
+                    setRefreshActionButtonState(true);
+                    TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
                     Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                 } else {
                     Helpers.msgLong(mContext,
@@ -467,7 +476,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         Log.e("map", "Error getting default location!", e);
                     }
                 }
-                if(c != null && !c.isClosed()) {
+                if(c != null) {
                     c.close();
                 }
                 mDbHelper.close();
@@ -599,6 +608,35 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         if (key.equals(KEY_MAP_TYPE)) {
             int item = Integer.parseInt(sharedPreferences.getString(key, "0"));
             setupMapType(item);
+        }
+    }
+
+    public void setRefreshActionButtonState(final boolean refreshing) {
+        if (mOptionsMenu != null) {
+            final MenuItem refreshItem = mOptionsMenu
+                    .findItem(R.id.get_opencellid);
+            if (refreshItem != null) {
+                if (refreshing) {
+                    refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+                } else {
+                    refreshItem.setActionView(null);
+                }
+            }
+        }
+    }
+
+
+    public void onStop() {
+        super.onStop();
+        ((AppAIMSICD) getApplication()).detach(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((AppAIMSICD) getApplication()).attach(this);
+        if( TinyDB.getInstance().getBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP)) {
+            setRefreshActionButtonState(false);
         }
     }
 }
