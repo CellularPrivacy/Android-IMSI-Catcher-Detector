@@ -113,39 +113,39 @@
     <string name="network_baseid">ID базовой станции:</string>
 
     <!-- LOCATION HELPER -->
-    <string name="location_error_title">Location Services Disabled</string>
-    <string name="location_error_message">You cannot track GPS data without enabling Location Services. Enable them now?</string>
+    <string name="location_error_title">Определение координат отключено</string>
+    <string name="location_error_message">Вы не можете отслеживать данные GPS без сервиса определения координат. Включить его сейчас?</string>
 
     <!-- PREFERENCES -->
-    <string name="pref_system_title">System Settings</string>
-    <string name="pref_autostart_title">Auto Start</string>
-    <string name="pref_autostart_summ">Automatically start service on boot</string>
-    <string name="pref_persistservice_title">Persistent Service</string>
-    <string name="pref_persistservice_summ">Service will continue to run after exiting the application (uncheck to fully close)</string>
-    <string name="pref_protection_title">Protection Settings</string>
-    <string name="pref_enable_cell_title">Cell Tracking</string>
-    <string name="pref_enable_cell_summ">Enable Automatic Cell Tracking</string>
-    <string name="pref_femto_title">Femtocell Detection</string>
-    <string name="pref_femto_summ">(currently CDMA Phones ONLY)</string>
-    <string name="pref_femto_action_title">Femtocell Protection</string>
-    <string name="pref_femto_action_summ">Enforce Airplane Mode when Femtocell detected (re-enable network manually)</string>
-    <string name="pref_ui_title">Interface Settings</string>
-    <string name="pref_ui_icons_title">Icons</string>
-    <string name="pref_ui_icons_summ">Icon Theme Selection</string>
-    <string name="pref_refresh_title">Refresh Rate</string>
-    <string name="pref_refresh_summ">Control the frequency of device updates</string>
-    <string name="pref_ocid_title">OpenCellID Settings</string>
-    <string name="pref_ocid_key_title">OpenCellID API Key</string>
-    <string name="pref_ocid_key_summ">Enter your OpenCellID API Key here</string>
-    <string name="pref_enable_cell_monitoring_title">Cell Monitoring</string>
-    <string name="pref_enable_cell_monitoring_summ">Enable Automatic Cell Monitoring</string>
-    <string name="pref_request_ocid_key">Request OCID API Key</string>
-    <string name="pref_ocid_requestkey_summary">Request API key for OpenCellID data access</string>
+    <string name="pref_system_title">Системные настройки</string>
+    <string name="pref_autostart_title">Автоматический старт</string>
+    <string name="pref_autostart_summ">Автоматический запуск сервиса при загрузке</string>
+    <string name="pref_persistservice_title">Постоянный сервис</string>
+    <string name="pref_persistservice_summ">Сервис будет продолжать работать после выхода из приложения (снимите флажок полностью закрыть)</string>
+    <string name="pref_protection_title">Настройки защиты</string>
+    <string name="pref_enable_cell_title">Отслеживание сотовой сети</string>
+    <string name="pref_enable_cell_summ">Включение автоматического отслеживания сотовой сети</string>
+    <string name="pref_femto_title">Обнаружение фемтосот</string>
+    <string name="pref_femto_summ">(в настоящее время только CDMA телефоны)</string>
+    <string name="pref_femto_action_title">Защита от фемтосот</string>
+    <string name="pref_femto_action_summ">Принудительный режим полета, когда фемтосот обнаружена (подключение к сети вручную)</string>
+    <string name="pref_ui_title">Настройки интерфейса</string>
+    <string name="pref_ui_icons_title">Иконки</string>
+    <string name="pref_ui_icons_summ">Выбор схемы иконок</string>
+    <string name="pref_refresh_title">Частота обновления</string>
+    <string name="pref_refresh_summ">Управление частотой обновления устройства</string>
+    <string name="pref_ocid_title">Настройки OpenCellID</string>
+    <string name="pref_ocid_key_title">Ключ OpenCellID API</string>
+    <string name="pref_ocid_key_summ">Введите здесь ваш ключ OpenCellID API</string>
+    <string name="pref_enable_cell_monitoring_title">Мониторинг сотовых сетей</string>
+    <string name="pref_enable_cell_monitoring_summ">Включить автоматический мониторинг сотовых сетей</string>
+    <string name="pref_request_ocid_key">Запрос ключа OCID API</string>
+    <string name="pref_ocid_requestkey_summary">Запрос ключа API для доступа к данным OpenCellID</string>
 
     <!-- MAP PREFERENCES -->
-    <string name="pref_map_title">Map Viewer Preferences</string>
-    <string name="pref_map_type_title">Map Type</string>
-    <string name="pref_map_type_summ">Display Map in different styles</string>
+    <string name="pref_map_title">Настроки просмотра карты</string>
+    <string name="pref_map_type_title">Тип карты</string>
+    <string name="pref_map_type_summ">Отображать карту в различных стилях</string>
     
     <!-- MAP INFOWINDOW -->
     <string name="cell_id_label">CID: </string>
@@ -153,14 +153,14 @@
     <string name="mcc_label">MCC: </string>
     <string name="mnc_label">MNC: </string>
     <string name="pc_label">PC: </string>
-    <string name="samples_label">Samples: </string>
-    <string name="open_cell_id_label">OpenCellID Data</string>
-    <string name="lat_label">Lat: </string>
-    <string name="lng_label">Lon: </string>
+    <string name="samples_label">Образцы: </string>
+    <string name="open_cell_id_label">Данные OpenCellID</string>
+    <string name="lat_label">Широта: </string>
+    <string name="lng_label">Долгота: </string>
 
     <!-- Database Viewer -->
-    <string name="load_table_data">Load Data</string>
-    <string name="table_names_prompt">Select Table</string>
+    <string name="load_table_data">Загрузка данных</string>
+    <string name="table_names_prompt">Выберите таблицу</string>
     <string-array name="table_names">
         <item>@string/unique_bts_data</item>
         <item>@string/bts_measurements</item>
@@ -170,40 +170,40 @@
         <item>@string/measured_signal_strengths</item>
         <item>@string/eventlog</item>
     </string-array>
-    <string name="database_export_successful">Export Successful</string>
+    <string name="database_export_successful">Экспорт успешен</string>
 
     <!-- AT Command Interface  -->
-    <string name="at_command_title">AT Command Interface</string>
-    <string name="response_label">Response:</string>
-    <string name="execute_at">Execute</string>
-    <string name="serial_device_title">Current Serial Device:</string>
-    <string name="serial_device_prompt">Select Serial Device</string>
-    <string name="serial_device_spinner_title">Detected Devices:</string>
-    <string name="timeout_spinner_title">Timeout:</string>
-    <string name="timeout_spinner_prompt">Select Timeout</string>
-    <string name="command_hint">Enter AT command here.</string>
+    <string name="at_command_title">Командный интерфейс AT</string>
+    <string name="response_label">Ответ:</string>
+    <string name="execute_at">Выполнение</string>
+    <string name="serial_device_title">Текущее Serial Device:</string>
+    <string name="serial_device_prompt">Выберите Serial Device</string>
+    <string name="serial_device_spinner_title">Обнаружены устройства:</string>
+    <string name="timeout_spinner_title">Задержка времени:</string>
+    <string name="timeout_spinner_prompt">Выберите задержку времени</string>
+    <string name="command_hint">Введите команду AT здесь.</string>
 
     <!-- SILENT SMS FRAGMENT -->
-    <string name="sms_title">Silent SMS Intercepted</string>
-    <string name="sms_message">Silent SMS Message has been intercepted!\n\nDetails are available through the Database Viewer.</string>
-    <string name="table_contains_no_data">Table contains no data to display.</string>
+    <string name="sms_title">Бесшумная SMS перехвачена</string>
+    <string name="sms_message">Бесшумная SMS была перехвачена!\n\nПодробная информация доступна через просмотр базы данных.</string>
+    <string name="table_contains_no_data">Таблица не содержит никаких данных для отображения.</string>
 
     <!-- Request OpenCellID Key -->
-    <string name="title_ocid_key">OpenCellID API Key</string>
-    <string name="message_request_api_key">Click OK to request an API key from OpenCellID.org. This will enable you to download their data and view it in the map. It will also enable you to upload cell data. Note that if you do not upload cell data within 20 days, your API key may become inactive.</string>
-    <string name="ocid_api_error">Error getting key: </string>
-    <string name="ocid_api_success">Saved new API key</string>
+    <string name="title_ocid_key">OpenCellID ключ API</string>
+    <string name="message_request_api_key">Нажмите OK для запроса ключа API из OpenCellID.org. Это позволит вам скачать их данные и просмотреть его на карте. Это также позволит вам выгружать данные сотовых сетей. Обратите внимание, что если вы не выгружать данные сотовых сетей в течение 20 дней, ваш ключ API может стать неактивным.</string>
+    <string name="ocid_api_error">Ошибка получения ключа: </string>
+    <string name="ocid_api_success">Сохранен новый ключ API</string>
 
     <!-- Debug logs -->
-    <string name="title_debug_logs">Debug Logs</string>
-    <string name="btn_clear_logs">Clear</string>
-    <string name="btn_copy_to_clipboard">Copy</string>
-    <string name="msg_copied_to_clipboard">Logs copied to clipboard</string>
-    <string name="btn_stop_logs">Stop</string>
-    <string name="btn_start_logs">Start</string>
+    <string name="title_debug_logs">Логи отладки</string>
+    <string name="btn_clear_logs">Очистить</string>
+    <string name="btn_copy_to_clipboard">Копировать</string>
+    <string name="msg_copied_to_clipboard">Логи скопированы в буфер обмена</string>
+    <string name="btn_stop_logs">Стоп</string>
+    <string name="btn_start_logs">Старт</string>
 
     <!-- Detailed Info Strings -->
-    <string name="title_activity_about_pop_up">DETAILED EXPLANATION</string>
+    <string name="title_activity_about_pop_up">Подробное описание</string>
     <string name="detail_info_idle">App is idling or loading. No protection and detection measures are enabled. Please open the Navigation Drawer and enable them in section TRACKING.</string>
     <string name="detail_info_normal">No threats detected or found. Our App is constantly checking your network based upon the protection measures you\'ve set in the Navigation Drawer and Preferences.</string>
     <string name="detail_info_medium">Insecure Service Area: At least 1 new or unknown BTS is in operation in this vicinity, or using an insecure (broken) encryption algorithm lower than A5/3 [Detection is WIP]. Expect that any phone calls/SMS made in this area can be intercepted and recorded. You better leave this place now.</string>
@@ -248,31 +248,31 @@
     <string name="femtocell_detection_active">FemtoCell Detection Active.</string>
     <string name="cell_tracking_active">Cell Tracking Active.</string>
     <string name="cell_monitoring_active">Cell Monitoring Active.</string>
-    <string name="phone_type">Phone Type</string>
-    <string name="status_idle"> - Status: Idle.</string>
-    <string name="status_good">- Status: Good. No Threats Detected.</string>
-    <string name="alert_threat_detected">ALERT: Some Threat Detected!</string>
-    <string name="aletr_femtocell_connection_detected">ALERT: FemtoCell Connection Detected!</string>
-    <string name="alert_silent_sms_intercepted">ALERT: Type-0 Silent SMS Intercepted!</string>
-    <string name="femtocell_only_on_cdma_devices">AIMSICD can only detect FemtoCell connections on CDMA devices.</string>
-    <string name="service_state_changed">Service State changed!</string>
-    <string name="stopped_tracking_femtocell">: Stopped tracking FemtoCell connections.</string>
-    <string name="alert_femtocell_tracking_detected">ALERT! FemtoCell Tracking Detected.</string>
-    <string name="refreshing_every">Refreshing every</string>
-    <string name="refreshing_now">Refreshing now&#8230;</string>
-    <string name="seconds">seconds.</string>
-    <string name="contacting_opencellid_for_data">Contacting OpenCellID for data&#8230;\nThis may take up to a minute.</string>
-    <string name="unable_to_determine_last_location">Unable to determine your last location.\nEnable Location Services and try again.</string>
-    <string name="no_tracked_locations_found">No tracked locations found to show on map.</string>
-    <string name="no_data_for_publishing">No data for publishing available.</string>
-    <string name="download_error">Download error:</string>
+    <string name="phone_type">Тип телефона</string>
+    <string name="status_idle">- Статус: Неработающий.</string>
+    <string name="status_good">- Status: Хорошо. Угроз не обнаружено.</string>
+    <string name="alert_threat_detected">ТРЕВОГА: Обнаружены некоторые угрозы!</string>
+    <string name="aletr_femtocell_connection_detected">ТРЕВОГА: Обнаружено соединение с фемтосотой!</string>
+    <string name="alert_silent_sms_intercepted">ТРЕВОГА: Перехвачена бесшумная SMS(Type-0)!</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD может определять соединение с фемтосотой только на CDMA устройствах.</string>
+    <string name="service_state_changed">Статус сервиса изменен!</string>
+    <string name="stopped_tracking_femtocell">: Остановлен мониториг соединения с фемтосотой.</string>
+    <string name="alert_femtocell_tracking_detected">ТРЕВОГА! Обнаружен мониторинг фемтосоты.</string>
+    <string name="refreshing_every">Обновлять каждые</string>
+    <string name="refreshing_now">Обновить сейчас&#8230;</string>
+    <string name="seconds">секунд.</string>
+    <string name="contacting_opencellid_for_data">Обращение к данным OpenCellID&#8230;\nThis may take up to a minute.</string>
+    <string name="unable_to_determine_last_location">Невозможно определить ваш последнее место.\nВключите сервис определения координат и попробуйте еще раз.</string>
+    <string name="no_tracked_locations_found">Не найдено отслеживаемых мест, чтобы показать их на карте.</string>
+    <string name="no_data_for_publishing">Нет доступных данных для публикации.</string>
+    <string name="download_error">Ошибка загрузки:</string>
     <string name="opencellid_data_successfully_received">OpenCellID data successfully received.</string>
     <string name="error_retrieving_opencellid_data">Error retrieving OpenCellID data.\nCheck your network!</string>
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data successfully received.\nMap Markers updated.</string>
     <string name="uploaded_bts_data_successfully">Uploaded BTS data to OCID successfully.</string>
     <string name="error_uploading_bts_data">Error in uploading BTS data to OCID servers!</string>
-    <string name="restore_database_completed">Restore database completed successfully.</string>
-    <string name="error_restoring_database">Error restoring database.</string>
+    <string name="restore_database_completed">Восстановление базы данных успешно завершено.</string>
+    <string name="error_restoring_database">Ошибка восстановления базы данных.</string>
     <string name="database_backup_successfully_saved_to">Database backup successfully saved to:</string>
     <string name="error_backing_up_data">Error backing up database.</string>
     <string name="no_opencellid_key_detected">No OpenCellID API Key detected!\nPlease enter your key in settings first.</string>
@@ -281,16 +281,16 @@
     <string name="unable_to_detect_busybox">Unable to detect Busybox on your device.\nAT Command Injection requires Busybox components to function correctly.\nPlease check your device has Busybox installed and try again</string>
     <string name="unknown_error_trying_to_acquire_serial_device">An unknown error has occurred trying to acquire the Serial Device.\nPlease check your logcat for any errors and post them to Github\nor XDA, links to both of these locations can be found within the\nAbout section of the application.</string>
     <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them to Github or\nXDA, links to both of these locations can be found within the\nAbout section of the application.</string>
-    <string name="getting_ocid_api_key">Getting OpenCellID API key&#8230;</string>
-    <string name="unable_to_create_map">Unable to create map!</string>
-    <string name="describe_the_problem_you_had">ATTENTION! Please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!\n</string>
-    <string name="status">Status:</string>
-    <string name="idle">IDLE</string>
-    <string name="normal">NORMAL</string>
-    <string name="medium">MEDIUM</string>
-    <string name="high">HIGH</string>
-    <string name="danger">DANGER</string>
-    <string name="run">RUN!</string>
+    <string name="getting_ocid_api_key">Получение ключа API OpenCellID&#8230;</string>
+    <string name="unable_to_create_map">Невозможно создать карту!</string>
+    <string name="describe_the_problem_you_had">ВНИМАНИЕ! Пожалуйста, опишите проблему, которая у вас была, прежде, чем отправить нам эти журналы. НЕТ ПОМОЩИ БЕЗ ОПИСАНИЯ!\n</string>
+    <string name="status">Статус:</string>
+    <string name="idle">Неработающий</string>
+    <string name="normal">Нормальный</string>
+    <string name="medium">Средний</string>
+    <string name="high">Высокий</string>
+    <string name="danger">Опасный</string>
+    <string name="run">Беги!</string>
 
     <!-- Section Main-->
     <string name="help_main_current_threat_level">AIMSICD status, neighboring cells, ciphering method indicator.</string>
