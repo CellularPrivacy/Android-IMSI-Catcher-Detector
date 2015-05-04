@@ -38,12 +38,12 @@ def getManifestVersionName() {
 //======================================================================
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 22
     buildToolsVersion '22.0.1'
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 19
+        targetSdkVersion 22
         versionCode = getManifestVersionCode()
         versionName = getManifestVersionName()
         testApplicationId "com.SecUpwN.AIMSICD.test"
