@@ -128,7 +128,7 @@ dependencies {
     //    compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':third_party:rootshell')
-    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.android.support:support-v4:22.1.1'
     compile 'org.osmdroid:osmdroid-android:4.2'
     //https://github.com/lp0/slf4j-android
     compile 'org.slf4j:slf4j-api:1.7.12'

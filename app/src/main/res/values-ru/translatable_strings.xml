@@ -5,7 +5,7 @@
     <string name="tracking">Слежение</string>
 
     <string name="device_info">Телефон/SIM подробнее</string>
-    <string name="map_view">Просмотр карты антенн</string>
+    <string name="map_view">Карта антенн</string>
     <string name="db_viewer">Просмотр базы данных</string>
     <string name="quit">Выход</string>
     <string name="text_ok">OK</string>
@@ -204,14 +204,14 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">Подробное описание</string>
-    <string name="detail_info_idle">App is idling or loading. No protection and detection measures are enabled. Please open the Navigation Drawer and enable them in section TRACKING.</string>
-    <string name="detail_info_normal">No threats detected or found. Our App is constantly checking your network based upon the protection measures you\'ve set in the Navigation Drawer and Preferences.</string>
-    <string name="detail_info_medium">Insecure Service Area: At least 1 new or unknown BTS is in operation in this vicinity, or using an insecure (broken) encryption algorithm lower than A5/3 [Detection is WIP]. Expect that any phone calls/SMS made in this area can be intercepted and recorded. You better leave this place now.</string>
-    <string name="detail_info_high">Hostile Service Actions Detected: An IMSI-Catcher (IMSIC) or fake BTS (FBTS) is actively tracking users. Active scanning takes place in this area. You should avoid this place, especially if there are political unrest. Take out your battery or kill your phone.</string>
-    <string name="detail_info_danger">Hostile Tracking Detected: An FBTS or IMSIC is actively tracking YOU and preventing your phone from connecting through your normal encrypted mobile provider. If you\'re in danger or repercussions, destroy your phone + SIM and report it as recently stolen.</string>
-    <string name="detail_info_run">Hostile Manipulation: Someone is trying to remotely manipulate your handset. Destroy (or sell) your phone and get a new one somewhere far away (don\'t carry your old phone to the changing place). Use a new (anonymous) SIM card, change calling behavior and warn your friends by talking to them in real life, NOT by calling them.</string>
+    <string name="detail_info_idle">Приложение работает в режиме ожидания или загрузки. Меры защиты и обнаружения не включены. Пожалуйста, откройте меню и включите их в разделе СЛЕЖЕНИЕ.</string>
+    <string name="detail_info_normal">Никакие угрозы не обнаружены. Наше приложение постоянно проверять вашу сеть на основе мер защиты, которые вы установили в меню и настройках.</string>
+    <string name="detail_info_medium">Небезопасная зона обслуживания: По крайней мере, 1 новая или неизвестная БС в эксплуатации в этом районе, или с использованием небезопасного (сломанного) алгоритма шифрования меньшего, чем A5 / 3 [Обнаружение WIP]. Ожидайте, что любые телефонные звонки / SMS, сделанные в этой области могут быть перехвачены и зарегистрированы. Вам лучше оставить это место сейчас.</string>
+    <string name="detail_info_high">Враждебные действия обнаружены: IMSI-Перехватчик (IMSIC) или поддельные BTS (FBTS) активно отслеживают пользователей. Активное сканирование происходит в этой области. Вы должны избегать этого места, особенно, если есть политическая нестабильность. Выньте батарею или уничтожьте свой телефон.</string>
+    <string name="detail_info_danger">Враждебные отслеживания обнаружены: FBTS или IMSIC активно отслеживают вас и предотвращают ваш телефон от подключения через обычную зашифрованную мобильную связь. Если вы находитесь в опасности, сломайте ваш телефон + SIM и сообщите, что ваш телефон недавно был украден.</string>
+    <string name="detail_info_run">Враждебные манипуляции: Кто-то пытается удаленно управлять вашим телефоном. Уничтожьте (или продайте) свой телефон и возьмите новый где-то подальше (не носите свой старый телефон с собой). Используйте новую (анонимную) SIM-карту, измените поведение вызовов и предупредите своих друзей, разговаривая с ними в реальной жизни, НЕ звоня им.</string>
 
-    <string name="open_cell_id_button_cancel">Cancel</string>
+    <string name="open_cell_id_button_cancel">Отмена</string>
     <string name="open_cell_id_button_ok">OK</string>
 
     <!-- UI icon preferences -->
@@ -236,17 +236,17 @@
     <string name="timeout_spinner_30_sec">30 сек</string>
     <string name="timeout_spinner_10_min">10 мин</string>
     <string name="main">Главное</string>
-    <string name="settings">Настройки приложения</string>
+    <string name="settings">Настройки</string>
     <string name="application">Приложение</string>
-    <string name="monitoring_cell_information">Monitoring Cell Information.</string>
-    <string name="stopped_monitoring_cell_information">Stopped monitoring Cell Information.</string>
-    <string name="tracking_cell_information">Tracking Cell Information.</string>
-    <string name="stopped_tracking_cell_information">Stopped tracking Cell Information.</string>
-    <string name="only_one_api_per_day">Only one new API key request per 24 hours!\nPlease try again later.</string>
-    <string name="cell_id_doesnt_exist_in_db">Cell ID does not exist in OpenCellID Database!</string>
-    <string name="hostile_service_area_changing_lac_detected">Hostile Service Area: Changing LAC Detected!</string>
-    <string name="femtocell_detection_active">FemtoCell Detection Active.</string>
-    <string name="cell_tracking_active">Cell Tracking Active.</string>
+    <string name="monitoring_cell_information">Мониторинг сотовой информации.</string>
+    <string name="stopped_monitoring_cell_information">Мониторинг сотовой информации остановлен.</string>
+    <string name="tracking_cell_information">Отслеживания данных сотового.</string>
+    <string name="stopped_tracking_cell_information">Отслеживания данных сотового остановлена.</string>
+    <string name="only_one_api_per_day">Только один запрос нового ключа API за 24 часа!\nПожалуйста, повторите попытку позже.</string>
+    <string name="cell_id_doesnt_exist_in_db">ID соты не существует в базе данных OpenCellID!</string>
+    <string name="hostile_service_area_changing_lac_detected">Враждебная зона обслуживания: Изменение LAC обнаружено!</string>
+    <string name="femtocell_detection_active">Обнаружение фемтосот активно.</string>
+    <string name="cell_tracking_active">Отслеживание активной сотовой ячейки.</string>
     <string name="cell_monitoring_active">Cell Monitoring Active.</string>
     <string name="phone_type">Тип телефона</string>
     <string name="status_idle">- Статус: Неработающий.</string>
@@ -261,25 +261,25 @@
     <string name="refreshing_every">Обновлять каждые</string>
     <string name="refreshing_now">Обновить сейчас&#8230;</string>
     <string name="seconds">секунд.</string>
-    <string name="contacting_opencellid_for_data">Обращение к данным OpenCellID&#8230;\nThis may take up to a minute.</string>
+    <string name="contacting_opencellid_for_data">Обращение к данным OpenCellID&#8230;\nЭто может занять до минуты.</string>
     <string name="unable_to_determine_last_location">Невозможно определить ваш последнее место.\nВключите сервис определения координат и попробуйте еще раз.</string>
     <string name="no_tracked_locations_found">Не найдено отслеживаемых мест, чтобы показать их на карте.</string>
     <string name="no_data_for_publishing">Нет доступных данных для публикации.</string>
     <string name="download_error">Ошибка загрузки:</string>
-    <string name="opencellid_data_successfully_received">OpenCellID data successfully received.</string>
-    <string name="error_retrieving_opencellid_data">Error retrieving OpenCellID data.\nCheck your network!</string>
-    <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data successfully received.\nMap Markers updated.</string>
-    <string name="uploaded_bts_data_successfully">Uploaded BTS data to OCID successfully.</string>
-    <string name="error_uploading_bts_data">Error in uploading BTS data to OCID servers!</string>
+    <string name="opencellid_data_successfully_received">Данные OpenCellID успешно приняты.</string>
+    <string name="error_retrieving_opencellid_data">Ошибка при получении данных OpenCellID.\nПроверьте вашу сеть!</string>
+    <string name="opencellid_data_successfully_received_markers_updated">Данные OpenCellID успешно приняты.\nМаркеры карты обновлены.</string>
+    <string name="uploaded_bts_data_successfully">Данные BTS для OCID выгружены успешно.</string>
+    <string name="error_uploading_bts_data">Ошибка при выгрузке данных BTS для OCID серверов!</string>
     <string name="restore_database_completed">Восстановление базы данных успешно завершено.</string>
     <string name="error_restoring_database">Ошибка восстановления базы данных.</string>
-    <string name="database_backup_successfully_saved_to">Database backup successfully saved to:</string>
-    <string name="error_backing_up_data">Error backing up database.</string>
+    <string name="database_backup_successfully_saved_to">Резервная копия базы данных успешна сохранена в:</string>
+    <string name="error_backing_up_data">Ошибка резервного копирования базы данных.</string>
     <string name="no_opencellid_key_detected">No OpenCellID API Key detected!\nPlease enter your key in settings first.</string>
-    <string name="refreshing_display">Refreshing display</string>
-    <string name="unable_to_acquire_root_access">Unable to acquire ROOT access on your device.\nAT Command Injection requires ROOT Terminal access.\nPlease check your device is ROOTED and try again</string>
-    <string name="unable_to_detect_busybox">Unable to detect Busybox on your device.\nAT Command Injection requires Busybox components to function correctly.\nPlease check your device has Busybox installed and try again</string>
-    <string name="unknown_error_trying_to_acquire_serial_device">An unknown error has occurred trying to acquire the Serial Device.\nPlease check your logcat for any errors and post them to Github\nor XDA, links to both of these locations can be found within the\nAbout section of the application.</string>
+    <string name="refreshing_display">Обновление дисплея</string>
+    <string name="unable_to_acquire_root_access">Невозможно получить ROOT доступ на вашем устройстве.\nДля инъекций AT-команд в терминал требуется ROOT доступ.\nПожалуйста, проверьте наличие ROOT прав на вашем устройстве и попробуйте еще раз</string>
+    <string name="unable_to_detect_busybox">Невозможно обнаружить Busybox на вашем устройстве.\nДля инъекций AT-команд в терминал требуются компоненты Busybox для правильного функционирования.\nПожалуйста, проверьте, что Busybox установлен на ваше устройство  и попробуйте снова</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Произошла неизвестная ошибка при попытке достижения Serial Device.\nПожалуйста, проверьте LogCat на возможные ошибки и отправьте их на Github\nили XDA, ссылки на оба этих места можно найти в \nсекции "О программе" приложения.</string>
     <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them to Github or\nXDA, links to both of these locations can be found within the\nAbout section of the application.</string>
     <string name="getting_ocid_api_key">Получение ключа API OpenCellID&#8230;</string>
     <string name="unable_to_create_map">Невозможно создать карту!</string>
