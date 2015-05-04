@@ -216,7 +216,11 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            loadOpenCellIDMarkers();
+            loadEntries();
+            if(BuildConfig.DEBUG && mCellTowerGridMarkerClusterer != null && mCellTowerGridMarkerClusterer.getItems() != null) {
+                Log.v(TAG, "mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+            }
+
         }
     };
 

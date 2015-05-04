@@ -29,6 +29,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 
 import java.io.BufferedReader;
@@ -277,9 +278,15 @@ import java.util.List;
                     new RequestTask(context, type).execute(sb.toString());
                 }
             } else {
+                if(context instanceof MapViewerOsmDroid) {
+                    ((MapViewerOsmDroid)context).setRefreshActionButtonState(false);
+                }
                 Helpers.sendMsg(context, context.getString(R.string.no_opencellid_key_detected));
             }
         } else {
+            if(context instanceof MapViewerOsmDroid) {
+                ((MapViewerOsmDroid)context).setRefreshActionButtonState(false);
+            }
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(R.string.no_network_connection_title)
                     .setMessage(R.string.no_network_connection_message);

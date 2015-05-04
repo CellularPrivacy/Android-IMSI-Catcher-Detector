@@ -116,6 +116,7 @@
                 android:exported="true"
                 android:label="@string/map_view"
                 android:parentActivityName=".AIMSICD"
+                android:launchMode="singleInstance"
                 android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
