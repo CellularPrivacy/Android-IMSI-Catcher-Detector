@@ -20,6 +20,7 @@ package com.SecUpwN.AIMSICD.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
@@ -572,5 +573,33 @@ import java.util.List;
         return sb.toString();
     }
 
+    /**
+     * Very cool method. Completely erases the entire database.
+     * Apply on medical prescription.
+     * Also asks the user, whether he wants to erase its database ...
+     *
+     * @param pContext Context of Activity
+     */
+    public static void askAndDeleteDb(final Context pContext) {
+        AlertDialog lAlertDialog = new AlertDialog.Builder(pContext)
+                .setNegativeButton(R.string.open_cell_id_button_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Do nothing
+                    }
+                })
+                .setPositiveButton(R.string.open_cell_id_button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //FIXME need to remove hardcoded string into constants
+                        pContext.deleteDatabase("aimsicd.db");
+                    }
+                })
+                .setMessage(pContext.getString(R.string.clear_database_question))
+                .setTitle(R.string.clear_database)
+                .setCancelable(false)
+                .setIcon(R.drawable.ic_action_delete_database).create();
+        lAlertDialog.show();
+    }
 }
 

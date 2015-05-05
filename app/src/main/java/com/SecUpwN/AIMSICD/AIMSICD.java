@@ -102,7 +102,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-        mNavConf = getNavDrawerConfiguration();
+        mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
 
         setContentView(mNavConf.getMainLayout());
 
@@ -290,6 +290,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             } else {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
             }
+        } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESET_DB) {
+            Helpers.askAndDeleteDb(this);
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BST_DATA) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
@@ -396,52 +398,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public void setTitle(CharSequence title) {
         mTitle = title;
         mActionBar.setTitle(mTitle);
-    }
-
-    public DrawerMenuActivityConfiguration getNavDrawerConfiguration() {
-
-        List<NavDrawerItem> menu = new ArrayList<>();
-
-        //Section Main
-        menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_MAIN, getString(R.string.main)));
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.CURRENT_TREAT_LEVEL, getString(R.string.cell_info_title), R.drawable.cell_tower, true));            // Cell Information (Neighboring cells etc)
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.PHONE_SIM_DETAILS, getString(R.string.device_info), R.drawable.ic_action_phone, true));           // Phone/SIM Details
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.ACD, getString(R.string.cell_lookup), R.drawable.stat_sys_download_anim0, false));  // Lookup "All Current Cell Details (ACD)"
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.DB_VIEWER, getString(R.string.db_viewer), R.drawable.ic_action_storage, true));           // Database Viewer
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.ANTENNA_MAP_VIEW, getString(R.string.map_view), R.drawable.ic_action_map, false));               // Antenna Map Viewer
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.AT_COMMAND_INTERFACE, getString(R.string.at_command_title), R.drawable.ic_action_computer, true));   // AT Command Interface
-
-        //Section Tracking
-        menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_TRACKING, getString(R.string.tracking)));
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TOGGLE_AIMSICD_MONITORING, getString(R.string.toggle_aimsicd_monitoring), R.drawable.untrack_cell, false));    // Toggle "AIMSICD Monitoring"
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TOGGLE_2G_ONLY_NETWORK, getString(R.string.toggle_2g_only_network_lock), R.drawable.untrack_cell, false));      // Toggle "Track Cell Details"
-        if (CellTracker.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
-            menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TRACK_FEMTOCELL, getString(R.string.toggle_femtocell), R.drawable.ic_action_network_cell, false, false)); // Track FemtoCell
-        }
-
-        //Section Settings
-        menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_SETTINGS, getString(R.string.settings)));
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.SETTINGS.PREFERENCES, getString(R.string.preferences), R.drawable.ic_action_settings, false));            // Preferences
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.SETTINGS.BACKUP_DB, getString(R.string.backup_database), R.drawable.ic_action_import_export, false));   // Backup Database
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.SETTINGS.RESTORE_DB, getString(R.string.restore_database), R.drawable.ic_action_import_export, false));  // Restore Database
-
-        //Section Application
-        menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_APPLICATION, getString(R.string.application)));
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BST_DATA, getString(R.string.get_opencellid), R.drawable.stat_sys_download_anim0, false));   // "Download Local BTS data"
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BST_DATA, getString(R.string.upload_bts), R.drawable.stat_sys_upload_anim0, false));      // "Upload Local BTS data"
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.ABOUT, getString(R.string.about_aimsicd), R.drawable.ic_action_about, true));         // About
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.SEND_DEBUGGING_LOG, getString(R.string.send_logs), R.drawable.ic_action_computer, false));         // Debugging
-        menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.QUIT, getString(R.string.quit), R.drawable.ic_action_remove, false));                // Quit
-
-        DrawerMenuActivityConfiguration navDrawerActivityConfiguration = new DrawerMenuActivityConfiguration();
-        navDrawerActivityConfiguration.setMainLayout(R.layout.main);
-        navDrawerActivityConfiguration.setDrawerLayoutId(R.id.drawer_layout);
-        navDrawerActivityConfiguration.setLeftDrawerId(R.id.left_drawer);
-        navDrawerActivityConfiguration.setNavItems(menu);
-        navDrawerActivityConfiguration.setDrawerOpenDesc(R.string.drawer_open);
-        navDrawerActivityConfiguration.setDrawerCloseDesc(R.string.drawer_close);
-        navDrawerActivityConfiguration.setBaseAdapter( new DrawerMenuAdapter(this, R.layout.drawer_item, menu ));
-        return navDrawerActivityConfiguration;
     }
 
     /**
