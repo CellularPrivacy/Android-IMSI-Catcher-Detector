@@ -23,6 +23,8 @@
     <string name="cell_lookup">Wszystkie informacje o obecnej komórce</string>
     <string name="ciphering_indicator_title">Wskaźnik szyfrowania</string>
     <string name="clear_database">Wyczyść bazę danych</string>
+    <!-- Need to translate -->
+    <string name="clear_database_question">All data will be deleted.\nAre you sure?</string>
     <string name="command_hint">Wpisz komendę AT tutaj</string>
     <string name="data_activity">Aktywność bazy danych</string>
     <string name="data_status">Status danych</string>

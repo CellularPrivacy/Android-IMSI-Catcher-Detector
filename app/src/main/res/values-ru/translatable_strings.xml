@@ -38,8 +38,8 @@
     <string name="toggle_femtocell">Переключить Femtocell</string>
 
     <string name="backup_database">Сделать резервную копию базы данных</string>
-    <!-- TODO: -->
     <string name="clear_database">Очистить/Сбросить базу данных</string>
+    <string name="clear_database_question">Все данные будут стерты.\nВы уверены?</string>
 
     <string name="restore_database">Восстановить базу данных</string>
     <string name="preferences">Параметры</string>
