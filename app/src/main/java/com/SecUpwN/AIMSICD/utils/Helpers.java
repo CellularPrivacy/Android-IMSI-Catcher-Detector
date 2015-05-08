@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.CountDownTimer
 import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
