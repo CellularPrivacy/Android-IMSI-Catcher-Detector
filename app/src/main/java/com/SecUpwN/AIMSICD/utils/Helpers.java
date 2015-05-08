@@ -23,11 +23,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.CountDownTimer
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.R;
@@ -136,8 +137,6 @@ import java.util.List;
     * Toast Extender
     * (To extend toast messages to more than 3.5 sec)
     *
-    * @param context Application Context
-    * @param msg     Message to send
     */
     public class Toaster {
       private static final int SHORT_TOAST_DURATION = 2000;
