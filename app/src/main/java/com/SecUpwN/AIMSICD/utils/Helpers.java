@@ -73,7 +73,7 @@ import java.util.List;
  *
  * Issues:          AS complaints that several of these methods are not used...
  *
- * ChangeLog:
+ * ChangeLog:       2015-05-08   SecUpwN   Added Toast Extender for longer toasts
  *
  */
  public class Helpers {
@@ -130,6 +130,36 @@ import java.util.List;
             msgLong(context, msg);
         }
     }
+    
+    /**
+    * Toast Extender
+    * (To extend toast messages to more than 3.5 sec)
+    *
+    * @param context Application Context
+    * @param msg     Message to send
+    */
+    public class Toaster {
+      private static final int SHORT_TOAST_DURATION = 2000;
+
+      private Toaster() {}
+
+      public static void makeLongToast(String msg, long durationInMillis) {
+        final Toast t = Toast.makeText(App.context(), msg, Toast.LENGTH_SHORT);
+        t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+        new CountDownTimer(Math.max(durationInMillis - SHORT_TOAST_DURATION, 1000), 1000) {
+          @Override
+          public void onFinish() {
+            t.show();
+          }
+
+          @Override
+          public void onTick(long millisUntilFinished) {
+            t.show();
+          }
+        }.start();
+      }
+    } 
 
     /**
      * Return a timestamp
