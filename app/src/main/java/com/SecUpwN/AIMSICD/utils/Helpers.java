@@ -143,8 +143,8 @@ import java.util.List;
 
       private Toaster() {}
 
-      public static void makeLongToast(String msg, long durationInMillis) {
-        final Toast t = Toast.makeText(App.context(), msg, Toast.LENGTH_SHORT);
+      public static void makeLongToast(Context context,String msg, long durationInMillis) {
+        final Toast t = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
         t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
 
         new CountDownTimer(Math.max(durationInMillis - SHORT_TOAST_DURATION, 1000), 1000) {
