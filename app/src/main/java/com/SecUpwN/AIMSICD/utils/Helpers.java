@@ -84,8 +84,8 @@ import java.util.List;
     private static final String mTAG = "Helpers";
 
     private static final int CHARS_PER_LINE = 34;
-    private static final int SHORT_TOAST_DURATION = 2000;//hardcoded, ideally this could be changed in prefs
-    private static final long TOAST_DURATION_MILLS = 6000;
+    private static final int SHORT_TOAST_DURATION = 2000;
+    private static final long TOAST_DURATION_MILLS = 6000;//change if need longer
     /**
      * Long toast message
      * TOAST_DURATION_MILLS controls the duration
