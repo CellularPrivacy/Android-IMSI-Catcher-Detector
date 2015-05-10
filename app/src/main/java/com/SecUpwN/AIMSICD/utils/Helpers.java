@@ -84,23 +84,34 @@ import java.util.List;
     private static final String mTAG = "Helpers";
 
     private static final int CHARS_PER_LINE = 34;
-
+    private static final int SHORT_TOAST_DURATION = 2000;//hardcoded, ideally this could be changed in prefs
+    private static final long TOAST_DURATION_MILLS = 6000;
     /**
      * Long toast message
-     * (Predefined in AOS to 3500 ms = 3.5 sec)
-     *
+     * TOAST_DURATION_MILLS controls the duration
+     * currently set to 6 seconds
      * @param context Application Context
      * @param msg     Message to send
      */
     public static void msgLong(final Context context, final String msg) {
-        if (context != null && msg != null) {
-            new Handler(context.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, msg.trim(), Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+            if (context != null && msg != null) {
+                final Toast t = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+                new CountDownTimer(Math.max(TOAST_DURATION_MILLS - SHORT_TOAST_DURATION, 1000), 1000) {
+                    @Override
+                    public void onFinish() {
+                        t.show();
+                    }
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        t.show();
+                    }
+                }.start();
+            }
+
+
     }
 
     /**
@@ -133,34 +144,6 @@ import java.util.List;
         }
     }
     
-    /**
-    * Toast Extender
-    * (To extend toast messages to more than 3.5 sec)
-    *
-    */
-    public class Toaster {
-      private static final int SHORT_TOAST_DURATION = 2000;
-
-      private Toaster() {}
-
-      public void makeLongToast(Context context,String msg, long durationInMillis) {
-        final Toast t = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-        t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
-
-        new CountDownTimer(Math.max(durationInMillis - SHORT_TOAST_DURATION, 1000), 1000) {
-          @Override
-          public void onFinish() {
-            t.show();
-          }
-
-          @Override
-          public void onTick(long millisUntilFinished) {
-            t.show();
-          }
-        }.start();
-      }
-    } 
-
     /**
      * Return a timestamp
      *
