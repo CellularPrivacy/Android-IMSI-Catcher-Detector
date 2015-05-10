@@ -1,6 +1,48 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [10.05.2015 - WIP-Release v0.1.27-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.27-alpha-b00)
+
+* Removed: Buggy `Toast Extender` for making toasts last longer than 3.5 seconds
+* Changed: Releases will now be published every Sunday to ease developers lifes
+* Moved: `DATABASE.md` has been moved into section `Technical Details` in WIKI
+* Fixed: Shout-out to @DimaKoz who cleared the mess done with `Toast Extender`
+* Fixed: Huge thanks to @banjaxbanjo for correctly implementing toast expansion
+
+---
+
+#### 06.05.2015 - WIP-Internal v0.1.26-alpha-build-04
+
+* Added: Implemented ability to erase the database through `Navigation Drawer`
+
+---
+
+#### 05.05.2015 - WIP-Internal v0.1.26-alpha-build-03
+
+* Updated: Tried to increase the version of the support library (now reverted)
+* Updated: Synced `buildToolsVersion` with dependencies for better support
+* Updated: Unified and resized copyright header within several source files
+* Added: Green checkmark now appears when pressing the toggle buttons
+* Added: Included AppCompat library in attempt to heal broken Buildozer builds
+* Fixed: Purged bug with doubling (and tripling, etc.) markers on the map
+
+---
+
+#### 02.05.2015 - WIP-Internal v0.1.26-alpha-build-02
+
+* Updated: More improvements of the Russian translations
+* Updated: Markers of cell towers are now drawn as immediately as possible
+* Added: Progress spinner shows on OCID download in `Antenna Map Viewer`
+* Fixed: Memory leaks and other warnings were partially eliminated
+
+---
+
+#### 02.05.2015 - WIP-Internal v0.1.26-alpha-build-01
+
+* Updated: Translation into Russian has been improved
+
+---
+
 #### [01.05.2015 - WIP-Release v0.1.26-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.26-alpha-b00)
 
 * Updated: Added [agilob](https://github.com/agilob) and [DimaKoz](https://github.com/DimaKoz) into our `CREDITS` for their awesome work
