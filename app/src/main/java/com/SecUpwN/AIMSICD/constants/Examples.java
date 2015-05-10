@@ -1,3 +1,8 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vJaf6 | TERMS:  http://git.io/vJMf5
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.constants;
 
 /**

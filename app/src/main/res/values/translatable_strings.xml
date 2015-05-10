@@ -32,8 +32,8 @@
     <string name="toggle_femtocell">Toggle Femtocell</string>
 
     <string name="backup_database">Backup Database</string>
-    <!-- TODO: -->
     <string name="clear_database">Clear/Reset Database</string>
+    <string name="clear_database_question">All data will be deleted.\nAre you sure?</string>
 
     <string name="restore_database">Restore Database</string>
     <string name="preferences">Preferences</string>

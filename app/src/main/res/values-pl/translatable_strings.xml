@@ -23,6 +23,8 @@
     <string name="cell_lookup">Wszystkie informacje o obecnej komórce</string>
     <string name="ciphering_indicator_title">Wskaźnik szyfrowania</string>
     <string name="clear_database">Wyczyść bazę danych</string>
+    <!-- Need to translate -->
+    <string name="clear_database_question">All data will be deleted.\nAre you sure?</string>
     <string name="command_hint">Wpisz komendę AT tutaj</string>
     <string name="data_activity">Aktywność bazy danych</string>
     <string name="data_status">Status danych</string>
@@ -249,7 +251,7 @@
     <string name="about_desc_icon_insecure_area">Ta okolica nie jest bezpieczna. Powinieneś się oddalić!</string>
     <string name="about_desc_icon_run">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem.</string>
     <string name="about_desc_icon_title">Kliknij na ikonę by uzyskać więcej informacji.</string>
-    <string name="help_app_download_local_bst">Pobierz bazę danych OCPID.</string>
+    <string name="help_app_download_local_bst">Pobierz bazę danych OCID.</string>
     <string name="help_app_upload_local_bst">Wyślij dane o lokalnych BTS do OCID.</string>
     <string name="help_app_debugging">Wczytaj i wyślij logi.</string>
     <string name="help_app_quit">Zakończ działanie aplikacji.</string>

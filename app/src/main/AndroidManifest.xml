@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
-          android:versionCode="26"
-          android:versionName="0.1.26-alpha-b00">
+          android:versionCode="27"
+          android:versionName="0.1.27-alpha-b00">
 
     <!-- If we ever wanna make this a system app, we can add the following 2 lines above:
           coreApp="true"
@@ -94,7 +94,8 @@
             android:allowBackup="false"
             android:icon="@drawable/sense_danger"
             android:label="@string/main_app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:name=".AppAIMSICD">
 
         <activity
                 android:name=".AIMSICD"
@@ -115,6 +116,7 @@
                 android:exported="true"
                 android:label="@string/map_view"
                 android:parentActivityName=".AIMSICD"
+                android:launchMode="singleInstance"
                 android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"

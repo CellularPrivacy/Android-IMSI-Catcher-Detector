@@ -1,20 +1,8 @@
-/* Android IMSI Catcher Detector
- *      Copyright (C) 2014
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You may obtain a copy of the License at
- *      https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vJaf6 | TERMS:  http://git.io/vJMf5
+ * -----------------------------------------------------------
  */
-
 package com.SecUpwN.AIMSICD.activities;
 
 import android.content.BroadcastReceiver;
@@ -41,8 +29,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.SecUpwN.AIMSICD.AppAIMSICD;
+import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
 import com.SecUpwN.AIMSICD.map.CellTowerGridMarkerClusterer;
 import com.SecUpwN.AIMSICD.map.CellTowerMarker;
 import com.SecUpwN.AIMSICD.map.MarkerData;
@@ -51,6 +42,7 @@ import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
+import com.SecUpwN.AIMSICD.utils.TinyDB;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -76,7 +68,7 @@ import java.util.List;
  *      [ ] See: #272 #250 #228
  *      [ ] Some pins remain clustered even on the greatest zoom, this is probably
  *          due to over sized icons, or too low zoom level.
- *      [ ] pin icons are too big. We need to reduce pin dot diameter by ~50%
+ *      [x] pin icons are too big. We need to reduce pin dot diameter by ~50%
  *      [ ] Need a manual way to add GPS coordinates of current location (see code comments below)
  *      [ ]
  *
@@ -112,6 +104,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     private CompassOverlay mCompassOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
     private CellTowerGridMarkerClusterer mCellTowerGridMarkerClusterer;
+    private Menu mOptionsMenu;
 
     private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
         @Override
@@ -211,7 +204,11 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
     private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            loadOpenCellIDMarkers();
+            loadEntries();
+            if(BuildConfig.DEBUG && mCellTowerGridMarkerClusterer != null && mCellTowerGridMarkerClusterer.getItems() != null) {
+                Log.v(TAG, "mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+            }
+
         }
     };
 
@@ -324,6 +321,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.mOptionsMenu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.map_viewer_menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -352,6 +350,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         cell = mAimsicdService.getCell();
                         cell.setLon(lastKnown.getLongitudeInDegrees());
                         cell.setLat(lastKnown.getLatitudeInDegrees());
+                        setRefreshActionButtonState(true);
+                        TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
                         Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                         return true;
                     }
@@ -363,6 +363,8 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                     Cell cell = new Cell();
                     cell.setLat(loc.getLatitude());
                     cell.setLon(loc.getLongitude());
+                    setRefreshActionButtonState(true);
+                    TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
                     Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                 } else {
                     Helpers.msgLong(mContext,
@@ -440,6 +442,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                             );
                             // The pin of our current position
                             ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_blue));
+
                             items.add(ovm);
 
 
@@ -465,7 +468,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         Log.e("map", "Error getting default location!", e);
                     }
                 }
-                if(c != null && !c.isClosed()) {
+                if(c != null) {
                     c.close();
                 }
                 mDbHelper.close();
@@ -533,6 +536,13 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                         }
                     }
                 }
+                if(mCellTowerGridMarkerClusterer != null) {
+                    if(BuildConfig.DEBUG && mCellTowerGridMarkerClusterer.getItems() != null) {
+                        Log.v(TAG, "CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                    }
+                    //Drawing markers of cell tower immediately as possible
+                    mCellTowerGridMarkerClusterer.invalidate();
+                }
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -590,6 +600,35 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         if (key.equals(KEY_MAP_TYPE)) {
             int item = Integer.parseInt(sharedPreferences.getString(key, "0"));
             setupMapType(item);
+        }
+    }
+
+    public void setRefreshActionButtonState(final boolean refreshing) {
+        if (mOptionsMenu != null) {
+            final MenuItem refreshItem = mOptionsMenu
+                    .findItem(R.id.get_opencellid);
+            if (refreshItem != null) {
+                if (refreshing) {
+                    refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+                } else {
+                    refreshItem.setActionView(null);
+                }
+            }
+        }
+    }
+
+
+    public void onStop() {
+        super.onStop();
+        ((AppAIMSICD) getApplication()).detach(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((AppAIMSICD) getApplication()).attach(this);
+        if( TinyDB.getInstance().getBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP)) {
+            setRefreshActionButtonState(false);
         }
     }
 }

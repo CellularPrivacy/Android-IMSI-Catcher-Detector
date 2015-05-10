@@ -132,7 +132,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             TinyDb tinydb = new TinyDb(context);
             everytime we need to use tinydb in this class
         */
-        tinydb = new TinyDB(context);
+        tinydb = TinyDB.getInstance();
         // TelephonyManager provides system details
         tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         prefs = context.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);

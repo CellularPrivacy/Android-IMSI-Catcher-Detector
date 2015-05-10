@@ -1,3 +1,8 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vJaf6 | TERMS:  http://git.io/vJMf5
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.constants;
 
 /**
@@ -53,7 +58,6 @@ public class DrawerMenu {
             public static final int PREFERENCES = 300;
             public static final int BACKUP_DB = 310; //Backup DataBase
             public static final int RESTORE_DB = 320; //Restore DataBase
-            //TODO need to implement
             public static final int RESET_DB = 330; //Reset DataBase
             //TODO need to implement
             public static final int EXPORT_DB_TO_CVS = 340; //Export DataBase to CSV files

@@ -20,15 +20,19 @@ package com.SecUpwN.AIMSICD.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 
 import java.io.BufferedReader;
@@ -71,7 +75,7 @@ import java.util.List;
  *
  * Issues:          AS complaints that several of these methods are not used...
  *
- * ChangeLog:
+ * ChangeLog:       2015-05-08   SecUpwN   Added Toast Extender for longer toasts
  *
  */
  public class Helpers {
@@ -80,23 +84,34 @@ import java.util.List;
     private static final String mTAG = "Helpers";
 
     private static final int CHARS_PER_LINE = 34;
-
+    private static final int SHORT_TOAST_DURATION = 2000;
+    private static final long TOAST_DURATION_MILLS = 6000;//change if need longer
     /**
      * Long toast message
-     * (Predefined in AOS to 3500 ms = 3.5 sec)
-     *
+     * TOAST_DURATION_MILLS controls the duration
+     * currently set to 6 seconds
      * @param context Application Context
      * @param msg     Message to send
      */
     public static void msgLong(final Context context, final String msg) {
-        if (context != null && msg != null) {
-            new Handler(context.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, msg.trim(), Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+            if (context != null && msg != null) {
+                final Toast t = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+                new CountDownTimer(Math.max(TOAST_DURATION_MILLS - SHORT_TOAST_DURATION, 1000), 1000) {
+                    @Override
+                    public void onFinish() {
+                        t.show();
+                    }
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        t.show();
+                    }
+                }.start();
+            }
+
+
     }
 
     /**
@@ -128,7 +143,7 @@ import java.util.List;
             msgLong(context, msg);
         }
     }
-
+    
     /**
      * Return a timestamp
      *
@@ -277,9 +292,15 @@ import java.util.List;
                     new RequestTask(context, type).execute(sb.toString());
                 }
             } else {
+                if(context instanceof MapViewerOsmDroid) {
+                    ((MapViewerOsmDroid)context).setRefreshActionButtonState(false);
+                }
                 Helpers.sendMsg(context, context.getString(R.string.no_opencellid_key_detected));
             }
         } else {
+            if(context instanceof MapViewerOsmDroid) {
+                ((MapViewerOsmDroid)context).setRefreshActionButtonState(false);
+            }
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(R.string.no_network_connection_title)
                     .setMessage(R.string.no_network_connection_message);
@@ -565,5 +586,33 @@ import java.util.List;
         return sb.toString();
     }
 
+    /**
+     * Very cool method. Completely erases the entire database.
+     * Apply on medical prescription.
+     * Also asks the user, whether he wants to erase its database ...
+     *
+     * @param pContext Context of Activity
+     */
+    public static void askAndDeleteDb(final Context pContext) {
+        AlertDialog lAlertDialog = new AlertDialog.Builder(pContext)
+                .setNegativeButton(R.string.open_cell_id_button_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Do nothing
+                    }
+                })
+                .setPositiveButton(R.string.open_cell_id_button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //FIXME need to remove hardcoded string into constants
+                        pContext.deleteDatabase("aimsicd.db");
+                    }
+                })
+                .setMessage(pContext.getString(R.string.clear_database_question))
+                .setTitle(R.string.clear_database)
+                .setCancelable(false)
+                .setIcon(R.drawable.ic_action_delete_database).create();
+        lAlertDialog.show();
+    }
 }
 
