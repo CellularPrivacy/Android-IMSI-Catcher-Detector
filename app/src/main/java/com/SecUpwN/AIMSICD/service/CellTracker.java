@@ -422,7 +422,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         List<Cell> neighboringCells = new ArrayList<>();
         List<NeighboringCellInfo> neighboringCellInfo;
         neighboringCellInfo = tm.getNeighboringCellInfo();
-
+        
         if (neighboringCellInfo.size() == 0) {
             // try to poll the neighboring cells for a few seconds
             neighboringCellBlockingQueue = new LinkedBlockingQueue<>(100);

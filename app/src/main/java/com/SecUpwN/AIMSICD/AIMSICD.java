@@ -17,8 +17,11 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -55,6 +58,12 @@ import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,6 +108,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        moveData();
 
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
@@ -623,6 +634,37 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public void onStart() {
         super.onStart();
         ((AppAIMSICD) getApplication()).attach(this);
+    }
+
+    /**
+     * TODO: Remove move in 2016.
+     * All people should have more than enough time to update their AIMSICD
+     * this method will be obsolete.
+     */
+    private void moveData() {
+
+        // /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/
+        File destinedPath =  new File(getExternalFilesDir(null) +  File.separator);
+        // /storage/emulated/0/AIMSICD
+        File currentPath = new File(Environment.getExternalStorageDirectory().toString() + "/AIMSICD");
+        //Log.d(TAG, destinedPath.toString());
+        //Log.d(TAG, currentPath.toString());
+
+        //checks if  /storage/emulated/0/AIMSICD exists
+        if(currentPath.exists()) {
+            // and if it's a directory, don't touch files
+            if(currentPath.isDirectory()) {
+                //list all files (and folders) in /storage/emulated/0/AIMSICD
+                File[] content = currentPath.listFiles();
+                for(int i = 0; i < content.length; i++) {
+                    File from = new File(content[i].toString());
+                    //move file to new directory
+                    from.renameTo(new File(destinedPath.toString() + content[i].getName().toString()));
+                }
+            }
+            //remove current directory so it won't try to move it again
+            currentPath.delete();
+        }
     }
 
 }

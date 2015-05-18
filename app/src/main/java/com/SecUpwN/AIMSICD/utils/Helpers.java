@@ -380,29 +380,30 @@ import java.util.List;
         return result;
     }
 
-    /**
-     * Checks if the external media (SD Card) is writable
-     *
-     * @return boolean True if Writable
-     */
-    public static boolean isSdWritable() {
-
-        boolean mExternalStorageAvailable = false;
-        try {
-            String state = Environment.getExternalStorageState();
-
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                // We can read and write the media
-                mExternalStorageAvailable = true;
-                Log.i(TAG, mTAG + ": External storage card is readable.");
-            } else {
-                mExternalStorageAvailable = false;
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, mTAG + ":isSdWritable - " + ex.getMessage());
-        }
-        return mExternalStorageAvailable;
-    }
+    // IT'S NEVER USED
+//    /**
+//     * Checks if the external media (SD Card) is writable
+//     *
+//     * @return boolean True if Writable
+//     */
+//    public static boolean isSdWritable() {
+//
+//        boolean mExternalStorageAvailable = false;
+//        try {
+//            String state = Environment.getExternalStorageState();
+//
+//            if (Environment.MEDIA_MOUNTED.equals(state)) {
+//                // We can read and write the media
+//                mExternalStorageAvailable = true;
+//                Log.i(TAG, mTAG + ": External storage card is readable.");
+//            } else {
+//                mExternalStorageAvailable = false;
+//            }
+//        } catch (Exception ex) {
+//            Log.e(TAG, mTAG + ":isSdWritable - " + ex.getMessage());
+//        }
+//        return mExternalStorageAvailable;
+//    }
 
     /**
      * Return a String List representing response from invokeOemRilRequestRaw
