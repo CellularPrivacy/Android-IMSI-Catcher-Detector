@@ -417,13 +417,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      */
     public List<Cell> updateNeighbouringCells() {
-
-
         List<Cell> neighboringCells = new ArrayList<>();
-        List<NeighboringCellInfo> neighboringCellInfo;
-        neighboringCellInfo = tm.getNeighboringCellInfo();
-        
-        if (neighboringCellInfo.size() == 0) {
+        List<NeighboringCellInfo> neighboringCellInfo = tm.getNeighboringCellInfo();
+        if(neighboringCellInfo == null)
+            neighboringCellInfo = new ArrayList<>();
+
+        if (neighboringCellInfo != null &&
+                neighboringCellInfo.size() == 0) {
             // try to poll the neighboring cells for a few seconds
             neighboringCellBlockingQueue = new LinkedBlockingQueue<>(100);
             Log.i(TAG, mTAG + ": neighbouringCellInfo empty - start polling");
@@ -447,6 +447,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
+                        if(neighboringCellInfo != null)
                         if (neighboringCellInfo.size() > 0) {
                             // Can we think of a better log message here?
                             Log.d(TAG, mTAG + ": neighbouringCellInfo found on " + i + " try. (time based)");
@@ -469,7 +470,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             }
         }
 
-        Log.d(TAG, mTAG + ": neighbouringCellInfo size: " + neighboringCellInfo.size());
+        //commented because I got NPE here
+        //Log.d(TAG, mTAG + ": neighbouringCellInfo size: " + neighboringCellInfo.size());
 
         /*
 
@@ -672,14 +674,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     }
     private void handlePhoneStateChange() {
-        List<NeighboringCellInfo> neighboringCellInfo;
-        neighboringCellInfo = tm.getNeighboringCellInfo();
-        if (neighboringCellInfo.size() == 0) {
+        List<NeighboringCellInfo> neighboringCellInfo = tm.getNeighboringCellInfo();
+        if (neighboringCellInfo == null || neighboringCellInfo.size() == 0) {
             return;
         }
         // Does this make sense? Is it empty or not?
         Log.i(TAG, mTAG + ": neighbouringCellInfo empty - event based polling succeeded!");
         tm.listen(phoneStatelistener, PhoneStateListener.LISTEN_NONE);
+        if(neighboringCellInfo == null)
+            neighboringCellInfo = new ArrayList<>();
         neighboringCellBlockingQueue.addAll(neighboringCellInfo);
     }
 
