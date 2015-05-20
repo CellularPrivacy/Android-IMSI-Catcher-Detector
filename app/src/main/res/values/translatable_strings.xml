@@ -154,7 +154,6 @@
     <string name="lng_label">Lon: </string>
 
     <!-- Database Viewer -->
-    <string name="load_table_data">Load Data</string>
     <string name="table_names_prompt">Select Table</string>
     <string-array name="table_names">
         <item>@string/unique_bts_data</item>
