@@ -43,6 +43,14 @@ Can't code (yet)? No problem, we love you too!
 
 ---
 
+#### DONATING
+
+Thank you for encouraging our developers!
+
+* Feel invited to donate using [this guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Donations).
+
+---
+
 #### SEEKING
 
 Special positions we are currently seeking skilled people for:
