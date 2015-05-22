@@ -132,8 +132,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         boolean prepared = mDbAdapter.prepareOpenCellUploadData();
                         Log.i(TAG, mTAG + ": OCID upload data prepared - " + String.valueOf(prepared));
                         if (prepared) {
-                            File file = new File(Environment.getExternalStorageDirectory()
-                                    + "/AIMSICD/OpenCellID/aimsicd-ocid-data.csv");
+                            File file = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/aimsicd-ocid-data.csv");
                             publishProgress(25,100);
 
                             MultipartEntity mpEntity = new MultipartEntity();
@@ -193,7 +192,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     int total;
                     int progress = 0;
 
-                    File dir = new File(Environment.getExternalStorageDirectory()+ "/AIMSICD/OpenCellID/");
+                    File dir = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/");
                     if (!dir.exists()) { dir.mkdirs(); } // need a try{} catch{}
                     File file = new File(dir, "opencellid.csv");
 

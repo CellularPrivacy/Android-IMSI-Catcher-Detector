@@ -126,7 +126,7 @@ public class TinyDB {
     }
 
     private String setupFolderPath(String imageName) {
-        File sdcard_path = Environment.getExternalStorageDirectory();
+        File sdcard_path = new File(mContext.getExternalFilesDir(null) + File.separator);
         mFolder = new File(sdcard_path, DEFAULT_APP_IMAGEDATA_DIRECTORY);
         if (!mFolder.exists()) {
             if (!mFolder.mkdirs()) {

@@ -8,6 +8,7 @@ import com.SecUpwN.AIMSICD.constants.Examples.EVENT_LOG_DATA;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -91,7 +92,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 
 public class AIMSICDDbAdapter {
 
-    public static final String FOLDER = Environment.getExternalStorageDirectory() + "/AIMSICD/";
+    public static String FOLDER;
     public static final int DATABASE_VERSION = 9; // Is this "pragma user_version;" ?
 
     // TODO: This should be implemented as a SharedPreference...
@@ -147,6 +148,7 @@ public class AIMSICDDbAdapter {
      */
     public AIMSICDDbAdapter(Context context) {
         mContext = context;
+        FOLDER = mContext.getExternalFilesDir(null) + File.separator; //e.g. /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/
         mDbHelper = new DbHelper(context);
         mTables = new String[]{
                 //  Old...
