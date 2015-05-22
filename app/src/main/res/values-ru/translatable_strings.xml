@@ -159,7 +159,6 @@
     <string name="lng_label">Долгота: </string>
 
     <!-- Database Viewer -->
-    <string name="load_table_data">Загрузка данных</string>
     <string name="table_names_prompt">Выберите таблицу</string>
     <string-array name="table_names">
         <item>@string/unique_bts_data</item>

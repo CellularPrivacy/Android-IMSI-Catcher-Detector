@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -35,7 +34,6 @@ public class DbViewerFragment extends Fragment {
 
     private AIMSICDDbAdapter mDb;
     private StatesDbViewer mTableSelected;
-    private boolean mMadeSelection;
     private Context mContext;
 
     //Layout items
@@ -58,50 +56,16 @@ public class DbViewerFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.db_view, container, false);
 
-        if (view != null) {
-            lv = (ListView) view.findViewById(R.id.list_view);
-            emptyView = view.findViewById(R.id.db_list_empty);
+        lv = (ListView) view.findViewById(R.id.list_view);
+        emptyView = view.findViewById(R.id.db_list_empty);
+        tblSpinner = (Spinner) view.findViewById(R.id.table_spinner);
+        DbViewerSpinnerAdapter mSpinnerAdapter = new DbViewerSpinnerAdapter(getActivity(), R.layout.item_spinner_db_viewer);
+        tblSpinner.setAdapter(mSpinnerAdapter);
 
-            tblSpinner = (Spinner) view.findViewById(R.id.table_spinner);
-            DbViewerSpinnerAdapter mSpinnerAdapter = new DbViewerSpinnerAdapter(getActivity(), R.layout.item_spinner_db_viewer);
-            tblSpinner.setAdapter(mSpinnerAdapter);
-            tblSpinner.setOnItemSelectedListener(new spinnerListener());
-
-            Button loadTable = (Button) view.findViewById(R.id.load_table_data);
-            loadTable.setOnClickListener(new btnClick());
-        }
-
-        return view;
-    }
-
-    private class spinnerListener implements AdapterView.OnItemSelectedListener {
-
-        @Override
-        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
-            mTableSelected = (StatesDbViewer)tblSpinner.getSelectedItem();
-
-            mMadeSelection = true;
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parentView) {
-            mMadeSelection = false;
-        }
-    }
-
-    /**
-     * Button Click (DB table selector) of "Database Viewer"
-     *
-     */
-    private class btnClick implements View.OnClickListener {
-
-        @Override
-        public void onClick(final View v) {
-            if (mMadeSelection) {
-                v.setEnabled(false);
-                getActivity().setProgressBarIndeterminateVisibility(true);
-                lv.setVisibility(View.GONE);
+        Spinner spnLocale = (Spinner) view.findViewById(R.id.table_spinner);
+        spnLocale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, final int position, long id) {
 
                 new AsyncTask<Void, Void, BaseInflaterAdapter> () {
 
@@ -113,42 +77,43 @@ public class DbViewerFragment extends Fragment {
                         //TODO Table: "DetectionFlags"
                         //case DETECTION_FLAGS:
                         //result = mDb.getDetectionFlagsData();
-                        switch (mTableSelected) {
+                        mTableSelected = (StatesDbViewer)tblSpinner.getSelectedItem();
 
-                            case UNIQUE_BTS_DATA:
+                        switch (position) {
+                            case 0: //UNIQUE_BTS_DATA
                                 // The unique BTSs we have been connected to in the past
                                 // EVA: Was "Cell Data" // Table: cellinfo
                                 //      ToBe: "DBi_bts"
                                 result = mDb.getCellData();
                                 break;
 
-                            case BTS_MEASUREMENTS:
+                            case 1: //BTS_MEASUREMENTS:
                                 // All BTS measurements we have done since start
                                 // EVA: Was "Location Data" // Table: locationinfo
                                 //      ToBe: "DBi_measure"
                                 result = mDb.getLocationData();
                                 break;
 
-                            case IMPORTED_OCID_DATA:
+                            case 2: //IMPORTED_OCID_DATA:
                                 // EVA: Was "OpenCellID Data" // Table: opencellid
                                 //      ToBe: "DBe_import"
                                 result = mDb.getOpenCellIDData();
                                 break;
 
-                            case DEFAULT_MCC_LOCATIONS:
+                            case 3: //DEFAULT_MCC_LOCATIONS:
                                 result = mDb.getDefaultMccLocationData();
                                 break;
 
-                            case SILENT_SMS:
+                            case 4: //SILENT_SMS:
                                 result = mDb.getSilentSmsData();
                                 break;
 
-                            case MEASURED_SIGNAL_STRENGTHS:
+                            case 5: //MEASURED_SIGNAL_STRENGTHS:
                                 //      ToBe merged into "DBi_measure:rx_signal"
                                 result = mDb.getSignalStrengthMeasurementData();
                                 break;
 
-                            case EVENT_LOG:
+                            case 6: //EVENT_LOG:
                                 // Table: "EventLog"
                                 result = mDb.getEventLogData();
                                 break;
@@ -156,6 +121,7 @@ public class DbViewerFragment extends Fragment {
                             default:
                                 throw new IllegalArgumentException("Unknown type of table");
                         }
+
                         BaseInflaterAdapter adapter = null;
                         if (result != null) {
                             adapter = BuildTable(result);
@@ -176,15 +142,20 @@ public class DbViewerFragment extends Fragment {
                         } else {
                             lv.setVisibility(View.GONE);
                             emptyView.setVisibility(View.VISIBLE);
-                            //Helpers.msgShort(mContext, "Table contains no data to display.");
                         }
 
-                        v.setEnabled(true);
                         getActivity().setProgressBarIndeterminateVisibility(false);
                     }
                 }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
-        }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                return;
+            }
+        });
+
+        return view;
     }
 
     /**

@@ -93,7 +93,6 @@
     <string name="sim_serial">Numer seryjny:</string>
     <string name="message_request_api_key">Wybierz OK by pobrać klucz API z OpenCellID.org. Pozwoli Ci to na pobranie danych i wyświetlanie ich na mapie, oraz na wysyłanie zebranych danych. Jeśli nie wyślesz żadanych danych w ciągu 20dni, Twój klucz może zostać zdezaktywowany.</string>
     <string name="location_error_title">Serwis lokalizacji wyłączony</string>
-    <string name="load_table_data">Wczytaj dane</string>
     <string name="lng_label">Wys.:</string>
     <string name="lat_label">Szer.:</string>
     <string name="lac_label">LAC:</string>
