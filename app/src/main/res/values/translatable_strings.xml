@@ -324,8 +324,14 @@
     <string name="measured_signal_strengths">Measured Signal Strengths</string>
 
     <string name="at_command_response_looking">*** Looking for AT serial devices&#8230;\n</string>
-    <string name="at_command_response_found">Found:&#032;</string>""
-    <string name="at_command_response_setup_complete">*** Setup Complete ***\n</string>""
+    <string name="at_command_response_found">Found:&#032;</string>
+    <string name="at_command_response_setup_complete">*** Setup Complete ***\n</string>
+
+    <string name="currently_connected_bts">Currently connected BTS</string>
+    <string name="well_known_encrypted_bts">Well known encrypted BTS</string>
+    <string name="unknown_or_insecure_bts">Unknown or insecure BTS</string>
+    <string name="new_or_recently_added_bts">New or recently added BTS</string>
+
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
         <item>@string/ui_icon_sense</item>

@@ -2,6 +2,7 @@
 
 <resources>
     <color name="white">#ffffffff</color>
+    <color name="transparent_white">#50ffffff</color>
     <color name="black">#ff000000</color>
     <color name="action_bar_color">#ff0d0d0d</color>
     <color name="green_text">#ff00FF00</color>
