@@ -1,6 +1,33 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [24.05.2015 - WIP-Release v0.1.28-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.28-alpha-b00)
+
+* Updated: `CREDITS` now reflect the latest contributions by our developers
+* Changed: Tables in the `Database Viewer` will now be loaded automatically
+* Added: New overlay BTS map legend now clarifies meanings of the map pins
+
+---
+
+#### 22.05.2015 - WIP-Internal v0.1.27-alpha-build-03
+
+* Moved: App data as been moved to new location (will update automatically)
+
+---
+
+#### 21.05.2015 - WIP-Internal v0.1.27-alpha-build-02
+
+* Fixed: Strange NPE related to `TelephonyManager.getNeighboringCellInfo()`
+
+---
+
+#### 15.05.2015 - WIP-Internal v0.1.27-alpha-build-01
+
+* Changed: Links within our app have been changed to permanent `HEAD` links
+* Added: Donations to encourage developers are now possible via [Bountysource](https://www.bountysource.com/teams/android-imsi-catcher-detector/issues)
+
+---
+
 #### [10.05.2015 - WIP-Release v0.1.27-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.27-alpha-b00)
 
 * Removed: Buggy `Toast Extender` for making toasts last longer than 3.5 seconds
