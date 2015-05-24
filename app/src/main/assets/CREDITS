@@ -167,8 +167,10 @@ for letting us use your data. Thanks!
 \n
 ziem\n
 https://github.com/ziem\n
-for the implementation of\n
-map scaling and clustering.\n
+for all the awesome work on our\n
+Antenna Map Viewer with adding\n
+scaling, clustering and a legend!\n
+Keep around for more map changes. ;-)\n
 \n
 Dave Mariano\n
 https://github.com/d-mariano\n
@@ -177,8 +179,8 @@ lovely contributions.\n
 \n
 Paul Kinsella\n
 https://github.com/banjaxbanjo\n
-for the code to dump SMS as PDU and\n
-all the other very cool pull requests!
+for enabling SILENT SMS DETECTION\n
+and all other very cool pull requests!\n
 \n
 Joey Hewitt\n
 https://github.com/scintill\n
@@ -201,7 +203,8 @@ https://rtyley.github.io/bfg-repo-cleaner/\n
 \n
 agilob\n
 http://b.agilob.net/\n
-for enabling TRANSLATIONS of our app!\n
+for enabling app TRANSLATIONS and\n
+his BOUNTY on silent SMS detection!\n
 \n
 Dima Kozhevin\n
 https://github.com/DimaKoz\n
