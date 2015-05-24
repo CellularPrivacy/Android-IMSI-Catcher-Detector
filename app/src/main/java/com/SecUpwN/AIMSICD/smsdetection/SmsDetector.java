@@ -46,7 +46,7 @@ import java.util.ArrayList;
  *
  *
  * For this to work better Samsung users will have to
- * set debug level to high in SysDump menu *#8080# or *#*#8080#*#*
+ * set debug level to high in SysDump menu *#9900# or *#*#9900#*#*
  *
  * To Use:
  *    SmsDetector smsdetector = new SmsDetector(context);
