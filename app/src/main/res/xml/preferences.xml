@@ -49,6 +49,11 @@
             android:key="@string/pref_femto_action_key"
             android:summary="@string/pref_femto_action_summ"
             android:title="@string/pref_femto_action_title"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/adv_user_root_pref_key"
+            android:summary="@string/adv_user_root_sum"
+            android:title="@string/adv_user_root_title"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -79,5 +84,24 @@
             android:summary="@string/pref_ocid_key_summ"
             android:title="@string/pref_ocid_key_title"/>
     </PreferenceCategory>
-
+    <PreferenceCategory
+        android:key="pref_key_adv_menu"
+        android:title="@string/adv_user_pref_header">
+        <Preference
+            android:title="@string/adv_user_pref_launch"
+            android:summary="@string/adv_user_pref_summary">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.SecUpwN.AIMSICD.smsdetection.AdvancedUserActivity"
+                android:targetPackage="com.SecUpwN.AIMSICD"/>
+        </Preference>
+        <Preference
+            android:title="@string/adv_user_pref_sms_launch"
+            android:summary="@string/adv_user_pref_sms_summary">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.SecUpwN.AIMSICD.smsdetection.AdvancedUserSmsActivity"
+                android:targetPackage="com.SecUpwN.AIMSICD"/>
+        </Preference>
+    </PreferenceCategory>
 used</PreferenceScreen>
