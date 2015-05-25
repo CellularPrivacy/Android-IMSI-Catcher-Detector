@@ -100,6 +100,21 @@ public class CustomPopUp extends Activity {
                         getResources().getString(R.string.detail_info_run)
                         ,getResources().getDrawable(R.drawable.sense_skull));
                 break;
+            case 6:
+                createPopUp(
+                        getResources().getString(R.string.typezero_title),
+                        getResources().getString(R.string.typezero_header),
+                        getResources().getString(R.string.typezero_data)
+                        ,getResources().getDrawable(R.drawable.sense_danger));
+                break;
+
+            case 7:
+                createPopUp(
+                        getResources().getString(R.string.typevoice_title),
+                        getResources().getString(R.string.typevoice_header),
+                        getResources().getString(R.string.typevoice_data)
+                        ,getResources().getDrawable(R.drawable.sense_danger));
+                break;
 
         }
     }

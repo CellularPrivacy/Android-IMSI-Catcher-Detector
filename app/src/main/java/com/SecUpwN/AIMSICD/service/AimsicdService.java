@@ -46,6 +46,7 @@ import android.view.WindowManager;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
+import com.SecUpwN.AIMSICD.smsdetection.SmsDetector;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 
@@ -70,6 +71,7 @@ public class AimsicdService extends Service {
     private SignalStrengthTracker signalStrengthTracker;
     private LocationTracker mLocationTracker;
     private RilExecutor mRilExecutor;
+    private SmsDetector smsdetector;
 
     private boolean isLocationRequestShowing = false;
 
@@ -122,6 +124,11 @@ public class AimsicdService extends Service {
         mLocationTracker.stop();
         mAccelerometerMonitor.stop();
         mRilExecutor.stop();
+        try {
+            if (smsdetector.getSmsDetectionState()) {
+                smsdetector.stopSmsDetection();
+            }
+        }catch (Exception ee){Log.e(TAG,"Error stopping sms detection\n"+ee.toString());}
         Log.i(TAG, "Service destroyed.");
     }
 
@@ -164,6 +171,26 @@ public class AimsicdService extends Service {
     public void setTrackingFemtocell(boolean track) {
         if (track) mCellTracker.startTrackingFemto();
         else mCellTracker.stopTrackingFemto();
+    }
+
+    //SMS DETECTION
+    public boolean isSmsTracking() {
+        return smsdetector.getSmsDetectionState();
+    }
+
+    public void startSmsTracking() {
+        if(!isSmsTracking()) {
+            Log.i(TAG,"Sms Detection Thread Started");
+            smsdetector = new SmsDetector(this);
+            smsdetector.startSmsDetection();
+        }
+    }
+
+    public void stopSmsTracking() {
+        if(isSmsTracking()) {
+            smsdetector.stopSmsDetection();
+            Log.i(TAG,"Sms Detection Thread Stopped");
+        }
     }
 
     // while tracking a cell, manage the power usage by switching off GPS if no movement

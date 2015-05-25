@@ -29,10 +29,17 @@ import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
 import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
 import com.SecUpwN.AIMSICD.constants.Examples;
 import com.SecUpwN.AIMSICD.enums.StatesDbViewer;
+import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsCardInflater;
+import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
+import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsCardInflater;
+import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsData;
+import com.SecUpwN.AIMSICD.smsdetection.SmsDetectionDbAccess;
+import com.SecUpwN.AIMSICD.smsdetection.SmsDetectionDbHelper;
 
 public class DbViewerFragment extends Fragment {
 
     private AIMSICDDbAdapter mDb;
+    private SmsDetectionDbAccess smsdetection_db;
     private StatesDbViewer mTableSelected;
     private Context mContext;
 
@@ -49,6 +56,7 @@ public class DbViewerFragment extends Fragment {
         super.onAttach(activity);
         mContext = activity.getBaseContext();
         mDb = new AIMSICDDbAdapter(mContext);
+        smsdetection_db = new SmsDetectionDbAccess(mContext);//open new database for sms detection
     }
 
     @Override
@@ -105,7 +113,7 @@ public class DbViewerFragment extends Fragment {
                                 break;
 
                             case 4: //SILENT_SMS:
-                                result = mDb.getSilentSmsData();
+                                result = smsdetection_db.returnDetectedSmsData();
                                 break;
 
                             case 5: //MEASURED_SIGNAL_STRENGTHS:
@@ -117,7 +125,9 @@ public class DbViewerFragment extends Fragment {
                                 // Table: "EventLog"
                                 result = mDb.getEventLogData();
                                 break;
-
+                            case 7:// SMS DETECTION STRINGS
+                                result = smsdetection_db.getDetectionStringCursor();
+                                break;
                             default:
                                 throw new IllegalArgumentException("Unknown type of table");
                         }
@@ -248,21 +258,24 @@ public class DbViewerFragment extends Fragment {
                     return adapter;
                 }
                 case SILENT_SMS: {
-                    // Table:   silentsms
-                    BaseInflaterAdapter<SilentSmsCardData> adapter
-                            = new BaseInflaterAdapter<>(new SilentSmsCardInflater());
+                    BaseInflaterAdapter<CapturedSmsData> adapter
+                            = new BaseInflaterAdapter<>(new CapturedSmsCardInflater());
                     //int count = tableData.getCount();
-                    while (tableData.moveToNext()) {
-                        SilentSmsCardData data = new SilentSmsCardData(
-                                tableData.getString(0), // Address
-                                tableData.getString(1), // Display
-                                tableData.getString(2), // Class
-                                tableData.getString(3), // ServiceCtr
-                                tableData.getString(4), // Message
-                                tableData.getLong(5));  // Timestamp
-                        //"" + (tableData.getPosition() + 1) + " / " + count);
-                        data.setIsFakeData(isExample(data));
-                        adapter.addItem(data, false);
+                    if (tableData.getCount() > 0) {
+                        while (tableData.moveToNext()) {
+                            CapturedSmsData getdata = new CapturedSmsData();
+                            getdata.setSmsTimestamp(tableData.getString(tableData.getColumnIndex(SmsDetectionDbHelper.SMS_DATA_TIMESTAMP)));
+                            getdata.setSmsType(tableData.getString(tableData.getColumnIndex(SmsDetectionDbHelper.SMS_DATA_SMS_TYPE)));
+                            getdata.setSenderNumber(tableData.getString(tableData.getColumnIndex(SmsDetectionDbHelper.SMS_DATA_SENDER_NUMBER)));
+                            getdata.setSenderMsg(tableData.getString(tableData.getColumnIndex(SmsDetectionDbHelper.SMS_DATA_SENDER_MSG)));
+                            getdata.setCurrent_lac(tableData.getInt(tableData.getColumnIndex(SmsDetectionDbHelper.SMS_DATA_CURRENT_LAC)));
+                            getdata.setCurrent_cid(tableData.getInt(tableData.getColumnIndex(SmsDetectionDbHelper.SMS_DATA_CURRENT_CID)));
+                            getdata.setCurrent_nettype(tableData.getString(tableData.getColumnIndex(SmsDetectionDbHelper.SMS_DATA_CURRENT_NETTYPE)));
+                            getdata.setCurrent_roam_status(tableData.getString(tableData.getColumnIndex(SmsDetectionDbHelper.SMS_DATA_CURRENT_ROAM_STATE)));
+                            getdata.setCurrent_gps_lat(tableData.getDouble(tableData.getColumnIndex(SmsDetectionDbHelper.SMS_DATA_CURRENT_GPS_LAT)));
+                            getdata.setCurrent_gps_lon(tableData.getDouble(tableData.getColumnIndex(SmsDetectionDbHelper.SMS_DATA_CURRENT_GPS_LON)));
+                            adapter.addItem(getdata, false);
+                        }
                     }
                     if (!tableData.isClosed()) {
                         tableData.close();
@@ -315,7 +328,24 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+                case DETECTION_STRINGS: {
 
+                    BaseInflaterAdapter<DetectionStringsData> adapter
+                            = new BaseInflaterAdapter<>(new DetectionStringsCardInflater());
+
+                    int count = tableData.getCount();
+                    while (tableData.moveToNext()) {
+                        DetectionStringsData data = new DetectionStringsData(
+                                tableData.getString(0),
+                                tableData.getString(1));
+
+                        adapter.addItem(data,false);
+                    }
+                    if (!tableData.isClosed()) {
+                        tableData.close();
+                    }
+                    return adapter;
+                }
 /*                // Table:   EventLog
                 case "EventLog Data": {
                     BaseInflaterAdapter<CardItemData> adapter

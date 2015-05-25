@@ -50,6 +50,7 @@ import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
+import com.SecUpwN.AIMSICD.smsdetection.SmsDetectionDbHelper;
 import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
@@ -85,6 +86,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     private final Context mContext = this;
     private boolean mBound;
     private SharedPreferences prefs;
+    private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
     private Editor prefsEditor;
     private String mDisclaimerAccepted;
     private AimsicdService mAimsicdService;
@@ -96,7 +98,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     public static ProgressBar mProgressBar;
-
+    SmsDetectionDbHelper dbhelper;
     //Back press to exit timer
     private long mLastPress = 0;
 
@@ -116,6 +118,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
 
         setContentView(mNavConf.getMainLayout());
+
+        //create the database on first install
+        dbhelper = new SmsDetectionDbHelper(this);
 
         mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
         mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
@@ -156,6 +161,17 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         prefs = mContext.getSharedPreferences( AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+
+                /* Pref listener to enable sms detection on pref change   */
+        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                if(key.equals(mContext.getString(R.string.adv_user_root_pref_key))){
+                    SmsDetection();
+                }
+
+            }
+        };
+        prefs.registerOnSharedPreferenceChangeListener(prefListener);
 
         mDisclaimerAccepted = getResources().getString(R.string.disclaimer_accepted);
 
@@ -425,6 +441,15 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             if (mAimsicdService.isTrackingCell()) {
                 mAimsicdService.checkLocationServices();
             }
+
+            if(!mAimsicdService.isSmsTracking() && prefs.getBoolean(mContext.getString(R.string.adv_user_root_pref_key),false)){
+                    /*Auto Start sms detection here if:
+                    *    isSmsTracking = false <---- not running
+                    *    root sms enabled = true
+                    *
+                    * */
+                SmsDetection();
+            }
         }
 
         @Override
@@ -544,8 +569,30 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         } else {
             onBackPressedToast.cancel();
             super.onBackPressed();
+            try {
+                if(mAimsicdService.isSmsTracking()) {
+                    mAimsicdService.stopSmsTracking();
+                }
+            }catch (Exception ee){System.out.println("Error Stopping sms detection");}
             finish();
         }
+    }
+
+
+    private void SmsDetection()
+    {
+        boolean root_sms = prefs.getBoolean(mContext.getString(R.string.adv_user_root_pref_key),false);//default is false
+
+        if(root_sms && !mAimsicdService.isSmsTracking()){
+            mAimsicdService.startSmsTracking();
+            Helpers.msgShort(mContext,"Sms Detection Started");
+            Log.i(TAG,"Sms Detection Thread Started");
+        }else if(!root_sms && mAimsicdService.isSmsTracking()) {
+            mAimsicdService.stopSmsTracking();
+            Helpers.msgShort(mContext, "Sms Detection Stopped");
+            Log.i(TAG, "Sms Detection Thread Stopped");
+        }
+
     }
 
     /**

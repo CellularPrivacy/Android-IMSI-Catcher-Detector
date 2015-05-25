@@ -7,6 +7,8 @@ import com.SecUpwN.AIMSICD.activities.CustomPopUp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Paul Kinsella on 04/03/15.
@@ -46,5 +48,12 @@ public class MiscUtils {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("display_mode",mode);
         context.startActivity(i);
+    }
+
+    public static String getCurrentTimeStamp(){
+
+        Date now = new Date();
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(now);
+        return timestamp;
     }
 }
