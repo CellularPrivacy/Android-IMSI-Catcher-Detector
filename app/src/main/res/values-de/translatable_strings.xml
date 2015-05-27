@@ -26,8 +26,8 @@
     </string>
     
     <!-- MENU -->
-    <string name="toggle_aimsicd_monitoring">AIMSICD-Überwachung umschalten</string>
-    <string name="toggle_2g_only_network_lock">Nur 2G-Netzwerk nutzen</string>
+    <string name="toggle_aimsicd_monitoring">Schutzüberwachung umschalten</string>
+    <string name="toggle_2g_only_network_lock">2G-Netzwerk nutzen</string>
     <string name="toggle_femtocell">Femtozellen erkennen</string>
     <string name="backup_database">Datenbank sichern</string>
     <string name="clear_database">Datenbank löschen</string>
@@ -38,8 +38,7 @@
     <string name="cell_lookup">Derzeitige Funkzellen</string>
     <string name="send_logs">Fehlerbehebung</string>
     <string name="no_network_connection_title">Keine Internetverbindung</string>
-    <string name="no_network_connection_message">Kein herunterladen der OpenCellID-Daten ohne Internet 
-    möglich, bitte Datenverbindung einschalten!</string>
+    <string name="no_network_connection_message">Kein herunterladen der OpenCellID-Daten ohne Internet möglich, bitte Datenverbindung einschalten!</string>
     
     <!-- MAP VIEWER -->
     <string name="get_opencellid">BTS-Daten herunterladen</string>
@@ -56,7 +55,7 @@
     <string name="sim_operator_id">Betreiber-ID:</string>
     <string name="sim_operator_name">Betreiber:</string>
     <string name="sim_imsi">IMSI:</string>
-    <string name="sim_serial">Serie:</string>
+    <string name="sim_serial">Seriennummer:</string>
     <string name="device_type">Telefonart:</string>
     <string name="device_imei">IMEI:</string>
     <string name="device_version">RIL Version:</string>
@@ -84,18 +83,18 @@
     <string name="about_github">AIMSICD auf GitHub</string>
     <string name="about_wiki">Dokumentation (WIKI)</string>
     <string name="about_contribute">MITMACHEN</string>
-    <string name="about_disclaimer">HAFTUNGSAUSSCHLUß</string>
-    <string name="about_releases">VERÖFFENTLICHUNGEN</string>
-    <string name="about_changelog">ÄNDERUNGSPROTOKOLL</string>
+    <string name="about_disclaimer">HAFTUNG</string>
+    <string name="about_releases">VERÖFFENTLICHUNG</string>
+    <string name="about_changelog">ÄNDERUNGEN</string>
     <string name="about_license">LIZENZ</string>
     <string name="about_credits">DANKSAGUNG</string>
     <string name="about_desc_icon_idle">Wartend / Ladend.</string>
-    <string name="about_desc_icon_active_tracking_near">Aktive Verfolgung in der Nähe!</string>
+    <string name="about_desc_icon_active_tracking_near">Aktive Verfolgung in Deiner Nähe!</string>
     <string name="about_desc_icon_ok">Alles in Ordnung.</string>
     <string name="about_desc_icon_tracked_down">Du wirst verfolgt!</string>
     <string name="about_desc_icon_insecure_area">Unsichere Betriebszone. Verlassen!</string>
     <string name="about_desc_icon_run">LAUF! Gerät wurde manipuliert!</string>
-    <string name="about_desc_icon_title">Drücke untere Status-Symbole für detaillierte Informationen</string>
+    <string name="about_desc_icon_title">Drücke die Status-Symbole für mehr Informationen:</string>
     
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Netzwerk-ID:</string>
@@ -103,17 +102,17 @@
     <string name="network_baseid">Basisstation-ID:</string>
     
     <!-- LOCATION HELPER -->
-    <string name="location_error_title">Standortbezogene Dienste deaktiviert</string>
-    <string name="location_error_message">GPS-Daten können nicht ohne standortbezogene Dienste aufgezeichnet werden. Jetzt aktivieren?</string>
+    <string name="location_error_title">Standort deaktiviert</string>
+    <string name="location_error_message">GPS-Daten können nicht ohne standortbezogene Dienste aufgezeichnet werden. Aktivieren?</string>
    
     <!-- PREFERENCES -->
     <string name="pref_system_title">Systemeinstellungen</string>
     <string name="pref_autostart_title">Automatischer Start</string>
     <string name="pref_autostart_summ">Automatischer Start beim Hochfahren</string>
     <string name="pref_persistservice_title">Beständiger Dienst</string>
-    <string name="pref_persistservice_summ">Dienst wird nach verlassen der App weiterlaufen (Haken entfernen um komplett zu schließen)</string>
+    <string name="pref_persistservice_summ">Dienst wird nach verlassen der App weiterlaufen (Haken entfernen um bei verlassen komplett zu schließen)</string>
     <string name="pref_protection_title">Schutzeinstellungen</string>
-    <string name="pref_enable_cell_title">Funkzellenverfolgung/string>
+    <string name="pref_enable_cell_title">Funkzellenverfolgung</string>
     <string name="pref_enable_cell_summ">Automatische Funkzellenverfolgung einschalten</string>
     <string name="pref_femto_title">Femtozellen erkennen</string>
     <string name="pref_femto_summ">(derzeit nur für CDMA-Telefone)</string>
@@ -393,5 +392,5 @@
         <item>@string/FLASH</item>
         <item>@string/WAPPUSH</item>
     </string-array>
-    </string>
+
 </resources>
