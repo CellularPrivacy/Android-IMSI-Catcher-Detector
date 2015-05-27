@@ -321,7 +321,7 @@
     <string name="at_command_response_setup_complete">*** Einrichtung vollständig ***\n</string>
     <string name="currently_connected_bts">Derzeit verbundene Funkstation</string>
     <string name="well_known_encrypted_bts">Gut bekannte verschlüsselte Funkstation</string>
-    <string name="unknown_or_insecure_bts"Unbekannte oder unsichere Funkstation</string>
+    <string name="unknown_or_insecure_bts">Unbekannte oder unsichere Funkstation</string>
     <string name="new_or_recently_added_bts">Neue oder kürzlich hinzugefügte Funkstation</string>
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
