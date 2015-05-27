@@ -355,12 +355,12 @@
         <item>@string/ui_icon_sense</item>
         <item>@string/ui_icon_white</item>
     </string-array>
-  
+
     <string-array name="pref_map_type_entries">
         <item>@string/map_type_normal</item>
         <item>@string/map_type_terrain</item>
     </string-array>
-  
+
     <string-array name="pref_refresh_entries">
         <item>@string/pref_refresh_manual</item>
         <item>@string/pref_refresh_automatic</item>
@@ -372,7 +372,7 @@
         <item>@string/pref_refresh_1_min</item>
         <item>@string/pref_refresh_5_min</item>
     </string-array>
-  
+
     <string-array name="timeout_spinner_values">
         <item>@string/timeout_spinner_2_sec</item>
         <item>@string/timeout_spinner_5_sec</item>
