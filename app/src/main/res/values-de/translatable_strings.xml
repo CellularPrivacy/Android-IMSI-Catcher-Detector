@@ -381,12 +381,12 @@
         <item>@string/timeout_spinner_30_sec</item>
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
-  
+
     <string name="TYPE0">TYPE0</string>
     <string name="SILENTVOICE">SILENTVOICE</string>
     <string name="FLASH">FLASH</string>
     <string name="WAPPUSH">WAPPUSH</string>
- 
+
     <string-array name="detection_spinner_values">
         <item>@string/TYPE0</item>
         <item>@string/SILENTVOICE</item>
