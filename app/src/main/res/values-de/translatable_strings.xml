@@ -26,8 +26,8 @@
     </string>
     
     <!-- MENU -->
-    <string name="toggle_aimsicd_monitoring">Schutzüberwachung umschalten</string>
-    <string name="toggle_2g_only_network_lock">2G-Netzwerk nutzen</string>
+    <string name="toggle_aimsicd_monitoring">Schutzüberwachung ein/ausschalten</string>
+    <string name="toggle_2g_only_network_lock">2G-Netzwerk für Aufzeichnung nutzen</string>
     <string name="toggle_femtocell">Femtozellen erkennen</string>
     <string name="backup_database">Datenbank sichern</string>
     <string name="clear_database">Datenbank löschen</string>
@@ -88,12 +88,12 @@
     <string name="about_changelog">ÄNDERUNGEN</string>
     <string name="about_license">LIZENZ</string>
     <string name="about_credits">DANKSAGUNG</string>
-    <string name="about_desc_icon_idle">Wartend / Ladend.</string>
-    <string name="about_desc_icon_active_tracking_near">Aktive Verfolgung in Deiner Nähe!</string>
+    <string name="about_desc_icon_idle">Warte / Lade.</string>
+    <string name="about_desc_icon_active_tracking_near">Aktive Verfolgung nahe!</string>
     <string name="about_desc_icon_ok">Alles in Ordnung.</string>
     <string name="about_desc_icon_tracked_down">Du wirst verfolgt!</string>
-    <string name="about_desc_icon_insecure_area">Unsichere Betriebszone. Verlassen!</string>
-    <string name="about_desc_icon_run">LAUF! Gerät wurde manipuliert!</string>
+    <string name="about_desc_icon_insecure_area">Unsichere Zone. Verlassen!</string>
+    <string name="about_desc_icon_run">RENN! Gerät manipuliert!</string>
     <string name="about_desc_icon_title">Drücke die Status-Symbole für mehr Informationen:</string>
     
     <!-- CDMA LAYOUT -->
@@ -113,11 +113,11 @@
     <string name="pref_persistservice_summ">Dienst wird nach verlassen der App weiterlaufen (Haken entfernen um bei verlassen komplett zu schließen)</string>
     <string name="pref_protection_title">Schutzeinstellungen</string>
     <string name="pref_enable_cell_title">Funkzellenverfolgung</string>
-    <string name="pref_enable_cell_summ">Automatische Funkzellenverfolgung einschalten</string>
+    <string name="pref_enable_cell_summ">Automatische Funkzellenverfolgung</string>
     <string name="pref_femto_title">Femtozellen erkennen</string>
     <string name="pref_femto_summ">(derzeit nur für CDMA-Telefone)</string>
     <string name="pref_femto_action_title">Femtozellen-Schutz</string>
-    <string name="pref_femto_action_summ">Flugmodus bei Erkennung einer Femtozelle erzwingen (Netzwer manuell wieder einschalten)</string>
+    <string name="pref_femto_action_summ">Flugmodus bei Erkennung einer Femtozelle erzwingen (Netzwerk muß manuell wieder einschaltet werden)</string>
     <string name="pref_ui_title">Oberflächeneinstellungen</string>
     <string name="pref_ui_icons_title">Symbole</string>
     <string name="pref_ui_icons_summ">Symboldesign wählen</string>
@@ -127,14 +127,14 @@
     <string name="pref_ocid_key_title">OpenCellID API-Schlüssel</string>
     <string name="pref_ocid_key_summ">OpenCellID API-Schlüssel hier eingeben</string>
     <string name="pref_enable_cell_monitoring_title">Zellenüberwachung</string>
-    <string name="pref_enable_cell_monitoring_summ">Automatische Zellenüberwachung einschalten</string>
+    <string name="pref_enable_cell_monitoring_summ">Automatische Zellenüberwachung</string>
     <string name="pref_request_ocid_key">OCID API-Schlüssel anfordern</string>
     <string name="pref_ocid_requestkey_summary">API-Schlüssel für OpenCellID-Zugang anfordern</string>
    
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Einstellungen Funkantennenkarte</string>
     <string name="pref_map_type_title">Kartenart</string>
-    <string name="pref_map_type_summ">Zeige Karte in verschienden Stilen</string>
+    <string name="pref_map_type_summ">Kartenstil auswählen</string>
     
     <!-- MAP INFOWINDOW -->
     <string name="cell_id_label">CID: </string>
@@ -178,7 +178,7 @@
   
     <!-- Request OpenCellID Key -->
     <string name="title_ocid_key">OpenCellID API-Schlüssel</string>
-    <string name="message_request_api_key">Drücke OK um einen API-Schlüssel von OpenCellID.org anzufordern. Dies ermöglicht das Herunterladen deren Daten und das Anzeigen in der Funkantennenkarte. Ermöglicht außerdem das hochladen gesammelter Zelldaten. Wenn keine Daten im Zeitraum von 20 Tagen hochgeladen wurde, wird der API-Schlüssel ungültig.</string>
+    <string name="message_request_api_key">Drücke OK um einen API-Schlüssel von OpenCellID.org anzufordern. Dies ermöglicht das Herunterladen deren Daten und das Anzeigen in der Funkantennenkarte. Außerdem können gesammelte Funkturmdaten an OCID übermittelt werden. Wenn keine Daten im Zeitraum von 20 Tagen hochgeladen wurden, wird der API-Schlüssel ungültig.</string>
     <string name="ocid_api_error">Fehler bei Schlüsselanforderung: </string>
     <string name="ocid_api_success">Neuer API-Schlüssel gesichert</string>
   
@@ -192,12 +192,12 @@
   
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILLIERTE BESCHREIBUNG</string>
-    <string name="detail_info_idle">App wartet oder lädt. Keine Schutz- und Erkennungsmaßnahmen aaktiviert. Bitte Seitenmenü öffnen und in Menü ZELLVERFOLGUNG aktivieren.</string>
-    <string name="detail_info_normal">Keine Gefahren erkannt oder gefunden. Unsere App prüft koninuierlich das Netzwerk nach den aktivierten Schutzmaßnahmen aus dem Seitenmenü und den Einstellungen.</string>
-    <string name="detail_info_medium">Unsichere Betriebszone: Mindestens 1 neuer oder unbekannter Mobilfunkmast ist in dieser Gegend aktiv oder verwendet eine unsichere (geknackte) Verschlüsselung niedriger als A5/3 [Erkennung ist in Arbeit]. Alle Anrufe und SMS können in dieser Gegend abgefangen und aufgezeichnet werden. Die Gegend sollte besser sofort verlassen werden.</string>
-    <string name="detail_info_high">Feindliche Betriebsaktionen erkannt: Ein IMSI-Catcher (IMSIC) oder gefälschte Mobilfunkstation (FBTS) verfolgt die Nutzer direkt. Aktive Rasterung findet in dieser Gegend statt. Diese Gegend sollte vermieden werden, vor allen Dingen während politischer Unruhen. Batterie aus dem Telefon nehmen oder Telefon außer Kraft setzen.</string>
-    <string name="detail_info_danger">Feindliche Verfolgung erkannt: Ein FBTS oder IMSIC verfolgt DICH aktiv und verhindert die Verbindung des Telefons mit dem echten verschlüsselten Netz des Mobilfunkbetreibers. Bei efahr oder Konsequenzen sollte das Telefon zerstört und die SIM als gestohlen gemeldet werden.</string>
-    <string name="detail_info_run">Feindliche Manipulation: Jemand versucht aus der Ferne dieses Telefon zu manipulieren. Zerstöre (oder verkaufe) das Telefons und besorge ein Neues von weit weg (altes Telefon nicht mit zum Wechselplatz mitnehmen). Nutze eine neue (anonyme) SIM, verändere das Telefonverhalten und warne Kontakte im echten Leben, NICHT mittels Anruf.</string>
+    <string name="detail_info_idle">App wartet oder lädt. Keine Schutz- und Erkennungsmaßnahmen aktiviert. Bitte Seitenmenü öffnen und in ZELLENVERFOLGUNG aktivieren.</string>
+    <string name="detail_info_normal">Keine Gefahren erkannt oder gefunden. Unsere App prüft kontinuierlich das Netzwerk mit den aktivierten Schutzmaßnahmen von Seitenmenü und Einstellungen.</string>
+    <string name="detail_info_medium">Unsichere Zone: Mindestens 1 neuer oder unbekannter Mobilfunkmast ist in dieser Gegend aktiv oder verwendet eine unsichere (geknackte) Verschlüsselung niedriger als A5/3 [Erkennung ist noch in Arbeit]. Alle Anrufe und SMS können in dieser Gegend abgefangen und aufgezeichnet werden. Die Gegend sollte sofort verlassen werden.</string>
+    <string name="detail_info_high">Feindliche Betriebsaktionen erkannt: Ein IMSI-Catcher (IMSIC) oder gefälschte Mobilfunkstation (FBTS) verfolgt die Nutzer gezielt. Aktive Rasterung findet in dieser Gegend statt. Diese Gegend sollte dringend vermieden werden, vor allen Dingen während politischer Unruhen. Batterie aus dem Telefon nehmen oder Telefon komplett außer Kraft setzen.</string>
+    <string name="detail_info_danger">Feindliche Verfolgung erkannt: Ein FBTS oder IMSIC verfolgt DICH aktiv und verhindert die Verbindung Deines Telefons mit dem echten verschlüsselten Netz Deines Mobilfunkbetreibers. Bei Gefahr oder Konsequenzen sollte das Telefon zerstört und die SIM als gestohlen gemeldet werden.</string>
+    <string name="detail_info_run">Feindliche Manipulation: Jemand versucht aus der Ferne dieses Telefon zu manipulieren. Zerstöre (oder verkaufe) das Telefons und besorge weit weg ein Neues (altes Telefon nicht zum Wechselplatz mitnehmen). Nutze eine neue (anonyme) SIM, verändere Dein Telefonieverhalten und warne Deine Kontakte im echten Leben, NICHT mittels Anruf.</string>
     <string name="open_cell_id_button_cancel">Abbrechen</string>
     <string name="open_cell_id_button_ok">OK</string>
    
@@ -246,7 +246,7 @@
     <string name="stopped_tracking_femtocell">: Femtozellerkennung angehalten.</string>
     <string name="alert_femtocell_tracking_detected">ALARM: Femtozellverfolgung erkannt!</string>
     <string name="refreshing_every">Aktualisiere aller</string>
-    <string name="refreshing_now">Aktalsiere jetzt&#8230;</string>
+    <string name="refreshing_now">Aktualisiere jetzt&#8230;</string>
     <string name="seconds">Sekunden.</string>
     <string name="contacting_opencellid_for_data">Kontaktiere OpenCellID für Daten&#8230;\nDies kann eine Minute dauern.</string>
     <string name="unable_to_determine_last_location">Konnte letzten Standort nicht ermitteln.\nStandortbasierte Dienste einschalten und erneut versuchen.</string>
@@ -257,12 +257,12 @@
     <string name="error_retrieving_opencellid_data">Fehler beim empfangen der OpenCellID-Daten.\nNetzwerk überprüfen!</string>
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID-Daten erfolgreich empfangen.\nAntennen aktualisiert.</string>
     <string name="uploaded_bts_data_successfully">BTS-Daten erfolgreich zu OCID hochgeladen.</string>
-    <string name="error_uploading_bts_data">Fehler beim hochladen der BTS-Daten zum OCID-Server!</string>
+    <string name="error_uploading_bts_data">Fehler beim hochladen zum OCID-Server!</string>
     <string name="restore_database_completed">Wiederherstelung der Datenbank erfolgreich.</string>
     <string name="error_restoring_database">Fehler beim Wiederherstellen der Datenbank.</string>
     <string name="database_backup_successfully_saved_to">Datenbank wurde erfolgreich gesichert nach:</string>
     <string name="error_backing_up_data">Fehler beim Sichern der Datenbank.</string>
-    <string name="no_opencellid_key_detected">Kein OpenCellID API-Schlüssel erkannt!\nBitte zuerst Schlüssel in Einstellungen eingeben.</string>
+    <string name="no_opencellid_key_detected">Kein OpenCellID API-Schlüssel erkannt!\nBitte Schlüssel in Einstellungen eingeben.</string>
     <string name="refreshing_display">Aktualisiere Anzeige</string>
     <string name="unable_to_acquire_root_access">Kein ROOT-Zugriff auf Gerät möglich.\nAT-Befehle setzen ROOT-Zugriff voraus.\nBitte prüfen ob das gerät GEROOTET ist und erneut versuchen.</string>
     <string name="unable_to_detect_busybox">Busybox konnte nicht erkannt werden.\nAT-Befehle setzen Busybox-Komponenten für korrekte Funktion voraus.\nBitte prüfen ob Busybox installiert ist und erneut versuchen.</string>
@@ -277,18 +277,18 @@
     <string name="medium">MEDIUM</string>
     <string name="high">HOCH</string>
     <string name="danger">GEFAHR</string>
-    <string name="run">LAUF!</string>
+    <string name="run">RENN!</string>
     
     <!-- Advanced User Settings: SMS Detection Strings-->
     <string name="adv_user_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\nBitte keine zufälligen Zeichenfolgen eingeben, sonst wird die Erkennung beeinträchtigt.\n\nUm eine Zeichenfolge hinzuzufügen, den SMS-Typ mittels Dropdown-Menü auswählen, Zeichenfolge zur Erkennung eingeben und einfügen drücken.\n\nZum löschen aus der Datenbank den Eintrag in der Liste lang drücken.</string>
    
     <!-- Advanced User Settings: Delete Detected SMS-->
-    <string name="adv_user_sms_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\n Zum löschen erkannter SMS den Eintrag in der Liste lang drücken.</string>
+    <string name="adv_user_sms_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\n Zum löschen die SMS in der Liste lang drücken.</string>
     <string name="title_activity_advanced_user">Erkannte SMS löschen</string>
     <string name="adv_user_pref_header">Advanced User Settings</string>
     <string name="adv_user_pref_launch">Erkennungs-Zeichenfolge</string>
     <string name="adv_user_pref_sms_launch">SMS löschen</string>
-    <string name="adv_user_pref_summary">Erkennungs-Zeichenfolgen einfügen und löschen</string>
+    <string name="adv_user_pref_summary">Erkennungs-Zeichenfolgen einfügen</string>
     <string name="adv_user_pref_sms_summary">Erkannte SMS löschen</string>
     
     <!-- Advanced User Settings: Enable SMS Detection-->
@@ -300,27 +300,27 @@
     <string name="detection_strings">Erkennungs-Zeichenfolgen</string>
     <string name="typezero_title">ACHTUNG!</string>
     <string name="typezero_header">Type0 SMS erkannt</string>
-    <string name="typezero_data">Stille SMS Nachricht wurde erkannt!\n\nDetails sind im Datenbankbetrachter verfügbar.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns diese bitte die Protokolldaten aus dem Menüpunkt Fehlerbehebung.</string>
+    <string name="typezero_data">Stille SMS Nachricht wurde erkannt!\n\nDetails sind im Datenbankbetrachter verfügbar.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte die Protokolldaten aus dem Menüpunkt Fehlerbehebung.</string>
     <string name="typevoice_title">ACHTUNG!</string>
     <string name="typevoice_header">Stille Sprachnachricht erkannt</string>
-    <string name="typevoice_data">Stille Sprachnachricht wurde erkannt! \n\nnDetails sind im Datenbankbetrachter verfügbar.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns diese bitte die Protokolldaten aus dem Menüpunkt Fehlerbehebung.</string>
+    <string name="typevoice_data">Stille Sprachnachricht wurde erkannt! \n\nnDetails sind im Datenbankbetrachter verfügbar.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte die Protokolldaten aus dem Menüpunkt Fehlerbehebung.</string>
     
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">AIMSICD Status, Benachbarte Funkzellen, Verschlüsselungsindikator.</string>
-    <string name="help_main_phone_sim_details">Details von SIM, Netzbetreiber, IMEI und TMSI.</string>
+    <string name="help_main_current_threat_level">AIMSICD-Status, Benachbarte Funkzellen und Verschlüsselungsindikator.</string>
+    <string name="help_main_phone_sim_details">SIM-Details, Netzbetreiber, IMEI und TMSI.</string>
     <string name="help_main_acd">Zeigt detaillierten Vergleich der derzeit verbundenen Funkzelle mit den Daten von OCID (wenn vorhanden) und hebt Unterschiede hervor.</string>
     <string name="help_main_database_viewer">Zeigt unsere verschiedenen Datenbanken.</string>
     <string name="help_main_antenna_map_view">Karte farbcodierter Antennen der Umgebung.</string>
     <string name="help_main_at_command_interface">Maske zur Eingabe von AT-Befehlen zur Kommunikation mit dem Baseband Processor (benötigt ROOT).</string>
     
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_aimsicd">Start/stop der AIMSICD-Überwachung und Sammlung der Daten in die internen Datenbanken.</string>
-    <string name="help_tracking_toggle_2g_only_network_lock">Starten um Telefon auf 2G-Netzwerk für Zellverfolgung festzusetzen. Stoppen um normale Netzwerkeinstellungen (RAT) oder automatisch zu nutzen.</string>
+    <string name="help_tracking_toggle_aimsicd">Umschalten des AIMSICD-Schutzes und Sammlung der Daten in die internen Datenbanken.</string>
+    <string name="help_tracking_toggle_2g_only_network_lock">Starten um Telefon auf 2G-Netzwerk für Zellverfolgung festzusetzen. Stoppen um normale Netzwerkeinstellungen (RAT) oder automatisches Netzwerk zu nutzen.</string>
     
     <!-- Section Settings-->
-    <string name="help_settings_preferences">AIMSICD-Einstellungen wie Aktualissierungszeiten und Dienstverhalten.</string>
-    <string name="help_settings_backup_db">AIMSICD SQLite3-Datenbank auf SD-Karte sichern.</string>
-    <string name="help_settings_restore_db">AIMSICD SQLite3-Datenbank von SD-Karte wiederherstellen.</string>
+    <string name="help_settings_preferences">AIMSICD-Einstellungen wie Schutzregeln, Aktualisierungszeiten und Dienstverhalten.</string>
+    <string name="help_settings_backup_db">SQLite3-Datenbank auf SD-Karte sichern.</string>
+    <string name="help_settings_restore_db">SQLite3-Datenbank wiederherstellen.</string>
     <string name="help_settings_reset_db">Alle oder bestimmte Datenbanken zurücksetzen und löschen.</string>
     <string name="help_settings_export_db_to_csv">Datenbanktabellen in einzelne CSV-Dateien exportieren.</string>
     <string name="help_settings_import_db_from_csv">Datenbanktabellen aus einzelnen CSV-Dateien importieren.</string>
@@ -329,7 +329,7 @@
     <string name="help_app_add_get_ocid_api_key">API-Schlüssel für die Nutzung der OpenCellID-Datenbanken sowie hoch- und herunterladen der Daten anfordern&#8230;</string>
     <string name="help_app_about">Status-Symbole und Erklärung des Projekts.</string>
     <string name="help_app_download_local_bst">OCID-Datenbank herunterladen.</string>
-    <string name="help_app_upload_local_bst">Eigene BTS-Daten zur OCID-Datenbank hochladen.</string>
+    <string name="help_app_upload_local_bst">Eigene BTS-Daten zu OCID hochladen.</string>
     <string name="help_app_debugging">Fehlerprotokolle sammeln und versenden.</string>
     <string name="help_app_quit">Diese App verlassen.</string>
     <string name="waiting_for_location">Standort wird ermittelt&#8230;</string>
