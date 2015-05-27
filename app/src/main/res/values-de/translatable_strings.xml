@@ -2,7 +2,7 @@
 <resources>
     
     <!-- Drawer -->
-    <string name="tracking">Zellenverfolgung</string>
+    <string name="tracking">Funkzellenverfolgung</string>
     <string name="device_info">Telefon/SIM Details</string>
     <string name="map_view">Funkantennenkarte</string>
     <string name="db_viewer">Datenbankbetrachter</string>
@@ -26,7 +26,7 @@
     </string>
     
     <!-- MENU -->
-    <string name="toggle_aimsicd_monitoring">Schutzüberwachung ein/ausschalten</string>
+    <string name="toggle_aimsicd_monitoring">Mobilfunkschutz ein/ausschalten</string>
     <string name="toggle_2g_only_network_lock">2G-Netzwerk für Aufzeichnung nutzen</string>
     <string name="toggle_femtocell">Femtozellen erkennen</string>
     <string name="backup_database">Datenbank sichern</string>
@@ -89,7 +89,7 @@
     <string name="about_license">LIZENZ</string>
     <string name="about_credits">DANKSAGUNG</string>
     <string name="about_desc_icon_idle">Warte / Lade.</string>
-    <string name="about_desc_icon_active_tracking_near">Aktive Verfolgung nahe!</string>
+    <string name="about_desc_icon_active_tracking_near">Verfolgung nahe!</string>
     <string name="about_desc_icon_ok">Alles in Ordnung.</string>
     <string name="about_desc_icon_tracked_down">Du wirst verfolgt!</string>
     <string name="about_desc_icon_insecure_area">Unsichere Zone. Verlassen!</string>
@@ -126,8 +126,8 @@
     <string name="pref_ocid_title">OpenCellID-Einstellungen</string>
     <string name="pref_ocid_key_title">OpenCellID API-Schlüssel</string>
     <string name="pref_ocid_key_summ">OpenCellID API-Schlüssel hier eingeben</string>
-    <string name="pref_enable_cell_monitoring_title">Zellenüberwachung</string>
-    <string name="pref_enable_cell_monitoring_summ">Automatische Zellenüberwachung</string>
+    <string name="pref_enable_cell_monitoring_title">Funkzellenüberprüfung</string>
+    <string name="pref_enable_cell_monitoring_summ">Automatische Funkzellenüberprüfung</string>
     <string name="pref_request_ocid_key">OCID API-Schlüssel anfordern</string>
     <string name="pref_ocid_requestkey_summary">API-Schlüssel für OpenCellID-Zugang anfordern</string>
    
@@ -192,7 +192,7 @@
   
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILLIERTE BESCHREIBUNG</string>
-    <string name="detail_info_idle">App wartet oder lädt. Keine Schutz- und Erkennungsmaßnahmen aktiviert. Bitte Seitenmenü öffnen und in ZELLENVERFOLGUNG aktivieren.</string>
+    <string name="detail_info_idle">App wartet oder lädt. Keine Schutz- und Erkennungsmaßnahmen aktiviert. Bitte Seitenmenü öffnen und unter FUNKZELLENVERFOLGUNG den Mobilfunkschutz aktivieren.</string>
     <string name="detail_info_normal">Keine Gefahren erkannt oder gefunden. Unsere App prüft kontinuierlich das Netzwerk mit den aktivierten Schutzmaßnahmen von Seitenmenü und Einstellungen.</string>
     <string name="detail_info_medium">Unsichere Zone: Mindestens 1 neuer oder unbekannter Mobilfunkmast ist in dieser Gegend aktiv oder verwendet eine unsichere (geknackte) Verschlüsselung niedriger als A5/3 [Erkennung ist noch in Arbeit]. Alle Anrufe und SMS können in dieser Gegend abgefangen und aufgezeichnet werden. Die Gegend sollte sofort verlassen werden.</string>
     <string name="detail_info_high">Feindliche Betriebsaktionen erkannt: Ein IMSI-Catcher (IMSIC) oder gefälschte Mobilfunkstation (FBTS) verfolgt die Nutzer gezielt. Aktive Rasterung findet in dieser Gegend statt. Diese Gegend sollte dringend vermieden werden, vor allen Dingen während politischer Unruhen. Batterie aus dem Telefon nehmen oder Telefon komplett außer Kraft setzen.</string>
@@ -225,16 +225,16 @@
     <string name="main">Hauptmenü</string>
     <string name="settings">Einstellungen</string>
     <string name="application">Anwendung</string>
-    <string name="monitoring_cell_information">Überwache Zellinformationen.</string>
-    <string name="stopped_monitoring_cell_information">Zellüberwachung angehalten.</string>
-    <string name="tracking_cell_information">Verfolge Zellinformationen.</string>
-    <string name="stopped_tracking_cell_information">Verfolgung der Funkzellen angehalten.</string>
+    <string name="monitoring_cell_information">Beobachte Funkzelldaten.</string>
+    <string name="stopped_monitoring_cell_information">Beobachtung der Funkzelldaten angehalten.</string>
+    <string name="tracking_cell_information">Funkzelldaten werden aufzeichnet.</string>
+    <string name="stopped_tracking_cell_information">Aufzeichnung der Funkzelldaten angehalten.</string>
     <string name="only_one_api_per_day">Anfrage für neuen API-Schlüssel nur einmal aller 24 Stunden möglich!\nBitte später erneut versuchen.</string>
     <string name="cell_id_doesnt_exist_in_db">Cell ID nicht existent in OpenCellID-Datenbank!</string>
     <string name="hostile_service_area_changing_lac_detected">Feindliche Betriebsaktion: LAC-Änderung erkannt!</string>
     <string name="femtocell_detection_active">Femtozellenerkennung aktiv.</string>
-    <string name="cell_tracking_active">Zellverfolgung ist aktiv.</string>
-    <string name="cell_monitoring_active">Zellüberwachung ist aktiv.</string>
+    <string name="cell_tracking_active">Funkzellen werden aufgezeichnet.</string>
+    <string name="cell_monitoring_active">Funkzellen werden beobachtet.</string>
     <string name="phone_type">Telefonart</string>
     <string name="status_idle"> - Status: Wartend.</string>
     <string name="status_good">- Status: Gut. Keine Gefahren erkannt.</string>
