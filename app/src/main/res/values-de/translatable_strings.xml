@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
     <!-- Drawer -->
     <string name="tracking">Zellenverfolgung</string>
     <string name="device_info">Telefon/SIM Details</string>
@@ -10,6 +11,7 @@
     <string name="text_cancel">Abbrechen</string>
     <string name="text_agree">Akzeptieren</string>
     <string name="text_disagree">Nicht akzeptieren</string>
+    
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">HAFTUNGSAUSSCHLUß</string>
     <string name="disclaimer">Durch die Nutzung von AIMSICD verstehen und akzeptieren
@@ -22,6 +24,7 @@
         verbundene Unternehmen auf gar keinen Fall für jegliche Resultate der Benutzung
         haftbar gemacht werden können.
     </string>
+    
     <!-- MENU -->
     <string name="toggle_aimsicd_monitoring">AIMSICD-Überwachung umschalten</string>
     <string name="toggle_2g_only_network_lock">Nur 2G-Netzwerk nutzen</string>
@@ -37,8 +40,10 @@
     <string name="no_network_connection_title">Keine Internetverbindung</string>
     <string name="no_network_connection_message">Kein herunterladen der OpenCellID-Daten ohne Internet 
     möglich, bitte Datenverbindung einschalten!</string>
+    
     <!-- MAP VIEWER -->
     <string name="get_opencellid">BTS-Daten herunterladen</string>
+    
     <!-- LAYOUT -->
     <string name="device_info_title">Geräteinformationen</string>
     <string name="sim_info_title">SIM-Informationen</string>
@@ -68,8 +73,10 @@
     <string name="drawer_open">Seitenmenü öffnen</string>
     <string name="drawer_close">Seitenmenü schließen</string>
     <string name="network_psc">PSC:</string>
+    
     <!-- Upload BTS to OpenCellID -->
     <string name="upload_bts">BTS-Daten hochladen</string>
+    
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">Über AIMSICD</string>
     <string name="app_version">Version:&#160;</string>
@@ -89,13 +96,16 @@
     <string name="about_desc_icon_insecure_area">Unsichere Betriebszone. Verlassen!</string>
     <string name="about_desc_icon_run">LAUF! Gerät wurde manipuliert!</string>
     <string name="about_desc_icon_title">Drücke untere Status-Symbole für detaillierte Informationen</string>
+    
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Netzwerk-ID:</string>
     <string name="network_sysid">System-ID:</string>
     <string name="network_baseid">Basisstation-ID:</string>
+    
     <!-- LOCATION HELPER -->
     <string name="location_error_title">Standortbezogene Dienste deaktiviert</string>
     <string name="location_error_message">GPS-Daten können nicht ohne standortbezogene Dienste aufgezeichnet werden. Jetzt aktivieren?</string>
+   
     <!-- PREFERENCES -->
     <string name="pref_system_title">Systemeinstellungen</string>
     <string name="pref_autostart_title">Automatischer Start</string>
@@ -121,6 +131,7 @@
     <string name="pref_enable_cell_monitoring_summ">Automatische Zellenüberwachung einschalten</string>
     <string name="pref_request_ocid_key">OCID API-Schlüssel anfordern</string>
     <string name="pref_ocid_requestkey_summary">API-Schlüssel für OpenCellID-Zugang anfordern</string>
+   
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Einstellungen Funkantennenkarte</string>
     <string name="pref_map_type_title">Kartenart</string>
@@ -136,6 +147,7 @@
     <string name="open_cell_id_label">OpenCellID-Daten</string>
     <string name="lat_label">Lat: </string>
     <string name="lng_label">Lon: </string>
+    
     <!-- Database Viewer -->
     <string name="table_names_prompt">Tabelle auswählen</string>
     <string-array name="table_names">
@@ -148,6 +160,7 @@
         <item>@string/eventlog</item>
     </string-array>
     <string name="database_export_successful">Export erfolgreich</string>
+    
     <!-- AT Command Interface  -->
     <string name="at_command_title">AT Command Interface</string>
     <string name="response_label">Reaktion:</string>
@@ -158,15 +171,18 @@
     <string name="timeout_spinner_title">Wartezeit:</string>
     <string name="timeout_spinner_prompt">Wartezeit auswählen</string>
     <string name="command_hint">AT-Befehl hier eingeben.</string>
+   
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Stille SMS erkannt</string>
     <string name="sms_message">Eine stille SMS wurde erkannt!\n\nDetails sind im Datenbankbetrachter verfügbar.</string>
     <string name="table_contains_no_data">Tabelle beinhaltet keine Daten.</string>
+  
     <!-- Request OpenCellID Key -->
     <string name="title_ocid_key">OpenCellID API-Schlüssel</string>
     <string name="message_request_api_key">Drücke OK um einen API-Schlüssel von OpenCellID.org anzufordern. Dies ermöglicht das Herunterladen deren Daten und das Anzeigen in der Funkantennenkarte. Ermöglicht außerdem das hochladen gesammelter Zelldaten. Wenn keine Daten im Zeitraum von 20 Tagen hochgeladen wurde, wird der API-Schlüssel ungültig.</string>
     <string name="ocid_api_error">Fehler bei Schlüsselanforderung: </string>
     <string name="ocid_api_success">Neuer API-Schlüssel gesichert</string>
+  
     <!-- Debug logs -->
     <string name="title_debug_logs">Fehlerprotokolle</string>
     <string name="btn_clear_logs">Löschen</string>
@@ -174,6 +190,7 @@
     <string name="msg_copied_to_clipboard">Protokolle in Ablage kopiert</string>
     <string name="btn_stop_logs">Stop</string>
     <string name="btn_start_logs">Start</string>
+  
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILLIERTE BESCHREIBUNG</string>
     <string name="detail_info_idle">App wartet oder lädt. Keine Schutz- und Erkennungsmaßnahmen aaktiviert. Bitte Seitenmenü öffnen und in Menü ZELLVERFOLGUNG aktivieren.</string>
@@ -184,7 +201,8 @@
     <string name="detail_info_run">Feindliche Manipulation: Jemand versucht aus der Ferne dieses Telefon zu manipulieren. Zerstöre (oder verkaufe) das Telefons und besorge ein Neues von weit weg (altes Telefon nicht mit zum Wechselplatz mitnehmen). Nutze eine neue (anonyme) SIM, verändere das Telefonverhalten und warne Kontakte im echten Leben, NICHT mittels Anruf.</string>
     <string name="open_cell_id_button_cancel">Abbrechen</string>
     <string name="open_cell_id_button_ok">OK</string>
-    <!-- UI icon preferences -->
+   
+    <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Flach</string>
     <string name="ui_icon_sense">Sense</string>
     <string name="ui_icon_white">Weiß</string>
@@ -261,8 +279,10 @@
     <string name="high">HOCH</string>
     <string name="danger">GEFAHR</string>
     <string name="run">LAUF!</string>
+    
     <!-- Advanced User Settings: SMS Detection Strings-->
     <string name="adv_user_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\nBitte keine zufälligen Zeichenfolgen eingeben, sonst wird die Erkennung beeinträchtigt.\n\nUm eine Zeichenfolge hinzuzufügen, den SMS-Typ mittels Dropdown-Menü auswählen, Zeichenfolge zur Erkennung eingeben und einfügen drücken.\n\nZum löschen aus der Datenbank den Eintrag in der Liste lang drücken.</string>
+   
     <!-- Advanced User Settings: Delete Detected SMS-->
     <string name="adv_user_sms_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\n Zum löschen erkannter SMS den Eintrag in der Liste lang drücken.</string>
     <string name="title_activity_advanced_user">Erkannte SMS löschen</string>
@@ -271,11 +291,13 @@
     <string name="adv_user_pref_sms_launch">SMS löschen</string>
     <string name="adv_user_pref_summary">Erkennungs-Zeichenfolgen einfügen und löschen</string>
     <string name="adv_user_pref_sms_summary">Erkannte SMS löschen</string>
+    
     <!-- Advanced User Settings: Enable SMS Detection-->
     <string name="adv_user_root_title">SMS-Erkennung aktivieren</string>
     <string name="adv_user_root_sum">Root ist für SMS-Erkennung notwendig</string>
     <string name="adv_user_root_pref_key">is_root_sms_enabled</string>
-    <!-- Detected sms string for custom popup-->
+    
+    <!-- Detected SMS string for custom popup-->
     <string name="detection_strings">Erkennungs-Zeichenfolgen</string>
     <string name="typezero_title">ACHTUNG!</string>
     <string name="typezero_header">Type0 SMS erkannt</string>
@@ -283,6 +305,7 @@
     <string name="typevoice_title">ACHTUNG!</string>
     <string name="typevoice_header">Stille Sprachnachricht erkannt</string>
     <string name="typevoice_data">Stille Sprachnachricht wurde erkannt! \n\nnDetails sind im Datenbankbetrachter verfügbar.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns diese bitte die Protokolldaten aus dem Menüpunkt Fehlerbehebung.</string>
+    
     <!-- Section Main-->
     <string name="help_main_current_threat_level">AIMSICD Status, Benachbarte Funkzellen, Verschlüsselungsindikator.</string>
     <string name="help_main_phone_sim_details">Details von SIM, Netzbetreiber, IMEI und TMSI.</string>
@@ -290,9 +313,11 @@
     <string name="help_main_database_viewer">Zeigt unsere verschiedenen Datenbanken.</string>
     <string name="help_main_antenna_map_view">Karte farbcodierter Antennen der Umgebung.</string>
     <string name="help_main_at_command_interface">Maske zur Eingabe von AT-Befehlen zur Kommunikation mit dem Baseband Processor (benötigt ROOT).</string>
+    
     <!-- Section Tracking-->
     <string name="help_tracking_toggle_aimsicd">Start/stop der AIMSICD-Überwachung und Sammlung der Daten in die internen Datenbanken.</string>
     <string name="help_tracking_toggle_2g_only_network_lock">Starten um Telefon auf 2G-Netzwerk für Zellverfolgung festzusetzen. Stoppen um normale Netzwerkeinstellungen (RAT) oder automatisch zu nutzen.</string>
+    
     <!-- Section Settings-->
     <string name="help_settings_preferences">AIMSICD-Einstellungen wie Aktualissierungszeiten und Dienstverhalten.</string>
     <string name="help_settings_backup_db">AIMSICD SQLite3-Datenbank auf SD-Karte sichern.</string>
@@ -300,6 +325,7 @@
     <string name="help_settings_reset_db">Alle oder bestimmte Datenbanken zurücksetzen und löschen.</string>
     <string name="help_settings_export_db_to_csv">Datenbanktabellen in einzelne CSV-Dateien exportieren.</string>
     <string name="help_settings_import_db_from_csv">Datenbanktabellen aus einzelnen CSV-Dateien importieren.</string>
+    
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">API-Schlüssel für die Nutzung der OpenCellID-Datenbanken sowie hoch- und herunterladen der Daten anfordern&#8230;</string>
     <string name="help_app_about">Status-Symbole und Erklärung des Projekts.</string>
@@ -323,15 +349,18 @@
     <string name="well_known_encrypted_bts">Gut bekannte verschlüsselte Funkstation</string>
     <string name="unknown_or_insecure_bts">Unbekannte oder unsichere Funkstation</string>
     <string name="new_or_recently_added_bts">Neue oder kürzlich hinzugefügte Funkstation</string>
+ 
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
         <item>@string/ui_icon_sense</item>
         <item>@string/ui_icon_white</item>
     </string-array>
+  
     <string-array name="pref_map_type_entries">
         <item>@string/map_type_normal</item>
         <item>@string/map_type_terrain</item>
     </string-array>
+  
     <string-array name="pref_refresh_entries">
         <item>@string/pref_refresh_manual</item>
         <item>@string/pref_refresh_automatic</item>
@@ -343,6 +372,7 @@
         <item>@string/pref_refresh_1_min</item>
         <item>@string/pref_refresh_5_min</item>
     </string-array>
+  
     <string-array name="timeout_spinner_values">
         <item>@string/timeout_spinner_2_sec</item>
         <item>@string/timeout_spinner_5_sec</item>
@@ -351,14 +381,17 @@
         <item>@string/timeout_spinner_30_sec</item>
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
+  
     <string name="TYPE0">TYPE0</string>
     <string name="SILENTVOICE">SILENTVOICE</string>
     <string name="FLASH">FLASH</string>
     <string name="WAPPUSH">WAPPUSH</string>
+ 
     <string-array name="detection_spinner_values">
         <item>@string/TYPE0</item>
         <item>@string/SILENTVOICE</item>
         <item>@string/FLASH</item>
         <item>@string/WAPPUSH</item>
     </string-array>
+    
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  
     <string name="about_aimsicd">O aplikacji</string>
     <string name="about_changelog">Lista zmian</string>
     <string name="about_credits">Twórcy</string>
@@ -23,6 +24,7 @@
     <string name="cell_lookup">Wszystkie informacje o obecnej komórce</string>
     <string name="ciphering_indicator_title">Wskaźnik szyfrowania</string>
     <string name="clear_database">Wyczyść bazę danych</string>
+    
     <!-- Need to translate -->
     <string name="clear_database_question">All data will be deleted.\nAre you sure?</string>
     <string name="command_hint">Wpisz komendę AT tutaj</string>
@@ -289,6 +291,5 @@
         <item>@string/timeout_spinner_30_sec</item>
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
-
 
 </resources>

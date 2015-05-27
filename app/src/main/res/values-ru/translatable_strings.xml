@@ -32,7 +32,6 @@
 
 
     <!-- MENU -->
-
     <string name="toggle_aimsicd_monitoring">Переключить AIMSICD мониторинг</string>
     <string name="toggle_2g_only_network_lock">Переключить сетевую блокировку только 2G</string>
     <string name="toggle_femtocell">Переключить Femtocell</string>
@@ -105,7 +104,6 @@
     <string name="about_desc_icon_insecure_area">Небезопасная зона обслуживания. Покиньте ее!</string>
     <string name="about_desc_icon_run">Беги! Манипулируют телефоном!</string>
     <string name="about_desc_icon_title">Нажмите значки состояния ниже для более подробной информации</string>
-
 
     <!-- CDMA LAYOUT -->
     <string name="network_netid">ID сети:</string>
