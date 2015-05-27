@@ -99,7 +99,7 @@
     <string name="about_desc_icon_tracked_down">You are being tracked down!</string>
     <string name="about_desc_icon_insecure_area">Insecure Service Area. Leave it!</string>
     <string name="about_desc_icon_run">RUN! Handset manipulated!</string>
-    <string name="about_desc_icon_title">Click Status Icons below for Detailed Information</string>
+    <string name="about_desc_icon_title">Press Status Icons below for detailed Information:</string>
 
 
     <!-- CDMA LAYOUT -->
@@ -164,7 +164,7 @@
         <item>@string/measured_signal_strengths</item>
         <item>@string/eventlog</item>
     </string-array>
-    <string name="database_export_successful">Export Successful</string>
+    <string name="database_export_successful">Export successful</string>
 
     <!-- AT Command Interface  -->
     <string name="at_command_title">AT Command Interface</string>
@@ -178,13 +178,13 @@
     <string name="command_hint">Enter AT command here.</string>
 
     <!-- SILENT SMS FRAGMENT -->
-    <string name="sms_title">Silent SMS Intercepted</string>
-    <string name="sms_message">Silent SMS Message has been intercepted!\n\nDetails are available through the Database Viewer.</string>
+    <string name="sms_title">Silent SMS Detected</string>
+    <string name="sms_message">Silent SMS Message has been detected!\n\nDetails are available through the Database Viewer.</string>
     <string name="table_contains_no_data">Table contains no data to display.</string>
 
     <!-- Request OpenCellID Key -->
     <string name="title_ocid_key">OpenCellID API Key</string>
-    <string name="message_request_api_key">Click OK to request an API key from OpenCellID.org. This will enable you to download their data and view it in the map. It will also enable you to upload cell data. Note that if you do not upload cell data within 20 days, your API key may become inactive.</string>
+    <string name="message_request_api_key">Press OK to request an API key from OpenCellID.org. This will enable you to download their data and view it in the map. It will also enable you to upload cell data. Note that if you do not upload cell data within 20 days, your API key may become inactive.</string>
     <string name="ocid_api_error">Error getting key: </string>
     <string name="ocid_api_success">Saved new API key</string>
 
@@ -247,11 +247,11 @@
     <string name="status_good">- Status: Good. No Threats Detected.</string>
     <string name="alert_threat_detected">ALERT: Some Threat Detected!</string>
     <string name="aletr_femtocell_connection_detected">ALERT: FemtoCell Connection Detected!</string>
-    <string name="alert_silent_sms_intercepted">ALERT: Type-0 Silent SMS Intercepted!</string>
+    <string name="alert_silent_sms_detected">ALERT: Type-0 Silent SMS detected!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD can only detect FemtoCell connections on CDMA devices.</string>
     <string name="service_state_changed">Service State changed!</string>
     <string name="stopped_tracking_femtocell">: Stopped tracking FemtoCell connections.</string>
-    <string name="alert_femtocell_tracking_detected">ALERT! FemtoCell Tracking Detected.</string>
+    <string name="alert_femtocell_tracking_detected">ALERT: FemtoCell Tracking Detected!</string>
     <string name="refreshing_every">Refreshing every</string>
     <string name="refreshing_now">Refreshing now&#8230;</string>
     <string name="seconds">seconds.</string>
@@ -271,8 +271,8 @@
     <string name="error_backing_up_data">Error backing up database.</string>
     <string name="no_opencellid_key_detected">No OpenCellID API Key detected!\nPlease enter your key in settings first.</string>
     <string name="refreshing_display">Refreshing display</string>
-    <string name="unable_to_acquire_root_access">Unable to acquire ROOT access on your device.\nAT Command Injection requires ROOT Terminal access.\nPlease check your device is ROOTED and try again</string>
-    <string name="unable_to_detect_busybox">Unable to detect Busybox on your device.\nAT Command Injection requires Busybox components to function correctly.\nPlease check your device has Busybox installed and try again</string>
+    <string name="unable_to_acquire_root_access">Unable to acquire ROOT access on your device.\nAT Command Injection requires ROOT Terminal access.\nPlease check your device is ROOTED and try again.</string>
+    <string name="unable_to_detect_busybox">Unable to detect Busybox on your device.\nAT Command Injection requires Busybox components to function correctly.\nPlease check your device has Busybox installed and try again.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">An unknown error has occurred trying to acquire the Serial Device.\nPlease check your logcat for any errors and post them to Github\nor XDA, links to both of these locations can be found within the\nAbout section of the application.</string>
     <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them to Github or\nXDA, links to both of these locations can be found within the\nAbout section of the application.</string>
     <string name="getting_ocid_api_key">Getting OpenCellID API key&#8230;</string>
@@ -286,30 +286,30 @@
     <string name="danger">DANGER</string>
     <string name="run">RUN!</string>
 
-    <!-- Section Advanced User Activity Sms Strings-->
-    <string name="adv_user_info">This menu is for advanced users only please do not insert random strings because it will cause detection to go out of control\n\nTo add a string choose the sms type from dropdown menu,type your detection string and press insert button\n\nTo delete from database long press on list view  </string>
-    <!-- Section Advanced User Activity Delete Sms-->
-    <string name="adv_user_sms_info">This menu is for advanced users only,To delete detected sms from the data base please long click on item in listview </string>
-    <string name="title_activity_advanced_user">AdvancedUserActivity</string>
+    <!-- Advanced User Settings: SMS Detection Strings-->
+    <string name="adv_user_info">This menu is for advanced users only!\n\nPlease do not insert random strings because it will cause detection to go out of control.\n\nTo add a string choose the SMS type from the dropdown menu, type your detection string and press insert.\n\nTo delete from database long press on list view.</string>
+    <!-- Advanced User Settings: Delete Detected SMS-->
+    <string name="adv_user_sms_info">This menu is for advanced users only!\n\nTo delete a detected SMS from the database please long press on item in listview.</string>
+    <string name="title_activity_advanced_user">Delete Detected SMS</string>
 
     <string name="adv_user_pref_header">Advanced User Settings</string>
     <string name="adv_user_pref_launch">Detection Strings</string>
-    <string name="adv_user_pref_sms_launch">Delete Sms</string>
-    <string name="adv_user_pref_summary">Insert and Delete Detection Strings</string>
-    <string name="adv_user_pref_sms_summary">Delete Detected Sms</string>
-    <!-- Section Advanced User Enable Sms Detection-->
-    <string name="adv_user_root_title">Enable Sms Detection</string>
-    <string name="adv_user_root_sum">Root is required to enable sms detection</string>
+    <string name="adv_user_pref_sms_launch">Delete SMS</string>
+    <string name="adv_user_pref_summary">Insert and delete detection strings</string>
+    <string name="adv_user_pref_sms_summary">Delete Detected SMS</string>
+    <!-- Advanced User Settings: Enable SMS Detection-->
+    <string name="adv_user_root_title">Enable SMS Detection</string>
+    <string name="adv_user_root_sum">Root is required to enable SMS detection</string>
     <string name="adv_user_root_pref_key">is_root_sms_enabled</string>
 
-    <!-- Detected sms string for custom popup-->
+    <!-- Detected sMS string for custom popup-->
     <string name="detection_strings">Detection Strings</string>
-    <string name="typezero_title">Attention!</string>
-    <string name="typezero_header">Type0 SMS Intercepted</string>
-    <string name="typezero_data">Silent SMS Message has been intercepted! \n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs go to Debugging, Select Copy and email to us</string>
-    <string name="typevoice_title">Attention!</string>
-    <string name="typevoice_header">Silent Voice Intercepted</string>
-    <string name="typevoice_data">Silent Voice SMS Message has been intercepted! \n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs go to Debugging, Select Copy and email to us</string>
+    <string name="typezero_title">ATTENTION!</string>
+    <string name="typezero_header">Type0 SMS Detected</string>
+    <string name="typezero_data">Silent SMS Message has been detected!\n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs, enter the Debugging menu and send the logfiles via E-Mail.</string>
+    <string name="typevoice_title">ATTENTION!</string>
+    <string name="typevoice_header">Silent Voice Detected</string>
+    <string name="typevoice_data">Silent Voice SMS Message has been detected!\n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs, enter the Debugging menu and send the logfiles via E-Mail.</string>
 
 
     <!-- Section Main-->
@@ -321,7 +321,7 @@
     <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
 
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_aimsicd">Start/stop AIMSICD monitoring and collect cell details into internal database tables (DBi).</string>
+    <string name="help_tracking_toggle_aimsicd">Start/stop AIMSICD monitoring and collect cell details into internal database tables.</string>
     <string name="help_tracking_toggle_2g_only_network_lock">Start to set phone to use 2G mode only, for tracking. Stop to use default Network Type (RAT) settings or Automatic.</string>
 
     <!-- Section Settings-->
@@ -333,7 +333,7 @@
     <string name="help_settings_import_db_from_csv">Import DB table(s) from individual CSV file(s).</string>
 
     <!-- Section Application-->
-    <string name="help_app_add_get_ocid_api_key">Get an API key for using the Open Cell ID database to upload and download data&#8230;</string>
+    <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data&#8230;</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
     <string name="help_app_download_local_bst">Downloads the OCID Database.</string>
     <string name="help_app_upload_local_bst">Uploads your BTS to the OCID Database.</string>

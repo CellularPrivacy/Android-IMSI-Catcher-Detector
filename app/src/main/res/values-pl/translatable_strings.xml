@@ -155,9 +155,9 @@
     <string name="phone_type">Rodzaj telefonu</string>
     <string name="status_idle">Oczekuję&#8230;</string>
     <string name="status_good">Brak zagrożeń. Wszystko OK.</string>
-    <string name="alert_threat_detected">UWAGA! Wykryto zagrożenie!</string>
-    <string name="aletr_femtocell_connection_detected">UWAGA! Wykryto połączenie FemtoCell!</string>
-    <string name="alert_silent_sms_intercepted">UWAGA! Przechwycono SilentSMS!</string>
+    <string name="alert_threat_detected">UWAGA: Wykryto zagrożenie!</string>
+    <string name="aletr_femtocell_connection_detected">UWAGA: Wykryto połączenie FemtoCell!</string>
+    <string name="alert_silent_sms_detected">UWAGA: Wykryto SilentSMS!</string>
     <string name="femtocell_only_on_cdma_devices">Aplikacja potrafi wykrywać FemtoCell tylko przez połączenie CDMA</string>
     <string name="service_state_changed">Zmieniony został stan usługi</string>
     <string name="stopped_tracking_femtocell">Wstrzymano śledzenie połączeń FemtoCell</string>

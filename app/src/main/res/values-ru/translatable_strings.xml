@@ -252,7 +252,7 @@
     <string name="status_good">- Status: Хорошо. Угроз не обнаружено.</string>
     <string name="alert_threat_detected">ТРЕВОГА: Обнаружены некоторые угрозы!</string>
     <string name="aletr_femtocell_connection_detected">ТРЕВОГА: Обнаружено соединение с фемтосотой!</string>
-    <string name="alert_silent_sms_intercepted">ТРЕВОГА: Перехвачена бесшумная SMS(Type-0)!</string>
+    <string name="alert_silent_sms_detected">ТРЕВОГА: обнаруженный бесшумная SMS (Type-0)!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD может определять соединение с фемтосотой только на CDMA устройствах.</string>
     <string name="service_state_changed">Статус сервиса изменен!</string>
     <string name="stopped_tracking_femtocell">: Остановлен мониториг соединения с фемтосотой.</string>
@@ -278,7 +278,7 @@
     <string name="refreshing_display">Обновление дисплея</string>
     <string name="unable_to_acquire_root_access">Невозможно получить ROOT доступ на вашем устройстве.\nДля инъекций AT-команд в терминал требуется ROOT доступ.\nПожалуйста, проверьте наличие ROOT прав на вашем устройстве и попробуйте еще раз</string>
     <string name="unable_to_detect_busybox">Невозможно обнаружить Busybox на вашем устройстве.\nДля инъекций AT-команд в терминал требуются компоненты Busybox для правильного функционирования.\nПожалуйста, проверьте, что Busybox установлен на ваше устройство  и попробуйте снова</string>
-    <string name="unknown_error_trying_to_acquire_serial_device">Произошла неизвестная ошибка при попытке достижения Serial Device.\nПожалуйста, проверьте LogCat на возможные ошибки и отправьте их на Github\nили XDA, ссылки на оба этих места можно найти в \nсекции "О программе" приложения.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Произошла неизвестная ошибка при попытке достижения Serial Device.\nПожалуйста, проверьте LogCat на возможные ошибки и отправьте их на Github.</string>
     <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them to Github or\nXDA, links to both of these locations can be found within the\nAbout section of the application.</string>
     <string name="getting_ocid_api_key">Получение ключа API OpenCellID&#8230;</string>
     <string name="unable_to_create_map">Невозможно создать карту!</string>
@@ -300,7 +300,7 @@
     <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
 
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_aimsicd">Start/stop AIMSICD monitoring and collect cell details into internal database tables (DBi).</string>
+    <string name="help_tracking_toggle_aimsicd">Start/stop AIMSICD monitoring and collect cell details into internal database tables.</string>
     <string name="help_tracking_toggle_2g_only_network_lock">Start to set phone to use 2G mode only, for tracking. Stop to use default Network Type (RAT) settings or Automatic.</string>
 
     <!-- Section Settings-->
@@ -312,7 +312,7 @@
     <string name="help_settings_import_db_from_csv">Import DB table(s) from individual CSV file(s).</string>
 
     <!-- Section Application-->
-    <string name="help_app_add_get_ocid_api_key">Get an API key for using the Open Cell ID database to upload and download data&#8230;</string>
+    <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data&#8230;</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
     <string name="help_app_download_local_bst">Downloads the OCID Database.</string>
     <string name="help_app_upload_local_bst">Uploads your BTS to the OCID Database.</string>
