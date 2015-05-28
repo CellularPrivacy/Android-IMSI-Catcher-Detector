@@ -302,7 +302,6 @@
     <string name="adv_user_root_title">Enable SMS Detection</string>
     <string name="adv_user_root_sum">Root is required to enable SMS detection</string>
 
-
     <!-- Detected SMS string for custom popup -->
     <string name="detection_strings">Detection Strings</string>
     <string name="typezero_title">ATTENTION!</string>
@@ -389,6 +388,5 @@
         <item>@string/timeout_spinner_30_sec</item>
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
-
 
 </resources>
