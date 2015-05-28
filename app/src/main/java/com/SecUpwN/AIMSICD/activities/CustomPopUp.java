@@ -34,10 +34,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 public class CustomPopUp extends Activity {
     TextView tv_popup_title,about_tv_status,about_tv_data;
     ImageView about_icon_holder;
+    int mode = 0; //default
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +103,10 @@ public class CustomPopUp extends Activity {
                         ,getResources().getDrawable(R.drawable.sense_skull));
                 break;
             case 6:
+                MiscUtils.showNotification(getApplicationContext(),
+                        getResources().getString(R.string.alert_silent_sms_detected),
+                        getResources().getString(R.string.app_name_short)+ " - "+getResources().getString(R.string.typezero_header),
+                        R.drawable.sense_danger,false);
                 createPopUp(
                         getResources().getString(R.string.typezero_title),
                         getResources().getString(R.string.typezero_header),
@@ -109,6 +115,11 @@ public class CustomPopUp extends Activity {
                 break;
 
             case 7:
+                MiscUtils.showNotification(getApplicationContext(),
+                        getResources().getString(R.string.alert_silent_sms_detected),
+                        getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.typevoice_header),
+                        R.drawable.sense_danger,false);
+
                 createPopUp(
                         getResources().getString(R.string.typevoice_title),
                         getResources().getString(R.string.typevoice_header),
@@ -140,6 +151,12 @@ public class CustomPopUp extends Activity {
     public boolean onTouchEvent(MotionEvent event) {
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                if(mode == 6 || mode == 7) {
+                    MiscUtils.showNotification(getApplicationContext(),
+                            getResources().getString(R.string.app_name_short),
+                            getResources().getString(R.string.app_name_short) + " - " + getResources().getString(R.string.status_good),
+                            R.drawable.sense_ok, false);
+                }
                 finish();
         }
         return true;
