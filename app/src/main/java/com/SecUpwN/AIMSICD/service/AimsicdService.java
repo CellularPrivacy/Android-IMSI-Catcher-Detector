@@ -124,11 +124,11 @@ public class AimsicdService extends Service {
         mLocationTracker.stop();
         mAccelerometerMonitor.stop();
         mRilExecutor.stop();
-        try {
-            if (smsdetector.getSmsDetectionState()) {
-                smsdetector.stopSmsDetection();
-            }
-        }catch (Exception ee){Log.e(TAG,"Error stopping sms detection\n"+ee.toString());}
+       if (smsdetector.getSmsDetectionState())
+       {
+        smsdetector.stopSmsDetection();
+       }
+
         Log.i(TAG, "Service destroyed.");
     }
 
