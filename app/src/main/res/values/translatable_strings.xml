@@ -301,7 +301,7 @@
     <!-- Advanced User Settings: Enable SMS Detection -->
     <string name="adv_user_root_title">Enable SMS Detection</string>
     <string name="adv_user_root_sum">Root is required to enable SMS detection</string>
-    <string name="adv_user_root_pref_key">is_root_sms_enabled</string>
+
 
     <!-- Detected SMS string for custom popup -->
     <string name="detection_strings">Detection Strings</string>
@@ -390,16 +390,5 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-    <string name="TYPE0">TYPE0</string>
-    <string name="SILENTVOICE">SILENTVOICE</string>
-    <string name="FLASH">FLASH</string>
-    <string name="WAPPUSH">WAPPUSH</string>
-
-    <string-array name="detection_spinner_values">
-        <item>@string/TYPE0</item>
-        <item>@string/SILENTVOICE</item>
-        <item>@string/FLASH</item>
-        <item>@string/WAPPUSH</item>
-    </string-array>
 
 </resources>

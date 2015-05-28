@@ -208,6 +208,12 @@ public class SmsDetector extends Thread {
 
                     CHECK THAT THE BROADCAST RECEIVER PICKED UP AN SMS.
                     future code
+                        Idea behind this code is if we pick up and SMS_ACK in logcat
+                        and the sms broadcast receiver did not pick up an sms then
+                        we received some sort of silent sms.
+
+                        When a new sms arrives, logcat picks up many SMS_ACKS so code is buggy
+                        at the moment.
                      */
                  /*   if (progress[x].contains(CHECK_BROADCAST_REC.split("#")[0])) {
                         try {
@@ -246,18 +252,22 @@ public class SmsDetector extends Thread {
                             CapturedSmsData setmsg = new CapturedSmsData();
                             setmsg.setSenderNumber("unknown");//default
                             setmsg.setSenderMsg("no data");//default
-
-                            int newcount = (x-15);//count back to get senders number if any
+                            /*
+                            *    count back to get senders number if any
+                            *    senders numuber is usually back about -15
+                            *    in the array.
+                            * */
+                            int newcount = (x-15);
 
                             //System.out.println("NewCount >>> "+newcount+" Xcount>>>>> "+x);
-                            if(newcount > 0) {//only check if array length is not -minus
+                            if(newcount > 0) {//only check if array length is not -minus (if minus we cant count back so skip)
                                 while (newcount < x) {
                                     if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
                                         try {
                                             //Looking for OrigAddr this is where type0 sender number is
                                             String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
                                             setmsg.setSenderNumber(number);//default
-                                        }catch (Exception ee){}
+                                        }catch (Exception ee){Log.e(TAG,"Error parsing number");}
                                         //System.out.println("Number>>>"+number);
                                     } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
                                         try {
@@ -266,7 +276,7 @@ public class SmsDetector extends Thread {
                                                     progress[newcount].length() - 1);
                                             //System.out.println("SMS Data>>>"+smsdata);
                                             setmsg.setSenderMsg(smsdata);
-                                        }catch (Exception ee){}
+                                        }catch (Exception ee){Log.e(TAG,"Error parsing sms data");}
                                     }
                                     newcount++;
                                 }
@@ -283,7 +293,7 @@ public class SmsDetector extends Thread {
                             dbacess.open();
                             dbacess.storeCapturedSms(setmsg);
                             dbacess.close();
-                            showNotification(tContext,"Type0 Sms Intercepted");
+
                             MiscUtils.startPopUpInfo(tContext, 6);
 
                         }else if(SILENT_ONLY_TAGS[arrayindex].split("#")[1].trim().equals("SILENTVOICE")){
@@ -296,6 +306,9 @@ public class SmsDetector extends Thread {
                             if(newcount > 0) {//only check if array length is not -minus
                                 while (newcount < x) {
                                     if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[0].toString())) {
+                                        /* This first try usually has the number of the sender
+                                        *  and second try is just there incase OrigAddr string shows.
+                                        * */
                                         try {
                                             String number = progress[newcount].substring(progress[newcount].indexOf("+"));
                                             setmsg.setSenderNumber(number);//default
@@ -306,7 +319,7 @@ public class SmsDetector extends Thread {
                                             //Looking for OrigAddr this is where type0 sender number is
                                             String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
                                             setmsg.setSenderNumber(number);//default
-                                        }catch (Exception ee){}
+                                        }catch (Exception ee){Log.e(TAG,"Error parsing number");}
                                         //System.out.println("Number>>>"+number);
                                     } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
                                         try {
@@ -315,7 +328,7 @@ public class SmsDetector extends Thread {
                                                     progress[newcount].length() - 1);
                                             //System.out.println("SMS Data>>>"+smsdata);
                                             setmsg.setSenderMsg(smsdata);
-                                        }catch (Exception ee){}
+                                        }catch (Exception ee){Log.e(TAG,"Error parsing sms data");}
                                     }
                                     newcount++;
                                 }
@@ -333,7 +346,7 @@ public class SmsDetector extends Thread {
                             dbacess.open();
                             dbacess.storeCapturedSms(setmsg);
                             dbacess.close();
-                            showNotification(tContext,"SilentVoice Sms Intercepted");
+
                             MiscUtils.startPopUpInfo(tContext, 7);
                         }
                         break;
@@ -345,32 +358,6 @@ public class SmsDetector extends Thread {
         }
     }
 
-    public void showNotification(Context context ,String contentText){
-    int NOTIFICATION_ID = 1;
-    String tickerText = context.getResources().getString(R.string.app_name_short);
-
-    Intent notificationIntent = new Intent(context, AIMSICD.class);
-    notificationIntent.putExtra("silent_sms", true);
-    notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
-
-    PendingIntent contentIntent = PendingIntent.getActivity(
-            context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-    Notification mBuilder =
-            new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.sense_danger)
-                    .setTicker(tickerText)
-                    .setContentTitle(context.getResources().getString(R.string.main_app_name))
-                    .setContentText(contentText)
-                    .setOngoing(true)
-                    .setAutoCancel(true)
-                    .setContentIntent(contentIntent)
-                    .build();
-    NotificationManager mNotificationManager =
-            (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-    mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
-
-}
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {

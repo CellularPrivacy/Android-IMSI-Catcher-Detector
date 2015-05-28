@@ -1,8 +1,14 @@
 package com.SecUpwN.AIMSICD.utils;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 
+import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CustomPopUp;
 
 import java.io.BufferedReader;
@@ -55,5 +61,37 @@ public class MiscUtils {
         Date now = new Date();
         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(now);
         return timestamp;
+    }
+
+    /*
+      Call This function from any activity to set notification:
+      Example:
+                          MiscUtils.showNotification(getApplicationContext(),
+                          getResources().getString(R.string.app_name_short),
+                          getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.status_good)                            ,
+                          R.drawable.sense_ok,false);
+   */
+    public static void showNotification(Context context ,String tickertext,String contentText, int drawable_id,boolean auto_cancel){
+        int NOTIFICATION_ID = 1;
+
+        Intent notificationIntent = new Intent(context, AIMSICD.class);
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Notification mBuilder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(drawable_id)
+                        .setTicker(tickertext)
+                        .setContentTitle(context.getResources().getString(R.string.main_app_name))
+                        .setContentText(contentText)
+                        .setOngoing(true)
+                        .setAutoCancel(auto_cancel)
+                        .setContentIntent(contentIntent)
+                        .build();
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
+
     }
 }
