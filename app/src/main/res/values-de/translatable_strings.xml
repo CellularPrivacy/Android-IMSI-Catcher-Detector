@@ -119,7 +119,7 @@
     <string name="pref_femto_action_title">Femtozellen-Schutz</string>
     <string name="pref_femto_action_summ">Flugmodus bei Erkennung einer Femtozelle erzwingen (Netzwerk muß manuell wieder einschaltet werden)</string>
     <string name="pref_ui_title">Oberflächeneinstellungen</string>
-    <string name="pref_ui_icons_title">Symbole</string>
+    <string name="pref_ui_icons_title">Status-Symbole</string>
     <string name="pref_ui_icons_summ">Symboldesign wählen</string>
     <string name="pref_refresh_title">Aktualisierungsrate</string>
     <string name="pref_refresh_summ">Kontrolle der Häufigkeit der Gerätaktualisierung</string>
@@ -178,7 +178,7 @@
   
     <!-- Request OpenCellID Key -->
     <string name="title_ocid_key">OpenCellID API-Schlüssel</string>
-    <string name="message_request_api_key">Drücke OK um einen API-Schlüssel von OpenCellID.org anzufordern. Dies ermöglicht das Herunterladen deren Daten und das Anzeigen in der Funkantennenkarte. Außerdem können gesammelte Funkturmdaten an OCID übermittelt werden. Wenn keine Daten im Zeitraum von 20 Tagen hochgeladen wurden, wird der API-Schlüssel ungültig.</string>
+    <string name="message_request_api_key">Drücke OK um einen API-Schlüssel von OpenCellID.org anzufordern. Dies ermöglicht das Herunterladen deren Daten und das Anzeigen in der Funkantennenkarte. Zudem können gesammelte Funkturmdaten an OCID übermittelt werden. Wenn keine Daten im Zeitraum von 20 Tagen hochgeladen wurden, wird der API-Schlüssel ungültig.</string>
     <string name="ocid_api_error">Fehler bei Schlüsselanforderung: </string>
     <string name="ocid_api_success">Neuer API-Schlüssel gesichert</string>
   
@@ -280,10 +280,10 @@
     <string name="run">RENN!</string>
     
     <!-- Advanced User Settings: SMS Detection Strings-->
-    <string name="adv_user_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\nBitte keine zufälligen Zeichenfolgen eingeben, sonst wird die Erkennung beeinträchtigt.\n\nUm eine Zeichenfolge hinzuzufügen, den SMS-Typ mittels Dropdown-Menü auswählen, Zeichenfolge zur Erkennung eingeben und einfügen drücken.\n\nZum löschen aus der Datenbank den Eintrag in der Liste lang drücken.</string>
+    <string name="adv_user_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\nBitte keine zufälligen Zeichenfolgen eingeben, sonst wird die Erkennung beeinträchtigt.\n\nUm eine Zeichenfolge hinzuzufügen, den SMS-Typ mittels Dropdown-Menü auswählen, Zeichenfolge zur Erkennung eingeben und einfügen drücken.\n\nZum löschen den Eintrag in der Liste lang drücken.</string>
    
     <!-- Advanced User Settings: Delete Detected SMS-->
-    <string name="adv_user_sms_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\n Zum löschen die SMS in der Liste lang drücken.</string>
+    <string name="adv_user_sms_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\nZum löschen die SMS in der Liste lang drücken.</string>
     <string name="title_activity_advanced_user">Erkannte SMS löschen</string>
     <string name="adv_user_pref_header">Advanced User Settings</string>
     <string name="adv_user_pref_launch">Erkennungs-Zeichenfolge</string>
@@ -306,9 +306,9 @@
     <string name="typevoice_data">Stille Sprachnachricht wurde erkannt! \n\nnDetails sind im Datenbankbetrachter verfügbar.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte die Protokolldaten aus dem Menüpunkt Fehlerbehebung.</string>
     
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">AIMSICD-Status, Benachbarte Funkzellen und Verschlüsselungsindikator.</string>
+    <string name="help_main_current_threat_level">AIMSICD-Gefahrenstatus, Benachbarte Funkzellen und Verschlüsselungsindikator.</string>
     <string name="help_main_phone_sim_details">SIM-Details, Netzbetreiber, IMEI und TMSI.</string>
-    <string name="help_main_acd">Zeigt detaillierten Vergleich der derzeit verbundenen Funkzelle mit den Daten von OCID (wenn vorhanden) und hebt Unterschiede hervor.</string>
+    <string name="help_main_acd">Zeigt einen detaillierten Vergleich der derzeit verbundenen Funkzelle mit den Daten von OCID (wenn vorhanden) und hebt Unterschiede hervor.</string>
     <string name="help_main_database_viewer">Zeigt unsere verschiedenen Datenbanken.</string>
     <string name="help_main_antenna_map_view">Karte farbcodierter Antennen der Umgebung.</string>
     <string name="help_main_at_command_interface">Maske zur Eingabe von AT-Befehlen zur Kommunikation mit dem Baseband Processor (benötigt ROOT).</string>
