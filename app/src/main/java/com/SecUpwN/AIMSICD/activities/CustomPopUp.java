@@ -51,7 +51,6 @@ public class CustomPopUp extends Activity {
         about_tv_data = (TextView)findViewById(R.id.about_tv_data);
         tv_popup_title = (TextView)findViewById(R.id.tv_popup_title);
 
-        int mode = 0; //default
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mode = extras.getInt("display_mode");
@@ -106,7 +105,7 @@ public class CustomPopUp extends Activity {
                 MiscUtils.showNotification(getApplicationContext(),
                         getResources().getString(R.string.alert_silent_sms_detected),
                         getResources().getString(R.string.app_name_short)+ " - "+getResources().getString(R.string.typezero_header),
-                        R.drawable.sense_danger,false);
+                        R.drawable.sense_danger,true);
                 createPopUp(
                         getResources().getString(R.string.typezero_title),
                         getResources().getString(R.string.typezero_header),
@@ -118,7 +117,7 @@ public class CustomPopUp extends Activity {
                 MiscUtils.showNotification(getApplicationContext(),
                         getResources().getString(R.string.alert_silent_sms_detected),
                         getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.typevoice_header),
-                        R.drawable.sense_danger,false);
+                        R.drawable.sense_danger,true);
 
                 createPopUp(
                         getResources().getString(R.string.typevoice_title),
