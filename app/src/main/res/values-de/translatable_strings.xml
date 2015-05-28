@@ -79,7 +79,7 @@
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">Über AIMSICD</string>
     <string name="app_version">Version:&#160;</string>
-    <string name="aimsicd_about_info3">Android-basiertes Projekt zur Erkennung und Vermeidung gefälschter Mobilfunkststationen (IMSI-Catcher) in GSM/UMTS Netzwerken.</string>
+    <string name="aimsicd_about_info3">Android-basiertes Projekt zur Erkennung und Vermeidung gefälschter Mobilfunkstationen\n(IMSI-Catcher) in GSM/UMTS-Netzwerken.</string>
     <string name="about_github">AIMSICD auf GitHub</string>
     <string name="about_wiki">Dokumentation (WIKI)</string>
     <string name="about_contribute">MITMACHEN</string>
