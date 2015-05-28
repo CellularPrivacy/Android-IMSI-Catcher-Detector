@@ -128,7 +128,7 @@
     <string name="pref_femto_action_title">Защита от фемтосот</string>
     <string name="pref_femto_action_summ">Принудительный режим полета, когда фемтосот обнаружена (подключение к сети вручную)</string>
     <string name="pref_ui_title">Настройки интерфейса</string>
-    <string name="pref_ui_icons_title">Иконки</string>
+    <string name="pref_ui_icons_title">значки состояния</string>
     <string name="pref_ui_icons_summ">Выбор схемы иконок</string>
     <string name="pref_refresh_title">Частота обновления</string>
     <string name="pref_refresh_summ">Управление частотой обновления устройства</string>
@@ -219,11 +219,11 @@
     <string name="map_type_normal">Обычный</string>
     <string name="pref_refresh_manual">Ручной</string>
     <string name="pref_refresh_automatic">Автоматическая</string>
-    <string name="pref_refresh_2s">2с</string>
-    <string name="pref_refresh_5s">5с</string>
-    <string name="pref_refresh_10s">10с</string>
-    <string name="pref_refresh_25s">25с</string>
-    <string name="pref_refresh_45s">45с</string>
+    <string name="pref_refresh_2s">2 сек</string>
+    <string name="pref_refresh_5s">5 сек</string>
+    <string name="pref_refresh_10s">10 сек</string>
+    <string name="pref_refresh_25s">25 сек</string>
+    <string name="pref_refresh_45s">45 сек</string>
     <string name="pref_refresh_1_min">1 мин</string>
     <string name="pref_refresh_5_min">5 минут</string>
     <string name="timeout_spinner_2_sec">2 сек</string>

@@ -124,7 +124,7 @@
     <string name="pref_femto_action_title">Femtocell Protection</string>
     <string name="pref_femto_action_summ">Enforce Airplane Mode when Femtocell detected (re-enable network manually)</string>
     <string name="pref_ui_title">Interface Settings</string>
-    <string name="pref_ui_icons_title">Icons</string>
+    <string name="pref_ui_icons_title">Status-Icons</string>
     <string name="pref_ui_icons_summ">Icon Theme Selection</string>
     <string name="pref_refresh_title">Refresh Rate</string>
     <string name="pref_refresh_summ">Control the frequency of device updates</string>
@@ -215,11 +215,11 @@
     <string name="map_type_normal">Normal</string>
     <string name="pref_refresh_manual">Manual</string>
     <string name="pref_refresh_automatic">Automatic</string>
-    <string name="pref_refresh_2s">2s</string>
-    <string name="pref_refresh_5s">5s</string>
-    <string name="pref_refresh_10s">10s</string>
-    <string name="pref_refresh_25s">25s</string>
-    <string name="pref_refresh_45s">45s</string>
+    <string name="pref_refresh_2s">2 sec</string>
+    <string name="pref_refresh_5s">5 sec</string>
+    <string name="pref_refresh_10s">10 sec</string>
+    <string name="pref_refresh_25s">25 sec</string>
+    <string name="pref_refresh_45s">45 sec</string>
     <string name="pref_refresh_1_min">1 min</string>
     <string name="pref_refresh_5_min">5 min</string>
     <string name="timeout_spinner_2_sec">2 sec</string>
@@ -227,7 +227,7 @@
     <string name="timeout_spinner_10_sec">10 sec</string>
     <string name="timeout_spinner_20_sec">20 sec</string>
     <string name="timeout_spinner_30_sec">30 sec</string>
-    <string name="timeout_spinner_10_min">10 mi</string>
+    <string name="timeout_spinner_10_min">10 min</string>
     <string name="main">Main</string>
     <string name="settings">Settings</string>
     <string name="application">Application</string>
@@ -289,7 +289,7 @@
     <string name="adv_user_info">This menu is for advanced users only!\n\nPlease do not insert random strings because it will cause detection to go out of control.\n\nTo add a string choose the SMS type from the dropdown menu, type your detection string and press insert.\n\nTo delete from database long press on list view.</string>
     
     <!-- Advanced User Settings: Delete Detected SMS -->
-    <string name="adv_user_sms_info">This menu is for advanced users only!\n\nTo delete a detected SMS from the database please long press on item in listview.</string>
+    <string name="adv_user_sms_info">This menu is for advanced users only!\nTo delete a detected SMS long press it in listview.</string>
     <string name="title_activity_advanced_user">Delete Detected SMS</string>
 
     <string name="adv_user_pref_header">Advanced User Settings</string>
@@ -313,7 +313,7 @@
     <string name="typevoice_data">Silent Voice SMS Message has been detected!\n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs, enter the Debugging menu and send the logfiles via E-Mail.</string>
 
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">AIMSICD status, neighboring cells, ciphering method indicator.</string>
+    <string name="help_main_current_threat_level">AIMSICD threat status, neighboring cells, ciphering method indicator.</string>
     <string name="help_main_phone_sim_details">SIM network provider details, IMEI, TMSI.</string>
     <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OCID and highlight the differences.</string>
     <string name="help_main_database_viewer">View the different DB tables we have.</string>
@@ -325,7 +325,7 @@
     <string name="help_tracking_toggle_2g_only_network_lock">Start to set phone to use 2G mode only, for tracking. Stop to use default Network Type (RAT) settings or Automatic.</string>
 
     <!-- Section Settings-->
-    <string name="help_settings_preferences">AIMSICD settings and preferences such as polling times, protections and service behaviour.</string>
+    <string name="help_settings_preferences">AIMSICD settings such as protection rules, polling times and service behaviour.</string>
     <string name="help_settings_backup_db">Backup SQLite3 DB to SD-Card.</string>
     <string name="help_settings_restore_db">Restore SQLite3 DB from SD-Card.</string>
     <string name="help_settings_reset_db">Clear and reset all or specified DB table(s).</string>

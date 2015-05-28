@@ -52,7 +52,7 @@
     <string name="pref_autostart_title">Uruchamiaj automatycznie</string>
     <string name="pref_autostart_summ">Uruchamiaj po włączeniu systemu </string>
     <string name="pref_refresh_automatic">Automatycznie</string>
-    <string name="pref_ui_icons_title">Ikony</string>
+    <string name="pref_ui_icons_title">Ikony stanu</string>
     <string name="preferences">Ustawienia</string>
     <string name="quit">Wyjście</string>
     <string name="response_label">Odpowiedź:</string>
