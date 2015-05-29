@@ -178,7 +178,7 @@
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Silent SMS Detected</string>
-    <string name="sms_message">Silent SMS Message has been detected!\n\nDetails are available through the Database Viewer.</string>
+    <string name="sms_message">Silent SMS Message detected!\n\nDetails: See Database Viewer.</string>
     <string name="table_contains_no_data">Table contains no data to display.</string>
 
     <!-- Request OpenCellID Key -->
@@ -242,8 +242,8 @@
     <string name="cell_tracking_active">Cell Tracking Active.</string>
     <string name="cell_monitoring_active">Cell Monitoring Active.</string>
     <string name="phone_type">Phone Type</string>
-    <string name="status_idle"> - Status: Idle.</string>
-    <string name="status_good">- Status: Good. No Threats Detected.</string>
+    <string name="status_idle">Status: Idle.</string>
+    <string name="status_good">Status: Good. No Threats Detected.</string>
     <string name="alert_threat_detected">ALERT: Some Threat Detected!</string>
     <string name="aletr_femtocell_connection_detected">ALERT: FemtoCell Connection Detected!</string>
     <string name="alert_silent_sms_detected">ALERT: Type-0 Silent SMS detected!</string>
@@ -306,10 +306,10 @@
     <string name="detection_strings">Detection Strings</string>
     <string name="typezero_title">ATTENTION!</string>
     <string name="typezero_header">Type0 SMS Detected</string>
-    <string name="typezero_data">Silent SMS Message has been detected!\n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs, enter the Debugging menu and send the logfiles via E-Mail.</string>
+    <string name="typezero_data">Silent SMS Message has been detected!\n\nDetails: See Database Viewer.\n\nIf you want this data to be analysed by our devs, send the logfiles through the Debugging menu.</string>
     <string name="typevoice_title">ATTENTION!</string>
     <string name="typevoice_header">Silent Voice Detected</string>
-    <string name="typevoice_data">Silent Voice SMS Message has been detected!\n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs, enter the Debugging menu and send the logfiles via E-Mail.</string>
+    <string name="typevoice_data">Silent Voice SMS Message has been detected!\n\nDetails: See Database Viewer.\n\nIf you want this data to be analysed by our devs, send the logfiles through the Debugging menu.</string>
 
     <!-- Section Main-->
     <string name="help_main_current_threat_level">AIMSICD threat status, neighboring cells, ciphering method indicator.</string>
