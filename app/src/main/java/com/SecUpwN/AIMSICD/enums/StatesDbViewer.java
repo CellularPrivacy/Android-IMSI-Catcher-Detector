@@ -8,7 +8,6 @@ package com.SecUpwN.AIMSICD.enums;
 
 import android.content.Context;
 
-
 import com.SecUpwN.AIMSICD.R;
 
 import java.util.ArrayList;

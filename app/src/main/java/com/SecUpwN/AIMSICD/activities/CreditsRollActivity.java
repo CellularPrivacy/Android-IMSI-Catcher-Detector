@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.fragments.CreditsRollView;

@@ -25,20 +25,14 @@
 
 package com.SecUpwN.AIMSICD.smsdetection;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
@@ -141,7 +135,7 @@ public class SmsDetector extends Thread {
         try {
 
             try {
-                new Thread().sleep(500);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -262,14 +256,14 @@ public class SmsDetector extends Thread {
                             //System.out.println("NewCount >>> "+newcount+" Xcount>>>>> "+x);
                             if(newcount > 0) {//only check if array length is not -minus (if minus we cant count back so skip)
                                 while (newcount < x) {
-                                    if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
+                                    if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2])) {
                                         try {
                                             //Looking for OrigAddr this is where type0 sender number is
-                                            String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
+                                            String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2], "").trim();
                                             setmsg.setSenderNumber(number);//default
                                         }catch (Exception ee){Log.e(TAG,"Error parsing number");}
                                         //System.out.println("Number>>>"+number);
-                                    } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
+                                    } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1])) {
                                         try {
                                             String smsdata = progress[newcount].substring(
                                                     progress[newcount].indexOf("'") + 1,
@@ -305,7 +299,7 @@ public class SmsDetector extends Thread {
                             //System.out.println("NewCount >>> "+newcount+" Xcount>>>>> "+x);
                             if(newcount > 0) {//only check if array length is not -minus
                                 while (newcount < x) {
-                                    if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[0].toString())) {
+                                    if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[0])) {
                                         /* This first try usually has the number of the sender
                                         *  and second try is just there incase OrigAddr string shows.
                                         * */
@@ -314,14 +308,14 @@ public class SmsDetector extends Thread {
                                             setmsg.setSenderNumber(number);//default
                                         }catch (Exception ee){}
                                         //System.out.println("Number>>>"+number);
-                                    }else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
+                                    }else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2])) {
                                         try {
                                             //Looking for OrigAddr this is where type0 sender number is
-                                            String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
+                                            String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2], "").trim();
                                             setmsg.setSenderNumber(number);//default
                                         }catch (Exception ee){Log.e(TAG,"Error parsing number");}
                                         //System.out.println("Number>>>"+number);
-                                    } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
+                                    } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1])) {
                                         try {
                                             String smsdata = progress[newcount].substring(
                                                     progress[newcount].indexOf("'") + 1,

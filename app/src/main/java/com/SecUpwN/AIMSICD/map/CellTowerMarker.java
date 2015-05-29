@@ -13,7 +13,6 @@ import com.SecUpwN.AIMSICD.R;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.OverlayItem;
 
 /**
  * BTS pin item

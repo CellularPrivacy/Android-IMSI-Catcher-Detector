@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

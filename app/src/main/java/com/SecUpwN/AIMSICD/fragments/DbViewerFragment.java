@@ -26,7 +26,6 @@ import com.SecUpwN.AIMSICD.adapters.MeasuredCellStrengthCardData;
 import com.SecUpwN.AIMSICD.adapters.MeasuredCellStrengthCardInflater;
 import com.SecUpwN.AIMSICD.adapters.OpenCellIdCardInflater;
 import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
-import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
 import com.SecUpwN.AIMSICD.constants.Examples;
 import com.SecUpwN.AIMSICD.enums.StatesDbViewer;
 import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsCardInflater;
@@ -70,8 +69,7 @@ public class DbViewerFragment extends Fragment {
         DbViewerSpinnerAdapter mSpinnerAdapter = new DbViewerSpinnerAdapter(getActivity(), R.layout.item_spinner_db_viewer);
         tblSpinner.setAdapter(mSpinnerAdapter);
 
-        Spinner spnLocale = (Spinner) view.findViewById(R.id.table_spinner);
-        spnLocale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        tblSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, final int position, long id) {
 
@@ -161,7 +159,7 @@ public class DbViewerFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                return;
+
             }
         });
 

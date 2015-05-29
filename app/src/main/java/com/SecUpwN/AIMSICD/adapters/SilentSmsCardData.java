@@ -1,6 +1,7 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class SilentSmsCardData {
 
@@ -68,7 +69,7 @@ public class SilentSmsCardData {
     }
 
     public String getTimestamp() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.getDefault());
         String dateString = formatter.format(mTimestamp);
         return "Timestamp: " + dateString;
     }

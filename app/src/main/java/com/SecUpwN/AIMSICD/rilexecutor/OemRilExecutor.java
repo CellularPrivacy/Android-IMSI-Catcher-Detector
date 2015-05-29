@@ -4,11 +4,11 @@ import android.os.Message;
 
 public interface OemRilExecutor {
 
-    public DetectResult detect();
+    DetectResult detect();
 
-    public void start();
+    void start();
 
-    public void stop();
+    void stop();
 
     /**
      * Invokes RIL_REQUEST_OEM_HOOK_RAW.
@@ -22,7 +22,7 @@ public interface OemRilExecutor {
      *                 com.android.internal.telephony.gsm.CommandException
      * @see #invokeOemRilRequestRaw(byte[], android.os.Message)
      */
-    public void invokeOemRilRequestRaw(byte data[], Message response);
+    void invokeOemRilRequestRaw(byte data[], Message response);
 
     /**
      * Invokes RIL_REQUEST_OEM_HOOK_STRING
@@ -36,6 +36,6 @@ public interface OemRilExecutor {
      *                 com.android.internal.telephony.gsm.CommandException
      * @see #invokeOemRilRequestStrings(String[], android.os.Message)
      */
-    public void invokeOemRilRequestStrings(String[] strings, Message response);
+    void invokeOemRilRequestStrings(String[] strings, Message response);
 
 }

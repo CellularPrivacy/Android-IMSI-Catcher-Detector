@@ -1,10 +1,10 @@
 package com.SecUpwN.AIMSICD.activities;
 
-import com.SecUpwN.AIMSICD.fragments.PrefFragment;
-
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+
+import com.SecUpwN.AIMSICD.fragments.PrefFragment;
 
 
 public class PrefActivity extends BaseActivity {

@@ -19,11 +19,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,11 +36,8 @@ import com.SecUpwN.AIMSICD.activities.DebugLogs;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.adapters.DrawerMenuAdapter;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
-import com.SecUpwN.AIMSICD.drawer.DrawerMenuItem;
-import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
 import com.SecUpwN.AIMSICD.fragments.AboutFragment;
 import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
@@ -60,12 +54,6 @@ import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -706,7 +694,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 for(int i = 0; i < content.length; i++) {
                     File from = new File(content[i].toString());
                     //move file to new directory
-                    from.renameTo(new File(destinedPath.toString() + content[i].getName().toString()));
+                    from.renameTo(new File(destinedPath.toString() + content[i].getName()));
                 }
             }
             //remove current directory so it won't try to move it again
