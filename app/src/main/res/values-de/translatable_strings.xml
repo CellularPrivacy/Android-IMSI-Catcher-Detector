@@ -230,7 +230,7 @@
     <string name="tracking_cell_information">Funkzelldaten werden aufzeichnet.</string>
     <string name="stopped_tracking_cell_information">Aufzeichnung der Funkzelldaten angehalten.</string>
     <string name="only_one_api_per_day">Anfrage für neuen API-Schlüssel nur einmal aller 24 Stunden möglich!\nBitte später erneut versuchen.</string>
-    <string name="cell_id_doesnt_exist_in_db">Cell ID nicht existent in OpenCellID-Datenbank!</string>
+    <string name="cell_id_doesnt_exist_in_db">Cell ID nicht existent in OCID-Datenbank!</string>
     <string name="hostile_service_area_changing_lac_detected">Feindliche Betriebsaktion: LAC-Änderung erkannt!</string>
     <string name="femtocell_detection_active">Femtozellenerkennung aktiv.</string>
     <string name="cell_tracking_active">Funkzellen werden aufgezeichnet.</string>

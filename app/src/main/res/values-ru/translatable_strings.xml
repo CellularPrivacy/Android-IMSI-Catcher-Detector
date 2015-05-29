@@ -240,7 +240,7 @@
     <string name="tracking_cell_information">Отслеживания данных сотового.</string>
     <string name="stopped_tracking_cell_information">Отслеживания данных сотового остановлена.</string>
     <string name="only_one_api_per_day">Только один запрос нового ключа API за 24 часа!\nПожалуйста, повторите попытку позже.</string>
-    <string name="cell_id_doesnt_exist_in_db">ID соты не существует в базе данных OpenCellID!</string>
+    <string name="cell_id_doesnt_exist_in_db">ID соты не существует в базе данных OCID!</string>
     <string name="hostile_service_area_changing_lac_detected">Враждебная зона обслуживания: Изменение LAC обнаружено!</string>
     <string name="femtocell_detection_active">Обнаружение фемтосот активно.</string>
     <string name="cell_tracking_active">Отслеживание активной сотовой ячейки.</string>
