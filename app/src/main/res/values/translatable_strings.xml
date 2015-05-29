@@ -306,10 +306,10 @@
     <string name="detection_strings">Detection Strings</string>
     <string name="typezero_title">ATTENTION!</string>
     <string name="typezero_header">Type0 SMS Detected</string>
-    <string name="typezero_data">Silent SMS Message has been detected!\n\nDetails: See Database Viewer.\n\nIf you want this data to be analysed by our devs, send the logfiles through the Debugging menu.</string>
+    <string name="typezero_data">Silent SMS Message detected!\n\nDetails: See Database Viewer.\n\nIf you want this data to be analysed by our developers, send the logfiles through the Debugging menu.</string>
     <string name="typevoice_title">ATTENTION!</string>
     <string name="typevoice_header">Silent Voice Detected</string>
-    <string name="typevoice_data">Silent Voice SMS Message has been detected!\n\nDetails: See Database Viewer.\n\nIf you want this data to be analysed by our devs, send the logfiles through the Debugging menu.</string>
+    <string name="typevoice_data">Silent Voice SMS Message detected!\n\nDetails: See Database Viewer.\n\nIf you want this data to be analysed by our developers, send the logfiles through the Debugging menu.</string>
 
     <!-- Section Main-->
     <string name="help_main_current_threat_level">AIMSICD threat status, neighboring cells, ciphering method indicator.</string>
