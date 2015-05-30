@@ -247,6 +247,8 @@
     <string name="alert_threat_detected">ALERT: Some Threat Detected!</string>
     <string name="aletr_femtocell_connection_detected">ALERT: FemtoCell Connection Detected!</string>
     <string name="alert_silent_sms_detected">ALERT: Type-0 Silent SMS detected!</string>
+    <string name="alert_silent_voice_sms_detected">ALERT: Silent Voice SMS detected!</string>
+    <string name="alert_silent_wap_sms_detected">ALERT: Wap Push SMS detected!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD can only detect FemtoCell connections on CDMA devices.</string>
     <string name="service_state_changed">Service State changed!</string>
     <string name="stopped_tracking_femtocell">: Stopped tracking FemtoCell connections.</string>
@@ -311,6 +313,10 @@
     <string name="typevoice_title">ATTENTION!</string>
     <string name="typevoice_header">Silent Voice Detected</string>
     <string name="typevoice_data">Silent Voice SMS Message has been detected!\n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs, enter the Debugging menu and send the logfiles via E-Mail.</string>
+
+    <string name="typewap_header">Wap Push Detected</string>
+    <string name="typewap_data">Wap Push SMS Message has been detected!\n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs, enter the Debugging menu and send the logfiles via E-Mail.</string>
+
 
     <!-- Section Main-->
     <string name="help_main_current_threat_level">AIMSICD status, neighboring cells, ciphering method indicator.</string>
