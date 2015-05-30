@@ -8,6 +8,7 @@ package com.SecUpwN.AIMSICD;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -50,6 +53,7 @@ import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
+import com.SecUpwN.AIMSICD.smsdetection.SmsDetectionDbAccess;
 import com.SecUpwN.AIMSICD.smsdetection.SmsDetectionDbHelper;
 import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Cell;
@@ -57,14 +61,22 @@ import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
+import com.SecUpwN.AIMSICD.utils.MiscUtils;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,6 +111,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     private CharSequence mTitle;
     public static ProgressBar mProgressBar;
     SmsDetectionDbHelper dbhelper;
+
     //Back press to exit timer
     private long mLastPress = 0;
 
@@ -110,6 +123,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /* add new detection strings if any*/
+        MiscUtils.refreshDetectionDbStrings(getApplicationContext());
 
         moveData();
 

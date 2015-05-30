@@ -115,7 +115,7 @@ public class CustomPopUp extends Activity {
 
             case 7:
                 MiscUtils.showNotification(getApplicationContext(),
-                        getResources().getString(R.string.alert_silent_sms_detected),
+                        getResources().getString(R.string.alert_silent_voice_sms_detected),
                         getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.typevoice_header),
                         R.drawable.sense_danger,true);
 
@@ -123,6 +123,19 @@ public class CustomPopUp extends Activity {
                         getResources().getString(R.string.typevoice_title),
                         getResources().getString(R.string.typevoice_header),
                         getResources().getString(R.string.typevoice_data)
+                        ,getResources().getDrawable(R.drawable.sense_danger));
+                break;
+
+            case 8:
+                MiscUtils.showNotification(getApplicationContext(),
+                        getResources().getString(R.string.alert_silent_wap_sms_detected),
+                        getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.typewap_header),
+                        R.drawable.sense_danger,true);
+
+                createPopUp(
+                        getResources().getString(R.string.typevoice_title),
+                        getResources().getString(R.string.typewap_header),
+                        getResources().getString(R.string.typewap_data)
                         ,getResources().getDrawable(R.drawable.sense_danger));
                 break;
 
@@ -150,7 +163,7 @@ public class CustomPopUp extends Activity {
     public boolean onTouchEvent(MotionEvent event) {
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if(mode == 6 || mode == 7) {
+                if(mode == 6 || mode == 7 || mode == 8) {
                     MiscUtils.showNotification(getApplicationContext(),
                             getResources().getString(R.string.app_name_short),
                             getResources().getString(R.string.app_name_short) + " - " + getResources().getString(R.string.status_good),

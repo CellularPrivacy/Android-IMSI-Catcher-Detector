@@ -110,10 +110,11 @@ public class SmsDetector extends Thread {
         ArrayList<AdvanceUserItems> silent_string = dbacess.getDetectionStrings();
         dbacess.close();
         SILENT_ONLY_TAGS = new String[silent_string.size()];
-        for(int x = 0;x <silent_string.size();x++){
+        for(int x = 0;x <silent_string.size();x++)
+        {
         SILENT_ONLY_TAGS[x] = silent_string.get(x).getDetection_string()+"#"+silent_string.get(x).getDetection_type();
-        prefs = newcontext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         }
+        prefs = newcontext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
     }
 
     public void startSmsDetection(){
@@ -316,7 +317,7 @@ public class SmsDetector extends Thread {
                                         //System.out.println("Number>>>"+number);
                                     }else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
                                         try {
-                                            //Looking for OrigAddr this is where type0 sender number is
+                                            //Looking for OrigAddr this is where sender number is
                                             String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
                                             setmsg.setSenderNumber(number);//default
                                         }catch (Exception ee){Log.e(TAG,"Error parsing number");}
@@ -348,6 +349,62 @@ public class SmsDetector extends Thread {
                             dbacess.close();
 
                             MiscUtils.startPopUpInfo(tContext, 7);
+                        }else if(SILENT_ONLY_TAGS[arrayindex].split("#")[1].trim().equals("WAPPUSH")){
+                            /*
+                                Wap Push in logcat shows no data only senders number
+                                TODO: data is probably in db content://raw/1?
+                             */
+                            CapturedSmsData setmsg = new CapturedSmsData();
+                            setmsg.setSenderNumber("unknown");//default
+                            setmsg.setSenderMsg("no data");//default
+
+                            int startindex = x-2;
+                            int endindex = x+3;
+                            /*  wap push port DestPort 0x0B84
+                             *  its usually at this index of +3 in array                             *
+                              * */
+                            if (progress[x+3].contains("DestPort 0x0B84"))
+                            {
+                                Log.i(TAG, "WAPPUSH DETECTED");
+                                /* loop thru array to find number */
+                                if (endindex+3 <= progress.length) {
+                                    while (startindex < endindex)
+                                    {
+                                        //Log.i(TAG,"WAP>>>"+progress[startindex].toString() );
+                                        if (progress[startindex].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
+                                            try {
+                                                //Looking for OrigAddr this is where sender number is
+                                                String number = progress[startindex].substring(
+                                                        progress[startindex].indexOf("OrigAddr")).replace(
+                                                        DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
+
+                                                setmsg.setSenderNumber(number);//default
+                                                break;
+                                            } catch (Exception ee) {
+                                                Log.e(TAG, "Error parsing number");
+                                            }
+
+                                        }
+                                        startindex++;
+
+                                    }
+                                }
+
+                                setmsg.setSmsTimestamp(MiscUtils.getCurrentTimeStamp());
+                                setmsg.setSmsType("WAPPUSH");
+                                setmsg.setCurrent_lac(mAimsicdService.getCellTracker().getMonitorCell().getLAC());
+                                setmsg.setCurrent_cid(mAimsicdService.getCellTracker().getMonitorCell().getCID());
+                                setmsg.setCurrent_nettype(Device.getNetworkTypeName(mAimsicdService.getCell().getNetType()));
+                                setmsg.setCurrent_roam_status(mAimsicdService.getCellTracker().getDevice().isRoaming());
+                                //TODO is this the right place to get upto date geo location?
+                                setmsg.setCurrent_gps_lat(mAimsicdService.lastKnownLocation().getLatitudeInDegrees());
+                                setmsg.setCurrent_gps_lon(mAimsicdService.lastKnownLocation().getLongitudeInDegrees());
+                                dbacess.open();
+                                dbacess.storeCapturedSms(setmsg);
+                                dbacess.close();
+
+                                MiscUtils.startPopUpInfo(tContext, 8);
+                            }// end of if contains("DestPort 0x0B84")
                         }
                         break;
                     }
