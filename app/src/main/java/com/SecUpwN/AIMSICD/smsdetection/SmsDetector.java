@@ -317,7 +317,7 @@ public class SmsDetector extends Thread {
                                         //System.out.println("Number>>>"+number);
                                     }else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
                                         try {
-                                            //Looking for OrigAddr this is where type0 sender number is
+                                            //Looking for OrigAddr this is where sender number is
                                             String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
                                             setmsg.setSenderNumber(number);//default
                                         }catch (Exception ee){Log.e(TAG,"Error parsing number");}
@@ -363,7 +363,8 @@ public class SmsDetector extends Thread {
                             /*  wap push port DestPort 0x0B84
                              *  its usually at this index of +3 in array                             *
                               * */
-                            if (progress[x+3].contains("DestPort 0x0B84")) {
+                            if (progress[x+3].contains("DestPort 0x0B84"))
+                            {
                                 Log.i(TAG, "WAPPUSH DETECTED");
                                 /* loop thru array to find number */
                                 if (endindex+3 <= progress.length) {
@@ -373,7 +374,10 @@ public class SmsDetector extends Thread {
                                         if (progress[startindex].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
                                             try {
                                                 //Looking for OrigAddr this is where sender number is
-                                                String number = progress[startindex].substring(progress[startindex].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
+                                                String number = progress[startindex].substring(
+                                                        progress[startindex].indexOf("OrigAddr")).replace(
+                                                        DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
+
                                                 setmsg.setSenderNumber(number);//default
                                                 break;
                                             } catch (Exception ee) {
