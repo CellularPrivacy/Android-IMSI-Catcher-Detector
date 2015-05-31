@@ -32,7 +32,6 @@
 
 
     <!-- MENU -->
-
     <string name="toggle_aimsicd_monitoring">Переключить AIMSICD мониторинг</string>
     <string name="toggle_2g_only_network_lock">Переключить сетевую блокировку только 2G</string>
     <string name="toggle_femtocell">Переключить Femtocell</string>
@@ -106,7 +105,6 @@
     <string name="about_desc_icon_run">Беги! Манипулируют телефоном!</string>
     <string name="about_desc_icon_title">Нажмите значки состояния ниже для более подробной информации</string>
 
-
     <!-- CDMA LAYOUT -->
     <string name="network_netid">ID сети:</string>
     <string name="network_sysid">ID системы:</string>
@@ -130,7 +128,7 @@
     <string name="pref_femto_action_title">Защита от фемтосот</string>
     <string name="pref_femto_action_summ">Принудительный режим полета, когда фемтосот обнаружена (подключение к сети вручную)</string>
     <string name="pref_ui_title">Настройки интерфейса</string>
-    <string name="pref_ui_icons_title">Иконки</string>
+    <string name="pref_ui_icons_title">значки состояния</string>
     <string name="pref_ui_icons_summ">Выбор схемы иконок</string>
     <string name="pref_refresh_title">Частота обновления</string>
     <string name="pref_refresh_summ">Управление частотой обновления устройства</string>
@@ -221,11 +219,11 @@
     <string name="map_type_normal">Обычный</string>
     <string name="pref_refresh_manual">Ручной</string>
     <string name="pref_refresh_automatic">Автоматическая</string>
-    <string name="pref_refresh_2s">2с</string>
-    <string name="pref_refresh_5s">5с</string>
-    <string name="pref_refresh_10s">10с</string>
-    <string name="pref_refresh_25s">25с</string>
-    <string name="pref_refresh_45s">45с</string>
+    <string name="pref_refresh_2s">2 сек</string>
+    <string name="pref_refresh_5s">5 сек</string>
+    <string name="pref_refresh_10s">10 сек</string>
+    <string name="pref_refresh_25s">25 сек</string>
+    <string name="pref_refresh_45s">45 сек</string>
     <string name="pref_refresh_1_min">1 мин</string>
     <string name="pref_refresh_5_min">5 минут</string>
     <string name="timeout_spinner_2_sec">2 сек</string>
@@ -242,17 +240,17 @@
     <string name="tracking_cell_information">Отслеживания данных сотового.</string>
     <string name="stopped_tracking_cell_information">Отслеживания данных сотового остановлена.</string>
     <string name="only_one_api_per_day">Только один запрос нового ключа API за 24 часа!\nПожалуйста, повторите попытку позже.</string>
-    <string name="cell_id_doesnt_exist_in_db">ID соты не существует в базе данных OpenCellID!</string>
+    <string name="cell_id_doesnt_exist_in_db">ID соты не существует в базе данных OCID!</string>
     <string name="hostile_service_area_changing_lac_detected">Враждебная зона обслуживания: Изменение LAC обнаружено!</string>
     <string name="femtocell_detection_active">Обнаружение фемтосот активно.</string>
     <string name="cell_tracking_active">Отслеживание активной сотовой ячейки.</string>
     <string name="cell_monitoring_active">Cell Monitoring Active.</string>
     <string name="phone_type">Тип телефона</string>
-    <string name="status_idle">- Статус: Неработающий.</string>
-    <string name="status_good">- Status: Хорошо. Угроз не обнаружено.</string>
+    <string name="status_idle">Статус: Неработающий.</string>
+    <string name="status_good">Статус: Хорошо. Угроз не обнаружено.</string>
     <string name="alert_threat_detected">ТРЕВОГА: Обнаружены некоторые угрозы!</string>
     <string name="aletr_femtocell_connection_detected">ТРЕВОГА: Обнаружено соединение с фемтосотой!</string>
-    <string name="alert_silent_sms_intercepted">ТРЕВОГА: Перехвачена бесшумная SMS(Type-0)!</string>
+    <string name="alert_silent_sms_detected">ТРЕВОГА: обнаруженный бесшумная SMS (Type-0)!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD может определять соединение с фемтосотой только на CDMA устройствах.</string>
     <string name="service_state_changed">Статус сервиса изменен!</string>
     <string name="stopped_tracking_femtocell">: Остановлен мониториг соединения с фемтосотой.</string>
@@ -278,7 +276,7 @@
     <string name="refreshing_display">Обновление дисплея</string>
     <string name="unable_to_acquire_root_access">Невозможно получить ROOT доступ на вашем устройстве.\nДля инъекций AT-команд в терминал требуется ROOT доступ.\nПожалуйста, проверьте наличие ROOT прав на вашем устройстве и попробуйте еще раз</string>
     <string name="unable_to_detect_busybox">Невозможно обнаружить Busybox на вашем устройстве.\nДля инъекций AT-команд в терминал требуются компоненты Busybox для правильного функционирования.\nПожалуйста, проверьте, что Busybox установлен на ваше устройство  и попробуйте снова</string>
-    <string name="unknown_error_trying_to_acquire_serial_device">Произошла неизвестная ошибка при попытке достижения Serial Device.\nПожалуйста, проверьте LogCat на возможные ошибки и отправьте их на Github\nили XDA, ссылки на оба этих места можно найти в \nсекции "О программе" приложения.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Произошла неизвестная ошибка при попытке достижения Serial Device.\nПожалуйста, проверьте LogCat на возможные ошибки и отправьте их на Github.</string>
     <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them to Github or\nXDA, links to both of these locations can be found within the\nAbout section of the application.</string>
     <string name="getting_ocid_api_key">Получение ключа API OpenCellID&#8230;</string>
     <string name="unable_to_create_map">Невозможно создать карту!</string>
@@ -300,19 +298,19 @@
     <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
 
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_aimsicd">Start/stop AIMSICD monitoring and collect cell details into internal database tables (DBi).</string>
+    <string name="help_tracking_toggle_aimsicd">Start/stop AIMSICD monitoring and collect cell details into internal database tables.</string>
     <string name="help_tracking_toggle_2g_only_network_lock">Start to set phone to use 2G mode only, for tracking. Stop to use default Network Type (RAT) settings or Automatic.</string>
 
     <!-- Section Settings-->
-    <string name="help_settings_preferences">AIMSICD settings and preferences such as polling times and service behaviour etc.</string>
-    <string name="help_settings_backup_db">Backup AIMSICD SQLite3 DB to SD-Card.</string>
-    <string name="help_settings_restore_db">Restore AIMSICD SQLite3 DB from SD-Card.</string>
+    <string name="help_settings_preferences">AIMSICD settings and preferences such as polling times, protections and service behaviour.</string>
+    <string name="help_settings_backup_db">Backup SQLite3 DB to SD-Card.</string>
+    <string name="help_settings_restore_db">Restore SQLite3 DB from SD-Card.</string>
     <string name="help_settings_reset_db">Clear and reset all or specified DB table(s).</string>
     <string name="help_settings_export_db_to_csv">Export DB tables into individual CSV files.</string>
     <string name="help_settings_import_db_from_csv">Import DB table(s) from individual CSV file(s).</string>
 
     <!-- Section Application-->
-    <string name="help_app_add_get_ocid_api_key">Get an API key for using the Open Cell ID database to upload and download data&#8230;</string>
+    <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data&#8230;</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
     <string name="help_app_download_local_bst">Downloads the OCID Database.</string>
     <string name="help_app_upload_local_bst">Uploads your BTS to the OCID Database.</string>

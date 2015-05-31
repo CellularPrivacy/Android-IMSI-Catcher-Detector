@@ -101,7 +101,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public static int PHONE_TYPE;               //
     public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
     public static int LAST_DB_BACKUP_VERSION;   //
-    public static final String SILENT_SMS = "SILENT_SMS_INTERCEPTED";
+    public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
     private boolean CELL_TABLE_CLEANSED;
     private final Device mDevice = new Device();
 
@@ -1129,7 +1129,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 if (mFemtoDetected) {
                     contentText = context.getString(R.string.aletr_femtocell_connection_detected);
                 } else if (mTypeZeroSmsDetected) {
-                    contentText = context.getString(R.string.alert_silent_sms_intercepted);
+                    contentText = context.getString(R.string.alert_silent_sms_detected);
                 }
 
                 break;

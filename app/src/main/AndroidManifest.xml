@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
           android:versionCode="28"
-          android:versionName="0.1.28-alpha-b00">
+          android:versionName="0.1.29-alpha-b00">
 
     <!-- If we ever wanna make this a system app, we can add the following 2 lines above:
           coreApp="true"
@@ -192,6 +192,15 @@
             android:name=".activities.CustomPopUp"
             android:label="@string/title_activity_about_pop_up"
             android:theme="@android:style/Theme.Dialog">
+        </activity>
+
+        <activity
+            android:name=".smsdetection.AdvancedUserActivity"
+            android:label="@string/title_activity_advanced_user" >
+        </activity>
+        <activity
+            android:name=".smsdetection.AdvancedUserSmsActivity"
+            android:label="@string/title_activity_advanced_user" >
         </activity>
     </application>
 

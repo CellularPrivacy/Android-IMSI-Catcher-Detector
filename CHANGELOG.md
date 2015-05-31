@@ -1,6 +1,39 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [31.05.2015 - WIP-Release v0.1.29-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.29-alpha-b00)
+
+* Added: New WAP Push Detection and corresponding popup as well as custom strings
+* Added: All detection strings will now be added to and loaded from `det_strings.json`
+* Fixed: Small typos in German translation removed, shortened OCID notifications
+
+---
+
+#### 28.05.2015 - WIP-Internal v0.1.28-alpha-build-03
+
+* Changed: Many German translation improvements for much easier understanding
+* Removed: SMS Detection `try` has been purged since it was not needed anymore
+* Updated: Improvements across all translation files for better display of notifications
+* Updated: SMS Detection improved and moved some functions in `CustomPopUp.java`
+* Updated: Moved some Detection functions to `MiscUtils` and added minor comments
+* Moved: Untranslatable strings have been removed from all existing translation files
+* Fixed: Padding issue displaying detected SMS only partially has been resolved
+
+---
+
+#### 27.05.2015 - WIP-Internal v0.1.28-alpha-build-02
+
+* Added: Translations into German have been started, many string improvements
+
+---
+
+#### 25.05.2015 - WIP-Internal v0.1.28-alpha-build-01
+
+* Added: New SMS Detection to detect tracking via silent SMS and silent Voice ;-)
+* Added: New WIKI entry on how to test your own detection strings in [Special SMS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Special-SMS)
+
+---
+
 #### [24.05.2015 - WIP-Release v0.1.28-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.28-alpha-b00)
 
 * Updated: `CREDITS` now reflect the latest contributions by our developers
