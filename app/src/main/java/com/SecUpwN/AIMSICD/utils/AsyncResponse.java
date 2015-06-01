@@ -3,6 +3,8 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
+package com.SecUpwN.AIMSICD.utils;
+
 import java.util.List;
 
 public interface AsyncResponse {
