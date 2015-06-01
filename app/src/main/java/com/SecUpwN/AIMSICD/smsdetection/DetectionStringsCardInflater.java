@@ -1,3 +1,11 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
+
+/* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
+
 package com.SecUpwN.AIMSICD.smsdetection;
 
 import android.view.LayoutInflater;
@@ -9,9 +17,6 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.IAdapterViewInflater;
 
-/**
- *
- */
 public class DetectionStringsCardInflater implements IAdapterViewInflater<DetectionStringsData> {
 
     @Override

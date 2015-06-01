@@ -1,6 +1,6 @@
 /* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
  * -----------------------------------------------------------
- * LICENSE:  http://git.io/vJaf6 | TERMS:  http://git.io/vJMf5
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
 

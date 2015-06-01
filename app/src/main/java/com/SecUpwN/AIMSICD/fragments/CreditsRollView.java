@@ -13,11 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.*/
 
-/*
+/* Edited by Paul Kinsella <paulkinsella29@yahoo.ie> */
 
-
-Edited by Paul Kinsella paulkinsella29@yahoo.ie
- */
 package com.SecUpwN.AIMSICD.fragments;
 
 import android.content.Context;

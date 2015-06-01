@@ -1,27 +1,29 @@
-/*
-    Copyright 2015 Created by Paul Kinsella <paulkinsella29@yahoo.ie>
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
+ 
+/* Coded by Paul Kinsella <paulkinsella29@yahoo.ie>
 
-        Basic Pop Up Screen with Icon - Header - data
+   Basic Pop Up Screen with Icon - Header - data
 
-    To create a new dialog add this to the case block
+   To create a new dialog add this to the case block:
 
-            case 6://your case value for your custom popup
-                 createPopUp(
-                        "YOUR TITLE",
-                        "YOUR HEADER",
-                        "YOUR DATA"
-                        ,getResources().getDrawable(R.drawable.sense_idle));//set your icon
+      case 6://your case value for your custom popup
+	   createPopUp(
+           "YOUR TITLE",
+           "YOUR HEADER",
+           "YOUR DATA"
+           ,getResources().getDrawable(R.drawable.sense_idle));//set your icon
 
-                to call from any activity use:
+   To call from any activity use:
 
-                MiscUtils.startPopUpInfo(YOUR APP CONTEXT,0);
+      MiscUtils.startPopUpInfo(YOUR APP CONTEXT,0);
 
-                The int value is your custom dialog value eg case 10:
-
-
+   The int value is your custom dialog value eg case 10:
 
  */
-
 
 package com.SecUpwN.AIMSICD.activities;
 

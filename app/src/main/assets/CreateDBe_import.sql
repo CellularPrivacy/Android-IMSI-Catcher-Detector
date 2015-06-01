@@ -1,3 +1,9 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
+
 -- PRAGMA foreign_keys=OFF;
 -- BEGIN TRANSACTION;
 

@@ -1,5 +1,8 @@
-package com.SecUpwN.AIMSICD.utils;
-
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 import java.util.List;
 
 public interface AsyncResponse {
