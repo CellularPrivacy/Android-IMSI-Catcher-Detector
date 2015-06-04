@@ -34,7 +34,7 @@
     <string name="clear_database">Effacer/Réinitialiser la Base De Donnée</string>
     <string name="clear_database_question">Toutes les données seront effacés.\nÊtes vous sur?</string>
 
-    <string name="restore_database">Restaurer la Base de Donné</string>
+    <string name="restore_database">Restaurer la Base de Données</string>
     <string name="preferences">Préférences</string>
     <string name="press_once_again_to_exit">Appuyez une seconde fois pour quitter.</string>
     <string name="cell_lookup">Détails sur la/les cellule(s) actuelles</string>
@@ -247,7 +247,9 @@
     <string name="alert_threat_detected">ALERTE : menace Détectée!</string>
     <string name="aletr_femtocell_connection_detected">ALERTE: FemtoCellule Détectée!</string>
     <string name="alert_silent_sms_detected">ALERTE: SMS Silencieux (Type-0) Détecté!</string>
-    <string name="alert_silent_wap_sms_detected">ALERTE: SMS Push(Wap) Détecté!</string>
+    <string name="alert_silent_wap_sms_detected">ALERTE: SMS Wap Push Détecté!</string>
+	<string name="alert_silent_voice_sms_detected">ALERTE: SMS de contrôle de messagerie vocale (MWI) Détecté!</string>
++   
     <string name="femtocell_only_on_cdma_devices">AIMSICD ne peut détecter les connexions FemtoCellules que sur les appareils CDMA.</string>
     <string name="service_state_changed">État du service changé !</string>
     <string name="stopped_tracking_femtocell">: Arrêt du tracking des FemtoCellules.</string>
@@ -306,14 +308,16 @@
     <string name="detection_strings">Texte de Détection</string>
     <string name="typezero_title">ATTENTION!</string>
     <string name="typezero_header">SMS Type-0 Détecté</string>
-    <string name="typezero_data">Message SMS silencieux détecté!\n\nDétails: Voir la Base de Données.\n\nSi vous voulez que ce SMS soit analysé par nos développeurs, envoyez les logs à travers le menu de Débugging.</string>
-    
-    <string name="typewap_header">Wap Push Detected</string>
-    <string name="typewap_data">Message SMS Push(Wap) Détecté!\n\nDétails: Voir la Base de Données.\n\nSi vous voulez que ce SMS soit analysé par nos développeurs, envoyez les logs à travers le menu de Débugging.</string>
+    <string name="typezero_data">SMS silencieux (Type-0) Détecté!\n\nDétails: Voir la Base de Données.\n\nSi vous voulez que ce SMS soit analysé par nos développeurs, envoyez les logs à travers le menu de Débugging.</string>
+	<string name="typevoice_title">ATTENTION!</string>
+	<string name="typevoice_header">SMS MWI Détecté</string>
+	<string name="typevoice_data">SMS de contrôle de la messagerie vocale (MWI) Détecté!\n\nDétails: Voir la Base de Données.\n\nSi vous voulez que ce SMS soit analysé par nos développeurs, envoyez les logs à travers le menu de Débugging.</string>
+    <string name="typewap_header">SMS Wap Push Détecté</string>
+    <string name="typewap_data">Message SMS Wap Push Détecté!\n\nDétails: Voir la Base de Données.\n\nSi vous voulez que ce SMS soit analysé par nos développeurs, envoyez les logs à travers le menu de Débugging.</string>
 
 
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">niveau de menace AIMSICD, cellules aux alentours, méthode de chiffrement utilisé.</string>
+    <string name="help_main_current_threat_level">Niveau de menace AIMSICD, cellules aux alentours, méthode de chiffrement utilisé.</string>
     <string name="help_main_phone_sim_details">Détail du fournisseur de la carte SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Affiche une comparaison détaillée des cellules connectées, avec les données (si il y en a)trouvées par OpenCellID, et surligne les différences.</string>
 	<string name="help_main_database_viewer">Voir les différentes Tables de la Base de Données.</string>
