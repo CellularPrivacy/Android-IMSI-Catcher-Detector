@@ -1,38 +1,27 @@
-
 /* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
  * -----------------------------------------------------------
- * LICENSE:  http://git.io/vJaf6 | TERMS:  http://git.io/vJMf5
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
 
-/*
-*
-@author Copyright Paul Kinsella paulkinsella29@yahoo.ie
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    */
+/* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
 
 package com.SecUpwN.AIMSICD.smsdetection;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
@@ -104,10 +93,11 @@ public class SmsDetector extends Thread {
         ArrayList<AdvanceUserItems> silent_string = dbacess.getDetectionStrings();
         dbacess.close();
         SILENT_ONLY_TAGS = new String[silent_string.size()];
-        for(int x = 0;x <silent_string.size();x++){
+        for(int x = 0;x <silent_string.size();x++)
+        {
         SILENT_ONLY_TAGS[x] = silent_string.get(x).getDetection_string()+"#"+silent_string.get(x).getDetection_type();
-        prefs = newcontext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         }
+        prefs = newcontext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
     }
 
     public void startSmsDetection(){
@@ -135,7 +125,7 @@ public class SmsDetector extends Thread {
         try {
 
             try {
-                Thread.sleep(500);
+                new Thread().sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -256,14 +246,14 @@ public class SmsDetector extends Thread {
                             //System.out.println("NewCount >>> "+newcount+" Xcount>>>>> "+x);
                             if(newcount > 0) {//only check if array length is not -minus (if minus we cant count back so skip)
                                 while (newcount < x) {
-                                    if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2])) {
+                                    if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
                                         try {
                                             //Looking for OrigAddr this is where type0 sender number is
-                                            String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2], "").trim();
+                                            String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
                                             setmsg.setSenderNumber(number);//default
                                         }catch (Exception ee){Log.e(TAG,"Error parsing number");}
                                         //System.out.println("Number>>>"+number);
-                                    } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1])) {
+                                    } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
                                         try {
                                             String smsdata = progress[newcount].substring(
                                                     progress[newcount].indexOf("'") + 1,
@@ -299,7 +289,7 @@ public class SmsDetector extends Thread {
                             //System.out.println("NewCount >>> "+newcount+" Xcount>>>>> "+x);
                             if(newcount > 0) {//only check if array length is not -minus
                                 while (newcount < x) {
-                                    if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[0])) {
+                                    if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[0].toString())) {
                                         /* This first try usually has the number of the sender
                                         *  and second try is just there incase OrigAddr string shows.
                                         * */
@@ -308,14 +298,14 @@ public class SmsDetector extends Thread {
                                             setmsg.setSenderNumber(number);//default
                                         }catch (Exception ee){}
                                         //System.out.println("Number>>>"+number);
-                                    }else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2])) {
+                                    }else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
                                         try {
-                                            //Looking for OrigAddr this is where type0 sender number is
-                                            String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2], "").trim();
+                                            //Looking for OrigAddr this is where sender number is
+                                            String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
                                             setmsg.setSenderNumber(number);//default
                                         }catch (Exception ee){Log.e(TAG,"Error parsing number");}
                                         //System.out.println("Number>>>"+number);
-                                    } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1])) {
+                                    } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
                                         try {
                                             String smsdata = progress[newcount].substring(
                                                     progress[newcount].indexOf("'") + 1,
@@ -342,6 +332,62 @@ public class SmsDetector extends Thread {
                             dbacess.close();
 
                             MiscUtils.startPopUpInfo(tContext, 7);
+                        }else if(SILENT_ONLY_TAGS[arrayindex].split("#")[1].trim().equals("WAPPUSH")){
+                            /*
+                                Wap Push in logcat shows no data only senders number
+                                TODO: data is probably in db content://raw/1?
+                             */
+                            CapturedSmsData setmsg = new CapturedSmsData();
+                            setmsg.setSenderNumber("unknown");//default
+                            setmsg.setSenderMsg("no data");//default
+
+                            int startindex = x-2;
+                            int endindex = x+3;
+                            /*  wap push port DestPort 0x0B84
+                             *  its usually at this index of +3 in array                             *
+                              * */
+                            if (progress[x+3].contains("DestPort 0x0B84"))
+                            {
+                                Log.i(TAG, "WAPPUSH DETECTED");
+                                /* loop thru array to find number */
+                                if (endindex+3 <= progress.length) {
+                                    while (startindex < endindex)
+                                    {
+                                        //Log.i(TAG,"WAP>>>"+progress[startindex].toString() );
+                                        if (progress[startindex].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
+                                            try {
+                                                //Looking for OrigAddr this is where sender number is
+                                                String number = progress[startindex].substring(
+                                                        progress[startindex].indexOf("OrigAddr")).replace(
+                                                        DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
+
+                                                setmsg.setSenderNumber(number);//default
+                                                break;
+                                            } catch (Exception ee) {
+                                                Log.e(TAG, "Error parsing number");
+                                            }
+
+                                        }
+                                        startindex++;
+
+                                    }
+                                }
+
+                                setmsg.setSmsTimestamp(MiscUtils.getCurrentTimeStamp());
+                                setmsg.setSmsType("WAPPUSH");
+                                setmsg.setCurrent_lac(mAimsicdService.getCellTracker().getMonitorCell().getLAC());
+                                setmsg.setCurrent_cid(mAimsicdService.getCellTracker().getMonitorCell().getCID());
+                                setmsg.setCurrent_nettype(Device.getNetworkTypeName(mAimsicdService.getCell().getNetType()));
+                                setmsg.setCurrent_roam_status(mAimsicdService.getCellTracker().getDevice().isRoaming());
+                                //TODO is this the right place to get upto date geo location?
+                                setmsg.setCurrent_gps_lat(mAimsicdService.lastKnownLocation().getLatitudeInDegrees());
+                                setmsg.setCurrent_gps_lon(mAimsicdService.lastKnownLocation().getLongitudeInDegrees());
+                                dbacess.open();
+                                dbacess.storeCapturedSms(setmsg);
+                                dbacess.close();
+
+                                MiscUtils.startPopUpInfo(tContext, 8);
+                            }// end of if contains("DestPort 0x0B84")
                         }
                         break;
                     }

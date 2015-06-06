@@ -1,8 +1,13 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
+
+/* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
+
 package com.SecUpwN.AIMSICD.smsdetection;
 
-/**
-Created By Paul Kinsella paulkinsella29@yahoo.ie
- */
 public class DetectionStringsData {
 
     private final String mDetection_string;

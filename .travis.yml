@@ -76,4 +76,4 @@ addons:
 # Scan results: http://scan.coverity.com/projects/3346
     build_command_prepend: "./gradlew clean"
     build_command: "./gradlew build"
-    branch_pattern: master
+    branch_pattern: development

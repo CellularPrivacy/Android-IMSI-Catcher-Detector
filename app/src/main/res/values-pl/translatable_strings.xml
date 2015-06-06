@@ -146,8 +146,8 @@
     <string name="detail_info_normal">Nie wykryto żadnych zagrożeń.</string>
     <string name="detail_info_run">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
     <string name="detail_info_medium">Ta okolica nie jest bezpieczna: wykryto co najmniej jedną nieznaną stację bazową lub używane jest szyfrowanie słabsze niż A5/3. Wszystkie wiadomości i rozmowy w tym rejonie mogą być przechwycone.</string>
-    <string name="detail_info_danger">Wykryto śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci! Pozbądź się swojego telefou, zniszcz kartę SIM i zgłoś ją jako zagubioną</string>
-    <string name="detail_info_high">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników. Wyjmij baterię z telefoni i unikaj tego miejsca.</string>
+    <string name="detail_info_danger">Wykryto śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci. Pozbądź się swojego telefou, zniszcz kartę SIM i zgłoś ją jako zagubioną!</string>
+    <string name="detail_info_high">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników! Wyjmij baterię z telefoni i unikaj tego miejsca!</string>
     <string name="monitoring_cell_information">Monitorowanie informacji komórek</string>
     <string name="stopped_monitoring_cell_information">Wstrzymano monitorowanie komórek</string>
     <string name="tracking_cell_information">Śledzenie informacji komórek</string>
@@ -159,7 +159,7 @@
     <string name="status_good">Brak zagrożeń. Wszystko OK.</string>
     <string name="alert_threat_detected">UWAGA: Wykryto zagrożenie!</string>
     <string name="aletr_femtocell_connection_detected">UWAGA: Wykryto połączenie FemtoCell!</string>
-    <string name="alert_silent_sms_detected">UWAGA: Wykryto SilentSMS!</string>
+    <string name="alert_silent_sms_detected">UWAGA: Wykryto SilentSMS (Type-0)!</string>
     <string name="femtocell_only_on_cdma_devices">Aplikacja potrafi wykrywać FemtoCell tylko przez połączenie CDMA</string>
     <string name="service_state_changed">Zmieniony został stan usługi</string>
     <string name="stopped_tracking_femtocell">Wstrzymano śledzenie połączeń FemtoCell</string>

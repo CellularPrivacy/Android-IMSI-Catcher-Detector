@@ -1,10 +1,9 @@
 /* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
  * -----------------------------------------------------------
- * LICENSE:  http://git.io/vJaf6 | TERMS:  http://git.io/vJMf5
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
 package com.SecUpwN.AIMSICD.enums;
-
 
 import android.content.Context;
 
@@ -12,7 +11,6 @@ import com.SecUpwN.AIMSICD.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 
 public enum StatesDbViewer {
 
