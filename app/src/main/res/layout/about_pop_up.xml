@@ -25,7 +25,7 @@
                 android:id="@+id/tv_popup_title"
                 android:gravity="center_vertical|center_horizontal"
                 android:textColor="@color/green_text"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp" />
         </TableLayout>
@@ -62,8 +62,8 @@
         </TableLayout>
 
         <TableLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1.13">
 
             <TableRow
@@ -80,7 +80,7 @@
                     android:layout_weight="1"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
-                    android:textSize="16dp" />
+                    android:textSize="16sp" />
             </TableRow>
         </TableLayout>
 

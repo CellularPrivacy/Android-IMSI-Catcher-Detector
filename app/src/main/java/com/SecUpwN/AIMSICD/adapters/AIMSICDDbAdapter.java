@@ -5,15 +5,8 @@
  */
 package com.SecUpwN.AIMSICD.adapters;
 
-import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.constants.Examples;
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.CMDProcessor;
-import com.SecUpwN.AIMSICD.constants.Examples.EVENT_LOG_DATA;
-
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -23,6 +16,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.util.SparseArray;
+
+import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.constants.Examples;
+import com.SecUpwN.AIMSICD.constants.Examples.EVENT_LOG_DATA;
+import com.SecUpwN.AIMSICD.utils.CMDProcessor;
+import com.SecUpwN.AIMSICD.utils.Cell;
 
 import java.io.File;
 import java.io.FileOutputStream;

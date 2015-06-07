@@ -93,9 +93,7 @@ public class LocationTracker {
         if (lastLocationTime <= 0) return true;
 
         // haven't received a GPS update in a while, assume no movement
-        if (System.currentTimeMillis() - lastLocationTime > MOVEMENT_THRESHOLD_MS) return true;
-
-        return false;
+        return System.currentTimeMillis() - lastLocationTime > MOVEMENT_THRESHOLD_MS;
     }
 
     public GeoLocation lastKnownLocation() {

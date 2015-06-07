@@ -45,7 +45,7 @@ public class AdvanceUserBaseAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = l_Inflater.inflate(R.layout.adv_user_strings_list, null);
+			convertView = l_Inflater.inflate(R.layout.adv_user_strings_list, parent);
 			holder = new ViewHolder();
             holder.tv_detection_string  = (TextView)convertView.findViewById(R.id.tv_adv_list_det_str);
             holder.tv_detection_type  = (TextView)convertView.findViewById(R.id.tv_adv_list_det_type);

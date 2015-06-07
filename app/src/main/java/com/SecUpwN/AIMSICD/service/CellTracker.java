@@ -331,7 +331,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     t = 15L; // Automatic refresh rate is 15 seconds
                     break;
                 default:
-                    t = (rate * 1L);
+                    t = (long) rate;
                     break;
             }
             REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);

@@ -13,10 +13,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
-import com.SecUpwN.AIMSICD.rilexecutor.OemRilExecutor;
-import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
-import com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.OemCommands;
 

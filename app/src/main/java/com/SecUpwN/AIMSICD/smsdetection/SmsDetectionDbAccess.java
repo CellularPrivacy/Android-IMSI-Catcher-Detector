@@ -62,9 +62,13 @@ public class SmsDetectionDbAccess {
         String check4String = String.format("SELECT * FROM %s WHERE %s = \"%s\"",
                 SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE,
                 SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN, newstring.get(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN));
-        Cursor stringcount = dectection_db.rawQuery(check4String, null);
+        Cursor stringCountCursor = dectection_db.rawQuery(check4String, null);
 
-        if (stringcount.getCount() > 0) {
+        int stringCount = stringCountCursor.getCount();
+
+        stringCountCursor.close();
+
+        if (stringCount > 0) {
             Log.i(LOGTAG, "Detection String already in Database");
         } else {
 
@@ -106,28 +110,27 @@ public class SmsDetectionDbAccess {
     // ====================================================================
     //      Get all detection strings
     // ====================================================================
-    public ArrayList<AdvanceUserItems> getDetectionStrings(){
-
-
-        Cursor stringcount = dectection_db.rawQuery("SELECT * FROM "+ SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE,null);
+    public ArrayList<AdvanceUserItems> getDetectionStrings() {
+        Cursor stringCountCursor = dectection_db.rawQuery("SELECT * FROM "+ SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE, null);
 
         ArrayList<AdvanceUserItems> detection_strs = new ArrayList<>();
-        System.out.println("DB LEN = "+stringcount.getCount());
-        if(stringcount.getCount() > 0) {
-            while (stringcount.moveToNext()) {
+        System.out.println("DB LEN = " + stringCountCursor.getCount());
+        if (stringCountCursor.getCount() > 0) {
+            while (stringCountCursor.moveToNext()) {
                 AdvanceUserItems setitems = new AdvanceUserItems();
-                setitems.setDetection_string(stringcount.getString(stringcount.getColumnIndex(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN)));
-                setitems.setDetection_type(stringcount.getString(stringcount.getColumnIndex(SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN)));
+                setitems.setDetection_string(stringCountCursor.getString(stringCountCursor.getColumnIndex(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN)));
+                setitems.setDetection_type(stringCountCursor.getString(stringCountCursor.getColumnIndex(SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN)));
                 detection_strs.add(setitems);
 
             }
-        }else
-        {
+        } else {
             AdvanceUserItems setitems = new AdvanceUserItems();
             setitems.setDetection_string("No data");
             setitems.setDetection_type("No data");
             detection_strs.add(setitems);
         }
+
+        stringCountCursor.close();
 
         return  detection_strs;
     }
