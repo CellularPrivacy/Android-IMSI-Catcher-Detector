@@ -41,7 +41,7 @@
         android:lines="2"
         android:maxLines="2"
         android:gravity="left|top"
-        android:textSize="10dp" />
+        android:textSize="10sp" />
 
     <Button
         android:layout_width="wrap_content"

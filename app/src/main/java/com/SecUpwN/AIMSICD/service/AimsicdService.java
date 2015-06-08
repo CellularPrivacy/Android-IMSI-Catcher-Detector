@@ -26,13 +26,8 @@ package com.SecUpwN.AIMSICD.service;
 
 import android.app.AlertDialog;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -44,7 +39,6 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
 import com.SecUpwN.AIMSICD.smsdetection.SmsDetector;
 import com.SecUpwN.AIMSICD.utils.Cell;
@@ -124,10 +118,10 @@ public class AimsicdService extends Service {
         mLocationTracker.stop();
         mAccelerometerMonitor.stop();
         mRilExecutor.stop();
-       if (smsdetector.getSmsDetectionState())
-       {
-        smsdetector.stopSmsDetection();
-       }
+
+        if (SmsDetector.getSmsDetectionState()) {
+            smsdetector.stopSmsDetection();
+        }
 
         Log.i(TAG, "Service destroyed.");
     }
@@ -175,7 +169,7 @@ public class AimsicdService extends Service {
 
     //SMS DETECTION
     public boolean isSmsTracking() {
-        return smsdetector.getSmsDetectionState();
+        return SmsDetector.getSmsDetectionState();
     }
 
     public void startSmsTracking() {

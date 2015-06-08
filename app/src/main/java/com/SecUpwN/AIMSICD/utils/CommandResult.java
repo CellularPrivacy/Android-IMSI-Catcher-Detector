@@ -21,11 +21,11 @@
 
 package com.SecUpwN.AIMSICD.utils;
 
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 
 import java.io.File;
 import java.io.FileWriter;

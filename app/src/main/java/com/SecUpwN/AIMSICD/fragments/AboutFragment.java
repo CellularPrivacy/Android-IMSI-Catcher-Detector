@@ -5,10 +5,6 @@
  */
 package com.SecUpwN.AIMSICD.fragments;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
-import com.SecUpwN.AIMSICD.utils.MiscUtils;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
+import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 public class AboutFragment extends Fragment {
 

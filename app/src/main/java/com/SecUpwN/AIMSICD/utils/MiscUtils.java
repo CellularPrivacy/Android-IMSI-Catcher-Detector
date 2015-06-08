@@ -33,6 +33,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Paul Kinsella on 04/03/15.
@@ -77,7 +78,7 @@ public class MiscUtils {
     public static String getCurrentTimeStamp(){
 
         Date now = new Date();
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(now);
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now);
         return timestamp;
     }
 

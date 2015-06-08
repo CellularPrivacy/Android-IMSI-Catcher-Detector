@@ -50,7 +50,7 @@ public class AdvancedUserActivity extends Activity {
 
         }catch (Exception ee){
             System.out.println("DB ERROR>>>>"+ee.toString());
-            msgitems = new ArrayList<AdvanceUserItems>();
+            msgitems = new ArrayList<>();
             AdvanceUserItems itemss = new AdvanceUserItems();
             itemss.setDetection_string("NO DATA");
             itemss.setDetection_type("No TYPE");

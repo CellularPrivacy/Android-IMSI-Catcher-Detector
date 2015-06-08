@@ -45,7 +45,7 @@ public class AdvanceUserBaseSmsAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = l_Inflater.inflate(R.layout.adv_user_sms_listview, null);
+			convertView = l_Inflater.inflate(R.layout.adv_user_sms_listview, parent);
 			holder = new ViewHolder();
             holder.smsd_timestamp = (TextView)convertView.findViewById(R.id.tv_adv_smsdata_timestamp);
             holder.smsd_smstype = (TextView) convertView.findViewById(R.id.tv_adv_smsdata_smstype);
