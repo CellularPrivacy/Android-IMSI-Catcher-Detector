@@ -879,8 +879,9 @@ public class AIMSICDDbAdapter {
      *          "updateOpenCellID" to "populateDBe_import"
      */
     public boolean updateOpenCellID() {
-        String fileName = Environment.getExternalStorageDirectory()
-                                        + "/AIMSICD/OpenCellID/opencellid.csv";
+        String fileName = (mContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/opencellid.csv";
+
+        Log.i(TAG, mTAG + ":updateOpenCellID: reading file: " + fileName );
         File file = new File(fileName);
         try {
             if (file.exists()) {
