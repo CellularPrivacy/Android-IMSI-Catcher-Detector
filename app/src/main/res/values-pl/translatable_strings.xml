@@ -176,8 +176,8 @@
     <string name="no_tracked_locations_found">Brak zapisanych lokalizacji do pokazania</string>
     <string name="contacting_opencellid_for_data">Łączenie z OpenCellID by uzyskać potrzebne dane.\nTo może zająć chwilę&#8230;</string>
 
-    <string name="toggle_aimsicd_monitoring">Rozpocznij śledzenie komórek</string>
-    <string name="toggle_2g_only_network_lock">Rozpocznij śledzenie w trybie 2G</string>
+    <string name="toggle_attack_detection">Wykrywanie przełącz Atak</string>
+    <string name="toggle_cell_tracking">Przełącz Śledzenie komórki</string>
     <string name="download_error">Błąd pobierania:</string>
     <string name="error_backing_up_data">Błąd tworzenia kopii zapasowej.</string>
     <string name="error_restoring_database">Błąd przywracania bazy danych.</string>
@@ -205,8 +205,8 @@
     <string name="help_settings_export_db_to_csv">Eksport z bazy danych do plików CSV.</string>
     <string name="help_settings_import_db_from_csv">Importuj do bazy danych z plików CSV.</string>
     <string name="help_settings_preferences">Ustawienia AIMSICD, czas odświeżania i zachowanie serwisów.</string>
-    <string name="help_tracking_toggle_2g_only_network_lock">Start - ustawia telefon w trybie 2G w celu śledzenia. Stop - ustawia domyślny typ sieci ub automatyczny.</string>
-    <string name="help_tracking_toggle_aimsicd">Rozpoczyna/zatrzymuje zbieranie danych przez AIMSICD do lokalnej bazy danych.</string>
+    <string name="help_tracking_toggle_cell_tracking">Zacznij śledzić komórki do wyświetlania na antenie Map Viewer i ewentualnie później przesłać do OCID.</string>
+    <string name="help_tracking_toggle_attack_detection">Rozpoczyna/zatrzymuje wykrywanie ataku i zbieranie danych do lokalnej bazy danych.</string>
     <string name="danger">ZAGROŻENIE</string>
     <string name="database_backup_successfully_saved_to">Kopia zapasowa zapisana do:</string>
     <string name="describe_the_problem_you_had">W celu uzyskania pomocy opisz swój problem. Problemy bez opisu są automatycznie ignorowane.</string>

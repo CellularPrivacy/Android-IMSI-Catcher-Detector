@@ -26,8 +26,8 @@
 
 
     <!-- MENU -->
-    <string name="toggle_aimsicd_monitoring">Démarrer/Arrêter AIMSICD</string>
-    <string name="toggle_2g_only_network_lock">Forcer le réseau 2G. Cela désactive le réseau automatique (RAT)</string>
+    <string name="toggle_attack_detection">Démarrer/arrêter la détection des attaques</string>
+    <string name="toggle_cell_tracking">Commencer à localiser les cellules</string>
     <string name="toggle_femtocell">Surveiller les FemtoCellules</string>
 
     <string name="backup_database">Sauvegarder la Base de Donnée</string>
@@ -325,8 +325,8 @@
     <string name="help_main_at_command_interface">Interface permettant d\'envoyer des commandes AT au Baseband (nécessite le ROOT).</string>
 
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_aimsicd">Démarre/Arrête la surveillance AIMSICD et compare les détails de chaque cellule avec la Base de Donnée.</string>
-    <string name="help_tracking_toggle_2g_only_network_lock">Force le téléphone à utiliser la 2G (EDGE/GPRS) seulement, pour le suivi. Provoque l\'arrêt des paramètres du réseau par défaut (RAT).</string>
+    <string name="help_tracking_toggle_attack_detection">Démarre/Arrête la surveillance AIMSICD et compare les détails de chaque cellule avec la Base de Donnée.</string>
+    <string name="help_tracking_toggle_cell_tracking">Commencer à localiser les cellules pour l'affichage sur l'antenne Map Viewer et peut-être plus tard télécharger sur OCID.</string>
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">paramètres AIMSICD : règles de protection, temps de requètes et comportement du réseau.</string>

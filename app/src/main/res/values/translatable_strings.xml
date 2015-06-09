@@ -26,8 +26,8 @@
 
 
     <!-- MENU -->
-    <string name="toggle_aimsicd_monitoring">Toggle AIMSICD monitoring</string>
-    <string name="toggle_2g_only_network_lock">Toggle 2G-only network lock</string>
+    <string name="toggle_attack_detection">Toggle Attack Detection</string>
+    <string name="toggle_cell_tracking">Toggle Cell Tracking</string>
     <string name="toggle_femtocell">Toggle Femtocell</string>
 
     <string name="backup_database">Backup Database</string>
@@ -326,8 +326,8 @@
     <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
 
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_aimsicd">Start/stop AIMSICD monitoring and collect cell details into internal database tables.</string>
-    <string name="help_tracking_toggle_2g_only_network_lock">Start to set phone to use 2G mode only, for tracking. Stop to use default Network Type (RAT) settings or Automatic.</string>
+    <string name="help_tracking_toggle_attack_detection">Start/stop attack detection and collect cell details into internal database tables.</string>
+    <string name="help_tracking_toggle_cell_tracking">Start to track cells for display on the Antenna Map Viewer and possibly later upload to OCID.</string>
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">AIMSICD settings such as protection rules, polling times and service behaviour.</string>

@@ -314,9 +314,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 break;
         }
 
-        if (selectedItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_AIMSICD_MONITORING) {
+        if (selectedItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_ATTACK_DETECTION) {
             monitorcell();
-        } else if (selectedItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_2G_ONLY_NETWORK) {
+        } else if (selectedItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_CELL_TRACKING) {
             trackcell();
         } else if (selectedItem.getId() == DrawerMenu.ID.TRACKING.TRACK_FEMTOCELL) {
             trackFemtocell();
@@ -527,9 +527,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         List<NavDrawerItem> menuItems = mNavConf.getNavItems();
         for(NavDrawerItem lItem:menuItems) {
-            if(lItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_AIMSICD_MONITORING) {
+            if(lItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_ATTACK_DETECTION) {
                 cellMonitoringItem = lItem;
-            } else if(lItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_2G_ONLY_NETWORK) {
+            } else if(lItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_CELL_TRACKING) {
                 cellTrackingItem = lItem;
             } else if(lItem.getId() == DrawerMenu.ID.TRACKING.TRACK_FEMTOCELL) {
                 femtoTrackingItem = lItem;

@@ -137,8 +137,8 @@ public class DrawerMenuActivityConfiguration {
 
             //Section Tracking
             menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_TRACKING, mContext.getString(R.string.tracking)));
-            menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TOGGLE_AIMSICD_MONITORING, mContext.getString(R.string.toggle_aimsicd_monitoring), R.drawable.untrack_cell, false));    // Toggle "AIMSICD Monitoring"
-            menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TOGGLE_2G_ONLY_NETWORK, mContext.getString(R.string.toggle_2g_only_network_lock), R.drawable.untrack_cell, false));      // Toggle "Track Cell Details"
+            menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TOGGLE_ATTACK_DETECTION, mContext.getString(R.string.toggle_attack_detection), R.drawable.untrack_cell, false));    // Toggle "Attack Detection"
+            menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TOGGLE_CELL_TRACKING, mContext.getString(R.string.toggle_cell_tracking), R.drawable.untrack_cell, false));      // Toggle "Cell Tracking"
             if (CellTracker.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
                 menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TRACK_FEMTOCELL, mContext.getString(R.string.toggle_femtocell), R.drawable.ic_action_network_cell, false, false)); // Track FemtoCell
             }

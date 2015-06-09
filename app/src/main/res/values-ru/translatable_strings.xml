@@ -32,8 +32,8 @@
 
 
     <!-- MENU -->
-    <string name="toggle_aimsicd_monitoring">Переключить AIMSICD мониторинг</string>
-    <string name="toggle_2g_only_network_lock">Переключить сетевую блокировку только 2G</string>
+    <string name="toggle_attack_detection">Переключатель обнаружения атаки</string>
+    <string name="toggle_cell_tracking">Переключить слежения Сотовый</string>
     <string name="toggle_femtocell">Переключить Femtocell</string>
 
     <string name="backup_database">Сделать резервную копию базы данных</string>
@@ -298,8 +298,8 @@
     <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
 
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_aimsicd">Start/stop AIMSICD monitoring and collect cell details into internal database tables.</string>
-    <string name="help_tracking_toggle_2g_only_network_lock">Start to set phone to use 2G mode only, for tracking. Stop to use default Network Type (RAT) settings or Automatic.</string>
+    <string name="help_tracking_toggle_attack_detection">Старт / Стоп обнаружения атаки и собирать информацию клеточных во внутренние таблицы базы данных.</string>
+    <string name="help_tracking_toggle_cell_tracking">Начните отслеживать клеток для отображения на антенны Map Viewer и, возможно, позже загрузить на OCID.</string>
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">AIMSICD settings and preferences such as polling times, protections and service behaviour.</string>

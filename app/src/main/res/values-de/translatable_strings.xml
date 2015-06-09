@@ -26,8 +26,8 @@
     </string>
     
     <!-- MENU -->
-    <string name="toggle_aimsicd_monitoring">Mobilfunkschutz ein/ausschalten</string>
-    <string name="toggle_2g_only_network_lock">2G-Netzwerk für Aufzeichnung nutzen</string>
+    <string name="toggle_attack_detection">Angriffserkennung\nein/ausschalten</string>
+    <string name="toggle_cell_tracking">Funkzellen aufzeichnen</string>
     <string name="toggle_femtocell">Femtozellen erkennen</string>
     <string name="backup_database">Datenbank sichern</string>
     <string name="clear_database">Datenbank löschen</string>
@@ -313,8 +313,8 @@
     <string name="help_main_at_command_interface">Maske zur Eingabe von AT-Befehlen zur Kommunikation mit dem Baseband Processor (benötigt ROOT).</string>
     
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_aimsicd">Umschalten des Schutzes und Sammlung der Daten in die internen Datenbanken.</string>
-    <string name="help_tracking_toggle_2g_only_network_lock">Starten um Telefon auf 2G-Netzwerk für Zellverfolgung festzusetzen. Stoppen um normale Netzwerkeinstellungen (RAT) oder automatisches Netzwerk zu nutzen.</string>
+    <string name="help_tracking_toggle_attack_detection">Umschaltung der Angriffserkennung und Sammlung der Daten in die internen Datenbanken.</string>
+    <string name="help_tracking_toggle_cell_tracking">Starten um Funkzellen aufzuzeichnen, in der Funkantennenkarte anzuzeigen und evtl. später zu OCID hochzuladen.</string>
     
     <!-- Section Settings-->
     <string name="help_settings_preferences">AIMSICD-Einstellungen wie Schutzregeln, Aktualisierungszeiten und Dienstverhalten.</string>
