@@ -55,7 +55,6 @@ Thank you for encouraging our developers!
 
 Special positions we are currently seeking skilled people for:
 
-* People with equipment to verify our app (e.g. OpenBTS).
 * People with a CryptoPhone for double app verification.
 * Fixing the identified [Coverity Scan Defects](https://scan.coverity.com/projects/3346) of our app.
 * Whistleblower working for an IMSI-Catcher producer.
