@@ -326,7 +326,7 @@
 
     <!-- Section Tracking-->
     <string name="help_tracking_toggle_attack_detection">Démarre/Arrête la surveillance AIMSICD et compare les détails de chaque cellule avec la Base de Donnée.</string>
-    <string name="help_tracking_toggle_cell_tracking">Commencer à localiser les cellules pour l'affichage sur l'antenne Map Viewer et peut-être plus tard télécharger sur OCID.</string>
+    <string name="help_tracking_toggle_cell_tracking">Commencer à localiser les cellules pour l\'affichage sur l\'antenne Map Viewer et peut-être plus tard télécharger sur OCID.</string>
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">paramètres AIMSICD : règles de protection, temps de requètes et comportement du réseau.</string>
