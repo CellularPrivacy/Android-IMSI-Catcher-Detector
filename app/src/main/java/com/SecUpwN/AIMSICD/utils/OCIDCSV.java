@@ -16,7 +16,6 @@ public class OCIDCSV  extends ArrayList<OCIDCSV.OCIDCSVLine> {
         add(new OCIDCSVLine(newLine));
     }
 
-
     public class OCIDCSVLine {
         private final String[] ocidCell;
 
@@ -49,7 +48,7 @@ public class OCIDCSV  extends ArrayList<OCIDCSV.OCIDCSVLine> {
         }
 
         /**
-         * Average signal in dBm
+         * Average signal in [dBm]
          * @return
          */
         public int getAvgSig() {
@@ -57,7 +56,7 @@ public class OCIDCSV  extends ArrayList<OCIDCSV.OCIDCSVLine> {
         }
 
         /**
-         * Average range in m
+         * Average range in [m]
          * @return
          */
         public int getAvgRange() {
