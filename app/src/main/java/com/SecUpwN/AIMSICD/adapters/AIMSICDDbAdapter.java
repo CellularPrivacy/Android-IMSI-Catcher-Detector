@@ -1504,8 +1504,7 @@ public class AIMSICDDbAdapter {
                     "Lng VARCHAR, " +
                     "Signal INTEGER, " +
                     "Connection VARCHAR, " +
-                    "Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
-                    "UTC_Timestamp TIMESTAMP NOT NULL);";
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);";
             database.execSQL(LOC_DATABASE_CREATE);
         }
 
