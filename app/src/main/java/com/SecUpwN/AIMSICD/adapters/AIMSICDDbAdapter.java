@@ -881,10 +881,14 @@ public class AIMSICDDbAdapter {
      *          "updateOpenCellID" to "populateDBe_import"
      */
     public boolean updateOpenCellID() {
-        File file = new File(RequestTask.getOCDBDownloadFilePath(mContext));
+        String filename = RequestTask.getOCDBDownloadFilePath(mContext);
+        Log.i(TAG, mTAG + ":updateOpenCellID: reading file: " + filename );
+
+        File file = new File(filename);
         try {
             if (file.exists()) {
                 CSVReader csvReader = new CSVReader(new FileReader(file));
+
                 OCIDCSV ocidCSV = new OCIDCSV();
                 String next[];
                 //FIXME Erase after refactoring.
@@ -1500,7 +1504,8 @@ public class AIMSICDDbAdapter {
                     "Lng VARCHAR, " +
                     "Signal INTEGER, " +
                     "Connection VARCHAR, " +
-                    "Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);";
+                    "Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
+                    "UTC_Timestamp TIMESTAMP NOT NULL);";
             database.execSQL(LOC_DATABASE_CREATE);
         }
 

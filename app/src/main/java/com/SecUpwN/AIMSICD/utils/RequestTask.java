@@ -192,10 +192,11 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 try {
                     int total;
                     int progress = 0;
-
-                    File dir = new File(getOCDBDownloadDirectoryPath(mAppContext));
+                    String dirName = getOCDBDownloadDirectoryPath(mAppContext);
+                    File dir = new File(dirName);
                     if (!dir.exists()) { dir.mkdirs(); } // need a try{} catch{}
                     File file = new File(dir, OCDB_File_Name);
+                    Log.i(TAG, mTAG + ": DBE_DOWNLOAD_REQUEST write to: " + dirName + OCDB_File_Name);
 
                     URL url = new URL(commandString[0]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
