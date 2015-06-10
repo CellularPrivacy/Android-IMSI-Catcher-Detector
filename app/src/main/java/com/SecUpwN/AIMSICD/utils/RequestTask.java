@@ -193,9 +193,9 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     int total;
                     int progress = 0;
 
-                    File dir = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/");
+                    File dir = new File(getOCDBDownloadDirectoryPath(mAppContext));
                     if (!dir.exists()) { dir.mkdirs(); } // need a try{} catch{}
-                    File file = new File(dir, "opencellid.csv");
+                    File file = new File(dir, OCDB_File_Name);
 
                     URL url = new URL(commandString[0]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -418,5 +418,20 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         if (lActivity != null && lActivity instanceof MapViewerOsmDroid) {
             ((MapViewerOsmDroid) lActivity).setRefreshActionButtonState(pFlag);
         }
+    }
+
+    public static final String OCDB_File_Name = "opencellid.csv";
+
+    /**
+     * The folder path to OCDB download.
+     * @param context
+     * @return
+     */
+    public static String getOCDBDownloadDirectoryPath(Context context) {
+        return (context.getExternalFilesDir(null) + File.separator) + "OpenCellID/";
+    }
+
+    public static String getOCDBDownloadFilePath(Context context) {
+        return getOCDBDownloadDirectoryPath(context) + OCDB_File_Name;
     }
 }

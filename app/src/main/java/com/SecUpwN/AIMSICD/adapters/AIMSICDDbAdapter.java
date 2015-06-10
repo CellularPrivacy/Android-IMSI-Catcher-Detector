@@ -22,6 +22,7 @@ import com.SecUpwN.AIMSICD.constants.Examples;
 import com.SecUpwN.AIMSICD.constants.Examples.EVENT_LOG_DATA;
 import com.SecUpwN.AIMSICD.utils.CMDProcessor;
 import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.RequestTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -879,10 +880,7 @@ public class AIMSICDDbAdapter {
      *          "updateOpenCellID" to "populateDBe_import"
      */
     public boolean updateOpenCellID() {
-        String fileName = (mContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/opencellid.csv";
-
-        Log.i(TAG, mTAG + ":updateOpenCellID: reading file: " + fileName );
-        File file = new File(fileName);
+        File file = new File(RequestTask.getOCDBDownloadFilePath(mContext));
         try {
             if (file.exists()) {
                 CSVReader csvReader = new CSVReader(new FileReader(file));
