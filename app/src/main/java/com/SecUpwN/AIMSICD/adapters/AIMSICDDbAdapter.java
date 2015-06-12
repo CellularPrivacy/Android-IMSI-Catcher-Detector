@@ -22,6 +22,8 @@ import com.SecUpwN.AIMSICD.constants.Examples;
 import com.SecUpwN.AIMSICD.constants.Examples.EVENT_LOG_DATA;
 import com.SecUpwN.AIMSICD.utils.CMDProcessor;
 import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.OCIDCSV;
+import com.SecUpwN.AIMSICD.utils.RequestTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -879,14 +881,15 @@ public class AIMSICDDbAdapter {
      *          "updateOpenCellID" to "populateDBe_import"
      */
     public boolean updateOpenCellID() {
-        String fileName = (mContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/opencellid.csv";
+        String filename = RequestTask.getOCDBDownloadFilePath(mContext);
+        Log.i(TAG, mTAG + ":updateOpenCellID: reading file: " + filename );
 
-        Log.i(TAG, mTAG + ":updateOpenCellID: reading file: " + fileName );
-        File file = new File(fileName);
+        File file = new File(filename);
         try {
             if (file.exists()) {
                 CSVReader csvReader = new CSVReader(new FileReader(file));
-                List<String[]> csvCellID = new ArrayList<>();
+
+                OCIDCSV ocidCSV = new OCIDCSV();
                 String next[];
                 //FIXME Erase after refactoring.
                 // These three lines below are useless.
@@ -899,12 +902,12 @@ public class AIMSICDDbAdapter {
                 //AIMSICD.mProgressBar.setProgress(0);
                 //AIMSICD.mProgressBar.setMax(csvSize);
                 while ((next = csvReader.readNext()) != null) {
-                    csvCellID.add(next);
+                    ocidCSV.add(next);
                     //AIMSICD.mProgressBar.setProgress(count++);
                 }
 
-                if (!csvCellID.isEmpty()) {
-                    int lines = csvCellID.size();
+                if (!ocidCSV.isEmpty()) {
+                    int lines = ocidCSV.size();
                     Log.i(TAG, mTAG + ":updateOpenCellID: OCID CSV size (lines): " + lines );
 
                     String lQuery = "SELECT CellID, COUNT(CellID) FROM "+OPENCELLID_TABLE+" GROUP BY CellID;";
@@ -922,24 +925,26 @@ public class AIMSICDDbAdapter {
                     for (int i = 1; i < lines; i++) {
                         AIMSICD.mProgressBar.setProgress(i);
 
+                        OCIDCSV.OCIDCSVLine ocidLine = ocidCSV.get(i);
+
                         // Inserted into the table only unique values CID
                         // without opening additional redundant cursor before each insert.
-                        if(lPresentCellID.get(Integer.parseInt(csvCellID.get(i)[5]), false)) {
+                        if(lPresentCellID.get(ocidLine.getCID(), false)) {
                             continue;
                         }
                         // Insert details into OpenCellID Database using:  insertOpenCell()
                         // Beware of negative values of "range" and "samples"!!
-                        insertOpenCell( Double.parseDouble(csvCellID.get(i)[0]), // gps_lat
-                                        Double.parseDouble(csvCellID.get(i)[1]), // gps_lon
-                                        Integer.parseInt(csvCellID.get(i)[2]),   // MCC
-                                        Integer.parseInt(csvCellID.get(i)[3]),   // MNC
-                                        Integer.parseInt(csvCellID.get(i)[4]),   // LAC
-                                        Integer.parseInt(csvCellID.get(i)[5]),   // CID (cellid) ?
-                                        Integer.parseInt(csvCellID.get(i)[6]),   // avg_signal [dBm]
-                                        Integer.parseInt(csvCellID.get(i)[7]),   // avg_range [m]
-                                        Integer.parseInt(csvCellID.get(i)[8]),   // samples
-                                        Integer.parseInt(csvCellID.get(i)[9]),   // isGPSexact
-                                        String.valueOf(csvCellID.get(i)[10]),     // RAT
+                        insertOpenCell(ocidLine.getGPSLat(), // gps_lat
+                                        ocidLine.getGPSLon(), // gps_lon
+                                        ocidLine.getMCC(),   // MCC
+                                        ocidLine.getMNC(),   // MNC
+                                        ocidLine.getLAC(),   // LAC
+                                        ocidLine.getCID(),   // CID (cellid) ?
+                                        ocidLine.getAvgSig(),   // avg_signal [dBm]
+                                        ocidLine.getAvgRange(),   // avg_range [m]
+                                        ocidLine.getSamples(),   // samples
+                                        ocidLine.isGPSExact(),   // isGPSexact
+                                        ocidLine.getRAT(),     // RAT
                                         false
                                         //Integer.parseInt(csvCellID.get(i)[11]), // --- RNC
                                         //Integer.parseInt(csvCellID.get(i)[12]), // --- (cid) ?
