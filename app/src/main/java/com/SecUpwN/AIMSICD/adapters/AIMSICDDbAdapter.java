@@ -1404,6 +1404,12 @@ public class AIMSICDDbAdapter {
 
             File lacells = new File(LACELLS_DB_NAME);
             if (lacells.isFile() && lacells.canRead()) {
+                // Make sure it has a location index. Separate connection to avoid locking issues.
+                // TODO this can take a while the first time, provide UI feedback
+                SQLiteDatabase ladb = SQLiteDatabase.openDatabase(LACELLS_DB_NAME, null, 0);
+                ladb.execSQL("CREATE INDEX IF NOT EXISTS _idxspatial ON " + LACELLS_TABLE + " (latitude, longitude);");
+                ladb.close();
+                // Attach to existing connection for cross-database join
                 db.execSQL("ATTACH DATABASE \"" + LACELLS_DB_NAME + "\" AS " + LACELLS_LOCAL_DB);
                 // signal strength is (usually) not present in lacells
                 CreateView += " UNION ALL" +
@@ -1610,6 +1616,7 @@ public class AIMSICDDbAdapter {
                     //"Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp, " +
                     ");";
             database.execSQL(OPENCELLID_DATABASE_CREATE);
+            database.execSQL("CREATE INDEX OpenCellID_spatial ON " + OPENCELLID_TABLE + " (latitude, longitude);");
         }
 
         /**
