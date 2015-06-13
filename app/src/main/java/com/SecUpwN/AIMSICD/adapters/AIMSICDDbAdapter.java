@@ -592,6 +592,16 @@ public class AIMSICDDbAdapter {
         );
     }
 
+    public Cursor getOpenCellIDDataByRegion(Double lat1, Double lng1, Double lat2, Double lng2) {
+        return mDb.query( OPENCELLID_VIEW,
+                new String[]{"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng", "AvgSigStr", "Samples"},
+                // avg_range, rej_cause, Type
+                "? <= Lng AND Lng <= ? AND ? <= Lat AND Lat <= ?",
+                new String[]{lng1.toString(), lng2.toString(), lat1.toString(), lat2.toString()},
+                null, null, null
+        );
+    }
+
     /**
      * Returns Default MCC Locations (defaultlocation) database contents
      */
