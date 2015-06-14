@@ -112,6 +112,7 @@ public class AIMSICDDbAdapter {
     private final String LOCATION_TABLE     = "locationinfo";    // TABLE_DBI_MEASURE:DBi_measure (volatile)
     private final String CELL_TABLE         = "cellinfo";        // TABLE_DBI_BTS:DBi_bts (physical)
     private final String OPENCELLID_TABLE   = "opencellid";      // TABLE_DBE_IMPORT:DBe_import
+    private final String OPENCELLID_VIEW    = "opencellid_view"; // OCID local + lacells (volatile)
     private final String TABLE_DEFAULT_MCC  = "defaultlocation"; // TABLE_DEFAULT_MCC:defaultlocation
     private final String SILENT_SMS_TABLE   = "silentsms";       // TABLE_SILENT_SMS:silentsms
 
@@ -131,6 +132,10 @@ public class AIMSICDDbAdapter {
     // private final String TABLE_SECTORTYPE  = "SectorType";       // BTS tower sector configuration (Many CID, same BTS)
     // private final String TABLE_SILENTSMS   = "silentsms";        // Silent SMS details
     // private final String TABLE_CMEASURES   = "CounterMeasures";  // Counter Measures thresholds and description
+
+    private final String LACELLS_DB_NAME  = "/sdcard/.nogapps/lacells.db";
+    private final String LACELLS_LOCAL_DB = "lacells";
+    private final String LACELLS_TABLE    = "cells";
 
     private final String[] mTables;
     private final DbHelper mDbHelper;
@@ -580,10 +585,20 @@ public class AIMSICDDbAdapter {
      *
      */
     public Cursor getOpenCellIDData() {
-        return mDb.query( OPENCELLID_TABLE,
+        return mDb.query( OPENCELLID_VIEW,
                 new String[]{"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng", "AvgSigStr", "Samples"},
                 // avg_range, rej_cause, Type
                 null, null, null, null, null
+        );
+    }
+
+    public Cursor getOpenCellIDDataByRegion(Double lat1, Double lng1, Double lat2, Double lng2) {
+        return mDb.query( OPENCELLID_VIEW,
+                new String[]{"CellID", "Lac", "Mcc", "Mnc", "Lat", "Lng", "AvgSigStr", "Samples"},
+                // avg_range, rej_cause, Type
+                "? <= Lng AND Lng <= ? AND ? <= Lat AND Lat <= ?",
+                new String[]{lng1.toString(), lng2.toString(), lat1.toString(), lat2.toString()},
+                null, null, null
         );
     }
 
@@ -632,10 +647,10 @@ public class AIMSICDDbAdapter {
 
     /**
      *  Description:    This checks if a cell with a given CID already exists
-     *                  in the "opencellid" (DBe_import) database.
+     *                  in the "opencellid" (DBe_import) or optional lacells database.
      */
     public boolean openCellExists(int cellID) {
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_TABLE +
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + OPENCELLID_VIEW +
                         " WHERE CellID = " + cellID, null);
         boolean exists = cursor.getCount() > 0;
         //Log.v(TAG, mTAG + ": Does CID: " + cellID + " exist in DBe_import? " + exists);
@@ -1369,13 +1384,16 @@ public class AIMSICDDbAdapter {
      *
      *  Description:    This class creates all the tables and DB structure in aimsicd.db when
      *                  AIMSICD is first started or updated when DB version changed.
+     *                  Also creates a view that merges lacells.db with local OCID.
      *
      *  Issues:
      *              [ ] Migrate table creation to use an SQL file import instead.
      *                  This will simplify the maintenance of the tables and the
      *                  create create process.
      *
-     *              [ ]
+     *              [ ] Avoid duplicates when cell is in both local and lacells tables
+     *
+     *              [ ] DRY checkDBe() and DbHelper.onConfigure() filter
      *
      *  ChangeLog:
      *
@@ -1384,6 +1402,36 @@ public class AIMSICDDbAdapter {
 
         DbHelper(Context context) {
             super(context, DB_NAME, null, DATABASE_VERSION);
+        }
+
+        // Create a view merging local OCID and lacells.db database rows.
+        @Override
+        public void onOpen(SQLiteDatabase db) {
+            String CreateView = "CREATE TEMP VIEW " +
+                    OPENCELLID_VIEW + " AS" +
+                    " SELECT CellID, Lac, Mcc, Mnc, Lat, Lng, AvgSigStr, Samples" +
+                    " FROM " + OPENCELLID_TABLE;
+
+            File lacells = new File(LACELLS_DB_NAME);
+            if (lacells.isFile() && lacells.canRead()) {
+                // Make sure it has a location index. Separate connection to avoid locking issues.
+                // TODO this can take a while the first time, provide UI feedback
+                SQLiteDatabase ladb = SQLiteDatabase.openDatabase(LACELLS_DB_NAME, null, 0);
+                ladb.execSQL("CREATE INDEX IF NOT EXISTS _idxspatial ON " + LACELLS_TABLE + " (latitude, longitude);");
+                ladb.close();
+                // Attach to existing connection for cross-database join
+                db.execSQL("ATTACH DATABASE \"" + LACELLS_DB_NAME + "\" AS " + LACELLS_LOCAL_DB);
+                // signal strength is (usually) not present in lacells
+                CreateView += " UNION ALL" +
+                    " SELECT cid AS CellID, lac AS Lac, mcc AS Mcc, mnc AS Mnc," +
+                        " latitude AS Lat, longitude AS Lng, NULL AS AvgSigStr, samples AS Samples" +
+                    " FROM " + LACELLS_LOCAL_DB + "." + LACELLS_TABLE +
+                    " WHERE Samples >= 1 AND Lac >= 1 AND Lac <= 65535" +
+                    " AND CellID >= 1 AND CellID <= 268435455 ";
+                    //" GROUP BY CellID, Lac, Mcc, Mnc"; // much too slow
+            }
+
+            db.execSQL(CreateView);
         }
 
         // Create aimsicd.db table structure 
@@ -1578,6 +1626,7 @@ public class AIMSICDDbAdapter {
                     //"Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp, " +
                     ");";
             database.execSQL(OPENCELLID_DATABASE_CREATE);
+            database.execSQL("CREATE INDEX OpenCellID_spatial ON " + OPENCELLID_TABLE + " (latitude, longitude);");
         }
 
         /**
