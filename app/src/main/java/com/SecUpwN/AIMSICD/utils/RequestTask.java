@@ -83,6 +83,7 @@ import java.net.URL;
  *      2015-03-01  kairenken   Fixed "DBE_UPLOAD_REQUEST" + button
  *      2015-03-02  kairenken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
  *      2015-03-03  E:V:A       Replaced dirty SharedPreferences code with TinyDB and Upload result Toast msg.
+ *      2015-06-15  SecUpwN     Increased timeout of OCID data download to avoid further retrieval errors
  *
  *  To Fix:
  *
@@ -95,7 +96,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     //Calling from the menu more extensive(more difficult for sever),
     // we have to give more time for the server response
-    public static final int REQUEST_TIMEOUT_MAPS = 20000;       // [ms] 20 s Calling from map
+    public static final int REQUEST_TIMEOUT_MAPS = 40000;       // [ms] 40 s Calling from map
     public static final int REQUEST_TIMEOUT_MENU = 40000;       // [ms] 40 s Calling from menu
 
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
@@ -202,7 +203,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.setConnectTimeout(mTimeOut);
-                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 20 s
+                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 40 s
                     urlConnection.setDoInput(true);
                     urlConnection.connect();
 
