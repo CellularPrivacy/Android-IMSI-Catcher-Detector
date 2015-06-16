@@ -13,20 +13,14 @@ package com.SecUpwN.AIMSICD.activities;
 * distributed under the License is distributed on an "AS IS" BASIS,
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
-* limitations under the License.*/
-
-/*
-
-
-Edited by Paul Kinsella paulkinsella29@yahoo.ie
- */
+* limitations under the License.
+*/
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.fragments.CreditsRollView;
@@ -35,14 +29,9 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 
-//import android.animation.Animator;
-//import android.animation.ObjectAnimator;
-//import android.animation.ValueAnimator;
-
-
 public class CreditsRollActivity extends Activity implements SeekBar.OnSeekBarChangeListener {
 
-    private static final float SCROLL_ANIM_DURATION = 20000;    // [ms] = 30 s
+    private static final float SCROLL_ANIM_DURATION = 20000;  // [ms] = 30 s
 
     private CreditsRollView mCreditsRollView;
     private boolean mScrolling;
@@ -63,8 +52,7 @@ public class CreditsRollActivity extends Activity implements SeekBar.OnSeekBarCh
                 if (!mScrolling) {
                     mCreditsRollView.setText(MiscUtils.setAssetsString(getApplicationContext()));
                     animateScroll();
-                }
-                else {
+                } else {
                     stopScrollAnimation();
                 }
             }

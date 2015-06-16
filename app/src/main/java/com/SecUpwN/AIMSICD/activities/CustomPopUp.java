@@ -1,5 +1,4 @@
 /*
-    Copyright 2015 Created by Paul Kinsella <paulkinsella29@yahoo.ie>
 
         Basic Pop Up Screen with Icon - Header - data
 
@@ -17,9 +16,6 @@
                 MiscUtils.startPopUpInfo(YOUR APP CONTEXT,0);
 
                 The int value is your custom dialog value eg case 10:
-
-
-
  */
 
 
@@ -37,19 +33,20 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 public class CustomPopUp extends Activity {
-    TextView tv_popup_title,about_tv_status,about_tv_data;
+    TextView tv_popup_title, about_tv_status, about_tv_data;
     ImageView about_icon_holder;
     int mode = 0; //default
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.about_pop_up);
 
-        about_icon_holder = (ImageView)findViewById(R.id.about_icon_holder);
-        about_tv_status = (TextView)findViewById(R.id.about_tv_status);
-        about_tv_data = (TextView)findViewById(R.id.about_tv_data);
-        tv_popup_title = (TextView)findViewById(R.id.tv_popup_title);
+        about_icon_holder = (ImageView) findViewById(R.id.about_icon_holder);
+        about_tv_status = (TextView) findViewById(R.id.about_tv_status);
+        about_tv_data = (TextView) findViewById(R.id.about_tv_data);
+        tv_popup_title = (TextView) findViewById(R.id.tv_popup_title);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -57,7 +54,7 @@ public class CustomPopUp extends Activity {
         }
 
         setFinishOnTouchOutside(true);
-        switch (mode){
+        switch (mode) {
             case 0:
                 createPopUp(
                         null,
@@ -99,61 +96,61 @@ public class CustomPopUp extends Activity {
                         null,
                         getString(R.string.status) + "\t" + getString(R.string.run),
                         getResources().getString(R.string.detail_info_run)
-                        ,getResources().getDrawable(R.drawable.sense_skull));
+                        , getResources().getDrawable(R.drawable.sense_skull));
                 break;
             case 6:
                 MiscUtils.showNotification(getApplicationContext(),
                         getResources().getString(R.string.alert_silent_sms_detected),
-                        getResources().getString(R.string.app_name_short)+ " - "+getResources().getString(R.string.typezero_header),
-                        R.drawable.sense_danger,true);
+                        getResources().getString(R.string.app_name_short) + " - " + getResources().getString(R.string.typezero_header),
+                        R.drawable.sense_danger, true);
                 createPopUp(
                         getResources().getString(R.string.typezero_title),
                         getResources().getString(R.string.typezero_header),
                         getResources().getString(R.string.typezero_data)
-                        ,getResources().getDrawable(R.drawable.sense_danger));
+                        , getResources().getDrawable(R.drawable.sense_danger));
                 break;
 
             case 7:
                 MiscUtils.showNotification(getApplicationContext(),
                         getResources().getString(R.string.alert_silent_voice_sms_detected),
-                        getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.typevoice_header),
-                        R.drawable.sense_danger,true);
+                        getResources().getString(R.string.app_name_short) + " - " + getResources().getString(R.string.typevoice_header),
+                        R.drawable.sense_danger, true);
 
                 createPopUp(
                         getResources().getString(R.string.typevoice_title),
                         getResources().getString(R.string.typevoice_header),
                         getResources().getString(R.string.typevoice_data)
-                        ,getResources().getDrawable(R.drawable.sense_danger));
+                        , getResources().getDrawable(R.drawable.sense_danger));
                 break;
 
             case 8:
                 MiscUtils.showNotification(getApplicationContext(),
                         getResources().getString(R.string.alert_silent_wap_sms_detected),
-                        getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.typewap_header),
-                        R.drawable.sense_danger,true);
+                        getResources().getString(R.string.app_name_short) + " - " + getResources().getString(R.string.typewap_header),
+                        R.drawable.sense_danger, true);
 
                 createPopUp(
                         getResources().getString(R.string.typevoice_title),
                         getResources().getString(R.string.typewap_header),
                         getResources().getString(R.string.typewap_data)
-                        ,getResources().getDrawable(R.drawable.sense_danger));
+                        , getResources().getDrawable(R.drawable.sense_danger));
                 break;
 
         }
     }
 
-    public void createPopUp(String title,String header,String data,Drawable icon){
-        if(title != null){
+    public void createPopUp(String title, String header, String data, Drawable icon) {
+        if (title != null) {
             tv_popup_title.setText(title);
         }
 
-        if(header != null){
+        if (header != null) {
             about_tv_status.setText(header);
         }
-        if(data != null){
+        if (data != null) {
             about_tv_data.setText(data);
         }
-        if(icon != null){
+        if (icon != null) {
             about_icon_holder.setImageDrawable(icon);
         }
 
@@ -161,9 +158,9 @@ public class CustomPopUp extends Activity {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        switch(event.getAction()) {
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if(mode == 6 || mode == 7 || mode == 8) {
+                if (mode == 6 || mode == 7 || mode == 8) {
                     MiscUtils.showNotification(getApplicationContext(),
                             getResources().getString(R.string.app_name_short),
                             getResources().getString(R.string.app_name_short) + " - " + getResources().getString(R.string.status_good),

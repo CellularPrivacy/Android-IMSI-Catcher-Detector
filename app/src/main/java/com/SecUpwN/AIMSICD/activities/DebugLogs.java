@@ -61,7 +61,6 @@ public class DebugLogs extends BaseActivity {
     private Button btnClear = null;
     private Button btnCopy = null;
     private Button btnStop = null;
-    //private Button btnRadio = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,6 @@ public class DebugLogs extends BaseActivity {
         btnClear = (Button) findViewById(R.id.btnClear);
         btnStop = (Button) findViewById(R.id.btnStopLogs);
         btnCopy = (Button) findViewById(R.id.btnCopy);
-        //btnRadio = (Button) findViewById(R.id.btnRadio);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -117,21 +115,6 @@ public class DebugLogs extends BaseActivity {
             }
         });
 
-        /*
-        // logcat radio buffer toggle on/off
-        btnRadio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isRadioLogs) {
-                    isRadioLogs = false;
-                    btnRadio.setText(getString(R.string.btn_radio_logs));
-                } else {
-                    isRadioLogs = true;
-                    btnRadio.setText(getString(R.string.btn_main_logs));
-                }
-            }
-        });
-        */
 
     }
 
@@ -195,7 +178,7 @@ public class DebugLogs extends BaseActivity {
                 try {
                     String helpUs = getString(R.string.describe_the_problem_you_had);
                     String log = helpUs + "\n\n" + "GETPROP:" + "\n\n" + getProp() +
-                                          "\n\n" + "LOGCAT:" + "\n\n" + getLogs() + "\n\n" + helpUs;
+                            "\n\n" + "LOGCAT:" + "\n\n" + getLogs() + "\n\n" + helpUs;
 
                     // show a share intent
                     Intent intent = new Intent(Intent.ACTION_SEND);
@@ -214,7 +197,7 @@ public class DebugLogs extends BaseActivity {
 
     /**
      * Read getprop and return the sorted result as a string
-     *
+     * <p/>
      * TODO: Need a way to sort properties for easy reading
      *
      * @return
@@ -225,26 +208,25 @@ public class DebugLogs extends BaseActivity {
     }
 
     /**
-     *  Description:    Read logcat and return as a string
-     *
-     *  Notes:
-     *
-     *  1) " *:V" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
-     *          ==> Now disabled!
-     *  2) Need to silent some spammy Samsung Galaxy's:     " AbsListView:S PackageInfo:S"
-     *  3) Need to silent some Qualcomm QMI:                " RILQ:S"
-     *  4) Need to silent some Qualcomm GPS:                " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S"
-     *  5) "-d" is not necessary when using "-t".
-     *  6) Need to silent some spammy HTC's:                "QC-QMI:S AudioPolicyManager:S"
-     *
+     * Description:    Read logcat and return as a string
+     * <p/>
+     * Notes:
+     * <p/>
+     * 1) " *:V" makes log very spammy due to verbose OemRilRequestRaw debug output (AIMSICD_Helpers).
+     * ==> Now disabled!
+     * 2) Need to silent some spammy Samsung Galaxy's:     " AbsListView:S PackageInfo:S"
+     * 3) Need to silent some Qualcomm QMI:                " RILQ:S"
+     * 4) Need to silent some Qualcomm GPS:                " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S"
+     * 5) "-d" is not necessary when using "-t".
+     * 6) Need to silent some spammy HTC's:                "QC-QMI:S AudioPolicyManager:S"
      */
     private String getLogs() throws IOException {
         return runProcess(
-            "logcat -t 500 -v brief -b main" +
-                    (isRadioLogs ? " -b radio RILQ:S" : "") +
-                    " AbsListView:S PackageInfo:S" +
-                    " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S" +
-                    " QC-QMI:S AudioPolicyManager:S" + " *:D"
+                "logcat -t 500 -v brief -b main" +
+                        (isRadioLogs ? " -b radio RILQ:S" : "") +
+                        " AbsListView:S PackageInfo:S" +
+                        " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S" +
+                        " QC-QMI:S AudioPolicyManager:S" + " *:D"
         );
     }
 
@@ -252,7 +234,7 @@ public class DebugLogs extends BaseActivity {
      * Run a shell command and return the results
      */
     private String runProcess(String command) throws IOException {
-        return runProcess(new String[]{ command });
+        return runProcess(new String[]{command});
     }
 
     /**
@@ -281,6 +263,7 @@ public class DebugLogs extends BaseActivity {
 
     /**
      * Clear logcat
+     *
      * @return
      * @throws IOException
      */
@@ -319,7 +302,7 @@ public class DebugLogs extends BaseActivity {
                                 logView.setText(logs);
 
                                 // scroll to the bottom of the log display
-                                final ScrollView scroll = ((ScrollView)logView.getParent());
+                                final ScrollView scroll = ((ScrollView) logView.getParent());
                                 scroll.post(new Runnable() {
                                     @Override
                                     public void run() {
@@ -332,7 +315,10 @@ public class DebugLogs extends BaseActivity {
                 } catch (Exception e) {
                     Log.e("AIMSICD", "DebugLogs: Error updating logs", e);
                 }
-                try { Thread.sleep(1000); } catch (Exception e) {}
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                }
             }
         }
     }

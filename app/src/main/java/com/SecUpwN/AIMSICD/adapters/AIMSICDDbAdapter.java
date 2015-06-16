@@ -8,7 +8,6 @@ import com.SecUpwN.AIMSICD.constants.Examples.EVENT_LOG_DATA;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;

@@ -115,10 +115,6 @@ public class CardItemData {
         } else {
             mSignal = "N/A";
         }
-        // NEW (in new DB tables)
-
-
-        // end New
 
         mLat = "N/A";
         mLng = "N/A";
@@ -127,11 +123,6 @@ public class CardItemData {
         mCountry = "N/A";
         mTimestamp = "N/A";
         mRecordId = recordId;
-
-        // NEW (in new DB tables)
-
-        // end New
-
     }
 
     public CardItemData(String cellID, String lac, String mcc, String mnc, String lat, String lng,
@@ -296,12 +287,5 @@ public class CardItemData {
     public String getTimestamp() {
         return mTimestamp;
     }
-
-    // NEW (in new DB tables)
-    // EventLog
-
-    //public String getAccu() {
-    //    return mAccu;
-    //}
 
 }

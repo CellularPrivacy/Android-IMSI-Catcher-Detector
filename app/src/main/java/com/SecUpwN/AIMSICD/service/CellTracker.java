@@ -12,7 +12,6 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.CellInfo;
@@ -122,8 +121,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     // TEST to fix toast in OCID api key was:
     // private Context context;
     private static Context context;
-    private final Handler timerHandler = new Handler();
-    TinyDB tinydb;
+    private TinyDB tinydb;
     public CellTracker(Context context, SignalStrengthTracker sst) {
         this.context = context;
         this.signalStrengthTracker = sst;
@@ -354,7 +352,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public static String requestNewOCIDKey() throws Exception {
         String responseFromServer = null;
         DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet("http://opencellid.org/gsmCell/user/generateApiKey");
+        HttpGet httpGet = new HttpGet(context.getString(R.string.opencellid_api_generatekey));
         HttpResponse result = httpclient.execute(httpGet);
         StatusLine status = result.getStatusLine();
 
@@ -399,9 +397,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             // TODO add code here or elsewhere to check for NO network exceptions...
             // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/293
-            httpclient = null;
-            httpGet = null;
-            result = null;
+//            httpclient = null;
+//            httpGet = null;
+//            result = null;
 
             Log.d("AIMSICD", "CellTracker: OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
             throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());

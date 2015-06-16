@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -19,7 +18,6 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;
     private final String TAG = "OpenCellIdActivity";
-    private Handler handler;
     private ProgressDialog pd;
 
     @Override
