@@ -1417,6 +1417,17 @@ public class AIMSICDDbAdapter {
                 // Make sure it has a location index. Separate connection to avoid locking issues.
                 // TODO this can take a while the first time, provide UI feedback
                 SQLiteDatabase ladb = SQLiteDatabase.openDatabase(LACELLS_DB_NAME, null, 0);
+                String LACELLS_TABLE_CREATE = "CREATE TABLE " +
+                        LACELLS_TABLE  + " (" + COLUMN_ID +
+                        " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "Lac INTEGER, CellID INTEGER, " +
+                        "Net VARCHAR, " +
+                        "Lat VARCHAR, " +
+                        "Lng VARCHAR, " +
+                        "Signal INTEGER, " +
+                        "Connection VARCHAR, " +
+                        "Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);";
+                ladb.execSQL(LACELLS_TABLE_CREATE);
                 ladb.execSQL("CREATE INDEX IF NOT EXISTS _idxspatial ON " + LACELLS_TABLE + " (Lat, Lng);");
                 ladb.close();
                 // Attach to existing connection for cross-database join
