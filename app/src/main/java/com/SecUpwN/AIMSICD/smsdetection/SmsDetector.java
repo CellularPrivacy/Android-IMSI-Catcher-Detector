@@ -186,46 +186,7 @@ public class SmsDetector extends Thread {
             for (int x = 0; x < progress.length; x++) { //check all progress buffer for strings
 
                 if (progress[x].length() < 250) { //check only short strings for faster processing
-                     /*
 
-                    CHECK THAT THE BROADCAST RECEIVER PICKED UP AN SMS.
-                    future code
-                        Idea behind this code is if we pick up and SMS_ACK in logcat
-                        and the sms broadcast receiver did not pick up an sms then
-                        we received some sort of silent sms.
-
-                        When a new sms arrives, logcat picks up many SMS_ACKS so code is buggy
-                        at the moment.
-                     */
-                 /*   if (progress[x].contains(CHECK_BROADCAST_REC.split("#")[0])) {
-                        try {
-                            Thread.sleep(2000);
-                            if (!TextMessageReceiver.isIS_MESSAGE_RECEIVED()) {
-                                Toast.makeText(mContext, CHECK_BROADCAST_REC.split("#")[1], Toast.LENGTH_LONG).show();
-                                break;
-                            }
-                        } catch (Exception err) {
-
-                        }
-                    }*/
-
-
-                    /*
-                    THE ONLY INDICATION OF A TYPE 0 ON SONY XPERIA J IS 4 OF THIS STRING [QCRIL_RPC]
-                    RIGHT AFTER EACH OTHER.
-                    Code is to buggy to many QCRIL_RPC strings
-                    Disabled for now because its to unstable
-                     */
-/*                    if (x <= MAX_INT) {
-                        if ((progress[x].contains(XPERIA_J_INDICATOR.split("#")[0]) && progress[x].length() < 11) &&
-                                (progress[x + 1].contains(XPERIA_J_INDICATOR.split("#")[0])&& progress[x].length() < 11) &&
-                                (progress[x + 2].contains(XPERIA_J_INDICATOR.split("#")[0])&& progress[x].length() < 11) &&
-                                (progress[x + 3].contains(XPERIA_J_INDICATOR.split("#")[0])&& progress[x].length() < 11)) {
-                            //Toast.makeText(mContext, XPERIA_J_INDICATOR.split("#")[1], Toast.LENGTH_LONG).show();
-                            break;
-                        }
-                    }
-*/
                     if (progress[x].contains(SILENT_ONLY_TAGS[arrayindex].split("#")[0])) {
 
                         Log.i(TAG, "SILENT SMS Detected >>>> " + SILENT_ONLY_TAGS[arrayindex].split("#")[1]);
