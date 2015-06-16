@@ -28,7 +28,6 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Démarrer/arrêter la détection des attaques</string>
     <string name="toggle_cell_tracking">Commencer à localiser les cellules</string>
-    <string name="toggle_femtocell">Surveiller les FemtoCellules</string>
 
     <string name="backup_database">Sauvegarder la Base de Donnée</string>
     <string name="clear_database">Effacer/Réinitialiser la Base De Donnée</string>

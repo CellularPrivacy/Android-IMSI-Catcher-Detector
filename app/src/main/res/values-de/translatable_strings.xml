@@ -28,7 +28,6 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Angriffserkennung\nein/ausschalten</string>
     <string name="toggle_cell_tracking">Funkzellen aufzeichnen</string>
-    <string name="toggle_femtocell">Femtozellen erkennen</string>
     <string name="backup_database">Datenbank sichern</string>
     <string name="clear_database">Datenbank löschen</string>
     <string name="clear_database_question">Alle Daten werden gelöscht.\nSind Sie sicher?</string>

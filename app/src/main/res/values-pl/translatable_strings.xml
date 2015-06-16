@@ -125,7 +125,6 @@
     <string name="sms_message">Przechwycono SilentSMS!\n\nWięcej infromacji w widoku bazy danych!</string>
     <string name="table_names_prompt">Wybierz tabelę</string>
     <string name="table_contains_no_data">Brak danych do wyświetlenia</string>
-    <string name="toggle_femtocell">Śledź Femtocell</string>
     <string name="upload_bts">Wyślij dane o lokalnych komórkach</string>
     <string name="serial_device_title">Obecny numer seryjny urządznia:</string>
     <string name="pref_refresh_summ">Kontroluj częstotliwość odświeżania danych</string>

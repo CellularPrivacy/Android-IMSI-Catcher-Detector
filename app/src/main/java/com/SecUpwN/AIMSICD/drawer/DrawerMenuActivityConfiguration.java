@@ -139,9 +139,6 @@ public class DrawerMenuActivityConfiguration {
             menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_TRACKING, mContext.getString(R.string.tracking)));
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TOGGLE_ATTACK_DETECTION, mContext.getString(R.string.toggle_attack_detection), R.drawable.untrack_cell, false));    // Toggle "Attack Detection"
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TOGGLE_CELL_TRACKING, mContext.getString(R.string.toggle_cell_tracking), R.drawable.untrack_cell, false));      // Toggle "Cell Tracking"
-            if (CellTracker.PHONE_TYPE == TelephonyManager.PHONE_TYPE_CDMA) {
-                menu.add(DrawerMenuItem.create(DrawerMenu.ID.TRACKING.TRACK_FEMTOCELL, mContext.getString(R.string.toggle_femtocell), R.drawable.ic_action_network_cell, false, false)); // Track FemtoCell
-            }
 
             //Section Settings
             menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_SETTINGS, mContext.getString(R.string.settings)));

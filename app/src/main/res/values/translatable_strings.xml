@@ -28,7 +28,6 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Toggle Attack Detection</string>
     <string name="toggle_cell_tracking">Toggle Cell Tracking</string>
-    <string name="toggle_femtocell">Toggle Femtocell</string>
 
     <string name="backup_database">Backup Database</string>
     <string name="clear_database">Clear/Reset Database</string>

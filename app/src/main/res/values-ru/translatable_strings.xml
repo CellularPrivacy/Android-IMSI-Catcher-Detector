@@ -34,7 +34,6 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Переключатель обнаружения атаки</string>
     <string name="toggle_cell_tracking">Переключить слежения Сотовый</string>
-    <string name="toggle_femtocell">Переключить Femtocell</string>
 
     <string name="backup_database">Сделать резервную копию базы данных</string>
     <string name="clear_database">Очистить/Сбросить базу данных</string>
