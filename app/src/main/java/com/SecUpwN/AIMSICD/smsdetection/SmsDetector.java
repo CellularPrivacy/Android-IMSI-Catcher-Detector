@@ -4,8 +4,6 @@
  * -----------------------------------------------------------
  */
 
-/* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
-
 package com.SecUpwN.AIMSICD.smsdetection;
 
 import android.app.Notification;
@@ -32,9 +30,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Copyright Paul Kinsella paulkinsella29@yahoo.ie on 19/04/15.
  *
- *
+ * Coded by Paul Kinsella <paulkinsella29@yahoo.ie>
  * For this to work better Samsung users will have to
  * set debug level to high in SysDump menu *#9900# or *#*#9900#*#*
  *
