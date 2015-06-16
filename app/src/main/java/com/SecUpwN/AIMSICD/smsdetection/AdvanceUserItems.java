@@ -1,8 +1,5 @@
 package com.SecUpwN.AIMSICD.smsdetection;
 
-/**
- * Created by Paul Kinsella paulkinsella29@yahoo.ie on 15/05/15.
- */
 public class AdvanceUserItems {
 
     public String getDetection_string() {
@@ -22,5 +19,5 @@ public class AdvanceUserItems {
     }
 
     private String detection_string;
-   private String detection_type;
+    private String detection_type;
 }

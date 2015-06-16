@@ -23,6 +23,7 @@ package com.SecUpwN.AIMSICD.smsdetection;
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Paul Kinsella paulkinsella29@yahoo.ie on 03/03/15.
- *
+ * <p/>
  * This class allows users to access the database
  */
 public class SmsDetectionDbAccess {
@@ -42,22 +43,24 @@ public class SmsDetectionDbAccess {
     SQLiteDatabase dectection_db;
     private static final String LOGTAG = "SmsDetectionDbAccess";
     static Context mContext;
-    public SmsDetectionDbAccess(Context context){
+
+    public SmsDetectionDbAccess(Context context) {
         mContext = context;
         dbhelper = new SmsDetectionDbHelper(context);
         dectection_db = dbhelper.getWritableDatabase();
 
     }
 
-    public void open(){
+    public void open() {
         dectection_db = dbhelper.getWritableDatabase();
         Log.i(LOGTAG, "database opened");
     }
 
-    public void close(){
+    public void close() {
         dbhelper.close();
         Log.i(LOGTAG, "database closed");
     }
+
     //====================================================================
     //      Insert new detection strings into database
     //====================================================================
@@ -97,12 +100,13 @@ public class SmsDetectionDbAccess {
     public boolean deleteDetectionString(String deleteme) {
 
         try {
-            dectection_db.delete(SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE, SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN + "='" + deleteme + "'",null);
+            dectection_db.delete(SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE, SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN + "='" + deleteme + "'", null);
             return true;
-        }catch (Exception ee){Log.i(LOGTAG, "Delete String failed");}
+        } catch (Exception ee) {
+            Log.i(LOGTAG, "Delete String failed");
+        }
 
         return false;
-
 
 
     }
@@ -110,9 +114,11 @@ public class SmsDetectionDbAccess {
     public boolean deleteDetectedSms(long deleteme) {
         // First check that string not in DB
         try {
-            dectection_db.delete(SmsDetectionDbHelper.SMS_DATA_TABLE_NAME, SmsDetectionDbHelper.SMS_DATA_ID + "=" + deleteme,null);
+            dectection_db.delete(SmsDetectionDbHelper.SMS_DATA_TABLE_NAME, SmsDetectionDbHelper.SMS_DATA_ID + "=" + deleteme, null);
             return true;
-        }catch (Exception ee){Log.i(LOGTAG, "Sms Deleted failed");}
+        } catch (Exception ee) {
+            Log.i(LOGTAG, "Sms Deleted failed");
+        }
 
         return false;
     }
@@ -121,14 +127,14 @@ public class SmsDetectionDbAccess {
     // ====================================================================
     //      Get all detection strings
     // ====================================================================
-    public ArrayList<AdvanceUserItems> getDetectionStrings(){
+    public ArrayList<AdvanceUserItems> getDetectionStrings() {
 
 
-        Cursor stringcount = dectection_db.rawQuery("SELECT * FROM "+ SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE,null);
+        Cursor stringcount = dectection_db.rawQuery("SELECT * FROM " + SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE, null);
 
         ArrayList<AdvanceUserItems> detection_strs = new ArrayList<>();
-        System.out.println("DB LEN = "+stringcount.getCount());
-        if(stringcount.getCount() > 0) {
+        System.out.println("DB LEN = " + stringcount.getCount());
+        if (stringcount.getCount() > 0) {
             while (stringcount.moveToNext()) {
                 AdvanceUserItems setitems = new AdvanceUserItems();
                 setitems.setDetection_string(stringcount.getString(stringcount.getColumnIndex(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN)));
@@ -136,24 +142,24 @@ public class SmsDetectionDbAccess {
                 detection_strs.add(setitems);
 
             }
-        }else
-        {
+        } else {
             AdvanceUserItems setitems = new AdvanceUserItems();
             setitems.setDetection_string("No data");
             setitems.setDetection_type("No data");
             detection_strs.add(setitems);
         }
 
-        return  detection_strs;
+        return detection_strs;
     }
-    public  Cursor getDetectionStringCursor() {
+
+    public Cursor getDetectionStringCursor() {
         return dectection_db.query(SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE,
                 new String[]{SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN, SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN},
                 null, null, null, null, null
         );
     }
 
-    public CapturedSmsData storeCapturedSms(CapturedSmsData smsdata){
+    public CapturedSmsData storeCapturedSms(CapturedSmsData smsdata) {
 
         ContentValues values = new ContentValues();
 
@@ -169,13 +175,14 @@ public class SmsDetectionDbAccess {
         values.put(SmsDetectionDbHelper.SMS_DATA_CURRENT_GPS_LON, smsdata.getCurrent_gps_lon());
 
 
-        long insertid = dectection_db.insert(SmsDetectionDbHelper.SMS_DATA_TABLE_NAME,null,values);
+        long insertid = dectection_db.insert(SmsDetectionDbHelper.SMS_DATA_TABLE_NAME, null, values);
         smsdata.setId(insertid);
-        return  smsdata;
+        return smsdata;
     }
-    public Cursor returnDetectedSmsData(){
-        Cursor getsmsdata_cursor = dectection_db.rawQuery("SELECT * FROM "+ SmsDetectionDbHelper.SMS_DATA_TABLE_NAME,null);
-        return  getsmsdata_cursor;
+
+    public Cursor returnDetectedSmsData() {
+        Cursor getsmsdata_cursor = dectection_db.rawQuery("SELECT * FROM " + SmsDetectionDbHelper.SMS_DATA_TABLE_NAME, null);
+        return getsmsdata_cursor;
 
     }
 

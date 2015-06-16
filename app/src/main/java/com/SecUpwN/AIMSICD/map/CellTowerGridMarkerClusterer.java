@@ -1,9 +1,7 @@
 package com.SecUpwN.AIMSICD.map;
 
 import android.content.Context;
-
 import org.osmdroid.bonuspack.clustering.GridMarkerClusterer;
-
 import java.util.List;
 
 /**

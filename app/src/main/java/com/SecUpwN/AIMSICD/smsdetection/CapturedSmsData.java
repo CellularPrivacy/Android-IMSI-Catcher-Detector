@@ -33,7 +33,6 @@ public class CapturedSmsData {
         this.current_roam_status = current_roam_status;
     }
 
-
     public double getCurrent_gps_lat() {
         return current_gps_lat;
     }
@@ -48,11 +47,6 @@ public class CapturedSmsData {
 
     public void setCurrent_gps_lon(double current_gps_lon) {
         this.current_gps_lon = current_gps_lon;
-    }
-
-
-    public CapturedSmsData(){
-
     }
 
     public int getCurrent_lac() {

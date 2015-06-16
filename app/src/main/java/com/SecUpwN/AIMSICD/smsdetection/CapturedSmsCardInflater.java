@@ -9,9 +9,6 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.IAdapterViewInflater;
 
-/**
- *
- */
 public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSmsData> {
 
     @Override
@@ -36,9 +33,8 @@ public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSms
     private class ViewHolder {
 
         private final View mRootView;
-        private final TextView smsd_timestamp,smsd_smstype,smsd_number,smsd_data,
-                               smsd_lac,smsd_cid,smsd_rat,smsd_roam,smsd_lat,smsd_lon;
-
+        private final TextView smsd_timestamp, smsd_smstype, smsd_number, smsd_data,
+                smsd_lac, smsd_cid, smsd_rat, smsd_roam, smsd_lat, smsd_lon;
 
 
         public ViewHolder(View rootView) {
@@ -55,7 +51,6 @@ public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSms
             smsd_lat = (TextView) mRootView.findViewById(R.id.tv_smsdata_lat);
             smsd_lon = (TextView) mRootView.findViewById(R.id.tv_smsdata_lon);
 
-
             rootView.setTag(this);
         }
 
@@ -70,12 +65,10 @@ public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSms
             smsd_roam.setText(item.getCurrent_roam_status());
             smsd_lat.setText(String.valueOf(item.getCurrent_gps_lat()));
             smsd_lon.setText(String.valueOf(item.getCurrent_gps_lon()));
-
-
         }
     }
 
-    public String SV(int value){
-       return String.valueOf(value);
-           }
+    public String SV(int value) {
+        return String.valueOf(value);
+    }
 }

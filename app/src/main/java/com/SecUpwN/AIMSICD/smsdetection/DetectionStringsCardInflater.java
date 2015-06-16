@@ -9,9 +9,6 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.IAdapterViewInflater;
 
-/**
- *
- */
 public class DetectionStringsCardInflater implements IAdapterViewInflater<DetectionStringsData> {
 
     @Override
@@ -39,19 +36,18 @@ public class DetectionStringsCardInflater implements IAdapterViewInflater<Detect
         private final TextView d_string;
         private final TextView d_type;
 
-
         public ViewHolder(View rootView) {
             mRootView = rootView;
-            //
-            d_string =         (TextView) mRootView.findViewById(R.id.tv_det_str_info);
-            d_type =          (TextView) mRootView.findViewById(R.id.tv_det_type_info);
+
+            d_string = (TextView) mRootView.findViewById(R.id.tv_det_str_info);
+            d_type = (TextView) mRootView.findViewById(R.id.tv_det_type_info);
 
             rootView.setTag(this);
         }
 
         public void updateDisplay(DetectionStringsData item) {
-            d_string.setText(      item.getDetectionString());
-            d_type.setText(       item.getDetectionType());
+            d_string.setText(item.getDetectionString());
+            d_type.setText(item.getDetectionType());
         }
     }
 }

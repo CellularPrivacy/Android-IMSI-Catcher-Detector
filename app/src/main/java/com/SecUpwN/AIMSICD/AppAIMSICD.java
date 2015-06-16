@@ -73,7 +73,7 @@ public class AppAIMSICD extends Application {
             mActivityTaskMap.put(key, tasks);
         }
         if (BuildConfig.DEBUG) {
-            Log.v(TAG, "BaseTask added:" + pTask.toString());
+            Log.d(TAG, "BaseTask added:" + pTask.toString());
         }
         tasks.add(pTask);
     }
