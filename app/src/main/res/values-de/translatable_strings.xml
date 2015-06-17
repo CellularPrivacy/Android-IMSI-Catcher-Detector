@@ -191,7 +191,7 @@
   
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILLIERTE BESCHREIBUNG</string>
-    <string name="detail_info_idle">App ruht oder lädt. Keine Schutz- und Erkennungsmaßnahmen aktiviert. Im Seitenmenü unter FUNKZELLENVERFOLGUNG den Mobilfunkschutz aktivieren!</string>
+    <string name="detail_info_idle">App ruht oder lädt. Keine Schutz- und Erkennungsmaßnahmen aktiviert. Im Seitenmenü unter FUNKZELLENVERFOLGUNG die Angriffserkennung aktivieren!</string>
     <string name="detail_info_normal">Keine Gefahren erkannt oder gefunden. Unsere App prüft kontinuierlich das Netzwerk mit den aktivierten Schutzmaßnahmen von Seitenmenü und Einstellungen.</string>
     <string name="detail_info_medium">Unsichere Zone: Mindestens 1 neuer oder unbekannter Mobilfunkmast ist in dieser Gegend aktiv oder verwendet eine unsichere (geknackte) Verschlüsselung niedriger als A5/3 [Erkennung ist noch in Arbeit]. Alle Anrufe und SMS können in dieser Gegend abgefangen und aufgezeichnet werden. Die Gegend sollte sofort verlassen werden.</string>
     <string name="detail_info_high">Feindliche Betriebsaktionen erkannt: Ein IMSI-Catcher (IMSIC) oder gefälschte Mobilfunkstation (FBTS) verfolgt die Nutzer gezielt. Aktive Rasterung findet in dieser Gegend statt. Diese Gegend sollte dringend vermieden werden, vor allen Dingen während politischer Unruhen. Batterie aus Telefon entfernen oder komplett außer Kraft setzen!</string>
