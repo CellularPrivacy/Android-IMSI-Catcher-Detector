@@ -190,7 +190,7 @@
                 android:textSize="14sp" />
 
             <Button
-                android:id="@+id/aimsicd_poc_link"
+                android:id="@+id/aimsicd_contribute_link"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -213,7 +213,7 @@
                 android:layout_weight="1"
                 android:text="@string/about_releases"
                 android:textSize="14sp" />
-
+AIMSICD auf GitHub
             <Button
                 android:id="@+id/aimsicd_changelog_link"
                 android:layout_width="0dp"
