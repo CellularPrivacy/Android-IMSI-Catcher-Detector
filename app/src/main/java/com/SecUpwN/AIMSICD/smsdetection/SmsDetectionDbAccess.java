@@ -166,5 +166,17 @@ public class SmsDetectionDbAccess {
         return  getsmsdata_cursor;
 
     }
+    
+    public boolean isTimeStampInDB(String TS){
+        String check4timestamp = String.format("SELECT * FROM %s WHERE %s = \"%s\"",
+            SmsDetectionDbHelper.SMS_DATA_TABLE_NAME,
+            SmsDetectionDbHelper.SMS_DATA_TIMESTAMP,TS);
+        Cursor timestampcount = dectection_db.rawQuery(check4timestamp,null);
+        if( timestampcount.getCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }
