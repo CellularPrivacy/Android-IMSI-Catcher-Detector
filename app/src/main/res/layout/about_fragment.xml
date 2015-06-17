@@ -163,7 +163,7 @@
         </TableLayout>
 
         <Button
-            android:id="@+id/aimsicd_contribute_link"
+            android:id="@+id/aimsicd_github_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_github"

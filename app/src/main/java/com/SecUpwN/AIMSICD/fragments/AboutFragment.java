@@ -58,9 +58,9 @@ public class AboutFragment extends Fragment {
             tv = v.findViewById(R.id.aimsicd_wiki_link);
             setLink(tv, R.string.wiki_link);
 
-            //Proof of Concept Link
-            tv = v.findViewById(R.id.aimsicd_contribute_link);
-            setLink(tv, R.string.contribute_link);
+            //GitHub Website Link
+            tv = v.findViewById(R.id.aimsicd_github_link);
+            setLink(tv, R.string.github_link);
 
             //Disclaimer Link
             tv = v.findViewById(R.id.aimsicd_disclaimer_link);
@@ -68,7 +68,7 @@ public class AboutFragment extends Fragment {
 
             //GitHub Contribution Link
             tv = v.findViewById(R.id.aimsicd_contribute_link);
-            setLink(tv, R.string.aimsicd_github_link);
+            setLink(tv, R.string.aimsicd_contribute_link);
 
             //XDA Development Thread Link
 //            tv = (TextView) v.findViewById(R.id.aimsicd_visit_xda_link);
