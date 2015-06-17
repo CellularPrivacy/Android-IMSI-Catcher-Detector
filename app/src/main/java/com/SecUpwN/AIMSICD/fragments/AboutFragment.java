@@ -56,7 +56,7 @@ public class AboutFragment extends Fragment {
 
             //GitHub WIKI Link
             tv = v.findViewById(R.id.aimsicd_wiki_link);
-            setLink(tv, R.string.wiki_link);
+            setLink(tv, R.string.aimsicd_wiki_link);
 
             //GitHub Website Link
             tv = v.findViewById(R.id.aimsicd_github_link);
