@@ -37,7 +37,7 @@ import java.util.Locale;
 
 /**
  * Created by Paul Kinsella on 04/03/15.
- * paulkinsella29@yahoo.ie
+ *
  */
 
 public class MiscUtils {
@@ -181,5 +181,25 @@ public class MiscUtils {
             e.printStackTrace();
         }
 
+    }
+    
+    /*
+        Returns a timestamp in this format 20150617223311
+        this is used to detect if the sms was already picked up
+     */
+    public static String logcatTimeStampParser(String line){
+        //06-17 22:06:05.988 D/dalvikvm(24747): <-- example of timestamp
+        String[] buffer = line.split(" ");
+
+        Calendar calendar = Calendar.getInstance();
+        line = String.valueOf(calendar.get(Calendar.YEAR))+buffer[0]+buffer[1];
+                                                            //   -->we dont need the last 4 digits in timestamp .988
+                                                            //   |  way to accurate but easily change if needed
+        String timestamp = line.substring(0,line.length()-4)// <-|
+                .replace(":","")
+                .replace(".","")
+                .replace("-","");
+
+        return timestamp;
     }
 }
