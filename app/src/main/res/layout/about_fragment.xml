@@ -162,21 +162,27 @@
 
         </TableLayout>
 
-        <Button
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <Button
                 android:id="@+id/aimsicd_github_link"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/about_github"
                 android:textSize="14sp" />
 
-        <Button
+            <Button
                 android:id="@+id/aimsicd_wiki_link"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/about_wiki"
                 android:textSize="14sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -200,7 +206,6 @@
                 android:ellipsize="start"
                 android:text="@string/about_contribute"
                 android:textSize="14sp" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -215,7 +220,7 @@
                 android:layout_weight="1"
                 android:text="@string/about_releases"
                 android:textSize="14sp" />
-AIMSICD auf GitHub
+
             <Button
                 android:id="@+id/aimsicd_changelog_link"
                 android:layout_width="0dp"
