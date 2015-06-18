@@ -312,4 +312,6 @@
     <string name="contacting_opencellid_for_data">Contacting opencellid.org for data...\nThis may take up to a minute.</string>
     <string name="unable_to_determine_last_location">Unable to determine your last location.\nEnable Location Services and try again.</string>
     <string name="no_tracked_locations_found">No tracked locations found to show on map.</string>
+    <string name="opencellid_api_get_key">http://opencellid.org/gsmCell/user/generateApiKey</string>
+    <string name="invalid_key_try_later">Invalid key, try later.</string>
 </resources>
