@@ -362,6 +362,9 @@
     <string name="unknown_or_insecure_bts">Unknown or insecure BTS</string>
     <string name="new_or_recently_added_bts">New or recently added BTS</string>
 
+    <string name="invalid_key_try_later">Invalid OpenCellId key, try again later.</string>
+    <string name="getting_ocid_key">Getting OpenCellId API Key...</string>
+
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
         <item>@string/ui_icon_sense</item>
