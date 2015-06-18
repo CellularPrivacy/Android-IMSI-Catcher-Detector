@@ -103,6 +103,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private SharedPreferences prefs;
     // We can also use this to simplify SharedPreferences usage above.
     //TinyDB tinydb = new TinyDB(context);
+    private TinyDB tinydb;
 
     public static int PHONE_TYPE;               //
     public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
@@ -128,8 +129,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     // TEST to fix toast in OCID api key was:
     // private Context context;
     private static Context context;
-    private final Handler timerHandler = new Handler();
-    TinyDB tinydb;
+
     public CellTracker(Context context, SignalStrengthTracker sst) {
         this.context = context;
         this.signalStrengthTracker = sst;
@@ -359,7 +359,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
     public static String requestNewOCIDKey() throws Exception {
         DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet("http://opencellid.org/gsmCell/user/generateApiKey");
+        HttpGet httpGet = new HttpGet(context.getString(R.string.opencellid_api_get_key));
         OCIDResponse result = new OCIDResponse(httpclient.execute(httpGet));
 
         if (result.getStatusCode() == 200) {
