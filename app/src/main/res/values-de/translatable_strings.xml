@@ -121,7 +121,7 @@
     <string name="pref_ui_icons_title">Status-Symbole</string>
     <string name="pref_ui_icons_summ">Symboldesign wählen</string>
     <string name="pref_refresh_title">Aktualisierungsrate</string>
-    <string name="pref_refresh_summ">Kontrolle der Häufigkeit der Gerätaktualisierung</string>
+    <string name="pref_refresh_summ">Kontrolle der Häufigkeit der Gerätaktualisierung\nDerzeitige Auswahl: %s</string>
     <string name="pref_ocid_title">OpenCellID-Einstellungen</string>
     <string name="pref_ocid_key_title">OpenCellID API-Schlüssel</string>
     <string name="pref_ocid_key_summ">OpenCellID API-Schlüssel hier eingeben</string>

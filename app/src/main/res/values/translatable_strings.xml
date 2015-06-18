@@ -126,7 +126,7 @@
     <string name="pref_ui_icons_title">Status-Icons</string>
     <string name="pref_ui_icons_summ">Icon Theme Selection</string>
     <string name="pref_refresh_title">Refresh Rate</string>
-    <string name="pref_refresh_summ">Control the frequency of device updates</string>
+    <string name="pref_refresh_summ">Control the frequency of device updates\nCurrent selection: %s</string>
     <string name="pref_ocid_title">OpenCellID Settings</string>
     <string name="pref_ocid_key_title">OpenCellID API Key</string>
     <string name="pref_ocid_key_summ">Enter your OpenCellID API Key here</string>

@@ -126,7 +126,7 @@
     <string name="pref_ui_icons_title">Icone de statut</string>
     <string name="pref_ui_icons_summ">Sélection de l\'Icone</string>
     <string name="pref_refresh_title">Taux de Rafraichissement</string>
-    <string name="pref_refresh_summ">Contrôle la fréquence de la mise à jour des données</string>
+    <string name="pref_refresh_summ">Contrôle la fréquence de la mise à jour des données\nSélection courante: %s</string>
     <string name="pref_ocid_title">Paramètres OpenCellID</string>
     <string name="pref_ocid_key_title">Entrer une clé OpenCellID</string>
     <string name="pref_ocid_key_summ">Entrez votre clé de l\'API OpenCellID ici</string>

@@ -127,7 +127,7 @@
     <string name="table_contains_no_data">Brak danych do wyświetlenia</string>
     <string name="upload_bts">Wyślij dane o lokalnych komórkach</string>
     <string name="serial_device_title">Obecny numer seryjny urządznia:</string>
-    <string name="pref_refresh_summ">Kontroluj częstotliwość odświeżania danych</string>
+    <string name="pref_refresh_summ">Kontroluj częstotliwość odświeżania danych\nBieżący wybór: %s</string>
     <string name="tracking">Śledzenie</string>
     <string name="disclaimer_title">Uwagi</string>
     <string name="main">Główne</string>

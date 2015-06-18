@@ -130,7 +130,7 @@
     <string name="pref_ui_icons_title">значки состояния</string>
     <string name="pref_ui_icons_summ">Выбор схемы иконок</string>
     <string name="pref_refresh_title">Частота обновления</string>
-    <string name="pref_refresh_summ">Управление частотой обновления устройства</string>
+    <string name="pref_refresh_summ">Управление частотой обновления устройства\nТекущий выбор: %s</string>
     <string name="pref_ocid_title">Настройки OpenCellID</string>
     <string name="pref_ocid_key_title">Ключ OpenCellID API</string>
     <string name="pref_ocid_key_summ">Введите здесь ваш ключ OpenCellID API</string>
