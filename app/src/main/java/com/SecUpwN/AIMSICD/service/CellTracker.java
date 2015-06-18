@@ -122,8 +122,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     // TEST to fix toast in OCID api key was:
     // private Context context;
     private static Context context;
-    private final Handler timerHandler = new Handler();
-    TinyDB tinydb;
+    private TinyDB tinydb;
     public CellTracker(Context context, SignalStrengthTracker sst) {
         this.context = context;
         this.signalStrengthTracker = sst;
@@ -354,7 +353,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public static String requestNewOCIDKey() throws Exception {
         String responseFromServer = null;
         DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet("http://opencellid.org/gsmCell/user/generateApiKey");
+        HttpGet httpGet = new HttpGet(context.getString(R.string.opencellid_api_get_key));
         HttpResponse result = httpclient.execute(httpGet);
         StatusLine status = result.getStatusLine();
 

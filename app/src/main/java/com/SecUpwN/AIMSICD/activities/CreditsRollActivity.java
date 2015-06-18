@@ -16,8 +16,6 @@ package com.SecUpwN.AIMSICD.activities;
 * limitations under the License.*/
 
 /*
-
-
 Edited by Paul Kinsella paulkinsella29@yahoo.ie
  */
 
@@ -26,7 +24,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.fragments.CreditsRollView;
@@ -34,11 +31,6 @@ import com.SecUpwN.AIMSICD.utils.MiscUtils;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
-
-//import android.animation.Animator;
-//import android.animation.ObjectAnimator;
-//import android.animation.ValueAnimator;
-
 
 public class CreditsRollActivity extends Activity implements SeekBar.OnSeekBarChangeListener {
 

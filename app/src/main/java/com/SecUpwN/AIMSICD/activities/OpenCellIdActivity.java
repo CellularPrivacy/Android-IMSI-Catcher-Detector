@@ -30,7 +30,7 @@ public class OpenCellIdActivity extends BaseActivity {
 
     public void onAcceptedClicked(View v) {
         pd = new ProgressDialog(this);
-        pd.setMessage(getString(R.string.opencellid_api_get_key));
+        pd.setMessage(getString(R.string.getting_opencellid_key));
         pd.show();
 
         OpenCellIdKeyDownloaderTask ocikd = new OpenCellIdKeyDownloaderTask();
@@ -97,7 +97,7 @@ public class OpenCellIdActivity extends BaseActivity {
 
         /**
          * This might be extended in the future.
-         * Two keys I started started with `dev-usr`, not sure if that's a rule.
+         * Two tested keys started with `dev-usr`, not sure if that's a rule.
          */
         private boolean isKeyValid(String key) {
             return key.startsWith("dev-");

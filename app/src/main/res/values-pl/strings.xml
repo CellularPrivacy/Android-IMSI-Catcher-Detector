@@ -177,7 +177,7 @@
     <string name="status_good">Brak zagrożeń. Wszystko OK.</string>
     <string name="alert_threat_detected">UWAGA! Wykryto zagrożenie!</string>
     <string name="aletr_femtocell_connection_detected">UWAGA! Wykryto połączenie FemtoCell!</string>
-    <string name="alert_silent_sms_intercepted">UWAGA! Przechwycono SilentSMS!</string>
+    <string name="alert_silent_sms_intercepted">UWAGA! Wykryto SilentSMS!</string>
     <string name="femtocell_only_on_cdma_devices">Aplikacja potrafi wykrywać FemtoCell tylko przez połączenie CDMA</string>
     <string name="service_state_changed">Zmieniony został stan usługi</string>
     <string name="stopped_tracking_femtocell">Wstrzymano śledzenie połączeń FemtoCell</string>
@@ -189,9 +189,11 @@
     <string name="hsdpa" translatable="false"></string>
     <string name="hostile_service_area_changing_lac_detected">Niezabezpieczona okolica: LAC został zmieniony</string>
     <string name="refreshing_every">Odświeżanie co</string>
-    <string name="refreshing_now">Odświeżam</string>
-    <string name="seconds">sekund</string>
+    <string name="refreshing_now">Odświeżanie...</string>
+    <string name="seconds">sekund.</string>
     <string name="unable_to_determine_last_location">Nie udalo się określić Twojej ostatniej lokalizacji. Włącz lokalizację w ustawieniach telefonu.</string>
     <string name="no_tracked_locations_found">Brak zapisanych lokalizacji do pokazania</string>
     <string name="contacting_opencellid_for_data">Łączenie z OpenCellID by uzyskać potrzebne dane.\nTo może zająć chwilę...</string>
+    <string name="invalid_key_try_later">Niepoprawny klucz API, spróbuj później.</string>
+    <string name="getting_opencellid_key">Pobieranie klucza OpenCellId...</string>
 </resources>
