@@ -89,7 +89,7 @@ Please follow [how to correctly submit Issues](https://github.com/SecUpwN/Androi
 
 ### Support
 
-Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a [donation](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Donations). All collected donations will be split into appropriate pieces and directly sent to developers who contribute useful code.
+Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a [donation](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Donations). It will be split into appropriate pieces and directly sent to developers who solved the backed Issue.
 
 ---
 
