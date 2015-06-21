@@ -20,7 +20,7 @@ import android.util.Log;
  * All databaes are created here
  */
 public class SmsDetectionDbHelper extends SQLiteOpenHelper {
-    private static final String LOGTAG = "TYPE0_DETECTION";
+    private static final String LOGTAG = "SmsDetectionDbHelper";
 
     private static final String DATABASE_NAME = "pk_sms_detection.db";
     private static final int DATABASE_VERSION = 1;
