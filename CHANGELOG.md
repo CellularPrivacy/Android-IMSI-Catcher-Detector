@@ -1,6 +1,76 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [21.06.2015 - WIP-Release v0.1.30-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.30-alpha-b00)
+
+* Updated: Refactored OpenCellId activity for better code quality and error handling
+* Updated: A few more wording improvements for our `README` and additions in `CREDITS`
+* Changed: Removed references and links to organizations not supporting our project
+* Changed: Improved `LOGTAG` to use proper class name `SmsDetectionDbHelper`
+* Added: Refresh Rate is now shown on menu entry in `Preferences` without opening it
+* Fixed: Made buttons in `About` menu reappear and fixed code for shrinked buttons
+* Fixed: Resolved reappearance of too many unnecessary database open/close operations
+
+---
+
+#### 17.06.2015 - WIP-Internal v0.1.29-alpha-build-06
+
+* Updated: Slight translation updates of strings due to previous menu changes
+* Changed: Removed unused imports and shrinked some buttons in `About` menu
+* Fixed: Resolved UI Issue in `Database Viewer` and corrected button link naming
+
+---
+
+#### 17.06.2015 - WIP-Internal v0.1.29-alpha-build-05
+
+* Changed: Removed old copyright and code of unused Femtocell toggle button
+* Added: New `logcatTimeStampParser` for friendly timestamp from a logcat string
+* Fixed: Endlessly receiving the same detected SMS has finally come to an end
+* Fixed: Exception on UI and database has been fixed (possibly just tentative)
+
+---
+
+#### 16.06.2015 - WIP-Internal v0.1.29-alpha-build-04
+
+* Updated: Better RIL/API support with refreshed `ServiceMode` parser
+* Updated: Increased timeout of OCID download to avoid retrieval errors
+* Added: New feature to read OCID data from generated [lacells.db](https://github.com/n76/Local-GSM-Backend) as well
+* Fixed: Resolved WIN DEATH when using Advanced User Preferences
+* Fixed: Startup crash fixed with `Lat` and `Lng` in `AIMSICDDbAdapter.java`
+
+--- 
+
+#### 12.06.2015 - WIP-Internal v0.1.29-alpha-build-03
+
+* Changed: Moved hardcoding of OCDB download path to static variable
+* Updated: Refactored OCID CSV parsing and truncated GPS coordinates
+
+---
+
+#### 09.06.2015 - WIP-Internal v0.1.29-alpha-build-02
+
+* Updated: Improved menu translations in `Navigation Drawer` for better understanding
+
+---
+
+#### 08.06.2015 - WIP-Internal v0.1.29-alpha-build-01
+
+* Removed: Purged unused imports and unnecessary `toString` calls
+* Removed: Purged public modifier from interface methods
+* Changed: Switched CoverityScan analysis to branch `development` to analyze current code
+* Changed: Replaced deprecated `GridMarkerClusterer` with `RadiusMarkerClusterer`
+* Changed: Closed some database cursors and replaced `dp` with `sp` for TextViews
+* Updated: License header has been unified across all source files to ensure proper GPL
+* Updated: Refactored `AIMSICDDbAdapter::DbHelper#onCreate` for easier reading
+* Updated: Refactored redundant parsing from get OCID API request
+* Added: Default `locale` has been implemented into `SimpleDateFormat` constructor
+* Added: Now using parent view instead of null when inflating layouts
+* Added: French translations as well as `leakcanary` analysis for detecting leaks
+* Fixed: Minor translation and punctuation improvements in several translation string files
+* Fixed: Corrected filename of CSV loaded in into `AIMSICDDbAdapter#updateOpenCellID`
+
+---
+
 #### [31.05.2015 - WIP-Release v0.1.29-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.29-alpha-b00)
 
 * Added: New WAP Push Detection and corresponding popup as well as custom strings
