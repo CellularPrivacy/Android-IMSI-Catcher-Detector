@@ -26,9 +26,8 @@
 
 
     <!-- MENU -->
-    <string name="toggle_aimsicd_monitoring">Toggle AIMSICD monitoring</string>
-    <string name="toggle_2g_only_network_lock">Toggle 2G-only network lock</string>
-    <string name="toggle_femtocell">Toggle Femtocell</string>
+    <string name="toggle_attack_detection">Toggle Attack Detection</string>
+    <string name="toggle_cell_tracking">Toggle Cell Tracking</string>
 
     <string name="backup_database">Backup Database</string>
     <string name="clear_database">Clear/Reset Database</string>
@@ -127,7 +126,7 @@
     <string name="pref_ui_icons_title">Status-Icons</string>
     <string name="pref_ui_icons_summ">Icon Theme Selection</string>
     <string name="pref_refresh_title">Refresh Rate</string>
-    <string name="pref_refresh_summ">Control the frequency of device updates</string>
+    <string name="pref_refresh_summ">Control the frequency of device updates\nCurrent selection: %s</string>
     <string name="pref_ocid_title">OpenCellID Settings</string>
     <string name="pref_ocid_key_title">OpenCellID API Key</string>
     <string name="pref_ocid_key_summ">Enter your OpenCellID API Key here</string>
@@ -197,12 +196,12 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILED EXPLANATION</string>
-    <string name="detail_info_idle">App is idling or loading. No protection and detection measures are enabled. Please open the Navigation Drawer and enable them in section TRACKING.</string>
+    <string name="detail_info_idle">App is idling or loading. No protection and detection measures are enabled. Please open the Navigation Drawer and enable them in section TRACKING!</string>
     <string name="detail_info_normal">No threats detected or found. Our App is constantly checking your network based upon the protection measures you\'ve set in the Navigation Drawer and Preferences.</string>
     <string name="detail_info_medium">Insecure Service Area: At least 1 new or unknown BTS is in operation in this vicinity, or using an insecure (broken) encryption algorithm lower than A5/3 [Detection is WIP]. Expect that any phone calls/SMS made in this area can be intercepted and recorded. You better leave this place now.</string>
-    <string name="detail_info_high">Hostile Service Actions Detected: An IMSI-Catcher (IMSIC) or fake BTS (FBTS) is actively tracking users. Active scanning takes place in this area. You should avoid this place, especially if there are political unrest. Take out your battery or kill your phone.</string>
+    <string name="detail_info_high">Hostile Service Actions Detected: An IMSI-Catcher (IMSIC) or fake BTS (FBTS) is actively tracking users. Active scanning takes place in this area. You should avoid this place, especially if there are political unrest. Take out your battery or kill your phone!</string>
     <string name="detail_info_danger">Hostile Tracking Detected: An FBTS or IMSIC is actively tracking YOU and preventing your phone from connecting through your normal encrypted mobile provider. If you\'re in danger or repercussions, destroy your phone + SIM and report it as recently stolen.</string>
-    <string name="detail_info_run">Hostile Manipulation: Someone is trying to remotely manipulate your handset. Destroy (or sell) your phone and get a new one somewhere far away (don\'t carry your old phone to the changing place). Use a new (anonymous) SIM card, change calling behavior and warn your friends by talking to them in real life, NOT by calling them.</string>
+    <string name="detail_info_run">Hostile Manipulation: Someone is trying to remotely manipulate your handset. Destroy (or sell) your phone and get a new one somewhere far away (don\'t carry your old phone to the changing place)! Use a new (anonymous) SIM card, change calling behavior and warn your friends by talking to them in real life, NOT by calling them!</string>
 
     <string name="open_cell_id_button_cancel">Cancel</string>
     <string name="open_cell_id_button_ok">OK</string>
@@ -246,7 +245,7 @@
     <string name="status_good">Status: Good. No Threats Detected.</string>
     <string name="alert_threat_detected">ALERT: Some Threat Detected!</string>
     <string name="aletr_femtocell_connection_detected">ALERT: FemtoCell Connection Detected!</string>
-    <string name="alert_silent_sms_detected">ALERT: Type-0 Silent SMS detected!</string>
+    <string name="alert_silent_sms_detected">ALERT: Silent SMS (Type-0) detected!</string>
     <string name="alert_silent_voice_sms_detected">ALERT: Silent Voice SMS detected!</string>
     <string name="alert_silent_wap_sms_detected">ALERT: Wap Push SMS detected!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD can only detect FemtoCell connections on CDMA devices.</string>
@@ -326,8 +325,8 @@
     <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
 
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_aimsicd">Start/stop AIMSICD monitoring and collect cell details into internal database tables.</string>
-    <string name="help_tracking_toggle_2g_only_network_lock">Start to set phone to use 2G mode only, for tracking. Stop to use default Network Type (RAT) settings or Automatic.</string>
+    <string name="help_tracking_toggle_attack_detection">Start/stop attack detection and collect cell details into internal database tables.</string>
+    <string name="help_tracking_toggle_cell_tracking">Start to track cells for display on the Antenna Map Viewer and possibly later upload to OCID.</string>
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">AIMSICD settings such as protection rules, polling times and service behaviour.</string>
@@ -362,6 +361,9 @@
     <string name="well_known_encrypted_bts">Well known encrypted BTS</string>
     <string name="unknown_or_insecure_bts">Unknown or insecure BTS</string>
     <string name="new_or_recently_added_bts">New or recently added BTS</string>
+
+    <string name="invalid_key_try_later">Invalid OpenCellId key, try again later.</string>
+    <string name="getting_ocid_key">Getting OpenCellId API Key...</string>
 
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>

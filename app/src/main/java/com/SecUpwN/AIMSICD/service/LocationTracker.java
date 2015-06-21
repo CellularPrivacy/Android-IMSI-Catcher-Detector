@@ -1,3 +1,8 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.service;
 
 import android.annotation.TargetApi;
@@ -88,9 +93,7 @@ public class LocationTracker {
         if (lastLocationTime <= 0) return true;
 
         // haven't received a GPS update in a while, assume no movement
-        if (System.currentTimeMillis() - lastLocationTime > MOVEMENT_THRESHOLD_MS) return true;
-
-        return false;
+        return System.currentTimeMillis() - lastLocationTime > MOVEMENT_THRESHOLD_MS;
     }
 
     public GeoLocation lastKnownLocation() {

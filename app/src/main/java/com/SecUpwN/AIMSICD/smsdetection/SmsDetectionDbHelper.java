@@ -1,27 +1,13 @@
-package com.SecUpwN.AIMSICD.smsdetection;
 /* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
  * -----------------------------------------------------------
- * LICENSE:  http://git.io/vJaf6 | TERMS:  http://git.io/vJMf5
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
 
-/*
-*
-@author Copyright Paul Kinsella paulkinsella29@yahoo.ie
+/* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+package com.SecUpwN.AIMSICD.smsdetection;
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    */
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,7 +20,7 @@ import android.util.Log;
  * All databaes are created here
  */
 public class SmsDetectionDbHelper extends SQLiteOpenHelper {
-    private static final String LOGTAG = "TYPE0_DETECTION";
+    private static final String LOGTAG = "SmsDetectionDbHelper";
 
     private static final String DATABASE_NAME = "pk_sms_detection.db";
     private static final int DATABASE_VERSION = 1;

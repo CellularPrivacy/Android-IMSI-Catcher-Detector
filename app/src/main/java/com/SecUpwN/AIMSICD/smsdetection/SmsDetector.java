@@ -1,44 +1,18 @@
-
 /* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
  * -----------------------------------------------------------
- * LICENSE:  http://git.io/vJaf6 | TERMS:  http://git.io/vJMf5
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
 
-/*
-*
-@author Copyright Paul Kinsella paulkinsella29@yahoo.ie
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    */
-
 package com.SecUpwN.AIMSICD.smsdetection;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
-import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
@@ -49,9 +23,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Copyright Paul Kinsella paulkinsella29@yahoo.ie on 19/04/15.
  *
- *
+ * Coded by Paul Kinsella @banjaxbanjo
  * For this to work better Samsung users will have to
  * set debug level to high in SysDump menu *#9900# or *#*#9900#*#*
  *
@@ -82,9 +55,6 @@ public class SmsDetector extends Thread {
     static Context tContext;
 
     String[] SILENT_ONLY_TAGS;
-    String XPERIA_J_INDICATOR = "QCRIL_RPC#POSSIBLE TYPE 0 DETECTED",
-    /*Experimental code to check for SMS_ACKNOWLEDGE true in logcat and sms true in Broadcast Receiver*/
-    CHECK_BROADCAST_REC = " SMS_ACKNOWLEDGE true #UNKNOWN_SILENT_SMS_DETECTED";
 
     /* this array holds known values to get the senders number and sms data */
     String DETECTION_PHONENUM_SMS_DATA[]={
@@ -147,7 +117,7 @@ public class SmsDetector extends Thread {
                 e.printStackTrace();
             }
             try {
-                String MODE = "logcat -b radio\n";// default
+                String MODE = "logcat -v time -b radio\n";// default
                 Runtime r = Runtime.getRuntime();
                 Process process = r.exec("su");
                 dos = new DataOutputStream(process.getOutputStream());
@@ -165,7 +135,6 @@ public class SmsDetector extends Thread {
 
 
                     int bufferlen = dis.available();
-                    //System.out.println("DEBUG>> Buff Len " +bufferlen);
 
                     if (bufferlen != 0) {
                         byte[] b = new byte[bufferlen];
@@ -174,23 +143,21 @@ public class SmsDetector extends Thread {
                         String split[] = new String(b).split("\n");
                         checkForSilentSms(split);
 
-                    } else {
-
-                        Thread.sleep(1000);
-                    }
+                    } else { Thread.sleep(1000); }
 
                 } catch (IOException e) {
-                    if (e.getMessage() != null)
-                        System.out.println(e.getMessage());
                     e.printStackTrace();
+                    Log.e(TAG,e.toString());
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
+                    Log.e(TAG,e.toString());
                     e.printStackTrace();
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG,e.toString());
         } finally {
 
         }
@@ -201,53 +168,24 @@ public class SmsDetector extends Thread {
 
         for(int arrayindex = 0;arrayindex < SILENT_ONLY_TAGS.length;arrayindex++)
         {
-            int MAX_INT = progress.length -4;
+
             for(int x =0;x <progress.length;x++) {//check all progress buffer for strings
 
                 if(progress[x].length() < 250){//check only short strings for faster processing
-                     /*
 
-                    CHECK THAT THE BROADCAST RECEIVER PICKED UP AN SMS.
-                    future code
-                        Idea behind this code is if we pick up and SMS_ACK in logcat
-                        and the sms broadcast receiver did not pick up an sms then
-                        we received some sort of silent sms.
-
-                        When a new sms arrives, logcat picks up many SMS_ACKS so code is buggy
-                        at the moment.
-                     */
-                 /*   if (progress[x].contains(CHECK_BROADCAST_REC.split("#")[0])) {
-                        try {
-                            Thread.sleep(2000);
-                            if (!TextMessageReceiver.isIS_MESSAGE_RECEIVED()) {
-                                Toast.makeText(mContext, CHECK_BROADCAST_REC.split("#")[1], Toast.LENGTH_LONG).show();
-                                break;
-                            }
-                        } catch (Exception err) {
-
-                        }
-                    }*/
-
-
-                    /*
-                    THE ONLY INDICATION OF A TYPE 0 ON SONY XPERIA J IS 4 OF THIS STRING [QCRIL_RPC]
-                    RIGHT AFTER EACH OTHER.
-                    Code is to buggy to many QCRIL_RPC strings
-                    Disabled for now because its to unstable
-                     */
-/*                    if (x <= MAX_INT) {
-                        if ((progress[x].contains(XPERIA_J_INDICATOR.split("#")[0]) && progress[x].length() < 11) &&
-                                (progress[x + 1].contains(XPERIA_J_INDICATOR.split("#")[0])&& progress[x].length() < 11) &&
-                                (progress[x + 2].contains(XPERIA_J_INDICATOR.split("#")[0])&& progress[x].length() < 11) &&
-                                (progress[x + 3].contains(XPERIA_J_INDICATOR.split("#")[0])&& progress[x].length() < 11)) {
-                            //Toast.makeText(mContext, XPERIA_J_INDICATOR.split("#")[1], Toast.LENGTH_LONG).show();
-                            break;
-                        }
-                    }
-*/
                     if (progress[x].contains(SILENT_ONLY_TAGS[arrayindex].split("#")[0])) {
+                        /* if we get to this loop we detected a known detection string
+                        *  and the next if blocks detect what type of sms it is
+                        * */
 
-                        System.out.println("Detected>>>>"+SILENT_ONLY_TAGS[arrayindex].split("#")[1]);
+                        /*
+                        * saving the logcat timestamp so we can check db if timestamp
+                        * was already saved
+                        * */
+                        String logcat_timestamp = MiscUtils.logcatTimeStampParser(progress[x]);
+                        Log.i(TAG,"TIME::"+logcat_timestamp);
+
+                        Log.i(TAG,"Detected>>>>"+SILENT_ONLY_TAGS[arrayindex].split("#")[1]);
                         if(SILENT_ONLY_TAGS[arrayindex].split("#")[1].equals("TYPE0")){
 
                             CapturedSmsData setmsg = new CapturedSmsData();
@@ -258,31 +196,32 @@ public class SmsDetector extends Thread {
                             *    senders numuber is usually back about -15
                             *    in the array.
                             * */
-                            int newcount = (x-15);
+                            int newcount = x - 15;
 
-                            //System.out.println("NewCount >>> "+newcount+" Xcount>>>>> "+x);
                             if(newcount > 0) {//only check if array length is not -minus (if minus we cant count back so skip)
-                                while (newcount < x) {
+                                while (newcount < x) {//loop thru array and try find number and sms data if any
                                     if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
                                         try {
                                             //Looking for OrigAddr this is where type0 sender number is
                                             String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
                                             setmsg.setSenderNumber(number);//default
-                                        }catch (Exception ee){Log.e(TAG,"Error parsing number");}
-                                        //System.out.println("Number>>>"+number);
-                                    } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
+                                        } catch (Exception ee) {
+                                            Log.e(TAG, "Error parsing number\n"+ ee.toString());
+                                        }
+                                    }else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
                                         try {
                                             String smsdata = progress[newcount].substring(
                                                     progress[newcount].indexOf("'") + 1,
                                                     progress[newcount].length() - 1);
-                                            //System.out.println("SMS Data>>>"+smsdata);
+
                                             setmsg.setSenderMsg(smsdata);
-                                        }catch (Exception ee){Log.e(TAG,"Error parsing sms data");}
+                                        }catch (Exception ee){
+                                            Log.e(TAG,"Error parsing sms data\n"+ ee.toString());}
                                     }
                                     newcount++;
                                 }
                             }
-                            setmsg.setSmsTimestamp(MiscUtils.getCurrentTimeStamp());
+                            setmsg.setSmsTimestamp(logcat_timestamp);
                             setmsg.setSmsType("TYPE0");
                             setmsg.setCurrent_lac(mAimsicdService.getCellTracker().getMonitorCell().getLAC());
                             setmsg.setCurrent_cid(mAimsicdService.getCellTracker().getMonitorCell().getCID());
@@ -291,19 +230,23 @@ public class SmsDetector extends Thread {
                             //TODO is this the right place to get upto date geo location?
                             setmsg.setCurrent_gps_lat(mAimsicdService.lastKnownLocation().getLatitudeInDegrees());
                             setmsg.setCurrent_gps_lon(mAimsicdService.lastKnownLocation().getLongitudeInDegrees());
+
+                            //only alert if timestamp is not in the data base
                             dbacess.open();
-                            dbacess.storeCapturedSms(setmsg);
+                            if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
+                                 dbacess.storeCapturedSms(setmsg);
+                                 MiscUtils.startPopUpInfo(tContext, 6);
+                            }
                             dbacess.close();
 
-                            MiscUtils.startPopUpInfo(tContext, 6);
-
+                        //SILENT_ONLY_TAGS[arrayindex].split("#")[0] <-- index 0 is the detection string
+                        //SILENT_ONLY_TAGS[arrayindex].split("#")[1] <-- index 1 is the sms TYPE WAPPUSH TYPE0 ETC...
                         }else if(SILENT_ONLY_TAGS[arrayindex].split("#")[1].trim().equals("SILENTVOICE")){
                             Log.i(TAG, "SILENT DETECTED");
                             CapturedSmsData setmsg = new CapturedSmsData();
                             setmsg.setSenderNumber("unknown");//default
                             setmsg.setSenderMsg("no data");//default
-                            int newcount = (x-15);
-                            //System.out.println("NewCount >>> "+newcount+" Xcount>>>>> "+x);
+                            int newcount = x - 15;
                             if(newcount > 0) {//only check if array length is not -minus
                                 while (newcount < x) {
                                     if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[0].toString())) {
@@ -313,29 +256,26 @@ public class SmsDetector extends Thread {
                                         try {
                                             String number = progress[newcount].substring(progress[newcount].indexOf("+"));
                                             setmsg.setSenderNumber(number);//default
-                                        }catch (Exception ee){}
-                                        //System.out.println("Number>>>"+number);
+                                        }catch (Exception ee){Log.e(TAG, "Error parsing number\n"+ ee.toString());}
                                     }else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
                                         try {
                                             //Looking for OrigAddr this is where sender number is
                                             String number = progress[newcount].substring(progress[newcount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
                                             setmsg.setSenderNumber(number);//default
-                                        }catch (Exception ee){Log.e(TAG,"Error parsing number");}
-                                        //System.out.println("Number>>>"+number);
+                                        }catch (Exception ee){Log.e(TAG, "Error parsing number\n"+ ee.toString());}
                                     } else if (progress[newcount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
                                         try {
                                             String smsdata = progress[newcount].substring(
                                                     progress[newcount].indexOf("'") + 1,
                                                     progress[newcount].length() - 1);
-                                            //System.out.println("SMS Data>>>"+smsdata);
                                             setmsg.setSenderMsg(smsdata);
-                                        }catch (Exception ee){Log.e(TAG,"Error parsing sms data");}
+                                        }catch (Exception ee){Log.e(TAG, "Error parsing sms data\n"+ ee.toString());;}
                                     }
                                     newcount++;
                                 }
                             }
 
-                            setmsg.setSmsTimestamp(MiscUtils.getCurrentTimeStamp());
+                            setmsg.setSmsTimestamp(logcat_timestamp);
                             setmsg.setSmsType("SILENTVOICE");
                             setmsg.setCurrent_lac(mAimsicdService.getCellTracker().getMonitorCell().getLAC());
                             setmsg.setCurrent_cid(mAimsicdService.getCellTracker().getMonitorCell().getCID());
@@ -344,11 +284,14 @@ public class SmsDetector extends Thread {
                             //TODO is this the right place to get upto date geo location?
                             setmsg.setCurrent_gps_lat(mAimsicdService.lastKnownLocation().getLatitudeInDegrees());
                             setmsg.setCurrent_gps_lon(mAimsicdService.lastKnownLocation().getLongitudeInDegrees());
-                            dbacess.open();
-                            dbacess.storeCapturedSms(setmsg);
-                            dbacess.close();
 
-                            MiscUtils.startPopUpInfo(tContext, 7);
+                            //only alert if timestamp is not in the data base
+                            dbacess.open();
+                            if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
+                                dbacess.storeCapturedSms(setmsg);
+                                MiscUtils.startPopUpInfo(tContext, 7);
+                            }
+                            dbacess.close();
                         }else if(SILENT_ONLY_TAGS[arrayindex].split("#")[1].trim().equals("WAPPUSH")){
                             /*
                                 Wap Push in logcat shows no data only senders number
@@ -370,7 +313,6 @@ public class SmsDetector extends Thread {
                                 if (endindex+3 <= progress.length) {
                                     while (startindex < endindex)
                                     {
-                                        //Log.i(TAG,"WAP>>>"+progress[startindex].toString() );
                                         if (progress[startindex].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
                                             try {
                                                 //Looking for OrigAddr this is where sender number is
@@ -381,7 +323,7 @@ public class SmsDetector extends Thread {
                                                 setmsg.setSenderNumber(number);//default
                                                 break;
                                             } catch (Exception ee) {
-                                                Log.e(TAG, "Error parsing number");
+                                                Log.e(TAG, "Error parsing number\n"+ ee.toString());
                                             }
 
                                         }
@@ -390,7 +332,7 @@ public class SmsDetector extends Thread {
                                     }
                                 }
 
-                                setmsg.setSmsTimestamp(MiscUtils.getCurrentTimeStamp());
+                                setmsg.setSmsTimestamp(logcat_timestamp);
                                 setmsg.setSmsType("WAPPUSH");
                                 setmsg.setCurrent_lac(mAimsicdService.getCellTracker().getMonitorCell().getLAC());
                                 setmsg.setCurrent_cid(mAimsicdService.getCellTracker().getMonitorCell().getCID());
@@ -399,18 +341,20 @@ public class SmsDetector extends Thread {
                                 //TODO is this the right place to get upto date geo location?
                                 setmsg.setCurrent_gps_lat(mAimsicdService.lastKnownLocation().getLatitudeInDegrees());
                                 setmsg.setCurrent_gps_lon(mAimsicdService.lastKnownLocation().getLongitudeInDegrees());
-                                dbacess.open();
-                                dbacess.storeCapturedSms(setmsg);
-                                dbacess.close();
 
-                                MiscUtils.startPopUpInfo(tContext, 8);
+                                //only alert if timestamp is not in the data base
+                                dbacess.open();
+                                if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
+                                    dbacess.storeCapturedSms(setmsg);
+                                    MiscUtils.startPopUpInfo(tContext, 8);
+                                }
+                                dbacess.close();
                             }// end of if contains("DestPort 0x0B84")
                         }
                         break;
                     }
                 }
-            }//for loop
-            //TextMessageReceiver.setIS_MESSAGE_RECEIVED(false);//reset the boolean to false
+            }
 
         }
     }
@@ -424,7 +368,7 @@ public class SmsDetector extends Thread {
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            Log.e(TAG, "Service Disconnected Sms Detection");
+            Log.i(TAG, "Service Disconnected Sms Detection");
             mBound = false;
 
         }

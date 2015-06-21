@@ -1,3 +1,9 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
+ 
 /*  This was introduced by Aussie in the Pull Request Commit: 
  * https://github.com/xLaMbChOpSx/Android-IMSI-Catcher-Detector/commit/6d8719ab356a3ecbd0b526a9ded0cabb17ab2021
  * 

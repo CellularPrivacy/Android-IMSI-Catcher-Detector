@@ -1,3 +1,8 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.utils;
 
 import android.app.Notification;
@@ -6,12 +11,8 @@ import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CustomPopUp;
@@ -24,14 +25,14 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Paul Kinsella on 04/03/15.
- * paulkinsella29@yahoo.ie
+ *
  */
 
 public class MiscUtils {
@@ -72,7 +73,7 @@ public class MiscUtils {
     public static String getCurrentTimeStamp(){
 
         Date now = new Date();
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(now);
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now);
         return timestamp;
     }
 
@@ -152,10 +153,10 @@ public class MiscUtils {
             JSONArray json_array_node = json_response.optJSONArray("load_detection_strings");
 
             int json_array_len = json_array_node.length();
-
+            dbaccess.open();
             for(int i=0; i < json_array_len; i++)
             {
-                dbaccess.open();
+                
                 JSONObject current_json_object = json_array_node.getJSONObject(i);
                 ContentValues store_new_det_string = new ContentValues();
                 store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN,
@@ -165,15 +166,34 @@ public class MiscUtils {
                 if(dbaccess.insertNewDetectionString(store_new_det_string)){
                     Log.i("refreshDetectionDbStrings",">>>String added success");
                 }
-                dbaccess.close();
+                
 
             }
-
+            dbaccess.close();
         } catch (JSONException e) {
             dbaccess.close();
             Log.e("refreshDetectionDbStrings",">>> Error parsing JsonFile "+e.toString());
             e.printStackTrace();
         }
 
+    }
+    
+    /*
+        Returns a timestamp in this format 20150617223311
+        this is used to detect if the sms was already picked up
+     */
+    public static String logcatTimeStampParser(String line){
+        //06-17 22:06:05.988 D/dalvikvm(24747): <-- example of timestamp
+        String[] buffer = line.split(" ");
+
+        line = String.valueOf(Calendar.getInstance().get(Calendar.YEAR))+buffer[0]+buffer[1];
+                                                            //   -->we dont need the last 4 digits in timestamp .988
+                                                            //   |  way to accurate but easily change if needed
+        String timestamp = line.substring(0,line.length()-4)// <-|
+                .replace(":","")
+                .replace(".","")
+                .replace("-","");
+
+        return timestamp;
     }
 }

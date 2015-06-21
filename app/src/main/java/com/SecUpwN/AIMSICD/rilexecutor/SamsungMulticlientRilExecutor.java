@@ -15,8 +15,6 @@
  */
 package com.SecUpwN.AIMSICD.rilexecutor;
 
-import com.SecUpwN.AIMSICD.BuildConfig;
-
 import android.annotation.SuppressLint;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;

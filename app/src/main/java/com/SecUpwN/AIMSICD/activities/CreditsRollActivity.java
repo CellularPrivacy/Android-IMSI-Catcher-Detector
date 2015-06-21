@@ -1,5 +1,3 @@
-package com.SecUpwN.AIMSICD.activities;
-
 /*
 * Copyright 2014 Frakbot (Sebastiano Poggi and Francesco Pontillo)
 *
@@ -15,18 +13,15 @@ package com.SecUpwN.AIMSICD.activities;
 * See the License for the specific language governing permissions and
 * limitations under the License.*/
 
-/*
-
-
-Edited by Paul Kinsella paulkinsella29@yahoo.ie
- */
+/* Edited by Paul Kinsella <paulkinsella29@yahoo.ie> */
+ 
+package com.SecUpwN.AIMSICD.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.fragments.CreditsRollView;

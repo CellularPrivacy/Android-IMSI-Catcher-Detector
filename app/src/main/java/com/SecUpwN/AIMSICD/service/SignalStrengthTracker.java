@@ -1,3 +1,8 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.service;
 
 import android.content.Context;
@@ -5,7 +10,6 @@ import android.util.Log;
 
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

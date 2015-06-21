@@ -1,14 +1,15 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.utils;
 
 import android.os.AsyncTask;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class LocationServices {
 

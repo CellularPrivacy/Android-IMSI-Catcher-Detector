@@ -1,9 +1,13 @@
-package com.SecUpwN.AIMSICD.smsdetection;
-/*
-
-    Coded by Paul Kinsella paulkinsella29@yahoo.ie
-
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
  */
+
+/* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
+
+package com.SecUpwN.AIMSICD.smsdetection;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.os.Bundle;
@@ -46,7 +50,7 @@ public class AdvancedUserActivity extends Activity {
 
         }catch (Exception ee){
             System.out.println("DB ERROR>>>>"+ee.toString());
-            msgitems = new ArrayList<AdvanceUserItems>();
+            msgitems = new ArrayList<>();
             AdvanceUserItems itemss = new AdvanceUserItems();
             itemss.setDetection_string("NO DATA");
             itemss.setDetection_type("No TYPE");

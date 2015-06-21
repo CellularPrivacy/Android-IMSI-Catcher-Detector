@@ -1,3 +1,8 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.drawer;
 
 import com.SecUpwN.AIMSICD.R;
@@ -111,11 +116,11 @@ public class DrawerMenuItem implements NavDrawerItem {
             case MAIN.AT_COMMAND_INTERFACE:
                 return R.string.help_main_at_command_interface;
 
-            case TRACKING.TOGGLE_2G_ONLY_NETWORK:
-                return R.string.help_tracking_toggle_2g_only_network_lock;
+            case TRACKING.TOGGLE_CELL_TRACKING:
+                return R.string.help_tracking_toggle_cell_tracking;
 
-            case TRACKING.TOGGLE_AIMSICD_MONITORING:
-                return R.string.help_tracking_toggle_aimsicd;
+            case TRACKING.TOGGLE_ATTACK_DETECTION:
+                return R.string.help_tracking_toggle_attack_detection;
 
             case SETTINGS.PREFERENCES:
                 return R.string.help_settings_preferences;

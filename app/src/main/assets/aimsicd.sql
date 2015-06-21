@@ -1,18 +1,24 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
+ 
 /*
-=======================================================================
+========================================================================
 FileName:	aimsicd.sql
 Version:	0.1
 Formatting:	8 char TAB, ASCII, UNIX EOL
 Author:		E:V:A (Team AIMSICD)
 Date:		2015-01-20
 Info:		https://github.com/SecUpwN/Android-IMSI-Catcher-Detector
-=======================================================================
+========================================================================
 
 Description:
 
 	This is the aimsicd.db SQL script. It is used in the 
 	"Android IMIS-Cather Detector" (AIMSICD) application, 
-	to create all and pre-populate some its DB tables.
+	to create all and pre-populate some of its DB tables.
 
 Dependencies:
 

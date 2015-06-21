@@ -1,6 +1,13 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.adapters;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  *
  * Data card class used in DB viewer (for Measured cell strength measurements)
@@ -12,7 +19,7 @@ public class MeasuredCellStrengthCardData {
     private final long timestamp;
     private final int signal;
     private final int cellID;
-    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
     public MeasuredCellStrengthCardData(int cellID, int signal, long timestamp) {
         this.cellID = cellID;

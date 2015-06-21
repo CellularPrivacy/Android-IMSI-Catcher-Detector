@@ -1,28 +1,13 @@
-package com.SecUpwN.AIMSICD.smsdetection;
-
 /* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
  * -----------------------------------------------------------
- * LICENSE:  http://git.io/vJaf6 | TERMS:  http://git.io/vJMf5
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
- 
-/*
-*
-@author Copyright Paul Kinsella paulkinsella29@yahoo.ie
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+/* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    */
+package com.SecUpwN.AIMSICD.smsdetection;
+    
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -77,9 +62,13 @@ public class SmsDetectionDbAccess {
         String check4String = String.format("SELECT * FROM %s WHERE %s = \"%s\"",
                 SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE,
                 SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN, newstring.get(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN));
-        Cursor stringcount = dectection_db.rawQuery(check4String, null);
+        Cursor stringCountCursor = dectection_db.rawQuery(check4String, null);
 
-        if (stringcount.getCount() > 0) {
+        int stringCount = stringCountCursor.getCount();
+
+        stringCountCursor.close();
+
+        if (stringCount > 0) {
             Log.i(LOGTAG, "Detection String already in Database");
         } else {
 
@@ -121,28 +110,27 @@ public class SmsDetectionDbAccess {
     // ====================================================================
     //      Get all detection strings
     // ====================================================================
-    public ArrayList<AdvanceUserItems> getDetectionStrings(){
-
-
-        Cursor stringcount = dectection_db.rawQuery("SELECT * FROM "+ SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE,null);
+    public ArrayList<AdvanceUserItems> getDetectionStrings() {
+        Cursor stringCountCursor = dectection_db.rawQuery("SELECT * FROM "+ SmsDetectionDbHelper.SILENT_SMS_STRINGS_TABLE, null);
 
         ArrayList<AdvanceUserItems> detection_strs = new ArrayList<>();
-        System.out.println("DB LEN = "+stringcount.getCount());
-        if(stringcount.getCount() > 0) {
-            while (stringcount.moveToNext()) {
+        System.out.println("DB LEN = " + stringCountCursor.getCount());
+        if (stringCountCursor.getCount() > 0) {
+            while (stringCountCursor.moveToNext()) {
                 AdvanceUserItems setitems = new AdvanceUserItems();
-                setitems.setDetection_string(stringcount.getString(stringcount.getColumnIndex(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN)));
-                setitems.setDetection_type(stringcount.getString(stringcount.getColumnIndex(SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN)));
+                setitems.setDetection_string(stringCountCursor.getString(stringCountCursor.getColumnIndex(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN)));
+                setitems.setDetection_type(stringCountCursor.getString(stringCountCursor.getColumnIndex(SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN)));
                 detection_strs.add(setitems);
 
             }
-        }else
-        {
+        } else {
             AdvanceUserItems setitems = new AdvanceUserItems();
             setitems.setDetection_string("No data");
             setitems.setDetection_type("No data");
             detection_strs.add(setitems);
         }
+
+        stringCountCursor.close();
 
         return  detection_strs;
     }
@@ -177,6 +165,18 @@ public class SmsDetectionDbAccess {
         Cursor getsmsdata_cursor = dectection_db.rawQuery("SELECT * FROM "+ SmsDetectionDbHelper.SMS_DATA_TABLE_NAME,null);
         return  getsmsdata_cursor;
 
+    }
+    
+    public boolean isTimeStampInDB(String TS){
+        String check4timestamp = String.format("SELECT * FROM %s WHERE %s = \"%s\"",
+            SmsDetectionDbHelper.SMS_DATA_TABLE_NAME,
+            SmsDetectionDbHelper.SMS_DATA_TIMESTAMP,TS);
+        Cursor timestampcount = dectection_db.rawQuery(check4timestamp,null);
+        if( timestampcount.getCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

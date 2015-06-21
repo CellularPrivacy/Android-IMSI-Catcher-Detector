@@ -8,13 +8,14 @@
 
 
     <string name="aimsicd_about_info" translatable="false">Android IMSI-Catcher Detector (AIMSICD)</string>
-    <string name="wiki_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki</string>
-    <string name="contribute_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/CONTRIBUTING.md</string>
+    <string name="aimsicd_wiki_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki</string>
+    <string name="aimsicd_contribute_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/CONTRIBUTING.md</string>
     <string name="disclaimer_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/DISCLAIMER</string>
     <string name="aimsicd_github_link" translatable="false">https://secupwn.github.io/Android-IMSI-Catcher-Detector/</string>
     <string name="aimsicd_release_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases</string>
     <string name="aimsicd_changelog_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/CHANGELOG.md</string>
     <string name="aimsicd_license_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/LICENSE</string>
+    <string name="opencellid_api_get_key" translatable="false">http://opencellid.org/gsmCell/user/generateApiKey</string>
 
     <string name="pref_enable_cell_monitoring_key" translatable="false">pref_enable_cell_monitoring</string>
     <string name="pref_enable_cell_key" translatable="false">pref_enable_cell_key</string>

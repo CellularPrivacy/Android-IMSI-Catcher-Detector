@@ -125,10 +125,9 @@
     <string name="sms_message">Przechwycono SilentSMS!\n\nWięcej infromacji w widoku bazy danych!</string>
     <string name="table_names_prompt">Wybierz tabelę</string>
     <string name="table_contains_no_data">Brak danych do wyświetlenia</string>
-    <string name="toggle_femtocell">Śledź Femtocell</string>
     <string name="upload_bts">Wyślij dane o lokalnych komórkach</string>
     <string name="serial_device_title">Obecny numer seryjny urządznia:</string>
-    <string name="pref_refresh_summ">Kontroluj częstotliwość odświeżania danych</string>
+    <string name="pref_refresh_summ">Kontroluj częstotliwość odświeżania danych\nBieżący wybór: %s</string>
     <string name="tracking">Śledzenie</string>
     <string name="disclaimer_title">Uwagi</string>
     <string name="main">Główne</string>
@@ -146,8 +145,8 @@
     <string name="detail_info_normal">Nie wykryto żadnych zagrożeń.</string>
     <string name="detail_info_run">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
     <string name="detail_info_medium">Ta okolica nie jest bezpieczna: wykryto co najmniej jedną nieznaną stację bazową lub używane jest szyfrowanie słabsze niż A5/3. Wszystkie wiadomości i rozmowy w tym rejonie mogą być przechwycone.</string>
-    <string name="detail_info_danger">Wykryto śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci! Pozbądź się swojego telefou, zniszcz kartę SIM i zgłoś ją jako zagubioną</string>
-    <string name="detail_info_high">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników. Wyjmij baterię z telefoni i unikaj tego miejsca.</string>
+    <string name="detail_info_danger">Wykryto śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci. Pozbądź się swojego telefou, zniszcz kartę SIM i zgłoś ją jako zagubioną!</string>
+    <string name="detail_info_high">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników! Wyjmij baterię z telefoni i unikaj tego miejsca!</string>
     <string name="monitoring_cell_information">Monitorowanie informacji komórek</string>
     <string name="stopped_monitoring_cell_information">Wstrzymano monitorowanie komórek</string>
     <string name="tracking_cell_information">Śledzenie informacji komórek</string>
@@ -159,7 +158,7 @@
     <string name="status_good">Brak zagrożeń. Wszystko OK.</string>
     <string name="alert_threat_detected">UWAGA: Wykryto zagrożenie!</string>
     <string name="aletr_femtocell_connection_detected">UWAGA: Wykryto połączenie FemtoCell!</string>
-    <string name="alert_silent_sms_detected">UWAGA: Wykryto SilentSMS!</string>
+    <string name="alert_silent_sms_detected">UWAGA: Wykryto SilentSMS (Type-0)!</string>
     <string name="femtocell_only_on_cdma_devices">Aplikacja potrafi wykrywać FemtoCell tylko przez połączenie CDMA</string>
     <string name="service_state_changed">Zmieniony został stan usługi</string>
     <string name="stopped_tracking_femtocell">Wstrzymano śledzenie połączeń FemtoCell</string>
@@ -176,8 +175,8 @@
     <string name="no_tracked_locations_found">Brak zapisanych lokalizacji do pokazania</string>
     <string name="contacting_opencellid_for_data">Łączenie z OpenCellID by uzyskać potrzebne dane.\nTo może zająć chwilę&#8230;</string>
 
-    <string name="toggle_aimsicd_monitoring">Rozpocznij śledzenie komórek</string>
-    <string name="toggle_2g_only_network_lock">Rozpocznij śledzenie w trybie 2G</string>
+    <string name="toggle_attack_detection">Wykrywanie przełącz Atak</string>
+    <string name="toggle_cell_tracking">Przełącz Śledzenie komórki</string>
     <string name="download_error">Błąd pobierania:</string>
     <string name="error_backing_up_data">Błąd tworzenia kopii zapasowej.</string>
     <string name="error_restoring_database">Błąd przywracania bazy danych.</string>
@@ -205,8 +204,8 @@
     <string name="help_settings_export_db_to_csv">Eksport z bazy danych do plików CSV.</string>
     <string name="help_settings_import_db_from_csv">Importuj do bazy danych z plików CSV.</string>
     <string name="help_settings_preferences">Ustawienia AIMSICD, czas odświeżania i zachowanie serwisów.</string>
-    <string name="help_tracking_toggle_2g_only_network_lock">Start - ustawia telefon w trybie 2G w celu śledzenia. Stop - ustawia domyślny typ sieci ub automatyczny.</string>
-    <string name="help_tracking_toggle_aimsicd">Rozpoczyna/zatrzymuje zbieranie danych przez AIMSICD do lokalnej bazy danych.</string>
+    <string name="help_tracking_toggle_cell_tracking">Zacznij śledzić komórki do wyświetlania na antenie Map Viewer i ewentualnie później przesłać do OCID.</string>
+    <string name="help_tracking_toggle_attack_detection">Rozpoczyna/zatrzymuje wykrywanie ataku i zbieranie danych do lokalnej bazy danych.</string>
     <string name="danger">ZAGROŻENIE</string>
     <string name="database_backup_successfully_saved_to">Kopia zapasowa zapisana do:</string>
     <string name="describe_the_problem_you_had">W celu uzyskania pomocy opisz swój problem. Problemy bez opisu są automatycznie ignorowane.</string>

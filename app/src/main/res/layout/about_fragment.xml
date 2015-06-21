@@ -48,7 +48,7 @@
             android:textColor="@color/green_text"
             android:id="@+id/textView2"
             android:gravity="center_vertical|center_horizontal"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
         <TableLayout
             android:id="@+id/aimsicd_status_icons"
@@ -162,19 +162,27 @@
 
         </TableLayout>
 
-        <Button
-            android:id="@+id/aimsicd_contribute_link"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_github"
-            android:textSize="14dp" />
+            android:orientation="horizontal">
+            
+            <Button
+                android:id="@+id/aimsicd_github_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_github"
+                android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/aimsicd_wiki_link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_wiki"
-            android:textSize="14dp" />
+            <Button
+                android:id="@+id/aimsicd_wiki_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_wiki"
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -187,18 +195,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/about_disclaimer"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <Button
-                android:id="@+id/aimsicd_poc_link"
+                android:id="@+id/aimsicd_contribute_link"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:ellipsize="start"
                 android:text="@string/about_contribute"
-                android:textSize="14dp" />
-
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -212,7 +219,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/about_releases"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/aimsicd_changelog_link"
@@ -220,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/about_changelog"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -234,7 +241,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/about_license"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/aimsicd_credits_link"
@@ -242,7 +249,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/about_credits"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

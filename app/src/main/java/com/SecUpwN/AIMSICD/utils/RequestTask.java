@@ -1,12 +1,14 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -16,10 +18,16 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
-//import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.TinyDB;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -33,14 +41,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.InputStreamBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
+//import com.SecUpwN.AIMSICD.utils.Helpers;
 
 /**
  *
@@ -82,6 +83,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *      2015-03-01  kairenken   Fixed "DBE_UPLOAD_REQUEST" + button
  *      2015-03-02  kairenken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
  *      2015-03-03  E:V:A       Replaced dirty SharedPreferences code with TinyDB and Upload result Toast msg.
+ *      2015-06-15  SecUpwN     Increased timeout of OCID data download to avoid further retrieval errors
  *
  *  To Fix:
  *
@@ -94,7 +96,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     //Calling from the menu more extensive(more difficult for sever),
     // we have to give more time for the server response
-    public static final int REQUEST_TIMEOUT_MAPS = 20000;       // [ms] 20 s Calling from map
+    public static final int REQUEST_TIMEOUT_MAPS = 40000;       // [ms] 40 s Calling from map
     public static final int REQUEST_TIMEOUT_MENU = 40000;       // [ms] 40 s Calling from menu
 
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
@@ -191,16 +193,17 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 try {
                     int total;
                     int progress = 0;
-
-                    File dir = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/");
+                    String dirName = getOCDBDownloadDirectoryPath(mAppContext);
+                    File dir = new File(dirName);
                     if (!dir.exists()) { dir.mkdirs(); } // need a try{} catch{}
-                    File file = new File(dir, "opencellid.csv");
+                    File file = new File(dir, OCDB_File_Name);
+                    Log.i(TAG, mTAG + ": DBE_DOWNLOAD_REQUEST write to: " + dirName + OCDB_File_Name);
 
                     URL url = new URL(commandString[0]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.setConnectTimeout(mTimeOut);
-                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 20 s
+                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 40 s
                     urlConnection.setDoInput(true);
                     urlConnection.connect();
 
@@ -417,5 +420,20 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         if (lActivity != null && lActivity instanceof MapViewerOsmDroid) {
             ((MapViewerOsmDroid) lActivity).setRefreshActionButtonState(pFlag);
         }
+    }
+
+    public static final String OCDB_File_Name = "opencellid.csv";
+
+    /**
+     * The folder path to OCDB download.
+     * @param context
+     * @return
+     */
+    public static String getOCDBDownloadDirectoryPath(Context context) {
+        return (context.getExternalFilesDir(null) + File.separator) + "OpenCellID/";
+    }
+
+    public static String getOCDBDownloadFilePath(Context context) {
+        return getOCDBDownloadDirectoryPath(context) + OCDB_File_Name;
     }
 }

@@ -89,13 +89,7 @@ Please follow [how to correctly submit Issues](https://github.com/SecUpwN/Androi
 
 ### Support
 
-Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a (fully anonymous) [donation](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Donations).
-
-All collected donations shall be split into appropriate pieces and directly sent to developers who contribute useful code (at our discretion). Additionally, donations will be used to support these privacy organizations (contact us if you are a like-minded organization):
-
-[![EFF](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/EFF.png)](https://www.eff.org/)
-[![Guardian Project](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/GuardianProject.png)](https://guardianproject.info/)
-[![Privacy International](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/PrivacyInternational.png)](https://www.privacyinternational.org/)
+Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! To keep developers in a great mood and support development, please consider making a [donation](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Donations). It will be split into appropriate pieces and directly sent to developers who solved the backed Issue.
 
 ---
 

@@ -1,9 +1,13 @@
-package com.SecUpwN.AIMSICD.smsdetection;
-/*
-
-    Coded by Paul Kinsella paulkinsella29@yahoo.ie
-
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
  */
+
+/* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
+
+package com.SecUpwN.AIMSICD.smsdetection;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +45,7 @@ public class AdvanceUserBaseAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = l_Inflater.inflate(R.layout.adv_user_strings_list, null);
+			convertView = l_Inflater.inflate(R.layout.adv_user_strings_list, parent, false);
 			holder = new ViewHolder();
             holder.tv_detection_string  = (TextView)convertView.findViewById(R.id.tv_adv_list_det_str);
             holder.tv_detection_type  = (TextView)convertView.findViewById(R.id.tv_adv_list_det_type);

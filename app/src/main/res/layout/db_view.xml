@@ -11,7 +11,7 @@
             android:id="@+id/linearLayout">
 
         <Spinner
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/table_spinner"
                 android:entries="@array/table_names"
@@ -22,7 +22,7 @@
     <ListView
             android:id="@+id/list_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:headerDividersEnabled="false"
             android:footerDividersEnabled="false"
             android:overScrollMode="never"

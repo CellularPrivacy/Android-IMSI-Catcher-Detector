@@ -1,6 +1,6 @@
 /* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
  * -----------------------------------------------------------
- * LICENSE:  http://git.io/vJaf6 | TERMS:  http://git.io/vJMf5
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
 package com.SecUpwN.AIMSICD.constants;
@@ -44,8 +44,8 @@ public class DrawerMenu {
          */
         public static class TRACKING {
 
-            public static final int TOGGLE_AIMSICD_MONITORING = 200; //Toggle AIMSICD monitoring
-            public static final int TOGGLE_2G_ONLY_NETWORK = 210; //Toggle 2G-only network lock
+            public static final int TOGGLE_ATTACK_DETECTION = 200; //Toggle Attack Detection
+            public static final int TOGGLE_CELL_TRACKING = 210; //Toggle Cell Tracking
             public static final int TRACK_FEMTOCELL = 220; //Track Femtocell
 
         }

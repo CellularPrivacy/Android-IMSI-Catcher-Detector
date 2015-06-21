@@ -1,13 +1,18 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.receiver;
-
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 

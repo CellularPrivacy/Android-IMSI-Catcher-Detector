@@ -1,9 +1,9 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.fragments;
-
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.utils.Device;
-import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -22,6 +22,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.SecUpwN.AIMSICD.utils.Device;
+import com.SecUpwN.AIMSICD.utils.Helpers;
 
 public class DeviceFragment extends Fragment {
 

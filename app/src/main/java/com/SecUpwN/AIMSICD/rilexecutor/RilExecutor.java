@@ -1,3 +1,8 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.rilexecutor;
 
 import android.content.Context;
@@ -8,10 +13,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import com.SecUpwN.AIMSICD.rilexecutor.DetectResult;
-import com.SecUpwN.AIMSICD.rilexecutor.OemRilExecutor;
-import com.SecUpwN.AIMSICD.rilexecutor.RawResult;
-import com.SecUpwN.AIMSICD.rilexecutor.SamsungMulticlientRilExecutor;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.OemCommands;
 
@@ -64,11 +65,13 @@ public class RilExecutor {
     private final Object mLastResponseLock = new Object();
     private volatile List<String> mLastResponse;
     private DetectResult mRilExecutorDetectResult;
+    private OemCommands mOemCommands;
     private OemRilExecutor mRequestExecutor;
     private HandlerThread mHandlerThread;
     private Handler mHandler;
 
     public RilExecutor(Context context) {
+        mOemCommands = OemCommands.getInstance(context);
         mRequestExecutor = new SamsungMulticlientRilExecutor();
         mRilExecutorDetectResult = mRequestExecutor.detect();
         if (!mRilExecutorDetectResult.available) {
@@ -220,23 +223,23 @@ public class RilExecutor {
                     synchronized (mLastResponseLock) {
                         mLastResponse = new ArrayList<>();
                     }
-                    requestData = OemCommands.getEnterServiceModeData(
+                    requestData = mOemCommands.getEnterServiceModeData(
                             mCurrentType, mCurrentSubtype, OemCommands.OEM_SM_ACTION);
                     responseMsg = mHandler.obtainMessage(ID_RESPONSE);
                     mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
                     break;
                 case ID_REQUEST_FINISH_SERVICE_MODE_COMMAND:
-                    requestData = OemCommands.getEndServiceModeData(mCurrentType);
+                    requestData = mOemCommands.getEndServiceModeData(mCurrentType);
                     responseMsg = mHandler.obtainMessage(ID_RESPONSE_FINISH_SERVICE_MODE_COMMAND);
                     mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
                     break;
                 case ID_REQUEST_PRESS_A_KEY:
-                    requestData = OemCommands.getPressKeyData(msg.arg1, OemCommands.OEM_SM_ACTION);
+                    requestData = mOemCommands.getPressKeyData(msg.arg1, OemCommands.OEM_SM_ACTION);
                     responseMsg = mHandler.obtainMessage(ID_RESPONSE_PRESS_A_KEY);
                     mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
                     break;
                 case ID_REQUEST_REFRESH:
-                    requestData = OemCommands.getPressKeyData('\0', OemCommands.OEM_SM_QUERY);
+                    requestData = mOemCommands.getPressKeyData('\0', OemCommands.OEM_SM_QUERY);
                     responseMsg = mHandler.obtainMessage(ID_RESPONSE);
                     mRequestExecutor.invokeOemRilRequestRaw(requestData, responseMsg);
                     break;

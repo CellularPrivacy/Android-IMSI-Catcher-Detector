@@ -1,4 +1,8 @@
-package com.SecUpwN.AIMSICD.utils;
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 
 /**
  * Description:
@@ -13,6 +17,9 @@ package com.SecUpwN.AIMSICD.utils;
  * @author Jan Philip Matuschek
  * @version 22 September 2010
  */
+
+package com.SecUpwN.AIMSICD.utils;
+
 public class GeoLocation {
 
     private double radLat; // latitude in radians

@@ -1,10 +1,15 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.activities;
-
-import com.SecUpwN.AIMSICD.fragments.MapPrefFragment;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+
+import com.SecUpwN.AIMSICD.fragments.MapPrefFragment;
 
 public class MapPrefActivity extends BaseActivity {
 

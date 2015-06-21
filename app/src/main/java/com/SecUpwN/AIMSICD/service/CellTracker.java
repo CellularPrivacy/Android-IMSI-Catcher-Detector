@@ -1,3 +1,8 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.service;
 
 import android.app.AlertDialog;
@@ -36,6 +41,7 @@ import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.DeviceApi17;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.Icon;
+import com.SecUpwN.AIMSICD.utils.OCIDResponse;
 import com.SecUpwN.AIMSICD.utils.Status;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
 
@@ -97,6 +103,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private SharedPreferences prefs;
     // We can also use this to simplify SharedPreferences usage above.
     //TinyDB tinydb = new TinyDB(context);
+    private TinyDB tinydb;
 
     public static int PHONE_TYPE;               //
     public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
@@ -122,8 +129,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     // TEST to fix toast in OCID api key was:
     // private Context context;
     private static Context context;
-    private final Handler timerHandler = new Handler();
-    TinyDB tinydb;
+
     public CellTracker(Context context, SignalStrengthTracker sst) {
         this.context = context;
         this.signalStrengthTracker = sst;
@@ -326,7 +332,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     t = 15L; // Automatic refresh rate is 15 seconds
                     break;
                 default:
-                    t = (rate * 1L);
+                    t = (long) rate;
                     break;
             }
             REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
@@ -352,49 +358,24 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      */
     public static String requestNewOCIDKey() throws Exception {
-        String responseFromServer = null;
         DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet("http://opencellid.org/gsmCell/user/generateApiKey");
-        HttpResponse result = httpclient.execute(httpGet);
-        StatusLine status = result.getStatusLine();
+        HttpGet httpGet = new HttpGet(context.getString(R.string.opencellid_api_get_key));
+        OCIDResponse result = new OCIDResponse(httpclient.execute(httpGet));
 
-        if (status.getStatusCode() == 200) {
-            if (result.getEntity() != null) {
-                InputStream is = result.getEntity().getContent();
-                ByteArrayOutputStream content = new ByteArrayOutputStream();
-                // Read response into a buffered stream
-                int readBytes;
-                byte[] sBuffer = new byte[4096];
-                while ((readBytes = is.read(sBuffer)) != -1) {
-                    content.write(sBuffer, 0, readBytes);
-                }
-                responseFromServer = content.toString("UTF-8");
-                result.getEntity().consumeContent();
-            }
+        if (result.getStatusCode() == 200) {
+            String responseFromServer = result.getResponseFromServer();
             Log.d("OCID", responseFromServer);
             return responseFromServer;
 
-        } else if (status.getStatusCode() == 503) {
+        } else if (result.getStatusCode() == 503) {
             // Check for HTTP error code 503 which is returned when user is trying to request
             // a new API key within 24 hours of the last request. (See GH issue #267)
             // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
 
             Helpers.msgLong(context, context.getString(R.string.only_one_api_per_day));
-            if (result.getEntity() != null) {
-                InputStream is = result.getEntity().getContent();
-                ByteArrayOutputStream content = new ByteArrayOutputStream();
-                // Read response into a buffered stream
-                int readBytes = 0;
-                byte[] sBuffer = new byte[4096];
-                while ((readBytes = is.read(sBuffer)) != -1) {
-                    content.write(sBuffer, 0, readBytes);
-                }
-                responseFromServer = content.toString("UTF-8");
-                result.getEntity().consumeContent();
-            }
+            String responseFromServer = result.getResponseFromServer();
             Log.d("AIMSICD", "CellTracker: OCID Reached 24hr API key limit: " + responseFromServer);
             return responseFromServer;
-
         } else {
 
             // TODO add code here or elsewhere to check for NO network exceptions...
@@ -403,8 +384,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             httpGet = null;
             result = null;
 
-            Log.d("AIMSICD", "CellTracker: OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
-            throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
+            Log.d("AIMSICD", "CellTracker: OCID Returned " + result.getStatusCode() + " " + result.getReasonPhrase());
+//                        throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
+            return null;
         }
     }
 

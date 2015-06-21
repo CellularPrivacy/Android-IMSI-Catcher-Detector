@@ -1,8 +1,9 @@
+/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
+ * -----------------------------------------------------------
+ * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
+ * -----------------------------------------------------------
+ */
 package com.SecUpwN.AIMSICD.fragments;
-
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
-import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
+import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 public class AboutFragment extends Fragment {
 
@@ -51,11 +56,11 @@ public class AboutFragment extends Fragment {
 
             //GitHub WIKI Link
             tv = v.findViewById(R.id.aimsicd_wiki_link);
-            setLink(tv, R.string.wiki_link);
+            setLink(tv, R.string.aimsicd_wiki_link);
 
-            //Proof of Concept Link
-            tv = v.findViewById(R.id.aimsicd_poc_link);
-            setLink(tv, R.string.contribute_link);
+            //GitHub Website Link
+            tv = v.findViewById(R.id.aimsicd_github_link);
+            setLink(tv, R.string.aimsicd_github_link);
 
             //Disclaimer Link
             tv = v.findViewById(R.id.aimsicd_disclaimer_link);
@@ -63,7 +68,7 @@ public class AboutFragment extends Fragment {
 
             //GitHub Contribution Link
             tv = v.findViewById(R.id.aimsicd_contribute_link);
-            setLink(tv, R.string.aimsicd_github_link);
+            setLink(tv, R.string.aimsicd_contribute_link);
 
             //XDA Development Thread Link
 //            tv = (TextView) v.findViewById(R.id.aimsicd_visit_xda_link);
