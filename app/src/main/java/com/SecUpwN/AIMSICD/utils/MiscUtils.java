@@ -153,10 +153,10 @@ public class MiscUtils {
             JSONArray json_array_node = json_response.optJSONArray("load_detection_strings");
 
             int json_array_len = json_array_node.length();
-
+            dbaccess.open();
             for(int i=0; i < json_array_len; i++)
             {
-                dbaccess.open();
+                
                 JSONObject current_json_object = json_array_node.getJSONObject(i);
                 ContentValues store_new_det_string = new ContentValues();
                 store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN,
@@ -166,10 +166,10 @@ public class MiscUtils {
                 if(dbaccess.insertNewDetectionString(store_new_det_string)){
                     Log.i("refreshDetectionDbStrings",">>>String added success");
                 }
-                dbaccess.close();
+                
 
             }
-
+            dbaccess.close();
         } catch (JSONException e) {
             dbaccess.close();
             Log.e("refreshDetectionDbStrings",">>> Error parsing JsonFile "+e.toString());
@@ -186,8 +186,7 @@ public class MiscUtils {
         //06-17 22:06:05.988 D/dalvikvm(24747): <-- example of timestamp
         String[] buffer = line.split(" ");
 
-        Calendar calendar = Calendar.getInstance();
-        line = String.valueOf(calendar.get(Calendar.YEAR))+buffer[0]+buffer[1];
+        line = String.valueOf(Calendar.getInstance().get(Calendar.YEAR))+buffer[0]+buffer[1];
                                                             //   -->we dont need the last 4 digits in timestamp .988
                                                             //   |  way to accurate but easily change if needed
         String timestamp = line.substring(0,line.length()-4)// <-|
