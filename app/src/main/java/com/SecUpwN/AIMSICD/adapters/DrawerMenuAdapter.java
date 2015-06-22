@@ -30,9 +30,9 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
  
     @SuppressLint("ShowToast")
     public DrawerMenuAdapter(Context context, int textViewResourceId, List<NavDrawerItem> objects ) {
-        super(context, textViewResourceId, objects)
+        super(context, textViewResourceId, objects);
         inflater = LayoutInflater.from(context);
-        this.context = context
+        this.context = context;
 
         mInfoButtonListener = new View.OnClickListener() {
             @Override
