@@ -31,13 +31,13 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
     private final View.OnClickListener mInfoButtonListener;
     private final Animation mBounceHelpButtonAnimation;
 
-    private static Context context;
+    private static Context appContext;
  
     @SuppressLint("ShowToast")
     public DrawerMenuAdapter(Context context, int textViewResourceId, List<NavDrawerItem> objects ) {
         super(context, textViewResourceId, objects);
         inflater = LayoutInflater.from(context);
-        this.context = context;
+        appContext = context.getApplicationContext();
 
         mInfoButtonListener = new View.OnClickListener() {
             @Override
@@ -47,11 +47,11 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
                     showHelpToast((Integer) pView.getTag());
             }
         };
-        mBounceHelpButtonAnimation = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.action_button_help);
+        mBounceHelpButtonAnimation = AnimationUtils.loadAnimation(appContext, R.anim.action_button_help);
     }
 
     private void showHelpToast(Integer pToastValueId) {
-        Helpers.msgLong(context.getApplicationContext(), context.getApplicationContext().getString(pToastValueId));
+        Helpers.msgLong(appContext, appContext.getString(pToastValueId));
     }
 
     @Override
