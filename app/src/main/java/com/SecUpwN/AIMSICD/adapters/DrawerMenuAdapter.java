@@ -37,7 +37,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
     public DrawerMenuAdapter(Context context, int textViewResourceId, List<NavDrawerItem> objects ) {
         super(context, textViewResourceId, objects);
         inflater = LayoutInflater.from(context);
-        this.appContext = context.getApplicationContext();
+        appContext = context.getApplicationContext();
 
         mInfoButtonListener = new View.OnClickListener() {
             @Override
