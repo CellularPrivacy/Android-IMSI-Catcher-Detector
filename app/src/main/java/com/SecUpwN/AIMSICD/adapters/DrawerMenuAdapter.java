@@ -15,13 +15,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuItem;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
+import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import java.util.List;
 
@@ -29,16 +29,16 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
 
     private final LayoutInflater inflater;
     private final View.OnClickListener mInfoButtonListener;
-    private final Toast mToast;
     private final Animation mBounceHelpButtonAnimation;
 
-
+    private static Context context;
+ 
     @SuppressLint("ShowToast")
     public DrawerMenuAdapter(Context context, int textViewResourceId, List<NavDrawerItem> objects ) {
         super(context, textViewResourceId, objects);
         inflater = LayoutInflater.from(context);
+        this.context = context;
 
-        mToast = Toast.makeText(context.getApplicationContext(), "", Toast.LENGTH_LONG);
         mInfoButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View pView) {
@@ -51,8 +51,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
     }
 
     private void showHelpToast(Integer pToastValueId) {
-        mToast.setText(getContext().getString(pToastValueId));
-        mToast.show();
+        Helpers.msgLong(context.getApplicationContext(), context.getApplicationContext().getString(pToastValueId));
     }
 
     @Override
