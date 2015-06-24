@@ -16,7 +16,7 @@ public class Toaster {
 
     private static final int SHORT_TOAST_DURATION = 2000;
     private static final long TOAST_DURATION_MILLS = 6000; //change if need longer
-    private final Toast toast;
+    private static final Toast toast;
 
     // Private constructor. Prevents instantiation from other classes.
     private Toaster() { }
