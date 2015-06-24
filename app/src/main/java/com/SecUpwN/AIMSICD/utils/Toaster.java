@@ -78,7 +78,8 @@ public class Toaster {
             new Handler(context.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    toast = Toast.makeText(context, msg.trim(), Toast.LENGTH_SHORT).show();
+                    toast = Toast.makeText(context, msg.trim(), Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             });
         }
