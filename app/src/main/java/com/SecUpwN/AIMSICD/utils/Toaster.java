@@ -16,6 +16,7 @@ public class Toaster {
 
     private static final int SHORT_TOAST_DURATION = 2000;
     private static final long TOAST_DURATION_MILLS = 6000; //change if need longer
+    private final Toast toast;
 
     // Private constructor. Prevents instantiation from other classes.
     private Toaster() { }
@@ -43,18 +44,21 @@ public class Toaster {
      */
     public static void msgLong(final Context context, final String msg) {
         if (context != null && msg != null) {
-            final Toast t = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-            t.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            if (toast!=null){
+                toast.cancel();
+            }
+        
+            toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
 
             new CountDownTimer(Math.max(TOAST_DURATION_MILLS - SHORT_TOAST_DURATION, 1000), 1000) {
                 @Override
                 public void onFinish() {
-                    t.show();
+                    toast.show();
                 }
 
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    t.show();
+                    toast.show();
                 }
             }.start();
         }
@@ -68,10 +72,13 @@ public class Toaster {
      */
     public static void msgShort(final Context context, final String msg) {
         if (context != null && msg != null) {
+            if (toast!=null){
+                toast.cancel();
+            }
             new Handler(context.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(context, msg.trim(), Toast.LENGTH_SHORT).show();
+                    toast = Toast.makeText(context, msg.trim(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
