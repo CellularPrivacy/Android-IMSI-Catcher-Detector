@@ -57,8 +57,9 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
     // private static final boolean DBG = BuildConfig.DEBUG;
     private static final boolean DBG = false;
 
-    // TODO: EVA: We should add AIMSICD to this TAG
-    private static final String TAG = SamsungMulticlientRilExecutor.class.getSimpleName();
+    private static final String TAG = "AIMSICD";
+    private static final String mTAG = "MultiRil";
+
     private volatile LocalSocketThread mThread;
 
     public SamsungMulticlientRilExecutor() {
@@ -104,7 +105,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
     @Override
     public synchronized void start() {
         if (mThread != null) {
-            Log.e(TAG, "OEM raw request executor thread is running");
+            Log.e(TAG, mTAG + " OEM raw request executor thread is running");
             return;
         }
         mThread = new LocalSocketThread(MULTICLIENT_SOCKET);
@@ -114,7 +115,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
     @Override
     public synchronized void stop() {
         if (mThread == null) {
-            Log.e(TAG, "OEM raw request executor thread is not running");
+            Log.e(TAG, mTAG + " OEM raw request executor thread is not running");
             return;
         }
         mThread.cancel();
@@ -124,26 +125,26 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
     @Override
     public synchronized void invokeOemRilRequestRaw(byte[] data, Message response) {
         if (mThread == null) {
-            Log.e(TAG, "OEM raw request executor thread is not running");
+            Log.e(TAG, mTAG + " OEM raw request executor thread is not running");
             return;
         }
         try {
             mThread.invokeOemRilRequestRaw(data, response);
         } catch (IOException ioe) {
-            Log.e(TAG, "invokeOemRilRequestRaw() error", ioe);
+            Log.e(TAG, mTAG + " invokeOemRilRequestRaw() error", ioe);
         }
     }
 
     @Override
     public synchronized void invokeOemRilRequestStrings(String[] strings, Message response) {
         if (mThread == null) {
-            Log.e(TAG, "OEM raw request executor thread is not running");
+            Log.e(TAG, mTAG + " OEM raw request executor thread is not running");
             return;
         }
         try {
             mThread.invokeOemRilRequestStrings(strings, response);
         } catch (IOException ioe) {
-            Log.e(TAG, "invokeOemRilRequestStrings() error", ioe);
+            Log.e(TAG, mTAG + " invokeOemRilRequestStrings() error", ioe);
         }
     }
 
@@ -168,7 +169,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
         public void cancel() {
             if (DBG) {
-                Log.v(TAG, "SamsungMulticlientRil cancel()");
+                Log.v(TAG, mTAG + " SamsungMulticlientRil cancel()");
             }
             synchronized (this) {
                 mCancelRequested.set(true);
@@ -181,12 +182,12 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                 throws IOException {
             int token;
             if (mMessages.size() > MAX_MESSAGES) {
-                Log.e(TAG, "message queue is full");
+                Log.e(TAG, mTAG + " message queue is full");
                 return;
             }
 
             if (mOutputStream == null) {
-                Log.e(TAG, "Local write() error: not connected");
+                Log.e(TAG, mTAG + " Local write() error: not connected");
                 return;
             }
 
@@ -213,12 +214,12 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                 throws IOException {
             int token;
             if (mMessages.size() > MAX_MESSAGES) {
-                Log.e(TAG, "message queue is full");
+                Log.e(TAG, mTAG + " message queue is full");
                 return;
             }
 
             if (mOutputStream == null) {
-                Log.e(TAG, "Local write() error: not connected");
+                Log.e(TAG, mTAG + " Local write() error: not connected");
                 return;
             }
 
@@ -272,7 +273,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
         public synchronized void disconnect() {
 
             if (DBG) {
-                Log.v(TAG, "Local disconnect()");
+                Log.v(TAG, mTAG + " Local disconnect()");
             }
 
             if (mSocket == null) {
@@ -282,31 +283,31 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             try {
                 mSocket.shutdownInput();
             } catch (IOException e) {
-                Log.e(TAG, "Local shutdownInput() of mSocket failed", e);
+                Log.e(TAG, mTAG + " Local shutdownInput() of mSocket failed", e);
             }
 
             try {
                 mSocket.shutdownOutput();
             } catch (IOException e) {
-                Log.e(TAG, "Local shutdownOutput() of mSocket failed", e);
+                Log.e(TAG, mTAG + " Local shutdownOutput() of mSocket failed", e);
             }
 
             try {
                 mInputStream.close();
             } catch (IOException e) {
-                Log.e(TAG, "Local close() of mInputStream failed", e);
+                Log.e(TAG, mTAG + " Local close() of mInputStream failed", e);
             }
 
             try {
                 mOutputStream.close();
             } catch (IOException e) {
-                Log.e(TAG, "Local close() of mOutputStream failed", e);
+                Log.e(TAG, mTAG + " Local close() of mOutputStream failed", e);
             }
 
             try {
                 mSocket.close();
             } catch (IOException e) {
-                Log.e(TAG, "Local close() of mSocket failed", e);
+                Log.e(TAG, mTAG + " Local close() of mSocket failed", e);
             }
 
             mSocket = null;
@@ -320,7 +321,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             int endpos = 0;
             final byte buf[] = new byte[4096];
 
-            Log.i(TAG, "BEGIN LocalSocketThread-Socket");
+            Log.i(TAG, mTAG + " BEGIN LocalSocketThread-Socket");
             setName("MultiClientThread");
 
             mSocket = new LocalSocket();
@@ -329,7 +330,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                 mInputStream = mSocket.getInputStream();
                 mOutputStream = mSocket.getOutputStream();
             } catch (IOException e) {
-                Log.e(TAG, "Connect error", e);
+                Log.e(TAG, mTAG + " Connect error", e);
                 return;
             }
 
@@ -338,7 +339,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                     rcvd = mInputStream.read(buf, endpos, buf.length - endpos);
                     if (rcvd < 0) {
                         if (DBG) {
-                            Log.v(TAG, "EOF reached");
+                            Log.v(TAG, mTAG + " EOF reached");
                         }
                         break;
                     }
@@ -349,7 +350,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
                     int msgLen = (buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | (buf[3] & 0xff);
                     if (msgLen + 4 > buf.length) {
-                        Log.e(TAG, "message to big. Length: " + msgLen);
+                        Log.e(TAG, mTAG + " message to big. Length: " + msgLen);
                         endpos = 0;
                         continue;
                     }
@@ -390,13 +391,13 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                 responseType = p.readInt();
                 switch (responseType) {
                     case RESPONSE_UNSOLICITED:
-                        Log.v(TAG, "Unsolicited response ");
+                        Log.v(TAG, mTAG + " Unsolicited response ");
                         break;
                     case RESPONSE_SOLICITED:
                         processSolicited(p);
                         break;
                     default:
-                        Log.v(TAG, "Invalid response type: " + responseType);
+                        Log.v(TAG, mTAG + " Invalid response type: " + responseType);
                         break;
                 }
             } finally {
@@ -430,7 +431,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             }
 
             if (token == null) {
-                Log.e(TAG, "token is null", errorEx);
+                Log.e(TAG, mTAG + " token is null", errorEx);
             } else {
                 synchronized (this) {
                     Message m = mMessages.remove(token);
@@ -448,7 +449,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                                 m.sendToTarget();
                         }
                     } else {
-                        Log.i(TAG, "Message with token " + token + " not found");
+                        Log.i(TAG, mTAG + " Message with token " + token + " not found");
                     }
                 }
             }
