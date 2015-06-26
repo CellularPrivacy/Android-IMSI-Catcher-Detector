@@ -33,6 +33,7 @@ public class AboutFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.about_fragment, container, false);
         String version;
+        String BUILDOZER_BUILDNUMBER;
         btncredits = (Button) v.findViewById(R.id.aimsicd_credits_link);
 
         PackageManager manager = mContext.getPackageManager();
@@ -44,11 +45,22 @@ public class AboutFragment extends Fragment {
             //Woops something went wrong??
             version = "";
         }
+        
+        BUILDOZER_BUILDNUMBER = prefs.getString(BUILDOZER_BUILDNUMBER, BuildConfig.BUILDOZER_BUILDNUMBER);
+        if (BUILDOZER_BUILDNUMBER == null) {
+            BUILDOZER_BUILDNUMBER = "NA"; // avoid null buildnumber
+        }
 
         TextView versionNumber;
         if (v != null) {
             versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
             versionNumber.setText(getString(R.string.app_version) + version);
+
+            if(BUILDOZER_BUILDNUMBER != "NA") {
+                BuildozerView = (TextView) v.findViewById(R.id.buildozer_buildnumber);
+                BuildozerView.setText(getString(R.string.buildozer_buildnumber) + BUILDOZER_BUILDNUMBER);
+                BuildozerView.setVisibility(View.VISIBLE);
+            }
 
             //Status icons link
             View tv = v.findViewById(R.id.aimsicd_status_icons);
