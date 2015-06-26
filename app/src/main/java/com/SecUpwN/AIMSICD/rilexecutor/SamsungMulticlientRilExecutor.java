@@ -58,7 +58,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
     private static final boolean DBG = false;
 
     private static final String TAG = "AIMSICD";
-    private static final String mTAG = "MultiRil";
+    private static final String mTAG = "SamsungMulticlientRilExecutor";
 
     private volatile LocalSocketThread mThread;
 
