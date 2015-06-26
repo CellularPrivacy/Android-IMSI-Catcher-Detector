@@ -64,13 +64,9 @@ android {
         }
         release {
             buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
+            buildConfigField 'String', 'BUILDOZER_BUILDNUMBER', '"NA"'
             minifyEnabled true
-            proguardFil            try {
-                buildConfigField 'String', 'OPEN_CELLID_API_KEY', '\"' + open_cellid_api_key + '\"'
-            } catch (MissingPropertyException e) {
-                buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
-            }
-es getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
     signingConfigs {
