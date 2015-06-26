@@ -56,9 +56,15 @@ android {
             } catch (MissingPropertyException e) {
                 buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
             }
+            try {
+                buildConfigField 'String', 'BUILDOZER_BUILDNUMBER', '\"' + System.getenv("BUILDOZER_BUILDNUMBER") + '\"'
+            } catch (MissingPropertyException e) {
+                buildConfigField 'String', 'BUILDOZER_BUILDNUMBER', '"NA"'
+            }
         }
         release {
             buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
+            buildConfigField 'String', 'BUILDOZER_BUILDNUMBER', '"NA"'
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
