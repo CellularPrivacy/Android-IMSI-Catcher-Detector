@@ -14,6 +14,7 @@ import android.util.SparseArray;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
 import com.SecUpwN.AIMSICD.utils.BaseAsyncTask;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
+// DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
 //import com.squareup.leakcanary.LeakCanary;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class AppAIMSICD extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
         //LeakCanary.install(this);
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
