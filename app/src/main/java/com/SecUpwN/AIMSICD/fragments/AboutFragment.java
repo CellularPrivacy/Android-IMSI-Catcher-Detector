@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
