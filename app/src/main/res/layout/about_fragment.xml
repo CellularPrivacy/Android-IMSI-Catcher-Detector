@@ -33,14 +33,14 @@
             android:textSize="16sp"/>
 
         <TextView
-		          android:id="@+id/buildozer_buildnumber"
-	           android:layout_width="match_parent"
-		          android:layout_height="wrap_content"
-		          android:gravity="center_horizontal"
-	           android:text="@string/buildozer_buildnumber"
-	           android:textColor="@color/red_text"
-	           android:textSize="16sp"
-	           android:visibility="gone"/>
+            android:id="@+id/buildozer_buildnumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/buildozer_buildnumber"
+            android:textColor="@color/red_text"
+            android:textSize="16sp"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
