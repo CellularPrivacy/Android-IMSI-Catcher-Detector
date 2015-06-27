@@ -53,6 +53,7 @@ public class AboutFragment extends Fragment {
         }
 
         TextView versionNumber;
+        TextView BuildozerView;
         if (v != null) {
             versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
             versionNumber.setText(getString(R.string.app_version) + version);
