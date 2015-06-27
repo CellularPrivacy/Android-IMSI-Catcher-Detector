@@ -47,7 +47,7 @@ public class AboutFragment extends Fragment {
             version = "";
         }
         
-        BUILDOZER_BUILDNUMBER = prefs.getString(BUILDOZER_BUILDNUMBER, BuildConfig.BUILDOZER_BUILDNUMBER);
+        BUILDOZER_BUILDNUMBER = BuildConfig.BUILDOZER_BUILDNUMBER;
         if (BUILDOZER_BUILDNUMBER == null) {
             BUILDOZER_BUILDNUMBER = "NA"; // avoid null buildnumber
         }
