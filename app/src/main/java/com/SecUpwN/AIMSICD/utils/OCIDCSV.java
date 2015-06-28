@@ -81,7 +81,9 @@ public class OCIDCSV  extends ArrayList<OCIDCSV.OCIDCSVLine> {
 
         public double truncateDouble(double d, int numDecimal) {
             String s = String.format("%." + Integer.toString(numDecimal) +"f", d);
-            return Double.parseDouble(s);
+            NumberFormat nf = NumberFormat.getInstance();
+            double number = nf.parse(s).doubleValue();
+            return number;
         }
     }
 }
