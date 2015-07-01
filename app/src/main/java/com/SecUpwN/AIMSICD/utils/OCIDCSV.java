@@ -2,6 +2,7 @@ package com.SecUpwN.AIMSICD.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.text.NumberFormat;
 
 /**
  * Created by Marvin Arnold on 9/06/15.
@@ -81,7 +82,14 @@ public class OCIDCSV  extends ArrayList<OCIDCSV.OCIDCSVLine> {
 
         public double truncateDouble(double d, int numDecimal) {
             String s = String.format("%." + Integer.toString(numDecimal) +"f", d);
-            return Double.parseDouble(s);
+            NumberFormat nf = NumberFormat.getInstance();
+            double number = 0;
+            try {
+                number = Double.parseDouble(String.valueOf(nf.parse(s).doubleValue()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return number;
         }
     }
 }
