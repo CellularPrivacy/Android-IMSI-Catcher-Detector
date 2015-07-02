@@ -28,7 +28,7 @@ public class TruncatedLocation extends Location {
     }
 
     public static double truncateDouble(double d, int numDecimal) {
-        double d = 0;
+        d = 0;
         NumberFormat format = NumberFormat.getInstance();
 
         String s = String.format("%." + Integer.toString(numDecimal) +"f", d);
