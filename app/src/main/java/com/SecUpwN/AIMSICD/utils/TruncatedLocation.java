@@ -28,16 +28,16 @@ public class TruncatedLocation extends Location {
     }
 
     public static double truncateDouble(double d, int numDecimal) {
-        d = 0;
+        double td = 0;
         NumberFormat format = NumberFormat.getInstance();
 
         String s = String.format("%." + Integer.toString(numDecimal) +"f", d);
         try {
             Number number = format.parse(s);
-            double d = number.doubleValue();
+            double td = number.doubleValue();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return d;
+        return td;
     }
 }
