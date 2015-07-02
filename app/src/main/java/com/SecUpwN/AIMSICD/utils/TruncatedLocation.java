@@ -1,6 +1,8 @@
 package com.SecUpwN.AIMSICD.utils;
 
 import android.location.Location;
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 /**
  * Created by Marvin Arnold on 1/07/15.
@@ -26,7 +28,16 @@ public class TruncatedLocation extends Location {
     }
 
     public static double truncateDouble(double d, int numDecimal) {
+        double td = 0;
+        NumberFormat format = NumberFormat.getInstance();
+
         String s = String.format("%." + Integer.toString(numDecimal) +"f", d);
-        return Double.parseDouble(s);
+        try {
+            Number number = format.parse(s);
+            td = number.doubleValue();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return td;
     }
 }
