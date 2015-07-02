@@ -34,7 +34,7 @@ public class TruncatedLocation extends Location {
         String s = String.format("%." + Integer.toString(numDecimal) +"f", d);
         try {
             Number number = format.parse(s);
-            double td = number.doubleValue();
+            td = number.doubleValue();
         } catch (ParseException e) {
             e.printStackTrace();
         }
