@@ -14,6 +14,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,38 +55,36 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
- *  Class to handle tracking of cell information
- *
- *  Description:  TODO: add more info
- *
- *  Note:       The refresh rate is set in two different places:
- *                  onSharedPreferenceChanged()
- *                  loadPreferences()
- *
- *              For proper TinyDB implementation use something like:
- *              https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo/issues/6
- *
- *
- *
- *  ToDo:       Currently the automatic refresh rate is hard-coded to 15 seconds,
- *              in 2 different places above. We may consider have this more transparent
- *              in a static variable. It is also used in timerRunnable where it
- *              defaults to 25 seconds.
- *
- *              [x] Use TinyDB.java to simplify Shared Preferences usage
- *
- *
- *  ChangeLog
- *
- *  2015-03-02  kairenken   removed OCID_UPLOAD_PREF. (Upload is done manually.)
- *  2015-03-02  E:V:A       Added TinyDB import for SharedPreferences alternative
- *  2015-03-03  E:V:A       Replaced getSystemProp with TinyDB Boolean "ocid_downloaded" in Runnable()
- *  2015-04-18  banjaxbanjo Removed timer that checked for neighbouring cells so it now checks onCellChange
- *
- *
+ * Class to handle tracking of cell information
+ * <p/>
+ * Description:  TODO: add more info
+ * <p/>
+ * Note:       The refresh rate is set in two different places:
+ * onSharedPreferenceChanged()
+ * loadPreferences()
+ * <p/>
+ * For proper TinyDB implementation use something like:
+ * https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo/issues/6
+ * <p/>
+ * <p/>
+ * <p/>
+ * ToDo:       Currently the automatic refresh rate is hard-coded to 15 seconds,
+ * in 2 different places above. We may consider have this more transparent
+ * in a static variable. It is also used in timerRunnable where it
+ * defaults to 25 seconds.
+ * <p/>
+ * [x] Use TinyDB.java to simplify Shared Preferences usage
+ * <p/>
+ * <p/>
+ * ChangeLog
+ * <p/>
+ * 2015-03-02  kairenken   removed OCID_UPLOAD_PREF. (Upload is done manually.)
+ * 2015-03-02  E:V:A       Added TinyDB import for SharedPreferences alternative
+ * 2015-03-03  E:V:A       Replaced getSystemProp with TinyDB Boolean "ocid_downloaded" in Runnable()
+ * 2015-04-18  banjaxbanjo Removed timer that checked for neighbouring cells so it now checks onCellChange
  */
 
-public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
     public static String OCID_API_KEY = null;   // see getOcidKey()
@@ -301,8 +301,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
     /**
      * Description:     TODO:
-     *
-     *
      */
     final PhoneStateListener phoneStatelistener = new PhoneStateListener() {
         private void handle() {
@@ -383,7 +381,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
      *
      * @return null or newly generated key
-     *
      */
     public static String requestNewOCIDKey() throws Exception {
         DefaultHttpClient httpclient = new DefaultHttpClient();
@@ -430,7 +427,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * Cell Information Monitoring
      * TODO: What exactly are we monitoring here??
      *
-     *
      * @param monitor Enable/Disable monitoring
      */
     public void setCellMonitoring(boolean monitor) {
@@ -476,29 +472,29 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     /**
      * Cell Information Tracking and database logging
-     *
-     *  Description:
-     *
-     *          If the "tracking" option is enabled (as it is by default) then we are keeping
-     *          a record (tracking) of the device location "gpsd_lat/lon", the connection
-     *          signal strength (rx_signal) and data activity (?) and data connection state (?).
-     *          The items included in these are stored in the "cellinfo" table.
-     *
-     *          DATA_ACTIVITY:
-     *          DATA_CONNECTION_STATE:
-     *
-     *  TODO:   We also need to listen and log for:
-     *
-     *      [ ]     LISTEN_CALL_STATE:
-     *                  CALL_STATE_IDLE
-     *                  CALL_STATE_OFFHOOK
-     *                  CALL_STATE_RINGING
-     *
-     *      [ ]     LISTEN_SERVICE_STATE:
-     *                  STATE_EMERGENCY_ONLY
-     *                  STATE_IN_SERVICE
-     *                  STATE_OUT_OF_SERVICE
-     *                  STATE_POWER_OFF
+     * <p/>
+     * Description:
+     * <p/>
+     * If the "tracking" option is enabled (as it is by default) then we are keeping
+     * a record (tracking) of the device location "gpsd_lat/lon", the connection
+     * signal strength (rx_signal) and data activity (?) and data connection state (?).
+     * The items included in these are stored in the "cellinfo" table.
+     * <p/>
+     * DATA_ACTIVITY:
+     * DATA_CONNECTION_STATE:
+     * <p/>
+     * TODO:   We also need to listen and log for:
+     * <p/>
+     * [ ]     LISTEN_CALL_STATE:
+     * CALL_STATE_IDLE
+     * CALL_STATE_OFFHOOK
+     * CALL_STATE_RINGING
+     * <p/>
+     * [ ]     LISTEN_SERVICE_STATE:
+     * STATE_EMERGENCY_ONLY
+     * STATE_IN_SERVICE
+     * STATE_OUT_OF_SERVICE
+     * STATE_POWER_OFF
      *
      * @param track Enable/Disable tracking
      */
@@ -527,14 +523,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     *  Description:    This handles the settings/choices and default preferences, when changed.
-     *                  From the default file:
-     *                          preferences.xml
-     *                  And saved in the file:
-     *                          /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
-     *
-     *  NOTE:           - For more code transparency we have added TinyDB.java as a
-     *                    wrapper to SharedPreferences usage. Please try to use this instead.
+     * Description:    This handles the settings/choices and default preferences, when changed.
+     * From the default file:
+     * preferences.xml
+     * And saved in the file:
+     * /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
+     * <p/>
+     * NOTE:           - For more code transparency we have added TinyDB.java as a
+     * wrapper to SharedPreferences usage. Please try to use this instead.
      *
      * @param sharedPreferences
      * @param key
@@ -590,16 +586,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     *  Description:    Updates Neighbouring Cell details
-     *
-     *  TODO: add more details...
-     *
-     *
+     * Description:    Updates Neighbouring Cell details
+     * <p/>
+     * TODO: add more details...
      */
     public List<Cell> updateNeighbouringCells() {
         List<Cell> neighboringCells = new ArrayList<>();
         List<NeighboringCellInfo> neighboringCellInfo = tm.getNeighboringCellInfo();
-        if(neighboringCellInfo == null)
+        if (neighboringCellInfo == null)
             neighboringCellInfo = new ArrayList<>();
 
         if (neighboringCellInfo.size() == 0) {
@@ -614,7 +608,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             } else {
                 tm.listen(phoneStatelistener,
                         PhoneStateListener.LISTEN_CELL_LOCATION |
-                                PhoneStateListener.LISTEN_CELL_INFO|
+                                PhoneStateListener.LISTEN_CELL_INFO |
                                 PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
                                 PhoneStateListener.LISTEN_SERVICE_STATE |
                                 PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
@@ -626,14 +620,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
-                        if(neighboringCellInfo != null)
-                        if (neighboringCellInfo.size() > 0) {
-                            // Can we think of a better log message here?
-                            Log.d(TAG, mTAG + ": neighbouringCellInfo found on " + i + " try. (time based)");
-                            break;
-                        } else {
-                            continue;
-                        }
+                        if (neighboringCellInfo != null)
+                            if (neighboringCellInfo.size() > 0) {
+                                // Can we think of a better log message here?
+                                Log.d(TAG, mTAG + ": neighbouringCellInfo found on " + i + " try. (time based)");
+                                break;
+                            } else {
+                                continue;
+                            }
                     }
                     ArrayList<NeighboringCellInfo> cellInfoList =
                             new ArrayList<>(neighboringCellBlockingQueue.size() + 1);
@@ -665,7 +659,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             " LAC:" + neighbourCell.getLac() +
                             " CID:" + neighbourCell.getCid() +
                             " PSC:" + neighbourCell.getPsc() +
-                            " RSSI:" + neighbourCell.getRssi() );
+                            " RSSI:" + neighbourCell.getRssi());
 
             final Cell cell = new Cell(
                     neighbourCell.getCid(),
@@ -685,8 +679,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         Description: Fixes the issue #346
 
      */
-    public void checkForNeighbourCount(CellLocation location){
-        Log.i(mTAG,"in checkForNeighbourCount");
+    public void checkForNeighbourCount(CellLocation location) {
+        Log.i(mTAG, "in checkForNeighbourCount");
 
         /**
          *  Description:    This snippet sets a global variable (SharedPreference) to indicate
@@ -719,26 +713,26 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
          */
         //TinyDB tinydb = new TinyDB(context);
         Integer ncls = 0;
-        if(tm != null && tm.getNeighboringCellInfo() != null) //https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/383
+        if (tm != null && tm.getNeighboringCellInfo() != null) //https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/383
             ncls = tm.getNeighboringCellInfo().size(); // NC list size
         Boolean nclp = tinydb.getBoolean("nc_list_present"); // NC list present? (default is false)
 
         //if ( ncls > 0 && !nclp ) {
-        if ( ncls > 0 ) {
+        if (ncls > 0) {
             tinydb.putBoolean("nc_list_present", true);
-            Log.d(TAG, mTAG + ": neighbouringCellInfo size: " + ncls );
-            Log.d(TAG, mTAG + ": Setting nc_list_present to: true" );
-        } else if ( ncls == 0 && nclp )  {
+            Log.d(TAG, mTAG + ": neighbouringCellInfo size: " + ncls);
+            Log.d(TAG, mTAG + ": Setting nc_list_present to: true");
+        } else if (ncls == 0 && nclp) {
             // Detection 7a
             //String ZID = String.valueOf(mDevice.mCell.getCID() );
 //            Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID() );
-            Log.i(TAG, mTAG+ ": ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID() );
+            Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID());
             //  TODO: ADD alert to EventLog table HERE !!
 
-        } else  {
+        } else {
             //if ( ncls == 0 && !nclp )
             // Todo: remove cid string when working.
-            Log.d(TAG, mTAG + ": NC list not supported by AOS on this device. Nothing to do. CID: " + mDevice.mCell.getCID() );
+            Log.d(TAG, mTAG + ": NC list not supported by AOS on this device. Nothing to do. CID: " + mDevice.mCell.getCID());
             Log.d(TAG, mTAG + ": Setting nc_list_present to: false");  // Maybe not needed...
             tinydb.putBoolean("nc_list_present", false);                // Maybe not needed...
         }
@@ -747,56 +741,56 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     }
 
-    /** Update: from banjaxbanjo
-     *          I removed the timer that activated this code and now the code will be run when
-     *          the cell changes so it will detect faster rather than using a timer that might
-     *          miss an imsi catcher, also says cpu rather than refreshing every x seconds.
-     *
-     *          original comments below from xLaMbChOpSx
-     *
-     *
-     *  Description:    (From xLaMbChOpSx commit comment)
-     *
-     *      Initial implementation for detection method 1 to compare the CID & LAC with the Cell
-     *      Information Table contents as an initial implementation for detection of a changed LAC,
-     *      once OCID issues (API key use etc) have been finalised this detection method can be
-     *      extended to include checking of external data.
-     *
-     *      REMOVED: refresh timer info
-     *
-     *      As I have no real way of testing this I require testing by other project members who
-     *      do have access to equipment or an environment where a changing LAC can be simulated
-     *      thus confirming the accuracy of this implementation.
-     *
-     *      Presently this will only invoke the MEDIUM threat level through the notification and
-     *      does not fully implement the capturing and score based method as per the issue details
-     *      once further testing is complete the alert and tracking of information can be refined.
-     *
-     *      See:
-     *        https://github.com/xLaMbChOpSx/Android-IMSI-Catcher-Detector/commit/43ae77e2a0cad10dfd50f92da5a998f9ece95b38
-     *        https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91#issuecomment-64391732
-     *
-     *  Short explanation:
-     *
-     *                  This is a polling mechanism for getting the LAC/CID and location
-     *                  info for the currently connected cell.
-     *
-     *  Variables:
-     *                  FIXED: now updates on cell change rather than a timer
-     *                  There is a "timer" here (REFRESH_RATE), what exactly is it timing?
-     *                  "Every REFRESH_RATE seconds, get connected cell details."
-     *
-     *  Notes:
-     *              a) Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
-     *                 See news in: issue #290 and compare to AIMSICDDbAdapter.java
-     *
-     *  Issues:     [ ] We shouldn't do any detection here!
-     *              [ ] We might wanna use a listener to do this?
-     *                  Are there any reasons why not using a listener?
-     *
-     *  ChangeLog:
-     *              2015-03-03  E:V:A   Changed getProp() to use TinyDB (SharedPreferences)
-     *
+    /**
+     * Update: from banjaxbanjo
+     * I removed the timer that activated this code and now the code will be run when
+     * the cell changes so it will detect faster rather than using a timer that might
+     * miss an imsi catcher, also says cpu rather than refreshing every x seconds.
+     * <p/>
+     * original comments below from xLaMbChOpSx
+     * <p/>
+     * <p/>
+     * Description:    (From xLaMbChOpSx commit comment)
+     * <p/>
+     * Initial implementation for detection method 1 to compare the CID & LAC with the Cell
+     * Information Table contents as an initial implementation for detection of a changed LAC,
+     * once OCID issues (API key use etc) have been finalised this detection method can be
+     * extended to include checking of external data.
+     * <p/>
+     * REMOVED: refresh timer info
+     * <p/>
+     * As I have no real way of testing this I require testing by other project members who
+     * do have access to equipment or an environment where a changing LAC can be simulated
+     * thus confirming the accuracy of this implementation.
+     * <p/>
+     * Presently this will only invoke the MEDIUM threat level through the notification and
+     * does not fully implement the capturing and score based method as per the issue details
+     * once further testing is complete the alert and tracking of information can be refined.
+     * <p/>
+     * See:
+     * https://github.com/xLaMbChOpSx/Android-IMSI-Catcher-Detector/commit/43ae77e2a0cad10dfd50f92da5a998f9ece95b38
+     * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91#issuecomment-64391732
+     * <p/>
+     * Short explanation:
+     * <p/>
+     * This is a polling mechanism for getting the LAC/CID and location
+     * info for the currently connected cell.
+     * <p/>
+     * Variables:
+     * FIXED: now updates on cell change rather than a timer
+     * There is a "timer" here (REFRESH_RATE), what exactly is it timing?
+     * "Every REFRESH_RATE seconds, get connected cell details."
+     * <p/>
+     * Notes:
+     * a) Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
+     * See news in: issue #290 and compare to AIMSICDDbAdapter.java
+     * <p/>
+     * Issues:     [ ] We shouldn't do any detection here!
+     * [ ] We might wanna use a listener to do this?
+     * Are there any reasons why not using a listener?
+     * <p/>
+     * ChangeLog:
+     * 2015-03-03  E:V:A   Changed getProp() to use TinyDB (SharedPreferences)
      */
     public void compareLac(CellLocation location) {
         switch (mDevice.getPhoneID()) {
@@ -873,17 +867,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     /**
      * Process User Preferences
-     *
+     * <p/>
      * Description:     This loads the default Settings/Preferences as set in:
-     *                      preferences.xml
-     *                  and:
-     *                      /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
-     *
-     *  TODO:           Please add more info and corrections
-     *
+     * preferences.xml
+     * and:
+     * /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
+     * <p/>
+     * TODO:           Please add more info and corrections
      */
     private void loadPreferences() {
-        boolean trackFemtoPref  = prefs.getBoolean(context.getString(R.string.pref_femto_detection_key), false);
+        boolean trackFemtoPref = prefs.getBoolean(context.getString(R.string.pref_femto_detection_key), false);
         boolean trackCellPref = prefs.getBoolean(context.getString(R.string.pref_enable_cell_key), true);
         boolean monitorCellPref = prefs.getBoolean(context.getString(R.string.pref_enable_cell_monitoring_key), true);
 
@@ -935,24 +928,23 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     *  Description:  TODO: add more info
-     *
-     *      This SEEM TO add entries to the "locationinfo" DB table ???
-     *
-     *  From "locationinfo":
-     *
-     *      $ sqlite3.exe -header aimsicd.db 'select * from locationinfo;'
-     *      _id|Lac|CellID|Net|Lat|Lng|Signal|Connection|Timestamp
-     *      1|10401|6828xxx|10|54.67874392|25.28693531|24|[10401,6828320,126]No|Di|HSPA||2015-01-21 20:45:10
-     *
-     *  From "cellinfo":
-     *
-     *      $ sqlite3.exe -header aimsicd.db 'select * from cellinfo;'
-     *      _id|Lac|CellID|Net|Lat|Lng|Signal|Mcc|Mnc|Accuracy|Speed|Direction|NetworkType|MeasurementTaken|OCID_SUBMITTED|Timestamp
-     *      1|10401|6828xxx|10|54.67874392|25.28693531|24|246|2|69.0|0.0|0.0|HSPA|82964|0|2015-01-21 20:45:10
-     *
-     *  Issues:
-     *
+     * Description:  TODO: add more info
+     * <p/>
+     * This SEEM TO add entries to the "locationinfo" DB table ???
+     * <p/>
+     * From "locationinfo":
+     * <p/>
+     * $ sqlite3.exe -header aimsicd.db 'select * from locationinfo;'
+     * _id|Lac|CellID|Net|Lat|Lng|Signal|Connection|Timestamp
+     * 1|10401|6828xxx|10|54.67874392|25.28693531|24|[10401,6828320,126]No|Di|HSPA||2015-01-21 20:45:10
+     * <p/>
+     * From "cellinfo":
+     * <p/>
+     * $ sqlite3.exe -header aimsicd.db 'select * from cellinfo;'
+     * _id|Lac|CellID|Net|Lat|Lng|Signal|Mcc|Mnc|Accuracy|Speed|Direction|NetworkType|MeasurementTaken|OCID_SUBMITTED|Timestamp
+     * 1|10401|6828xxx|10|54.67874392|25.28693531|24|246|2|69.0|0.0|0.0|HSPA|82964|0|2015-01-21 20:45:10
+     * <p/>
+     * Issues:
      */
     public void onLocationChanged(Location loc) {
 
@@ -1056,43 +1048,41 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     /**
      * Set or update the Detection/Status Notification
-     *
-     *  Description:    TODO: Please add details!
-     *
-     *  Issues:
-     *
-     *  [ ] TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
-     *      See:  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
-     *      and:  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/11#issuecomment-44670204
-     *
-     *      Change names from "IDLE,NORMAL,MEDIUM,ALARM" to:"GRAY,GREEN,YELLOW,ORANGE,RED,BLACK",
-     *      to reflect detection Icon colors. They should be based on the detection scores here:
-     *      <TBA>
-     *
-     *  [ ] We need to standardize the "contentText" and "tickerText" format
-     *
-     *  [ ] From #91: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91
-     *
-     *      Problem:
-     *          Having multiple notifications will cause an issue with
-     *      notifications themselves AND tickerText.  It seems that the
-     *      most recent notification raised would overwrite any previous,
-     *      notification or tickerText.  This results in loss of information
-     *      for any notification before the last one.
-     *
-     *      Possible Solution:
-     *          Perhaps arranging a queue implementation to deal with text
-     *      being passed into tickerText only when any previous text has
-     *      been entirely displayed.
-     *
-     *
-     *  Dependencies:    Status.java, CellTracker.java, Icon.java ( + others?)
-     *
-     *  ChangeLog:
-     *
-     *     2015-01-22   E:V:A  Added placeholder for "Missing Neighboring Cells Alert"
-     *
-     *
+     * <p/>
+     * Description:    TODO: Please add details!
+     * <p/>
+     * Issues:
+     * <p/>
+     * [ ] TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
+     * See:  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
+     * and:  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/11#issuecomment-44670204
+     * <p/>
+     * Change names from "IDLE,NORMAL,MEDIUM,ALARM" to:"GRAY,GREEN,YELLOW,ORANGE,RED,BLACK",
+     * to reflect detection Icon colors. They should be based on the detection scores here:
+     * <TBA>
+     * <p/>
+     * [ ] We need to standardize the "contentText" and "tickerText" format
+     * <p/>
+     * [ ] From #91: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91
+     * <p/>
+     * Problem:
+     * Having multiple notifications will cause an issue with
+     * notifications themselves AND tickerText.  It seems that the
+     * most recent notification raised would overwrite any previous,
+     * notification or tickerText.  This results in loss of information
+     * for any notification before the last one.
+     * <p/>
+     * Possible Solution:
+     * Perhaps arranging a queue implementation to deal with text
+     * being passed into tickerText only when any previous text has
+     * been entirely displayed.
+     * <p/>
+     * <p/>
+     * Dependencies:    Status.java, CellTracker.java, Icon.java ( + others?)
+     * <p/>
+     * ChangeLog:
+     * <p/>
+     * 2015-01-22   E:V:A  Added placeholder for "Missing Neighboring Cells Alert"
      */
     void setNotification() {
         String tickerText;
@@ -1170,9 +1160,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType));
+        Bitmap icon = BitmapFactory.decodeResource(context.getResources(), iconResId);
         Notification mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(Icon.getIcon(Icon.Type.valueOf(iconType)))
+                        .setSmallIcon(iconResId)
+                        .setLargeIcon(icon)
                         .setTicker(tickerText)
                         .setContentTitle(context.getResources().getString(R.string.main_app_name))
                         .setContentText(contentText)
