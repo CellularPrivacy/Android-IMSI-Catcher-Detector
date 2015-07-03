@@ -53,6 +53,7 @@ import java.io.InputStreamReader;
  *          2015-02-11  E:V:A   Increased to 500 lines and removed "-d" and
  *                              incl. radio log, but not working. Permission problem?
  *          2015-02-24  E:V:A   Silent some spam logs on HTC devices.
+ *          2015-07-03  E:V:A   Silent some spam logs from the XPosed framework
  *
  */
 
@@ -241,6 +242,7 @@ public class DebugLogs extends BaseActivity {
      *  4) Need to silent some Qualcomm GPS:                " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S"
      *  5) "-d" is not necessary when using "-t".
      *  6) Need to silent some spammy HTC's:                "QC-QMI:S AudioPolicyManager:S"
+     *  7) Need to silent some spammy XPrivacy items:       "XPrivacy/XRuntime:S Xposed:S"
      *
      */
     private String getLogs() throws IOException {
@@ -249,7 +251,8 @@ public class DebugLogs extends BaseActivity {
                     (isRadioLogs ? " -b radio RILQ:S" : "") +
                     " AbsListView:S PackageInfo:S" +
                     " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S" +
-                    " QC-QMI:S AudioPolicyManager:S" + " *:D"
+                    " QC-QMI:S AudioPolicyManager:S" +
+                    " XPrivacy/XRuntime:S Xposed:S" + " *:D"
         );
     }
 
