@@ -17,7 +17,6 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.CellInfo;
@@ -45,13 +44,9 @@ import com.SecUpwN.AIMSICD.utils.OCIDResponse;
 import com.SecUpwN.AIMSICD.utils.Status;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -91,27 +86,27 @@ import java.util.concurrent.TimeUnit;
 
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener{
 
+    public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
+    public static String OCID_API_KEY = null;   // see getOcidKey()
+    public static int PHONE_TYPE;               //
+    public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
+    public static int LAST_DB_BACKUP_VERSION;   //
+    private static TelephonyManager tm;
+    // TEST to fix toast in OCID api key was:
+    // private Context context;
+    private static Context context;
     private final String TAG = "AIMSICD";
     private final String mTAG = "CellTracker";
-
-    public static String OCID_API_KEY = null;   // see getOcidKey()
     private final int NOTIFICATION_ID = 1;      // ?
-
-    private static TelephonyManager tm;
     private final SignalStrengthTracker signalStrengthTracker;
+    private final Device mDevice = new Device();
+    private final AIMSICDDbAdapter dbHelper;
     private PhoneStateListener mPhoneStateListener;
     private SharedPreferences prefs;
     // We can also use this to simplify SharedPreferences usage above.
     //TinyDB tinydb = new TinyDB(context);
     private TinyDB tinydb;
-
-    public static int PHONE_TYPE;               //
-    public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
-    public static int LAST_DB_BACKUP_VERSION;   //
-    public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
     private boolean CELL_TABLE_CLEANSED;
-    private final Device mDevice = new Device();
-
     /*
      * Tracking and Alert Declarations
      */
@@ -123,15 +118,233 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private boolean mCellIdNotInOpenDb;
     private Cell mMonitorCell;
     private boolean mTypeZeroSmsDetected;
-    private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                dbHelper.open();
+                dbHelper.insertSilentSms(bundle);
+                dbHelper.close();
+                setSilentSmsStatus(true);
+            }
+        }
+    };
+    /**
+     * Description:  TODO: add more info
+     * <p/>
+     * This SEEM TO add entries to the "locationinfo" DB table in the ??
+     * <p/>
+     * Issues:
+     * <p/>
+     * [ ] We see that "Connection" items are messed up. What is the purpose of these?
+     * <p/>
+     * $ sqlite3.exe -header -csv aimsicd.db 'select * from locationinfo;'
+     * _id,Lac,CellID,Net,Lat,Lng,Signal,Connection,Timestamp
+     * 1,10401,6828111,10, 54.6787,25.2869, 24, "[10401,6828111,126]No|Di|HSPA|", "2015-01-21 20:45:10"
+     * <p/>
+     * [ ] TODO: CDMA has to extract the MCC and MNC using something like:
+     * <p/>
+     * String mccMnc = phoneMgr.getNetworkOperator();
+     * String cdmaMcc = "";
+     * String cdmaMnc = "";
+     * if (mccMnc != null && mccMnc.length() >= 5) {
+     * cdmaMcc = mccMnc.substring(0, 3);
+     * cdmaMnc = mccMnc.substring(3, 5);
+     * }      }
+     * <p/>
+     * ChangeLog:
+     * <p/>
+     * 2015-01-22  E:V:A   Changed what appears to be a typo in the character
+     * following getNetworkTypeName(), "|" to "]"
+     * 2015-01-24  E:V:A   FC WTF!? Changed back ^ to "|". (Where is this info parsed?)
+     */
+    private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
+        public void onCellLocationChanged(CellLocation location) {
+            checkForNeighbourCount(location);
+            compareLac(location);
+            refreshDevice();//refresh data on cell change
+            mDevice.setNetID(tm);           // ??
+            mDevice.getNetworkTypeName();   // RAT??
 
-    private final AIMSICDDbAdapter dbHelper;
-    // TEST to fix toast in OCID api key was:
-    // private Context context;
-    private static Context context;
+            switch (mDevice.getPhoneID()) {
+
+                case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
+                case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
+                case TelephonyManager.PHONE_TYPE_GSM:
+                    GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
+                    if (gsmCellLocation != null) {
+                        mDevice.setCellInfo(
+                                gsmCellLocation.toString() +                // ??
+                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
+                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
+                                        mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
+                        );
+                        mDevice.mCell.setLAC(gsmCellLocation.getLac());     // LAC
+                        mDevice.mCell.setCID(gsmCellLocation.getCid());     // CID
+                        if (gsmCellLocation.getPsc() != -1)
+                            mDevice.mCell.setPSC(gsmCellLocation.getPsc()); // PSC
+
+                    }
+                    break;
+
+                case TelephonyManager.PHONE_TYPE_CDMA:
+                    CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
+                    if (cdmaCellLocation != null) {
+                        mDevice.setCellInfo(
+                                cdmaCellLocation.toString() +               // ??
+                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
+                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
+                                        mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
+                        );
+                        mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());      // NID
+                        mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());  // BID
+                        mDevice.mCell.setSID(cdmaCellLocation.getSystemId());       // SID
+                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());       // <== BUG!? See issue above! // MNC
+                        mDevice.setNetworkName(tm.getNetworkOperatorName());        // ??
+                    }
+            }
+
+        }
+
+        /**
+         *  Description:  TODO: add more info
+         *
+         *  Issues:
+         *
+         *      [ ]     Getting and comparing signal strengths between different RATs can be very
+         *              tricky, since they all return different ranges of values. AOS doesn't
+         *              specify very clearly what exactly is returned, even though people have
+         *              a good idea, by trial and error.
+         *
+         *              See note in : SignalStrengthTracker.java
+         *
+         *  Notes:
+         *
+         *
+         *
+         */
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            // Update Signal Strength
+            if (signalStrength.isGsm()) {
+                int dbm;
+                if (signalStrength.getGsmSignalStrength() <= 2 ||
+                        signalStrength.getGsmSignalStrength() == NeighboringCellInfo.UNKNOWN_RSSI) {
+                    // Unknown signal strength, get it another way
+                    String[] bits = signalStrength.toString().split(" ");
+                    dbm = Integer.parseInt(bits[9]);
+                } else {
+                    dbm = signalStrength.getGsmSignalStrength();
+                }
+                mDevice.setSignalDbm(dbm);
+            } else {
+                int evdoDbm = signalStrength.getEvdoDbm();
+                int cdmaDbm = signalStrength.getCdmaDbm();
+
+                // Use lowest signal to be conservative
+                mDevice.setSignalDbm((cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm);
+            }
+            // Send it to signal tracker
+            signalStrengthTracker.registerSignalStrength(mDevice.mCell.getCID(), mDevice.getSignalDBm());
+            //signalStrengthTracker.isMysterious(mDevice.mCell.getCID(), mDevice.getSignalDBm());
+        }
+
+        // In DB:   No,In,Ou,IO,Do
+        public void onDataActivity(int direction) {
+            switch (direction) {
+                case TelephonyManager.DATA_ACTIVITY_NONE:
+                    mDevice.setDataActivityTypeShort("No");
+                    mDevice.setDataActivityType("None");
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_IN:
+                    mDevice.setDataActivityTypeShort("In");
+                    mDevice.setDataActivityType("In");
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_OUT:
+                    mDevice.setDataActivityTypeShort("Ou");
+                    mDevice.setDataActivityType("Out");
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_INOUT:
+                    mDevice.setDataActivityTypeShort("IO");
+                    mDevice.setDataActivityType("In-Out");
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_DORMANT:
+                    mDevice.setDataActivityTypeShort("Do");
+                    mDevice.setDataActivityType("Dormant");
+                    break;
+            }
+        }
+
+        // In DB:   Di,Ct,Cd,Su
+        public void onDataConnectionStateChanged(int state) {
+            switch (state) {
+                case TelephonyManager.DATA_DISCONNECTED:
+                    mDevice.setDataState("Disconnected");
+                    mDevice.setDataStateShort("Di");
+                    break;
+                case TelephonyManager.DATA_CONNECTING:
+                    mDevice.setDataState("Connecting");
+                    mDevice.setDataStateShort("Ct");
+                    break;
+                case TelephonyManager.DATA_CONNECTED:
+                    mDevice.setDataState("Connected");
+                    mDevice.setDataStateShort("Cd");
+                    break;
+                case TelephonyManager.DATA_SUSPENDED:
+                    mDevice.setDataState("Suspended");
+                    mDevice.setDataStateShort("Su");
+                    break;
+            }
+        }
+
+    };
+    private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
+    /**
+     * Description:     TODO:
+     *
+     *
+     */
+    final PhoneStateListener phoneStatelistener = new PhoneStateListener() {
+        private void handle() {
+            handlePhoneStateChange();
+        }
+
+        @Override
+        public void onServiceStateChanged(ServiceState serviceState) {
+            handle();
+        }
+
+        @Override
+        public void onDataConnectionStateChanged(int state) {
+            handle();
+        }
+
+        @Override
+        public void onDataConnectionStateChanged(int state, int networkType) {
+            handle();
+        }
+
+        @Override
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            handle();
+        }
+
+        @Override
+        public void onCellInfoChanged(List<CellInfo> cellInfo) {
+            handle();
+            Log.i(mTAG, "Cell info change");
+        }
+
+        @Override
+        public void onCellLocationChanged(CellLocation location) {
+            handle();
+            Log.i(mTAG, "Cell info change");
+        }
+
+    };
 
     public CellTracker(Context context, SignalStrengthTracker sst) {
-        this.context = context;
+        CellTracker.context = context;
         this.signalStrengthTracker = sst;
         /*
             creating tinydb here so we dont have to use
@@ -164,6 +377,45 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         //Register receiver for Silent SMS Interception Notification
         context.registerReceiver(mMessageReceiver, new IntentFilter(SILENT_SMS));
+    }
+
+    /**
+     * Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
+     *
+     * @return null or newly generated key
+     *
+     */
+    public static String requestNewOCIDKey() throws Exception {
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(context.getString(R.string.opencellid_api_get_key));
+        OCIDResponse result = new OCIDResponse(httpclient.execute(httpGet));
+
+        if (result.getStatusCode() == 200) {
+            String responseFromServer = result.getResponseFromServer();
+            Log.d("OCID", responseFromServer);
+            return responseFromServer;
+
+        } else if (result.getStatusCode() == 503) {
+            // Check for HTTP error code 503 which is returned when user is trying to request
+            // a new API key within 24 hours of the last request. (See GH issue #267)
+            // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
+
+            Helpers.msgLong(context, context.getString(R.string.only_one_key_per_day));
+            String responseFromServer = result.getResponseFromServer();
+            Log.d("AIMSICD", "CellTracker: OCID Reached 24hr API key limit: " + responseFromServer);
+            return responseFromServer;
+        } else {
+
+            // TODO add code here or elsewhere to check for NO network exceptions...
+            // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/293
+            httpclient = null;
+            httpGet = null;
+            result = null;
+
+            Log.d("AIMSICD", "CellTracker: OCID Returned " + result.getStatusCode() + " " + result.getReasonPhrase());
+//                        throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
+            return null;
+        }
     }
 
     public boolean isTrackingCell() {
@@ -206,13 +458,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     public void stop() {
-        if(isMonitoringCell()) {
+        if (isMonitoringCell()) {
             setCellMonitoring(false);
         }
-        if(isTrackingCell()){
+        if (isTrackingCell()) {
             setCellTracking(false);
         }
-        if(isTrackingFemtocell()){
+        if (isTrackingFemtocell()) {
             stopTrackingFemto();
         }
         cancelNotification();
@@ -274,20 +526,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         setNotification();
     }
 
-    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                dbHelper.open();
-                dbHelper.insertSilentSms(bundle);
-                dbHelper.close();
-                setSilentSmsStatus(true);
-            }
-        }
-    };
-
-
     /**
      *  Description:    This handles the settings/choices and default preferences, when changed.
      *                  From the default file:
@@ -302,11 +540,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * @param key
      */
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        final String KEY_UI_ICONS =     context.getString(R.string.pref_ui_icons_key);
-        final String FEMTO_DETECTION =  context.getString(R.string.pref_femto_detection_key);
-        final String REFRESH =          context.getString(R.string.pref_refresh_key);      // Manual Refresh
-        final String DB_VERSION =       context.getString(R.string.pref_last_database_backup_version);
-        final String OCID_KEY =         context.getString(R.string.pref_ocid_key);
+        final String KEY_UI_ICONS = context.getString(R.string.pref_ui_icons_key);
+        final String FEMTO_DETECTION = context.getString(R.string.pref_femto_detection_key);
+        final String REFRESH = context.getString(R.string.pref_refresh_key);      // Manual Refresh
+        final String DB_VERSION = context.getString(R.string.pref_last_database_backup_version);
+        final String OCID_KEY = context.getString(R.string.pref_ocid_key);
 
         if (key.equals(KEY_UI_ICONS)) {
             //Update Notification to display selected icon type
@@ -352,46 +590,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     * Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
-     *
-     * @return null or newly generated key
-     *
-     */
-    public static String requestNewOCIDKey() throws Exception {
-        DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(context.getString(R.string.opencellid_api_get_key));
-        OCIDResponse result = new OCIDResponse(httpclient.execute(httpGet));
-
-        if (result.getStatusCode() == 200) {
-            String responseFromServer = result.getResponseFromServer();
-            Log.d("OCID", responseFromServer);
-            return responseFromServer;
-
-        } else if (result.getStatusCode() == 503) {
-            // Check for HTTP error code 503 which is returned when user is trying to request
-            // a new API key within 24 hours of the last request. (See GH issue #267)
-            // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
-
-            Helpers.msgLong(context, context.getString(R.string.only_one_key_per_day));
-            String responseFromServer = result.getResponseFromServer();
-            Log.d("AIMSICD", "CellTracker: OCID Reached 24hr API key limit: " + responseFromServer);
-            return responseFromServer;
-        } else {
-
-            // TODO add code here or elsewhere to check for NO network exceptions...
-            // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/293
-            httpclient = null;
-            httpGet = null;
-            result = null;
-
-            Log.d("AIMSICD", "CellTracker: OCID Returned " + result.getStatusCode() + " " + result.getReasonPhrase());
-//                        throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
-            return null;
-        }
-    }
-
-
-    /**
      *  Description:    Updates Neighbouring Cell details
      *
      *  TODO: add more details...
@@ -404,8 +602,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if(neighboringCellInfo == null)
             neighboringCellInfo = new ArrayList<>();
 
-        if (neighboringCellInfo != null &&
-                neighboringCellInfo.size() == 0) {
+        if (neighboringCellInfo.size() == 0) {
             // try to poll the neighboring cells for a few seconds
             neighboringCellBlockingQueue = new LinkedBlockingQueue<>(100);
             Log.i(TAG, mTAG + ": neighbouringCellInfo empty - start polling");
@@ -480,6 +677,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
         return neighboringCells;
     }
+
     /*
         Update: banjaxbanjo
                 I moved this code out of updateNeighbouringCells() so now this will
@@ -600,7 +798,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *              2015-03-03  E:V:A   Changed getProp() to use TinyDB (SharedPreferences)
      *
      */
-    public void compareLac(CellLocation location){
+    public void compareLac(CellLocation location) {
         switch (mDevice.getPhoneID()) {
 
             case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
@@ -620,7 +818,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         mChangedLAC = false;
                     }
                     // Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
-                    if ( tinydb.getBoolean("ocid_downloaded") ) {
+                    if (tinydb.getBoolean("ocid_downloaded")) {
                         if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
                             Log.i(mTAG, "ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
 
@@ -655,6 +853,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
 
     }
+
     private void handlePhoneStateChange() {
         List<NeighboringCellInfo> neighboringCellInfo = tm.getNeighboringCellInfo();
         if (neighboringCellInfo == null || neighboringCellInfo.size() == 0) {
@@ -663,7 +862,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         // Does this make sense? Is it empty or not?
         Log.i(TAG, mTAG + ": neighbouringCellInfo empty - event based polling succeeded!");
         tm.listen(phoneStatelistener, PhoneStateListener.LISTEN_NONE);
-        if(neighboringCellInfo == null)
+        if (neighboringCellInfo == null)
             neighboringCellInfo = new ArrayList<>();
         neighboringCellBlockingQueue.addAll(neighboringCellInfo);
     }
@@ -684,16 +883,18 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      */
     private void loadPreferences() {
-        boolean trackFemtoPref  = prefs.getBoolean( context.getString(R.string.pref_femto_detection_key), false);
-        boolean trackCellPref   = prefs.getBoolean( context.getString(R.string.pref_enable_cell_key), true);
-        boolean monitorCellPref = prefs.getBoolean( context.getString(R.string.pref_enable_cell_monitoring_key), true);
+        boolean trackFemtoPref  = prefs.getBoolean(context.getString(R.string.pref_femto_detection_key), false);
+        boolean trackCellPref = prefs.getBoolean(context.getString(R.string.pref_enable_cell_key), true);
+        boolean monitorCellPref = prefs.getBoolean(context.getString(R.string.pref_enable_cell_monitoring_key), true);
 
-        LAST_DB_BACKUP_VERSION  = prefs.getInt(     context.getString(R.string.pref_last_database_backup_version), 1);
-        CELL_TABLE_CLEANSED     = prefs.getBoolean( context.getString(R.string.pref_cell_table_cleansed), false);
+        LAST_DB_BACKUP_VERSION = prefs.getInt(context.getString(R.string.pref_last_database_backup_version), 1);
+        CELL_TABLE_CLEANSED = prefs.getBoolean(context.getString(R.string.pref_cell_table_cleansed), false);
 
-        String refreshRate      = prefs.getString(  context.getString(R.string.pref_refresh_key), "1");
+        String refreshRate = prefs.getString(context.getString(R.string.pref_refresh_key), "1");
         // Default to Automatic ("1")
-        if (refreshRate.isEmpty()) { refreshRate = "1";  }
+        if (refreshRate.isEmpty()) {
+            refreshRate = "1";
+        }
 
         int rate = Integer.parseInt(refreshRate);
         long t;
@@ -709,182 +910,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
         getOcidKey();
 
-        if (trackFemtoPref) {   startTrackingFemto(); }
-        if (trackCellPref) {    setCellTracking(true); }
-        if (monitorCellPref) {  setCellMonitoring(true); }
+        if (trackFemtoPref) {
+            startTrackingFemto();
+        }
+        if (trackCellPref) {
+            setCellTracking(true);
+        }
+        if (monitorCellPref) {
+            setCellMonitoring(true);
+        }
     }
-
-
-    /**
-     * Description:  TODO: add more info
-     *
-     *    This SEEM TO add entries to the "locationinfo" DB table in the ??
-     *
-     *    Issues:
-     *
-     *    [ ] We see that "Connection" items are messed up. What is the purpose of these?
-     *
-     *    $ sqlite3.exe -header -csv aimsicd.db 'select * from locationinfo;'
-     *      _id,Lac,CellID,Net,Lat,Lng,Signal,Connection,Timestamp
-     *      1,10401,6828111,10, 54.6787,25.2869, 24, "[10401,6828111,126]No|Di|HSPA|", "2015-01-21 20:45:10"
-     *
-     *    [ ] TODO: CDMA has to extract the MCC and MNC using something like:
-     *
-     *    	String mccMnc = phoneMgr.getNetworkOperator();
-     *      String cdmaMcc = "";
-     *      String cdmaMnc = "";
-     *      if (mccMnc != null && mccMnc.length() >= 5) {
-     *          cdmaMcc = mccMnc.substring(0, 3);
-     *          cdmaMnc = mccMnc.substring(3, 5);
-     }      }
-     *
-     *    ChangeLog:
-     *
-     *          2015-01-22  E:V:A   Changed what appears to be a typo in the character
-     *                              following getNetworkTypeName(), "|" to "]"
-     *          2015-01-24  E:V:A   FC WTF!? Changed back ^ to "|". (Where is this info parsed?)
-     *
-     */
-    private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
-        public void onCellLocationChanged(CellLocation location) {
-            checkForNeighbourCount(location);
-            compareLac(location);
-            refreshDevice();//refresh data on cell change
-            mDevice.setNetID(tm);           // ??
-            mDevice.getNetworkTypeName();   // RAT??
-
-            switch (mDevice.getPhoneID()) {
-
-                case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
-                case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
-                case TelephonyManager.PHONE_TYPE_GSM:
-                    GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
-                    if (gsmCellLocation != null) {
-                        mDevice.setCellInfo(
-                                gsmCellLocation.toString() +                // ??
-                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
-                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                        mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
-                        );
-                        mDevice.mCell.setLAC(gsmCellLocation.getLac());     // LAC
-                        mDevice.mCell.setCID(gsmCellLocation.getCid());     // CID
-                        if (gsmCellLocation.getPsc() != -1)
-                            mDevice.mCell.setPSC(gsmCellLocation.getPsc()); // PSC
-
-                    }
-                    break;
-
-                case TelephonyManager.PHONE_TYPE_CDMA:
-                    CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
-                    if (cdmaCellLocation != null) {
-                        mDevice.setCellInfo(
-                                cdmaCellLocation.toString() +               // ??
-                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
-                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                        mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
-                        );
-                        mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());      // NID
-                        mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());  // BID
-                        mDevice.mCell.setSID(cdmaCellLocation.getSystemId());       // SID
-                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());       // <== BUG!? See issue above! // MNC
-                        mDevice.setNetworkName(tm.getNetworkOperatorName());        // ??
-                    }
-            }
-
-        }
-
-        /**
-         *  Description:  TODO: add more info
-         *
-         *  Issues:
-         *
-         *      [ ]     Getting and comparing signal strengths between different RATs can be very
-         *              tricky, since they all return different ranges of values. AOS doesn't
-         *              specify very clearly what exactly is returned, even though people have
-         *              a good idea, by trial and error.
-         *
-         *              See note in : SignalStrengthTracker.java
-         *
-         *  Notes:
-         *
-         *
-         *
-         */
-        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-            // Update Signal Strength
-            if (signalStrength.isGsm()) {
-                int dbm;
-                if(signalStrength.getGsmSignalStrength() <= 2 ||
-                        signalStrength.getGsmSignalStrength() ==  NeighboringCellInfo.UNKNOWN_RSSI)
-                {
-                    // Unknown signal strength, get it another way
-                    String[] bits = signalStrength.toString().split(" ");
-                    dbm = Integer.parseInt(bits[9]);
-                } else {
-                    dbm = signalStrength.getGsmSignalStrength();
-                }
-                mDevice.setSignalDbm(dbm);
-            } else {
-                int evdoDbm = signalStrength.getEvdoDbm();
-                int cdmaDbm = signalStrength.getCdmaDbm();
-
-                // Use lowest signal to be conservative
-                mDevice.setSignalDbm((cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm);
-            }
-            // Send it to signal tracker
-            signalStrengthTracker.registerSignalStrength(mDevice.mCell.getCID(), mDevice.getSignalDBm());
-            //signalStrengthTracker.isMysterious(mDevice.mCell.getCID(), mDevice.getSignalDBm());
-        }
-
-        // In DB:   No,In,Ou,IO,Do
-        public void onDataActivity(int direction) {
-            switch (direction) {
-                case TelephonyManager.DATA_ACTIVITY_NONE:
-                    mDevice.setDataActivityTypeShort("No");
-                    mDevice.setDataActivityType("None");
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_IN:
-                    mDevice.setDataActivityTypeShort("In");
-                    mDevice.setDataActivityType("In");
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_OUT:
-                    mDevice.setDataActivityTypeShort("Ou");
-                    mDevice.setDataActivityType("Out");
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_INOUT:
-                    mDevice.setDataActivityTypeShort("IO");
-                    mDevice.setDataActivityType("In-Out");
-                    break;
-                case TelephonyManager.DATA_ACTIVITY_DORMANT:
-                    mDevice.setDataActivityTypeShort("Do");
-                    mDevice.setDataActivityType("Dormant");
-                    break;
-            }
-        }
-
-        // In DB:   Di,Ct,Cd,Su
-        public void onDataConnectionStateChanged(int state) {
-            switch (state) {
-                case TelephonyManager.DATA_DISCONNECTED:
-                    mDevice.setDataState("Disconnected");
-                    mDevice.setDataStateShort("Di");
-                    break;
-                case TelephonyManager.DATA_CONNECTING:
-                    mDevice.setDataState("Connecting");
-                    mDevice.setDataStateShort("Ct");
-                    break;
-                case TelephonyManager.DATA_CONNECTED:
-                    mDevice.setDataState("Connected");
-                    mDevice.setDataStateShort("Cd");
-                    break;
-                case TelephonyManager.DATA_SUSPENDED:
-                    mDevice.setDataState("Suspended");
-                    mDevice.setDataStateShort("Su");
-                    break;
-            }
-        }
-
-    };
 
     void setSilentSmsStatus(boolean state) {
         mTypeZeroSmsDetected = state;
@@ -1011,6 +1046,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
     }
 
+
+//=================================================================================================
+// The below code section was copied and modified with permission from
+// Femtocatcher at:  https://github.com/iSECPartners/femtocatcher
+//
+// Copyright (C) 2013 iSEC Partners
+//=================================================================================================
+
     /**
      * Set or update the Detection/Status Notification
      *
@@ -1056,15 +1099,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         String contentText = "Phone Type " + mDevice.getPhoneType();
 
         if (mFemtoDetected || mTypeZeroSmsDetected) {
-            Status.setCurrentStatus(Status.Type.ALARM, this.context);
+            Status.setCurrentStatus(Status.Type.ALARM, context);
         } else if (mChangedLAC) {
-            Status.setCurrentStatus(Status.Type.MEDIUM, this.context);
+            Status.setCurrentStatus(Status.Type.MEDIUM, context);
             contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
-        } else if(mCellIdNotInOpenDb){
-            Status.setCurrentStatus(Status.Type.MEDIUM, this.context);
+        } else if (mCellIdNotInOpenDb) {
+            Status.setCurrentStatus(Status.Type.MEDIUM, context);
             contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
         } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
-            Status.setCurrentStatus(Status.Type.NORMAL, this.context);
+            Status.setCurrentStatus(Status.Type.NORMAL, context);
             if (mTrackingFemtocell) {
                 contentText = context.getString(R.string.femtocell_detection_active);
             } else if (mTrackingCell) {
@@ -1073,7 +1116,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 contentText = context.getString(R.string.cell_monitoring_active);
             }
         } else {
-            Status.setCurrentStatus(Status.Type.IDLE, this.context);
+            Status.setCurrentStatus(Status.Type.IDLE, context);
         }
 
         switch (Status.getStatus()) {
@@ -1141,16 +1184,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
     }
-
-
-
-
-//=================================================================================================
-// The below code section was copied and modified with permission from
-// Femtocatcher at:  https://github.com/iSECPartners/femtocatcher
-//
-// Copyright (C) 2013 iSEC Partners
-//=================================================================================================
 
     /**
      * Start FemtoCell detection tracking (For CDMA Devices ONLY!)
@@ -1265,6 +1298,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     }
 
+//=================================================================================================
+// END Femtocatcher code
+//=================================================================================================
+
     /**
      * Confirmation of connection to an EVDO Network
      *
@@ -1276,49 +1313,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 (networkType == TelephonyManager.NETWORK_TYPE_EVDO_B) ||
                 (networkType == TelephonyManager.NETWORK_TYPE_EHRPD);
     }
-
-//=================================================================================================
-// END Femtocatcher code
-//=================================================================================================
-
-    /**
-     * Description:     TODO:
-     *
-     *
-     */
-    final PhoneStateListener phoneStatelistener = new PhoneStateListener() {
-        private void handle() {
-            handlePhoneStateChange();
-        }
-        @Override
-        public void onServiceStateChanged(ServiceState serviceState) {
-            handle();
-        }
-        @Override
-        public void onDataConnectionStateChanged(int state) {
-            handle();
-        }
-        @Override
-        public void onDataConnectionStateChanged(int state, int networkType) {
-            handle();
-        }
-        @Override
-        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-            handle();
-        }
-        @Override
-        public void onCellInfoChanged(List<CellInfo> cellInfo) {
-            handle();
-            Log.i(mTAG,"Cell info change");
-        }
-
-        @Override
-        public void onCellLocationChanged(CellLocation location) {
-            handle();
-            Log.i(mTAG,"Cell info change");
-        }
-
-    };
 
     /**
      * Getter for use in tests only
