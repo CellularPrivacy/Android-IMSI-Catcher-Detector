@@ -88,9 +88,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
     public static String OCID_API_KEY = null;   // see getOcidKey()
-    public static int PHONE_TYPE;               //
     public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
     public static int LAST_DB_BACKUP_VERSION;   //
+    private static int PHONE_TYPE;               //
     private static TelephonyManager tm;
     // TEST to fix toast in OCID api key was:
     // private Context context;
@@ -101,11 +101,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private final SignalStrengthTracker signalStrengthTracker;
     private final Device mDevice = new Device();
     private final AIMSICDDbAdapter dbHelper;
-    private PhoneStateListener mPhoneStateListener;
-    private SharedPreferences prefs;
+    private final SharedPreferences prefs;
     // We can also use this to simplify SharedPreferences usage above.
     //TinyDB tinydb = new TinyDB(context);
-    private TinyDB tinydb;
+    private final TinyDB tinydb;
+    private final Cell mMonitorCell;
+    private PhoneStateListener mPhoneStateListener;
     private boolean CELL_TABLE_CLEANSED;
     /*
      * Tracking and Alert Declarations
@@ -116,7 +117,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private boolean mFemtoDetected;
     private boolean mChangedLAC;
     private boolean mCellIdNotInOpenDb;
-    private Cell mMonitorCell;
     private boolean mTypeZeroSmsDetected;
     private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -302,7 +302,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     /**
      * Description:     TODO:
      */
-    final PhoneStateListener phoneStatelistener = new PhoneStateListener() {
+    private final PhoneStateListener phoneStatelistener = new PhoneStateListener() {
         private void handle() {
             handlePhoneStateChange();
         }
@@ -577,7 +577,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
     }
 
-    public void getOcidKey() {
+    private void getOcidKey() {
         final String OCID_KEY = context.getString(R.string.pref_ocid_key);
         OCID_API_KEY = prefs.getString(OCID_KEY, BuildConfig.OPEN_CELLID_API_KEY);
         if (OCID_API_KEY == null) {
@@ -679,7 +679,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         Description: Fixes the issue #346
 
      */
-    public void checkForNeighbourCount(CellLocation location) {
+    private void checkForNeighbourCount(CellLocation location) {
         Log.i(mTAG, "in checkForNeighbourCount");
 
         /**
@@ -792,7 +792,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * ChangeLog:
      * 2015-03-03  E:V:A   Changed getProp() to use TinyDB (SharedPreferences)
      */
-    public void compareLac(CellLocation location) {
+    private void compareLac(CellLocation location) {
         switch (mDevice.getPhoneID()) {
 
             case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
@@ -912,7 +912,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
     }
 
-    void setSilentSmsStatus(boolean state) {
+    private void setSilentSmsStatus(boolean state) {
         mTypeZeroSmsDetected = state;
         setNotification();
         if (state) {
@@ -1028,7 +1028,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     /**
      * Cancel and remove the persistent notification
      */
-    public void cancelNotification() {
+    private void cancelNotification() {
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
@@ -1082,7 +1082,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * <p/>
      * 2015-01-22   E:V:A  Added placeholder for "Missing Neighboring Cells Alert"
      */
-    void setNotification() {
+    private void setNotification() {
         String tickerText;
         String contentText = "Phone Type " + mDevice.getPhoneType();
 
