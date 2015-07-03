@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     
     <!-- Drawer -->
@@ -77,7 +77,7 @@
     
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">Über AIMSICD</string>
-    <string name="app_version">Version:&#160;</string>
+    <string name="app_version">Version: </string>
     <string name="aimsicd_about_info3">Android-basiertes Projekt zur Erkennung und Vermeidung gefälschter Mobilfunkstationen\n(IMSI-Catcher) in GSM/UMTS-Netzwerken.</string>
     <string name="about_github">AIMSICD auf GitHub</string>
     <string name="about_wiki">Dokumentation (WIKI)</string>
@@ -245,9 +245,9 @@
     <string name="stopped_tracking_femtocell">: Femtozellerkennung angehalten.</string>
     <string name="alert_femtocell_tracking_detected">ALARM: Femtozellverfolgung erkannt!</string>
     <string name="refreshing_every">Aktualisiere aller</string>
-    <string name="refreshing_now">Aktualisiere jetzt&#8230;</string>
+    <string name="refreshing_now">Aktualisiere jetzt…</string>
     <string name="seconds">Sekunden.</string>
-    <string name="contacting_opencellid_for_data">Kontaktiere OpenCellID für Daten&#8230;\nDies kann eine Minute dauern.</string>
+    <string name="contacting_opencellid_for_data">Kontaktiere OpenCellID für Daten…\nDies kann eine Minute dauern.</string>
     <string name="unable_to_determine_last_location">Konnte letzten Standort nicht ermitteln.\nStandortbasierte Dienste einschalten und erneut versuchen.</string>
     <string name="no_tracked_locations_found">Keine aufgezeichneten Standorte zum Anzeigen gefunden.</string>
     <string name="no_data_for_publishing">Keine Daten zum Veröffentlichen verfügbar.</string>
@@ -267,7 +267,7 @@
     <string name="unable_to_detect_busybox">Busybox konnte nicht erkannt werden.\nAT-Befehle setzen Busybox-Komponenten für korrekte Funktion voraus.\nBitte prüfen ob Busybox installiert ist und erneut versuchen.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Ein unbekannter Fehler trat beim Zugriffsversuch auf die serielle Schnittstelle auf.\nBitte Fehlerprotokoll prüfen und auf unserem GitHub veröffentlichen.</string>
     <string name="unknown_error_initialising_at_command_injector">Ein unbekannter Fehler trat bei der Initialisierung des AT-Befehlseingabe auf.\nBitte Fehlerprotokoll prüfen und auf unserem GitHub veröffentlichen.</string>
-    <string name="getting_ocid_api_key">Empfange OpenCellID API-Schlüssel&#8230;</string>
+    <string name="getting_ocid_api_key">Empfange OpenCellID API-Schlüssel…</string>
     <string name="unable_to_create_map">Karte konnte nicht erstellt werden!</string>
     <string name="describe_the_problem_you_had">ACHTUNG! Bitte das Problem vor dem versenden der Daten beschreiben. KEINE HILFE OHNE BESCHREIBUNG!\n</string>
     <string name="status">Status:</string>
@@ -324,13 +324,13 @@
     <string name="help_settings_import_db_from_csv">Datenbanktabellen aus einzelnen CSV-Dateien importieren.</string>
     
     <!-- Section Application-->
-    <string name="help_app_add_get_ocid_api_key">API-Schlüssel für die Nutzung der OpenCellID-Datenbanken sowie hoch- und herunterladen der Daten anfordern&#8230;</string>
+    <string name="help_app_add_get_ocid_api_key">API-Schlüssel für die Nutzung der OpenCellID-Datenbanken sowie hoch- und herunterladen der Daten anfordern…</string>
     <string name="help_app_about">Status-Symbole und Erklärung des Projekts.</string>
     <string name="help_app_download_local_bst">OCID-Datenbank herunterladen.</string>
     <string name="help_app_upload_local_bst">Eigene BTS-Daten zu OCID hochladen.</string>
     <string name="help_app_debugging">Fehlerprotokolle sammeln und versenden.</string>
     <string name="help_app_quit">Diese App verlassen.</string>
-    <string name="waiting_for_location">Standort wird ermittelt&#8230;</string>
+    <string name="waiting_for_location">Standort wird ermittelt…</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Alte Datenbank kann auf Grund struktureller Änderungen nicht wiederhergestellt werden!</string>
     <string name="unique_bts_data">Eindeutige BTS-Daten</string>
     <string name="bts_measurements">BTS-Messungen</string>
@@ -339,8 +339,8 @@
     <string name="silent_sms">Stille SMS</string>
     <string name="eventlog">Ereignisprotokoll</string>
     <string name="measured_signal_strengths">Gemessene Signalstärken</string>
-    <string name="at_command_response_looking">*** Suche AT-Schnittstelle&#8230;\n</string>
-    <string name="at_command_response_found">Gefunden:&#032;</string>
+    <string name="at_command_response_looking">*** Suche AT-Schnittstelle…\n</string>
+    <string name="at_command_response_found">Gefunden: </string>
     <string name="at_command_response_setup_complete">*** Einrichtung vollständig ***\n</string>
     <string name="currently_connected_bts">Derzeit verbundene Funkstation</string>
     <string name="well_known_encrypted_bts">Gut bekannte verschlüsselte Funkstation</string>
@@ -379,4 +379,13 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-</resources>
+<string name="alert_silent_voice_sms_detected">ALARM: Stille Sprach-SMS erkannt!</string>
+    <string name="alert_silent_wap_sms_detected">ALARM: WAP Push SMS erkannt!</string>
+    <string name="typewap_header">WAP Push Erkannt</string>
+    <string name="typewap_data">WAP Push SMS nachricht wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte das Protokoll über das Menü Fehlerbehebung.</string>
+
+
+    <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
+    <string name="getting_ocid_key">Besorge OpenCellID-Schlüssel...</string>
+
+    </resources>
