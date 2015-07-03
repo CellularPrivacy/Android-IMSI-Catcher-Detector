@@ -11,8 +11,11 @@ import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CustomPopUp;
@@ -93,9 +96,11 @@ public class MiscUtils {
 
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), drawable_id);
         Notification mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(drawable_id)
+                        .setLargeIcon(largeIcon)
                         .setTicker(tickertext)
                         .setContentTitle(context.getResources().getString(R.string.main_app_name))
                         .setContentText(contentText)
