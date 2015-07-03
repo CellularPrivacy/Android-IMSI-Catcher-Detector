@@ -35,29 +35,28 @@ import java.util.Locale;
 
 /**
  * Created by Paul Kinsella on 04/03/15.
- *
  */
 
 public class MiscUtils {
 
-    public static String setAssetsString(Context context){
+    public static String setAssetsString(Context context) {
         BufferedReader reader = null;
         StringBuilder buildassets = new StringBuilder();
-        try{
+        try {
             reader = new BufferedReader(new InputStreamReader(context.getAssets().open("CREDITS")));
-            String rline = reader.readLine().replace("'","\\'").replace("\\n","");
+            String rline = reader.readLine().replace("'", "\\'").replace("\\n", "");
 
-            while (rline != null ){
+            while (rline != null) {
                 buildassets.append(rline).append("\n");
-                rline = reader.readLine().replace("'","\\'").replace("\\n","");
+                rline = reader.readLine().replace("'", "\\'").replace("\\n", "");
             }
-        } catch (Exception ee){
+        } catch (Exception ee) {
             ee.printStackTrace();
-        }finally {
-            if(reader != null){
+        } finally {
+            if (reader != null) {
                 try {
                     reader.close();
-                } catch (Exception ee){
+                } catch (Exception ee) {
                     ee.printStackTrace();
                 }
             }
@@ -66,14 +65,14 @@ public class MiscUtils {
         return buildassets.toString();
     }
 
-    public static void startPopUpInfo(Context context,int mode){
+    public static void startPopUpInfo(Context context, int mode) {
         Intent i = new Intent(context, CustomPopUp.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("display_mode",mode);
+        i.putExtra("display_mode", mode);
         context.startActivity(i);
     }
 
-    public static String getCurrentTimeStamp(){
+    public static String getCurrentTimeStamp() {
 
         Date now = new Date();
         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now);
@@ -88,7 +87,7 @@ public class MiscUtils {
                           getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.status_good)                            ,
                           R.drawable.sense_ok,false);
    */
-    public static void showNotification(Context context ,String tickertext,String contentText, int drawable_id,boolean auto_cancel){
+    public static void showNotification(Context context, String tickertext, String contentText, int drawable_id, boolean auto_cancel) {
         int NOTIFICATION_ID = 1;
 
         Intent notificationIntent = new Intent(context, AIMSICD.class);
@@ -125,26 +124,27 @@ public class MiscUtils {
          "detection_type":"WAPPUSH"}
 
       */
-    public static void refreshDetectionDbStrings(Context con){
+    public static void refreshDetectionDbStrings(Context con) {
+        final String TAG = "refreshDetectDBStrings";
         SmsDetectionDbAccess dbaccess = new SmsDetectionDbAccess(con);
         BufferedReader reader = null;
         StringBuilder json_file = new StringBuilder();
-        try{
+        try {
             reader = new BufferedReader(new InputStreamReader(con.getAssets().open("det_strings.json")));
             String rline = reader.readLine();
 
-            while (rline != null ){
+            while (rline != null) {
                 json_file.append(rline);
                 rline = reader.readLine();
             }
-            Log.i("refreshDetectionDbStrings", json_file.toString());
-        } catch (Exception ee){
+            Log.i(TAG, json_file.toString());
+        } catch (Exception ee) {
             ee.printStackTrace();
-        }finally {
-            if(reader != null){
+        } finally {
+            if (reader != null) {
                 try {
                     reader.close();
-                } catch (Exception ee){
+                } catch (Exception ee) {
                     ee.printStackTrace();
                 }
             }
@@ -159,45 +159,44 @@ public class MiscUtils {
 
             int json_array_len = json_array_node.length();
             dbaccess.open();
-            for(int i=0; i < json_array_len; i++)
-            {
-                
+            for (int i = 0; i < json_array_len; i++) {
+
                 JSONObject current_json_object = json_array_node.getJSONObject(i);
                 ContentValues store_new_det_string = new ContentValues();
                 store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN,
                         current_json_object.optString("detection_string").toString());
                 store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN,
                         current_json_object.optString("detection_type").toString());
-                if(dbaccess.insertNewDetectionString(store_new_det_string)){
-                    Log.i("refreshDetectionDbStrings",">>>String added success");
+                if (dbaccess.insertNewDetectionString(store_new_det_string)) {
+                    Log.i(TAG, ">>>String added success");
                 }
-                
+
 
             }
             dbaccess.close();
         } catch (JSONException e) {
             dbaccess.close();
-            Log.e("refreshDetectionDbStrings",">>> Error parsing JsonFile "+e.toString());
+            Log.e(TAG, ">>> Error parsing JsonFile " + e.toString());
             e.printStackTrace();
         }
 
     }
-    
+
     /*
         Returns a timestamp in this format 20150617223311
         this is used to detect if the sms was already picked up
      */
-    public static String logcatTimeStampParser(String line){
+    public static String logcatTimeStampParser(String line) {
         //06-17 22:06:05.988 D/dalvikvm(24747): <-- example of timestamp
         String[] buffer = line.split(" ");
 
-        line = String.valueOf(Calendar.getInstance().get(Calendar.YEAR))+buffer[0]+buffer[1];
-                                                            //   -->we dont need the last 4 digits in timestamp .988
-                                                            //   |  way to accurate but easily change if needed
-        String timestamp = line.substring(0,line.length()-4)// <-|
-                .replace(":","")
-                .replace(".","")
-                .replace("-","");
+        line = String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + buffer[0] + buffer[1];
+        //   -->we dont need the last 4 digits in timestamp .988
+        //   |  way to accurate but easily change if needed
+        String timestamp = line.substring(0, line.length() - 4)// <-|
+                .replace(":", "")
+                .replace(".", "")
+                .replace("-", "");
 
         return timestamp;
     }
