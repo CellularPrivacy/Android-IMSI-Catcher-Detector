@@ -143,8 +143,8 @@
     <string name="pc_label">PC: </string>
     <string name="samples_label">Samples: </string>
     <string name="open_cell_id_label">OpenCellID Data</string>
-    <string name="lat_label">Lat: </string>
-    <string name="lng_label">Lon: </string>
+    <string name="lat_label">"Lat: "</string>
+    <string name="lng_label">"Lon: "</string>
 
     <!-- Database Viewer -->
     <string name="table_names_prompt">Select Table</string>
