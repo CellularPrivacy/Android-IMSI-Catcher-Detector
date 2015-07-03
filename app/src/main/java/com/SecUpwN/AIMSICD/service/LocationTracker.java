@@ -99,14 +99,16 @@ public class LocationTracker {
 
     public GeoLocation lastKnownLocation() {
         GeoLocation loc = null;
-        TruncatedLocation location = new TruncatedLocation(lm.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (location != null && (location.getLatitude() != 0.0 && location.getLongitude() != 0.0)) {
-            loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
+            TruncatedLocation TruncatedLocation = new TruncatedLocation(location);
+            loc = GeoLocation.fromDegrees(TruncatedLocation.getLatitude(), TruncatedLocation.getLongitude());
         } else {
-            location = new TruncatedLocation(lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
+            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             if (location != null && (location.getLatitude() != 0.0
                     && location.getLongitude() != 0.0)) {
-                loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
+                TruncatedLocation TruncatedLocation = new TruncatedLocation(location);
+                loc = GeoLocation.fromDegrees(TruncatedLocation.getLatitude(), TruncatedLocation.getLongitude());
             } else {
                 String coords = prefs.getString(context.getString(R.string.data_last_lat_lon), null);
                 if (coords != null) {
