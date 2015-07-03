@@ -372,7 +372,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             // a new API key within 24 hours of the last request. (See GH issue #267)
             // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
 
-            Helpers.msgLong(context, context.getString(R.string.only_one_api_per_day));
+            Helpers.msgLong(context, context.getString(R.string.only_one_key_per_day));
             String responseFromServer = result.getResponseFromServer();
             Log.d("AIMSICD", "CellTracker: OCID Reached 24hr API key limit: " + responseFromServer);
             return responseFromServer;
@@ -1109,7 +1109,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             case ALARM: // ORANGE, RED or BLACK ?
                 tickerText = context.getResources().getString(R.string.app_name_short) + " - " + context.getString(R.string.alert_threat_detected); // Hmm, this is vague!
                 if (mFemtoDetected) {
-                    contentText = context.getString(R.string.aletr_femtocell_connection_detected);
+                    contentText = context.getString(R.string.alert_femtocell_connection_detected);
                 } else if (mTypeZeroSmsDetected) {
                     contentText = context.getString(R.string.alert_silent_sms_detected);
                 }
