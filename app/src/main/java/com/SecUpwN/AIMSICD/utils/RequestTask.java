@@ -96,8 +96,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     //Calling from the menu more extensive(more difficult for sever),
     // we have to give more time for the server response
-    public static final int REQUEST_TIMEOUT_MAPS = 80000;       // [ms] 40 s Calling from map
-    public static final int REQUEST_TIMEOUT_MENU = 80000;       // [ms] 40 s Calling from menu
+    public static final int REQUEST_TIMEOUT_MAPS = 80000;       // [ms] 80 s Calling from map
+    public static final int REQUEST_TIMEOUT_MENU = 80000;       // [ms] 80 s Calling from menu
 
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
