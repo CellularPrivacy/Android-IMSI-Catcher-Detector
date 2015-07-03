@@ -20,7 +20,7 @@ env:
 # Amount of memory granted to Gradle JVM
     - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
 # General Android settings used in builds
-    - ANDROID_TARGET=android-17
+    - ANDROID_TARGET=android-22
     - ANDROID_ABI=armeabi-v7a
 
 # Encrypted Tokens
@@ -43,9 +43,9 @@ android:
      - platform-tools
      - tools
 # The BuildTools version we are using for our project
-     - build-tools-21.1.2
+     - build-tools-22.0.1
 # System Image we use to run emulator(s) during tests
-     - sys-img-armeabi-v7a-android-17
+     - sys-img-armeabi-v7a-android-22
 # Additional components
      - extra-android-m2repository
 
