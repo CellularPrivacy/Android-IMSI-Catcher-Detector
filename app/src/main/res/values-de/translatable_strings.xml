@@ -228,7 +228,7 @@
     <string name="stopped_monitoring_cell_information">Beobachtung der Funkzelldaten angehalten.</string>
     <string name="tracking_cell_information">Funkzelldaten werden aufzeichnet.</string>
     <string name="stopped_tracking_cell_information">Aufzeichnung der Funkzelldaten angehalten.</string>
-    <string name="only_one_api_per_day">Anfrage für neuen API-Schlüssel nur einmal aller 24 Stunden möglich!\nBitte später erneut versuchen.</string>
+    <string name="only_one_key_per_day">Anfrage für neuen API-Schlüssel nur einmal aller 24 Stunden möglich!\nBitte später erneut versuchen.</string>
     <string name="cell_id_doesnt_exist_in_db">Zell-ID nicht existent in OCID-Datenbank!</string>
     <string name="hostile_service_area_changing_lac_detected">Feindliche Betriebsaktion: LAC-Änderung erkannt!</string>
     <string name="femtocell_detection_active">Femtozellenerkennung aktiv.</string>
@@ -238,7 +238,7 @@
     <string name="status_idle">Status: Ruhend.</string>
     <string name="status_good">Status: Gut. Keine Gefahren erkannt.</string>
     <string name="alert_threat_detected">ALARM: Eine Gefahr wurde erkannt!</string>
-    <string name="aletr_femtocell_connection_detected">ALARM: Verbinding mit Femtozelle erkannt!</string>
+    <string name="alert_femtocell_connection_detected">ALARM: Verbinding mit Femtozelle erkannt!</string>
     <string name="alert_silent_sms_detected">ALARM: Stille SMS (Type-0) erkannt!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD kann Verbindungen mit Femtozellen derzeit nur auf CDMA-Geräten erkennen.</string>
     <string name="service_state_changed">Betriebsstatus verändert!</string>
