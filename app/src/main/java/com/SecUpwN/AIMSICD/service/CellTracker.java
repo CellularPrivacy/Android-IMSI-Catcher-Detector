@@ -402,15 +402,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             Log.d("AIMSICD", "CellTracker: OCID Reached 24hr API key limit: " + responseFromServer);
             return responseFromServer;
         } else {
-
             // TODO add code here or elsewhere to check for NO network exceptions...
             // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/293
-            httpclient = null;
-            httpGet = null;
-            result = null;
-
             Log.d("AIMSICD", "CellTracker: OCID Returned " + result.getStatusCode() + " " + result.getReasonPhrase());
-//                        throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
+            // throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
             return null;
         }
     }
