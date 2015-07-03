@@ -238,7 +238,7 @@
     <string name="stopped_monitoring_cell_information">Мониторинг сотовой информации остановлен.</string>
     <string name="tracking_cell_information">Отслеживания данных сотового.</string>
     <string name="stopped_tracking_cell_information">Отслеживания данных сотового остановлена.</string>
-    <string name="only_one_api_per_day">Только один запрос нового ключа API за 24 часа!\nПожалуйста, повторите попытку позже.</string>
+    <string name="only_one_key_per_day">Только один запрос нового ключа API за 24 часа!\nПожалуйста, повторите попытку позже.</string>
     <string name="cell_id_doesnt_exist_in_db">ID соты не существует в базе данных OCID!</string>
     <string name="hostile_service_area_changing_lac_detected">Враждебная зона обслуживания: Изменение LAC обнаружено!</string>
     <string name="femtocell_detection_active">Обнаружение фемтосот активно.</string>
@@ -248,7 +248,7 @@
     <string name="status_idle">Статус: Неработающий.</string>
     <string name="status_good">Статус: Хорошо. Угроз не обнаружено.</string>
     <string name="alert_threat_detected">ТРЕВОГА: Обнаружены некоторые угрозы!</string>
-    <string name="aletr_femtocell_connection_detected">ТРЕВОГА: Обнаружено соединение с фемтосотой!</string>
+    <string name="alert_femtocell_connection_detected">ТРЕВОГА: Обнаружено соединение с фемтосотой!</string>
     <string name="alert_silent_sms_detected">ТРЕВОГА: обнаруженный бесшумная SMS (Type-0)!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD может определять соединение с фемтосотой только на CDMA устройствах.</string>
     <string name="service_state_changed">Статус сервиса изменен!</string>
@@ -276,7 +276,7 @@
     <string name="unable_to_acquire_root_access">Невозможно получить ROOT доступ на вашем устройстве.\nДля инъекций AT-команд в терминал требуется ROOT доступ.\nПожалуйста, проверьте наличие ROOT прав на вашем устройстве и попробуйте еще раз</string>
     <string name="unable_to_detect_busybox">Невозможно обнаружить Busybox на вашем устройстве.\nДля инъекций AT-команд в терминал требуются компоненты Busybox для правильного функционирования.\nПожалуйста, проверьте, что Busybox установлен на ваше устройство  и попробуйте снова</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Произошла неизвестная ошибка при попытке достижения Serial Device.\nПожалуйста, проверьте LogCat на возможные ошибки и отправьте их на Github.</string>
-    <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them to Github or\nXDA, links to both of these locations can be found within the\nAbout section of the application.</string>
+    <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them on our Github.</string>
     <string name="getting_ocid_api_key">Получение ключа API OpenCellID&#8230;</string>
     <string name="unable_to_create_map">Невозможно создать карту!</string>
     <string name="describe_the_problem_you_had">ВНИМАНИЕ! Пожалуйста, опишите проблему, которая у вас была, прежде, чем отправить нам эти журналы. НЕТ ПОМОЩИ БЕЗ ОПИСАНИЯ!\n</string>
