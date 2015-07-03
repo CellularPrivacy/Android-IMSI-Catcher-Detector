@@ -856,8 +856,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         // Does this make sense? Is it empty or not?
         Log.i(TAG, mTAG + ": neighbouringCellInfo empty - event based polling succeeded!");
         tm.listen(phoneStatelistener, PhoneStateListener.LISTEN_NONE);
-        if (neighboringCellInfo == null)
-            neighboringCellInfo = new ArrayList<>();
         neighboringCellBlockingQueue.addAll(neighboringCellInfo);
     }
 
@@ -896,7 +894,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 t = 15L; // Automatic refresh rate is 15 seconds
                 break;
             default:
-                t = (rate * 1L);
+                t = ((long) rate);
                 break;
         }
 
