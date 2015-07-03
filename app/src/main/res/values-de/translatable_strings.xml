@@ -160,7 +160,7 @@
     <string name="database_export_successful">Export erfolgreich</string>
     
     <!-- AT Command Interface  -->
-    <string name="at_command_title">AT Command Interface</string>
+    <string name="at_command_title">AT-Befehlskonsole</string>
     <string name="response_label">Reaktion:</string>
     <string name="execute_at">Ausführen</string>
     <string name="serial_device_title">Derzeitige Schnittstelle:</string>
@@ -284,7 +284,7 @@
     <!-- Advanced User Settings: Delete Detected SMS-->
     <string name="adv_user_sms_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\nZum löschen die SMS in der Liste lang drücken.</string>
     <string name="title_activity_advanced_user">Erkannte SMS löschen</string>
-    <string name="adv_user_pref_header">Advanced User Settings</string>
+    <string name="adv_user_pref_header">Experteneinstellungen</string>
     <string name="adv_user_pref_launch">Erkennungs-Zeichenfolge</string>
     <string name="adv_user_pref_sms_launch">SMS löschen</string>
     <string name="adv_user_pref_summary">Erkennungs-Zeichenfolgen einfügen</string>
