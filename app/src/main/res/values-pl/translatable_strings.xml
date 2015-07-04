@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
 
     <!-- Drawer -->
@@ -76,7 +76,7 @@
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">O AIMSICD</string>
-    <string name="app_version">Wersja:&#160;</string>
+    <string name="app_version">Wersja: </string>
     <string name="aimsicd_about_info3">Projekt na Android pozwalający wykrywać fałszywe stacje bazowe (IMSI-catchery) w sieci GSM/UMTS.</string>
     <string name="about_github">AIMSICD na Githubie</string>
     <string name="about_wiki">Dokumentacja (WIKI)</string>
@@ -179,13 +179,13 @@
     <string name="title_ocid_key">Klucz API OpenCellID</string>
     <string name="message_request_api_key">Wybierz OK by pobrać klucz API z OpenCellID.org. Pozwoli Ci to na pobranie danych i wyświetlanie ich na mapie, oraz na wysyłanie zebranych danych. Jeśli nie wyślesz żadanych danych w ciągu 20dni, Twój klucz może zostać zdezaktywowany.</string>
     <string name="ocid_api_error">Błąd pobierania klucza: </string>
-    <string name="ocid_api_success">Zapisano nowy klucz</string>
+    <string name="ocid_api_success">Zapisano nowy klucz API.</string>
 
     <!-- Debug logs -->
     <string name="title_debug_logs">Logi</string>
     <string name="btn_clear_logs">Wyczyść</string>
     <string name="btn_copy_to_clipboard">Kopiuj</string>
-    <string name="msg_copied_to_clipboard">Skopiowano logi do schowka</string>
+    <string name="msg_copied_to_clipboard">Skopiowano logi do schowka.</string>
     <string name="btn_stop_logs">Zakończ</string>
     <string name="btn_start_logs">Rozpocznij</string>
 
@@ -235,7 +235,7 @@
     <string name="cell_tracking_active">Śledzenie komórek aktywne.</string>
     <string name="cell_monitoring_active">Monitoring komórek aktywny.</string>
     <string name="phone_type">Rodzaj telefonu</string>
-    <string name="status_idle">Oczekuję&#8230;</string>
+    <string name="status_idle">Oczekuję…</string>
     <string name="status_good">Brak zagrożeń. Wszystko OK.</string>
     <string name="alert_threat_detected">UWAGA: Wykryto zagrożenie!</string>
     <string name="alert_femtocell_connection_detected">UWAGA: Wykryto połączenie FemtoCell!</string>
@@ -247,9 +247,9 @@
     <string name="stopped_tracking_femtocell">: Wstrzymano śledzenie połączeń FemtoCell.</string>
     <string name="alert_femtocell_tracking_detected">UWAGA! Wykryto śledzenie FemtoCell!</string>
     <string name="refreshing_every">Odświeżanie co</string>
-    <string name="refreshing_now">Odświeżam&#8230;</string>
+    <string name="refreshing_now">Odświeżam…</string>
     <string name="seconds">sekund.</string>
-    <string name="contacting_opencellid_for_data">Łączenie z OpenCellID by uzyskać potrzebne dane&#8230;\nMoże to potrwać nawet minutę.</string>
+    <string name="contacting_opencellid_for_data">Łączenie z OpenCellID by uzyskać potrzebne dane…\nMoże to potrwać nawet minutę.</string>
     <string name="unable_to_determine_last_location">Nie udalo się określić Twojej ostatniej lokalizacji. Włącz lokalizację w ustawieniach telefonu.</string>
     <string name="no_tracked_locations_found">Brak zapisanych lokalizacji do pokazania.</string>
     <string name="no_data_for_publishing">Brak nowych danych do wysłania.</string>
@@ -267,9 +267,9 @@
     <string name="refreshing_display">Odświeżanie ekranu</string>
     <string name="unable_to_acquire_root_access">Nie udało się usyskać praw ROOTa. Interface komend AT wymaga praw ROOTa. Sprawdź swoje urządzenie i spróbuj ponownie.</string>
     <string name="unable_to_detect_busybox">Nie udało się odnaleźć BusyBox na Twoim urządzeniu. Interface komend AT wymaga BusyBoxa! Sprawdź swoje urządzenie i spróbuj ponownie.</string>
-    <string name="unknown_error_trying_to_acquire_serial_device">Wystąpił nieznany bład przy próbie uzyskania Serial Device. Prosimy o sprawdzenie logów i przesłanie ich do nas na Github. Link do Githuba znajedziesz w sekcji \'O aplikacji\'.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Wystąpił nieznany bład przy próbie uzyskania numeru seryjnego urządzenia. Prosimy o sprawdzenie logów i przesłanie ich do nas na Github.</string>
     <string name="unknown_error_initialising_at_command_injector">AWystąpił nieznany błąd przy uruchamianiu inteface komend AT. Prosimy o sprawdzenie logów i przesłanie ich do nas na Github. Link do Githuba znajedziesz w sekcji \'O aplikacji\'.</string>
-    <string name="getting_ocid_api_key">Pobieranie klucza OpenCellID&#8230;</string>
+    <string name="getting_ocid_api_key">Pobieranie klucza OpenCellID…</string>
     <string name="unable_to_create_map">Nie powiodło się tworzenie mapy!</string>
     <string name="describe_the_problem_you_had">W celu uzyskania pomocy opisz swój problem. Problemy bez opisu są automatycznie ignorowane!\n</string>
     <string name="status">Status:</string>
@@ -330,13 +330,13 @@
     <string name="help_settings_import_db_from_csv">Importuj do bazy danych z plików CSV.</string>
 
     <!-- Section Application-->
-    <string name="help_app_add_get_ocid_api_key">Uzyskaj klucz API do OpenCellID by pobierać i wysyłać dane&#8230;</string>
+    <string name="help_app_add_get_ocid_api_key">Uzyskaj klucz API do OpenCellID by pobierać i wysyłać dane…</string>
     <string name="help_app_about">O nas i kogo wspieramy.</string>
     <string name="help_app_download_local_bst">Pobierz bazę danych OCID.</string>
     <string name="help_app_upload_local_bst">Wyślij dane o lokalnych BTS do OCID.</string>
     <string name="help_app_debugging">Wczytaj i wyślij logi.</string>
     <string name="help_app_quit">Zakończ działanie aplikacji.</string>
-    <string name="waiting_for_location">Oczekiwanie na lokalizację&#8230;</string>
+    <string name="waiting_for_location">Oczekiwanie na lokalizację…</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Nie udało się odzyskać kopii z poprzedniej wersji bazy danych!</string>
     <string name="unique_bts_data">Unikalne dane BTS</string>
     <string name="bts_measurements">Pomiary BTS</string>
@@ -346,8 +346,8 @@
     <string name="eventlog">Logi zdarzeń</string>
     <string name="measured_signal_strengths">Pomiary siły sygnałów</string>
 
-    <string name="at_command_response_looking">*** Wykrywanie urządzeń AT&#8230;\n</string>
-    <string name="at_command_response_found">Wykryto:&#032;</string>
+    <string name="at_command_response_looking">*** Wykrywanie urządzeń AT…\n</string>
+    <string name="at_command_response_found">Wykryto: </string>
     <string name="at_command_response_setup_complete">*** Konfiguracja zakończona ***\n</string>
 
     <string name="currently_connected_bts">Currently connected BTS</string>
