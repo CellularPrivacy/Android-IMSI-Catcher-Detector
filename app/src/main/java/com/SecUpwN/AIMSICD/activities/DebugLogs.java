@@ -61,6 +61,10 @@ import java.io.InputStreamReader;
 
 
 public class DebugLogs extends BaseActivity {
+
+    private static final String TAG = "AIMSICD";
+    private static final String mTAG = "DebugLogs";
+
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
     private boolean isRadioLogs = true; // Including this, should be a toggle.
@@ -98,7 +102,7 @@ public class DebugLogs extends BaseActivity {
                     clearLogs();
                     //Log.d("DebugLogs", "Logcat clearing disabled!");
                 } catch (Exception e) {
-                    Log.e("AIMSICD", "DebugLogs: Error clearing logs", e);
+                    Log.e(TAG, mTAG + ": Error clearing logs", e);
                 }
             }
         });
@@ -161,7 +165,7 @@ public class DebugLogs extends BaseActivity {
             logUpdater = new LogUpdaterThread();
             logUpdater.start();
         } catch (Exception e) {
-            Log.e("AIMSICD", "DebugLogs: Error starting log updater thread", e);
+            Log.e(TAG, mTAG + ": Error starting log updater thread", e);
         }
         btnStop.setText(getString(R.string.btn_stop_logs));
     }
@@ -214,7 +218,7 @@ public class DebugLogs extends BaseActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
                 } catch (IOException e) {
-                    Log.e("AIMSICD", "DebugLogs: Error reading logs", e);
+                    Log.e(TAG, mTAG + ": Error reading logs", e);
                 }
             }
         }.start();
@@ -303,7 +307,7 @@ public class DebugLogs extends BaseActivity {
                 try {
                     Runtime.getRuntime().exec("logcat -c -b main -b system -b radio -b events");
                 } catch (Exception e) {
-                    Log.e("AIMSICD", "DebugLogs: Error clearing logs", e);
+                    Log.e(TAG, mTAG + ": Error clearing logs", e);
                 }
 
                 runOnUiThread(new Runnable() {
@@ -342,7 +346,7 @@ public class DebugLogs extends BaseActivity {
                         });
                     }
                 } catch (Exception e) {
-                    Log.e("AIMSICD", "DebugLogs: Error updating logs", e);
+                    Log.e(TAG, mTAG + ": Error updating logs", e);
                 }
                 try { Thread.sleep(1000); } catch (Exception e) {}
             }

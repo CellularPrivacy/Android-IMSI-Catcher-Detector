@@ -26,16 +26,26 @@ import java.util.HashMap;
  *
  *      https://cloud.githubusercontent.com/assets/2507905/4428863/c85c8366-45d4-11e4-89da-c650cdb56caf.jpg
  *
+ *  Issues:
+ *
+ *      [ ]
+ *
+ *  ChangeLog
+ *
+ *      20150703    E:V:A       Changed log TAG to use only TAG for Log.i() and mTAG for Log.d/e/v()
+ *
  * @author Tor Henning Ueland
  */
 public class SignalStrengthTracker {
-    //FIXME The logging tag can be at most 23 characters, was 29 (AIMSICD_SignalStrengthTracker)
-    public static final String TAG = "AIMSICD_SignalStrength";
+
+    private static final String TAG = "AIMSICD";
+    private static final String mTAG = "SignalStrengthTracker";
+
     private static int sleepTimeBetweenSignalRegistration = 60; // [seconds]
-    private static int minimumIdleTime              = 30; // [seconds]
-    private static int maximumNumberOfDaysSaved     = 60; // [days] = 2 months
-    private static int mysteriousSignalDifference   = 10; // [dBm] or [ASU]?
-    private static int sleepTimeBetweenCleanup      = 3600; // Once per hour
+    private static int minimumIdleTime                    = 30; // [seconds]
+    private static int maximumNumberOfDaysSaved           = 60; // [days] = 2 months
+    private static int mysteriousSignalDifference         = 10; // [dBm] or [ASU]?
+    private static int sleepTimeBetweenCleanup            = 3600; // Once per hour
     private Long lastRegistrationTime;  //Timestamp for last registration to DB
     private Long lastCleanupTime;       //Timestamp for last cleanup of DB
     private HashMap<Integer, Integer> averageSignalCache = new HashMap<>();
@@ -62,8 +72,8 @@ public class SignalStrengthTracker {
         long now = System.currentTimeMillis();
 
         if(deviceIsMoving()) {
-            Log.i(TAG, "Ignored signal strength sample for CID: " + cellID +
-                    " as the device is currently moving around, will not accept anything for another " +
+            Log.i(TAG, "Ignoring signal strength for CID: " + cellID +
+                    " since device is moving around, waiting for " +
                     ((minimumIdleTime*1000) - (now - lastMovementDetected)) + " ms.");
             return;
         }
@@ -113,7 +123,7 @@ public class SignalStrengthTracker {
         //If moving, return false
         if(deviceIsMoving()) {
             Log.i(TAG, "Cannot check signal strength for CID: " + cellID +
-                        " as the device is currently moving around.");
+                        " since device is moving around.");
             return false;
         }
 
@@ -122,13 +132,13 @@ public class SignalStrengthTracker {
         //Cached?
         if(averageSignalCache.get(cellID) != null) {
             storedAvg = averageSignalCache.get(cellID);
-            Log.d(TAG, "Cached average SS for CID: " + cellID + " is: " + storedAvg);
+            Log.d(TAG, mTAG + ": Cached average SS for CID: " + cellID + " is: " + storedAvg);
         } else {
             //Not cached, check DB
             mDbHelper.open();
             storedAvg = mDbHelper.getAverageSignalStrength(cellID);
             averageSignalCache.put(cellID, storedAvg);
-            Log.d(TAG, "Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
+            Log.d(TAG, mTAG + ": Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
             mDbHelper.close();
         }
 

@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppAIMSICD extends Application {
-    final static String TAG = "AppAIMSICD";
+    final static String TAG = "AIMSICD";
+    final static String mTAG = "AppAIMSICD";
 
     /**
      * Maps between an activity class name and the list of currently running
@@ -51,7 +52,7 @@ public class AppAIMSICD extends Application {
                 if (lTask.equals(pTask)) {
                     tasks.remove(lTask);
                     if (BuildConfig.DEBUG) {
-                        Log.v(TAG, "BaseTask removed:" + pTask.toString());
+                        Log.v(TAG, mTAG + ": BaseTask removed:" + pTask.toString());
                     }
                     break;
                 }
@@ -68,7 +69,7 @@ public class AppAIMSICD extends Application {
             return;
         }
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "BaseTask addTask activity:" + activity.getClass().getCanonicalName());
+            Log.d(TAG, mTAG + ": BaseTask addTask activity:" + activity.getClass().getCanonicalName());
         }
         int key = activity.getClass().getCanonicalName().hashCode();
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(key);
@@ -77,7 +78,7 @@ public class AppAIMSICD extends Application {
             mActivityTaskMap.put(key, tasks);
         }
         if (BuildConfig.DEBUG) {
-            Log.v(TAG, "BaseTask added:" + pTask.toString());
+            Log.v(TAG, mTAG + ": BaseTask added:" + pTask.toString());
         }
         tasks.add(pTask);
     }
@@ -87,7 +88,7 @@ public class AppAIMSICD extends Application {
             return;
         }
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "BaseTask detach:" + activity.getClass().getCanonicalName());
+            Log.d(TAG, mTAG + ": BaseTask detach:" + activity.getClass().getCanonicalName());
         }
 
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName().hashCode());
@@ -103,7 +104,7 @@ public class AppAIMSICD extends Application {
             return;
         }
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "BaseTask attach:" + activity.getClass().getCanonicalName());
+            Log.d(TAG, mTAG + ": BaseTask attach:" + activity.getClass().getCanonicalName());
         }
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName().hashCode());
         if (tasks != null) {

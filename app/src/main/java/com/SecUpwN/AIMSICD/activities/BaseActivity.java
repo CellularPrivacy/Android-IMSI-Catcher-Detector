@@ -25,7 +25,9 @@ import com.SecUpwN.AIMSICD.utils.Status;
  * @author Tor Henning Ueland
  */
 public class BaseActivity extends FragmentActivity {
-    private static String TAG = "BaseActivity";
+    private static final String TAG = "AIMSICD";
+    private static final String mTAG = "BaseActivity";
+
 
     /**
      * Triggered when GUI is opened
@@ -33,7 +35,7 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "StatusWatcher starting watching");
+        Log.d(TAG, mTAG + ": StatusWatcher starting watching");
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("StatusChange"));
         updateIcon(this);
@@ -45,7 +47,7 @@ public class BaseActivity extends FragmentActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "StatusWatcher received status change to " + Status.getStatus().name()+", updating icon");
+            Log.d(TAG, mTAG +  ": StatusWatcher received status change to " + Status.getStatus().name()+", updating icon");
                     updateIcon(context);
         }
     };
@@ -69,7 +71,7 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "StatusWatcher stopped watching");
+        Log.d(TAG, mTAG + ": StatusWatcher stopped watching");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 }

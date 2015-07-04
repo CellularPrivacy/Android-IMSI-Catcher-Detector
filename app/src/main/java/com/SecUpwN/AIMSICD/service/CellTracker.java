@@ -253,10 +253,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void setCellTracking(boolean track) {
         if (track) {
             tm.listen(mCellSignalListener,
-                    PhoneStateListener.LISTEN_CELL_LOCATION |           // gpsd_lat/lon ?
+                    PhoneStateListener.LISTEN_CELL_LOCATION |                   // gpsd_lat/lon ?
                             PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |        // rx_signal
                             PhoneStateListener.LISTEN_DATA_ACTIVITY |           // No,In,Ou,IO,Do
-                            PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |    // Di,Ct,Cd,Su
+                            PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |   // Di,Ct,Cd,Su
                             PhoneStateListener.LISTEN_CELL_INFO
                     // PhoneStateListener.LISTEN_CALL_STATE ?
                     // PhoneStateListener.LISTEN_SERVICE_STATE ?
@@ -463,8 +463,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         // Add NC list to ?? cellinfo ??  --->  DBi_measure:nc_list
         for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
-            Log.i(TAG,
-                    mTAG + ": neighbouringCellInfo -" +
+            Log.i(TAG, mTAG + ": neighbouringCellInfo -" +
                             " LAC:" + neighbourCell.getLac() +
                             " CID:" + neighbourCell.getCid() +
                             " PSC:" + neighbourCell.getPsc() +
@@ -488,7 +487,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
      */
     public void checkForNeighbourCount(CellLocation location){
-        Log.i(mTAG,"in checkForNeighbourCount");
+        Log.i(TAG, mTAG + ": checkForNeighbourCount()");
 
         /**
          *  Description:    This snippet sets a global variable (SharedPreference) to indicate
@@ -622,7 +621,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     // Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
                     if ( tinydb.getBoolean("ocid_downloaded") ) {
                         if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
-                            Log.i(mTAG, "ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
+                            Log.i(TAG, "ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
 
                             // Code Place-holder: TODO: Add to EventLog table!!
 
@@ -1309,13 +1308,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         @Override
         public void onCellInfoChanged(List<CellInfo> cellInfo) {
             handle();
-            Log.i(mTAG,"Cell info change");
+            Log.i(TAG, mTAG + ": Cell info change");
         }
 
         @Override
         public void onCellLocationChanged(CellLocation location) {
             handle();
-            Log.i(mTAG,"Cell info change");
+            Log.i(TAG, mTAG +": Cell info change");
         }
 
     };
