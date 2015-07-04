@@ -14,6 +14,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -1126,9 +1128,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType));
+        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconResId);
         Notification mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(Icon.getIcon(Icon.Type.valueOf(iconType)))
+                        .setSmallIcon(iconResId)
+                        .setLargeIcon(largeIcon)
                         .setTicker(tickerText)
                         .setContentTitle(context.getResources().getString(R.string.main_app_name))
                         .setContentText(contentText)

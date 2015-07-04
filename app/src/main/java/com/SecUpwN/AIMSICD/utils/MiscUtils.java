@@ -11,6 +11,8 @@ import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.SecUpwN.AIMSICD.AIMSICD;
@@ -73,8 +75,7 @@ public class MiscUtils {
     public static String getCurrentTimeStamp(){
 
         Date now = new Date();
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now);
-        return timestamp;
+        return new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now);
     }
 
     /*
@@ -93,9 +94,11 @@ public class MiscUtils {
 
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), drawable_id);
         Notification mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(drawable_id)
+                        .setLargeIcon(largeIcon)
                         .setTicker(tickertext)
                         .setContentTitle(context.getResources().getString(R.string.main_app_name))
                         .setContentText(contentText)
@@ -160,9 +163,9 @@ public class MiscUtils {
                 JSONObject current_json_object = json_array_node.getJSONObject(i);
                 ContentValues store_new_det_string = new ContentValues();
                 store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN,
-                        current_json_object.optString("detection_string").toString());
+                        current_json_object.optString("detection_string"));
                 store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN,
-                        current_json_object.optString("detection_type").toString());
+                        current_json_object.optString("detection_type"));
                 if(dbaccess.insertNewDetectionString(store_new_det_string)){
                     Log.i("refreshDetectionDbStrings",">>>String added success");
                 }
@@ -189,11 +192,9 @@ public class MiscUtils {
         line = String.valueOf(Calendar.getInstance().get(Calendar.YEAR))+buffer[0]+buffer[1];
                                                             //   -->we dont need the last 4 digits in timestamp .988
                                                             //   |  way to accurate but easily change if needed
-        String timestamp = line.substring(0,line.length()-4)// <-|
+        return line.substring(0,line.length()-4)// <-|
                 .replace(":","")
                 .replace(".","")
                 .replace("-","");
-
-        return timestamp;
     }
 }
