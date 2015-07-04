@@ -380,12 +380,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             // TODO add code here or elsewhere to check for NO network exceptions...
             // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/293
-            httpclient = null;
-            httpGet = null;
-            result = null;
+
+            // TODO: Remove commented out stuff if app works without these NULLs
+            // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/526
+            // PR: 4a68d00
+            //httpclient = null;
+            //httpGet = null;
+            //result = null;
 
             Log.d("AIMSICD", "CellTracker: OCID Returned " + result.getStatusCode() + " " + result.getReasonPhrase());
-//                        throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
+            //throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
             return null;
         }
     }

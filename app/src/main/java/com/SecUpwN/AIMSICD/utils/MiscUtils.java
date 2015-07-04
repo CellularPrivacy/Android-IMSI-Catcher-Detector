@@ -31,11 +31,20 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by Paul Kinsella on 04/03/15.
+ * Description:     TODO
+ *
+ *
+ * ChangeLog:
+ *
+ *      banjaxbanjo     20150304    First PR
+ *      E:V:A           20150704    Changed TAGs and fixed some formatting
  *
  */
 
 public class MiscUtils {
+
+    private static final String TAG = "AIMSICD";
+    private static final String mTAG = "MiscUtils";
 
     public static String setAssetsString(Context context){
         BufferedReader reader = null;
@@ -111,13 +120,13 @@ public class MiscUtils {
 
     /*
          Coder:banjaxbanjo
+
          All new database detection strings will be added here so we
          don't need to keep updating db every time we find a new string.
 
          to add a new string in det_strings.json see example below:
 
-         {"detection_string":"incoming msg. Mti 0 ProtocolID 0 DCS 0x04 class -1",
-         "detection_type":"WAPPUSH"}
+         {"detection_string":"incoming msg. Mti 0 ProtocolID 0 DCS 0x04 class -1", "detection_type":"WAPPUSH"}
 
       */
     public static void refreshDetectionDbStrings(Context con){
@@ -132,7 +141,8 @@ public class MiscUtils {
                 json_file.append(rline);
                 rline = reader.readLine();
             }
-            Log.i("refreshDetectionDbStrings", json_file.toString());
+            // Hmm I hope this doesn't affect the detection
+            Log.i(TAG, mTAG + ": refreshDetectionDbStrings: " + json_file.toString());
         } catch (Exception ee){
             ee.printStackTrace();
         }finally {
@@ -164,7 +174,7 @@ public class MiscUtils {
                 store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN,
                         current_json_object.optString("detection_type").toString());
                 if(dbaccess.insertNewDetectionString(store_new_det_string)){
-                    Log.i("refreshDetectionDbStrings",">>>String added success");
+                    Log.i(TAG, mTAG + ": refreshDetectionDbStrings: New string added!");
                 }
                 
 
@@ -172,14 +182,14 @@ public class MiscUtils {
             dbaccess.close();
         } catch (JSONException e) {
             dbaccess.close();
-            Log.e("refreshDetectionDbStrings",">>> Error parsing JsonFile "+e.toString());
+            Log.e(TAG, mTAG + ": refreshDetectionDbStrings: "+ "Error parsing JsonFile " + e.toString());
             e.printStackTrace();
         }
 
     }
     
     /*
-        Returns a timestamp in this format 20150617223311
+        Returns a timestamp in this format:     20150617223311
         this is used to detect if the sms was already picked up
      */
     public static String logcatTimeStampParser(String line){
@@ -187,12 +197,12 @@ public class MiscUtils {
         String[] buffer = line.split(" ");
 
         line = String.valueOf(Calendar.getInstance().get(Calendar.YEAR))+buffer[0]+buffer[1];
-                                                            //   -->we dont need the last 4 digits in timestamp .988
-                                                            //   |  way to accurate but easily change if needed
-        String timestamp = line.substring(0,line.length()-4)// <-|
-                .replace(":","")
-                .replace(".","")
-                .replace("-","");
+        //   -->we dont need the last 4 digits in timestamp .988
+        //   |  way to accurate but easily change if needed
+        String timestamp = line.substring(0,line.length()-4) // <-|
+                .replace(":", "")
+                .replace(".", "")
+                .replace("-", "");
 
         return timestamp;
     }
