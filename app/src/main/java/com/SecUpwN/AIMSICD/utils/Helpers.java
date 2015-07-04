@@ -267,12 +267,15 @@ import java.util.List;
                             .append(CellTracker.OCID_API_KEY).append("&BBOX=")
                             .append(boundParameter);
 
+                    Log.i(TAG, mTAG + ":OCID MCC is set to: " + cell.getMCC());
                     if (cell.getMCC() != Integer.MAX_VALUE) {
                         sb.append("&mcc=").append(cell.getMCC());
                     }
+                    Log.i(TAG, mTAG + ":OCID MNC is set to: " + cell.getMNC());
                     if (cell.getMNC() != Integer.MAX_VALUE) {
                         sb.append("&mnc=").append(cell.getMNC());
                     }
+                    //Log.i(TAG, mTAG + ":OCID LAC is set to: " + cell.getLAC());
                     // We need DBe_import filtering, if we wanna keep these lines commented out...
                     //if (cell.getLAC() != Integer.MAX_VALUE) {
                     //    sb.append("&lac=").append(cell.getLAC());

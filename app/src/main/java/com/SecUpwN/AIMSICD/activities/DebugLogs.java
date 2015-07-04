@@ -46,6 +46,8 @@ import java.io.InputStreamReader;
  *                  but never implemented here. We need to add the buffer selector button
  *                  to the top bar, next to email icon button. **
  *
+ *  TODO:   [ ]     We should add an XPrivacy button (or automatic) to add XPrivacy filters when used.
+ *
  *  ChangeLog:
  *
  *          2015-01-27  E:V:A   Added "getprop|sort" info to log.
@@ -243,6 +245,7 @@ public class DebugLogs extends BaseActivity {
      *  5) "-d" is not necessary when using "-t".
      *  6) Need to silent some spammy HTC's:                "QC-QMI:S AudioPolicyManager:S"
      *  7) Need to silent some spammy XPrivacy items:       "XPrivacy/XRuntime:S Xposed:S"
+     *  8) Need to silent even more XPrivacy items:         "XPrivacy/XTelephonyManager:S XPrivacy/XLocationManager:S XPrivacy/XPackageManager:S"
      *
      */
     private String getLogs() throws IOException {
@@ -252,7 +255,8 @@ public class DebugLogs extends BaseActivity {
                     " AbsListView:S PackageInfo:S" +
                     " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S" +
                     " QC-QMI:S AudioPolicyManager:S" +
-                    " XPrivacy/XRuntime:S Xposed:S" + " *:D"
+                    " XPrivacy/XRuntime:S Xposed:S" +
+                    " XPrivacy/XTelephonyManager:S XPrivacy/XLocationManager:S XPrivacy/XPackageManager:S" + " *:D"
         );
     }
 
