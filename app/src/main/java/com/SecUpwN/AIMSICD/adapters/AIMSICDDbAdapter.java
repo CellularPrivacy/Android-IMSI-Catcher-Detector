@@ -1417,7 +1417,7 @@ public class AIMSICDDbAdapter {
                 // Make sure it has a location index. Separate connection to avoid locking issues.
                 // TODO this can take a while the first time, provide UI feedback
                 SQLiteDatabase ladb = SQLiteDatabase.openDatabase(LACELLS_DB_NAME, null, 0);
-                String LACELLS_TABLE_CREATE = "CREATE TABLE " +
+                String LACELLS_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " +
                         LACELLS_TABLE  + " (" + COLUMN_ID +
                         " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "Lac INTEGER, CellID INTEGER, " +

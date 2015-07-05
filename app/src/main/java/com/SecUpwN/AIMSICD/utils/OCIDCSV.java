@@ -1,7 +1,6 @@
 package com.SecUpwN.AIMSICD.utils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Marvin Arnold on 9/06/15.
@@ -24,11 +23,11 @@ public class OCIDCSV  extends ArrayList<OCIDCSV.OCIDCSVLine> {
         }
 
         public double getGPSLat() {
-            return truncateDouble(this.ocidCell[0], 5);
+            return TruncatedLocation.truncateDouble(this.ocidCell[0], 5);
         }
 
         public double getGPSLon() {
-            return truncateDouble(this.ocidCell[1], 5);
+            return TruncatedLocation.truncateDouble(this.ocidCell[1], 5);
         }
 
         public int getMCC() {
@@ -75,13 +74,5 @@ public class OCIDCSV  extends ArrayList<OCIDCSV.OCIDCSVLine> {
             return String.valueOf(this.ocidCell[10]);
         }
 
-        public double truncateDouble(String d, int numDecimal) {
-            return  truncateDouble(Double.parseDouble(d), numDecimal);
-        }
-
-        public double truncateDouble(double d, int numDecimal) {
-            String s = String.format("%." + Integer.toString(numDecimal) +"f", d);
-            return Double.parseDouble(s);
-        }
     }
 }

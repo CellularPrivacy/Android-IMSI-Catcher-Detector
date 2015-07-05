@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.service.CellTracker;
+import com.SecUpwN.AIMSICD.utils.Toaster;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -83,63 +84,53 @@ import java.util.List;
     private static final String mTAG = "Helpers";
 
     private static final int CHARS_PER_LINE = 34;
-    private static final int SHORT_TOAST_DURATION = 2000;
-    private static final long TOAST_DURATION_MILLS = 6000;//change if need longer
-    /**
-     * Long toast message
-     * TOAST_DURATION_MILLS controls the duration
-     * currently set to 6 seconds
-     * @param context Application Context
-     * @param msg     Message to send
-     */
-    public static void msgLong(final Context context, final String msg) {
-            if (context != null && msg != null) {
-                final Toast t = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
 
-                new CountDownTimer(Math.max(TOAST_DURATION_MILLS - SHORT_TOAST_DURATION, 1000), 1000) {
-                    @Override
-                    public void onFinish() {
-                        t.show();
-                    }
-
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        t.show();
-                    }
-                }.start();
-            }
-
-
-    }
-
-    /**
-     * Short toast message
-     * (Predefined in AOS to 2000 ms = 2 sec)
-     *
-     * @param context Application Context
-     * @param msg     Message to send
-     */
-    public static void msgShort(final Context context, final String msg) {
+   /**
+    * Description:      Long toast message
+    *
+    * Notes:
+    *
+    *       This is only a proxy method to the Toaster class.
+    *       It also takes care of using the Toaster's Singleton.
+    *
+    * @param context Application Context
+    * @param msg     Message to send
+    */
+    public static void msgLong(Context context, String msg) {
         if (context != null && msg != null) {
-            new Handler(context.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, msg.trim(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            Toaster.getInstance().msgLong(context, msg);
         }
     }
-
-    /**
-     * Long toast message
-     *
-     * @param context Application Context
-     * @param msg     Message to send
-     */
+   /**
+    * Description:      Short toast message
+    *
+    * Notes:
+    *
+    *       This is only a proxy method to the Toaster class.
+    *       It also takes care of using the Toaster's Singleton.
+    *
+    * @param context Application Context
+    * @param msg     Message to send
+    */
+    public static void msgShort(Context context, String msg) {
+        if (context != null && msg != null) {
+            Toaster.getInstance().msgShort(context, msg);
+        }
+    }
+   /**
+    * Description:      Long toast message
+    *
+    * Notes:
+    *
+    *       This is only a proxy method to the Toaster class.
+    *       It also takes care of using the Toaster's Singleton.
+    *
+    * @param context Application Context
+    * @param msg     Message to send
+    */
     public static void sendMsg(Context context, String msg) {
         if (context != null && msg != null) {
-            msgLong(context, msg);
+            Toaster.getInstance().msgLong(context, msg);
         }
     }
     
@@ -276,12 +267,15 @@ import java.util.List;
                             .append(CellTracker.OCID_API_KEY).append("&BBOX=")
                             .append(boundParameter);
 
+                    Log.i(TAG, mTAG + ":OCID MCC is set to: " + cell.getMCC());
                     if (cell.getMCC() != Integer.MAX_VALUE) {
                         sb.append("&mcc=").append(cell.getMCC());
                     }
+                    Log.i(TAG, mTAG + ":OCID MNC is set to: " + cell.getMNC());
                     if (cell.getMNC() != Integer.MAX_VALUE) {
                         sb.append("&mnc=").append(cell.getMNC());
                     }
+                    //Log.i(TAG, mTAG + ":OCID LAC is set to: " + cell.getLAC());
                     // We need DBe_import filtering, if we wanna keep these lines commented out...
                     //if (cell.getLAC() != Integer.MAX_VALUE) {
                     //    sb.append("&lac=").append(cell.getLAC());
@@ -615,4 +609,3 @@ import java.util.List;
         lAlertDialog.show();
     }
 }
-

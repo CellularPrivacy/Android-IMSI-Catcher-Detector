@@ -46,6 +46,8 @@ import java.io.InputStreamReader;
  *                  but never implemented here. We need to add the buffer selector button
  *                  to the top bar, next to email icon button. **
  *
+ *  TODO:   [ ]     We should add an XPrivacy button (or automatic) to add XPrivacy filters when used.
+ *
  *  ChangeLog:
  *
  *          2015-01-27  E:V:A   Added "getprop|sort" info to log.
@@ -53,11 +55,16 @@ import java.io.InputStreamReader;
  *          2015-02-11  E:V:A   Increased to 500 lines and removed "-d" and
  *                              incl. radio log, but not working. Permission problem?
  *          2015-02-24  E:V:A   Silent some spam logs on HTC devices.
+ *          2015-07-03  E:V:A   Silent some spam logs from the XPosed framework
  *
  */
 
 
 public class DebugLogs extends BaseActivity {
+
+    private static final String TAG = "AIMSICD";
+    private static final String mTAG = "DebugLogs";
+
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
     private boolean isRadioLogs = true; // Including this, should be a toggle.
@@ -95,7 +102,7 @@ public class DebugLogs extends BaseActivity {
                     clearLogs();
                     //Log.d("DebugLogs", "Logcat clearing disabled!");
                 } catch (Exception e) {
-                    Log.e("AIMSICD", "DebugLogs: Error clearing logs", e);
+                    Log.e(TAG, mTAG + ": Error clearing logs", e);
                 }
             }
         });
@@ -158,7 +165,7 @@ public class DebugLogs extends BaseActivity {
             logUpdater = new LogUpdaterThread();
             logUpdater.start();
         } catch (Exception e) {
-            Log.e("AIMSICD", "DebugLogs: Error starting log updater thread", e);
+            Log.e(TAG, mTAG + ": Error starting log updater thread", e);
         }
         btnStop.setText(getString(R.string.btn_stop_logs));
     }
@@ -211,7 +218,7 @@ public class DebugLogs extends BaseActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
                 } catch (IOException e) {
-                    Log.e("AIMSICD", "DebugLogs: Error reading logs", e);
+                    Log.e(TAG, mTAG + ": Error reading logs", e);
                 }
             }
         }.start();
@@ -241,6 +248,8 @@ public class DebugLogs extends BaseActivity {
      *  4) Need to silent some Qualcomm GPS:                " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S"
      *  5) "-d" is not necessary when using "-t".
      *  6) Need to silent some spammy HTC's:                "QC-QMI:S AudioPolicyManager:S"
+     *  7) Need to silent some spammy XPrivacy items:       "XPrivacy/XRuntime:S Xposed:S"
+     *  8) Need to silent even more XPrivacy items:         "XPrivacy/XTelephonyManager:S XPrivacy/XLocationManager:S XPrivacy/XPackageManager:S"
      *
      */
     private String getLogs() throws IOException {
@@ -249,7 +258,9 @@ public class DebugLogs extends BaseActivity {
                     (isRadioLogs ? " -b radio RILQ:S" : "") +
                     " AbsListView:S PackageInfo:S" +
                     " LocSvc_eng:S LocSvc_adapter:S LocSvc_afw:S" +
-                    " QC-QMI:S AudioPolicyManager:S" + " *:D"
+                    " QC-QMI:S AudioPolicyManager:S" +
+                    " XPrivacy/XRuntime:S Xposed:S" +
+                    " XPrivacy/XTelephonyManager:S XPrivacy/XLocationManager:S XPrivacy/XPackageManager:S" + " *:D"
         );
     }
 
@@ -296,7 +307,7 @@ public class DebugLogs extends BaseActivity {
                 try {
                     Runtime.getRuntime().exec("logcat -c -b main -b system -b radio -b events");
                 } catch (Exception e) {
-                    Log.e("AIMSICD", "DebugLogs: Error clearing logs", e);
+                    Log.e(TAG, mTAG + ": Error clearing logs", e);
                 }
 
                 runOnUiThread(new Runnable() {
@@ -335,7 +346,7 @@ public class DebugLogs extends BaseActivity {
                         });
                     }
                 } catch (Exception e) {
-                    Log.e("AIMSICD", "DebugLogs: Error updating logs", e);
+                    Log.e(TAG, mTAG + ": Error updating logs", e);
                 }
                 try { Thread.sleep(1000); } catch (Exception e) {}
             }

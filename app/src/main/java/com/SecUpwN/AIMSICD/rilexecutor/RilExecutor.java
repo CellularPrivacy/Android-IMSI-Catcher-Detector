@@ -27,7 +27,9 @@ import java.util.Queue;
  * Class to handle Ril and Samsung MultiRil implementation. Used by the Aimsicd Service.
  */
 public class RilExecutor {
-    public static final String TAG = "MultiRil";
+    protected static final String TAG = "AIMSICD";
+    protected static final String mTAG = "RilExecutor";
+    
     public boolean mMultiRilCompatible;
 
     /*
@@ -76,7 +78,7 @@ public class RilExecutor {
         mRilExecutorDetectResult = mRequestExecutor.detect();
         if (!mRilExecutorDetectResult.available) {
             mMultiRilCompatible = false;
-            Log.e(TAG, "Samsung Multiclient RIL not available: " + mRilExecutorDetectResult.error);
+            Log.e(TAG, mTAG + ": Samsung Multiclient RIL not available: " + mRilExecutorDetectResult.error);
             mRequestExecutor = null;
         } else {
             mRequestExecutor.start();
@@ -142,7 +144,7 @@ public class RilExecutor {
                 subtype,
                 keySeqence).sendToTarget();
         if (!mRequestCondvar.block(timeout)) {
-            Log.e(TAG, "request timeout");
+            Log.e(TAG, mTAG + ": request timeout");
             return Collections.emptyList();
         } else {
             synchronized (mLastResponseLock) {
@@ -248,15 +250,15 @@ public class RilExecutor {
                     try {
                         RawResult result = (RawResult) msg.obj;
                         if (result == null) {
-                            Log.e(TAG, "result is null");
+                            Log.e(TAG, mTAG + ": result is null");
                             break;
                         }
                         if (result.exception != null) {
-                            Log.e(TAG, "", result.exception);
+                            Log.e(TAG, mTAG + ": ", result.exception);
                             break;
                         }
                         if (result.result == null) {
-                            Log.v(TAG, "No need to refresh.");
+                            Log.v(TAG, mTAG + ": No need to refresh.");
                             break;
                         }
                         if (lastKeyStep.captureResponse) {

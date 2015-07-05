@@ -19,6 +19,7 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
+import com.SecUpwN.AIMSICD.utils.TruncatedLocation;
 
 /**
  * Class to handle GPS location tracking
@@ -100,12 +101,14 @@ public class LocationTracker {
         GeoLocation loc = null;
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (location != null && (location.getLatitude() != 0.0 && location.getLongitude() != 0.0)) {
-            loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
+            TruncatedLocation TruncatedLocation = new TruncatedLocation(location);
+            loc = GeoLocation.fromDegrees(TruncatedLocation.getLatitude(), TruncatedLocation.getLongitude());
         } else {
             location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             if (location != null && (location.getLatitude() != 0.0
                     && location.getLongitude() != 0.0)) {
-                loc = GeoLocation.fromDegrees(location.getLatitude(), location.getLongitude());
+                TruncatedLocation TruncatedLocation = new TruncatedLocation(location);
+                loc = GeoLocation.fromDegrees(TruncatedLocation.getLatitude(), TruncatedLocation.getLongitude());
             } else {
                 String coords = prefs.getString(context.getString(R.string.data_last_lat_lon), null);
                 if (coords != null) {
