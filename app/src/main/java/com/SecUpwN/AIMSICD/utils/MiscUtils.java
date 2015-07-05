@@ -84,8 +84,7 @@ public class MiscUtils {
     public static String getCurrentTimeStamp(){
 
         Date now = new Date();
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now);
-        return timestamp;
+        return new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now);
     }
 
     /*
@@ -174,9 +173,9 @@ public class MiscUtils {
                 JSONObject current_json_object = json_array_node.getJSONObject(i);
                 ContentValues store_new_det_string = new ContentValues();
                 store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN,
-                        current_json_object.optString("detection_string").toString());
+                        current_json_object.optString("detection_string")); // removed .toString()
                 store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN,
-                        current_json_object.optString("detection_type").toString());
+                        current_json_object.optString("detection_type"));
                 if(dbaccess.insertNewDetectionString(store_new_det_string)){
                     Log.i(TAG, mTAG + ": refreshDetectionDbStrings: New string added!");
                 }
@@ -193,21 +192,20 @@ public class MiscUtils {
     }
     
     /*
-        Returns a timestamp in this format:     20150617223311
-        this is used to detect if the sms was already picked up
+     *  Description:    Converts logcat timstamp to SQL friendly timstamps
+     *                  We use this to determine if an sms has already been found
+     *
+     *      Converts a timstamp in this format:     06-17 22:06:05.988 D/dalvikvm(24747):
+     *      Returns a timestamp in this format:     20150617223311
      */
     public static String logcatTimeStampParser(String line){
-        //06-17 22:06:05.988 D/dalvikvm(24747): <-- example of timestamp
         String[] buffer = line.split(" ");
 
         line = String.valueOf(Calendar.getInstance().get(Calendar.YEAR))+buffer[0]+buffer[1];
-        //   -->we dont need the last 4 digits in timestamp .988
-        //   |  way to accurate but easily change if needed
-        String timestamp = line.substring(0,line.length()-4) // <-|
+        //   We don't need the last 4 digits in timestamp ".988" or it is too accurate.
+        return line.substring(0,line.length()-4) // <-|
                 .replace(":", "")
                 .replace(".", "")
                 .replace("-", "");
-
-        return timestamp;
     }
 }
