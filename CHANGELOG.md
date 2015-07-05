@@ -1,6 +1,116 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [05.07.2015 - WIP-Release v0.1.31-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.31-alpha-b00)
+
+* Removed: Commented out unused imports and re-ordered variable declarations
+* Updated: Shortened badge of `Development Status` in `README` for better display
+* Added: More clarifying code co´mments in `CellTracker.java`
+
+#### 05.07.2015 - WIP-Internal v0.1.30-alpha-build-16
+
+* Fixed: Cleanup of timestamp code in `MiscUtils.java`
+* Fixed: AIMSICD Status-Icons are now shown correctly in colored style on Android 5+
+
+
+---
+
+#### 04.07.2015 - WIP-Internal v0.1.30-alpha-build-14
+
+* Added: New Log items for MCC and MNC parameters when downloading OCID for debugging
+* Fixed: Reformatted 23 char limitation of Log TAG with our standard TAG, mTAG + "text"
+* Fixed: Corrected MiscUtils TAGs and nulls in CellTracker and improved some formatting
+* Fixed: Silenced even more XPrivacy logcat spam in DebugLogs
+
+---
+
+#### 03.07.2015 - WIP-Internal v0.1.30-alpha-build-13
+
+* Fixed: Comments in `RequestTask.java` have been fixed to reflect code changes
+* Fixed: Silenced some spammy XPrivacy items using: `XPrivacy/XRuntime:S Xposed:S`
+
+---
+
+#### 03.07.2015 - WIP-Internal v0.1.30-alpha-build-12
+
+* Added: Weblate translations badge added to our `README` for people to see progress
+* Fixed: AIMSICD should now start again properly on previously complaining devices
+
+---
+
+#### 03.07.2015 - WIP-Internal v0.1.30-alpha-build-11
+
+* Updated: `CREDITS` now reflect the latest awesome additions by our new developers
+* Fixed: Small string fixes and translation improvements to move our new [Weblate](https://hosted.weblate.org/projects/aimsicd/strings/).
+
+---
+
+#### 03.07.2015 - WIP-Internal v0.1.30-alpha-build-10
+
+* Fixed: Now truncating measured and used Lat/Lon GPS coordinates in `LocationTracker`
+
+---
+
+#### 27.06.2015 - WIP-Internal v0.1.30-alpha-build-09
+
+* Changed: Timeout value in `RequestTask.java` has been increased to 80 seconds
+* Fixed: Repaired OCIDCSV parsing which obviously temporarily broke during development
+
+---
+
+#### 27.06.2015 - WIP-Internal v0.1.30-alpha-build-08
+
+* Added: Buildozer Buildnumber to has been added to About View for development builds
+
+---
+
+#### 26.06.2015 - WIP-Internal v0.1.30-alpha-build-07
+
+* Changed: mTAG has been changed as requested to `SamsungMulticlientRilExecutor`
+* Added: Small warning within code to not remove commented out stuff without prior asking
+
+---
+
+#### 25.06.2015 - WIP-Internal v0.1.30-alpha-build-06
+
+* Updated: Log calls updated to common TAGs, added doublepoints and removed whitespaces
+
+---
+
+#### 25.06.2015 - WIP-Internal v0.1.30-alpha-build-05
+
+* Changed: Customized build script in `.travis.yml` to override CoverityScan limits
+* Changed: Made toast property static and non-final, splitting toast creation for `msgShort`
+* Removed: Commented out `LeakCanary` until this libray has reived some code improvemens
+* Fixed: Toasts are now displayed in the ccorrect position and duration to really read them
+
+---
+
+#### 24.06.2015 - WIP-Internal v0.1.30-alpha-build-04
+
+* Added: Toasts are now being cancelled on new toast to prevent overapping of toasts
+
+---
+
+#### 24.06.2015 - WIP-Internal v0.1.30-alpha-build-03
+
+* Fixed: Info box toasts are now shown longer by adding a new singleton toaster
+
+---
+
+#### 23.06.2015 - WIP-Internal v0.1.30-alpha-build-02
+
+* Changed: Context property changed to `appContext` in `DrawerMenuAdapter.java`
+* Removed: Purged `this` prefix of `appContext` as it is not needed anymore
+
+---
+
+#### 23.06.2015 - WIP-Internal v0.1.30-alpha-build-01
+
+* Changed: Help toast has been changed to long toast in `DrawerMenuAdapter.java`
+
+---
+
 #### [21.06.2015 - WIP-Release v0.1.30-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.30-alpha-b00)
 
 * Updated: Refactored OpenCellId activity for better code quality and error handling
