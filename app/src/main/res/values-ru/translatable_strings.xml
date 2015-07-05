@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
 
     <!-- Drawer -->
@@ -41,7 +41,7 @@
 
     <string name="restore_database">Восстановить базу данных</string>
     <string name="preferences">Параметры</string>
-    <string name="press_once_again_to_exit">Нажмите еще раз для выхода</string>
+    <string name="press_once_again_to_exit">Нажмите еще раз для выхода.</string>
     <string name="cell_lookup">Все текущие сотовые сведения</string>
     <string name="send_logs">Отладка</string>
 
@@ -86,7 +86,7 @@
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">Об AIMSICD</string>
-    <string name="app_version">Версия:&#160;</string>
+    <string name="app_version">Версия: </string>
     <string name="aimsicd_about_info3">Проект для обнаружения и избегания поддельных базовых станций (IMSI-перехватчики) в GSM / UMTS сети на основе Android.</string>
     <string name="about_github">AIMSICD на GitHub</string>
     <string name="about_wiki">Документация (WIKI)</string>
@@ -102,7 +102,7 @@
     <string name="about_desc_icon_tracked_down">Вас отслеживают!</string>
     <string name="about_desc_icon_insecure_area">Небезопасная зона обслуживания. Покиньте ее!</string>
     <string name="about_desc_icon_run">Беги! Манипулируют телефоном!</string>
-    <string name="about_desc_icon_title">Нажмите значки состояния ниже для более подробной информации</string>
+    <string name="about_desc_icon_title">Нажмите значки состояния ниже для более подробной информации:</string>
 
     <!-- CDMA LAYOUT -->
     <string name="network_netid">ID сети:</string>
@@ -188,13 +188,13 @@
     <string name="title_ocid_key">OpenCellID ключ API</string>
     <string name="message_request_api_key">Нажмите OK для запроса ключа API из OpenCellID.org. Это позволит вам скачать их данные и просмотреть его на карте. Это также позволит вам выгружать данные сотовых сетей. Обратите внимание, что если вы не выгружать данные сотовых сетей в течение 20 дней, ваш ключ API может стать неактивным.</string>
     <string name="ocid_api_error">Ошибка получения ключа: </string>
-    <string name="ocid_api_success">Сохранен новый ключ API</string>
+    <string name="ocid_api_success">Сохранен новый ключ API.</string>
 
     <!-- Debug logs -->
     <string name="title_debug_logs">Логи отладки</string>
     <string name="btn_clear_logs">Очистить</string>
     <string name="btn_copy_to_clipboard">Копировать</string>
-    <string name="msg_copied_to_clipboard">Логи скопированы в буфер обмена</string>
+    <string name="msg_copied_to_clipboard">Логи скопированы в буфер обмена.</string>
     <string name="btn_stop_logs">Стоп</string>
     <string name="btn_start_logs">Старт</string>
 
@@ -253,11 +253,11 @@
     <string name="femtocell_only_on_cdma_devices">AIMSICD может определять соединение с фемтосотой только на CDMA устройствах.</string>
     <string name="service_state_changed">Статус сервиса изменен!</string>
     <string name="stopped_tracking_femtocell">: Остановлен мониториг соединения с фемтосотой.</string>
-    <string name="alert_femtocell_tracking_detected">ТРЕВОГА! Обнаружен мониторинг фемтосоты.</string>
+    <string name="alert_femtocell_tracking_detected">ТРЕВОГА: Обнаружен мониторинг фемтосоты!</string>
     <string name="refreshing_every">Обновлять каждые</string>
-    <string name="refreshing_now">Обновить сейчас&#8230;</string>
+    <string name="refreshing_now">Обновить сейчас…</string>
     <string name="seconds">секунд.</string>
-    <string name="contacting_opencellid_for_data">Обращение к данным OpenCellID&#8230;\nЭто может занять до минуты.</string>
+    <string name="contacting_opencellid_for_data">Обращение к данным OpenCellID…\nЭто может занять до минуты.</string>
     <string name="unable_to_determine_last_location">Невозможно определить ваш последнее место.\nВключите сервис определения координат и попробуйте еще раз.</string>
     <string name="no_tracked_locations_found">Не найдено отслеживаемых мест, чтобы показать их на карте.</string>
     <string name="no_data_for_publishing">Нет доступных данных для публикации.</string>
@@ -273,11 +273,11 @@
     <string name="error_backing_up_data">Ошибка резервного копирования базы данных.</string>
     <string name="no_opencellid_key_detected">No OpenCellID API Key detected!\nPlease enter your key in settings first.</string>
     <string name="refreshing_display">Обновление дисплея</string>
-    <string name="unable_to_acquire_root_access">Невозможно получить ROOT доступ на вашем устройстве.\nДля инъекций AT-команд в терминал требуется ROOT доступ.\nПожалуйста, проверьте наличие ROOT прав на вашем устройстве и попробуйте еще раз</string>
-    <string name="unable_to_detect_busybox">Невозможно обнаружить Busybox на вашем устройстве.\nДля инъекций AT-команд в терминал требуются компоненты Busybox для правильного функционирования.\nПожалуйста, проверьте, что Busybox установлен на ваше устройство  и попробуйте снова</string>
+    <string name="unable_to_acquire_root_access">Невозможно получить ROOT доступ на вашем устройстве.\nДля инъекций AT-команд в терминал требуется ROOT доступ.\nПожалуйста, проверьте наличие ROOT прав на вашем устройстве и попробуйте еще раз.</string>
+    <string name="unable_to_detect_busybox">Невозможно обнаружить Busybox на вашем устройстве.\nДля инъекций AT-команд в терминал требуются компоненты Busybox для правильного функционирования.\nПожалуйста, проверьте, что Busybox установлен на ваше устройство и попробуйте снова.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Произошла неизвестная ошибка при попытке достижения Serial Device.\nПожалуйста, проверьте LogCat на возможные ошибки и отправьте их на Github.</string>
     <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.\nPlease check your logcat for any errors and post them on our Github.</string>
-    <string name="getting_ocid_api_key">Получение ключа API OpenCellID&#8230;</string>
+    <string name="getting_ocid_api_key">Получение ключа API OpenCellID…</string>
     <string name="unable_to_create_map">Невозможно создать карту!</string>
     <string name="describe_the_problem_you_had">ВНИМАНИЕ! Пожалуйста, опишите проблему, которая у вас была, прежде, чем отправить нам эти журналы. НЕТ ПОМОЩИ БЕЗ ОПИСАНИЯ!\n</string>
     <string name="status">Статус:</string>
@@ -309,13 +309,13 @@
     <string name="help_settings_import_db_from_csv">Import DB table(s) from individual CSV file(s).</string>
 
     <!-- Section Application-->
-    <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data&#8230;</string>
+    <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data…</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
     <string name="help_app_download_local_bst">Downloads the OCID Database.</string>
     <string name="help_app_upload_local_bst">Uploads your BTS to the OCID Database.</string>
     <string name="help_app_debugging">Collect and send error logs.</string>
     <string name="help_app_quit">Exit this app.</string>
-    <string name="waiting_for_location">Waiting for location&#8230;</string>
+    <string name="waiting_for_location">Waiting for location…</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Unable to restore backup from previous database version due to structural changes!</string>
     <string name="unique_bts_data">Unique BTS Data</string>
     <string name="bts_measurements">BTS Measurements</string>
@@ -325,8 +325,8 @@
     <string name="eventlog">EventLog</string>
     <string name="measured_signal_strengths">Measured Signal Strengths</string>
 
-    <string name="at_command_response_looking">*** Looking for AT serial devices&#8230;\n</string>
-    <string name="at_command_response_found">Found:&#032;</string>""
+    <string name="at_command_response_looking">*** Looking for AT serial devices…\n</string>
+    <string name="at_command_response_found">Found: </string>""
     <string name="at_command_response_setup_complete">*** Setup Complete ***\n</string>""
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
