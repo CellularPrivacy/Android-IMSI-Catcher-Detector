@@ -5,7 +5,7 @@
 
 * Removed: Commented out unused imports and re-ordered variable declarations
 * Updated: Shortened badge of `Development Status` in `README` for better display
-* Added: More clarifying code co´mments in `CellTracker.java`
+* Added: More clarifying code comments in `CellTracker.java`
 
 #### 05.07.2015 - WIP-Internal v0.1.30-alpha-build-16
 
@@ -27,7 +27,7 @@
 #### 03.07.2015 - WIP-Internal v0.1.30-alpha-build-13
 
 * Fixed: Comments in `RequestTask.java` have been fixed to reflect code changes
-* Fixed: Silenced some spammy XPrivacy items using: `XPrivacy/XRuntime:S Xposed:S`
+* Fixed: Silenced some spammy XPrivacy items using `XPrivacy/XRuntime:S Xposed:S`
 
 ---
 
@@ -88,7 +88,7 @@
 
 #### 24.06.2015 - WIP-Internal v0.1.30-alpha-build-04
 
-* Added: Toasts are now being cancelled on new toast to prevent overapping of toasts
+* Added: Toasts are now being cancelled on new toast to prevent overlapping of toasts
 
 ---
 
