@@ -41,8 +41,8 @@ import java.util.ArrayList;
  *    For latest list of working phones/models, please see:
  *    https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/532
  *
- *    PHONE:Samsung S5      MODEL:SM-G900F      ANDROID_VER:4.4.2   TYPE0:YES SILENTVOICE:YES
- *    PHONE:Sony Xperia J   MODEL:ST260i        ANDROID_VER:4.1.2   TYPE0:NO  SILENTVOICE:YES
+ *    PHONE:Samsung S5      MODEL:SM-G900F      ANDROID_VER:4.4.2   TYPE0:YES MWI:YES
+ *    PHONE:Sony Xperia J   MODEL:ST260i        ANDROID_VER:4.1.2   TYPE0:NO  MWI:YES
  *
  */
 public class SmsDetector extends Thread {
@@ -242,7 +242,7 @@ public class SmsDetector extends Thread {
 
                         //SILENT_ONLY_TAGS[arrayindex].split("#")[0] <-- index 0 is the detection string
                         //SILENT_ONLY_TAGS[arrayindex].split("#")[1] <-- index 1 is the sms TYPE WAPPUSH TYPE0 ETC...
-                        }else if(SILENT_ONLY_TAGS[arrayindex].split("#")[1].trim().equals("SILENTVOICE")){
+                        }else if(SILENT_ONLY_TAGS[arrayindex].split("#")[1].trim().equals("MWI")){
                             Log.i(TAG, "SILENT DETECTED");
                             CapturedSmsData setmsg = new CapturedSmsData();
                             setmsg.setSenderNumber("unknown");//default
@@ -277,7 +277,7 @@ public class SmsDetector extends Thread {
                             }
 
                             setmsg.setSmsTimestamp(logcat_timestamp);
-                            setmsg.setSmsType("SILENTVOICE");
+                            setmsg.setSmsType("MWI");
                             setmsg.setCurrent_lac(mAimsicdService.getCellTracker().getMonitorCell().getLAC());
                             setmsg.setCurrent_cid(mAimsicdService.getCellTracker().getMonitorCell().getCID());
                             setmsg.setCurrent_nettype(Device.getNetworkTypeName(mAimsicdService.getCell().getNetType()));

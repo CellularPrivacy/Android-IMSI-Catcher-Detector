@@ -63,13 +63,13 @@
 
     <string name="adv_user_root_pref_key">is_root_sms_enabled</string>
     <string name="TYPE0">TYPE0</string>
-    <string name="SILENTVOICE">SILENTVOICE</string>
+    <string name="MWI">MWI</string>
     <string name="FLASH">FLASH</string>
     <string name="WAPPUSH">WAPPUSH</string>
 
     <string-array name="detection_spinner_values">
         <item>@string/TYPE0</item>
-        <item>@string/SILENTVOICE</item>
+        <item>@string/MWI</item>
         <item>@string/FLASH</item>
         <item>@string/WAPPUSH</item>
     </string-array>

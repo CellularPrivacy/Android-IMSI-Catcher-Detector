@@ -101,7 +101,7 @@ public class SmsDetectionDbHelper extends SQLiteOpenHelper {
         //Preparing strings for database here
         String SILENT_ONLY_TAGS[] = {
                 "Received short message type 0, Don't display or store it. Send Ack#TYPE0",//Type0 Samsung
-                "Received voice mail indicator clear SMS shouldStore=false#SILENTVOICE",//this msg is in a few phones
+                "Received voice mail indicator clear SMS shouldStore=false#MWI",//this msg is in a few phones
                 "SMS TP-PID:0 data coding scheme: 24#FLASH",//Flash
                 "isTypeZero=true#TYPE0",
                 "incoming msg. Mti 0 ProtocolID 0 DCS 0x04 class -1#WAPPUSH"
