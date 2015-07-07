@@ -172,7 +172,7 @@
    
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Stille SMS erkannt</string>
-    <string name="sms_message">Stille SMS wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.</string>
+    <string name="sms_message">Stille SMS wurde erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
     <string name="table_contains_no_data">Tabelle beinhaltet keine Daten.</string>
   
     <!-- Request OpenCellID Key -->
@@ -297,8 +297,8 @@
     <!-- Detected SMS string for custom popup-->
     <string name="detection_strings">Erkennungs-Zeichenfolgen</string>
     <string name="typezero_title">ACHTUNG!</string>
-    <string name="typezero_header">Type0 SMS erkannt</string>
-    <string name="typezero_data">Stille SMS Nachricht wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.</string>
+    <string name="typezero_header">Stille SMS (Type-0) erkannt</string>
+    <string name="typezero_data">Stille SMS Nachricht wurde erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
     <string name="typevoice_title">ACHTUNG!</string>
     <string name="typevoice_header">Stille Sprachnachricht erkannt</string>
     <string name="typevoice_data">Stille Sprachnachricht wurde erkannt! \n\nnDetails: Siehe Datenbankbetrachter.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte das Protokoll über das Menü Fehlerbehebung.</string>
@@ -382,7 +382,7 @@
 <string name="alert_silent_voice_sms_detected">ALARM: Stille Sprach-SMS erkannt!</string>
     <string name="alert_silent_wap_sms_detected">ALARM: WAP Push SMS erkannt!</string>
     <string name="typewap_header">WAP Push Erkannt</string>
-    <string name="typewap_data">WAP Push SMS nachricht wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.</string>
+    <string name="typewap_data">WAP Push SMS Nachricht wurde erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
 
 
     <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
@@ -391,5 +391,5 @@
     <string name="alert_mwi_detected">ALARM: Benachrichtigungsindikator erkannt!</string>
     <string name="typemwi_title">ACHTUNG!</string>
     <string name="typemwi_header">MWI Erkannt</string>
-    <string name="typemwi_data">Benachrichtigungsindikator wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.</string>
+    <string name="typemwi_data">Benachrichtigungsindikator erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
     </resources>
