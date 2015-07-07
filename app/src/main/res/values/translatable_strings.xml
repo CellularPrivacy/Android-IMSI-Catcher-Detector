@@ -301,12 +301,12 @@
     <string name="detection_strings">Detection Strings</string>
     <string name="typezero_title">ATTENTION!</string>
     <string name="typezero_header">Type0 SMS Detected</string>
-    <string name="typezero_data">Silent SMS Message detected!\n\nDetails: See Database Viewer.\n\nIf you want this data to be analysed by our developers, send the logfiles through the Debugging menu.</string>
+    <string name="typezero_data">Silent SMS Message detected!\n\nDetails: See Database Viewer.</string>
     <string name="typemwi_title">ATTENTION!</string>
     <string name="typemwi_header">MWI Detected</string>
-    <string name="typemwi_data">Message Waiting Indicator detected!\n\nDetails: See Database Viewer.\n\nIf you want this data to be analysed by our developers, send the logfiles through the Debugging menu.</string>
+    <string name="typemwi_data">Message Waiting Indicator detected!\n\nDetails: See Database Viewer.</string>
     <string name="typewap_header">WAP Push Detected</string>
-    <string name="typewap_data">WAP Push SMS Message has been detected!\n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs, enter the Debugging menu and send the logfiles via E-Mail.</string>
+    <string name="typewap_data">WAP Push SMS Message has been detected!\n\nDetails: See Database Viewer.</string>
 
 
     <!-- Section Main-->
