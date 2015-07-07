@@ -172,7 +172,7 @@
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Silent SMS Detected</string>
-    <string name="sms_message">Silent SMS Message detected!\n\nDetails: See Database Viewer.</string>
+    <string name="sms_message">Silent SMS Message detected!\nDetails: See Database Viewer.</string>
     <string name="table_contains_no_data">Table contains no data to display.</string>
 
     <!-- Request OpenCellID Key -->
@@ -300,13 +300,13 @@
     <!-- Detected SMS string for custom popup -->
     <string name="detection_strings">Detection Strings</string>
     <string name="typezero_title">ATTENTION!</string>
-    <string name="typezero_header">Type0 SMS Detected</string>
-    <string name="typezero_data">Silent SMS Message detected!\n\nDetails: See Database Viewer.</string>
+    <string name="typezero_header">Silent SMS (Type-0) Detected</string>
+    <string name="typezero_data">Silent SMS Message detected!\nDetails: See Database Viewer.</string>
     <string name="typemwi_title">ATTENTION!</string>
     <string name="typemwi_header">MWI Detected</string>
-    <string name="typemwi_data">Message Waiting Indicator detected!\n\nDetails: See Database Viewer.</string>
+    <string name="typemwi_data">Message Waiting Indicator detected!\nDetails: See Database Viewer.</string>
     <string name="typewap_header">WAP Push Detected</string>
-    <string name="typewap_data">WAP Push SMS Message has been detected!\n\nDetails: See Database Viewer.</string>
+    <string name="typewap_data">WAP Push SMS Message has been detected!\nDetails: See Database Viewer.</string>
 
 
     <!-- Section Main-->
