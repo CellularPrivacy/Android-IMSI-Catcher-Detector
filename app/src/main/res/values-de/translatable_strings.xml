@@ -172,7 +172,7 @@
    
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Stille SMS erkannt</string>
-    <string name="sms_message">Eine stille SMS wurde erkannt!\n\Details: Siehe Datenbankbetrachter.</string>
+    <string name="sms_message">Stille SMS wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.</string>
     <string name="table_contains_no_data">Tabelle beinhaltet keine Daten.</string>
   
     <!-- Request OpenCellID Key -->
