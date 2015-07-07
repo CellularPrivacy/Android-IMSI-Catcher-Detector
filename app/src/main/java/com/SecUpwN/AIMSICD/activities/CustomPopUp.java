@@ -117,14 +117,14 @@ public class CustomPopUp extends Activity {
 
             case 7:
                 MiscUtils.showNotification(getApplicationContext(),
-                        getResources().getString(R.string.alert_silent_voice_sms_detected),
-                        getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.typevoice_header),
+                        getResources().getString(R.string.alert_mwi_detected),
+                        getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.typemwi_header),
                         R.drawable.sense_danger,true);
 
                 createPopUp(
-                        getResources().getString(R.string.typevoice_title),
-                        getResources().getString(R.string.typevoice_header),
-                        getResources().getString(R.string.typevoice_data)
+                        getResources().getString(R.string.typemwi_title),
+                        getResources().getString(R.string.typemwi_header),
+                        getResources().getString(R.string.typemwi_data)
                         ,getResources().getDrawable(R.drawable.sense_danger));
                 break;
 
@@ -135,7 +135,7 @@ public class CustomPopUp extends Activity {
                         R.drawable.sense_danger,true);
 
                 createPopUp(
-                        getResources().getString(R.string.typevoice_title),
+                        getResources().getString(R.string.typemwi_title),
                         getResources().getString(R.string.typewap_header),
                         getResources().getString(R.string.typewap_data)
                         ,getResources().getDrawable(R.drawable.sense_danger));
