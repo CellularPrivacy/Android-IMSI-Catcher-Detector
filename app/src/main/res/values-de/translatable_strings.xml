@@ -298,7 +298,7 @@
     <string name="detection_strings">Erkennungs-Zeichenfolgen</string>
     <string name="typezero_title">ACHTUNG!</string>
     <string name="typezero_header">Type0 SMS erkannt</string>
-    <string name="typezero_data">Stille SMS Nachricht wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte das Protokoll über das Menü Fehlerbehebung.</string>
+    <string name="typezero_data">Stille SMS Nachricht wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.</string>
     <string name="typevoice_title">ACHTUNG!</string>
     <string name="typevoice_header">Stille Sprachnachricht erkannt</string>
     <string name="typevoice_data">Stille Sprachnachricht wurde erkannt! \n\nnDetails: Siehe Datenbankbetrachter.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte das Protokoll über das Menü Fehlerbehebung.</string>
@@ -382,7 +382,7 @@
 <string name="alert_silent_voice_sms_detected">ALARM: Stille Sprach-SMS erkannt!</string>
     <string name="alert_silent_wap_sms_detected">ALARM: WAP Push SMS erkannt!</string>
     <string name="typewap_header">WAP Push Erkannt</string>
-    <string name="typewap_data">WAP Push SMS nachricht wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte das Protokoll über das Menü Fehlerbehebung.</string>
+    <string name="typewap_data">WAP Push SMS nachricht wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.</string>
 
 
     <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
@@ -391,5 +391,5 @@
     <string name="alert_mwi_detected">ALARM: Benachrichtigungsindikator erkannt!</string>
     <string name="typemwi_title">ACHTUNG!</string>
     <string name="typemwi_header">MWI Erkannt</string>
-    <string name="typemwi_data">Benachrichtigungsindikator wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte das Protokoll über das Menü Fehlerbehebung.</string>
+    <string name="typemwi_data">Benachrichtigungsindikator wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.</string>
     </resources>
