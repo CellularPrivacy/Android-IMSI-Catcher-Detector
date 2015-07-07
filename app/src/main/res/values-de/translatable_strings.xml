@@ -388,4 +388,8 @@
     <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
     <string name="getting_ocid_key">Besorge OpenCellID-Schlüssel...</string>
 
+    <string name="alert_mwi_detected">ALARM: Benachrichtigungsindikator erkannt!</string>
+    <string name="typemwi_title">ACHTUNG!</string>
+    <string name="typemwi_header">MWI Erkannt</string>
+    <string name="typemwi_data">Benachrichtigungsindikator wurde erkannt!\n\nDetails: Siehe Datenbankbetrachter.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte das Protokoll über das Menü Fehlerbehebung.</string>
     </resources>
