@@ -49,7 +49,7 @@ public class SmsDetectionDbAccess {
     /*
         When inserting strings it has to be in the format
         i am a type 0 string  <-----your string can be found in locat
-        TYPE0 SILENTVOICE FLASH <--- These have to be in CAPS
+        TYPE0 MWI FLASH <--- These have to be in CAPS
         ContentValues newconvalues = new ContentValues();
         newconvalues.put(SILENT_SMS_STRING_COLUMN, "your string goes here");
         newconvalues.put(SILENT_SMS_TYPE_COLUMN, "TYPE0");
