@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
 
     <!-- Drawer -->
@@ -76,7 +76,7 @@
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">À propos de AIMSICD</string>
-    <string name="app_version">Version:&#160;</string>
+    <string name="app_version">Version: </string>
     <string name="aimsicd_about_info3">Projet Basé sur Android conçu pour détecter et éviter les fausses stations de bases (IMSI-Catchers) sur les réseaux GSM/UMTS.</string>
     <string name="about_github">AIMSICD sur GitHub</string>
     <string name="about_wiki">Documentation (WIKI)</string>
@@ -185,7 +185,7 @@
     <string name="title_debug_logs">Logs de Debugging</string>
     <string name="btn_clear_logs">Effacer</string>
     <string name="btn_copy_to_clipboard">Copier</string>
-    <string name="msg_copied_to_clipboard">Logs copiés dans le presse papier</string>
+    <string name="msg_copied_to_clipboard">Logs copiés dans le presse papier.</string>
     <string name="btn_stop_logs">Arrêter</string>
     <string name="btn_start_logs">Démarrage</string>
 
@@ -247,9 +247,9 @@
     <string name="stopped_tracking_femtocell">: Arrêt du tracking des FemtoCellules.</string>
     <string name="alert_femtocell_tracking_detected">ALERTE: Tracking par FemtoCellule Détecté!</string>
     <string name="refreshing_every">Rafraichir tous les</string>
-    <string name="refreshing_now">Raffaichissement&#8230;</string>
+    <string name="refreshing_now">Raffaichissement…</string>
     <string name="seconds">secondes.</string>
-    <string name="contacting_opencellid_for_data">Contact d\'OpenCellID pour récupérer les données&#8230;\nCela peut prendre jusqu\'à une minute.</string>
+    <string name="contacting_opencellid_for_data">Contact d\'OpenCellID pour récupérer les données…\nCela peut prendre jusqu\'à une minute.</string>
     <string name="unable_to_determine_last_location">Impossible de déterminer votre dernière position.\nActivez les services et réessayez.</string>
     <string name="no_tracked_locations_found">Aucune position à afficher sur la carte.</string>
     <string name="no_data_for_publishing">Aucune donnée à publier.</string>
@@ -268,7 +268,7 @@
     <string name="unable_to_acquire_root_access">Impossible d\'obtenir l\'accès ROOT.\nL\'injection de commandes AT à besoin d\'un accès terminal en tant que ROOT.\nVéréfiez que votre téléphone est rooté et réessayez.</string>
     <string name="unable_to_detect_busybox">Busybox non trouvé.\nL\'injection de commandes AT a besoin de Busybox pour fonctionner correctement.\nVéréfiez que votre appareil possède Busybox et ressayez.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Une erreur inconnue  est survenu lors de l\'accès au périphérique Série.\nVéréfiez les logs et postez les erreurs sur Github.</string>
-    <string name="getting_ocid_api_key">Obtention d\'une clé de l\'API d\'OpenCellID&#8230;</string>
+    <string name="getting_ocid_api_key">Obtention d\'une clé de l\'API d\'OpenCellID…</string>
     <string name="unable_to_create_map">Impossible de créer la carte!</string>
     <string name="describe_the_problem_you_had">ATTENTION! Veuillez décrire le problème que vous avez (en anglais !), avant de nous envoyer ces logs. PAS D\'AIDE SANS DESCRIPTION PRÉCISE!\n</string>
     <string name="status">Statut:</string>
@@ -300,12 +300,12 @@
     <string name="detection_strings">Texte de Détection</string>
     <string name="typezero_title">ATTENTION!</string>
     <string name="typezero_header">SMS Type-0 Détecté</string>
-    <string name="typezero_data">SMS silencieux (Type-0) Détecté!\n\nDétails: Voir la Base de Données.\n\nSi vous voulez que ce SMS soit analysé par nos développeurs, envoyez les logs à travers le menu de Débugging.</string>
+    <string name="typezero_data">SMS silencieux (Type-0) Détecté!\n\nDétails: Voir la Base de Données.</string>
     <string name="typevoice_title">ATTENTION!</string>
     <string name="typevoice_header">SMS MWI Détecté</string>
     <string name="typevoice_data">SMS de contrôle de la messagerie vocale (MWI) Détecté!\n\nDétails: Voir la Base de Données.\n\nSi vous voulez que ce SMS soit analysé par nos développeurs, envoyez les logs à travers le menu de Débugging.</string>
     <string name="typewap_header">SMS Wap Push Détecté</string>
-    <string name="typewap_data">Message SMS Wap Push Détecté!\n\nDétails: Voir la Base de Données.\n\nSi vous voulez que ce SMS soit analysé par nos développeurs, envoyez les logs à travers le menu de Débugging.</string>
+    <string name="typewap_data">Message SMS Wap Push Détecté!\n\nDétails: Voir la Base de Données.</string>
 
 
     <!-- Section Main-->
@@ -329,13 +329,13 @@
     <string name="help_settings_import_db_from_csv">Importer une table de la Base de Donnée depuis un fichier CSV.</string>
 
     <!-- Section Application-->
-    <string name="help_app_add_get_ocid_api_key">obtenir une clé pour utiliser la base de donnée d\'OpenCellID et pour uploader vos données&#8230;</string>
+    <string name="help_app_add_get_ocid_api_key">obtenir une clé pour utiliser la base de donnée d\'OpenCellID et pour uploader vos données…</string>
     <string name="help_app_about">Explication des icônes de statut et du projet.</string>
     <string name="help_app_download_local_bst">Télécharger la Base de Données OpenCellID.</string>
     <string name="help_app_upload_local_bst">Uploader vos BTS vers OpenCellID.</string>
     <string name="help_app_debugging">Afficher et envoyer les logs d\'application.</string>
     <string name="help_app_quit">Quitter cette application.</string>
-    <string name="waiting_for_location">Recherche de votre localisation en cours&#8230;</string>
+    <string name="waiting_for_location">Recherche de votre localisation en cours…</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Impossible de restaurer la Base de Données : la structure de celle-ci a changé depuis!</string>
     <string name="unique_bts_data">Données BTS Uniques</string>
     <string name="bts_measurements">Données BTS</string>
@@ -345,8 +345,8 @@
     <string name="eventlog">Événements</string>
     <string name="measured_signal_strengths">Puissance des signaux Mesurés</string>
 
-    <string name="at_command_response_looking">*** Recherche de périphériques AT&#8230;\n</string>
-    <string name="at_command_response_found">Trouvé:&#032;</string>
+    <string name="at_command_response_looking">*** Recherche de périphériques AT…\n</string>
+    <string name="at_command_response_found">Trouvé: </string>
     <string name="at_command_response_setup_complete">*** Recherche terminée ***\n</string>
 
     <string name="currently_connected_bts">BTS actuellement connectée à votre Téléphone.</string>
