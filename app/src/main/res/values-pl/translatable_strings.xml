@@ -165,7 +165,7 @@
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Przechwycono SilentSMS</string>
-    <string name="sms_message">Przechwycono SilentSMS!\n\nWięcej infromacji w widoku bazy danych.</string>
+    <string name="sms_message">Przechwycono SilentSMS!\nWięcej infromacji w widoku bazy danych.</string>
     <string name="table_contains_no_data">Brak danych do wyświetlenia.</string>
 
     <!-- Request OpenCellID Key -->
@@ -293,8 +293,8 @@
     <!-- Detected SMS string for custom popup -->
     <string name="detection_strings">Łańcuchy znaków wykrywania</string>
     <string name="typezero_title">UWAGA!</string>
-    <string name="typezero_header">Wykryto SMS Type0</string>
-    <string name="typezero_data">Wykryto bezgłośną wiadomość SMS!\n\nSzczegóły: Zobacz Database Viewer.</string>
+    <string name="typezero_header">Wykryto SMS (Type-0)</string>
+    <string name="typezero_data">Wykryto bezgłośną wiadomość SMS!\nSzczegóły: Zobacz Database Viewer.</string>
     <string name="typevoice_title">UWAGA!</string>
     <string name="typevoice_header">Wykryto Silent Voice</string>
     <string name="typevoice_data">Wykryto Silent Voice SMS!\n\nSzczegóły: zobacz Database Viewer.\n\nJeśli chcesz by ten dane zostały przeanalizowany przez naszych deweloperów, wyślij logi przez menu Debugowania.</string>
@@ -383,4 +383,6 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-</resources>
+<string name="typemwi_title">UWAGA!</string>
+    <string name="typemwi_header">MWI wykrywane</string>
+    </resources>
