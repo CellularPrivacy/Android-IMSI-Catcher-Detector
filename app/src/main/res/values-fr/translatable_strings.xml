@@ -172,7 +172,7 @@
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">SMS Silencieux détecté!</string>
-    <string name="sms_message">SMS Silencieux détecté!\n\nDetails: Voir la base de donnée</string>
+    <string name="sms_message">SMS Silencieux détecté!\nDetails: Voir la base de donnée.</string>
     <string name="table_contains_no_data">La table ne contient aucune donnée.</string>
 
     <!-- Request OpenCellID Key -->
@@ -239,7 +239,7 @@
     <string name="status_good">Statut: Bon. Aucune Menace Détectée.</string>
     <string name="alert_threat_detected">ALERTE : menace Détectée!</string>
     <string name="alert_femtocell_connection_detected">ALERTE: FemtoCellule Détectée!</string>
-    <string name="alert_silent_sms_detected">ALERTE: SMS Silencieux (Type-0) Détecté!</string>
+    <string name="alert_silent_sms_detected">ALERTE: SMS Silencieux Détecté!</string>
     <string name="alert_silent_wap_sms_detected">ALERTE: SMS Wap Push Détecté!</string>
     <string name="alert_silent_voice_sms_detected">ALERTE: SMS de contrôle de messagerie vocale (MWI) Détecté!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD ne peut détecter les connexions FemtoCellules que sur les appareils CDMA.</string>
@@ -299,13 +299,13 @@
     <!-- Detected SMS string for custom popup -->
     <string name="detection_strings">Texte de Détection</string>
     <string name="typezero_title">ATTENTION!</string>
-    <string name="typezero_header">SMS Type-0 Détecté</string>
-    <string name="typezero_data">SMS silencieux (Type-0) Détecté!\n\nDétails: Voir la Base de Données.</string>
+    <string name="typezero_header">SMS Silencieux Détecté</string>
+    <string name="typezero_data">Message Type-0 Détecté!\nDétails: Voir la Base de Données.</string>
     <string name="typevoice_title">ATTENTION!</string>
     <string name="typevoice_header">SMS MWI Détecté</string>
     <string name="typevoice_data">SMS de contrôle de la messagerie vocale (MWI) Détecté!\n\nDétails: Voir la Base de Données.\n\nSi vous voulez que ce SMS soit analysé par nos développeurs, envoyez les logs à travers le menu de Débugging.</string>
     <string name="typewap_header">SMS Wap Push Détecté</string>
-    <string name="typewap_data">Message SMS Wap Push Détecté!\n\nDétails: Voir la Base de Données.</string>
+    <string name="typewap_data">Message SMS Wap Push Détecté!\nDétails: Voir la Base de Données.</string>
 
 
     <!-- Section Main-->
