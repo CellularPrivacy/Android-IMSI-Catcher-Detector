@@ -379,11 +379,9 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-<string name="alert_mwi_detected">ALARM: Benachrichtigungsindikator erkannt!</string>
     <string name="alert_silent_wap_sms_detected">ALARM: WAP Push SMS erkannt!</string>
     <string name="typewap_header">WAP Push Erkannt</string>
     <string name="typewap_data">WAP Push SMS Nachricht erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
-
 
     <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
     <string name="getting_ocid_key">Besorge OpenCellID-Schlüssel...</string>
