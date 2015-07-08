@@ -232,7 +232,7 @@
     <string name="status_good">Brak zagrożeń. Wszystko OK.</string>
     <string name="alert_threat_detected">UWAGA: Wykryto zagrożenie!</string>
     <string name="alert_femtocell_connection_detected">UWAGA: Wykryto połączenie FemtoCell!</string>
-    <string name="alert_silent_sms_detected">UWAGA: Wykryto SilentSMS (Type-0)!</string>
+    <string name="alert_silent_sms_detected">UWAGA: Wykryto Silent SMS!</string>
     <string name="alert_silent_voice_sms_detected">UWAGA: Wykryto Bezgłośny SMS!</string>
     <string name="alert_silent_wap_sms_detected">ALERT: Wap Push SMS detected!</string>
     <string name="femtocell_only_on_cdma_devices">Aplikacja potrafi wykrywać FemtoCell tylko przez połączenie CDMA.</string>
@@ -293,13 +293,13 @@
     <!-- Detected SMS string for custom popup -->
     <string name="detection_strings">Łańcuchy znaków wykrywania</string>
     <string name="typezero_title">UWAGA!</string>
-    <string name="typezero_header">Wykryto SMS (Type-0)</string>
-    <string name="typezero_data">Wykryto bezgłośną wiadomość SMS!\nSzczegóły: Zobacz Database Viewer.</string>
+    <string name="typezero_header">Wykryto Silent SMS</string>
+    <string name="typezero_data">Wykryto Typu-0 SMS!\nSzczegóły: Zobacz Database Viewer.</string>
     <string name="typevoice_title">UWAGA!</string>
     <string name="typevoice_header">Wykryto Silent Voice</string>
     <string name="typevoice_data">Wykryto Silent Voice SMS!\n\nSzczegóły: zobacz Database Viewer.\n\nJeśli chcesz by ten dane zostały przeanalizowany przez naszych deweloperów, wyślij logi przez menu Debugowania.</string>
     <string name="typewap_header">Wap Push Detected</string>
-    <string name="typewap_data">Wap Push SMS Message has been detected!\n\nDetails are available through the Database Viewer.\n\nIf you want this data to be analysed by our devs, enter the Debugging menu and send the logfiles via E-Mail.</string>
+    <string name="typewap_data">Wykryto WAP Push SMS!\nSzczegóły: Zobacz Database Viewer.</string>
 
 
     <!-- Section Main-->
