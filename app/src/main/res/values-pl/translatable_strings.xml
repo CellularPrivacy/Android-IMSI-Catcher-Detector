@@ -383,6 +383,4 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-<string name="typemwi_title">UWAGA!</string>
-    <string name="typemwi_header">MWI wykrywane</string>
     </resources>
