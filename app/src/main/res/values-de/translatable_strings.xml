@@ -239,7 +239,7 @@
     <string name="status_good">Status: Gut. Keine Gefahren erkannt.</string>
     <string name="alert_threat_detected">ALARM: Eine Gefahr wurde erkannt!</string>
     <string name="alert_femtocell_connection_detected">ALARM: Verbinding mit Femtozelle erkannt!</string>
-    <string name="alert_silent_sms_detected">ALARM: Stille SMS (Type-0) erkannt!</string>
+    <string name="alert_silent_sms_detected">ALARM: Stille SMS erkannt!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD kann Verbindungen mit Femtozellen derzeit nur auf CDMA-Geräten erkennen.</string>
     <string name="service_state_changed">Betriebsstatus verändert!</string>
     <string name="stopped_tracking_femtocell">: Femtozellerkennung angehalten.</string>
@@ -297,8 +297,8 @@
     <!-- Detected SMS string for custom popup-->
     <string name="detection_strings">Erkennungs-Zeichenfolgen</string>
     <string name="typezero_title">ACHTUNG!</string>
-    <string name="typezero_header">Stille SMS (Type-0) erkannt</string>
-    <string name="typezero_data">Stille SMS Nachricht wurde erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
+    <string name="typezero_header">Stille SMS erkannt</string>
+    <string name="typezero_data">Type-0 Nachricht wurde erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
     <string name="typevoice_title">ACHTUNG!</string>
     <string name="typevoice_header">Stille Sprachnachricht erkannt</string>
     <string name="typevoice_data">Stille Sprachnachricht wurde erkannt! \n\nnDetails: Siehe Datenbankbetrachter.\n\nWenn diese Daten durch unsere Entwickler analysiert werden sollen, senden Sie uns bitte das Protokoll über das Menü Fehlerbehebung.</string>
@@ -382,7 +382,7 @@
 <string name="alert_silent_voice_sms_detected">ALARM: Stille Sprach-SMS erkannt!</string>
     <string name="alert_silent_wap_sms_detected">ALARM: WAP Push SMS erkannt!</string>
     <string name="typewap_header">WAP Push Erkannt</string>
-    <string name="typewap_data">WAP Push SMS Nachricht wurde erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
+    <string name="typewap_data">WAP Push SMS Nachricht erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
 
 
     <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
