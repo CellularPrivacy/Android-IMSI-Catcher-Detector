@@ -239,7 +239,7 @@
     <string name="status_good">Status: Good. No Threats Detected.</string>
     <string name="alert_threat_detected">ALERT: Some Threat Detected!</string>
     <string name="alert_femtocell_connection_detected">ALERT: FemtoCell Connection Detected!</string>
-    <string name="alert_silent_sms_detected">ALERT: Silent SMS (Type-0) detected!</string>
+    <string name="alert_silent_sms_detected">ALERT: Silent SMS detected!</string>
     <string name="alert_mwi_detected">ALERT: Message Waiting Indicator detected!</string>
     <string name="alert_silent_wap_sms_detected">ALERT: WAP Push SMS detected!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD can only detect FemtoCell connections on CDMA devices.</string>
@@ -300,13 +300,13 @@
     <!-- Detected SMS string for custom popup -->
     <string name="detection_strings">Detection Strings</string>
     <string name="typezero_title">ATTENTION!</string>
-    <string name="typezero_header">Silent SMS (Type-0) Detected</string>
-    <string name="typezero_data">Silent SMS Message detected!\nDetails: See Database Viewer.</string>
+    <string name="typezero_header">Silent SMS Detected</string>
+    <string name="typezero_data">Type-0 Message detected!\nDetails: See Database Viewer.</string>
     <string name="typemwi_title">ATTENTION!</string>
     <string name="typemwi_header">MWI Detected</string>
     <string name="typemwi_data">Message Waiting Indicator detected!\nDetails: See Database Viewer.</string>
     <string name="typewap_header">WAP Push Detected</string>
-    <string name="typewap_data">WAP Push SMS Message has been detected!\nDetails: See Database Viewer.</string>
+    <string name="typewap_data">WAP Push SMS Message detected!\nDetails: See Database Viewer.</string>
 
 
     <!-- Section Main-->

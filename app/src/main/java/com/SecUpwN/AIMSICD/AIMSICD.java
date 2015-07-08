@@ -566,7 +566,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 if(mAimsicdService.isSmsTracking()) {
                     mAimsicdService.stopSmsTracking();
                 }
-            }catch (Exception ee){System.out.println("Error Stopping sms detection");}
+            }catch (Exception ee){System.out.println("Error: Stopping SMS detection");}
             finish();
         }
     }
@@ -578,12 +578,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         if(root_sms && !mAimsicdService.isSmsTracking()){
             mAimsicdService.startSmsTracking();
-            Helpers.msgShort(mContext,"Sms Detection Started");
-            Log.i(TAG,"Sms Detection Thread Started");
+            Helpers.msgShort(mContext,"SMS Detection Started");
+            Log.i(TAG,"SMS Detection Thread Started");
         }else if(!root_sms && mAimsicdService.isSmsTracking()) {
             mAimsicdService.stopSmsTracking();
             Helpers.msgShort(mContext, "Sms Detection Stopped");
-            Log.i(TAG, "Sms Detection Thread Stopped");
+            Log.i(TAG, "SMS Detection Thread Stopped");
         }
 
     }
