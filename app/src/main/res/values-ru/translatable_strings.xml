@@ -181,7 +181,7 @@
 
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Бесшумная SMS перехвачена</string>
-    <string name="sms_message">Бесшумная SMS была перехвачена!\n\nПодробная информация доступна через просмотр базы данных.</string>
+    <string name="sms_message">Бесшумная SMS была перехвачена!\nПодробности: См просмотра базы данных.</string>
     <string name="table_contains_no_data">Таблица не содержит никаких данных для отображения.</string>
 
     <!-- Request OpenCellID Key -->
@@ -249,7 +249,7 @@
     <string name="status_good">Статус: Хорошо. Угроз не обнаружено.</string>
     <string name="alert_threat_detected">ТРЕВОГА: Обнаружены некоторые угрозы!</string>
     <string name="alert_femtocell_connection_detected">ТРЕВОГА: Обнаружено соединение с фемтосотой!</string>
-    <string name="alert_silent_sms_detected">ТРЕВОГА: обнаруженный бесшумная SMS (Type-0)!</string>
+    <string name="alert_silent_sms_detected">ТРЕВОГА: обнаруженный бесшумная SMS!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD может определять соединение с фемтосотой только на CDMA устройствах.</string>
     <string name="service_state_changed">Статус сервиса изменен!</string>
     <string name="stopped_tracking_femtocell">: Остановлен мониториг соединения с фемтосотой.</string>
