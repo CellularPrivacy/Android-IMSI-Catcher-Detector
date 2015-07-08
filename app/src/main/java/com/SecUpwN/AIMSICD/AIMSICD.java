@@ -372,6 +372,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             startActivity(i);
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.QUIT) {
             finish();
+            if (mAimsicdService != null) mAimsicdService.onDestroy();
         }
 
         mDrawerList.setItemChecked(position, true);
