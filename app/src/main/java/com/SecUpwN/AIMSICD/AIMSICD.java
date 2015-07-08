@@ -371,8 +371,16 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             Intent i = new Intent(this, DebugLogs.class);
             startActivity(i);
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.QUIT) {
-            finish();
+            try {
+                if(mAimsicdService.isSmsTracking()) {
+                    mAimsicdService.stopSmsTracking();
+                }
+            }catch (Exception ee) {
+                System.out.println("Error: Stopping SMS detection");
+            }
+
             if (mAimsicdService != null) mAimsicdService.onDestroy();
+            finish();
         }
 
         mDrawerList.setItemChecked(position, true);
