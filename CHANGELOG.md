@@ -1,11 +1,60 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [12.07.2015 - WIP-Release v0.1.32-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.32-alpha-b00)
+
+* Updated: Enhanced `AIMSICD.java` for another attempt to fix AIMSICD not closing
+* Updated: French, Polish and Russian translations, added: Czech and Swedish
+* Updated: More updates of MWI detection strings with fixes to avoid failing build
+* Added: Small note in `CONTRIBUTING.md` to actually *finish* the started translations
+* Fixed: Reverted lacells pull request because it caused blockings and exceptions
+
+---
+
+#### 07.07.2015 - WIP-Internal v0.1.31-alpha-build-05
+
+* Changed: Switched Coverity Scan analysis to `master` to avoid Travis-CI failures
+* Updated: Improved French, German and Polish translations (needs more translators)
+* Fixed: Corrected Type-0 silent SMS popup display and tried to fix app not closing
+
+---
+
+#### 07.07.2015 - WIP-Internal v0.1.31-alpha-build-04
+
+* Updated: German translations have been improved upon changes in source strings
+* Fixed: Corrected MWI code and removed unnecessary spaces from detection popup
+
+---
+
+#### 07.07.2015 - WIP-Internal v0.1.31-alpha-build-03
+
+* Updated: German translations have been improved upon changes in source strings
+* Removed: Purged E-Mail address to send logfiles to - a better way will come soon!
+* Removed: Purged invitation to send logfiles for every single detection event
+
+---
+
+#### 07.07.2015 - WIP-Internal v0.1.31-alpha-build-02
+
+* Added: New table for detection tests of Type-0 silent SMS and MWI in [Special SMS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Special-SMS)
+* Fixed: Declared Message Waiting Indicator strings correctly in our detection code
+
+---
+
+#### 07.07.2015 - WIP-Internal v0.1.31-alpha-build-01
+
+* Updated: Enhanced Type-0 silent SMS detection with main buffer to logcat scraper
+* Updated: Translations via Weblate are now finally getting pulled in automatically
+* Updated: Thanked [thechangelog](https://github.com/thechangelog) in our `CREDITS` for their public announcements
+* Added: Translations into English, German, French, Polish, Japanese and Russian
+
+---
+
 #### [05.07.2015 - WIP-Release v0.1.31-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.31-alpha-b00)
 
 * Removed: Commented out unused imports and re-ordered variable declarations
 * Updated: Shortened badge of `Development Status` in `README` for better display
-* Added: More clarifying code co´mments in `CellTracker.java`
+* Added: More clarifying code comments in `CellTracker.java`
 
 #### 05.07.2015 - WIP-Internal v0.1.30-alpha-build-16
 
@@ -27,7 +76,7 @@
 #### 03.07.2015 - WIP-Internal v0.1.30-alpha-build-13
 
 * Fixed: Comments in `RequestTask.java` have been fixed to reflect code changes
-* Fixed: Silenced some spammy XPrivacy items using: `XPrivacy/XRuntime:S Xposed:S`
+* Fixed: Silenced some spammy XPrivacy items using `XPrivacy/XRuntime:S Xposed:S`
 
 ---
 
@@ -88,7 +137,7 @@
 
 #### 24.06.2015 - WIP-Internal v0.1.30-alpha-build-04
 
-* Added: Toasts are now being cancelled on new toast to prevent overapping of toasts
+* Added: Toasts are now being cancelled on new toast to prevent overlapping of toasts
 
 ---
 

@@ -25,6 +25,7 @@ Let our app start up in your native language!
 
 * See [our translations](https://hosted.weblate.org/projects/aimsicd/strings/) and login via [GitHub](https://hosted.weblate.org/accounts/login/github/?next=/projects/aimsicd/strings/) or [others](https://hosted.weblate.org/accounts/login/?next=/projects/aimsicd/strings/) to add yours.
 * When translating, keep small device screens in mind. Shorten it.
+* Please make sure to finish all translations as best as possible.
 * Translations will be pulled into our GitHub automatically. Enjoy!
 
 ---

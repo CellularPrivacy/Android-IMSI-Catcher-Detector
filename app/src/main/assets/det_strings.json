@@ -4,7 +4,7 @@
 "detection_type":"TYPE0"},
 
 {"detection_string":"Received voice mail indicator clear SMS shouldStore=false",
-"detection_type":"SILENTVOICE"},
+"detection_type":"MWI"},
 
 {"detection_string":"SMS TP-PID:0 data coding scheme: 24",
 "detection_type":"FLASH"},
