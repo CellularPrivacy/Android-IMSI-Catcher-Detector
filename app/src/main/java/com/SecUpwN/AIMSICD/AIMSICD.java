@@ -44,7 +44,6 @@ import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
-import com.SecUpwN.AIMSICD.smsdetection.SmsDetectionDbHelper;
 import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
@@ -87,9 +86,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     public static ProgressBar mProgressBar;
-    SmsDetectionDbHelper dbhelper;
-
-    //Back press to exit timer
+     //Back press to exit timer
     private long mLastPress = 0;
 
     private DrawerMenuActivityConfiguration mNavConf ;
@@ -101,9 +98,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /* add new detection strings if any*/
-        MiscUtils.refreshDetectionDbStrings(getApplicationContext());
-
         moveData();
 
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -111,9 +105,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
 
         setContentView(mNavConf.getMainLayout());
-
-        //create the database on first install
-        dbhelper = new SmsDetectionDbHelper(this);
 
         mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
         mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
@@ -311,7 +302,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESET_DB) {
-            Helpers.askAndDeleteDb(this);
+            //Helpers.askAndDeleteDb(this); Todo this isnt a good method for deleting database
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BST_DATA) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
@@ -380,6 +371,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             }
 
             if (mAimsicdService != null) mAimsicdService.onDestroy();
+            //Close database on Exit
+            Log.i(TAG, "Closing db from DrawerMenu.ID.APPLICATION.QUIT");
+            new AIMSICDDbAdapter(getApplicationContext()).close();
             finish();
         }
 
@@ -576,6 +570,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                     mAimsicdService.stopSmsTracking();
                 }
             }catch (Exception ee){System.out.println("Error: Stopping SMS detection");}
+            //Close database on Exit
+            Log.i(TAG, "Closing db from onBackPressed()");
+            new AIMSICDDbAdapter(getApplicationContext()).close();
             finish();
         }
     }

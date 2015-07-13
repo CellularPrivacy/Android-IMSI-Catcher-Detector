@@ -18,7 +18,7 @@ public class CapturedSmsData {
     private int current_lac;
     private int current_cid;
     private String current_nettype;
-    private String current_roam_status;
+    private int current_roam_status;
     private double current_gps_lat;
     private double current_gps_lon;
 
@@ -30,11 +30,11 @@ public class CapturedSmsData {
         this.current_nettype = current_nettype;
     }
 
-    public String getCurrent_roam_status() {
+    public int getCurrent_roam_status() {
         return current_roam_status;
     }
 
-    public void setCurrent_roam_status(String current_roam_status) {
+    public void setCurrent_roam_status(int current_roam_status) {
         this.current_roam_status = current_roam_status;
     }
 
