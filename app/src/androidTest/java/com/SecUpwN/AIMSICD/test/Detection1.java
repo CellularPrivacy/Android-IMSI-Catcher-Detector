@@ -21,12 +21,12 @@ public class Detection1 extends AndroidTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         dbHelper = new AIMSICDDbAdapter(getContext());
-        dbHelper.open();
+        
     }
 
     @Override
     protected void tearDown() throws Exception {
-        dbHelper.close();
+        
         super.tearDown();
     }
 
