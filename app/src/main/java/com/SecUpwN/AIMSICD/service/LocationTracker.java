@@ -121,9 +121,9 @@ public class LocationTracker {
                         if (cell != null) {
                             Log.d("location", "Looking up MCC " + cell.getMCC());
                             AIMSICDDbAdapter mDbHelper = new AIMSICDDbAdapter(context);
-                            mDbHelper.open();
+
                             double[] defLoc = mDbHelper.getDefaultLocation(cell.getMCC());
-                            mDbHelper.close();
+
                             loc = GeoLocation.fromDegrees(defLoc[0], defLoc[1]);
                         }
                     } catch (Exception e) {

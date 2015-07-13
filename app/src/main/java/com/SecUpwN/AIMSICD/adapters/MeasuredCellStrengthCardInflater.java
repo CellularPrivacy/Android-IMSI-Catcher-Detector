@@ -24,12 +24,12 @@ public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<Me
 
     @Override
     public View inflate(final BaseInflaterAdapter<MeasuredCellStrengthCardData> adapter, final int pos,
-            View convertView, ViewGroup parent) {
+                        View convertView, ViewGroup parent) {
         ViewHolder holder;
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            convertView = inflater.inflate(R.layout.silent_sms_items, parent, false);
+            convertView = inflater.inflate(R.layout.measured_signal_str, parent, false);
             holder = new ViewHolder(convertView);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -44,23 +44,23 @@ public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<Me
     private class ViewHolder {
 
         private final View mRootView;
-        private final TextView mAddress;
-        private final TextView mDisplayAddress;
-        private final TextView mMessageClass;
+        private final TextView cid;
+        private final TextView rss;
+        private final TextView time;
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
-            mAddress =          (TextView) mRootView.findViewById(R.id.address);
-            mDisplayAddress =   (TextView) mRootView.findViewById(R.id.display_address);
-            mMessageClass =     (TextView) mRootView.findViewById(R.id.message_class);
+            cid =          (TextView) mRootView.findViewById(R.id.tv_measure_cid);
+            rss =   (TextView) mRootView.findViewById(R.id.tv_measure_rss);
+            time =     (TextView) mRootView.findViewById(R.id.tv_measure_time);
 
             rootView.setTag(this);
         }
 
         public void updateDisplay(MeasuredCellStrengthCardData item) {
-            mAddress.setText(       item.getCellID());
-            mDisplayAddress.setText(item.getSignal());
-            mMessageClass.setText(  item.getTimestamp());
+            cid.setText(       item.getCellID());
+            rss.setText(item.getSignal());
+            time.setText(  item.getTimestamp());
         }
     }
 }

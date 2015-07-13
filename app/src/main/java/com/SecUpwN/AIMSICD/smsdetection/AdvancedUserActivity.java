@@ -10,7 +10,9 @@ package com.SecUpwN.AIMSICD.smsdetection;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,12 +22,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 
 import java.util.ArrayList;
 
 public class AdvancedUserActivity extends Activity {
+    final static String TAG = "AdvancedUserActivity";
     ListView listViewAdv;
-    private SmsDetectionDbAccess dbaccess;
+    AIMSICDDbAdapter dbaccess;
     Button btn_insert;
     EditText edit_adv_user_det;
     Spinner myspinner;
@@ -39,14 +44,13 @@ public class AdvancedUserActivity extends Activity {
         edit_adv_user_det = (EditText)findViewById(R.id.edit_adv_user_string);
         myspinner = (Spinner)findViewById(R.id.spinner);
 
-    dbaccess = new SmsDetectionDbAccess(getApplicationContext());
-        dbaccess.open();
+        dbaccess = new AIMSICDDbAdapter(getApplicationContext());//SmsDetectionDbAccess(getApplicationContext());
 
         listViewAdv = (ListView)findViewById(R.id.listView_Adv_Activity);
 
 
         try {
-             msgitems = dbaccess.getDetectionStrings();
+            msgitems = dbaccess.getDetectionStrings();
 
         }catch (Exception ee){
             System.out.println("DB ERROR>>>>"+ee.toString());
@@ -58,7 +62,6 @@ public class AdvancedUserActivity extends Activity {
 
         }
 
-        dbaccess.close();
 
         listViewAdv.setAdapter(new AdvanceUserBaseAdapter(getApplicationContext(),msgitems));
 
@@ -68,11 +71,10 @@ public class AdvancedUserActivity extends Activity {
                 Object o = listViewAdv.getItemAtPosition(position);
                 AdvanceUserItems obj_itemDetails = (AdvanceUserItems) o;
 
-                dbaccess.open();
                 if(dbaccess.deleteDetectionString(obj_itemDetails.getDetection_string())){
                     Toast.makeText(getApplicationContext(),"Deleted String\n"+obj_itemDetails.getDetection_string(),Toast.LENGTH_SHORT).show();
                 }else {Toast.makeText(getApplicationContext(),"Failed to Delete",Toast.LENGTH_SHORT).show();}
-                dbaccess.close();
+
                 try{
                     loadDbString();
                 }catch (Exception ee){}
@@ -84,38 +86,40 @@ public class AdvancedUserActivity extends Activity {
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbaccess.open();
-                ContentValues store_new_sms_string = new ContentValues();
-                store_new_sms_string.put(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN,edit_adv_user_det.getText().toString());
-                store_new_sms_string.put(SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN,myspinner.getSelectedItem().toString());
-                if(dbaccess.insertNewDetectionString(store_new_sms_string)){
 
-                    Toast.makeText(getApplicationContext(),"String Added to DB",Toast.LENGTH_SHORT).show();
-                }else {Toast.makeText(getApplicationContext(),"String Failed to add",Toast.LENGTH_SHORT).show();}
-                dbaccess.close();
-                try{
-                    loadDbString();
-                }catch (Exception ee){}
+                if (edit_adv_user_det.getText().toString().contains("\"")) {
+                    Toast.makeText(getApplicationContext(), "String not added\n \" double quote will cause db error ", Toast.LENGTH_SHORT).show();
+                } else {
+                    ContentValues store_new_sms_string = new ContentValues();
+                    store_new_sms_string.put(DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING, edit_adv_user_det.getText().toString());//.replace("\"","")
+                    store_new_sms_string.put(DBTableColumnIds.DETECTION_STRINGS_SMS_TYPE, myspinner.getSelectedItem().toString());//.replace("\"","")
+
+                    if (dbaccess.insertNewDetectionString(store_new_sms_string)) {
+                        Toast.makeText(getApplicationContext(), "String Added to DB", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "String Failed to add", Toast.LENGTH_SHORT).show();
+                    }
+
+                    try {
+                        loadDbString();
+                    } catch (Exception ee) {
+                    }
+                }
             }
 
         });
     }
 
-/* Reload ListView with new database values  */
-public void loadDbString(){
-    ArrayList<AdvanceUserItems> newmsglist;
-    dbaccess.open();
-    try {
+    /* Reload ListView with new database values  */
+    public void loadDbString(){
+        ArrayList<AdvanceUserItems> newmsglist;
+        try {
         /* There should be at least 1 detection string in db so not to cause an error */
-        newmsglist = dbaccess.getDetectionStrings();
-        listViewAdv.setAdapter(new AdvanceUserBaseAdapter(getApplicationContext(),newmsglist));
-    }catch (Exception ee){
+            newmsglist = dbaccess.getDetectionStrings();
+            listViewAdv.setAdapter(new AdvanceUserBaseAdapter(getApplicationContext(),newmsglist));
+        }catch (Exception ee){
+            Log.e(TAG,"<AdvanceUserItems>\n"+ee.toString() );
+        }
 
     }
-
-    dbaccess.close();
-
-
-
-}
 }
