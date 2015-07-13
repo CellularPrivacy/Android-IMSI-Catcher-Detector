@@ -386,4 +386,8 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-</resources>
+<string name="unknown_error_initialising_at_command_injector">Erreur inconnue lors de l\'initialisation de l\'injecteur de commandes AT.\nMerci de chercher les erreurs dans le logcat et de les poster sur Github.</string>
+    <string name="invalid_key_try_later">Clé OpenCellId invalide, merci de réessayer plus tard.</string>
+    <string name="getting_ocid_key">Demande d\'une clé OpenCellId...</string>
+
+    </resources>
