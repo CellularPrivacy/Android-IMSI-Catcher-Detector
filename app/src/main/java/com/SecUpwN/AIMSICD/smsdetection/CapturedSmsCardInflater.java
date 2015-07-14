@@ -43,7 +43,7 @@ public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSms
 
         private final View mRootView;
         private final TextView smsd_timestamp,smsd_smstype,smsd_number,smsd_data,
-                               smsd_lac,smsd_cid,smsd_rat,smsd_roam,smsd_lat,smsd_lon;
+                smsd_lac,smsd_cid,smsd_rat,smsd_roam,smsd_lat,smsd_lon;
 
 
 
@@ -73,7 +73,9 @@ public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSms
             smsd_lac.setText(SV(item.getCurrent_lac()));
             smsd_cid.setText(SV(item.getCurrent_cid()));
             smsd_rat.setText(item.getCurrent_nettype());
-            smsd_roam.setText(item.getCurrent_roam_status());
+            String isRoaming = "false";
+            if(item.getCurrent_roam_status() == 1){isRoaming = "true";}
+            smsd_roam.setText(isRoaming);
             smsd_lat.setText(String.valueOf(item.getCurrent_gps_lat()));
             smsd_lon.setText(String.valueOf(item.getCurrent_gps_lon()));
 
@@ -82,6 +84,6 @@ public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSms
     }
 
     public String SV(int value){
-       return String.valueOf(value);
-           }
+        return String.valueOf(value);
+    }
 }

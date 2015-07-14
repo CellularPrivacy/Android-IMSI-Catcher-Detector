@@ -42,10 +42,10 @@ public class SignalStrengthTracker {
     private static final String mTAG = "SignalStrengthTracker";
 
     private static int sleepTimeBetweenSignalRegistration = 60; // [seconds]
-    private static int minimumIdleTime                    = 30; // [seconds]
-    private static int maximumNumberOfDaysSaved           = 60; // [days] = 2 months
-    private static int mysteriousSignalDifference         = 10; // [dBm] or [ASU]?
-    private static int sleepTimeBetweenCleanup            = 3600; // Once per hour
+    private static int minimumIdleTime              = 30; // [seconds]
+    private static int maximumNumberOfDaysSaved     = 60; // [days] = 2 months
+    private static int mysteriousSignalDifference   = 10; // [dBm] or [ASU]?
+    private static int sleepTimeBetweenCleanup      = 3600; // Once per hour
     private Long lastRegistrationTime;  //Timestamp for last registration to DB
     private Long lastCleanupTime;       //Timestamp for last cleanup of DB
     private HashMap<Integer, Integer> averageSignalCache = new HashMap<>();
@@ -72,8 +72,8 @@ public class SignalStrengthTracker {
         long now = System.currentTimeMillis();
 
         if(deviceIsMoving()) {
-            Log.i(TAG, "Ignoring signal strength for CID: " + cellID +
-                    " since device is moving around, waiting for " +
+            Log.i(TAG, "Ignored signal strength sample for CID: " + cellID +
+                    " as the device is currently moving around, will not accept anything for another " +
                     ((minimumIdleTime*1000) - (now - lastMovementDetected)) + " ms.");
             return;
         }
@@ -84,14 +84,20 @@ public class SignalStrengthTracker {
                     " @ " + signalStrength + " dBm. Last registration was " + diff + "ms ago.");
             lastRegistrationTime = now;
 
-            mDbHelper.open();
-            mDbHelper.addSignalStrength(cellID, signalStrength, now);
-            mDbHelper.close();
+            //mDbHelper.addSignalStrength(cellID, signalStrength, String.valueOf(System.currentTimeMillis()));
+
         }
 
         if(now-(sleepTimeBetweenCleanup*1000) > lastCleanupTime) {
             Log.i(TAG, "Removing old signal strength entries");
-            cleanupOldData();
+
+            //cleanupOldData();//
+            /*
+                TODO cleanupOldData() need to change query as now time is a string value
+                String query = String.format("DELETE FROM %s WHERE %s < %d",
+                DBTableColumnIds.DBI_MEASURE_TABLE_NAME,
+                DBTableColumnIds.DBI_MEASURE_TIME,maxTime );
+             */
         }
     }
 
@@ -101,9 +107,8 @@ public class SignalStrengthTracker {
      */
     private void cleanupOldData() {
         long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved*86400))*1000);
-        mDbHelper.open();
-        mDbHelper.cleanseCellStrengthTables(maxTime);
-        mDbHelper.close();
+        //todo
+        //mDbHelper.cleanseCellStrengthTables(maxTime);
         averageSignalCache.clear();
     }
 
@@ -123,7 +128,7 @@ public class SignalStrengthTracker {
         //If moving, return false
         if(deviceIsMoving()) {
             Log.i(TAG, "Cannot check signal strength for CID: " + cellID +
-                        " since device is moving around.");
+                    " as the device is currently moving around.");
             return false;
         }
 
@@ -132,14 +137,12 @@ public class SignalStrengthTracker {
         //Cached?
         if(averageSignalCache.get(cellID) != null) {
             storedAvg = averageSignalCache.get(cellID);
-            Log.d(TAG, mTAG + ": Cached average SS for CID: " + cellID + " is: " + storedAvg);
+            Log.d(TAG, "Cached average SS for CID: " + cellID + " is: " + storedAvg);
         } else {
             //Not cached, check DB
-            mDbHelper.open();
             storedAvg = mDbHelper.getAverageSignalStrength(cellID);
             averageSignalCache.put(cellID, storedAvg);
-            Log.d(TAG, mTAG + ": Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
-            mDbHelper.close();
+            Log.d(TAG, "Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
         }
 
         boolean result;
