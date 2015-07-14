@@ -31,7 +31,13 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
+/**
+ *      Description:
+ *
+ *      ChangeLog:
+ *
+ *      2015-07-14      E:V:A       Re-enabled code for preventing use on wrong devices, added mTAG
+ */
 public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
     public static final String MULTICLIENT_SOCKET = "Multiclient";
@@ -52,7 +58,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
     private static final int ID_REQUEST_AT_COMMAND = 5;
     private static final int ID_RESPONSE_AT_COMMAND = 104;
 
-    // E:V:A:  2014-12-19  We need debugging on, until further notice.
+    // If you need debugging on, for testing on toher devices, change here.
     //  WARNING: Could fill your logcat if running app long!
     // private static final boolean DBG = BuildConfig.DEBUG;
     private static final boolean DBG = false;
@@ -81,9 +87,9 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
         // E:V:A comment out for debugging purposes on other non-Samsung RILS
         // and moved gsm.version.. to catch...
         // WARNING may have bad consequences...
-        //if (!gsmVerRilImpl.matches("Samsung\\s+RIL\\(IPC\\).*")) {
-        //    return DetectResult.Unavailable("gsm.version.ril-impl = " + gsmVerRilImpl);
-        //}
+        if (!gsmVerRilImpl.matches("Samsung\\s+RIL\\(IPC\\).*")) {
+            return DetectResult.Unavailable("gsm.version.ril-impl = " + gsmVerRilImpl);
+        }
 
         LocalSocket s = new LocalSocket();
         try {
@@ -198,10 +204,9 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             byte req[] = marshallRequest(token, data);
 
             if (DBG) {
-                Log.v(TAG,
-                        String.format("invokeOemRilRequestRaw() token: 0x%X, header: %s, req: %s ",
-                                token, HexDump.toHexString(getHeader(req)),
-                                HexDump.toHexString(req))
+                Log.v(TAG, mTAG + String.format(
+                    ": invokeOemRilRequestRaw() token: 0x%X, header: %s, req: %s ",
+                    token, HexDump.toHexString(getHeader(req)),HexDump.toHexString(req))
                 );
             }
 
@@ -230,8 +235,8 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             byte[] req = marshallRequest(token, strings);
 
             if (DBG) {
-                Log.v(TAG, String.format(
-                        "invokeOemRilRequestStrings() token: 0x%X, header: %s, req: %s ",
+                Log.v(TAG, mTAG + String.format(
+                        ": invokeOemRilRequestStrings() token: 0x%X, header: %s, req: %s ",
                         token, HexDump.toHexString(getHeader(req)), HexDump.toHexString(req)));
             }
 
@@ -379,8 +384,8 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
             if (DBG) {
 
-                Log.v(TAG,
-                        "received " + length + " bytes: " + HexDump.toHexString(data, pos, length));
+                Log.v(TAG, mTAG + ": received " + length + " bytes: " +
+                        HexDump.toHexString(data, pos, length));
             }
 
             p = Parcel.obtain();
@@ -416,7 +421,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                 int err = p.readInt();
 
                 if (DBG) {
-                    Log.v(TAG, String.format("processSolicited() token: 0x%X err: %d", token, err));
+                    Log.v(TAG, mTAG + String.format(": processSolicited() token: 0x%X err: %d", token, err));
                 }
 
                 if (err != RIL_CLIENT_ERR_SUCCESS) {
