@@ -688,8 +688,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                 mnc =csvCellID.get(i)[3],       //int
                                 lac =csvCellID.get(i)[4],       //int
                                 cellid =csvCellID.get(i)[5],    //int
-                                avg_sig =csvCellID.get(i)[6],   //int
-                                range =csvCellID.get(i)[7],     //int
+                                range=csvCellID.get(i)[6],   //int
+                                avg_sig =csvCellID.get(i)[7],     //int
                                 samples =csvCellID.get(i)[8],   //int
                                 change =csvCellID.get(i)[9],    //int
                                 radio =csvCellID.get(i)[10],    //TEXT
@@ -712,7 +712,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                 iPsc,                       // psc
                                 lat,                        // gps_lat
                                 lon,                        // gps_lon
-                                0,                          // isGPSexact TODO dont know what to put here
+                                Integer.parseInt(change),   // isGPSexact Put changeable here as you want @EVA
                                 Integer.parseInt(avg_sig),  // avg_signal [dBm]
                                 Integer.parseInt(range),    // avg_range [m]
                                 Integer.parseInt(samples),  // samples
@@ -1801,16 +1801,16 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         Created this because we dont need to insert all the data in this table
         because we dont have items like tmsi and others yet
      */
-    public void insertBTS(Device device){
+    public void insertBTS(Cell cell){
 
         //If lac and cellID not in DB store it
-        if(!cellInDbiBts(device.mCell.getLAC(),device.mCell.getCID())) {
+        if(!cellInDbiBts(cell.getLAC(),cell.getCID())) {
             ContentValues values = new ContentValues();
-            values.put(DBTableColumnIds.DBI_BTS_MCC, device.mCell.getMCC());
-            values.put(DBTableColumnIds.DBI_BTS_MNC, device.mCell.getMNC());
-            values.put(DBTableColumnIds.DBI_BTS_LAC, device.mCell.getLAC());
-            values.put(DBTableColumnIds.DBI_BTS_CID, device.mCell.getCID());
-            values.put(DBTableColumnIds.DBI_BTS_PSC, device.mCell.getPSC());
+            values.put(DBTableColumnIds.DBI_BTS_MCC, cell.getMCC());
+            values.put(DBTableColumnIds.DBI_BTS_MNC, cell.getMNC());
+            values.put(DBTableColumnIds.DBI_BTS_LAC, cell.getLAC());
+            values.put(DBTableColumnIds.DBI_BTS_CID, cell.getCID());
+            values.put(DBTableColumnIds.DBI_BTS_PSC, cell.getPSC());
 
             //setting these to 0 because if empty causing error in db restore
             //values.put(DBTableColumnIds.DBI_BTS_T3212,0);
@@ -1819,8 +1819,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
             values.put(DBTableColumnIds.DBI_BTS_TIME_FIRST, String.valueOf(System.currentTimeMillis()));
             values.put(DBTableColumnIds.DBI_BTS_TIME_LAST, String.valueOf(System.currentTimeMillis()));
-            values.put(DBTableColumnIds.DBI_BTS_LAT, device.mCell.getLat());
-            values.put(DBTableColumnIds.DBI_BTS_LON, device.mCell.getLon());
+            values.put(DBTableColumnIds.DBI_BTS_LAT, cell.getLat());
+            values.put(DBTableColumnIds.DBI_BTS_LON, cell.getLon());
             mDb.insert(DBTableColumnIds.DBI_BTS_TABLE_NAME, null, values);
 
             Log.i(mTAG, "DBi_bts inserted");
@@ -1834,51 +1834,51 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             values.put(DBTableColumnIds.DBI_BTS_TIME_LAST, String.valueOf(System.currentTimeMillis()));
 
             //Only update if gps coors are good
-            if(device.mCell.getLat() != 0.0 && device.mCell.getLat() != 0
-                    && device.mCell.getLon() != 0.0 && device.mCell.getLon() != 0){
-                values.put(DBTableColumnIds.DBI_BTS_LAT, device.mCell.getLat());
-                values.put(DBTableColumnIds.DBI_BTS_LON, device.mCell.getLon());
+            if(cell.getLat() != 0.0 && cell.getLat() != 0
+                    && cell.getLon() != 0.0 && cell.getLon() != 0){
+                values.put(DBTableColumnIds.DBI_BTS_LAT, cell.getLat());
+                values.put(DBTableColumnIds.DBI_BTS_LON, cell.getLon());
             }
 
 
             mDb.update( DBTableColumnIds.DBI_BTS_TABLE_NAME,
                     values,
-                    "CID=?", new String[]{Integer.toString(device.mCell.getCID())} );
-            Log.i(mTAG, "DBi_bts Updated Cid="+device.mCell.getCID()+" Lac="+device.mCell.getLAC());
+                    "CID=?", new String[]{Integer.toString(cell.getCID())} );
+            Log.i(mTAG, "DBi_bts Updated Cid="+cell.getCID()+" Lac="+cell.getLAC());
 
         }
 
         //Checking to see is cellID(bts_id) already in DBi_measure--|
-        if(!cellInDbiMeasure(device.mCell.getCID())){//<----|
+        if(!cellInDbiMeasure(cell.getCID())){//<----|
             ContentValues dbiMeasure = new ContentValues();
 
 
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BTS_ID,device.mCell.getCID());
+            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BTS_ID,cell.getCID());
 
 
             dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_NC_LIST,"no_data");//TODO where are we getting this?
             dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TIME, String.valueOf(System.currentTimeMillis()));
 
-            String slat = String.valueOf(device.mCell.getLat());
-            String slon = String.valueOf(device.mCell.getLon());
+            String slat = String.valueOf(cell.getLat());
+            String slon = String.valueOf(cell.getLon());
 
             if (slat == null){slat = "0.0";}
             if (slon == null){slat = "0.0";}
 
             dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LAT, slat);
             dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LON, slon);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_ACCURACY, device.mCell.getAccuracy());
+            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_ACCURACY, cell.getAccuracy());
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSE_LAT,gpse_lat);
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSE_LON,gpse_lon);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_POWER,String.valueOf(device.mCell.getDBM()));
+            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_POWER,String.valueOf(cell.getDBM()));
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_RF_TEMP,bb_rf_temp);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TX_POWER,String.valueOf(device.mCell.getRssi()));//which is which?
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_SIGNAL,String.valueOf(device.mCell.getRssi()));//which is which?
+            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TX_POWER,"0");//TODO putting 0 here as we dont have this value yet
+            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_SIGNAL,"0");//TODO putting 0 here as we dont have this value yet and giving 0xFFFFFF atm
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_STYPE,rx_stype);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RAT, String.valueOf(device.mCell.getNetType()));
+            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RAT, String.valueOf(cell.getNetType()));
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BCCH,BCCH);
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TMSI,TMSI);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TA,device.mCell.getTimingAdvance());//TODO does this actually get timing advance?
+            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TA,cell.getTimingAdvance());//TODO does this actually get timing advance?
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_PD,PD);
             dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BER,0);//TODO setting 0 because we dont have data yet.
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_AVG_EC_NO,AvgEcNo);
@@ -1886,7 +1886,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_IS_NEIGHBOUR,0);
             mDb.insert(DBTableColumnIds.DBI_MEASURE_TABLE_NAME, null, dbiMeasure);
 
-            Log.i(mTAG, "DBi_measure inserted bts_id="+device.mCell.getCID());
+            Log.i(mTAG, "DBi_measure inserted bts_id="+cell.getCID());
 
         }else{
             //Updated DBi_measure
@@ -1895,38 +1895,38 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_NC_LIST,nc_list);
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TIME, MiscUtils.getCurrentTimeStamp());
 
-            if(device.mCell.getLat() != 0.0 && device.mCell.getLon() != 0.0){
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LAT, device.mCell.getLat());
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LON, device.mCell.getLon());
+            if(cell.getLat() != 0.0 && cell.getLon() != 0.0){
+                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LAT, cell.getLat());
+                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LON, cell.getLon());
             }
-            if(device.mCell.getAccuracy() != 0.0 && device.mCell.getAccuracy() > 0) {
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_ACCURACY, device.mCell.getAccuracy());
+            if(cell.getAccuracy() != 0.0 && cell.getAccuracy() > 0) {
+                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_ACCURACY, cell.getAccuracy());
             }
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSE_LAT,gpse_lat);
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSE_LON,gpse_lon);
-            if(device.mCell.getDBM() > 0) {
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_POWER, String.valueOf(device.mCell.getDBM()));
+            if(cell.getDBM() > 0) {
+                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_POWER, String.valueOf(cell.getDBM()));
             }
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_RF_TEMP,bb_rf_temp);
-            if(device.mCell.getRssi() >0) {
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TX_POWER, String.valueOf(device.mCell.getRssi()));
-                //TODO set correct value for tx_power and rx_signal
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_SIGNAL,String.valueOf(device.mCell.getRssi()));
+            //TODO set correct value for tx_power and rx_signal and un comment when working again
+ /*           if(cell.getRssi() >0) {
+                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TX_POWER, String.valueOf(cell.getRssi()));
+                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_SIGNAL,String.valueOf(cell.getRssi()));
             }
-
+*/
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_STYPE,rx_stype);
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RAT, String.valueOf(device.mCell.getNetType()));
+            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RAT, String.valueOf(cell.getNetType()));
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BCCH,BCCH);
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TMSI,TMSI);
-            if(device.mCell.getTimingAdvance() > 0) {
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TA, device.mCell.getTimingAdvance());
+            if(cell.getTimingAdvance() > 0) {
+                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TA, cell.getTimingAdvance());
             }
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_PD,PD);
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BER,0);
             //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_AVG_EC_NO,AvgEcNo);
 
-            mDb.update(DBTableColumnIds.DBI_MEASURE_TABLE_NAME,dbiMeasure,"bts_id=?",new String[]{Integer.toString(device.mCell.getCID())});
-            Log.i(mTAG, "DBi_measure updated bts_id="+device.mCell.getCID());
+            mDb.update(DBTableColumnIds.DBI_MEASURE_TABLE_NAME,dbiMeasure,"bts_id=?",new String[]{Integer.toString(cell.getCID())});
+            Log.i(mTAG, "DBi_measure updated bts_id="+cell.getCID());
 
         }
 
