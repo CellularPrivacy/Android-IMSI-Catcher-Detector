@@ -14,6 +14,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -97,7 +99,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private final String mTAG = "CellTracker";
 
     public static String OCID_API_KEY = null;   // see getOcidKey()
+    public static int PHONE_TYPE;               //
+    public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
+    public static int LAST_DB_BACKUP_VERSION;   //
+    public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
+
+    private boolean CELL_TABLE_CLEANSED;        //
     private final int NOTIFICATION_ID = 1;      // ?
+    private final Device mDevice = new Device();
 
     private static TelephonyManager tm;
     private final SignalStrengthTracker signalStrengthTracker;
@@ -107,12 +116,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     //TinyDB tinydb = new TinyDB(context);
     private TinyDB tinydb;
 
-    public static int PHONE_TYPE;               //
-    public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
-    public static int LAST_DB_BACKUP_VERSION;   //
-    public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
-    private boolean CELL_TABLE_CLEANSED;
-    private final Device mDevice = new Device();
 
     /*
      * Tracking and Alert Declarations
@@ -347,6 +350,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         HttpGet httpGet = new HttpGet(context.getString(R.string.opencellid_api_get_key));
         OCIDResponse result = new OCIDResponse(httpclient.execute(httpGet));
 
+        //here for debugging response and codes
+        Log.d("OCID Response", result.getResponseFromServer()+" Code="+String.valueOf(result.getStatusCode()));
+
         if (result.getStatusCode() == 200) {
             String responseFromServer = result.getResponseFromServer();
             Log.d("OCID", responseFromServer);
@@ -365,12 +371,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             // TODO add code here or elsewhere to check for NO network exceptions...
             // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/293
-            httpclient = null;
-            httpGet = null;
-            result = null;
+
+            // TODO: Remove commented out stuff if app works without these NULLs
+            // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/526
+            // PR: 4a68d00
+            //httpclient = null;
+            //httpGet = null;
+            //result = null;
 
             Log.d("AIMSICD", "CellTracker: OCID Returned " + result.getStatusCode() + " " + result.getReasonPhrase());
-//                        throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
+            //throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
             return null;
         }
     }
@@ -534,7 +544,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     }
 
-    /** Update: from banjaxbanjo
+    /**
      *          I removed the timer that activated this code and now the code will be run when
      *          the cell changes so it will detect faster rather than using a timer that might
      *          miss an imsi catcher, also says cpu rather than refreshing every x seconds.
@@ -582,7 +592,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *                  Are there any reasons why not using a listener?
      *
      *  ChangeLog:
-     *              2015-03-03  E:V:A   Changed getProp() to use TinyDB (SharedPreferences)
+     *              2015-03-03  E:V:A           Changed getProp() to use TinyDB (SharedPreferences)
+     *              2015-0x-xx  banjaxbanjo     Update: ??? (hey dude what did you do?)
      *
      */
     public void compareLac(CellLocation location){
@@ -596,7 +607,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     mMonitorCell.setLAC(gsmCellLocation.getLac());
                     mMonitorCell.setCID(gsmCellLocation.getCid());
 
-                    //dbHelper.open();
                     boolean lacOK = dbHelper.checkLAC(mMonitorCell);
                     if (!lacOK) {
                         mChangedLAC = true;
@@ -613,14 +623,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                     mMonitorCell.getLAC(),
                                     mMonitorCell.getCID(),
                                     mMonitorCell.getPSC(),
-
                                     String.valueOf(mDevice.mCell.getLat()),
                                     String.valueOf(mDevice.mCell.getLon()),
                                     (int)mDevice.mCell.getAccuracy(),
-
-                                    // String.valueOf(mMonitorCell.getLat()), //This doesn't get lat
-                                    // String.valueOf(mMonitorCell.getLon()),//This doesn't get lon
-                                    // (int)mMonitorCell.getAccuracy(),      //This doesn't get accu
                                     2,"CID not in DBe_import"
                             );
                             //dbHelper.close();
@@ -641,7 +646,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     mMonitorCell.setLAC(cdmaCellLocation.getNetworkId());
                     mMonitorCell.setCID(cdmaCellLocation.getBaseStationId());
 
-                    //dbHelper.open();
                     boolean lacOK = dbHelper.checkLAC(mMonitorCell);
                     if (!lacOK) {
                         mChangedLAC = true;
@@ -658,7 +662,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     } else {
                         mChangedLAC = false;
                     }
-                    //dbHelper.close();
+
                 }
         }
 
@@ -757,7 +761,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         public void onCellLocationChanged(CellLocation location) {
             checkForNeighbourCount(location);
             compareLac(location);
-            refreshDevice();//refresh data on cell change
+            refreshDevice();                //refresh data on cell change
             mDevice.setNetID(tm);           // ??
             mDevice.getNetworkTypeName();   // RAT??
 
@@ -778,7 +782,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                         */
                         mDevice.setCellInfo(
-                                gsmCellLocation.toString() +                // ??
+                                gsmCellLocation.toString() +                        // ??
                                         mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
                                         mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
                                         mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
@@ -813,7 +817,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             mDevice.mCell.setMNC(Integer.parseInt(networkOperator.substring(3)));
                         }
 
-                        dbHelper.insertBTS(mDevice);
+                        dbHelper.insertBTS(mDevice.mCell);
  */
 
                     }
@@ -823,7 +827,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                     if (cdmaCellLocation != null) {
                         mDevice.setCellInfo(
-                                cdmaCellLocation.toString() +               // ??
+                                cdmaCellLocation.toString() +                       // ??
                                         mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
                                         mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
                                         mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
@@ -976,7 +980,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId()); // BSID ??
                         mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());     // NID
                         mDevice.mCell.setSID(cdmaCellLocation.getSystemId());      // SID
-                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());       // <== BUG!??     // MNC
+                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());      // MNC <== BUG!??
 
                         break;//Todo was was there no break here was this right?
                 }
@@ -1004,6 +1008,38 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             if (mTrackingCell) {
 
                 /*
+                    OLD TABLED FOR REFRENCE FOR EVA
+
+                                    // LOCATION_TABLE (locationinfo)    ==>  DBi_measure + DBi_bts
+                dbHelper.insertLocation(
+                        mDevice.mCell.getLAC(),     // Lac
+                        mDevice.mCell.getCID(),     // CellID
+                        mDevice.mCell.getNetType(), // Net
+                        mDevice.mCell.getLat(),     // Lat
+                        mDevice.mCell.getLon(),     // Lng
+                        mDevice.mCell.getDBM(),     // Signal
+                        mDevice.getCellInfo()       // Connection
+                );
+
+                // CELL_TABLE                       (cellinfo)      ==>  DBi_measure + DBi_bts
+                dbHelper.insertCell(
+                        mDevice.mCell.getLAC(),     // Lac
+                        mDevice.mCell.getCID(),     // CellID
+                        mDevice.mCell.getNetType(), // Net
+                        mDevice.mCell.getLat(),     // Lat
+                        mDevice.mCell.getLon(),     // Lng
+                        mDevice.mCell.getDBM(),     // Signal
+                        mDevice.mCell.getMCC(),     // Mcc
+                        mDevice.mCell.getMNC(),     // Mnc
+                        mDevice.mCell.getAccuracy(),// Accuracy
+                        mDevice.mCell.getSpeed(),   // Speed
+                        mDevice.mCell.getBearing(), // Direction
+                        mDevice.getNetworkTypeName(),         // NetworkType
+                        SystemClock.currentThreadTimeMillis() // MeasurementTaken [ms]
+                );
+                 */
+
+                /*
                     This function inserts bts and also the data to dbi_measure
                     there is 2 versions of this in the database with the same name
                     this one dbHelper.insertBTS(mDevice); inserts only data that we
@@ -1027,7 +1063,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                  */
                 //This also checks that the lac are cid are not in DB before inserting
-                dbHelper.insertBTS(mDevice);
+                dbHelper.insertBTS(mDevice.mCell);
 
 
             }
@@ -1161,9 +1197,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType));
+        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconResId);
         Notification mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(Icon.getIcon(Icon.Type.valueOf(iconType)))
+                        //.setSmallIcon(Icon.getIcon(Icon.Type.valueOf(iconType)))
+                        .setSmallIcon(iconResId)
+                        .setLargeIcon(largeIcon)
                         .setTicker(tickerText)
                         .setContentTitle(context.getResources().getString(R.string.main_app_name))
                         .setContentText(contentText)
