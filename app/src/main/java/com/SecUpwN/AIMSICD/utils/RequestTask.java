@@ -96,8 +96,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     //Calling from the menu more extensive(more difficult for sever),
     // we have to give more time for the server response
-    public static final int REQUEST_TIMEOUT_MAPS = 80000;       // [ms] 40 s Calling from map
-    public static final int REQUEST_TIMEOUT_MENU = 80000;       // [ms] 40 s Calling from menu
+    public static final int REQUEST_TIMEOUT_MAPS = 80000;       // [ms] 80 s Calling from map
+    public static final int REQUEST_TIMEOUT_MENU = 80000;       // [ms] 80 s Calling from menu
 
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
@@ -204,7 +204,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.setConnectTimeout(mTimeOut);
-                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 40 s
+                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 80 s
                     urlConnection.setDoInput(true);
                     urlConnection.connect();
 
@@ -260,21 +260,16 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 }
 
             case BACKUP_DATABASE:
-                //#   mDbAdapter.open();
+
                 if (mDbAdapter.backupDB()) {
-                    //#       mDbAdapter.close();
                     return "Successful";
                 }
-                //#   mDbAdapter.close();
                 return null;
 
             case RESTORE_DATABASE:
-                //#   mDbAdapter.open();
                 if (mDbAdapter.restoreDB()) {
-                    //#    mDbAdapter.close();
                     return "Successful";
                 }
-                //# mDbAdapter.close();
                 return null;
         }
 
@@ -337,14 +332,12 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
             case DBE_DOWNLOAD_REQUEST_FROM_MAP:
                 if (result != null && result.equals("Successful")) {
-                    //#    mDbAdapter.open();
                     if (mDbAdapter.populateDBeImport()) {
                         Intent intent = new Intent(MapViewerOsmDroid.updateOpenCellIDMarkers);
                         LocalBroadcastManager.getInstance(mAppContext).sendBroadcast(intent);
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received_markers_updated));
 
                         mDbAdapter.checkDBe();
-                        //#      mDbAdapter.close();
                         tinydb.putBoolean("ocid_downloaded", true);
                     }
                 } else {
@@ -357,6 +350,15 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             case DBE_UPLOAD_REQUEST:
                 if (result != null && result.equals("Successful")) {
                     Helpers.msgShort(mAppContext, mAppContext.getString(R.string.uploaded_bts_data_successfully));
+
+                    Activity lActivity = getActivity();
+                    if(lActivity != null) {//Activity may be detached or destroyed
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
+                        builder.setTitle(R.string.restore_database_completed_title).setMessage(
+                                lActivity.getString(R.string.restore_database_completed));
+                        builder.create().show();
+                    }
+
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_uploading_bts_data));
                 }
