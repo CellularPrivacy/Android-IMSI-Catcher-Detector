@@ -351,14 +351,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 if (result != null && result.equals("Successful")) {
                     Helpers.msgShort(mAppContext, mAppContext.getString(R.string.uploaded_bts_data_successfully));
 
-                    Activity lActivity = getActivity();
-                    if(lActivity != null) {//Activity may be detached or destroyed
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
-                        builder.setTitle(R.string.restore_database_completed_title).setMessage(
-                                lActivity.getString(R.string.restore_database_completed));
-                        builder.create().show();
-                    }
-
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_uploading_bts_data));
                 }
@@ -367,6 +359,13 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
                     Helpers.msgShort(mAppContext, mAppContext.getString(R.string.restore_database_completed));
+                                        Activity lActivity = getActivity();
+                    if(lActivity != null) {//Activity may be detached or destroyed
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
+                        builder.setTitle(R.string.restore_database_completed_title).setMessage(
+                                lActivity.getString(R.string.restore_database_completed));
+                        builder.create().show();
+                    }
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_restoring_database));
                 }
