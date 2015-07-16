@@ -259,6 +259,7 @@
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data successfully received.\nMap Markers updated.</string>
     <string name="uploaded_bts_data_successfully">Uploaded BTS data to OCID successfully.</string>
     <string name="error_uploading_bts_data">Error in uploading BTS data to OCID servers!</string>
+    <string name="restore_database_completed_title">Restore Successfull.</string>
     <string name="restore_database_completed">Restore database completed successfully.</string>
     <string name="error_restoring_database">Error restoring database.</string>
     <string name="database_backup_successfully_saved_to">Database backup successfully saved to:</string>
