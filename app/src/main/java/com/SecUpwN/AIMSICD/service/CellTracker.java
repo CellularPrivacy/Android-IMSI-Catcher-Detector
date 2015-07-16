@@ -259,9 +259,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |        // rx_signal
                             PhoneStateListener.LISTEN_DATA_ACTIVITY |           // No,In,Ou,IO,Do
                             PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |    // Di,Ct,Cd,Su
-                            PhoneStateListener.LISTEN_CELL_INFO
-                    // PhoneStateListener.LISTEN_CALL_STATE ?
-                    // PhoneStateListener.LISTEN_SERVICE_STATE ?
+                            PhoneStateListener.LISTEN_CELL_INFO                  // !? (Need API 17)
+                            // PhoneStateListener.LISTEN_CALL_STATE ?           // idle,ringing,offhook
+                            // PhoneStateListener.LISTEN_SERVICE_STATE ?        // emergency_only,in_service,out_of_service,power_off
             );
             mTrackingCell = true;
             Helpers.msgShort(context, context.getString(R.string.tracking_cell_information));
@@ -309,7 +309,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else if (key.equals(REFRESH)) {
             String refreshRate = sharedPreferences.getString(REFRESH, "1");
             if (refreshRate.isEmpty()) {
-                refreshRate = "1"; // Set default refresh rate to automatic "1", manual is "0".
+                refreshRate = "1"; // Set default to: 1 second
             }
 
 
@@ -320,7 +320,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     t = 15L; // Automatic refresh rate is 15 seconds
                     break;
                 default:
-                    t = (long) rate;
+                    t = (long) rate;// Default is 1 sec (from above)
                     break;
             }
             REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
@@ -714,7 +714,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 t = 15L; // Automatic refresh rate is 15 seconds
                 break;
             default:
-                t = (rate * 1L);
+               t = ((long) rate); // Default is 1 sec (from above)
                 break;
         }
 
@@ -785,7 +785,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                 gsmCellLocation.toString() +                        // ??
                                         mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
                                         mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                        mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
+                                        mDevice.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
 
                         mDevice.mCell.setLAC(gsmCellLocation.getLac());     // LAC
@@ -835,7 +835,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());      // NID
                         mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());  // BID
                         mDevice.mCell.setSID(cdmaCellLocation.getSystemId());       // SID
-                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());       // <== BUG!? See issue above! // MNC
+                        mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());       // MNC <== BUG!??
                         mDevice.setNetworkName(tm.getNetworkOperatorName());        // ??
                     }
             }
