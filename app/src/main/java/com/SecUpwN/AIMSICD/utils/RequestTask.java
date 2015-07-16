@@ -359,7 +359,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
                     Helpers.msgShort(mAppContext, mAppContext.getString(R.string.restore_database_completed));
-                                        Activity lActivity = getActivity();
+                    Activity lActivity = getActivity();
+                    
                     if(lActivity != null) {//Activity may be detached or destroyed
                         final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
                         builder.setTitle(R.string.restore_database_completed_title).setMessage(
