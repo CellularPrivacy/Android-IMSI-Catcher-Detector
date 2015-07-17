@@ -328,7 +328,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     * Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
+     * Description:     Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
+     *                  For the various server responses, pleas refer to the OpenCellID API wiki:
+     *                  http://wiki.opencellid.org/wiki/API#Error_codes
+     *                  TODO: And the github issue #303:
+     *                  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/303
+     *
+     *  TODO:   [ ] Add handlers for other HTTP request and OCID Server error codes
+     *
      *
      * @return null or newly generated key
      *
@@ -338,12 +345,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         HttpGet httpGet = new HttpGet(context.getString(R.string.opencellid_api_get_key));
         OCIDResponse result = new OCIDResponse(httpclient.execute(httpGet));
 
-        //here for debugging response and codes
-        Log.d("OCID Response", result.getResponseFromServer()+" Code="+String.valueOf(result.getStatusCode()));
+        // TODO: remoe these and fix first type def in beginning of file
+        String TAG = "AIMSICD";
+        String mTAG = "CellTracker";
+
+        // For debugging response and codes
+        Log.d(TAG, mTAG + ": OCID Server Response: " + result.getResponseFromServer() + " Code=" + String.valueOf(result.getStatusCode()) );
 
         if (result.getStatusCode() == 200) {
             String responseFromServer = result.getResponseFromServer();
-            Log.d("OCID", responseFromServer);
+            Log.d(TAG, mTAG + ": OCID Server Repsonse: " + responseFromServer );
             return responseFromServer;
 
         } else if (result.getStatusCode() == 503) {
@@ -353,7 +364,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             Helpers.msgLong(context, context.getString(R.string.only_one_key_per_day));
             String responseFromServer = result.getResponseFromServer();
-            Log.d("AIMSICD", "CellTracker: OCID Reached 24hr API key limit: " + responseFromServer);
+            Log.d(TAG, mTAG + ": OCID Reached 24hr API key request limit: " + responseFromServer);
             return responseFromServer;
         } else {
 
@@ -367,7 +378,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             //httpGet = null;
             //result = null;
 
-            Log.d("AIMSICD", "CellTracker: OCID Returned " + result.getStatusCode() + " " + result.getReasonPhrase());
+            Log.d(TAG, mTAG + ": OCID Returned " + result.getStatusCode() + " " + result.getReasonPhrase());
             //throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
             return null;
         }

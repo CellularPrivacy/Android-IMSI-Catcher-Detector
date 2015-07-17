@@ -22,7 +22,8 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
  */
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;
-    private final String TAG = "OpenCellIdActivity";
+    private final String TAG = "AIMSICD";
+    private final String mTAG = "OpenCellIdActivity";
     private ProgressDialog pd;
 
     @Override
@@ -56,7 +57,7 @@ public class OpenCellIdActivity extends BaseActivity {
             try {
                 return CellTracker.requestNewOCIDKey();
             } catch (final Exception e) {
-                Log.e(TAG, e.getMessage());
+                Log.e(TAG, mTAG + ": " + e.getMessage());
                 e.printStackTrace();
 
                 /**
@@ -68,12 +69,10 @@ public class OpenCellIdActivity extends BaseActivity {
                     @Override
                     public void run() {
                         pd.dismiss();
-                        Helpers.msgLong(OpenCellIdActivity.this,
-                                getString(R.string.ocid_api_error) + e.getClass().getName() +
-                                        " - " + e.getMessage());
+                        Helpers.msgLong(OpenCellIdActivity.this, getString(R.string.ocid_api_error) +
+                                e.getClass().getName() + " - " + e.getMessage());
                     }
                 });
-
                 finish();
                 return null;
             }
@@ -84,7 +83,7 @@ public class OpenCellIdActivity extends BaseActivity {
             if (s == null || s.isEmpty())
                 return;
 
-            // if returned value is "Error: You can not register new account more than once per day."
+            // If the returned value is "Error: You can not register new account more than once per day."
             // don't save it as the API key -.-'
             if (isKeyValid(s) == true) {
                 String opcidKey = getString(R.string.pref_ocid_key);
@@ -94,15 +93,12 @@ public class OpenCellIdActivity extends BaseActivity {
             } else {
                 Helpers.msgShort(OpenCellIdActivity.this, getString(R.string.invalid_key_try_later));
             }
-
             pd.dismiss();
             finish();
         }
 
-        /**
-         * This might be extended in the future.
-         * Two keys I started started with `dev-usr`, not sure if that's a rule.
-         */
+         // This might be extended in the future.
+         // Newly obtained keys start with: "dev-usr", not sure if that's a rule.
         private boolean isKeyValid(String key) {
             return key.startsWith("dev-");
         }
