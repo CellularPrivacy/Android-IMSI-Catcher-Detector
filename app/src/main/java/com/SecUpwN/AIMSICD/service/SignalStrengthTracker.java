@@ -28,11 +28,41 @@ import java.util.HashMap;
  *
  *  Issues:
  *
- *      [ ]
+ *      [ ] Correctly set the time in the database. Our database is using TEXT in all its time
+ *          related entries, like "time", "time_first" and "time_Last". So what do we put there?
+ *
+ *          We have two options:
+ *
+ *          1) Change the time fields to use INTEGER so that we can use the "unixepoch" (Unix time)
+ *             [no of seconds since 1970-01-01] to perform numerical comparisons directly in SQL.
+ *
+ *                  # To compute the current unix timestamp.
+ *                  SELECT strftime('%s','now');
+ *
+ *          2) Store as TEXT in DB and convert all times to/from TEXT type. (Note, this is not
+ *             how SQLIte3 handles date and time. See references below.
+ *
+ *  Note:
+ *                  Apparently SQLite3 can use any data type for date operations, due to affinity:
+ *                  http://www.sqlite.org/datatype3.html
+ *
+ *  Conclusion:     The java "int" data type is a 32-bit signed two's complement integer.
+ *                  The Minimum value is: - 2,147,483,648 (-2^31) and
+ *                  the Maximum value is:   2,147,483,647 (inclusive) (2^31 -1).
+ *                  This is the equivalent of the Unix Epoch of:
+ *                           sqlite> select datetime(2147483647, 'unixepoch');
+ *                           2038-01-19 03:14:07
+ *                  ==> We can be very happy to use "int" and thus try to use (1).
+ *
+ *  References:
+ *
+ *          a) For SQLite time reference, see:     https://www.sqlite.org/lang_datefunc.html
+ *          b) For Unix/Posix epoch, see:          https://en.wikipedia.org/wiki/Unix_time
  *
  *  ChangeLog
  *
  *      20150703    E:V:A       Changed log TAG to use only TAG for Log.i() and mTAG for Log.d/e/v()
+ *      20150717    E:V:A       Added back mTAG's and added comments
  *
  * @author Tor Henning Ueland
  */
@@ -42,14 +72,15 @@ public class SignalStrengthTracker {
     private static final String mTAG = "SignalStrengthTracker";
 
     private static int sleepTimeBetweenSignalRegistration = 60; // [seconds]
-    private static int minimumIdleTime              = 30; // [seconds]
-    private static int maximumNumberOfDaysSaved     = 60; // [days] = 2 months
-    private static int mysteriousSignalDifference   = 10; // [dBm] or [ASU]?
-    private static int sleepTimeBetweenCleanup      = 3600; // Once per hour
-    private Long lastRegistrationTime;  //Timestamp for last registration to DB
-    private Long lastCleanupTime;       //Timestamp for last cleanup of DB
+    private static int minimumIdleTime              = 30;       // [seconds]
+    private static int maximumNumberOfDaysSaved     = 60;       // [days] = 2 months
+    private static int mysteriousSignalDifference   = 10;       // [dBm] or [ASU]?
+    private static int sleepTimeBetweenCleanup      = 3600;     // [seconds] Once per hour
+
+    private Long lastRegistrationTime;  // Timestamp for last registration to DB
+    private Long lastCleanupTime;       // Timestamp for last cleanup of DB
     private HashMap<Integer, Integer> averageSignalCache = new HashMap<>();
-    private long lastMovementDetected = 0l;
+    private long lastMovementDetected = 0l; // ??
     private AIMSICDDbAdapter mDbHelper;
 
     public SignalStrengthTracker(Context context) {
@@ -69,18 +100,18 @@ public class SignalStrengthTracker {
      */
     public void registerSignalStrength(int cellID, int signalStrength) {
 
-        long now = System.currentTimeMillis();
+        long now = System.currentTimeMillis(); // What is this? [ms]?
 
         if(deviceIsMoving()) {
-            Log.i(TAG, "Ignored signal strength sample for CID: " + cellID +
-                    " as the device is currently moving around, will not accept anything for another " +
+            Log.i(TAG, mTAG + ": Ignored signal sample for CID: " + cellID +
+                    " due to device movement. Waiting for " +
                     ((minimumIdleTime*1000) - (now - lastMovementDetected)) + " ms.");
             return;
         }
 
         if( now - (sleepTimeBetweenSignalRegistration*1000) > lastRegistrationTime) {
             long diff = now - lastRegistrationTime;
-            Log.i(TAG, "Scheduling signal strength calculation from CID: " + cellID +
+            Log.i(TAG, mTAG + ": Scheduling signal strength calculation from CID: " + cellID +
                     " @ " + signalStrength + " dBm. Last registration was " + diff + "ms ago.");
             lastRegistrationTime = now;
 
@@ -88,16 +119,12 @@ public class SignalStrengthTracker {
 
         }
 
-        if(now-(sleepTimeBetweenCleanup*1000) > lastCleanupTime) {
-            Log.i(TAG, "Removing old signal strength entries");
+        if( now - (sleepTimeBetweenCleanup*1000) > lastCleanupTime) {
+            Log.i(TAG, mTAG + ": Removing old signal strength entries from DB.");
 
-            //cleanupOldData();//
-            /*
-                TODO cleanupOldData() need to change query as now time is a string value
-                String query = String.format("DELETE FROM %s WHERE %s < %d",
-                DBTableColumnIds.DBI_MEASURE_TABLE_NAME,
-                DBTableColumnIds.DBI_MEASURE_TIME,maxTime );
-             */
+            // cleanupOldData();//
+            // TODO cleanupOldData() need to change query as now time is a string value
+            // String query = String.format("DELETE FROM DBi_measure WHERE time < %d", maxTime);
         }
     }
 
@@ -106,14 +133,14 @@ public class SignalStrengthTracker {
      *  (days * number of seconds in a day) * seconds to milliseconds
      */
     private void cleanupOldData() {
-        long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved*86400))*1000);
-        //todo
+        long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved*86400))*1000); // Units are? [ms]?
+        //TODO
         //mDbHelper.cleanseCellStrengthTables(maxTime);
         averageSignalCache.clear();
     }
 
     private boolean deviceIsMoving() {
-        return System.currentTimeMillis() - lastMovementDetected < minimumIdleTime*1000;
+        return System.currentTimeMillis() - lastMovementDetected < minimumIdleTime*1000; // Units are? [ms]?
     }
 
     /**
@@ -125,24 +152,24 @@ public class SignalStrengthTracker {
      */
     public boolean isMysterious(int cellID, int signalStrength) {
 
-        //If moving, return false
+        // If moving, return false
         if(deviceIsMoving()) {
-            Log.i(TAG, "Cannot check signal strength for CID: " + cellID +
-                    " as the device is currently moving around.");
+            Log.i(TAG, mTAG + ": Cannot check signal strength for CID: " + cellID +
+                    " because of device movements.");
             return false;
         }
 
         int storedAvg;
 
-        //Cached?
+        // Cached?
         if(averageSignalCache.get(cellID) != null) {
             storedAvg = averageSignalCache.get(cellID);
-            Log.d(TAG, "Cached average SS for CID: " + cellID + " is: " + storedAvg);
+            Log.d(TAG, mTAG + ": Cached average SS for CID: " + cellID + " is: " + storedAvg);
         } else {
             //Not cached, check DB
             storedAvg = mDbHelper.getAverageSignalStrength(cellID);
             averageSignalCache.put(cellID, storedAvg);
-            Log.d(TAG, "Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
+            Log.d(TAG, mTAG + ": Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
         }
 
         boolean result;
@@ -151,7 +178,7 @@ public class SignalStrengthTracker {
         } else {
             result = signalStrength - storedAvg > mysteriousSignalDifference;
         }
-        Log.d(TAG, "Signal Strength mystery check for CID: " + cellID +
+        Log.d(TAG, mTAG + ": Signal Strength mystery check for CID: " + cellID +
                 " is " + result + ", avg:" + storedAvg + ", this signal: " + signalStrength);
         return result;
     }

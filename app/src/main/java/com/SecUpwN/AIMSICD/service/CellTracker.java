@@ -395,6 +395,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             //Log.i(TAG, "signal: " + mDevice.getSignalDBm());
 
             //LISTEN_CELL_INFO added in API 17
+            // TODO: See issue #555 (DeviceApi17.java is using API 18 CellInfoWcdma calls.
             if (Build.VERSION.SDK_INT > 16) {
                 DeviceApi17.startListening(tm, phoneStatelistener);
             } else {
@@ -446,8 +447,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         // Add NC list to ?? cellinfo ??  --->  DBi_measure:nc_list
         for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
-            Log.i(TAG,
-                    mTAG + ": neighbouringCellInfo -" +
+            Log.i(TAG, mTAG + ": neighbouringCellInfo -" +
                             " LAC:" + neighbourCell.getLac() +
                             " CID:" + neighbourCell.getCid() +
                             " PSC:" + neighbourCell.getPsc() +
@@ -471,7 +471,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
      */
     public void checkForNeighbourCount(CellLocation location){
-        Log.i(mTAG,"in checkForNeighbourCount");
+        Log.i(TAG, mTAG + ": checkForNeighbourCount()...");
 
         /**
          *  Description:    This snippet sets a global variable (SharedPreference) to indicate
@@ -605,7 +605,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     // Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91) <---FIXED
                     if ( tinydb.getBoolean("ocid_downloaded") ) {
                         if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
-                            Log.i(mTAG, "ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
+                            Log.i(TAG, mTAG + ": ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
                             //dbHelper.open();
                             dbHelper.insertEventLog(MiscUtils.getCurrentTimeStamp(),
                                     mMonitorCell.getLAC(),
@@ -945,6 +945,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
     public void onLocationChanged(Location loc) {
         //Log.i(mTAG, "in onLocationChanged(Location loc)");
+        // TODO: See issue #555 (DeviceApi17.java is using API 18 CellInfoWcdma calls.
         if (Build.VERSION.SDK_INT > 16) {
             DeviceApi17.loadCellInfo(tm, mDevice);
         }
@@ -1371,12 +1372,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         @Override
         public void onCellInfoChanged(List<CellInfo> cellInfo) {
             handle();
-            Log.i(mTAG,"Cell info change");
+            Log.d(TAG, mTAG + ": Cell info changed...");
         }
 
         @Override
         public void onCellLocationChanged(CellLocation location) {
-
             handle();
         }
 
