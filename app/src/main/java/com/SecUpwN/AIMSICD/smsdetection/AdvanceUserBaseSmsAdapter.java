@@ -71,7 +71,9 @@ public class AdvanceUserBaseSmsAdapter extends BaseAdapter {
         holder.smsd_lac.setText(SV(detectionItemDetails.get(position).getCurrent_lac()));
         holder.smsd_cid.setText(SV(detectionItemDetails.get(position).getCurrent_cid()));
         holder.smsd_rat.setText(detectionItemDetails.get(position).getCurrent_nettype());
-        holder.smsd_roam.setText(detectionItemDetails.get(position).getCurrent_roam_status());
+		String isRoaming = "false";
+		if(detectionItemDetails.get(position).getCurrent_roam_status() == 1){isRoaming = "true";}
+        holder.smsd_roam.setText(isRoaming);
         holder.smsd_lat.setText(String.valueOf(detectionItemDetails.get(position).getCurrent_gps_lat()));
         holder.smsd_lon.setText(String.valueOf(detectionItemDetails.get(position).getCurrent_gps_lon()));
 
