@@ -6,8 +6,6 @@ import com.SecUpwN.AIMSICD.smsdetection.AdvanceUserItems;
 import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.CMDProcessor;
-import com.SecUpwN.AIMSICD.utils.Device;
-import com.SecUpwN.AIMSICD.utils.MiscUtils;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -288,7 +286,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         Log.i(TAG, mTAG + ": Deleted CID: " + cellId);
         // TODO Do we also need to delete this cell from DBi_measure?
         // Rewrite this query!
-        return mDb.delete(DBTableColumnIds.DBI_BTS_TABLE_NAME, DBTableColumnIds.DBI_BTS_CID + "=" + cellId, null);
+        return mDb.delete("DBi_bts","CID=" + cellId, null);
     }
 
     /* ====================================================================
@@ -339,18 +337,24 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *
      */
     public Cursor getOPCIDSubmitData() {
+        //TODO I did not create this function and where are these columns in DBi_bts????? Direction Speed Signal
         // TODO:    rewrite mDb.query to use mDb.rawQuery
         // This is used (prepareOpenCellUploadData) when uploading data to OCID
-        return mDb.query( DBTableColumnIds.DBI_BTS_TABLE_NAME,
+        //TODO REMOVE THIS CODE IF NO LONGER NEEDED
+  /*      return mDb.query( "DBi_measure",
                 new String[]{"Mcc", "Mnc", "Lac", "CellID", "Lng", "Lat", "Signal", "Timestamp",
                         "Accuracy", "Speed", "Direction", "NetworkType"}, "OCID_SUBMITTED <> 1",
                 null, null, null, null
         );
-
+*/
         // TODO: Use something like this instead... VVV Need testing may need ...,RAT FROM DBi_measure ..
+        // @EVA created a new function getRatFromCellId(CellId) to get RAT with CellId from DBi_measure
+        //      this can be used when creating the upload data to add the RAT to the CSV file
+
         // IMPORTANT: Note the order of the items (to match CSV)!
-        //String query = "SELECT MCC,MNC,LAC,CID,gpsd_lon,gpsd_lat,rx_signal,time,gpsd_accu FROM DBi_bts WHERE isSubmitted <> 1";
-        //return mDb.rawQuery(query,null);
+        //TODO hmm ok this is tricky half these tables are in DBi_bts & DBi_measure how is this going to work????
+        String query = "SELECT MCC,MNC,LAC,CID,gpsd_lon,gpsd_lat,rx_signal,time,gpsd_accu FROM DBi_bts WHERE isSubmitted <> 1";
+        return mDb.rawQuery(query,null);
     }
 
 
@@ -382,25 +386,23 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *
      */
     public boolean checkLAC(Cell cell) {
-        String query = String.format("SELECT * FROM %s WHERE %s = %d",
-                DBTableColumnIds.DBI_BTS_TABLE_NAME,            //DBi_bts
-                DBTableColumnIds.DBI_BTS_CID,  cell.getCID());  //CID
+        String query = String.format("SELECT * FROM DBi_bts WHERE CID = %d",cell.getCID());  //CID
 
         Cursor bts_cursor = mDb.rawQuery(query,null);
 
         while (bts_cursor.moveToNext()) {
             // 1=LAC, 8=Accuracy, 11=Time
-            if (cell.getLAC() != bts_cursor.getInt(bts_cursor.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC))) {
+            if (cell.getLAC() != bts_cursor.getInt(bts_cursor.getColumnIndex("LAC"))) {
                 Log.i(TAG, mTAG + ": ALERT: Changing LAC on CID: " + cell.getCID()
                         + " LAC(API): " + cell.getLAC()
-                        + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC)));
+                        + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
 
                 bts_cursor.close();
                 return false;
             } else {
                 Log.v(TAG, mTAG + ": LAC checked - no change on CID:" + cell.getCID()
                         + " LAC(API): " + cell.getLAC()
-                        + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC)));
+                        + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
             }
         }
         bts_cursor.close();
@@ -415,12 +417,9 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public void ocidProcessed() {
         ContentValues ocidValues = new ContentValues();
-        ocidValues.put(DBTableColumnIds.DBI_MEASURE_IS_SUBMITTED, 1); // isSubmitted
+        ocidValues.put("isSubmitted", 1); // isSubmitted
         // TODO:    rewrite mDb.query to use mDb.rawQuery ??
-        mDb.update(
-                DBTableColumnIds.DBI_MEASURE_TABLE_NAME, ocidValues,
-                DBTableColumnIds.DBI_MEASURE_IS_SUBMITTED + "<>?", new String[]{"1"}
-        ); // isSubmitted
+        mDb.update("DBi_measure", ocidValues, "isSubmitted<>?", new String[]{"1"}); // isSubmitted
     }
 
 
@@ -432,29 +431,22 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public Cursor returnOcidBtsByNetwork(int mcc,int mnc){
         String query = String.format(
-                "SELECT * FROM %s WHERE %s = %d AND %s = %d",
-                DBTableColumnIds.DBE_IMPORT_TABLE_NAME,             // DBe_import
-                DBTableColumnIds.DBE_IMPORT_MCC, mcc,               // MCC
-                DBTableColumnIds.DBE_IMPORT_MNC, mnc                // MNC
-        );
+                "SELECT * FROM DBe_import WHERE MCC = %d AND MNC = %d",
+                mcc,
+                mnc);
         return mDb.rawQuery(query, null);
     }
 
     public double[] getDefaultLocation(int mcc) {
         String query = String.format(
-                "SELECT %s,%s FROM %s WHERE %s = %d",
-                DBTableColumnIds.DEFAULT_LOCATION_LAT,              // lat
-                DBTableColumnIds.DEFAULT_LOCATION_LON,              // lon
-                DBTableColumnIds.DEFAULT_LOCATION_TABLE_NAME,       // defaultlocation
-                DBTableColumnIds.DEFAULT_LOCATION_MCC, mcc          // MCC
-        );
+                "SELECT lat,lon FROM defaultlocation WHERE MCC = %d",mcc);
 
         double[] loc = new double[2];
         Cursor cursor = mDb.rawQuery(query, null);
 
         if (cursor != null && cursor.moveToFirst()) {
-            loc[0] = Double.parseDouble(cursor.getString(cursor.getColumnIndex(DBTableColumnIds.DEFAULT_LOCATION_LAT)));
-            loc[1] = Double.parseDouble(cursor.getString(cursor.getColumnIndex(DBTableColumnIds.DEFAULT_LOCATION_LON)));
+            loc[0] = Double.parseDouble(cursor.getString(cursor.getColumnIndex("lat")));
+            loc[1] = Double.parseDouble(cursor.getString(cursor.getColumnIndex("lon")));
         } else {
             loc[0] = 0.0;
             loc[1] = 0.0;
@@ -476,21 +468,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     public void cleanseCellTable() {
         // Creating queries with string format because easier to understand
         // This removes all but the last row in the "DBi_bts" table
-        String query = String.format(
-                "DELETE FROM %s WHERE %s NOT IN (SELECT MAX(%s) FROM %s GROUP BY %s)",
-                DBTableColumnIds.DBI_BTS_TABLE_NAME,    // DBi_bts
-                DBTableColumnIds.DBI_BTS_ID,            // _id
-                DBTableColumnIds.DBI_BTS_ID,            // _id
-                DBTableColumnIds.DBI_BTS_TABLE_NAME,    // DBi_bts
-                DBTableColumnIds.DBI_BTS_CID            // CID
-        );
-        mDb.execSQL(query);
 
-        String query2 = String.format("DELETE FROM %s WHERE %s = %d OR %s = -1",
-                DBTableColumnIds.DBI_BTS_TABLE_NAME,                // DBi_bts
-                DBTableColumnIds.DBI_BTS_CID, Integer.MAX_VALUE,    // CID
-                DBTableColumnIds.DBI_BTS_CID                        // CID
-        );
+        mDb.execSQL("DELETE FROM DBi_bts WHERE _id NOT IN (SELECT MAX(_id) FROM DBi_bts GROUP BY CID)");
+
+        String query2 = String.format("DELETE FROM DBi_bts WHERE CID = %d OR CID = -1",Integer.MAX_VALUE);
         mDb.execSQL(query2);
     }
 
@@ -502,6 +483,9 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *                     For example, in:  /data/media/0/AIMSICD/OpenCellID
      *   TODO this needs to be fixed with new database upgrade 12/07/2015
      *          @banjaxbanjo: What do yuo mean? --E:V:A
+     *          @EVA the columns need to be sorted because we dont hase some of these in DBi_bts
+     *          //("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act")
+     *          //and also this function getOPCIDSubmitData() is not working because columns also not in DBi_bts
      */
     public boolean prepareOpenCellUploadData() {
         boolean result;
@@ -634,14 +618,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                     Log.i(TAG, mTAG + ":updateOpenCellID: OCID CSV size (lines): " + lines );
 
                     // This counts how many CIDs we have in DBe_import
-                    String lQuery = String.format(
-                            "SELECT %s, COUNT(%s) FROM %s GROUP BY %s;",
-                            DBTableColumnIds.DBE_IMPORT_CID,
-                            DBTableColumnIds.DBE_IMPORT_CID,
-                            DBTableColumnIds.DBE_IMPORT_TABLE_NAME,
-                            DBTableColumnIds.DBE_IMPORT_CID
-                    );
-                    Cursor lCursor = mDb.rawQuery(lQuery, null);
+                    //TODO I removed ; from "SELECT CID, COUNT(CID) FROM DBe_import GROUP BY CID;" is this prob?
+                    Cursor lCursor = mDb.rawQuery("SELECT CID, COUNT(CID) FROM DBe_import GROUP BY CID", null);
                     SparseArray<Boolean> lPresentCellID = new SparseArray<>();
                     if(lCursor.getCount() > 0) {
                         while(lCursor.moveToNext()) {
@@ -754,7 +732,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                             AIMSICD.mProgressBar.setProgress(i);
                             switch (table) {
 
-                                case DBTableColumnIds.DEFAULT_LOCATION_TABLE_NAME:
+                                case "defaultlocation":
                                     try{
                                         insertDefaultLocation(
                                                 records.get(i)[1].toString(),           //country
@@ -767,7 +745,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                     }
                                     break;
 
-                                case DBTableColumnIds.API_KEYS_TABLE_NAME:
+                                case "API_keys":
                                     insertApiKeys(
                                             records.get(i)[1].toString(),           //name
                                             records.get(i)[2].toString(),           //type
@@ -777,7 +755,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                     );
                                     break;
 
-                                case DBTableColumnIds.COUNTER_MEASURES_TABLE_NAME:
+                                case "CounterMeasures":
                                     insertCounterMeasures(
                                             records.get(i)[1].toString(),           //name
                                             records.get(i)[2].toString(),           //description
@@ -786,7 +764,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                     );
                                     break;
 
-                                case DBTableColumnIds.DBE_CAPABILITIES_TABLE_NAME:
+                                case "DBe_capabilities":
 
                                     insertDBeCapabilities(
                                             records.get(i)[1].toString(),           //MCC
@@ -799,7 +777,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
                                     break;
 
-                                case DBTableColumnIds.DBE_IMPORT_TABLE_NAME:
+                                case "DBe_import":
                                     try{
                                         insertDBeImport(
                                                 records.get(i)[1].toString(),           // DBsource
@@ -825,7 +803,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                     }
                                     break;
 
-                                case DBTableColumnIds.DBI_BTS_TABLE_NAME:
+                                case "DBi_bts":
                                     try{
                                         insertBTS(
                                                 Integer.parseInt(records.get(i)[1]),    // MCC
@@ -846,7 +824,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                     }
                                     break;
 
-                                case DBTableColumnIds.DBI_MEASURE_TABLE_NAME:
+                                case "DBi_measure":
                                     try{
                                         insertDbiMeasure(
                                                 Integer.parseInt(records.get(i)[1]),      // bts_id
@@ -877,7 +855,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                     }
                                     break;
 
-                                case DBTableColumnIds.DETECTION_FLAGS_TABLE_NAME:
+                                case "DetectionFlags":
                                     insertDetectionFlags(
                                             Integer.parseInt(records.get(i)[1]),    //code
                                             records.get(i)[2].toString(),           //name
@@ -896,7 +874,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                     );
                                     break;
 
-                                case DBTableColumnIds.EVENTLOG_TABLE_NAME:
+                                case "EventLog":
                                     insertEventLog(
                                             records.get(i)[1].toString(),           //time
                                             Integer.parseInt(records.get(i)[2]),    //LAC
@@ -910,20 +888,20 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                     );
                                     break;
 
-                                case DBTableColumnIds.SECTOR_TYPE_TABLE_NAME:
+                                case "SectorType":
                                     insertSectorType(
                                             records.get(i)[1].toString()
                                     );
                                     break;
 
-                                case DBTableColumnIds.DETECTION_STRINGS_TABLE_NAME:
+                                case "DetectionStrings":
                                     insertDetectionStrings(
                                             records.get(i)[1].toString(),
                                             records.get(i)[2].toString()
                                     );
                                     break;
 
-                                case DBTableColumnIds.SMS_DATA_TABLE_NAME:
+                                case "SmsData":
                                     insertSmsData(
                                             records.get(i)[1].toString(),           //time
                                             records.get(i)[2].toString(),           //number
@@ -1140,7 +1118,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         Log.d(TAG, mTAG + ":checkDBe() Attempting to delete bad import data from DBe_import table...");
 
         // =========== samples ===========
-        sqlq = "DELETE FROM " + DBTableColumnIds.DBE_IMPORT_TABLE_NAME + " WHERE samples < 1";
+        sqlq = "DELETE FROM DBe_import WHERE samples < 1";
         mDb.execSQL(sqlq);
 
         // =========== range (DBe_import::avg_range) ===========
@@ -1149,25 +1127,25 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         //mDb.rawQuery(sqlq, null);
 
         // =========== LAC ===========
-        sqlq = "DELETE FROM " + DBTableColumnIds.DBE_IMPORT_TABLE_NAME + " WHERE LAC < 1";
+        sqlq = "DELETE FROM DBe_import WHERE LAC < 1";
         mDb.execSQL(sqlq);
 
         // We should delete cells with CDMA (4) LAC not in [1,65534] but we can simplify this to:
         // Delete ANY cells with a LAC not in [1,65534]
-        sqlq = "DELETE FROM " + DBTableColumnIds.DBE_IMPORT_TABLE_NAME + " WHERE LAC > 65534";
+        sqlq = "DELETE FROM DBe_import WHERE LAC > 65534";
         mDb.execSQL(sqlq);
         // Delete cells with GSM/UMTS/LTE (1/2/3/13 ??) (or all others?) LAC not in [1,65533]
         //sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE Lac > 65533 AND Type!='CDMA'";
         //mDb.rawQuery(sqlq, null);
 
         // =========== CID ===========
-        sqlq = "DELETE FROM " + DBTableColumnIds.DBE_IMPORT_TABLE_NAME + " WHERE CID < 1";
+        sqlq = "DELETE FROM DBe_import WHERE CID < 1";
         mDb.execSQL(sqlq);
 
         // We should delete cells with UMTS/LTE (3,13) CID not in [1,268435455] (0xFFF FFFF) but
         // we can simplify this to:
         // Delete ANY cells with a CID not in [1,268435455]
-        sqlq = "DELETE FROM " + DBTableColumnIds.DBE_IMPORT_TABLE_NAME + " WHERE CID > 268435455";
+        sqlq = "DELETE FROM DBe_import WHERE CID > 268435455";
         mDb.execSQL(sqlq);
         // Delete cells with GSM/CDMA (1-3,4) CID not in [1,65534]
         //sqlq = "DELETE FROM " + OPENCELLID_TABLE + " WHERE CellID > 65534 AND (Net!=3 OR Net!=13)";
@@ -1198,11 +1176,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     // =======================================================================================
 
     public void cleanseCellStrengthTables(long maxTime) {
-        String query = String.format(
-                "DELETE FROM %s WHERE %s < %d",
-                DBTableColumnIds.DBI_MEASURE_TABLE_NAME,        //DBi_measure
-                DBTableColumnIds.DBI_MEASURE_TIME, maxTime      //time
-        );
+        //TODO @EVA this is not working because time in DBi_measure = TEXT not Intgear
+        String query = String.format("DELETE FROM DBi_measure WHERE time < %d",maxTime );
         Log.d(TAG, mTAG + ": Cleaning " + DBTableColumnIds.DBI_MEASURE_TABLE_NAME + " WHERE time < " + maxTime);
         mDb.execSQL(query);
     }
@@ -1212,21 +1187,18 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public void addSignalStrength( int cellID, int signal, String timestamp ) {
         ContentValues row = new ContentValues();
-        // TODO: Rewrite as an SQL query!!!
-        row.put(DBTableColumnIds.DBI_MEASURE_BTS_ID, cellID);
-        row.put(DBTableColumnIds.DBI_MEASURE_RX_SIGNAL, signal);
-        row.put(DBTableColumnIds.DBI_MEASURE_TIME, timestamp);
+        row.put("bts_id", cellID);
+        row.put("rx_signal", signal);
+        row.put("time", timestamp);
         //TODO are we inserting or updating? if we insert will this not wipe out all data from last known row
-        mDb.insert(DBTableColumnIds.DBI_MEASURE_TABLE_NAME, null, row);
+        mDb.insert("DBi_measure", null, row);
     }
 
     public int countSignalMeasurements(int cellID) {
         String query = String.format(
-                "SELECT COUNT(%s) FROM %s WHERE %s= %d",
-                DBTableColumnIds.DBI_MEASURE_BTS_ID,            // bts_id
-                DBTableColumnIds.DBI_MEASURE_TABLE_NAME,        // DBi_measure
-                DBTableColumnIds.DBI_MEASURE_BTS_ID, cellID     // bts_id  <<--- NO! Must be DBi_bts:CID
-        );
+                "SELECT COUNT(bts_id) FROM DBi_measure WHERE bts_id= %d", cellID);
+
+
         Cursor c = mDb.rawQuery(query,null);
         c.moveToFirst();
         int lAnswer = c.getInt(0);
@@ -1235,12 +1207,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     public int getAverageSignalStrength(int cellID) {
-        String query = String.format(
-                "SELECT AVG(%s) FROM %s WHERE %s= %d",
-                DBTableColumnIds.DBI_MEASURE_RX_SIGNAL,         // rx_signal
-                DBTableColumnIds.DBI_MEASURE_TABLE_NAME,        // DBi_measure
-                DBTableColumnIds.DBI_MEASURE_BTS_ID, cellID     // bts_id <<--- NO! Must be DBi_bts:CID
-        );
+        String query = String.format("SELECT AVG(rx_signal) FROM DBi_measure WHERE bts_id= %d", cellID);
         Cursor c = mDb.rawQuery(query,null);
         c.moveToFirst();
         int lAnswer = c.getInt(0);
@@ -1249,15 +1216,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     public Cursor getSignalStrengthMeasurementData() {
-        String query = String.format(
-                "SELECT %s, %s, %s FROM  %s ORDER BY %s DESC",
-                DBTableColumnIds.DBI_MEASURE_BTS_ID,            //bts_id <<--- NO! Must be DBi_bts:CID
-                DBTableColumnIds.DBI_MEASURE_RX_SIGNAL,         //rx_signal
-                DBTableColumnIds.DBI_MEASURE_TIME,              //time
-                DBTableColumnIds.DBI_MEASURE_TABLE_NAME,        //DBi_measure
-                DBTableColumnIds.DBI_MEASURE_TIME               //time
-        );
-        return mDb.rawQuery(query,null);
+        return mDb.rawQuery("SELECT bts_id, rx_signal, time FROM DBi_measure ORDER BY time DESC",null);
     }
 
     //TODO: do we need to remove this? its used in MapViewer
@@ -1280,15 +1239,15 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     public ArrayList<AdvanceUserItems> getDetectionStrings(){
 
         // TODO Rewrite in cleartext!
-        Cursor cursor = mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.DETECTION_STRINGS_TABLE_NAME,null);
+        Cursor cursor = mDb.rawQuery("SELECT * FROM DetectionStrings",null);
 
         ArrayList<AdvanceUserItems> detection_strs = new ArrayList<>();
 
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
                 AdvanceUserItems setitems = new AdvanceUserItems();
-                setitems.setDetection_string(cursor.getString(cursor.getColumnIndex(DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING)));
-                setitems.setDetection_type(cursor.getString(cursor.getColumnIndex(DBTableColumnIds.DETECTION_STRINGS_SMS_TYPE)));
+                setitems.setDetection_string(cursor.getString(cursor.getColumnIndex("det_str")));
+                setitems.setDetection_type(cursor.getString(cursor.getColumnIndex("sms_type")));
                 detection_strs.add(setitems);
 
             }
@@ -1308,7 +1267,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
         try {
             // TODO Rewrite in cleartext!
-            mDb.delete(DBTableColumnIds.SMS_DATA_TABLE_NAME, DBTableColumnIds.SMS_DATA_ID + "=" + deleteme,null);
+            mDb.delete("SmsData","_id=" + deleteme,null);
             return true;
         }catch (Exception ee){Log.i("AIMSICDDbAdapter", "Sms Deleted failed");}
 
@@ -1319,7 +1278,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
         try {
             // TODO Rewrite in cleartext!
-            mDb.delete(DBTableColumnIds.DETECTION_STRINGS_TABLE_NAME, DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING + "='" + deleteme + "'",null);
+            mDb.delete("DetectionStrings","det_str='" + deleteme + "'",null);
             return true;
         }catch (Exception ee){Log.i("AIMSICDDbAdapter", "Delete String failed");}
 
@@ -1345,13 +1304,9 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     public boolean insertNewDetectionString(ContentValues newstring) {
         // First check that string not in DB
 
-        // TODO Rewrite in cleartext!
         String check4String = String.format(
-                "SELECT * FROM %s WHERE %s = \"%s\"",
-                DBTableColumnIds.DETECTION_STRINGS_TABLE_NAME,
-                DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING,
-                newstring.get(DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING).toString()
-        );
+                "SELECT * FROM DetectionStrings WHERE det_str = \"%s\"",
+                newstring.get("det_str").toString());
 
         Cursor cursor = mDb.rawQuery(check4String, null);
         boolean exists = cursor.getCount() > 0;
@@ -1361,8 +1316,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         } else {
 
             try {
-                // TODO Rewrite in cleartext!
-                mDb.insert(DBTableColumnIds.DETECTION_STRINGS_TABLE_NAME, null, newstring);
+
+                mDb.insert("DetectionStrings", null, newstring);
                 Log.i(TAG, mTAG +  ": New detection string added.");
                 return true;
             } catch (Exception ee) {
@@ -1376,30 +1331,27 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
         ContentValues values = new ContentValues();
 
-        values.put(DBTableColumnIds.SMS_DATA_SENDER_NUMBER, smsdata.getSenderNumber());
-        values.put(DBTableColumnIds.SMS_DATA_SENDER_MSG, smsdata.getSenderMsg());
-        values.put(DBTableColumnIds.SMS_DATA_TIMESTAMP, smsdata.getSmsTimestamp());
-        values.put(DBTableColumnIds.SMS_DATA_SMS_TYPE, smsdata.getSmsType());
-        values.put(DBTableColumnIds.SMS_DATA_LAC, smsdata.getCurrent_lac());
-        values.put(DBTableColumnIds.SMS_DATA_CID, smsdata.getCurrent_cid());
-        values.put(DBTableColumnIds.SMS_DATA_RAT, smsdata.getCurrent_nettype());
-        values.put(DBTableColumnIds.SMS_DATA_ROAM_STATE, smsdata.getCurrent_roam_status());
-        values.put(DBTableColumnIds.SMS_DATA_GPS_LAT, smsdata.getCurrent_gps_lat());
-        values.put(DBTableColumnIds.SMS_DATA_GPS_LON, smsdata.getCurrent_gps_lon());
+        values.put("number", smsdata.getSenderNumber());
+        values.put("message", smsdata.getSenderMsg());
+        values.put("time", smsdata.getSmsTimestamp());
+        values.put("type", smsdata.getSmsType());
+        values.put("lac", smsdata.getCurrent_lac());
+        values.put("cid", smsdata.getCurrent_cid());
+        values.put("rat", smsdata.getCurrent_nettype());
+        values.put("isRoaming", smsdata.getCurrent_roam_status());
+        values.put("gps_lat", smsdata.getCurrent_gps_lat());
+        values.put("gps_lon", smsdata.getCurrent_gps_lon());
 
         // TODO Rewrite in cleartext!
-        long insertid = mDb.insert(DBTableColumnIds.SMS_DATA_TABLE_NAME,null,values);
+        long insertid = mDb.insert("SmsData",null,values);
         smsdata.setId(insertid);
         return  smsdata;
     }
 
 
-    public boolean isTimeStampInDB(String TS){
+    public boolean isTimeStampInDB(String timestamp){
         String check4timestamp = String.format(
-                "SELECT * FROM %s WHERE %s = \"%s\"",
-                DBTableColumnIds.SMS_DATA_TABLE_NAME,
-                DBTableColumnIds.SMS_DATA_TIMESTAMP, TS
-        );
+                "SELECT * FROM SmsData WHERE time = \"%s\"", timestamp);
         Cursor cursor = mDb.rawQuery(check4timestamp,null);
         boolean exists = cursor.getCount() > 0;
         cursor.close();
@@ -1421,7 +1373,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public Cursor returnDefaultLocation(){
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.DEFAULT_LOCATION_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM defaultlocation",null);
     }
 
     /*
@@ -1435,7 +1387,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     */
     public Cursor returnApiKeys(){
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.API_KEYS_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM API_keys",null);
     }
 
     /*
@@ -1448,7 +1400,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     */
     public Cursor returnCounterMeasures(){
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.COUNTER_MEASURES_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM CounterMeasures",null);
     }
 
     /*
@@ -1463,7 +1415,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     */
     public Cursor returnDBeCapabilities(){
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.DBE_CAPABILITIES_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM DBe_capabilities",null);
     }
 
     /*
@@ -1496,7 +1448,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public Cursor returnDBeImport(){
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.DBE_IMPORT_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM DBe_import",null);
     }
 
     /*
@@ -1517,7 +1469,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 */
     public Cursor returnDBiBts(){
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.DBI_BTS_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM DBi_bts",null);
     }
 
     /*
@@ -1550,7 +1502,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 */
     public Cursor returnDBiMeasure(){
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.DBI_MEASURE_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM DBi_measure",null);
     }
 
     /*
@@ -1572,7 +1524,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public Cursor returnDetectionFlags(){
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.DETECTION_FLAGS_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM DetectionFlags",null);
     }
     /**
      Returned Columns:
@@ -1592,7 +1544,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public Cursor returnEventLogData() {
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.EVENTLOG_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM EventLog",null);
     }
 
     /**
@@ -1602,7 +1554,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public Cursor returnSectorType() {
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.SECTOR_TYPE_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM SectorType",null);
     }
 
     /**
@@ -1613,7 +1565,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public Cursor returnDetectionStrings() {
         // TODO Rewrite in cleartext!
-        return mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.DETECTION_STRINGS_TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM DetectionStrings",null);
     }
 
     /*
@@ -1634,7 +1586,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
  */
     public Cursor returnSmsData(){
         // TODO Rewrite in cleartext!
-        return  mDb.rawQuery("SELECT * FROM "+ DBTableColumnIds.SMS_DATA_TABLE_NAME,null);
+        return  mDb.rawQuery("SELECT * FROM SmsData",null);
     }
 
     //----END OF RETURN DATABASE CURSORS------//
@@ -1647,22 +1599,21 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                       String lon){
 
         ContentValues def_location = new ContentValues();
-        def_location.put(DBTableColumnIds.DEFAULT_LOCATION_COUNTRY, country);
-        def_location.put(DBTableColumnIds.DEFAULT_LOCATION_MCC, mcc);
-        def_location.put(DBTableColumnIds.DEFAULT_LOCATION_LAT, lat);
-        def_location.put(DBTableColumnIds.DEFAULT_LOCATION_LON, lon);
+        def_location.put("country", country);
+        def_location.put("MCC", mcc);
+        def_location.put("lat", lat);
+        def_location.put("lon", lon);
 
         // Check that the country and MCC not known in the DefaultLocation DB to avoid duplicates
         String query = String.format(
-                "SELECT * FROM %s WHERE %s = \"%s\" AND %s = %d ",
-                DBTableColumnIds.DEFAULT_LOCATION_TABLE_NAME,               // defaultlocation
-                DBTableColumnIds.DEFAULT_LOCATION_COUNTRY,      country,    // country
-                DBTableColumnIds.DEFAULT_LOCATION_MCC,          mcc         // MCC
-        );
+                "SELECT * FROM defaultlocation WHERE country = \"%s\" AND MCC = %d ",
+                country,
+                mcc);
+
         Cursor cursor = mDb.rawQuery(query,null);
         if(cursor.getCount() <= 0){
             // <= 0 means country is not in database yet
-            mDb.insert(DBTableColumnIds.DEFAULT_LOCATION_TABLE_NAME, null, def_location);
+            mDb.insert("defaultlocation", null, def_location);
         }
         cursor.close();
 
@@ -1673,26 +1624,21 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                  String key,
                                  String time_add,
                                  String time_exp){
-
         ContentValues ApiKeys = new ContentValues();
-        ApiKeys.put(DBTableColumnIds.API_KEYS_NAME,name);
-        ApiKeys.put(DBTableColumnIds.API_KEYS_TYPE,type);
-        ApiKeys.put(DBTableColumnIds.API_KEYS_KEY,key);
-        ApiKeys.put(DBTableColumnIds.API_KEYS_TIME_ADD,time_add);
-        ApiKeys.put(DBTableColumnIds.API_KEYS_TIME_EXP,time_exp);
+        ApiKeys.put("name",name);
+        ApiKeys.put("type",type);
+        ApiKeys.put("key",key);
+        ApiKeys.put("time_add",time_add);
+        ApiKeys.put("time_exp",time_exp);
 
-        String query = String.format(
-                "SELECT * FROM %s WHERE %s = \"%s\"",
-                DBTableColumnIds.API_KEYS_TABLE_NAME,               // API_keys
-                DBTableColumnIds.API_KEYS_KEY,                key   // key
-        );
+        String query = String.format("SELECT * FROM API_keys WHERE key = \"%s\"",key);
 
         Cursor cursor = mDb.rawQuery(query,null);
 
 
         if( cursor.getCount() <= 0){
             // only insert if key not in db
-            mDb.insert(DBTableColumnIds.API_KEYS_TABLE_NAME, null, ApiKeys);
+            mDb.insert("API_keys", null, ApiKeys);
             cursor.close();
             return true;
         }
@@ -1707,13 +1653,13 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                       double thfine){
 
         ContentValues counterMeasures = new ContentValues();
-        counterMeasures.put(DBTableColumnIds.COUNTER_MEASURES_NAME,name);
-        counterMeasures.put(DBTableColumnIds.COUNTER_MEASURES_DESCRIPTION,description);
-        counterMeasures.put(DBTableColumnIds.COUNTER_MEASURES_THRESH,thresh);
-        counterMeasures.put(DBTableColumnIds.COUNTER_MEASURES_THFINE,thfine);
+        counterMeasures.put("name",name);
+        counterMeasures.put("description",description);
+        counterMeasures.put("thresh",thresh);
+        counterMeasures.put("thfine",thfine);
 
         //TODO do I need to check or update or are we just inserting without any checks
-        mDb.insert(DBTableColumnIds.COUNTER_MEASURES_TABLE_NAME, null, counterMeasures);
+        mDb.insert("CounterMeasures", null, counterMeasures);
     }
 
     /*
@@ -1733,15 +1679,15 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                       String __EXPAND__){
 
         ContentValues dbeCapabilities = new ContentValues();
-        dbeCapabilities.put(DBTableColumnIds.DBE_CAPABILITIES_MCC,mcc);
-        dbeCapabilities.put(DBTableColumnIds.DBE_CAPABILITIES_MNC,mnc);
-        dbeCapabilities.put(DBTableColumnIds.DBE_CAPABILITIES_LAC,lac);
-        dbeCapabilities.put(DBTableColumnIds.DBE_CAPABILITIES_OP_NAME,op_name);
-        dbeCapabilities.put(DBTableColumnIds.DBE_CAPABILITIES_BAND_PLAN,band_plan);
-        dbeCapabilities.put(DBTableColumnIds.DBE_CAPABILITIES_EXPAND,__EXPAND__);
+        dbeCapabilities.put("MCC",mcc);
+        dbeCapabilities.put("MNC",mnc);
+        dbeCapabilities.put("LAC",lac);
+        dbeCapabilities.put("op_name",op_name);
+        dbeCapabilities.put("band_plan",band_plan);
+        dbeCapabilities.put("__EXPAND__",__EXPAND__);
 
         //TODO do I need to check or update or are we just inserting without any checks
-        mDb.insert(DBTableColumnIds.DBE_CAPABILITIES_TABLE_NAME, null, dbeCapabilities);
+        mDb.insert("DBe_capabilities", null, dbeCapabilities);
     }
 
     /**
@@ -1780,30 +1726,26 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                 String time_last,
                                 int rej_cause){
 
-        ContentValues dbeImport = new ContentValues();
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_DBSOURCE,db_src);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_RAT,rat);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_MCC,mcc);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_MNC,mnc);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_LAC,lac);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_CID,cid);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_PSC,psc);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_GPS_LAT,lat);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_GPS_LON,lon);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_IS_GPS_EXACT,isGPSexact);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_AVG_RANGE,avg_range);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_AVG_SIGNAL,avg_signal);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_SAMPLES,samples);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_TIME_FIRST,time_first);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_TIME_LAST,time_last);
-        dbeImport.put(DBTableColumnIds.DBE_IMPORT_REJ_CAUSE,rej_cause);
 
-        String query = String.format(
-                "SELECT * FROM %s WHERE %s = %d AND %s = %d ",
-                DBTableColumnIds.DBE_IMPORT_TABLE_NAME,                 //DBe_import
-                DBTableColumnIds.DBE_IMPORT_LAC,                lac,    //LAC
-                DBTableColumnIds.DBE_IMPORT_CID,                cid     //CID
-        );
+        ContentValues dbeImport = new ContentValues();
+        dbeImport.put("DBsource",db_src);
+        dbeImport.put("RAT",rat);
+        dbeImport.put("MCC",mcc);
+        dbeImport.put("MNC",mnc);
+        dbeImport.put("LAC",lac);
+        dbeImport.put("CID",cid);
+        dbeImport.put("PSC",psc);
+        dbeImport.put("gps_lat",lat);
+        dbeImport.put("gps_lon",lon);
+        dbeImport.put("isGPSexact",isGPSexact);
+        dbeImport.put("avg_range",avg_range);
+        dbeImport.put("avg_signal",avg_signal);
+        dbeImport.put("samples",samples);
+        dbeImport.put("time_first",time_first);
+        dbeImport.put("time_last",time_last);
+        dbeImport.put("rej_cause",rej_cause);
+
+        String query = String.format("SELECT * FROM DBe_import WHERE LAC = %d AND CID = %d ",lac,cid);
         /*
             Check that the lac and cid not known in the DBe_import
             to avoid duplicate cells
@@ -1813,7 +1755,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         Cursor cursor = mDb.rawQuery(query,null);
         if(cursor.getCount() <= 0){
             // <= 0 means cell is not in database yet
-            mDb.insert(DBTableColumnIds.DBE_IMPORT_TABLE_NAME,null,dbeImport);
+            mDb.insert("DBe_import",null,dbeImport);
         }
         cursor.close();
 
@@ -1829,22 +1771,24 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             ContentValues values = new ContentValues();
 
             // TODO Rewrite all this in cleartext and use Raw type query!
-            values.put(DBTableColumnIds.DBI_BTS_MCC, cell.getMCC());
-            values.put(DBTableColumnIds.DBI_BTS_MNC, cell.getMNC());
-            values.put(DBTableColumnIds.DBI_BTS_LAC, cell.getLAC());
-            values.put(DBTableColumnIds.DBI_BTS_CID, cell.getCID());
-            values.put(DBTableColumnIds.DBI_BTS_PSC, cell.getPSC());
+            //@EVA I am not really an SQL expert so if you want to create a raw query that does this please do
+            // because this here is the only way I know how
+            values.put("MCC", cell.getMCC());
+            values.put("MNC", cell.getMNC());
+            values.put("LAC", cell.getLAC());
+            values.put("CID", cell.getCID());
+            values.put("PSC", cell.getPSC());
 
             //setting these to 0 because if empty causing error in db restore
-            //values.put(DBTableColumnIds.DBI_BTS_T3212,0);
-            //values.put(DBTableColumnIds.DBI_BTS_A5X,0);
-            //values.put(DBTableColumnIds.DBI_BTS_ST_ID,0);
+            //values.put("T3212",0);
+            //values.put("A5x",0);
+            //values.put("ST_id",0);
 
-            values.put(DBTableColumnIds.DBI_BTS_TIME_FIRST, String.valueOf(System.currentTimeMillis()));
-            values.put(DBTableColumnIds.DBI_BTS_TIME_LAST, String.valueOf(System.currentTimeMillis()));
-            values.put(DBTableColumnIds.DBI_BTS_LAT, cell.getLat());
-            values.put(DBTableColumnIds.DBI_BTS_LON, cell.getLon());
-            mDb.insert(DBTableColumnIds.DBI_BTS_TABLE_NAME, null, values);
+            values.put("time_first", String.valueOf(System.currentTimeMillis()));
+            values.put("time_last", String.valueOf(System.currentTimeMillis()));
+            values.put("gps_lat", cell.getLat());
+            values.put("gps_lon", cell.getLon());
+            mDb.insert("DBi_bts", null, values);
 
             Log.i(TAG, mTAG + ": DBi_bts inserted");
         }else{
@@ -1853,35 +1797,32 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                 and update gps coors if not 0.0
 
              */
+
             ContentValues values = new ContentValues();
-            values.put(DBTableColumnIds.DBI_BTS_TIME_LAST, String.valueOf(System.currentTimeMillis()));
+            values.put("time_last", String.valueOf(System.currentTimeMillis()));
 
             //Only update if gps coors are good
             if(cell.getLat() != 0.0 && cell.getLat() != 0
                     && cell.getLon() != 0.0 && cell.getLon() != 0){
-                values.put(DBTableColumnIds.DBI_BTS_LAT, cell.getLat());
-                values.put(DBTableColumnIds.DBI_BTS_LON, cell.getLon());
+                values.put("gps_lat", cell.getLat());
+                values.put("gps_lon", cell.getLon());
             }
 
             // TODO Rewrite in cleartext!
-            mDb.update(
-                    DBTableColumnIds.DBI_BTS_TABLE_NAME, values,
-                    "CID=?", new String[]{Integer.toString(cell.getCID())}
+            mDb.update("DBi_bts", values,"CID=?", new String[]{Integer.toString(cell.getCID())}
             );
             Log.i(TAG, mTAG + ": DBi_bts updated: CID=" + cell.getCID() + " LAC=" + cell.getLAC());
 
         }
 
-        // TODO Rewrite in cleartext!
-        // TODO Rewrite in cleartext!
-        // TODO Rewrite in cleartext!
+
         //Checking to see is cellID(bts_id) already in DBi_measure--|
         if(!cellInDbiMeasure(cell.getCID())){//<----|
             ContentValues dbiMeasure = new ContentValues();
 
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BTS_ID,cell.getCID());
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_NC_LIST,"no_data");//TODO where are we getting this?
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TIME, String.valueOf(System.currentTimeMillis()));
+            dbiMeasure.put("bts_id",cell.getCID());
+            dbiMeasure.put("nc_list","no_data");//TODO where are we getting this?
+            dbiMeasure.put("time", String.valueOf(System.currentTimeMillis()));
 
             String slat = String.valueOf(cell.getLat());
             String slon = String.valueOf(cell.getLon());
@@ -1889,26 +1830,26 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             if (slat == null){slat = "0.0";}
             if (slon == null){slat = "0.0";}
 
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LAT, slat);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LON, slon);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_ACCURACY, cell.getAccuracy());
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSE_LAT,gpse_lat);
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSE_LON,gpse_lon);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_POWER,String.valueOf(cell.getDBM()));
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_RF_TEMP,bb_rf_temp);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TX_POWER,"0");//TODO putting 0 here as we dont have this value yet
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_SIGNAL,"0");//TODO putting 0 here as we dont have this value yet and giving 0xFFFFFF atm
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_STYPE,rx_stype);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RAT, String.valueOf(cell.getNetType()));
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BCCH,BCCH);
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TMSI,TMSI);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TA,cell.getTimingAdvance());//TODO does this actually get timing advance?
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_PD,PD);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BER,0);//TODO setting 0 because we dont have data yet.
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_AVG_EC_NO,AvgEcNo);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_IS_SUBMITTED,0);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_IS_NEIGHBOUR,0);
-            mDb.insert(DBTableColumnIds.DBI_MEASURE_TABLE_NAME, null, dbiMeasure);
+            dbiMeasure.put("gpsd_lat", slat);
+            dbiMeasure.put("gpsd_lon", slon);
+            dbiMeasure.put("gpsd_accu", cell.getAccuracy());
+            //dbiMeasure.put("gpse_lat",gpse_lat);
+            //dbiMeasure.put("gpse_lat",gpse_lon);
+            dbiMeasure.put("bb_power",String.valueOf(cell.getDBM()));
+            //dbiMeasure.put("bb_rf_temp",bb_rf_temp);
+            dbiMeasure.put("tx_power","0");//TODO putting 0 here as we dont have this value yet
+            dbiMeasure.put("rx_signal","0");//TODO putting 0 here as we dont have this value yet and giving 0xFFFFFF atm
+            //dbiMeasure.put("rx_stype",rx_stype);
+            dbiMeasure.put("RAT", String.valueOf(cell.getNetType()));
+            //dbiMeasure.put("BCCH",BCCH);
+            //dbiMeasure.put("TMSI",TMSI);
+            dbiMeasure.put("TA",cell.getTimingAdvance());//TODO does this actually get timing advance?
+            //dbiMeasure.put("PD",PD);
+            dbiMeasure.put("BER",0);//TODO setting 0 because we dont have data yet.
+            //dbiMeasure.put("AvgEcNo",AvgEcNo);
+            dbiMeasure.put("isSubmitted",0);
+            dbiMeasure.put("isNeighbour",0);
+            mDb.insert("DBi_measure", null, dbiMeasure);
 
             Log.i(mTAG, "DBi_measure inserted bts_id="+cell.getCID());
 
@@ -1916,40 +1857,40 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             //Updated DBi_measure
             //TODO commented out items are because we don't have this data yet or it doesn't need updating
             ContentValues dbiMeasure = new ContentValues();
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_NC_LIST,nc_list);
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TIME, MiscUtils.getCurrentTimeStamp());
+            //dbiMeasure.put("nc_list",nc_list);
+            //dbiMeasure.put("time", MiscUtils.getCurrentTimeStamp());
 
             if(cell.getLat() != 0.0 && cell.getLon() != 0.0){
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LAT, cell.getLat());
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LON, cell.getLon());
+                dbiMeasure.put("gpsd_lat", cell.getLat());
+                dbiMeasure.put("gpsd_lon", cell.getLon());
             }
             if(cell.getAccuracy() != 0.0 && cell.getAccuracy() > 0) {
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_ACCURACY, cell.getAccuracy());
+                dbiMeasure.put("gpsd_accu", cell.getAccuracy());
             }
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSE_LAT,gpse_lat);
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSE_LON,gpse_lon);
+            //dbiMeasure.put("gpse_lat",gpse_lat);
+            //dbiMeasure.put("gpse_lat",gpse_lon);
             if(cell.getDBM() > 0) {
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_POWER, String.valueOf(cell.getDBM()));
+                dbiMeasure.put("bb_power", String.valueOf(cell.getDBM()));
             }
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_RF_TEMP,bb_rf_temp);
+            //dbiMeasure.put("bb_rf_temp",bb_rf_temp);
             //TODO set correct value for tx_power and rx_signal and un comment when working again
  /*           if(cell.getRssi() >0) {
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TX_POWER, String.valueOf(cell.getRssi()));
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_SIGNAL,String.valueOf(cell.getRssi()));
+                dbiMeasure.put("tx_power", String.valueOf(cell.getRssi()));
+                dbiMeasure.put("rx_signal",String.valueOf(cell.getRssi()));
             }
 */
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_STYPE,rx_stype);
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RAT, String.valueOf(cell.getNetType()));
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BCCH,BCCH);
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TMSI,TMSI);
+            //dbiMeasure.put("rx_stype",rx_stype);
+            //dbiMeasure.put("RAT", String.valueOf(cell.getNetType()));
+            //dbiMeasure.put("BCCH",BCCH);
+            //dbiMeasure.put("TMSI",TMSI);
             if(cell.getTimingAdvance() > 0) {
-                dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TA, cell.getTimingAdvance());
+                dbiMeasure.put("TA", cell.getTimingAdvance());
             }
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_PD,PD);
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BER,0);
-            //dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_AVG_EC_NO,AvgEcNo);
+            //dbiMeasure.put("PD",PD);
+            //dbiMeasure.put("BER",0);
+            //dbiMeasure.put("AvgEcNo",AvgEcNo);
 
-            mDb.update(DBTableColumnIds.DBI_MEASURE_TABLE_NAME,dbiMeasure,"bts_id=?",new String[]{Integer.toString(cell.getCID())});
+            mDb.update("DBi_measure",dbiMeasure,"bts_id=?",new String[]{Integer.toString(cell.getCID())});
             Log.i(mTAG, "DBi_measure updated bts_id="+cell.getCID());
 
         }
@@ -1979,27 +1920,27 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         if (cid != -1) {
             //Populate Content Values for Insert or Update
             ContentValues btsValues = new ContentValues();
-            btsValues.put(DBTableColumnIds.DBI_BTS_MCC,        mcc);
-            btsValues.put(DBTableColumnIds.DBI_BTS_MNC,        mnc);
-            btsValues.put(DBTableColumnIds.DBI_BTS_LAC,        lac);
-            btsValues.put(DBTableColumnIds.DBI_BTS_CID,        cid);
-            btsValues.put(DBTableColumnIds.DBI_BTS_PSC,        psc);
-            btsValues.put(DBTableColumnIds.DBI_BTS_T3212,    t3231);
-            btsValues.put(DBTableColumnIds.DBI_BTS_A5X,        a5x);
-            btsValues.put(DBTableColumnIds.DBI_BTS_ST_ID,    st_id);
-            btsValues.put(DBTableColumnIds.DBI_BTS_TIME_FIRST, time_first);
-            btsValues.put(DBTableColumnIds.DBI_BTS_TIME_LAST,  time_last);
-            btsValues.put(DBTableColumnIds.DBI_BTS_LAT, lat);
-            btsValues.put(DBTableColumnIds.DBI_BTS_LON,  lon);
+            btsValues.put("MCC",        mcc);
+            btsValues.put("MNC",        mnc);
+            btsValues.put("LAC",        lac);
+            btsValues.put("CID",        cid);
+            btsValues.put("PSC",        psc);
+            btsValues.put("T3212",    t3231);
+            btsValues.put("A5x",        a5x);
+            btsValues.put("ST_id",    st_id);
+            btsValues.put("time_first", time_first);
+            btsValues.put("time_last",  time_last);
+            btsValues.put("gps_lat", lat);
+            btsValues.put("gps_lon",  lon);
 
             //Only insert cell if its not in DBi_bts
             if(!cellInDbiBts(lac,cid)){
 
-                mDb.insert(DBTableColumnIds.DBI_BTS_TABLE_NAME, null, btsValues);
+                mDb.insert("DBi_bts", null, btsValues);
 
             }else{
                 //TODO EVA do I need to update an already known cell?
-                mDb.update( DBTableColumnIds.DBI_BTS_TABLE_NAME, btsValues, "CID=?", new String[]{Integer.toString(cid)} );
+                mDb.update( "DBi_bts", btsValues, "CID=?", new String[]{Integer.toString(cid)} );
 
             }
         }
@@ -2036,36 +1977,36 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         //Check bts_id is not already stored int DBi_measure. Only adds new cell if false
         if(cellInDbiMeasure(bts_id)){
             ContentValues dbiMeasure = new ContentValues();
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BTS_ID,bts_id);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_NC_LIST,nc_list);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TIME,time);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LAT,gpsd_lat);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_LON,gpsd_lon);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSD_ACCURACY,gpsd_accuracy);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSE_LAT,gpse_lat);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_GPSE_LON,gpse_lon);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_POWER,bb_power);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BB_RF_TEMP,bb_rf_temp);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TX_POWER,tx_power);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_SIGNAL,rx_signal);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RX_STYPE,rx_stype);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_RAT,rat);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BCCH,BCCH);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TMSI,TMSI);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_TA,TA);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_PD,PD);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_BER,BER);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_AVG_EC_NO,AvgEcNo);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_IS_SUBMITTED,isSubmitted);
-            dbiMeasure.put(DBTableColumnIds.DBI_MEASURE_IS_NEIGHBOUR,isNeighbour);
-            mDb.insert(DBTableColumnIds.DBI_MEASURE_TABLE_NAME, null, dbiMeasure);
+            dbiMeasure.put("bts_id",bts_id);
+            dbiMeasure.put("nc_list",nc_list);
+            dbiMeasure.put("time",time);
+            dbiMeasure.put("gpsd_lat",gpsd_lat);
+            dbiMeasure.put("gpsd_lon",gpsd_lon);
+            dbiMeasure.put("gpsd_accu",gpsd_accuracy);
+            dbiMeasure.put("gpse_lat",gpse_lat);
+            dbiMeasure.put("gpse_lon",gpse_lon);
+            dbiMeasure.put("bb_power",bb_power);
+            dbiMeasure.put("bb_rf_temp",bb_rf_temp);
+            dbiMeasure.put("tx_power",tx_power);
+            dbiMeasure.put("rx_signal",rx_signal);
+            dbiMeasure.put("rx_stype",rx_stype);
+            dbiMeasure.put("RAT",rat);
+            dbiMeasure.put("BCCH",BCCH);
+            dbiMeasure.put("TMSI",TMSI);
+            dbiMeasure.put("TA",TA);
+            dbiMeasure.put("PD",PD);
+            dbiMeasure.put("BER",BER);
+            dbiMeasure.put("AvgEcNo",AvgEcNo);
+            dbiMeasure.put("isSubmitted",isSubmitted);
+            dbiMeasure.put("isNeighbour",isNeighbour);
+            mDb.insert("DBi_measure", null, dbiMeasure);
 
         }
 
     }
 
     /**
-     TODO: add descritpion what this functions does
+     TODO: add descritpion what this function does
      */
     public void insertDetectionFlags(int code,
                                      String name,
@@ -2079,21 +2020,21 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     ){
 
         ContentValues detectionFlags = new ContentValues();
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_CODE,code);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_NAME,name);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_DESCRIPTION,description);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_P1,p1);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_P2,p2);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_P3,p3);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_P1_FINE,p1_fine);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_P2_FINE,p2_fine);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_P3_FINE,p3_fine);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_APP_TEXT,app_text);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_FUNC_USE,func_use);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_IS_STATUS,istatus);
-        detectionFlags.put(DBTableColumnIds.DETECTION_FLAGS_CM_ID,CM_id);
+        detectionFlags.put("code",code);
+        detectionFlags.put("name",name);
+        detectionFlags.put("description",description);
+        detectionFlags.put("p1",p1);
+        detectionFlags.put("p2",p2);
+        detectionFlags.put("p3",p3);
+        detectionFlags.put("p1_fine",p1_fine);
+        detectionFlags.put("p2_fine",p2_fine);
+        detectionFlags.put("p3_fine",p3_fine);
+        detectionFlags.put("app_text",app_text);
+        detectionFlags.put("func_use",func_use);
+        detectionFlags.put("istatus",istatus);
+        detectionFlags.put("CM_id",CM_id);
 
-        mDb.insert(DBTableColumnIds.DETECTION_FLAGS_TABLE_NAME, null, detectionFlags);
+        mDb.insert("DetectionFlags", null, detectionFlags);
     }
 
     /**
@@ -2128,13 +2069,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             dumped to the event log and will fill up pretty quickly
 
          */
-        String query = String.format("SELECT * FROM %s WHERE %s = %d AND %s = %d AND %s = %d",
-                DBTableColumnIds.EVENTLOG_TABLE_NAME,       //EventLog
-                DBTableColumnIds.EVENTLOG_CID,  cid,        //CID
-                DBTableColumnIds.EVENTLOG_LAC,  lac,        //LAC
-                DBTableColumnIds.EVENTLOG_DF_ID,  DF_id);   //DF_id
-
-
+        String query = String.format("SELECT * FROM EventLog WHERE CID = %d AND LAC = %d AND DF_id = %d",
+                cid,
+                lac,
+                DF_id);
 
         //Check that the lac/cid/DF_id not known if not insert
         Cursor cursor = mDb.rawQuery(query,null);
@@ -2178,17 +2116,17 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         if(insertData){
 
             ContentValues eventLog = new ContentValues();
-            eventLog.put(DBTableColumnIds.EVENTLOG_TIME,time);
-            eventLog.put(DBTableColumnIds.EVENTLOG_LAC,lac);
-            eventLog.put(DBTableColumnIds.EVENTLOG_CID,cid);
-            eventLog.put(DBTableColumnIds.EVENTLOG_PSC,psc);
-            eventLog.put(DBTableColumnIds.EVENTLOG_LAT,gpsd_lat);
-            eventLog.put(DBTableColumnIds.EVENTLOG_LON,gpsd_lon);
-            eventLog.put(DBTableColumnIds.EVENTLOG_ACCU,gpsd_accu);
-            eventLog.put(DBTableColumnIds.EVENTLOG_DF_ID,DF_id);
-            eventLog.put(DBTableColumnIds.EVENTLOG_DF_DESC,DF_description);
+            eventLog.put("time",time);
+            eventLog.put("LAC",lac);
+            eventLog.put("CID",cid);
+            eventLog.put("PSC",psc);
+            eventLog.put("gpsd_lat",gpsd_lat);
+            eventLog.put("gpsd_lon",gpsd_lon);
+            eventLog.put("gpsd_accu",gpsd_accu);
+            eventLog.put("DF_id",DF_id);
+            eventLog.put("DF_description",DF_description);
 
-            mDb.insert(DBTableColumnIds.EVENTLOG_TABLE_NAME, null, eventLog);
+            mDb.insert("EventLog", null, eventLog);
             Log.v(TAG, mTAG + ": Insert Detection into EventLog Table: " + cid);
 
         }else{
@@ -2203,8 +2141,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     public void insertSectorType(String description){
 
         ContentValues sectorType = new ContentValues();
-        sectorType.put(DBTableColumnIds.SECTOR_TYPE_DESCRIPTION,description);
-        mDb.insert(DBTableColumnIds.SECTOR_TYPE_TABLE_NAME, null, sectorType);
+        sectorType.put("description",description);
+        mDb.insert("SectorType", null, sectorType);
 
     }
 
@@ -2215,21 +2153,19 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                        String sms_type){
 
         ContentValues detectonStrings = new ContentValues();
-        detectonStrings.put(DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING,det_str);
-        detectonStrings.put(DBTableColumnIds.DETECTION_STRINGS_SMS_TYPE,sms_type);
+        detectonStrings.put("det_str",det_str);
+        detectonStrings.put("sms_type",sms_type);
 
 
         String query = String.format(
-                "SELECT * FROM %s WHERE %s = \"%s\" AND %s = \"%s\"",
-                DBTableColumnIds.DETECTION_STRINGS_TABLE_NAME,                          // DetectionStrings
-                DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING,          det_str,     // det_str
-                DBTableColumnIds.DETECTION_STRINGS_SMS_TYPE,                sms_type    // sms_type
-        );
+                "SELECT * FROM DetectionStrings WHERE det_str = \"%s\" AND sms_type = \"%s\"",
+                det_str,
+                sms_type);
         //Check that string not in db then insert
         Cursor cursor = mDb.rawQuery(query,null);
 
         if( cursor.getCount() <= 0){
-            mDb.insert(DBTableColumnIds.DETECTION_STRINGS_TABLE_NAME, null, detectonStrings);
+            mDb.insert("DetectionStrings", null, detectonStrings);
             cursor.close();
         }else{
             cursor.close();
@@ -2253,24 +2189,40 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                               double gps_lon,
                               int isRoaming){
 
+        /*
+            public static final String SMS_DATA_TABLE_NAME = "SmsData";
+    public static final String SMS_DATA_ID = "_id";
+    public static final String SMS_DATA_TIMESTAMP = "time";
+    public static final String SMS_DATA_SENDER_NUMBER = "number";
+    public static final String SMS_DATA_SENDER_SMSC = "smsc";
+    public static final String SMS_DATA_SENDER_MSG = "message";
+    public static final String SMS_DATA_SMS_TYPE = "type";
+    public static final String SMS_DATA_SMS_CLASS = "class";
+    public static final String SMS_DATA_LAC = "lac";
+    public static final String SMS_DATA_CID = "cid";
+    public static final String SMS_DATA_RAT = "rat";
+    public static final String SMS_DATA_GPS_LAT = "gps_lat";
+    public static final String SMS_DATA_GPS_LON = "gps_lon";
+    public static final String SMS_DATA_ROAM_STATE = "isRoaming";
+         */
         ContentValues smsData = new ContentValues();
-        smsData.put(DBTableColumnIds.SMS_DATA_TIMESTAMP,time);
-        smsData.put(DBTableColumnIds.SMS_DATA_SENDER_NUMBER,number);
-        smsData.put(DBTableColumnIds.SMS_DATA_SENDER_SMSC,smsc);
-        smsData.put(DBTableColumnIds.SMS_DATA_SENDER_MSG,message);
-        smsData.put(DBTableColumnIds.SMS_DATA_SMS_TYPE,type);
-        smsData.put(DBTableColumnIds.SMS_DATA_SMS_CLASS,CLASS);
-        smsData.put(DBTableColumnIds.SMS_DATA_LAC,lac);
-        smsData.put(DBTableColumnIds.SMS_DATA_CID,cid);
-        smsData.put(DBTableColumnIds.SMS_DATA_RAT,rat);
-        smsData.put(DBTableColumnIds.SMS_DATA_GPS_LAT,gps_lat);
-        smsData.put(DBTableColumnIds.SMS_DATA_GPS_LON,gps_lon);
-        smsData.put(DBTableColumnIds.SMS_DATA_ROAM_STATE,isRoaming);
+        smsData.put("time",time);
+        smsData.put("number",number);
+        smsData.put("smsc",smsc);
+        smsData.put("message",message);
+        smsData.put("type",type);
+        smsData.put("class",CLASS);
+        smsData.put("lac",lac);
+        smsData.put("cid",cid);
+        smsData.put("rat",rat);
+        smsData.put("gps_lat",gps_lat);
+        smsData.put("gps_lon",gps_lon);
+        smsData.put("isRoaming",isRoaming);
 
 
         //Check that timestamp not in db then insert
         if(!isTimeStampInDB(time)){
-            mDb.insert(DBTableColumnIds.SMS_DATA_TABLE_NAME, null, smsData);
+            mDb.insert("SmsData", null, smsData);
         }
 
     }
@@ -2283,11 +2235,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *                  used in CellTracker()
      */
     public boolean openCellExists(int cellID) {
-        String qry = String.format(
-                "SELECT * FROM %s WHERE %s = %d",
-                DBTableColumnIds.DBE_IMPORT_TABLE_NAME,
-                DBTableColumnIds.DBE_IMPORT_CID,                cellID
-        );
+        String qry = String.format("SELECT * FROM DBe_import WHERE CID = %d",cellID);
         Cursor cursor = mDb.rawQuery(qry, null);
         boolean exists = cursor.getCount() > 0;
         cursor.close();
@@ -2299,12 +2247,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         Replaces cellExists()
     */
     public boolean cellInDbiBts(int lac,int cellID){
-        String query = String.format(
-                "SELECT * FROM %s WHERE %s = %d AND %s = %d",
-                DBTableColumnIds.DBI_BTS_TABLE_NAME,                    //DBi_bts
-                DBTableColumnIds.DBI_BTS_LAC,                lac,       //LAC
-                DBTableColumnIds.DBI_BTS_CID,                cellID     //CID
-        );
+        String query = String.format("SELECT * FROM DBi_bts WHERE LAC = %d AND CID = %d",lac, cellID);
         Cursor cursor = mDb.rawQuery(query,null);
         boolean exists = cursor.getCount() > 0;
         cursor.close();
@@ -2316,14 +2259,30 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     */
     public boolean cellInDbiMeasure(int cellID){
         String query = String.format(
-                "SELECT * FROM %s WHERE %s = %d",
-                DBTableColumnIds.DBI_MEASURE_TABLE_NAME,                // DB_measure
-                DBTableColumnIds.DBI_MEASURE_BTS_ID,        cellID      // bts_id
-        );
+                "SELECT * FROM DBi_measure WHERE bts_id = %d",cellID);
         Cursor cursor = mDb.rawQuery(query,null);
         boolean exists = cursor.getCount() > 0;
         cursor.close();
         return exists;
+
+    }
+
+    /*
+        Returns the RAT for CellId in Database from DBi_measure as DBi_bts does not
+        have RAT column and RAT is needed for OCID upload
+
+     */
+    public String getRatFromCellId(int cellID){
+        String RAT = null;
+        String query = String.format("SELECT * FROM DBi_measure WHERE bts_id = %d",cellID);
+
+        Cursor cursor = mDb.rawQuery(query,null);
+
+        if(cursor != null && cursor.moveToNext()){
+            RAT = cursor.getString(cursor.getColumnIndex("RAT"));
+        }
+         cursor.close();
+        return RAT;
 
     }
 
