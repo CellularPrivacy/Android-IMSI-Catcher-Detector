@@ -6,6 +6,8 @@ import com.SecUpwN.AIMSICD.smsdetection.AdvanceUserItems;
 import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.CMDProcessor;
+import com.SecUpwN.AIMSICD.utils.MiscUtils;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -336,24 +338,18 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *              where isSubmitted is not 1.
      *
      */
-    public Cursor getOPCIDSubmitData() {
-        //TODO I did not create this function and where are these columns in DBi_bts????? Direction Speed Signal
-        // TODO:    rewrite mDb.query to use mDb.rawQuery
+    public Cursor getOCIDSubmitData() {
         // This is used (prepareOpenCellUploadData) when uploading data to OCID
-        //TODO REMOVE THIS CODE IF NO LONGER NEEDED
-  /*      return mDb.query( "DBi_measure",
-                new String[]{"Mcc", "Mnc", "Lac", "CellID", "Lng", "Lat", "Signal", "Timestamp",
-                        "Accuracy", "Speed", "Direction", "NetworkType"}, "OCID_SUBMITTED <> 1",
-                null, null, null, null
-        );
-*/
+
         // TODO: Use something like this instead... VVV Need testing may need ...,RAT FROM DBi_measure ..
-        // @EVA created a new function getRatFromCellId(CellId) to get RAT with CellId from DBi_measure
+        // @EVA created a new function getRatFromDBimeasure(CellId) to get RAT with CID
         //      this can be used when creating the upload data to add the RAT to the CSV file
 
         // IMPORTANT: Note the order of the items (to match CSV)!
-        //TODO hmm ok this is tricky half these tables are in DBi_bts & DBi_measure how is this going to work????
-        String query = "SELECT MCC,MNC,LAC,CID,gpsd_lon,gpsd_lat,rx_signal,time,gpsd_accu FROM DBi_bts WHERE isSubmitted <> 1";
+        //TODO @EVA this is working but its returning 2 of each rows any ideas??
+        //
+        String query = "SELECT DISTINCT MCC,MNC,LAC,CID,gpsd_lon,gpsd_lat,rx_signal,time,gpsd_accu FROM DBi_measure, DBi_bts WHERE isSubmitted <> 1 ORDER BY time;";
+        //String query = "SELECT MCC,MNC,LAC,CID,gpsd_lon,gpsd_lat,rx_signal,time,gpsd_accu FROM DBi_bts WHERE isSubmitted <> 1";//<<<OLD for refernce
         return mDb.rawQuery(query,null);
     }
 
@@ -500,7 +496,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         File file = new File(dir, "aimsicd-ocid-data.csv");
 
         try {
-            Cursor c = getOPCIDSubmitData(); // get data not submitted yet
+            Cursor c = getOCIDSubmitData(); // get data not submitted yet
 
             if(c.getCount() > 0) { // check if we have something to upload
                 if (!file.exists()) {
@@ -510,19 +506,28 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                         return false;
                     }
 
+                    //OCID upload format
+                    //measured_at =time gps accu = rating
+                    //mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act,ta,psc,tac,pci,sid,nid,bid
                     CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
-                    // TODO: remove speed, direction
-                    csvWrite.writeNext("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act");
-                    String[] rowData = new String[c.getColumnCount()];
-                    int size = c.getColumnCount();
-                    AIMSICD.mProgressBar.setProgress(0);
+                     csvWrite.writeNext("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating");
+                    int size = c.getCount();
+                    Log.d(TAG, mTAG+" OCID UPLOAD: row count = "+size);
+                    int startcount = 0;
+                    AIMSICD.mProgressBar.setProgress(startcount);
                     AIMSICD.mProgressBar.setMax(size);
                     while (c.moveToNext()) {
-                        for (int i = 0; i < size; i++) {
-                            rowData[i] = c.getString(i);
-                            AIMSICD.mProgressBar.setProgress(i);
-                        }
-                        csvWrite.writeNext(rowData);
+                        csvWrite.writeNext(
+                                String.valueOf(c.getInt(c.getColumnIndex("MCC"))),
+                                String.valueOf(c.getInt(c.getColumnIndex("MNC"))),
+                                String.valueOf(c.getInt(c.getColumnIndex("LAC"))),
+                                String.valueOf(c.getInt(c.getColumnIndex("CID"))),
+                                c.getString(c.getColumnIndex("gpsd_lon")),
+                                c.getString(c.getColumnIndex("gpsd_lat")),
+                                c.getString(c.getColumnIndex("rx_signal")),
+                                c.getString(c.getColumnIndex("time")),
+                                String.valueOf(c.getInt(c.getColumnIndex("gpsd_accu"))));
+                                AIMSICD.mProgressBar.setProgress(++startcount);
                     }
 
                     csvWrite.close();
@@ -530,6 +535,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                 }
                 return true;
             }
+            c.close();
             return false;
         } catch (Exception e) {
             Log.e(TAG, mTAG + ": Error creating OpenCellID Upload Data: " + e);
@@ -1658,7 +1664,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         counterMeasures.put("thresh",thresh);
         counterMeasures.put("thfine",thfine);
 
-        //TODO do I need to check or update or are we just inserting without any checks
+
         mDb.insert("CounterMeasures", null, counterMeasures);
     }
 
@@ -1686,7 +1692,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         dbeCapabilities.put("band_plan",band_plan);
         dbeCapabilities.put("__EXPAND__",__EXPAND__);
 
-        //TODO do I need to check or update or are we just inserting without any checks
         mDb.insert("DBe_capabilities", null, dbeCapabilities);
     }
 
@@ -1784,8 +1789,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             //values.put("A5x",0);
             //values.put("ST_id",0);
 
-            values.put("time_first", String.valueOf(System.currentTimeMillis()));
-            values.put("time_last", String.valueOf(System.currentTimeMillis()));
+            values.put("time_first", MiscUtils.getCurrentTimeStamp());
+            values.put("time_last", MiscUtils.getCurrentTimeStamp());
             values.put("gps_lat", cell.getLat());
             values.put("gps_lon", cell.getLon());
             mDb.insert("DBi_bts", null, values);
@@ -1799,7 +1804,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
              */
 
             ContentValues values = new ContentValues();
-            values.put("time_last", String.valueOf(System.currentTimeMillis()));
+            values.put("time_last",MiscUtils.getCurrentTimeStamp());
 
             //Only update if gps coors are good
             if(cell.getLat() != 0.0 && cell.getLat() != 0
@@ -1822,7 +1827,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
             dbiMeasure.put("bts_id",cell.getCID());
             dbiMeasure.put("nc_list","no_data");//TODO where are we getting this?
-            dbiMeasure.put("time", String.valueOf(System.currentTimeMillis()));
+            dbiMeasure.put("time", MiscUtils.getCurrentTimeStamp());
 
             String slat = String.valueOf(cell.getLat());
             String slon = String.valueOf(cell.getLon());
@@ -1838,7 +1843,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             dbiMeasure.put("bb_power",String.valueOf(cell.getDBM()));
             //dbiMeasure.put("bb_rf_temp",bb_rf_temp);
             dbiMeasure.put("tx_power","0");//TODO putting 0 here as we dont have this value yet
-            dbiMeasure.put("rx_signal","0");//TODO putting 0 here as we dont have this value yet and giving 0xFFFFFF atm
+            dbiMeasure.put("rx_signal",String.valueOf(cell.getDBM()));//TODO putting cell.getDBM() here so we have some signal for OCID upload.
             //dbiMeasure.put("rx_stype",rx_stype);
             dbiMeasure.put("RAT", String.valueOf(cell.getNetType()));
             //dbiMeasure.put("BCCH",BCCH);
@@ -2272,7 +2277,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         have RAT column and RAT is needed for OCID upload
 
      */
-    public String getRatFromCellId(int cellID){
+    public String getRatFromDBimeasure(int cellID){
         String RAT = null;
         String query = String.format("SELECT * FROM DBi_measure WHERE bts_id = %d",cellID);
 
