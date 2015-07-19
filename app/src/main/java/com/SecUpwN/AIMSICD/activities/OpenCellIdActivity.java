@@ -158,7 +158,7 @@ public class OpenCellIdActivity extends BaseActivity {
             String htmlResponse = EntityUtils.toString(response.getEntity(), "UTF-8");
 
             //here for debugging response and codes
-            Log.d("OCID Response Message", "Response Html="+htmlResponse+" Response Code="+String.valueOf(responseCode));
+            Log.d(TAG,mTAG+ " Response Html="+htmlResponse+" Response Code="+String.valueOf(responseCode));
 
             if (responseCode == 200) {
                 Log.d(TAG, mTAG + ": OCID Server Repsonse: " + htmlResponse);
