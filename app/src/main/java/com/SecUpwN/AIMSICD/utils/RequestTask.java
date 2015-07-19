@@ -133,6 +133,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 try {
 
                     boolean prepared = mDbAdapter.prepareOpenCellUploadData();
+
                     Log.i(TAG, mTAG + ": OCID upload data prepared - " + String.valueOf(prepared));
                     if (prepared) {
                         File file = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/aimsicd-ocid-data.csv");

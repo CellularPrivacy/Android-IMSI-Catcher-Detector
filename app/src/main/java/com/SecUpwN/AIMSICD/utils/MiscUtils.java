@@ -73,7 +73,7 @@ public class MiscUtils {
     }
 
     public static String getCurrentTimeStamp(){
-
+        //yyyyMMddHHmmss <-- this format is needed for OCID upload
         Date now = new Date();
         return new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now);
     }
