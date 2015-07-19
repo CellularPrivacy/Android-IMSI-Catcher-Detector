@@ -99,8 +99,7 @@ public class DBTableColumnIds {
     public static final String DBI_MEASURE_AVG_EC_NO = "AvgEcNo";
     public static final String DBI_MEASURE_IS_SUBMITTED = "isSubmitted";
     public static final String DBI_MEASURE_IS_NEIGHBOUR = "isNeighbour";
-    public static final String DBI_MEASURE_FOREIGN_KEY = "bts_id";
-    //REFERENCES "DBi_bts"("_id") TODO <--- how would I code this if its needed? DBI_MEASURE_REFERENCES = "\"DBi_bts\"(\"_id\")"?
+    public static final String DBI_MEASURE_FOREIGN_KEY = "bts_id"; // TODO: Remove?
 
     //DetectionFlags
     public static final String DETECTION_FLAGS_TABLE_NAME = "DetectionFlags";
@@ -119,7 +118,7 @@ public class DBTableColumnIds {
     public static final String DETECTION_FLAGS_IS_STATUS = "istatus";
     public static final String DETECTION_FLAGS_CM_ID = "CM_id";
 
-    //EventLog Table name and columns
+    //EventLog
     public static final String EVENTLOG_TABLE_NAME = "EventLog";
     public static final String EVENTLOG_TIME = "time";
     public static final String EVENTLOG_LAC = "LAC";
@@ -136,14 +135,13 @@ public class DBTableColumnIds {
     public static final String SECTOR_TYPE_ID = "_id";
     public static final String SECTOR_TYPE_DESCRIPTION = "description";
 
-    //SilentSmsStrings <--  renaming to Detection_Strings to avoid confusing
+    //DetectionStrings  (For SMS)
     public static final String DETECTION_STRINGS_TABLE_NAME = "DetectionStrings";
     public static final String DETECTION_STRINGS_ID = "_id";
     public static final String DETECTION_STRINGS_LOGCAT_STRING = "det_str";
     public static final String DETECTION_STRINGS_SMS_TYPE = "sms_type";
 
-    //Detected_Sms_Data
-    //TABLE FOR SILENT SMS DATA
+    //SmsData  (For SMS)
     public static final String SMS_DATA_TABLE_NAME = "SmsData";
     public static final String SMS_DATA_ID = "_id";
     public static final String SMS_DATA_TIMESTAMP = "time";

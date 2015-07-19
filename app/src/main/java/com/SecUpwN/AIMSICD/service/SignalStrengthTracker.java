@@ -26,7 +26,15 @@ import java.util.HashMap;
  *
  *      https://cloud.githubusercontent.com/assets/2507905/4428863/c85c8366-45d4-11e4-89da-c650cdb56caf.jpg
  *
+ *
+ *  Dependency:
+ *              AIMSICDDbAdapter:   getAverageSignalStrength etc..
+ *
  *  Issues:
+ *
+ *      [ ] Need to add RAT detection for each signal, as to above. Since we could have different
+ *          signal due to different RAT, for the same cell (LAC/CID). (@He3556 please confirm.)
+ *          This means that the SQL query will be a little more complicated.
  *
  *      [ ] Correctly set the time in the database. Our database is using TEXT in all its time
  *          related entries, like "time", "time_first" and "time_Last". So what do we put there?
@@ -63,6 +71,7 @@ import java.util.HashMap;
  *
  *      20150703    E:V:A       Changed log TAG to use only TAG for Log.i() and mTAG for Log.d/e/v()
  *      20150717    E:V:A       Added back mTAG's and added comments
+ *      20150719    E:V:A       Added comments
  *
  * @author Tor Henning Ueland
  */
@@ -91,16 +100,21 @@ public class SignalStrengthTracker {
     }
 
     /**
-     * Registers a new cell signal strength for future calculation,
-     * only values older than $sleepTimeBetweenSignalRegistration seconds
-     * since last registration is saved for processing.
+     * Registers a new cell signal strength for future calculation, only values older
+     * than $sleepTimeBetweenSignalRegistration seconds since last registration, is
+     * saved for processing.
      *
      * @param cellID
      * @param signalStrength
      */
     public void registerSignalStrength(int cellID, int signalStrength) {
 
-        long now = System.currentTimeMillis(); // What is this? [ms]?
+        // Returns the current time in milliseconds since January 1, 1970 00:00:00.0 UTC.
+        //   "This method shouldn't be used for measuring timeouts or other elapsed time
+        //   measurements, as changing the system time can affect the results.
+        //   Use nanoTime() for that."
+        // TODO: We probably need to convert this into seconds for easy use in DB
+        long now = System.currentTimeMillis(); // [ms]
 
         if(deviceIsMoving()) {
             Log.i(TAG, mTAG + ": Ignored signal sample for CID: " + cellID +
@@ -133,14 +147,15 @@ public class SignalStrengthTracker {
      *  (days * number of seconds in a day) * seconds to milliseconds
      */
     private void cleanupOldData() {
-        long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved*86400))*1000); // Units are? [ms]?
+        long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved*86400))*1000); // [ms] Number of days
         //TODO
         //mDbHelper.cleanseCellStrengthTables(maxTime);
         averageSignalCache.clear();
     }
 
     private boolean deviceIsMoving() {
-        return System.currentTimeMillis() - lastMovementDetected < minimumIdleTime*1000; // Units are? [ms]?
+        // Is device moving?
+        return System.currentTimeMillis() - lastMovementDetected < minimumIdleTime*1000; // [ms]
     }
 
     /**
@@ -166,8 +181,8 @@ public class SignalStrengthTracker {
             storedAvg = averageSignalCache.get(cellID);
             Log.d(TAG, mTAG + ": Cached average SS for CID: " + cellID + " is: " + storedAvg);
         } else {
-            //Not cached, check DB
-            storedAvg = mDbHelper.getAverageSignalStrength(cellID);
+            // Not cached, check DB
+            storedAvg = mDbHelper.getAverageSignalStrength(cellID); // DBi_measure:rx_signal
             averageSignalCache.put(cellID, storedAvg);
             Log.d(TAG, mTAG + ": Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
         }
