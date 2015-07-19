@@ -24,7 +24,16 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 /**
- * Popup asking if user wants to download new API key to access OpenCellId services.
+ *  Description:    Popup toast messages asking if user wants to download new API key
+ *                  to access OpenCellId services and data.
+ *
+ *  TODO:
+ *              [ ] Add toast for every server response code/message
+ *
+ *  ChangeLog:
+ *
+ *      2015-07-19  E:V:A       Added new server response codes, removed old comments
+ *
  */
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;
@@ -91,22 +100,23 @@ public class OpenCellIdActivity extends BaseActivity {
             if (s == null || s.isEmpty())
                 return;
 
-            // If the returned value is "Error: You can not register new account more than once per day."
-            // don't save it as the API key -.-'
-            if (isKeyValid(s) == true) {
+            // Check key validity (is done on foreign server)
+            if (isKeyValid(s)) {
                 String opcidKey = getString(R.string.pref_ocid_key);
                 prefs.edit().putString(opcidKey, s).commit();
                 CellTracker.OCID_API_KEY = s;
 
                 Helpers.msgShort(OpenCellIdActivity.this, getString(R.string.ocid_api_success));
-            }else if(s.contains("Error: You can not register new account")){
+
+            } else if(s.contains("Error: You can not register new account")){
                 Helpers.msgLong(getApplicationContext(), getString(R.string.only_one_key_per_day));
 
-            }else if(s.contains("Bad Request")){
-                Helpers.msgShort(OpenCellIdActivity.this, "Bad Request 400 or 403 error ");
-            }
-            else
-            {
+            // TODO: Add more and better toast messages here
+
+            } else if(s.contains("Bad Request")){
+                Helpers.msgShort(OpenCellIdActivity.this, "Bad Request 400, 403 or 500 error ");
+
+            } else {
                 Helpers.msgShort(OpenCellIdActivity.this, "Unknown error please view logcat");
             }
 
@@ -129,24 +139,23 @@ public class OpenCellIdActivity extends BaseActivity {
          *                  TODO: And the github issue #303:
          *                  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/303
          *
-         *  TODO:   [ ] Add handlers for other HTTP request and OCID Server error codes
+         *  TODO:   [ ] Add handlers for other HTTP request and OCID Server error codes:
          *
-         * banjaxbanjo I moved this here because it has no reason to be in CellTracker
+         *      OCID status codes http://wiki.opencellid.org/wiki/API#Error_codes
+         *      1 	200 	Cell not found
+         *      2 	401 	Invalid API key
+         *      3 	400 	Invalid input data
+         *      4 	403     Your API key must be white listed in order to run this operation
+         *      5 	500 	Internal server error
+         *      6 	503 	Too many requests. Try later again
+         *      7 	429     Daily limit 1000 requests exceeded for your API key.
          *
-         * OCID status codes http://wiki.opencellid.org/wiki/API#Error_codes
-         * 1 	200 	Cell not found
-         * 2 	401 	Invalid API key
-         * 3 	400 	Invalid input data
-         * 4 	403     Your API key must be white listed in order to run this operation
-         * 5 	500 	Internal server error
-         * 6 	503 	Too many requests. Try later again
-         * 7 	429     Daily limit 1000 requests exceeded for your API key.
          * @return null or newly generated key
-         *
          */
         public  String requestNewOCIDKey() throws Exception {
 
-            //TODO (remove OCIDResponse.java) I dont think we need a class just a parse 1 line of text.
+            //TODO (remove OCIDResponse.java) I don't think we need a class to just parse 1 line of text.
+            // @banjaxobanjo Did you remove it??  --EVA  (If yes, remove these comments!!)
             //String htmlResponse = EntityUtils.toString(response.getEntity(), "UTF-8");
 
             HttpGet httpRequest = new HttpGet(getString(R.string.opencellid_api_get_key));
@@ -157,38 +166,44 @@ public class OpenCellIdActivity extends BaseActivity {
 
             String htmlResponse = EntityUtils.toString(response.getEntity(), "UTF-8");
 
-            //here for debugging response and codes
-            Log.d(TAG,mTAG+ " Response Html="+htmlResponse+" Response Code="+String.valueOf(responseCode));
+            // For debugging HTTP server response and codes
+            Log.d(TAG,mTAG+ " Response Html=" + htmlResponse + " Response Code=" + String.valueOf(responseCode));
 
             if (responseCode == 200) {
-                Log.d(TAG, mTAG + ": OCID Server Repsonse: " + htmlResponse);
+                Log.d(TAG, mTAG + ": OCID Code 1: Cell Not found: " + htmlResponse);
                 return htmlResponse;
+
+            } else if (responseCode == 401) {
+                Log.d(TAG, mTAG + ": OCID Code 2: Invalid API Key! :" + htmlResponse);
+                return htmlResponse;
+
+            } else if(responseCode == 400){
+                Log.d(TAG, mTAG + ": OCID Code 3: Invalid input data: " + htmlResponse);
+                return "Bad Request"; // For making a toast!
+
+            } else if (responseCode == 403) {
+                Log.d(TAG, mTAG + ": OCID Code 4:  Your API key must be white listed: " + htmlResponse);
+                return "Bad Request"; // For making a toast!
+                //return htmlResponse;
+
+            } else if(responseCode == 500){
+                Log.d(TAG, mTAG + ": OCID Code 5: Remote internal server error: " + htmlResponse);
+                return "Bad Request"; // For making a toast!
 
             } else if (responseCode == 503) {
-                // Check for HTTP error code 503 which is returned when user is trying to request
-                // a new API key within 24 hours of the last request. (See GH issue #267)
-                // Make toast message:  "Only one new API key request per 24 hours. Please try again later."
-
-                //Calling toasts from inside an AsyncTask ins't a good idea.
-                //       Helpers.msgLong(getApplicationContext(), getApplicationContext().getString(R.string.only_one_key_per_day));
-
-                Log.d(TAG, mTAG + ": OCID Reached 24hr API key request limit: " + htmlResponse);
+                Log.d(TAG, mTAG + ": OCID Code 6: Reached 24hr API key request limit: " + htmlResponse);
                 return htmlResponse;
-            }else if(responseCode == 400 || responseCode == 403){
-                return "Bad Request";
-            }else {
+
+            } else if(responseCode == 429){
+                Log.d(TAG, mTAG + ": OCID Code 7: Exceeded daily request limit (1000) for your API key: " + htmlResponse);
+                return htmlResponse;
+
+            } else {
 
                 // TODO add code here or elsewhere to check for NO network exceptions...
                 // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/293
 
-                // TODO: Remove commented out stuff if app works without these NULLs
-                // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/526
-                // PR: 4a68d00
-                //httpclient = null;
-                //httpGet = null;
-                //result = null;
-
-                Log.d(TAG, mTAG + ": OCID Returned " + responseCode);
+                Log.d(TAG, mTAG + ": OCID Returned Unknown Response: " + responseCode);
                 //throw new Exception("OCID Returned " + status.getStatusCode() + " " + status.getReasonPhrase());
                 return null;
             }
