@@ -3,18 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:descendantFocusability="beforeDescendants">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
         android:background="@drawable/selector_card_background"
         android:descendantFocusability="afterDescendants">
 
@@ -31,6 +31,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
 
                 <TextView
@@ -38,6 +39,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
             </TableRow>
         </TableLayout>
@@ -55,6 +57,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
 
                 <TextView
@@ -62,6 +65,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
             </TableRow>
         </TableLayout>
@@ -79,6 +83,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
 
                 <TextView
@@ -86,6 +91,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
             </TableRow>
         </TableLayout>
@@ -103,6 +109,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
 
                 <TextView
@@ -110,6 +117,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
             </TableRow>
         </TableLayout>
@@ -127,6 +135,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
 
                 <TextView
@@ -134,6 +143,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
             </TableRow>
         </TableLayout>
@@ -151,6 +161,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
 
                 <TextView
@@ -158,6 +169,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/medium_blue"
+                    android:textSize="12sp"
                     android:layout_weight="0.1" />
             </TableRow>
         </TableLayout>
@@ -166,19 +178,22 @@
             android:id="@+id/nTIME_FIRST"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/medium_blue" />
+            android:textColor="@color/medium_blue"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/nTIME_LAST"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/medium_blue" />
+            android:textColor="@color/medium_blue"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/dbsource"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/medium_blue" />
+            android:textColor="@color/medium_blue"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
