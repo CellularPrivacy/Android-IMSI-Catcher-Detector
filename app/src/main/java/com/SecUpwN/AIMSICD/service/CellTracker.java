@@ -340,8 +340,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if(neighboringCellInfo == null)
             neighboringCellInfo = new ArrayList<>();
 
-        if (neighboringCellInfo != null &&
-                neighboringCellInfo.size() == 0) {
+        Boolean nclp = tinydb.getBoolean("nc_list_present"); // NC list present? (default is false)
+        //if nclp = true then check for neighboringCellInfo
+        if (neighboringCellInfo != null && neighboringCellInfo.size() == 0 && nclp) {
             // try to poll the neighboring cells for a few seconds
             neighboringCellBlockingQueue = new LinkedBlockingQueue<>(100);
             Log.i(TAG, mTAG + ": neighbouringCellInfo empty - start polling");
@@ -551,6 +552,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     boolean lacOK = dbHelper.checkLAC(mMonitorCell);
                     if (!lacOK) {
                         mChangedLAC = true;
+
+                        dbHelper.insertEventLog(MiscUtils.getCurrentTimeStamp(),
+                                mMonitorCell.getLAC(),
+                                mMonitorCell.getCID(),
+                                mMonitorCell.getPSC(),//This is giving weird values like 21478364... is this right?
+                                String.valueOf(mMonitorCell.getLat()),
+                                String.valueOf(mMonitorCell.getLon()),
+                                (int)mMonitorCell.getAccuracy(),
+                                1,
+                                "Changing LAC");
                         setNotification();
                     } else {
                         mChangedLAC = false;
@@ -559,7 +570,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     if ( tinydb.getBoolean("ocid_downloaded") ) {
                         if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
                             Log.i(TAG, mTAG + ": ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
-                            //dbHelper.open();
+
                             dbHelper.insertEventLog(MiscUtils.getCurrentTimeStamp(),
                                     mMonitorCell.getLAC(),
                                     mMonitorCell.getCID(),

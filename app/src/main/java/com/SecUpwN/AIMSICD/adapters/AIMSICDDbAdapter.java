@@ -665,6 +665,17 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
                         if(psc != null && !psc.equals("")){iPsc = Integer.parseInt(psc);}
 
+                        //Reverse order 1 = 0 & 0 = 1
+                        int ichange = Integer.parseInt(change);
+
+                        if (ichange == 0)
+                        {
+                            ichange = 1;
+                        }else if(ichange == 1)
+                        {
+                            ichange = 0;
+                        }
+
                         insertDBeImport(
                                 "OCID",                     // DBsource
                                 radio,                      // RAT
@@ -675,7 +686,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                 iPsc,                       // psc
                                 lat,                        // gps_lat
                                 lon,                        // gps_lon
-                                Integer.parseInt(change),   // isGPSexact
+                                ichange,                    // isGPSexact
                                 Integer.parseInt(avg_sig),  // avg_signal [dBm]
                                 Integer.parseInt(range),    // avg_range [m]
                                 Integer.parseInt(samples),  // samples
