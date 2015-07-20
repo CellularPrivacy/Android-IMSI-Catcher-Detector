@@ -154,7 +154,6 @@ public class OpenCellIdActivity extends BaseActivity {
          */
         public  String requestNewOCIDKey() throws Exception {
 
-            //TODO (remove OCIDResponse.java) I don't think we need a class to just parse 1 line of text.
             // @banjaxobanjo Did you remove it??  --EVA  (If yes, remove these comments!!)
             //String htmlResponse = EntityUtils.toString(response.getEntity(), "UTF-8");
 
