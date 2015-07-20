@@ -336,6 +336,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
                 case DEFAULT_MCC_LOCATIONS: {       // defaultlocation
 
                     // Table:   defaultlocation
@@ -356,6 +357,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
                 case SILENT_SMS: {
 
                     BaseInflaterAdapter<CapturedSmsData> adapter
@@ -382,6 +384,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
                 case MEASURED_SIGNAL_STRENGTHS: {
 
                     // TODO: merge into "DBi_measure:rx_signal"
@@ -403,6 +406,7 @@ public class DbViewerFragment extends Fragment {
                     return adapter;
 
                 }
+
                 case EVENT_LOG: {
 
                     // Table:   EventLog
@@ -431,6 +435,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
                 case DETECTION_STRINGS: {       // Abnormal SMS detection strings
 
                     BaseInflaterAdapter<DetectionStringsData> adapter
