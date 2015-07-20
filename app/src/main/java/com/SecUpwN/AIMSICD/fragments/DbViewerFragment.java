@@ -308,6 +308,11 @@ public class DbViewerFragment extends Fragment {
                             = new BaseInflaterAdapter<>(new DbeImportCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
+
+                        // @banajxbanjo: I don't like this solution, it should be made in the processing of the CSV.
+                        int exact = tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_IS_GPS_EXACT));
+                        if (exact == 0){exact = 1;}else {exact = 0;}
+
                         DbeImportItemData data = new DbeImportItemData(
                                 "source: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_DBSOURCE))+
                                         "\t\t" + (tableData.getPosition() + 1) + " / " + count,                                             // DBsource
@@ -319,7 +324,7 @@ public class DbViewerFragment extends Fragment {
                                 "PSC: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC))),      // PSC
                                 "Lat: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LAT)),               // gps_lat
                                 "Lon: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LON)),               // gps_lon
-                                "isExact: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_IS_GPS_EXACT))), // isGPSexact
+                                "isExact: " + String.valueOf (exact),                                                                       // isGPSexact
                                 "Range: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_AVG_RANGE))),      // avg_range //
                                 "AvgSignal: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_AVG_SIGNAL))), // avg_signal
                                 "Samples: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_SAMPLES))),      // samples // NOTE: #7 is range from ocid csv
