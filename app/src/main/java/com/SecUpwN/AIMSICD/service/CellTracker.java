@@ -144,9 +144,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         dbHelper = new AIMSICDDbAdapter(context);
         if (!CELL_TABLE_CLEANSED) {
             //TODO Eva what and why is this used why remove all cells from Dbi_bts table?
-            //dbHelper.open();
+
             dbHelper.cleanseCellTable();
-            //dbHelper.close();
+
             SharedPreferences.Editor prefsEditor;
             prefsEditor = prefs.edit();
             prefsEditor.putBoolean(context.getString(R.string.pref_cell_table_cleansed), true);
@@ -473,6 +473,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 //            Log.i(TAG, mTAG + ": ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID() );
             Log.i(TAG, mTAG+ ": ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID() );
             //  TODO: ADD alert to EventLog table HERE !!
+            dbHelper.insertEventLog(MiscUtils.getCurrentTimeStamp(),
+                    mMonitorCell.getLAC(),
+                    mMonitorCell.getCID(),
+                    mMonitorCell.getPSC(),//This is giving weird values like 21478364... is this right?
+                    String.valueOf(mMonitorCell.getLat()),
+                    String.valueOf(mMonitorCell.getLon()),
+                    (int)mMonitorCell.getAccuracy(),
+                    4,
+                    "No neighboring cells detected");
 
         } else  {
             //if ( ncls == 0 && !nclp )

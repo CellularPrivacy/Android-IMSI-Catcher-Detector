@@ -159,7 +159,7 @@ public class SmsDetector extends Thread {
                     e.printStackTrace();
                     Log.e(TAG, mTAG + ": IOE Stacktrace: " + e.toString());
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
+
                     Log.e(TAG, mTAG + ": IE Exception: " + e.toString());
                     e.printStackTrace();
                 }
