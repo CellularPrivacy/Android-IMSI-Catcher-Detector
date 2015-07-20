@@ -193,10 +193,8 @@ public class SmsDetector extends Thread {
                         * was already saved
                         * */
                         String logcat_timestamp = MiscUtils.logcatTimeStampParser(progress[x]);
-                        // TODO:    Add mTAG here
                         Log.i(TAG,mTAG+" TIME::" + logcat_timestamp);
 
-                        // TODO:    Add mTAG here
                         Log.i(TAG,mTAG+" Detected>>>>"+SILENT_ONLY_TAGS[arrayindex].split("#")[1]);
 
                         if(SILENT_ONLY_TAGS[arrayindex].split("#")[1].equals("TYPE0")){
@@ -259,7 +257,7 @@ public class SmsDetector extends Thread {
                                         "Detected TYPE0 sms"
                                 );
                                 MiscUtils.startPopUpInfo(tContext, 6);
-                            }else {Log.d(TAG,mTAG+"Detected Sms already logged");}
+                            }else {Log.d(TAG,mTAG+" Detected Sms already logged");}
 
 
                         //SILENT_ONLY_TAGS[arrayindex].split("#")[0] <-- index 0 is the detection string
@@ -327,7 +325,7 @@ public class SmsDetector extends Thread {
                                 );
 
                                 MiscUtils.startPopUpInfo(tContext, 7);
-                            }else {Log.d(TAG,mTAG+"Detected Sms already logged");}
+                            }else {Log.d(TAG,mTAG+" Detected Sms already logged");}
 
                         }else if(SILENT_ONLY_TAGS[arrayindex].split("#")[1].trim().equals("WAPPUSH")){
                             /*
@@ -398,7 +396,7 @@ public class SmsDetector extends Thread {
                                     );
 
                                     MiscUtils.startPopUpInfo(tContext, 8);
-                                }else {Log.d(TAG,mTAG+"Detected Sms already logged");}
+                                }else {Log.d(TAG,mTAG+" Detected Sms already logged");}
 
                             }// end of if contains("DestPort 0x0B84")
                             else if (progress[x-1].contains("SMS originating address:"))//<--- This is index on Samsungs is defferent for other phone makes
@@ -459,7 +457,7 @@ public class SmsDetector extends Thread {
                                     );
 
                                     MiscUtils.startPopUpInfo(tContext, 8);
-                                }else {Log.d(TAG,mTAG+"Detected Sms already logged");}
+                                }else {Log.d(TAG,mTAG+" Detected Sms already logged");}
 
                             }// end of if contains("SMS originating address:")
                         }
