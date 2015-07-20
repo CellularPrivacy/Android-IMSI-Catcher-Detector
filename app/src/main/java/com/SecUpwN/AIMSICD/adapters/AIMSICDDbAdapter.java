@@ -1224,7 +1224,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     public int getAverageSignalStrength(int cellID) {
-        String query = String.format("SELECT AVG(rx_signal) FROM DBi_measure WHERE bts_id= %d", cellID);
+        String query = String.format("SELECT avg(rx_signal) FROM DBi_measure WHERE bts_id= %d", cellID);
         Cursor c = mDb.rawQuery(query,null);
         c.moveToFirst();
         int lAnswer = c.getInt(0);
@@ -1233,10 +1233,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     public Cursor getSignalStrengthMeasurementData() {
-        return mDb.rawQuery("SELECT bts_id, rx_signal, time FROM DBi_measure ORDER BY time DESC",null);
+        return mDb.rawQuery("SELECT bts_id,rx_signal,time FROM DBi_measure ORDER BY time DESC",null);
     }
 
-    //TODO: do we need to remove this? its used in MapViewer
+    //TODO: Do we need to remove this? It's used in MapViewer..
     public Cursor getOpenCellIDDataByRegion(Double lat1, Double lng1, Double lat2, Double lng2) {
         return mDb.query( DBTableColumnIds.DBE_IMPORT_TABLE_NAME,
                 new String[]{"CID", "LAC", "MCC", "MNC", "gps_lat", "gps_lon", "avg_signal", "samples"},
@@ -1255,7 +1255,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     // ====================================================================
     public ArrayList<AdvanceUserItems> getDetectionStrings(){
 
-        // TODO Rewrite in cleartext!
         Cursor cursor = mDb.rawQuery("SELECT * FROM DetectionStrings",null);
 
         ArrayList<AdvanceUserItems> detection_strs = new ArrayList<>();
@@ -1268,26 +1267,27 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                 detection_strs.add(setitems);
 
             }
-        }else
-        {
+        } else {
             AdvanceUserItems setitems = new AdvanceUserItems();
             setitems.setDetection_string("No data");
             setitems.setDetection_type("No data");
             detection_strs.add(setitems);
         }
         cursor.close();
-
         return  detection_strs;
     }
 
     public boolean deleteDetectedSms(long deleteme) {
+        String TAG = "AIMSICD";
+        String mTAG = "AIMSICDDbAdapter";
 
         try {
             // TODO Rewrite in cleartext!
             mDb.delete("SmsData","_id=" + deleteme,null);
             return true;
-        }catch (Exception ee){Log.i("AIMSICDDbAdapter", "Sms Deleted failed");}
-
+        } catch (Exception ee){
+            Log.i(TAG, mTAG + ": Deleting SMS data failed:" + ee);
+        }
         return false;
     }
 
@@ -1297,8 +1297,9 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             // TODO Rewrite in cleartext!
             mDb.delete("DetectionStrings","det_str='" + deleteme + "'",null);
             return true;
-        }catch (Exception ee){Log.i("AIMSICDDbAdapter", "Delete String failed");}
-
+        }catch (Exception ee){
+            Log.i(TAG, mTAG + ": Deleting detection string failed: " + ee);
+        }
         return false;
 
     }
