@@ -310,6 +310,10 @@ public class DbViewerFragment extends Fragment {
                     while (tableData.moveToNext()) {
 
                         // WARNING! The ORDER of these are crucial!!  MUST correspond to OCID CSV order...
+                        //@EVA this is the order of the DB script?
+                        //This also as no effect on OCID upload and if you want to sort these to be in a
+                        //particular order then the best place to do this is the layout.xml file by moving
+                        //the textviews around
                         DbeImportItemData data = new DbeImportItemData(
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_DBSOURCE))+
                                         "\t\t" + (tableData.getPosition() + 1) + " / " + count,                                   // DBsource + count (record_id?)
@@ -366,6 +370,7 @@ public class DbViewerFragment extends Fragment {
                         while (tableData.moveToNext()) {
                             CapturedSmsData getdata = new CapturedSmsData();
                             // TODO: Add human readable labels in same manner as for tables above
+                            //The human readable labels are created in the layout so no need
                             getdata.setSmsTimestamp(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_TIMESTAMP)));
                             getdata.setSmsType(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_SMS_TYPE)));
                             getdata.setSenderNumber(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_SENDER_NUMBER)));
@@ -394,6 +399,7 @@ public class DbViewerFragment extends Fragment {
                     while (tableData.moveToNext()) {
                         MeasuredCellStrengthCardData data = new MeasuredCellStrengthCardData(
                                 // TODO: Add human readable labels in same manner as for tables above
+                                //The human readable labels are created in the layout so no need
                                 tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID)),
                                 Integer.parseInt(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BB_POWER))),
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TIME)));
@@ -445,6 +451,7 @@ public class DbViewerFragment extends Fragment {
                     while (tableData.moveToNext()) {
                         DetectionStringsData data = new DetectionStringsData(
                                 // TODO: Add human readable labels in same manner as for tables above
+                                //The human readable labels are created in the layout so no need
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING)),
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DETECTION_STRINGS_SMS_TYPE)));
 

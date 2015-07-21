@@ -317,11 +317,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
 
 
-    // =========== NEW ============================================================================
-
-    // =========== OLD ============================================================================
-
-
     /**
      * Returns Cell Information (DBi_bts) database contents
      * this returns BTS's that we logged and is called from
