@@ -1319,7 +1319,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
         String check4String = String.format(
                 "SELECT * FROM DetectionStrings WHERE det_str = \"%s\"",
-                newstring.get("det_str").toString());
+                newstring.get("det_str").toString() );
 
         Cursor cursor = mDb.rawQuery(check4String, null);
         boolean exists = cursor.getCount() > 0;
@@ -1334,7 +1334,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                 Log.i(TAG, mTAG +  ": New detection string added.");
                 return true;
             } catch (Exception ee) {
-                Log.i(TAG, mTAG +  ": Adding detection string Failed!");
+                Log.i(TAG, mTAG +  ": Adding detection string Failed! " + ee.toString());
             }
         }
         return false;
@@ -1361,10 +1361,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         return  smsdata;
     }
 
-
+    // Boolean Check if a give timestamp already exists in SmsData table
     public boolean isTimeStampInDB(String timestamp){
         String check4timestamp = String.format(
-                "SELECT * FROM SmsData WHERE time = \"%s\"", timestamp);
+                "SELECT time FROM SmsData WHERE time = \"%s\"", timestamp);
         Cursor cursor = mDb.rawQuery(check4timestamp,null);
         boolean exists = cursor.getCount() > 0;
         cursor.close();
@@ -1373,7 +1373,17 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
     }
 
-    //----RETURN FUNCTIONS START HERE-----//
+    //====================================================================
+    //      RETURN DATABASE CURSORS START HERE
+    //
+    // @banjaxbanjo:    (1) What do you mean with this actually?
+    //                  (2) Where are these used?
+    //                  (3) Are you making cursors?
+    //
+    // TODO:  Because of many changes to DB design, please keep these
+    // TODO:  "Returned Columns" comments updated.
+    //====================================================================
+
     /*
         Returned Columns:
         "_id"     	INTEGER PRIMARY KEY,
@@ -1385,7 +1395,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 	    returns Default Mcc Locations
      */
     public Cursor returnDefaultLocation(){
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM defaultlocation",null);
     }
 
@@ -1395,11 +1404,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     	"name"    	TEXT,
     	"type"    	TEXT,
     	"key"     	TEXT,
-    	"time_add"	TEXT,
-    	"time_exp"	TEXT
+    	"time_add"	INTEGER,
+    	"time_exp"	INTEGER
     */
     public Cursor returnApiKeys(){
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM API_keys",null);
     }
 
@@ -1412,7 +1420,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     	"thfine"     	REAL
     */
     public Cursor returnCounterMeasures(){
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM CounterMeasures",null);
     }
 
@@ -1427,11 +1434,15 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         "__EXPAND__"	TEXT
     */
     public Cursor returnDBeCapabilities(){
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM DBe_capabilities",null);
     }
 
-    /*
+    /**
+        Returns OpenCellID (DBe_import) database contents
+        Used in:
+               DbViewerFragment.java
+               MapViewerOsmDroid.java
+
         Returned Columns:
         "_id"        	INTEGER PRIMARY KEY AUTOINCREMENT,
         "DBsource"  	TEXT NOT NULL,
@@ -1441,29 +1452,21 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         "LAC"       	INTEGER,
         "CID"       	INTEGER,
         "PSC"       	INTEGER,
-        "gps_lat"   	TEXT,
-        "gps_lon"   	TEXT,
+        "gps_lat"   	REAL,
+        "gps_lon"   	REAL,
         "isGPSexact"	INTEGER,
         "avg_range" 	INTEGER,
         "avg_signal"	INTEGER,
         "samples"   	INTEGER,
-        "time_first"	TEXT,
-        "time_last" 	TEXT,
+        "time_first"	INTEGER,
+        "time_last" 	INTEGER,
         "rej_cause" 	INTEGER
-
-
-     * Returns OpenCellID (DBe_import) database contents
-     * Used in:
-     *          DbViewerFragment.java
-     *          MapViewerOsmDroid.java
-     *
-     *
      */
     public Cursor returnDBeImport(){
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM DBe_import",null);
     }
 
+    // TODO: THESE ARE OUTDATED!! Please see design and update
     /*
         Returned Columns:
         "_id"        	INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1475,16 +1478,16 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         "T3212"     	INTEGER,
         "A5x"       	INTEGER,
         "ST_id"     	INTEGER,
-        "time_first"	TEXT,
-        "time_last" 	TEXT,
-	    "LAT"	        REAL NOT NULL,
+        "time_first"	INTEGER,
+        "time_last" 	INTEGER,
+	    "LAT"	        REAL NOT NULL,  -- NULL should be okay, as GPS is not always available
 	    "LON"	        REAL NOT NULL
-*/
+    */
     public Cursor returnDBiBts(){
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM DBi_bts",null);
     }
 
+    // TODO: THESE ARE OUTDATED!! Please see design and update
     /*
     Returned Columns:
         "_id"           INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1510,11 +1513,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         "AvgEcNo"      	TEXT,
         "isSubmitted"  	INTEGER DEFAULT 0,
         "isNeighbour"  	INTEGER DEFAULT 0,
-        FOREIGN KEY("bts_id")
-        REFERENCES "DBi_bts"("_id") <--TODO how do I get this column programmattically it doesnt show up in db?
 */
     public Cursor returnDBiMeasure(){
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM DBi_measure",null);
     }
 
@@ -1536,9 +1536,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         "CM_id"      	INTEGER
      */
     public Cursor returnDetectionFlags(){
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM DetectionFlags",null);
     }
+
+    // TODO: THESE ARE OUTDATED!! Please see design and update
     /**
      Returned Columns:
      "_id"            	INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1551,12 +1552,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      "gpsd_accu"     	INTEGER,
      "DF_id"         	INTEGER,
      "DF_description"	TEXT,
-     -- Do we need these?
-     FOREIGN KEY("DF_id")
-     REFERENCES "DetectionFlags"("_id")
      */
     public Cursor returnEventLogData() {
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM EventLog",null);
     }
 
@@ -1566,7 +1563,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      "description"	TEXT
      */
     public Cursor returnSectorType() {
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM SectorType",null);
     }
 
@@ -1577,10 +1573,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      "sms_type"			TEXT--(WapPush MWI TYPE0 etc..)
      */
     public Cursor returnDetectionStrings() {
-        // TODO Rewrite in cleartext!
         return mDb.rawQuery("SELECT * FROM DetectionStrings",null);
     }
 
+    // TODO: THESE ARE OUTDATED!! Please see design and update
     /*
     Returned Columns:
     "_id"         INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1598,18 +1594,16 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     "isRoaming"   INTEGER
  */
     public Cursor returnSmsData(){
-        // TODO Rewrite in cleartext!
         return  mDb.rawQuery("SELECT * FROM SmsData",null);
     }
 
     //----END OF RETURN DATABASE CURSORS------//
 
-    //----START OF INSERT FUNCTIONS-----//
+    //====================================================================
+    //      START OF INSERT FUNCTIONS
+    //====================================================================
 
-    public void insertDefaultLocation(String country,
-                                      int mcc,
-                                      String lat,
-                                      String lon){
+    public void insertDefaultLocation(String country, int mcc, String lat, String lon){
 
         ContentValues def_location = new ContentValues();
         def_location.put("country", country);
@@ -1618,10 +1612,12 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         def_location.put("lon", lon);
 
         // Check that the country and MCC not known in the DefaultLocation DB to avoid duplicates
+        // TODO: @banjaxbanjo:  Please clarify its use:
+        //                      Why would there be duplicates?
+        //                      All countries are pre-loaded??
         String query = String.format(
                 "SELECT * FROM defaultlocation WHERE country = \"%s\" AND MCC = %d ",
-                country,
-                mcc);
+                country, mcc);
 
         Cursor cursor = mDb.rawQuery(query,null);
         if(cursor.getCount() <= 0){
@@ -1645,17 +1641,14 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         ApiKeys.put("time_exp",time_exp);
 
         String query = String.format("SELECT * FROM API_keys WHERE key = \"%s\"",key);
-
         Cursor cursor = mDb.rawQuery(query,null);
 
-
+        // Only insert a new key if the key not already in DB
         if( cursor.getCount() <= 0){
-            // only insert if key not in db
             mDb.insert("API_keys", null, ApiKeys);
             cursor.close();
             return true;
         }
-
         cursor.close();
         return false;
     }
@@ -1670,7 +1663,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         counterMeasures.put("description",description);
         counterMeasures.put("thresh",thresh);
         counterMeasures.put("thfine",thfine);
-
 
         mDb.insert("CounterMeasures", null, counterMeasures);
     }
@@ -1692,6 +1684,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                       String __EXPAND__){
 
         ContentValues dbeCapabilities = new ContentValues();
+
         dbeCapabilities.put("MCC",mcc);
         dbeCapabilities.put("MNC",mnc);
         dbeCapabilities.put("LAC",lac);
@@ -1703,7 +1696,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     /**
-     * //TODO: @EVA update comments as not I dont think there is an issue with this
+     * //TODO: @EVA update comments as not I don't think there is an issue with this
      *  Description:    This method is used to insert and populate the downloaded or previously
      *                  backed up OCID details into the DBe_import database table.
      *                  It also prevents adding multiple entries of the same cell-id, when OCID
@@ -1728,18 +1721,19 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                 int lac,
                                 int cid,
                                 int psc,
-                                String lat,
-                                String lon,
+                                String lat,             // TODO: change to real
+                                String lon,             // TODO: change to real
                                 int isGPSexact,
                                 int avg_range,
                                 int avg_signal,
                                 int samples,
-                                String time_first,
-                                String time_last,
+                                String time_first,      // TODO: change to int
+                                String time_last,       // TODO: change to int
                                 int rej_cause){
 
 
         ContentValues dbeImport = new ContentValues();
+
         dbeImport.put("DBsource",db_src);
         dbeImport.put("RAT",rat);
         dbeImport.put("MCC",mcc);
@@ -1780,60 +1774,55 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
         //If LAC and CID are not in the DBi_bts (which) store it
         if(!cellInDbiBts(cell.getLAC(),cell.getCID())) {
+
             ContentValues values = new ContentValues();
 
-            // TODO Rewrite all this in cleartext and use Raw type query!
-            //@EVA I am not really an SQL expert so if you want to create a raw query that does this please do
-            // because this here is the only way I know how
             values.put("MCC", cell.getMCC());
             values.put("MNC", cell.getMNC());
             values.put("LAC", cell.getLAC());
             values.put("CID", cell.getCID());
             values.put("PSC", cell.getPSC());
-
             //setting these to 0 because if empty causing error in db restore
             //values.put("T3212",0);
             //values.put("A5x",0);
             //values.put("ST_id",0);
-
             values.put("time_first", MiscUtils.getCurrentTimeStamp());
             values.put("time_last", MiscUtils.getCurrentTimeStamp());
             values.put("gps_lat", cell.getLat());
             values.put("gps_lon", cell.getLon());
+
             mDb.insert("DBi_bts", null, values);
 
-            Log.i(TAG, mTAG + ": DBi_bts inserted");
+            Log.i(TAG, mTAG + ": DBi_bts was populated.");
         }else{
-            /*
-                if cell is in the DB update it to last time seen
-                and update gps coors if not 0.0
 
-             */
-
+             // If cell is in the DB, update it to last time seen and
+             // update its GPS coordinates, if not 0.0
             ContentValues values = new ContentValues();
             values.put("time_last",MiscUtils.getCurrentTimeStamp());
 
-            //Only update if gps coors are good
+            // Only update if GPS coordinates are good
             if(cell.getLat() != 0.0 && cell.getLat() != 0
                     && cell.getLon() != 0.0 && cell.getLon() != 0){
                 values.put("gps_lat", cell.getLat());
                 values.put("gps_lon", cell.getLon());
             }
 
-            // TODO Rewrite in cleartext!
-            mDb.update("DBi_bts", values,"CID=?", new String[]{Integer.toString(cell.getCID())}
-            );
-            Log.i(TAG, mTAG + ": DBi_bts updated: CID=" + cell.getCID() + " LAC=" + cell.getLAC());
+            // This is the native update equivalent to:
+            // "UPDATE Dbi_bts time_last=...,gps_lat=..., gps_lon=... WHERE CID=..."
+            // update (String table, ContentValues values, String whereClause, String[] whereArgs)
+            mDb.update("DBi_bts", values,"CID=?", new String[]{Integer.toString(cell.getCID())} );
 
+            Log.i(TAG, mTAG + ": DBi_bts updated: CID=" + cell.getCID() + " LAC=" + cell.getLAC());
         }
 
 
-        //Checking to see is cellID(bts_id) already in DBi_measure--|
-        if(!cellInDbiMeasure(cell.getCID())){//<----|
+        // Checking to see is cellID(bts_id) already in DBi_measure
+        if(!cellInDbiMeasure(cell.getCID())){
             ContentValues dbiMeasure = new ContentValues();
 
             dbiMeasure.put("bts_id",cell.getCID());
-            dbiMeasure.put("nc_list","no_data");//TODO where are we getting this?
+            dbiMeasure.put("nc_list","no_data");                        // TODO: Better with "n/a" or "0", where are we getting this?
             dbiMeasure.put("time", MiscUtils.getCurrentTimeStamp());
 
             String slat = String.valueOf(cell.getLat());
@@ -1849,27 +1838,27 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             //dbiMeasure.put("gpse_lat",gpse_lon);
             dbiMeasure.put("bb_power",String.valueOf(cell.getDBM()));
             //dbiMeasure.put("bb_rf_temp",bb_rf_temp);
-            dbiMeasure.put("tx_power","0");//TODO putting 0 here as we dont have this value yet
-            dbiMeasure.put("rx_signal",String.valueOf(cell.getDBM()));//TODO putting cell.getDBM() here so we have some signal for OCID upload.
+            dbiMeasure.put("tx_power","0");                             //TODO putting 0 here as we dont have this value yet
+            dbiMeasure.put("rx_signal",String.valueOf(cell.getDBM()));  //TODO putting cell.getDBM() here so we have some signal for OCID upload.
             //dbiMeasure.put("rx_stype",rx_stype);
             dbiMeasure.put("RAT", String.valueOf(cell.getNetType()));
             //dbiMeasure.put("BCCH",BCCH);
             //dbiMeasure.put("TMSI",TMSI);
-            dbiMeasure.put("TA",cell.getTimingAdvance());//TODO does this actually get timing advance?
+            dbiMeasure.put("TA",cell.getTimingAdvance());               //TODO does this actually get timing advance?
             //dbiMeasure.put("PD",PD);
-            dbiMeasure.put("BER",0);//TODO setting 0 because we dont have data yet.
+            dbiMeasure.put("BER",0);                                    //TODO setting 0 because we dont have data yet.
             //dbiMeasure.put("AvgEcNo",AvgEcNo);
             dbiMeasure.put("isSubmitted",0);
             dbiMeasure.put("isNeighbour",0);
-            mDb.insert("DBi_measure", null, dbiMeasure);
 
+            mDb.insert("DBi_measure", null, dbiMeasure);
             Log.i(mTAG, "DBi_measure inserted bts_id="+cell.getCID());
 
         }else{
-            //Updated DBi_measure
+            // Updating DBi_measure tables if already exists.
             //TODO commented out items are because we don't have this data yet or it doesn't need updating
             ContentValues dbiMeasure = new ContentValues();
-            //dbiMeasure.put("nc_list",nc_list);
+            //dbiMeasure.put("nc_list", nc_list);
             //dbiMeasure.put("time", MiscUtils.getCurrentTimeStamp());
 
             if(cell.getLat() != 0.0 && cell.getLon() != 0.0){
@@ -1896,14 +1885,17 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             //dbiMeasure.put("BCCH",BCCH);
             //dbiMeasure.put("TMSI",TMSI);
             if(cell.getTimingAdvance() > 0) {
-                dbiMeasure.put("TA", cell.getTimingAdvance());
+                dbiMeasure.put("TA", cell.getTimingAdvance());  // Only available on API >16 on LTE
             }
-            //dbiMeasure.put("PD",PD);
-            //dbiMeasure.put("BER",0);
-            //dbiMeasure.put("AvgEcNo",AvgEcNo);
+
+            //dbiMeasure.put("PD",PD);                          // TODO: LTE: I need to check this...
+            //dbiMeasure.put("BER",0);                          // getGsmBitErrorRate() for API 17+
+            // See: http://developer.android.com/reference/android/telephony/SignalStrength.html
+
+            //dbiMeasure.put("AvgEcNo",AvgEcNo);                // TODO: I need to check this...
 
             mDb.update("DBi_measure",dbiMeasure,"bts_id=?",new String[]{Integer.toString(cell.getCID())});
-            Log.i(mTAG, "DBi_measure updated bts_id="+cell.getCID());
+            Log.i(TAG, mTAG + ": DBi_measure updated bts_id="+cell.getCID());
 
         }
 
@@ -1914,6 +1906,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      * Inserts (API?) Cell Details into Database (DBi_bts)
      * Used be restoreDB()
      */
+    // TODO: THESE ARE OUTDATED!! Please see design and update
     public void insertBTS(
             int mcc,
             int mnc,
@@ -1930,7 +1923,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     ) {
 
         if (cid != -1) {
-            //Populate Content Values for Insert or Update
+            // Populate Content Values for INSERT or UPDATE
             ContentValues btsValues = new ContentValues();
             btsValues.put("MCC",        mcc);
             btsValues.put("MNC",        mnc);
@@ -1945,23 +1938,32 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             btsValues.put("gps_lat", lat);
             btsValues.put("gps_lon",  lon);
 
-            //Only insert cell if its not in DBi_bts
+            // Only insert new cell if its not in DBi_bts
             if(!cellInDbiBts(lac,cid)){
-
                 mDb.insert("DBi_bts", null, btsValues);
-
             }else{
-                //TODO EVA do I need to update an already known cell?
+                // =======================================================================
+                // TODO: EVA do I need to update an already known cell?
+                // Good question! The DBi_bts is meant to be physical (non-volatile) and
+                // stay the same, but I now see that PSC, T3212, A5x etc., might change,
+                // under certain and special circumstances.
+                // However, if they do, we should log this as an (suspicious?) event in EventLog
+                // =======================================================================
                 mDb.update( "DBi_bts", btsValues, "CID=?", new String[]{Integer.toString(cid)} );
-
+                Log.i(TAG, mTAG + ": Warning: Physical cell data in DBi_bts has changed! CID=" + cid);
             }
         }
 
     }
 
     /**
-     TODO: add descritpion what this functions does
-     Used be restoreDB()
+     * Description:     TODO: add description
+     *                  Used be restoreDB()
+     * Issues:
+     *              [ ] Where is this used and how?
+     *              [ ] MAYBE it's current use is still okay?
+     *              [ ] TODO: Using bts_id is WRONG! That is a foreign key id in the DBi_bts and used in DBi_measure
+     *
      */
     public void insertDbiMeasure(int bts_id,
                                  String nc_list,
@@ -1986,10 +1988,14 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                  int isSubmitted,
                                  int isNeighbour){
 
-        //Check bts_id is not already stored int DBi_measure. Only adds new cell if false
+        // Check bts_id is not already stored int DBi_measure. Only adds new cell if false
+        // @banjaxbanjo:  No this is wrong...
+        //
         if(cellInDbiMeasure(bts_id)){
             ContentValues dbiMeasure = new ContentValues();
-            dbiMeasure.put("bts_id",bts_id);
+
+            dbiMeasure.put("bts_id",bts_id); // Try replacing this with cid
+
             dbiMeasure.put("nc_list",nc_list);
             dbiMeasure.put("time",time);
             dbiMeasure.put("gpsd_lat",gpsd_lat);
@@ -2011,14 +2017,25 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             dbiMeasure.put("AvgEcNo",AvgEcNo);
             dbiMeasure.put("isSubmitted",isSubmitted);
             dbiMeasure.put("isNeighbour",isNeighbour);
-            mDb.insert("DBi_measure", null, dbiMeasure);
 
+            mDb.insert("DBi_measure", null, dbiMeasure);
+            // try with:
+            // mDb.insert("DBi_measure, DBi_bts", null, dbiMeasure); // but you'll need the DBi_bts data then as well...
         }
 
     }
 
     /**
-     TODO: add descritpion what this function does
+     * Description:     This inserts Detection Flag data that is used to fine tune the various
+     *                  available detection mechanisms. (See Detection List in issue #230)
+     *
+     *                  These parameters are described elsewhere, but should be included here
+     *                  for completeness and reference.
+     *
+     *                  There's also a CounterMeasure id to link to possible future counter measures.
+     * Issues:
+     *              [ ]
+     *
      */
     public void insertDetectionFlags(int code,
                                      String name,
@@ -2052,6 +2069,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     /**
      * Description:     Inserts log data into the EventLog table
      *
+     * Issues:          [ ] ALL events should be logged!!
+     *
      * Notes:           Table item order:
      *                  time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
      *
@@ -2070,64 +2089,64 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
         //Query examples for future devs
         //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id BETWEEN 1 AND 4
-        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 1" Changing lac
-        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 2" cell not in OCID
+        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 1" Changing LAC
+        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 2" Cell not in OCID
         //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 3" Detected SMS
-        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 4" dont know yet?
+        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 4" Unknown T.B.A...
 
         /*
-            We need to check if cell not in OCID  Event are not continuously logged
-            to the database as it currently stands if the same cell shows up it will again be
+            We need to check if cell is not in OCID  Events are not continuously logged
+            to the database as it currently stands. If the same cell shows up it will again be
             dumped to the event log and will fill up pretty quickly
 
          */
-        String query = String.format("SELECT * FROM EventLog WHERE CID = %d AND LAC = %d AND DF_id = %d",
-                cid,
-                lac,
-                DF_id);
+        String query = String.format(
+                "SELECT * FROM EventLog WHERE CID = %d AND LAC = %d AND DF_id = %d",
+                cid, lac, DF_id);
 
-        //Check that the lac/cid/DF_id not known if not insert
+        // Check that the lac/cid/DF_id is not already known, if not, then INSERT
         Cursor cursor = mDb.rawQuery(query,null);
 
-        boolean EVENT_ALREADY_LOGGED = cursor.getCount() > 0;// if > 0 Event is logged boolean will be true
+        // @banjaxobanjo    What do you mean here? ALL events should be logged!
+        boolean EVENT_ALREADY_LOGGED = cursor.getCount() > 0;   // if > 0 Event is logged boolean will be true
         Log.d(TAG, mTAG + ": EVENT_ALREADY_LOGGED=" + EVENT_ALREADY_LOGGED );
-        boolean insertData = true; //default
+        boolean insertData = true;                              // default
         cursor.close();
-
 
         switch (DF_id){
             case 1:
-
-                /*Is lac and cid already logged for  CHANGING LAC */
+                // Is lac and cid already logged for  CHANGING LAC
                 if(EVENT_ALREADY_LOGGED) {
                     insertData = false;
                 }
                 break;
+
             case 2:
-                //Is lac and cid already logged for Cell not in OCID
+                // Is lac and cid already logged for Cell not in OCID
                 if(EVENT_ALREADY_LOGGED) {
                     insertData = false;
                 }
                 break;
-            case 3:
-                /*
-                    Store detected sms
 
-                    We dont really need to check this event
-                    because it will only be inserted if an
-                    sms is detected and we wont have duplicates
-                 */
+            case 3:
+                // Store detected SMS
+                //
+                // We don't really need to check this event because it will only be inserted if an
+                // SMS is detected and we won't have duplicates
                 //insertData = true;
                 break;
+
             case 4:
                 //future code TODO: where are the DF_id codes? Like 1 = Changing Lac?
                 //insertData = true; //already set above
                 break;
         }
 
+        // Not sure this should be here as all event should be logged! --E:V:A
         if(insertData){
 
             ContentValues eventLog = new ContentValues();
+
             eventLog.put("time",time);
             eventLog.put("LAC",lac);
             eventLog.put("CID",cid);
@@ -2142,13 +2161,20 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             Log.v(TAG, mTAG + ": Insert Detection into EventLog Table: " + cid);
 
         }else{
-            //TODO do we need to do anything if event already logged?
+            // TODO do we need to do anything if event already logged?
+            // TODO See my comments above -- E:V:A
         }
 
     }
 
     /**
-     TODO: add description what this functions does
+     * Description:     Inserts BTS Sector Type data into the SectorType table
+     *
+     * Issues:
+     *          [ ]
+     *
+     * Notes:
+     *
      */
     public void insertSectorType(String description){
 
@@ -2159,25 +2185,30 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     /**
-     TODO: add descritpion what this functions does
+     * Description:     Inserts SMS Detection Strings data into the DetectionStrings table
+     *
+     * Issues:
+     *          [ ]
+     *
+     * Notes:
+     *
      */
     public void insertDetectionStrings(String det_str,
                                        String sms_type){
 
-        ContentValues detectonStrings = new ContentValues();
-        detectonStrings.put("det_str",det_str);
-        detectonStrings.put("sms_type",sms_type);
-
+        ContentValues detectionStrings = new ContentValues();
+        detectionStrings.put("det_str",det_str);
+        detectionStrings.put("sms_type",sms_type);
 
         String query = String.format(
                 "SELECT * FROM DetectionStrings WHERE det_str = \"%s\" AND sms_type = \"%s\"",
-                det_str,
-                sms_type);
-        //Check that string not in db then insert
+                det_str, sms_type);
+
+        // Check that string not in db then insert
         Cursor cursor = mDb.rawQuery(query,null);
 
         if( cursor.getCount() <= 0){
-            mDb.insert("DetectionStrings", null, detectonStrings);
+            mDb.insert("DetectionStrings", null, detectionStrings);
             cursor.close();
         }else{
             cursor.close();
@@ -2185,15 +2216,19 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     /**
-     Description:
-     inserts detected silent sms data into TABLE: SmsData
+     *  Description:     inserts detected silent sms data into TABLE: SmsData
+     *
+     *  Issues:
+     *          [ ]
+     *
+     *  Notes:
      */
     public void insertSmsData(String time,
                               String number,
                               String smsc,
                               String message,
                               String type,
-                              String CLASS,//<-- had to put in uppercase class is used be api
+                              String CLASS, //<-- had to put in uppercase class is used be api
                               int lac,
                               int cid,
                               String rat,
@@ -2203,21 +2238,22 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
         /*
             public static final String SMS_DATA_TABLE_NAME = "SmsData";
-    public static final String SMS_DATA_ID = "_id";
-    public static final String SMS_DATA_TIMESTAMP = "time";
-    public static final String SMS_DATA_SENDER_NUMBER = "number";
-    public static final String SMS_DATA_SENDER_SMSC = "smsc";
-    public static final String SMS_DATA_SENDER_MSG = "message";
-    public static final String SMS_DATA_SMS_TYPE = "type";
-    public static final String SMS_DATA_SMS_CLASS = "class";
-    public static final String SMS_DATA_LAC = "lac";
-    public static final String SMS_DATA_CID = "cid";
-    public static final String SMS_DATA_RAT = "rat";
-    public static final String SMS_DATA_GPS_LAT = "gps_lat";
-    public static final String SMS_DATA_GPS_LON = "gps_lon";
-    public static final String SMS_DATA_ROAM_STATE = "isRoaming";
+            public static final String SMS_DATA_ID = "_id";
+            public static final String SMS_DATA_TIMESTAMP = "time";
+            public static final String SMS_DATA_SENDER_NUMBER = "number";
+            public static final String SMS_DATA_SENDER_SMSC = "smsc";
+            public static final String SMS_DATA_SENDER_MSG = "message";
+            public static final String SMS_DATA_SMS_TYPE = "type";
+            public static final String SMS_DATA_SMS_CLASS = "class";
+            public static final String SMS_DATA_LAC = "lac";
+            public static final String SMS_DATA_CID = "cid";
+            public static final String SMS_DATA_RAT = "rat";
+            public static final String SMS_DATA_GPS_LAT = "gps_lat";
+            public static final String SMS_DATA_GPS_LON = "gps_lon";
+            public static final String SMS_DATA_ROAM_STATE = "isRoaming";
          */
         ContentValues smsData = new ContentValues();
+
         smsData.put("time",time);
         smsData.put("number",number);
         smsData.put("smsc",smsc);
@@ -2231,14 +2267,12 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         smsData.put("gps_lon",gps_lon);
         smsData.put("isRoaming",isRoaming);
 
-
-        //Check that timestamp not in db then insert
+        // Check that timestamp not already in DB, then INSERT
         if(!isTimeStampInDB(time)){
             mDb.insert("SmsData", null, smsData);
         }
 
     }
-
 
     /**
      *  Description:    This checks if a cell with a given CID already exists
@@ -2247,7 +2281,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *                  used in CellTracker()
      */
     public boolean openCellExists(int cellID) {
-        String qry = String.format("SELECT * FROM DBe_import WHERE CID = %d",cellID);
+        String qry = String.format(
+                "SELECT * FROM DBe_import WHERE CID = %d",
+                cellID);
+
         Cursor cursor = mDb.rawQuery(qry, null);
         boolean exists = cursor.getCount() > 0;
         cursor.close();
@@ -2259,7 +2296,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         Replaces cellExists()
     */
     public boolean cellInDbiBts(int lac,int cellID){
-        String query = String.format("SELECT * FROM DBi_bts WHERE LAC = %d AND CID = %d",lac, cellID);
+        String query = String.format(
+                "SELECT * FROM DBi_bts WHERE LAC = %d AND CID = %d",
+                lac, cellID);
+
         Cursor cursor = mDb.rawQuery(query,null);
         boolean exists = cursor.getCount() > 0;
         cursor.close();
@@ -2271,12 +2311,13 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     */
     public boolean cellInDbiMeasure(int cellID){
         String query = String.format(
-                "SELECT * FROM DBi_measure WHERE bts_id = %d",cellID);
+                "SELECT * FROM DBi_measure WHERE bts_id = %d",
+                cellID);
+
         Cursor cursor = mDb.rawQuery(query,null);
         boolean exists = cursor.getCount() > 0;
         cursor.close();
         return exists;
-
     }
 
     /*
@@ -2286,16 +2327,16 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public String getRatFromDBimeasure(int cellID){
         String RAT = null;
-        String query = String.format("SELECT * FROM DBi_measure WHERE bts_id = %d",cellID);
+        String query = String.format(
+                "SELECT * FROM DBi_measure WHERE bts_id = %d",
+                cellID);
 
         Cursor cursor = mDb.rawQuery(query,null);
-
         if(cursor != null && cursor.moveToNext()){
             RAT = cursor.getString(cursor.getColumnIndex("RAT"));
         }
-         cursor.close();
+        cursor.close();
         return RAT;
-
     }
 
 }
