@@ -308,24 +308,30 @@ public class DbViewerFragment extends Fragment {
                             = new BaseInflaterAdapter<>(new DbeImportCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
+
+                        // WARNING! The ORDER of these are crucial!!  MUST correspond to OCID CSV order...
+                        //@EVA this is the order of the DB script?
+                        //This also as no effect on OCID upload and if you want to sort these to be in a
+                        //particular order then the best place to do this is the layout.xml file by moving
+                        //the textviews around
                         DbeImportItemData data = new DbeImportItemData(
-                                "source: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_DBSOURCE))+
-                                        "\t\t" + (tableData.getPosition() + 1) + " / " + count,                                             // DBsource
-                                "RAT: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_RAT)),                   // RAT
-                                "MCC: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MCC))),      //
-                                "MNC: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MNC))),      //
-                                "CID: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_CID))),      //
-                                "LAC: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_LAC))),      //
-                                "PSC: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC))),      // PSC
-                                "Lat: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LAT)),               // gps_lat
-                                "Lon: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LON)),               // gps_lon
-                                "isExact: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_IS_GPS_EXACT))), // isGPSexact
-                                "Range: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_AVG_RANGE))),      // avg_range //
-                                "AvgSignal: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_AVG_SIGNAL))), // avg_signal
-                                "Samples: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_SAMPLES))),      // samples // NOTE: #7 is range from ocid csv
-                                "first: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_FIRST)),                  // time_first
-                                "last: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_LAST)));//,                // time_last
-                        // TODO put "source" here and add:
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_DBSOURCE))+
+                                        "\t\t" + (tableData.getPosition() + 1) + " / " + count,                                   // DBsource + count (record_id?)
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_RAT)),                   // RAT
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MCC))),      // MCC
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MNC))),      // MNC
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_LAC))),      // LAC
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_CID))),      // CID
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC))),      // PSC (UMTS only)
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LAT)),               // gps_lat
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LON)),               // gps_lon
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_IS_GPS_EXACT))),   //isGPSexact                                                                     // isGPSexact
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_AVG_RANGE))),      // avg_range //
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_AVG_SIGNAL))),     // avg_signal
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_SAMPLES))),        // samples // NOTE: #7 is range from ocid csv
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_FIRST)),                  // time_first
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_LAST)));                  // time_last
+                        // TODO move ? "source" here and add:
                         // "" + (tableData.getPosition() + 1) + " / " + count );
                         adapter.addItem(data, false);
                     }
@@ -334,6 +340,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
                 case DEFAULT_MCC_LOCATIONS: {       // defaultlocation
 
                     // Table:   defaultlocation
@@ -354,6 +361,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
                 case SILENT_SMS: {
 
                     BaseInflaterAdapter<CapturedSmsData> adapter
@@ -362,6 +370,7 @@ public class DbViewerFragment extends Fragment {
                         while (tableData.moveToNext()) {
                             CapturedSmsData getdata = new CapturedSmsData();
                             // TODO: Add human readable labels in same manner as for tables above
+                            //The human readable labels are created in the layout so no need
                             getdata.setSmsTimestamp(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_TIMESTAMP)));
                             getdata.setSmsType(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_SMS_TYPE)));
                             getdata.setSenderNumber(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_SENDER_NUMBER)));
@@ -380,6 +389,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
                 case MEASURED_SIGNAL_STRENGTHS: {
 
                     // TODO: merge into "DBi_measure:rx_signal"
@@ -389,6 +399,7 @@ public class DbViewerFragment extends Fragment {
                     while (tableData.moveToNext()) {
                         MeasuredCellStrengthCardData data = new MeasuredCellStrengthCardData(
                                 // TODO: Add human readable labels in same manner as for tables above
+                                //The human readable labels are created in the layout so no need
                                 tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID)),
                                 Integer.parseInt(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BB_POWER))),
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TIME)));
@@ -401,6 +412,7 @@ public class DbViewerFragment extends Fragment {
                     return adapter;
 
                 }
+
                 case EVENT_LOG: {
 
                     // Table:   EventLog
@@ -429,6 +441,7 @@ public class DbViewerFragment extends Fragment {
                     }
                     return adapter;
                 }
+
                 case DETECTION_STRINGS: {       // Abnormal SMS detection strings
 
                     BaseInflaterAdapter<DetectionStringsData> adapter
@@ -438,6 +451,7 @@ public class DbViewerFragment extends Fragment {
                     while (tableData.moveToNext()) {
                         DetectionStringsData data = new DetectionStringsData(
                                 // TODO: Add human readable labels in same manner as for tables above
+                                //The human readable labels are created in the layout so no need
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING)),
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DETECTION_STRINGS_SMS_TYPE)));
 

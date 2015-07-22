@@ -12,6 +12,19 @@ import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
 
+/**
+ *  Description:     TODO!
+ *
+ *  Dependencies:
+ *                  dbe_import_items.xml
+ *
+ *
+ *  Issues:
+ *          [ ]     LAC and CID seem swapped...hard to debug
+ *
+ *  ChangeLog:
+ *
+ */
 public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItemData> {
 
     @Override
@@ -29,7 +42,6 @@ public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItem
 
         final DbeImportItemData item = adapter.getTItem(pos);
         holder.updateDisplay(item);
-
         return convertView;
     }
 
@@ -55,23 +67,23 @@ public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItem
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
-            //
-            DB_SOURCE =         (TextView) mRootView.findViewById(R.id.dbsource);
-            RAT =          (TextView) mRootView.findViewById(R.id.RAT);
-            MCC =          (TextView) mRootView.findViewById(R.id.nMCC);
-            MNC =          (TextView) mRootView.findViewById(R.id.nMNC);
-            LAC =     (TextView) mRootView.findViewById(R.id.nLAC);
-            CID =     (TextView) mRootView.findViewById(R.id.nCID);
-            PSC =    (TextView) mRootView.findViewById(R.id.nPSC);
-            GPS_LAT =        (TextView) mRootView.findViewById(R.id.ngpsd_lat);
-            GPS_LON =      (TextView) mRootView.findViewById(R.id.ngpsd_lon);
-            IS_GPS_EXACT =     (TextView) mRootView.findViewById(R.id.is_exact);
-            AVG_RANGE =      (TextView) mRootView.findViewById(R.id.navg_range);
+            // TODO: explain these and try to adhere to a naming convention
+            // These are the id names as used in the "dbe_import_items.xml" stylesheet
+            DB_SOURCE =     (TextView) mRootView.findViewById(R.id.dbsource);
+            RAT =           (TextView) mRootView.findViewById(R.id.RAT);
+            MCC =           (TextView) mRootView.findViewById(R.id.nMCC);
+            MNC =           (TextView) mRootView.findViewById(R.id.nMNC);
+            LAC =           (TextView) mRootView.findViewById(R.id.nLAC);
+            CID =           (TextView) mRootView.findViewById(R.id.nCID);
+            PSC =           (TextView) mRootView.findViewById(R.id.nPSC);
+            GPS_LAT =       (TextView) mRootView.findViewById(R.id.ngpsd_lat);
+            GPS_LON =       (TextView) mRootView.findViewById(R.id.ngpsd_lon);
+            IS_GPS_EXACT =  (TextView) mRootView.findViewById(R.id.is_exact);
+            AVG_RANGE =     (TextView) mRootView.findViewById(R.id.navg_range);
             AVG_SIGNAL =    (TextView) mRootView.findViewById(R.id.navg_signal);
-            SAMPLES =        (TextView) mRootView.findViewById(R.id.nSAMPLES);
-            TIME_FIRST =      (TextView) mRootView.findViewById(R.id.nTIME_FIRST);
+            SAMPLES =       (TextView) mRootView.findViewById(R.id.nSAMPLES);
+            TIME_FIRST =    (TextView) mRootView.findViewById(R.id.nTIME_FIRST);
             TIME_LAST =     (TextView) mRootView.findViewById(R.id.nTIME_LAST);
-
 
             rootView.setTag(this);
         }
@@ -92,7 +104,6 @@ public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItem
             SAMPLES.setText(item.getSAMPLES());
             TIME_FIRST.setText(item.getTIME_FIRST());
             TIME_LAST.setText(item.getTIME_LAST());
-
         }
     }
 }

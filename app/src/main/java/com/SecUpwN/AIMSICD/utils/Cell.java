@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class Cell implements Parcelable {
 
-    //Cell Specific Variables
+    // Cell Specific Variables
     private int cid;  // Cell Identification code
     private int lac;  // Location Area Code
     private int mcc;  // Mobile Country Code
@@ -37,11 +37,11 @@ public class Cell implements Parcelable {
     private int sid;                 // Cell-ID for [CDMA]
     private long timestamp;
 
-    //Tracked Cell Specific Variables
+    // Tracked Cell Specific Variables
     private int netType;
-    private double speed;
-    private double accuracy;
-    private double bearing;
+    private double speed;       // Remove
+    private double accuracy;    // Remove
+    private double bearing;     // Remove
     private double lon;
     private double lat;
 
@@ -58,9 +58,9 @@ public class Cell implements Parcelable {
         netType = Integer.MAX_VALUE;
         lon = 0.0;
         lat = 0.0;
-        speed = 0.0;
-        accuracy = 0.0;
-        bearing = 0.0;
+        speed = 0.0;        // Remove
+        accuracy = 0.0;     // Remove
+        bearing = 0.0;      // Remove
     }
 
     public Cell() {}
@@ -473,6 +473,10 @@ public class Cell implements Parcelable {
     public static class CellLookUpAsync extends AsyncTask<String, Void, List<Cell>> {
         public AsyncResponse delegate=null;
 
+        private final String TAG = "AIMSICD";
+        private final String mTAG = "Cell";
+
+
         @Override
         protected List<Cell> doInBackground(String ... urls) {
             try {
@@ -483,8 +487,8 @@ public class Cell implements Parcelable {
 
                 URL url = new URL(urls[0]);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setReadTimeout(10000);     // [ms] 10s
+                conn.setConnectTimeout(15000);  // [ms] 15s
                 conn.setRequestMethod("GET");
                 conn.setDoInput(true);
                 // Starts the query
@@ -499,7 +503,7 @@ public class Cell implements Parcelable {
                 return cells;
 
             } catch (Exception e) {
-                Log.i("AIMSICD", "Cell Lookup - " + e.getMessage());
+                Log.i(TAG, mTAG + ": Cell Lookup: " + e.getMessage());
                 return null;
             }
         }

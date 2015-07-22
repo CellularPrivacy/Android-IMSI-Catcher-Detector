@@ -214,7 +214,7 @@
                     android:layout_weight="1"
                     android:textSize="12sp" />
             </TableRow>
-        </TableLayout>
 
+        </TableLayout>
     </LinearLayout>
 </FrameLayout>
