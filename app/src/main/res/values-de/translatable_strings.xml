@@ -387,4 +387,5 @@
     <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
     <string name="getting_ocid_key">Besorge OpenCellID-Schlüssel...</string>
     
+    <string name="restore_database_completed_title">Wiederherstellung erfolgreich.</string>
     </resources>
