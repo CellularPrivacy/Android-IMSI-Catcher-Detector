@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -303,8 +304,27 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESET_DB) {
             //Helpers.askAndDeleteDb(this); Todo this isnt a good method for deleting database
+            // @banjaxbanjo  If it isn't good, that it not a good enough reason to remove it.
+            // or what did you mean?
+            // "If it ain't broke, don't fix."
+
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BST_DATA) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
+
+                // Trying to fix issue #525 by using DJaeger's comment in:
+                // https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/543#issuecomment-121605064
+                /* TODO: FIXME !!
+                TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                String networkOperator = tm.getNetworkOperator();
+
+                if (networkOperator != null) {
+                    int mcc = Integer.parseInt(networkOperator.substring(0, 3));
+                    cell.setMCC(Integer.parseInt(networkOperator.substring(0, 3)));
+                    int mnc = Integer.parseInt(networkOperator.substring(3));
+                    cell.setMNC(Integer.parseInt(networkOperator.substring(3, 5)));
+                }
+                */
+
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
                     Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data));
