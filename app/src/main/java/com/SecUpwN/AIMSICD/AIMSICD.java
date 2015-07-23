@@ -313,7 +313,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
                 // Trying to fix issue #525 by using DJaeger's comment in:
                 // https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/543#issuecomment-121605064
-                /* TODO: FIXME !!
+                // TODO: FIXME !!
+                Cell cell = new Cell();
                 TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 String networkOperator = tm.getNetworkOperator();
 
@@ -322,13 +323,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                     cell.setMCC(Integer.parseInt(networkOperator.substring(0, 3)));
                     int mnc = Integer.parseInt(networkOperator.substring(3));
                     cell.setMNC(Integer.parseInt(networkOperator.substring(3, 5)));
+                    Log.d(TAG, "CELL:: mcc="+mcc+ " mnc="+mnc);
                 }
-                */
+
 
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
                     Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data));
-                    Cell cell = new Cell();
+
                     cell.setLon(loc.getLongitudeInDegrees());
                     cell.setLat(loc.getLatitudeInDegrees());
                     Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
