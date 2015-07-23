@@ -34,7 +34,7 @@
     <string name="network_type">Typ:</string>
     <string name="network_lac">LAC:</string>
     <string name="network_cellid">CID:</string>
-    <string name="app_version">Verze:</string>
+    <string name="app_version">Verze: </string>
     <string name="download_error">Chyba při stahování:</string>
     <string name="status">Stav:</string>
     </resources>
