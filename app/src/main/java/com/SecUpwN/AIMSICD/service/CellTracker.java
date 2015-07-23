@@ -33,7 +33,7 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Device;
-import com.SecUpwN.AIMSICD.utils.DeviceApi17;
+import com.SecUpwN.AIMSICD.utils.DeviceApi18;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
@@ -73,7 +73,7 @@ import java.util.concurrent.TimeUnit;
  *  2015-03-02  E:V:A       Added TinyDB import for SharedPreferences alternative
  *  2015-03-03  E:V:A       Replaced getSystemProp with TinyDB Boolean "ocid_downloaded" in Runnable()
  *  2015-04-18  banjaxbanjo Removed timer that checked for neighbouring cells so it now checks onCellChange
- *
+ *  2015-07-23  E:V:A       Changed API from 16 to 17 and to use DeviceApi18.java instead of old.
  *
  */
 
@@ -346,8 +346,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             //LISTEN_CELL_INFO added in API 17
             // TODO: See issue #555 (DeviceApi17.java is using API 18 CellInfoWcdma calls.
-            if (Build.VERSION.SDK_INT > 16) {
-                DeviceApi17.startListening(tm, phoneStatelistener);
+            if (Build.VERSION.SDK_INT > 17) {
+                DeviceApi18.startListening(tm, phoneStatelistener);
             } else {
                 tm.listen(phoneStatelistener,
                         PhoneStateListener.LISTEN_CELL_LOCATION |
@@ -915,8 +915,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void onLocationChanged(Location loc) {
         //Log.i(mTAG, "in onLocationChanged(Location loc)");
         // TODO: See issue #555 (DeviceApi17.java is using API 18 CellInfoWcdma calls.
-        if (Build.VERSION.SDK_INT > 16) {
-            DeviceApi17.loadCellInfo(tm, mDevice);
+        if (Build.VERSION.SDK_INT > 17) {
+            DeviceApi18.loadCellInfo(tm, mDevice);
         }
 
         if (!mDevice.mCell.isValid()) {
