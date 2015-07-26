@@ -331,8 +331,8 @@
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">obtenir une clé pour utiliser la base de donnée d\'OpenCellID et pour uploader vos données…</string>
     <string name="help_app_about">Explication des icônes de statut et du projet.</string>
-    <string name="help_app_download_local_bst">Télécharger la Base de Données OpenCellID.</string>
-    <string name="help_app_upload_local_bst">Uploader vos BTS vers OpenCellID.</string>
+    <string name="help_app_download_local_bts">Télécharger la Base de Données OpenCellID.</string>
+    <string name="help_app_upload_local_bts">Uploader vos BTS vers OpenCellID.</string>
     <string name="help_app_debugging">Afficher et envoyer les logs d\'application.</string>
     <string name="help_app_quit">Quitter cette application.</string>
     <string name="waiting_for_location">Recherche de votre localisation en cours…</string>

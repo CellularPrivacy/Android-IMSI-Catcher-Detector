@@ -277,7 +277,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new AboutFragment()).commit();
                 break;
-            case DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BST_DATA:
+            case DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA:
                 // Request uploading here?
                 new RequestTask(mContext, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute(""); // no string needed for csv based upload
                 break;
@@ -308,7 +308,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             // or what did you mean?
             // "If it ain't broke, don't fix."
 
-        } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BST_DATA) {
+        } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
 
                 // Trying to fix issue #525 by using DJaeger's comment in:

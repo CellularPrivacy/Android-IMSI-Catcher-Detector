@@ -146,11 +146,11 @@ public class DrawerMenuItem implements NavDrawerItem {
             case APPLICATION.ABOUT:
                 return R.string.help_app_about;
 
-            case APPLICATION.DOWNLOAD_LOCAL_BST_DATA:
-                return R.string.help_app_download_local_bst;
+            case APPLICATION.DOWNLOAD_LOCAL_BTS_DATA:
+                return R.string.help_app_download_local_bts;
 
-            case APPLICATION.UPLOAD_LOCAL_BST_DATA:
-                return R.string.help_app_upload_local_bst;
+            case APPLICATION.UPLOAD_LOCAL_BTS_DATA:
+                return R.string.help_app_upload_local_bts;
 
             case APPLICATION.SEND_DEBUGGING_LOG:
                 return R.string.help_app_debugging;

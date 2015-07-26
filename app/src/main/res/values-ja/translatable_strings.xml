@@ -288,8 +288,8 @@
 
     <string name="help_app_add_get_ocid_api_key">OpenCellID データベースを使用してデータをアップロードおよびダウンロードするために API キーを取得…</string>
     <string name="help_app_about">ステータス アイコンとプロジェクトの説明。</string>
-    <string name="help_app_download_local_bst">OCID データベースをダウンロードします。</string>
-    <string name="help_app_upload_local_bst">あなたの BTS を OCID データベースにアップロードします。</string>
+    <string name="help_app_download_local_bts">OCID データベースをダウンロードします。</string>
+    <string name="help_app_upload_local_bts">あなたの BTS を OCID データベースにアップロードします。</string>
     <string name="help_app_debugging">エラー ログを収集して送信します。</string>
     <string name="help_app_quit">このアプリを終了します。</string>
     <string name="waiting_for_location">位置情報の待機中…</string>
