@@ -13,6 +13,18 @@ import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 
+/**
+ * Description:     TODO
+ *
+ * Issues:
+ *              [ ] The use of wrong API for some calls in the cell tracker
+ *
+ * ChangeLog:
+ *              2015-07-23  E:V:A   Changed to use DeviceApi18.java instead of 17. Fix? of # 555
+ *                                  Do we need an import here??
+ *                                  import com.SecUpwN.AIMSICD.utils.DeviceApi18;
+ *
+ */
 public class Device {
 
     private final String TAG = "AIMSICD";
@@ -60,7 +72,7 @@ public class Device {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             mNetType = getNetworkTypeName();
-            DeviceApi17.loadCellInfo(tm, this);
+            DeviceApi18.loadCellInfo(tm, this);
         }
 
         if (mCell == null)
@@ -68,8 +80,8 @@ public class Device {
 
         switch (mPhoneID) {
 
-            case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
-            case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
+            case TelephonyManager.PHONE_TYPE_NONE:
+            case TelephonyManager.PHONE_TYPE_SIP:
             case TelephonyManager.PHONE_TYPE_GSM:
                 mPhoneType = "GSM";
                 mMncmcc = tm.getNetworkOperator();
@@ -80,7 +92,7 @@ public class Device {
                         if (mCell.getMNC() == Integer.MAX_VALUE)
                             mCell.setMNC(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
                     } catch (Exception e) {
-                        Log.i(TAG, mTAG + ":MncMcc parse exception - " + e.getMessage());
+                        Log.i(TAG, mTAG + ": MncMcc parse exception: " + e.getMessage());
                     }
                 }
                 mNetName = tm.getNetworkOperatorName();
@@ -102,6 +114,8 @@ public class Device {
                         mCell.setCID(cdmaCellLocation.getBaseStationId());
                         mCell.setLAC(cdmaCellLocation.getNetworkId());
                         mCell.setSID(cdmaCellLocation.getSystemId()); // one of these must be a bug !!
+                        // See: http://stackoverflow.com/questions/8088046/android-how-to-identify-carrier-on-cdma-network
+                        // and: https://github.com/klinker41/android-smsmms/issues/26
                         mCell.setMNC(cdmaCellLocation.getSystemId()); // todo: check! (Also CellTracker.java)
 
                         //Retrieve MCC through System Property
@@ -659,7 +673,7 @@ public class Device {
         return false;
     }
 
-    /** Checks whether two providers are the same */
+    // Checks whether two providers are the same
     private boolean isSameProvider(String provider1, String provider2) {
         if (provider1 == null) {
             return provider2 == null;
