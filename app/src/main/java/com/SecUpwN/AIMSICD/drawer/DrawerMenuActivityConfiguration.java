@@ -149,8 +149,8 @@ public class DrawerMenuActivityConfiguration {
 
             //Section Application
             menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_APPLICATION, mContext.getString(R.string.application)));
-            menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BST_DATA, mContext.getString(R.string.get_opencellid), R.drawable.stat_sys_download_anim0, false));   // "Download Local BTS data"
-            menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BST_DATA, mContext.getString(R.string.upload_bts), R.drawable.stat_sys_upload_anim0, false));      // "Upload Local BTS data"
+            menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA, mContext.getString(R.string.get_opencellid), R.drawable.stat_sys_download_anim0, false));   // "Download Local BTS data"
+            menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA, mContext.getString(R.string.upload_bts), R.drawable.stat_sys_upload_anim0, false));      // "Upload Local BTS data"
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.ABOUT, mContext.getString(R.string.about_aimsicd), R.drawable.ic_action_about, true));         // About
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.SEND_DEBUGGING_LOG, mContext.getString(R.string.send_logs), R.drawable.ic_action_computer, false));         // Debugging
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.QUIT, mContext.getString(R.string.quit), R.drawable.ic_action_remove, false));                // Quit

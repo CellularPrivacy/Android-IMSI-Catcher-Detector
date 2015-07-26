@@ -325,8 +325,8 @@
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Uzyskaj klucz API do OpenCellID by pobierać i wysyłać dane…</string>
     <string name="help_app_about">O nas i kogo wspieramy.</string>
-    <string name="help_app_download_local_bst">Pobierz bazę danych OCID.</string>
-    <string name="help_app_upload_local_bst">Wyślij dane o lokalnych BTS do OCID.</string>
+    <string name="help_app_download_local_bts">Pobierz bazę danych OCID.</string>
+    <string name="help_app_upload_local_bts">Wyślij dane o lokalnych BTS do OCID.</string>
     <string name="help_app_debugging">Wczytaj i wyślij logi.</string>
     <string name="help_app_quit">Zakończ działanie aplikacji.</string>
     <string name="waiting_for_location">Oczekiwanie na lokalizację…</string>
