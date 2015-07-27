@@ -227,15 +227,15 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         UniqueBtsItemData data = new UniqueBtsItemData(
-                                "MCC: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_MCC))), // MCC
-                                "MNC: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_MNC))), // MNC
-                                "LAC: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC))), // LAC
-                                "CID: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_CID))), // CID
-                                "PSC: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC))), // PSC
-                                "First Seen: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_TIME_FIRST)),// time_first
-                                "Last Seen: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_TIME_LAST)),  // time_last
-                                "LAT: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LAT)),              // gps_lat
-                                "LON: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LON))               // gps_lon
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_MCC))), // MCC
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_MNC))), // MNC
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC))), // LAC
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_CID))), // CID
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC))), // PSC
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_TIME_FIRST)),       // time_first
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_TIME_LAST)),        // time_last
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LAT)),              // gps_lat
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LON))               // gps_lon
                         );
                         // "" + (tableData.getPosition() + 1) + " / " + count);
                         adapter.addItem(data,false);
@@ -309,11 +309,7 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
 
-                        // WARNING! The ORDER of these are crucial!!  MUST correspond to OCID CSV order...
-                        //@EVA this is the order of the DB script?
-                        //This also as no effect on OCID upload and if you want to sort these to be in a
-                        //particular order then the best place to do this is the layout.xml file by moving
-                        //the textviews around
+                        // WARNING! The ORDER of these are crucial!!  MUST correspond to the imported OCID CSV order...
                         DbeImportItemData data = new DbeImportItemData(
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_DBSOURCE))+
                                         "\t\t" + (tableData.getPosition() + 1) + " / " + count,                                   // DBsource + count (record_id?)
@@ -430,7 +426,7 @@ public class DbViewerFragment extends Fragment {
                                 "Lat: " + tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LAT)),     // gpsd_lat
                                 "Lon: " + tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LON)),     // gpsd_lon
                                 "Accu: " + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_ACCU)),      // gpsd_accu (accuracy in [m])
-                                "DetID: " + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_DF_ID)),    // DF_id
+                                "DF_id: " + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_DF_ID)),    // DF_id
                                 "Event: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_DF_DESC)),// DF_desc
                                 "" + (tableData.getPosition() + 1) + " / " + count);
                         data.setIsFakeData(isExample(data));

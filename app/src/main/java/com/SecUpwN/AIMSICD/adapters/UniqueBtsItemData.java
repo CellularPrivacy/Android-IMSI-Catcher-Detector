@@ -5,6 +5,44 @@
  */
 package com.SecUpwN.AIMSICD.adapters;
 
+/**
+ * Description:     Contains the data and definitions of all the items of the XML layout
+ *
+ * Dependencies:
+ *                  UniqueBtsCardInflater.java
+ *                  unique_bts_data.xml
+ *
+ * TODO:
+ *                  [ ] Add record id to show item number in DBV
+ *                  [ ] Fix typo T3213 to be T3212
+ *                  [ ] Order all the items according to appearance found in the DB table below
+ *                  [ ] Add DB items: T3212, A5x and ST_id
+ *                  [ ] If (exact) gpse_lat/lon doesn't exist in DBe_import, set Lat/Lon to "-"
+ *
+ *
+ *
+ * NOTE:
+ *                  CREATE TABLE "DBi_bts"  (
+ *                   "_id"        	INTEGER PRIMARY KEY AUTOINCREMENT,
+ *                   "MCC"       	INTEGER NOT NULL,	--
+ *                   "MNC"       	INTEGER NOT NULL,	--
+ *                   "LAC"       	INTEGER NOT NULL,	--
+ *                   "CID"       	INTEGER NOT NULL,	--
+ *                   "PSC"       	INTEGER,		--
+ *                   "T3212"     	INTEGER DEFAULT 0,	-- Fix java to allow null here
+ *                   "A5x"       	INTEGER DEFAULT 0,	-- Fix java to allow null here
+ *                   "ST_id"     	INTEGER DEFAULT 0,	-- Fix java to allow null here
+ *                   "time_first"	INTEGER,		--
+ *                   "time_last" 	INTEGER,		--
+ *                   "gps_lat"       REAL NOT NULL,		--
+ *                   "gps_lon"       REAL NOT NULL		--
+ *                   );
+ *
+ *
+ * ChangeLog:
+ *                  2015-07-27  E:V:A           Added placeholders for missing items, Fixed T3212 typo
+ */
+
 public class UniqueBtsItemData {
 
     public String getCid() {
@@ -63,12 +101,13 @@ public class UniqueBtsItemData {
         this.psc = psc;
     }
 
-    public String getT3213() {
-        return t3213;
+    // START new ==============================================================
+    public String getT3212() {
+        return t3212;
     }
 
-    public void setT3213(String t3213) {
-        this.t3213 = t3213;
+    public void setT3212(String t3212) {
+        this.t3212 = t3212;
     }
 
     public String getA5x() {
@@ -79,13 +118,19 @@ public class UniqueBtsItemData {
         this.a5x = a5x;
     }
 
-    public String getSt_id() {
+    public String getStId() {
         return st_id;
     }
 
-    public void setSt_id(String st_id) {
+    public void setStId(String st_id) {
         this.st_id = st_id;
     }
+
+    /*public String getRecordId() {
+        return mRecordId;
+    }*/
+    //EVA
+    // END new ==============================================================
 
     public String getLat() {
         return lat;
@@ -109,14 +154,14 @@ public class UniqueBtsItemData {
     String lac;
     String cid;
     String psc;
-    String t3213;
+    String t3212;
     String a5x;
     String st_id;
     String time_first;
     String time_last;
     String lat;
     String lon;
-
+   // String iRecordId;           //EVA
 
     public UniqueBtsItemData(
             String imcc,
@@ -128,25 +173,25 @@ public class UniqueBtsItemData {
             String itime_last,
             String ilat,
             String ilon
-            //String it3213,
+            //String it3212,
             //String ia5x,
             //String ist_id,
-
-            ) {
-        mcc = imcc;
-        mnc = imnc;
-        lac = ilac;
-        cid = icid;
-        psc = ipsc;
-        time_first = itime_first;
-        time_last = itime_last;
-        lat = ilat;
-        lon = ilon;
-        //t3213 = it3213;
-        //a5x = ia5x;
-        //st_id = ist_id;
-
+            //String iRecordId   //EVA
+            )
+    {
+            mcc = imcc;
+            mnc = imnc;
+            lac = ilac;
+            cid = icid;
+            psc = ipsc;
+            time_first = itime_first;
+            time_last = itime_last;
+            lat = ilat;
+            lon = ilon;
+            //t3212 = it3212;
+            //a5x = ia5x;
+            //st_id = ist_id;
+            //RecordId = iRecordId;          //EVA
     }
-
 
 }
