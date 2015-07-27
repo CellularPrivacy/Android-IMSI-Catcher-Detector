@@ -44,11 +44,13 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
-            mCountry = (TextView) mRootView.findViewById(R.id.country);
-            mMcc = (TextView) mRootView.findViewById(R.id.mcc);
-            mLat = (TextView) mRootView.findViewById(R.id.lat);
-            mLng = (TextView) mRootView.findViewById(R.id.lng);
+
+            mCountry =  (TextView) mRootView.findViewById(R.id.country);
+            mMcc =      (TextView) mRootView.findViewById(R.id.mcc);
+            mLat =      (TextView) mRootView.findViewById(R.id.lat);
+            mLng =      (TextView) mRootView.findViewById(R.id.lng);
             mRecordId = (TextView) mRootView.findViewById(R.id.record_id);
+
             rootView.setTag(this);
         }
 
