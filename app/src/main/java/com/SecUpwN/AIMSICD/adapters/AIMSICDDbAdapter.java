@@ -564,9 +564,15 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *                  - "samples"
      *                  - "range"
      *
+     *          d) The difference between "Cellid" and "cid", is that "cellid" is the "Long CID",
+     *             consisting of RNC and a multiplier:
+     *                      Long CID = 65536 * RNC + CID
+     *             See FAQ.
+     *
      * ========================================================================
      * For details on available OpenCellID API DB values, see:
      * http://wiki.opencellid.org/wiki/API
+     * http://wiki.opencellid.org/wiki/FAQ#Long_CellID_vs._short_Cell_ID
      * ========================================================================
      *   # head -2 opencellid.csv
      *   lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,tac,pci,sid,nid,bid
@@ -576,20 +582,20 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *   2 mcc                      INTEGER
      *   3 mnc                      INTEGER
      *   4 lac                      INTEGER
-     *   5 cellid                   INTEGER     (CID)
+     *   5 cellid                   INTEGER     (Long CID) = 65536 * RNC + CID
      *   6 averageSignalStrength    INTEGER     (rx_power)
      *   7 range                    INTEGER     (accu)
      *   8 samples                  INTEGER
      *   9 changeable               INTEGER     (isGPSexact)
      *   10 radio                   TEXT        (RAT)
      *   11 rnc                     INTEGER
-     *   12 cid                     INTEGER
+     *   12 cid                     INTEGER     CID (Short)= "Long CID" mod 65536
      *   13 psc                     INTEGER
-     *   14 tac
-     *   15 pci
-     *   16 sid
-     *   17 nid
-     *   18 bid
+     *   14 tac                     -
+     *   15 pci                     -
+     *   16 sid                     -
+     *   17 nid                     -
+     *   18 bid                     -
      *
      *   54.63376,25.160243,246,3,20,1294,0,-1,1,1,GSM,,,,,,,,
      * ========================================================================
