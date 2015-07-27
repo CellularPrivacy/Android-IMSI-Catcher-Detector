@@ -119,7 +119,7 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
             gpsd_accu  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_gpsd_accu);
 //            gpse_lat  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_gpse_lat);
 //            gpse_lon  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_gpse_lon);
-            bb_power  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_bb_power);
+//            bb_power  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_bb_power);
 //            bb_rf_temp  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_bb_rf_temp);
 //            tx_power  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_tx_power);
             rx_signal  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_rx_signal);
