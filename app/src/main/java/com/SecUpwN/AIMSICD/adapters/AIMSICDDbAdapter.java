@@ -533,7 +533,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             c.close();
             return false;
         } catch (Exception e) {
-            Log.e(TAG, mTAG + ": Error creating OpenCellID Upload Data: " + e);
+            Log.e(TAG, mTAG + ": Error creating OpenCellID Upload Data: " + e.toString());
             return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
@@ -937,7 +937,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             Log.i(TAG, mTAG + ": restoreDB() Finished ");
             return true;
         } catch (Exception e) {
-            Log.e(TAG, mTAG + ": restoreDB() Error\n" + e);
+            Log.e(TAG, mTAG + ": restoreDB() Error\n" + e.toString());
             return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
@@ -990,7 +990,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             //Process process = Runtime.getRuntime().exec(execString);
 
         } catch (Exception e) {
-            Log.e(TAG, mTAG + ":dumpDB() Failed to export DB dump file: " + e);
+            Log.e(TAG, mTAG + ":dumpDB() Failed to export DB dump file: " + e.toString());
         }
         Log.i(TAG, mTAG + ":dumpDB() Database dumped to: " + file);
 
@@ -1060,7 +1060,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             c.close();
 
         } catch (Exception e) {
-            Log.e(TAG, mTAG + ": Error exporting table: " + tableName + " " + e);
+            Log.e(TAG, mTAG + ": Error exporting table: " + tableName + " " + e.toString());
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
         }
