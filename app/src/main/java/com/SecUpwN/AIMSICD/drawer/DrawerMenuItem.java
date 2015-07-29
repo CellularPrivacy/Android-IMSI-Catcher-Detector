@@ -98,11 +98,11 @@ public class DrawerMenuItem implements NavDrawerItem {
 
         switch (mId) {
 
-            case MAIN.CURRENT_TREAT_LEVEL:
-                return R.string.help_main_current_threat_level;
-
             case MAIN.PHONE_SIM_DETAILS:
                 return R.string.help_main_phone_sim_details;
+
+            case MAIN.CURRENT_TREAT_LEVEL:
+                return R.string.help_main_current_threat_level;
 
             case MAIN.ACD:
                 return R.string.help_main_acd;
