@@ -1011,7 +1011,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                            int lac,
                            int cid,
                            int psc,
-                           int t3231,
+                           int t3212,
                            int a5x,
                            int st_id,
                            String time_first,

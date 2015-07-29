@@ -591,6 +591,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *   11 rnc                     INTEGER
      *   12 cid                     INTEGER     CID (Short)= "Long CID" mod 65536
      *   13 psc                     INTEGER
+     *   --------- vvv  See OCID API  vvv ---------
      *   14 tac                     -
      *   15 pci                     -
      *   16 sid                     -
@@ -1919,7 +1920,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             int lac,
             int cid,
             int psc,
-            int t3231,
+            int t3212,
             int a5x,
             int st_id,
             String time_first,
@@ -1936,7 +1937,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             btsValues.put("LAC",        lac);
             btsValues.put("CID",        cid);
             btsValues.put("PSC",        psc);
-            btsValues.put("T3212",    t3231);
+            btsValues.put("T3212",    t3212);
             btsValues.put("A5x",        a5x);
             btsValues.put("ST_id",    st_id);
             btsValues.put("time_first", time_first);
