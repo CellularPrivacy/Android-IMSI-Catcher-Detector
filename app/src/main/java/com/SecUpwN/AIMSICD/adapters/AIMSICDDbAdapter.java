@@ -471,15 +471,23 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     /**
      * Description:     Prepares the CSV file used to upload new data to the OCID server.
      *
-     * Note:            Q: Where is this?
+     * Issues:          TODO:
+     *                  [ ] Add "act" in upload data for the DBi_measure:RAT
+     *                  [ ] function getOCIDSubmitData() is not fully working ==> DB join not yet implemented
+     *                  [ ] skip (or change) progress bar, since CSV write is too fast to be seen.
+     *
+     * Note:            Q: Where is this file?
      *                  A: It is wherever your device has mounted its SDCard.
      *                     For example, in:  /data/media/0/AIMSICD/OpenCellID
      *
-     *   TODO this needs to be fixed with new database upgrade 12/07/2015
-     *          @banjaxbanjo: What do yuo mean? --E:V:A
-     *          @EVA the columns need to be sorted because we don't have some of these in DBi_bts
-     *          //("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act")
-     *          //and also this function getOPCIDSubmitData() is not working because columns also not in DBi_bts
+     *                 OCID CSV upload format:
+     *                  "cellid"        = CID (in UMTS long format)
+     *                  "measured_at"   = time
+     *                  "rating"        = gpsd_accu
+     *                  "act"           = RAT (TEXT):
+     *                                     1xRTT, CDMA, eHRPD, IS95A, IS95B, EVDO_0, EVDO_A, EVDO_B,
+     *                                     UMTS, HSPA+, HSDPA, HSUPA, HSPA, LTE, EDGE, GPRS, GSM
+     *
      */
     public boolean prepareOpenCellUploadData() {
         boolean result;
@@ -494,9 +502,9 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         File file = new File(dir, "aimsicd-ocid-data.csv");
 
         try {
-            // get data not yet submitted yet:
+            // Get data not yet submitted:
             Cursor c = getOCIDSubmitData();
-            // check if we have something to upload:
+            // Check if we have something to upload:
             if(c.getCount() > 0) {
                 if (!file.exists()) {
                     result = file.createNewFile();
@@ -505,17 +513,17 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                         return false;
                     }
 
-                    //OCID upload format
-                    //measured_at =time gps accu = rating
-                    //mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act,ta,psc,tac,pci,sid,nid,bid
+                    // OCID CSV upload format and items
+                    // mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating,speed,direction,act,ta,psc,tac,pci,sid,nid,bid
                     CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+                    // TODO: Add "Act"
                     csvWrite.writeNext("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating");
 
                     int size = c.getCount();
                     Log.d(TAG, mTAG+" OCID UPLOAD: row count = "+size);
                     int startcount = 0;
-                    AIMSICD.mProgressBar.setProgress(startcount);
-                    AIMSICD.mProgressBar.setMax(size);
+                    //AIMSICD.mProgressBar.setProgress(startcount);
+                    //AIMSICD.mProgressBar.setMax(size);
 
                     while (c.moveToNext()) {
                         csvWrite.writeNext(
@@ -527,9 +535,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                 c.getString(c.getColumnIndex("gpsd_lat")),
                                 c.getString(c.getColumnIndex("rx_signal")),
                                 c.getString(c.getColumnIndex("time")),
+                                //c.getString(c.getColumnIndex("RAT")),                     // TODO
                                 String.valueOf(c.getInt(c.getColumnIndex("gpsd_accu"))));
 
-                                AIMSICD.mProgressBar.setProgress(++startcount);
+                                //AIMSICD.mProgressBar.setProgress(++startcount);
                     }
                     csvWrite.close();
                     c.close();
@@ -539,10 +548,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             c.close();
             return false;
         } catch (Exception e) {
-            Log.e(TAG, mTAG + ": Error creating OpenCellID Upload Data: " + e.toString());
+            Log.e(TAG, mTAG + ": prepareOpenCellUploadData(): Error creating OpenCellID Upload Data: " + e.toString());
             return false;
-        } finally {
-            AIMSICD.mProgressBar.setProgress(0);
+        //} finally {
+            //AIMSICD.mProgressBar.setProgress(0);
         }
     }
 

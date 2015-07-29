@@ -44,9 +44,7 @@ import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsData;
 import java.util.ArrayList;
 
 /**
- *      Class that handles the display of the items in the 'Database Viewer'
- *
- *      Description:
+ *      Description:    Class that handles the display of the items in the 'Database Viewer'
  *
  *      Issues:
  *
@@ -58,7 +56,7 @@ import java.util.ArrayList;
  *      ChangeLog:
  *
  *      2015-07-14      E:V:A       Changed the display names of several items (see issue #234)
- *
+ *      2015-07-29      E:V:A
  *
  */
 public class DbViewerFragment extends Fragment {
@@ -132,12 +130,12 @@ public class DbViewerFragment extends Fragment {
                                 result = mDb.returnDefaultLocation();
                                 break;
 
-                            case 4: // SILENT_SMS:              ("")
+                            case 4: // SILENT_SMS:              ("SmsData")
                                 // SMS log data, such as SMSC, type, etc
                                 result = mDb.returnSmsData();
                                 break;
 
-                            case 5: // MEASURED_SIGNAL_STRENGTHS: ("")
+                            case 5: // MEASURED_SIGNAL_STRENGTHS: ("DBi_measure")
                                 // TODO:     ToBe merged into "DBi_measure:rx_signal"
                                 result = mDb.returnDBiMeasure();
                                 break;
@@ -146,7 +144,7 @@ public class DbViewerFragment extends Fragment {
                                 // Table: "EventLog"
                                 result = mDb.returnEventLogData();
                                 break;
-                            case 7:// SMS DETECTION STRINGS     ("")
+                            case 7:// SMS DETECTION STRINGS     ("DetectionStrings")
                                 result = mDb.returnDetectionStrings();
                                 break;
 

@@ -89,7 +89,8 @@
                     android:id="@+id/lng"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/standard_grey" />
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
 
             </TableRow>
 
@@ -99,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/medium_blue"
                 android:textSize="12sp"
-                android:gravity="end"/>
+                android:gravity="end" />
 
         </TableLayout>
     </LinearLayout>

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.SecUpwN.AIMSICD"
           android:versionCode="32"
-          android:versionName="0.1.32-alpha-b11">
+          android:versionName="0.1.32-alpha-b12">
 
     <!-- If we ever wanna make this a system app, we can add the following 2 lines above:
           coreApp="true"
