@@ -34,8 +34,6 @@
                     android:textColor="@color/green_text"
                     android:textSize="12sp" />
 
-                <!-- TODO: Change bts_id to use CID from DBi_bts:CID -->
-
                 <TextView
                     android:id="@+id/tv_bts_measure_bts_id"
                     android:layout_width="0dp"

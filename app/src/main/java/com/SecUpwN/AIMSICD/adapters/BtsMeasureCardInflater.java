@@ -147,7 +147,7 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
             gpsd_accu.setText(item.getGpsd_accu());
 //            gpse_lat.setText(item.getGpse_lat());
 //            gpse_lon.setText(item.getGpse_lon());
-            bb_power.setText(item.getBb_power());
+//            bb_power.setText(item.getBb_power());
 //            bb_rf_temp.setText(item.getBb_rf_temp());
 //            tx_power.setText(item.getTx_power());
             rx_signal.setText(item.getRx_signal());

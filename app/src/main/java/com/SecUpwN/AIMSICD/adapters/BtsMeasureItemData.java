@@ -255,7 +255,7 @@ public class BtsMeasureItemData  {
             String _gpsd_accu,
 //            String _gpse_lat,
 //            String _gpse_lon,
-            String _bb_power,
+//            String _bb_power,
 //            String _bb_rf_temp,
 //            String _tx_power,
             String _rx_signal,
@@ -278,7 +278,7 @@ public class BtsMeasureItemData  {
         this.gpsd_accu = _gpsd_accu;
 //        this.gpse_lat = _gpse_lat;
 //        this.gpse_lon = _gpse_lon;
-        this.bb_power = _bb_power;
+//        this.bb_power = _bb_power;
 //        this.bb_rf_temp = _bb_rf_temp;
 //        this.tx_power = _tx_power;
         this.rx_signal = _rx_signal;
@@ -305,8 +305,9 @@ public class BtsMeasureItemData  {
                 args[6],
                 args[7],
                 args[8],
-                args[9],
-                args[10]
+                args[9]
+                //,
+//                args[10]
         );
     }
 
