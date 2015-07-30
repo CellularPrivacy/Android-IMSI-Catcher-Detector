@@ -175,7 +175,7 @@
                     android:id="@+id/wtf9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DF_desc:"
+                    android:text="Event:"
                     android:textColor="@color/green_text"
                     android:textSize="12sp" />
 
@@ -187,17 +187,6 @@
                     android:textSize="12sp" />
 
             </TableRow>
-
-            <!-- TextView
-            android:id="@+id/example"
-            android:paddingTop="15dp"
-            android:paddingRight="15dp"
-            android:paddingEnd="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/bright_red_text"
-            android:gravity="end"
-            android:layout_gravity="end"/ -->
 
             <TextView
             android:id="@+id/record_id"

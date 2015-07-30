@@ -339,7 +339,6 @@ public class DbViewerFragment extends Fragment {
 
                 case DEFAULT_MCC_LOCATIONS: {       // defaultlocation
 
-                    // Table:   defaultlocation
                     BaseInflaterAdapter<CardItemData> adapter
                             = new BaseInflaterAdapter<>(new DefaultLocationCardInflater());
                     int count = tableData.getCount();
@@ -410,23 +409,27 @@ public class DbViewerFragment extends Fragment {
                 }
 
                 case EVENT_LOG: {           // EventLog
-                    // Where:   Table is displayed with EventLogCardInflater and EventLogItemData
+
                     BaseInflaterAdapter<EventLogItemData> adapter
                             = new BaseInflaterAdapter<>(new EventLogCardInflater());
                     int count = tableData.getCount();
+
+                    // WARNING: Must correspond with:  EventLogCardInflater  and  EventLogItemData
                     while (tableData.moveToNext()) {
                         EventLogItemData data = new EventLogItemData(
-                                "Time: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_TIME)),       // time
-                                "LAC: " + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LAC)),            // LAC
-                                "CID: " + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_CID)),            // CID
-                                "PSC: " + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_PSC)),            // PSC
-                                "Lat: " + tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LAT)),         // gpsd_lat
-                                "Lon: " + tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LON)),         // gpsd_lon
-                                "Accu: " + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_ACCU)),          // gpsd_accu (accuracy in [m])
-                                "DF_id: " + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_DF_ID)),        // DF_id
-                                "Event: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_DF_DESC)),   // DF_desc
-                                "" + (tableData.getPosition() + 1) + " / " + count                                              // item:  "n/X"
+                                //TODO: WTF it's not possible to remove the ""'s??
+                                "" + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_TIME)),      // time
+                                "" + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LAC)),          // LAC
+                                "" + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_CID)),          // CID
+                                "" + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_PSC)),          // PSC
+                                "" + tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LAT)),       // gpsd_lat
+                                "" + tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LON)),       // gpsd_lon
+                                "" + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_ACCU)),         // gpsd_accu (accuracy in [m])
+                                "" + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_DF_ID)),        // DF_id
+                                "" + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_DF_DESC)),   // DF_desc
+                                "" + (tableData.getPosition() + 1) + " / " + count                                       // item:  "n/X"
                         );
+
                         data.setIsFakeData(isExample(data));
                         adapter.addItem(data, false);
                     }

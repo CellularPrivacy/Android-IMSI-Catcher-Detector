@@ -50,19 +50,19 @@ public class EventLogItemData {
     private boolean mIsFakeData;
 
 
-
-
-    public EventLogItemData(String time,
-                            String LAC,
-                            String CID,
-                            String PSC,
-                            String gpsd_lat,
-                            String gpsd_lon,
-                            String gpsd_accu,
-                            String DF_id,
-                            String DF_desc,
-                            String recordId) {
-        this(time,
+    public EventLogItemData(
+                String time,
+                String LAC,
+                String CID,
+                String PSC,
+                String gpsd_lat,
+                String gpsd_lon,
+                String gpsd_accu,
+                String DF_id,
+                String DF_desc,
+                String recordId) {
+        this(
+                time,
                 LAC,
                 CID,
                 PSC,
@@ -72,7 +72,8 @@ public class EventLogItemData {
                 DF_id,
                 DF_desc,
                 recordId,
-                false);
+                false
+        );
     }
 
     public EventLogItemData(String pTime,
