@@ -251,7 +251,7 @@ public class BtsMeasureItemData  {
     private String isSubmitted;
     private String isNeighbour;
 
-    String mRecordId;           //EVA
+    private String mRecordId;
 
     public BtsMeasureItemData(
             String _bts_id,
@@ -300,23 +300,24 @@ public class BtsMeasureItemData  {
 //        this.AvgEcNo = _AvgEcNo;
         this.isSubmitted = _isSubmitted;
         this.isNeighbour = _isNeighbour;
+
         this.mRecordId = _mRecordId;
     }
 
     public BtsMeasureItemData(String... args) {
         this(
-                args[0],
-                args[1],
-                args[2],
-                args[3],
-                args[4],
-                args[5],
-                args[6],
-                args[7],
-                args[8],
-                args[9],
+                args[0],    // bts_id
+                args[1],    // nc_list
+                args[2],    // time
+                args[3],    // gpsd_lat
+                args[4],    // gpsd_lon
+                args[5],    // gpsd_accu
+                args[6],    // rx_signal
+                args[7],    // rat
+                args[8],    // isSubmitted
+                args[9],    // isNeighbour
+                args[10]    // mRecordId        // EVA
                 //,
-                args[10]
         );
     }
 

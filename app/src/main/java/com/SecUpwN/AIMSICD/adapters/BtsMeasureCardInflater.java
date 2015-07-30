@@ -111,7 +111,6 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
 
         private TextView mRecordId;     //EVA
 
-
         public ViewHolder(View rootView) {
             mRootView = rootView;
 
@@ -139,7 +138,6 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
             isNeighbour  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_isNeighbour);
 
             mRecordId = (TextView) mRootView.findViewById(R.id.record_id);      // EVA
-
             rootView.setTag(this);
         }
 
@@ -169,7 +167,6 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
             isNeighbour.setText(item.getIsNeighbour());
 
             mRecordId.setText(item.getRecordId());      // EVA
-
         }
     }
 }

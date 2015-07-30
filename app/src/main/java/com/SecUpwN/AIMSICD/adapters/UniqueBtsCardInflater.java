@@ -107,8 +107,8 @@ public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItem
             TIME_LAST = (TextView) mRootView.findViewById(R.id.tv_uniquebts_time_last);
             LAT =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_lat);
             LON =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_lon);
-            RecordId = (TextView) mRootView.findViewById(R.id.record_id);
 
+            RecordId = (TextView) mRootView.findViewById(R.id.record_id);
             rootView.setTag(this);
         }
 
@@ -132,9 +132,7 @@ public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItem
             LAT.setText(String.valueOf(item.getLat())); // DBe_import
             LON.setText(String.valueOf(item.getLon())); // DBe_import
 
-            //TODO NOT WORKING!! See: UniquewBtsItemData.Java
-            RecordId.setText("fail");// RecordId.setText(item.getRecordId());
-
+            RecordId.setText(item.getRecordId());
         }
     }
 }

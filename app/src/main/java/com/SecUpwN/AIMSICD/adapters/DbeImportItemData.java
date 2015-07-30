@@ -22,41 +22,45 @@ public class DbeImportItemData {
     private final String SAMPLES;
     private final String TIME_FIRST;
     private final String TIME_LAST;
-    private boolean mIsFakeData;
 
+    //private boolean mIsFakeData;
+    private final String mRecordId;
 
-    public DbeImportItemData(String db_source,
-                             String rat,
-                             String mcc,
-                             String mnc,
-                             String lac,
-                             String cid,
-                             String psc,
-                             String gps_lat,
-                             String gps_lon,
-                             String is_gps_exact,
-                             String avg_range,
-                             String avg_signal,
-                             String samples,
-                             String time_first,
-                             String time_last) {
-        DB_SOURCE = db_source;
-        RAT = rat;
-        MCC = mcc;
-        MNC = mnc;
-        LAC = lac;
-        CID = cid;
-        PSC = psc;
-        GPS_LAT = gps_lat;
-        GPS_LON = gps_lon;
-        IS_GPS_EXACT = is_gps_exact;
-        AVG_RANGE = avg_range;
-        AVG_SIGNAL = avg_signal;
-        SAMPLES = samples;
-        TIME_FIRST = time_first;
-        TIME_LAST = time_last;
+    public DbeImportItemData(
+            String db_source,
+             String rat,
+             String mcc,
+             String mnc,
+             String lac,
+             String cid,
+             String psc,
+             String gps_lat,
+             String gps_lon,
+             String is_gps_exact,
+             String avg_range,
+             String avg_signal,
+             String samples,
+             String time_first,
+             String time_last,
+             String _mRecordId) {
 
+            DB_SOURCE = db_source;
+            RAT = rat;
+            MCC = mcc;
+            MNC = mnc;
+            LAC = lac;
+            CID = cid;
+            PSC = psc;
+            GPS_LAT = gps_lat;
+            GPS_LON = gps_lon;
+            IS_GPS_EXACT = is_gps_exact;
+            AVG_RANGE = avg_range;
+            AVG_SIGNAL = avg_signal;
+            SAMPLES = samples;
+            TIME_FIRST = time_first;
+            TIME_LAST = time_last;
 
+            mRecordId = _mRecordId;
     }
 
     public String getDB_SOURCE() {
@@ -118,5 +122,7 @@ public class DbeImportItemData {
     public String getTIME_LAST() {
         return TIME_LAST;
     }
+
+    public String getRecordId() { return mRecordId; }
 
 }

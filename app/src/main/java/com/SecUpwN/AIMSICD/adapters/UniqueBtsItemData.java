@@ -126,10 +126,7 @@ public class UniqueBtsItemData {
         this.st_id = st_id;
     }
 
-    /*public String getRecordId() {
-        return mRecordId;
-    }*/
-    //EVA
+
     // END new ==============================================================
 
     public String getLat() {
@@ -149,6 +146,8 @@ public class UniqueBtsItemData {
     }
 
 
+    public String getRecordId() { return mRecordId; }
+
     String mcc;
     String mnc;
     String lac;
@@ -161,7 +160,8 @@ public class UniqueBtsItemData {
     String time_last;
     String lat;
     String lon;
-   // String iRecordId;           //EVA
+
+    String mRecordId;
 
     public UniqueBtsItemData(
             String imcc,
@@ -172,13 +172,13 @@ public class UniqueBtsItemData {
             String itime_first,
             String itime_last,
             String ilat,
-            String ilon
+            String ilon,
             //String it3212,
             //String ia5x,
             //String ist_id,
-            //String iRecordId   //EVA
-            )
-    {
+            String iRecordId
+            ) {
+
             mcc = imcc;
             mnc = imnc;
             lac = ilac;
@@ -191,7 +191,7 @@ public class UniqueBtsItemData {
             //t3212 = it3212;
             //a5x = ia5x;
             //st_id = ist_id;
-            //RecordId = iRecordId;          //EVA
+            mRecordId = iRecordId;
     }
 
 }
