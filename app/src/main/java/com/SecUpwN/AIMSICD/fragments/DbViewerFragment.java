@@ -255,7 +255,7 @@ public class DbViewerFragment extends Fragment {
                         // WARNING! The ORDER and number of these are crucial, and need to correspond
                         // to what's found in:  BtsMeasureCardInflater.java and BtsMeasureItemData.java
                         BtsMeasureItemData data = new BtsMeasureItemData(
-                                "bts_id: "  + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID))),  // TODO: Wrong! Should be DBi_bts:CID
+                                "bts_id: "  + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID))), // TODO: Wrong! Should be DBi_bts:CID
                                 "n/a", // + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_NC_LIST)),        // nc_list
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TIME)),                       // time
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_LAT)),                   // gpsd_lat
