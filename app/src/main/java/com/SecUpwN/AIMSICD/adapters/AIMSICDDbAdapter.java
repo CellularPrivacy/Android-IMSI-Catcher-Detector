@@ -2130,12 +2130,28 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      * Description:     Inserts log data into the EventLog table
      *
      * Issues:          [ ] ALL events should be logged!!
+     *                  [ ] To avoid repeated copies, only check last DB entries
      *
-     * Notes:           Table item order:
-     *                  time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
+     * Notes:           a)  Table item order:
      *
+     *                      time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
      *
-     * This table was previously known as insertDetection
+     *                  b)  We need to check if cell is not in OCID  Events are not continuously
+     *                      logged to the database as it currently stands. If the same cell shows
+     *                      up it will again be dumped to the event log and will fill up pretty
+     *                      quickly.
+     *
+     *                      @banjaxobanjo    What do you mean here? ALL events should be logged!
+     *
+     *                  c)
+     *
+     *      Query examples for future devs:
+     *
+     *       SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id BETWEEN 1 AND 4
+     *       SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 1" Changing LAC
+     *       SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 2" Cell not in OCID
+     *       SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 3" Detected SMS
+     *       SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 4" Unknown T.B.A...     *
      */
     public void insertEventLog(String time,
                                int lac,
@@ -2147,29 +2163,21 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                int DF_id,
                                String DF_description){
 
-        //Query examples for future devs
-        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id BETWEEN 1 AND 4
-        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 1" Changing LAC
-        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 2" Cell not in OCID
-        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 3" Detected SMS
-        //SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 4" Unknown T.B.A...
-
-        /*
-            We need to check if cell is not in OCID  Events are not continuously logged
-            to the database as it currently stands. If the same cell shows up it will again be
-            dumped to the event log and will fill up pretty quickly
-
-         */
+        // TODO: ONLY check LAST entry!
+        // TODO:  "SELECT * from EventLog WHERE _id=(SELECT max(_id) from EventLog) AND CID=%d AND LAC=%d AND DF_id=%d";
         String query = String.format(
-                "SELECT * FROM EventLog WHERE CID = %d AND LAC = %d AND DF_id = %d",
+                "SELECT * from EventLog WHERE _id=(SELECT max(_id) from EventLog) AND CID=%d AND LAC=%d AND DF_id=%d",
+                // was: "SELECT * FROM EventLog WHERE CID = %d AND LAC = %d AND DF_id = %d",
                 cid, lac, DF_id);
-
-        // Check that the lac/cid/DF_id is not already known, if not, then INSERT
         Cursor cursor = mDb.rawQuery(query,null);
 
-        // @banjaxobanjo    What do you mean here? ALL events should be logged!
+        boolean insertData = true;
+        if (cursor.getCount() > 0) { insertData = false; }
+        cursor.close();
+
+        /*
         boolean EVENT_ALREADY_LOGGED = cursor.getCount() > 0;   // if > 0 Event is logged boolean will be true
-        Log.d(TAG, mTAG + ": EVENT_ALREADY_LOGGED=" + EVENT_ALREADY_LOGGED );
+        //Log.d(TAG, mTAG + ": EVENT_ALREADY_LOGGED=" + EVENT_ALREADY_LOGGED );
         boolean insertData = true;                              // default
         cursor.close();
 
@@ -2201,10 +2209,9 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                 //insertData = true; //already set above
                 break;
         }
+        */
 
-        // Not sure this should be here as all event should be logged! --E:V:A
         if(insertData){
-
             ContentValues eventLog = new ContentValues();
 
             eventLog.put("time",time);
@@ -2218,13 +2225,11 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             eventLog.put("DF_description",DF_description);
 
             mDb.insert("EventLog", null, eventLog);
-            Log.v(TAG, mTAG + ": Insert Detection into EventLog Table: " + cid);
-
+            Log.i(TAG, mTAG + ":insertEventLog(): Insert detection event into EventLog table with CID=" + cid);
         }else{
-            // TODO do we need to do anything if event already logged?
-            // TODO See my comments above -- E:V:A
+            // TODO This may need to be removed as it may spam the logcat buffer...
+            Log.v(TAG, mTAG + ":insertEventLog(): Skipped inserting duplicate event into EventLog table with CID=" + cid);
         }
-
     }
 
     /**
@@ -2351,8 +2356,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
    /**
     *  Description:     Check if CID and LAC is already in DBi_bts
     *
-    *  NOTES:           Replaces cellExists()
-    *                   Warning, this is only for checking, if used to get info,
+    *  NOTES:           Warning, this is only for checking, if used to get info,
     *                   replace "CID,LAC" with "*"
     */
     public boolean cellInDbiBts(int lac,int cellID){
@@ -2371,6 +2375,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     *  Description:     Check if CID (currently bts_id) is already in DBi_measure
     *
     *  Issues:          TODO: replace "bts_id" with DBi_bts:CID
+    *                   [ ] This is redundant because of cellInDbiBts
     *
     *  Dependencies:    TODO: where is this used?
     */
