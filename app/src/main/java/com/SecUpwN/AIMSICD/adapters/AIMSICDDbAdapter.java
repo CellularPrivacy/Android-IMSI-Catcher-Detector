@@ -2131,6 +2131,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *
      * Issues:          [ ] ALL events should be logged!!
      *                  [ ] To avoid repeated copies, only check last DB entries
+     *                  [ ] Before inserting event, check that LAC/CID are not "-1".
      *
      * Notes:           a)  Table item order:
      *
@@ -2143,7 +2144,11 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *
      *                      @banjaxobanjo    What do you mean here? ALL events should be logged!
      *
-     *                  c)
+     *                  c) To select last lines use:
+     *
+     *      SELECT * FROM EventLog WHERE LAC=30114 AND CID=779149 AND DF_id=1 ORDER BY _id DESC LIMIT 1;
+     *      SELECT * FROM EventLog WHERE _id=(SELECT max(_id) FROM EventLog) AND LAC=30114 AND CID=779149 AND DF_id=1;
+     *
      *
      *      Query examples for future devs:
      *
@@ -2163,72 +2168,38 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                int DF_id,
                                String DF_description){
 
-        // TODO: ONLY check LAST entry!
-        // TODO:  "SELECT * from EventLog WHERE _id=(SELECT max(_id) from EventLog) AND CID=%d AND LAC=%d AND DF_id=%d";
-        String query = String.format(
-                "SELECT * from EventLog WHERE _id=(SELECT max(_id) from EventLog) AND CID=%d AND LAC=%d AND DF_id=%d",
-                // was: "SELECT * FROM EventLog WHERE CID = %d AND LAC = %d AND DF_id = %d",
-                cid, lac, DF_id);
-        Cursor cursor = mDb.rawQuery(query,null);
+        if (cid != -1 ) { // skip CID of "-1" (due to crappy API or roaming or Air-Plane Mode)
+            // ONLY check if LAST entry is the same!
+            String query = String.format(
+                    // "SELECT * FROM EventLog WHERE LAC=%d AND CID=%d AND DF_id=%d ORDER BY _id DESC LIMIT 1",
+                    "SELECT * from EventLog WHERE _id=(SELECT max(_id) from EventLog) AND CID=%d AND LAC=%d AND DF_id=%d",
+                    // was: "SELECT * FROM EventLog WHERE CID = %d AND LAC = %d AND DF_id = %d",
+                    cid, lac, DF_id);
+            Cursor cursor = mDb.rawQuery(query,null);
 
-        boolean insertData = true;
-        if (cursor.getCount() > 0) { insertData = false; }
-        cursor.close();
+            boolean insertData = true;
+            if (cursor.getCount() > 0) { insertData = false; }
+            cursor.close();
 
-        /*
-        boolean EVENT_ALREADY_LOGGED = cursor.getCount() > 0;   // if > 0 Event is logged boolean will be true
-        //Log.d(TAG, mTAG + ": EVENT_ALREADY_LOGGED=" + EVENT_ALREADY_LOGGED );
-        boolean insertData = true;                              // default
-        cursor.close();
+            if(insertData){
+                ContentValues eventLog = new ContentValues();
 
-        switch (DF_id){
-            case 1:
-                // Is lac and cid already logged for  CHANGING LAC
-                if(EVENT_ALREADY_LOGGED) {
-                    insertData = false;
-                }
-                break;
+                eventLog.put("time",time);
+                eventLog.put("LAC",lac);
+                eventLog.put("CID",cid);
+                eventLog.put("PSC",psc);
+                eventLog.put("gpsd_lat",gpsd_lat);
+                eventLog.put("gpsd_lon",gpsd_lon);
+                eventLog.put("gpsd_accu",gpsd_accu);
+                eventLog.put("DF_id",DF_id);
+                eventLog.put("DF_description",DF_description);
 
-            case 2:
-                // Is LAC and CID already logged for Cell not in OCID
-                if(EVENT_ALREADY_LOGGED) {
-                    insertData = false;
-                }
-                break;
-
-            case 3:
-                // Store detected SMS
-                //
-                // We don't really need to check this event because it will only be inserted if an
-                // SMS is detected and we won't have duplicates
-                //insertData = true;
-                break;
-
-            case 4:
-                //future code TODO: where are the DF_id codes? Like 1 = Changing Lac?
-                //insertData = true; //already set above
-                break;
-        }
-        */
-
-        if(insertData){
-            ContentValues eventLog = new ContentValues();
-
-            eventLog.put("time",time);
-            eventLog.put("LAC",lac);
-            eventLog.put("CID",cid);
-            eventLog.put("PSC",psc);
-            eventLog.put("gpsd_lat",gpsd_lat);
-            eventLog.put("gpsd_lon",gpsd_lon);
-            eventLog.put("gpsd_accu",gpsd_accu);
-            eventLog.put("DF_id",DF_id);
-            eventLog.put("DF_description",DF_description);
-
-            mDb.insert("EventLog", null, eventLog);
-            Log.i(TAG, mTAG + ":insertEventLog(): Insert detection event into EventLog table with CID=" + cid);
-        }else{
-            // TODO This may need to be removed as it may spam the logcat buffer...
-            Log.v(TAG, mTAG + ":insertEventLog(): Skipped inserting duplicate event into EventLog table with CID=" + cid);
+                mDb.insert("EventLog", null, eventLog);
+                Log.i(TAG, mTAG + ":insertEventLog(): Insert detection event into EventLog table with CID=" + cid);
+            }else{
+                // TODO This may need to be removed as it may spam the logcat buffer...
+                Log.v(TAG, mTAG + ":insertEventLog(): Skipped inserting duplicate event into EventLog table with CID=" + cid);
+            }
         }
     }
 

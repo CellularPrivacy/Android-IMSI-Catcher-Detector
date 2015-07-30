@@ -559,46 +559,62 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void compareLac(CellLocation location){
         switch (mDevice.getPhoneID()) {
 
-            case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
-            case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
+            case TelephonyManager.PHONE_TYPE_NONE:
+            case TelephonyManager.PHONE_TYPE_SIP:
             case TelephonyManager.PHONE_TYPE_GSM:
                 GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
                 if (gsmCellLocation != null) {
                     mMonitorCell.setLAC(gsmCellLocation.getLac());
                     mMonitorCell.setCID(gsmCellLocation.getCid());
 
+                    // Check if LAC is ok
                     boolean lacOK = dbHelper.checkLAC(mMonitorCell);
                     if (!lacOK) {
                         mChangedLAC = true;
 
-                        dbHelper.insertEventLog(MiscUtils.getCurrentTimeStamp(),
-                                mMonitorCell.getLAC(),
-                                mMonitorCell.getCID(),
-                                mMonitorCell.getPSC(),//This is giving weird values like 21478364... is this right?
-                                String.valueOf(mMonitorCell.getLat()),
-                                String.valueOf(mMonitorCell.getLon()),
-                                (int)mMonitorCell.getAccuracy(),
-                                1,
-                                "Changing LAC");
+                        dbHelper.insertEventLog(
+                                MiscUtils.getCurrentTimeStamp(),        // time
+                                mMonitorCell.getLAC(),                  // LAC
+                                mMonitorCell.getCID(),                  // CID
+                                mMonitorCell.getPSC(),                  // PSC
+                                String.valueOf(mMonitorCell.getLat()),  // gpsd_lat
+                                String.valueOf(mMonitorCell.getLon()),  // gpsd_lon
+                                (int)mMonitorCell.getAccuracy(),        // gpsd_accu
+                                1,                                      // DF_id
+                                "Changing LAC"                          // DF_desc
+                        );
+
+                        // Detection Logs are made in checkLAC()
+                        Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+                        v.vibrate(100);     // Vibrate for 100 ms
                         setNotification();
+
                     } else {
                         mChangedLAC = false;
                     }
-                    // Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91) <---FIXED
+
+                    // Check if CID is in DBe_import DB (issue #91)
                     if ( tinydb.getBoolean("ocid_downloaded") ) {
                         if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
-                            Log.i(TAG, mTAG + ": ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
 
-                            dbHelper.insertEventLog(MiscUtils.getCurrentTimeStamp(),
-                                    mMonitorCell.getLAC(),
-                                    mMonitorCell.getCID(),
-                                    mMonitorCell.getPSC(),
-                                    String.valueOf(mDevice.mCell.getLat()),
-                                    String.valueOf(mDevice.mCell.getLon()),
-                                    (int)mDevice.mCell.getAccuracy(),
-                                    2,"CID not in DBe_import"
+                            // TODO: Why are we using different calls here:
+                            // TODO:    "mDevice.mCell" instead of "mMonitorCell" ??
+                            dbHelper.insertEventLog(
+                                    MiscUtils.getCurrentTimeStamp(),        // time
+                                    mMonitorCell.getLAC(),                  // LAC
+                                    mMonitorCell.getCID(),                  // CID
+                                    mMonitorCell.getPSC(),                  // PSC
+                                    String.valueOf(mDevice.mCell.getLat()), // gpsd_lat
+                                    String.valueOf(mDevice.mCell.getLon()), // gpsd_lon
+                                    (int)mDevice.mCell.getAccuracy(),       // gpsd_accu
+                                    2,                                      // DF_id
+                                    "CID not in DBe_import"                 // DF_desc
                             );
                             //dbHelper.close();
+
+                            Log.i(TAG, mTAG + ": ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
+                            Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+                            v.vibrate(100);     // Vibrate for 100 ms
 
                             mCellIdNotInOpenDb = true;
                             setNotification();
@@ -619,7 +635,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     boolean lacOK = dbHelper.checkLAC(mMonitorCell);
                     if (!lacOK) {
                         mChangedLAC = true;
-                        dbHelper.insertEventLog(MiscUtils.getCurrentTimeStamp(),
+                        dbHelper.insertEventLog(
+                                MiscUtils.getCurrentTimeStamp(),
                                 mMonitorCell.getLAC(),
                                 mMonitorCell.getCID(),
                                 mMonitorCell.getPSC(),//This is giving weird values like 21478364... is this right?
@@ -627,7 +644,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                 String.valueOf(mMonitorCell.getLon()),
                                 (int)mMonitorCell.getAccuracy(),
                                 1,
-                                "Changing LAC");
+                                "Changing LAC"
+                        );
                         setNotification();
                     } else {
                         mChangedLAC = false;
@@ -637,6 +655,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
 
     }
+
+    // Where is this used?
     private void handlePhoneStateChange() {
         List<NeighboringCellInfo> neighboringCellInfo = tm.getNeighboringCellInfo();
         if (neighboringCellInfo == null || neighboringCellInfo.size() == 0) {
@@ -655,14 +675,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     * Process User Preferences
-     *
-     * Description:     This loads the default Settings/Preferences as set in:
+     * Description:     Process User Preferences
+     *                  This loads the default Settings/Preferences as set in:
      *                      preferences.xml
      *                  and:
      *                      /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
      *
-     *  TODO:           Please add more info and corrections
+     *                  TODO: Please add more info
      *
      */
     private void loadPreferences() {
@@ -729,16 +748,17 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
     private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
         public void onCellLocationChanged(CellLocation location) {
-            checkForNeighbourCount(location);
-            compareLac(location);
-            refreshDevice();                //refresh data on cell change
-            mDevice.setNetID(tm);           // ??
-            mDevice.getNetworkTypeName();   // RAT??
+
+            checkForNeighbourCount(location);   // ??
+            compareLac(location);               // ??
+            refreshDevice();                    // Refresh data on cell change //TODO: Maybe not!!?
+            mDevice.setNetID(tm);               // ??
+            mDevice.getNetworkTypeName();       // RAT??
 
             switch (mDevice.getPhoneID()) {
 
-                case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
-                case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
+                case TelephonyManager.PHONE_TYPE_NONE:
+                case TelephonyManager.PHONE_TYPE_SIP:
                 case TelephonyManager.PHONE_TYPE_GSM:
 
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
@@ -752,10 +772,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                         */
                         mDevice.setCellInfo(
-                                gsmCellLocation.toString() +                        // ??
-                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
-                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                        mDevice.getNetworkTypeName() + "|"          // HSPA,LTE etc
+                                gsmCellLocation.toString() +                // ??
+                                mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
+                                mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
+                                mDevice.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
 
                         mDevice.mCell.setLAC(gsmCellLocation.getLac());     // LAC
@@ -800,7 +820,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                 cdmaCellLocation.toString() +                       // ??
                                         mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
                                         mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                        mDevice.getNetworkTypeName() + "|"          // TODO: Is "|" a typo?
+                                        mDevice.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
                         mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());      // NID
                         mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());  // BID
