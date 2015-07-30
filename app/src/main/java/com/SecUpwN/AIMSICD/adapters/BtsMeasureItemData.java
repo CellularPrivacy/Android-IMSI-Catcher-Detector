@@ -4,6 +4,7 @@ package com.SecUpwN.AIMSICD.adapters;
  * Description:     Contains the data and definitions of all the items of the XML layout
  *
  * Dependencies:
+ *                  DbViewerFragment.java: BuildTable()
  *                  BtsMeasureCardInflater.java
  *                  bts_measure_data.xml
  *
@@ -223,6 +224,10 @@ public class BtsMeasureItemData  {
         this.isNeighbour = isNeighbour;
     }
 
+    public String getRecordId() {
+        return mRecordId;
+    }
+
     private String bts_id;
     private String nc_list;
     private String time;
@@ -246,6 +251,8 @@ public class BtsMeasureItemData  {
     private String isSubmitted;
     private String isNeighbour;
 
+    String mRecordId;           //EVA
+
     public BtsMeasureItemData(
             String _bts_id,
             String _nc_list,
@@ -268,7 +275,8 @@ public class BtsMeasureItemData  {
 //            String _BER,
 //            String _AvgEcNo,
             String _isSubmitted,
-            String _isNeighbour) {
+            String _isNeighbour,
+            String _mRecordId) {
 
         this.bts_id = _bts_id;
         this.nc_list = _nc_list;
@@ -292,6 +300,7 @@ public class BtsMeasureItemData  {
 //        this.AvgEcNo = _AvgEcNo;
         this.isSubmitted = _isSubmitted;
         this.isNeighbour = _isNeighbour;
+        this.mRecordId = _mRecordId;
     }
 
     public BtsMeasureItemData(String... args) {
@@ -305,9 +314,9 @@ public class BtsMeasureItemData  {
                 args[6],
                 args[7],
                 args[8],
-                args[9]
+                args[9],
                 //,
-//                args[10]
+                args[10]
         );
     }
 

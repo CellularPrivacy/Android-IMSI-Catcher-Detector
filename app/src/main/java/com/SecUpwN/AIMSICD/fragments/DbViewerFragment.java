@@ -249,35 +249,35 @@ public class DbViewerFragment extends Fragment {
 
                     BaseInflaterAdapter<BtsMeasureItemData> adapter
                             = new BaseInflaterAdapter<>(new BtsMeasureCardInflater());
-//                    int count = tableData.getCount();
+                    int count = tableData.getCount();
 
                     while (tableData.moveToNext()) {
-                        
-                        // WARNING! check that the ORDER of these are not crucial??
+                        // WARNING! The ORDER and number of these are crucial, and need to correspond
+                        // to what's found in:  BtsMeasureCardInflater.java and BtsMeasureItemData.java
                         BtsMeasureItemData data = new BtsMeasureItemData(
-                                "bts_id: "      + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID))),  // TODO: Wrong! Should be DBi_bts:CID
-                                "nc_list: ",// + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_NC_LIST)),               // nc_list
-                                "time: "        + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TIME)),                 // time
-                                "gpsd_lat: "    + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_LAT)),             // gpsd_lat
-                                "gpsd_lon: "    + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_LON)),             // gpsd_lon
-                                "gpsd_accu: "   + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_ACCURACY))), // gpsd_accu
-                                //      "GPSE LAT: "  + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSE_LAT)),       // gpse_lat (remove?)
-                                //      "GPSE LON: "  + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSE_LON)),       // gpse_lon (remove?)
-                                "bb_power: "    + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BB_POWER)),             // bb_power
-                                //      "bb_rf_temp: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BB_RF_TEMP)),    // bb_rf_temp
-                                //      "tx_power: "  + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TX_POWER)),       // tx_power
-                                "rx_signal: "   + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_RX_SIGNAL)),            // rx_signal
-                                //      "rx_stype: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_RX_STYPE)),        // rx_stype
-                                "RAT: "         + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_RAT)),                  // RAT
-                                //      "BCCH: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BCCH)),                // BCCH
-                                //      "TMSI: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TMSI)),                // TMSI
-                                //      "TA: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TA))),       // TA
-                                //      "PD: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_PD))),       // PD
-                                //      "BER: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BER))),     // BER
-                                //      "AvgEcNo: " + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_AVG_EC_NO)),        // AvgEcNo
+                                "bts_id: "  + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID))),  // TODO: Wrong! Should be DBi_bts:CID
+                                "nc_list is n/a", // + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_NC_LIST)),     // nc_list
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TIME)),                       // time
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_LAT)),                   // gpsd_lat
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_LON)),                   // gpsd_lon
+                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_ACCURACY))), // gpsd_accu
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSE_LAT)),                // gpse_lat (remove?)
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSE_LON)),                // gpse_lon (remove?)
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BB_POWER)),                // bb_power
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BB_RF_TEMP)),              // bb_rf_temp
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TX_POWER)),                // tx_power
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_RX_SIGNAL)),                  // rx_signal
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_RX_STYPE)),                // rx_stype
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_RAT)),                        // RAT
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BCCH)),                    // BCCH
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TMSI)),                    // TMSI
+                                // String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TA))),         // TA
+                                // String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_PD))),         // PD
+                                // String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BER))),        // BER
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_AVG_EC_NO)),               // AvgEcNo
                                 "isSubmitted: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_IS_SUBMITTED))), // isSubmitted
-                                "isNeighbour: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_IS_NEIGHBOUR)))  // isNeighbour
-                                //"" + (tableData.getPosition() + 1) + " / " + count
+                                "isNeighbour: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_IS_NEIGHBOUR))), // isNeighbour
+                                "Rec: " + (tableData.getPosition() + 1) + " / " + count
                         );
                         adapter.addItem(data, false);
                     }

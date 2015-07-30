@@ -84,7 +84,7 @@
                     android:id="@+id/wtf4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dLat:"
+                    android:text="Lat:"
                     android:textColor="@color/green_text"
                     android:textSize="12sp" />
 
@@ -122,7 +122,7 @@
                     android:id="@+id/wtf6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dLon:"
+                    android:text="Lon:"
                     android:textColor="@color/green_text"
                     android:textSize="12sp" />
 
@@ -160,7 +160,7 @@
                     android:id="@+id/wtf8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dAccu:"
+                    android:text="Accu:"
                     android:textColor="@color/green_text"
                     android:textSize="12sp" />
 

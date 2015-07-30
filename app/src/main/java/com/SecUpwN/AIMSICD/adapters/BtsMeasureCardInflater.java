@@ -11,11 +11,13 @@ import com.SecUpwN.AIMSICD.R;
  * Description:     Contains the data and definitions of all the items of the XML layout
  *
  * Dependencies:
+ *                  DbViewerFragment.java: BuildTable()
  *                  BtsMeasureItemData.java
  *                  bts_measure_data.xml
  *
  * TODO:
  *                  [ ] Order all the items according to appearance found in the DB table below
+ *                      (Is this the right way to do it?)
  *                  [ ] Only show items currently supported
  *                  [ ] Add record id "n/XXX"
  *
@@ -107,6 +109,8 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
         private TextView isSubmitted;
         private TextView isNeighbour;
 
+        private TextView mRecordId;     //EVA
+
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
@@ -133,6 +137,8 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
 //            AvgEcNo  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_AvgEcNo);
             isSubmitted  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_isSubmitted);
             isNeighbour  = (TextView) mRootView.findViewById(R.id.tv_bts_measure_isNeighbour);
+
+            mRecordId = (TextView) mRootView.findViewById(R.id.record_id);      // EVA
 
             rootView.setTag(this);
         }
@@ -161,6 +167,8 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
 //            AvgEcNo.setText(item.getAvgEcNo());
             isSubmitted.setText(item.getIsSubmitted());
             isNeighbour.setText(item.getIsNeighbour());
+
+            mRecordId.setText(item.getRecordId());      // EVA
 
         }
     }
