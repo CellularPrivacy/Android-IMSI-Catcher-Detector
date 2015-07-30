@@ -171,7 +171,13 @@
                     android:textColor="@color/standard_yellow"
                     android:textSize="12sp" />
 
-                <TextView
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+            <TextView
                     android:id="@+id/wtf9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
