@@ -349,7 +349,8 @@ public class DbViewerFragment extends Fragment {
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DEFAULT_LOCATION_MCC))),  // MCC
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DEFAULT_LOCATION_LAT)),               // lat
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DEFAULT_LOCATION_LON)),               // lon
-                                (tableData.getPosition() + 1) + " / " + count);                                                     // item:  "n/X"
+                                (tableData.getPosition() + 1) + " / " + count                                                       // item:  "n/X"
+                        );
                         adapter.addItem(data, false);
                     }
                     if (!tableData.isClosed()) {
@@ -377,6 +378,7 @@ public class DbViewerFragment extends Fragment {
                             getdata.setCurrent_roam_status(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_ROAM_STATE)));   // roaming (BOOL)
                             getdata.setCurrent_gps_lat(tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_GPS_LAT)));       // lat
                             getdata.setCurrent_gps_lon(tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_GPS_LON)));       // lon
+
                             adapter.addItem(getdata, false);
                         }
                     }
@@ -398,7 +400,7 @@ public class DbViewerFragment extends Fragment {
                                 tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID)),                        // CID
                                 Integer.parseInt(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BB_POWER))), // rx_signal
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TIME)));                      // time
-                        //"" + (tableData.getPosition() + 1) + " / " + count);                                                          // item:  "n/X"
+                                //"" + (tableData.getPosition() + 1) + " / " + count);                                                  // item:  "n/X"
                         adapter.addItem(data, false);
                     }
                     if (!tableData.isClosed()) {
