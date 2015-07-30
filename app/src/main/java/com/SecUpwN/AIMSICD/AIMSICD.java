@@ -311,9 +311,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
 
-                // Trying to fix issue #525 by using DJaeger's comment in:
-                // https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/543#issuecomment-121605064
-                // TODO: FIXME !!
                 Cell cell = new Cell();
                 TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 String networkOperator = tm.getNetworkOperator();

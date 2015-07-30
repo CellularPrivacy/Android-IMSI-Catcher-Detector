@@ -5,7 +5,7 @@ package com.SecUpwN.AIMSICD.constants;
  *                  make everything much more transparent...
  *
  * Note:            Try keep the same order as in the aimsicd.sql tables
- *                  
+ *
  */
 public class DBTableColumnIds {
     //defaultlocation
