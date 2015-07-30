@@ -430,6 +430,7 @@ public class DbViewerFragment extends Fragment {
                                 "" + (tableData.getPosition() + 1) + " / " + count                                       // item:  "n/X"
                         );
 
+                        // TODO: @banajaxbanjo, please explain how to use this!!
                         data.setIsFakeData(isExample(data));
                         adapter.addItem(data, false);
                     }

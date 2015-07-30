@@ -46,6 +46,7 @@ public class EventLogItemData {
     private final String mgpsd_accu;
     private final String mDF_id;
     private final String mDF_desc;
+
     private final String mRecordId;
     private boolean mIsFakeData;
 
@@ -60,6 +61,7 @@ public class EventLogItemData {
                 String gpsd_accu,
                 String DF_id,
                 String DF_desc,
+
                 String recordId) {
         this(
                 time,
@@ -71,6 +73,7 @@ public class EventLogItemData {
                 gpsd_accu,
                 DF_id,
                 DF_desc,
+
                 recordId,
                 false
         );
@@ -85,6 +88,7 @@ public class EventLogItemData {
                             String pGpsd_accu,
                             String pDF_id,
                             String pDF_desc,
+
                             String pRecordId,
                             boolean pIsFakeData) {
         mTimestamp = pTime;
@@ -96,6 +100,7 @@ public class EventLogItemData {
         mgpsd_accu = pGpsd_accu;
         mDF_id = pDF_id;
         mDF_desc = pDF_desc;
+
         mRecordId = pRecordId;
         mIsFakeData = pIsFakeData;
     }
@@ -135,6 +140,7 @@ public class EventLogItemData {
     public String getDF_desc() {
         return mDF_desc;
     }
+
 
     public String getRecordId() {
         return mRecordId;
