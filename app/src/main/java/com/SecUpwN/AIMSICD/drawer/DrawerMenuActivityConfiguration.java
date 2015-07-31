@@ -6,27 +6,23 @@
 package com.SecUpwN.AIMSICD.drawer;
 
 import android.content.Context;
-import android.telephony.TelephonyManager;
 import android.widget.BaseAdapter;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.DrawerMenuAdapter;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;
-import com.SecUpwN.AIMSICD.service.CellTracker;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DrawerMenuActivityConfiguration {
 
-    private final int mMainLayout;
-    private final int mDrawerLayoutId;
-    private final int mLeftDrawerId;
-    private final int[] mActionMenuItemsToHideWhenDrawerOpen;
-    private final List<NavDrawerItem> mNavItems;
-    private final int mDrawerOpenDesc;
-    private final int mDrawerCloseDesc;
-    private final BaseAdapter mBaseAdapter;
+    private int mMainLayout;
+    private int mDrawerLayoutId;
+    private int mLeftDrawerId;
+    private int[] mActionMenuItemsToHideWhenDrawerOpen;
+    private List<NavDrawerItem> mNavItems;
+    private BaseAdapter mBaseAdapter;
 
     private DrawerMenuActivityConfiguration(Builder pBuilder) {
         mMainLayout = pBuilder.mMainLayout;
@@ -34,8 +30,6 @@ public class DrawerMenuActivityConfiguration {
         mLeftDrawerId = pBuilder.mLeftDrawerId;
         mActionMenuItemsToHideWhenDrawerOpen = pBuilder.mActionMenuItemsToHideWhenDrawerOpen;
         mNavItems = pBuilder.mNavItems;
-        mDrawerOpenDesc = pBuilder.mDrawerOpenDesc;
-        mDrawerCloseDesc = pBuilder.mDrawerCloseDesc;
         mBaseAdapter = pBuilder.mBaseAdapter;
     }
 
@@ -57,14 +51,6 @@ public class DrawerMenuActivityConfiguration {
 
     public List<NavDrawerItem> getNavItems() {
         return mNavItems;
-    }
-
-    public int getDrawerOpenDesc() {
-        return mDrawerOpenDesc;
-    }
-
-    public int getDrawerCloseDesc() {
-        return mDrawerCloseDesc;
     }
 
     public BaseAdapter getBaseAdapter() {
@@ -102,11 +88,6 @@ public class DrawerMenuActivityConfiguration {
             return this;
         }
 
-        public Builder actionMenuItemsToHideWhenDrawerOpen(int[] pActionMenuItemsToHideWhenDrawerOpen) {
-            mActionMenuItemsToHideWhenDrawerOpen = pActionMenuItemsToHideWhenDrawerOpen;
-            return this;
-        }
-
         public Builder drawerOpenDesc(int pDrawerOpenDesc) {
             mDrawerOpenDesc = pDrawerOpenDesc;
             return this;
@@ -117,19 +98,14 @@ public class DrawerMenuActivityConfiguration {
             return this;
         }
 
-        public Builder baseAdapter(BaseAdapter pBaseAdapter) {
-            mBaseAdapter = pBaseAdapter;
-            return this;
-        }
-
         public DrawerMenuActivityConfiguration build() {
 
             List<NavDrawerItem> menu = new ArrayList<>();
 
             //Section Main
             menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_MAIN, mContext.getString(R.string.main)));
-            menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.CURRENT_TREAT_LEVEL, mContext.getString(R.string.cell_info_title), R.drawable.cell_tower, true));            // Cell Information (Neighboring cells etc)
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.PHONE_SIM_DETAILS, mContext.getString(R.string.device_info), R.drawable.ic_action_phone, true));           // Phone/SIM Details
+            menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.CURRENT_TREAT_LEVEL, mContext.getString(R.string.cell_info_title), R.drawable.cell_tower, true));            // Cell Information (Neighboring cells etc)
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.ACD, mContext.getString(R.string.cell_lookup), R.drawable.stat_sys_download_anim0, false));  // Lookup "All Current Cell Details (ACD)"
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.DB_VIEWER, mContext.getString(R.string.db_viewer), R.drawable.ic_action_storage, true));           // Database Viewer
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.ANTENNA_MAP_VIEW, mContext.getString(R.string.map_view), R.drawable.ic_action_map, false));               // Antenna Map Viewer
