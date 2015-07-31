@@ -23,7 +23,6 @@
         depending on the use of this application.
     </string>
 
-
     <!-- MENU -->
     <string name="toggle_attack_detection">Toggle Attack Detection</string>
     <string name="toggle_cell_tracking">Toggle Cell Tracking</string>
@@ -93,7 +92,6 @@
     <string name="about_desc_icon_insecure_area">Insecure Service Area. Leave it!</string>
     <string name="about_desc_icon_run">RUN! Handset manipulated!</string>
     <string name="about_desc_icon_title">Press Status Icons below for detailed Information:</string>
-
 
     <!-- CDMA LAYOUT -->
     <string name="network_netid">Network ID:</string>
@@ -259,7 +257,7 @@
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data successfully received.\nMap Markers updated.</string>
     <string name="uploaded_bts_data_successfully">Uploaded BTS data to OCID successfully.</string>
     <string name="error_uploading_bts_data">Error in uploading BTS data to OCID servers!</string>
-    <string name="restore_database_completed_title">Restore Successfull.</string>
+    <string name="restore_database_completed_title">Restore Successful.</string>
     <string name="restore_database_completed">Restore database completed successfully.</string>
     <string name="error_restoring_database">Error restoring database.</string>
     <string name="database_backup_successfully_saved_to">Database backup successfully saved to:</string>
@@ -310,7 +308,7 @@
     <string name="typewap_data">WAP Push SMS Message detected!\nDetails: See Database Viewer.</string>
 
 
-    <!-- Section Main-->
+    <!-- Section Main -->
     <string name="help_main_current_threat_level">AIMSICD threat status, neighboring cells, ciphering method indicator.</string>
     <string name="help_main_phone_sim_details">SIM network provider details, IMEI, TMSI.</string>
     <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OCID and highlight the differences.</string>
@@ -318,11 +316,11 @@
     <string name="help_main_antenna_map_view">Map of color coded antennas nearby.</string>
     <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
 
-    <!-- Section Tracking-->
+    <!-- Section Tracking -->
     <string name="help_tracking_toggle_attack_detection">Start/stop attack detection and collect cell details into internal database tables.</string>
     <string name="help_tracking_toggle_cell_tracking">Start to track cells for display on the Antenna Map Viewer and possibly later upload to OCID.</string>
 
-    <!-- Section Settings-->
+    <!-- Section Settings -->
     <string name="help_settings_preferences">AIMSICD settings such as protection rules, polling times and service behaviour.</string>
     <string name="help_settings_backup_db">Backup SQLite3 DB to SD-Card.</string>
     <string name="help_settings_restore_db">Restore SQLite3 DB from SD-Card.</string>
@@ -330,7 +328,7 @@
     <string name="help_settings_export_db_to_csv">Export DB tables into individual CSV files.</string>
     <string name="help_settings_import_db_from_csv">Import DB table(s) from individual CSV file(s).</string>
 
-    <!-- Section Application-->
+    <!-- Section Application -->
     <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data…</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
     <string name="help_app_download_local_bts">Downloads the OCID Database.</string>
@@ -356,6 +354,10 @@
     <string name="unknown_or_insecure_bts">Unknown or insecure BTS</string>
     <string name="new_or_recently_added_bts">New or recently added BTS</string>
 
+    <!-- Section Delete DB -->
+    <string name="delete_database_msg_success">Database deleted and recreated successfully.\nPlease restart app to clear old values already in memory.</string>
+
+    <!-- Section OCID Download API key -->
     <string name="invalid_key_try_later">Invalid OpenCellId key, try again later.</string>
     <string name="getting_ocid_key">Getting OpenCellId API Key...</string>
 

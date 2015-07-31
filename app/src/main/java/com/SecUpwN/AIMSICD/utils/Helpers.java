@@ -21,6 +21,7 @@ package com.SecUpwN.AIMSICD.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.CountDownTimer;
@@ -30,8 +31,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.utils.Toaster;
 
@@ -75,7 +79,8 @@ import java.util.List;
  *
  * Issues:          AS complaints that several of these methods are not used...
  *
- * ChangeLog:       2015-05-08   SecUpwN   Added Toast Extender for longer toasts
+ * ChangeLog:
+ *              2015-05-08   SecUpwN   Added Toast Extender for longer toasts
  *
  */
  public class Helpers {
@@ -581,9 +586,22 @@ import java.util.List;
     }
 
     /**
-     * Very cool method. Completely erases the entire database.
-     * Apply on medical prescription.
-     * Also asks the user, whether he wants to erase its database ...
+     * Description:     Deletes the entire database by removing internal SQLite DB file
+     *
+
+     *
+     * Dependencies:    Used in AIMSICD.java
+     *
+     * Notes:           See Android developer info: http://tinyurl.com/psz8vmt
+     *
+     *              WARNING!
+     *              This deletes the entire database, thus any subsequent DB access will FC app.
+     *              Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
+     *              See: #581
+     *
+     *              In addition, since SQLite is kept in memory during lifetime of App, and
+     *              is using Journaling, we have to restart app in order to clear old data
+     *              already in memory.
      *
      * @param pContext Context of Activity
      */
@@ -592,14 +610,18 @@ import java.util.List;
                 .setNegativeButton(R.string.open_cell_id_button_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Do nothing
+                        // Do nothing... or add something more informative!
                     }
                 })
                 .setPositiveButton(R.string.open_cell_id_button_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //FIXME need to remove hardcoded string into constants
+                        // Probably put in try/catch in case file removal fails...
+                        pContext.stopService(new Intent(pContext, AimsicdService.class));
                         pContext.deleteDatabase("aimsicd.db");
+                        new AIMSICDDbAdapter(pContext);
+                        pContext.startService(new Intent(pContext, AimsicdService.class));
+                        msgLong(pContext,pContext.getString(R.string.delete_database_msg_success));
                     }
                 })
                 .setMessage(pContext.getString(R.string.clear_database_question))

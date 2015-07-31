@@ -1,7 +1,51 @@
 package com.SecUpwN.AIMSICD.adapters;
 
 /**
- * Created by Marvin Arnold on 8/07/15.
+ * Description:     Contains the data and definitions of all the items of the XML layout
+ *
+ * Dependencies:
+ *                  DbViewerFragment.java: BuildTable()
+ *                  BtsMeasureCardInflater.java
+ *                  bts_measure_data.xml
+ *
+ * TODO:
+ *                  [ ] Order all the items according to appearance found in the DB table below
+ *
+ * NOTE:
+ *
+ *      CREATE TABLE "DBi_measure"  (
+ *        "_id"           INTEGER PRIMARY KEY AUTOINCREMENT,
+ *        "bts_id"       	INTEGER NOT NULL,	-- DBi_bts:_id
+ *        "nc_list"      	TEXT,			    -- Neighboring Cells List (TODO: specify content)
+ *        "time"         	INTEGER NOT NULL,	-- [s]
+ *        "gpsd_lat"     	REAL,			    -- Device GPS (allow NULL)
+ *        "gpsd_lon"     	REAL,			    -- Device GPS (allow NULL)
+ *        "gpsd_accu"	INTEGER,		        -- Device GPS position accuracy [m]
+ *        "gpse_lat"     	REAL,			    -- Exact GPS		(from where? DBi_import?)
+ *        "gpse_lon"     	REAL,			    -- Exact GPS		(from where? DBi_import?)
+ *        "bb_power"     	TEXT,			    -- [mW] or [mA]		(from BP power rail usage)
+ *        "bb_rf_temp"   	TEXT,			    -- [C]			(from BP internal thermistor)
+ *        "tx_power"     	TEXT,			    -- [dBm]		(from BP )
+ *        "rx_signal"    	TEXT,			    -- [dBm] or ASU		(from AP/BP)
+ *        "rx_stype"     	TEXT,			    -- Reveived Signal power Type [RSSI, ...] etc.
+ *        "RAT"		TEXT NOT NULL,		        -- Radio Access Technology
+ *        "BCCH"         	TEXT,			    -- Broadcast Channel		-- consider INTEGER
+ *        "TMSI"         	TEXT,			    -- Temporary IMSI (hex)
+ *        "TA"           	INTEGER DEFAULT 0,	-- Timing Advance (GSM, LTE)	-- allow NULL
+ *        "PD"           	INTEGER DEFAULT 0,	-- Propagation Delay (LTE)	-- allow NULL
+ *        "BER"          	INTEGER DEFAULT 0,	-- Bit Error Rate		-- allow NULL
+ *        "AvgEcNo"      	TEXT,			    -- Average Ec/No		-- consider REAL
+ *        "isSubmitted"  	INTEGER DEFAULT 0,	-- * Has been submitted to OCID/MLS etc?
+ *        "isNeighbour"  	INTEGER DEFAULT 0,	-- * Is a neighboring BTS? [Is this what we want?]
+ *        FOREIGN KEY("bts_id")			        --
+ *        REFERENCES "DBi_bts"("_id")		    --
+ *      );
+ *
+ *
+ * ChangeLog:
+ *                  2015-07-08  Marvin Arnold   Initial commit
+ *                  2015-07-27  E:V:A           Added placeholders for missing items
+ *
  */
 public class BtsMeasureItemData  {
     public String getBts_id() {
@@ -180,6 +224,10 @@ public class BtsMeasureItemData  {
         this.isNeighbour = isNeighbour;
     }
 
+    public String getRecordId() {
+        return mRecordId;
+    }
+
     private String bts_id;
     private String nc_list;
     private String time;
@@ -203,6 +251,8 @@ public class BtsMeasureItemData  {
     private String isSubmitted;
     private String isNeighbour;
 
+    private String mRecordId;
+
     public BtsMeasureItemData(
             String _bts_id,
             String _nc_list,
@@ -212,7 +262,7 @@ public class BtsMeasureItemData  {
             String _gpsd_accu,
 //            String _gpse_lat,
 //            String _gpse_lon,
-            String _bb_power,
+//            String _bb_power,
 //            String _bb_rf_temp,
 //            String _tx_power,
             String _rx_signal,
@@ -225,7 +275,8 @@ public class BtsMeasureItemData  {
 //            String _BER,
 //            String _AvgEcNo,
             String _isSubmitted,
-            String _isNeighbour) {
+            String _isNeighbour,
+            String _mRecordId) {
 
         this.bts_id = _bts_id;
         this.nc_list = _nc_list;
@@ -235,7 +286,7 @@ public class BtsMeasureItemData  {
         this.gpsd_accu = _gpsd_accu;
 //        this.gpse_lat = _gpse_lat;
 //        this.gpse_lon = _gpse_lon;
-        this.bb_power = _bb_power;
+//        this.bb_power = _bb_power;
 //        this.bb_rf_temp = _bb_rf_temp;
 //        this.tx_power = _tx_power;
         this.rx_signal = _rx_signal;
@@ -249,21 +300,24 @@ public class BtsMeasureItemData  {
 //        this.AvgEcNo = _AvgEcNo;
         this.isSubmitted = _isSubmitted;
         this.isNeighbour = _isNeighbour;
+
+        this.mRecordId = _mRecordId;
     }
 
     public BtsMeasureItemData(String... args) {
         this(
-                args[0],
-                args[1],
-                args[2],
-                args[3],
-                args[4],
-                args[5],
-                args[6],
-                args[7],
-                args[8],
-                args[9],
-                args[10]
+                args[0],    // bts_id
+                args[1],    // nc_list
+                args[2],    // time
+                args[3],    // gpsd_lat
+                args[4],    // gpsd_lon
+                args[5],    // gpsd_accu
+                args[6],    // rx_signal
+                args[7],    // rat
+                args[8],    // isSubmitted
+                args[9],    // isNeighbour
+                args[10]    // mRecordId        // EVA
+                //,
         );
     }
 

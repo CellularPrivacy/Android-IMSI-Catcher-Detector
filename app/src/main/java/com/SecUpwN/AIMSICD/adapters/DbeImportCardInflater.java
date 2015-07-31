@@ -13,14 +13,14 @@ import android.widget.TextView;
 import com.SecUpwN.AIMSICD.R;
 
 /**
- *  Description:     TODO!
+ *  Description:     Contains the data and definitions of all the items of the XML layout
  *
  *  Dependencies:
+ *                  DbViewerFragment.java: BuildTable()
+ *                  DbeImportItemData.java
  *                  dbe_import_items.xml
  *
- *
  *  Issues:
- *          [ ]     LAC and CID seem swapped...hard to debug
  *
  *  ChangeLog:
  *
@@ -65,6 +65,8 @@ public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItem
         private final TextView TIME_FIRST;
         private final TextView TIME_LAST;
 
+        private final TextView mRecordId;     //EVA
+
         public ViewHolder(View rootView) {
             mRootView = rootView;
             // TODO: explain these and try to adhere to a naming convention
@@ -85,6 +87,7 @@ public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItem
             TIME_FIRST =    (TextView) mRootView.findViewById(R.id.nTIME_FIRST);
             TIME_LAST =     (TextView) mRootView.findViewById(R.id.nTIME_LAST);
 
+            mRecordId =     (TextView) mRootView.findViewById(R.id.record_id);      // EVA
             rootView.setTag(this);
         }
 
@@ -104,6 +107,8 @@ public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItem
             SAMPLES.setText(item.getSAMPLES());
             TIME_FIRST.setText(item.getTIME_FIRST());
             TIME_LAST.setText(item.getTIME_LAST());
+
+            mRecordId.setText(item.getRecordId());      // EVA
         }
     }
 }

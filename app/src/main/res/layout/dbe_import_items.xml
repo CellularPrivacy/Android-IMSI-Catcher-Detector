@@ -307,22 +307,15 @@
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="--"
-                    android:id="@+id/wtf16"
-                    android:textSize="12sp"
-                    android:textColor="@color/green_text" />
-
-                <TextView
-                    android:id="@+id/record_id"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/medium_blue"
-                    android:textSize="12sp" />
-
             </TableRow>
+
+            <TextView
+                android:id="@+id/record_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/medium_blue"
+                android:textSize="12sp"
+                android:gravity="end" />
             
         </TableLayout>
     </LinearLayout>

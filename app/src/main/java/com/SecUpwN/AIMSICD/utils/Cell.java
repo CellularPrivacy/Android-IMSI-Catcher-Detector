@@ -25,23 +25,23 @@ import java.util.List;
 public class Cell implements Parcelable {
 
     // Cell Specific Variables
-    private int cid;  // Cell Identification code
-    private int lac;  // Location Area Code
-    private int mcc;  // Mobile Country Code
-    private int mnc;  // Mobile Network Code
-    private int dbm;  // [dBm] RX signal "power"
-    private int psc;  // Primary Scrambling Code
-    private int rssi; // Relative Signal Strength Indicator [dBm, asu etc.]
-    private int timingAdvance;       // Timing Advance [LTE,GSM]
+    private int cid;                // Cell Identification code
+    private int lac;                // Location Area Code
+    private int mcc;                // Mobile Country Code
+    private int mnc;                // Mobile Network Code
+    private int dbm;                // [dBm] RX signal "power"
+    private int psc;                // Primary Scrambling Code
+    private int rssi;               // Relative Signal Strength Indicator [dBm, asu etc.]
+    private int timingAdvance;      // Timing Advance [LTE,GSM]
     //private int propagationDelay;  // Propagation Delay [LTE]
-    private int sid;                 // Cell-ID for [CDMA]
-    private long timestamp;
+    private int sid;                // Cell-ID for [CDMA]
+    private long timestamp;         // time
 
     // Tracked Cell Specific Variables
     private int netType;
-    private double speed;       // Remove
-    private double accuracy;    // Remove
-    private double bearing;     // Remove
+    private double speed;       //
+    private double accuracy;    //
+    private double bearing;     //
     private double lon;
     private double lat;
 
@@ -58,9 +58,9 @@ public class Cell implements Parcelable {
         netType = Integer.MAX_VALUE;
         lon = 0.0;
         lat = 0.0;
-        speed = 0.0;        // Remove
-        accuracy = 0.0;     // Remove
-        bearing = 0.0;      // Remove
+        speed = 0.0;        //
+        accuracy = 0.0;     //
+        bearing = 0.0;      //
     }
 
     public Cell() {}
@@ -80,9 +80,9 @@ public class Cell implements Parcelable {
         netType = Integer.MAX_VALUE;
         lon = 0.0;
         lat = 0.0;
-        speed = 0.0;
+        speed = 0.0;        //
         accuracy = 0.0;
-        bearing = 0.0;
+        bearing = 0.0;      //
     }
 
     public Cell(int cid, int lac, int signal, int psc, int netType, boolean dbm) {
@@ -101,9 +101,9 @@ public class Cell implements Parcelable {
         sid = Integer.MAX_VALUE;
         lon = 0.0;
         lat = 0.0;
-        speed = 0.0;
+        speed = 0.0;        //
         accuracy = 0.0;
-        bearing = 0.0;
+        bearing = 0.0;        //
         this.timestamp = SystemClock.currentThreadTimeMillis();
     }
 
@@ -118,8 +118,8 @@ public class Cell implements Parcelable {
         timingAdvance = Integer.MAX_VALUE;
         sid = Integer.MAX_VALUE;
         this.accuracy = accuracy;
-        this.speed = speed;
-        this.bearing = bearing;
+        this.speed = speed;             //
+        this.bearing = bearing;         //
         this.netType = netType;
         this.timestamp = timestamp;
     }
@@ -411,7 +411,6 @@ public class Cell implements Parcelable {
     /**
      * TODO: What is this, and where is it supposed to be used ???
      *
-     *
      * @return
      */
     @Override
@@ -449,6 +448,7 @@ public class Cell implements Parcelable {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
+
         result.append("CID - ").append(cid).append("\n");
         result.append("LAC - ").append(lac).append("\n");
         result.append("MCC - ").append(mcc).append("\n");
@@ -469,7 +469,17 @@ public class Cell implements Parcelable {
     }
 
 
-    // What is this doing ??? (And from where is it called?)
+    /**
+     * Description:     This is used in in the All Current Cell Details (ACD) menu option.
+     *                  It was originally meant to look up single cell (BTS) info by querying OCID.
+     *
+     * Issues:
+     *                  TODO: What is the current development status of this? Implemented?
+     *
+     * Dependencies:
+     *                  AIMSICD.java -- selectItem()
+     *
+     */
     public static class CellLookUpAsync extends AsyncTask<String, Void, List<Cell>> {
         public AsyncResponse delegate=null;
 
@@ -519,19 +529,19 @@ public class Cell implements Parcelable {
         String[] data = new String[15];
 
         in.readStringArray(data);
-        cid = Integer.valueOf(data[0]);
-        lac = Integer.valueOf(data[1]);
-        mcc = Integer.valueOf(data[2]);
-        mnc = Integer.valueOf(data[3]);
-        dbm = Integer.valueOf(data[4]);
-        psc = Integer.valueOf(data[5]);
-        rssi = Integer.valueOf(data[6]);
+        cid     = Integer.valueOf(data[0]);
+        lac     = Integer.valueOf(data[1]);
+        mcc     = Integer.valueOf(data[2]);
+        mnc     = Integer.valueOf(data[3]);
+        dbm     = Integer.valueOf(data[4]);
+        psc     = Integer.valueOf(data[5]);
+        rssi    = Integer.valueOf(data[6]);
         timingAdvance = Integer.valueOf(data[7]);
-        sid = Integer.valueOf(data[8]);
+        sid     = Integer.valueOf(data[8]);
         netType = Integer.valueOf(data[9]);
-        lon = Double.valueOf(data[10]);
-        lat = Double.valueOf(data[11]);
-        speed = Double.valueOf(data[12]);
+        lon     = Double.valueOf(data[10]);
+        lat     = Double.valueOf(data[11]);
+        speed   = Double.valueOf(data[12]);
         accuracy = Double.valueOf(data[13]);
         bearing = Double.valueOf(data[14]);
     }

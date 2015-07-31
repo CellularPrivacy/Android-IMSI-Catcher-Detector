@@ -1,6 +1,11 @@
 package com.SecUpwN.AIMSICD.constants;
-/*
-    trying to follow the same order as aimsicd.sql tables
+/**
+ * Description:     These are some static constants that represent the SQLite DB
+ *                  table names. These should normally NOT be used, as hardcoded strings
+ *                  make everything much more transparent...
+ *
+ * Note:            Try keep the same order as in the aimsicd.sql tables
+ *
  */
 public class DBTableColumnIds {
     //defaultlocation
@@ -128,7 +133,7 @@ public class DBTableColumnIds {
     public static final String EVENTLOG_LON = "gpsd_lon";
     public static final String EVENTLOG_ACCU = "gpsd_accu";
     public static final String EVENTLOG_DF_ID = "DF_id";
-    public static final String EVENTLOG_DF_DESC = "DF_description";
+    public static final String EVENTLOG_DF_DESC = "DF_description"; // TODO: should be "DF_desc"
 
     //SectorType
     public static final String SECTOR_TYPE_TABLE_NAME = "SectorType";
