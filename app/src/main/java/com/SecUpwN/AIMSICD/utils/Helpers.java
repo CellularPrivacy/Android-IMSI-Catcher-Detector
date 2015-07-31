@@ -75,7 +75,8 @@ import java.util.List;
  *
  * Issues:          AS complaints that several of these methods are not used...
  *
- * ChangeLog:       2015-05-08   SecUpwN   Added Toast Extender for longer toasts
+ * ChangeLog:
+ *              2015-05-08   SecUpwN   Added Toast Extender for longer toasts
  *
  */
  public class Helpers {
@@ -581,9 +582,16 @@ import java.util.List;
     }
 
     /**
-     * Very cool method. Completely erases the entire database.
-     * Apply on medical prescription.
-     * Also asks the user, whether he wants to erase its database ...
+     * Description:     Deletes the entire database by removing internal SQLite DB file
+     * 
+     * Notes:           See Android developer info: http://tinyurl.com/psz8vmt
+     *
+     * Dependencies:    Used in AIMSICD.java
+     *
+     *              WARNING!
+     *              This deletes the entire database, thus any subsequent DB access will FC app.
+     *              Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
+     *              See: #581
      *
      * @param pContext Context of Activity
      */
@@ -592,13 +600,13 @@ import java.util.List;
                 .setNegativeButton(R.string.open_cell_id_button_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Do nothing
+                        // Do nothing... or add something more informative!
                     }
                 })
                 .setPositiveButton(R.string.open_cell_id_button_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //FIXME need to remove hardcoded string into constants
+                        // Probably put in try/catch in case file removal fails...
                         pContext.deleteDatabase("aimsicd.db");
                     }
                 })

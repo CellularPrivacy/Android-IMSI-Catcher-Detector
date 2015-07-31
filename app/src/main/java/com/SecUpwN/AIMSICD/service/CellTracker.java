@@ -957,8 +957,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             if (cellLocation != null) {
                 switch (mDevice.getPhoneID()) {
 
-                    case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
-                    case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
+                    case TelephonyManager.PHONE_TYPE_NONE:
+                    case TelephonyManager.PHONE_TYPE_SIP:
                     case TelephonyManager.PHONE_TYPE_GSM:
                         GsmCellLocation gsmCellLocation = (GsmCellLocation) cellLocation;
                         mDevice.mCell.setCID(gsmCellLocation.getCid()); // CID
@@ -982,9 +982,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if (loc != null && (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0)) {
             mDevice.mCell.setLon(loc.getLongitude());       // gpsd_lon
             mDevice.mCell.setLat(loc.getLatitude());        // gpsd_lat
-            mDevice.mCell.setSpeed(loc.getSpeed());         // speed
+            mDevice.mCell.setSpeed(loc.getSpeed());         // speed        // TODO: Remove, we're not using it!
             mDevice.mCell.setAccuracy(loc.getAccuracy());   // gpsd_accu
-            mDevice.mCell.setBearing(loc.getBearing());     // -- [deg]??
+            mDevice.mCell.setBearing(loc.getBearing());     // -- [deg]??   // TODO: Remove, we're not using it!
             mDevice.setLastLocation(loc);                   //
 
             //Store last known location in preference
@@ -1073,9 +1073,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     * Set or update the Detection/Status Notification
-     *
-     *  Description:    TODO: Please add details!
+     *  Description:    Set or update the Detection/Status Notification
+     *                  TODO: Please add details!
      *
      *  Issues:
      *
@@ -1347,7 +1346,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 //=================================================================================================
 
     /**
-     * Description:     TODO:
+     * Description:     TODO: WTF is this?  --E:V:A
      *
      *
      */
