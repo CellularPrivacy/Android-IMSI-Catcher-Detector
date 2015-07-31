@@ -10,6 +10,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.CellLocation;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
@@ -18,6 +20,7 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 
 import org.apache.http.HttpResponse;
@@ -84,6 +87,7 @@ import java.net.URL;
  *      2015-03-02  kairenken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
  *      2015-03-03  E:V:A       Replaced dirty SharedPreferences code with TinyDB and Upload result Toast msg.
  *      2015-06-15  SecUpwN     Increased timeout of OCID data download to avoid further retrieval errors
+ *      2015-07-31  E:V:A / DJ  Implemented DJaeger's cancelled PR for rechecking cell after OCID download
  *
  *  To Fix:
  *
@@ -113,6 +117,11 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     private final Context mAppContext;
     private final char mType;
     private int mTimeOut;
+
+    private CellTracker mCellTracker;
+    private AimsicdService mAimsicdService;
+    private static TelephonyManager tm;
+    private static Context context;
 
     public RequestTask(Context context, char type) {
         super((Activity)context);
@@ -315,6 +324,10 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         AIMSICD.mProgressBar.setProgress(0);
         TinyDB tinydb = TinyDB.getInstance();
 
+        //this.context = context;
+        tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        CellLocation cellLocation = tm.getCellLocation();
+
         switch (mType) {
             case DBE_DOWNLOAD_REQUEST:
                 if (result != null && result.equals("Successful")) {
@@ -324,8 +337,9 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     }
 
                     mDbAdapter.checkDBe();
-
                     tinydb.putBoolean("ocid_downloaded", true);
+                    mAimsicdService.getCellTracker().compareLac(cellLocation);
+
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_retrieving_opencellid_data));
                 }
