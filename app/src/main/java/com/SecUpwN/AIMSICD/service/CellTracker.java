@@ -926,9 +926,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     };
 
     /**
-     *  Description:  TODO: add more info
+     * Description:    Add entries to the "DBi_measure" DB table
      *
-     *      This SEEM TO add entries to the "locationinfo" DB table ???
+     * Issues:
+     *                  [ ]
+     *
+     * Notes:           (a)
+     *
+     *
+     * TODO:  Remove OLD notes below, once we have new ones relevant to our new table
      *
      *  From "locationinfo":
      *
@@ -973,11 +979,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         mDevice.mCell.setSID(cdmaCellLocation.getSystemId());      // SID
                         mDevice.mCell.setMNC(cdmaCellLocation.getSystemId());      // MNC <== BUG!??
 
-                        break;//Todo was was there no break here was this right?
+                        break;
                 }
             }
         }
-
 
         if (loc != null && (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0)) {
             mDevice.mCell.setLon(loc.getLongitude());       // gpsd_lon
@@ -987,56 +992,22 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             mDevice.mCell.setBearing(loc.getBearing());     // -- [deg]??   // TODO: Remove, we're not using it!
             mDevice.setLastLocation(loc);                   //
 
-            //Store last known location in preference
+            // Store last known location in preference
             SharedPreferences.Editor prefsEditor;
             prefsEditor = prefs.edit();
             prefsEditor.putString(context.getString(R.string.data_last_lat_lon),
-                    String.valueOf(loc.getLatitude()) + ":" +
-                            String.valueOf(loc.getLongitude()));
+                    String.valueOf(loc.getLatitude()) + ":" + String.valueOf(loc.getLongitude()));
             prefsEditor.apply();
 
-//TODO this only logs a BTS if GPS has lock so no BTS's are logged otherwise?
+            // This only logs a BTS if we have GPS lock
+            // TODO: Is correct behaviour? We should consider logging all cells, even without GPS.
             if (mTrackingCell) {
-
                 /*
-                    OLD TABLED FOR REFRENCE FOR EVA
-
-                                    // LOCATION_TABLE (locationinfo)    ==>  DBi_measure + DBi_bts
-                dbHelper.insertLocation(
-                        mDevice.mCell.getLAC(),     // Lac
-                        mDevice.mCell.getCID(),     // CellID
-                        mDevice.mCell.getNetType(), // Net
-                        mDevice.mCell.getLat(),     // Lat
-                        mDevice.mCell.getLon(),     // Lng
-                        mDevice.mCell.getDBM(),     // Signal
-                        mDevice.getCellInfo()       // Connection
-                );
-
-                // CELL_TABLE                       (cellinfo)      ==>  DBi_measure + DBi_bts
-                dbHelper.insertCell(
-                        mDevice.mCell.getLAC(),     // Lac
-                        mDevice.mCell.getCID(),     // CellID
-                        mDevice.mCell.getNetType(), // Net
-                        mDevice.mCell.getLat(),     // Lat
-                        mDevice.mCell.getLon(),     // Lng
-                        mDevice.mCell.getDBM(),     // Signal
-                        mDevice.mCell.getMCC(),     // Mcc
-                        mDevice.mCell.getMNC(),     // Mnc
-                        mDevice.mCell.getAccuracy(),// Accuracy
-                        mDevice.mCell.getSpeed(),   // Speed
-                        mDevice.mCell.getBearing(), // Direction
-                        mDevice.getNetworkTypeName(),         // NetworkType
-                        SystemClock.currentThreadTimeMillis() // MeasurementTaken [ms]
-                );
-                 */
-
-                /*
-                    This function inserts bts and also the data to dbi_measure
-                    there is 2 versions of this in the database with the same name
-                    this one dbHelper.insertBTS(mDevice); inserts only data that we
-                    can access so far we cant get tmsi and alot of other data yet
-
-                    the other insertBTS functions inserts all data in the table
+                    This function inserts bts and also the data to dbi_measure.
+                    There are 2 versions of this in the database with the same name:
+                        dbHelper.insertBTS(mDevice);
+                    The first inserts only data that we can access. (So far we can't get TMSI etc.)
+                    The other insertBTS(), inserts all data in the table
 
                         public void insertBTS(
                            int mcc,
@@ -1051,12 +1022,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                            String time_last,
                            String gps_lat,
                            String gps_lon);
-
-                 */
-                //This also checks that the lac are cid are not in DB before inserting
+                */
+                // This also checks that the lac are cid are not in DB before inserting
                 dbHelper.insertBTS(mDevice.mCell);
-
-
             }
         }
     }
@@ -1189,8 +1157,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
         int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType));
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconResId);
-        Notification mBuilder =
-                new NotificationCompat.Builder(context)
+
+        Notification mBuilder = new NotificationCompat.Builder(context)
                         //.setSmallIcon(Icon.getIcon(Icon.Type.valueOf(iconType)))
                         .setSmallIcon(iconResId)
                         .setLargeIcon(largeIcon)
@@ -1210,6 +1178,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
 
 //=================================================================================================
+// TODO: Consider REMOVAL!   See issues: #6, #457, #489
+// TODO: Summary: We can detect femtocells by other means, using network data that we already have!
 // The below code section was copied and modified with permission from
 // Femtocatcher at:  https://github.com/iSECPartners/femtocatcher
 //
@@ -1384,8 +1354,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     };
 
     /**
-     * Getter for use in tests only
-     * TODO: What tests?
+     * Used in SmsDetector.java
      */
     public Cell getMonitorCell() {
         return mMonitorCell;
