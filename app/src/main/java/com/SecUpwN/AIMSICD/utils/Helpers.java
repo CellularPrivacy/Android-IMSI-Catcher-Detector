@@ -583,7 +583,7 @@ import java.util.List;
 
     /**
      * Description:     Deletes the entire database by removing internal SQLite DB file
-     * 
+     *
      * Notes:           See Android developer info: http://tinyurl.com/psz8vmt
      *
      * Dependencies:    Used in AIMSICD.java
