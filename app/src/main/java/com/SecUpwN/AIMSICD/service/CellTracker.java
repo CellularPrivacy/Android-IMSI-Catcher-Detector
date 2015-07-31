@@ -91,7 +91,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public static int PHONE_TYPE;               //
     public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
     public static int LAST_DB_BACKUP_VERSION;   //
-    //public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
+    public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
 
     private boolean CELL_TABLE_CLEANSED;        // Clean DBi_bts and DBi_measures after each CellTracker re-start
     private final int NOTIFICATION_ID = 1;      // ?
