@@ -21,6 +21,7 @@ package com.SecUpwN.AIMSICD.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.CountDownTimer;
@@ -30,8 +31,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
+import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.utils.Toaster;
 
@@ -607,7 +611,12 @@ import java.util.List;
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Probably put in try/catch in case file removal fails...
+
+                        pContext.stopService(new Intent(pContext, AimsicdService.class));
                         pContext.deleteDatabase("aimsicd.db");
+                        new AIMSICDDbAdapter(pContext);
+                        pContext.startService(new Intent(pContext, AimsicdService.class));
+                        msgLong(pContext,pContext.getString(R.string.delete_database_msg_success));
                     }
                 })
                 .setMessage(pContext.getString(R.string.clear_database_question))
