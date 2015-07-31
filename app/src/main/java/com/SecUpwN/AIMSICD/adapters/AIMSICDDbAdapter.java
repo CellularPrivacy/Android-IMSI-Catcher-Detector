@@ -2370,7 +2370,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *
      *  Notes:          -
      *
-     *  Dependencies:   TODO: where is this used?
+     *  Dependencies:   TODO: where is this used? -- it is not, yet. ==> tag for Removal?
      */
     public String getRatFromDBimeasure(int cellID){
         String RAT = null;
@@ -2383,7 +2383,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         if(cursor != null && cursor.moveToNext()){
             RAT = cursor.getString(cursor.getColumnIndex("RAT"));
         }
-
         try {
             cursor.close();
         } catch (Exception ee){

@@ -339,9 +339,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 } else {
                     Helpers.msgShort(mContext, getString(R.string.waiting_for_location));
 
-                    // TODO: Is this implemented?? --E:V:A (2015-01-22)
-                    //Attempt to find location through CID
-                    //CID Location Async Output Delegate Interface Implementation
+                    // This uses the LocationServices to get CID/LAC/MNC/MCC to be used
+                    // for grabbing the BTS data from OCID, via their API.
+                    // CID Location Async Output Delegate Interface Implementation
                     LocationServices.LocationAsync locationAsync
                             = new LocationServices.LocationAsync();
                     locationAsync.delegate = this;
