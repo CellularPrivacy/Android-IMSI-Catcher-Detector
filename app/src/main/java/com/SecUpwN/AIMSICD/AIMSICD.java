@@ -311,7 +311,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             //          Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
             //          See: #581 and Helpers.java
             Helpers.askAndDeleteDb(this);
-            new AIMSICDDbAdapter(getApplicationContext());
+
 
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {

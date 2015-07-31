@@ -356,6 +356,10 @@
     <string name="unknown_or_insecure_bts">Unknown or insecure BTS</string>
     <string name="new_or_recently_added_bts">New or recently added BTS</string>
 
+    <!-- Section Delete DB-->
+    <string name="delete_database_msg_success">Database deleted and recreated successful\nPlease restart app if you want to clear values in Database Viewer</string>
+
+
     <string name="invalid_key_try_later">Invalid OpenCellId key, try again later.</string>
     <string name="getting_ocid_key">Getting OpenCellId API Key...</string>
 
