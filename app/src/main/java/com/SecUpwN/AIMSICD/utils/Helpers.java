@@ -588,14 +588,20 @@ import java.util.List;
     /**
      * Description:     Deletes the entire database by removing internal SQLite DB file
      *
-     * Notes:           See Android developer info: http://tinyurl.com/psz8vmt
+
      *
      * Dependencies:    Used in AIMSICD.java
+     *
+     * Notes:           See Android developer info: http://tinyurl.com/psz8vmt
      *
      *              WARNING!
      *              This deletes the entire database, thus any subsequent DB access will FC app.
      *              Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
      *              See: #581
+     *
+     *              In addition, since SQLite is kept in memory during lifetime of App, and
+     *              is using Journaling, we have to restart app in order to clear old data
+     *              already in memory.
      *
      * @param pContext Context of Activity
      */
@@ -611,7 +617,6 @@ import java.util.List;
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Probably put in try/catch in case file removal fails...
-
                         pContext.stopService(new Intent(pContext, AimsicdService.class));
                         pContext.deleteDatabase("aimsicd.db");
                         new AIMSICDDbAdapter(pContext);
