@@ -47,13 +47,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
- *  Class to handle tracking of cell information
+ * Description:     Class to handle tracking of cell information
  *
- *  Description:  TODO: add more info
+ * Dependencies:
  *
- *  Note:       The refresh rate is set in two different places:
- *                  onSharedPreferenceChanged()
- *                  loadPreferences()
+ * Issues:
+ *
+ *
+ * Note:            The refresh rate is set in two different places:
+ *                      onSharedPreferenceChanged()
+ *                      loadPreferences()
  *
  *              For proper TinyDB implementation use something like:
  *              https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo/issues/6
@@ -88,7 +91,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public static int PHONE_TYPE;               //
     public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
     public static int LAST_DB_BACKUP_VERSION;   //
-    public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
+    //public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
 
     private boolean CELL_TABLE_CLEANSED;        // Clean DBi_bts and DBi_measures after each CellTracker re-start
     private final int NOTIFICATION_ID = 1;      // ?
@@ -120,7 +123,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         this.context = context;
         this.signalStrengthTracker = sst;
 
-        // Creating tinydb here so we don't have to use: "TinyDb tinydb = new TinyDb(context);"
+        // Creating tinydb here to avoid: "TinyDb tinydb = new TinyDb(context);"
         // every time we need to use tinydb in this class.
         tinydb = TinyDB.getInstance();
 
@@ -149,7 +152,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             prefsEditor.putBoolean(context.getString(R.string.pref_cell_table_cleansed), true);
             prefsEditor.apply();
         }
-
         mDevice.refreshDeviceInfo(tm, context);         // Telephony Manager
         mMonitorCell = new Cell();
     }
@@ -186,7 +188,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     * Tracking Femotcell Connections
+     * Description:     Tracking Femotcell Connections
+     *                  TODO: Consider REMOVAL!
      *
      * @return boolean indicating Femtocell Connection Tracking State
      */
