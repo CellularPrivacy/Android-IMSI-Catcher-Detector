@@ -323,7 +323,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         CellLocation cellLocation = tm.getCellLocation();
 
-
         switch (mType) {
             case DBE_DOWNLOAD_REQUEST:
                 if (result != null && result.equals("Successful")) {
