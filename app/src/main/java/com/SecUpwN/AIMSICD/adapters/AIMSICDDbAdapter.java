@@ -471,6 +471,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         //"DELETE FROM DBi_bts WHERE _id NOT IN (SELECT MAX(_id) FROM DBi_bts) GROUP BY CID"
         mDb.execSQL("DELETE FROM DBi_bts WHERE _id NOT IN (SELECT MAX(_id) FROM DBi_bts)");
 
+        // TODO: MOVE this, as this is only executed once!!
         // This removes erroneous BTS entries due to API giving you CID/LAC of "-1" or MAX_INT,
         // when either roaming, in airplane mode or during crappy hand-overs.
         String query2 = String.format(
@@ -631,7 +632,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         // This was not finding the file on a Samsung S5
         // String fileName = Environment.getExternalStorageDirectory()+ "/AIMSICD/OpenCellID/opencellid.csv";
         String fileName = mContext.getExternalFilesDir(null) + File.separator + "OpenCellID/opencellid.csv";
-
         File file = new File(fileName);
 
         try {
@@ -641,11 +641,16 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                 List<String[]> csvCellID = new ArrayList<>();
                 String next[];
 
-                //AIMSICD.mProgressBar.setProgress(0);
-                //AIMSICD.mProgressBar.setMax(csvSize);
+                // Let's show something: Like 1/4 of a progress bar
+                AIMSICD.mProgressBar.setProgress(0);
+                AIMSICD.mProgressBar.setMax(4);
+                AIMSICD.mProgressBar.setProgress(1);
+
                 while ((next = csvReader.readNext()) != null) {
                     csvCellID.add(next);
                 }
+
+                AIMSICD.mProgressBar.setProgress(2);
 
                 if (!csvCellID.isEmpty()) {
                     int lines = csvCellID.size();
@@ -661,11 +666,14 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                     }
                     lCursor.close();
 
-                    AIMSICD.mProgressBar.setProgress(0);
+                    AIMSICD.mProgressBar.setProgress(3);
                     AIMSICD.mProgressBar.setMax(lines);
-                    for (int i = 1; i < lines; i++) {
-                        AIMSICD.mProgressBar.setProgress(i);
 
+                    int i;
+                    for ( i = 1; i < lines; i++) {
+                        AIMSICD.mProgressBar.setProgress(i); // Move this outside fast loop?
+
+                        // TODO: IS this needed!???
                         // Inserted into the table only unique values CID
                         // without opening additional redundant cursor before each insert.
                         if(lPresentCellID.get(Integer.parseInt(csvCellID.get(i)[5]), false)) {
@@ -695,7 +703,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                         int ichange = Integer.parseInt(change);
                         if (ichange == 0) {
                             ichange = 1;
-                        }else if (ichange == 1) {
+                        } else if (ichange == 1) {
                             ichange = 0;
                         }
 
@@ -713,12 +721,13 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                 Integer.parseInt(avg_sig),  // avg_signal [dBm]
                                 Integer.parseInt(range),    // avg_range [m]
                                 Integer.parseInt(samples),  // samples
-                                "no_time",                  // time_first  (not in OCID)
-                                "no_time",                  // time_last   (not in OCID)
-                                0                           // rej_cause ?? set default 0
+                                "n/a",                      // time_first  (not in OCID)
+                                "n/a",                      // time_last   (not in OCID)
+                                0                           // TODO: rej_cause , set default 0
                         );
                         //Log.d(TAG,"Dbe_import tables inserted=" + i);
                     }
+                    Log.d(TAG, mTAG + ":populateDBeImport(): " + i + " cells inserted.");
                 }
             }else{
                 Log.e(TAG, mTAG + ": opencellid.csv file does not exist!");
