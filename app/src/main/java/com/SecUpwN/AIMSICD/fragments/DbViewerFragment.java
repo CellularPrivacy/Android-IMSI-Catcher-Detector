@@ -467,12 +467,13 @@ public class DbViewerFragment extends Fragment {
         return null;
     }
 
-    /**
-     * Description:         Used for populating some Example entries in the DB tables
-     *
-     * @param pEventLogItemData
-     * @return
-     */
+    /*=========================================================================
+     *          Add Example entries into the Database Viewer tables
+     *=========================================================================*/
+
+    // Table:           EventLog
+    // Dependencies:    Examples.java
+    //                  EventLogItemData.java
     private boolean isExample(EventLogItemData pEventLogItemData) {
         return pEventLogItemData != null &&
                 pEventLogItemData.getLac().contains(Examples.EVENT_LOG_DATA.LAC) &&
@@ -484,6 +485,9 @@ public class DbViewerFragment extends Fragment {
                 pEventLogItemData.getDF_id().contains(Examples.EVENT_LOG_DATA.DF_ID);
     }
 
+    // Table:           SmsData
+    // Dependencies:    Examples.java
+    //                  SilentSmsCardData.java
     private boolean isExample(SilentSmsCardData pSilentSmsCardData) {
         return pSilentSmsCardData != null &&
                 pSilentSmsCardData.getAddress().contains(Examples.SILENT_SMS_CARD_DATA.ADDRESS) &&

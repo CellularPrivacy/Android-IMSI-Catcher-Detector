@@ -36,7 +36,7 @@
 
                 <TextView
                     android:id="@+id/country"
-                    android:layout_width="fill_parent"
+                    android:layout_weight="0.1"
                     android:layout_height="wrap_content"
                     android:textColor="@color/standard_grey"
                     android:textSize="12sp" />
@@ -51,7 +51,7 @@
 
                 <TextView
                     android:id="@+id/lat"
-                    android:layout_width="fill_parent"
+                    android:layout_weight="0.1"
                     android:layout_height="wrap_content"
                     android:textColor="@color/standard_grey"
                     android:textSize="12sp" />
@@ -72,7 +72,7 @@
 
                 <TextView
                     android:id="@+id/mcc"
-                    android:layout_width="fill_parent"
+                    android:layout_weight="0.1"
                     android:layout_height="wrap_content"
                     android:textColor="@color/standard_grey"
                     android:textSize="12sp" />
@@ -87,7 +87,7 @@
 
                 <TextView
                     android:id="@+id/lng"
-                    android:layout_width="fill_parent"
+                    android:layout_weight="0.1"
                     android:layout_height="wrap_content"
                     android:textColor="@color/standard_grey"
                     android:textSize="12sp" />
