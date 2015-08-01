@@ -44,19 +44,18 @@ import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsData;
 import java.util.ArrayList;
 
 /**
- *      Description:    Class that handles the display of the items in the 'Database Viewer'
+ *      Description:    Class that handles the display of the items in the 'Database Viewer' (DBV)
  *
  *      Issues:
  *
- *      Notes:
- *
- *      TODO:           see issue #234
- *
+ *      Notes:          See issue #234 for details on how to format the UI
  *
  *      ChangeLog:
  *
  *      2015-07-14      E:V:A       Changed the display names of several items (see issue #234)
- *      2015-07-29      E:V:A
+ *      2015-07-31      E:V:A       Added comments and changed some inflater data to avoid using:
+ *                                  DBTableColumnIds.java. More to do... Use string convert trick:
+ *                                      "" + int = "string"  (See EventLog for example)
  *
  */
 public class DbViewerFragment extends Fragment {
@@ -65,7 +64,7 @@ public class DbViewerFragment extends Fragment {
     private StatesDbViewer mTableSelected;
     private Context mContext;
 
-    //Layout items
+    // Layout items
     private Spinner tblSpinner;
     private ListView lv;
     private View emptyView;
@@ -78,7 +77,6 @@ public class DbViewerFragment extends Fragment {
         super.onAttach(activity);
         mContext = activity.getBaseContext();
         mDb = new AIMSICDDbAdapter(mContext);
-
     }
 
     @Override
@@ -104,9 +102,7 @@ public class DbViewerFragment extends Fragment {
                         //# mDb.open();
                         Cursor result;
                         ArrayList<String> CellDetails = new ArrayList<String>();
-                        //TODO Table: "DetectionFlags"
-                        //case DETECTION_FLAGS:
-                        //result = mDb.getDetectionFlagsData();
+
                         mTableSelected = (StatesDbViewer)tblSpinner.getSelectedItem();
 
                         switch (position) {
@@ -155,7 +151,6 @@ public class DbViewerFragment extends Fragment {
 
                             default:
                                 throw new IllegalArgumentException("Unknown type of table");
-
                         }
 
                         BaseInflaterAdapter adapter = null;
@@ -195,11 +190,11 @@ public class DbViewerFragment extends Fragment {
     }
 
     /**
-     * Content layout and presentation of the Database Viewer
+     * Description:     Content layout and presentation of the Database Viewer
      *
-     * Description: This is where the text labels are created for each column in the Database Viewer
-     *              For details of how this should be presented, see:
-     *              https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
+     *                  This is where the text labels are created for each column in
+     *                  the Database Viewer (DBV). For details of how this should be presented, see:
+     *                  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
      *
      * Lat/Lng:     Latitude / Longitude (We should use "Lon" instead of "Lng".)
      * AvgSignal:   Average Signal Strength
@@ -207,11 +202,12 @@ public class DbViewerFragment extends Fragment {
      *              Can have different meanings on different RAN's, e.g. RSCP in UMTS.
      * RAN:         Radio Access Network (GSM, UMTS, LTE etc.)
      *
-     * Special Notes:
+     * Notes:
      *
-     *  1. Although "RAN" is more correct here, we'll use "RAT" (Radio Access Technology),
-     *     which is the more common terminology. Thus reverting.
-     *  2. Since Signal is not an "indicator" we should just call it "RSS" or "RXS"
+     *      1. Although "RAN" is more correct here, we'll use "RAT" (Radio Access Technology),
+     *         which is the more common terminology. Thus reverting.
+     *
+     *      2. Since Signal is not an "indicator" we should just call it "RSS" or "RXS"
      *
      */
     private BaseInflaterAdapter BuildTable(Cursor tableData) {
@@ -230,6 +226,9 @@ public class DbViewerFragment extends Fragment {
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC))),   // LAC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_CID))),   // CID
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC))),   // PSC
+                                //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_T3212))), // T3212
+                                //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_A5x))),   // A5x
+                                //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_ST_id))), // ST_id
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_TIME_FIRST)),         // time_first
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_TIME_LAST)),          // time_last
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LAT)),                // gps_lat
@@ -256,13 +255,13 @@ public class DbViewerFragment extends Fragment {
                         // to what's found in:  BtsMeasureCardInflater.java and BtsMeasureItemData.java
                         BtsMeasureItemData data = new BtsMeasureItemData(
                                 "bts_id: "  + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID))), // TODO: Wrong! Should be DBi_bts:CID
-                                "n/a", // + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_NC_LIST)),        // nc_list
+                                "n/a", // + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_NC_LIST)),        // nc_list      TODO: fix
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TIME)),                       // time
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_LAT)),                   // gpsd_lat
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_LON)),                   // gpsd_lon
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_ACCURACY))), // gpsd_accu    GPS accuracy in [m]
-                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSE_LAT)),                // gpse_lat     (remove?)
-                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSE_LON)),                // gpse_lon     (remove?)
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSE_LAT)),                // gpse_lat     TODO: remove
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSE_LON)),                // gpse_lon     TODO: remove
                                 // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BB_POWER)),                // bb_power     BP power usage [mA]
                                 // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BB_RF_TEMP)),              // bb_rf_temp   BP temperature [C]
                                 // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TX_POWER)),                // tx_power     BP TX Power [dB?]
@@ -277,6 +276,7 @@ public class DbViewerFragment extends Fragment {
                                 // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_AVG_EC_NO)),               // AvgEcNo      Average Ec/No
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_IS_SUBMITTED))),  // isSubmitted
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_IS_NEIGHBOUR))),  // isNeighbour
+                                // tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_CON_STATE)),               // con_state    AOS data/connection states
                                 (tableData.getPosition() + 1) + " / " + count                                                           // item:  "n/X"
                         );
                         adapter.addItem(data, false);
@@ -294,9 +294,6 @@ public class DbViewerFragment extends Fragment {
                      *
                      *   CSV:  lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,  tac,pci,sid,nid,bid
                      *
-                     *   old:   opencellid
-                     *          _id|Lat|Lng|Mcc|Mnc|Lac|CellID|AvgSigStr|Samples|Timestamp
-                     *
                      *   new:   DBe_import
                      *          _id,DBsource,RAT,MCC,MNC,LAC,CID,PSC,gps_lat,gps_lon,isGPSexact,avg_range,avg_signal,samples,time_first,time_last,rej_cause
                      *
@@ -311,6 +308,7 @@ public class DbViewerFragment extends Fragment {
                         // WARNING! The ORDER and number of these are crucial, and need to correspond
                         // to what's found in:  DbeImportCardInflater.java and DbeImportItemData.java
                         // MUST also correspond to the imported OCID CSV order... ???
+                        // TODO: add rej_cause
                         DbeImportItemData data = new DbeImportItemData(
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_DBSOURCE)),                    // DBsource
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_RAT)),                         // RAT
@@ -327,6 +325,7 @@ public class DbViewerFragment extends Fragment {
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_SAMPLES))),        // samples
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_FIRST)),                  // time_first
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_LAST)),                   // time_last
+                                //tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_REJ_CAUSE)),                 // TODO: rej_cause
                                 (tableData.getPosition() + 1) + " / " + count                                                           // item:  "n/X"
                         );
                         adapter.addItem(data, false);
@@ -368,16 +367,19 @@ public class DbViewerFragment extends Fragment {
                             CapturedSmsData getdata = new CapturedSmsData();
 
                             // TODO: Add class and smsc
+                            // TODO: Check order as in DB schema (ER diagram)
                             getdata.setSmsTimestamp(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_TIMESTAMP)));        // time
                             getdata.setSmsType(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_SMS_TYPE)));              // type
                             getdata.setSenderNumber(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_SENDER_NUMBER)));    // number
+                            //getdata.setSenderNumber(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_SMSC)));           // smsc
                             getdata.setSenderMsg(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_SENDER_MSG)));          // message
+                            //getdata.setSenderNumber(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_CLASS)));          // class
                             getdata.setCurrent_lac(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_LAC)));                  // lac
                             getdata.setCurrent_cid(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_CID)));                  // cid
                             getdata.setCurrent_nettype(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_RAT)));           // rat
-                            getdata.setCurrent_roam_status(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_ROAM_STATE)));   // roaming (BOOL)
-                            getdata.setCurrent_gps_lat(tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_GPS_LAT)));       // lat
-                            getdata.setCurrent_gps_lon(tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_GPS_LON)));       // lon
+                            getdata.setCurrent_roam_status(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_ROAM_STATE)));   // isRoaming (BOOL)
+                            getdata.setCurrent_gps_lat(tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_GPS_LAT)));       // gps_lat
+                            getdata.setCurrent_gps_lon(tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.SMS_DATA_GPS_LON)));       // gps_lon
 
                             adapter.addItem(getdata, false);
                         }
@@ -396,11 +398,11 @@ public class DbViewerFragment extends Fragment {
                     //int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         MeasuredCellStrengthCardData data = new MeasuredCellStrengthCardData(
-                                // TODO: FIX !!
-                                tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID)),                        // CID
-                                Integer.parseInt(tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BB_POWER))), // rx_signal
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TIME)));                      // time
-                                //"" + (tableData.getPosition() + 1) + " / " + count);                                                  // item:  "n/X"
+                            tableData.getInt(tableData.getColumnIndex("bts_id")),                           // TODO: CID
+                            Integer.parseInt(tableData.getString(tableData.getColumnIndex("rx_signal"))),   // rx_signal
+                            tableData.getString(tableData.getColumnIndex("time"))                           // time
+                            //"" + (tableData.getPosition() + 1) + " / " + count                            // item:  "n/X"
+                        );
                         adapter.addItem(data, false);
                     }
                     if (!tableData.isClosed()) {
@@ -419,20 +421,19 @@ public class DbViewerFragment extends Fragment {
                     // WARNING: Must correspond with:  EventLogCardInflater  and  EventLogItemData
                     while (tableData.moveToNext()) {
                         EventLogItemData data = new EventLogItemData(
-                                //TODO: WTF it's not possible to remove the ""'s??
-                                "" + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_TIME)),      // time
-                                "" + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LAC)),          // LAC
-                                "" + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_CID)),          // CID
-                                "" + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_PSC)),          // PSC
-                                "" + tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LAT)),       // gpsd_lat
-                                "" + tableData.getDouble(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_LON)),       // gpsd_lon
-                                "" + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_ACCU)),         // gpsd_accu (accuracy in [m])
-                                "" + tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_DF_ID)),        // DF_id
-                                "" + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.EVENTLOG_DF_DESC)),   // DF_desc
-                                "" + (tableData.getPosition() + 1) + " / " + count                                       // item:  "n/X"
+                                // Use the trick to automatically converting int/real to strings by adding empty ""s.
+                                "" + tableData.getString(tableData.getColumnIndex("time")),             // time
+                                "" + tableData.getInt(tableData.getColumnIndex("LAC")),                 // LAC
+                                "" + tableData.getInt(tableData.getColumnIndex("CID")),                 // CID
+                                "" + tableData.getInt(tableData.getColumnIndex("PSC")),                 // PSC
+                                "" + tableData.getDouble(tableData.getColumnIndex("gpsd_lat")),         // gpsd_lat
+                                "" + tableData.getDouble(tableData.getColumnIndex("gpsd_lon")),         // gpsd_lon
+                                "" + tableData.getInt(tableData.getColumnIndex("gpsd_accu")),           // gpsd_accu (accuracy in [m])
+                                "" + tableData.getInt(tableData.getColumnIndex("DF_id")),               // DF_id
+                                "" + tableData.getString(tableData.getColumnIndex("DF_description")),   // TODO: DF_desc
+                                "" + (tableData.getPosition() + 1) + " / " + count                      // item:  "n/X"
                         );
-
-                        // TODO: @banajaxbanjo, please explain how to use this!!
+                        // TODO: Explain how to use this?
                         data.setIsFakeData(isExample(data));
                         adapter.addItem(data, false);
                     }
@@ -449,8 +450,8 @@ public class DbViewerFragment extends Fragment {
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         DetectionStringsData data = new DetectionStringsData(
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING)), // det_str
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DETECTION_STRINGS_SMS_TYPE))       // sms_type
+                                tableData.getString(tableData.getColumnIndex("det_str")),  // det_str
+                                tableData.getString(tableData.getColumnIndex("sms_type"))  // sms_type
                         );
                         adapter.addItem(data, false);
                     }
@@ -466,12 +467,13 @@ public class DbViewerFragment extends Fragment {
         return null;
     }
 
-    /**
-     * Description:         Used for populating some Example entries in the DB tables
-     *
-     * @param pEventLogItemData
-     * @return
-     */
+    /*=========================================================================
+     *          Add Example entries into the Database Viewer tables
+     *=========================================================================*/
+
+    // Table:           EventLog
+    // Dependencies:    Examples.java
+    //                  EventLogItemData.java
     private boolean isExample(EventLogItemData pEventLogItemData) {
         return pEventLogItemData != null &&
                 pEventLogItemData.getLac().contains(Examples.EVENT_LOG_DATA.LAC) &&
@@ -483,6 +485,9 @@ public class DbViewerFragment extends Fragment {
                 pEventLogItemData.getDF_id().contains(Examples.EVENT_LOG_DATA.DF_ID);
     }
 
+    // Table:           SmsData
+    // Dependencies:    Examples.java
+    //                  SilentSmsCardData.java
     private boolean isExample(SilentSmsCardData pSilentSmsCardData) {
         return pSilentSmsCardData != null &&
                 pSilentSmsCardData.getAddress().contains(Examples.SILENT_SMS_CARD_DATA.ADDRESS) &&

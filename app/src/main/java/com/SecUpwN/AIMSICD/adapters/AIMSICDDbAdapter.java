@@ -31,8 +31,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
 /**
- * Brief:   Handles the AMISICD DataBase tables (creation, population, updates, etc)
- *
  * Description:
  *
  *      This class handle all the AMISICD DataBase maintenance operations, like
@@ -230,7 +228,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *                  This is done by transferring bytestream.
      */
     private void copyDataBase() throws IOException{
-
         // Open your local DB as the input stream
         InputStream myInput = mContext.getAssets().open(DB_NAME);
         // Open the empty DB as the output stream
@@ -266,7 +263,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
-
+    // Nothing? Not even a log?
     }
 
 
@@ -275,8 +272,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     // ====================================================================
 
     /**
-     * Description:     Delete cell info - This is used in the AIMSICD frame work Tests
+     * Description:     This is used in the AIMSICD framework Tests to delete cells.
      *                  see: ../src/androidTest/java/com.SecUpwN.test/.
+     *
+     * Issues:          TODO: See comments below!
      *
      * @param cellId    This method deletes a cell with CID from CELL_TABLE
      *
@@ -285,7 +284,9 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public int deleteCell(int cellId) {
         Log.i(TAG, mTAG + ": Deleted CID: " + cellId);
-        // TODO Do we also need to delete this cell from DBi_measure?
+        // TODO Instead we need to delete this cell from DBi_measure, since:
+        // we are using foreign_key enforced DB, that doesn't allow you to
+        // remove Dbi_bts without corresponding DBi_measures that uses them.
         // Rewrite this query!
         return mDb.delete("DBi_bts","CID=" + cellId, null);
     }
@@ -451,19 +452,27 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     /**
-     *  Description:    Remove all but the last row, unless its CID is invalid...
+     * Description:     Remove all but the last row, unless its CID is invalid...
      *
      * Dependencies:    CellTracker.java:  ( dbHelper.cleanseCellTable(); )
      *
-     * Notes:           TODO: Do we need to clean LAC as well? Test with airplane-mode or roaming
+     * Issues:          [ ] This will not work if: PRAGMA foreign_key=ON, then we need to delete
+     *                      the corresponding DBi_measure entries before / as well.
+     *
+     *                  [ ] TODO: It is UNCLEAR why this is needed!! It's probably an artifact of old DB tables??
+     *                      TODO: Consider changing or removing!
+     *
+     * Notes:           Do we need to clean LAC as well? (Test with airplane-mode or roaming)
      *                  - probably not since a APM would give both LAC and CID as "-1".
      *
      */
     public void cleanseCellTable() {
         // This removes all but the last row in the "DBi_bts" table
-        mDb.execSQL("DELETE FROM DBi_bts WHERE _id NOT IN (SELECT MAX(_id) FROM DBi_bts GROUP BY CID)");
+        //"DELETE FROM DBi_bts WHERE _id NOT IN (SELECT MAX(_id) FROM DBi_bts) GROUP BY CID"
+        mDb.execSQL("DELETE FROM DBi_bts WHERE _id NOT IN (SELECT MAX(_id) FROM DBi_bts)");
 
-        // This removes erroneous BTS entries due to API giving you CID/LAC of "-1" or MAXINT,
+        // TODO: MOVE this, as this is only executed once!!
+        // This removes erroneous BTS entries due to API giving you CID/LAC of "-1" or MAX_INT,
         // when either roaming, in airplane mode or during crappy hand-overs.
         String query2 = String.format(
                 "DELETE FROM DBi_bts WHERE CID = %d OR CID = -1",
@@ -623,7 +632,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         // This was not finding the file on a Samsung S5
         // String fileName = Environment.getExternalStorageDirectory()+ "/AIMSICD/OpenCellID/opencellid.csv";
         String fileName = mContext.getExternalFilesDir(null) + File.separator + "OpenCellID/opencellid.csv";
-
         File file = new File(fileName);
 
         try {
@@ -633,11 +641,16 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                 List<String[]> csvCellID = new ArrayList<>();
                 String next[];
 
-                //AIMSICD.mProgressBar.setProgress(0);
-                //AIMSICD.mProgressBar.setMax(csvSize);
+                // Let's show something: Like 1/4 of a progress bar
+                AIMSICD.mProgressBar.setProgress(0);
+                AIMSICD.mProgressBar.setMax(4);
+                AIMSICD.mProgressBar.setProgress(1);
+
                 while ((next = csvReader.readNext()) != null) {
                     csvCellID.add(next);
                 }
+
+                AIMSICD.mProgressBar.setProgress(2);
 
                 if (!csvCellID.isEmpty()) {
                     int lines = csvCellID.size();
@@ -653,11 +666,14 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                     }
                     lCursor.close();
 
-                    AIMSICD.mProgressBar.setProgress(0);
+                    AIMSICD.mProgressBar.setProgress(3);
                     AIMSICD.mProgressBar.setMax(lines);
-                    for (int i = 1; i < lines; i++) {
-                        AIMSICD.mProgressBar.setProgress(i);
 
+                    int i;
+                    for ( i = 1; i < lines; i++) {
+                        //AIMSICD.mProgressBar.setProgress(i); // Move this outside fast loop?
+
+                        // TODO: IS this needed!???
                         // Inserted into the table only unique values CID
                         // without opening additional redundant cursor before each insert.
                         if(lPresentCellID.get(Integer.parseInt(csvCellID.get(i)[5]), false)) {
@@ -687,7 +703,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                         int ichange = Integer.parseInt(change);
                         if (ichange == 0) {
                             ichange = 1;
-                        }else if (ichange == 1) {
+                        } else if (ichange == 1) {
                             ichange = 0;
                         }
 
@@ -705,14 +721,16 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                 Integer.parseInt(avg_sig),  // avg_signal [dBm]
                                 Integer.parseInt(range),    // avg_range [m]
                                 Integer.parseInt(samples),  // samples
-                                "no_time",                  // time_first  (not in OCID)
-                                "no_time",                  // time_last   (not in OCID)
-                                0                           // rej_cause ?? set default 0
+                                "n/a",                      // time_first  (not in OCID)
+                                "n/a",                      // time_last   (not in OCID)
+                                0                           // TODO: rej_cause , set default 0
                         );
                         //Log.d(TAG,"Dbe_import tables inserted=" + i);
                     }
+                    AIMSICD.mProgressBar.setProgress(4);
+                    Log.d(TAG, mTAG + ":populateDBeImport(): " + i + " cells inserted.");
                 }
-            }else{
+            } else {
                 Log.e(TAG, mTAG + ": opencellid.csv file does not exist!");
             }
             return true;
@@ -720,6 +738,11 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             Log.e(TAG, mTAG + ": Error parsing OpenCellID data: " + e.getMessage());
             return false;
         } finally {
+            try {
+                Thread.sleep(1000); // wait 1 seconds to allow user to see progress bar.
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
             AIMSICD.mProgressBar.setProgress(0);
         }
     }
@@ -729,24 +752,24 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     //=============================================================================================
 
     /**
-     *  Description:    Imports a previously exported CSV file into the database
+     *  Description:    Restores the database tables from a previously Exported CSV files.
+     *                  One CSV file per table with the name:  "aimsicd-<table_name>.csv"
      *
-     *  Used:           ??
-     *
-     *  Issues:
-     *              [ ] CELL_TABLE items are missing or corrupt
-     *              [ ]
-     *
-     *  Exported CSV format: TODO:
+     *  Issues:         [ ]
      *
      *  Notes:      1) Restoring the DB can be done from a monolithic SQLite3 DB by (check!):
      *                  # sqlite3 aimsicd.db <aimsicd.dump
-     *
-     *
      */
     public boolean restoreDB() {
         try {
+            // Progress bar should be here for each table, not each line.
+            AIMSICD.mProgressBar.setMax(mTables.length);
+            AIMSICD.mProgressBar.setProgress(0);
+            int tcount=1;
+
             for (String table : mTables) {
+                AIMSICD.mProgressBar.setProgress(tcount++);
+                
                 File file = new File(FOLDER + "aimsicd-" + table + ".csv");
                 if (file.exists()) {
                     List<String[]> records = new ArrayList<>();
@@ -758,10 +781,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
                     if (!records.isEmpty()) {
                         int lines = records.size();
-                        AIMSICD.mProgressBar.setMax(lines);
-                        AIMSICD.mProgressBar.setProgress(0);
                         for (int i = 1; i < lines; i++) {
-                            AIMSICD.mProgressBar.setProgress(i);
                             switch (table) {
 
                                 case "defaultlocation":
@@ -773,7 +793,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 records.get(i)[4].toString()        // lon
                                         );
                                     }catch(Exception ee){
-                                        Log.e(TAG, mTAG + ": err DEFAULT_LOCATION");
+                                        Log.e(TAG, mTAG + ":restoreDB: Error in insertDefaultLocation()");
                                     }
                                     break;
 
@@ -826,10 +846,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 Integer.parseInt(records.get(i)[13]),   // samples
                                                 records.get(i)[14].toString(),          // time_first
                                                 records.get(i)[15].toString(),          // time_last
-                                                0                                       // rej_cause
+                                                0 //Integer.parseInt(records.get(i)[16])  // TODO: rej_cause
                                         );
                                     }catch(Exception ee){
-                                        Log.e(TAG, mTAG + ": err DBE_IMPORT_");
+                                        Log.e(TAG, mTAG + ":restoreDB: Error in insertDBeImport()");
                                     }
                                     break;
 
@@ -850,7 +870,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 Double.parseDouble(records.get(i)[12])  // lon
                                         );
                                     }catch(Exception ee){
-                                        Log.e(TAG, mTAG + ": err DBI_BTS");
+                                        Log.e(TAG, mTAG + ":restoreDB: Error in insertBTS()");
                                     }
                                     break;
 
@@ -863,14 +883,14 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 records.get(i)[4].toString(),             // gpsd_lat
                                                 records.get(i)[5].toString(),             // gpsd_lon
                                                 Integer.parseInt(records.get(i)[6]),      // gpsd_accu
-                                                records.get(i)[7].toString(),             // gpse_lat
-                                                records.get(i)[8].toString(),             // gpse_lon
+                                                records.get(i)[7].toString(),             // gpse_lat TODO: remove!
+                                                records.get(i)[8].toString(),             // gpse_lon TODO: remove!
                                                 records.get(i)[9].toString(),             // bb_power
                                                 records.get(i)[10].toString(),            // bb_rf_temp
                                                 records.get(i)[11].toString(),            // tx_power
                                                 records.get(i)[12].toString(),            // rx_signal
                                                 records.get(i)[13].toString(),            // rx_stype
-                                                records.get(i)[14].toString(),            // rat
+                                                records.get(i)[14].toString(),            // RAT
                                                 records.get(i)[15].toString(),            // BCCH
                                                 records.get(i)[16].toString(),            // TMSI
                                                 Integer.parseInt(records.get(i)[17]),     // TA
@@ -879,9 +899,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 records.get(i)[20].toString(),            // AvgEcNo
                                                 Integer.parseInt(records.get(i)[21]),     // isSubmitted
                                                 Integer.parseInt(records.get(i)[22])      // isNeighbour
+                                                //records.get(i)[23].toString()           // TODO: con_state
                                         );
                                     }catch(Exception ee){
-                                        Log.e(TAG, mTAG + ": err DBI_MEASURE");
+                                        Log.e(TAG, mTAG + ":restoreDB: Error in insertDbiMeasure()");
                                     }
                                     break;
 
@@ -955,7 +976,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             Log.i(TAG, mTAG + ": restoreDB() Finished ");
             return true;
         } catch (Exception e) {
-            Log.e(TAG, mTAG + ": restoreDB() Error\n" + e.toString());
+            Log.e(TAG, mTAG + ": restoreDB() Error:\n" + e.toString());
             return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
@@ -964,11 +985,13 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     /**
-     *  Description:    Dumps the entire aimsicd.db to a dump file called "aimsicd_dump.db".
+     *  Description:    Dumps the internal aimsicd.db to a dump file called "aimsicd_dump.db".
      *
      *  Requires:       root + SQLite3 binary
      *
      *  Dev Status:     INCOMPLETE !!  Either fix or do not try to use.. TODO: is this ok now?
+     *
+     *  Where?          Used in backupDB() and depend on the  MONO_DB_DUMP  boolean.
      *
      *  Template:       DebugLogs.java
      *
@@ -996,22 +1019,17 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         //if (!dir.exists()) { dir.mkdirs(); }
         File file = new File(dumpdir, "aimsicd_dump.db");
         //Bad coding? (What is AOS standard?)
-        String aimdir = "/data/data/com.SecUpwN.AIMSICD/databases/";
         //Context.getFilesDir().getPath("com.SecUpwN.AIMSICD/databases"); ????
+        String aimdir = "/data/data/com.SecUpwN.AIMSICD/databases/";
         String execString = "/system/xbin/sqlite3 " + aimdir + "aimsicd.db '.backup " + file + "'";
 
         try {
             Log.i(TAG, mTAG + ":dumpDB() Attempting to dump DB to: " + file + "\nUsing: \"" + execString + "\"\n");
-            // We need SU here and cd...
-            CMDProcessor.runSuCommand(execString);
-            //CMDProcessor.runSuCommand(execString).getStdout(); // Need import!
-            //Process process = Runtime.getRuntime().exec(execString);
-
+            CMDProcessor.runSuCommand(execString); // We need SU for this...
         } catch (Exception e) {
             Log.e(TAG, mTAG + ":dumpDB() Failed to export DB dump file: " + e.toString());
         }
-        Log.i(TAG, mTAG + ":dumpDB() Database dumped to: " + file);
-
+        Log.i(TAG, mTAG + ":dumpDB() Dumped internal database to: " + aimdir + file);
     }
 
 
@@ -1083,7 +1101,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             Log.e(TAG, mTAG + ": Error exporting table: " + tableName + " " + e.toString());
         } finally {
             //AIMSICD.mProgressBar.setProgress(0);
-
         }
         Log.i(TAG, mTAG + ": Database Export complete.");
         //todo: Add toast!
