@@ -305,7 +305,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -316,11 +317,10 @@
                     android:textColor="@color/green_text" />
 
                 <TextView
-                    android:id="@+id/wtf999"
+                    android:id="@+id/nREJ_CAUSE"
+                    android:layout_weight="0.1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:text=" TODO!"
                     android:textColor="@color/standard_yellow"
                     android:textSize="12sp" />
 

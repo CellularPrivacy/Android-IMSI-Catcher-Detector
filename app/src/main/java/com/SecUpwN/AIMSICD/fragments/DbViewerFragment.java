@@ -308,7 +308,6 @@ public class DbViewerFragment extends Fragment {
                         // WARNING! The ORDER and number of these are crucial, and need to correspond
                         // to what's found in:  DbeImportCardInflater.java and DbeImportItemData.java
                         // MUST also correspond to the imported OCID CSV order... ???
-                        // TODO: add rej_cause
                         DbeImportItemData data = new DbeImportItemData(
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_DBSOURCE)),                    // DBsource
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_RAT)),                         // RAT
@@ -325,7 +324,7 @@ public class DbViewerFragment extends Fragment {
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_SAMPLES))),        // samples
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_FIRST)),                  // time_first
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_LAST)),                   // time_last
-                                //tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_REJ_CAUSE)),                 // TODO: rej_cause
+                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_REJ_CAUSE)),                   // rej_cause
                                 (tableData.getPosition() + 1) + " / " + count                                                           // item:  "n/X"
                         );
                         adapter.addItem(data, false);
@@ -390,7 +389,7 @@ public class DbViewerFragment extends Fragment {
                     return adapter;
                 }
 
-                case MEASURED_SIGNAL_STRENGTHS: {
+                case MEASURED_SIGNAL_STRENGTHS: {       // DBi_measure:rx_signal
 
                     // TODO: merge into "DBi_measure:rx_signal"
                     BaseInflaterAdapter<MeasuredCellStrengthCardData> adapter

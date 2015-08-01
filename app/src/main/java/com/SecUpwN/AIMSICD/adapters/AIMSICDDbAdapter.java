@@ -1234,20 +1234,34 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         //      int tf_settings = current_time[s] - (3600 * 24 * tf_settings) ???
         //sqlq = "UPDATE DBe_import SET rej_cause = rej_cause + 1 WHERE time_first < " + tf_settings;
         //mDb.execSQL(sqlq);
+
     }
 
-    
+
     // =======================================================================================
     //      Signal Strengths Table
     // =======================================================================================
 
+    /**
+     * Description:     Remove too old signal strengths entries from DBi_measure table,
+     *                  given a particular LAC,CID,PSC,RAT (or all?).
+     *
+     *                  TODO: Why do we need this at all?
+     *
+     * Note:            WARNING!    Do not remove based upon time only, as that would remove
+     *                              all other measurement entries as well.
+     *
+     * Issues:          TODO:   timestamp in DBi_measure is a String,
+     *                          but the one from SignalStrengthTracker is a long
+     */
+
     public void cleanseCellStrengthTables(long maxTime) {
+        Log.d(TAG, mTAG + ": cleanseCellStrengthTables(): Cleaning DBi_measure WHERE time < " + maxTime);
+
         //TODO Change "time" to INTEGER in DB   -- currently not working
         String query = String.format(
                 "DELETE FROM DBi_measure WHERE time < %d",
                 maxTime );
-
-        Log.d(TAG, mTAG + ": Cleaning " + DBTableColumnIds.DBI_MEASURE_TABLE_NAME + " WHERE time < " + maxTime);
         mDb.execSQL(query);
     }
 
@@ -1292,13 +1306,13 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         return lAnswer;
     }
 
-    // TODO: Where is this used?
+    // TODO: Where is this used? -- It is not...
     public Cursor getSignalStrengthMeasurementData() {
         return mDb.rawQuery("SELECT bts_id,rx_signal,time FROM DBi_measure ORDER BY time DESC",null);
     }
 
     // TODO: Do we need to remove this? It's used in MapViewer..
-    // TODO: Where is this used?
+    // TODO: Where is this used?  -- It is not...
     // TODO: What does it do?
     public Cursor getOpenCellIDDataByRegion(Double lat1, Double lng1, Double lat2, Double lng2) {
         return mDb.query( DBTableColumnIds.DBE_IMPORT_TABLE_NAME,

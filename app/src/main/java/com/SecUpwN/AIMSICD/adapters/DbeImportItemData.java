@@ -22,6 +22,7 @@ public class DbeImportItemData {
     private final String SAMPLES;
     private final String TIME_FIRST;
     private final String TIME_LAST;
+    private final String REJ_CAUSE;
 
     //private boolean mIsFakeData;
     private final String mRecordId;
@@ -42,6 +43,7 @@ public class DbeImportItemData {
              String samples,
              String time_first,
              String time_last,
+             String rej_cause,
              String _mRecordId) {
 
             DB_SOURCE = db_source;
@@ -59,6 +61,7 @@ public class DbeImportItemData {
             SAMPLES = samples;
             TIME_FIRST = time_first;
             TIME_LAST = time_last;
+            REJ_CAUSE = rej_cause;
 
             mRecordId = _mRecordId;
     }
@@ -66,6 +69,7 @@ public class DbeImportItemData {
     public String getDB_SOURCE() {
         return DB_SOURCE;
     }
+
 
     public String getRAT() {
         return RAT;
@@ -122,6 +126,11 @@ public class DbeImportItemData {
     public String getTIME_LAST() {
         return TIME_LAST;
     }
+
+    public String getREJ_CAUSE() {
+        return REJ_CAUSE;
+    }
+
 
     public String getRecordId() { return mRecordId; }
 
