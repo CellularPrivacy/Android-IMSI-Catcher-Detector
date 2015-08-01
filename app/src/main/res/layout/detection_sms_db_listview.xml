@@ -44,13 +44,14 @@
                     android:text="TYPE:"
                     android:id="@+id/wtf8"
                     android:textSize="12sp"
-                    android:textColor="@color/bright_red_text" />
+                    android:textColor="@color/green_text" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_smsdata_smstype"
                     android:layout_weight="1"
+                    android:textColor="@color/standard_yellow"
                     android:textSize="12sp" />
                 
             </TableRow>
@@ -98,7 +99,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SMSC:"
+                    android:text="SMSC: "
                     android:id="@+id/wtf9"
                     android:textSize="12sp"
                     android:textColor="@color/green_text" />
@@ -106,9 +107,10 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text=" TODO! "
+                    android:text="TODO! "
                     android:id="@+id/wtf999"
                     android:layout_weight="1"
+                    android:textColor="@color/standard_yellow"
                     android:textSize="12sp" />
 
                 <TextView

@@ -311,7 +311,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="rej_cause:"
+                    android:text="rej_cause: "
                     android:id="@+id/wtf16"
                     android:textSize="12sp"
                     android:textColor="@color/green_text" />
