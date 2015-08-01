@@ -671,7 +671,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
                     int i;
                     for ( i = 1; i < lines; i++) {
-                        AIMSICD.mProgressBar.setProgress(i); // Move this outside fast loop?
+                        //AIMSICD.mProgressBar.setProgress(i); // Move this outside fast loop?
 
                         // TODO: IS this needed!???
                         // Inserted into the table only unique values CID
@@ -727,9 +727,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                         );
                         //Log.d(TAG,"Dbe_import tables inserted=" + i);
                     }
+                    AIMSICD.mProgressBar.setProgress(4);
                     Log.d(TAG, mTAG + ":populateDBeImport(): " + i + " cells inserted.");
                 }
-            }else{
+            } else {
                 Log.e(TAG, mTAG + ": opencellid.csv file does not exist!");
             }
             return true;
@@ -737,6 +738,11 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             Log.e(TAG, mTAG + ": Error parsing OpenCellID data: " + e.getMessage());
             return false;
         } finally {
+            try {
+                Thread.sleep(1000); // wait 1 seconds to allow user to see progress bar.
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
             AIMSICD.mProgressBar.setProgress(0);
         }
     }
@@ -746,24 +752,24 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     //=============================================================================================
 
     /**
-     *  Description:    Imports a previously exported CSV file into the database
+     *  Description:    Restores the database tables from a previously Exported CSV files.
+     *                  One CSV file per table with the name:  "aimsicd-<table_name>.csv"
      *
-     *  Used:           ??
-     *
-     *  Issues:
-     *              [ ] CELL_TABLE items are missing or corrupt
-     *              [ ]
-     *
-     *  Exported CSV format: TODO:
+     *  Issues:         [ ]
      *
      *  Notes:      1) Restoring the DB can be done from a monolithic SQLite3 DB by (check!):
      *                  # sqlite3 aimsicd.db <aimsicd.dump
-     *
-     *
      */
     public boolean restoreDB() {
         try {
+            // Progress bar should be here for each table, not each line.
+            AIMSICD.mProgressBar.setMax(mTables.length);
+            AIMSICD.mProgressBar.setProgress(0);
+            int tcount=1;
+
             for (String table : mTables) {
+                AIMSICD.mProgressBar.setProgress(tcount++);
+                
                 File file = new File(FOLDER + "aimsicd-" + table + ".csv");
                 if (file.exists()) {
                     List<String[]> records = new ArrayList<>();
@@ -775,10 +781,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
                     if (!records.isEmpty()) {
                         int lines = records.size();
-                        AIMSICD.mProgressBar.setMax(lines);
-                        AIMSICD.mProgressBar.setProgress(0);
                         for (int i = 1; i < lines; i++) {
-                            AIMSICD.mProgressBar.setProgress(i);
                             switch (table) {
 
                                 case "defaultlocation":
@@ -790,7 +793,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 records.get(i)[4].toString()        // lon
                                         );
                                     }catch(Exception ee){
-                                        Log.e(TAG, mTAG + ": err DEFAULT_LOCATION");
+                                        Log.e(TAG, mTAG + ":restoreDB: Error in insertDefaultLocation()");
                                     }
                                     break;
 
@@ -843,10 +846,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 Integer.parseInt(records.get(i)[13]),   // samples
                                                 records.get(i)[14].toString(),          // time_first
                                                 records.get(i)[15].toString(),          // time_last
-                                                0                                       // rej_cause
+                                                0 //Integer.parseInt(records.get(i)[16])  // TODO: rej_cause
                                         );
                                     }catch(Exception ee){
-                                        Log.e(TAG, mTAG + ": err DBE_IMPORT_");
+                                        Log.e(TAG, mTAG + ":restoreDB: Error in insertDBeImport()");
                                     }
                                     break;
 
@@ -867,7 +870,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 Double.parseDouble(records.get(i)[12])  // lon
                                         );
                                     }catch(Exception ee){
-                                        Log.e(TAG, mTAG + ": err DBI_BTS");
+                                        Log.e(TAG, mTAG + ":restoreDB: Error in insertBTS()");
                                     }
                                     break;
 
@@ -880,14 +883,14 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 records.get(i)[4].toString(),             // gpsd_lat
                                                 records.get(i)[5].toString(),             // gpsd_lon
                                                 Integer.parseInt(records.get(i)[6]),      // gpsd_accu
-                                                records.get(i)[7].toString(),             // gpse_lat
-                                                records.get(i)[8].toString(),             // gpse_lon
+                                                records.get(i)[7].toString(),             // gpse_lat TODO: remove!
+                                                records.get(i)[8].toString(),             // gpse_lon TODO: remove!
                                                 records.get(i)[9].toString(),             // bb_power
                                                 records.get(i)[10].toString(),            // bb_rf_temp
                                                 records.get(i)[11].toString(),            // tx_power
                                                 records.get(i)[12].toString(),            // rx_signal
                                                 records.get(i)[13].toString(),            // rx_stype
-                                                records.get(i)[14].toString(),            // rat
+                                                records.get(i)[14].toString(),            // RAT
                                                 records.get(i)[15].toString(),            // BCCH
                                                 records.get(i)[16].toString(),            // TMSI
                                                 Integer.parseInt(records.get(i)[17]),     // TA
@@ -896,9 +899,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 records.get(i)[20].toString(),            // AvgEcNo
                                                 Integer.parseInt(records.get(i)[21]),     // isSubmitted
                                                 Integer.parseInt(records.get(i)[22])      // isNeighbour
+                                                //records.get(i)[23].toString()           // TODO: con_state
                                         );
                                     }catch(Exception ee){
-                                        Log.e(TAG, mTAG + ": err DBI_MEASURE");
+                                        Log.e(TAG, mTAG + ":restoreDB: Error in insertDbiMeasure()");
                                     }
                                     break;
 
@@ -972,7 +976,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             Log.i(TAG, mTAG + ": restoreDB() Finished ");
             return true;
         } catch (Exception e) {
-            Log.e(TAG, mTAG + ": restoreDB() Error\n" + e.toString());
+            Log.e(TAG, mTAG + ": restoreDB() Error:\n" + e.toString());
             return false;
         } finally {
             AIMSICD.mProgressBar.setProgress(0);
@@ -981,11 +985,13 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     /**
-     *  Description:    Dumps the entire aimsicd.db to a dump file called "aimsicd_dump.db".
+     *  Description:    Dumps the internal aimsicd.db to a dump file called "aimsicd_dump.db".
      *
      *  Requires:       root + SQLite3 binary
      *
      *  Dev Status:     INCOMPLETE !!  Either fix or do not try to use.. TODO: is this ok now?
+     *
+     *  Where?          Used in backupDB() and depend on the  MONO_DB_DUMP  boolean.
      *
      *  Template:       DebugLogs.java
      *
@@ -1013,22 +1019,17 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         //if (!dir.exists()) { dir.mkdirs(); }
         File file = new File(dumpdir, "aimsicd_dump.db");
         //Bad coding? (What is AOS standard?)
-        String aimdir = "/data/data/com.SecUpwN.AIMSICD/databases/";
         //Context.getFilesDir().getPath("com.SecUpwN.AIMSICD/databases"); ????
+        String aimdir = "/data/data/com.SecUpwN.AIMSICD/databases/";
         String execString = "/system/xbin/sqlite3 " + aimdir + "aimsicd.db '.backup " + file + "'";
 
         try {
             Log.i(TAG, mTAG + ":dumpDB() Attempting to dump DB to: " + file + "\nUsing: \"" + execString + "\"\n");
-            // We need SU here and cd...
-            CMDProcessor.runSuCommand(execString);
-            //CMDProcessor.runSuCommand(execString).getStdout(); // Need import!
-            //Process process = Runtime.getRuntime().exec(execString);
-
+            CMDProcessor.runSuCommand(execString); // We need SU for this...
         } catch (Exception e) {
             Log.e(TAG, mTAG + ":dumpDB() Failed to export DB dump file: " + e.toString());
         }
-        Log.i(TAG, mTAG + ":dumpDB() Database dumped to: " + file);
-
+        Log.i(TAG, mTAG + ":dumpDB() Dumped internal database to: " + aimdir + file);
     }
 
 
@@ -1100,7 +1101,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             Log.e(TAG, mTAG + ": Error exporting table: " + tableName + " " + e.toString());
         } finally {
             //AIMSICD.mProgressBar.setProgress(0);
-
         }
         Log.i(TAG, mTAG + ": Database Export complete.");
         //todo: Add toast!
