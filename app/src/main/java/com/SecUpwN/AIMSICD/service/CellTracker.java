@@ -89,11 +89,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     public static String OCID_API_KEY = null;   // see getOcidKey()
     public static int PHONE_TYPE;               //
-    public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
     public static int LAST_DB_BACKUP_VERSION;   //
+    public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
     public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
 
-    private boolean CELL_TABLE_CLEANSED;        // Clean DBi_bts and DBi_measures after each CellTracker re-start
+    private boolean CELL_TABLE_CLEANSED;        // default is FALSE for "boolean", and NULL for "Boolean".
+
     private final int NOTIFICATION_ID = 1;      // ?
     private final Device mDevice = new Device();
 
@@ -139,18 +140,17 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         PHONE_TYPE = tm.getPhoneType();                 // PHONE_TYPE_GSM/CDMA/SIP/NONE
 
         dbHelper = new AIMSICDDbAdapter(context);
+
+        // Remove all but the last DBi_bts entry, after:
+        // (a) starting CellTracker for the first time or
+        // (b) having cleared the preferences.
+        // Subsequent runs are prevented by a hidden boolean preference. See: loadPreferences()
         if (!CELL_TABLE_CLEANSED) {
-            // TODO: What is this used for? (why remove all cells from Dbi_bts table?)
-            // TODO: Possibly old artifact to clean/reset DB tables in a hardcoded way
-            // TODO: Where to activate it? Settings?
-            // TODO: Consider removing this!!
-
             dbHelper.cleanseCellTable();
-
             SharedPreferences.Editor prefsEditor;
             prefsEditor = prefs.edit();
-            prefsEditor.putBoolean(context.getString(R.string.pref_cell_table_cleansed), true);
-            prefsEditor.apply();
+            prefsEditor.putBoolean(context.getString(R.string.pref_cell_table_cleansed), true); // set to true
+            prefsEditor.apply(); //commit changes
         }
         mDevice.refreshDeviceInfo(tm, context);         // Telephony Manager
         mMonitorCell = new Cell();
@@ -306,7 +306,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             if (refreshRate.isEmpty()) {
                 refreshRate = "1"; // Set default to: 1 second
             }
-
 
             int rate = Integer.parseInt(refreshRate);
             long t;
@@ -688,6 +687,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      */
     private void loadPreferences() {
+        // defaults are given by:  getBoolean(key, default if not exist)
         boolean trackFemtoPref  = prefs.getBoolean( context.getString(R.string.pref_femto_detection_key), false);
         boolean trackCellPref   = prefs.getBoolean( context.getString(R.string.pref_enable_cell_key), true);
         boolean monitorCellPref = prefs.getBoolean( context.getString(R.string.pref_enable_cell_monitoring_key), true);

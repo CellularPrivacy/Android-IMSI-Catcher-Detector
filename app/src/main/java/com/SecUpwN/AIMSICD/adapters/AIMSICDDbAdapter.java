@@ -31,8 +31,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
 /**
- * Brief:   Handles the AMISICD DataBase tables (creation, population, updates, etc)
- *
  * Description:
  *
  *      This class handle all the AMISICD DataBase maintenance operations, like
@@ -230,7 +228,6 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *                  This is done by transferring bytestream.
      */
     private void copyDataBase() throws IOException{
-
         // Open your local DB as the input stream
         InputStream myInput = mContext.getAssets().open(DB_NAME);
         // Open the empty DB as the output stream
@@ -266,7 +263,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
-
+    // Nothing? Not even a log?
     }
 
 
@@ -275,8 +272,10 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     // ====================================================================
 
     /**
-     * Description:     Delete cell info - This is used in the AIMSICD frame work Tests
+     * Description:     This is used in the AIMSICD framework Tests to delete cells.
      *                  see: ../src/androidTest/java/com.SecUpwN.test/.
+     *
+     * Issues:          TODO: See comments below!
      *
      * @param cellId    This method deletes a cell with CID from CELL_TABLE
      *
@@ -285,7 +284,9 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      */
     public int deleteCell(int cellId) {
         Log.i(TAG, mTAG + ": Deleted CID: " + cellId);
-        // TODO Do we also need to delete this cell from DBi_measure?
+        // TODO Instead we need to delete this cell from DBi_measure, since:
+        // we are using foreign_key enforced DB, that doesn't allow you to
+        // remove Dbi_bts without corresponding DBi_measures that uses them.
         // Rewrite this query!
         return mDb.delete("DBi_bts","CID=" + cellId, null);
     }
@@ -451,19 +452,26 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     /**
-     *  Description:    Remove all but the last row, unless its CID is invalid...
+     * Description:     Remove all but the last row, unless its CID is invalid...
      *
      * Dependencies:    CellTracker.java:  ( dbHelper.cleanseCellTable(); )
      *
-     * Notes:           TODO: Do we need to clean LAC as well? Test with airplane-mode or roaming
+     * Issues:          [ ] This will not work if: PRAGMA foreign_key=ON, then we need to delete
+     *                      the corresponding DBi_measure entries before / as well.
+     *
+     *                  [ ] TODO: It is UNCLEAR why this is needed!! It's probably an artifact of old DB tables??
+     *                      TODO: Consider changing or removing!
+     *
+     * Notes:           Do we need to clean LAC as well? (Test with airplane-mode or roaming)
      *                  - probably not since a APM would give both LAC and CID as "-1".
      *
      */
     public void cleanseCellTable() {
         // This removes all but the last row in the "DBi_bts" table
-        mDb.execSQL("DELETE FROM DBi_bts WHERE _id NOT IN (SELECT MAX(_id) FROM DBi_bts GROUP BY CID)");
+        //"DELETE FROM DBi_bts WHERE _id NOT IN (SELECT MAX(_id) FROM DBi_bts) GROUP BY CID"
+        mDb.execSQL("DELETE FROM DBi_bts WHERE _id NOT IN (SELECT MAX(_id) FROM DBi_bts)");
 
-        // This removes erroneous BTS entries due to API giving you CID/LAC of "-1" or MAXINT,
+        // This removes erroneous BTS entries due to API giving you CID/LAC of "-1" or MAX_INT,
         // when either roaming, in airplane mode or during crappy hand-overs.
         String query2 = String.format(
                 "DELETE FROM DBi_bts WHERE CID = %d OR CID = -1",
