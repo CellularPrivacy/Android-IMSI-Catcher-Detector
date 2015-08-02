@@ -33,7 +33,7 @@ import com.SecUpwN.AIMSICD.utils.Device;
  *  Notes:
  *
  *   We often talk about "Network Type", when we actually refer to:
- *   "RAN" = Radio Access Network (cellular communaitcation only)
+ *   "RAN" = Radio Access Network (cellular communication only)
  *   "RAT" = Radio Access Technology (any wireless communication technology, like WiMax etc.)
  *
  *   As for this application, we shall use the terms:
@@ -116,7 +116,7 @@ public class CardItemData {
         if (cell.getRssi() != Integer.MAX_VALUE && cell.getRssi() != -1) {
             mSignal = "RSSI: " + cell.getRssi();
         } else if (cell.getDBM() != Integer.MAX_VALUE && cell.getDBM() != -1) {
-            mSignal = "Dbm: " + cell.getDBM();
+            mSignal = "dBm: " + cell.getDBM();
         } else {
             mSignal = "N/A";
         }

@@ -40,7 +40,7 @@ public class LocationTracker {
     private Location lastLocation;
     private static final long GPS_MIN_UPDATE_TIME = 10000;
     private static final float GPS_MIN_UPDATE_DISTANCE = 10;
-
+    AIMSICDDbAdapter mDbHelper;
 
     LocationTracker(AimsicdService service, LocationListener extLocationListener) {
         this.context = service;
@@ -50,6 +50,7 @@ public class LocationTracker {
         mLocationListener = new MyLocationListener();
         prefs = context.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        mDbHelper = new AIMSICDDbAdapter(context);
     }
 
     public void start() {
@@ -120,10 +121,9 @@ public class LocationTracker {
                         Cell cell = context.getCell();
                         if (cell != null) {
                             Log.d("location", "Looking up MCC " + cell.getMCC());
-                            AIMSICDDbAdapter mDbHelper = new AIMSICDDbAdapter(context);
-                            mDbHelper.open();
+
                             double[] defLoc = mDbHelper.getDefaultLocation(cell.getMCC());
-                            mDbHelper.close();
+
                             loc = GeoLocation.fromDegrees(defLoc[0], defLoc[1]);
                         }
                     } catch (Exception e) {

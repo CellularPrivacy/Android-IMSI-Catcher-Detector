@@ -71,8 +71,8 @@ public class DrawerMenu {
          */
         public static class APPLICATION {
             //FIXME     Is this should be "Download Local OCID Data" ?
-            public static final int DOWNLOAD_LOCAL_BST_DATA = 400; //Download Local BST Data
-            public static final int UPLOAD_LOCAL_BST_DATA = 410; //Upload Local BST Data
+            public static final int DOWNLOAD_LOCAL_BTS_DATA = 400; //Download Local BST Data
+            public static final int UPLOAD_LOCAL_BTS_DATA = 410; //Upload Local BST Data
             //TODO need to implement
             public static final int ADD_GET_OCID_API_KEY = 420; // Add/Get OCID API key
             public static final int ABOUT = 430; //About AIMSICD

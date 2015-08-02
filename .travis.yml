@@ -77,4 +77,3 @@ addons:
     build_command_prepend: "./gradlew clean"
     build_command: "./gradlew build"
     branch_pattern: master
-    build_script_url: https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/travisci_build_coverity_scan.sh

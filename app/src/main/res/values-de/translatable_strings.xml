@@ -327,8 +327,8 @@
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">API-Schlüssel für die Nutzung der OpenCellID-Datenbanken sowie hoch- und herunterladen der Daten anfordern…</string>
     <string name="help_app_about">Status-Symbole und Erklärung des Projekts.</string>
-    <string name="help_app_download_local_bst">OCID-Datenbank herunterladen.</string>
-    <string name="help_app_upload_local_bst">Eigene BTS-Daten zu OCID hochladen.</string>
+    <string name="help_app_download_local_bts">OCID-Datenbank herunterladen.</string>
+    <string name="help_app_upload_local_bts">Eigene BTS-Daten zu OCID hochladen.</string>
     <string name="help_app_debugging">Fehlerprotokolle sammeln und versenden.</string>
     <string name="help_app_quit">Diese App verlassen.</string>
     <string name="waiting_for_location">Standort wird ermittelt…</string>
@@ -387,4 +387,7 @@
     <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
     <string name="getting_ocid_key">Besorge OpenCellID-Schlüssel...</string>
     
+    <string name="restore_database_completed_title">Wiederherstellung erfolgreich.</string>
+    <string name="delete_database_msg_success">Datenbank gelöscht und erfolgreich neu erstellt.\nBitte App neu starten um alte Werte aus dem Speicher zu löschen.</string>
+
     </resources>

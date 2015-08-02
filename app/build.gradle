@@ -43,7 +43,7 @@ android {
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 19 // Do not change: Working Icons on Android 5+
         versionCode = getManifestVersionCode()
         versionName = getManifestVersionName()
         testApplicationId "com.SecUpwN.AIMSICD.test"

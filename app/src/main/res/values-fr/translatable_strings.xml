@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Drawer -->
-    <string name="tracking">Tracking</string>
+    <string name="tracking">Repérage</string>
     <string name="device_info">Détails Téléphone/Carte SIM</string>
     <string name="map_view">Carte des Antennes Relai</string>
     <string name="db_viewer">Visionneuse de la Base de Donnée</string>
@@ -29,12 +29,12 @@
     <string name="toggle_cell_tracking">Commencer à localiser les cellules</string>
     <string name="backup_database">Sauvegarder la Base de Donnée</string>
     <string name="clear_database">Effacer/Réinitialiser la Base De Donnée</string>
-    <string name="clear_database_question">Toutes les données seront effacés.\nÊtes vous sur?</string>
+    <string name="clear_database_question">Toutes les données vont être effacées.\nÊtes vous sur?</string>
     <string name="restore_database">Restaurer la Base de Données</string>
     <string name="preferences">Préférences</string>
     <string name="press_once_again_to_exit">Appuyez une seconde fois pour quitter.</string>
     <string name="cell_lookup">Détails sur la/les cellule(s) actuelles</string>
-    <string name="send_logs">Debugging</string>
+    <string name="send_logs">Déverminage</string>
     <string name="no_network_connection_title">Aucune Connexion Internet</string>
     <string name="no_network_connection_message">Impossible de télécharger les données OpenCellID sans une connexion internet!</string>
 
@@ -141,7 +141,7 @@
     <string name="mcc_label">MCC: </string>
     <string name="mnc_label">MNC: </string>
     <string name="pc_label">PC: </string>
-    <string name="samples_label">Samples: </string>
+    <string name="samples_label">"Echantillons: "</string>
     <string name="open_cell_id_label">Données OpenCellID</string>
     <string name="lat_label">Lat: </string>
     <string name="lng_label">Lon: </string>
@@ -194,15 +194,15 @@
     <string name="detail_info_idle">L\'application est en sommeil ou en chargement. Aucune protection/détection n\'est activée. Activez l\'application dans la section TRACKING du menu!</string>
     <string name="detail_info_normal">Aucune menace détectée. Notre application vérifie constamment votre réseau à partir des mesures de protections que vous avez paramétré dans le menu et les préférences.</string>
     <string name="detail_info_medium">Zone avec un service non sécurisé : Au moins une BTS est nouvelle ou inconnue dans les environs, ou bien celle-ci utilise un système de chiffrement considéré comme non sur (inférieure à A5/3). Considérez que tout appel/SMS envoyé ou reçu dans cette zone peut être interceptée et enregistrée. Vous devriez quitter cet endroit.</string>
-    <string name="detail_info_high">Actions Hostiles de la part d\'un service détecté: Un IMSI-Catcher ou une fausse BTS est actuellement en train de traquer ses utilisateurs. Le scan à lieu ici et maintenant. Vous devriez quitter cette place, particulièrement s’il y a des troubles politiques. Enlevez votre batterie ou détruisez votre téléphone!</string>
+    <string name="detail_info_high">Actions Hostiles de la part d\'un service détecté: Un IMSI-Catcher ou une fausse BTS est actuellement en train de traquer ses utilisateurs. Scan actif dans cette zone. Vous devriez quitter cette place, particulièrement s’il y a des troubles politiques. Enlevez votre batterie ou détruisez votre téléphone!</string>
     <string name="detail_info_danger">Tracking Détecté : une fausse BTS ou IMSI-Catcher est actuellement en train de VOUS tracer et empêche votre téléphone de se connecter à votre opérateur avec un chiffrement normal. Si vous êtes en danger, détruisez votre téléphone(ou vendez le)+votre carte SIM et déclarez cette dernière volée.</string>
-    <string name="detail_info_run">Manipulation: Quelqu\'un essaye de contrôler à distance votre téléphone. Détruisez votre téléphone(ou vendez le) et obtenez en un nouveau depuis un autre emplacement géographique!</string>
+    <string name="detail_info_run">Manipulation: Quelqu\'un essaye de contrôler à distance votre téléphone. Détruisez votre téléphone(ou vendez le) et obtenez en un nouveau loin d\'ici ( n\'emmenez pas ce téléphone là où vous en changerez)! Changez de carte SIM et d\'habitude d\'appel, prévenez vos amis IRL et PAS au téléphone!</string>
     <string name="open_cell_id_button_cancel">Annuler</string>
     <string name="open_cell_id_button_ok">OK</string>
 
     <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Plate</string>
-    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_sense">Sens</string>
     <string name="ui_icon_white">Blanche</string>
     <string name="map_type_terrain">Terrain</string>
     <string name="map_type_normal">Normal</string>
@@ -241,7 +241,7 @@
     <string name="alert_femtocell_connection_detected">ALERTE: FemtoCellule Détectée!</string>
     <string name="alert_silent_sms_detected">ALERTE: SMS Silencieux Détecté!</string>
     <string name="alert_silent_wap_sms_detected">ALERTE: SMS Wap Push Détecté!</string>
-    <string name="alert_mwi_detected">ALERT: Message Waiting Indicator detected!</string>
+    <string name="alert_mwi_detected">ALERTE: Message Waiting Indicator detecté!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD ne peut détecter les connexions FemtoCellules que sur les appareils CDMA.</string>
     <string name="service_state_changed">État du service changé !</string>
     <string name="stopped_tracking_femtocell">: Arrêt du tracking des FemtoCellules.</string>
@@ -255,7 +255,7 @@
     <string name="no_data_for_publishing">Aucune donnée à publier.</string>
     <string name="download_error">Erreur de téléchargement:</string>
     <string name="opencellid_data_successfully_received">Données OpenCellID reçues avec succès.</string>
-    <string name="error_retrieving_opencellid_data">Erreur lors de la récupération des données OpenCellID.\nVéréfiez Votre réseau!</string>
+    <string name="error_retrieving_opencellid_data">Erreur lors de la récupération des données OpenCellID.\nVérifiez Votre réseau!</string>
     <string name="opencellid_data_successfully_received_markers_updated">Données OpenCellID reçues avec succès.\nCarte Mise à jour.</string>
     <string name="uploaded_bts_data_successfully">Envoi des BTS à OpenCellID réussi.</string>
     <string name="error_uploading_bts_data">Erreur lors de l\'upload des BTS vers les serveurs OpenCellID!</string>
@@ -331,12 +331,12 @@
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">obtenir une clé pour utiliser la base de donnée d\'OpenCellID et pour uploader vos données…</string>
     <string name="help_app_about">Explication des icônes de statut et du projet.</string>
-    <string name="help_app_download_local_bst">Télécharger la Base de Données OpenCellID.</string>
-    <string name="help_app_upload_local_bst">Uploader vos BTS vers OpenCellID.</string>
+    <string name="help_app_download_local_bts">Télécharger la Base de Données OpenCellID.</string>
+    <string name="help_app_upload_local_bts">Uploader vos BTS vers OpenCellID.</string>
     <string name="help_app_debugging">Afficher et envoyer les logs d\'application.</string>
     <string name="help_app_quit">Quitter cette application.</string>
     <string name="waiting_for_location">Recherche de votre localisation en cours…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Impossible de restaurer la Base de Données : la structure de celle-ci a changé depuis!</string>
+    <string name="unable_to_restore_backup_from_previous_database_version">Impossible de restaurer la Base de Données : la structure de celle-ci a changé!</string>
     <string name="unique_bts_data">Données BTS Uniques</string>
     <string name="bts_measurements">Données BTS</string>
     <string name="imported_ocid_data">Données importés d\'OpenCellID</string>
@@ -349,7 +349,7 @@
     <string name="at_command_response_found">Trouvé: </string>
     <string name="at_command_response_setup_complete">*** Recherche terminée ***\n</string>
 
-    <string name="currently_connected_bts">BTS actuellement connectée à votre Téléphone.</string>
+    <string name="currently_connected_bts">BTS actuellement connectée à votre Téléphone</string>
     <string name="well_known_encrypted_bts">BTS connu et sécurisé</string>
     <string name="unknown_or_insecure_bts">BTS inconnu ou non-sécurisé</string>
     <string name="new_or_recently_added_bts">BTS nouvelle ou récemment ajoutée</string>
@@ -386,4 +386,8 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-</resources>
+<string name="unknown_error_initialising_at_command_injector">Erreur inconnue lors de l\'initialisation de l\'injecteur de commandes AT.\nMerci de chercher les erreurs dans le logcat et de les poster sur Github.</string>
+    <string name="invalid_key_try_later">Clé OpenCellId invalide, merci de réessayer plus tard.</string>
+    <string name="getting_ocid_key">Demande d\'une clé OpenCellId...</string>
+
+    </resources>

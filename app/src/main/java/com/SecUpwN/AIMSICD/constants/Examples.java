@@ -6,13 +6,16 @@
 package com.SecUpwN.AIMSICD.constants;
 
 /**
- * Constants for examples
+ * Description:     This class add Constants for examples as used to pre-populate
+ *                  various tables used in the Database Viewer (DBV).
+ *
+ * Dependencies:    DbViewerFragment.java
  */
 public class Examples {
 
     /**
-     * Constants of examples for EventLogItemData
-     * <p>Relates to {@link com.SecUpwN.AIMSICD.adapters.EventLogItemData}<br />
+     * Description:     Constants of examples for EventLogItemData
+     * Dependencies:    EventLogItemData.java
      */
     public static class EVENT_LOG_DATA {
         public static final String LAC = "12345";
@@ -25,8 +28,8 @@ public class Examples {
     }
 
     /**
-     * Constants of examples for SilentSmsCardData
-     * <p>Relates to {@link com.SecUpwN.AIMSICD.adapters.SilentSmsCardData}<br />
+     * Description:     Constants of examples for SilentSmsCardData
+     * Dependencies:    SilentSmsCardData.java
      */
     public static class SILENT_SMS_CARD_DATA {
         public static final String ADDRESS = "ADREZZ";

@@ -131,61 +131,63 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             // UPLOADING !!
             case DBE_UPLOAD_REQUEST:   // OCID upload request from "APPLICATION" drawer title
                 try {
-                        boolean prepared = mDbAdapter.prepareOpenCellUploadData();
-                        Log.i(TAG, mTAG + ": OCID upload data prepared - " + String.valueOf(prepared));
-                        if (prepared) {
-                            File file = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/aimsicd-ocid-data.csv");
-                            publishProgress(25,100);
 
-                            MultipartEntity mpEntity = new MultipartEntity();
-                            FileInputStream fin = new FileInputStream(file);
-                            String csv = Helpers.convertStreamToString(fin);
+                    boolean prepared = mDbAdapter.prepareOpenCellUploadData();
 
-                            mpEntity.addPart("key", new StringBody(CellTracker.OCID_API_KEY));
-                            mpEntity.addPart("datafile", new InputStreamBody(
-                                    new ByteArrayInputStream(csv.getBytes()), "text/csv", "aimsicd-ocid-data.csv"));
+                    Log.i(TAG, mTAG + ": OCID upload data prepared - " + String.valueOf(prepared));
+                    if (prepared) {
+                        File file = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/aimsicd-ocid-data.csv");
+                        publishProgress(25,100);
 
-                            ByteArrayOutputStream bAOS = new ByteArrayOutputStream();
-                            publishProgress(50,100);
-                            mpEntity.writeTo(bAOS);
-                            bAOS.flush();
-                            ByteArrayEntity bArrEntity = new ByteArrayEntity(bAOS.toByteArray());
-                            bAOS.close();
-                            bArrEntity.setChunked(false);
-                            bArrEntity.setContentEncoding(mpEntity.getContentEncoding());
-                            bArrEntity.setContentType(mpEntity.getContentType());
+                        MultipartEntity mpEntity = new MultipartEntity();
+                        FileInputStream fin = new FileInputStream(file);
+                        String csv = Helpers.convertStreamToString(fin);
 
-                            HttpClient httpclient;
-                            HttpPost httppost;
-                            HttpResponse response;
+                        mpEntity.addPart("key", new StringBody(CellTracker.OCID_API_KEY));
+                        mpEntity.addPart("datafile", new InputStreamBody(
+                                new ByteArrayInputStream(csv.getBytes()), "text/csv", "aimsicd-ocid-data.csv"));
 
-                            httpclient = new DefaultHttpClient();
-                            httppost = new HttpPost("http://www.opencellid.org/measure/uploadCsv");
-                            publishProgress(60,100);
-                            httppost.setEntity(bArrEntity);
-                            response = httpclient.execute(httppost);
-                            publishProgress(80,100);
-                            if (response!= null) {
-                                Log.i(TAG, mTAG + ": OCID Upload Response: "
-                                        + response.getStatusLine().getStatusCode() + " - "
-                                        + response.getStatusLine());
-                                if (response.getStatusLine().getStatusCode() == org.apache.http.HttpStatus.SC_OK) {
-                                    mDbAdapter.ocidProcessed();
-                                }
-                                publishProgress(95,100);
+                        ByteArrayOutputStream bAOS = new ByteArrayOutputStream();
+                        publishProgress(50,100);
+                        mpEntity.writeTo(bAOS);
+                        bAOS.flush();
+                        ByteArrayEntity bArrEntity = new ByteArrayEntity(bAOS.toByteArray());
+                        bAOS.close();
+                        bArrEntity.setChunked(false);
+                        bArrEntity.setContentEncoding(mpEntity.getContentEncoding());
+                        bArrEntity.setContentType(mpEntity.getContentType());
+
+                        HttpClient httpclient;
+                        HttpPost httppost;
+                        HttpResponse response;
+
+                        httpclient = new DefaultHttpClient();
+                        httppost = new HttpPost("http://www.opencellid.org/measure/uploadCsv");
+                        publishProgress(60,100);
+                        httppost.setEntity(bArrEntity);
+                        response = httpclient.execute(httppost);
+                        publishProgress(80,100);
+                        if (response!= null) {
+                            Log.i(TAG, mTAG + ": OCID Upload Response: "
+                                    + response.getStatusLine().getStatusCode() + " - "
+                                    + response.getStatusLine());
+                            if (response.getStatusLine().getStatusCode() == org.apache.http.HttpStatus.SC_OK) {
+                                mDbAdapter.ocidProcessed();
                             }
-                            return "Successful";
-                        } else {
-                            Helpers.msgLong(mAppContext, mAppContext.getString(R.string.no_data_for_publishing));
-                            return null;
+                            publishProgress(95,100);
                         }
+                        return "Successful";
+                    } else {
+                        Helpers.msgLong(mAppContext, mAppContext.getString(R.string.no_data_for_publishing));
+                        return null;
+                    }
 
                 } catch (Exception e) {
                     Log.e(TAG, mTAG + ": Upload OpenCellID data Exception - " + e.getMessage());
                     e.printStackTrace();
                 }
 
-            // DOWNLOADING...
+                // DOWNLOADING...
             case DBE_DOWNLOAD_REQUEST:          // OCID download request from "APPLICATION" drawer title
                 mTimeOut = REQUEST_TIMEOUT_MENU;
             case DBE_DOWNLOAD_REQUEST_FROM_MAP: // OCID download request from "Antenna Map Viewer"
@@ -203,7 +205,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.setConnectTimeout(mTimeOut);
-                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 40 s
+                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 80 s
                     urlConnection.setDoInput(true);
                     urlConnection.connect();
 
@@ -259,21 +261,16 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 }
 
             case BACKUP_DATABASE:
-                mDbAdapter.open();
+
                 if (mDbAdapter.backupDB()) {
-                    mDbAdapter.close();
                     return "Successful";
                 }
-                mDbAdapter.close();
                 return null;
 
             case RESTORE_DATABASE:
-                mDbAdapter.open();
                 if (mDbAdapter.restoreDB()) {
-                    mDbAdapter.close();
                     return "Successful";
                 }
-                mDbAdapter.close();
                 return null;
         }
 
@@ -292,7 +289,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         super.onProgressUpdate(values);
         // Silence or Remove when working:
         Log.v(TAG, mTAG + ":onProgressUpdate values[0]: " + values[0] +
-                                           " values[1]: " + values[1]);
+                " values[1]: " + values[1]);
         //setProgressPercent(progress[0]); ??
         AIMSICD.mProgressBar.setProgress(values[0]);    // progress
         AIMSICD.mProgressBar.setMax(values[1]);         // total
@@ -321,13 +318,13 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         switch (mType) {
             case DBE_DOWNLOAD_REQUEST:
                 if (result != null && result.equals("Successful")) {
-                    mDbAdapter.open();
-                    if (mDbAdapter.updateOpenCellID()) {
+
+                    if (mDbAdapter.populateDBeImport()) {
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received));
                     }
 
                     mDbAdapter.checkDBe();
-                    mDbAdapter.close();
+
                     tinydb.putBoolean("ocid_downloaded", true);
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_retrieving_opencellid_data));
@@ -336,14 +333,12 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
             case DBE_DOWNLOAD_REQUEST_FROM_MAP:
                 if (result != null && result.equals("Successful")) {
-                    mDbAdapter.open();
-                    if (mDbAdapter.updateOpenCellID()) {
+                    if (mDbAdapter.populateDBeImport()) {
                         Intent intent = new Intent(MapViewerOsmDroid.updateOpenCellIDMarkers);
                         LocalBroadcastManager.getInstance(mAppContext).sendBroadcast(intent);
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received_markers_updated));
 
                         mDbAdapter.checkDBe();
-                        mDbAdapter.close();
                         tinydb.putBoolean("ocid_downloaded", true);
                     }
                 } else {
@@ -356,6 +351,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             case DBE_UPLOAD_REQUEST:
                 if (result != null && result.equals("Successful")) {
                     Helpers.msgShort(mAppContext, mAppContext.getString(R.string.uploaded_bts_data_successfully));
+
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_uploading_bts_data));
                 }
@@ -364,6 +360,14 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             case RESTORE_DATABASE:
                 if (result != null && result.equals("Successful")) {
                     Helpers.msgShort(mAppContext, mAppContext.getString(R.string.restore_database_completed));
+                    Activity lActivity = getActivity();
+                    
+                    if(lActivity != null) {//Activity may be detached or destroyed
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
+                        builder.setTitle(R.string.restore_database_completed_title).setMessage(
+                                lActivity.getString(R.string.restore_database_completed));
+                        builder.create().show();
+                    }
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_restoring_database));
                 }

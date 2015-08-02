@@ -3,64 +3,70 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:descendantFocusability="beforeDescendants">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:paddingLeft="5dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:paddingRight="5dp"
-        android:descendantFocusability="afterDescendants"
-        android:background="@drawable/selector_card_background">
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/selector_card_background"
+        android:descendantFocusability="afterDescendants">
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusableInTouchMode="false">
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
             <TextView
-                android:id="@+id/tv_det_str"
+                android:id="@+id/wtf1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="String: "
                 android:textColor="@color/green_text"
-                android:text="String:" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_det_str_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/standard_grey"
-                android:gravity="center|left" />
+                android:gravity="start"
+                android:textSize="12sp" />
 
-        </GridLayout>
+        </TableRow>
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusableInTouchMode="false" >
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
             <TextView
-                android:id="@+id/tv_det_type"
+                android:id="@+id/wtf2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Type: "
                 android:textColor="@color/green_text"
-                android:text="Type:" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_det_type_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/standard_grey"
-                android:gravity="center|left" />
-        </GridLayout>
+                android:gravity="start"
+                android:textSize="12sp" />
 
+        </TableRow>
+
+        </TableLayout>
     </LinearLayout>
-
-
 </FrameLayout>
 

@@ -8,23 +8,14 @@ package com.SecUpwN.AIMSICD.utils;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CustomPopUp;
-import com.SecUpwN.AIMSICD.smsdetection.SmsDetectionDbAccess;
-import com.SecUpwN.AIMSICD.smsdetection.SmsDetectionDbHelper;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
@@ -82,7 +73,7 @@ public class MiscUtils {
     }
 
     public static String getCurrentTimeStamp(){
-
+        //yyyyMMddHHmmss <-- this format is needed for OCID upload
         Date now = new Date();
         return new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now);
     }
@@ -121,76 +112,7 @@ public class MiscUtils {
 
     }
 
-    /*
-         Coder:banjaxbanjo
 
-         All new database detection strings will be added here so we
-         don't need to keep updating db every time we find a new string.
-
-         to add a new string in det_strings.json see example below:
-
-         {"detection_string":"incoming msg. Mti 0 ProtocolID 0 DCS 0x04 class -1", "detection_type":"WAPPUSH"}
-
-      */
-    public static void refreshDetectionDbStrings(Context con){
-        SmsDetectionDbAccess dbaccess = new SmsDetectionDbAccess(con);
-        BufferedReader reader = null;
-        StringBuilder json_file = new StringBuilder();
-        try{
-            reader = new BufferedReader(new InputStreamReader(con.getAssets().open("det_strings.json")));
-            String rline = reader.readLine();
-
-            while (rline != null ){
-                json_file.append(rline);
-                rline = reader.readLine();
-            }
-            // Hmm I hope this doesn't affect the detection
-            Log.i(TAG, mTAG + ": refreshDetectionDbStrings: " + json_file.toString());
-        } catch (Exception ee){
-            ee.printStackTrace();
-        }finally {
-            if(reader != null){
-                try {
-                    reader.close();
-                } catch (Exception ee){
-                    ee.printStackTrace();
-                }
-            }
-        }
-
-        JSONObject json_response;
-
-        try {
-
-            json_response = new JSONObject(json_file.toString());
-            JSONArray json_array_node = json_response.optJSONArray("load_detection_strings");
-
-            int json_array_len = json_array_node.length();
-            dbaccess.open();
-            for(int i=0; i < json_array_len; i++)
-            {
-                
-                JSONObject current_json_object = json_array_node.getJSONObject(i);
-                ContentValues store_new_det_string = new ContentValues();
-                store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_STRING_COLUMN,
-                        current_json_object.optString("detection_string")); // removed .toString()
-                store_new_det_string.put(SmsDetectionDbHelper.SILENT_SMS_TYPE_COLUMN,
-                        current_json_object.optString("detection_type"));
-                if(dbaccess.insertNewDetectionString(store_new_det_string)){
-                    Log.i(TAG, mTAG + ": refreshDetectionDbStrings: New string added!");
-                }
-                
-
-            }
-            dbaccess.close();
-        } catch (JSONException e) {
-            dbaccess.close();
-            Log.e(TAG, mTAG + ": refreshDetectionDbStrings: "+ "Error parsing JsonFile " + e.toString());
-            e.printStackTrace();
-        }
-
-    }
-    
     /*
      *  Description:    Converts logcat timstamp to SQL friendly timstamps
      *                  We use this to determine if an sms has already been found

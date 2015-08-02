@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,7 +45,6 @@ import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
-import com.SecUpwN.AIMSICD.smsdetection.SmsDetectionDbHelper;
 import com.SecUpwN.AIMSICD.utils.AsyncResponse;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
@@ -66,6 +66,7 @@ import java.util.List;
  * Issues:
  *
  * ChangeLog:
+ *              2015-07-31  E:V:A       Added a restart of AIMSICDDbAdapter after deleting DB
  *
  */
 public class AIMSICD extends BaseActivity implements AsyncResponse {
@@ -87,10 +88,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     public static ProgressBar mProgressBar;
-    SmsDetectionDbHelper dbhelper;
 
-    //Back press to exit timer
-    private long mLastPress = 0;
+    private long mLastPress = 0;    // Back press to exit timer
 
     private DrawerMenuActivityConfiguration mNavConf ;
 
@@ -101,9 +100,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /* add new detection strings if any*/
-        MiscUtils.refreshDetectionDbStrings(getApplicationContext());
-
         moveData();
 
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -111,9 +107,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
 
         setContentView(mNavConf.getMainLayout());
-
-        //create the database on first install
-        dbhelper = new SmsDetectionDbHelper(this);
 
         mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
         mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
@@ -240,7 +233,10 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         }
     }
 
-    /** Swaps fragments in the main content view */
+    /**
+     * Description:     Swaps fragments in the main content view
+     *
+     */
     void selectItem(int position) {
         NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
         String title = selectedItem.getLabel();
@@ -285,7 +281,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new AboutFragment()).commit();
                 break;
-            case DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BST_DATA:
+            case DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA:
                 // Request uploading here?
                 new RequestTask(mContext, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute(""); // no string needed for csv based upload
                 break;
@@ -311,22 +307,41 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESET_DB) {
+            // WARNING! This deletes the entire database, thus any subsequent DB access will FC app.
+            //          Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
+            //          See: #581 and Helpers.java
             Helpers.askAndDeleteDb(this);
-        } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BST_DATA) {
+
+
+        } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
+
+                Cell cell = new Cell();
+                TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                String networkOperator = tm.getNetworkOperator();
+
+                if (networkOperator != null) {
+                    int mcc = Integer.parseInt(networkOperator.substring(0, 3));
+                    cell.setMCC(Integer.parseInt(networkOperator.substring(0, 3)));
+                    int mnc = Integer.parseInt(networkOperator.substring(3));
+                    cell.setMNC(Integer.parseInt(networkOperator.substring(3, 5)));
+                    Log.d(TAG, "CELL:: mcc="+mcc+ " mnc="+mnc);
+                }
+
+
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
                     Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data));
-                    Cell cell = new Cell();
+
                     cell.setLon(loc.getLongitudeInDegrees());
                     cell.setLat(loc.getLatitudeInDegrees());
                     Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
                 } else {
                     Helpers.msgShort(mContext, getString(R.string.waiting_for_location));
 
-                    // TODO: Is this implemented?? --E:V:A (2015-01-22)
-                    //Attempt to find location through CID
-                    //CID Location Async Output Delegate Interface Implementation
+                    // This uses the LocationServices to get CID/LAC/MNC/MCC to be used
+                    // for grabbing the BTS data from OCID, via their API.
+                    // CID Location Async Output Delegate Interface Implementation
                     LocationServices.LocationAsync locationAsync
                             = new LocationServices.LocationAsync();
                     locationAsync.delegate = this;
@@ -380,6 +395,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             }
 
             if (mAimsicdService != null) mAimsicdService.onDestroy();
+            //Close database on Exit
+            Log.i(TAG, "Closing db from DrawerMenu.ID.APPLICATION.QUIT");
+            new AIMSICDDbAdapter(getApplicationContext()).close();
             finish();
         }
 
@@ -439,7 +457,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
             mBound = true;
 
-            //If tracking cell details check location services are still enabled
+            // Check if tracking cell details check location services are still enabled
             if (mAimsicdService.isTrackingCell()) {
                 mAimsicdService.checkLocationServices();
             }
@@ -472,7 +490,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             startService(intent);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
-            //Display the Device Fragment as the Default View
+            // Display the Device Fragment as the Default View
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, new DetailsContainerFragment())
                     .commit();
@@ -576,6 +594,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                     mAimsicdService.stopSmsTracking();
                 }
             }catch (Exception ee){System.out.println("Error: Stopping SMS detection");}
+            // Close database on Exit
+            Log.i(TAG, "Closing db from onBackPressed()");
+            new AIMSICDDbAdapter(getApplicationContext()).close();
             finish();
         }
     }
@@ -583,7 +604,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     private void SmsDetection()
     {
-        boolean root_sms = prefs.getBoolean(mContext.getString(R.string.adv_user_root_pref_key),false);//default is false
+        boolean root_sms = prefs.getBoolean(mContext.getString(R.string.adv_user_root_pref_key),false); // default is false
 
         if(root_sms && !mAimsicdService.isSmsTracking()){
             mAimsicdService.startSmsTracking();
@@ -594,7 +615,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             Helpers.msgShort(mContext, "Sms Detection Stopped");
             Log.i(TAG, "SMS Detection Thread Stopped");
         }
-
     }
 
     /**
@@ -606,12 +626,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     /**
-     * Cell Information Tracking - Enable/Disable
+     * Description:     Cell Information Tracking - Enable/Disable
      *
-     * TODO: Clarify usage and what functions we would like this to provide.
-     *  - Are we toggling GPS location tracking?
-     *  - Are we logging measurement data into DBi?
-     *  - Are we locking phone to 2/3/4G operation?
+     *                  TODO: Clarify usage and what functions we would like this to provide.
+     *                  - Are we toggling GPS location tracking?
+     *                  - Are we logging measurement data into DBi?
+     *                  - Are we locking phone to 2/3/4G operation?
      *
      */
     private void trackcell() {
@@ -623,15 +643,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     /**
-     * Cell Information Monitoring - Enable/Disable
+     * Description:     Cell Information Monitoring - Enable/Disable
      *
-     * TODO: Clarify usage and what functions we would like this to provide.
-     * - Are we temporarily disabling AIMSICD monitoring? (IF yes, why not just Quit?)
-     * - Are we ignoring Detection alarms?
-     * - Are we logging something?
+     *                  TODO: Clarify usage and what functions we would like this to provide.
+     *                  - Are we temporarily disabling AIMSICD monitoring? (IF yes, why not just Quit?)
+     *                  - Are we ignoring Detection alarms?
+     *                  - Are we logging something?
      *
      */
-    // TODO: Wrong Spelling, should be "monitorcell"
     private void monitorcell() {
         if (mAimsicdService.isMonitoringCell()) {
             mAimsicdService.setCellMonitoring(false);
@@ -686,12 +705,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     /**
-     * TODO: Remove move in 2016.
-     * All people should have more than enough time to update their AIMSICD
-     * this method will be obsolete.
+     * Description:     TODO: What does this do?
+     *
+     *                  TODO: Remove move in 2016.
+     *
+     *                  All people should have more than enough time to update their AIMSICD
+     *                  this method will be obsolete.
      */
     private void moveData() {
-
         // /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/
         File destinedPath =  new File(getExternalFilesDir(null) +  File.separator);
         // /storage/emulated/0/AIMSICD

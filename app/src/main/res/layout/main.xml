@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0.01dp"
-            android:progressDrawable="@drawable/progress_bar_states"/>
+            android:progressDrawable="@xml/pbar"/>
     </RelativeLayout>
 
     <!-- The navigation drawer -->

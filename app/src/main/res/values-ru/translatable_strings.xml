@@ -311,8 +311,8 @@
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data…</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
-    <string name="help_app_download_local_bst">Downloads the OCID Database.</string>
-    <string name="help_app_upload_local_bst">Uploads your BTS to the OCID Database.</string>
+    <string name="help_app_download_local_bts">Downloads the OCID Database.</string>
+    <string name="help_app_upload_local_bts">Uploads your BTS to the OCID Database.</string>
     <string name="help_app_debugging">Collect and send error logs.</string>
     <string name="help_app_quit">Exit this app.</string>
     <string name="waiting_for_location">Waiting for location…</string>

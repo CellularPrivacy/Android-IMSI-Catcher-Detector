@@ -44,11 +44,16 @@ import com.SecUpwN.AIMSICD.smsdetection.SmsDetector;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 
+/**
+ *  Description:    This starts the (background?) AIMSICD service to check for SMS and track
+ *                  cells with or without GPS enabled.
+ *                  TODO: better and more detailed explanation!
+ */
 public class AimsicdService extends Service {
 
-    private final String TAG = "AIMSICD_Service";
-    //private final String TAG = "AIMSICD";
-    //private final String mTAG = "AimsicdService";
+    //private final String TAG = "AimsicdService";
+    private final String TAG = "AIMSICD";
+    private final String mTAG = "AimsicdService";
 
     // /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
@@ -103,7 +108,7 @@ public class AimsicdService extends Service {
         mRilExecutor = new RilExecutor(this);
         mCellTracker = new CellTracker(this, signalStrengthTracker);
 
-        Log.i(TAG, "Service launched successfully.");
+        Log.i(TAG, mTAG + ": Service launched successfully.");
     }
 
     @Override
@@ -122,8 +127,7 @@ public class AimsicdService extends Service {
         if (SmsDetector.getSmsDetectionState()) {
             smsdetector.stopSmsDetection();
         }
-
-        Log.i(TAG, "Service destroyed.");
+        Log.i(TAG, mTAG +  ": Service destroyed.");
     }
 
     public GeoLocation lastKnownLocation() {
@@ -167,14 +171,14 @@ public class AimsicdService extends Service {
         else mCellTracker.stopTrackingFemto();
     }
 
-    //SMS DETECTION
+    // SMS Detection Thread
     public boolean isSmsTracking() {
         return SmsDetector.getSmsDetectionState();
     }
 
     public void startSmsTracking() {
         if(!isSmsTracking()) {
-            Log.i(TAG,"Sms Detection Thread Started");
+            Log.i(TAG, mTAG +  ": Sms Detection Thread Started");
             smsdetector = new SmsDetector(this);
             smsdetector.startSmsDetection();
         }
@@ -183,7 +187,7 @@ public class AimsicdService extends Service {
     public void stopSmsTracking() {
         if(isSmsTracking()) {
             smsdetector.stopSmsDetection();
-            Log.i(TAG,"Sms Detection Thread Stopped");
+            Log.i(TAG, mTAG +  ": Sms Detection Thread Stopped");
         }
     }
 
@@ -192,14 +196,13 @@ public class AimsicdService extends Service {
         @Override
         public void run() {
             if (mCellTracker.isTrackingCell()) {
-                //Log.d("power", "Checking to see if GPS should be disabled");
+                //Log.d(TAG, mTAG +  ": (power): Checking to see if GPS should be disabled");
                 // if no movement in a while, shut off GPS. Gets re-enabled when there is movement
                 if (mAccelerometerMonitor.notMovedInAWhile() ||
                         mLocationTracker.notMovedInAWhile()) {
-                    //Log.d("power", "Disabling GPS");
+                    //Log.d(TAG, mTAG +  ": (power): Disabling GPS");
                     mLocationTracker.stop();
                 }
-
                 mAccelerometerMonitor.start();
             }
         }
