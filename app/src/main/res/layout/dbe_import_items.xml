@@ -219,7 +219,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AvgSignal:"
+                    android:text="AvgSignal: "
                     android:id="@+id/wtf11"
                     android:textSize="12sp"
                     android:textColor="@color/green_text" />
@@ -231,28 +231,6 @@
                     android:textColor="@color/standard_grey"
                     android:textSize="12sp"
                     android:layout_weight="0.1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="AvgRange:"
-                    android:id="@+id/wtf12"
-                    android:textSize="12sp"
-                    android:textColor="@color/green_text" />
-
-                <TextView
-                    android:id="@+id/navg_range"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/standard_grey"
-                    android:textSize="12sp"
-                    android:layout_weight="0.1" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -270,6 +248,28 @@
                     android:textSize="12sp"
                     android:layout_weight="0.1" />
 
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AvgRange: "
+                    android:id="@+id/wtf12"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/navg_range"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -280,11 +280,11 @@
 
                 <TextView
                     android:id="@+id/nTIME_LAST"
+                    android:layout_weight="0.1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/standard_grey"
-                    android:textSize="12sp"
-                    android:layout_weight="0.1" />
+                    android:textSize="12sp" />
 
             </TableRow>
 
@@ -302,9 +302,26 @@
 
                 <TextView
                     android:id="@+id/dbsource"
-                    android:layout_width="fill_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="rej_cause: "
+                    android:id="@+id/wtf16"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/nREJ_CAUSE"
+                    android:layout_weight="0.1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_yellow"
                     android:textSize="12sp" />
 
             </TableRow>

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources><string name="tracking">追跡中</string>
     <string name="device_info">電話/SIM 詳細</string>
-    <string name="map_view">アンテナマップ ビューア</string>
-    <string name="db_viewer">データベース ビューア</string>
+    <string name="map_view">アンテナ地図ビューアー</string>
+    <string name="db_viewer">データベース ビューアー</string>
     <string name="quit">終了</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">キャンセル</string>

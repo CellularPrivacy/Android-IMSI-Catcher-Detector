@@ -6,7 +6,6 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -27,16 +26,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="TS:"
-                    android:id="@+id/textView7"
+                    android:id="@+id/wtf7"
                     android:textSize="12sp"
                     android:textColor="@color/green_text" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/tv_smsdata_timestamp"
                     android:layout_weight="1"
                     android:textSize="12sp" />
@@ -44,19 +41,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="TYPE:"
-                    android:id="@+id/textView8"
+                    android:id="@+id/wtf8"
                     android:textSize="12sp"
-                    android:textColor="@color/bright_red_text" />
+                    android:textColor="@color/green_text" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/tv_smsdata_smstype"
                     android:layout_weight="1"
+                    android:textColor="@color/standard_yellow"
                     android:textSize="12sp" />
+                
             </TableRow>
 
             <TableRow
@@ -66,16 +63,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="NUM:"
-                    android:id="@+id/textView11"
+                    android:id="@+id/wtf11"
                     android:textSize="12sp"
                     android:textColor="@color/green_text" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/tv_smsdata_number"
                     android:layout_weight="1"
                     android:textSize="12sp" />
@@ -83,19 +78,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="MSG:"
-                    android:id="@+id/textView12"
+                    android:text="isRoaming: "
+                    android:id="@+id/wtf12"
                     android:textSize="12sp"
                     android:textColor="@color/green_text" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:id="@+id/tv_smsdata_msg"
+                    android:id="@+id/tv_smsdata_roaming"
                     android:layout_weight="1"
                     android:textSize="12sp" />
+                
             </TableRow>
 
             <TableRow
@@ -105,16 +99,52 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="LAC:"
-                    android:id="@+id/textView9"
+                    android:text="SMSC: "
+                    android:id="@+id/wtf9"
                     android:textSize="12sp"
                     android:textColor="@color/green_text" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="TODO! "
+                    android:id="@+id/wtf999"
+                    android:layout_weight="1"
+                    android:textColor="@color/standard_yellow"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RAT:"
+                    android:id="@+id/wtf10"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_smsdata_nettype"
+                    android:layout_weight="1"
+                    android:textSize="12sp" />
+                
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAC:"
+                    android:id="@+id/wtf13"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/tv_smsdata_lac"
                     android:layout_weight="1"
                     android:textSize="12sp" />
@@ -122,58 +152,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="CID:"
-                    android:id="@+id/textView10"
+                    android:text="LAT:"
+                    android:id="@+id/wtf14"
                     android:textSize="12sp"
                     android:textColor="@color/green_text" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:id="@+id/tv_smsdata_cid"
+                    android:id="@+id/tv_smsdata_lat"
                     android:layout_weight="1"
                     android:textSize="12sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="RAT:"
-                    android:id="@+id/textView13"
-                    android:textSize="12sp"
-                    android:textColor="@color/green_text" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:id="@+id/tv_smsdata_nettype"
-                    android:layout_weight="1"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="ROAM:"
-                    android:id="@+id/textView14"
-                    android:textSize="12sp"
-                    android:textColor="@color/green_text" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:id="@+id/tv_smsdata_roaming"
-                    android:layout_weight="1"
-                    android:textSize="12sp" />
+                
             </TableRow>
 
             <TableRow
@@ -183,36 +173,55 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="LAT:"
-                    android:id="@+id/textView15"
+                    android:text="CID:"
+                    android:id="@+id/wtf15"
                     android:textSize="12sp"
                     android:textColor="@color/green_text" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:id="@+id/tv_smsdata_lat"
+                    android:id="@+id/tv_smsdata_cid"
                     android:layout_weight="1"
                     android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="LON:"
-                    android:id="@+id/textView16"
+                    android:id="@+id/wtf16"
                     android:textSize="12sp"
                     android:textColor="@color/green_text" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/tv_smsdata_lon"
                     android:layout_weight="1"
                     android:textSize="12sp" />
+                
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MSG:"
+                    android:id="@+id/wtf17"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_smsdata_msg"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
             </TableRow>
 
         </TableLayout>
