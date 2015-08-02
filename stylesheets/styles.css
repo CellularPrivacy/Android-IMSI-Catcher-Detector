@@ -68,6 +68,10 @@
   -webkit-font-smoothing: antialiased;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /* normalize.css 2012-02-07T12:37 UTC - https://github.com/necolas/normalize.css */
 /* =============================================================================
    HTML5 display definitions
@@ -390,7 +394,7 @@ fieldset {
 
 /*
  * 1. Corrects color not being inherited in IE6/7/8/9
- * 2. Corrects text not wrapping in FF3 
+ * 2. Corrects text not wrapping in FF3
  * 3. Corrects alignment displayed oddly in IE6/7
  */
 legend {
@@ -697,6 +701,8 @@ dt {
 #header {
   z-index: 100;
   left: 0;
+  right: 0;
+  left: 0;
   top: 0px;
   height: 60px;
   width: 100%;
@@ -710,9 +716,7 @@ dt {
 }
 #header nav {
   max-width: 650px;
-  margin: 0 auto;
   padding: 0 10px;
-  background: blue;
   margin: 6px auto;
 }
 #header nav li {
@@ -836,16 +840,14 @@ section #title .credits.right {
     display: block;
   }
 }
+
 @media print, screen and (max-width: 480px) {
-  #header {
-    margin-top: -20px;
+  li.title, li.downloads {
+    display: none !important;
   }
 
-  section {
-    margin-top: 40px;
-  }
 
-  nav {
-    display: none;
+  #header nav * {
+    width: 100% !important;
   }
 }
