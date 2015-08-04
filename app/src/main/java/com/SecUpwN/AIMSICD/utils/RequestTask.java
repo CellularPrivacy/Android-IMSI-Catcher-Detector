@@ -10,8 +10,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.telephony.CellLocation;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
@@ -20,7 +18,6 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 
 import org.apache.http.HttpResponse;
@@ -116,9 +113,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     private final Context mAppContext;
     private final char mType;
     private int mTimeOut;
-    private CellTracker mCellTracker;
-    private AimsicdService mAimsicdService;
-    private static TelephonyManager tm;
 
     public RequestTask(Context context, char type) {
         super((Activity)context);
@@ -320,8 +314,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         super.onPostExecute(result);
         AIMSICD.mProgressBar.setProgress(0);
         TinyDB tinydb = TinyDB.getInstance();
-        tm = (TelephonyManager)mAppContext.getSystemService(Context.TELEPHONY_SERVICE);
-        CellLocation cellLocation = tm.getCellLocation();
 
         switch (mType) {
             case DBE_DOWNLOAD_REQUEST:
@@ -332,9 +324,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     }
 
                     mDbAdapter.checkDBe();
-                    tinydb.putBoolean("ocid_downloaded", true);
 
-                    mAimsicdService.getCellTracker().compareLac(cellLocation);
+                    tinydb.putBoolean("ocid_downloaded", true);
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_retrieving_opencellid_data));
                 }
@@ -349,8 +340,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
                         mDbAdapter.checkDBe();
                         tinydb.putBoolean("ocid_downloaded", true);
-
-                        mAimsicdService.getCellTracker().compareLac(cellLocation);
                     }
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_retrieving_opencellid_data));
