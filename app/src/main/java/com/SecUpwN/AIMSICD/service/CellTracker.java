@@ -486,7 +486,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
             v.vibrate(100);     // Vibrate for 100 ms
 
-            dbHelper.insertEventLog(
+            /*dbHelper.insertEventLog(
                     MiscUtils.getCurrentTimeStamp(),        // time
                     mMonitorCell.getLAC(),                  // LAC
                     mMonitorCell.getCID(),                  // CID
@@ -496,8 +496,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     (int)mMonitorCell.getAccuracy(),        // gpsd_accu
                     4,                                      // DF_id
                     "No neighboring cells detected"         // DF_desc
-            );
-
+            );*/
+            dbHelper.toEventLog(4,"No neighboring cells detected"); // (DF_id, DF_desc)
         } else  {
             //if ( ncls == 0 && !nclp )
             // Todo: remove cid string when working.
@@ -575,7 +575,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     if (!lacOK) {
                         mChangedLAC = true;
 
-                        dbHelper.insertEventLog(
+                        /*dbHelper.insertEventLog(
                                 MiscUtils.getCurrentTimeStamp(),        // time
                                 mMonitorCell.getLAC(),                  // LAC
                                 mMonitorCell.getCID(),                  // CID
@@ -585,7 +585,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                 (int)mMonitorCell.getAccuracy(),        // gpsd_accu
                                 1,                                      // DF_id
                                 "Changing LAC"                          // DF_desc
-                        );
+                        );*/
+                        dbHelper.toEventLog(1, "Changing LAC"); // (DF_id, DF_desc)
 
                         // Detection Logs are made in checkLAC()
                         Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -639,7 +640,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     boolean lacOK = dbHelper.checkLAC(mMonitorCell);
                     if (!lacOK) {
                         mChangedLAC = true;
-                        dbHelper.insertEventLog(
+                        /*dbHelper.insertEventLog(
                                 MiscUtils.getCurrentTimeStamp(),
                                 mMonitorCell.getLAC(),
                                 mMonitorCell.getCID(),
@@ -649,7 +650,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                 (int)mMonitorCell.getAccuracy(),
                                 1,
                                 "Changing LAC"
-                        );
+                        );*/
+                        dbHelper.toEventLog(1,"Changing LAC");
                         setNotification();
                     } else {
                         mChangedLAC = false;

@@ -2177,13 +2177,34 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     /**
-     * Description:     Inserts log data into the EventLog table
+     * Description:     Inserts log data into the EventLog table, using data provided by
+     *                  the TelephonyManager (TM) or an already backed up EvenLog database...
+     *
+     *                  If you just need to add an event with currently connected TM data such
+     *                  as CID,LAC,PSC,GPS, then use the simple version called toEventLog(),
+     *                  defined below.
+     *
+     * Used in:         AIMSICDDbAdapter.java (here)
+     *                  CellTracker.java
+     *                  SmsDetector.java
      *
      * Issues:          [ ] ALL events should be logged!!
      *                  [ ] To avoid repeated copies, only check last DB entries
      *                  [ ] Before inserting event, check that LAC/CID are not "-1".
      *                  [ ] Any related notifications are better put here as well, right?
      *                  [ ]
+     *
+     * Description of EventLog DF_id:   TODO: check and fix
+     *
+     *                  DF_id   DF_desc
+     *                  ---------------
+     *                  1       changing lac
+     *                  2       cell no in OCID
+     *                  3       "Detected Type-0 SMS"
+     *                  4       "Detected MWI SMS"
+     *                  5       "Detected WAP PUSH SMS"
+     *                  6       "Detected WAP PUSH (2) SMS"
+     *                  7
      *
      * Notes:           a)  Table item order:
      *
@@ -2256,7 +2277,9 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
 
-    // Defining a new simpler version of insertEventLog:
+    // Defining a new simpler version of insertEventLog for use in CellTracker.
+    // Please note, that in AMSICDDbAdapter (here) it is also used to backup DB,
+    // in which case we can not use this simpler version!
     public void toEventLog(int DF_id, String DF_desc){
         //Cell cell; //TODO is this enough? Can we use this instead?
 
@@ -2295,10 +2318,9 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                 eventLog.put("DF_description", DF_desc);    // DF_desc
 
                 mDb.insert("EventLog", null, eventLog);
-                Log.i(TAG, mTAG + ":insertEventLog(): Added New Event: id=" +DF_id+ " time=" +time+ " cid=" +cid);
-                // TODO: Insert notification sound and vibration here.
+                Log.i(TAG, mTAG + ":toEventLog(): Added new event: id=" +DF_id+ " time=" +time+ " cid=" +cid);
                 // Short 100 ms Vibration
-                Vibrator v = (Vibrator) this.mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(100);     // Vibrate for 100 ms
 
                 // Short sound:
@@ -2306,7 +2328,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
             } else {
                 // TODO This may need to be removed as it may spam the logcat buffer...
-                //Log.v(TAG, mTAG + ":insertEventLog(): Skipped inserting duplicate event");
+                //Log.v(TAG, mTAG + ":toEventLog(): Skipped inserting duplicate event");
             }
         }
         // TODO This may need to be removed as it may spam the logcat buffer...

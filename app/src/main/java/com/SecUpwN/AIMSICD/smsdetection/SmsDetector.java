@@ -246,16 +246,18 @@ public class SmsDetector extends Thread {
                             // Only alert if the timestamp is not in the data base
                             if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
                                 dbacess.storeCapturedSms(setmsg);
-                                dbacess.insertEventLog(MiscUtils.getCurrentTimeStamp(),
+                                /*dbacess.insertEventLog(
+                                        MiscUtils.getCurrentTimeStamp(),
                                         mAimsicdService.getCellTracker().getMonitorCell().getLAC(),
                                         mAimsicdService.getCellTracker().getMonitorCell().getCID(),
                                         mAimsicdService.getCellTracker().getMonitorCell().getPSC(),
                                         String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
                                         String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
                                         (int)mAimsicdService.getCell().getAccuracy(),
-                                        3,//TODO what are the DF_ids? 1 = changing lac 2 = cell no in OCID 3 = detected sms?
-                                        "Detected TYPE0 sms"
-                                );
+                                        3,
+                                        "Detected Type-0 SMS"
+                                );*/
+                                dbacess.toEventLog(3,"Detected Type-0 SMS");
                                 MiscUtils.startPopUpInfo(tContext, 6);
                             }else {Log.d(TAG,mTAG+" Detected Sms already logged");}
 
@@ -313,7 +315,8 @@ public class SmsDetector extends Thread {
                             if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
                                 dbacess.storeCapturedSms(setmsg);
 
-                                dbacess.insertEventLog(MiscUtils.getCurrentTimeStamp(),
+                                /*dbacess.insertEventLog(
+                                        MiscUtils.getCurrentTimeStamp(),
                                         mAimsicdService.getCellTracker().getMonitorCell().getLAC(),
                                         mAimsicdService.getCellTracker().getMonitorCell().getCID(),
                                         mAimsicdService.getCellTracker().getMonitorCell().getPSC(),
@@ -322,8 +325,8 @@ public class SmsDetector extends Thread {
                                         (int)mAimsicdService.getCell().getAccuracy(),
                                         3,//TODO what are the DF_ids? 1 = changing lac 2 = cell no in OCID 3 = detected sms?
                                         "Detected MWI sms"
-                                );
-
+                                );*/
+                                dbacess.toEventLog(4,"Detected MWI SMS");
                                 MiscUtils.startPopUpInfo(tContext, 7);
                             }else {Log.d(TAG,mTAG+" Detected Sms already logged");}
 
@@ -384,22 +387,23 @@ public class SmsDetector extends Thread {
                                 if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
                                     dbacess.storeCapturedSms(setmsg);
 
-                                    dbacess.insertEventLog(MiscUtils.getCurrentTimeStamp(),
+                                    /*dbacess.insertEventLog(
+                                            MiscUtils.getCurrentTimeStamp(),
                                             mAimsicdService.getCellTracker().getMonitorCell().getLAC(),
                                             mAimsicdService.getCellTracker().getMonitorCell().getCID(),
                                             mAimsicdService.getCellTracker().getMonitorCell().getPSC(),
                                             String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
                                             String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
                                             (int)mAimsicdService.getCell().getAccuracy(),
-                                            3,//TODO what are the DF_ids? 1 = changing lac 2 = cell no in OCID 3 = detected sms?
+                                            3,
                                             "Detected WAP PUSH sms"
-                                    );
-
+                                    );*/
+                                    dbacess.toEventLog(5,"Detected WAP PUSH SMS");
                                     MiscUtils.startPopUpInfo(tContext, 8);
-                                }else {Log.d(TAG,mTAG+" Detected Sms already logged");}
+                                }else {Log.d(TAG, mTAG + " Detected Sms already logged");}
 
                             }// end of if contains("DestPort 0x0B84")
-                            else if (progress[x-1].contains("SMS originating address:"))//<--- This is index on Samsungs is defferent for other phone makes
+                            else if (progress[x-1].contains("SMS originating address:"))//<--- This is index on Samsung's is different for other phone makes
                             {
                                 Log.i(TAG, "WAPPUSH DETECTED");
                                 /* loop thru array to find number */
@@ -445,17 +449,18 @@ public class SmsDetector extends Thread {
                                 if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
                                     dbacess.storeCapturedSms(setmsg);
 
-                                    dbacess.insertEventLog(MiscUtils.getCurrentTimeStamp(),
+                                    /*dbacess.insertEventLog(
+                                    MiscUtils.getCurrentTimeStamp(),
                                             mAimsicdService.getCellTracker().getMonitorCell().getLAC(),
                                             mAimsicdService.getCellTracker().getMonitorCell().getCID(),
                                             mAimsicdService.getCellTracker().getMonitorCell().getPSC(),
                                             String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
                                             String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
                                             (int)mAimsicdService.getCell().getAccuracy(),
-                                            3,//TODO what are the DF_ids? 1 = changing lac 2 = cell no in OCID 3 = detected sms?
+                                            3,
                                             "Detected WAP PUSH sms"
-                                    );
-
+                                    );*/
+                                    dbacess.toEventLog(6,"Detected WAP PUSH (2) SMS");
                                     MiscUtils.startPopUpInfo(tContext, 8);
                                 }else {Log.d(TAG,mTAG+" Detected Sms already logged");}
 
