@@ -2,6 +2,7 @@ package com.SecUpwN.AIMSICD.adapters;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
+import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.smsdetection.AdvanceUserItems;
 import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
 import com.SecUpwN.AIMSICD.utils.Cell;
@@ -2254,22 +2255,18 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         }
     }
 
-    /*
+
     // Defining a new simpler version of insertEventLog:
     public void toEventLog(int DF_id, String DF_desc){
-        // TODO: What to use here...
-        //private static Context context;
-        //mContext = context;
-        //this.context = context;
-        Cell cell; //TODO is this enough?
+        //Cell cell; //TODO is this enough? Can we use this instead?
 
-        String time     = MiscUtils.getCurrentTimeStamp();	    // time
-        int lac         = cell.getLAC();			    // LAC
-        int cid         = cell.getCID();			    // CID
-        int psc         = cell.getPSC();			    // PSC [UMTS,LTE]
-        String gpsd_lat = String.valueOf(cell.getLat());// gpsd_lat
-        String gpsd_lon = String.valueOf(cell.getLon());// gpsd_lon
-        int gpsd_accu   = (int)cell.getAccuracy();		// gpsd_accu
+        String time     = MiscUtils.getCurrentTimeStamp();	                // time
+        int lac         = CellTracker.mMonitorCell.getLAC();			    // LAC
+        int cid         = CellTracker.mMonitorCell.getCID();			    // CID
+        int psc         = CellTracker.mMonitorCell.getPSC();			    // PSC [UMTS,LTE]
+        String gpsd_lat = String.valueOf(CellTracker.mMonitorCell.getLat());// gpsd_lat
+        String gpsd_lon = String.valueOf(CellTracker.mMonitorCell.getLon());// gpsd_lon
+        int gpsd_accu   = (int)CellTracker.mMonitorCell.getAccuracy();		// gpsd_accu
 
         // skip CID/LAC of "-1" (due to crappy API, Roaming or Air-Plane Mode)
         if (cid != -1 || lac != -1) {
@@ -2301,8 +2298,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                 Log.i(TAG, mTAG + ":insertEventLog(): Added New Event: id=" +DF_id+ " time=" +time+ " cid=" +cid);
                 // TODO: Insert notification sound and vibration here.
                 // Short 100 ms Vibration
-                //Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
-                //v.vibrate(100);     // Vibrate for 100 ms
+                Vibrator v = (Vibrator) this.mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(100);     // Vibrate for 100 ms
 
                 // Short sound:
                 // TODO see issue #15
@@ -2315,7 +2312,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         // TODO This may need to be removed as it may spam the logcat buffer...
         //Log.v(TAG, mTAG + ":insertEventLog(): Skipped inserting bad CID/LAC data");
     }
-*/
+
 
 
 

@@ -87,6 +87,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private final String TAG = "AIMSICD";
     private final String mTAG = "CellTracker";
 
+    public static Cell mMonitorCell;
     public static String OCID_API_KEY = null;   // see getOcidKey()
     public static int PHONE_TYPE;               //
     public static int LAST_DB_BACKUP_VERSION;   //
@@ -113,7 +114,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private boolean mFemtoDetected;
     private boolean mChangedLAC;
     private boolean mCellIdNotInOpenDb;
-    private Cell mMonitorCell;
+    //private Cell mMonitorCell; //made public
     private boolean mTypeZeroSmsDetected;
     private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
 
@@ -601,7 +602,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                             // TODO: Why are we using different calls here:
                             // TODO:    "mDevice.mCell" instead of "mMonitorCell" ??
-                            dbHelper.insertEventLog(
+                            /*dbHelper.insertEventLog(
                                     MiscUtils.getCurrentTimeStamp(),        // time
                                     mMonitorCell.getLAC(),                  // LAC
                                     mMonitorCell.getCID(),                  // CID
@@ -611,7 +612,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                     (int)mDevice.mCell.getAccuracy(),       // gpsd_accu
                                     2,                                      // DF_id
                                     "CID not in DBe_import"                 // DF_desc
-                            );
+                            );*/
+                            dbHelper.toEventLog(2, "CID not in DBe_import");
                             //dbHelper.close();
 
                             Log.i(TAG, mTAG + ": ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
