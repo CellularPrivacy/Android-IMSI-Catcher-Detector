@@ -15,6 +15,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Vibrator;
 import android.util.Log;
 import android.util.SparseArray;
 import java.io.File;
@@ -136,6 +137,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     private final String[] mTables;
     private SQLiteDatabase mDb;
     private final Context mContext;
+    //private static Context context; // Added by E:V:A for toEventLog()
 
     public AIMSICDDbAdapter(Context context) {
         super(context, DB_NAME, null, 1);
@@ -2179,6 +2181,8 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      * Issues:          [ ] ALL events should be logged!!
      *                  [ ] To avoid repeated copies, only check last DB entries
      *                  [ ] Before inserting event, check that LAC/CID are not "-1".
+     *                  [ ] Any related notifications are better put here as well, right?
+     *                  [ ]
      *
      * Notes:           a)  Table item order:
      *
@@ -2249,6 +2253,71 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             }
         }
     }
+
+    /*
+    // Defining a new simpler version of insertEventLog:
+    public void toEventLog(int DF_id, String DF_desc){
+        // TODO: What to use here...
+        //private static Context context;
+        //mContext = context;
+        //this.context = context;
+        Cell cell; //TODO is this enough?
+
+        String time     = MiscUtils.getCurrentTimeStamp();	    // time
+        int lac         = cell.getLAC();			    // LAC
+        int cid         = cell.getCID();			    // CID
+        int psc         = cell.getPSC();			    // PSC [UMTS,LTE]
+        String gpsd_lat = String.valueOf(cell.getLat());// gpsd_lat
+        String gpsd_lon = String.valueOf(cell.getLon());// gpsd_lon
+        int gpsd_accu   = (int)cell.getAccuracy();		// gpsd_accu
+
+        // skip CID/LAC of "-1" (due to crappy API, Roaming or Air-Plane Mode)
+        if (cid != -1 || lac != -1) {
+            // Check if LAST entry is the same!
+            String query = String.format(
+                    "SELECT * from EventLog WHERE _id=(SELECT max(_id) from EventLog) AND CID=%d AND LAC=%d AND PSC=%d AND DF_id=%d",
+                    cid, lac, psc, DF_id);
+            Cursor cursor = mDb.rawQuery(query,null);
+
+            // WARNING: By skipping duplicate events, we might be missing counts of Type-0 SMS etc.
+            boolean insertData = true;
+            if (cursor.getCount() > 0) { insertData = false; }
+            cursor.close();
+
+            if(insertData){
+                ContentValues eventLog = new ContentValues();
+
+                eventLog.put("time", time );			    // time
+                eventLog.put("LAC", lac );			        // LAC
+                eventLog.put("CID", cid );			        // CID
+                eventLog.put("PSC", psc );			        // PSC [UMTS,LTE]
+                eventLog.put("gpsd_lat", gpsd_lat );		// gpsd_lat
+                eventLog.put("gpsd_lon", gpsd_lon );		// gpsd_lon
+                eventLog.put("gpsd_accu", gpsd_accu );		// gpsd_accu
+                eventLog.put("DF_id", DF_id);			    // DF_id
+                eventLog.put("DF_description", DF_desc);    // DF_desc
+
+                mDb.insert("EventLog", null, eventLog);
+                Log.i(TAG, mTAG + ":insertEventLog(): Added New Event: id=" +DF_id+ " time=" +time+ " cid=" +cid);
+                // TODO: Insert notification sound and vibration here.
+                // Short 100 ms Vibration
+                //Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+                //v.vibrate(100);     // Vibrate for 100 ms
+
+                // Short sound:
+                // TODO see issue #15
+
+            } else {
+                // TODO This may need to be removed as it may spam the logcat buffer...
+                //Log.v(TAG, mTAG + ":insertEventLog(): Skipped inserting duplicate event");
+            }
+        }
+        // TODO This may need to be removed as it may spam the logcat buffer...
+        //Log.v(TAG, mTAG + ":insertEventLog(): Skipped inserting bad CID/LAC data");
+    }
+*/
+
+
 
     /**
      * Description:     Inserts BTS Sector Type data into the SectorType table
