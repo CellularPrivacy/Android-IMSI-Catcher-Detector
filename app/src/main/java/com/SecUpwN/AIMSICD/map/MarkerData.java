@@ -8,23 +8,30 @@ package com.SecUpwN.AIMSICD.map;
 /**
  * Description:     Class to hold data for displaying in BTS pin popup dialog
  *
- * TODO: Consider adding more details, similar as for the DB Viewer UI:
- * see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
+ * Issues:
+ *                  [ ] clarify which GPS coordinates are used. Exact of from device?
+ *                  [ ] adding more details, similar as for the DB Viewer UI:
+ *                      see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
+ *
  *
  */
 public class MarkerData {
 
     public final String cellID;     // change to "CID"...
     //private final String psc;     // PSC (UMTS)
-    public final String lat;
-    public final String lng;        // change to "lon"...
-    public final String lac;
+    public final String lat;        // gpsd_lat or gps_lat
+    public final String lng;        // gpsd_lon or gps_lon    TODO: change to "lon"...
+    public final String lac;        // LAC
     private final String mcc;       // remove and use PC: MCC+MNC
     private final String mnc;       // remove and use PC: MCC+MNC
+    // todo: Add PSC and RAT
+    //private final String psc;     // PSC
+    //private final String rat;     // RAT
+
     //private final String pc;      // PC = MCC + MNC
     //private final String first;   // time_first
     //private final String last;    // time_last
-    private final String samples;
+    private final String samples;   // samples
     public final boolean openCellID; // ??
 
     public MarkerData(
@@ -32,16 +39,21 @@ public class MarkerData {
                String latitude,
                String longitude,
                String local_area_code,
+               //String net_psc,    // PSC
+               //String net_rat,    // RAT
                String mobile_country_code,
                String mobile_network_code,
                String samples_taken,
-               boolean openCellID_Data) {
+               boolean openCellID_Data
+    ) {
         cellID = cell_id;
         lat = latitude;
         lng = longitude;
         lac = local_area_code;
         mcc = mobile_country_code;
         mnc = mobile_network_code;
+        //psc = net_psc;
+        //rat = net_rat;
         samples = samples_taken;
         openCellID = openCellID_Data;
     }
@@ -58,10 +70,21 @@ public class MarkerData {
         return ("00" + mnc).substring(mnc.length());
     }
 
-    // (Mobile Network Operator) Provider Code
+    // (Mobile Network Operator) Provider Code in form: MCC-MNC
     public String getPC() {
-        return getMCC() + getMNC();
+        return getMCC() +"-"+ getMNC();
     }
+
+/*
+    // Primary Scrambling Code (UMTS) / Channel (LTE)
+    public String getPSC() {
+        return psc;
+    }
+    // Radio Access Technology (RAT)
+    public String getRAT() {
+        return rat;
+    }
+*/
 
     public String getSamples() {
         if (samples == null || (!openCellID && samples.isEmpty())) return "0";

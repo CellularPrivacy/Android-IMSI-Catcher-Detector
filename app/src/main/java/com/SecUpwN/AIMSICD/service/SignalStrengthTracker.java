@@ -19,12 +19,13 @@ import java.util.HashMap;
  *
  *          See:    http://wiki.opencellid.org/wiki/API#Filtering_of_data
  *
- *      GSM     RSSI in dBm in the range of [-51 to -113] or ASU in the range of [0 to 31]
- *      UMTS    RSCP in dBm in the range of [-25 to -121] or ASU in the range of [-5 to 91]
- *      LTE     RSRP in dBm in the range of [-45 to -137] or ASU in the range of [0 to 95]
- *      CDMA    RSSI in dBm in the range of [-75 to -100] or ASU in the range of [1 to 16]
+ *          GSM     RSSI in dBm in the range of [-51 to -113] or ASU in the range of [0 to 31]
+ *          UMTS    RSCP in dBm in the range of [-25 to -121] or ASU in the range of [-5 to 91]
+ *          LTE     RSRP in dBm in the range of [-45 to -137] or ASU in the range of [0 to 95]
+ *          CDMA    RSSI in dBm in the range of [-75 to -100] or ASU in the range of [1 to 16]
  *
- *      https://cloud.githubusercontent.com/assets/2507905/4428863/c85c8366-45d4-11e4-89da-c650cdb56caf.jpg
+ *          Detection Flowchart:
+ *          https://cloud.githubusercontent.com/assets/2507905/4428863/c85c8366-45d4-11e4-89da-c650cdb56caf.jpg
  *
  *
  *  Dependency:
@@ -58,8 +59,10 @@ import java.util.HashMap;
  *                  The Minimum value is: - 2,147,483,648 (-2^31) and
  *                  the Maximum value is:   2,147,483,647 (inclusive) (2^31 -1).
  *                  This is the equivalent of the Unix Epoch of:
+ *
  *                           sqlite> select datetime(2147483647, 'unixepoch');
  *                           2038-01-19 03:14:07
+ *
  *                  ==> We can be very happy to use "int" and thus try to use (1).
  *
  *  References:
@@ -117,15 +120,16 @@ public class SignalStrengthTracker {
         long now = System.currentTimeMillis(); // [ms]
 
         if(deviceIsMoving()) {
-            Log.i(TAG, mTAG + ": Ignored signal sample for CID: " + cellID +
-                    " due to device movement. Waiting for " +
-                    ((minimumIdleTime*1000) - (now - lastMovementDetected)) + " ms.");
+            Log.i(TAG, mTAG +
+                    ": Ignored signal sample for CID: " + cellID +
+                    " due to device movement. Waiting for " + ((minimumIdleTime*1000) - (now - lastMovementDetected)) + " ms.");
             return;
         }
 
         if( now - (sleepTimeBetweenSignalRegistration*1000) > lastRegistrationTime) {
             long diff = now - lastRegistrationTime;
-            Log.i(TAG, mTAG + ": Scheduling signal strength calculation from CID: " + cellID +
+            Log.i(TAG, mTAG +
+                    ": Scheduling signal strength calculation from CID: " + cellID +
                     " @ " + signalStrength + " dBm. Last registration was " + diff + "ms ago.");
             lastRegistrationTime = now;
 
@@ -169,8 +173,7 @@ public class SignalStrengthTracker {
 
         // If moving, return false
         if(deviceIsMoving()) {
-            Log.i(TAG, mTAG + ": Cannot check signal strength for CID: " + cellID +
-                    " because of device movements.");
+            Log.i(TAG, mTAG + ": Cannot check signal strength for CID: " + cellID + " because of device movements.");
             return false;
         }
 

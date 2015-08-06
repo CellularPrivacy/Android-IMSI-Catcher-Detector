@@ -1,6 +1,186 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [02.08.2015 - WIP-Release v0.1.33-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.33-alpha-b00)
+
+* Updated: Minor formatting of `dbe_import_items.xml` and `detection_sms_db_listview.xml`
+* Updated: Improved `.gitignore` to ignore Android Studio Navigation editor temp files
+* Updated: Improved Japanese and German translations, comments for `Helpers.java`
+* Updated: Refactored string for Type-0 SMS in `aimsicd.db` to improve its detection
+* Added: Implemented `rej_cause` into `DBe_import` and updated existing comments 
+* Added: ProgressBar and updated SQL for `DBcheck()` in `AIMSICDDbAdapter.java`
+* Fixed: Made ProgressBar in `AIMSICDDbAdapter.java` and logs work again
+
+---
+
+#### 01.08.2015 - WIP-Internal v0.1.32-alpha-build-21
+
+* Reverted: Removed code for rechecking cell after OCID download after failed tests
+* Updated: Refreshed Inflater data and comments in `DbViewerFragment.java`
+* Fixed: Re-implemented possibility to delete and reset the internal database
+* Fixed: Corrected typos in language source file `translatable_strings.xml`
+* Fixed: Improved comments and `cleanseCellTable` in `CellTracker.java`
+* Fixed: Corrected many layout Issues of XML for `DbViewerFragment.java`
+
+---
+
+#### 31.07.2015 - WIP-Internal v0.1.32-alpha-build-20
+
+* Updated: Improved formatting of `AIMSICD.java`, `AIMSICDDbAdapter.java` and `Cell.java`
+* Updated: Cleanup of `CellTracker.java`, consider removing old FemtoCell detection code
+* Added: Implemented code for rechecking cell after OCID download (needs intensive testing)
+
+---
+
+#### 31.07.2015 - WIP-Internal v0.1.32-alpha-build-19
+
+* Removed: Purged `CID -1` from EventLog, updated comments in `AIMSICDDbAdapter.java`
+* Added: New restart of `AIMSICDDbAdapter` after deleting the internal database
+* Fixed: Ordered navigation drawer and removed unused imports and attributes
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-18
+
+* Added: Vibration on no nc_list detection as well as many comments and formatting
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-17
+
+* Added: New `insertEventLog` query to prevent duplicates in the EvenLog table
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-16
+
+* Updated: Refreshed comments and fixed a few minor typos in several source files
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-15
+
+* Changed: Placed `DF_id` and `DF_desc` on separate lines for easier log reading
+* Fixed: Refreshed EventLog DBE and formatting to use standard TableLayout
+* Fixed: Reformatted `DBTableColumnIds.java` and `DbViewerFragment.java`
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-14
+
+* Fixed: Corrected several DBV Issues, removed old unused and commented out code
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-13
+
+* Removed: Purged ProgressBar calls when not visible (e.g. reading/writing CSVs)
+* Fixed: Ordered navigation drawer and removed unused imports and attributes
+* Fixed: Corrected defaultlocations layout and fixed BTS Measurements in DBV
+* Fixed: Corrected typo of `T3212` incorrectly labeled as `T3213`
+
+---
+
+#### 29.07.2015 - WIP-Internal v0.1.32-alpha-build-12
+
+* Changed: 2nd attempt to fix FC in DBV by commenting out `bb_power` in all files
+* Updated: Notes and comments in `AIMSICDDbAdapter.java` have been renewed
+* Added: Clarified difference between CellId and CID in `AIMSICDDbAdapter.java`
+* Fixed: Corrected build error in `BtsMeasureCardInflater.java`
+* Fixed: Corrected Log exceptions to use `.toString()`
+
+---
+
+#### 27.07.2015 - WIP-Internal v0.1.32-alpha-build-11
+
+* Fixed: Corrected BTS Measurements and defaultlocations DBV layout 
+
+---
+
+#### 27.07.2015 - WIP-Internal v0.1.32-alpha-build-10
+
+* Changed: Failed attempt to add "item" number to table layout
+* Updated: Comments added, updated and removed in several files
+* Fixed: Now showing `Unique BTS Data` items as intended in DBV
+* Fixed: Corrected typo of `T3212` incorrectly labeled as `T3213`
+
+---
+
+#### 26.07.2015 - WIP-Internal v0.1.32-alpha-build-09
+
+* Updated: Improved Japanese and Czech language translations (needs contributors)
+* Fixed: OCID download now respects the filter for `MCC`, `MNC` and `LAC` again
+* Fixed: Corrected spelling error to the correct display `DOWNLOAD_LOCAL_BTS_DATA`
+
+---
+
+#### 23.07.2015 - WIP-Internal v0.1.32-alpha-build-08
+
+* Updated: Improved German language translations
+* Added: New `DeviceApi18.java` to counteract wrong API for WCDMA cell info
+* Fixed: API build versions issues for network related items has been resolved
+* Fixed: Layout problems with new DBV xml style sheet have been resolved
+
+---
+
+#### 21.07.2015 - WIP-Internal v0.1.32-alpha-build-07
+
+* Removed: Purged outdated `OCIDResponse.java` since no longer needed
+* Changed: Attempt to reduze the font size in the DB viewer for the `DBe_import`
+* Changed: Restructured `dbe_import_items.xml` for easier readbility to our users
+* Changed: New color scheme within `dbe_import_items.xml` for cleaner overview
+* Changed: Reversed logic code for `isExact`, changable on where data is imported
+* Updated: Comments in `DBTableColumnIds.java` and `SignalStrengthTracker.java`
+* Updated: TAGs and comments in `SmsDetector.java` are now reflecting current state
+* Updated: Cleaned `DbeImportCardInflater.java` and `detection_sms_db_listview.xml`
+* Updated: Improvement to SMS detection of WAP Push SMS messages with a new string
+* Updated: TAGs in `AIMSICDDbAdapter.java` and formatting of `DbViewerFragment.java`
+* Added: New server response codes in OpenCellIdActivity.java, removed old comments
+* Added: New EventLog for changing `LAC` in GSM case (only had it in CDMA until now)
+* Added: Minor comments in `DbViewerFragment.java` to clarify even more table data
+* Added: More notes and TAGs to work on for `AimsicdService.java` and `Cell.java`
+* Fixed: Downgrade of `targetSdkVersion` to `19` fixing whitish Icons on Android 5+
+* Fixed: Repaired `CellTracker` polling neighbouring cells on unsupported phones
+* Fixed: Repaired switched `LAC`/`CID` vs data labels of DBV in `DBe_import` table
+* Fixed: Better comments, spellings and formatting in `AIMSICDDbAdapter.java`
+
+#### 17.07.2015 - WIP-Internal v0.1.32-alpha-build-06
+
+* Moved: `requestNewOCIDKey()` from `Celltracker` to `OpenCellIdActivity`
+* Fixed: Repaired OCID crash when getting key, better DBV layout for `DBe_ipmort`
+
+---
+
+#### 17.07.2015 - WIP-Internal v0.1.32-alpha-build-04
+
+* Updated: Minor changes to correct value for `avg_range` in `AIMSICDDbAdapter.java`
+* Updated: from `DBE_UPLOAD_REQUEST` to `RESTORE_DATABASE` in `RequestTask.java`
+* Added: New string for database restoration popup added in `RequestTask.java`
+* Fixed: `CellTracker` and `RequestTask` are now works along with our new database
+* Fixed: Comments in `CellTracker` have been answered to clarify current functionality
+
+---
+
+#### 16.07.2015 - WIP-Internal v0.1.32-alpha-build-03
+
+* Updated: Shuffling, commenting and formatting of `AIMSICDDbAdapter.java`
+
+---
+
+#### 14.07.2015 - WIP-Internal v0.1.32-alpha-build-02
+
+* Fixed: AIMSICD does not crash anymore when downloading OpenCellID data
+
+---
+
+#### 14.07.2015 - WIP-Internal v0.1.32-alpha-build-01
+
+* Changed: **[MAJOR DATABASE OVERHAUL](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215)** - huge THANKS flies out to [banjaxbanjo](https://github.com/banjaxbanjo)!
+* Changed: Our new database is now pre-compiled, faster, better and uses correct tables
+* Updated: Improved French and Polish, minor string changes for Database Viewer labels
+
+---
+
 #### [12.07.2015 - WIP-Release v0.1.32-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.32-alpha-b00)
 
 * Updated: Enhanced `AIMSICD.java` for another attempt to fix AIMSICD not closing
