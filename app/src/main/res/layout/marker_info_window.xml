@@ -6,6 +6,7 @@
             android:background="@color/black"
             android:padding="12dp">
 
+    <!-- todo: We need to add HEX here and align... -->
     <TableRow
         android:id="@+id/open_cell_label"
         android:gravity="center_horizontal"
@@ -13,136 +14,175 @@
         android:tag="device">
 
         <TextView
-                android:textSize="16sp" android:text="@string/open_cell_id_label"
-                android:layout_span="2"
-                android:textColor="@color/green_text"
-                android:padding="4dip"/>
+            android:textSize="14sp"
+            android:text="@string/open_cell_id_label"
+            android:layout_span="2"
+            android:textColor="@color/green_text"
+            android:padding="4dip"/>
+
     </TableRow>
 
     <TableRow
         android:tag="device">
 
         <TextView
-                android:id="@+id/cell_id_label" android:text="@string/cell_id_label"
-                android:textSize="15sp"
-                android:textColor="@color/white"
-                android:padding="2dip" android:gravity="end"
-                android:layout_gravity="end"/>
-
-        <TextView
-                android:id="@+id/cell_id" android:text="@string/empty"
-                android:textSize="15sp"
-                android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="start"/>
-    </TableRow>
-
-    <TableRow
-        android:tag="device">
-
-        <TextView
-            android:id="@+id/lac_label" android:text="@string/lac_label"
-            android:textColor="@color/white"
-            android:padding="2dip" android:gravity="end"
-            android:layout_gravity="end"/>
-
-        <TextView
-            android:id="@+id/lac" android:text="@string/empty"
+            android:id="@+id/cell_id_label"
+            android:text="@string/cell_id_label"
             android:textSize="15sp"
-            android:textColor="@color/medium_blue"
-            android:padding="2dip" android:gravity="start"/>
-    </TableRow>
-
-<!-- Remove these once PC = MCC+MNC is done and make sure you comment out
-     the code in CellTowerMarker.java too. -->
-    <TableRow
-        android:tag="device">
-
-        <TextView
-            android:id="@+id/mcc_label" android:text="@string/mcc_label"
-            android:textColor="@color/white"
-            android:padding="2dip" android:gravity="end"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
             android:layout_gravity="end"/>
 
         <TextView
-            android:id="@+id/mcc" android:text="@string/empty"
-            android:textColor="@color/medium_blue"
-            android:padding="2dip" android:gravity="start"/>
+            android:id="@+id/cell_id"
+            android:text="@string/empty"
+            android:textSize="15sp"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
     </TableRow>
 
     <TableRow
         android:tag="device">
 
         <TextView
-            android:id="@+id/mnc_label" android:text="@string/mnc_label"
-            android:textColor="@color/white"
-            android:padding="2dip" android:gravity="end"
+            android:id="@+id/lac_label"
+            android:text="@string/lac_label"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
             android:layout_gravity="end"/>
 
         <TextView
-            android:id="@+id/mnc" android:text="@string/empty"
-            android:textColor="@color/medium_blue"
-            android:padding="2dip" android:gravity="start"/>
+            android:id="@+id/lac"
+            android:text="@string/empty"
+            android:textSize="15sp"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
     </TableRow>
- <!-- END remove -->
 
     <TableRow
         android:tag="device">
 
         <TextView
-            android:id="@+id/pc_label" android:text="@string/pc_label"
-            android:textColor="@color/white"
-            android:padding="2dip" android:gravity="end"
+            android:id="@+id/mcc_label"
+            android:text="PSC:"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
             android:layout_gravity="end"/>
 
         <TextView
-            android:id="@+id/pc" android:text="@string/empty"
-            android:textColor="@color/medium_blue"
-            android:padding="2dip" android:gravity="start"/>
+            android:id="@+id/wtf1"
+            android:text="ToDo"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
     </TableRow>
 
     <TableRow
         android:tag="device">
 
         <TextView
-                android:id="@+id/lat_label" android:text="@string/lat_label"
-                android:textColor="@color/white"
-                android:padding="2dip" android:gravity="end"
-                android:layout_gravity="end"/>
+            android:id="@+id/mnc_label"
+            android:text="RAT:"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
 
         <TextView
-                android:id="@+id/lat" android:text="@string/empty"
-                android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="start"/>
+            android:id="@+id/wtf2"
+            android:text="ToDo"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
     </TableRow>
 
     <TableRow
         android:tag="device">
 
         <TextView
-                android:id="@+id/lng_label" android:text="@string/lng_label"
-                android:textColor="@color/white"
-                android:padding="2dip" android:gravity="end"
-                android:layout_gravity="end"/>
+            android:id="@+id/pc_label"
+            android:text="@string/pc_label"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
 
         <TextView
-                android:id="@+id/lng" android:text="@string/empty"
-                android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="start"/>
+            android:id="@+id/pc"
+            android:text="@string/empty"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
     </TableRow>
 
     <TableRow
         android:tag="device">
 
         <TextView
-                android:id="@+id/samples_label" android:text="@string/samples_label"
-                android:textColor="@color/white"
-                android:padding="2dip" android:gravity="end"
-                android:layout_gravity="end"/>
+            android:id="@+id/lat_label"
+            android:text="@string/lat_label"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
 
         <TextView
-                android:id="@+id/samples" android:text="@string/empty"
-                android:textColor="@color/medium_blue"
-                android:padding="2dip" android:gravity="start"/>
+            android:id="@+id/lat"
+            android:text="@string/empty"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/lng_label"
+            android:text="@string/lng_label"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/lng"
+            android:text="@string/empty"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/samples_label"
+            android:text="Samples:"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/samples"
+            android:text="@string/empty"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
     </TableRow>
 
 </TableLayout>

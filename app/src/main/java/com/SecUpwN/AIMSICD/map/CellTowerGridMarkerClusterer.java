@@ -12,7 +12,8 @@ import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer;
 import java.util.List;
 
 /**
- * Overlay class for OSMDroid map to display BTS pins
+ * Description:     Overlay class for OSMDroid map to display multiple BTS pins
+ *                  as one numbered point, clustering multiple pins.
  */
 public class CellTowerGridMarkerClusterer extends RadiusMarkerClusterer {
     protected Context mContext;
