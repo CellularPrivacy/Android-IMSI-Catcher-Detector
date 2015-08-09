@@ -1,6 +1,27 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [09.08.2015 - WIP-Release v0.1.34-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.34-alpha-b00)
+
+* Updated: Finally found a **WHISTLEBLOWER**, removed position from [SEEKING](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/CONTRIBUTING.md#seeking) ;-)
+* Added: New language translation into Dutch
+
+---
+
+#### 06.08.2015 - WIP-Internal v0.1.33-alpha-build-02
+
+* Updated: Cleaned up marker info layout (needs more items and work to be done)
+
+---
+
+#### 05.08.2015 - WIP-Internal v0.1.33-alpha-build-01
+
+* Updated: `SmsDetector` is now using `toEventLog()`, fixed typo in `toEventlog`
+* Added: Simplified placeholder for `insertEventLog` in `AIMSICDDbAdapter.java`
+* Moved: Vibration code now resides in `toEventLog` for better maintainance
+
+---
+
 #### [02.08.2015 - WIP-Release v0.1.33-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.33-alpha-b00)
 
 * Updated: Minor formatting of `dbe_import_items.xml` and `detection_sms_db_listview.xml`
