@@ -202,7 +202,7 @@
    
     <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Flach</string>
-    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_sense">Gefühl</string>
     <string name="ui_icon_white">Weiß</string>
     <string name="map_type_terrain">Gelände</string>
     <string name="map_type_normal">Normal</string>
