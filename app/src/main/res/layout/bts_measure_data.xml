@@ -216,6 +216,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" >
 
+                <!-- This is currently not dBm but ASU -->
                 <TextView
                     android:id="@+id/wtf11"
                     android:layout_width="wrap_content"

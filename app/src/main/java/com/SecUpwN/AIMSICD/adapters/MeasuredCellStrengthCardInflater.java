@@ -44,23 +44,25 @@ public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<Me
     private class ViewHolder {
 
         private final View mRootView;
+
         private final TextView cid;
         private final TextView rss;
         private final TextView time;
 
         public ViewHolder(View rootView) {
             mRootView = rootView;
-            cid =          (TextView) mRootView.findViewById(R.id.tv_measure_cid);
+
+            cid =   (TextView) mRootView.findViewById(R.id.tv_measure_cid);
             rss =   (TextView) mRootView.findViewById(R.id.tv_measure_rss);
-            time =     (TextView) mRootView.findViewById(R.id.tv_measure_time);
+            time =  (TextView) mRootView.findViewById(R.id.tv_measure_time);
 
             rootView.setTag(this);
         }
 
         public void updateDisplay(MeasuredCellStrengthCardData item) {
-            cid.setText(       item.getCellID());
+            cid.setText(item.getCellID());
             rss.setText(item.getSignal());
-            time.setText(  item.getTimestamp());
+            time.setText(item.getTimestamp());
         }
     }
 }
