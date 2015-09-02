@@ -46,6 +46,9 @@ import com.SecUpwN.AIMSICD.utils.RequestTask;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
 
 import org.osmdroid.api.IProjection;
+import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
+import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
+import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -88,7 +91,7 @@ import java.util.List;
  *
  */
 
-public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
+public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener, MapEventsReceiver, Marker.OnMarkerDragListener, Marker.OnMarkerClickListener {
 
     private final String TAG = "AIMSICD_MapViewer";
     public static final String updateOpenCellIDMarkers = "update_opencell_markers";
@@ -303,7 +306,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
                 // Sets cluster pin color
                 mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(MapViewerOsmDroid.this);
-                mCellTowerGridMarkerClusterer.setIcon(((BitmapDrawable)mContext.getResources().
+                mCellTowerGridMarkerClusterer.setIcon(((BitmapDrawable) mContext.getResources().
                         getDrawable(R.drawable.ic_map_pin_orange)).getBitmap());
 
                 GpsMyLocationProvider imlp = new GpsMyLocationProvider(MapViewerOsmDroid.this.getBaseContext());
@@ -312,11 +315,13 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
                 mMyLocationOverlay = new MyLocationNewOverlay(MapViewerOsmDroid.this.getBaseContext(), imlp, mMap);
                 mMyLocationOverlay.setDrawAccuracyEnabled(true);
 
+                MapEventsOverlay mapEventsOverlay = new MapEventsOverlay(this, this);
+
                 mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
                 mMap.getOverlays().add(mMyLocationOverlay);
                 mMap.getOverlays().add(mCompassOverlay);
                 mMap.getOverlays().add(mScaleBarOverlay);
-
+                mMap.getOverlays().add(mapEventsOverlay);
             } else {
                 Helpers.msgShort(this, getString(R.string.unable_to_create_map));
             }
@@ -609,6 +614,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
         mCellTowerGridMarkerClusterer.addAll(items);
     }
+
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         final String KEY_MAP_TYPE = getBaseContext().getString(R.string.pref_map_type_key);
         if (key.equals(KEY_MAP_TYPE)) {
@@ -630,8 +636,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
             }
         }
     }
-
-
+    
     public void onStop() {
         super.onStop();
         ((AppAIMSICD) getApplication()).detach(this);
@@ -644,5 +649,71 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
         if( TinyDB.getInstance().getBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP)) {
             setRefreshActionButtonState(false);
         }
+    }
+
+    private void loadUserDefinedCoordinates() {
+        // TODO: 02.09.2015 load coordinates from database
+        // use createUserDefinedMarker to
+    }
+
+    private void saveUserDefinedCoordinates(GeoPoint coordinates) {
+        // TODO: 02.09.2015 save to database
+    }
+
+    private void updateUserDefinedCoordinates(int coordinatesId, GeoPoint coordinates) {
+        // TODO: 02.09.2015 update coordinates in database
+    }
+
+    private Marker createUserDefinedMarker(GeoPoint geoPoint) {
+        Marker marker = new Marker(mMap);
+        marker.setPosition(geoPoint);
+        marker.setDraggable(true);
+        marker.setOnMarkerDragListener(this);
+        marker.setOnMarkerClickListener(this);
+
+        return marker;
+    }
+
+    private void addUserDefinedMarkerToMap(Marker marker) {
+        mMap.getOverlays().add(marker);
+    }
+
+    @Override
+    public boolean singleTapConfirmedHelper(GeoPoint geoPoint) {
+        return false;
+    }
+
+    @Override
+    public boolean longPressHelper(GeoPoint geoPoint) {
+        Log.i(TAG, "longPressHelper");
+        addUserDefinedMarkerToMap(createUserDefinedMarker(geoPoint));
+
+        saveUserDefinedCoordinates(geoPoint);
+        return true;
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+        Log.i(TAG, "onMarkerDrag");
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        Log.i(TAG, "onMarkerDragEnd");
+        if (marker.getRelatedObject() != null) {
+            updateUserDefinedCoordinates((Integer) marker.getRelatedObject(), marker.getPosition());
+        }
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+        Log.i(TAG, "onMarkerDragStart");
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker, MapView mapView) {
+        Log.i(TAG, "onMarkerClick");
+        // TODO: 02.09.2015 show remove/delete spot dialog
+        return true;
     }
 }
