@@ -195,7 +195,7 @@
 
     <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Płaskie</string>
-    <string name="ui_icon_sense">Wykrywanie</string>
+    <string name="ui_icon_sense">Sense</string>
     <string name="ui_icon_white">Białe</string>
     <string name="map_type_terrain">Teren</string>
     <string name="map_type_normal">Zwyczajna</string>
@@ -294,12 +294,12 @@
     <string name="detection_strings">Łańcuchy znaków wykrywania</string>
     <string name="typezero_title">UWAGA!</string>
     <string name="typezero_header">Wykryto Silent SMS</string>
-    <string name="typezero_data">Wykryto Typu-0 SMS!\nSzczegóły: Zobacz Database Viewer.</string>
+    <string name="typezero_data">Wykryto SMS typu 0!\nSzczegóły: Zobacz podgląd bazy danych.</string>
     <string name="typemwi_title">UWAGA!</string>
     <string name="typemwi_header">Wykryto MWI</string>
     <string name="typemwi_data">Message Waiting Indicator detected!\nDetails: See Database Viewer.</string>
     <string name="typewap_header">Wap Push Detected</string>
-    <string name="typewap_data">Wykryto WAP Push SMS!\nSzczegóły: Zobacz Database Viewer.</string>
+    <string name="typewap_data">Wykryto WAP Push SMS!\nSzczegóły: Zobacz podgląd bazy danych.</string>
 
 
     <!-- Section Main-->
