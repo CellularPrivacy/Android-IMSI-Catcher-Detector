@@ -110,8 +110,10 @@ public class LocationTracker {
             loc = GeoLocation.fromDegrees(TruncatedLocation.getLatitude(), TruncatedLocation.getLongitude());
         } else {
             location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (location != null && (location.getLatitude() != 0.0
-                    && location.getLongitude() != 0.0)) {
+            if (location != null &&
+                       (Double.doubleToLongBits(location.getLatitude()) != 0 &&
+                               Double.doubleToLongBits(location.getLongitude()) != 0)) {
+                
                 TruncatedLocation TruncatedLocation = new TruncatedLocation(location);
                 loc = GeoLocation.fromDegrees(TruncatedLocation.getLatitude(), TruncatedLocation.getLongitude());
             } else {
