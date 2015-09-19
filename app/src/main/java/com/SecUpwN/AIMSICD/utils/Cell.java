@@ -87,8 +87,9 @@ public class Cell implements Parcelable {
     public Cell(int cid, int lac, int signal, int psc, int netType, boolean dbm) {
         this.cid = cid;
         this.lac = lac;
-        mcc = Integer.MAX_VALUE;
-        mnc = Integer.MAX_VALUE;
+        this.mcc = Integer.MAX_VALUE;
+        this.mnc = Integer.MAX_VALUE;
+
         if (dbm) {
             this.dbm = signal;
         } else {
@@ -97,13 +98,13 @@ public class Cell implements Parcelable {
         this.psc = psc;
 
         this.netType = netType;
-        timingAdvance = Integer.MAX_VALUE;
-        sid = Integer.MAX_VALUE;
-        lon = 0.0;
-        lat = 0.0;
-        speed = 0.0;
-        accuracy = 0.0;
-        bearing = 0.0;
+        this.timingAdvance = Integer.MAX_VALUE;
+        this.sid = Integer.MAX_VALUE;
+        this.lon = 0.0;
+        this.lat = 0.0;
+        this.speed = 0.0;
+        this.accuracy = 0.0;
+        this.bearing = 0.0;
         this.timestamp = SystemClock.currentThreadTimeMillis();
     }
 
@@ -327,15 +328,6 @@ public class Cell implements Parcelable {
     }
 
     /**
-     * Bearing
-     *
-     * @return Bearing (0.0, 360.0] or 0.0 if unavailable
-     */
-    public double getBearing() {
-        return this.bearing;
-    }
-
-    /**
      * Set current Bearing
      *
      * @param bearing Current bearing
@@ -484,9 +476,7 @@ public class Cell implements Parcelable {
     public static class CellLookUpAsync extends AsyncTask<String, Void, List<Cell>> {
         public AsyncResponse delegate = null;
 
-        private static final String TAG = "AIMSICD";
-        private static final String mTAG = "Cell";
-
+        private static final String TAG = "CellLookUpAsync";
 
         @Override
         protected List<Cell> doInBackground(String ... urls) {
@@ -514,7 +504,7 @@ public class Cell implements Parcelable {
                 return cells;
 
             } catch (Exception e) {
-                Log.i(TAG, mTAG + ": Cell Lookup: " + e.getMessage());
+                Log.i(TAG, e.getMessage(), e);
                 return null;
             }
         }

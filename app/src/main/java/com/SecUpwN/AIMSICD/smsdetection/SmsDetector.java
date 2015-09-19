@@ -100,15 +100,14 @@ public class SmsDetector extends Thread {
         SmsDetector.isRunning = isrunning;
     }
 
-
-    public void startSmsDetection(){
+    public void startSmsDetection() {
         Intent intent = new Intent(tContext, AimsicdService.class);
         tContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
             start();
             Log.i(TAG, "SMS detection started");
    }
 
-    public void stopSmsDetection(){
+    public void stopSmsDetection() {
         setSmsDetectionState(false);
         // Unbind from the service
         if (mBound) {
@@ -117,6 +116,7 @@ public class SmsDetector extends Thread {
         }
         Log.i(TAG, "SMS detection stopped");
     }
+
     @Override
     public void run() {
         setSmsDetectionState(true);
