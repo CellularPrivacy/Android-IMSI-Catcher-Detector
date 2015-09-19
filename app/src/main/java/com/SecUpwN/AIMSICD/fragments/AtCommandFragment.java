@@ -77,7 +77,6 @@ public class AtCommandFragment extends Fragment {
     private static final int SERIAL_INIT_ERROR = 101;
     private static final int ROOT_UNAVAILABLE = 102;
     private static final int BUSYBOX_UNAVAILABLE = 103;
-    private static final int EXECUTE_COMMAND = 201;
     private static final List<String> mSerialDevices = new ArrayList<>();
 
     private Context mContext;
@@ -427,21 +426,22 @@ public class AtCommandFragment extends Fragment {
                 }
             }
             if (!cmd.isExecuting() && !cmd.isFinished()) {
+                Exception e = new Exception();
+
                 if (!shell.isExecuting && !shell.isReading) {
                     Log.w(TAG, "Waiting for a command to be executed in a shell that is not executing and not reading! \n\n Command: " + cmd.getCommand());
-                    Exception e = new Exception();
                     e.setStackTrace(Thread.currentThread().getStackTrace());
-                    e.printStackTrace();
+                    Log.e(TAG, e.getMessage(), e);
+
                 } else if (shell.isExecuting && !shell.isReading) {
                     Log.e(TAG, "Waiting for a command to be executed in a shell that is executing but not reading! \n\n Command: " + cmd.getCommand());
-                    Exception e = new Exception();
                     e.setStackTrace(Thread.currentThread().getStackTrace());
-                    e.printStackTrace();
+                    Log.e(TAG, e.getMessage(), e);
+
                 } else {
                     Log.e(TAG, "Waiting for a command to be executed in a shell that is not reading! \n\n Command: " + cmd.getCommand());
-                    Exception e = new Exception();
                     e.setStackTrace(Thread.currentThread().getStackTrace());
-                    e.printStackTrace();
+                    Log.e(TAG, e.getMessage(), e);
                 }
             }
         }
