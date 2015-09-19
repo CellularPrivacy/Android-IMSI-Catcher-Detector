@@ -222,7 +222,8 @@ import java.util.List;
                 double earthRadius = 6371.01; // [Km]
                 int radius = 2; // Use a 2 Km radius with center at GPS location.
 
-                if (cell.getLat() != 0.0 && cell.getLon() != 0.0) {
+                if (Double.doubleToRawLongBits(cell.getLat()) != 0 &&
+                        Double.doubleToRawLongBits(cell.getLon()) != 0) {
                     //New GeoLocation object to find bounding Coordinates
                     GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
@@ -358,7 +359,6 @@ import java.util.List;
                 .setNegativeButton(R.string.open_cell_id_button_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing... or add something more informative!
                     }
                 })
                 .setPositiveButton(R.string.open_cell_id_button_ok, new DialogInterface.OnClickListener() {
