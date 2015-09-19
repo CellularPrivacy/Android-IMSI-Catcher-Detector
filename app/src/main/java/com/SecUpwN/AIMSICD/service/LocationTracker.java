@@ -113,7 +113,7 @@ public class LocationTracker {
             if (location != null &&
                        (Double.doubleToLongBits(location.getLatitude()) != 0 &&
                                Double.doubleToLongBits(location.getLongitude()) != 0)) {
-                
+
                 TruncatedLocation TruncatedLocation = new TruncatedLocation(location);
                 loc = GeoLocation.fromDegrees(TruncatedLocation.getLatitude(), TruncatedLocation.getLongitude());
             } else {
