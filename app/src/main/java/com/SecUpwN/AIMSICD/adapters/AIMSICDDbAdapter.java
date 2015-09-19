@@ -550,7 +550,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
             c.close();
             return false;
         } catch (Exception e) {
-            Log.e(TAG, "prepareOpenCellUploadData(): Error creating OpenCellID Upload Data: " + e.toString());
+            Log.e(TAG, "prepareOpenCellUploadData(): Error creating OpenCellID Upload Data: ", e);
             return false;
         }
     }
@@ -857,7 +857,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
                                                 Double.parseDouble(records.get(i)[12])  // lon
                                         );
                                     }catch(Exception ee){
-                                        Log.e(TAG, "RestoreDB: Error in insertBTS()");
+                                        Log.e(TAG, "RestoreDB: Error in insertBTS()", ee);
                                     }
                                     break;
 
