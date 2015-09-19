@@ -127,17 +127,15 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
         // We need to create a separate case for UPLOADING to DBe (OCID, MLS etc)
         switch (mType) {
-
             // OCID upload request from "APPLICATION" drawer title
             case DBE_UPLOAD_REQUEST:
                 try {
-
                     boolean prepared = mDbAdapter.prepareOpenCellUploadData();
 
                     Log.i(TAG, "OCID upload data prepared - " + String.valueOf(prepared));
                     if (prepared) {
                         File file = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/aimsicd-ocid-data.csv");
-                        publishProgress(25,100);
+                        publishProgress(25, 100);
 
                         MultipartEntity mpEntity = new MultipartEntity();
                         FileInputStream fin = new FileInputStream(file);
@@ -174,7 +172,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                             if (response.getStatusLine().getStatusCode() == org.apache.http.HttpStatus.SC_OK) {
                                 mDbAdapter.ocidProcessed();
                             }
-                            publishProgress(95,100);
+                            publishProgress(95, 100);
                         }
                         return "Successful";
                     } else {
@@ -184,15 +182,15 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
                     // all caused by httpclient.execute(httppost);
                 } catch (UnsupportedEncodingException e) {
-                    Log.e(TAG, "Upload OpenCellID data Exception ", e);
+                    Log.e(TAG, "Upload OpenCellID data Exception", e);
                 } catch (FileNotFoundException e) {
-                    Log.e(TAG, "Upload OpenCellID data Exception ", e);
+                    Log.e(TAG, "Upload OpenCellID data Exception", e);
                 } catch (ClientProtocolException e) {
-                    Log.e(TAG, "Upload OpenCellID data Exception ", e);
+                    Log.e(TAG, "Upload OpenCellID data Exception", e);
                 } catch (IOException e) {
-                    Log.e(TAG, "Upload OpenCellID data Exception ", e);
+                    Log.e(TAG, "Upload OpenCellID data Exception", e);
                 } catch (Exception e) {
-                    Log.e(TAG, "Upload OpenCellID data Exception ", e);
+                    Log.e(TAG, "Upload OpenCellID data Exception", e);
                 }
 
                 // DOWNLOADING...
@@ -262,7 +260,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     return "Successful";
 
                 } catch (MalformedURLException e) {
-                    // would show toast about it to a user?
                     Log.e(TAG, "Malformed URL", e);
                     return null;
                 } catch (IOException e) {
@@ -357,7 +354,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             case DBE_UPLOAD_REQUEST:
                 if ("Successful".equals(result)) {
                     Helpers.msgShort(mAppContext, mAppContext.getString(R.string.uploaded_bts_data_successfully));
-
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_uploading_bts_data));
                 }
