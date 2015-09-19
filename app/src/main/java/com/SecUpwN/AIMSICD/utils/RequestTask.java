@@ -41,8 +41,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-//import com.SecUpwN.AIMSICD.utils.Helpers;
-
 /**
  *
  * Description:
@@ -128,8 +126,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         // We need to create a separate case for UPLOADING to DBe (OCID, MLS etc)
         switch (mType) {
 
-            // UPLOADING !!
-            case DBE_UPLOAD_REQUEST:   // OCID upload request from "APPLICATION" drawer title
+            // OCID upload request from "APPLICATION" drawer title
+            case DBE_UPLOAD_REQUEST:
                 try {
 
                     boolean prepared = mDbAdapter.prepareOpenCellUploadData();
@@ -245,6 +243,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                             progress += count;
                             publishProgress(progress, total);
                         }
+                        input.close();
                         // flushing output
                         output.flush();
                         output.close();
@@ -435,9 +434,5 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
      */
     public static String getOCDBDownloadDirectoryPath(Context context) {
         return (context.getExternalFilesDir(null) + File.separator) + "OpenCellID/";
-    }
-
-    public static String getOCDBDownloadFilePath(Context context) {
-        return getOCDBDownloadDirectoryPath(context) + OCDB_File_Name;
     }
 }

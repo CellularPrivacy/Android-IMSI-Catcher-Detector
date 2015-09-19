@@ -59,7 +59,6 @@ import java.io.InputStreamReader;
  *
  */
 
-
 public class DebugLogs extends BaseActivity {
 
     private static final String TAG = "AIMSICD";
@@ -86,7 +85,6 @@ public class DebugLogs extends BaseActivity {
         btnClear = (Button) findViewById(R.id.btnClear);
         btnStop = (Button) findViewById(R.id.btnStopLogs);
         btnCopy = (Button) findViewById(R.id.btnCopy);
-        //btnRadio = (Button) findViewById(R.id.btnRadio);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -292,6 +290,7 @@ public class DebugLogs extends BaseActivity {
             log.append(line);
             log.append("\n");
         }
+        bufferedReader.close();
         return log.toString();
     }
 
