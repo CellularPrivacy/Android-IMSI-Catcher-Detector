@@ -16,8 +16,8 @@ import android.hardware.SensorManager;
  */
 public class AccelerometerMonitor {
     // How long with no movement detected, before we assume we are not moving
-    public static final long MOVEMENT_THRESHOLD_MS = 20*1000;
-    private final float ACCELEROMETER_NOISE = 2.0f; // amount of sensor noise to ignore
+    static final long MOVEMENT_THRESHOLD_MS = 20*1000;
+    static final float ACCELEROMETER_NOISE = 2.0f; // amount of sensor noise to ignore
 
     private long lastMovementTime = 0;
     private float mLastX, mLastY, mLastZ;
@@ -27,7 +27,7 @@ public class AccelerometerMonitor {
     private SensorEventListener mSensorListener;
     private Runnable onMovement;
 
-    AccelerometerMonitor(Context context, Runnable onMovement) {
+    public AccelerometerMonitor(Context context, Runnable onMovement) {
         setupAccelerometer(context);
         this.onMovement = onMovement;
     }
@@ -52,11 +52,10 @@ public class AccelerometerMonitor {
                 float z = event.values[2];
 
                 if (!mInitialized) {
+                    mInitialized = true;
                     mLastX = x;
                     mLastY = y;
                     mLastZ = z;
-
-                    mInitialized = true;
                 } else {
                     float deltaX = Math.abs(mLastX - x);
                     float deltaY = Math.abs(mLastY - y);
@@ -72,21 +71,21 @@ public class AccelerometerMonitor {
 
                     if (deltaX > 0 || deltaY > 0 || deltaZ > 0) {
                         // movement detected
-                        //Log.d("sensor", "Movement detected, enabling GPS");
-
                         // disable the movement sensor to save power
                         stop();
 
                         lastMovementTime = System.currentTimeMillis();
 
-                        if (onMovement != null) onMovement.run();
+                        if (onMovement != null) {
+                            Thread runThread = new Thread(onMovement);
+                            runThread.start();
+                        }
                     }
                 }
             }
 
             @Override
             public void onAccuracyChanged(Sensor sensor, int i) {
-
             }
         };
 
