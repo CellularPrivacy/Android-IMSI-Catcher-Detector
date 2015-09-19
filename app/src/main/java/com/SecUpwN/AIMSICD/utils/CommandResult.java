@@ -34,23 +34,20 @@ import java.io.IOException;
 @SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
 
-    private final String TAG = "AIMSICD_CommandResult";
-    private final long mStartTime;
-    private final int mExitValue;
-    private final String mStdout;
-    private final String mStderr;
-    private final long mEndTime;
+    private static final String TAG = "AIMSICD_CommandResult";
+    private long mStartTime;
+    private int mExitValue;
+    private String mStdout;
+    private String mStderr;
+    private long mEndTime;
 
-    public CommandResult(long startTime,
-            int exitValue,
-            String stdout,
-            String stderr,
-            long endTime) {
-        mStartTime = startTime;
-        mExitValue = exitValue;
-        mStdout = stdout;
-        mStderr = stderr;
-        mEndTime = endTime;
+    public CommandResult(long startTime, int exitValue,
+                         String stdout, String stderr, long endTime) {
+        this.mStartTime = startTime;
+        this.mExitValue = exitValue;
+        this.mStdout = stdout;
+        this.mStderr = stderr;
+        this.mEndTime = endTime;
 
         Log.d(TAG, "Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
         // this is set last so log from here
@@ -61,19 +58,12 @@ public class CommandResult implements Parcelable {
     // loading constructor
     @SuppressWarnings("CastToConcreteClass")
     public CommandResult(Parcel inParcel) {
-        this(inParcel.readLong(),
-                inParcel.readInt(),
-                inParcel.readString(),
-                inParcel.readString(),
-                inParcel.readLong());
+        this(inParcel.readLong(), inParcel.readInt(), inParcel.readString(),
+                inParcel.readString(), inParcel.readLong());
     }
 
     public boolean success() {
         return (mExitValue == 0);
-    }
-
-    public long getEndTime() {
-        return mEndTime;
     }
 
     public String getStderr() {
@@ -88,14 +78,9 @@ public class CommandResult implements Parcelable {
         return mExitValue;
     }
 
-    public long getStartTime() {
-        return mStartTime;
-    }
-
     @SuppressWarnings("UnnecessaryExplicitNumericCast")
     private void checkForErrors() {
-        if (mExitValue != 0
-                || !"".equals(mStderr.trim())) {
+        if (mExitValue != 0 || !mStderr.trim().isEmpty()) {
             // don't log the commands that failed
             // because the cpu was offline
             boolean skipOfflineCpu =
@@ -106,9 +91,7 @@ public class CommandResult implements Parcelable {
             String lineEnding = System.getProperty("line.separator");
             FileWriter errorWriter = null;
             try {
-                File errorLogFile = new File(
-                        AIMSICDDbAdapter.FOLDER + "error.txt"
-                );
+                File errorLogFile = new File(AIMSICDDbAdapter.FOLDER + "error.txt");
                 if (!errorLogFile.exists()) {
                     errorLogFile.createNewFile();
                 }
@@ -131,7 +114,7 @@ public class CommandResult implements Parcelable {
                     try {
                         errorWriter.close();
                     } catch (IOException ignored) {
-                        // let it go
+                        Log.e(TAG, "Failed to close error writer", ignored);
                     }
                 }
             }
