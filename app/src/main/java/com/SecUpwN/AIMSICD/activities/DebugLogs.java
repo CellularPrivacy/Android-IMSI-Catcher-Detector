@@ -98,7 +98,6 @@ public class DebugLogs extends BaseActivity {
                     clearLogs();
                 } catch (IOException e) {
                     Log.e(TAG, "Error clearing logs", e);
-
                 }
             }
         });
@@ -212,7 +211,7 @@ public class DebugLogs extends BaseActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
                 } catch (IOException e) {
-                    Log.e(TAG, "Error reading logs", e);
+                    Log.w(TAG, "Error reading logs", e);
                 }
             }
         }.start();
@@ -274,8 +273,10 @@ public class DebugLogs extends BaseActivity {
      */
     private String runProcess(String[] command) throws IOException {
         Process process = null;
-        if (command.length == 1) process = Runtime.getRuntime().exec(command[0]);
-        else Runtime.getRuntime().exec(command);
+        if (command.length == 1)
+            process = Runtime.getRuntime().exec(command[0]);
+        else
+            Runtime.getRuntime().exec(command);
 
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
@@ -320,7 +321,6 @@ public class DebugLogs extends BaseActivity {
         public void run() {
             while (updateLogs) {
                 try {
-                    //Log.d("log_thread", "running");
                     final String logs = getLogs();
                     if (!logs.equals(logView.getText().toString())) {
                         runOnUiThread(new Runnable() {
