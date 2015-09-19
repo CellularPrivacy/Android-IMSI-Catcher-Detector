@@ -39,9 +39,9 @@ public class LocationTracker {
     private Location lastLocation;
     private static final long GPS_MIN_UPDATE_TIME = 10000;
     private static final float GPS_MIN_UPDATE_DISTANCE = 10;
-    AIMSICDDbAdapter mDbHelper;
+    private AIMSICDDbAdapter mDbHelper;
 
-    LocationTracker(AimsicdService service, LocationListener extLocationListener) {
+    public LocationTracker(AimsicdService service, LocationListener extLocationListener) {
         this.context = service;
         this.extLocationListener = extLocationListener;
 
