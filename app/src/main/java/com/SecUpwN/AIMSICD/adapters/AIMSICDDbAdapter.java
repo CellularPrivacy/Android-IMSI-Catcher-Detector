@@ -1,14 +1,5 @@
 package com.SecUpwN.AIMSICD.adapters;
 
-import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
-import com.SecUpwN.AIMSICD.service.CellTracker;
-import com.SecUpwN.AIMSICD.smsdetection.AdvanceUserItems;
-import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.CMDProcessor;
-import com.SecUpwN.AIMSICD.utils.MiscUtils;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -19,6 +10,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Vibrator;
 import android.util.Log;
 import android.util.SparseArray;
+
+import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
+import com.SecUpwN.AIMSICD.service.CellTracker;
+import com.SecUpwN.AIMSICD.smsdetection.AdvanceUserItems;
+import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
+import com.SecUpwN.AIMSICD.utils.CMDProcessor;
+import com.SecUpwN.AIMSICD.utils.Cell;
+import com.SecUpwN.AIMSICD.utils.MiscUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -131,14 +132,13 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
     private final String TAG = "AIMSICD";
     private final String mTAG = "AIMSICDDbAdapter";
-    private static String DB_NAME = "aimsicd.db";
-    private static String DB_PATH = "/data/data/com.SecUpwN.AIMSICD/databases/";
-    private String DB_LOCATION = DB_PATH + DB_NAME;
+    private static final String DB_NAME = "aimsicd.db";
+    private static final String DB_PATH = "/data/data/com.SecUpwN.AIMSICD/databases/";
+    private static final String DB_LOCATION = DB_PATH + DB_NAME;
 
-    private final String[] mTables;
+    private String[] mTables;
     private SQLiteDatabase mDb;
-    private final Context mContext;
-    //private static Context context; // Added by E:V:A for toEventLog()
+    private Context mContext;
 
     public AIMSICDDbAdapter(Context context) {
         super(context, DB_NAME, null, 1);
@@ -186,18 +186,19 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      *                  http://www.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
      *
      **/
-    public boolean createDataBase(){
-        if(!checkDataBase()){
+    public boolean createDataBase() {
+        if(!checkDataBase()) {
             // By calling this method, an empty database will be created into the default system path
             // of your application so that we can overwrite that database with our own database.
             this.getReadableDatabase();
             try {
                 copyDataBase();
-                Log.i(TAG, mTAG + ": Database created");
+                Log.i(TAG, "Database created");
 
                 return true;
             } catch (IOException e) {
-                throw new Error("Error copying database\n" + e.toString());
+                Log.e(TAG, "Error creating database", e);
+                throw new Error("Error copying database", e);
             }
 
         }
@@ -208,21 +209,22 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
      * Check if the database already exist to avoid re-copying the file each time you open the application.
      * @return true if it exists, false if it doesn't
      */
-    private boolean checkDataBase(){
+    private boolean checkDataBase() {
 
         SQLiteDatabase checkDB = null;
 
-        try{
+        try {
             //Log.i(TAG,"Checking for db first install this will throw an error on install and is noraml");
             checkDB = SQLiteDatabase.openDatabase(DB_LOCATION, null, SQLiteDatabase.OPEN_READONLY);
-        }catch(SQLiteException e){
-            Log.e(TAG, mTAG + ": database not yet created: " + e.toString());
+        } catch(SQLiteException e) {
+            Log.e(TAG, "database not yet created", e);
         }
 
-        if(checkDB != null){
+        if(checkDB != null) {
             checkDB.close();
+            return true;
         }
-        return checkDB != null;
+        return false;
     }
 
     /**
@@ -239,7 +241,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
         // Transfer bytes from the inputfile to the outputfile
         byte[] buffer = new byte[1024];
         int length;
-        while ((length = myInput.read(buffer))>0){
+        while ((length = myInput.read(buffer)) > 0) {
             myOutput.write(buffer, 0, length);
         }
         // Close the streams
@@ -265,9 +267,7 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
-    // Nothing? Not even a log?
-    }
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
 
 
     // ====================================================================
