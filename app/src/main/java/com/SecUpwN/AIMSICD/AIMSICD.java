@@ -590,7 +590,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                     mAimsicdService.stopSmsTracking();
                 }
             } catch (Exception ee) {
-                System.out.println("Error: Stopping SMS detection");
+                Log.e(TAG, "Error: Stopping SMS detection : " + ee.getMessage());
             }
             // Close database on Exit
             Log.i(TAG, "Closing db from onBackPressed()");
