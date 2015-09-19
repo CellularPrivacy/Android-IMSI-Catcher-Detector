@@ -35,6 +35,7 @@ public class TruncatedLocation extends Location {
         double td = 0;
         NumberFormat format = NumberFormat.getInstance();
 
+        // %.<string>f, d <-- this is wrong on so many ways
         String s = String.format("%." + Integer.toString(numDecimal) + "f", d);
         try {
             Number number = format.parse(s);
