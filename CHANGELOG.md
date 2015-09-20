@@ -1,6 +1,18 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [20.09.2015 - WIP-Release v0.1.35-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.35-alpha-b00)
+
+* Changed: Improved code quality and better error handling
+* Added: Animated updates on "Phone/SIM Details" page
+* Fixed: Resolved many security and performance issues [[#613](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/613)]
+
+#### 16.09.2015 - WIP-Internal v0.1.33-alpha-build-01
+
+* Updated: Old formatting updates for cleaner code structure
+* Added: Database support for BtsLoc table in `aimsicd.db`
+* Added: Translations for Japanese, Albanian, Spanish and Polish
+
 #### [09.08.2015 - WIP-Release v0.1.34-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.34-alpha-b00)
 
 * Updated: Finally found a **WHISTLEBLOWER**, removed position from [SEEKING](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/CONTRIBUTING.md#seeking) ;-)
