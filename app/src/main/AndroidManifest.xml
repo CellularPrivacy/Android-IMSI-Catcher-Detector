@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.SecUpwN.AIMSICD"
           android:versionCode="34"
-          android:versionName="0.1.34-alpha-b00">
+          android:versionName="0.1.34-alpha-b01">
 
     <!-- If we ever wanna make this a system app, we can add the following 2 lines above:
           coreApp="true"
@@ -91,6 +92,7 @@
     <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
    
     <application
+            tools:replace="allowBackup"
             android:allowBackup="false"
             android:icon="@drawable/sense_danger"
             android:label="@string/main_app_name"

@@ -445,7 +445,6 @@ public class SmsDetector extends Thread {
                                 setmsg.setCurrent_gps_lon(mAimsicdService.lastKnownLocation().getLongitudeInDegrees());
 
                                 //only alert if timestamp is not in the data base
-
                                 if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
                                     dbacess.storeCapturedSms(setmsg);
 
@@ -462,7 +461,9 @@ public class SmsDetector extends Thread {
                                     );*/
                                     dbacess.toEventLog(6,"Detected WAP PUSH (2) SMS");
                                     MiscUtils.startPopUpInfo(tContext, 8);
-                                }else {Log.d(TAG,mTAG+" Detected Sms already logged");}
+                                } else {
+                                    Log.d(TAG,mTAG+" Detected SMS already logged");
+                                }
 
                             }// end of if contains("SMS originating address:")
                         }

@@ -314,4 +314,6 @@
     <string name="invalid_key_try_later">無効な OpenCellId キー。もう一度後で試してください。</string>
     <string name="getting_ocid_key">OpenCellID API キーを取得しています…</string>
 
+    <string name="delete_database_msg_success">データベースは正常に削除され、再作成されました。\nメモリ内の古い値をクリアするため、アプリを再起動してください。</string>
+
     </resources>

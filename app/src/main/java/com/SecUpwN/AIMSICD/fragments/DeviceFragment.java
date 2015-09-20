@@ -21,12 +21,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.SecUpwN.AIMSICD.widget.HighlightTextView;
+import com.kaichunlin.transition.animation.AnimationManager;
 
 public class DeviceFragment extends Fragment {
 
@@ -119,9 +120,11 @@ public class DeviceFragment extends Fragment {
     };
 
     private void updateUI() {
-        TextView content;
+        HighlightTextView content;
         TableRow tr;
         if (mBound) {
+            final AnimationManager ani=new AnimationManager();
+
             mAimsicdService.getCellTracker().refreshDevice();
             Device mDevice = mAimsicdService.getCellTracker().getDevice();
             switch (mDevice.getPhoneID()) {
@@ -129,28 +132,28 @@ public class DeviceFragment extends Fragment {
                 case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
                 case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
                 case TelephonyManager.PHONE_TYPE_GSM: {
-                    content = (TextView) mView.findViewById(R.id.network_lac);
-                    content.setText(String.valueOf(mAimsicdService.getCell().getLAC()));
+                    content = (HighlightTextView)  mView.findViewById(R.id.network_lac);
+                    content.updateText(String.valueOf(mAimsicdService.getCell().getLAC()), ani);
                     tr = (TableRow) mView.findViewById(R.id.gsm_cellid);
                     tr.setVisibility(View.VISIBLE);
-                    content = (TextView) mView.findViewById(R.id.network_cellid);
-                    content.setText(String.valueOf(mAimsicdService.getCell().getCID()));
+                    content = (HighlightTextView)  mView.findViewById(R.id.network_cellid);
+                    content.updateText(String.valueOf(mAimsicdService.getCell().getCID()), ani);
                     break;
                 }
 
                 case TelephonyManager.PHONE_TYPE_CDMA: {
                     tr = (TableRow) mView.findViewById(R.id.cdma_netid);
                     tr.setVisibility(View.VISIBLE);
-                    content = (TextView) mView.findViewById(R.id.network_netid);
-                    content.setText(String.valueOf(mAimsicdService.getCell().getLAC()));
+                    content = (HighlightTextView)  mView.findViewById(R.id.network_netid);
+                    content.updateText(String.valueOf(mAimsicdService.getCell().getLAC()), ani);
                     tr = (TableRow) mView.findViewById(R.id.cdma_sysid);
                     tr.setVisibility(View.VISIBLE);
-                    content = (TextView) mView.findViewById(R.id.network_sysid);
-                    content.setText(String.valueOf(mAimsicdService.getCell().getSID()));
+                    content = (HighlightTextView)  mView.findViewById(R.id.network_sysid);
+                    content.updateText(String.valueOf(mAimsicdService.getCell().getSID()), ani);
                     tr = (TableRow) mView.findViewById(R.id.cdma_baseid);
                     tr.setVisibility(View.VISIBLE);
-                    content = (TextView) mView.findViewById(R.id.network_baseid);
-                    content.setText(String.valueOf(mAimsicdService.getCell().getCID()));
+                    content = (HighlightTextView)  mView.findViewById(R.id.network_baseid);
+                    content.updateText(String.valueOf(mAimsicdService.getCell().getCID()), ani);
                     break;
                 }
             }
@@ -158,50 +161,51 @@ public class DeviceFragment extends Fragment {
             if (mAimsicdService.getCell().getTimingAdvance() != Integer.MAX_VALUE) {
                 tr = (TableRow) mView.findViewById(R.id.lte_timing_advance);
                 tr.setVisibility(View.VISIBLE);
-                content = (TextView) mView.findViewById(R.id.network_lte_timing_advance);
-                content.setText(String.valueOf(mAimsicdService.getCell().getTimingAdvance()));
+                content = (HighlightTextView)  mView.findViewById(R.id.network_lte_timing_advance);
+                content.updateText(String.valueOf(mAimsicdService.getCell().getTimingAdvance()), ani);
             } else {
                 tr = (TableRow) mView.findViewById(R.id.lte_timing_advance);
                 tr.setVisibility(View.GONE);
             }
 
             if (mAimsicdService.getCell().getPSC() != Integer.MAX_VALUE) {
-                content = (TextView) mView.findViewById(R.id.network_psc);
-                content.setText(String.valueOf(mAimsicdService.getCell().getPSC()));
+                content = (HighlightTextView)  mView.findViewById(R.id.network_psc);
+                content.updateText(String.valueOf(mAimsicdService.getCell().getPSC()), ani);
                 tr = (TableRow) mView.findViewById(R.id.primary_scrambling_code);
                 tr.setVisibility(View.VISIBLE);
             }
 
-            content = (TextView) mView.findViewById(R.id.sim_country);
-            content.setText(mDevice.getSimCountry());
-            content = (TextView) mView.findViewById(R.id.sim_operator_id);
-            content.setText(mDevice.getSimOperator());
-            content = (TextView) mView.findViewById(R.id.sim_operator_name);
-            content.setText(mDevice.getSimOperatorName());
-            content = (TextView) mView.findViewById(R.id.sim_imsi);
-            content.setText(mDevice.getSimSubs());
-            content = (TextView) mView.findViewById(R.id.sim_serial);
-            content.setText(mDevice.getSimSerial());
+            content = (HighlightTextView)  mView.findViewById(R.id.sim_country);
+            content.updateText(mDevice.getSimCountry(), ani);
+            content = (HighlightTextView)  mView.findViewById(R.id.sim_operator_id);
+            content.updateText(mDevice.getSimOperator(), ani);
+            content = (HighlightTextView) mView.findViewById(R.id.sim_operator_name);
+            content.updateText(mDevice.getSimOperatorName(), ani);
+            content = (HighlightTextView)  mView.findViewById(R.id.sim_imsi);
+//            content.updateText(mDevice.getSimSubs(), ani);
+            content.updateText(mDevice.getSimSerial(), ani);
 
-            content = (TextView) mView.findViewById(R.id.device_type);
-            content.setText(mDevice.getPhoneType());
-            content = (TextView) mView.findViewById(R.id.device_imei);
-            content.setText(mDevice.getIMEI());
-            content = (TextView) mView.findViewById(R.id.device_version);
-            content.setText(mDevice.getIMEIv());
-            content = (TextView) mView.findViewById(R.id.network_name);
-            content.setText(mDevice.getNetworkName());
-            content = (TextView) mView.findViewById(R.id.network_code);
-            content.setText(mDevice.getMncMcc());
-            content = (TextView) mView.findViewById(R.id.network_type);
-            content.setText(mDevice.getNetworkTypeName());
+            content = (HighlightTextView)  mView.findViewById(R.id.device_type);
+            content.updateText(mDevice.getPhoneType(), ani);
+            content = (HighlightTextView)  mView.findViewById(R.id.device_imei);
+            content.updateText(mDevice.getIMEI(), ani);
+            content = (HighlightTextView)  mView.findViewById(R.id.device_version);
+            content.updateText(mDevice.getIMEIv(), ani);
+            content = (HighlightTextView)  mView.findViewById(R.id.network_name);
+            content.updateText(mDevice.getNetworkName(), ani);
+            content = (HighlightTextView)  mView.findViewById(R.id.network_code);
+            content.updateText(mDevice.getMncMcc(), ani);
+            content = (HighlightTextView)  mView.findViewById(R.id.network_type);
+            content.updateText(mDevice.getNetworkTypeName(), ani);
 
-            content = (TextView) mView.findViewById(R.id.data_activity);
-            content.setText(mDevice.getDataActivity());
-            content = (TextView) mView.findViewById(R.id.data_status);
-            content.setText(mDevice.getDataState());
-            content = (TextView) mView.findViewById(R.id.network_roaming);
-            content.setText(mDevice.isRoaming());
+            content = (HighlightTextView)  mView.findViewById(R.id.data_activity);
+            content.updateText(mDevice.getDataActivity(), ani);
+            content = (HighlightTextView)  mView.findViewById(R.id.data_status);
+            content.updateText(mDevice.getDataState(), ani);
+            content = (HighlightTextView)  mView.findViewById(R.id.network_roaming);
+            content.updateText(mDevice.isRoaming(), ani);
+
+            ani.startAnimation(5000);
         }
     }
 }
