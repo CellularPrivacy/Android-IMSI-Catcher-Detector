@@ -33,7 +33,6 @@ public class Cell implements Parcelable {
     private int psc;                // Primary Scrambling Code
     private int rssi;               // Relative Signal Strength Indicator [dBm, asu etc.]
     private int timingAdvance;      // Timing Advance [LTE,GSM]
-    //private int propagationDelay;  // Propagation Delay [LTE]
     private int sid;                // Cell-ID for [CDMA]
     private long timestamp;         // time
 
@@ -58,9 +57,9 @@ public class Cell implements Parcelable {
         netType = Integer.MAX_VALUE;
         lon = 0.0;
         lat = 0.0;
-        speed = 0.0;        //
-        accuracy = 0.0;     //
-        bearing = 0.0;      //
+        speed = 0.0;
+        accuracy = 0.0;
+        bearing = 0.0;
     }
 
     public Cell() {}
@@ -72,38 +71,40 @@ public class Cell implements Parcelable {
         this.mcc = mcc;
         this.mnc = mnc;
         this.dbm = dbm;
-        rssi = Integer.MAX_VALUE;
+        this.rssi = Integer.MAX_VALUE;
         this.psc = Integer.MAX_VALUE;
         this.timestamp = timestamp;
-        timingAdvance = Integer.MAX_VALUE;
-        sid = Integer.MAX_VALUE;
-        netType = Integer.MAX_VALUE;
-        lon = 0.0;
-        lat = 0.0;
-        speed = 0.0;        //
-        accuracy = 0.0;
-        bearing = 0.0;      //
+        this.timingAdvance = Integer.MAX_VALUE;
+        this.sid = Integer.MAX_VALUE;
+        this.netType = Integer.MAX_VALUE;
+        this.lon = 0.0;
+        this.lat = 0.0;
+        this.speed = 0.0;
+        this.accuracy = 0.0;
+        this.bearing = 0.0;
     }
 
     public Cell(int cid, int lac, int signal, int psc, int netType, boolean dbm) {
         this.cid = cid;
         this.lac = lac;
-        mcc = Integer.MAX_VALUE;
-        mnc = Integer.MAX_VALUE;
+        this.mcc = Integer.MAX_VALUE;
+        this.mnc = Integer.MAX_VALUE;
+
         if (dbm) {
             this.dbm = signal;
         } else {
             this.rssi = signal;
         }
         this.psc = psc;
+
         this.netType = netType;
-        timingAdvance = Integer.MAX_VALUE;
-        sid = Integer.MAX_VALUE;
-        lon = 0.0;
-        lat = 0.0;
-        speed = 0.0;        //
-        accuracy = 0.0;
-        bearing = 0.0;        //
+        this.timingAdvance = Integer.MAX_VALUE;
+        this.sid = Integer.MAX_VALUE;
+        this.lon = 0.0;
+        this.lat = 0.0;
+        this.speed = 0.0;
+        this.accuracy = 0.0;
+        this.bearing = 0.0;
         this.timestamp = SystemClock.currentThreadTimeMillis();
     }
 
@@ -114,12 +115,12 @@ public class Cell implements Parcelable {
         this.mcc = mcc;
         this.mnc = mnc;
         this.dbm = dbm;
-        rssi = Integer.MAX_VALUE;
-        timingAdvance = Integer.MAX_VALUE;
-        sid = Integer.MAX_VALUE;
+        this.rssi = Integer.MAX_VALUE;
+        this.timingAdvance = Integer.MAX_VALUE;
+        this.sid = Integer.MAX_VALUE;
         this.accuracy = accuracy;
-        this.speed = speed;             //
-        this.bearing = bearing;         //
+        this.speed = speed;
+        this.bearing = bearing;
         this.netType = netType;
         this.timestamp = timestamp;
     }
@@ -327,15 +328,6 @@ public class Cell implements Parcelable {
     }
 
     /**
-     * Bearing
-     *
-     * @return Bearing (0.0, 360.0] or 0.0 if unavailable
-     */
-    public double getBearing() {
-        return this.bearing;
-    }
-
-    /**
      * Set current Bearing
      *
      * @param bearing Current bearing
@@ -421,7 +413,8 @@ public class Cell implements Parcelable {
         result = prime * result + lac;
         result = prime * result + mcc;
         result = prime * result + mnc;
-        if (psc != -1) result = prime * result + psc;
+        if (psc != -1)
+            result = prime * result + psc;
         return result;
     }
 
@@ -481,11 +474,9 @@ public class Cell implements Parcelable {
      *
      */
     public static class CellLookUpAsync extends AsyncTask<String, Void, List<Cell>> {
-        public AsyncResponse delegate=null;
+        public AsyncResponse delegate = null;
 
-        private final String TAG = "AIMSICD";
-        private final String mTAG = "Cell";
-
+        private static final String TAG = "CellLookUpAsync";
 
         @Override
         protected List<Cell> doInBackground(String ... urls) {
@@ -513,7 +504,7 @@ public class Cell implements Parcelable {
                 return cells;
 
             } catch (Exception e) {
-                Log.i(TAG, mTAG + ": Cell Lookup: " + e.getMessage());
+                Log.i(TAG, e.getMessage(), e);
                 return null;
             }
         }

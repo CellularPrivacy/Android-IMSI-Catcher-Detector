@@ -361,6 +361,13 @@
     <string name="invalid_key_try_later">Invalid OpenCellId key, try again later.</string>
     <string name="getting_ocid_key">Getting OpenCellId API Key...</string>
 
+    <!-- Advanced user menu -->
+    <string name="deleted">Deleted</string>
+    <string name="failed_to_delete">Failed to delete</string>
+    <string name="double_quote_will_cause_db_error">"String not added\n \" double quote will cause db error "</string>
+    <string name="the_string_was_added_to_db">The string was added to database</string>
+    <string name="failed_to_add_the_string_to_db">Failed to add the string to database</string>
+
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
         <item>@string/ui_icon_sense</item>
