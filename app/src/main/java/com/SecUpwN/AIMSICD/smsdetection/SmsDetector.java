@@ -10,7 +10,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -20,7 +19,6 @@ import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -63,7 +61,6 @@ public class SmsDetector extends Thread {
     private DataOutputStream dos;
     BufferedReader in;
     private AimsicdService mAimsicdService;
-    private SharedPreferences prefs;
     private boolean mBound;
     private AIMSICDDbAdapter dbacess;
     private Context tContext;
@@ -87,7 +84,6 @@ public class SmsDetector extends Thread {
             LOADED_DETECTION_STRINGS[x] = silent_string.get(x).getDetection_string()
                     + "#"+silent_string.get(x).getDetection_type();
         }
-        prefs = newcontext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
     }
 
     public static boolean getSmsDetectionState() {
