@@ -174,7 +174,7 @@ public class SmsDetector extends Thread {
         try{
             in.close();
         }catch (IOException ee){
-            Log.e(TAG, "IOE Errot closing BufferedReader", ee);
+            Log.e(TAG, "IOE Error closing BufferedReader", ee);
         }
 
     }
