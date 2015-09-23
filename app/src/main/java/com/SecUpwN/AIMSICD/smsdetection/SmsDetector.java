@@ -129,9 +129,10 @@ public class SmsDetector extends Thread {
         }
 
         int count =0;
+        String line;
         while (getSmsDetectionState()) {
             try {
-                String line;
+                
                 while ((line = in.readLine()) != null) {
                     //reset to 0 if count bigger then array size
                     if(count >= B_LINED_SIZE){
