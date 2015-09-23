@@ -193,9 +193,6 @@ public class SmsDetector extends Thread {
                     return WAP;
                 }
 
-            }else if(line.contains("BroadcastReceiver action: android.provider.Telephony.SMS_RECEIVED")){
-                Log.i(TAG, "SMS found");
-                return 0;
             }
         }
         return 0;
