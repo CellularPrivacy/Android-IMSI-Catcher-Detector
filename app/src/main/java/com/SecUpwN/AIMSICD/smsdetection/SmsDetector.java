@@ -103,9 +103,9 @@ public class SmsDetector extends Thread {
     public void startSmsDetection() {
         Intent intent = new Intent(tContext, AimsicdService.class);
         tContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-            start();
-            Log.i(TAG, "SMS detection started");
-   }
+        start();
+        Log.i(TAG, "SMS detection started");
+    }
 
     public void stopSmsDetection() {
         setSmsDetectionState(false);
@@ -142,17 +142,16 @@ public class SmsDetector extends Thread {
 
         while (getSmsDetectionState()) {
             try {
-                int bufferlen = dis.available();
 
-                if (bufferlen != 0) {
-                    byte[] b = new byte[bufferlen];
+                int bytestoread = dis.available();
+                if (bytestoread != -1 && bytestoread > 0 ) {
+                    byte[] b = new byte[bytestoread];
                     dis.read(b);
-
                     String split[] = new String(b).split("\n");
                     checkForSilentSms(split);
 
                 } else {
-                    Thread.sleep(1000);
+                    this.sleep(1000);
                 }
 
             } catch (IOException e) {
