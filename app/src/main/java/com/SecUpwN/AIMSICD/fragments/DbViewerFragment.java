@@ -220,12 +220,15 @@ public class DbViewerFragment extends Fragment {
                             = new BaseInflaterAdapter<>(new UniqueBtsCardInflater());
                     int count = tableData.getCount();
                     while (tableData.moveToNext()) {
+                        int isValidPsc = tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC));
+                        String psc = String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC)));
+                        if(isValidPsc > 511){psc = "invalid";}
                         UniqueBtsItemData data = new UniqueBtsItemData(
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_MCC))),   // MCC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_MNC))),   // MNC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC))),   // LAC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_CID))),   // CID
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC))),   // PSC
+                                psc,                                                                                        // PSC
                                 //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_T3212))), // T3212
                                 //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_A5x))),   // A5x
                                 //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_ST_id))), // ST_id
@@ -308,6 +311,9 @@ public class DbViewerFragment extends Fragment {
                         // WARNING! The ORDER and number of these are crucial, and need to correspond
                         // to what's found in:  DbeImportCardInflater.java and DbeImportItemData.java
                         // MUST also correspond to the imported OCID CSV order... ???
+                        int isValidPsc = tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC));
+                        String psc = String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC)));
+                        if(isValidPsc > 511){psc = "invalid";}
                         DbeImportItemData data = new DbeImportItemData(
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_DBSOURCE)),                    // DBsource
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_RAT)),                         // RAT
@@ -315,7 +321,7 @@ public class DbViewerFragment extends Fragment {
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MNC))),            // MNC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_LAC))),            // LAC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_CID))),            // CID
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC))),            // PSC (UMTS only)
+                                psc,                                                                                                    // PSC (UMTS only)
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LAT)),                     // gps_lat
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LON)),                     // gps_lon
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_IS_GPS_EXACT))),   // isGPSexact
@@ -419,12 +425,15 @@ public class DbViewerFragment extends Fragment {
 
                     // WARNING: Must correspond with:  EventLogCardInflater  and  EventLogItemData
                     while (tableData.moveToNext()) {
+                        int isValidPsc = tableData.getInt(tableData.getColumnIndex("PSC"));
+                        String psc = String.valueOf(tableData.getInt(tableData.getColumnIndex("PSC")));
+                        if(isValidPsc > 511){psc = "invalid";}
                         EventLogItemData data = new EventLogItemData(
                                 // Use the trick to automatically converting int/real to strings by adding empty ""s.
                                 "" + tableData.getString(tableData.getColumnIndex("time")),             // time
                                 "" + tableData.getInt(tableData.getColumnIndex("LAC")),                 // LAC
                                 "" + tableData.getInt(tableData.getColumnIndex("CID")),                 // CID
-                                "" + tableData.getInt(tableData.getColumnIndex("PSC")),                 // PSC
+                                "" + psc,                                                                // PSC
                                 "" + tableData.getDouble(tableData.getColumnIndex("gpsd_lat")),         // gpsd_lat
                                 "" + tableData.getDouble(tableData.getColumnIndex("gpsd_lon")),         // gpsd_lon
                                 "" + tableData.getInt(tableData.getColumnIndex("gpsd_accu")),           // gpsd_accu (accuracy in [m])

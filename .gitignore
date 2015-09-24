@@ -65,3 +65,4 @@ signing.properties
 import-summary.txt
 manifest-merger*.txt
 .navigation/
+app/src/main/java/com/SecUpwN/AIMSICD/smsdetection/SmsDetector.java
