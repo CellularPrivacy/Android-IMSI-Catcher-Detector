@@ -316,4 +316,10 @@
 
     <string name="delete_database_msg_success">データベースは正常に削除され、再作成されました。\nメモリ内の古い値をクリアするため、アプリを再起動してください。</string>
 
+    <string name="deleted">削除しました</string>
+    <string name="failed_to_delete">削除に失敗しました</string>
+    <string name="double_quote_will_cause_db_error">"文字列を追加しませんでした\n \" 二重引用符が DB エラーを発生します "</string>
+    <string name="the_string_was_added_to_db">文字列をデータベースに追加しました</string>
+    <string name="failed_to_add_the_string_to_db">文字列をデータベースに追加できませんでした</string>
+
     </resources>
