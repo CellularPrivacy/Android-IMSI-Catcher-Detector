@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Drawer -->
-    <string name="tracking">Repérage</string>
+    <string name="tracking">Tracking</string>
     <string name="device_info">Détails Téléphone/Carte SIM</string>
     <string name="map_view">Carte des Antennes Relai</string>
     <string name="db_viewer">Visionneuse de la Base de Donnée</string>
@@ -34,9 +34,9 @@
     <string name="preferences">Préférences</string>
     <string name="press_once_again_to_exit">Appuyez une seconde fois pour quitter.</string>
     <string name="cell_lookup">Détails sur la/les cellule(s) actuelles</string>
-    <string name="send_logs">Déverminage</string>
+    <string name="send_logs">Debugging</string>
     <string name="no_network_connection_title">Aucune Connexion Internet</string>
-    <string name="no_network_connection_message">Impossible de télécharger les données OpenCellID sans une connexion internet!</string>
+    <string name="no_network_connection_message">Impossible de télécharger les données OpenCellID sans connexion internet!</string>
 
     <!-- MAP VIEWER -->
     <string name="get_opencellid">Télécharger les BTS depuis OpenCellID</string>
@@ -80,8 +80,8 @@
     <string name="aimsicd_about_info3">Projet Basé sur Android conçu pour détecter et éviter les fausses stations de bases (IMSI-Catchers) sur les réseaux GSM/UMTS.</string>
     <string name="about_github">AIMSICD sur GitHub</string>
     <string name="about_wiki">Documentation (WIKI)</string>
-    <string name="about_contribute">CONTRIBUER</string>
-    <string name="about_disclaimer">DISCLAIMER</string>
+    <string name="about_contribute">CONTRIBUTEURS</string>
+    <string name="about_disclaimer">INFOS LÉGALES</string>
     <string name="about_releases">RELEASES</string>
     <string name="about_changelog">CHANGELOG</string>
     <string name="about_license">LICENSE</string>
@@ -202,7 +202,7 @@
 
     <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Plate</string>
-    <string name="ui_icon_sense">Sens</string>
+    <string name="ui_icon_sense">Classique</string>
     <string name="ui_icon_white">Blanche</string>
     <string name="map_type_terrain">Terrain</string>
     <string name="map_type_normal">Normal</string>
@@ -318,7 +318,7 @@
 
     <!-- Section Tracking-->
     <string name="help_tracking_toggle_attack_detection">Démarre/Arrête la surveillance AIMSICD et compare les détails de chaque cellule avec la Base de Donnée.</string>
-    <string name="help_tracking_toggle_cell_tracking">Commencer à localiser les cellules pour l\'affichage sur l\'antenne Map Viewer et peut-être plus tard télécharger sur OCID.</string>
+    <string name="help_tracking_toggle_cell_tracking">Commencer à localiser les cellules pour les afficher sur la carte des antennes, et les envoyer à OpenCellID.</string>
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">paramètres AIMSICD : règles de protection, temps de requètes et comportement du réseau.</string>
@@ -329,7 +329,7 @@
     <string name="help_settings_import_db_from_csv">Importer une table de la Base de Donnée depuis un fichier CSV.</string>
 
     <!-- Section Application-->
-    <string name="help_app_add_get_ocid_api_key">obtenir une clé pour utiliser la base de donnée d\'OpenCellID et pour uploader vos données…</string>
+    <string name="help_app_add_get_ocid_api_key">Obtenir une clé pour utiliser la base de donnée d\'OpenCellID pour uploader vos données…</string>
     <string name="help_app_about">Explication des icônes de statut et du projet.</string>
     <string name="help_app_download_local_bts">Télécharger la Base de Données OpenCellID.</string>
     <string name="help_app_upload_local_bts">Uploader vos BTS vers OpenCellID.</string>
