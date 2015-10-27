@@ -391,4 +391,8 @@
     <string name="getting_ocid_key">Demande d\'une clé OpenCellId...</string>
 
     <string name="restore_database_completed_title">Restauration réussie.</string>
+    <string name="delete_database_msg_success">Base de données supprimée et recréée avec succès.\nVeuillez redémarrer l\'application pour nettoyer les anciennes données de la mémoire.</string>
+
+    <string name="deleted">Supprimé</string>
+    <string name="failed_to_delete">Échec de la suppression</string>
     </resources>
