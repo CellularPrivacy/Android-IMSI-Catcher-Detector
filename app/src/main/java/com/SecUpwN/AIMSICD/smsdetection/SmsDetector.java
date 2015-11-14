@@ -10,7 +10,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -19,99 +18,97 @@ import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
-import java.io.DataInputStream;
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description: Detects mysterious SMS by scraping Logcat entries.
- *
- *
+ * <p/>
+ * <p/>
  * NOTES:   For this to work better Samsung users might have to set their Debug Level to High
- *          in SysDump menu *#9900# or *#*#9900#*#*
- *
- *          This is by no means a complete detection method but gives us something to work off.
- *
- *          For latest list of working phones/models, please see:
- *          https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/532
- *
- *          PHONE:Samsung S5      MODEL:SM-G900F      ANDROID_VER:4.4.2   TYPE0:YES MWI:YES
- *          PHONE:Samsung S4-min  MODEL:GT-I9195      ANDROID_VER:4.2.2   TYPE0:YES MWI:YES
- *          PHONE:Sony Xperia J   MODEL:ST260i        ANDROID_VER:4.1.2   TYPE0:NO  MWI:YES
- *
+ * in SysDump menu *#9900# or *#*#9900#*#*
+ * <p/>
+ * This is by no means a complete detection method but gives us something to work off.
+ * <p/>
+ * For latest list of working phones/models, please see:
+ * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/532
+ * <p/>
+ * PHONE:Samsung S5      MODEL:SM-G900F      ANDROID_VER:4.4.2   TYPE0:YES MWI:YES
+ * PHONE:Samsung S4-min  MODEL:GT-I9195      ANDROID_VER:4.2.2   TYPE0:YES MWI:YES
+ * PHONE:Sony Xperia J   MODEL:ST260i        ANDROID_VER:4.1.2   TYPE0:NO  MWI:YES
+ * <p/>
  * To Use:
+ * <p/>
+ * SmsDetector smsDetector = new SmsDetector(context);
+ * <p/>
+ * smsDetector.startSmsDetection();
+ * smsDetector.stopSmsDetection();
+ * <p/>
+ * <p/>
+ * TODO:
+ * [ ] Add more mTAG to the detection Log items
  *
- *    SmsDetector smsdetector = new SmsDetector(context);
- *
- *    smsdetector.startSmsDetection();
- *    smsdetector.stopSmsDetection();
- *
- *
- *  TODO:
- *          [ ] Add more mTAG to the detection Log items
- *
- *
- *  @author: Paul Kinsella @banjaxbanjo
+ * @author Paul Kinsella @banjaxbanjo
  */
-public class SmsDetector extends Thread {
+public final class SmsDetector extends Thread {
 
     private final static String TAG = "SmsDetector";
 
-    private DataInputStream dis;
-    private DataOutputStream dos;
-    private AimsicdService mAimsicdService;
-    private SharedPreferences prefs;
+    private BufferedReader mLogcatReader;
+    private AimsicdService mAIMSICDService;
     private boolean mBound;
-    private AIMSICDDbAdapter dbacess;
-    private Context tContext;
-    private String[] SILENT_ONLY_TAGS;
+    private AIMSICDDbAdapter mDbAdapter;
+    private Context mContext;
+    private final String[] LOADED_DETECTION_STRINGS;
+    private static final int TYPE0 = 1, MWI = 2, WAP = 3;
+    // TODO: replace this with retrieval from AIMSICDDbAdapter
+    private static final int LOGCAT_BUFFER_MAX_SIZE = 100;
 
     /**
-     *  Holds known values to get the senders number and sms data
+     * To correctly detect sms data and phone numbers on wap, we need at least
+     * 10 lines after line which indicates wap communication
      */
-    private String DETECTION_PHONENUM_SMS_DATA[] = {
-            "SMS originating address:",
-            "SMS message body (raw):",
-            "OrigAddr"};
+    private static final int LOGCAT_WAP_EXTRA_LINES = 10;
 
     private static boolean isRunning = false;
 
-    public SmsDetector(Context newcontext){
-        tContext = newcontext;
-        dbacess =  new AIMSICDDbAdapter(newcontext);
+    public SmsDetector(Context context) {
+        mContext = context;
+        mDbAdapter = new AIMSICDDbAdapter(context);
 
+        ArrayList<AdvanceUserItems> silent_string = mDbAdapter.getDetectionStrings();
 
-        ArrayList<AdvanceUserItems> silent_string = dbacess.getDetectionStrings();
-
-        SILENT_ONLY_TAGS = new String[silent_string.size()];
-        for(int x = 0; x <silent_string.size(); x++) {
-            SILENT_ONLY_TAGS[x] = silent_string.get(x).getDetection_string()
-                    + "#"+silent_string.get(x).getDetection_type();
+        LOADED_DETECTION_STRINGS = new String[silent_string.size()];
+        for (int x = 0; x < silent_string.size(); x++) {
+            LOADED_DETECTION_STRINGS[x] = silent_string.get(x).getDetection_string()
+                    + "#" + silent_string.get(x).getDetection_type();
         }
-        prefs = newcontext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
     }
 
     public static boolean getSmsDetectionState() {
         return isRunning;
     }
 
-    public static void setSmsDetectionState(boolean isrunning) {
-        SmsDetector.isRunning = isrunning;
+    public static void setSmsDetectionState(boolean isRunning) {
+        SmsDetector.isRunning = isRunning;
     }
 
     public void startSmsDetection() {
-        Intent intent = new Intent(tContext, AimsicdService.class);
-        tContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-            start();
-            Log.i(TAG, "SMS detection started");
-   }
+        Intent intent = new Intent(mContext, AimsicdService.class);
+        mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        start();
+        Log.i(TAG, "SMS detection started");
+    }
 
     public void stopSmsDetection() {
         setSmsDetectionState(false);
         // Unbind from the service
         if (mBound) {
-            tContext.unbindService(mConnection);
+            mContext.unbindService(mConnection);
             mBound = false;
         }
         Log.i(TAG, "SMS detection stopped");
@@ -122,379 +119,302 @@ public class SmsDetector extends Thread {
         setSmsDetectionState(true);
 
         try {
-            new Thread().sleep(500);
+            Thread.sleep(500);
 
             String MODE = "logcat -v time -b radio -b main\n";
             Runtime r = Runtime.getRuntime();
             Process process = r.exec("su");
-            dos = new DataOutputStream(process.getOutputStream());
+            DataOutputStream dos = new DataOutputStream(process.getOutputStream());
 
             dos.writeBytes(MODE);
             dos.flush();
             dos.close();
 
-            dis = new DataInputStream(process.getInputStream());
-        } catch (InterruptedException e) {
-            Log.e(TAG, "thread interrupted", e);
-        } catch (IOException e) {
-            Log.e(TAG, "thread interrupted", e);
+            mLogcatReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        } catch (InterruptedException | IOException e) {
+            Log.e(TAG, "Exception while initializing LogCat (time, radio, main) reader", e);
         }
 
+        String logcatLine;
+        List<String> logcatLines = new ArrayList<>();
         while (getSmsDetectionState()) {
             try {
-                int bufferlen = dis.available();
-
-                if (bufferlen != 0) {
-                    byte[] b = new byte[bufferlen];
-                    dis.read(b);
-
-                    String split[] = new String(b).split("\n");
-                    checkForSilentSms(split);
-
-                } else {
+                logcatLine = mLogcatReader.readLine();
+                if (logcatLines.size() >= LOGCAT_BUFFER_MAX_SIZE || logcatLine != null) {
+                    logcatLines.add(logcatLine);
+                } else if (logcatLines.size() == 0) {
+                    /**
+                     * Sleep only when there is no more input, not after going through buffer
+                     * to not unnecessary slow down the process
+                     * */
                     Thread.sleep(1000);
+                } else {
+                    /**
+                     * In moment, where there are no data
+                     * we check the current buffer and clear it
+                     * */
+                    String[] outLines = new String[logcatLines.size()];
+                    logcatLines.toArray(outLines);
+
+                    for (int counter = 0; counter < logcatLines.size(); counter++) {
+                        String bufferedLine = logcatLines.get(counter);
+                        switch (checkForSms(bufferedLine)) {
+                            case TYPE0:
+                                parseTypeZeroSms(outLines, MiscUtils.logcatTimeStampParser(bufferedLine));
+                                break;
+                            case MWI:
+                                parseMwiSms(outLines, MiscUtils.logcatTimeStampParser(bufferedLine));
+                                break;
+                            case WAP:
+                                int remainingLinesInBuffer = logcatLines.size() - counter - LOGCAT_WAP_EXTRA_LINES;
+                                if (remainingLinesInBuffer < 0) {
+                                    /**
+                                     * we need to go forward a few more lines to get data
+                                     * and store it in post buffer array
+                                     * */
+                                    String[] wapPostLines = new String[Math.abs(remainingLinesInBuffer)];
+                                    String extraLine;
+                                    for (int x = 0; x < Math.abs(remainingLinesInBuffer); x++) {
+                                        if ((extraLine = mLogcatReader.readLine()) != null) {
+                                            wapPostLines[x] = extraLine;
+                                        }
+                                    }
+
+                                    /**
+                                     * We'll add the extra lines to logcat buffer, so we don't miss anything
+                                     * on detection cycle continue
+                                     * */
+                                    int insertCounter = logcatLines.size();
+                                    for (String postLine : wapPostLines) {
+                                        logcatLines.add(counter + insertCounter, postLine);
+                                        insertCounter++;
+                                    }
+                                }
+
+                                /**
+                                 * Will readout from LogcatBuffer remaining lines, or next LOGCAT_WAP_EXTRA_LINES lines
+                                 * depending on how many are available
+                                 * */
+                                int availableLines = Math.min(logcatLines.size() - counter - LOGCAT_WAP_EXTRA_LINES, LOGCAT_WAP_EXTRA_LINES);
+                                String[] nextAvailableLines = new String[availableLines];
+                                for (int nextLine = 0; nextLine < availableLines; nextLine++) {
+                                    nextAvailableLines[nextLine] = logcatLines.get(counter + nextLine);
+                                }
+
+                                parseWapPushSms(outLines, nextAvailableLines, MiscUtils.logcatTimeStampParser(bufferedLine));
+                                break;
+                        }
+                        counter++;
+                    }
+
+                    logcatLines.clear();
                 }
 
             } catch (IOException e) {
-                Log.e(TAG, "IOE Stacktrace", e);
+                Log.e(TAG, "IO Exception", e);
             } catch (InterruptedException e) {
-                Log.e(TAG, "IE Exception", e);
+                Log.e(TAG, "Interrupted Exception", e);
             }
+        }
+
+        try {
+            mLogcatReader.close();
+        } catch (IOException ee) {
+            Log.e(TAG, "IOE Error closing BufferedReader", ee);
         }
     }
 
+    private int checkForSms(String line) {
+        //0 - null 1 = TYPE0, 2 = MWI, 3 = WAPPUSH
+        for (String LOADED_DETECTION_STRING : LOADED_DETECTION_STRINGS) {
+            //looping through detection strings to see does logcat line match
+            // memory optimized and precaution for LOADED_DETECTION_STRING being not filled
+            String[] splitDetectionString = LOADED_DETECTION_STRING == null ? null : LOADED_DETECTION_STRING.split("#");
+            if (splitDetectionString == null || splitDetectionString.length < 2 || splitDetectionString[0] == null || splitDetectionString[1] == null) {
+                Log.d(TAG, "Broken detection string: " + LOADED_DETECTION_STRING);
+                // skip broken detection string
+                continue;
+            }
+            if (line.contains(splitDetectionString[0])) {
+                if ("TYPE0".equalsIgnoreCase(splitDetectionString[1])) {
+                    Log.i(TAG, "TYPE0 detected");
+                    return TYPE0;
+                } else if ("MWI".equalsIgnoreCase(splitDetectionString[1])) {
+                    Log.i(TAG, "MWI detected");
+                    return MWI;
+                } else if ("WAPPUSH".equalsIgnoreCase(splitDetectionString[1])) {
+                    Log.i(TAG, "WAPPUSH detected");
+                    return WAP;
+                }
 
-    public void checkForSilentSms(String[] progress){
+            }
+            // This is currently unused, but keeping as an example of possible data contents
+            // else if (line.contains("BroadcastReceiver action: android.provider.Telephony.SMS_RECEIVED")) {
+            // Log.i(TAG, "SMS found");
+            // return 0;
+            // }
+        }
+        return 0;
+    }
 
-        for(int index = 0; index < SILENT_ONLY_TAGS.length; index++) {
+    private void parseTypeZeroSms(String[] bufferLines, String logcat_timestamp) {
 
-            for(int x =0;x <progress.length;x++) {//check all progress buffer for strings
+        CapturedSmsData capturedSms = new CapturedSmsData();
+        String smsText = findSmsData(bufferLines, null);
+        String num = findSmsNumber(bufferLines, null);
 
-                if(progress[x].length() < 250){//check only short strings for faster processing
+        capturedSms.setSenderNumber(num == null ? "null" : num);
+        capturedSms.setSenderMsg(smsText == null ? "null" : num);
+        capturedSms.setSmsTimestamp(logcat_timestamp);
+        capturedSms.setSmsType("TYPE0");
+        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLAC());
+        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCID());
+        capturedSms.setCurrent_nettype(Device.getNetworkTypeName(mAIMSICDService.getCell().getNetType()));
+        int isRoaming = 0;
 
-                    if (progress[x].contains(SILENT_ONLY_TAGS[index].split("#")[0])) {
-                        /* if we get to this loop we detected a known detection string
-                        *  and the next if blocks detect what type of sms it is
-                        * */
+        if ("true".equals(mAIMSICDService.getCellTracker().getDevice().isRoaming())) {
+            isRoaming = 1;
+        }
+        capturedSms.setCurrent_roam_status(isRoaming);
+        capturedSms.setCurrent_gps_lat(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
+        capturedSms.setCurrent_gps_lon(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
 
-                        /*
-                        * saving the logcat timestamp so we can check db if timestamp
-                        * was already saved
-                        * */
-                        String logcat_timestamp = MiscUtils.logcatTimeStampParser(progress[x]);
-                        Log.i(TAG, "TIME::" + logcat_timestamp);
+        // Only alert if the timestamp is not in the data base
+        if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
+            mDbAdapter.storeCapturedSms(capturedSms);
+            mDbAdapter.toEventLog(3, "Detected Type-0 SMS");
+            MiscUtils.startPopUpInfo(mContext, 6);
+        } else {
+            Log.d(TAG, "Detected Sms already logged");
+        }
 
-                        Log.i(TAG, "Detected>>>>" + SILENT_ONLY_TAGS[index].split("#")[1]);
+    }
 
-                        if(SILENT_ONLY_TAGS[index].split("#")[1].equals("TYPE0")) {
+    private void parseMwiSms(String[] logcatLines, String logcat_timestamp) {
 
-                            CapturedSmsData setmsg = new CapturedSmsData();
-                            setmsg.setSenderNumber("unknown");
-                            setmsg.setSenderMsg("no data");
+        CapturedSmsData capturedSms = new CapturedSmsData();
+        String smsText = findSmsData(logcatLines, null);
+        String num = findSmsNumber(logcatLines, null);
 
-                            // Count backward to get the senders number (if any). The senders
-                            // number is usually back about -15 in the array.
-                            int newCount = x - 15;
+        capturedSms.setSenderNumber(num == null ? "null" : num);
+        capturedSms.setSenderMsg(smsText == null ? "null" : smsText);
+        capturedSms.setSmsTimestamp(logcat_timestamp);
+        capturedSms.setSmsType("MWI");
+        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLAC());
+        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCID());
+        capturedSms.setCurrent_nettype(Device.getNetworkTypeName(mAIMSICDService.getCell().getNetType()));
+        int isRoaming = 0;
+        if ("true".equals(mAIMSICDService.getCellTracker().getDevice().isRoaming())) {
+            isRoaming = 1;
+        }
+        capturedSms.setCurrent_roam_status(isRoaming);
+        capturedSms.setCurrent_gps_lat(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
+        capturedSms.setCurrent_gps_lon(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
 
-                            if(newCount > 0) { // Only check if array length is not -minus (if minus we can't count back so skip)
-                                while (newCount < x) {  // Loop through array and try find number and sms data if any
-                                    if (progress[newCount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
-                                        try {
-                                            //Looking for OrigAddr this is where type0 sender number is
-                                            String number = progress[newCount].substring(progress[newCount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
-                                            setmsg.setSenderNumber(number);
-                                        } catch (Exception ee) {
-                                            Log.e(TAG, "Error parsing number", ee);
-                                        }
-                                    }else if (progress[newCount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
-                                        try {
-                                            String smsdata = progress[newCount].substring(
-                                                    progress[newCount].indexOf("'") + 1,
-                                                    progress[newCount].length() - 1);
+        //only alert if timestamp is not in the data base
+        if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
+            mDbAdapter.storeCapturedSms(capturedSms);
+            mDbAdapter.toEventLog(4, "Detected MWI SMS");
+            MiscUtils.startPopUpInfo(mContext, 7);
+        } else {
+            Log.d(TAG, " Detected Sms already logged");
+        }
+    }
 
-                                            setmsg.setSenderMsg(smsdata);
-                                        } catch (Exception ee) {
-                                            Log.e(TAG, "Error parsing SMS data:\n"+ ee.toString(), ee);
-                                        }
-                                    }
-                                    newCount++;
-                                }
-                            }
-                            setmsg.setSmsTimestamp(logcat_timestamp);
-                            setmsg.setSmsType("TYPE0");
-                            setmsg.setCurrent_lac(mAimsicdService.getCellTracker().getMonitorCell().getLAC());
-                            setmsg.setCurrent_cid(mAimsicdService.getCellTracker().getMonitorCell().getCID());
-                            setmsg.setCurrent_nettype(Device.getNetworkTypeName(mAimsicdService.getCell().getNetType()));
-                            int isRoaming = 0;
+    private void parseWapPushSms(String[] logcatLines, String[] postWapMessageLines, String logcat_timestamp) {
+        CapturedSmsData capturedSms = new CapturedSmsData();
+        String smsText = findSmsData(logcatLines, postWapMessageLines);
+        String num = findSmsNumber(logcatLines, postWapMessageLines);
 
-                            if("true".equals(mAimsicdService.getCellTracker().getDevice().isRoaming())) {
-                                isRoaming = 1;
-                            }
-                            setmsg.setCurrent_roam_status(isRoaming);
-                            // TODO is this the right place to get upto date geo location?
-                            setmsg.setCurrent_gps_lat(mAimsicdService.lastKnownLocation().getLatitudeInDegrees());
-                            setmsg.setCurrent_gps_lon(mAimsicdService.lastKnownLocation().getLongitudeInDegrees());
+        capturedSms.setSenderNumber(num == null ? "null" : num);
+        capturedSms.setSenderMsg(smsText == null ? "null" : smsText);
+        capturedSms.setSmsTimestamp(logcat_timestamp);
+        capturedSms.setSmsType("WAPPUSH");
+        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLAC());
+        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCID());
+        capturedSms.setCurrent_nettype(Device.getNetworkTypeName(mAIMSICDService.getCell().getNetType()));
+        int isRoaming = 0;
+        if ("true".equals(mAIMSICDService.getCellTracker().getDevice().isRoaming())) {
+            isRoaming = 1;
+        }
+        capturedSms.setCurrent_roam_status(isRoaming);
+        capturedSms.setCurrent_gps_lat(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
+        capturedSms.setCurrent_gps_lon(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
 
-                            // Only alert if the timestamp is not in the data base
-                            if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
-                                dbacess.storeCapturedSms(setmsg);
-                                /*dbacess.insertEventLog(
-                                        MiscUtils.getCurrentTimeStamp(),
-                                        mAimsicdService.getCellTracker().getMonitorCell().getLAC(),
-                                        mAimsicdService.getCellTracker().getMonitorCell().getCID(),
-                                        mAimsicdService.getCellTracker().getMonitorCell().getPSC(),
-                                        String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
-                                        String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
-                                        (int)mAimsicdService.getCell().getAccuracy(),
-                                        3,
-                                        "Detected Type-0 SMS"
-                                );*/
-                                dbacess.toEventLog(3, "Detected Type-0 SMS");
-                                MiscUtils.startPopUpInfo(tContext, 6);
-                            } else {
-                                Log.d(TAG, "Detected Sms already logged");
-                            }
+        //only alert if timestamp is not in the data base
+        if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
+            mDbAdapter.storeCapturedSms(capturedSms);
+            mDbAdapter.toEventLog(6, "Detected WAPPUSH SMS");
+            MiscUtils.startPopUpInfo(mContext, 8);
+        } else {
+            Log.d(TAG, "Detected SMS already logged");
+        }
+    }
 
-
-                        }else if("MWI".equals(SILENT_ONLY_TAGS[index].split("#")[1].trim())) {
-                            Log.i(TAG, "MWI DETECTED");
-                            CapturedSmsData setmsg = new CapturedSmsData();
-                            setmsg.setSenderNumber("unknown");
-                            setmsg.setSenderMsg("no data");
-                            int newCount = x - 15;
-
-                            //only check if array length is not -minus
-                            if(newCount > 0) {
-                                while (newCount < x) {
-                                    if (progress[newCount].contains(DETECTION_PHONENUM_SMS_DATA[0].toString())) {
-
-                                        // This first try usually has the number of the sender
-                                        // and second try is just there incase OrigAddr string shows.
-                                        try {
-                                            String number = progress[newCount].substring(progress[newCount].indexOf("+"));
-                                            setmsg.setSenderNumber(number);
-                                        } catch (Exception ee) {
-                                            Log.e(TAG, "Error parsing number", ee);
-                                        }
-                                    }else if (progress[newCount].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
-                                        try {
-                                            //Looking for OrigAddr this is where sender number is
-                                            String number = progress[newCount].substring(progress[newCount].indexOf("OrigAddr")).replace(DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
-                                            setmsg.setSenderNumber(number);
-                                        } catch (Exception ee) {
-                                            Log.e(TAG, "Error parsing number:"+ ee.getMessage(), ee);
-                                        }
-                                    } else if (progress[newCount].contains(DETECTION_PHONENUM_SMS_DATA[1].toString())) {
-                                        try {
-                                            String smsData = progress[newCount].substring(
-                                                    progress[newCount].indexOf("'") + 1,
-                                                    progress[newCount].length() - 1);
-
-                                            setmsg.setSenderMsg(smsData);
-                                        } catch (Exception ee) {
-                                            Log.e(TAG, "Error parsing SMS data" + ee.getMessage(), ee);
-                                        }
-                                    }
-                                    newCount++;
-                                }
-                            }
-
-                            setmsg.setSmsTimestamp(logcat_timestamp);
-                            setmsg.setSmsType("MWI");
-                            setmsg.setCurrent_lac(mAimsicdService.getCellTracker().getMonitorCell().getLAC());
-                            setmsg.setCurrent_cid(mAimsicdService.getCellTracker().getMonitorCell().getCID());
-                            setmsg.setCurrent_nettype(Device.getNetworkTypeName(mAimsicdService.getCell().getNetType()));
-                            int isRoaming = 0;
-                            if("true".equals(mAimsicdService.getCellTracker().getDevice().isRoaming())) {
-                                isRoaming = 1;
-                            }
-                            setmsg.setCurrent_roam_status(isRoaming);
-                            //TODO is this the right place to get upto date geo location?
-                            setmsg.setCurrent_gps_lat(mAimsicdService.lastKnownLocation().getLatitudeInDegrees());
-                            setmsg.setCurrent_gps_lon(mAimsicdService.lastKnownLocation().getLongitudeInDegrees());
-
-                            //only alert if timestamp is not in the data base
-
-                            if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
-                                dbacess.storeCapturedSms(setmsg);
-
-                                /*dbacess.insertEventLog(
-                                        MiscUtils.getCurrentTimeStamp(),
-                                        mAimsicdService.getCellTracker().getMonitorCell().getLAC(),
-                                        mAimsicdService.getCellTracker().getMonitorCell().getCID(),
-                                        mAimsicdService.getCellTracker().getMonitorCell().getPSC(),
-                                        String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
-                                        String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
-                                        (int)mAimsicdService.getCell().getAccuracy(),
-                                        3,//TODO what are the DF_ids? 1 = changing lac 2 = cell no in OCID 3 = detected sms?
-                                        "Detected MWI sms"
-                                );*/
-                                dbacess.toEventLog(4,"Detected MWI SMS");
-                                MiscUtils.startPopUpInfo(tContext, 7);
-                            } else {
-                                Log.d(TAG, " Detected Sms already logged");
-                            }
-
-                        } else if("WAPPUSH".equals(SILENT_ONLY_TAGS[index].split("#")[1].trim())) {
-                            /*
-                                Wap Push in logcat shows no data only senders number
-                                TODO: data is probably in db content://raw/1?
-                             */
-                            CapturedSmsData setmsg = new CapturedSmsData();
-                            setmsg.setSenderNumber("unknown");
-                            setmsg.setSenderMsg("no data");
-
-                            int startindex = x - 2;
-                            int endindex = x + 3;
-                            /*  wap push port DestPort 0x0B84
-                             *  its usually at this index of +3 in array                             *
-                              * */
-                            //This is index on Samsungs is different for other phone makes
-                            if (progress[x + 3].contains("DestPort 0x0B84")) {
-                                Log.d(TAG, "WAPPUSH DETECTED");
-                                /* loop thru array to find number */
-                                if (endindex+3 <= progress.length) {
-                                    while (startindex < endindex)
-                                    {
-                                        if (progress[startindex].contains(DETECTION_PHONENUM_SMS_DATA[2].toString())) {
-                                            try {
-                                                // Looking for OrigAddr this is where sender number is
-                                                String number = progress[startindex].substring(
-                                                        progress[startindex].indexOf("OrigAddr")).replace(
-                                                        DETECTION_PHONENUM_SMS_DATA[2].toString(), "").trim();
-
-                                                setmsg.setSenderNumber(number);
-                                                break;
-                                            } catch (Exception ee) {
-                                                Log.e(TAG, "Error parsing number", ee);
-                                            }
-
-                                        }
-                                        startindex++;
-
-                                    }
-                                }
-
-                                setmsg.setSmsTimestamp(logcat_timestamp);
-                                setmsg.setSmsType("WAPPUSH");
-                                setmsg.setCurrent_lac(mAimsicdService.getCellTracker().getMonitorCell().getLAC());
-                                setmsg.setCurrent_cid(mAimsicdService.getCellTracker().getMonitorCell().getCID());
-                                setmsg.setCurrent_nettype(Device.getNetworkTypeName(mAimsicdService.getCell().getNetType()));
-                                int isRoaming = 0;
-                                if("true".equals(mAimsicdService.getCellTracker().getDevice().isRoaming())){
-                                    isRoaming = 1;
-                                }
-                                setmsg.setCurrent_roam_status(isRoaming);
-                                //TODO is this the right place to get upto date geo location?
-                                setmsg.setCurrent_gps_lat(mAimsicdService.lastKnownLocation().getLatitudeInDegrees());
-                                setmsg.setCurrent_gps_lon(mAimsicdService.lastKnownLocation().getLongitudeInDegrees());
-
-                                //only alert if timestamp is not in the data base
-
-                                if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
-                                    dbacess.storeCapturedSms(setmsg);
-
-                                    /*dbacess.insertEventLog(
-                                            MiscUtils.getCurrentTimeStamp(),
-                                            mAimsicdService.getCellTracker().getMonitorCell().getLAC(),
-                                            mAimsicdService.getCellTracker().getMonitorCell().getCID(),
-                                            mAimsicdService.getCellTracker().getMonitorCell().getPSC(),
-                                            String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
-                                            String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
-                                            (int)mAimsicdService.getCell().getAccuracy(),
-                                            3,
-                                            "Detected WAP PUSH sms"
-                                    );*/
-                                    dbacess.toEventLog(5, "Detected WAP PUSH SMS");
-                                    MiscUtils.startPopUpInfo(tContext, 8);
-                                } else {
-                                    Log.d(TAG, "Detected Sms already logged");
-                                }
-
-                            }// end of if contains("DestPort 0x0B84")
-
-                            //This is index on Samsung's is different for other phone makes
-                            else if (progress[x-1].contains("SMS originating address:")) {
-                                Log.i(TAG, "WAPPUSH DETECTED");
-                                /* loop thru array to find number */
-                                endindex = x+3;
-                                startindex = x-3;
-
-                                if (endindex <= progress.length) {
-                                    while (startindex < endindex)
-                                    {
-                                        if (progress[startindex].contains("SMS originating address:")) {
-                                            try {
-                                                String number = progress[startindex].substring(progress[startindex].indexOf("+"));
-                                                setmsg.setSenderNumber(number);
-                                            } catch (Exception ee) {
-                                                Log.e(TAG, "Error parsing number "+ ee.toString());
-                                            }
-
-                                        }
-                                        if (progress[startindex].contains("SMS SC address:")) {
-                                            try {
-                                                String number = progress[startindex].substring(progress[startindex].indexOf("+"));
-                                                Log.d(TAG, "Detected msg smsc: " + number);
-                                            } catch (Exception ee) {
-                                                Log.e(TAG, "Error parsing smsc number: " + ee.toString());
-                                            }
-
-                                        }
-                                        startindex++;
-
-                                    }
-                                }
-
-                                setmsg.setSmsTimestamp(logcat_timestamp);
-                                setmsg.setSmsType("WAPPUSH");
-                                setmsg.setCurrent_lac(mAimsicdService.getCellTracker().getMonitorCell().getLAC());
-                                setmsg.setCurrent_cid(mAimsicdService.getCellTracker().getMonitorCell().getCID());
-                                setmsg.setCurrent_nettype(Device.getNetworkTypeName(mAimsicdService.getCell().getNetType()));
-                                int isRoaming = 0;
-                                if("true".equals(mAimsicdService.getCellTracker().getDevice().isRoaming())) {
-                                    isRoaming = 1;
-                                }
-                                setmsg.setCurrent_roam_status(isRoaming);
-                                //TODO is this the right place to get upto date geo location?
-                                setmsg.setCurrent_gps_lat(mAimsicdService.lastKnownLocation().getLatitudeInDegrees());
-                                setmsg.setCurrent_gps_lon(mAimsicdService.lastKnownLocation().getLongitudeInDegrees());
-
-                                //only alert if timestamp is not in the data base
-                                if(!dbacess.isTimeStampInDB(logcat_timestamp)) {
-                                    dbacess.storeCapturedSms(setmsg);
-
-                                    /*dbacess.insertEventLog(
-                                    MiscUtils.getCurrentTimeStamp(),
-                                            mAimsicdService.getCellTracker().getMonitorCell().getLAC(),
-                                            mAimsicdService.getCellTracker().getMonitorCell().getCID(),
-                                            mAimsicdService.getCellTracker().getMonitorCell().getPSC(),
-                                            String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
-                                            String.valueOf(mAimsicdService.lastKnownLocation().getLatitudeInDegrees()),
-                                            (int)mAimsicdService.getCell().getAccuracy(),
-                                            3,
-                                            "Detected WAP PUSH sms"
-                                    );*/
-                                    dbacess.toEventLog(6, "Detected WAP PUSH (2) SMS");
-                                    MiscUtils.startPopUpInfo(tContext, 8);
-                                } else {
-                                    Log.d(TAG, "Detected SMS already logged");
-                                }
-
-                            }// end of if contains("SMS originating address:")
+    private String findSmsData(String[] preBuffer, String[] postBuffer) {
+        //check pre buffer for number and sms msg
+        if (preBuffer != null) {
+            for (String preBufferLine : preBuffer) {
+                if (preBufferLine != null) {
+                    if (preBufferLine.contains("SMS message body (raw):") && preBufferLine.contains("'")) {
+                        preBufferLine = preBufferLine.substring(preBufferLine.indexOf("'") + 1,
+                                preBufferLine.length() - 1);
+                        return preBufferLine;
+                    }
+                }
+            }
+            //check post buffer for number and sms msg
+            if (postBuffer != null) {
+                for (int x = 0; x < postBuffer.length; x++) {
+                    if (postBuffer[x] != null) {
+                        String testLine = preBuffer[x];
+                        if (testLine.contains("SMS message body (raw):") && testLine.contains("'")) {
+                            testLine = testLine.substring(testLine.indexOf("'") + 1,
+                                    testLine.length() - 1);
+                            return testLine;
                         }
-                        break;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private String findSmsNumber(String[] preBuffer, String[] postBuffer) {
+        //check pre buffer for number and sms msg
+        if (preBuffer != null) {
+            for (String preBufferLine : preBuffer) {
+                if (preBufferLine != null) {
+                    if (preBufferLine.contains("SMS originating address:") && preBufferLine.contains("+")) {
+                        return preBufferLine.substring(preBufferLine.indexOf("+"));
+                    } else if (preBufferLine.contains("OrigAddr")) {
+                        preBufferLine = preBufferLine.substring(preBufferLine.indexOf("OrigAddr")).replace("OrigAddr", "").trim();
+                        return preBufferLine;
+                    }
+                }
+            }
+        }
+        //check post buffer for number and sms msg
+        if (postBuffer != null) {
+            for (String postBufferLine : postBuffer) {
+                if (postBufferLine != null) {
+                    if (postBufferLine.contains("SMS originating address:") && postBufferLine.contains("+")) {
+                        return postBufferLine.substring(postBufferLine.indexOf("+"));
+                    } else if (postBufferLine.contains("OrigAddr")) {
+                        postBufferLine = postBufferLine.substring(postBufferLine.indexOf("OrigAddr")).replace("OrigAddr", "").trim();
+                        return postBufferLine;
                     }
                 }
             }
 
         }
+        return null;
     }
 
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
+            mAIMSICDService = ((AimsicdService.AimscidBinder) service).getService();
             mBound = true;
         }
 
