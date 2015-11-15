@@ -113,6 +113,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private boolean mChangedLAC;
     private boolean mCellIdNotInOpenDb;
     private boolean mTypeZeroSmsDetected;
+    private boolean mVibrateEnabled;
+    private int mVibrateMinThreatLevel;
     private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
 
     private final AIMSICDDbAdapter dbHelper;
@@ -286,6 +288,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         final String REFRESH = context.getString(R.string.pref_refresh_key);
         final String DB_VERSION = context.getString(R.string.pref_last_database_backup_version);
         final String OCID_KEY = context.getString(R.string.pref_ocid_key);
+        final String VIBRATE_ENABLE = context.getString(R.string.pref_notification_vibrate_enable);
+        final String VIBRATE_MIN_LEVEL = context.getString(R.string.pref_notification_vibrate_min_level);
 
         if (key.equals(KEY_UI_ICONS)) {
             // Update Notification to display selected icon type
@@ -318,6 +322,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             LAST_DB_BACKUP_VERSION = sharedPreferences.getInt(DB_VERSION, 1);
         } else if (key.equals(OCID_KEY)) {
             getOcidKey();
+        } else if (key.equals(VIBRATE_ENABLE)) {
+            mVibrateEnabled = sharedPreferences.getBoolean(VIBRATE_ENABLE, true);
+        } else if (key.equals(VIBRATE_MIN_LEVEL)) {
+            mVibrateMinThreatLevel = Integer.valueOf(sharedPreferences.getString(VIBRATE_MIN_LEVEL, String.valueOf(Status.Type.MEDIUM.level)));
         }
     }
 
@@ -465,11 +473,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 Log.d(TAG, "Setting nc_list_present to: true");
                 tinydb.putBoolean("nc_list_present", true);
             }
-        } else if ( ncls == 0 && nclp )  {
+        } else if (ncls == 0 && nclp) {
             // Detection 7a
-            Log.i(TAG, "ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID() );
-            Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
-            v.vibrate(100); // Vibrate for 100 ms
+            Log.i(TAG, "ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID());
+            vibrate(100, Status.Type.MEDIUM);
             dbHelper.toEventLog(4,"No neighboring cells detected"); // (DF_id, DF_desc)
         } else  {
             // Todo: remove cid string when working.
@@ -549,8 +556,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         dbHelper.toEventLog(1, "Changing LAC");
 
                         // Detection Logs are made in checkLAC()
-                        Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
-                        v.vibrate(100); // Vibrate for 100 ms
+                        vibrate(100, Status.Type.MEDIUM);
                         setNotification();
 
                     } else {
@@ -563,8 +569,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             dbHelper.toEventLog(2, "CID not in DBe_import");
 
                             Log.i(TAG, "ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
-                            Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
-                            v.vibrate(100); // Vibrate for 100 ms
+                            vibrate(100, Status.Type.MEDIUM);
 
                             mCellIdNotInOpenDb = true;
                             setNotification();
@@ -640,9 +645,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         boolean trackCellPref   = prefs.getBoolean(context.getString(R.string.pref_enable_cell_key), true);
         boolean monitorCellPref = prefs.getBoolean(context.getString(R.string.pref_enable_cell_monitoring_key), true);
 
-        LAST_DB_BACKUP_VERSION  = prefs.getInt(context.getString(R.string.pref_last_database_backup_version), 1);
-        CELL_TABLE_CLEANSED     = prefs.getBoolean(context.getString(R.string.pref_cell_table_cleansed), false);
-        String refreshRate      = prefs.getString(context.getString(R.string.pref_refresh_key), "1");
+        LAST_DB_BACKUP_VERSION      = prefs.getInt(context.getString(R.string.pref_last_database_backup_version), 1);
+        CELL_TABLE_CLEANSED         = prefs.getBoolean(context.getString(R.string.pref_cell_table_cleansed), false);
+        String refreshRate = prefs.getString(context.getString(R.string.pref_refresh_key), "1");
+        this.mVibrateEnabled = prefs.getBoolean(context.getString(R.string.pref_notification_vibrate_enable), true);
+        this.mVibrateMinThreatLevel = Integer.valueOf(prefs.getString(context.getString(R.string.pref_notification_vibrate_min_level), String.valueOf(Status.Type.MEDIUM.level)));
 
         // Default to Automatic ("1")
         if (refreshRate.isEmpty()) {
@@ -1001,15 +1008,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         String contentText = "Phone Type " + mDevice.getPhoneType();
 
         if (mFemtoDetected || mTypeZeroSmsDetected) {
-            Status.setCurrentStatus(Status.Type.ALARM, this.context);
+            Status.setCurrentStatus(Status.Type.ALARM, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
         } else if (mChangedLAC) {
-            Status.setCurrentStatus(Status.Type.MEDIUM, this.context);
+            Status.setCurrentStatus(Status.Type.MEDIUM, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
             contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
         } else if(mCellIdNotInOpenDb){
-            Status.setCurrentStatus(Status.Type.MEDIUM, this.context);
+            Status.setCurrentStatus(Status.Type.MEDIUM, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
             contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
         } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
-            Status.setCurrentStatus(Status.Type.NORMAL, this.context);
+            Status.setCurrentStatus(Status.Type.NORMAL, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
             if (mTrackingFemtocell) {
                 contentText = context.getString(R.string.femtocell_detection_active);
             } else if (mTrackingCell) {
@@ -1018,7 +1025,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 contentText = context.getString(R.string.cell_monitoring_active);
             }
         } else {
-            Status.setCurrentStatus(Status.Type.IDLE, this.context);
+            Status.setCurrentStatus(Status.Type.IDLE, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
         }
 
         switch (Status.getStatus()) {
@@ -1090,8 +1097,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
     }
 
-
-
+    /**
+     * Vibrator helper method, will check current preferences (vibrator enabled, min threat level to vibrate)
+     * and act appropriately
+     * */
+    private void vibrate(int msec, Status.Type threatLevel) {
+        if (mVibrateEnabled && (threatLevel == null || threatLevel.level >= mVibrateMinThreatLevel)) {
+            Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(msec);
+        }
+    }
 
 //=================================================================================================
 // TODO: Consider REMOVAL!   See issues: #6, #457, #489
