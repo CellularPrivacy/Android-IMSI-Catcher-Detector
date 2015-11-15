@@ -57,6 +57,25 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="pref_key_notification_settings"
+        android:title="@string/pref_notification_settings">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_notification_vibrate_enable"
+            android:title="@string/pref_notification_vibrate_enable_title"
+            android:summary="@string/pref_notification_vibrate_enable_summary"/>
+        <ListPreference
+            android:defaultValue="2"
+            android:key="@string/pref_notification_vibrate_min_level"
+            android:title="@string/pref_notification_vibrate_min_level_title"
+            android:dialogTitle="@string/pref_notification_vibrate_min_level_title"
+            android:entries="@array/pref_notification_vibrate_min_level_entries"
+            android:entryValues="@array/pref_notification_vibrate_level"
+            android:dependency="pref_notification_vibrate_enable"
+            android:summary="@string/pref_notification_vibrate_min_level_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="pref_key_ui_settings"
         android:title="@string/pref_ui_title">
         <ListPreference

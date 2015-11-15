@@ -2,16 +2,19 @@ package com.SecUpwN.AIMSICD.adapters;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseArray;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.smsdetection.AdvanceUserItems;
@@ -19,6 +22,7 @@ import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
 import com.SecUpwN.AIMSICD.utils.CMDProcessor;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
+import com.SecUpwN.AIMSICD.utils.Status;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -138,10 +142,12 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
     private String[] mTables;
     private SQLiteDatabase mDb;
     private Context mContext;
+    private SharedPreferences mPreferences;
 
     public AIMSICDDbAdapter(Context context) {
         super(context, DB_NAME, null, 1);
         mContext = context;
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         FOLDER = mContext.getExternalFilesDir(null) + File.separator;
         //e.g. /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/
 
@@ -2161,9 +2167,17 @@ public class AIMSICDDbAdapter extends SQLiteOpenHelper{
 
                 mDb.insert("EventLog", null, eventLog);
                 Log.i(TAG, "ToEventLog(): Added new event: id=" + DF_id + " time=" + time + " cid=" + cid);
+
                 // Short 100 ms Vibration
-                Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-                v.vibrate(100);
+                // TODO not elegant solution, vibrator invocation should be moved somewhere else imho
+                boolean vibrationEnabled = mPreferences.getBoolean(mContext.getString(R.string.pref_notification_vibrate_enable), true);
+                int thresholdLevel = Integer.valueOf(mPreferences.getString(mContext.getString(R.string.pref_notification_vibrate_min_level), String.valueOf(Status.Type.MEDIUM.level)));
+                boolean higherLevelThanThreshold = Status.Type.MEDIUM.level <= thresholdLevel;
+
+                if (vibrationEnabled && higherLevelThanThreshold) {
+                    Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                    v.vibrate(100);
+                }
 
                 // Short sound:
                 // TODO see issue #15
