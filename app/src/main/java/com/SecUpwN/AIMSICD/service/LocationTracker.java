@@ -24,7 +24,7 @@ import com.SecUpwN.AIMSICD.utils.TruncatedLocation;
 /**
  * Class to handle GPS location tracking
  */
-public class LocationTracker {
+public final class LocationTracker {
 
     private static final String TAG = "LocationTracker";
     // how long with no movement detected, before we assume we are not moving
@@ -88,7 +88,7 @@ public class LocationTracker {
     /**
      * Check if we are moving, using last known GPS locations
      *
-     * @return
+     * @return true if user has not moved in a while
      */
     public boolean notMovedInAWhile() {
         // first-lock, assume no movement
@@ -149,7 +149,7 @@ public class LocationTracker {
      * Our location listener, so that we can update our internal status before passing on the events
      * to the caller
      */
-    private class MyLocationListener implements LocationListener {
+    private final class MyLocationListener implements LocationListener {
 
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Override
@@ -161,6 +161,7 @@ public class LocationTracker {
                 return;
             }
 
+            lastLocation = loc;
             lastLocationTime = System.currentTimeMillis();
             extLocationListener.onLocationChanged(loc);
         }
