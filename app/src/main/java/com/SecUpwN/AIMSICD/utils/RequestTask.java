@@ -388,7 +388,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     if(lActivity != null) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
                         builder.setTitle(R.string.database_export_successful).setMessage(
-                                lActivity.getString(R.string.database_backup_successfully_saved_to) + "\n" + AIMSICDDbAdapter.FOLDER);
+                                lActivity.getString(R.string.database_backup_successfully_saved_to) + "\n" + AIMSICDDbAdapter.mExternalFilesDirPath);
                         builder.create().show();
                     }
                 } else {

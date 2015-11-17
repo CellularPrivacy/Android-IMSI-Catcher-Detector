@@ -91,7 +91,7 @@ public class CommandResult implements Parcelable {
             String lineEnding = System.getProperty("line.separator");
             FileWriter errorWriter = null;
             try {
-                File errorLogFile = new File(AIMSICDDbAdapter.FOLDER + "error.txt");
+                File errorLogFile = new File(AIMSICDDbAdapter.mExternalFilesDirPath + "error.txt");
                 if (!errorLogFile.exists()) {
                     errorLogFile.createNewFile();
                 }
