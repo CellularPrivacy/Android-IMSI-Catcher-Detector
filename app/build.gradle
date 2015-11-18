@@ -87,6 +87,7 @@ android {
     }
 
     lintOptions {
+        disable 'MissingTranslation'
         abortOnError false
     }
 
