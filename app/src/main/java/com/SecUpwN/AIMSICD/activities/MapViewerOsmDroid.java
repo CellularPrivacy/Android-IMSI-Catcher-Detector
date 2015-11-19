@@ -636,7 +636,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
             }
         }
     }
-    
+
     public void onStop() {
         super.onStop();
         ((AppAIMSICD) getApplication()).detach(this);
@@ -653,7 +653,7 @@ public class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenc
 
     private void loadUserDefinedCoordinates() {
         // TODO: 02.09.2015 load coordinates from database
-        // use createUserDefinedMarker to
+        // use addUserDefinedMarkerToMap(createUserDefinedMarker(...)) to create and add markers to map
     }
 
     private void saveUserDefinedCoordinates(GeoPoint coordinates) {
