@@ -25,13 +25,15 @@ import java.io.IOException;
  *
  */
 public class TtyPrivFile extends TtyStream {
-    protected Process mReadProc, mWriteProc;
+
+    protected Process mReadProc;
+    protected Process mWriteProc;
 
     public TtyPrivFile(String ttyPath) throws IOException {
         // TODO robustify su detection?
         this(
-                new ProcessBuilder("su", "-c", "\\exec cat <" + ttyPath).start(),
-                new ProcessBuilder("su", "-c", "\\exec cat >" + ttyPath).start()
+            new ProcessBuilder("su", "-c", "\\exec cat <" + ttyPath).start(),
+            new ProcessBuilder("su", "-c", "\\exec cat >" + ttyPath).start()
         );
     }
 
@@ -52,7 +54,7 @@ public class TtyPrivFile extends TtyStream {
             mOutputStream.write("ATE0\r".getBytes("ASCII"));// disable local Echo
             mOutputStream.flush();
         } catch (IOException e) {
-            // ignore and hope it exits
+            Log.e(TAG, "moutputstream didnt close", e);
         }
         mReadProc.destroy();
         mWriteProc.destroy();

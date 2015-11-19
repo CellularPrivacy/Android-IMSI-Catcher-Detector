@@ -23,6 +23,8 @@
     <string name="pref_refresh_key" translatable="false">pref_refresh_key</string>
     <string name="pref_femto_detection_key" translatable="false">pref_femto_detection_key</string>
     <string name="pref_ui_icons_key" translatable="false">pref_ui_icons_key</string>
+    <string name="pref_notification_vibrate_enable" translatable="false">pref_notification_vibrate_enable</string>
+    <string name="pref_notification_vibrate_min_level" translatable="false">pref_notification_vibrate_min_level</string>
     <string name="pref_ocid_key" translatable="false">pref_ocid_key</string>
     <string name="pref_autostart_key" translatable="false">pref_autostart</string>
     <string name="disclaimer_accepted" translatable="false">disclaimer_accepted</string>
@@ -41,6 +43,13 @@
         <item>"flat"</item>
         <item>"sense"</item>
         <item>"white"</item>
+    </string-array>
+
+    <string-array name="pref_notification_vibrate_level" translatable="false">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
     </string-array>
 
     <string-array name="pref_map_type_values" translatable="false">

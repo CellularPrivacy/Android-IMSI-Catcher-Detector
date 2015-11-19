@@ -109,6 +109,7 @@
     <string name="pref_persistservice_title">Persistent Service</string>
     <string name="pref_persistservice_summ">Service will continue to run after exiting the application (uncheck to fully close)</string>
     <string name="pref_protection_title">Protection Settings</string>
+    <string name="pref_notification_settings">Notification Settings</string>
     <string name="pref_enable_cell_title">Cell Tracking</string>
     <string name="pref_enable_cell_summ">Enable Automatic Cell Tracking</string>
     <string name="pref_femto_title">Femtocell Detection</string>
@@ -198,6 +199,16 @@
     <string name="open_cell_id_button_cancel">Cancel</string>
     <string name="open_cell_id_button_ok">OK</string>
 
+    <!-- Vibration Preference -->
+    <string name="pref_notification_vibrate_enable_title">Enable Vibration</string>
+    <string name="pref_notification_vibrate_enable_summary">Vibrate when notification changes</string>
+    <string name="pref_notification_vibrate_min_level_title">Vibrate on threat level</string>
+    <string name="pref_notification_vibrate_min_level_summary">Select minimum threat level to vibrate on</string>
+    <string name="notification_vibrate_idle">Idle</string>
+    <string name="notification_vibrate_normal">Normal</string>
+    <string name="notification_vibrate_medium">Medium</string>
+    <string name="notification_vibrate_alarm">Alarm</string>
+    
     <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Flat</string>
     <string name="ui_icon_sense">Sense</string>
@@ -361,10 +372,24 @@
     <string name="invalid_key_try_later">Invalid OpenCellId key, try again later.</string>
     <string name="getting_ocid_key">Getting OpenCellId API Key...</string>
 
+    <!-- Advanced user menu -->
+    <string name="deleted">Deleted</string>
+    <string name="failed_to_delete">Failed to delete</string>
+    <string name="double_quote_will_cause_db_error">"String not added\n \" double quote will cause db error "</string>
+    <string name="the_string_was_added_to_db">The string was added to database</string>
+    <string name="failed_to_add_the_string_to_db">Failed to add the string to database</string>
+
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
         <item>@string/ui_icon_sense</item>
         <item>@string/ui_icon_white</item>
+    </string-array>
+
+    <string-array name="pref_notification_vibrate_min_level_entries">
+        <item>@string/notification_vibrate_idle</item>
+        <item>@string/notification_vibrate_normal</item>
+        <item>@string/notification_vibrate_medium</item>
+        <item>@string/notification_vibrate_alarm</item>
     </string-array>
 
     <string-array name="pref_map_type_entries">

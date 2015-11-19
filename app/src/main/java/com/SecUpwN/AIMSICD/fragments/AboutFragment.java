@@ -13,41 +13,46 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.BuildConfig;
+import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 public class AboutFragment extends Fragment {
 
+    private static final String TAG = "Aboutfragment";
     private Context mContext;
     private Button btncredits;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.about_fragment, container, false);
         String version;
-        String BUILDOZER_BUILDNUMBER;
+
         btncredits = (Button) v.findViewById(R.id.aimsicd_credits_link);
 
         PackageManager manager = mContext.getPackageManager();
         try {
             PackageInfo info = manager != null ? manager
                     .getPackageInfo(mContext.getPackageName(), 0) : null;
-            version = info != null ? info.versionName : "";
-        } catch (PackageManager.NameNotFoundException nnfe) {
-            //Woops something went wrong??
+            version = (info != null ? info.versionName : "");
+        } catch (PackageManager.NameNotFoundException e) {
+            //Woops something went wrong?? // so what do we do then?
+            // YES!! LOG THE EXCEPTION ~agilob
+            Log.e(TAG, "Something went wrong", e);
             version = "";
         }
-        
-        BUILDOZER_BUILDNUMBER = BuildConfig.BUILDOZER_BUILDNUMBER;
+
+        String BUILDOZER_BUILDNUMBER = BuildConfig.BUILDOZER_BUILDNUMBER;
         if (BUILDOZER_BUILDNUMBER == null) {
             BUILDOZER_BUILDNUMBER = "NA"; // avoid null buildnumber
         }
@@ -58,18 +63,14 @@ public class AboutFragment extends Fragment {
             versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
             versionNumber.setText(getString(R.string.app_version) + version);
 
-            if(BUILDOZER_BUILDNUMBER != "NA") {
+            if(!"NA".equals(BUILDOZER_BUILDNUMBER)) {
                 BuildozerView = (TextView) v.findViewById(R.id.buildozer_buildnumber);
                 BuildozerView.setText(getString(R.string.buildozer_buildnumber) + BUILDOZER_BUILDNUMBER);
                 BuildozerView.setVisibility(View.VISIBLE);
             }
 
-            //Status icons link
-            View tv = v.findViewById(R.id.aimsicd_status_icons);
-            //setLink(tv, R.string.status_icons_link);
-
             //GitHub WIKI Link
-            tv = v.findViewById(R.id.aimsicd_wiki_link);
+            View tv = v.findViewById(R.id.aimsicd_wiki_link);
             setLink(tv, R.string.aimsicd_wiki_link);
 
             //GitHub Website Link
@@ -84,11 +85,6 @@ public class AboutFragment extends Fragment {
             tv = v.findViewById(R.id.aimsicd_contribute_link);
             setLink(tv, R.string.aimsicd_contribute_link);
 
-            //XDA Development Thread Link
-//            tv = (TextView) v.findViewById(R.id.aimsicd_visit_xda_link);
-//            tv.setMovementMethod(LinkMovementMethod.getInstance());
-//            tv.setText(Html.fromHtml(getResources().getString(R.string.aimsicd_xda_link)));
-
             //WIP Release Link
             tv = v.findViewById(R.id.aimsicd_release_link);
             setLink(tv, R.string.aimsicd_release_link);
@@ -101,15 +97,10 @@ public class AboutFragment extends Fragment {
             tv = v.findViewById(R.id.aimsicd_license_link);
             setLink(tv, R.string.aimsicd_license_link);
 
-            //Credits Link
-            //tv = v.findViewById(R.id.aimsicd_credits_link);
-            //setLink(tv, R.string.aimsicd_credits_link);
-
             View imgView_idle = v.findViewById(R.id.imgView_idle);
             imgView_idle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     MiscUtils.startPopUpInfo(mContext, 0);
                 }
             });
@@ -118,7 +109,6 @@ public class AboutFragment extends Fragment {
             imgView_normal.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     MiscUtils.startPopUpInfo(mContext, 1);
                 }
             });
@@ -127,7 +117,6 @@ public class AboutFragment extends Fragment {
             imgView_medium.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     MiscUtils.startPopUpInfo(mContext, 2);
                 }
             });
@@ -136,7 +125,6 @@ public class AboutFragment extends Fragment {
             imgView_high.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     MiscUtils.startPopUpInfo(mContext, 3);
                 }
             });
@@ -145,7 +133,6 @@ public class AboutFragment extends Fragment {
             imgView_danger.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     MiscUtils.startPopUpInfo(mContext, 4);
                 }
             });
@@ -154,7 +141,6 @@ public class AboutFragment extends Fragment {
             imgView_run.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     MiscUtils.startPopUpInfo(mContext, 5);
                 }
             });
@@ -175,13 +161,8 @@ public class AboutFragment extends Fragment {
         btncredits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    Intent i = new Intent(mContext, CreditsRollActivity.class);
-                    startActivity(i);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Intent i = new Intent(mContext, CreditsRollActivity.class);
+                startActivity(i);
             }
         });
 
@@ -192,9 +173,4 @@ public class AboutFragment extends Fragment {
         super.onAttach(activity);
         mContext = activity.getBaseContext();
     }
-
-    public AboutFragment() {
-    }
-
-
 }

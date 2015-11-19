@@ -152,6 +152,12 @@ public class Command {
         }
     }
 
+    public final void finish()
+    {
+        RootShell.log("Command finished at users request!");
+        commandFinished();
+    }
+
     protected final void finishCommand() {
         executing = false;
         finished = true;
@@ -202,7 +208,13 @@ public class Command {
         executing = true;
     }
 
-    public final void terminate(String reason) {
+    public final void terminate()
+    {
+        RootShell.log("Terminating command at users request!");
+        terminated("Terminated at users request!");
+    }
+
+    protected final void terminate(String reason) {
         try {
             Shell.closeAll();
             RootShell.log("Terminating all shells.");
@@ -260,18 +272,23 @@ public class Command {
     private class ExecutionMonitor extends Thread {
 
         public void run() {
-            while (!finished) {
 
-                synchronized (Command.this) {
-                    try {
-                        Command.this.wait(timeout);
-                    } catch (InterruptedException e) {
+            if(timeout > 0)
+            {
+                //We need to kill the command after the given timeout
+                while (!finished) {
+
+                    synchronized (Command.this) {
+                        try {
+                            Command.this.wait(timeout);
+                        } catch (InterruptedException e) {
+                        }
                     }
-                }
 
-                if (!finished) {
-                    RootShell.log("Timeout Exception has occurred.");
-                    terminate("Timeout Exception");
+                    if (!finished) {
+                        RootShell.log("Timeout Exception has occurred.");
+                        terminate("Timeout Exception");
+                    }
                 }
             }
         }

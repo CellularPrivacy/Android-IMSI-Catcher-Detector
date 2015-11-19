@@ -390,4 +390,10 @@
     <string name="restore_database_completed_title">Wiederherstellung erfolgreich.</string>
     <string name="delete_database_msg_success">Datenbank gelöscht und erfolgreich neu erstellt.\nBitte App neu starten um alte Werte aus dem Speicher zu löschen.</string>
 
+    <string name="deleted">Gelöscht</string>
+    <string name="failed_to_delete">Löschen fehlgeschlagen</string>
+    <string name="double_quote_will_cause_db_error">"Zeichenkette nicht hinzugefügt\n\" Anführungszeichen würde DB Fehler verursachen "</string>
+    <string name="the_string_was_added_to_db">Zeichenkette zur Datenbank hinzugefügt</string>
+    <string name="failed_to_add_the_string_to_db">Hinzufügen der Zeichenkette zur Datenbank fehlgeschlagen</string>
+
     </resources>

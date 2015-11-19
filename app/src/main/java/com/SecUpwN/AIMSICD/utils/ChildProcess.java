@@ -21,6 +21,8 @@
 
 package com.SecUpwN.AIMSICD.utils;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -29,14 +31,12 @@ import static java.lang.System.nanoTime;
 
 public class ChildProcess {
 
-    private String TAG = getClass().getSimpleName();
-
+    private static final String TAG = "ChildProcess";
     private static final int PIPE_SIZE = 1024;
 
     private class ChildReader extends Thread {
 
         final InputStream mStream;
-
         final StringBuffer mBuffer;
 
         ChildReader(InputStream is, StringBuffer buf) {
@@ -53,21 +53,20 @@ public class ChildProcess {
                     mBuffer.append(s);
                 }
             } catch (IOException e) {
-                // Ignore
+                Log.d(TAG, e.getMessage());
             }
             try {
                 mStream.close();
             } catch (IOException e) {
-                // Ignore
+                Log.d(TAG, "cannot close stream", e);
             }
         }
     }
 
     private class ChildWriter extends Thread {
 
-        final OutputStream mStream;
-
-        final String mBuffer;
+        private final OutputStream mStream;
+        private final String mBuffer;
 
         ChildWriter(OutputStream os, String buf) {
             mStream = os;
@@ -84,30 +83,32 @@ public class ChildProcess {
                     off += len;
                 }
             } catch (IOException e) {
-                // Ignore
+                Log.d(TAG, e.getMessage());
             }
             try {
                 mStream.close();
             } catch (IOException e) {
-                // Ignore
+                Log.d(TAG, "cannot close stream", e);
             }
         }
     }
 
-    private final long mStartTime;
+    private long mStartTime;
     private Process mChildProc;
     private ChildWriter mChildStdinWriter;
     private ChildReader mChildStdoutReader;
     private ChildReader mChildStderrReader;
-    final private StringBuffer mChildStdout;
-    final private StringBuffer mChildStderr;
+    private StringBuffer mChildStdout;
+    private StringBuffer mChildStderr;
     private int mExitValue;
     private long mEndTime;
 
     public ChildProcess(String[] cmdarray, String childStdin) {
+
         mStartTime = nanoTime();
         mChildStdout = new StringBuffer();
         mChildStderr = new StringBuffer();
+
         try {
             mChildProc = Runtime.getRuntime().exec(cmdarray);
             if (childStdin != null) {
@@ -119,7 +120,7 @@ public class ChildProcess {
             mChildStderrReader = new ChildReader(mChildProc.getErrorStream(), mChildStderr);
             mChildStderrReader.start();
         } catch (IOException e) {
-            // XXX: log
+            Log.d(TAG, e.getMessage(), e);
         }
     }
 
@@ -150,7 +151,7 @@ public class ChildProcess {
                     mChildStdinWriter = null;
                 }
             } catch (InterruptedException e) {
-                // Ignore
+                Log.d(TAG, e.getMessage(), e);
             }
         }
         return mExitValue;
@@ -160,11 +161,7 @@ public class ChildProcess {
         if (!isFinished()) {
             throw new IllegalThreadStateException("Child process running");
         }
-        return new CommandResult(
-                mStartTime,
-                mExitValue,
-                mChildStdout.toString(),
-                mChildStderr.toString(),
-                mEndTime);
+        return new CommandResult(mStartTime, mExitValue, mChildStdout.toString(),
+                mChildStderr.toString(), mEndTime);
     }
 }

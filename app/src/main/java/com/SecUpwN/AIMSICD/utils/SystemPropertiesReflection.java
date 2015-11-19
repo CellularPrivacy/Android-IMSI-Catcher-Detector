@@ -18,6 +18,7 @@
 package com.SecUpwN.AIMSICD.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -42,6 +43,8 @@ import dalvik.system.DexFile;
  */
 public class SystemPropertiesReflection {
 
+    private static final String TAG = "SystemPropertiesRef";
+
     /**
      * This class cannot be instantiated
      */
@@ -57,7 +60,7 @@ public class SystemPropertiesReflection {
      */
     public static String get(Context context, String key) throws IllegalArgumentException {
 
-        String ret = "";
+        String ret;
 
         try {
             ClassLoader cl = context.getClassLoader();
@@ -76,9 +79,11 @@ public class SystemPropertiesReflection {
 
             ret = (String) get.invoke(SystemProperties, params);
 
-        } catch (IllegalArgumentException iAE) {
-            throw iAE;
+        } catch (IllegalArgumentException iae) {
+            Log.e(TAG, iae.getMessage(), iae);
+            throw iae;
         } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
             ret = "";
         }
 
@@ -95,10 +100,9 @@ public class SystemPropertiesReflection {
     public static String get(Context context, String key, String def)
             throws IllegalArgumentException {
 
-        String ret = def;
+        String ret;
 
         try {
-
             ClassLoader cl = context.getClassLoader();
             Class<?> SystemProperties = cl.loadClass("android.os.SystemProperties");
 
@@ -117,152 +121,15 @@ public class SystemPropertiesReflection {
 
             ret = (String) get.invoke(SystemProperties, params);
 
-        } catch (IllegalArgumentException iAE) {
-            throw iAE;
+        } catch (IllegalArgumentException iae) {
+            Log.e(TAG, iae.getMessage(), iae);
+            throw iae;
         } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
             ret = def;
         }
 
         return ret;
-
-    }
-
-    /**
-     * Get the value for the given key, and return as an integer.
-     *
-     * @param key the key to lookup
-     * @param def a default value to return
-     * @return the key parsed as an integer, or def if the key isn't found or cannot be parsed
-     * @throws IllegalArgumentException if the key exceeds 32 characters
-     */
-    public static Integer getInt(Context context, String key, int def)
-            throws IllegalArgumentException {
-
-        Integer ret = def;
-
-        try {
-
-            ClassLoader cl = context.getClassLoader();
-            Class<?> SystemProperties = cl.loadClass("android.os.SystemProperties");
-
-            //Parameters Types
-            @SuppressWarnings("rawtypes")
-            Class[] paramTypes = new Class[2];
-            paramTypes[0] = String.class;
-            paramTypes[1] = int.class;
-
-            Method getInt = SystemProperties.getMethod("getInt", paramTypes);
-
-            //Parameters
-            Object[] params = new Object[2];
-            params[0] = key;
-            params[1] = def;
-
-            ret = (Integer) getInt.invoke(SystemProperties, params);
-
-        } catch (IllegalArgumentException iAE) {
-            throw iAE;
-        } catch (Exception e) {
-            ret = def;
-        }
-
-        return ret;
-
-    }
-
-    /**
-     * Get the value for the given key, and return as a long.
-     *
-     * @param key the key to lookup
-     * @param def a default value to return
-     * @return the key parsed as a long, or def if the key isn't found or
-     * cannot be parsed
-     * @throws IllegalArgumentException if the key exceeds 32 characters
-     */
-    public static Long getLong(Context context, String key, long def)
-            throws IllegalArgumentException {
-
-        Long ret = def;
-
-        try {
-
-            ClassLoader cl = context.getClassLoader();
-            @SuppressWarnings("rawtypes")
-            Class SystemProperties = cl.loadClass("android.os.SystemProperties");
-
-            //Parameters Types
-            @SuppressWarnings("rawtypes")
-            Class[] paramTypes = new Class[2];
-            paramTypes[0] = String.class;
-            paramTypes[1] = long.class;
-
-            Method getLong = SystemProperties.getMethod("getLong", paramTypes);
-
-            //Parameters
-            Object[] params = new Object[2];
-            params[0] = key;
-            params[1] = def;
-
-            ret = (Long) getLong.invoke(SystemProperties, params);
-
-        } catch (IllegalArgumentException iAE) {
-            throw iAE;
-        } catch (Exception e) {
-            ret = def;
-        }
-
-        return ret;
-
-    }
-
-    /**
-     * Get the value for the given key, returned as a boolean.
-     * Values 'n', 'no', '0', 'false' or 'off' are considered false.
-     * Values 'y', 'yes', '1', 'true' or 'on' are considered true.
-     * (case insensitive).
-     * If the key does not exist, or has any other value, then the default
-     * result is returned.
-     *
-     * @param key the key to lookup
-     * @param def a default value to return
-     * @return the key parsed as a boolean, or def if the key isn't found or is
-     * not able to be parsed as a boolean.
-     * @throws IllegalArgumentException if the key exceeds 32 characters
-     */
-    public static Boolean getBoolean(Context context, String key, boolean def)
-            throws IllegalArgumentException {
-
-        Boolean ret = def;
-
-        try {
-
-            ClassLoader cl = context.getClassLoader();
-            @SuppressWarnings("rawtypes")
-            Class SystemProperties = cl.loadClass("android.os.SystemProperties");
-
-            //Parameters Types
-            @SuppressWarnings("rawtypes")
-            Class[] paramTypes = new Class[2];
-            paramTypes[0] = String.class;
-            paramTypes[1] = boolean.class;
-
-            Method getBoolean = SystemProperties.getMethod("getBoolean", paramTypes);
-
-            //Parameters
-            Object[] params = new Object[2];
-            params[0] = key;
-            params[1] = def;
-
-            ret = (Boolean) getBoolean.invoke(SystemProperties, params);
-
-        } catch (IllegalArgumentException iAE) {
-            throw iAE;
-        } catch (Exception e) {
-            ret = def;
-        }
-
-        return ret;
-
     }
 
     /**
@@ -275,7 +142,6 @@ public class SystemPropertiesReflection {
             throws IllegalArgumentException {
 
         try {
-
             @SuppressWarnings("unused")
             DexFile df = new DexFile(new File("/system/app/Settings.apk"));
             @SuppressWarnings("unused")
@@ -298,9 +164,11 @@ public class SystemPropertiesReflection {
 
             set.invoke(SystemProperties, params);
 
-        } catch (IllegalArgumentException iAE) {
-            throw iAE;
+        } catch (IllegalArgumentException iae) {
+            Log.e(TAG, iae.getMessage(), iae);
+            throw iae;
         } catch (Exception ignored) {
+            Log.d(TAG, ignored.getMessage(), ignored);
         }
 
     }

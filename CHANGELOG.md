@@ -1,6 +1,32 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [15.11.2015 - WIP-Release v0.1.36-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.36-alpha-b00)
+
+* Changed: **We're now back from a huge break and intend to improve our project in all areas!**
+* Updated: Improved Japanese, French, Russian German and Czech translations, added Lithuanian
+* Updated: Formatted both comments and code, working torwards an easier code structure
+* Updated: RootShell library pushed to version 1.3, thanked [smarek](https://github.com/smarek) in `CREDITS` for saving us
+* Removed: Unused imports, unused class-global variables and dual `view.findViewById` calls
+* Removed: Unnecessary `return` call and unused `count` variable
+* Added: New vibration options in new menu `NOTIFICATION SETTINGS` (see `Preferences`)
+* Fixed: Phone will no longer vibrate every few seconds on status changes (set it yourself)
+* Fixed: Issue where `getSelectedItem()` was called in `doInBackground`
+* Fixed: Handled unchecked type of `getSelectedItem()` return
+* Fixed: Avoided NPE on `result.close();`
+
+#### [20.09.2015 - WIP-Release v0.1.35-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.35-alpha-b00)
+
+* Changed: Improved code quality and better error handling
+* Added: Animated updates on "Phone/SIM Details" page
+* Fixed: Resolved many security and performance issues [[#613](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/613)]
+
+#### 16.09.2015 - WIP-Internal v0.1.33-alpha-build-01
+
+* Updated: Old formatting updates for cleaner code structure
+* Added: Database support for BtsLoc table in `aimsicd.db`
+* Added: Translations for Japanese, Albanian, Spanish and Polish
+
 #### [09.08.2015 - WIP-Release v0.1.34-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.34-alpha-b00)
 
 * Updated: Finally found a **WHISTLEBLOWER**, removed position from [SEEKING](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/CONTRIBUTING.md#seeking) ;-)

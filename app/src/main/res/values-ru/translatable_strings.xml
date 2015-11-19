@@ -360,4 +360,48 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-</resources>
+<string name="restore_database_completed_title">Успешное восстановление.</string>
+    <string name="adv_user_info">Это меню только для продвинутых пользователей!\n\nПожалуйста, не пишите случайных строк, потому что это сломает детектор станций.\n\nЧтобы добавить строку, выберите тип СМС из выпадающего меню, введите строку детектирования и нажмите ввод.\n\nДля удаления нажмите и удерживайте.</string>
+    
+    <string name="adv_user_sms_info">Это меню только для опытных пользователей!\nДля удаления СМС зажмите его в списке.</string>
+    <string name="adv_user_pref_header">Расширенные настройки</string>
+    <string name="title_activity_advanced_user">Удалить обнаруженное СМС</string>
+
+    <string name="adv_user_pref_launch">Строки обнаружения</string>
+    <string name="adv_user_pref_sms_launch">Удалить СМС</string>
+    <string name="adv_user_pref_summary">Вставить или удалить строки обнаружения</string>
+    <string name="adv_user_pref_sms_summary">Удалить обнаруженное СМС</string>
+   
+    <string name="adv_user_root_title">Включить обнаружение СМС</string>
+    <string name="adv_user_root_sum">Для включения обнаружения нужны права root</string>
+
+    <string name="detection_strings">Строки обнаружения</string>
+    <string name="typezero_title">ВНИМАНИЕ!</string>
+    <string name="typezero_header">Обнаружено бесшумное СМС</string>
+    <string name="typezero_data">Обнаружено Type-0 СМС!\nПодробности в Просмотрщике базы данных</string>
+    <string name="typemwi_title">ВНИМАНИЕ!</string>
+    <string name="typemwi_header">Обнаружен MWI</string>
+    <string name="typemwi_data">Обнаружен индикатор ожидания сообщения(MWI)!\nПодробности в Просмотрщике базы данных</string>
+    <string name="typewap_header">Обнаружен WAP Push</string>
+    <string name="typewap_data">Обнаружено WAP Push СМС!\nПодробности в Просмотрщике базы данных.</string>
+
+
+    <string name="currently_connected_bts">Подключенные базовые станции (BTS)</string>
+    <string name="well_known_encrypted_bts">Знакомые базовые станции (BTS) с шифрованием</string>
+    <string name="unknown_or_insecure_bts">Неизвестные или небезопасные базовые станции (BTS)</string>
+    <string name="new_or_recently_added_bts">Новые или недавно добавленные базовые станции (BTS)</string>
+
+    <string name="delete_database_msg_success">Удаление и повторное создание базы данных завершено успешно.\nПожалуйста, перезапустите приложения для сброса значений из памяти.</string>
+
+    <string name="invalid_key_try_later">Неверный ключ OpenCellId, попробуйте еще позже.</string>
+    <string name="getting_ocid_key">Получение OpenCellId ключа…</string>
+
+    <string name="deleted">Удалено</string>
+    <string name="failed_to_delete">Не получилось удалить</string>
+    <string name="double_quote_will_cause_db_error">"Строка не добавлена\n \" двойные кавычки вызовут ошибку в базе данных "</string>
+    <string name="the_string_was_added_to_db">Строка добавлена в базу данных</string>
+    <string name="failed_to_add_the_string_to_db">Не получилось добавить строку в базу данных</string>
+
+    <string name="alert_mwi_detected">ТРЕВОГА: Обнаружен Индикатор Ожидания Сообщений (MWI)!</string>
+    <string name="alert_silent_wap_sms_detected">ТРЕВОГА: Обнаружено WAP Push SMS!</string>
+    </resources>

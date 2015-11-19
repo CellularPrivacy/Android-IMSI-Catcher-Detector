@@ -59,11 +59,9 @@ import java.io.InputStreamReader;
  *
  */
 
-
 public class DebugLogs extends BaseActivity {
 
-    private static final String TAG = "AIMSICD";
-    private static final String mTAG = "DebugLogs";
+    private static final String TAG = "DebugLogs";
 
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
@@ -73,7 +71,6 @@ public class DebugLogs extends BaseActivity {
     private Button btnClear = null;
     private Button btnCopy = null;
     private Button btnStop = null;
-    //private Button btnRadio = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +83,6 @@ public class DebugLogs extends BaseActivity {
         btnClear = (Button) findViewById(R.id.btnClear);
         btnStop = (Button) findViewById(R.id.btnStopLogs);
         btnCopy = (Button) findViewById(R.id.btnCopy);
-        //btnRadio = (Button) findViewById(R.id.btnRadio);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -100,9 +96,8 @@ public class DebugLogs extends BaseActivity {
             public void onClick(View view) {
                 try {
                     clearLogs();
-                    //Log.d("DebugLogs", "Logcat clearing disabled!");
-                } catch (Exception e) {
-                    Log.e(TAG, mTAG + ": Error clearing logs", e);
+                } catch (IOException e) {
+                    Log.e(TAG, "Error clearing logs", e);
                 }
             }
         });
@@ -161,12 +156,10 @@ public class DebugLogs extends BaseActivity {
 
     private void startLogging() {
         updateLogs = true;
-        try {
-            logUpdater = new LogUpdaterThread();
-            logUpdater.start();
-        } catch (Exception e) {
-            Log.e(TAG, mTAG + ": Error starting log updater thread", e);
-        }
+
+        logUpdater = new LogUpdaterThread();
+        logUpdater.start();
+
         btnStop.setText(getString(R.string.btn_stop_logs));
     }
 
@@ -218,7 +211,7 @@ public class DebugLogs extends BaseActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
                 } catch (IOException e) {
-                    Log.e(TAG, mTAG + ": Error reading logs", e);
+                    Log.w(TAG, "Error reading logs", e);
                 }
             }
         }.start();
@@ -280,8 +273,10 @@ public class DebugLogs extends BaseActivity {
      */
     private String runProcess(String[] command) throws IOException {
         Process process = null;
-        if (command.length == 1) process = Runtime.getRuntime().exec(command[0]);
-        else Runtime.getRuntime().exec(command);
+        if (command.length == 1)
+            process = Runtime.getRuntime().exec(command[0]);
+        else
+            Runtime.getRuntime().exec(command);
 
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
@@ -292,6 +287,7 @@ public class DebugLogs extends BaseActivity {
             log.append(line);
             log.append("\n");
         }
+        bufferedReader.close();
         return log.toString();
     }
 
@@ -306,8 +302,8 @@ public class DebugLogs extends BaseActivity {
             public void run() {
                 try {
                     Runtime.getRuntime().exec("logcat -c -b main -b system -b radio -b events");
-                } catch (Exception e) {
-                    Log.e(TAG, mTAG + ": Error clearing logs", e);
+                } catch (IOException e) {
+                    Log.e(TAG, "Error clearing logs", e);
                 }
 
                 runOnUiThread(new Runnable() {
@@ -325,7 +321,6 @@ public class DebugLogs extends BaseActivity {
         public void run() {
             while (updateLogs) {
                 try {
-                    //Log.d("log_thread", "running");
                     final String logs = getLogs();
                     if (!logs.equals(logView.getText().toString())) {
                         runOnUiThread(new Runnable() {
@@ -345,10 +340,14 @@ public class DebugLogs extends BaseActivity {
                             }
                         });
                     }
-                } catch (Exception e) {
-                    Log.e(TAG, mTAG + ": Error updating logs", e);
+                } catch (IOException e) {
+                    Log.w(TAG, "Error updating logs", e);
                 }
-                try { Thread.sleep(1000); } catch (Exception e) {}
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Log.w(TAG, "Thread was interrupted", e);
+                }
             }
         }
     }

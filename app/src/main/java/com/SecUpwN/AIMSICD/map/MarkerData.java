@@ -28,9 +28,6 @@ public class MarkerData {
     //private final String psc;     // PSC
     //private final String rat;     // RAT
 
-    //private final String pc;      // PC = MCC + MNC
-    //private final String first;   // time_first
-    //private final String last;    // time_last
     private final String samples;   // samples
     public final boolean openCellID; // ??
 
@@ -39,34 +36,34 @@ public class MarkerData {
                String latitude,
                String longitude,
                String local_area_code,
-               //String net_psc,    // PSC
-               //String net_rat,    // RAT
                String mobile_country_code,
                String mobile_network_code,
                String samples_taken,
-               boolean openCellID_Data
-    ) {
+               boolean openCellID_Data) {
         cellID = cell_id;
         lat = latitude;
         lng = longitude;
         lac = local_area_code;
         mcc = mobile_country_code;
         mnc = mobile_network_code;
-        //psc = net_psc;
-        //rat = net_rat;
         samples = samples_taken;
         openCellID = openCellID_Data;
     }
 
     public String getMCC() {
-        if (mcc == null) return "000";
-        if (mcc.length() >= 3) return mcc;
+        if (mcc == null)
+            return "000";
+        if (mcc.length() >= 3)
+            return mcc;
+
         return ("000" + mcc).substring(mcc.length());
     }
 
     public String getMNC() {
-        if (mnc == null) return "00";
-        if (mnc.length() >= 2) return mnc;
+        if (mnc == null)
+            return "00";
+        if (mnc.length() >= 2)
+            return mnc;
         return ("00" + mnc).substring(mnc.length());
     }
 
@@ -75,19 +72,9 @@ public class MarkerData {
         return getMCC() +"-"+ getMNC();
     }
 
-/*
-    // Primary Scrambling Code (UMTS) / Channel (LTE)
-    public String getPSC() {
-        return psc;
-    }
-    // Radio Access Technology (RAT)
-    public String getRAT() {
-        return rat;
-    }
-*/
-
     public String getSamples() {
-        if (samples == null || (!openCellID && samples.isEmpty())) return "0";
+        if (samples == null || (!openCellID && samples.isEmpty()))
+            return "0";
         return samples;
     }
 }
