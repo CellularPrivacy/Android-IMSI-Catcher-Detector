@@ -685,7 +685,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
                         // TODO: WHAT IS THIS DOING? Can we remove?
                         // (There shouldn't be any bad PSCs in the import...)
-                        int iPsc = 0;
+                        int iPsc = 666;
                         if (psc != null && !psc.isEmpty()) {
                             iPsc = Integer.parseInt(psc);
                         }
