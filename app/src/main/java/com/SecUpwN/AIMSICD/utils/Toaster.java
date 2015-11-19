@@ -47,20 +47,24 @@ public class Toaster {
             if (toast!=null){
                 toast.cancel();
             }
-        
-            toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
 
-            new CountDownTimer(Math.max(TOAST_DURATION_MILLS - SHORT_TOAST_DURATION, 1000), 1000) {
+            new Handler(context.getMainLooper()).post(new Runnable() {
                 @Override
-                public void onFinish() {
-                    toast.show();
-                }
+                public void run() {
+                    toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+                    new CountDownTimer(Math.max(TOAST_DURATION_MILLS - SHORT_TOAST_DURATION, 1000), 1000) {
+                        @Override
+                        public void onFinish() {
+                            toast.show();
+                        }
 
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    toast.show();
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            toast.show();
+                        }
+                    }.start();
                 }
-            }.start();
+            });
         }
     }
     /**
