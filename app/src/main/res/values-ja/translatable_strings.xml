@@ -322,4 +322,14 @@
     <string name="the_string_was_added_to_db">文字列をデータベースに追加しました</string>
     <string name="failed_to_add_the_string_to_db">文字列をデータベースに追加できませんでした</string>
 
+    <string name="pref_notification_settings">通知設定</string>
+    <string name="pref_notification_vibrate_enable_title">振動を有効にする</string>
+    <string name="pref_notification_vibrate_enable_summary">通知が変更されたときに振動します</string>
+    <string name="pref_notification_vibrate_min_level_title">脅威レベルで振動</string>
+    <string name="pref_notification_vibrate_min_level_summary">振動をオンにする最小の脅威レベルを選択します</string>
+    <string name="notification_vibrate_idle">アイドル</string>
+    <string name="notification_vibrate_normal">標準</string>
+    <string name="notification_vibrate_medium">中</string>
+    <string name="notification_vibrate_alarm">アラーム</string>
+    
     </resources>
