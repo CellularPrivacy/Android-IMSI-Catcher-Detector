@@ -45,7 +45,7 @@ public class RootShell {
 
     public static boolean debugMode = false;
 
-    public static final String version = "RootShell v1.2";
+    public static final String version = "RootShell v1.3";
 
     /**
      * Setting this to false will disable the handler that is used
@@ -525,6 +525,7 @@ public class RootShell {
         while (!cmd.isFinished()) {
 
             RootShell.log(version, shell.getCommandQueuePositionString(cmd));
+            RootShell.log(version, "Processed " + cmd.totalOutputProcessed + " of " + cmd.totalOutput + " output from command.");
 
             synchronized (cmd) {
                 try {

@@ -1,7 +1,6 @@
 package com.SecUpwN.AIMSICD.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
 import com.SecUpwN.AIMSICD.adapters.BtsMeasureCardInflater;
 import com.SecUpwN.AIMSICD.adapters.BtsMeasureItemData;
 import com.SecUpwN.AIMSICD.adapters.CardItemData;
-import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
 import com.SecUpwN.AIMSICD.adapters.DbViewerSpinnerAdapter;
 import com.SecUpwN.AIMSICD.adapters.DbeImportCardInflater;
 import com.SecUpwN.AIMSICD.adapters.DbeImportItemData;
@@ -28,9 +26,7 @@ import com.SecUpwN.AIMSICD.adapters.EventLogCardInflater;
 import com.SecUpwN.AIMSICD.adapters.EventLogItemData;
 import com.SecUpwN.AIMSICD.adapters.MeasuredCellStrengthCardData;
 import com.SecUpwN.AIMSICD.adapters.MeasuredCellStrengthCardInflater;
-import com.SecUpwN.AIMSICD.adapters.OpenCellIdCardInflater;
 import com.SecUpwN.AIMSICD.adapters.SilentSmsCardData;
-import com.SecUpwN.AIMSICD.adapters.SilentSmsCardInflater;
 import com.SecUpwN.AIMSICD.adapters.UniqueBtsCardInflater;
 import com.SecUpwN.AIMSICD.adapters.UniqueBtsItemData;
 import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
@@ -41,28 +37,24 @@ import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
 import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsCardInflater;
 import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsData;
 
-import java.util.ArrayList;
-
 /**
- *      Description:    Class that handles the display of the items in the 'Database Viewer' (DBV)
- *
- *      Issues:
- *
- *      Notes:          See issue #234 for details on how to format the UI
- *
- *      ChangeLog:
- *
- *      2015-07-14      E:V:A       Changed the display names of several items (see issue #234)
- *      2015-07-31      E:V:A       Added comments and changed some inflater data to avoid using:
- *                                  DBTableColumnIds.java. More to do... Use string convert trick:
- *                                      "" + int = "string"  (See EventLog for example)
- *
+ * Description:    Class that handles the display of the items in the 'Database Viewer' (DBV)
+ * <p/>
+ * Issues:
+ * <p/>
+ * Notes:          See issue #234 for details on how to format the UI
+ * <p/>
+ * ChangeLog:
+ * <p/>
+ * 2015-07-14      E:V:A       Changed the display names of several items (see issue #234)
+ * 2015-07-31      E:V:A       Added comments and changed some inflater data to avoid using:
+ * DBTableColumnIds.java. More to do... Use string convert trick:
+ * "" + int = "string"  (See EventLog for example)
  */
-public class DbViewerFragment extends Fragment {
+public final class DbViewerFragment extends Fragment {
 
     private AIMSICDDbAdapter mDb;
     private StatesDbViewer mTableSelected;
-    private Context mContext;
 
     // Layout items
     private Spinner tblSpinner;
@@ -75,13 +67,11 @@ public class DbViewerFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mContext = activity.getBaseContext();
-        mDb = new AIMSICDDbAdapter(mContext);
+        mDb = new AIMSICDDbAdapter(activity.getBaseContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.db_view, container, false);
 
         lv = (ListView) view.findViewById(R.id.list_view);
@@ -89,21 +79,20 @@ public class DbViewerFragment extends Fragment {
         tblSpinner = (Spinner) view.findViewById(R.id.table_spinner);
         DbViewerSpinnerAdapter mSpinnerAdapter = new DbViewerSpinnerAdapter(getActivity(), R.layout.item_spinner_db_viewer);
         tblSpinner.setAdapter(mSpinnerAdapter);
-
-        Spinner spnLocale = (Spinner) view.findViewById(R.id.table_spinner);
-        spnLocale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        tblSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, final int position, long id) {
-
-                new AsyncTask<Void, Void, BaseInflaterAdapter> () {
+                Object selectedItem = tblSpinner.getSelectedItem();
+                if (!(selectedItem instanceof StatesDbViewer)) {
+                    return;
+                }
+                mTableSelected = (StatesDbViewer) selectedItem;
+                new AsyncTask<Void, Void, BaseInflaterAdapter>() {
 
                     @Override
                     protected BaseInflaterAdapter doInBackground(Void... params) {
                         //# mDb.open();
                         Cursor result;
-                        ArrayList<String> CellDetails = new ArrayList<String>();
-
-                        mTableSelected = (StatesDbViewer)tblSpinner.getSelectedItem();
 
                         switch (position) {
                             case 0: // UNIQUE_BTS_DATA          ("DBi_bts")
@@ -156,9 +145,9 @@ public class DbViewerFragment extends Fragment {
                         BaseInflaterAdapter adapter = null;
                         if (result != null) {
                             adapter = BuildTable(result);
+                            result.close();
                         }
-                        //# mDb.close();
-                        result.close();
+
                         return adapter;
                     }
 
@@ -182,7 +171,6 @@ public class DbViewerFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                return;
             }
         });
 
@@ -191,24 +179,23 @@ public class DbViewerFragment extends Fragment {
 
     /**
      * Description:     Content layout and presentation of the Database Viewer
-     *
-     *                  This is where the text labels are created for each column in
-     *                  the Database Viewer (DBV). For details of how this should be presented, see:
-     *                  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
-     *
+     * <p/>
+     * This is where the text labels are created for each column in
+     * the Database Viewer (DBV). For details of how this should be presented, see:
+     * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
+     * <p/>
      * Lat/Lng:     Latitude / Longitude (We should use "Lon" instead of "Lng".)
      * AvgSignal:   Average Signal Strength
      * RSSI:        Received Signal Strength Indicator (previously "Signal Strength")
-     *              Can have different meanings on different RAN's, e.g. RSCP in UMTS.
+     * Can have different meanings on different RAN's, e.g. RSCP in UMTS.
      * RAN:         Radio Access Network (GSM, UMTS, LTE etc.)
-     *
+     * <p/>
      * Notes:
-     *
-     *      1. Although "RAN" is more correct here, we'll use "RAT" (Radio Access Technology),
-     *         which is the more common terminology. Thus reverting.
-     *
-     *      2. Since Signal is not an "indicator" we should just call it "RSS" or "RXS"
-     *
+     * <p/>
+     * 1. Although "RAN" is more correct here, we'll use "RAT" (Radio Access Technology),
+     * which is the more common terminology. Thus reverting.
+     * <p/>
+     * 2. Since Signal is not an "indicator" we should just call it "RSS" or "RXS"
      */
     private BaseInflaterAdapter BuildTable(Cursor tableData) {
         if (tableData != null && tableData.getCount() > 0) {
@@ -225,7 +212,7 @@ public class DbViewerFragment extends Fragment {
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_MNC))),   // MNC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC))),   // LAC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_CID))),   // CID
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC))),   // PSC
+                                validatePscValue(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC))),      // PSC
                                 //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_T3212))), // T3212
                                 //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_A5x))),   // A5x
                                 //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_ST_id))), // ST_id
@@ -235,7 +222,7 @@ public class DbViewerFragment extends Fragment {
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LON)),                // gps_lon
                                 (tableData.getPosition() + 1) + " / " + count                                               // item:  "n/X"
                         );
-                        adapter.addItem(data,false);
+                        adapter.addItem(data, false);
                     }
                     if (!tableData.isClosed()) {
                         tableData.close();
@@ -254,7 +241,7 @@ public class DbViewerFragment extends Fragment {
                         // WARNING! The ORDER and number of these are crucial, and need to correspond
                         // to what's found in:  BtsMeasureCardInflater.java and BtsMeasureItemData.java
                         BtsMeasureItemData data = new BtsMeasureItemData(
-                                "bts_id: "  + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID))), // TODO: Wrong! Should be DBi_bts:CID
+                                "bts_id: " + String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_BTS_ID))), // TODO: Wrong! Should be DBi_bts:CID
                                 "n/a", // + tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_NC_LIST)),        // nc_list      TODO: fix
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_TIME)),                       // time
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBI_MEASURE_GPSD_LAT)),                   // gpsd_lat
@@ -315,7 +302,7 @@ public class DbViewerFragment extends Fragment {
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MNC))),            // MNC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_LAC))),            // LAC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_CID))),            // CID
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC))),            // PSC (UMTS only)
+                                validatePscValue(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC))),               // PSC (UMTS only)
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LAT)),                     // gps_lat
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LON)),                     // gps_lon
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_IS_GPS_EXACT))),   // isGPSexact
@@ -397,10 +384,10 @@ public class DbViewerFragment extends Fragment {
                     //int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         MeasuredCellStrengthCardData data = new MeasuredCellStrengthCardData(
-                            tableData.getInt(tableData.getColumnIndex("bts_id")),                           // TODO: CID
-                            Integer.parseInt(tableData.getString(tableData.getColumnIndex("rx_signal"))),   // rx_signal
-                            tableData.getString(tableData.getColumnIndex("time"))                           // time
-                            //"" + (tableData.getPosition() + 1) + " / " + count                            // item:  "n/X"
+                                tableData.getInt(tableData.getColumnIndex("bts_id")),                           // TODO: CID
+                                Integer.parseInt(tableData.getString(tableData.getColumnIndex("rx_signal"))),   // rx_signal
+                                tableData.getString(tableData.getColumnIndex("time"))                           // time
+                                //"" + (tableData.getPosition() + 1) + " / " + count                            // item:  "n/X"
                         );
                         adapter.addItem(data, false);
                     }
@@ -424,7 +411,7 @@ public class DbViewerFragment extends Fragment {
                                 "" + tableData.getString(tableData.getColumnIndex("time")),             // time
                                 "" + tableData.getInt(tableData.getColumnIndex("LAC")),                 // LAC
                                 "" + tableData.getInt(tableData.getColumnIndex("CID")),                 // CID
-                                "" + tableData.getInt(tableData.getColumnIndex("PSC")),                 // PSC
+                                "" + validatePscValue(tableData.getInt(tableData.getColumnIndex("PSC"))),    // PSC
                                 "" + tableData.getDouble(tableData.getColumnIndex("gpsd_lat")),         // gpsd_lat
                                 "" + tableData.getDouble(tableData.getColumnIndex("gpsd_lon")),         // gpsd_lon
                                 "" + tableData.getInt(tableData.getColumnIndex("gpsd_accu")),           // gpsd_accu (accuracy in [m])
@@ -446,7 +433,6 @@ public class DbViewerFragment extends Fragment {
                     // Storage of Abnormal SMS detection strings
                     BaseInflaterAdapter<DetectionStringsData> adapter
                             = new BaseInflaterAdapter<>(new DetectionStringsCardInflater());
-                    int count = tableData.getCount();
                     while (tableData.moveToNext()) {
                         DetectionStringsData data = new DetectionStringsData(
                                 tableData.getString(tableData.getColumnIndex("det_str")),  // det_str
@@ -464,6 +450,13 @@ public class DbViewerFragment extends Fragment {
             return null;
         }
         return null;
+    }
+
+    private String validatePscValue(int dbPsc) {
+        if (dbPsc > 511) {
+            return "invalid";
+        }
+        return String.valueOf(dbPsc);
     }
 
     /*=========================================================================
