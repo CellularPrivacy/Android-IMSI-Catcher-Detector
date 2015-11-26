@@ -19,7 +19,7 @@ def getManifestVersionCode() {
      def matcher = pattern.matcher(manifestText)
      matcher.find()
      def version = Integer.parseInt(matcher.group(1))
-     println sprintf("Returning version %d", version)
+     println sprintf("Returning version code %d", version)
      return version
 }
 
@@ -31,7 +31,9 @@ def getManifestVersionName() {
      def matcher = pattern.matcher(manifestText)
      matcher.find()
      def zname = matcher.group(1)
-     println sprintf("Returning version %s", zname)
+     def git = org.ajoberstar.grgit.Grgit.open(file('..'))
+     zname += "-" + git.head().abbreviatedId
+     println sprintf("Returning version name %s", zname)
      return zname
 }
 
