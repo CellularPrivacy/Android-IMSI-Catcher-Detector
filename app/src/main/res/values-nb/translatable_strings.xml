@@ -1,2 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='utf-8'?>
+<resources><string name="tracking">Sporing</string>
+    <string name="device_info">Telefon/SIM-detaljer</string>
+    <string name="map_view">Antennekart-fremviser</string>
+    <string name="db_viewer">Databasefremviser</string>
+    <string name="quit">Avslutt</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Avbryt</string>
+    <string name="text_agree">Jeg er enig</string>
+    <string name="text_disagree">Jeg er uenig</string>
+
+    <string name="disclaimer_title"/>
+    <string name="disclaimer"/>
+
+    <string name="toggle_attack_detection"/>
+    <string name="toggle_cell_tracking"/>
+    <string name="backup_database"/>
+    <string name="clear_database"/>
+    <string name="clear_database_question">Alle data vil slettes.\nEr du sikker?</string>
+    <string name="restore_database"/>
+    <string name="press_once_again_to_exit">Trykk på nytt for å gå ut.</string>
+    <string name="cell_lookup"/>
+    <string name="send_logs"/>
+    <string name="no_network_connection_title">Ingen Internett-forbindelse</string>
+    <string name="no_network_connection_message"/>
+
+    <string name="get_opencellid">Last med BTS-data</string>
+
+    <string name="device_info_title">Enhetsinformasjon</string>
+    <string name="sim_info_title">SIM-informasjon</string>
+    <string name="network_info">Nettverksinformasjon</string>
+    <string name="cell_info_title">Gjeldende trusselsnivå</string>
+    <string name="neighbouring_cells_title"/>
+    <string name="ciphering_indicator_title"/>
+    <string name="neighbouring_cells_num_title">Total:</string>
+    <string name="sim_country">Land:</string>
+    <string name="sim_operator_id">Operatør-ID:</string>
+    <string name="sim_operator_name">Operatørnavn:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">Seriell:</string>
+    <string name="device_type">Telefontype:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version"/>
+    <string name="network_name">Tilbydernavn:</string>
+    <string name="network_code">Tilbyderkode:</string>
+    <string name="network_type">Type:</string>
+    <string name="network_lac"/>
+    <string name="network_cellid"/>
+    <string name="data_activity">Dataaktivitet:</string>
+    <string name="data_status">Datastatus:</string>
+    <string name="network_roaming"/>
+    <string name="network_lte_timing_advance"/>
+    <string name="button_refresh">Frisk opp</string>
+    <string name="drawer_open"></string>
+    </resources>
