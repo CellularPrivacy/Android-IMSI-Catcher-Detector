@@ -314,4 +314,20 @@
     <string name="invalid_key_try_later">Llave OpenCellId Invalida, Intente de nuevo mas tarde.</string>
     <string name="getting_ocid_key">Obtener llave API de OpenCellId...</string>
 
+    <string name="pref_notification_settings">Ajustes de Notificación</string>
+    <string name="pref_notification_vibrate_enable_title">Habilitar Vibración</string>
+    <string name="pref_notification_vibrate_enable_summary">Vibrar cuando la notificación cambie</string>
+    <string name="pref_notification_vibrate_min_level_title">Vibrar por nivel de amenaza</string>
+    <string name="pref_notification_vibrate_min_level_summary">Seleccionar nivel mínimo de amenaza en el que vibrar</string>
+    <string name="notification_vibrate_idle">En reposo</string>
+    <string name="notification_vibrate_normal">Normal</string>
+    <string name="notification_vibrate_medium">Medio</string>
+    <string name="notification_vibrate_alarm">Alarma</string>
+    
+    <string name="deleted">Borrado</string>
+    <string name="failed_to_delete">Error al borrar</string>
+    <string name="the_string_was_added_to_db">La cadena fue añadida a la base de datos</string>
+    <string name="failed_to_add_the_string_to_db">Error al añadir la cadena a la base de datos</string>
+
+    <string name="double_quote_will_cause_db_error">"Cadena no añadida\nLas comillas dobles \" no están soportadas "</string>
     </resources>
