@@ -3,12 +3,12 @@ apply plugin: 'com.android.application'
 def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion '21.1.2'
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 19 // Do not change: Working Icons on Android 5+
+        targetSdkVersion 22 // Do not change: Working Icons on Android 5+
         versionCode 36
         versionName '0.1.36-alpha-' + gitSha
         testApplicationId "com.SecUpwN.AIMSICD.test"
@@ -103,7 +103,7 @@ dependencies {
     //https://github.com/lp0/slf4j-android
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':third_party:rootshell')
-    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.android.support:support-v4:22.+'
     compile 'org.osmdroid:osmdroid-android:4.2'
     compile 'org.slf4j:slf4j-api:1.7.12'
     compile 'eu.lp0.slf4j:slf4j-android:1.7.12-0'
