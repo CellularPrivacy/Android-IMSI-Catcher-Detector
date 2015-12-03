@@ -19,6 +19,7 @@ package com.SecUpwN.AIMSICD.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
@@ -35,7 +36,7 @@ import com.nineoldandroids.animation.ValueAnimator;
 //import android.animation.ValueAnimator;
 
 
-public class CreditsRollActivity extends Activity implements SeekBar.OnSeekBarChangeListener {
+public class CreditsRollActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
 
     private static final float SCROLL_ANIM_DURATION = 20000;    // [ms] = 30 s
 

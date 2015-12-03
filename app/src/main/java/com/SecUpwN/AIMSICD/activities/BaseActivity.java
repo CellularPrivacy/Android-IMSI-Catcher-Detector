@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.SecUpwN.AIMSICD.R;
@@ -24,7 +25,7 @@ import com.SecUpwN.AIMSICD.utils.Status;
  *
  * @author Tor Henning Ueland
  */
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends AppCompatActivity {
     private static final String TAG = "AIMSICD";
     private static final String mTAG = "BaseActivity";
 

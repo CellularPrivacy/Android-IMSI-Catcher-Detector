@@ -5,7 +5,6 @@
  */
 package com.SecUpwN.AIMSICD;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -21,12 +20,12 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -98,15 +97,13 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         moveData();
 
-        getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
         mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
 
         setContentView(mNavConf.getMainLayout());
 
         mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
         mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
-        mActionBar = getActionBar();
+        mActionBar = getSupportActionBar();
         mTitle = mDrawerTitle = getTitle();
 
         mDrawerList.setAdapter(mNavConf.getBaseAdapter());
