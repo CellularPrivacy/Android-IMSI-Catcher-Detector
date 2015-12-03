@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.SecUpwN.AIMSICD"
-          android:versionCode="36"
-          android:versionName="0.1.36-alpha">
+          package="com.SecUpwN.AIMSICD">
 
     <!-- If we ever wanna make this a system app, we can add the following 2 lines above:
           coreApp="true"
