@@ -1,43 +1,6 @@
-import java.util.regex.Pattern
-
 apply plugin: 'com.android.application'
 
-//======================================================================
-// TODO: (There must be a simpler way to do this!)
-// These will import versionCode and versionName from AndroidManifest.xml
-// Most important is that these function names are unique.
-// versionCode can auto update the version number.
-// Then put this function inside the defaultConfig { ... }}
-// See: http://tinyurl.com/kuu2rve
-//======================================================================
-
-def getManifestVersionCode() {
-     println "Importing with getManifestVersionCode()"
-     def manifestFile = file("src/main/AndroidManifest.xml")
-     def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
-     def manifestText = manifestFile.getText()
-     def matcher = pattern.matcher(manifestText)
-     matcher.find()
-     def version = Integer.parseInt(matcher.group(1))
-     println sprintf("Returning version code %d", version)
-     return version
-}
-
-def getManifestVersionName() {
-     println "Importing with getManifestVersionName()"
-     def manifestFile = file("src/main/AndroidManifest.xml")
-     def pattern = Pattern.compile("versionName=\"(.+)\"")
-     def manifestText = manifestFile.getText()
-     def matcher = pattern.matcher(manifestText)
-     matcher.find()
-     def zname = matcher.group(1)
-     def git = org.ajoberstar.grgit.Grgit.open(file('..'))
-     zname += "-" + git.head().abbreviatedId
-     println sprintf("Returning version name %s", zname)
-     return zname
-}
-
-//======================================================================
+def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 
 android {
     compileSdkVersion 21
@@ -46,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
-        versionCode = getManifestVersionCode()
-        versionName = getManifestVersionName()
+        versionCode 36
+        versionName '0.1.36-alpha-' + gitSha
         testApplicationId "com.SecUpwN.AIMSICD.test"
     }
 
