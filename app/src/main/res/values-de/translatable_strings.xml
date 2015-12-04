@@ -9,7 +9,7 @@
     <string name="quit">Beenden</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Abbrechen</string>
-    <string name="text_agree">Akzeptieren</string>
+    <string name="text_agree">Ich akzeptiere</string>
     <string name="text_disagree">Nicht akzeptieren</string>
     
     <!-- DISCLAIMER -->
@@ -29,11 +29,11 @@
     <string name="toggle_attack_detection">Angriffserkennung\nein/ausschalten</string>
     <string name="toggle_cell_tracking">Funkzellen aufzeichnen</string>
     <string name="backup_database">Datenbank sichern</string>
-    <string name="clear_database">Datenbank löschen</string>
+    <string name="clear_database">Datenbank löschen / zurücksetzen</string>
     <string name="clear_database_question">Alle Daten werden gelöscht.\nSind Sie sicher?</string>
     <string name="restore_database">Datenbank wiederherstellen</string>
     <string name="preferences">Einstellungen</string>
-    <string name="press_once_again_to_exit">Erneut drücken zum verlassen.</string>
+    <string name="press_once_again_to_exit">Erneut drücken zum Verlassen.</string>
     <string name="cell_lookup">Derzeitige Funkzellen</string>
     <string name="send_logs">Fehlerbehebung</string>
     <string name="no_network_connection_title">Keine Internetverbindung</string>
@@ -202,7 +202,7 @@
    
     <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Flach</string>
-    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_sense">Sinn</string>
     <string name="ui_icon_white">Weiß</string>
     <string name="map_type_terrain">Gelände</string>
     <string name="map_type_normal">Normal</string>
@@ -396,4 +396,12 @@
     <string name="the_string_was_added_to_db">Zeichenkette zur Datenbank hinzugefügt</string>
     <string name="failed_to_add_the_string_to_db">Hinzufügen der Zeichenkette zur Datenbank fehlgeschlagen</string>
 
+    <string name="pref_notification_vibrate_enable_title">Vibration an</string>
+    <string name="pref_notification_vibrate_enable_summary">Vibriere bei Benachrichtigungs-Wechsel</string>
+    <string name="pref_notification_settings">Benachrichtigungs-Einstellungen</string>
+    <string name="notification_vibrate_idle">Ruhezustand</string>
+    <string name="notification_vibrate_normal">Normal</string>
+    <string name="notification_vibrate_medium">Mittel</string>
+    <string name="notification_vibrate_alarm">Alarm</string>
+    
     </resources>
