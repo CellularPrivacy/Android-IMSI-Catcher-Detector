@@ -99,7 +99,7 @@ android {
 dependencies {
     // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
     //compile 'com.github.amlcurran.showcaseview:library:5.0.0'
-    compile 'com.android.support:appcompat-v7:22.+'
+    compile 'com.android.support:appcompat-v7:22.2.1'
     //https://github.com/lp0/slf4j-android
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':third_party:rootshell')
