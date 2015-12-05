@@ -1,6 +1,11 @@
 apply plugin: 'com.android.application'
 
-def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+def gitSha = 'na'
+try {
+    gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+} catch (Exception e) {
+    logger.warn("git not available")
+}
 
 android {
     compileSdkVersion 21
@@ -10,7 +15,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
         versionCode 36
-        versionName '0.1.36-alpha-' + gitSha
+        versionName '0.1.36-alpha'
         testApplicationId "com.SecUpwN.AIMSICD.test"
     }
 
@@ -26,12 +31,19 @@ android {
             } catch (MissingPropertyException e) {
                 buildConfigField 'String', 'BUILDOZER_BUILDNUMBER', '"NA"'
             }
+            if (!gitSha.equals('na')) {
+                versionNameSuffix '-' + gitSha
+            } else {
+                versionNameSuffix '-debug'
+            }
         }
         release {
             buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
             buildConfigField 'String', 'BUILDOZER_BUILDNUMBER', '"NA"'
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+
+            versionNameSuffix '-release'
         }
     }
     signingConfigs {
