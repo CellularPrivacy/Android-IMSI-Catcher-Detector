@@ -189,4 +189,25 @@
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID дані успішно отримано.\nМаркери карти оновлено.</string>
     <string name="status">Стан:</string>
     <string name="serial_device_title">Поточний послідовний пристрій:</string>
+    <string name="detail_info_idle">Додаток працює в режимі очікування чи завантаження. Заходи захисту та моніторингу вимкнуто. Будь ласка, відкрийте меню та увімкніть їх в розділі СЛІДКУВАННЯ!</string>
+    <string name="detail_info_normal">Жодних загроз не виявлено. Наш додаток постійно перевіряє вашу мережу на основі заходів захисту, які ви зазначили в меню та налаштуваннях.</string>
+    <string name="ui_icon_white">Білі</string>
+    <string name="map_type_terrain">Земний</string>
+    <string name="map_type_normal">Звичайний</string>
+    <string name="pref_refresh_manual">Вручну</string>
+    <string name="pref_refresh_automatic">Автоматично</string>
+    <string name="main">Основне</string>
+    <string name="hostile_service_area_changing_lac_detected">Ворожа зона обслуговування: виявлено зміну LAC!</string>
+    <string name="femtocell_detection_active">Виявлення фемтоточок активовано.</string>
+    <string name="cell_tracking_active">Відслідковування стільника активовано.</string>
+    <string name="cell_monitoring_active">Моніторинг стільника активовано.</string>
+    <string name="status_good">Статус: Все добре. Загроз не виявлено.</string>
+    <string name="service_state_changed">Статус сервісу змінено!</string>
+    <string name="stopped_tracking_femtocell">: Зупинено моніторинг з\'єднання з фемтоточкою.</string>
+    <string name="download_error">Помилка завантаження:</string>
+    <string name="opencellid_data_successfully_received">Дані OpenCellID успішно прийнято.</string>
+    <string name="error_retrieving_opencellid_data">Помилка під час отримання OpenCellID даних.\nПеревірте вашу мережу!</string>
+    <string name="error_restoring_database">Помилка відновлення бази даних.</string>
+    <string name="database_backup_successfully_saved_to">Резервну копію бази даних успішно скопійовано до:</string>
+    <string name="error_backing_up_data">Помилка резервного копіювання бази даних.</string>
     </resources>
