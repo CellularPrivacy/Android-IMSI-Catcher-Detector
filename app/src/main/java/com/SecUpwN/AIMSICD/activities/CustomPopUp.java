@@ -30,6 +30,7 @@ package com.SecUpwN.AIMSICD.activities;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.widget.ImageView;
@@ -38,7 +39,7 @@ import android.widget.TextView;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
-public class CustomPopUp extends Activity {
+public class CustomPopUp extends AppCompatActivity {
     TextView tv_popup_title,about_tv_status,about_tv_data;
     ImageView about_icon_holder;
     int mode = 0; //default
