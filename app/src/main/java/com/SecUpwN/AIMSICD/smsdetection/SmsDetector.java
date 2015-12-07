@@ -13,6 +13,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.SecUpwN.AIMSICD.activities.CustomPopUp;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Device;
@@ -95,6 +96,13 @@ public final class SmsDetector extends Thread {
 
     public static void setSmsDetectionState(boolean isRunning) {
         SmsDetector.isRunning = isRunning;
+    }
+
+    public static void startPopUpInfo(Context context,int mode){
+        Intent i = new Intent(context, CustomPopUp.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("display_mode",mode);
+        context.startActivity(i);
     }
 
     public void startSmsDetection() {
@@ -283,7 +291,7 @@ public final class SmsDetector extends Thread {
         if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
             mDbAdapter.storeCapturedSms(capturedSms);
             mDbAdapter.toEventLog(3, "Detected Type-0 SMS");
-            MiscUtils.startPopUpInfo(mContext, 6);
+            startPopUpInfo(mContext, 6);
         } else {
             Log.d(TAG, "Detected Sms already logged");
         }
@@ -315,7 +323,7 @@ public final class SmsDetector extends Thread {
         if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
             mDbAdapter.storeCapturedSms(capturedSms);
             mDbAdapter.toEventLog(4, "Detected MWI SMS");
-            MiscUtils.startPopUpInfo(mContext, 7);
+            startPopUpInfo(mContext, 7);
         } else {
             Log.d(TAG, " Detected Sms already logged");
         }
@@ -345,7 +353,7 @@ public final class SmsDetector extends Thread {
         if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
             mDbAdapter.storeCapturedSms(capturedSms);
             mDbAdapter.toEventLog(6, "Detected WAPPUSH SMS");
-            MiscUtils.startPopUpInfo(mContext, 8);
+            startPopUpInfo(mContext, 8);
         } else {
             Log.d(TAG, "Detected SMS already logged");
         }

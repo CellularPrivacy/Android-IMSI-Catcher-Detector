@@ -66,13 +66,6 @@ public class MiscUtils {
         return buildassets.toString();
     }
 
-    public static void startPopUpInfo(Context context,int mode){
-        Intent i = new Intent(context, CustomPopUp.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("display_mode",mode);
-        context.startActivity(i);
-    }
-
     public static String getCurrentTimeStamp(){
         //yyyyMMddHHmmss <-- this format is needed for OCID upload
         return new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date());
