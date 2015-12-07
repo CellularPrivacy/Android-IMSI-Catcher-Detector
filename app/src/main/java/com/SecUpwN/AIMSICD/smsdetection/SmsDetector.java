@@ -98,11 +98,11 @@ public final class SmsDetector extends Thread {
         SmsDetector.isRunning = isRunning;
     }
 
-    public static void startPopUpInfo(Context context,int mode){
-        Intent i = new Intent(context, CustomPopUp.class);
+    public void startPopUpInfo(int mode){
+        Intent i = new Intent(mContext, CustomPopUp.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("display_mode",mode);
-        context.startActivity(i);
+        mContext.startActivity(i);
     }
 
     public void startSmsDetection() {
@@ -291,7 +291,7 @@ public final class SmsDetector extends Thread {
         if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
             mDbAdapter.storeCapturedSms(capturedSms);
             mDbAdapter.toEventLog(3, "Detected Type-0 SMS");
-            startPopUpInfo(mContext, 6);
+            startPopUpInfo(6);
         } else {
             Log.d(TAG, "Detected Sms already logged");
         }
@@ -323,7 +323,7 @@ public final class SmsDetector extends Thread {
         if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
             mDbAdapter.storeCapturedSms(capturedSms);
             mDbAdapter.toEventLog(4, "Detected MWI SMS");
-            startPopUpInfo(mContext, 7);
+            startPopUpInfo(7);
         } else {
             Log.d(TAG, " Detected Sms already logged");
         }
@@ -353,7 +353,7 @@ public final class SmsDetector extends Thread {
         if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
             mDbAdapter.storeCapturedSms(capturedSms);
             mDbAdapter.toEventLog(6, "Detected WAPPUSH SMS");
-            startPopUpInfo(mContext, 8);
+            startPopUpInfo(8);
         } else {
             Log.d(TAG, "Detected SMS already logged");
         }
