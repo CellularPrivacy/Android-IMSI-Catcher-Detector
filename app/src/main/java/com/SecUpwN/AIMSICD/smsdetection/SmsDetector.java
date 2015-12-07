@@ -100,17 +100,17 @@ public final class SmsDetector extends Thread {
         SmsDetector.isRunning = isRunning;
     }
 
-    public void startPopUpInfo(SmsType mode){
+    public void startPopUpInfo(SmsType smsType) {
         MiscUtils.showNotification(
                 mContext,
-                mContext.getString(mode.getAlert()),
-                mContext.getString(R.string.app_name_short) + " - " + mContext.getString(mode.getTitle()),
+                mContext.getString(smsType.getAlert()),
+                mContext.getString(R.string.app_name_short) + " - " + mContext.getString(smsType.getTitle()),
                 R.drawable.sense_danger,
                 true);
 
         new AlertDialog.Builder(mContext)
-                .setTitle(mode.getTitle())
-                .setMessage(mode.getMessage())
+                .setTitle(smsType.getTitle())
+                .setMessage(smsType.getMessage())
                 .setIcon(R.drawable.sense_danger)
                 .show();
     }
@@ -447,11 +447,13 @@ public final class SmsDetector extends Thread {
         SILENT(
                 R.string.alert_silent_sms_detected,
                 R.string.typezero_header,
-                R.string.typezero_data),
+                R.string.typezero_data
+        ),
         MWI(
                 R.string.alert_mwi_detected,
                 R.string.typemwi_header,
-                R.string.typemwi_data),
+                R.string.typemwi_data
+        ),
         WAP_PUSH(
                 R.string.alert_silent_wap_sms_detected,
                 R.string.typewap_header,

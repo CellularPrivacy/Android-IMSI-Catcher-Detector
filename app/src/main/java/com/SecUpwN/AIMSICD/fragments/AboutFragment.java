@@ -26,7 +26,6 @@ import android.widget.TextView;
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
-import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 public class AboutFragment extends Fragment {
 
@@ -66,7 +65,7 @@ public class AboutFragment extends Fragment {
             versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
             versionNumber.setText(getString(R.string.app_version) + version);
 
-            if(!"NA".equals(BUILDOZER_BUILDNUMBER)) {
+            if (!"NA".equals(BUILDOZER_BUILDNUMBER)) {
                 BuildozerView = (TextView) v.findViewById(R.id.buildozer_buildnumber);
                 BuildozerView.setText(getString(R.string.buildozer_buildnumber) + BUILDOZER_BUILDNUMBER);
                 BuildozerView.setVisibility(View.VISIBLE);
@@ -177,7 +176,7 @@ public class AboutFragment extends Fragment {
         mContext = activity.getBaseContext();
     }
 
-    private void showInfoDialog(Status status){
+    private void showInfoDialog(Status status) {
         new AlertDialog.Builder(getActivity())
                 .setIcon(status.getIcon())
                 .setTitle(getString(R.string.status) + "\t" + getString(status.getName()))
@@ -185,13 +184,37 @@ public class AboutFragment extends Fragment {
                 .show();
     }
 
-    enum Status {
-        IDLE(R.drawable.sense_idle, R.string.idle, R.string.detail_info_idle),
-        NORMAL(R.drawable.sense_ok, R.string.normal, R.string.detail_info_normal),
-        MEDIUM(R.drawable.sense_medium, R.string.medium, R.string.detail_info_medium),
-        HIGH(R.drawable.sense_high, R.string.high, R.string.detail_info_high),
-        DANGER(R.drawable.sense_danger, R.string.danger, R.string.detail_info_danger),
-        RUN(R.drawable.sense_skull, R.string.run, R.string.detail_info_run);
+    public enum Status {
+        IDLE(
+                R.drawable.sense_idle,
+                R.string.idle,
+                R.string.detail_info_idle
+        ),
+        NORMAL(
+                R.drawable.sense_ok,
+                R.string.normal,
+                R.string.detail_info_normal
+        ),
+        MEDIUM(
+                R.drawable.sense_medium,
+                R.string.medium,
+                R.string.detail_info_medium
+        ),
+        HIGH(
+                R.drawable.sense_high,
+                R.string.high,
+                R.string.detail_info_high
+        ),
+        DANGER(
+                R.drawable.sense_danger,
+                R.string.danger,
+                R.string.detail_info_danger
+        ),
+        RUN(
+                R.drawable.sense_skull,
+                R.string.run,
+                R.string.detail_info_run
+        );
 
         @DrawableRes
         private int icon;
