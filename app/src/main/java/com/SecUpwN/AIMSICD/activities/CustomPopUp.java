@@ -27,7 +27,6 @@
 
 package com.SecUpwN.AIMSICD.activities;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -68,7 +67,6 @@ public class CustomPopUp extends AppCompatActivity {
                         getResources().getString(R.string.app_name_short)+ " - "+getResources().getString(R.string.typezero_header),
                         R.drawable.sense_danger,true);
                 createPopUp(
-                        getResources().getString(R.string.typezero_title),
                         getResources().getString(R.string.typezero_header),
                         getResources().getString(R.string.typezero_data)
                         ,getResources().getDrawable(R.drawable.sense_danger));
@@ -81,7 +79,6 @@ public class CustomPopUp extends AppCompatActivity {
                         R.drawable.sense_danger,true);
 
                 createPopUp(
-                        getResources().getString(R.string.typemwi_title),
                         getResources().getString(R.string.typemwi_header),
                         getResources().getString(R.string.typemwi_data)
                         ,getResources().getDrawable(R.drawable.sense_danger));
@@ -94,7 +91,6 @@ public class CustomPopUp extends AppCompatActivity {
                         R.drawable.sense_danger,true);
 
                 createPopUp(
-                        getResources().getString(R.string.typemwi_title),
                         getResources().getString(R.string.typewap_header),
                         getResources().getString(R.string.typewap_data)
                         ,getResources().getDrawable(R.drawable.sense_danger));
@@ -103,10 +99,7 @@ public class CustomPopUp extends AppCompatActivity {
         }
     }
 
-    public void createPopUp(String title,String header,String data,Drawable icon){
-        if(title != null){
-            tv_popup_title.setText(title);
-        }
+    public void createPopUp(String header, String data, Drawable icon){
 
         if(header != null){
             about_tv_status.setText(header);
