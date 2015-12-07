@@ -27,7 +27,6 @@
 
 package com.SecUpwN.AIMSICD.activities;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -59,59 +58,6 @@ public class CustomPopUp extends AppCompatActivity {
         }
 
         setFinishOnTouchOutside(true);
-        switch (mode){
-
-            case 6:
-                MiscUtils.showNotification(getApplicationContext(),
-                        getResources().getString(R.string.alert_silent_sms_detected),
-                        getResources().getString(R.string.app_name_short)+ " - "+getResources().getString(R.string.typezero_header),
-                        R.drawable.sense_danger,true);
-                createPopUp(
-                        getResources().getString(R.string.typezero_header),
-                        getResources().getString(R.string.typezero_data)
-                        ,getResources().getDrawable(R.drawable.sense_danger));
-                break;
-
-            case 7:
-                MiscUtils.showNotification(getApplicationContext(),
-                        getResources().getString(R.string.alert_mwi_detected),
-                        getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.typemwi_header),
-                        R.drawable.sense_danger,true);
-
-                createPopUp(
-                        getResources().getString(R.string.typemwi_header),
-                        getResources().getString(R.string.typemwi_data)
-                        ,getResources().getDrawable(R.drawable.sense_danger));
-                break;
-
-            case 8:
-                MiscUtils.showNotification(getApplicationContext(),
-                        getResources().getString(R.string.alert_silent_wap_sms_detected),
-                        getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.typewap_header),
-                        R.drawable.sense_danger,true);
-
-                createPopUp(
-                        getResources().getString(R.string.typewap_header),
-                        getResources().getString(R.string.typewap_data)
-                        ,getResources().getDrawable(R.drawable.sense_danger));
-                break;
-
-        }
-    }
-
-    public void createPopUp(String header, String data, Drawable icon){
-
-        if(header != null){
-            about_tv_status.setText(header);
-        }
-        if(data != null){
-            about_tv_data.setText(data);
-        }
-        if(icon != null){
-            about_icon_holder.setImageDrawable(icon);
-        }
-
-
     }
 
     public boolean onTouchEvent(MotionEvent event) {

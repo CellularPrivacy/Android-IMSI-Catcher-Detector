@@ -17,7 +17,6 @@ import android.util.Log;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.CustomPopUp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

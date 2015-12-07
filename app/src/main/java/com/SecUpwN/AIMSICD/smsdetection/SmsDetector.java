@@ -11,9 +11,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.annotation.StringRes;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
-import com.SecUpwN.AIMSICD.activities.CustomPopUp;
+import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Device;
@@ -98,11 +100,19 @@ public final class SmsDetector extends Thread {
         SmsDetector.isRunning = isRunning;
     }
 
-    public void startPopUpInfo(int mode){
-        Intent i = new Intent(mContext, CustomPopUp.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("display_mode",mode);
-        mContext.startActivity(i);
+    public void startPopUpInfo(SmsType mode){
+        MiscUtils.showNotification(
+                mContext,
+                mContext.getString(mode.getAlert()),
+                mContext.getString(R.string.app_name_short) + " - " + mContext.getString(mode.getTitle()),
+                R.drawable.sense_danger,
+                true);
+
+        new AlertDialog.Builder(mContext)
+                .setTitle(mode.getTitle())
+                .setMessage(mode.getMessage())
+                .setIcon(R.drawable.sense_danger)
+                .show();
     }
 
     public void startSmsDetection() {
@@ -291,7 +301,7 @@ public final class SmsDetector extends Thread {
         if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
             mDbAdapter.storeCapturedSms(capturedSms);
             mDbAdapter.toEventLog(3, "Detected Type-0 SMS");
-            startPopUpInfo(6);
+            startPopUpInfo(SmsType.SILENT);
         } else {
             Log.d(TAG, "Detected Sms already logged");
         }
@@ -323,7 +333,7 @@ public final class SmsDetector extends Thread {
         if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
             mDbAdapter.storeCapturedSms(capturedSms);
             mDbAdapter.toEventLog(4, "Detected MWI SMS");
-            startPopUpInfo(7);
+            startPopUpInfo(SmsType.MWI);
         } else {
             Log.d(TAG, " Detected Sms already logged");
         }
@@ -353,7 +363,7 @@ public final class SmsDetector extends Thread {
         if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
             mDbAdapter.storeCapturedSms(capturedSms);
             mDbAdapter.toEventLog(6, "Detected WAPPUSH SMS");
-            startPopUpInfo(8);
+            startPopUpInfo(SmsType.WAP_PUSH);
         } else {
             Log.d(TAG, "Detected SMS already logged");
         }
@@ -432,4 +442,49 @@ public final class SmsDetector extends Thread {
             mBound = false;
         }
     };
+
+    public enum SmsType {
+        SILENT(
+                R.string.alert_silent_sms_detected,
+                R.string.typezero_header,
+                R.string.typezero_data),
+        MWI(
+                R.string.alert_mwi_detected,
+                R.string.typemwi_header,
+                R.string.typemwi_data),
+        WAP_PUSH(
+                R.string.alert_silent_wap_sms_detected,
+                R.string.typewap_header,
+                R.string.typewap_data
+        );
+
+        SmsType(@StringRes int alert,
+                @StringRes int title,
+                @StringRes int message) {
+            this.alert = alert;
+            this.title = title;
+            this.message = message;
+        }
+
+        @StringRes
+        private int alert;
+
+        @StringRes
+        private int title;
+
+        @StringRes
+        private int message;
+
+        public int getAlert() {
+            return alert;
+        }
+
+        public int getTitle() {
+            return title;
+        }
+
+        public int getMessage() {
+            return message;
+        }
+    }
 }
