@@ -69,21 +69,23 @@ The reason IMSI-Catchers are so commonly used is that it is very easy to get awa
 
 Please read our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)! This app does **not**:
 
-* Provide secure phone calls (see [RedPhone](https://github.com/WhisperSystems/RedPhone))
-* Provide secure data transmission (see [Tor](https://www.torproject.org/))
-* Provide app permission control ([XPrivacy](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783))
+* Provide secure phone calls
+* Provide secure data transmission
+* Provide app permission control
 * Provide secure application sand-boxing
 * Provide [ROOT](http://www.xda-developers.com/root) and remove bloatware
-* Provide secure SMS (see [SMSSecure](https://github.com/SMSSecure/SMSSecure))
-* Provide firewalls (see [AFWall+](https://github.com/ukanth/afwall))
+* Provide secure SMS
+* Provide firewalls
 * Provide full device encryption
-* Prevent already installed rogue applications from full access and spying
+* Prevent already installed rogue apps from full access and spying
+
+Solutions for the above may be found in our [Recommendations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Recommendations).
 
 ---
 
 ### Bug Tracker
 
-Please follow [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues).
+Please follow our [Bug Submission Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues).
 
 ---
 
@@ -101,7 +103,7 @@ This project is completely licensed [GPL v3+](https://github.com/SecUpwN/Android
 
 ### Credits & Greetings
 
-Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/app/src/main/assets/CREDITS). HUGE THANKS!
+Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/app/src/main/assets/CREDITS). THANK YOU!
 
 ---
 
@@ -115,6 +117,6 @@ Our gratitude flies out to our great Sponsors:
 
 ### Get in touch with the core team!
 
-You will find our current team members [here](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
+Core team members are listed [here](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
 
 ---
