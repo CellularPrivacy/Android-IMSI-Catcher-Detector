@@ -233,14 +233,17 @@ public class AboutFragment extends Fragment {
             this.description = description;
         }
 
+        @DrawableRes
         public int getIcon() {
             return icon;
         }
 
+        @StringRes
         public int getName() {
             return name;
         }
 
+        @StringRes
         public int getDescription() {
             return description;
         }

@@ -460,14 +460,6 @@ public final class SmsDetector extends Thread {
                 R.string.typewap_data
         );
 
-        SmsType(@StringRes int alert,
-                @StringRes int title,
-                @StringRes int message) {
-            this.alert = alert;
-            this.title = title;
-            this.message = message;
-        }
-
         @StringRes
         private int alert;
 
@@ -477,14 +469,25 @@ public final class SmsDetector extends Thread {
         @StringRes
         private int message;
 
+        SmsType(@StringRes int alert,
+                @StringRes int title,
+                @StringRes int message) {
+            this.alert = alert;
+            this.title = title;
+            this.message = message;
+        }
+
+        @StringRes
         public int getAlert() {
             return alert;
         }
 
+        @StringRes
         public int getTitle() {
             return title;
         }
 
+        @StringRes
         public int getMessage() {
             return message;
         }
