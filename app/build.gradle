@@ -118,7 +118,7 @@ dependencies {
     compile 'org.osmdroid:osmdroid-android:4.2'
     compile 'org.slf4j:slf4j-api:1.7.12'
     compile 'eu.lp0.slf4j:slf4j-android:1.7.12-0'
-    compile 'org.apache.httpcomponents:httpmime:4.2.1'
+    compile 'com.squareup.okhttp:okhttp:2.6.0'
     compile 'au.com.bytecode:opencsv:2.4'
     compile files('libs/osmbonuspack_v5.1.jar')
     compile 'com.nineoldandroids:library:2.4.0'

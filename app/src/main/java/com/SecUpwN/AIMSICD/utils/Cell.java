@@ -5,22 +5,13 @@
  */
 package com.SecUpwN.AIMSICD.utils;
 
-import android.os.AsyncTask;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
-import android.util.Log;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
 
 
 /**
- *  Description:    TODO:  What've got here...
- *
- *
+ * Description:    TODO:  What've got here...
  */
 public class Cell implements Parcelable {
 
@@ -62,7 +53,8 @@ public class Cell implements Parcelable {
         bearing = 0.0;
     }
 
-    public Cell() {}
+    public Cell() {
+    }
 
     public Cell(int cid, int lac, int mcc, int mnc, int dbm, long timestamp) {
         super();
@@ -109,7 +101,7 @@ public class Cell implements Parcelable {
     }
 
     public Cell(int cid, int lac, int mcc, int mnc, int dbm, double accuracy, double speed,
-            double bearing, int netType, long timestamp) {
+                double bearing, int netType, long timestamp) {
         this.cid = cid;
         this.lac = lac;
         this.mcc = mcc;
@@ -461,89 +453,35 @@ public class Cell implements Parcelable {
         return this.getCID() != Integer.MAX_VALUE && this.getLAC() != Integer.MAX_VALUE;
     }
 
-
-    /**
-     * Description:     This is used in in the All Current Cell Details (ACD) menu option.
-     *                  It was originally meant to look up single cell (BTS) info by querying OCID.
-     *
-     * Issues:
-     *                  TODO: What is the current development status of this? Implemented?
-     *
-     * Dependencies:
-     *                  AIMSICD.java -- selectItem()
-     *
-     */
-    public static class CellLookUpAsync extends AsyncTask<String, Void, List<Cell>> {
-        public AsyncResponse delegate = null;
-
-        private static final String TAG = "CellLookUpAsync";
-
-        @Override
-        protected List<Cell> doInBackground(String ... urls) {
-            try {
-                InputStream stream;
-                // Instantiate the parser
-                StackOverflowXmlParser stackOverflowXmlParser = new StackOverflowXmlParser();
-                List<Cell> cells;
-
-                URL url = new URL(urls[0]);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000);     // [ms] 10s
-                conn.setConnectTimeout(15000);  // [ms] 15s
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                // Starts the query
-                conn.connect();
-
-                stream = conn.getInputStream();
-                cells = stackOverflowXmlParser.parse(stream);
-
-                conn.disconnect();
-                stream.close();
-
-                return cells;
-
-            } catch (Exception e) {
-                Log.i(TAG, e.getMessage(), e);
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(List<Cell> cells) {
-            delegate.processFinish(cells);
-        }
-    }
-
     // Parcelling
-    public Cell(Parcel in){
+    public Cell(Parcel in) {
         String[] data = new String[15];
 
         in.readStringArray(data);
-        cid     = Integer.valueOf(data[0]);
-        lac     = Integer.valueOf(data[1]);
-        mcc     = Integer.valueOf(data[2]);
-        mnc     = Integer.valueOf(data[3]);
-        dbm     = Integer.valueOf(data[4]);
-        psc     = Integer.valueOf(data[5]);
-        rssi    = Integer.valueOf(data[6]);
+        cid = Integer.valueOf(data[0]);
+        lac = Integer.valueOf(data[1]);
+        mcc = Integer.valueOf(data[2]);
+        mnc = Integer.valueOf(data[3]);
+        dbm = Integer.valueOf(data[4]);
+        psc = Integer.valueOf(data[5]);
+        rssi = Integer.valueOf(data[6]);
         timingAdvance = Integer.valueOf(data[7]);
-        sid     = Integer.valueOf(data[8]);
+        sid = Integer.valueOf(data[8]);
         netType = Integer.valueOf(data[9]);
-        lon     = Double.valueOf(data[10]);
-        lat     = Double.valueOf(data[11]);
-        speed   = Double.valueOf(data[12]);
+        lon = Double.valueOf(data[10]);
+        lat = Double.valueOf(data[11]);
+        speed = Double.valueOf(data[12]);
         accuracy = Double.valueOf(data[13]);
         bearing = Double.valueOf(data[14]);
     }
 
-    public int describeContents(){
+    public int describeContents() {
         return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[] {
+        dest.writeStringArray(new String[]{
                 String.valueOf(this.cid),
                 String.valueOf(this.lac),
                 String.valueOf(this.mcc),
@@ -560,6 +498,7 @@ public class Cell implements Parcelable {
                 String.valueOf(this.accuracy),
                 String.valueOf(this.bearing)});
     }
+
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Cell createFromParcel(Parcel in) {
             return new Cell(in);

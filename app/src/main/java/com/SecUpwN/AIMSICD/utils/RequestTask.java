@@ -13,36 +13,27 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
 import com.SecUpwN.AIMSICD.service.CellTracker;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.InputStreamBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  *
@@ -125,6 +116,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String... commandString) {
 
+        OkHttpClient okHttpClient = ((AppAIMSICD)getActivity().getApplication()).getOkHttpClient();
+
         // We need to create a separate case for UPLOADING to DBe (OCID, MLS etc)
         switch (mType) {
             // OCID upload request from "APPLICATION" drawer title
@@ -137,39 +130,27 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         File file = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/aimsicd-ocid-data.csv");
                         publishProgress(25, 100);
 
-                        MultipartEntity mpEntity = new MultipartEntity();
-                        FileInputStream fin = new FileInputStream(file);
-                        String csv = Helpers.convertStreamToString(fin);
+                        RequestBody requestBody = new MultipartBuilder()
+                                .type(MultipartBuilder.FORM)
+                                .addFormDataPart("key", CellTracker.OCID_API_KEY)
+                                .addFormDataPart("datafile", "aimsicd-ocid-data.csv", RequestBody.create(MediaType.parse("text/csv"), file))
+                                .build();
 
-                        mpEntity.addPart("key", new StringBody(CellTracker.OCID_API_KEY));
-                        mpEntity.addPart("datafile", new InputStreamBody(
-                                new ByteArrayInputStream(csv.getBytes()), "text/csv", "aimsicd-ocid-data.csv"));
+                        Request request = new Request.Builder()
+                                .url("http://www.opencellid.org/measure/uploadCsv")
+                                .post(requestBody)
+                                .build();
 
-                        ByteArrayOutputStream bAOS = new ByteArrayOutputStream();
-                        publishProgress(50, 100);
-                        mpEntity.writeTo(bAOS);
-                        bAOS.flush();
-                        ByteArrayEntity bArrEntity = new ByteArrayEntity(bAOS.toByteArray());
-                        bAOS.close();
-                        bArrEntity.setChunked(false);
-                        bArrEntity.setContentEncoding(mpEntity.getContentEncoding());
-                        bArrEntity.setContentType(mpEntity.getContentType());
+                        publishProgress(60, 100);
 
-                        HttpClient httpclient;
-                        HttpPost httppost;
-                        HttpResponse response;
+                        Response response = okHttpClient.newCall(request).execute();
 
-                        httpclient = new DefaultHttpClient();
-                        httppost = new HttpPost("http://www.opencellid.org/measure/uploadCsv");
-                        publishProgress(60,100);
-                        httppost.setEntity(bArrEntity);
-                        response = httpclient.execute(httppost);
                         publishProgress(80,100);
                         if (response!= null) {
                             Log.i(TAG, "OCID Upload Response: "
-                                    + response.getStatusLine().getStatusCode() + " - "
-                                    + response.getStatusLine());
-                            if (response.getStatusLine().getStatusCode() == org.apache.http.HttpStatus.SC_OK) {
+                                    + response.code() + " - "
+                                    + response.message());
+                            if (response.code() == 200) {
                                 mDbAdapter.ocidProcessed();
                             }
                             publishProgress(95, 100);
@@ -185,8 +166,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     Log.e(TAG, "Upload OpenCellID data Exception", e);
                 } catch (FileNotFoundException e) {
                     Log.e(TAG, "Upload OpenCellID data Exception", e);
-                } catch (ClientProtocolException e) {
-                    Log.e(TAG, "Upload OpenCellID data Exception", e);
                 } catch (IOException e) {
                     Log.e(TAG, "Upload OpenCellID data Exception", e);
                 } catch (Exception e) {
@@ -199,7 +178,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             case DBE_DOWNLOAD_REQUEST_FROM_MAP: // OCID download request from "Antenna Map Viewer"
                 int count;
                 try {
-                    int total;
+                    long total;
                     int progress = 0;
                     String dirName = getOCDBDownloadDirectoryPath(mAppContext);
                     File dir = new File(dirName);
@@ -209,17 +188,16 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     File file = new File(dir, OCDB_File_Name);
                     Log.i(TAG, "DBE_DOWNLOAD_REQUEST write to: " + dirName + OCDB_File_Name);
 
-                    URL url = new URL(commandString[0]);
-                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    urlConnection.setRequestMethod("GET");
-                    urlConnection.setConnectTimeout(mTimeOut);
-                    urlConnection.setReadTimeout(mTimeOut);   // [ms] 80 s
-                    urlConnection.setDoInput(true);
-                    urlConnection.connect();
+                    Request request = new Request.Builder()
+                            .url(commandString[0])
+                            .get()
+                            .build();
 
-                    if (urlConnection.getResponseCode() != 200) {
+                    Response response = okHttpClient.newCall(request).execute();
+
+                    if (response.code() != 200) {
                         try {
-                            String error = Helpers.convertStreamToString(urlConnection.getErrorStream());
+                            String error = response.body().string();
                             Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_error) + " " + error);
                             Log.e(TAG, "Download OCID data error: " + error);
                         } catch (Exception e) {
@@ -230,38 +208,33 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         }
                         return "Error";
                     } else {
-                        // http://stackoverflow.com/questions/10439829/urlconnection-getcontentlength-returns-1
                         // This returns "-1" for streamed response (Chunked Transfer Encoding)
-                        total = urlConnection.getContentLength();
+                        total = response.body().contentLength();
                         if (total == -1 ) {
                             Log.d(TAG, "doInBackground DBE_DOWNLOAD_REQUEST total not returned!");
                             total = 1024; // Let's set it arbitrarily to something other than "-1"
                         } else {
                             Log.d(TAG, "doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
-                            publishProgress((int) (0.25 * total), total); // Let's show something!
+                            publishProgress((int) (0.25 * total), (int)total); // Let's show something!
                         }
 
                         FileOutputStream output = new FileOutputStream(file, false);
-                        InputStream input = new BufferedInputStream(urlConnection.getInputStream());
+                        InputStream input = new BufferedInputStream(response.body().byteStream());
 
                         byte[] data = new byte[1024];
                         while ((count = input.read(data)) > 0) {
                             // writing data to file
                             output.write(data, 0, count);
                             progress += count;
-                            publishProgress(progress, total);
+                            publishProgress(progress, (int)total);
                         }
                         input.close();
                         // flushing output
                         output.flush();
                         output.close();
                     }
-                    urlConnection.disconnect();
                     return "Successful";
 
-                } catch (MalformedURLException e) {
-                    Log.e(TAG, "Malformed URL", e);
-                    return null;
                 } catch (IOException e) {
                     Log.w(TAG, "Problem reading data from steam", e);
                     return null;

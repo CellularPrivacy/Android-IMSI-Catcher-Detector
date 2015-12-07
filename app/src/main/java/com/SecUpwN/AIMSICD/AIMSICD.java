@@ -51,8 +51,16 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
+import com.SecUpwN.AIMSICD.utils.StackOverflowXmlParser;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -88,12 +96,18 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     private DrawerMenuActivityConfiguration mNavConf;
 
+    //TODO: @Inject
+    OkHttpClient okHttpClient;
+
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //TODO: Use a dependency Injection for this
+        okHttpClient = ((AppAIMSICD)getApplication()).getOkHttpClient();
 
         moveData();
 
@@ -344,8 +358,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.MAIN.ACD) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
-                Cell.CellLookUpAsync cellLookUpAsync = new Cell.CellLookUpAsync();
-                cellLookUpAsync.delegate = this;
+
+                //TODO: Use Retrofit for that
                 StringBuilder sb = new StringBuilder();
                 sb.append("http://www.opencellid.org/cell/get?key=").append(CellTracker.OCID_API_KEY);
 
@@ -366,7 +380,29 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 }
 
                 sb.append("&format=xml");
-                cellLookUpAsync.execute(sb.toString());
+
+                Request request = new Request.Builder()
+                        .url(sb.toString())
+                        .get()
+                        .build();
+
+                okHttpClient.newCall(request)
+                        .enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Request request, IOException e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(Response response) throws IOException {
+                                try {
+                                    List<Cell> cellList = new StackOverflowXmlParser().parse(response.body().byteStream());
+                                    AIMSICD.this.processFinish(cellList);
+                                } catch (XmlPullParserException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
             } else {
                 Helpers.sendMsg(mContext, mContext.getString(R.string.no_opencellid_key_detected));
             }
