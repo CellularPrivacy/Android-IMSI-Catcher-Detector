@@ -90,6 +90,7 @@ import io.freefair.android.util.logging.Logger;
 
 public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
+    //TODO: @Inject
     private final Logger log = AndroidLogger.forClass(MapViewerOsmDroid.class);
     public static final String updateOpenCellIDMarkers = "update_open_cell_markers";
 
