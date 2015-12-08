@@ -10,15 +10,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.Status;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 /**
  * Base activity class, handles code that is shared between all activities
@@ -26,9 +27,8 @@ import com.SecUpwN.AIMSICD.utils.Status;
  * @author Tor Henning Ueland
  */
 public class BaseActivity extends AppCompatActivity {
-    private static final String TAG = "AIMSICD";
-    private static final String mTAG = "BaseActivity";
-
+    //TODO: @Inject
+    private final Logger log = AndroidLogger.forClass(BaseActivity.class);
 
     /**
      * Triggered when GUI is opened
@@ -36,7 +36,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, mTAG + ": StatusWatcher starting watching");
+        log.debug("StatusWatcher starting watching");
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("StatusChange"));
         updateIcon(this);
@@ -48,8 +48,8 @@ public class BaseActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, mTAG +  ": StatusWatcher received status change to " + Status.getStatus().name()+", updating icon");
-                    updateIcon(context);
+            log.debug("StatusWatcher received status change to " + Status.getStatus().name() + ", updating icon");
+            updateIcon(context);
         }
     };
 
@@ -72,7 +72,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, mTAG + ": StatusWatcher stopped watching");
+        log.debug("StatusWatcher stopped watching");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 }

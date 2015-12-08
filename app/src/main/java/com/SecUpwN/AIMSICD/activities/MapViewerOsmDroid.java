@@ -24,7 +24,6 @@ import android.telephony.CellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -57,6 +56,9 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
 /**
  * Description:    TODO: add details
  * <p/>
@@ -88,7 +90,7 @@ import java.util.List;
 
 public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
-    private final String TAG = "AIMSICD_MapViewer";
+    private final Logger log = AndroidLogger.forClass(MapViewerOsmDroid.class);
     public static final String updateOpenCellIDMarkers = "update_open_cell_markers";
 
     private MapView mMap;
@@ -123,7 +125,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "Starting MapViewer");
+        log.info("Starting MapViewer");
         super.onCreate(savedInstanceState);
         mContext = this;
 
@@ -207,7 +209,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         public void onReceive(Context context, Intent intent) {
             loadEntries();
             if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer != null && mCellTowerGridMarkerClusterer.getItems() != null) {
-                Log.v(TAG, "mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                log.verbose("mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
             }
 
         }
@@ -238,7 +240,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            Log.e(TAG, "Service Disconnected");
+            log.error("Service Disconnected");
             mBound = false;
         }
     };
@@ -400,7 +402,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                     // Grab cell data from CELL_TABLE (cellinfo) --> DBi_bts
                     c = mDbHelper.getCellData();
                 } catch (IllegalStateException ix) {
-                    Log.e(TAG, "Problem getting data from CELL_TABLE", ix);
+                    log.error("Problem getting data from CELL_TABLE", ix);
                 }
 
                 /*
@@ -469,7 +471,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                         double[] d = mDbHelper.getDefaultLocation(mcc);
                         ret = new GeoPoint(d[0], d[1]);
                     } catch (Exception e) {
-                        Log.e("map", "Error getting default location!", e);
+                        log.error("Error getting default location!", e);
                     }
                 }
                 if (c != null) {
@@ -482,7 +484,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                             return null;
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
-                        Log.w(TAG, "thread interrupted", e);
+                        log.warn("thread interrupted", e);
                     }
                 List<Cell> nc = mAimsicdService.getCellTracker().updateNeighbouringCells();
                 for (Cell cell : nc) {
@@ -505,7 +507,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                         ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_orange));
                         items.add(ovm);
                     } catch (Exception e) {
-                        Log.e("map", "Error plotting neighbouring cells", e);
+                        log.error("Error plotting neighbouring cells", e);
                     }
                 }
 
@@ -549,7 +551,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 }
                 if (mCellTowerGridMarkerClusterer != null) {
                     if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer.getItems() != null) {
-                        Log.v(TAG, "CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                        log.verbose("CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
                     }
                     //Drawing markers of cell tower immediately as possible
                     mCellTowerGridMarkerClusterer.invalidate();
