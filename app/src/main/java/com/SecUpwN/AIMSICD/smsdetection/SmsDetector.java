@@ -151,6 +151,7 @@ public final class SmsDetector extends Thread {
             mLogcatReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         } catch (InterruptedException | IOException e) {
             Log.e(TAG, "Exception while initializing LogCat (time, radio, main) reader", e);
+            return;
         }
 
         String logcatLine;
