@@ -6,8 +6,8 @@
     <string name="quit">Stoppen</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Annuleren</string>
-    <string name="text_agree">Accoord</string>
-    <string name="text_disagree">Niet accoord</string>
+    <string name="text_agree">Akkoord</string>
+    <string name="text_disagree">Niet akkoord</string>
 
     <string name="disclaimer_title">DISCLAIMER</string>
     <string name="toggle_attack_detection">Aanvalsdetectie aan/uit</string>
@@ -27,7 +27,7 @@
 
     <string name="device_info_title">Apparaatgegevens</string>
     <string name="sim_info_title">SIM gegevens</string>
-    <string name="network_info">Netwerk gegevens</string>
+    <string name="network_info">Netwerkgegevens</string>
     <string name="cell_info_title">Huidig gevarenniveau</string>
     <string name="neighbouring_cells_title">Buurcellen</string>
     <string name="ciphering_indicator_title">Encryptie indicator</string>
@@ -84,7 +84,7 @@
     <string name="pref_system_title">Systeeminstellingen</string>
     <string name="pref_autostart_title">Automatisch starten</string>
     <string name="pref_autostart_summ">Service automatisch starten bij opstarten telefoon</string>
-    <string name="disclaimer">"Door het gebruik van AIMSICD begrijpt u en gaat u er mee accoord dat AIMSICD een experimenteel en informatief Android programma is dat door verschiullende redenen mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het op andere manieren die de ontwikkelaars momenteel nog niet begrijpen omzeild kan worden. U begrijpt en gaat er tevens mee accoord dat dit de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. "</string>
+    <string name="disclaimer">"Door het gebruik van AIMSICD begrijpt u en gaat u er mee akkoord dat AIMSICD een experimenteel en informatief Android programma is dat door verschillende redenen mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het op andere manieren die de ontwikkelaars momenteel nog niet begrijpen omzeild kan worden. U begrijpt en gaat er tevens mee akkoord dat dit de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. "</string>
 
     <string name="about_desc_icon_idle">Inactief / aan het laden.</string>
     <string name="pref_persistservice_title">Permanente service</string>
@@ -313,5 +313,18 @@
     <string name="getting_ocid_key">Verkrijgen OpenCellId API sleutel...</string>
 
     <string name="delete_database_msg_success">De database is succesvol verwijderd en opnieuw aangemaakt.\nHerstart de app om oude gegevens uit het geheugen te verwijderen.</string>
+
+    <string name="notification_vibrate_normal">Normaal</string>
+    <string name="notification_vibrate_medium">Gemiddeld</string>
+    <string name="notification_vibrate_alarm">Alarm</string>
+    
+    <string name="deleted">Verwijderd</string>
+    <string name="failed_to_delete">Fout bij het verwijderen</string>
+    <string name="the_string_was_added_to_db">De string is toegevoegd aan de database</string>
+    <string name="pref_notification_vibrate_enable_title">Trilfunctie Inschakelen</string>
+    <string name="pref_notification_vibrate_min_level_title">Vibreren bij gevarenniveau</string>
+    <string name="pref_notification_vibrate_min_level_summary">Selecteer het minimum gevarenniveau voor de trilfunctie</string>
+    <string name="notification_vibrate_idle">Inactief</string>
+    <string name="failed_to_add_the_string_to_db">String aan database toevoegen is mislukt</string>
 
     </resources>
