@@ -41,21 +41,9 @@ public class AboutFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.about_fragment, container, false);
-        String version;
+        String version = BuildConfig.VERSION_NAME;
 
         btncredits = (Button) v.findViewById(R.id.aimsicd_credits_link);
-
-        PackageManager manager = mContext.getPackageManager();
-        try {
-            PackageInfo info = manager != null ? manager
-                    .getPackageInfo(mContext.getPackageName(), 0) : null;
-            version = (info != null ? info.versionName : "");
-        } catch (PackageManager.NameNotFoundException e) {
-            //Woops something went wrong?? // so what do we do then?
-            // YES!! LOG THE EXCEPTION ~agilob
-            log.error("Something went wrong", e);
-            version = "";
-        }
 
         String BUILDOZER_BUILDNUMBER = BuildConfig.BUILDOZER_BUILDNUMBER;
         if (BUILDOZER_BUILDNUMBER == null) {
