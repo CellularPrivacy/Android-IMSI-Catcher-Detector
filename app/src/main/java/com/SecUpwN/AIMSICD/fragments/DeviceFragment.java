@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +28,12 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.widget.HighlightTextView;
 import com.kaichunlin.transition.animation.AnimationManager;
 
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
 public class DeviceFragment extends Fragment {
 
-    private final String TAG = "AIMSICD";
+    private final Logger log = AndroidLogger.forClass(DeviceFragment.class);
 
     private View mView;
 
@@ -103,7 +105,7 @@ public class DeviceFragment extends Fragment {
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            Log.e(TAG, "Service Disconnected");
+            log.error("Service Disconnected");
             mBound = false;
         }
     };
