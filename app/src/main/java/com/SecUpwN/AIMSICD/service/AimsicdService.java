@@ -35,7 +35,6 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.WindowManager;
 
 import com.SecUpwN.AIMSICD.R;
@@ -44,6 +43,9 @@ import com.SecUpwN.AIMSICD.smsdetection.SmsDetector;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
 /**
  *  Description:    This starts the (background?) AIMSICD service to check for SMS and track
  *                  cells with or without GPS enabled.
@@ -51,7 +53,8 @@ import com.SecUpwN.AIMSICD.utils.GeoLocation;
  */
 public class AimsicdService extends Service {
 
-    private static final String TAG = "AimsicdService";
+    //TODO: @Inject
+    private final Logger log = AndroidLogger.forClass(AimsicdService.class);
 
     // /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
@@ -119,7 +122,7 @@ public class AimsicdService extends Service {
         mRilExecutor = new RilExecutor(this);
         mCellTracker = new CellTracker(this, signalStrengthTracker);
 
-        Log.i(TAG, "Service launched successfully.");
+        log.info("Service launched successfully.");
     }
 
     @Override
@@ -138,7 +141,7 @@ public class AimsicdService extends Service {
         if (SmsDetector.getSmsDetectionState()) {
             smsdetector.stopSmsDetection();
         }
-        Log.i(TAG, "Service destroyed.");
+        log.info("Service destroyed.");
     }
 
     public GeoLocation lastKnownLocation() {
@@ -189,7 +192,7 @@ public class AimsicdService extends Service {
 
     public void startSmsTracking() {
         if(!isSmsTracking()) {
-            Log.i(TAG, "Sms Detection Thread Started");
+            log.info("Sms Detection Thread Started");
             smsdetector = new SmsDetector(this);
             smsdetector.startSmsDetection();
         }
@@ -198,7 +201,7 @@ public class AimsicdService extends Service {
     public void stopSmsTracking() {
         if(isSmsTracking()) {
             smsdetector.stopSmsDetection();
-            Log.i(TAG, "Sms Detection Thread Stopped");
+            log.info("Sms Detection Thread Stopped");
         }
     }
 

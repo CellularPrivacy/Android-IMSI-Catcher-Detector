@@ -13,7 +13,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
@@ -21,12 +20,15 @@ import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 import com.SecUpwN.AIMSICD.utils.TruncatedLocation;
 
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
 /**
  * Class to handle GPS location tracking
  */
 public final class LocationTracker {
 
-    private static final String TAG = "LocationTracker";
+    private final Logger log = AndroidLogger.forClass(LocationTracker.class);
     // how long with no movement detected, before we assume we are not moving
     public static final long MOVEMENT_THRESHOLD_MS = 20 * 1000;
 
@@ -59,21 +61,21 @@ public final class LocationTracker {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPS_MIN_UPDATE_TIME,
                     GPS_MIN_UPDATE_DISTANCE, mLocationListener);
         } catch (IllegalArgumentException e) {
-            Log.d(TAG, "GPS location provider doesnt exist");
+            log.debug("GPS location provider doesnt exist");
         }
 
         try {
             lm.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, GPS_MIN_UPDATE_TIME,
                     GPS_MIN_UPDATE_DISTANCE, mLocationListener);
         } catch (IllegalArgumentException e) {
-            Log.d(TAG, "Passive location provider doesnt exist");
+            log.debug("Passive location provider doesnt exist");
         }
 
         try {
             lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, GPS_MIN_UPDATE_TIME,
                     GPS_MIN_UPDATE_DISTANCE, mLocationListener);
         } catch (IllegalArgumentException e) {
-            Log.d(TAG, "Network location provider doesnt exist");
+            log.debug("Network location provider doesnt exist");
         }
     }
 
@@ -126,21 +128,21 @@ public final class LocationTracker {
                     try {
                         Cell cell = context.getCell();
                         if (cell != null) {
-                            Log.d("location", "Looking up MCC " + cell.getMCC());
+                            log.debug("Looking up MCC " + cell.getMCC());
 
                             double[] defLoc = mDbHelper.getDefaultLocation(cell.getMCC());
 
                             loc = GeoLocation.fromDegrees(defLoc[0], defLoc[1]);
                         }
                     } catch (Exception e) {
-                        Log.e("location", "Unable to get location from MCC", e);
+                        log.error("Unable to get location from MCC", e);
                     }
                 }
             }
         }
 
         if (loc != null)
-            Log.i("location", "Last known location " + loc.toString());
+            log.info("Last known location " + loc.toString());
 
         return loc;
     }
