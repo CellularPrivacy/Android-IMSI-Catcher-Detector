@@ -93,7 +93,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    public static ProgressBar mProgressBar;
 
     private long mLastPress = 0;    // Back press to exit timer
 
@@ -151,8 +150,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setHomeButtonEnabled(true);
-
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         prefs = mContext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
 
@@ -683,31 +680,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
      */
     private void trackFemtocell() {
         mAimsicdService.setTrackingFemtocell(!mAimsicdService.isTrackingFemtocell());
-    }
-
-    public void showProgressbar(final boolean indeterminate, final int max, final int progress) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mProgressBar.setIndeterminate(indeterminate);
-                if (max > 0)
-                    mProgressBar.setMax(max);
-                if (max > 0 && progress >= 0)
-                    mProgressBar.setProgress(progress);
-                mProgressBar.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-    public void hideProgressbar() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mProgressBar.setMax(0);
-                mProgressBar.setProgress(0);
-                mProgressBar.setVisibility(View.GONE);
-            }
-        });
     }
 
     public void onStop() {

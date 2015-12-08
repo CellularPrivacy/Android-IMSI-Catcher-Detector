@@ -263,15 +263,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         super.onPreExecute();
     }
 
-    @Override
-    protected void onProgressUpdate(Integer... values) {
-        super.onProgressUpdate(values);
-        // Silence or Remove when working:
-        log.verbose("onProgressUpdate values[0]: " + values[0] + " values[1]: " + values[1]);
-        AIMSICD.mProgressBar.setProgress(values[0]);
-        AIMSICD.mProgressBar.setMax(values[1]);
-    }
-
     /**
      *  Description:    This is where we:
      *
@@ -289,7 +280,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        AIMSICD.mProgressBar.setProgress(0);
         TinyDB tinydb = TinyDB.getInstance();
 
         switch (mType) {

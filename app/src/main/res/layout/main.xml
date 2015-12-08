@@ -7,20 +7,14 @@
         android:layout_height="match_parent">
 
     <!-- The main content view -->
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <FrameLayout
-                android:id="@+id/content_frame"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/progressBar"/>
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
+            android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0.01dp"
-            android:progressDrawable="@xml/pbar"/>
+            android:layout_height="match_parent" />
     </RelativeLayout>
 
     <!-- The navigation drawer -->

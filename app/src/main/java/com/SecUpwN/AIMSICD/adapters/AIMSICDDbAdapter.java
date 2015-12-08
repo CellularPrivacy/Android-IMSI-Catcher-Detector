@@ -630,16 +630,9 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                 List<String[]> csvCellID = new ArrayList<>();
                 String next[];
 
-                // Let's show something: Like 1/4 of a progress bar
-                AIMSICD.mProgressBar.setProgress(0);
-                AIMSICD.mProgressBar.setMax(4);
-                AIMSICD.mProgressBar.setProgress(1);
-
                 while ((next = csvReader.readNext()) != null) {
                     csvCellID.add(next);
                 }
-
-                AIMSICD.mProgressBar.setProgress(2);
 
                 if (!csvCellID.isEmpty()) {
                     int lines = csvCellID.size();
@@ -656,8 +649,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                     }
                     lCursor.close();
 
-                    AIMSICD.mProgressBar.setProgress(3);
-                    AIMSICD.mProgressBar.setMax(lines);
 
                     int rowCounter;
                     for (rowCounter = 1; rowCounter < lines; rowCounter++) {
@@ -715,7 +706,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                 0                           // TODO: rej_cause , set default 0
                         );
                     }
-                    AIMSICD.mProgressBar.setProgress(4);
                     log.debug( "PopulateDBeImport(): inserted " + rowCounter + " cells.");
                 }
             } else {
@@ -731,7 +721,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
-            AIMSICD.mProgressBar.setProgress(0);
         }
     }
 
@@ -750,13 +739,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      */
     public boolean restoreDB() {
         try {
-            // Progress bar should be here for each table, not each line.
-            AIMSICD.mProgressBar.setMax(mTables.length);
-            AIMSICD.mProgressBar.setProgress(0);
-            int tcount = 1;
 
             for (String table : mTables) {
-                AIMSICD.mProgressBar.setProgress(tcount++);
 
                 File file = new File(mExternalFilesDirPath + "aimsicd-" + table + ".csv");
                 if (file.exists()) {
@@ -963,8 +947,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         } catch (Exception e) {
             log.error( "RestoreDB() Error", e);
             return false;
-        } finally {
-            AIMSICD.mProgressBar.setProgress(0);
         }
 
     }
@@ -997,9 +979,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      */
     private void dumpDB() {
 
-        AIMSICD.mProgressBar.setMax(2);
-        AIMSICD.mProgressBar.setProgress(1);
-
         File dumpdir = new File(mExternalFilesDirPath);
         //if (!dir.exists()) { dir.mkdirs(); }
         File file = new File(dumpdir, "aimsicd_dump.db");
@@ -1011,12 +990,10 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         try {
             log.info( "DumpDB() Attempting to dump DB to: " + file + "\nUsing: \"" + execString + "\"\n");
             CMDProcessor.runSuCommand(execString); // We need SU for this...
-            AIMSICD.mProgressBar.setProgress(2);
         } catch (Exception e) {
             log.error( "DumpDB() Failed to export DB dump file: ", e);
         }
         log.info( "DumpDB() Dumped internal database to: " + aimdir + file);
-        AIMSICD.mProgressBar.setProgress(0);
     }
 
 
