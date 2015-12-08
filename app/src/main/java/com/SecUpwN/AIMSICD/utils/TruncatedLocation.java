@@ -1,7 +1,9 @@
 package com.SecUpwN.AIMSICD.utils;
 
 import android.location.Location;
-import android.util.Log;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -11,7 +13,7 @@ import java.text.ParseException;
  */
 public class TruncatedLocation extends Location {
 
-    private static final String TAG = "TruncLocation";
+    private static final Logger log = AndroidLogger.forClass(TruncatedLocation.class);
 
     public TruncatedLocation(Location l) {
         super(l);
@@ -41,7 +43,7 @@ public class TruncatedLocation extends Location {
             Number number = format.parse(s);
             td = number.doubleValue();
         } catch (ParseException e) {
-            Log.e(TAG, "parsing exception", e);
+            log.error("parsing exception", e);
         }
         return td;
     }

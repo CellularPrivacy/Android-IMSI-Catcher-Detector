@@ -8,23 +8,25 @@ package com.SecUpwN.AIMSICD;
 
 import android.app.Activity;
 import android.app.Application;
-import android.util.Log;
 import android.util.SparseArray;
 
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
 import com.SecUpwN.AIMSICD.utils.BaseAsyncTask;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
-import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
-// DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
-//import com.squareup.leakcanary.LeakCanary;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
+// DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
+//import com.squareup.leakcanary.LeakCanary;
+
 public class AppAIMSICD extends Application {
-    final static String TAG = "AIMSICD";
-    final static String mTAG = "AppAIMSICD";
+
+    private final Logger log = AndroidLogger.forClass(AppAIMSICD.class);
 
     private OkHttpClient okHttpClient;
 
@@ -57,9 +59,8 @@ public class AppAIMSICD extends Application {
             for (BaseAsyncTask<?, ?, ?> lTask : tasks) {
                 if (lTask.equals(pTask)) {
                     tasks.remove(lTask);
-                    if (BuildConfig.DEBUG) {
-                        Log.v(TAG, mTAG + ": BaseTask removed:" + pTask.toString());
-                    }
+                    log.verbose("BaseTask removed:" + pTask.toString());
+
                     break;
                 }
             }
@@ -74,18 +75,16 @@ public class AppAIMSICD extends Application {
         if (activity == null) {
             return;
         }
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, mTAG + ": BaseTask addTask activity:" + activity.getClass().getCanonicalName());
-        }
+
+        log.debug("BaseTask addTask activity:" + activity.getClass().getCanonicalName());
+
         int key = activity.getClass().getCanonicalName().hashCode();
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(key);
         if (tasks == null) {
             tasks = new ArrayList<>();
             mActivityTaskMap.put(key, tasks);
         }
-        if (BuildConfig.DEBUG) {
-            Log.v(TAG, mTAG + ": BaseTask added:" + pTask.toString());
-        }
+        log.verbose("BaseTask added:" + pTask.toString());
         tasks.add(pTask);
     }
 
@@ -93,9 +92,8 @@ public class AppAIMSICD extends Application {
         if (activity == null) {
             return;
         }
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, mTAG + ": BaseTask detach:" + activity.getClass().getCanonicalName());
-        }
+
+        log.debug("BaseTask detach:" + activity.getClass().getCanonicalName());
 
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName().hashCode());
         if (tasks != null) {
@@ -109,9 +107,8 @@ public class AppAIMSICD extends Application {
         if (activity == null) {
             return;
         }
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, mTAG + ": BaseTask attach:" + activity.getClass().getCanonicalName());
-        }
+        log.debug("BaseTask attach:" + activity.getClass().getCanonicalName());
+
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName().hashCode());
         if (tasks != null) {
             for (BaseAsyncTask<?, ?, ?> task : tasks) {

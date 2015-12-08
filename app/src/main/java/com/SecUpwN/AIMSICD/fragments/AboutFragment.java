@@ -16,7 +16,6 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +26,13 @@ import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
 
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
 public class AboutFragment extends Fragment {
 
-    private static final String TAG = "Aboutfragment";
+    //TODO: @Inject
+    private final Logger log = AndroidLogger.forClass(AboutFragment.class);
     private Context mContext;
     private Button btncredits;
 
@@ -50,7 +53,7 @@ public class AboutFragment extends Fragment {
         } catch (PackageManager.NameNotFoundException e) {
             //Woops something went wrong?? // so what do we do then?
             // YES!! LOG THE EXCEPTION ~agilob
-            Log.e(TAG, "Something went wrong", e);
+            log.error("Something went wrong", e);
             version = "";
         }
 

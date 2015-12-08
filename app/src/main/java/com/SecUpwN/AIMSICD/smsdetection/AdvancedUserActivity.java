@@ -11,7 +11,6 @@ package com.SecUpwN.AIMSICD.smsdetection;
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,9 +25,13 @@ import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 
 import java.util.ArrayList;
 
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
 public class AdvancedUserActivity extends AppCompatActivity {
 
-    private static final String TAG = "AdvancedUserActivity";
+    //TODO: @Inject
+    private final Logger log = AndroidLogger.forClass(AdvancedUserActivity.class);
 
     private ListView listViewAdv;
     private AIMSICDDbAdapter dbAccess;
@@ -51,7 +54,7 @@ public class AdvancedUserActivity extends AppCompatActivity {
         try {
             msgItems = dbAccess.getDetectionStrings();
         } catch (Exception ee) {
-            Log.e(TAG, "Database error", ee);
+            log.error("Database error", ee);
             msgItems = new ArrayList<>();
             AdvanceUserItems advUserItems = new AdvanceUserItems();
             advUserItems.setDetection_string("NO DATA");
@@ -80,7 +83,7 @@ public class AdvancedUserActivity extends AppCompatActivity {
                 try {
                     loadDbString();
                 } catch (Exception ee){
-                    Log.d(TAG, "Error loading db string", ee);
+                    log.debug("Error loading db string", ee);
                 }
                 return false;
             }
@@ -113,7 +116,7 @@ public class AdvancedUserActivity extends AppCompatActivity {
                     try {
                         loadDbString();
                     } catch (Exception ee) {
-                        Log.e(TAG, ee.getMessage(), ee);
+                        log.error(ee.getMessage(), ee);
                     }
                 }
             }
@@ -130,7 +133,7 @@ public class AdvancedUserActivity extends AppCompatActivity {
             newmsglist = dbAccess.getDetectionStrings();
             listViewAdv.setAdapter(new AdvanceUserBaseAdapter(getApplicationContext(), newmsglist));
         } catch (Exception ee) {
-            Log.e(TAG, "<AdvanceUserItems>", ee);
+            log.error("<AdvanceUserItems>", ee);
         }
     }
 }

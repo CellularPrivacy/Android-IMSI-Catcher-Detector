@@ -11,7 +11,6 @@ package com.SecUpwN.AIMSICD.smsdetection;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -23,8 +22,14 @@ import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 
 import java.util.ArrayList;
 
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
 public class AdvancedUserSmsActivity extends AppCompatActivity {
-    final  static String TAG ="AdvancedUserSmsActivity";
+
+    //TODO: @Inject
+    private final Logger log = AndroidLogger.forClass(AdvancedUserSmsActivity.class);
+
     ListView listViewAdv;
     AIMSICDDbAdapter dbaccess;
     ArrayList<CapturedSmsData> msgitems;
@@ -59,8 +64,8 @@ public class AdvancedUserSmsActivity extends AppCompatActivity {
             }
             smscur.close();
 
-        }catch (Exception ee){
-            Log.e(TAG, "DB ERROR>>>>" + ee.toString());
+        } catch (Exception ee) {
+            log.error("DB ERROR", ee);
         }
 
 
@@ -111,9 +116,9 @@ public class AdvancedUserSmsActivity extends AppCompatActivity {
             }
 
             smscur.close();
-            listViewAdv.setAdapter(new AdvanceUserBaseSmsAdapter(getApplicationContext(),newmsglist));
-        }catch (Exception ee){
-            Log.e(TAG, "DB ERROR>>>>" + ee.toString());
+            listViewAdv.setAdapter(new AdvanceUserBaseSmsAdapter(getApplicationContext(), newmsglist));
+        } catch (Exception ee) {
+            log.error("DB ERROR", ee);
         }
 
 

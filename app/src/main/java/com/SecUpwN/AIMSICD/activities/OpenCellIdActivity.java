@@ -9,7 +9,6 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.SecUpwN.AIMSICD.AppAIMSICD;
@@ -22,6 +21,9 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 /**
  *  Description:    Popup toast messages asking if user wants to download new API key
@@ -37,7 +39,8 @@ import java.io.IOException;
  */
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;
-    private static final String TAG = "OpenCellIdActivity";
+    //TODO: @Inject
+    private final Logger log = AndroidLogger.forClass(OpenCellIdActivity.class);
     private ProgressDialog pd;
 
     //TODO: @Inject
@@ -77,7 +80,7 @@ public class OpenCellIdActivity extends BaseActivity {
             try {
                 return requestNewOCIDKey();
             } catch (final IOException e) {
-                Log.w(TAG, "Error getting new OCID-API", e);
+                log.warn("Error getting new OCID-API", e);
 
                 /**
                  * In case response from OCID takes more time and user pressed back or anything else,
@@ -164,38 +167,38 @@ public class OpenCellIdActivity extends BaseActivity {
             String htmlResponse = response.body().string();
 
             // For debugging HTTP server response and codes
-            Log.d(TAG, "Response Html=" + htmlResponse + " Response Code=" + String.valueOf(responseCode));
+            log.debug("Response Html=" + htmlResponse + " Response Code=" + String.valueOf(responseCode));
 
             if (responseCode == 200) {
-                Log.d(TAG, "OCID Code 1: Cell Not found: " + htmlResponse);
+                log.debug("OCID Code 1: Cell Not found: " + htmlResponse);
                 return htmlResponse;
 
             } else if (responseCode == 401) {
-                Log.d(TAG, "OCID Code 2: Invalid API Key! :" + htmlResponse);
+                log.debug("OCID Code 2: Invalid API Key! :" + htmlResponse);
                 return htmlResponse;
 
             } else if(responseCode == 400){
-                Log.d(TAG, "OCID Code 3: Invalid input data: " + htmlResponse);
+                log.debug("OCID Code 3: Invalid input data: " + htmlResponse);
                 return "Bad Request"; // For making a toast!
 
             } else if (responseCode == 403) {
-                Log.d(TAG, "OCID Code 4:  Your API key must be white listed: " + htmlResponse);
+                log.debug("OCID Code 4:  Your API key must be white listed: " + htmlResponse);
                 return "Bad Request"; // For making a toast!
 
             } else if(responseCode == 500){
-                Log.d(TAG, "OCID Code 5: Remote internal server error: " + htmlResponse);
+                log.debug("OCID Code 5: Remote internal server error: " + htmlResponse);
                 return "Bad Request"; // For making a toast!
 
             } else if (responseCode == 503) {
-                Log.d(TAG, "OCID Code 6: Reached 24hr API key request limit: " + htmlResponse);
+                log.debug("OCID Code 6: Reached 24hr API key request limit: " + htmlResponse);
                 return htmlResponse;
 
             } else if(responseCode == 429){
-                Log.d(TAG, "OCID Code 7: Exceeded daily request limit (1000) for your API key: " + htmlResponse);
+                log.debug("OCID Code 7: Exceeded daily request limit (1000) for your API key: " + htmlResponse);
                 return htmlResponse;
 
             } else {
-                Log.e(TAG, "OCID Returned Unknown Response: " + responseCode);
+                log.debug("OCID Returned Unknown Response: " + responseCode);
                 return null;
             }
         }

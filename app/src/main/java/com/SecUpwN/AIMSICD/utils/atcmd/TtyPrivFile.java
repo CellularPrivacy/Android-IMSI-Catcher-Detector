@@ -5,8 +5,6 @@
  */
 package com.SecUpwN.AIMSICD.utils.atcmd;
 
-import android.util.Log;
-
 import java.io.IOException;
 
 
@@ -42,7 +40,7 @@ public class TtyPrivFile extends TtyStream {
         mReadProc = read;
         mWriteProc = write;
 
-        Log.d(TAG, "mReadProc=" + mReadProc + ", mWriteProc=" + mWriteProc);
+        log.debug("mReadProc=" + mReadProc + ", mWriteProc=" + mWriteProc);
     }
 
     @Override
@@ -54,7 +52,7 @@ public class TtyPrivFile extends TtyStream {
             mOutputStream.write("ATE0\r".getBytes("ASCII"));// disable local Echo
             mOutputStream.flush();
         } catch (IOException e) {
-            Log.e(TAG, "moutputstream didnt close", e);
+            log.error("moutputstream didnt close", e);
         }
         mReadProc.destroy();
         mWriteProc.destroy();

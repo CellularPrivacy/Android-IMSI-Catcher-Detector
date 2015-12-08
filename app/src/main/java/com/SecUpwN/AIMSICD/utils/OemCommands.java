@@ -5,7 +5,8 @@
  */
 package com.SecUpwN.AIMSICD.utils;
 
-import android.util.Log;
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 import com.SecUpwN.AIMSICD.R;
 
@@ -22,7 +23,8 @@ import android.content.Context;
  */
 public class OemCommands {
 
-    private static final String TAG = "AIMSICD_OemCommands";
+    private static final Logger log = AndroidLogger.forClass(OemCommands.class);
+
     public static final char OEM_SERVM_FUNCTAG = 1;
     public static final char OEM_SM_ACTION = 0;
     public static final char OEM_SM_QUERY = 1;
@@ -106,7 +108,7 @@ public class OemCommands {
             dos.writeByte(query);
             return baos.toByteArray();
         } catch (IOException e) {
-            Log.e(TAG, "", e);
+            log.error("", e);
         }
         return null;
     }
@@ -128,7 +130,7 @@ public class OemCommands {
             dos.writeByte(modeType);
             return baos.toByteArray();
         } catch (IOException e) {
-            Log.e(TAG, "", e);
+            log.error("", e);
         }
         return null;
     }
@@ -151,7 +153,7 @@ public class OemCommands {
             dos.writeByte(query);
             return baos.toByteArray();
         } catch (IOException e) {
-            Log.e(TAG, "", e);
+            log.error("", e);
         }
         return null;
     }

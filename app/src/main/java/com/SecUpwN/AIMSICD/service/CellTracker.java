@@ -26,7 +26,6 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
-import android.util.Log;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.BuildConfig;
@@ -44,6 +43,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 /**
  * Description:     Class to handle tracking of cell information
@@ -83,7 +85,7 @@ import java.util.concurrent.TimeUnit;
 
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private static final String TAG = "CellTracker";
+    private final Logger log = AndroidLogger.forClass(CellTracker.class);
 
     public static Cell mMonitorCell;
     public static String OCID_API_KEY = null;   // see getOcidKey()
@@ -355,7 +357,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         //if nclp = true then check for neighboringCellInfo
         if (neighboringCellInfo != null && neighboringCellInfo.size() == 0 && nclp) {
 
-            Log.i(TAG, "NeighbouringCellInfo is empty: start polling...");
+            log.info("NeighbouringCellInfo is empty: start polling...");
 
             // Try to poll the neighboring cells for a few seconds
             neighboringCellBlockingQueue = new LinkedBlockingQueue<>(100); // TODO What is this ??
@@ -376,14 +378,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             // TODO: Consider removing ??
             for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
                 try {
-                    Log.d(TAG, "NeighbouringCellInfo empty: trying " + i);
+                    log.debug("NeighbouringCellInfo empty: trying " + i);
                     NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
                         if(neighboringCellInfo != null)
                             if (neighboringCellInfo.size() > 0) {
                                 // Can we think of a better log message here?
-                                Log.d(TAG, "NeighbouringCellInfo found on " + i + " try. (time based)");
+                                log.debug("NeighbouringCellInfo found on " + i + " try. (time based)");
                                 break;
                             } else {
                                 continue;
@@ -405,11 +407,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         //commented because I got NPE here
         // TODO: Who are you?? --EVA
-        //Log.d(TAG, mTAG + ": neighbouringCellInfo size: " + neighboringCellInfo.size());
+        //log.debug(mTAG + ": neighbouringCellInfo size: " + neighboringCellInfo.size());
 
         // Add NC list to DBi_measure:nc_list
         for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
-            Log.i(TAG, "NeighbouringCellInfo -" +
+            log.info("NeighbouringCellInfo -" +
                     " LAC:" + neighbourCell.getLac() +
                     " CID:" + neighbourCell.getCid() +
                     " PSC:" + neighbourCell.getPsc() +
@@ -460,7 +462,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      */
     public void checkForNeighbourCount(CellLocation location){
-        Log.i(TAG, "CheckForNeighbourCount()");
+        log.info("CheckForNeighbourCount()");
 
         Integer ncls = 0;                                       // NC list size
         if(tm != null && tm.getNeighboringCellInfo() != null)   // See # 383
@@ -468,20 +470,20 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         Boolean nclp = tinydb.getBoolean("nc_list_present");    // NC list present? (default is false)
 
         if (ncls > 0) {
-            Log.d(TAG, "NeighbouringCellInfo size: " + ncls );
+            log.debug("NeighbouringCellInfo size: " + ncls );
             if (!nclp) {
-                Log.d(TAG, "Setting nc_list_present to: true");
+                log.debug("Setting nc_list_present to: true");
                 tinydb.putBoolean("nc_list_present", true);
             }
         } else if (ncls == 0 && nclp) {
             // Detection 7a
-            Log.i(TAG, "ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID());
+            log.info("ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID());
             vibrate(100, Status.Type.MEDIUM);
             dbHelper.toEventLog(4,"No neighboring cells detected"); // (DF_id, DF_desc)
         } else  {
             // Todo: remove cid string when working.
-            Log.d(TAG, "NC list not supported by AOS on this device. Nothing to do.");
-            Log.d(TAG, ": Setting nc_list_present to: false");
+            log.debug("NC list not supported by AOS on this device. Nothing to do.");
+            log.debug(": Setting nc_list_present to: false");
             tinydb.putBoolean("nc_list_present", false);
         }
     }
@@ -568,7 +570,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
                             dbHelper.toEventLog(2, "CID not in DBe_import");
 
-                            Log.i(TAG, "ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
+                            log.info("ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
                             vibrate(100, Status.Type.MEDIUM);
 
                             mCellIdNotInOpenDb = true;
@@ -618,7 +620,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             return;
         }
 
-        Log.i(TAG, "NeighbouringCellInfo empty - event based polling succeeded!");
+        log.info("NeighbouringCellInfo empty - event based polling succeeded!");
         tm.listen(phoneStatelistener, PhoneStateListener.LISTEN_NONE);
         if(neighboringCellInfo == null)
             neighboringCellInfo = new ArrayList<>();
@@ -1131,7 +1133,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         mTrackingFemtocell = true;
         mPhoneStateListener = new PhoneStateListener() {
             public void onServiceStateChanged(ServiceState s) {
-                Log.d(TAG, context.getString(R.string.service_state_changed));
+                log.debug(context.getString(R.string.service_state_changed));
                 getServiceStateInfo(s);
             }
         };
@@ -1148,7 +1150,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
             mTrackingFemtocell = false;
             setNotification();
-            Log.v(TAG, context.getString(R.string.stopped_tracking_femtocell));
+            log.verbose(context.getString(R.string.stopped_tracking_femtocell));
         }
     }
 
@@ -1196,11 +1198,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     return !((networkID < FEMTO_NID_MIN) || (networkID >= FEMTO_NID_MAX));
 
                 } else {
-                    Log.v(TAG, "Cell location info is null.");
+                    log.verbose("Cell location info is null.");
                     return false;
                 }
             } else {
-                Log.v(TAG, "Telephony Manager is null.");
+                log.verbose("Telephony Manager is null.");
                 return false;
             }
         }
@@ -1219,11 +1221,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     int FEMTO_NID_MIN = 0xfa;
                     return !((networkID < FEMTO_NID_MIN) || (networkID >= FEMTO_NID_MAX));
                 } else {
-                    Log.v(TAG, "Cell location info is null.");
+                    log.verbose("Cell location info is null.");
                     return false;
                 }
             } else {
-                Log.v(TAG, "Telephony Manager is null.");
+                log.verbose("Telephony Manager is null.");
                 return false;
             }
         }

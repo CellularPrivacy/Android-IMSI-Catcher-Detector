@@ -6,10 +6,12 @@
 package com.SecUpwN.AIMSICD.utils.atcmd;
 
 import android.os.Message;
-import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 /**
  *  Description:    ...
@@ -33,8 +35,7 @@ import java.io.IOException;
  */
 public abstract class AtCommandTerminal {
 
-    protected static final String TAG = "AIMSICD";
-    protected static final String mTAG = "AtCommandTerminal"; //ATCoP:
+    protected static Logger log = AndroidLogger.forClass(AtCommandTerminal.class);
 
     // message may be null if the response is not needed
     public abstract void send(String s, Message message);
@@ -53,7 +54,7 @@ public abstract class AtCommandTerminal {
             try {
                 term = new TtyPrivFile(smdFile.getAbsolutePath());
             } catch (IOException e) {
-                Log.e(TAG, mTAG + " IOException in constructor", e);
+                log.error("IOException in constructor", e);
                 // fall through
             }
         }
