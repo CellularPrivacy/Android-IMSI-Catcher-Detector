@@ -12,7 +12,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +26,6 @@ import android.widget.TextView;
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
-import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 public class AboutFragment extends Fragment {
 
@@ -63,7 +65,7 @@ public class AboutFragment extends Fragment {
             versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
             versionNumber.setText(getString(R.string.app_version) + version);
 
-            if(!"NA".equals(BUILDOZER_BUILDNUMBER)) {
+            if (!"NA".equals(BUILDOZER_BUILDNUMBER)) {
                 BuildozerView = (TextView) v.findViewById(R.id.buildozer_buildnumber);
                 BuildozerView.setText(getString(R.string.buildozer_buildnumber) + BUILDOZER_BUILDNUMBER);
                 BuildozerView.setVisibility(View.VISIBLE);
@@ -101,7 +103,7 @@ public class AboutFragment extends Fragment {
             imgView_idle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MiscUtils.startPopUpInfo(mContext, 0);
+                    showInfoDialog(Status.IDLE);
                 }
             });
 
@@ -109,7 +111,7 @@ public class AboutFragment extends Fragment {
             imgView_normal.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MiscUtils.startPopUpInfo(mContext, 1);
+                    showInfoDialog(Status.NORMAL);
                 }
             });
 
@@ -117,7 +119,7 @@ public class AboutFragment extends Fragment {
             imgView_medium.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MiscUtils.startPopUpInfo(mContext, 2);
+                    showInfoDialog(Status.MEDIUM);
                 }
             });
 
@@ -125,7 +127,7 @@ public class AboutFragment extends Fragment {
             imgView_high.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MiscUtils.startPopUpInfo(mContext, 3);
+                    showInfoDialog(Status.HIGH);
                 }
             });
 
@@ -133,7 +135,7 @@ public class AboutFragment extends Fragment {
             imgView_danger.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MiscUtils.startPopUpInfo(mContext, 4);
+                    showInfoDialog(Status.DANGER);
                 }
             });
 
@@ -141,7 +143,7 @@ public class AboutFragment extends Fragment {
             imgView_run.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MiscUtils.startPopUpInfo(mContext, 5);
+                    showInfoDialog(Status.RUN);
                 }
             });
         }
@@ -172,5 +174,78 @@ public class AboutFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = activity.getBaseContext();
+    }
+
+    private void showInfoDialog(Status status) {
+        new AlertDialog.Builder(getActivity())
+                .setIcon(status.getIcon())
+                .setTitle(getString(R.string.status) + "\t" + getString(status.getName()))
+                .setMessage(status.getDescription())
+                .show();
+    }
+
+    public enum Status {
+        IDLE(
+                R.drawable.sense_idle,
+                R.string.idle,
+                R.string.detail_info_idle
+        ),
+        NORMAL(
+                R.drawable.sense_ok,
+                R.string.normal,
+                R.string.detail_info_normal
+        ),
+        MEDIUM(
+                R.drawable.sense_medium,
+                R.string.medium,
+                R.string.detail_info_medium
+        ),
+        HIGH(
+                R.drawable.sense_high,
+                R.string.high,
+                R.string.detail_info_high
+        ),
+        DANGER(
+                R.drawable.sense_danger,
+                R.string.danger,
+                R.string.detail_info_danger
+        ),
+        RUN(
+                R.drawable.sense_skull,
+                R.string.run,
+                R.string.detail_info_run
+        );
+
+        @DrawableRes
+        private int icon;
+
+        @StringRes
+        private int name;
+
+        @StringRes
+        private int description;
+
+        Status(@DrawableRes int icon,
+               @StringRes int name,
+               @StringRes int description) {
+            this.icon = icon;
+            this.name = name;
+            this.description = description;
+        }
+
+        @DrawableRes
+        public int getIcon() {
+            return icon;
+        }
+
+        @StringRes
+        public int getName() {
+            return name;
+        }
+
+        @StringRes
+        public int getDescription() {
+            return description;
+        }
     }
 }

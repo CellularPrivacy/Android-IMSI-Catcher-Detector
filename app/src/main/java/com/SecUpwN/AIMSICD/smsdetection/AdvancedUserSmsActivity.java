@@ -8,9 +8,9 @@
 
 package com.SecUpwN.AIMSICD.smsdetection;
 
-import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +23,7 @@ import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 
 import java.util.ArrayList;
 
-public class AdvancedUserSmsActivity extends Activity {
+public class AdvancedUserSmsActivity extends AppCompatActivity {
     final  static String TAG ="AdvancedUserSmsActivity";
     ListView listViewAdv;
     AIMSICDDbAdapter dbaccess;

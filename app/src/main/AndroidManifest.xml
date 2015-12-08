@@ -179,12 +179,6 @@
             android:screenOrientation="portrait"> </activity>
 
         <activity
-            android:name=".activities.CustomPopUp"
-            android:label="@string/title_activity_about_pop_up"
-            android:theme="@android:style/Theme.Dialog">
-        </activity>
-
-        <activity
             android:name=".smsdetection.AdvancedUserActivity"
             android:label="@string/title_activity_advanced_user" >
         </activity>
