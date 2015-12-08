@@ -13,7 +13,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
@@ -37,7 +39,7 @@ import java.util.Locale;
  */
 public class MiscUtils {
 
-    private static final String TAG = "MiscUtils";
+    private static final Logger log = AndroidLogger.forClass(MiscUtils.class);
 
     public static String setAssetsString(Context context){
         BufferedReader reader = null;
@@ -51,13 +53,13 @@ public class MiscUtils {
                 rline = reader.readLine().replace("'","\\'").replace("\\n","");
             }
         } catch (Exception ee) {
-            Log.e(TAG, ee.getMessage());
+            log.error(ee.getMessage());
         } finally {
             if(reader != null) {
                 try {
                     reader.close();
                 } catch (Exception ee) {
-                    Log.e(TAG, ee.getMessage());
+                    log.error(ee.getMessage());
                 }
             }
         }

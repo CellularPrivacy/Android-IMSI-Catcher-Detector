@@ -201,7 +201,7 @@ public class SignalStrengthTracker {
     }
 
     public void onSensorChanged() {
-        //log.debug(TAG, "We are moving...");
+        //log.debug("We are moving...");
         lastMovementDetected = System.currentTimeMillis();
     }
 }

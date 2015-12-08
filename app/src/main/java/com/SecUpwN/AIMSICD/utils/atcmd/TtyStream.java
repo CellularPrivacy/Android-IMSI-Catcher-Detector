@@ -6,7 +6,6 @@
 package com.SecUpwN.AIMSICD.utils.atcmd;
 
 import android.os.Message;
-import android.util.Log;
 import android.util.Pair;
 
 import java.io.BufferedReader;
@@ -81,7 +80,7 @@ class TtyStream extends AtCommandTerminal {
                         mOutputStream.write('\r');
                         mOutputStream.flush();
                     } catch (IOException e) {
-                        Log.e(TAG, "Output IOException", e);
+                        log.error("Output IOException", e);
                         if (resultMessage != null) {
                             resultMessage.obj = e;
                             resultMessage.sendToTarget();
@@ -117,7 +116,7 @@ class TtyStream extends AtCommandTerminal {
                             line = in.readLine();
                             if (line == null) throw new IOException("reader closed");
                         } catch (IOException e) {
-                            Log.e(TAG, "Input IOException", e);
+                            log.error("Input IOException", e);
                             if (resultMessage != null) {
                                 resultMessage.obj = e;
                                 resultMessage.sendToTarget();
@@ -130,13 +129,13 @@ class TtyStream extends AtCommandTerminal {
                     } while (!(line.equals("OK") || line.equals("ERROR") || line.startsWith("+CME ERROR")));
 
                     // XXX this logging could have sensitive info
-                    //Log.d(TAG, "IO< " + lines);
+                    //log.debug("IO< " + lines);
 
                     if (resultMessage != null) {
                         resultMessage.obj = lines;
                         resultMessage.sendToTarget();
                     } else {
-                        Log.d(TAG, "Data came in with no handler");
+                        log.debug("Data came in with no handler");
                     }
                 }
             } catch (UnsupportedEncodingException e) {
@@ -152,7 +151,7 @@ class TtyStream extends AtCommandTerminal {
     public void send(String s, Message resultMessage) {
         try {
             // XXX this logging could have sensitive info
-            //Log.d(TAG, "IO> " + s);
+            //log.debug("IO> " + s);
             mWriteQ.add(Pair.create(s.getBytes("ASCII"), resultMessage));
         } catch (UnsupportedEncodingException e) {
             // we assume that if a String is being used for convenience, it must be ASCII

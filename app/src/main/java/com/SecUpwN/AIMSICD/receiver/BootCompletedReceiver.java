@@ -9,12 +9,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
+
+    private final Logger log = AndroidLogger.forClass(BootCompletedReceiver.class);
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -23,7 +27,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         final String AUTO_START = context.getString(R.string.pref_autostart_key);
         boolean mAutoStart = prefs.getBoolean(AUTO_START, false);
         if (mAutoStart) {
-            Log.i("AIMSICD", "System booted starting service.");
+            log.info("System booted starting service.");
             context.startService(new Intent(context, AimsicdService.class));
         }
     }

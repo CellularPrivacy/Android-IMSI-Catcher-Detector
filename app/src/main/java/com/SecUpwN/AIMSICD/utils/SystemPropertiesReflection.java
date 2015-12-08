@@ -18,7 +18,9 @@
 package com.SecUpwN.AIMSICD.utils;
 
 import android.content.Context;
-import android.util.Log;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -43,7 +45,7 @@ import dalvik.system.DexFile;
  */
 public class SystemPropertiesReflection {
 
-    private static final String TAG = "SystemPropertiesRef";
+    private static final Logger log = AndroidLogger.forClass(SystemPropertiesReflection.class);
 
     /**
      * This class cannot be instantiated
@@ -80,10 +82,10 @@ public class SystemPropertiesReflection {
             ret = (String) get.invoke(SystemProperties, params);
 
         } catch (IllegalArgumentException iae) {
-            Log.e(TAG, iae.getMessage(), iae);
+            log.error(iae.getMessage(), iae);
             throw iae;
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
+            log.error(e.getMessage(), e);
             ret = "";
         }
 
@@ -122,10 +124,10 @@ public class SystemPropertiesReflection {
             ret = (String) get.invoke(SystemProperties, params);
 
         } catch (IllegalArgumentException iae) {
-            Log.e(TAG, iae.getMessage(), iae);
+            log.error(iae.getMessage(), iae);
             throw iae;
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
+            log.error(e.getMessage(), e);
             ret = def;
         }
 
@@ -165,10 +167,10 @@ public class SystemPropertiesReflection {
             set.invoke(SystemProperties, params);
 
         } catch (IllegalArgumentException iae) {
-            Log.e(TAG, iae.getMessage(), iae);
+            log.error(iae.getMessage(), iae);
             throw iae;
         } catch (Exception ignored) {
-            Log.d(TAG, ignored.getMessage(), ignored);
+            log.debug(ignored.getMessage(), ignored);
         }
 
     }
