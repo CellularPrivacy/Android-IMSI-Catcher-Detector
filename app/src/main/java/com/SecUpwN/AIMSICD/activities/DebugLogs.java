@@ -77,7 +77,7 @@ public class DebugLogs extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug_logs);
         // Show the Up button in the action bar.
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         logView = (TextView) findViewById(R.id.debug_log_view);
         btnClear = (Button) findViewById(R.id.btnClear);

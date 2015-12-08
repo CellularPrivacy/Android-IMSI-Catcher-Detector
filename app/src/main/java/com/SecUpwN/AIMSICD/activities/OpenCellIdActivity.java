@@ -12,16 +12,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.utils.Helpers;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
@@ -42,12 +40,18 @@ public class OpenCellIdActivity extends BaseActivity {
     private static final String TAG = "OpenCellIdActivity";
     private ProgressDialog pd;
 
+    //TODO: @Inject
+    private OkHttpClient okHttpClient;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_cell_id);
 
         prefs = getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+
+        //TODO: Use a dependency injection for this
+        okHttpClient = ((AppAIMSICD)getApplication()).getOkHttpClient();
     }
 
     public void onAcceptedClicked(View v) {
@@ -148,13 +152,16 @@ public class OpenCellIdActivity extends BaseActivity {
          * @return null or newly generated key
          */
         public  String requestNewOCIDKey() throws IOException {
-            HttpGet httpRequest = new HttpGet(getString(R.string.opencellid_api_get_key));
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpResponse response = httpclient.execute(httpRequest);
+            Request request = new Request.Builder()
+                    .get()
+                    .url(getString(R.string.opencellid_api_get_key))
+                    .build();
 
-            int responseCode = response.getStatusLine().getStatusCode();
+            Response response = okHttpClient.newCall(request).execute();
 
-            String htmlResponse = EntityUtils.toString(response.getEntity(), "UTF-8");
+            int responseCode = response.code();
+
+            String htmlResponse = response.body().string();
 
             // For debugging HTTP server response and codes
             Log.d(TAG, "Response Html=" + htmlResponse + " Response Code=" + String.valueOf(responseCode));

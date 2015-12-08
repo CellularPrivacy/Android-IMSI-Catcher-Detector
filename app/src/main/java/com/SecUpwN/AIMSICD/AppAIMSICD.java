@@ -14,6 +14,8 @@ import android.util.SparseArray;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
 import com.SecUpwN.AIMSICD.utils.BaseAsyncTask;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
 // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
 //import com.squareup.leakcanary.LeakCanary;
 
@@ -23,6 +25,8 @@ import java.util.List;
 public class AppAIMSICD extends Application {
     final static String TAG = "AIMSICD";
     final static String mTAG = "AppAIMSICD";
+
+    private OkHttpClient okHttpClient;
 
     /**
      * Maps between an activity class name and the list of currently running
@@ -41,6 +45,8 @@ public class AppAIMSICD extends Application {
         //LeakCanary.install(this);
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
+
+        okHttpClient = new OkHttpClient();
     }
 
     public void removeTask(BaseAsyncTask<?, ?, ?> pTask) {
@@ -112,5 +118,9 @@ public class AppAIMSICD extends Application {
                 task.setActivity(activity);
             }
         }
+    }
+
+    public OkHttpClient getOkHttpClient() {
+        return okHttpClient;
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources>
 
-    <style name="AppTheme" parent="android:Theme.Holo">
-        <item name="android:actionBarStyle">@style/action_bar_style</item>
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/green_text</item>
     </style>
 
 </resources>
