@@ -136,7 +136,7 @@
     <string name="pref_ocid_key_summ">Введите здесь ваш ключ OpenCellID API</string>
     <string name="pref_enable_cell_monitoring_title">Мониторинг сотовых сетей</string>
     <string name="pref_enable_cell_monitoring_summ">Включить автоматический мониторинг сотовых сетей</string>
-    <string name="pref_request_ocid_key">Запрос ключа OCID API</string>
+    <string name="pref_request_ocid_key">Запрос ключа OpenCellID API</string>
     <string name="pref_ocid_requestkey_summary">Запрос ключа API для доступа к данным OpenCellID</string>
 
     <!-- MAP PREFERENCES -->
@@ -239,7 +239,7 @@
     <string name="tracking_cell_information">Отслеживания данных сотового.</string>
     <string name="stopped_tracking_cell_information">Отслеживания данных сотового остановлена.</string>
     <string name="only_one_key_per_day">Только один запрос нового ключа API за 24 часа!\nПожалуйста, повторите попытку позже.</string>
-    <string name="cell_id_doesnt_exist_in_db">ID соты не существует в базе данных OCID!</string>
+    <string name="cell_id_doesnt_exist_in_db">ID соты не существует в базе данных OpenCellID!</string>
     <string name="hostile_service_area_changing_lac_detected">Враждебная зона обслуживания: Изменение LAC обнаружено!</string>
     <string name="femtocell_detection_active">Обнаружение фемтосот активно.</string>
     <string name="cell_tracking_active">Отслеживание активной сотовой ячейки.</string>
@@ -265,8 +265,8 @@
     <string name="opencellid_data_successfully_received">Данные OpenCellID успешно приняты.</string>
     <string name="error_retrieving_opencellid_data">Ошибка при получении данных OpenCellID.\nПроверьте вашу сеть!</string>
     <string name="opencellid_data_successfully_received_markers_updated">Данные OpenCellID успешно приняты.\nМаркеры карты обновлены.</string>
-    <string name="uploaded_bts_data_successfully">Данные BTS для OCID выгружены успешно.</string>
-    <string name="error_uploading_bts_data">Ошибка при выгрузке данных BTS для OCID серверов!</string>
+    <string name="uploaded_bts_data_successfully">Данные BTS для OpenCellID выгружены успешно.</string>
+    <string name="error_uploading_bts_data">Ошибка при выгрузке данных BTS для OpenCellID серверов!</string>
     <string name="restore_database_completed">Восстановление базы данных успешно завершено.</string>
     <string name="error_restoring_database">Ошибка восстановления базы данных.</string>
     <string name="database_backup_successfully_saved_to">Резервная копия базы данных успешна сохранена в:</string>
@@ -291,14 +291,14 @@
     <!-- Section Main-->
     <string name="help_main_current_threat_level">AIMSICD status, neighboring cells, ciphering method indicator.</string>
     <string name="help_main_phone_sim_details">SIM network provider details, IMEI, TMSI.</string>
-    <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OCID and highlight the differences.</string>
+    <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OpenCellID and highlight the differences.</string>
     <string name="help_main_database_viewer">View the different DB tables we have.</string>
     <string name="help_main_antenna_map_view">Map of color coded antennas nearby.</string>
     <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
 
     <!-- Section Tracking-->
     <string name="help_tracking_toggle_attack_detection">Старт / Стоп обнаружения атаки и собирать информацию клеточных во внутренние таблицы базы данных.</string>
-    <string name="help_tracking_toggle_cell_tracking">Начните отслеживать клеток для отображения на антенны Map Viewer и, возможно, позже загрузить на OCID.</string>
+    <string name="help_tracking_toggle_cell_tracking">Начните отслеживать клеток для отображения на антенны Map Viewer и, возможно, позже загрузить на OpenCellID.</string>
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">AIMSICD settings and preferences such as polling times, protections and service behaviour.</string>
@@ -311,15 +311,15 @@
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data…</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
-    <string name="help_app_download_local_bts">Downloads the OCID Database.</string>
-    <string name="help_app_upload_local_bts">Uploads your BTS to the OCID Database.</string>
+    <string name="help_app_download_local_bts">Downloads the OpenCellID Database.</string>
+    <string name="help_app_upload_local_bts">Uploads your BTS to the OpenCellID Database.</string>
     <string name="help_app_debugging">Collect and send error logs.</string>
     <string name="help_app_quit">Exit this app.</string>
     <string name="waiting_for_location">Waiting for location…</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Unable to restore backup from previous database version due to structural changes!</string>
     <string name="unique_bts_data">Unique BTS Data</string>
     <string name="bts_measurements">BTS Measurements</string>
-    <string name="imported_ocid_data">Imported OCID Data</string>
+    <string name="imported_ocid_data">Imported OpenCellID Data</string>
     <string name="default_mmc_locations">Default MCC Locations</string>
     <string name="silent_sms">Silent SMS</string>
     <string name="eventlog">EventLog</string>
@@ -393,8 +393,8 @@
 
     <string name="delete_database_msg_success">Удаление и повторное создание базы данных завершено успешно.\nПожалуйста, перезапустите приложения для сброса значений из памяти.</string>
 
-    <string name="invalid_key_try_later">Неверный ключ OpenCellId, попробуйте еще позже.</string>
-    <string name="getting_ocid_key">Получение OpenCellId ключа…</string>
+    <string name="invalid_key_try_later">Неверный ключ OpenCellID, попробуйте еще позже.</string>
+    <string name="getting_ocid_key">Получение OpenCellID ключа…</string>
 
     <string name="deleted">Удалено</string>
     <string name="failed_to_delete">Не получилось удалить</string>

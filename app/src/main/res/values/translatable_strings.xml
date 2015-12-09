@@ -126,7 +126,7 @@
     <string name="pref_ocid_key_summ">Enter your OpenCellID API Key here</string>
     <string name="pref_enable_cell_monitoring_title">Cell Monitoring</string>
     <string name="pref_enable_cell_monitoring_summ">Enable Automatic Cell Monitoring</string>
-    <string name="pref_request_ocid_key">Request OCID API Key</string>
+    <string name="pref_request_ocid_key">Request OpenCellID API Key</string>
     <string name="pref_ocid_requestkey_summary">Request API key for OpenCellID data access</string>
 
     <!-- MAP PREFERENCES -->
@@ -238,7 +238,7 @@
     <string name="tracking_cell_information">Tracking Cell Information.</string>
     <string name="stopped_tracking_cell_information">Stopped tracking Cell Information.</string>
     <string name="only_one_key_per_day">Only one new API key request per 24 hours!\nPlease try again later.</string>
-    <string name="cell_id_doesnt_exist_in_db">Cell ID does not exist in OCID Database!</string>
+    <string name="cell_id_doesnt_exist_in_db">Cell ID not in OpenCellID Database!</string>
     <string name="hostile_service_area_changing_lac_detected">Hostile Service Area: Changing LAC Detected!</string>
     <string name="femtocell_detection_active">FemtoCell Detection Active.</string>
     <string name="cell_tracking_active">Cell Tracking Active.</string>
@@ -266,8 +266,8 @@
     <string name="opencellid_data_successfully_received">OpenCellID data successfully received.</string>
     <string name="error_retrieving_opencellid_data">Error retrieving OpenCellID data.\nCheck your network!</string>
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data successfully received.\nMap Markers updated.</string>
-    <string name="uploaded_bts_data_successfully">Uploaded BTS data to OCID successfully.</string>
-    <string name="error_uploading_bts_data">Error in uploading BTS data to OCID servers!</string>
+    <string name="uploaded_bts_data_successfully">Uploaded BTS data to OpenCellID successfully.</string>
+    <string name="error_uploading_bts_data">Error in uploading BTS data to OpenCellID servers!</string>
     <string name="restore_database_completed_title">Restore Successful.</string>
     <string name="restore_database_completed">Restore database completed successfully.</string>
     <string name="error_restoring_database">Error restoring database.</string>
@@ -322,14 +322,14 @@
     <!-- Section Main -->
     <string name="help_main_current_threat_level">AIMSICD threat status, neighboring cells, ciphering method indicator.</string>
     <string name="help_main_phone_sim_details">SIM network provider details, IMEI, TMSI.</string>
-    <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OCID and highlight the differences.</string>
+    <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OpenCellID and highlight the differences.</string>
     <string name="help_main_database_viewer">View the different DB tables we have.</string>
     <string name="help_main_antenna_map_view">Map of color coded antennas nearby.</string>
     <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
 
     <!-- Section Tracking -->
     <string name="help_tracking_toggle_attack_detection">Start/stop attack detection and collect cell details into internal database tables.</string>
-    <string name="help_tracking_toggle_cell_tracking">Start to track cells for display on the Antenna Map Viewer and possibly later upload to OCID.</string>
+    <string name="help_tracking_toggle_cell_tracking">Start to track cells for display on the Antenna Map Viewer and possibly later upload to OpenCellID.</string>
 
     <!-- Section Settings -->
     <string name="help_settings_preferences">AIMSICD settings such as protection rules, polling times and service behaviour.</string>
@@ -342,15 +342,15 @@
     <!-- Section Application -->
     <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data…</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
-    <string name="help_app_download_local_bts">Downloads the OCID Database.</string>
-    <string name="help_app_upload_local_bts">Uploads your BTS to the OCID Database.</string>
+    <string name="help_app_download_local_bts">Downloads the OpenCellID Database.</string>
+    <string name="help_app_upload_local_bts">Uploads your BTS to the OpenCellID Database.</string>
     <string name="help_app_debugging">Collect and send error logs.</string>
     <string name="help_app_quit">Exit this app.</string>
     <string name="waiting_for_location">Waiting for location…</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Unable to restore backup from previous database version due to structural changes!</string>
     <string name="unique_bts_data">Unique BTS Data</string>
     <string name="bts_measurements">BTS Measurements</string>
-    <string name="imported_ocid_data">Imported OCID Data</string>
+    <string name="imported_ocid_data">Imported OpenCellID Data</string>
     <string name="default_mmc_locations">Default MCC Locations</string>
     <string name="silent_sms">Silent SMS</string>
     <string name="eventlog">EventLog</string>

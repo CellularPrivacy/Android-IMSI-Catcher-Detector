@@ -388,7 +388,7 @@
 
 <string name="unknown_error_initialising_at_command_injector">Erreur inconnue lors de l\'initialisation de l\'injecteur de commandes AT.\nMerci de chercher les erreurs dans le logcat et de les poster sur Github.</string>
     <string name="invalid_key_try_later">Clé OpenCellId invalide, merci de réessayer plus tard.</string>
-    <string name="getting_ocid_key">Demande d\'une clé OpenCellId...</string>
+    <string name="getting_ocid_key">Demande d\'une clé OpenCellID…</string>
 
     <string name="restore_database_completed_title">Restauration réussie.</string>
     <string name="delete_database_msg_success">Base de données supprimée et recréée avec succès.\nVeuillez redémarrer l\'application pour nettoyer les anciennes données de la mémoire.</string>

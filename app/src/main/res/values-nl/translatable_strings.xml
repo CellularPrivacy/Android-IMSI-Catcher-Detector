@@ -106,7 +106,7 @@
     <string name="pref_ocid_key_summ">Geef hier uw OpenCellID sleutel in</string>
     <string name="pref_enable_cell_monitoring_title">Celmonitoring</string>
     <string name="pref_enable_cell_monitoring_summ">Zet automatische celmonitoring aan</string>
-    <string name="pref_request_ocid_key">Verzoek OCID API sleutel</string>
+    <string name="pref_request_ocid_key">Verzoek OpenCellID API sleutel</string>
     <string name="pref_ocid_requestkey_summary">Verzoek API sleutel voor OpenCellID data toegang</string>
 
     <string name="pref_map_title">Kaartscherm instellingen</string>
@@ -190,7 +190,7 @@
     <string name="tracking_cell_information">Volgen celinformatie.</string>
     <string name="stopped_tracking_cell_information">Gestopt met volgen celinformatie.</string>
     <string name="only_one_key_per_day">Slechts een nieuwe API key per 24 uur!\nProbeer het later nog eens.</string>
-    <string name="cell_id_doesnt_exist_in_db">Cell ID bestaat niet in OCID database!</string>
+    <string name="cell_id_doesnt_exist_in_db">Cell ID bestaat niet in OpenCellID database!</string>
     <string name="hostile_service_area_changing_lac_detected">Vijandig gebied: veranderende LAC waargenomen!</string>
     <string name="femtocell_detection_active">FemtoCell detectie actief.</string>
     <string name="phone_type">Telefoon type</string>
@@ -223,8 +223,8 @@
     <string name="opencellid_data_successfully_received">OpenCellID gegevens succesvol ververst.</string>
     <string name="error_retrieving_opencellid_data">Fout bij het ophalen van OpenCellID gegevens.\nControleer uw netwerk!</string>
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID gegevens succesvol ontvangen.\nKaartmarkeringen vernieuwd.</string>
-    <string name="uploaded_bts_data_successfully">BTS gegevens succesvol verstuurd naar OCID.</string>
-    <string name="error_uploading_bts_data">Fout bij het opsturen van BTS gegevens naar OCID servers!</string>
+    <string name="uploaded_bts_data_successfully">BTS gegevens succesvol verstuurd naar OpenCellID.</string>
+    <string name="error_uploading_bts_data">Fout bij het opsturen van BTS gegevens naar OpenCellID servers!</string>
     <string name="no_opencellid_key_detected">Geen OpenCellID API sleutel gevonden!\nStel uw sleutel eerst in de instellingen in.</string>
     <string name="refreshing_display">Scherm verversen</string>
     <string name="unable_to_acquire_root_access">Kan geen ROOT toegang op uw toestel krijgen.\nVersturen van AT commando\'s vereist ROOT terminal toegang.\nControleer of uw apparaat ROOT toegang heeft en probeer opnieuw.</string>
@@ -269,13 +269,13 @@
 
     <string name="help_main_current_threat_level">AIMSICD dreigingsstatus, naburige cellen, versleutelingsmethode indicator.</string>
     <string name="help_main_phone_sim_details">SIM netwerk provider details, IMEI, TMSI.</string>
-    <string name="help_main_acd">"Toont een gedetailleerde  vergelijking van de cel waarmee u nu verbonden bent en de gegevens uit OCID en toont de verschillen."</string>
+    <string name="help_main_acd">"Toont een gedetailleerde  vergelijking van de cel waarmee u nu verbonden bent en de gegevens uit OpenCellID en toont de verschillen."</string>
     <string name="help_main_database_viewer">Toon de verschillende DB tabellen.</string>
     <string name="help_main_antenna_map_view">Kleurcode kaart van in de buurt zijnde antennes.</string>
     <string name="help_main_at_command_interface">Interface dat het mogelijk maakt AT commando\'s te sturen naar de baseband processor (Root nodig).</string>
 
     <string name="help_tracking_toggle_attack_detection">Start/stop aanvalsdetectie en verzamel mastgegevens in de interne database tabellen.</string>
-    <string name="help_tracking_toggle_cell_tracking">Start het volgen van cellen om ze op de antennekaart te tonen en ze later te versturen naar OCID.</string>
+    <string name="help_tracking_toggle_cell_tracking">Start het volgen van cellen om ze op de antennekaart te tonen en ze later te versturen naar OpenCellID.</string>
 
     <string name="help_settings_preferences">AIMSICD instellingen zoals beschermingsregels, contactfrequentie en service gedrag.</string>
     <string name="help_settings_backup_db">Backup SQLite3 DB naar de SD-kaart.</string>
@@ -286,15 +286,15 @@
 
     <string name="help_app_add_get_ocid_api_key">Verkrijg een API sleutel voor de OpenCellID database om gegevens te up- en downloaden…</string>
     <string name="help_app_about">Status iconen en uitleg over het project.</string>
-    <string name="help_app_download_local_bts">Download de OCID database.</string>
-    <string name="help_app_upload_local_bts">Upload de BTS naar de OCID database.</string>
+    <string name="help_app_download_local_bts">Download de OpenCellID database.</string>
+    <string name="help_app_upload_local_bts">Upload de BTS naar de OpenCellID database.</string>
     <string name="help_app_debugging">Verzamel en verstuur foutberichten.</string>
     <string name="help_app_quit">Deze app afsluiten.</string>
     <string name="waiting_for_location">Wachten op locatie…</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Kan de backup van een oud databaseformaat niet terugzetten omdat de database structuur gewijzigd is!</string>
     <string name="unique_bts_data">Unieke BTS gegevens</string>
     <string name="bts_measurements">BTS metingen</string>
-    <string name="imported_ocid_data">OCID gegevens geïmporteerd</string>
+    <string name="imported_ocid_data">OpenCellID gegevens geïmporteerd</string>
     <string name="default_mmc_locations">Standaard MCC locaties</string>
     <string name="silent_sms">Stille SMS</string>
     <string name="eventlog">Gebeurtenissenlog</string>
@@ -309,8 +309,8 @@
     <string name="unknown_or_insecure_bts">Onbekende of onveilige BTS</string>
     <string name="new_or_recently_added_bts">Nieuwe of recent toegevoegde BTS</string>
 
-    <string name="invalid_key_try_later">Ongeldige OpenCellId sleutel, probeer het later nog eens.</string>
-    <string name="getting_ocid_key">Verkrijgen OpenCellId API sleutel...</string>
+    <string name="invalid_key_try_later">Ongeldige OpenCellID sleutel, probeer het later nog eens.</string>
+    <string name="getting_ocid_key">Verkrijgen OpenCellID API sleutel...</string>
 
     <string name="delete_database_msg_success">De database is succesvol verwijderd en opnieuw aangemaakt.\nHerstart de app om oude gegevens uit het geheugen te verwijderen.</string>
 
