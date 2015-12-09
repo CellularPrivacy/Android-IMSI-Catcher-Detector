@@ -21,7 +21,6 @@ if(isTravis) {
 android {
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
-
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
@@ -31,7 +30,6 @@ android {
 
         buildConfigField 'String', 'BUILD_NUMBER', (buildNumber == null ? 'null' : "\"${buildNumber}\"")
     }
-
     buildTypes {
         debug {
             try {
@@ -53,12 +51,10 @@ android {
             versionNameSuffix '-release'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
-
     lintOptions {
         warning 'MissingTranslation', 'InvalidPackage'
         abortOnError false
@@ -69,10 +65,14 @@ android {
         textReport isCi
         textOutput 'stdout'
     }
-
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/LICENSE.txt'
+    }
+
+    productFlavors {
+        system {}
+        normal {}
     }
 }
 
@@ -81,7 +81,7 @@ dependencies {
     //compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile 'com.android.support:appcompat-v7:22.2.1'
     //https://github.com/lp0/slf4j-android
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':third_party:rootshell')
     compile 'org.osmdroid:osmdroid-android:4.2'
     compile 'org.slf4j:slf4j-api:1.7.12'
