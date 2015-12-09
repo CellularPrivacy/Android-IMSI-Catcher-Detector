@@ -36,10 +36,7 @@ public class AboutFragment extends Fragment {
 
         btncredits = (Button) v.findViewById(R.id.aimsicd_credits_link);
 
-        String BUILDOZER_BUILDNUMBER = BuildConfig.BUILDOZER_BUILDNUMBER;
-        if (BUILDOZER_BUILDNUMBER == null) {
-            BUILDOZER_BUILDNUMBER = "NA"; // avoid null buildnumber
-        }
+        String buildNumber = BuildConfig.BUILD_NUMBER;
 
         TextView versionNumber;
         TextView BuildozerView;
@@ -47,9 +44,9 @@ public class AboutFragment extends Fragment {
             versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
             versionNumber.setText(getString(R.string.app_version) + version);
 
-            if (!"NA".equals(BUILDOZER_BUILDNUMBER)) {
+            if (buildNumber != null) {
                 BuildozerView = (TextView) v.findViewById(R.id.buildozer_buildnumber);
-                BuildozerView.setText(getString(R.string.buildozer_buildnumber) + BUILDOZER_BUILDNUMBER);
+                BuildozerView.setText(getString(R.string.buildnumber) + buildNumber);
                 BuildozerView.setVisibility(View.VISIBLE);
             }
 
