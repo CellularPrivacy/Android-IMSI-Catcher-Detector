@@ -683,7 +683,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                         }
 
                         //Reverse order 1 = 0 & 0 = 1
-                        // what if ichange is 4? ~ agilob
                         int ichange = Integer.parseInt(change);
                         ichange = (ichange == 0 ? 1 : 0);
 
