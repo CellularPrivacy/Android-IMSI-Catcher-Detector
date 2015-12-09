@@ -89,7 +89,7 @@
     <string name="app_version">Версия: </string>
     <string name="aimsicd_about_info3">Проект для обнаружения и избегания поддельных базовых станций (IMSI-перехватчики) в GSM / UMTS сети на основе Android.</string>
     <string name="about_github">AIMSICD на GitHub</string>
-    <string name="about_wiki">Документация (WIKI)</string>
+    <string name="about_wiki">ДОКУМЕНТАЦИЯ</string>
     <string name="about_contribute">ВКЛАД</string>
     <string name="about_disclaimer">ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ</string>
     <string name="about_releases">РЕЛИЗЫ</string>

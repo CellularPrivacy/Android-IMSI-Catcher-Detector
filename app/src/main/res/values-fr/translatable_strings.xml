@@ -79,7 +79,7 @@
     <string name="app_version">Version: </string>
     <string name="aimsicd_about_info3">Projet Basé sur Android conçu pour détecter et éviter les fausses stations de bases (IMSI-Catchers) sur les réseaux GSM/UMTS.</string>
     <string name="about_github">AIMSICD sur GitHub</string>
-    <string name="about_wiki">Documentation (WIKI)</string>
+    <string name="about_wiki">DOCUMENTATION</string>
     <string name="about_contribute">CONTRIBUTEURS</string>
     <string name="about_disclaimer">INFOS LÉGALES</string>
     <string name="about_releases">RELEASES</string>
