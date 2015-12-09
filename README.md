@@ -27,7 +27,7 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 * [What it does](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#what-it-does)
 * [Why use it](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#why-use-it)
 * [**Contributing**](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md)
-* [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues)
+* [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#debugging)
 * [Warnings](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#warnings)
 * [Research](https://spideroak.com/browse/share/AIMSICD/GitHub)
 * [Support](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#support)
@@ -85,7 +85,7 @@ Solutions for the above may be found in our [Recommendations](https://github.com
 
 ### Bug Tracker
 
-Please follow our [Bug Submission Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues).
+Please follow our [Bug Submission Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#debugging).
 
 ---
 
@@ -97,7 +97,7 @@ Although this project is fully Open Source, developing AIMSICD is a lot of work 
 
 ### License
 
-This project is completely licensed [GPL v3+](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE).
+This project is completely licensed [GPLv3+](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE).
 
 ---
 
