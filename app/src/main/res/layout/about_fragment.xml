@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/buildozer_buildnumber"
+            android:text="@string/buildnumber"
             android:textColor="@color/red_text"
             android:textSize="16sp"
             android:visibility="gone"/>

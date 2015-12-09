@@ -8,6 +8,15 @@ try {
 }
 
 def isCi = "true".equals(System.getenv("CI"))
+def isTravis = "true".equals(System.getenv("TRAVIS"))
+
+def buildNumber = null
+if(isTravis) {
+    buildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
+} else {
+    buildNumber = System.getenv("BUILDOZER_BUILDNUMBER")
+}
+
 
 android {
     compileSdkVersion 22
@@ -19,6 +28,8 @@ android {
         versionCode 36
         versionName '0.1.36-alpha'
         testApplicationId "com.SecUpwN.AIMSICD.test"
+
+        buildConfigField 'String', 'BUILD_NUMBER', (buildNumber == null ? 'null' : "\"${buildNumber}\"")
     }
 
     buildTypes {
@@ -28,11 +39,6 @@ android {
             } catch (MissingPropertyException e) {
                 buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
             }
-            try {
-                buildConfigField 'String', 'BUILDOZER_BUILDNUMBER', '\"' + System.getenv("BUILDOZER_BUILDNUMBER") + '\"'
-            } catch (MissingPropertyException e) {
-                buildConfigField 'String', 'BUILDOZER_BUILDNUMBER', '"NA"'
-            }
             if (!gitSha.equals('na')) {
                 versionNameSuffix '-' + gitSha
             } else {
@@ -41,7 +47,6 @@ android {
         }
         release {
             buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
-            buildConfigField 'String', 'BUILDOZER_BUILDNUMBER', '"NA"'
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
 
