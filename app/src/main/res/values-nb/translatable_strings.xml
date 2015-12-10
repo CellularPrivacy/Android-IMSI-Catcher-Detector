@@ -52,5 +52,147 @@
     <string name="network_lte_timing_advance"/>
     <string name="button_refresh">Frisk opp</string>
     <string name="drawer_open"/>
-    <string name="preferences"/>
+    <string name="preferences">Innstillinger</string>
+    <string name="drawer_close"/>
+    <string name="network_psc"/>
+
+    <string name="upload_bts">Last opp BTS-data</string>
+
+    <string name="about_aimsicd"/>
+    <string name="app_version">Versjon: </string>
+    <string name="aimsicd_about_info3">Android-basert prosjekt for å oppdage og unngå falske basestasjoner (IMSI-fangere) i GSM/UMTS-nettverk.</string>
+    <string name="about_github">AIMSICD på GitHub</string>
+    <string name="about_wiki">Dokumentasjon (WIKI)</string>
+    <string name="about_contribute">BIDRA</string>
+    <string name="about_releases">UTGAVER</string>
+    <string name="about_changelog">ENDRINGSLOGG</string>
+    <string name="about_license">LISENS</string>
+    <string name="about_credits"/>
+    <string name="about_desc_icon_idle"/>
+    <string name="about_desc_icon_active_tracking_near">Aktiv sporing nær deg!</string>
+    <string name="about_desc_icon_ok">Alt OK.</string>
+    <string name="about_desc_icon_tracked_down"/>
+    <string name="about_desc_icon_insecure_area">"Utrygt tjenesteområde.  Forlat det!"</string>
+    <string name="about_desc_icon_run">"SPRING!  Håndsettet er manipulert!"</string>
+    <string name="about_desc_icon_title">Trykk status-ikonet under for detaljert informasjon:</string>
+
+    <string name="network_netid">Nettverk-ID:</string>
+    <string name="network_sysid">System-ID:</string>
+    <string name="network_baseid">Basestasjon-ID:</string>
+
+    <string name="location_error_title"/>
+    <string name="location_error_message"/>
+
+    <string name="pref_system_title">Systemoppsett</string>
+    <string name="pref_autostart_title">Start automatisk</string>
+    <string name="pref_autostart_summ">Start tjenesten automatisk ved oppstart</string>
+    <string name="pref_persistservice_title"/>
+    <string name="pref_persistservice_summ"/>
+    <string name="pref_protection_title"/>
+    <string name="pref_notification_settings">Meldingsoppsett</string>
+    <string name="pref_enable_cell_title">Cellesporing</string>
+    <string name="pref_enable_cell_summ">Slå på automatisk cellesporing</string>
+    <string name="pref_femto_title"/>
+    <string name="pref_femto_summ"/>
+    <string name="pref_femto_action_title"/>
+    <string name="pref_femto_action_summ"/>
+    <string name="pref_ui_title">Grensesnittoppsett</string>
+    <string name="pref_ui_icons_title">Status-ikoner</string>
+    <string name="pref_ui_icons_summ"/>
+    <string name="pref_refresh_title">Oppfriskningsrate</string>
+    <string name="pref_refresh_summ"/>
+    <string name="pref_ocid_title"/>
+    <string name="pref_ocid_key_title"/>
+    <string name="pref_ocid_key_summ"/>
+    <string name="pref_enable_cell_monitoring_title"/>
+    <string name="pref_enable_cell_monitoring_summ"/>
+    <string name="pref_request_ocid_key"/>
+    <string name="pref_ocid_requestkey_summary"/>
+
+    <string name="pref_map_title">Kartfremvisningsinnstillinger</string>
+    <string name="pref_map_type_title">Karttype</string>
+    <string name="pref_map_type_summ"/>
+    
+    <string name="cell_id_label"/>
+    <string name="lac_label"/>
+    <string name="mcc_label"/>
+    <string name="mnc_label"/>
+    <string name="pc_label"/>
+    <string name="samples_label"/>
+    <string name="open_cell_id_label"/>
+    <string name="lat_label">"Lat: "</string>
+    <string name="lng_label">"Lon: "</string>
+
+    <string name="table_names_prompt"/>
+    <string name="database_export_successful">Vellykket eksport</string>
+
+    <string name="at_command_title"/>
+    <string name="response_label">Tilbakemelding:</string>
+    <string name="execute_at">Utfør</string>
+    <string name="serial_device_title"/>
+    <string name="serial_device_prompt"/>
+    <string name="serial_device_spinner_title"/>
+    <string name="timeout_spinner_title"/>
+    <string name="timeout_spinner_prompt"/>
+    <string name="command_hint"/>
+
+    <string name="sms_title">Oppdaget stille SMS</string>
+    <string name="sms_message">Oppdaget stille SMS-melding!\nDetaljer: Se databasefremviser.</string>
+    <string name="table_contains_no_data"/>
+
+    <string name="title_ocid_key"/>
+    <string name="message_request_api_key"/>
+    <string name="ocid_api_error"/>
+    <string name="ocid_api_success">Lagret ny API-nøkkel.</string>
+
+    <string name="title_debug_logs">Feilsøkingslogger</string>
+    <string name="btn_clear_logs"/>
+    <string name="btn_copy_to_clipboard">Kopier</string>
+    <string name="msg_copied_to_clipboard"/>
+    <string name="btn_stop_logs">Stopp</string>
+    <string name="btn_start_logs">Start</string>
+
+    <string name="title_activity_about_pop_up">DETALJERT FORKLARING</string>
+    <string name="detail_info_idle"/>
+    <string name="detail_info_normal"/>
+    <string name="detail_info_medium"/>
+    <string name="detail_info_high"/>
+    <string name="detail_info_danger"/>
+    <string name="detail_info_run"/>
+    <string name="open_cell_id_button_cancel">Avbryt</string>
+    <string name="open_cell_id_button_ok">OK</string>
+
+    <string name="pref_notification_vibrate_enable_title">Aktiver vibrering</string>
+    <string name="pref_notification_vibrate_enable_summary">Vibrer når meldinger endres</string>
+    <string name="pref_notification_vibrate_min_level_title">Vibrer på trusselnivå</string>
+    <string name="pref_notification_vibrate_min_level_summary">Velg minimumstrusselnivå å vibrere på</string>
+    <string name="notification_vibrate_idle"/>
+    <string name="notification_vibrate_normal">Normal</string>
+    <string name="notification_vibrate_medium">Medium</string>
+    <string name="notification_vibrate_alarm">Alarm</string>
+    
+    <string name="ui_icon_flat"/>
+    <string name="ui_icon_sense"/>
+    <string name="ui_icon_white">Hvit</string>
+    <string name="map_type_terrain">Terreng</string>
+    <string name="map_type_normal">Normal</string>
+    <string name="pref_refresh_manual">Manuell</string>
+    <string name="pref_refresh_automatic">Automatisk</string>
+    <string name="pref_refresh_2s">2 sek</string>
+    <string name="pref_refresh_5s">5 sek</string>
+    <string name="pref_refresh_10s">10 sek</string>
+    <string name="pref_refresh_25s">25 sek</string>
+    <string name="pref_refresh_45s">45 sek</string>
+    <string name="pref_refresh_1_min">1 min</string>
+    <string name="pref_refresh_5_min">5 min</string>
+    <string name="timeout_spinner_2_sec">2 sek</string>
+    <string name="timeout_spinner_5_sec">5 sek</string>
+    <string name="timeout_spinner_10_sec">10 sek</string>
+    <string name="timeout_spinner_20_sec">20 sek</string>
+    <string name="timeout_spinner_30_sec">30 sek</string>
+    <string name="timeout_spinner_10_min">10 min</string>
+    <string name="main"/>
+    <string name="settings">Oppsett</string>
+    <string name="application"/>
+    <string name="monitoring_cell_information"></string>
     </resources>
