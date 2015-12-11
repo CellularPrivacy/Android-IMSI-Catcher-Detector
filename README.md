@@ -43,12 +43,12 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 
 AIMSICD attempts to detect IMSI-Catchers through [detection methods](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/230) such as these:
     
-* Check [tower information consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/253)
-* Check [LAC/Cell ID consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91)
+* Check [Tower Information Consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/253)
+* Check [LAC/Cell ID Consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91)
 * Check [Neighbouring Cell Info](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/264)
 * Prevent [silent app installations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/151)
 * Monitor [Signal Strength](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/97)
-* Detect [silent SMS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/69)
+* Detect [silent SMS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/glossary-of-terms#silent-sms)
 * Detect [FemtoCells](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/6)
 
 See our [app goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status#application-goals) and [development status](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status)!
