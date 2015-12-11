@@ -327,4 +327,5 @@
     <string name="notification_vibrate_idle">Inactief</string>
     <string name="failed_to_add_the_string_to_db">String aan database toevoegen is mislukt</string>
 
+    <string name="pref_notification_settings">Instellingen voor meldingen</string>
     </resources>
