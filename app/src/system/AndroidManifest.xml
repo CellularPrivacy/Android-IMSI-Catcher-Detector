@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    coreApp="true"
+    package="com.SecUpwN.AIMSICD"
+    android:sharedUserId="android.uid.system"
+    tools:ignore="ProtectedPermissions">
+
+    <!-- PERMISSIONS ARE SORTED BY AOS PERMISSION AND 3rd PARTY ACCESS. KEEP THIS! -->
+    <!-- https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Permissions -->
+
+    <!-- SPECIAL PERMISSIONS TO BE ADDED AFTER THIS LINE. /> -->
+    <!-- To list all available (used) Android permissions on a device, use:
+         # `pm list permissions -g`  -->
+
+    <!-- These are Android System (non 3rd party) Permissions -->
+    <uses-permission android:name="android.permission.CONTROL_LOCATION_UPDATES"/>
+    <uses-permission android:name="android.permission.DEVICE_POWER"/>
+    <uses-permission android:name="android.permission.DIAGNOSTIC"/>
+    <uses-permission android:name="android.permission.DUMP"/>
+    <uses-permission android:name="android.permission.FACTORY_TEST"/>
+    <uses-permission android:name="android.permission.HARDWARE_TEST"/>
+    <uses-permission android:name="android.permission.INJECT_EVENTS"/>
+    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW"/>
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.SET_PROCESS_LIMIT"/>
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>
+    <!--uses-permission android:name="android.permission.WRITE_GSERVICES"/ -->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+
+    <!-- These are OEM / Samsung Permissions -->
+    <uses-permission android:name="android.phone.receiveDetailedCallState"/>
+    <uses-permission android:name="com.android.permission.HANDOVER_STATUS"/>
+    <uses-permission android:name="com.sec.android.app.controlpanel.permission.PRIVATE"/>
+    <uses-permission android:name="com.sec.android.app.factorymode.permission.KEYSTRING"/>
+    <uses-permission android:name="com.sec.android.app.cm.permission.PERMISSION_MANAGEMENT"/>
+    <uses-permission android:name="com.sec.android.app.phoneutil.permission.KEYSTRING"/>
+    <uses-permission android:name="com.sec.android.app.servicemodeapp.permission.KEYSTRING"/>
+    <uses-permission android:name="com.sec.android.phone.permission.DATA_ROAMING_SETTINGS_ENHANCED"/>
+    <uses-permission android:name="com.sec.android.phone.permission.READ_CALL_SETTINGS"/>
+    <uses-permission android:name="com.sec.android.phone.permission.WRITE_CALL_SETTINGS"/>
+    <!-- uses-permission android:name="com.sec.factory.permission.ALLOWFTCLIENTCPOBIND"/>
+    <uses-permission android:name="com.sec.factory.permission.BT_ID_WRITE"/ -->
+    <uses-permission android:name="com.sec.factory.permission.KEYSTRING"/>
+    <uses-permission android:name="com.sec.modem.settings.permission.KEYSTRING"/>
+    <!-- uses-permission android:name="diagandroid.app.receiveDetailedApplicationState"/>
+    <uses-permission android:name="diagandroid.data.receivePDPContextState"/>
+    <uses-permission android:name="diagandroid.phone.receiveDetailedCallState"/ -->
+
+    <!-- May be needed (in the future) to access SIM related functions -->
+    <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
+
+</manifest>
