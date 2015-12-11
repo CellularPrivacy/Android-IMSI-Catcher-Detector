@@ -22,7 +22,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.telephony.TelephonyManager;
-import android.util.Log;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,7 +76,8 @@ import java.util.List;
  */
 public class AIMSICD extends BaseActivity implements AsyncResponse {
 
-    private final String TAG = "AIMSICD";
+    //TODO: @Inject
+    private final Logger log = AndroidLogger.forClass(AIMSICD.class);
 
     private final Context mContext = this;
     private boolean mBound;
@@ -90,7 +93,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    public static ProgressBar mProgressBar;
 
     private long mLastPress = 0;    // Back press to exit timer
 
@@ -148,8 +150,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setHomeButtonEnabled(true);
-
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         prefs = mContext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
 
@@ -327,7 +327,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                     cell.setMCC(Integer.parseInt(networkOperator.substring(0, 3)));
                     int mnc = Integer.parseInt(networkOperator.substring(3));
                     cell.setMNC(Integer.parseInt(networkOperator.substring(3, 5)));
-                    Log.d(TAG, "CELL:: mcc=" + mcc + " mnc=" + mnc);
+                    log.debug("CELL:: mcc=" + mcc + " mnc=" + mnc);
                 }
 
 
@@ -415,12 +415,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                     mAimsicdService.stopSmsTracking();
                 }
             } catch (Exception ee) {
-                Log.w(TAG, "Exception in smstracking module: " + ee.getMessage());
+                log.warn("Exception in smstracking module: " + ee.getMessage());
             }
 
             if (mAimsicdService != null) mAimsicdService.onDestroy();
             //Close database on Exit
-            Log.i(TAG, "Closing db from DrawerMenu.ID.APPLICATION.QUIT");
+            log.info("Closing db from DrawerMenu.ID.APPLICATION.QUIT");
             new AIMSICDDbAdapter(getApplicationContext()).close();
             finish();
         }
@@ -438,7 +438,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     @Override
     public void processFinish(float[] location) {
-        Log.i(TAG, "processFinish - location[0]=" + location[0] + " location[1]=" + location[1]);
+        log.info("processFinish - location[0]=" + location[0] + " location[1]=" + location[1]);
 
 
         if (Float.floatToRawIntBits(location[0]) == 0
@@ -455,7 +455,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         if (cells != null) {
             if (!cells.isEmpty()) {
                 for (Cell cell : cells) {
-                    Log.i(TAG, "processFinish - Cell =" + cell.toString());
+                    log.info("processFinish - Cell =" + cell.toString());
                     if (cell.isValid()) {
                         mAimsicdService.setCell(cell);
                         Intent intent = new Intent(AimsicdService.UPDATE_DISPLAY);
@@ -501,7 +501,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            Log.w(TAG, "Service disconnected");
+            log.warn("Service disconnected");
             mBound = false;
         }
     };
@@ -621,10 +621,10 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                     mAimsicdService.stopSmsTracking();
                 }
             } catch (Exception ee) {
-                Log.e(TAG, "Error: Stopping SMS detection : " + ee.getMessage());
+                log.error("Error: Stopping SMS detection : " + ee.getMessage());
             }
             // Close database on Exit
-            Log.i(TAG, "Closing db from onBackPressed()");
+            log.info("Closing db from onBackPressed()");
             new AIMSICDDbAdapter(getApplicationContext()).close();
             finish();
         }
@@ -637,11 +637,11 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         if (root_sms && !mAimsicdService.isSmsTracking()) {
             mAimsicdService.startSmsTracking();
             Helpers.msgShort(mContext, "SMS Detection Started");
-            Log.i(TAG, "SMS Detection Thread Started");
+            log.info("SMS Detection Thread Started");
         } else if (!root_sms && mAimsicdService.isSmsTracking()) {
             mAimsicdService.stopSmsTracking();
             Helpers.msgShort(mContext, "Sms Detection Stopped");
-            Log.i(TAG, "SMS Detection Thread Stopped");
+            log.info("SMS Detection Thread Stopped");
         }
     }
 
@@ -680,31 +680,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
      */
     private void trackFemtocell() {
         mAimsicdService.setTrackingFemtocell(!mAimsicdService.isTrackingFemtocell());
-    }
-
-    public void showProgressbar(final boolean indeterminate, final int max, final int progress) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mProgressBar.setIndeterminate(indeterminate);
-                if (max > 0)
-                    mProgressBar.setMax(max);
-                if (max > 0 && progress >= 0)
-                    mProgressBar.setProgress(progress);
-                mProgressBar.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-    public void hideProgressbar() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mProgressBar.setMax(0);
-                mProgressBar.setProgress(0);
-                mProgressBar.setVisibility(View.GONE);
-            }
-        });
     }
 
     public void onStop() {

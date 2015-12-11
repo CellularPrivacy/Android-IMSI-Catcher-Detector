@@ -72,7 +72,7 @@
     <string name="app_version">Wersja: </string>
     <string name="aimsicd_about_info3">Projekt na Android pozwalający wykrywać fałszywe stacje bazowe (IMSI-catchery) w sieci GSM/UMTS.</string>
     <string name="about_github">AIMSICD na Githubie</string>
-    <string name="about_wiki">Dokumentacja (WIKI)</string>
+    <string name="about_wiki">DOKUMENTACJA</string>
     <string name="about_contribute">PRZYCZYNIAJĄ</string>
     <string name="about_disclaimer">ZASTRZEŻENIE</string>
     <string name="about_releases">WYDANIA</string>
@@ -120,7 +120,7 @@
     <string name="pref_ocid_key_summ">Wpisz swój klucz API do OpenCellID</string>
     <string name="pref_enable_cell_monitoring_title">Monitorowanie komórek</string>
     <string name="pref_enable_cell_monitoring_summ">Włącz automatyczne monitorowanie komórek</string>
-    <string name="pref_request_ocid_key">Zażądaj klucz API OCID</string>
+    <string name="pref_request_ocid_key">Zażądaj klucz API OpenCellID</string>
     <string name="pref_ocid_requestkey_summary">Pobierz nowy klucz API dla danych OpenCellID</string>
 
     <!-- MAP PREFERENCES -->
@@ -221,8 +221,8 @@
     <string name="stopped_monitoring_cell_information">Wstrzymano monitorowanie komórek.</string>
     <string name="tracking_cell_information">Śledzenie informacji komórek.</string>
     <string name="stopped_tracking_cell_information">Wstrzymano śledzenie komórek.</string>
-    <string name="only_one_key_per_day">Możesz pobrać tylko jeden klucz OCID na dobę.\nSpróbuj później.</string>
-    <string name="cell_id_doesnt_exist_in_db">ID komórki nie istnieje w bazie danych OCID!</string>
+    <string name="only_one_key_per_day">Możesz pobrać tylko jeden klucz OpenCellID na dobę.\nSpróbuj później.</string>
+    <string name="cell_id_doesnt_exist_in_db">ID komórki nie istnieje w bazie danych OpenCellID!</string>
     <string name="hostile_service_area_changing_lac_detected">Niezabezpieczona okolica: LAC został zmieniony!</string>
     <string name="femtocell_detection_active">Wykrywanie FemtoCell aktywne.</string>
     <string name="cell_tracking_active">Śledzenie komórek aktywne.</string>
@@ -312,7 +312,7 @@
 
     <!-- Section Tracking-->
     <string name="help_tracking_toggle_attack_detection">Rozpoczyna/zatrzymuje wykrywanie ataku i zbieranie danych do lokalnej bazy danych.</string>
-    <string name="help_tracking_toggle_cell_tracking">Zacznij śledzić komórki do wyświetlania na antenie Map Viewer i ewentualnie później przesłać do OCID.</string>
+    <string name="help_tracking_toggle_cell_tracking">Zacznij śledzić komórki do wyświetlania na antenie Map Viewer i ewentualnie później przesłać do OpenCellID.</string>
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">Ustawienia AIMSICD, czas odświeżania i zachowanie serwisów.</string>
@@ -325,8 +325,8 @@
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Uzyskaj klucz API do OpenCellID by pobierać i wysyłać dane…</string>
     <string name="help_app_about">O nas i kogo wspieramy.</string>
-    <string name="help_app_download_local_bts">Pobierz bazę danych OCID.</string>
-    <string name="help_app_upload_local_bts">Wyślij dane o lokalnych BTS do OCID.</string>
+    <string name="help_app_download_local_bts">Pobierz bazę danych OpenCellID.</string>
+    <string name="help_app_upload_local_bts">Wyślij dane o lokalnych BTS do OpenCellID.</string>
     <string name="help_app_debugging">Wczytaj i wyślij logi.</string>
     <string name="help_app_quit">Zakończ działanie aplikacji.</string>
     <string name="waiting_for_location">Oczekiwanie na lokalizację…</string>
@@ -348,8 +348,8 @@
     <string name="unknown_or_insecure_bts">Nieznany lub niebezpieczny BTS</string>
     <string name="new_or_recently_added_bts">Nowy lub niedawno dodany BTS</string>
 
-    <string name="invalid_key_try_later">Nieprawidłowany klucz OpenCell ID, spróbuj później.</string>
-    <string name="getting_ocid_key">Pobieranie klucza API OpenCellId...</string>
+    <string name="invalid_key_try_later">Nieprawidłowany klucz OpenCellID, spróbuj później.</string>
+    <string name="getting_ocid_key">Pobieranie klucza API OpenCellID…</string>
 
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>

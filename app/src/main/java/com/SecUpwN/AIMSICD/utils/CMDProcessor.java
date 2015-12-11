@@ -21,11 +21,12 @@
 
 package com.SecUpwN.AIMSICD.utils;
 
-import android.util.Log;
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 public final class CMDProcessor {
 
-    private static final String TAG = "CMDProcessor";
+    private static final Logger log = AndroidLogger.forClass(CMDProcessor.class);
 
     public CMDProcessor() {
 
@@ -78,7 +79,7 @@ public final class CMDProcessor {
         out.append(r.getStdout());
         out.append(" ; ");
         out.append(r.getStderr());
-        Log.d(TAG, "canSU() su[" + r.getExitValue() + "]: " + out);
+        log.debug("canSU() su[" + r.getExitValue() + "]: " + out);
         return r.success();
     }
 }

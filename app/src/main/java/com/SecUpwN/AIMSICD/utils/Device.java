@@ -11,7 +11,9 @@ import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
-import android.util.Log;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 /**
  * Description:     TODO
@@ -27,7 +29,7 @@ import android.util.Log;
  */
 public class Device {
 
-    private final String TAG = "Device";
+    private final Logger log = AndroidLogger.forClass(Device.class);
 
     public Cell mCell;
     private int mPhoneID = -1;
@@ -84,7 +86,7 @@ public class Device {
                         if (mCell.getMNC() == Integer.MAX_VALUE)
                             mCell.setMNC(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
                     } catch (Exception e) {
-                        Log.i(TAG, "MncMcc parse exception: ", e);
+                        log.info("MncMcc parse exception: ", e);
                     }
                 }
                 mNetName = tm.getNetworkOperatorName();
@@ -120,7 +122,7 @@ public class Device {
                                 if (mCell.getMNC() == Integer.MAX_VALUE)
                                     mCell.setMNC(Integer.valueOf(homeOperator.substring(3, 5)));
                             } catch (Exception e) {
-                                Log.i(TAG, "HomeOperator parse exception - " + e.getMessage(), e);
+                                log.info("HomeOperator parse exception - " + e.getMessage(), e);
                             }
                         }
                     }
@@ -184,7 +186,7 @@ public class Device {
         } catch (Exception e) {
             // SIM methods can cause Exceptions on some devices
             mSimCountry = "N/A";
-            Log.e(TAG, "GetSimCountry " + e);
+            log.error("GetSimCountry " + e);
         }
 
         if (mSimCountry.isEmpty()) {
@@ -216,7 +218,7 @@ public class Device {
         } catch (Exception e) {
             // SIM methods can cause Exceptions on some devices
             mSimOperator = "N/A";
-            Log.e(TAG, "GetSimOperator " + e.getMessage(), e);
+            log.error("GetSimOperator " + e.getMessage(), e);
         }
 
         if (mSimOperator.isEmpty()) {
@@ -243,7 +245,7 @@ public class Device {
                 mSimOperatorName = "N/A";
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
+            log.error(e.getMessage(), e);
             //SIM methods can cause Exceptions on some devices
             mSimOperatorName = "N/A";
         }
@@ -274,7 +276,7 @@ public class Device {
         } catch (Exception e) {
             //Some devices don't like this method
             mSimSubs = "N/A";
-            Log.e(TAG, "GetSimSubs "+e.getMessage(), e);
+            log.error("GetSimSubs "+e.getMessage(), e);
         }
 
         if (mSimSubs.isEmpty()) {
@@ -304,7 +306,7 @@ public class Device {
         } catch (Exception e) {
             // SIM methods can cause Exceptions on some devices
             mSimSerial = "N/A";
-            Log.e(TAG, "GetSimSerial " + e);
+            log.error("GetSimSerial " + e);
         }
 
         if (mSimSerial.isEmpty()) {

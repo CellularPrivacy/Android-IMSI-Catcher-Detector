@@ -63,7 +63,7 @@
     <string name="app_version">バージョン: </string>
     <string name="aimsicd_about_info3">GSM/UMTS ネットワークで、偽の基地局 (IMSI キャッチャー) を検出して避けるための Android ベースのプロジェクト。</string>
     <string name="about_github">GitHub 上の AIMSICD</string>
-    <string name="about_wiki">ドキュメント (WIKI)</string>
+    <string name="about_wiki">ドキュメント</string>
     <string name="about_contribute">貢献</string>
     <string name="about_disclaimer">免責事項</string>
     <string name="about_releases">リリース</string>
@@ -108,7 +108,7 @@
     <string name="pref_ocid_key_summ">ここに OpenCellID API キーを入力してください</string>
     <string name="pref_enable_cell_monitoring_title">基地局の監視</string>
     <string name="pref_enable_cell_monitoring_summ">基地局の自動監視を有効にします</string>
-    <string name="pref_request_ocid_key">OCID API キーを要求</string>
+    <string name="pref_request_ocid_key">OpenCellID API キーを要求</string>
     <string name="pref_ocid_requestkey_summary">OpenCellID データ アクセス用の API キーを要求します</string>
 
     <string name="pref_map_title">地図ビューアーのプリファレンス</string>
@@ -190,7 +190,7 @@
     <string name="tracking_cell_information">基地局情報を追跡します。</string>
     <string name="stopped_tracking_cell_information">基地局情報の追跡を停止します。</string>
     <string name="only_one_key_per_day">新しい API キー要求は 24 時間に 1 回だけです!\n後でもう一度試してください。</string>
-    <string name="cell_id_doesnt_exist_in_db">セル ID が OCID データベースに存在しません!</string>
+    <string name="cell_id_doesnt_exist_in_db">セル ID が OpenCellID データベースに存在しません!</string>
     <string name="detail_info_medium">安全でないサービス エリア: この付近に少なくとも 1 つの新しいまたは未知の BTS が運用中です。あるいは A5/3 よりも低い、安全でない (壊れた) 暗号化アルゴリズムを使用しています [検出は WIP]。このエリアの通話/SMS は傍受や記録される可能性があります。あなたは今すぐこの場所を離れたほうがよいです。</string>
     <string name="detail_info_high">敵対的なサービスの活動を検出しました: IMSI キャッチャー (IMSIC) または偽の BTS (FBTS) が積極的にユーザーを追跡します。このエリアでアクティブなスキャンが行われます。特に政情不安がある場合は、この場所を避ける必要があります。お使いのバッテリーを取りはずすか、携帯電話を破壊します!</string>
     <string name="detail_info_danger">敵対的な追跡を検出しました: FBTS または IMSIC が積極的にあなたを追跡し、お使いの携帯電話が通常の暗号化された携帯電話会社を介した接続を防止します。あなたが危険や影響を受けている場合は、お使いの電話 + SIM を破壊し、最近盗まれたものとして報告してください。</string>
@@ -222,8 +222,8 @@
     <string name="opencellid_data_successfully_received">OpenCellID データを正常に受信しました。</string>
     <string name="error_retrieving_opencellid_data">OpenCellID データの取得エラー。\nネットワークを確認してください!</string>
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID データを正常に受信しました。\n地図マーカーを更新します。</string>
-    <string name="uploaded_bts_data_successfully">OCID に BTS データを正常にアップロードしました。</string>
-    <string name="error_uploading_bts_data">OCID サーバーに BTS データをアップロード中にエラー!</string>
+    <string name="uploaded_bts_data_successfully">OpenCellID に BTS データを正常にアップロードしました。</string>
+    <string name="error_uploading_bts_data">OpenCellID サーバーに BTS データをアップロード中にエラー!</string>
     <string name="restore_database_completed_title">正常に復元しました。</string>
     <string name="restore_database_completed">正常にデータベースの復元を完了しました。</string>
     <string name="error_restoring_database">データベースの復元中にエラー。</string>
@@ -273,11 +273,11 @@
 
     <string name="help_main_current_threat_level">AIMSICD 脅威ステータス、隣接する基地局、暗号化方法インジケーター。</string>
     <string name="help_main_phone_sim_details">SIM ネットワーク プロバイダーの詳細、IMEI、TMSI。</string>
-    <string name="help_main_acd">OCID で見つかったデータ (ある場合) と、現在接続している基地局の詳細な比較を表示し、違いを強調します。</string>
+    <string name="help_main_acd">OpenCellID で見つかったデータ (ある場合) と、現在接続している基地局の詳細な比較を表示し、違いを強調します。</string>
     <string name="help_main_database_viewer">私たちが持っている別の DB テーブルを表示します。</string>
     <string name="help_main_antenna_map_view">近くの、色でコード化されたアンテナの地図。</string>
     <string name="help_tracking_toggle_attack_detection">攻撃検出を開始/停止し、内部データベース テーブルに基地局の詳細を収集します。</string>
-    <string name="help_tracking_toggle_cell_tracking">アンテナ地図ビューアーに基地局の追跡の表示を開始します。後で OCID にアップロードすることができます。</string>
+    <string name="help_tracking_toggle_cell_tracking">アンテナ地図ビューアーに基地局の追跡の表示を開始します。後で OpenCellID にアップロードすることができます。</string>
 
     <string name="help_settings_preferences">保護ルール、ポーリング時間、そしてサービスの動作などの AIMSICD 設定 。</string>
     <string name="help_settings_backup_db">SD カードに SQLite3 DB をバックアップします。</string>
@@ -288,15 +288,15 @@
 
     <string name="help_app_add_get_ocid_api_key">OpenCellID データベースを使用してデータをアップロードおよびダウンロードするために API キーを取得…</string>
     <string name="help_app_about">ステータス アイコンとプロジェクトの説明。</string>
-    <string name="help_app_download_local_bts">OCID データベースをダウンロードします。</string>
-    <string name="help_app_upload_local_bts">あなたの BTS を OCID データベースにアップロードします。</string>
+    <string name="help_app_download_local_bts">OpenCellID データベースをダウンロードします。</string>
+    <string name="help_app_upload_local_bts">あなたの BTS を OpenCellID データベースにアップロードします。</string>
     <string name="help_app_debugging">エラー ログを収集して送信します。</string>
     <string name="help_app_quit">このアプリを終了します。</string>
     <string name="waiting_for_location">位置情報の待機中…</string>
     <string name="unable_to_restore_backup_from_previous_database_version">構造が変更されたため、以前のデータベース バージョンからバックアップを復元することができません!</string>
     <string name="unique_bts_data">固有の BTS データ</string>
     <string name="bts_measurements">BTS 測定結果</string>
-    <string name="imported_ocid_data">インポートした OCID データ</string>
+    <string name="imported_ocid_data">インポートした OpenCellID データ</string>
     <string name="default_mmc_locations">デフォルトの MCC の場所</string>
     <string name="silent_sms">サイレント SMS</string>
     <string name="eventlog">イベント ログ</string>

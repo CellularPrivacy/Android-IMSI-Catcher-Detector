@@ -10,7 +10,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.AppAIMSICD;
@@ -98,7 +100,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     public static final char RESTORE_DATABASE = 4;              // Restore DB from CSV files
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
 
-    public static final String TAG = "RequestTask";
+    private final Logger log = AndroidLogger.forClass(RequestTask.class);
 
     private AIMSICDDbAdapter mDbAdapter;
     private Context mAppContext;
@@ -125,7 +127,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 try {
                     boolean prepared = mDbAdapter.prepareOpenCellUploadData();
 
-                    Log.i(TAG, "OCID upload data prepared - " + String.valueOf(prepared));
+                    log.info("OCID upload data prepared - " + String.valueOf(prepared));
                     if (prepared) {
                         File file = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/aimsicd-ocid-data.csv");
                         publishProgress(25, 100);
@@ -147,7 +149,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
                         publishProgress(80,100);
                         if (response!= null) {
-                            Log.i(TAG, "OCID Upload Response: "
+                            log.info("OCID Upload Response: "
                                     + response.code() + " - "
                                     + response.message());
                             if (response.code() == 200) {
@@ -163,13 +165,13 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
                     // all caused by httpclient.execute(httppost);
                 } catch (UnsupportedEncodingException e) {
-                    Log.e(TAG, "Upload OpenCellID data Exception", e);
+                    log.error("Upload OpenCellID data Exception", e);
                 } catch (FileNotFoundException e) {
-                    Log.e(TAG, "Upload OpenCellID data Exception", e);
+                    log.error("Upload OpenCellID data Exception", e);
                 } catch (IOException e) {
-                    Log.e(TAG, "Upload OpenCellID data Exception", e);
+                    log.error("Upload OpenCellID data Exception", e);
                 } catch (Exception e) {
-                    Log.e(TAG, "Upload OpenCellID data Exception", e);
+                    log.error("Upload OpenCellID data Exception", e);
                 }
 
                 // DOWNLOADING...
@@ -186,7 +188,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         dir.mkdirs();
                     }
                     File file = new File(dir, OCDB_File_Name);
-                    Log.i(TAG, "DBE_DOWNLOAD_REQUEST write to: " + dirName + OCDB_File_Name);
+                    log.info("DBE_DOWNLOAD_REQUEST write to: " + dirName + OCDB_File_Name);
 
                     Request request = new Request.Builder()
                             .url(commandString[0])
@@ -199,22 +201,22 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         try {
                             String error = response.body().string();
                             Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_error) + " " + error);
-                            Log.e(TAG, "Download OCID data error: " + error);
+                            log.error("Download OCID data error: " + error);
                         } catch (Exception e) {
                             Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_error) + " "
                                     + e.getClass().getName() + " - "
                                     + e.getMessage());
-                            Log.e(TAG, "Download OCID exception: ", e);
+                            log.error("Download OCID exception: ", e);
                         }
                         return "Error";
                     } else {
                         // This returns "-1" for streamed response (Chunked Transfer Encoding)
                         total = response.body().contentLength();
                         if (total == -1 ) {
-                            Log.d(TAG, "doInBackground DBE_DOWNLOAD_REQUEST total not returned!");
+                            log.debug("doInBackground DBE_DOWNLOAD_REQUEST total not returned!");
                             total = 1024; // Let's set it arbitrarily to something other than "-1"
                         } else {
-                            Log.d(TAG, "doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
+                            log.debug("doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
                             publishProgress((int) (0.25 * total), (int)total); // Let's show something!
                         }
 
@@ -236,7 +238,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     return "Successful";
 
                 } catch (IOException e) {
-                    Log.w(TAG, "Problem reading data from steam", e);
+                    log.warn("Problem reading data from steam", e);
                     return null;
                 }
 
@@ -261,15 +263,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         super.onPreExecute();
     }
 
-    @Override
-    protected void onProgressUpdate(Integer... values) {
-        super.onProgressUpdate(values);
-        // Silence or Remove when working:
-        Log.v(TAG, "onProgressUpdate values[0]: " + values[0] + " values[1]: " + values[1]);
-        AIMSICD.mProgressBar.setProgress(values[0]);
-        AIMSICD.mProgressBar.setMax(values[1]);
-    }
-
     /**
      *  Description:    This is where we:
      *
@@ -287,7 +280,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        AIMSICD.mProgressBar.setProgress(0);
         TinyDB tinydb = TinyDB.getInstance();
 
         switch (mType) {
@@ -395,7 +387,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     private void showHideMapProgressBar(boolean pFlag) {
         Activity lActivity = getActivity();
         if(BuildConfig.DEBUG && lActivity == null) {
-            Log.v(TAG, "BaseTask showHideMapProgressBar() activity is null");
+            log.verbose("BaseTask showHideMapProgressBar() activity is null");
         }
         if (lActivity != null && lActivity instanceof MapViewerOsmDroid) {
             ((MapViewerOsmDroid) lActivity).setRefreshActionButtonState(pFlag);

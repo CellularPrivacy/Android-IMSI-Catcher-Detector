@@ -11,7 +11,9 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.OemCommands;
@@ -27,8 +29,8 @@ import java.util.Queue;
  * Class to handle Ril and Samsung MultiRil implementation. Used by the Aimsicd Service.
  */
 public class RilExecutor {
-    protected static final String TAG = "AIMSICD";
-    protected static final String mTAG = "RilExecutor";
+
+    private final Logger log = AndroidLogger.forClass(RilExecutor.class);
     
     public boolean mMultiRilCompatible;
 
@@ -78,7 +80,7 @@ public class RilExecutor {
         mRilExecutorDetectResult = mRequestExecutor.detect();
         if (!mRilExecutorDetectResult.available) {
             mMultiRilCompatible = false;
-            Log.e(TAG, mTAG + ": Samsung Multiclient RIL not available: " + mRilExecutorDetectResult.error);
+            log.error("Samsung Multiclient RIL not available: " + mRilExecutorDetectResult.error);
             mRequestExecutor = null;
         } else {
             mRequestExecutor.start();
@@ -144,7 +146,7 @@ public class RilExecutor {
                 subtype,
                 keySeqence).sendToTarget();
         if (!mRequestCondvar.block(timeout)) {
-            Log.e(TAG, mTAG + ": request timeout");
+            log.error("request timeout");
             return Collections.emptyList();
         } else {
             synchronized (mLastResponseLock) {
@@ -250,15 +252,15 @@ public class RilExecutor {
                     try {
                         RawResult result = (RawResult) msg.obj;
                         if (result == null) {
-                            Log.e(TAG, mTAG + ": result is null");
+                            log.error("result is null");
                             break;
                         }
                         if (result.exception != null) {
-                            Log.e(TAG, mTAG + ": ", result.exception);
+                            log.error("", result.exception);
                             break;
                         }
                         if (result.result == null) {
-                            Log.v(TAG, mTAG + ": No need to refresh.");
+                            log.verbose("No need to refresh");
                             break;
                         }
                         if (lastKeyStep.captureResponse) {

@@ -62,7 +62,7 @@
     <string name="app_version">versión: </string>
     <string name="aimsicd_about_info3">Projecto basado en Android para detectar y evadir estaciones celulares falsas (IMSI-Catchers) en Redes GSM/UMTS.</string>
     <string name="about_github">AIMSICD en GitHub</string>
-    <string name="about_wiki">Documentación (WIKI)</string>
+    <string name="about_wiki">DOCUMENTACIÓN</string>
     <string name="about_contribute">CONTRIBUIR</string>
     <string name="about_disclaimer">DESCARGO DE RESPONSABILIDAD</string>
     <string name="about_releases">VERSIONES</string>
@@ -106,7 +106,7 @@
     <string name="pref_ocid_key_summ">Introduzca su llave de API OpenCellID aquí</string>
     <string name="pref_enable_cell_monitoring_title">Monitoreo de Celda</string>
     <string name="pref_enable_cell_monitoring_summ">Habilitar el Rastreo automático de la Celda</string>
-    <string name="pref_request_ocid_key">Solicitar llave de OCID API</string>
+    <string name="pref_request_ocid_key">Solicitar llave de OpenCellID API</string>
     <string name="pref_ocid_requestkey_summary">Solicitar llave de API para acceso a datos OpenCellID</string>
 
     <string name="pref_map_title">Preferencias del visor de mapa</string>
@@ -190,7 +190,7 @@
     <string name="tracking_cell_information">Rastreando Informacion de Celda.</string>
     <string name="stopped_tracking_cell_information">Se detuvo el rastraeo de informacion de celda.</string>
     <string name="only_one_key_per_day">Sólo una nueva solicitud de llave API cada 24 horas!\nPor favor Inténtalo más tarde.</string>
-    <string name="cell_id_doesnt_exist_in_db">Cell ID no existe en la Base de Datos OCID!</string>
+    <string name="cell_id_doesnt_exist_in_db">Cell ID no existe en la Base de Datos OpenCellID!</string>
     <string name="hostile_service_area_changing_lac_detected">Área de servicio hostil: Cambio de LAC Detectado!</string>
     <string name="femtocell_detection_active">Detección de FemtoCell activa.</string>
     <string name="cell_tracking_active">Rastreo de Celda Activo.</string>
@@ -218,8 +218,8 @@
     <string name="opencellid_data_successfully_received">Datos de OpenCellID recibidos con éxito.</string>
     <string name="error_retrieving_opencellid_data">Error al recuperar datosde OpenCellID.\nRevisa tu red!</string>
     <string name="opencellid_data_successfully_received_markers_updated">Datos de OpenCellID recibidos con éxito.\nMarcadores actualizados.</string>
-    <string name="uploaded_bts_data_successfully">Datos de BTS cargados a OCID Exitosamente.</string>
-    <string name="error_uploading_bts_data">Error al cargar datos BTS a los servidores de OCID!</string>
+    <string name="uploaded_bts_data_successfully">Datos de BTS cargados a OpenCellID Exitosamente.</string>
+    <string name="error_uploading_bts_data">Error al cargar datos BTS a los servidores de OpenCellID!</string>
     <string name="restore_database_completed_title">Restauración exitosa.</string>
     <string name="restore_database_completed">Restauracion de base de datos Exitosa.</string>
     <string name="error_restoring_database">Error restaurando base de datos.</string>
@@ -269,13 +269,13 @@
 
     <string name="help_main_current_threat_level">Estado de amenaza AIMSICD, Celdas Vecinas, indicador de método de cifrado.</string>
     <string name="help_main_phone_sim_details">Detalles del proveedor SIM, IMEI, TMSI.</string>
-    <string name="help_main_acd">Ver comparación detallada de la célula conectada actualmente, con los datos (si existe) en OCID y resaltar las diferencias.</string>
+    <string name="help_main_acd">Ver comparación detallada de la célula conectada actualmente, con los datos (si existe) en OpenCellID y resaltar las diferencias.</string>
     <string name="help_main_database_viewer">Ver las diferentes tablas de la DB que tenemos.</string>
     <string name="help_main_antenna_map_view">Mapa de color codificado de las antenas cercanas.</string>
     <string name="help_main_at_command_interface">Interfaz que permite enviar comandos AT al procesador de banda base (requiere ROOT).</string>
 
     <string name="help_tracking_toggle_attack_detection">Iniciar/detener detección de ataque y recoger datos de celdas en las tablas de base de datos internas.</string>
-    <string name="help_tracking_toggle_cell_tracking">Empezar a Rastrear las celdas para mostrarlas en el visor de antena y posiblemente más adelante subir a la OCID.</string>
+    <string name="help_tracking_toggle_cell_tracking">Empezar a Rastrear las celdas para mostrarlas en el visor de antena y posiblemente más adelante subir a la OpenCellID.</string>
 
     <string name="help_settings_preferences">Configuración de AIMSICD como las normas de protección, tiempos de consulta y comportamiento de servicio.</string>
     <string name="help_settings_backup_db">Backup Base de datos SQLite3 a tarjeta SD.</string>
@@ -286,15 +286,15 @@
 
     <string name="help_app_add_get_ocid_api_key">Obtener una llave API para usar la base de datos OpenCellID para cargar y descargar datos…</string>
     <string name="help_app_about">Iconos de estado y explicacion del proyecto.</string>
-    <string name="help_app_download_local_bts">Descargas de la base de datos OCID.</string>
-    <string name="help_app_upload_local_bts">Carga tus BTS a la base de datos de OCID.</string>
+    <string name="help_app_download_local_bts">Descargas de la base de datos OpenCellID.</string>
+    <string name="help_app_upload_local_bts">Carga tus BTS a la base de datos de OpenCellID.</string>
     <string name="help_app_debugging">Recopilar y enviar registros de errores.</string>
     <string name="help_app_quit">Salir de esta aplicación.</string>
     <string name="waiting_for_location">Esperando ubicación…</string>
     <string name="unable_to_restore_backup_from_previous_database_version">No se pueden restaurar copias de seguridad de la versión anterior de la base de datos debido a cambios estructurales!</string>
     <string name="unique_bts_data">Datos únicos BTS</string>
     <string name="bts_measurements">Mediciones de BTS</string>
-    <string name="imported_ocid_data">Datos importados OCID</string>
+    <string name="imported_ocid_data">Datos importados OpenCellID</string>
     <string name="default_mmc_locations">Ubicaciones predeterminadas de MCC</string>
     <string name="silent_sms">SMS silencioso</string>
     <string name="eventlog">Registro de eventos</string>
@@ -311,8 +311,8 @@
 
     <string name="delete_database_msg_success">Base de datos borrada y recreada con éxito.\nReinicie la aplicación para borrar valores de la memoria.</string>
 
-    <string name="invalid_key_try_later">Llave OpenCellId Invalida, Intente de nuevo mas tarde.</string>
-    <string name="getting_ocid_key">Obtener llave API de OpenCellId...</string>
+    <string name="invalid_key_try_later">Llave OpenCellID Invalida, Intente de nuevo mas tarde.</string>
+    <string name="getting_ocid_key">Obtener llave API de OpenCellID…</string>
 
     <string name="pref_notification_settings">Ajustes de Notificación</string>
     <string name="pref_notification_vibrate_enable_title">Habilitar Vibración</string>

@@ -22,7 +22,9 @@ import android.telephony.CellSignalStrengthLte;
 import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 import java.util.List;
 
@@ -49,8 +51,8 @@ import java.util.List;
  */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class DeviceApi18 {
-    public static final String TAG = "AIMSICD";
-    public static final String mTAG = "DeviceApi18";
+
+    public static final Logger log = AndroidLogger.forClass(DeviceApi18.class);
 
     public static void loadCellInfo(TelephonyManager tm, Device pDevice) {
         int lCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
@@ -111,16 +113,16 @@ public class DeviceApi18 {
                         pDevice.mCell.setPSC(identityWcdma.getPsc());
 
                     } else {
-                        Log.i(TAG, mTAG + ": Unknown type of cell signal!"
-                                        + "\n ClassName: " + info.getClass().getSimpleName()
-                                        + "\n ToString: " + info.toString());
+                        log.info("Unknown type of cell signal!"
+                                + "\n ClassName: " + info.getClass().getSimpleName()
+                                + "\n ToString: " + info.toString());
                     }
                     if (pDevice.mCell.isValid())
                         break;
                 }
             }
         } catch (NullPointerException npe) {
-            Log.e(TAG, mTAG + ": loadCellInfo: Unable to obtain cell signal information: ", npe);
+            log.error("loadCellInfo: Unable to obtain cell signal information: ", npe);
         }
     }
 

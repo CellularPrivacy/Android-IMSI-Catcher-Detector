@@ -48,7 +48,7 @@
     <string name="about_aimsicd">Про AIMSICD</string>
     <string name="app_version">Версія: </string>
     <string name="about_github">AIMSICD на GitHub</string>
-    <string name="about_wiki">Документація (WIKI)</string>
+    <string name="about_wiki">ДОКУМЕНТАЦІЯ</string>
     <string name="about_desc_icon_idle">Очікування/Завантаження.</string>
     <string name="about_desc_icon_ok">Все гаразд.</string>
     <string name="network_netid">ID мережі:</string>
@@ -119,7 +119,7 @@
     <string name="location_error_message">Ви не можете відслідковувати данні GPS без сервісу визначення координат. Увімкнути його зараз?</string>
 
     <string name="pref_persistservice_summ">Сервіс буде продовжувати роботу після виходу з додатку (зніміть прапорець «закрити повністю»)</string>
-    <string name="getting_ocid_key">Отримання OpenCellId API ключа...</string>
+    <string name="getting_ocid_key">Отримання OpenCellID API ключа...</string>
 
     <string name="deleted">Видалено</string>
     <string name="failed_to_delete">Не вдалося видалити</string>
@@ -139,7 +139,7 @@
     <string name="pref_refresh_summ">Контроль за частотою оновлення пристрою\nПоточний вибір: %s</string>
     <string name="pref_ocid_key_summ">Введіть Ваш OpenCellID API ключ тут</string>
     <string name="pref_enable_cell_monitoring_summ">Увімкнути автоматичний моніторинг стільників</string>
-    <string name="pref_request_ocid_key">Запит ключа OCID API</string>
+    <string name="pref_request_ocid_key">Запит ключа OpenCellID API</string>
     <string name="pref_ocid_requestkey_summary">Запит API ключа для доступу до OpenCellID даних</string>
 
     <string name="at_command_title">Командний інтерфейс AT</string>
@@ -179,7 +179,7 @@
     <string name="tracking_cell_information">Відслідковування стільникової інформації.</string>
     <string name="stopped_tracking_cell_information">Відслідковування стільникової інформації призупинено.</string>
     <string name="only_one_key_per_day">Лише один запит на добу!\nБудь ласка, спробуйте пізніше.</string>
-    <string name="cell_id_doesnt_exist_in_db">ID стільника відсутнє в базі даних OCID!</string>
+    <string name="cell_id_doesnt_exist_in_db">ID стільника відсутнє в базі даних OpenCellID!</string>
     <string name="phone_type">Тип телефону</string>
     <string name="refreshing_every">Оновлювати кожні</string>
     <string name="refreshing_now">Оновити зараз…</string>

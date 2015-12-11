@@ -25,7 +25,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
-import android.util.Log;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
@@ -75,7 +77,7 @@ import java.util.List;
  */
  public class Helpers {
 
-    private static final String TAG = "Helpers";
+    private static final Logger log = AndroidLogger.forClass(Helpers.class);
     private static final int CHARS_PER_LINE = 34;
 
    /**
@@ -141,7 +143,7 @@ import java.util.List;
                 return wifiInfo.isConnected() || mobileInfo.isConnected();
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return false;
     }
@@ -237,18 +239,18 @@ import java.util.List;
                                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
-                    Log.i(TAG, "OCID BBOX is set to: " + boundParameter + "  with radius " + radius + " Km.");
+                    log.info("OCID BBOX is set to: " + boundParameter + "  with radius " + radius + " Km.");
 
                     StringBuilder sb = new StringBuilder();
                     sb.append("http://www.opencellid.org/cell/getInArea?key=")
                             .append(CellTracker.OCID_API_KEY).append("&BBOX=")
                             .append(boundParameter);
 
-                    Log.i(TAG, "OCID MCC is set to: " + cell.getMCC());
+                    log.info("OCID MCC is set to: " + cell.getMCC());
                     if (cell.getMCC() != Integer.MAX_VALUE) {
                         sb.append("&mcc=").append(cell.getMCC());
                     }
-                    Log.i(TAG, "OCID MNC is set to: " + cell.getMNC());
+                    log.info("OCID MNC is set to: " + cell.getMNC());
                     if (cell.getMNC() != Integer.MAX_VALUE) {
                         sb.append("&mnc=").append(cell.getMNC());
                     }
@@ -282,7 +284,7 @@ import java.util.List;
 
         if (aob.length == 0) {
             // WARNING: This one is very chatty!
-            Log.v(TAG, "invokeOemRilRequestRaw: byte-list response Length = 0");
+            log.verbose("invokeOemRilRequestRaw: byte-list response Length = 0");
             return Collections.emptyList();
         }
         int lines = aob.length / CHARS_PER_LINE;
@@ -294,13 +296,13 @@ import java.util.List;
             byteCount = 0;
 
             if (offset + byteCount >= aob.length) {
-                Log.e(TAG, "Unexpected EOF");
+                log.error("Unexpected EOF");
                 break;
             }
             while (aob[offset + byteCount] != 0 && (byteCount < CHARS_PER_LINE)) {
                 byteCount += 1;
                 if (offset + byteCount >= aob.length) {
-                    Log.e(TAG, "Unexpected EOF");
+                    log.error("Unexpected EOF");
                     break;
                 }
             }
@@ -318,7 +320,7 @@ import java.util.List;
         try {
             result = SystemPropertiesReflection.get(context, prop);
         } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "Failed to get system property: " + prop, iae);
+            log.error("Failed to get system property: " + prop, iae);
         }
         return result == null ? def : result;
     }

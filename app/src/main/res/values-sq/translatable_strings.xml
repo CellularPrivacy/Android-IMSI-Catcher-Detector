@@ -62,7 +62,7 @@
     <string name="app_version">Versioni: </string>
     <string name="aimsicd_about_info3">Projekt i bazuar në sistemin android për të identifukuar dhe mënjanuar kulla të gabuara/ të rrema (IMSI-Catchers) në rrjetet GSM/UMTS.</string>
     <string name="about_github">AIMSICD në GitHub</string>
-    <string name="about_wiki">Dokumentacioni (WIKI)</string>
+    <string name="about_wiki">DOKUMENTACIONI</string>
     <string name="about_contribute">KONTRIBO</string>
     <string name="about_disclaimer">Heq dorë</string>
     <string name="about_releases">VERSIONET</string>
@@ -101,12 +101,12 @@
     <string name="pref_ui_icons_summ">Zgjedh paraqitjen e ikonës</string>
     <string name="pref_refresh_title">Rifresko quotat</string>
     <string name="pref_refresh_summ">Kontrollo aktualizimin e frequencës së aparatit\nZgjedhja e deritanishme: %s</string>
-    <string name="pref_ocid_title">Ndryshimet e OpenCELLID</string>
-    <string name="pref_ocid_key_title">Çelësi API-it i OpenCELLID</string>
-    <string name="pref_ocid_key_summ">Shtypni këtu çelësin e API-it tuaj OpenCELLID</string>
+    <string name="pref_ocid_title">Ndryshimet e OpenCellID</string>
+    <string name="pref_ocid_key_title">Çelësi API-it i OpenCellID</string>
+    <string name="pref_ocid_key_summ">Shtypni këtu çelësin e API-it tuaj OpenCellID</string>
     <string name="pref_enable_cell_monitoring_title">Monitorimi i kullave</string>
     <string name="pref_enable_cell_monitoring_summ">Aktivizo monitorimit automotik të kullave</string>
-    <string name="pref_request_ocid_key">Apliko për një çelës API OCID</string>
+    <string name="pref_request_ocid_key">Apliko për një çelës API OpenCellID</string>
     <string name="pref_ocid_requestkey_summary">Apliko një çelës për hapjen e të dhënave OpenCellID</string>
 
     </resources>

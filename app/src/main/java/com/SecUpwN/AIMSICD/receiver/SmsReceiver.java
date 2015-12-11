@@ -10,12 +10,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import android.util.Log;
 
 import com.SecUpwN.AIMSICD.service.CellTracker;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 
 /**
@@ -67,6 +69,8 @@ import java.util.List;
  */
 public class SmsReceiver extends BroadcastReceiver {
 
+    private final Logger log = AndroidLogger.forClass(SmsReceiver.class);
+
     public void onReceive(Context context, Intent intent) {
         try {
             final Bundle bundle = intent.getExtras();
@@ -87,7 +91,7 @@ public class SmsReceiver extends BroadcastReceiver {
                         }
                         full_pdu_string = sb.toString();
                     } catch (Exception err) {
-                        Log.e("SmsReceiver", "Exception PDU smsReceiver" + err);
+                        log.error("Exception PDU smsReceiver" + err);
                     }
 
                     // We may also need to consider catching WAP PUSH SMS messages
@@ -97,8 +101,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     //int mms = firstByte & 0x4;  //   4 = 0000 0100    (bit 3)
                     //int sri = firstByte & 0x10; //  16 = 0001 0000    (bit 5)
                     int pID = smsPdu[1] & 0xc0; // 192 = 1100 0000
-                    Log.i("AIMSICD_SmsReceiver", "PDU Data: firstByte: " + firstByte +
-                            " TP-MTI: " + mti + " TP-PID: " + pID);
+                    log.info("PDU Data: firstByte: " + firstByte + " TP-MTI: " + mti + " TP-PID: " + pID);
                     // Need checking! --EVA
                     if (pID == 0x40 && mti == 0) {
                         messages.add(SmsMessage.createFromPdu((byte[]) pdu));
@@ -116,14 +119,14 @@ public class SmsReceiver extends BroadcastReceiver {
                         smsData.putString("message",         sms.getMessageBody());
                         smsIntent.putExtras(smsData);
                         context.sendBroadcast(smsIntent);
-                        Log.i("AIMSICD_SmsReceiver", "Type-0 SMS received! Sender: "
+                        log.info("Type-0 SMS received! Sender: "
                                 + sms.getOriginatingAddress() + " Message: "
                                 + sms.getMessageBody());
                     }
                 }
             }
         } catch (NullPointerException npe) {
-            Log.e("SmsReceiver", "Exception smsReceiver" + npe);
+            log.error("Exception smsReceiver", npe);
         }
     }
 

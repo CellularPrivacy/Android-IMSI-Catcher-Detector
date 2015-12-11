@@ -23,7 +23,6 @@ package com.SecUpwN.AIMSICD.utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 
@@ -31,10 +30,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
 @SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
 
-    private static final String TAG = "AIMSICD_CommandResult";
+    private final Logger log = AndroidLogger.forClass(CommandResult.class);
     private long mStartTime;
     private int mExitValue;
     private String mStdout;
@@ -49,7 +51,7 @@ public class CommandResult implements Parcelable {
         this.mStderr = stderr;
         this.mEndTime = endTime;
 
-        Log.d(TAG, "Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
+        log.debug("Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
         // this is set last so log from here
         checkForErrors();
     }
@@ -101,20 +103,20 @@ public class CommandResult implements Parcelable {
                     errorWriter.write(lineEnding);
                     errorWriter.write("Attempted to write to an offline cpu core (ignore me).");
                 } else {
-                    errorWriter.write(TAG + " shell error detected!");
+                    errorWriter.write("shell error detected!");
                     errorWriter.write(lineEnding);
                     errorWriter.write("CommandResult {" + this.toString() + '}');
                     errorWriter.write(lineEnding);
                 }
                 errorWriter.write(lineEnding);
             } catch (IOException e) {
-                Log.e(TAG, "Failed to write command result to error file", e);
+                log.error("Failed to write command result to error file", e);
             } finally {
                 if (errorWriter != null) {
                     try {
                         errorWriter.close();
                     } catch (IOException ignored) {
-                        Log.e(TAG, "Failed to close error writer", ignored);
+                        log.error("Failed to close error writer", ignored);
                     }
                 }
             }

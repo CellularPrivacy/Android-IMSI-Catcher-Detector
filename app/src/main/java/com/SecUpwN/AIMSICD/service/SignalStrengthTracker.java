@@ -6,11 +6,13 @@
 package com.SecUpwN.AIMSICD.service;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 
 import java.util.HashMap;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 /**
  *  Description:    Class that calculates cell signal strength averages and decides if a
@@ -72,7 +74,7 @@ import java.util.HashMap;
  *
  *  ChangeLog
  *
- *      20150703    E:V:A       Changed log TAG to use only TAG for Log.i() and mTAG for Log.d/e/v()
+ *      20150703    E:V:A       Changed log TAG to use only TAG for log.info() and mTAG for log.debug/e/v()
  *      20150717    E:V:A       Added back mTAG's and added comments
  *      20150719    E:V:A       Added comments
  *
@@ -80,8 +82,7 @@ import java.util.HashMap;
  */
 public class SignalStrengthTracker {
 
-    private static final String TAG = "AIMSICD";
-    private static final String mTAG = "SignalStrengthTracker";
+    private final Logger log = AndroidLogger.forClass(SignalStrengthTracker.class);
 
     private static int sleepTimeBetweenSignalRegistration = 60; // [seconds]
     private static int minimumIdleTime              = 30;       // [seconds]
@@ -119,17 +120,15 @@ public class SignalStrengthTracker {
         // TODO: We probably need to convert this into seconds for easy use in DB
         long now = System.currentTimeMillis(); // [ms]
 
-        if(deviceIsMoving()) {
-            Log.i(TAG, mTAG +
-                    ": Ignored signal sample for CID: " + cellID +
-                    " due to device movement. Waiting for " + ((minimumIdleTime*1000) - (now - lastMovementDetected)) + " ms.");
+        if (deviceIsMoving()) {
+            log.info("Ignored signal sample for CID: " + cellID +
+                    " due to device movement. Waiting for " + ((minimumIdleTime * 1000) - (now - lastMovementDetected)) + " ms.");
             return;
         }
 
         if( now - (sleepTimeBetweenSignalRegistration*1000) > lastRegistrationTime) {
             long diff = now - lastRegistrationTime;
-            Log.i(TAG, mTAG +
-                    ": Scheduling signal strength calculation from CID: " + cellID +
+            log.info("Scheduling signal strength calculation from CID: " + cellID +
                     " @ " + signalStrength + " dBm. Last registration was " + diff + "ms ago.");
             lastRegistrationTime = now;
 
@@ -138,7 +137,7 @@ public class SignalStrengthTracker {
         }
 
         if( now - (sleepTimeBetweenCleanup*1000) > lastCleanupTime) {
-            Log.i(TAG, mTAG + ": Removing old signal strength entries from DB.");
+            log.info("Removing old signal strength entries from DB.");
 
             // cleanupOldData();//
             // TODO cleanupOldData() need to change query as now time is a string value
@@ -173,7 +172,7 @@ public class SignalStrengthTracker {
 
         // If moving, return false
         if(deviceIsMoving()) {
-            Log.i(TAG, mTAG + ": Cannot check signal strength for CID: " + cellID + " because of device movements.");
+            log.info("Cannot check signal strength for CID: " + cellID + " because of device movements.");
             return false;
         }
 
@@ -182,12 +181,12 @@ public class SignalStrengthTracker {
         // Cached?
         if(averageSignalCache.get(cellID) != null) {
             storedAvg = averageSignalCache.get(cellID);
-            Log.d(TAG, mTAG + ": Cached average SS for CID: " + cellID + " is: " + storedAvg);
+            log.debug("Cached average SS for CID: " + cellID + " is: " + storedAvg);
         } else {
             // Not cached, check DB
             storedAvg = mDbHelper.getAverageSignalStrength(cellID); // DBi_measure:rx_signal
             averageSignalCache.put(cellID, storedAvg);
-            Log.d(TAG, mTAG + ": Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
+            log.debug("Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
         }
 
         boolean result;
@@ -196,13 +195,13 @@ public class SignalStrengthTracker {
         } else {
             result = signalStrength - storedAvg > mysteriousSignalDifference;
         }
-        Log.d(TAG, mTAG + ": Signal Strength mystery check for CID: " + cellID +
+        log.debug("Signal Strength mystery check for CID: " + cellID +
                 " is " + result + ", avg:" + storedAvg + ", this signal: " + signalStrength);
         return result;
     }
 
     public void onSensorChanged() {
-        //Log.d(TAG, "We are moving...");
+        //log.debug("We are moving...");
         lastMovementDetected = System.currentTimeMillis();
     }
 }

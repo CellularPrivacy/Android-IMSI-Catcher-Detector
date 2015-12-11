@@ -5,11 +5,10 @@
  */
 package com.SecUpwN.AIMSICD.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
-
-import android.view.Gravity;
 import android.widget.Toast;
 
 public class Toaster {
@@ -49,6 +48,7 @@ public class Toaster {
             }
 
             new Handler(context.getMainLooper()).post(new Runnable() {
+                @SuppressLint("ShowToast")
                 @Override
                 public void run() {
                     toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);

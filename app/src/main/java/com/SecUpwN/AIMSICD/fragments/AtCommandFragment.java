@@ -13,7 +13,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 
 /**
@@ -70,7 +72,7 @@ import java.util.List;
  */
 public class AtCommandFragment extends Fragment {
 
-    private static final String TAG = "AtCommandFrag";
+    private final Logger log = AndroidLogger.forClass(AtCommandFragment.class);
 
     //Return value constants
     private static final int SERIAL_INIT_OK = 100;
@@ -215,7 +217,7 @@ public class AtCommandFragment extends Fragment {
         public void onClick(View v) {
             if (mAtCommand.getText() != null) {
                 String command = mAtCommand.getText().toString();
-                Log.i(TAG, "AT Command Detected: " + command);
+                log.info("AT Command Detected: " + command);
                 executeAT();
             }
         }
@@ -276,7 +278,7 @@ public class AtCommandFragment extends Fragment {
                     mSerialDevices.add(mSerialDevice);
                 }
             } catch (StringIndexOutOfBoundsException e) {
-                Log.w(TAG, e.getMessage());
+                log.warn(e.getMessage());
                 // ignore, move on
             }
 
@@ -334,7 +336,7 @@ public class AtCommandFragment extends Fragment {
             }
 
         } catch (Exception e) {
-            Log.e(TAG, "InitSerialDevice ", e);
+            log.error("InitSerialDevice ", e);
         }
 
         if (!mSerialDevices.isEmpty()) {
@@ -379,7 +381,7 @@ public class AtCommandFragment extends Fragment {
         // We need a device-type check here, perhaps: gsm.version.ril-impl.
         Editable cmd = mAtCommand.getText();
         if (cmd != null && cmd.length() != 0) {
-            Log.d(TAG, "ExecuteAT: attempting to send: " + cmd.toString());
+            log.debug("ExecuteAT: attempting to send: " + cmd.toString());
 
             if (getSerialDevice() != null) {
                 mCommandTerminal.send(cmd.toString(), new Handler(Looper.getMainLooper()) {
@@ -422,26 +424,26 @@ public class AtCommandFragment extends Fragment {
                         cmd.wait(mTimeout);
                     }
                 } catch (InterruptedException e) {
-                    Log.e(TAG, e.getMessage());
+                    log.error(e.getMessage());
                 }
             }
             if (!cmd.isExecuting() && !cmd.isFinished()) {
                 Exception e = new Exception();
 
                 if (!shell.isExecuting && !shell.isReading) {
-                    Log.w(TAG, "Waiting for a command to be executed in a shell that is not executing and not reading! \n\n Command: " + cmd.getCommand());
+                    log.warn("Waiting for a command to be executed in a shell that is not executing and not reading! \n\n Command: " + cmd.getCommand());
                     e.setStackTrace(Thread.currentThread().getStackTrace());
-                    Log.e(TAG, e.getMessage(), e);
+                    log.error(e.getMessage(), e);
 
                 } else if (shell.isExecuting && !shell.isReading) {
-                    Log.e(TAG, "Waiting for a command to be executed in a shell that is executing but not reading! \n\n Command: " + cmd.getCommand());
+                    log.error("Waiting for a command to be executed in a shell that is executing but not reading! \n\n Command: " + cmd.getCommand());
                     e.setStackTrace(Thread.currentThread().getStackTrace());
-                    Log.e(TAG, e.getMessage(), e);
+                    log.error(e.getMessage(), e);
 
                 } else {
-                    Log.e(TAG, "Waiting for a command to be executed in a shell that is not reading! \n\n Command: " + cmd.getCommand());
+                    log.error("Waiting for a command to be executed in a shell that is not reading! \n\n Command: " + cmd.getCommand());
                     e.setStackTrace(Thread.currentThread().getStackTrace());
-                    Log.e(TAG, e.getMessage(), e);
+                    log.error(e.getMessage(), e);
                 }
             }
         }

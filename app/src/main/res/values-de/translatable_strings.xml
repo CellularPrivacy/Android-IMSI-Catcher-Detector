@@ -80,7 +80,7 @@
     <string name="app_version">Version: </string>
     <string name="aimsicd_about_info3">Android-basiertes Projekt zur Erkennung und Vermeidung gefälschter Mobilfunkstationen\n(IMSI-Catcher) in GSM/UMTS-Netzwerken.</string>
     <string name="about_github">AIMSICD auf GitHub</string>
-    <string name="about_wiki">Dokumentation (WIKI)</string>
+    <string name="about_wiki">DOKUMENTATION</string>
     <string name="about_contribute">MITMACHEN</string>
     <string name="about_disclaimer">HAFTUNG</string>
     <string name="about_releases">VERÖFFENTLICHUNG</string>
@@ -127,7 +127,7 @@
     <string name="pref_ocid_key_summ">OpenCellID API-Schlüssel hier eingeben</string>
     <string name="pref_enable_cell_monitoring_title">Funkzellenüberprüfung</string>
     <string name="pref_enable_cell_monitoring_summ">Automatische Funkzellenüberprüfung</string>
-    <string name="pref_request_ocid_key">OCID API-Schlüssel anfordern</string>
+    <string name="pref_request_ocid_key">OpenCellID API-Schlüssel anfordern</string>
     <string name="pref_ocid_requestkey_summary">API-Schlüssel für OpenCellID-Zugang anfordern</string>
    
     <!-- MAP PREFERENCES -->
@@ -177,7 +177,7 @@
   
     <!-- Request OpenCellID Key -->
     <string name="title_ocid_key">OpenCellID API-Schlüssel</string>
-    <string name="message_request_api_key">Drücke OK um einen API-Schlüssel von OpenCellID.org anzufordern. Dies ermöglicht das Herunterladen deren Daten und das Anzeigen in der Funkantennenkarte. Zudem können gesammelte Funkturmdaten an OCID übermittelt werden. Wenn keine Daten im Zeitraum von 20 Tagen hochgeladen wurden, wird der API-Schlüssel ungültig.</string>
+    <string name="message_request_api_key">Drücke OK um einen API-Schlüssel von OpenCellID.org anzufordern. Dies ermöglicht das Herunterladen deren Daten und das Anzeigen in der Funkantennenkarte. Zudem können gesammelte Funkturmdaten an OpenCellID übermittelt werden. Wenn keine Daten im Zeitraum von 20 Tagen hochgeladen wurden, wird der API-Schlüssel ungültig.</string>
     <string name="ocid_api_error">Fehler bei Schlüsselanforderung: </string>
     <string name="ocid_api_success">Neuer API-Schlüssel gesichert.</string>
   
@@ -229,7 +229,7 @@
     <string name="tracking_cell_information">Funkzelldaten werden aufzeichnet.</string>
     <string name="stopped_tracking_cell_information">Aufzeichnung der Funkzelldaten angehalten.</string>
     <string name="only_one_key_per_day">Anfrage für neuen API-Schlüssel nur einmal aller 24 Stunden möglich!\nBitte später erneut versuchen.</string>
-    <string name="cell_id_doesnt_exist_in_db">Zell-ID nicht existent in OCID-Datenbank!</string>
+    <string name="cell_id_doesnt_exist_in_db">Zell-ID nicht in OpenCellID-Datenbank!</string>
     <string name="hostile_service_area_changing_lac_detected">Feindliche Betriebsaktion: LAC-Änderung erkannt!</string>
     <string name="femtocell_detection_active">Femtozellenerkennung aktiv.</string>
     <string name="cell_tracking_active">Funkzellen werden aufgezeichnet.</string>
@@ -255,8 +255,8 @@
     <string name="opencellid_data_successfully_received">OpenCellID-Daten erfolgreich empfangen.</string>
     <string name="error_retrieving_opencellid_data">Fehler beim empfangen der OpenCellID-Daten.\nNetzwerk überprüfen!</string>
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID-Daten erfolgreich empfangen.\nAntennen aktualisiert.</string>
-    <string name="uploaded_bts_data_successfully">BTS-Daten erfolgreich zu OCID hochgeladen.</string>
-    <string name="error_uploading_bts_data">Fehler beim hochladen zum OCID-Server!</string>
+    <string name="uploaded_bts_data_successfully">BTS-Daten erfolgreich zu OpenCellID hochgeladen.</string>
+    <string name="error_uploading_bts_data">Fehler beim hochladen zum OpenCellID-Server!</string>
     <string name="restore_database_completed">Wiederherstelung der Datenbank erfolgreich.</string>
     <string name="error_restoring_database">Fehler beim Wiederherstellen der Datenbank.</string>
     <string name="database_backup_successfully_saved_to">Datenbank wurde erfolgreich gesichert nach:</string>
@@ -307,14 +307,14 @@
     <!-- Section Main-->
     <string name="help_main_current_threat_level">AIMSICD-Gefahrenstatus, Benachbarte Funkzellen und Verschlüsselungsindikator.</string>
     <string name="help_main_phone_sim_details">SIM-Details, Netzbetreiber, IMEI und TMSI.</string>
-    <string name="help_main_acd">Zeigt detaillierten Vergleich der verbundenen Funkzelle mit den Daten von OCID (wenn vorhanden) und hebt Unterschiede hervor.</string>
+    <string name="help_main_acd">Zeigt detaillierten Vergleich der verbundenen Funkzelle mit den Daten von OpenCellID (wenn vorhanden) und hebt Unterschiede hervor.</string>
     <string name="help_main_database_viewer">Zeigt unsere verschiedenen Datenbanken.</string>
     <string name="help_main_antenna_map_view">Karte farbcodierter Antennen der Umgebung.</string>
     <string name="help_main_at_command_interface">Maske zur Eingabe von AT-Befehlen zur Kommunikation mit dem Baseband Processor (benötigt ROOT).</string>
     
     <!-- Section Tracking-->
     <string name="help_tracking_toggle_attack_detection">Umschaltung der Angriffserkennung und Sammlung der Daten in die internen Datenbanken.</string>
-    <string name="help_tracking_toggle_cell_tracking">Starten um Funkzellen aufzuzeichnen, in der Funkantennenkarte anzuzeigen und evtl. später zu OCID hochzuladen.</string>
+    <string name="help_tracking_toggle_cell_tracking">Starten um Funkzellen aufzuzeichnen, in der Funkantennenkarte anzuzeigen und evtl. später zu OpenCellID hochzuladen.</string>
     
     <!-- Section Settings-->
     <string name="help_settings_preferences">AIMSICD-Einstellungen wie Schutzregeln, Aktualisierungszeiten und Dienstverhalten.</string>
@@ -327,15 +327,15 @@
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">API-Schlüssel für die Nutzung der OpenCellID-Datenbanken sowie hoch- und herunterladen der Daten anfordern…</string>
     <string name="help_app_about">Status-Symbole und Erklärung des Projekts.</string>
-    <string name="help_app_download_local_bts">OCID-Datenbank herunterladen.</string>
-    <string name="help_app_upload_local_bts">Eigene BTS-Daten zu OCID hochladen.</string>
+    <string name="help_app_download_local_bts">OpenCellID-Datenbank herunterladen.</string>
+    <string name="help_app_upload_local_bts">Eigene BTS-Daten zu OpenCellID hochladen.</string>
     <string name="help_app_debugging">Fehlerprotokolle sammeln und versenden.</string>
     <string name="help_app_quit">Diese App verlassen.</string>
     <string name="waiting_for_location">Standort wird ermittelt…</string>
     <string name="unable_to_restore_backup_from_previous_database_version">Alte Datenbank kann auf Grund struktureller Änderungen nicht wiederhergestellt werden!</string>
     <string name="unique_bts_data">Eindeutige BTS-Daten</string>
     <string name="bts_measurements">BTS-Messungen</string>
-    <string name="imported_ocid_data">Importierte OCID-Daten</string>
+    <string name="imported_ocid_data">Importierte OpenCellID-Daten</string>
     <string name="default_mmc_locations">Voreingestellte MCC-Standorte</string>
     <string name="silent_sms">Stille SMS</string>
     <string name="eventlog">Ereignisprotokoll</string>

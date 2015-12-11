@@ -21,17 +21,18 @@
 
 package com.SecUpwN.AIMSICD.utils;
 
-import android.util.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 import static java.lang.System.nanoTime;
 
 public class ChildProcess {
 
-    private static final String TAG = "ChildProcess";
+    private final Logger log = AndroidLogger.forClass(ChildProcess.class);
     private static final int PIPE_SIZE = 1024;
 
     private class ChildReader extends Thread {
@@ -53,12 +54,12 @@ public class ChildProcess {
                     mBuffer.append(s);
                 }
             } catch (IOException e) {
-                Log.d(TAG, e.getMessage());
+                log.debug(e.getMessage());
             }
             try {
                 mStream.close();
             } catch (IOException e) {
-                Log.d(TAG, "cannot close stream", e);
+                log.debug("cannot close stream", e);
             }
         }
     }
@@ -83,12 +84,12 @@ public class ChildProcess {
                     off += len;
                 }
             } catch (IOException e) {
-                Log.d(TAG, e.getMessage());
+                log.debug(e.getMessage());
             }
             try {
                 mStream.close();
             } catch (IOException e) {
-                Log.d(TAG, "cannot close stream", e);
+                log.debug("cannot close stream", e);
             }
         }
     }
@@ -120,7 +121,7 @@ public class ChildProcess {
             mChildStderrReader = new ChildReader(mChildProc.getErrorStream(), mChildStderr);
             mChildStderrReader.start();
         } catch (IOException e) {
-            Log.d(TAG, e.getMessage(), e);
+            log.debug(e.getMessage(), e);
         }
     }
 
@@ -151,7 +152,7 @@ public class ChildProcess {
                     mChildStdinWriter = null;
                 }
             } catch (InterruptedException e) {
-                Log.d(TAG, e.getMessage(), e);
+                log.debug(e.getMessage(), e);
             }
         }
         return mExitValue;
