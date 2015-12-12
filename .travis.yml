@@ -48,3 +48,15 @@ addons:
     build_command_prepend: "./gradlew clean"
     build_command: "./gradlew build"
     branch_pattern: master
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: hWL8k4eTm6RBA6JtY+zL/bFFm+f2eM466kKlHBrywukSXAThgX8VzHVu9I8u9bL1yP2j8R9XHmG+C49Fy8NZ85Hmj5ECFg3dGRhfxAzr3o3deP3Kaeo+LozGhOy/z2PvOPyHS7XqOK8kk8gmoMJ9jvhz+wFAbW9GxhKLYBMn81E=
+  file:
+    - app/build/outputs/apk/app-normal-debug.apk
+    - app/build/outputs/apk/app-system-debug.apk
+  on:
+    repo: SecUpwN/Android-IMSI-Catcher-Detector
+    tags: true
