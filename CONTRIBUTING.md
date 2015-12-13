@@ -75,4 +75,60 @@ Useful links to help you with correctly formatting posts.
 
 #### DEBUGGING
 
-* Please follow our instructions on [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues).
+#### DEBUGGING
+
+Thanks for helping us squashing bugs! Please be patient.
+
+---
+**Important Bug Submission Rules:**
+
+1. **SAFETY FIRST:** Remove CID, LAT, IMEI, IMSI and phone number from logs you submit!
+2. ALWAYS use the [latest release](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases). Preferrably  [build the `development` branch from source](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Building).
+3. If you use [Xprivacy](https://github.com/M66B/XPrivacy) read and understand [THIS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Permissions) first! Give our app another try after reading.
+4. App still mocking around? See our [open Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues) and look if your Issue already exists.
+5. If your Issue does not exist yet, open a new Issue and give it a short descriptive title.
+6. Describe your Issue as thoroughly as possible and *add logs* so that we can reproduce it.
+8. Maintain your filed Issues! Nothing is more annoying than unresponsive bug reporters.
+
+---
+
+In all cases, you **MUST** include the following:
+
+* AIMSICD version (see the About-Tab within our App)
+* Your exact FW specification (ROM, AOS API, etc.)
+* Your exact HW specification (processor, model number, etc.)
+* The output of getprop command to a Pastebin-Site such as [PIE-Bin](https://defuse.ca/pastebin.htm)
+* Logcat from button `Debugging` in Navigation Drawer (remove personal data)
+* Feel free to attach any other logs made by a logcat tool like [MatLog](https://github.com/plusCubed/matlog)
+
+---
+
+Command line junkie?
+
+Then you can use the following shell function to help you get only relevant logcat entries. Copy and paste the following to your terminal shell:
+
+```bash
+alias logrep='logcat -d -v time -b main -b system -b radio|grep -iE $@'
+```
+
+Furthermore, here are some great commands that will:
+
+ 1. Create a log directory in: `/sdcard/aimsicd_log/`
+ 2. cd into that directory 
+ 3. Clear all the existing logcats
+ 4. Run AIMSICD and wait for a key press to kill it
+ 5. Save a full *logcat* (excluding *radio*) into `/sdcard/aimsicd_log/aimdump.log`
+
+Copy and paste the following to your android rooted shell:
+  
+```bash
+alias cdaim='mkdir /sdcard/aimsicd_log; cd /sdcard/aimsicd_log'
+alias logclr='logcat -c -b main -b system -b radio -b events' 
+alias logdmp='logcat -d -v threadtime -b main -b system -b events -f /sdcard/aimsicd_log/aimdump.log'
+export DUMTXT="When bug occurs, press any key to kill app and dump logcat to file..."
+alias aimrun='cdaim; logclr; am start -n com.SecUpwN.AIMSICD/.AIMSICD; read dummy?"${DUMTXT}"; am force-stop com.SecUpwN.AIMSICD; logdmp;'
+```
+To run it, just type: `aimrun`.
+If you want to also supply *radio* logcat, add `-b radio` somewhere in the `logdmp` alias, but know that your GPS location and cell info may be included when you do that.
+
+---
