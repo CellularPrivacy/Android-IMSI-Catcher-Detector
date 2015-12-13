@@ -24,8 +24,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
-        versionCode 36
-        versionName '0.1.36-alpha'
+        versionCode 37
+        versionName '0.1.37-alpha'
         testApplicationId "com.SecUpwN.AIMSICD.test"
 
         buildConfigField 'String', 'BUILD_NUMBER', (buildNumber == null ? 'null' : "\"${buildNumber}\"")
