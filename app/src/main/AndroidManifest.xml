@@ -137,14 +137,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- We may need to remove the android:permission line in order NOT
-             to block other (system?) apps who doesn't have or use this permission.  -->
-        <receiver android:name=".receiver.SmsReceiver"
-                  android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter android:priority="1000">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
-            </intent-filter>
-        </receiver>
         <activity android:name=".activities.CreditsRollActivity"
             android:theme="@android:style/Theme.Dialog"
             android:screenOrientation="portrait"> </activity>
