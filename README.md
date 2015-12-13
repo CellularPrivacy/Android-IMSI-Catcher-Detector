@@ -1,4 +1,4 @@
-### Android IMSI-Catcher Detector
+# Android IMSI-Catcher Detector
 
 [![BuildStatus](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector.svg)](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector) [![DevelopmentStatus](http://img.shields.io/badge/Development-ALPHA-brightgreen.svg)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status) [![CoverityScan](https://scan.coverity.com/projects/3346/badge.svg)](https://scan.coverity.com/projects/3346) [![Translations](https://hosted.weblate.org/widgets/aimsicd/-/shields-badge.svg)](https://hosted.weblate.org/projects/aimsicd/strings/)
 [![Bountysource](https://www.bountysource.com/badge/team?team_id=40338&style=bounties_received)](https://www.bountysource.com/teams/android-imsi-catcher-detector/issues?utm_source=Android%20IMSI-Catcher%20Detector&utm_medium=shield&utm_campaign=bounties_received)
@@ -27,7 +27,7 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 * [What it does](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#what-it-does)
 * [Why use it](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#why-use-it)
 * [**Contributing**](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md)
-* [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues)
+* [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#debugging)
 * [Warnings](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#warnings)
 * [Research](https://spideroak.com/browse/share/AIMSICD/GitHub)
 * [Support](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#support)
@@ -43,13 +43,13 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 
 AIMSICD attempts to detect IMSI-Catchers through [detection methods](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/230) such as these:
     
-* Check [tower information consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/253)
-* Prevent [silent app installations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/151)
-* Check [LAC/Cell ID consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91)
+* Check [Tower Information Consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/253)
+* Check [LAC/Cell ID Consistency](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/91)
 * Check [Neighbouring Cell Info](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/264)
-* [Signal strength monitoring](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/97)
-* Look for [silent SMS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/69)
-* [Detect FemtoCells](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/6)
+* Prevent [silent app installations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/151)
+* Monitor [Signal Strength](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/97)
+* Detect [silent SMS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/glossary-of-terms#silent-sms)
+* Detect [FemtoCells](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/6)
 
 See our [app goals](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status#application-goals) and [development status](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status)!
 
@@ -69,21 +69,23 @@ The reason IMSI-Catchers are so commonly used is that it is very easy to get awa
 
 Please read our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)! This app does **not**:
 
-* Provide secure phone calls (see [RedPhone](https://github.com/WhisperSystems/RedPhone))
-* Provide secure data transmission (see [Tor](https://www.torproject.org/))
-* Provide app permission control ([XPrivacy](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783))
+* Provide secure phone calls
+* Provide secure data transmission
+* Provide app permission control
 * Provide secure application sand-boxing
 * Provide [ROOT](http://www.xda-developers.com/root) and remove bloatware
-* Provide secure SMS (see [SMSSecure](https://github.com/SMSSecure/SMSSecure))
-* Provide firewalls (see [AFWall+](https://github.com/ukanth/afwall))
+* Provide secure SMS
+* Provide firewalls
 * Provide full device encryption
-* Prevent already installed rogue applications from full access and spying
+* Prevent already installed rogue apps from full access and spying
+
+Solutions for the above may be found in our [Recommendations](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Recommendations).
 
 ---
 
 ### Bug Tracker
 
-Please follow [how to correctly submit Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Submitting-Issues).
+Please follow our [Bug Submission Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#debugging).
 
 ---
 
@@ -95,13 +97,13 @@ Although this project is fully Open Source, developing AIMSICD is a lot of work 
 
 ### License
 
-This project is completely licensed [GPL v3+](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE).
+This project is completely licensed [GPLv3+](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE).
 
 ---
 
 ### Credits & Greetings
 
-Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/app/src/main/assets/CREDITS). HUGE THANKS!
+Our project would not have been possible without [these awesome people](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/app/src/main/assets/CREDITS). THANK YOU!
 
 ---
 
@@ -115,6 +117,6 @@ Our gratitude flies out to our great Sponsors:
 
 ### Get in touch with the core team!
 
-You will find our current team members [here](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
+Core team members are listed [here](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
 
 ---
