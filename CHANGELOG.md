@@ -1,6 +1,30 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [13.12.2015 - WIP-Release v0.1.37-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.37-alpha)
+
+* Changed: Slimmed down permissions to the bare necessary ones to ensure peace for us privacy geeks
+* Changed: Moving towards a more usable and polished interface by adding a bit Material Design
+* Changed: Versioning from manually editing `AndroidManifest.xml` to using current `commitId`
+* Changed: Replaced deprecated `Apache HttpClient` and `HttpUrlConnection` with `okhttp`
+* Changed: Resized documentation button in About Fragment to fit screen for more devices
+* Changed: Now loading `OSMBonusPack` as Maven dependency, renamed app module to `AIMSICD`
+* Updated: Invalid `PSC` is now shown if saved value is higher than 511 (`PSC` max value)
+* Updated: Now using Gradle Wrapper 2.9 and cleaned up `AIMSICDDbAdapter` implementation
+* Updated: Now using a logging interface and better logging in Activities and Services
+* Updated: Cleaned Proguard rules, several `README` improvements with updated links and guides
+* Removed: Purged unused `activity_open_cell_id.xml`, `split.rb` and `signing.properties`
+* Removed: Purged ProgressBar since it was accessed in a very strange way, will be replaced soon
+* Removed: Purged obsolete and redundant things from our `build.gradle`
+* Added: New translation for Ukrainian and Norwegian Bokmål, improved Japanese and Spanish
+* Added: Gradle magic to also build a system app using system permissions and be included in ROMs
+* Fixed: Calling `msgLong` on background thread (no `looper.prepare`) and `ShowToast` lint error
+* Fixed: Gradle build fixed, ommiting missing translations while assembling release
+* Fixed: `lastLocation` in `LocationTracker` gets assigned, preventing duplicate location reports
+* Fixed: Antenna Map Viewer does not crash any more after fixing StringIndexOutOfBoundsException
+* Fixed: Simplified version display in About Fragment, improved `lint` and fixed `buildnumbers`
+* Fixed: Ensured OpenCellID string consistency so that everyone know which database is meant
+
 #### [15.11.2015 - WIP-Release v0.1.36-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.36-alpha-b00)
 
 * Changed: **We're now back from a huge break and intend to improve our project in all areas!**
