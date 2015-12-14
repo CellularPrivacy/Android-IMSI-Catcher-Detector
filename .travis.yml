@@ -55,8 +55,8 @@ deploy:
   api_key:
     secure: hWL8k4eTm6RBA6JtY+zL/bFFm+f2eM466kKlHBrywukSXAThgX8VzHVu9I8u9bL1yP2j8R9XHmG+C49Fy8NZ85Hmj5ECFg3dGRhfxAzr3o3deP3Kaeo+LozGhOy/z2PvOPyHS7XqOK8kk8gmoMJ9jvhz+wFAbW9GxhKLYBMn81E=
   file:
-    - app/build/outputs/apk/AIMSICD-normal-debug.apk
-    - app/build/outputs/apk/AIMSICD-system-debug.apk
+    - AIMSICD/build/outputs/apk/AIMSICD-normal-debug.apk
+    - AIMSICD/build/outputs/apk/AIMSICD-system-debug.apk
   on:
     repo: SecUpwN/Android-IMSI-Catcher-Detector
     tags: true
