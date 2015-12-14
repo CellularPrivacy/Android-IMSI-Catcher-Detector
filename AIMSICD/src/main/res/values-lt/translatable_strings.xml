@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources><string name="quit">Išeiti</string>
+    <string name="text_ok">Gerai</string>
+    <string name="text_cancel">Atšaukti</string>
+    <string name="text_agree">Sutinku</string>
+    <string name="text_disagree">Nesutinku</string>
+
+    <string name="disclaimer_title">Atsakomybės apribojimas</string>
+    <string name="disclaimer">"Naudodamasis AIMSICD suprantu ir sutinku, kad AIMSICD yra ekspermentinė Android aplikacija, kuri gali ir neaptikti visų bandymų mane sekti. Suprantu, kad ši programa gali būti apgauta būdais, iki šiol nežinomiems jos kūrėjams. Taigi, sutinku ir suprantu, kad kūrėjai bei įmonės susijusios su šiuo nemokamu produktu negali būti laikomi atsakingais dėl rezultatų bei pasekmių kylančių dėl šios programos naudojimo. "</string>
+
+    <string name="db_viewer">Duombazės peržiūra</string>
+    <string name="toggle_attack_detection">Įjungti atakų aptikimą</string>
+    <string name="toggle_cell_tracking">Įjungti radijo bokšto sekimą</string>
+    <string name="backup_database">Atsarginė kopija</string>
+    <string name="clear_database">Išvalyti duombazę</string>
+    <string name="clear_database_question">Duomenys bus ištrinti.\nTęsti?</string>
+    <string name="restore_database">Atstatyti duombazę</string>
+    <string name="preferences">Nustatymai</string>
+    <string name="press_once_again_to_exit">Norint uždaryti, spauskite dar kartą.</string>
+    <string name="no_network_connection_title">Nėra interneto ryšio</string>
+    <string name="no_network_connection_message">Negalima parsiųsti OpenCellID be interneto ryšio, prašome įjungti duomenų perdavimą!</string>
+
+    <string name="get_opencellid">Parsiųsti BTS duomenis</string>
+
+    <string name="device_info_title">Įrenginio informacija</string>
+    <string name="sim_info_title">SIM informacija</string>
+    <string name="network_info">Tinklo informacija</string>
+    <string name="cell_info_title">Dabartinis grėsmės lygis</string>
+    <string name="ciphering_indicator_title">Šifro indikatorius</string>
+    <string name="neighbouring_cells_num_title">Viso:</string>
+    <string name="sim_country">Šalis:</string>
+    <string name="sim_operator_id">Operatoriaus ID:</string>
+    <string name="sim_operator_name">Operatoriaus pavadinimas:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">Serijos nr:</string>
+    <string name="device_type">Telefono tipas:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">RIL versija:</string>
+    <string name="network_name">Operatoriaus pavadinimas:</string>
+    <string name="network_code">Operatoriaus kodas:</string>
+    <string name="network_type">Tipas:</string>
+    <string name="network_lac">LAC:</string>
+    <string name="network_cellid">CID:</string>
+    <string name="data_activity">Duomenų veikla:</string>
+    <string name="data_status">Duomenų būsena:</string>
+    <string name="network_roaming">Roaming:</string>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="button_refresh">Atnaujinti</string>
+    </resources>

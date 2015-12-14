@@ -15,14 +15,6 @@ cache: false
 sudo: false
 env:
   global:
-# Initiating clean Gradle output
-    - TERM=dumb
-# Amount of memory granted to Gradle JVM
-    - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
-# General Android settings used in builds
-    - ANDROID_TARGET=android-17
-    - ANDROID_ABI=armeabi-v7a
-
 # Encrypted Tokens
 #-----------------
 
@@ -32,39 +24,18 @@ env:
 notifications:
   hipchat:
     - secure: "I2XmQkFCyKZHW2NeClYyl3FND80YkqLtYo+Rn3ftS4xjEg6VfGgDv6AlvQ+b+oZg7RZI6nKia9OLZxAxVBOHw6UcJJnurJx4hfAIBZAihIiNpZPj1c9wGgv4D+M6zi3rgbJRZ2Tz6IKJvHC+CD3LApeJR9kH15lDWbD7YZ0UI7E="
-
-before_install:
-# Making sure gradlew has executable permissions
-    - chmod +x gradlew
-
 android:
   components:
 # We are using the latest revision of Android SDK Tools
      - platform-tools
      - tools
 # The BuildTools version we are using for our project
-     - build-tools-21.1.2
-# System Image we use to run emulator(s) during tests
-     - sys-img-armeabi-v7a-android-17
+     - build-tools-22.0.1
+     - android-22
 # Additional components
      - extra-android-m2repository
-
-  licenses:
-     - 'android-sdk-license-.+'
      
-# Emulator Management: Create, Start and Wait
-before_script:
-# Inspecting running services
-     - ps auxww
-     - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-     - emulator -avd test -no-skin -no-audio -no-window &
-     - android-wait-for-emulator
-     - adb shell input keyevent 82 &
-     
-script:
-     - ./gradlew connectedAndroidTest --info
-     - ./gradlew lintVitalRelease
-
+script: ./gradlew build check
 # Coverity Scan Settings
 #-----------------------
 

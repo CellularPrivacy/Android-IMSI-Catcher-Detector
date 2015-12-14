@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources><string name="tracking">Sledování</string>
+    <string name="device_info">Podrobnosti telefonu/SIM</string>
+    <string name="db_viewer">Prohlížení databáze</string>
+    <string name="map_view">Prohlížení mapy antén</string>
+    <string name="quit">Ukončit</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Zrušit</string>
+    <string name="text_agree">Souhlasím</string>
+    <string name="text_disagree">Nesouhlasím</string>
+
+    <string name="disclaimer_title">VAROVÁNÍ</string>
+    <string name="toggle_attack_detection">Zjišťovat útoky</string>
+    <string name="toggle_cell_tracking">Sledovat buňky</string>
+    <string name="backup_database">Záloha databáze</string>
+    <string name="restore_database">Obnova databáze</string>
+    <string name="preferences">Nastavení</string>
+    <string name="send_logs">Ladění</string>
+    <string name="get_opencellid">Stáhnout data BTS</string>
+
+    <string name="device_info_title">Informace o zařízení</string>
+    <string name="sim_info_title">Informace o SIM</string>
+    <string name="network_info">Informace o síti</string>
+    <string name="neighbouring_cells_num_title">Celkem:</string>
+    <string name="sim_country">Země:</string>
+    <string name="sim_operator_id">ID operátora:</string>
+    <string name="sim_operator_name">Název operátora:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="device_type">Typ telefonu:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">Verze RIL:</string>
+    <string name="network_name">Název poskytovatele:</string>
+    <string name="network_code">ID poskytovatele:</string>
+    <string name="network_type">Typ:</string>
+    <string name="network_lac">LAC:</string>
+    <string name="network_cellid">CID:</string>
+    <string name="app_version">Verze: </string>
+    <string name="download_error">Chyba při stahování:</string>
+    <string name="status">Stav:</string>
+    <string name="clear_database">Odstranit vše z databáze</string>
+    <string name="clear_database_question">Všechna data budou smazána.\nOpravdu pokračovat?</string>
+    <string name="press_once_again_to_exit">Opakujte pro vypnutí aplikace.</string>
+    <string name="cell_lookup">Informace o aktuální buňce</string>
+    <string name="no_network_connection_title">Nelze se připojit k internetu</string>
+    <string name="no_network_connection_message">Nepodařilo se stáhnout data z OpenCellID, chybí připojení k internetu!</string>
+
+    <string name="cell_info_title">Aktuální Úroveň Ohrožení</string>
+    <string name="neighbouring_cells_title">Sousední buňky</string>
+    <string name="ciphering_indicator_title">Indikace použitého šifrování</string>
+    <string name="sim_serial">Serial No:</string>
+    <string name="data_activity">Datová aktivita:</string>
+    <string name="data_status">Stav datových služeb:</string>
+    <string name="network_roaming"/>
+    <string name="network_lte_timing_advance">Timing Advance (LTE):</string>
+    <string name="button_refresh">Obnovit</string>
+    <string name="drawer_open">Otevřít boční menu</string>
+    <string name="drawer_close">Zavřít boční menu</string>
+    <string name="network_psc">Primary Scrambling Code:</string>
+
+    <string name="upload_bts">Nahrát BTS Data</string>
+
+    <string name="about_aimsicd">O aplikaci AIMSICD</string>
+    <string name="aimsicd_about_info3">Android projekt umožňující detekovat a bránit se útokům IMSI Catcher (falešné BTS) v GSM/UMTS sítích.</string>
+    <string name="about_github">AIMSICD na GitHub</string>
+    <string name="about_wiki">DOKUMENTACE</string>
+    <string name="about_contribute">PODÍLET SE</string>
+    <string name="about_disclaimer">UPOZORNĚNÍ</string>
+    <string name="about_releases">VYDÁNÍ</string>
+    <string name="about_changelog">ZÁZNAM ZMĚN</string>
+    <string name="about_license">LICENCE</string>
+    <string name="about_credits">ZÁSLUHY</string>
+    <string name="about_desc_icon_idle">Nečinný / Načítání.</string>
+    <string name="about_desc_icon_active_tracking_near">Aktivní sledování blízko vás!</string>
+    <string name="about_desc_icon_ok">Vše je v pořádku.</string>
+    <string name="about_desc_icon_tracked_down">Někdo vás sleduje!</string>
+    <string name="about_desc_icon_insecure_area">Nebezpečná síťová aktivia! Pozor!</string>
+    <string name="about_desc_icon_run">POPLACH! Někdo na vás útočí!</string>
+    <string name="about_desc_icon_title">Stiskněte ikonu stavu níže pro více informací:</string>
+
+    <string name="network_netid">ID Sítě:</string>
+    <string name="network_sysid">ID Systému:</string>
+    <string name="network_baseid">BTS ID:</string>
+
+    <string name="location_error_title">Služby GPS jsou vypnuty</string>
+    <string name="location_error_message">Není možné sledovat GPS polohu. Povolit Služby Umístění?</string>
+
+    <string name="pref_system_title">Nastavení Systému</string>
+    <string name="pref_autostart_title">Spouštět Automaticky</string>
+    <string name="pref_autostart_summ">Automaticky spustit při startu systému</string>
+    <string name="pref_persistservice_title">Trvale spuštěná služba</string>
+    <string name="pref_persistservice_summ">Služba poběží i když vypnete tuto aplikaci (zakažte možnost pro vypnutí s aplikací)</string>
+    <string name="pref_protection_title">Nastavení Zabezpečení</string>
+    <string name="pref_enable_cell_title">Sledování Sítě</string>
+    <string name="pref_enable_cell_summ">Povolit automatické sledování sítě</string>
+    <string name="pref_femto_title">Detekce Femtocell BTS</string>
+    <string name="pref_femto_summ">(pouze pro telefony CDMA)</string>
+    <string name="pref_femto_action_title">Ochrana proti Femtocell</string>
+    <string name="pref_femto_action_summ">Vynutit Režim v Letadle při detekci Femtocell (budete muset manuálně vypnout)</string>
+    <string name="pref_ui_title">Obecné Nastavení</string>
+    <string name="pref_ui_icons_title">Ikony-Stavu</string>
+    <string name="pref_ui_icons_summ">Výběr tématu ikon</string>
+    <string name="pref_refresh_title">Rychlost obnovení</string>
+    <string name="pref_refresh_summ">Nastavte si frekvenci aktualizace síťových informací\nAktuální nastavení: %s</string>
+    <string name="pref_ocid_title">Nastavení OpenCellID</string>
+    <string name="pref_ocid_key_title">API Klíč OpenCellID</string>
+    <string name="pref_ocid_key_summ">Vložte API Klíč OpenCellID zde</string>
+    <string name="pref_enable_cell_monitoring_title">Sledování Sítě</string>
+    <string name="pref_enable_cell_monitoring_summ">Povolit automatické sledování sítě</string>
+    <string name="pref_request_ocid_key">Vyžádat si nový OpenCellID API Klíč</string>
+    <string name="pref_ocid_requestkey_summary">Vyžádat API Klíč pro přístup k OpenCellID databázi</string>
+
+    <string name="pref_map_title">Nastavení Mapového Zobrazení</string>
+    <string name="pref_map_type_title">Typ Mapy</string>
+    <string name="pref_map_type_summ">Zobrazit mapu jiným stylem</string>
+    
+    <string name="cell_id_label">"Cell ID: "</string>
+    <string name="lac_label"/>
+    <string name="mcc_label"/>
+    <string name="mnc_label"/>
+    <string name="pc_label">"Kód poskytovatele (PC): "</string>
+    <string name="samples_label">"Ukázky: "</string>
+    <string name="open_cell_id_label">Data OpenCellID</string>
+    <string name="lat_label"/>
+    <string name="lng_label"/>
+
+    <string name="table_names_prompt">Vybrat Tabulku</string>
+    <string name="database_export_successful">Export proběhl úspěšně</string>
+
+    <string name="at_command_title">Rozhraní AT příkazů</string>
+    <string name="response_label">Odpověď:</string>
+    <string name="execute_at">Spustit</string>
+    <string name="serial_device_title">Aktuální Sériový Port:</string>
+    <string name="serial_device_prompt">Vybrat Sériové Zařízení</string>
+    <string name="disclaimer">"Používáním aplikace AIMSICD berete na vědomí že AIMSICD je experimentální a informační Android aplikace, která může selhat při detekci odposlechu a sledování z mnoha důvodů. Zároveň berete na vědomí, že detekci poskytované aplikací je možné se vyhnout způsoby, které její autoři zatím nepředpokládali nebo neznají. Tímto také souhlasíte že vývojáři a společnosti, které lze spojovat s vývojem a poskytováním této bezplatné aplikace nemohou být zodpovědni za zobrazené informace nebo jakékoli důsledky používání této aplikace . "</string>
+
+    <string name="serial_device_spinner_title"/>
+    <string name="timeout_spinner_title"/>
+    <string name="timeout_spinner_prompt">Vyberte Čas Vypršení</string>
+    <string name="command_hint">Vepište AT příkaz zde.</string>
+
+    <string name="sms_title">Silent SMS Detekována</string>
+    <string name="sms_message">Tichá SMS detekována!\nDetaily: Viz. prohlížeč databáze.</string>
+    <string name="table_contains_no_data">Tabulka neobsahuje žádná data.</string>
+
+    <string name="title_ocid_key">API Klíč OpenCellID</string>
+    <string name="message_request_api_key">Stiskněte OK pro vyžádání API Klíče ze serveru OpenCellID.org. API Klíč vám umožní využívat jejich databázi BTS a zobrazovat ji v mapě. Zároveň vám Klíč dovolí nahrávat vámi detekované BTS zpět do veřejné databáze. Pokud během 20 dní po přidělení klíče nenahrajete žádná BTS data zpět do databáze, vás Klíč může být deaktivován.</string>
+    <string name="ocid_api_error">"Chyba při získávání API Klíče: "</string>
+    <string name="ocid_api_success">Nový API Klíč uložen.</string>
+
+    <string name="title_debug_logs">Ladící Logy</string>
+    <string name="btn_clear_logs">Vyčistit</string>
+    <string name="btn_copy_to_clipboard">Kopírovat</string>
+    <string name="msg_copied_to_clipboard">Logy zkopírovány do schránky.</string>
+    <string name="btn_stop_logs">Zastavit</string>
+    <string name="btn_start_logs">Spustit</string>
+
+    <string name="title_activity_about_pop_up">DETAILNÍ VYSVĚTLENÍ</string>
+    <string name="detail_info_idle">Aplikace je neaktivní nebo se načítá. Detekce ani ochrana není povolena. Otevřete prosím boční menu v aplikaci a povolte je v sekci SLEDOVÁNÍ!</string>
+    <string name="detail_info_normal">Nebyly detekovány nebo nazeleny žádné hrozby. AIMSICD neustále kontroluje vaše síťové připojení podle nastavení, které jste si zvolili v sekci Nastavení a v bočním menu aplikace.</string>
+    </resources>

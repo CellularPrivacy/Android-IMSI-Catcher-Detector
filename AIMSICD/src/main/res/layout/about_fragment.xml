@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:fadingEdgeLength="0dp">
+
+
+    <LinearLayout
+        android:id="@+id/aboutView"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/small_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/aimsicd_about_info"
+            android:textColor="@color/green_text"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/aimsicd_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/app_version"
+            android:textColor="@color/red_text"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/buildozer_buildnumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/buildnumber"
+            android:textColor="@color/red_text"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/small_padding"
+            android:paddingTop="@dimen/small_padding"
+            android:text="@string/aimsicd_about_info3"
+            android:textColor="@color/white"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_desc_icon_title"
+            android:textColor="@color/green_text"
+            android:id="@+id/textView2"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="14sp" />
+
+        <TableLayout
+            android:id="@+id/aimsicd_status_icons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_padding">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_idle"
+                    android:id="@+id/imgView_idle" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="@string/about_desc_icon_idle"/>
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_high"
+                    android:id="@+id/imgView_high" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="@string/about_desc_icon_active_tracking_near"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_padding">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_ok"
+                    android:id="@+id/imgView_normal" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="@string/about_desc_icon_ok"/>
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_danger"
+                    android:id="@+id/imgView_danger" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="@string/about_desc_icon_tracked_down"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_padding">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_medium"
+                    android:id="@+id/imgView_medium" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="@string/about_desc_icon_insecure_area"/>
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sense_skull"
+                    android:id="@+id/imgView_run" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/small_padding"
+                    android:text="@string/about_desc_icon_run"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <Button
+                android:id="@+id/aimsicd_github_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_github"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/aimsicd_wiki_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_wiki"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/aimsicd_disclaimer_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_disclaimer"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/aimsicd_contribute_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:text="@string/about_contribute"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/aimsicd_release_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_releases"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/aimsicd_changelog_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_changelog"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/aimsicd_license_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_license"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/aimsicd_credits_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about_credits"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

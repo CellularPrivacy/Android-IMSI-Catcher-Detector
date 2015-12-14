@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_send_logs"
+        android:icon="@drawable/ic_action_send_logs"
+        android:title="@string/send_logs"
+        app:showAsAction="always" />
+
+    <!-- Attempt to add a logcat radio buffer toggle button -->
+    <!--
+    <item android:id="@+id/btnRadio"
+        android:title="@string/btn_radio_logs"
+        app:showAsAction="always"/>
+    -->
+</menu>

@@ -1,0 +1,407 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    
+    <!-- Drawer -->
+    <string name="tracking">Funkzellenverfolgung</string>
+    <string name="device_info">Telefon/SIM Details</string>
+    <string name="map_view">Funkantennenkarte</string>
+    <string name="db_viewer">Datenbankbetrachter</string>
+    <string name="quit">Beenden</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Abbrechen</string>
+    <string name="text_agree">Ich akzeptiere</string>
+    <string name="text_disagree">Nicht akzeptieren</string>
+    
+    <!-- DISCLAIMER -->
+    <string name="disclaimer_title">HAFTUNGSAUSSCHLUß</string>
+    <string name="disclaimer">Durch die Nutzung von AIMSICD verstehen und akzeptieren
+        Sie, daß AIMSICD eine experimentelle und informative Android App ist, welche
+        seinen Zweck, Überwachungs- und Verfolgungsmaßnahmen zu erkennen, durch viele
+        verschiedene Gründe verfehlen kann. Sie verstehen auch, daß diese App
+        möglicherweise durch den Entwicklern noch nicht bekannte Technik von Behörden
+        und Geheimdiensten umgangen oder ausgetrickst werden könnte. Außerdem verstehen
+        und akzeptieren Sie, daß die Entwickler dieser kostenfreien App sowie damit
+        verbundene Unternehmen auf gar keinen Fall für jegliche Resultate der Benutzung
+        haftbar gemacht werden können.
+    </string>
+    
+    <!-- MENU -->
+    <string name="toggle_attack_detection">Angriffserkennung\nein/ausschalten</string>
+    <string name="toggle_cell_tracking">Funkzellen aufzeichnen</string>
+    <string name="backup_database">Datenbank sichern</string>
+    <string name="clear_database">Datenbank löschen / zurücksetzen</string>
+    <string name="clear_database_question">Alle Daten werden gelöscht.\nSind Sie sicher?</string>
+    <string name="restore_database">Datenbank wiederherstellen</string>
+    <string name="preferences">Einstellungen</string>
+    <string name="press_once_again_to_exit">Erneut drücken zum Verlassen.</string>
+    <string name="cell_lookup">Derzeitige Funkzellen</string>
+    <string name="send_logs">Fehlerbehebung</string>
+    <string name="no_network_connection_title">Keine Internetverbindung</string>
+    <string name="no_network_connection_message">Kein herunterladen der OpenCellID-Daten ohne Internet möglich, bitte Datenverbindung einschalten!</string>
+    
+    <!-- MAP VIEWER -->
+    <string name="get_opencellid">BTS-Daten herunterladen</string>
+    
+    <!-- LAYOUT -->
+    <string name="device_info_title">Geräteinformationen</string>
+    <string name="sim_info_title">SIM-Informationen</string>
+    <string name="network_info">Netzwerkinformationen</string>
+    <string name="cell_info_title">Derzeitige Gefahrenstufe</string>
+    <string name="neighbouring_cells_title">Benachbarte Funkzellen</string>
+    <string name="ciphering_indicator_title">Verschlüsselungsindikator</string>
+    <string name="neighbouring_cells_num_title">Gesamt:</string>
+    <string name="sim_country">Land:</string>
+    <string name="sim_operator_id">Betreiber-ID:</string>
+    <string name="sim_operator_name">Betreiber:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">Seriennummer:</string>
+    <string name="device_type">Telefonart:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">RIL-Version:</string>
+    <string name="network_name">Versorger:</string>
+    <string name="network_code">Versorger-Code:</string>
+    <string name="network_type">Netzart:</string>
+    <string name="network_lac">LAC:</string>
+    <string name="network_cellid">CID:</string>
+    <string name="data_activity">Datenaktivität:</string>
+    <string name="data_status">Datenstatus:</string>
+    <string name="network_roaming">Durchleitung:</string>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="button_refresh">Aktualisieren</string>
+    <string name="drawer_open">Seitenmenü öffnen</string>
+    <string name="drawer_close">Seitenmenü schließen</string>
+    <string name="network_psc">PSC:</string>
+    
+    <!-- Upload BTS to OpenCellID -->
+    <string name="upload_bts">BTS-Daten hochladen</string>
+    
+    <!-- ABOUT LAYOUT -->
+    <string name="about_aimsicd">Über AIMSICD</string>
+    <string name="app_version">Version: </string>
+    <string name="aimsicd_about_info3">Android-basiertes Projekt zur Erkennung und Vermeidung gefälschter Mobilfunkstationen\n(IMSI-Catcher) in GSM/UMTS-Netzwerken.</string>
+    <string name="about_github">AIMSICD auf GitHub</string>
+    <string name="about_wiki">DOKUMENTATION</string>
+    <string name="about_contribute">MITMACHEN</string>
+    <string name="about_disclaimer">HAFTUNG</string>
+    <string name="about_releases">VERÖFFENTLICHUNG</string>
+    <string name="about_changelog">ÄNDERUNGEN</string>
+    <string name="about_license">LIZENZ</string>
+    <string name="about_credits">DANKSAGUNG</string>
+    <string name="about_desc_icon_idle">Ruht / Lädt.</string>
+    <string name="about_desc_icon_active_tracking_near">Verfolgung nahe!</string>
+    <string name="about_desc_icon_ok">Alles in Ordnung.</string>
+    <string name="about_desc_icon_tracked_down">Du wirst verfolgt!</string>
+    <string name="about_desc_icon_insecure_area">Unsichere Zone. Verlassen!</string>
+    <string name="about_desc_icon_run">RENN! Gerät manipuliert!</string>
+    <string name="about_desc_icon_title">Drücke die Status-Symbole für mehr Informationen:</string>
+    
+    <!-- CDMA LAYOUT -->
+    <string name="network_netid">Netzwerk-ID:</string>
+    <string name="network_sysid">System-ID:</string>
+    <string name="network_baseid">Basisstation-ID:</string>
+    
+    <!-- LOCATION HELPER -->
+    <string name="location_error_title">Standort deaktiviert</string>
+    <string name="location_error_message">GPS-Daten können nicht ohne standortbezogene Dienste aufgezeichnet werden. Aktivieren?</string>
+   
+    <!-- PREFERENCES -->
+    <string name="pref_system_title">Systemeinstellungen</string>
+    <string name="pref_autostart_title">Automatischer Start</string>
+    <string name="pref_autostart_summ">Automatischer Start beim Hochfahren</string>
+    <string name="pref_persistservice_title">Beständiger Dienst</string>
+    <string name="pref_persistservice_summ">Dienst wird nach verlassen der App weiterlaufen (Haken entfernen um bei verlassen komplett zu schließen)</string>
+    <string name="pref_protection_title">Schutzeinstellungen</string>
+    <string name="pref_enable_cell_title">Funkzellenverfolgung</string>
+    <string name="pref_enable_cell_summ">Automatische Funkzellenverfolgung</string>
+    <string name="pref_femto_title">Femtozellen erkennen</string>
+    <string name="pref_femto_summ">(derzeit nur für CDMA-Telefone)</string>
+    <string name="pref_femto_action_title">Femtozellen-Schutz</string>
+    <string name="pref_femto_action_summ">Flugmodus bei Erkennung einer Femtozelle erzwingen (Netzwerk muß manuell wieder einschaltet werden)</string>
+    <string name="pref_ui_title">Oberflächeneinstellungen</string>
+    <string name="pref_ui_icons_title">Status-Symbole</string>
+    <string name="pref_ui_icons_summ">Symboldesign wählen</string>
+    <string name="pref_refresh_title">Aktualisierungsrate</string>
+    <string name="pref_refresh_summ">Kontrolle der Häufigkeit der Gerätaktualisierung\nDerzeitige Auswahl: %s</string>
+    <string name="pref_ocid_title">OpenCellID-Einstellungen</string>
+    <string name="pref_ocid_key_title">OpenCellID API-Schlüssel</string>
+    <string name="pref_ocid_key_summ">OpenCellID API-Schlüssel hier eingeben</string>
+    <string name="pref_enable_cell_monitoring_title">Funkzellenüberprüfung</string>
+    <string name="pref_enable_cell_monitoring_summ">Automatische Funkzellenüberprüfung</string>
+    <string name="pref_request_ocid_key">OpenCellID API-Schlüssel anfordern</string>
+    <string name="pref_ocid_requestkey_summary">API-Schlüssel für OpenCellID-Zugang anfordern</string>
+   
+    <!-- MAP PREFERENCES -->
+    <string name="pref_map_title">Einstellungen Funkantennenkarte</string>
+    <string name="pref_map_type_title">Kartenart</string>
+    <string name="pref_map_type_summ">Kartenstil auswählen</string>
+    
+    <!-- MAP INFOWINDOW -->
+    <string name="cell_id_label">CID: </string>
+    <string name="lac_label">LAC: </string>
+    <string name="mcc_label">MCC: </string>
+    <string name="mnc_label">MNC: </string>
+    <string name="pc_label">PC: </string>
+    <string name="samples_label">Proben: </string>
+    <string name="open_cell_id_label">OpenCellID-Daten</string>
+    <string name="lat_label">"Lat: "</string>
+    <string name="lng_label">"Lon: "</string>
+    
+    <!-- Database Viewer -->
+    <string name="table_names_prompt">Tabelle auswählen</string>
+    <string-array name="table_names">
+        <item>@string/unique_bts_data</item>
+        <item>@string/bts_measurements</item>
+        <item>@string/imported_ocid_data</item>
+        <item>@string/default_mmc_locations</item>
+        <item>@string/silent_sms</item>
+        <item>@string/measured_signal_strengths</item>
+        <item>@string/eventlog</item>
+    </string-array>
+    <string name="database_export_successful">Export erfolgreich</string>
+    
+    <!-- AT Command Interface  -->
+    <string name="at_command_title">AT-Befehlskonsole</string>
+    <string name="response_label">Reaktion:</string>
+    <string name="execute_at">Ausführen</string>
+    <string name="serial_device_title">Derzeitige Schnittstelle:</string>
+    <string name="serial_device_prompt">Serielle Schnittstelle auswählen</string>
+    <string name="serial_device_spinner_title">Erkannte Schnittstellen:</string>
+    <string name="timeout_spinner_title">Wartezeit:</string>
+    <string name="timeout_spinner_prompt">Wartezeit auswählen</string>
+    <string name="command_hint">AT-Befehl hier eingeben.</string>
+   
+    <!-- SILENT SMS FRAGMENT -->
+    <string name="sms_title">Stille SMS erkannt</string>
+    <string name="sms_message">Stille SMS wurde erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
+    <string name="table_contains_no_data">Tabelle beinhaltet keine Daten.</string>
+  
+    <!-- Request OpenCellID Key -->
+    <string name="title_ocid_key">OpenCellID API-Schlüssel</string>
+    <string name="message_request_api_key">Drücke OK um einen API-Schlüssel von OpenCellID.org anzufordern. Dies ermöglicht das Herunterladen deren Daten und das Anzeigen in der Funkantennenkarte. Zudem können gesammelte Funkturmdaten an OpenCellID übermittelt werden. Wenn keine Daten im Zeitraum von 20 Tagen hochgeladen wurden, wird der API-Schlüssel ungültig.</string>
+    <string name="ocid_api_error">Fehler bei Schlüsselanforderung: </string>
+    <string name="ocid_api_success">Neuer API-Schlüssel gesichert.</string>
+  
+    <!-- Debug logs -->
+    <string name="title_debug_logs">Fehlerprotokolle</string>
+    <string name="btn_clear_logs">Löschen</string>
+    <string name="btn_copy_to_clipboard">Kopieren</string>
+    <string name="msg_copied_to_clipboard">Protokolle in Ablage kopiert.</string>
+    <string name="btn_stop_logs">Stop</string>
+    <string name="btn_start_logs">Start</string>
+  
+    <!-- Detailed Info Strings -->
+    <string name="title_activity_about_pop_up">DETAILLIERTE BESCHREIBUNG</string>
+    <string name="detail_info_idle">App ruht oder lädt. Keine Schutz- und Erkennungsmaßnahmen aktiviert. Im Seitenmenü unter FUNKZELLENVERFOLGUNG die Angriffserkennung aktivieren!</string>
+    <string name="detail_info_normal">Keine Gefahren erkannt oder gefunden. Unsere App prüft kontinuierlich das Netzwerk mit den aktivierten Schutzmaßnahmen von Seitenmenü und Einstellungen.</string>
+    <string name="detail_info_medium">Unsichere Zone: Mindestens 1 neuer oder unbekannter Mobilfunkmast ist in dieser Gegend aktiv oder verwendet eine unsichere (geknackte) Verschlüsselung niedriger als A5/3 [Erkennung ist noch in Arbeit]. Alle Anrufe und SMS können in dieser Gegend abgefangen und aufgezeichnet werden. Die Gegend sollte sofort verlassen werden.</string>
+    <string name="detail_info_high">Feindliche Betriebsaktionen erkannt: Ein IMSI-Catcher (IMSIC) oder gefälschte Mobilfunkstation (FBTS) verfolgt die Nutzer gezielt. Aktive Rasterung findet in dieser Gegend statt. Diese Gegend sollte dringend vermieden werden, vor allen Dingen während politischer Unruhen. Batterie aus Telefon entfernen oder komplett außer Kraft setzen!</string>
+    <string name="detail_info_danger">Feindliche Verfolgung erkannt: Ein FBTS oder IMSIC verfolgt DICH aktiv und verhindert die Verbindung Deines Telefons mit dem echten verschlüsselten Netz Deines Mobilfunkbetreibers. Bei Gefahr oder Konsequenzen sollte das Telefon zerstört und die SIM als gestohlen gemeldet werden.</string>
+    <string name="detail_info_run">Feindliche Manipulation: Jemand versucht aus der Ferne dieses Telefon zu manipulieren. Zerstöre (oder verkaufe) das Telefon und besorge weit weg ein Neues (altes Telefon nicht zum Wechselplatz mitnehmen)! Nutze eine neue (anonyme) SIM, verändere Dein Telefonieverhalten und warne Deine Kontakte im echten Leben, NICHT mittels Anruf!</string>
+    <string name="open_cell_id_button_cancel">Abbrechen</string>
+    <string name="open_cell_id_button_ok">OK</string>
+   
+    <!-- UI Icon Preferences -->
+    <string name="ui_icon_flat">Flach</string>
+    <string name="ui_icon_sense">Sinn</string>
+    <string name="ui_icon_white">Weiß</string>
+    <string name="map_type_terrain">Gelände</string>
+    <string name="map_type_normal">Normal</string>
+    <string name="pref_refresh_manual">Manuell</string>
+    <string name="pref_refresh_automatic">Automatisch</string>
+    <string name="pref_refresh_2s">2 sek</string>
+    <string name="pref_refresh_5s">5 sek</string>
+    <string name="pref_refresh_10s">10 sek</string>
+    <string name="pref_refresh_25s">25 sek</string>
+    <string name="pref_refresh_45s">45 sek</string>
+    <string name="pref_refresh_1_min">1 min</string>
+    <string name="pref_refresh_5_min">5 min</string>
+    <string name="timeout_spinner_2_sec">2 sek</string>
+    <string name="timeout_spinner_5_sec">5 sek</string>
+    <string name="timeout_spinner_10_sec">10 sek</string>
+    <string name="timeout_spinner_20_sec">20 sek</string>
+    <string name="timeout_spinner_30_sec">30 sek</string>
+    <string name="timeout_spinner_10_min">10 min</string>
+    <string name="main">Hauptmenü</string>
+    <string name="settings">Einstellungen</string>
+    <string name="application">Anwendung</string>
+    <string name="monitoring_cell_information">Beobachte Funkzelldaten.</string>
+    <string name="stopped_monitoring_cell_information">Beobachtung der Funkzelldaten angehalten.</string>
+    <string name="tracking_cell_information">Funkzelldaten werden aufzeichnet.</string>
+    <string name="stopped_tracking_cell_information">Aufzeichnung der Funkzelldaten angehalten.</string>
+    <string name="only_one_key_per_day">Anfrage für neuen API-Schlüssel nur einmal aller 24 Stunden möglich!\nBitte später erneut versuchen.</string>
+    <string name="cell_id_doesnt_exist_in_db">Zell-ID nicht in OpenCellID-Datenbank!</string>
+    <string name="hostile_service_area_changing_lac_detected">Feindliche Betriebsaktion: LAC-Änderung erkannt!</string>
+    <string name="femtocell_detection_active">Femtozellenerkennung aktiv.</string>
+    <string name="cell_tracking_active">Funkzellen werden aufgezeichnet.</string>
+    <string name="cell_monitoring_active">Funkzellen werden beobachtet.</string>
+    <string name="phone_type">Telefonart</string>
+    <string name="status_idle">Status: Ruhend.</string>
+    <string name="status_good">Status: Gut. Keine Gefahren erkannt.</string>
+    <string name="alert_threat_detected">ALARM: Eine Gefahr wurde erkannt!</string>
+    <string name="alert_femtocell_connection_detected">ALARM: Verbinding mit Femtozelle erkannt!</string>
+    <string name="alert_silent_sms_detected">ALARM: Stille SMS erkannt!</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD kann Verbindungen mit Femtozellen derzeit nur auf CDMA-Geräten erkennen.</string>
+    <string name="service_state_changed">Betriebsstatus verändert!</string>
+    <string name="stopped_tracking_femtocell">: Femtozellerkennung angehalten.</string>
+    <string name="alert_femtocell_tracking_detected">ALARM: Femtozellverfolgung erkannt!</string>
+    <string name="refreshing_every">Aktualisiere aller</string>
+    <string name="refreshing_now">Aktualisiere jetzt…</string>
+    <string name="seconds">Sekunden.</string>
+    <string name="contacting_opencellid_for_data">Kontaktiere OpenCellID für Daten…\nDies kann eine Minute dauern.</string>
+    <string name="unable_to_determine_last_location">Konnte letzten Standort nicht ermitteln.\nStandortbasierte Dienste einschalten und erneut versuchen.</string>
+    <string name="no_tracked_locations_found">Keine aufgezeichneten Standorte zum Anzeigen gefunden.</string>
+    <string name="no_data_for_publishing">Keine Daten zum Veröffentlichen verfügbar.</string>
+    <string name="download_error">Fehler beim herunterladen:</string>
+    <string name="opencellid_data_successfully_received">OpenCellID-Daten erfolgreich empfangen.</string>
+    <string name="error_retrieving_opencellid_data">Fehler beim empfangen der OpenCellID-Daten.\nNetzwerk überprüfen!</string>
+    <string name="opencellid_data_successfully_received_markers_updated">OpenCellID-Daten erfolgreich empfangen.\nAntennen aktualisiert.</string>
+    <string name="uploaded_bts_data_successfully">BTS-Daten erfolgreich zu OpenCellID hochgeladen.</string>
+    <string name="error_uploading_bts_data">Fehler beim hochladen zum OpenCellID-Server!</string>
+    <string name="restore_database_completed">Wiederherstelung der Datenbank erfolgreich.</string>
+    <string name="error_restoring_database">Fehler beim Wiederherstellen der Datenbank.</string>
+    <string name="database_backup_successfully_saved_to">Datenbank wurde erfolgreich gesichert nach:</string>
+    <string name="error_backing_up_data">Fehler beim Sichern der Datenbank.</string>
+    <string name="no_opencellid_key_detected">Kein OpenCellID API-Schlüssel erkannt!\nBitte Schlüssel in Einstellungen eingeben.</string>
+    <string name="refreshing_display">Aktualisiere Anzeige</string>
+    <string name="unable_to_acquire_root_access">Kein ROOT-Zugriff auf Gerät möglich.\nAT-Befehle setzen ROOT-Zugriff voraus.\nBitte prüfen ob das gerät GEROOTET ist und erneut versuchen.</string>
+    <string name="unable_to_detect_busybox">Busybox konnte nicht erkannt werden.\nAT-Befehle setzen Busybox-Komponenten für korrekte Funktion voraus.\nBitte prüfen ob Busybox installiert ist und erneut versuchen.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Ein unbekannter Fehler trat beim Zugriffsversuch auf die serielle Schnittstelle auf.\nBitte Fehlerprotokoll prüfen und auf unserem GitHub veröffentlichen.</string>
+    <string name="unknown_error_initialising_at_command_injector">Ein unbekannter Fehler trat bei der Initialisierung des AT-Befehlseingabe auf.\nBitte Fehlerprotokoll prüfen und auf unserem GitHub veröffentlichen.</string>
+    <string name="getting_ocid_api_key">Empfange OpenCellID API-Schlüssel…</string>
+    <string name="unable_to_create_map">Karte konnte nicht erstellt werden!</string>
+    <string name="describe_the_problem_you_had">ACHTUNG! Bitte das Problem vor dem versenden der Daten beschreiben. KEINE HILFE OHNE BESCHREIBUNG!\n</string>
+    <string name="status">Status:</string>
+    <string name="idle">RUHEND</string>
+    <string name="normal">NORMAL</string>
+    <string name="medium">MEDIUM</string>
+    <string name="high">HOCH</string>
+    <string name="danger">GEFAHR</string>
+    <string name="run">RENN!</string>
+    
+    <!-- Advanced User Settings: SMS Detection Strings-->
+    <string name="adv_user_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\nBitte keine zufälligen Zeichenfolgen eingeben, sonst wird die Erkennung beeinträchtigt.\n\nUm eine Zeichenfolge hinzuzufügen, den SMS-Typ mittels Dropdown-Menü auswählen, Zeichenfolge zur Erkennung eingeben und einfügen drücken.\n\nZum löschen den Eintrag in der Liste lang drücken.</string>
+   
+    <!-- Advanced User Settings: Delete Detected SMS-->
+    <string name="adv_user_sms_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\nZum löschen die SMS in der Liste lang drücken.</string>
+    <string name="title_activity_advanced_user">Erkannte SMS löschen</string>
+    <string name="adv_user_pref_header">Experteneinstellungen</string>
+    <string name="adv_user_pref_launch">Erkennungs-Zeichenfolge</string>
+    <string name="adv_user_pref_sms_launch">SMS löschen</string>
+    <string name="adv_user_pref_summary">Erkennungs-Zeichenfolgen einfügen</string>
+    <string name="adv_user_pref_sms_summary">Erkannte SMS löschen</string>
+    
+    <!-- Advanced User Settings: Enable SMS Detection-->
+    <string name="adv_user_root_title">SMS-Erkennung aktivieren</string>
+    <string name="adv_user_root_sum">Root ist für SMS-Erkennung notwendig</string>
+    
+    <!-- Detected SMS string for custom popup-->
+    <string name="detection_strings">Erkennungs-Zeichenfolgen</string>
+    <string name="typezero_title">ACHTUNG!</string>
+    <string name="typezero_header">Stille SMS erkannt</string>
+    <string name="typezero_data">Type-0 Nachricht wurde erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
+    <string name="alert_mwi_detected">ALARM: Benachrichtigungsindikator erkannt!</string>
+    <string name="typemwi_title">ACHTUNG!</string>
+    <string name="typemwi_header">MWI Erkannt</string>
+    <string name="typemwi_data">Benachrichtigungsindikator erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
+    
+    <!-- Section Main-->
+    <string name="help_main_current_threat_level">AIMSICD-Gefahrenstatus, Benachbarte Funkzellen und Verschlüsselungsindikator.</string>
+    <string name="help_main_phone_sim_details">SIM-Details, Netzbetreiber, IMEI und TMSI.</string>
+    <string name="help_main_acd">Zeigt detaillierten Vergleich der verbundenen Funkzelle mit den Daten von OpenCellID (wenn vorhanden) und hebt Unterschiede hervor.</string>
+    <string name="help_main_database_viewer">Zeigt unsere verschiedenen Datenbanken.</string>
+    <string name="help_main_antenna_map_view">Karte farbcodierter Antennen der Umgebung.</string>
+    <string name="help_main_at_command_interface">Maske zur Eingabe von AT-Befehlen zur Kommunikation mit dem Baseband Processor (benötigt ROOT).</string>
+    
+    <!-- Section Tracking-->
+    <string name="help_tracking_toggle_attack_detection">Umschaltung der Angriffserkennung und Sammlung der Daten in die internen Datenbanken.</string>
+    <string name="help_tracking_toggle_cell_tracking">Starten um Funkzellen aufzuzeichnen, in der Funkantennenkarte anzuzeigen und evtl. später zu OpenCellID hochzuladen.</string>
+    
+    <!-- Section Settings-->
+    <string name="help_settings_preferences">AIMSICD-Einstellungen wie Schutzregeln, Aktualisierungszeiten und Dienstverhalten.</string>
+    <string name="help_settings_backup_db">SQLite3-Datenbank auf SD-Karte sichern.</string>
+    <string name="help_settings_restore_db">SQLite3-Datenbank wiederherstellen.</string>
+    <string name="help_settings_reset_db">Alle oder bestimmte Datenbanken zurücksetzen und löschen.</string>
+    <string name="help_settings_export_db_to_csv">Datenbanktabellen in einzelne CSV-Dateien exportieren.</string>
+    <string name="help_settings_import_db_from_csv">Datenbanktabellen aus einzelnen CSV-Dateien importieren.</string>
+    
+    <!-- Section Application-->
+    <string name="help_app_add_get_ocid_api_key">API-Schlüssel für die Nutzung der OpenCellID-Datenbanken sowie hoch- und herunterladen der Daten anfordern…</string>
+    <string name="help_app_about">Status-Symbole und Erklärung des Projekts.</string>
+    <string name="help_app_download_local_bts">OpenCellID-Datenbank herunterladen.</string>
+    <string name="help_app_upload_local_bts">Eigene BTS-Daten zu OpenCellID hochladen.</string>
+    <string name="help_app_debugging">Fehlerprotokolle sammeln und versenden.</string>
+    <string name="help_app_quit">Diese App verlassen.</string>
+    <string name="waiting_for_location">Standort wird ermittelt…</string>
+    <string name="unable_to_restore_backup_from_previous_database_version">Alte Datenbank kann auf Grund struktureller Änderungen nicht wiederhergestellt werden!</string>
+    <string name="unique_bts_data">Eindeutige BTS-Daten</string>
+    <string name="bts_measurements">BTS-Messungen</string>
+    <string name="imported_ocid_data">Importierte OpenCellID-Daten</string>
+    <string name="default_mmc_locations">Voreingestellte MCC-Standorte</string>
+    <string name="silent_sms">Stille SMS</string>
+    <string name="eventlog">Ereignisprotokoll</string>
+    <string name="measured_signal_strengths">Gemessene Signalstärken</string>
+    <string name="at_command_response_looking">*** Suche AT-Schnittstelle…\n</string>
+    <string name="at_command_response_found">Gefunden: </string>
+    <string name="at_command_response_setup_complete">*** Einrichtung vollständig ***\n</string>
+    <string name="currently_connected_bts">Derzeit verbundene Funkstation</string>
+    <string name="well_known_encrypted_bts">Gut bekannte verschlüsselte Funkstation</string>
+    <string name="unknown_or_insecure_bts">Unbekannte oder unsichere Funkstation</string>
+    <string name="new_or_recently_added_bts">Neue oder kürzlich hinzugefügte Funkstation</string>
+ 
+    <string-array name="pref_ui_icons_entries">
+        <item>@string/ui_icon_flat</item>
+        <item>@string/ui_icon_sense</item>
+        <item>@string/ui_icon_white</item>
+    </string-array>
+
+    <string-array name="pref_map_type_entries">
+        <item>@string/map_type_normal</item>
+        <item>@string/map_type_terrain</item>
+    </string-array>
+
+    <string-array name="pref_refresh_entries">
+        <item>@string/pref_refresh_manual</item>
+        <item>@string/pref_refresh_automatic</item>
+        <item>@string/pref_refresh_2s</item>
+        <item>@string/pref_refresh_5s</item>
+        <item>@string/pref_refresh_10s</item>
+        <item>@string/pref_refresh_25s</item>
+        <item>@string/pref_refresh_45s</item>
+        <item>@string/pref_refresh_1_min</item>
+        <item>@string/pref_refresh_5_min</item>
+    </string-array>
+
+    <string-array name="timeout_spinner_values">
+        <item>@string/timeout_spinner_2_sec</item>
+        <item>@string/timeout_spinner_5_sec</item>
+        <item>@string/timeout_spinner_10_sec</item>
+        <item>@string/timeout_spinner_20_sec</item>
+        <item>@string/timeout_spinner_30_sec</item>
+        <item>@string/timeout_spinner_10_min</item>
+    </string-array>
+
+    <string name="alert_silent_wap_sms_detected">ALARM: WAP Push SMS erkannt!</string>
+    <string name="typewap_header">WAP Push Erkannt</string>
+    <string name="typewap_data">WAP Push SMS Nachricht erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
+
+    <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
+    <string name="getting_ocid_key">Besorge OpenCellID-Schlüssel...</string>
+    
+    <string name="restore_database_completed_title">Wiederherstellung erfolgreich.</string>
+    <string name="delete_database_msg_success">Datenbank gelöscht und erfolgreich neu erstellt.\nBitte App neu starten um alte Werte aus dem Speicher zu löschen.</string>
+
+    <string name="deleted">Gelöscht</string>
+    <string name="failed_to_delete">Löschen fehlgeschlagen</string>
+    <string name="double_quote_will_cause_db_error">"Zeichenkette nicht hinzugefügt\n\" Anführungszeichen würde DB Fehler verursachen "</string>
+    <string name="the_string_was_added_to_db">Zeichenkette zur Datenbank hinzugefügt</string>
+    <string name="failed_to_add_the_string_to_db">Hinzufügen der Zeichenkette zur Datenbank fehlgeschlagen</string>
+
+    <string name="pref_notification_vibrate_enable_title">Vibration an</string>
+    <string name="pref_notification_vibrate_enable_summary">Vibriere bei Benachrichtigungs-Wechsel</string>
+    <string name="pref_notification_settings">Benachrichtigungs-Einstellungen</string>
+    <string name="notification_vibrate_idle">Ruhezustand</string>
+    <string name="notification_vibrate_normal">Normal</string>
+    <string name="notification_vibrate_medium">Mittel</string>
+    <string name="notification_vibrate_alarm">Alarm</string>
+    
+    </resources>
