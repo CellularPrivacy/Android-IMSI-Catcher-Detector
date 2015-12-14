@@ -6,13 +6,16 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
-        classpath 'io.freefair.gradle-plugins:android:2.0.0-beta1'
+        classpath 'io.freefair:gradle-plugins:2.0.0-beta1'
     }
 }
+
+apply plugin: 'io.freefair.git-version'
 
 allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
     }
+    version = rootProject.version
 }
