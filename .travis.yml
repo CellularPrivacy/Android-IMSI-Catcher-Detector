@@ -49,6 +49,8 @@ addons:
     build_command: "./gradlew build"
     branch_pattern: master
 
+before_deploy: cd AIMSICD/build/outputs/apk; md5sum *.apk > md5sums.txt; cd -
+
 deploy:
   skip_cleanup: true
   provider: releases
@@ -57,6 +59,7 @@ deploy:
   file:
     - AIMSICD/build/outputs/apk/AIMSICD-normal-debug.apk
     - AIMSICD/build/outputs/apk/AIMSICD-system-debug.apk
+    - AIMSICD/build/outputs/apk/md5sums.txt
   on:
     repo: SecUpwN/Android-IMSI-Catcher-Detector
     tags: true
