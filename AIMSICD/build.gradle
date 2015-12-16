@@ -26,10 +26,10 @@ android {
 
     signingConfigs {
         releaseSigningConfig {
-            keyAlias aimsicd_key_alias
-            keyPassword aimsicd_key_password
+            keyAlias project.hasProperty("aimsicd_key_alias") ? aimsicd_key_alias : "dummy"
+            keyPassword project.hasProperty("aimsicd_key_password") ? aimsicd_key_password : "dummy"
             storeFile file('../keystore.jks')
-            storePassword aimsicd_keystore_password
+            storePassword project.hasProperty("aimsicd_keystore_password") ? aimsicd_keystore_password : "dummy"
         }
     }
 
