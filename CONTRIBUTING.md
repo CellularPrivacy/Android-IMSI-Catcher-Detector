@@ -1,21 +1,29 @@
-# How to contribute to 'AIMSICD'
---------------------------------
+# Contribution Guide
+--------------------
 
-To avoid confusion and rejected development commits, please use this guide!
+Thank you for contributing! Please select:
+
+* [Developing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#developing)
+* [Translating](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#translating)
+* [Testing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#testing)
+* [Formatting](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#formatting)
+* [Debugging](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#debugging)
+* [Seeking](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#seeking)
+* [Donating](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#donating)
+
+---
 
 #### DEVELOPING
 
 Feel invited to develop with us using these steps:
 
 1. [Fork our repository](https://help.github.com/articles/fork-a-repo/) and optionally give it a star when you like it.
-2. Download your fork using a Git Cient like [SmartGit](http://www.syntevo.com/smartgit/) (all platforms).
+2. Download your fork using a Git client like [SmartGit](http://www.syntevo.com/smartgit/) (all platforms).
 3. Pick [an Issue](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues) you'd like to work on. Introduce yourself in that Issue.
 4. Work on resolving the Issue you picked using your local code copy.
-5. Add [Code Comments](https://source.android.com/source/code-style.html#java-style-rules) for documentation and follow our [Style Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Style-Guide).
-6. Increase the build number `*-alpha-bXX` in `android:versionName`.
-7. Test your changes and submit a [pull request](https://help.github.com/articles/using-pull-requests/) when we shall add it.
-8. Monitor our [Current Development Status and Development Cycle](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status).
-9. Don't be shy to ask if you need help. Ask in your Issue or [contact us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
+5. Follow our [Style Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Style-Guide) for higher code quality and corporate design.
+6. Test your changes and submit a [pull request](https://help.github.com/articles/using-pull-requests/) when we shall add it.
+7. Don't be shy to ask for help in an Issue and feel invited to [contact us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
 
 ---
 
@@ -23,9 +31,9 @@ Feel invited to develop with us using these steps:
 
 Let our app start up in your native language!
 
-* See [our translations](https://hosted.weblate.org/projects/aimsicd/strings/) and login via [GitHub](https://hosted.weblate.org/accounts/login/github/?next=/projects/aimsicd/strings/) or [others](https://hosted.weblate.org/accounts/login/?next=/projects/aimsicd/strings/) to add yours.
+* See [our translations](https://hosted.weblate.org/projects/aimsicd/strings/) and [login via GitHub](https://hosted.weblate.org/accounts/login/github/?next=/projects/aimsicd/strings/) or [others](https://hosted.weblate.org/accounts/login/?next=/projects/aimsicd/strings/) to add yours.
 * When translating, keep small device screens in mind. Shorten it.
-* Please make sure to finish all translations as best as possible.
+* Please make sure to *finish* your translation, if you start a new one!
 * Translations will be pulled into our GitHub automatically. Enjoy!
 
 ---
@@ -34,28 +42,11 @@ Let our app start up in your native language!
 
 Can't code (yet)? No problem, we love you too!
 
-1. Grab our [latest Release](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases) (or even better: compile from [development](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/development)).
+1. Grab our [latest Release](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases) (or even better: [compile `development` branch](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/development)).
 2. Read and understand our [WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki) and **fully agree** to our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER).
-3. Test our App on demonstrations and riots (warning: [Privacy](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Privacy/) at risk). 
-4. Test all functions of our App and check for possible translation bugs.
-5. Spread [our website](https://secupwn.github.io/Android-IMSI-Catcher-Detector), [tweet about us](https://twitter.com/AIMSICD) or use any other [Media Material](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material).
-
----
-
-#### DONATING
-
-Thank you for encouraging our developers!
-
-* Feel invited to donate using [this guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Donations).
-
----
-
-#### SEEKING
-
-Special positions we are currently seeking skilled people for:
-
-* People with a CryptoPhone for double app verification.
-* Fixing the identified [Coverity Scan Defects](https://scan.coverity.com/projects/3346) of our app.
+3. Test our app on demonstrations and riots (warning: [Privacy](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Privacy/) at risk). 
+4. Test all functions of our app and check for possible translation bugs.
+5. Share [our website](https://secupwn.github.io/Android-IMSI-Catcher-Detector) and [Media Material](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material) or [tweet about us](https://twitter.com/AIMSICD).
 
 ---
 
@@ -72,8 +63,6 @@ Useful links to help you with correctly formatting posts.
 * [Code/Syntax Highlighting](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml)
 
 ---
-
-#### DEBUGGING
 
 #### DEBUGGING
 
@@ -94,10 +83,10 @@ Thanks for helping us squashing bugs! Please be patient.
 
 In all cases, you **MUST** include the following:
 
-* AIMSICD version (see the About-Tab within our App)
+* AIMSICD version (see the About-Tab within our app)
 * Your exact FW specification (ROM, AOS API, etc.)
 * Your exact HW specification (processor, model number, etc.)
-* The output of getprop command to a Pastebin-Site such as [PIE-Bin](https://defuse.ca/pastebin.htm)
+* The output of `getprop` command to a Pastebin-Site such as [PIE-Bin](https://defuse.ca/pastebin.htm)
 * Logcat from button `Debugging` in Navigation Drawer (remove personal data)
 * Feel free to attach any other logs made by a logcat tool like [MatLog](https://github.com/plusCubed/matlog)
 
@@ -132,3 +121,18 @@ To run it, just type: `aimrun`.
 If you want to also supply *radio* logcat, add `-b radio` somewhere in the `logdmp` alias, but know that your GPS location and cell info may be included when you do that.
 
 ---
+
+#### SEEKING
+
+Special positions we are currently seeking skilled people for:
+
+* People with a CryptoPhone for another detection verification.
+* Bugfixer for [Coverity Scan Defects](https://scan.coverity.com/projects/3346) detected within our app.
+
+---
+
+#### DONATING
+
+Thank you for encouraging our developers!
+
+* Feel invited to donate using [this guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Donations).
