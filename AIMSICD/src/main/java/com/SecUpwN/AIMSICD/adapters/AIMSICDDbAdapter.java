@@ -12,7 +12,6 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.SparseArray;
 
-import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 import com.SecUpwN.AIMSICD.service.CellTracker;
