@@ -360,10 +360,10 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-<string name="restore_database_completed_title">Успешное восстановление.</string>
-    <string name="adv_user_info">Это меню только для продвинутых пользователей!\n\nПожалуйста, не пишите случайных строк, потому что это сломает детектор станций.\n\nЧтобы добавить строку, выберите тип СМС из выпадающего меню, введите строку детектирования и нажмите ввод.\n\nДля удаления нажмите и удерживайте.</string>
+<string name="restore_database_completed_title">Восстановление завершено успешно.</string>
+    <string name="adv_user_info">Это меню предназначено только для продвинутых пользователей!\n\nНе вставляйте сюда что попало, иначе Вы можете сломать систему обнаружения.\n\nЧтобы добавить строку, выберите тип СМС из выпадающего меню, введите строку обнаружения и нажмите «Вставить».\n\nЧтобы удалить запись из базы данных, нажмите и удерживайте соответствующий пункт в списке.</string>
     
-    <string name="adv_user_sms_info">Это меню только для опытных пользователей!\nДля удаления СМС зажмите его в списке.</string>
+    <string name="adv_user_sms_info">Это меню предназначено только для продвинутых пользователей!\nЧтобы удалить уже обнаруженное СМС, зажмите и удерживайте соответствующий пункт в списке.</string>
     <string name="adv_user_pref_header">Расширенные настройки</string>
     <string name="title_activity_advanced_user">Удалить обнаруженное СМС</string>
 
@@ -402,6 +402,7 @@
     <string name="the_string_was_added_to_db">Строка добавлена в базу данных</string>
     <string name="failed_to_add_the_string_to_db">Не получилось добавить строку в базу данных</string>
 
-    <string name="alert_mwi_detected">ТРЕВОГА: Обнаружен Индикатор Ожидания Сообщений (MWI)!</string>
-    <string name="alert_silent_wap_sms_detected">ТРЕВОГА: Обнаружено WAP Push SMS!</string>
+    <string name="alert_mwi_detected">ТРЕВОГА: Обнаружен индикатор ожидания сообщения!</string>
+    <string name="alert_silent_wap_sms_detected">ТРЕВОГА: Обнаружена WAP Push СМС!</string>
+    <string name="pref_notification_settings">Настройки уведомлений</string>
     </resources>
