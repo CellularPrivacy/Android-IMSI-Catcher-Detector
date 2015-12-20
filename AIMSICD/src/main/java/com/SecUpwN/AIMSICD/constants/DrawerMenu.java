@@ -88,6 +88,6 @@ public class DrawerMenu {
     /**
      * The constant indicates the number of types of menu items
      */
-    public final static int COUNT_OF_MENU_TYPE = 2;
+    public static final int COUNT_OF_MENU_TYPE = 2;
 
 }
