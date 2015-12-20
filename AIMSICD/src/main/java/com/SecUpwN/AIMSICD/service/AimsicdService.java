@@ -24,7 +24,6 @@
 
 package com.SecUpwN.AIMSICD.service;
 
-import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +34,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 
 import com.SecUpwN.AIMSICD.R;
@@ -89,6 +89,7 @@ public class AimsicdService extends Service {
 
     @Override
     public void onCreate() {
+        setTheme(R.style.AppTheme);
 
         signalStrengthTracker = new SignalStrengthTracker(getBaseContext());
 
@@ -246,8 +247,8 @@ public class AimsicdService extends Service {
     private void enableLocationServices() {
         if (isLocationRequestShowing) return; // only show dialog once
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.location_error_message)
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setMessage(R.string.location_error_message)
                 .setTitle(R.string.location_error_title)
                 .setCancelable(false)
                 .setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
@@ -264,10 +265,10 @@ public class AimsicdService extends Service {
                         isLocationRequestShowing = false;
                         setCellTracking(false);
                     }
-                });
-        AlertDialog alert = builder.create();
-        alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        alert.show();
+                })
+                .create();
+        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        alertDialog.show();
         isLocationRequestShowing = true;
     }
 
