@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <!-- SPECIAL PERMISSIONS TO BE ADDED AFTER THIS LINE. /> -->
     <!-- To list all available (used) Android permissions on a device, use:
@@ -100,7 +101,6 @@
             android:name=".activities.OpenCellIdActivity"
             android:icon="@drawable/ic_action_settings"
             android:label="@string/title_ocid_key"
-            android:theme="@android:style/Theme.Holo.Dialog"
             android:parentActivityName=".activities.PrefActivity"
             android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
         </activity>
@@ -138,7 +138,6 @@
         </receiver>
 
         <activity android:name=".activities.CreditsRollActivity"
-            android:theme="@android:style/Theme.Dialog"
             android:screenOrientation="portrait"> </activity>
 
         <activity

@@ -13,6 +13,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
+import android.view.WindowManager;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
@@ -110,11 +111,13 @@ public final class SmsDetector extends Thread {
                 R.drawable.sense_danger,
                 true);
 
-        new AlertDialog.Builder(mContext)
+        AlertDialog alertDialog = new AlertDialog.Builder(mContext)
                 .setTitle(smsType.getTitle())
                 .setMessage(smsType.getMessage())
                 .setIcon(R.drawable.sense_danger)
-                .show();
+                .create();
+        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        alertDialog.show();
     }
 
     public void startSmsDetection() {
