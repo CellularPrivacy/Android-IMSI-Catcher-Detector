@@ -4,32 +4,26 @@
     "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
 
 <module name="Checker">
-    <module name="NewlineAtEndOfFile"/>
-    <module name="FileLength"/>
-    <module name="FileTabCharacter"/>
-
-    <!-- Trailing spaces -->
-    <module name="RegexpSingleline">
-        <property name="format" value="\s+$"/>
-        <property name="message" value="Line has trailing spaces."/>
+    <!--module name="NewlineAtEndOfFile"/-->
+    <module name="FileLength">
+        <property name="max" value="2500"/>
     </module>
+    <!--module name="FileTabCharacter"/-->
 
     <module name="TreeWalker">
 
-        <module name="ConstantName"/>
+        <!--module name="ConstantName"/>
         <module name="LocalFinalVariableName"/>
         <module name="LocalVariableName"/>
         <module name="MemberName"/>
         <module name="MethodName"/>
-        <!--<module name="PackageName"/>-->
         <module name="ParameterName"/>
         <module name="StaticVariableName"/>
-        <module name="TypeName"/>
+        <module name="TypeName"/-->
 
 
         <!-- Checks for imports                              -->
         <!-- See http://checkstyle.sf.net/config_import.html -->
-        <module name="AvoidStarImport"/>
         <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
         <module name="RedundantImport"/>
         <module name="UnusedImports">
@@ -41,17 +35,14 @@
         <module name="ModifierOrder"/>
         <module name="RedundantModifier"/>
 
-        <module name="LeftCurly"/>
-
-        <module name="RightCurly"/>
         <module name="CovariantEquals"/>
         <module name="EmptyStatement"/>
 
 
         <module name="IllegalInstantiation"/>
 
-        <module name="MissingSwitchDefault"/>
-        <module name="RedundantThrows"/>
+        <!--module name="MissingSwitchDefault"/-->
+        <!--module name="RedundantThrows"/-->
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>
     </module>
