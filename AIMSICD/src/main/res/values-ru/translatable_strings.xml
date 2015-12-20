@@ -365,7 +365,7 @@
     
     <string name="adv_user_sms_info">Это меню предназначено только для продвинутых пользователей!\nЧтобы удалить уже обнаруженное СМС, зажмите и удерживайте соответствующий пункт в списке.</string>
     <string name="adv_user_pref_header">Расширенные настройки</string>
-    <string name="title_activity_advanced_user">Удалить обнаруженное СМС</string>
+    <string name="title_activity_advanced_user">Удалить СМС</string>
 
     <string name="adv_user_pref_launch">Строки обнаружения</string>
     <string name="adv_user_pref_sms_launch">Удалить СМС</string>
