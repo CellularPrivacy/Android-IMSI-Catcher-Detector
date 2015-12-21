@@ -12,13 +12,14 @@ import android.util.SparseArray;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
 import com.SecUpwN.AIMSICD.utils.BaseAsyncTask;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
-import com.squareup.okhttp.OkHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.modules.AndroidLoggerModule;
+import io.freefair.android.injection.modules.OkHttpModule;
+import io.freefair.android.injection.ui.InjectionAppCompatActivity;
 import io.freefair.android.injection.ui.InjectionApplication;
 import io.freefair.android.util.logging.Logger;
 
@@ -29,8 +30,6 @@ public class AppAIMSICD extends InjectionApplication {
 
     @Inject
     private Logger log;
-
-    private OkHttpClient okHttpClient;
 
     /**
      * Maps between an activity class name and the list of currently running
@@ -45,13 +44,12 @@ public class AppAIMSICD extends InjectionApplication {
     @Override
     public void onCreate() {
         new AndroidLoggerModule().configure(getInjector());
+        OkHttpModule.withCache(this).configure(getInjector());
         super.onCreate();
         // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
         //LeakCanary.install(this);
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
-
-        okHttpClient = new OkHttpClient();
     }
 
     public void removeTask(BaseAsyncTask<?, ?, ?> pTask) {
@@ -106,7 +104,7 @@ public class AppAIMSICD extends InjectionApplication {
         }
     }
 
-    public void attach(Activity activity) {
+    public void attach(InjectionAppCompatActivity activity) {
         if (activity == null) {
             return;
         }
@@ -118,9 +116,5 @@ public class AppAIMSICD extends InjectionApplication {
                 task.setActivity(activity);
             }
         }
-    }
-
-    public OkHttpClient getOkHttpClient() {
-        return okHttpClient;
     }
 }

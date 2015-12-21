@@ -87,11 +87,11 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'io.freefair.android-injection:injection:1.0.0-rc1'
     compile 'io.freefair.android-injection:logging:1.0.0-rc1'
+    compile 'io.freefair.android-injection:okhttp:1.0.0-rc1'
     //https://github.com/lp0/slf4j-android
     compile 'com.github.Stericson:RootShell:d708ae1f0a'
     compile 'org.slf4j:slf4j-api:1.7.12'
     compile 'eu.lp0.slf4j:slf4j-android:1.7.12-0'
-    compile 'com.squareup.okhttp:okhttp:2.6.0'
     compile 'au.com.bytecode:opencsv:2.4'
 
     //This git hash resolves to version 5.5

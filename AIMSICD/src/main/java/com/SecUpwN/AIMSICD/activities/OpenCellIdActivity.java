@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 
-import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
@@ -39,7 +38,7 @@ public class OpenCellIdActivity extends BaseActivity {
     private Logger log;
     private ProgressDialog pd;
 
-    //TODO: @Inject
+    @Inject
     private OkHttpClient okHttpClient;
 
     @Override
@@ -48,9 +47,6 @@ public class OpenCellIdActivity extends BaseActivity {
         setContentView(R.layout.activity_open_cell_id);
 
         prefs = getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-
-        //TODO: Use a dependency injection for this
-        okHttpClient = ((AppAIMSICD)getApplication()).getOkHttpClient();
     }
 
     public void onAcceptedClicked(View v) {
