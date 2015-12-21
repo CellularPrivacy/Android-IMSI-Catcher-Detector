@@ -26,8 +26,10 @@
 
     <!-- SPECIAL PERMISSIONS TO BE ADDED AFTER THIS LINE. /> -->
 
-    <!-- May be needed (in the future) to access SIM related functions -->
-    <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
+    <!--
+        May be needed (in the future) to access SIM related functions
+        <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
+    -->
 
     <application
             tools:replace="allowBackup"
