@@ -21,8 +21,8 @@ if(isTravis) {
 version = '0.1.37-alpha'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '22.0.1'
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
@@ -84,7 +84,7 @@ android {
 dependencies {
     // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
     //compile 'com.github.amlcurran.showcaseview:library:5.0.0'
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
     //https://github.com/lp0/slf4j-android
     compile 'com.github.Stericson:RootShell:d708ae1f0a'
     compile 'org.slf4j:slf4j-api:1.7.12'
