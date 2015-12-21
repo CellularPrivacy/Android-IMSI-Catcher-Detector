@@ -1,10 +1,13 @@
-    <!-- Privacy Enthusiasts: Please read our Permissions Statement linked below!  -->
-    <!-- https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Permissions -->
-
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.SecUpwN.AIMSICD">
+
+    <!--
+        Privacy Enthusiasts: Please read our Permissions Statement linked below!
+        https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Permissions
+    -->
 
     <!-- Normal Android third-party permissions, sorted for better viewing -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -25,7 +28,7 @@
 
     <!-- May be needed (in the future) to access SIM related functions -->
     <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
-   
+
     <application
             tools:replace="allowBackup"
             android:allowBackup="false"
