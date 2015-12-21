@@ -17,6 +17,6 @@ public class TinyDbKeys {
      * (applies to the case where the application has been minimized,
      * and at this point the download was completed in the map)
      */
-    public final static String FINISHED_LOAD_IN_MAP = "FINISHED_LOAD_IN_MAP";
+    public static final String FINISHED_LOAD_IN_MAP = "FINISHED_LOAD_IN_MAP";
 
 }

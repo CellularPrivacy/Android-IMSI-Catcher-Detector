@@ -14,7 +14,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
-import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
