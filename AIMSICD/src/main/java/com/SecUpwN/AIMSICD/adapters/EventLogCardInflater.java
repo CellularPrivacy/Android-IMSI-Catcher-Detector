@@ -25,10 +25,6 @@ import com.SecUpwN.AIMSICD.R;
  *                  eventlog_items.xml
  *
  *  Issues:
- *
- *  ChangeLog:
- *
- *
  *  Notes:
  *
  */

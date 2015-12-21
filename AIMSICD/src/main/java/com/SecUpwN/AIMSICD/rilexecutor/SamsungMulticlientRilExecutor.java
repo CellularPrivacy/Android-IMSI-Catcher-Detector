@@ -35,10 +35,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  *      Description:
- *
- *      ChangeLog:
- *
- *      2015-07-14      E:V:A       Re-enabled code for preventing use on wrong devices, added mTAG
  */
 public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 

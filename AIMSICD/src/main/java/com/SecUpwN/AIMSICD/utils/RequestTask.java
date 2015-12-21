@@ -68,16 +68,6 @@ import java.io.UnsupportedEncodingException;
  * Issues:
  *          [ ] There is no onPreExecute here...perhaps that's why the progress bar is not shown?
  *              see:  http://developer.android.com/reference/android/os/AsyncTask.html
- *
- * ChangeLog:
- *
- *      2015-01-21  E:V:A       Moved code blocks, added placeholder code, disabled upload
- *      2015-02-13  E:V:A       Added onPreExecute() and super keywords & Logs (to be removed when working)
- *      2015-03-01  kairenken   Fixed "DBE_UPLOAD_REQUEST" + button
- *      2015-03-02  kairenken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
- *      2015-03-03  E:V:A       Replaced dirty SharedPreferences code with TinyDB and Upload result Toast msg.
- *      2015-06-15  SecUpwN     Increased timeout of OCID data download to avoid further retrieval errors
- *
  *  To Fix:
  *
  *      [ ] Explain why BACKUP/RESTORE_DATABASE is in here?

@@ -49,16 +49,6 @@ import io.freefair.android.util.logging.Logger;
  *                  to the top bar, next to email icon button. **
  *
  *  TODO:   [ ]     We should add an XPrivacy button (or automatic) to add XPrivacy filters when used.
- *
- *  ChangeLog:
- *
- *          2015-01-27  E:V:A   Added "getprop|sort" info to log.
- *          2015-01-28  Toby    Fixed "getprop" info to log (but not sorted)
- *          2015-02-11  E:V:A   Increased to 500 lines and removed "-d" and
- *                              incl. radio log, but not working. Permission problem?
- *          2015-02-24  E:V:A   Silent some spam logs on HTC devices.
- *          2015-07-03  E:V:A   Silent some spam logs from the XPosed framework
- *
  */
 
 public class DebugLogs extends BaseActivity {

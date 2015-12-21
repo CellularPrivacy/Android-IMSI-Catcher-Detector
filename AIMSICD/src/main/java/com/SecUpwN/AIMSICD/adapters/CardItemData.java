@@ -23,12 +23,6 @@ import com.SecUpwN.AIMSICD.utils.Device;
  *
  *
  *  Issues:
- *
- *  ChangeLog:
- *
- *          2015-01-26  E:V:A   Added HEX string to CID.
- *
- *
  *  -----------------------------------------------------------------------------------------
  *  Notes:
  *

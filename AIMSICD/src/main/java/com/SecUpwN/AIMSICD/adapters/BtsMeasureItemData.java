@@ -40,12 +40,6 @@ package com.SecUpwN.AIMSICD.adapters;
  *        FOREIGN KEY("bts_id")			        --
  *        REFERENCES "DBi_bts"("_id")		    --
  *      );
- *
- *
- * ChangeLog:
- *                  2015-07-08  Marvin Arnold   Initial commit
- *                  2015-07-27  E:V:A           Added placeholders for missing items
- *
  */
 public class BtsMeasureItemData  {
     public String getBts_id() {

@@ -21,9 +21,6 @@ import com.SecUpwN.AIMSICD.R;
  *                  dbe_import_items.xml
  *
  *  Issues:
- *
- *  ChangeLog:
- *                  2015-08-02  E:V:A           Added rej_cause
  */
 public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItemData> {
 

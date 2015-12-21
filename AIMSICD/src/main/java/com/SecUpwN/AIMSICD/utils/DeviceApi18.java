@@ -32,11 +32,6 @@ import java.util.List;
  *  Description:    This class is taking in consideration newly available network info items
  *                  that are only available in the AOS API 18 and above. In this case we're 
  *                  concerned with Wcdma Cell info...  CellInfoWcdma
- *
- *  ChangeLog:
- *                  2014-10-10      Toby      Original code in DeviceApi17.java
- *                  2015-07-23      E:V:A     Added this file to fix #555
- *
  *  NOTES:
  *                See:  http://developer.android.com/reference/android/os/Build.VERSION_CODES.html
  *
