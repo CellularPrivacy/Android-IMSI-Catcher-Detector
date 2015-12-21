@@ -70,17 +70,6 @@ import io.freefair.android.util.logging.Logger;
  *              defaults to 25 seconds.
  *
  *              [x] Use TinyDB.java to simplify Shared Preferences usage
- *
- *
- *  ChangeLog
- *
- *  2015-03-02  kairenken   removed OCID_UPLOAD_PREF. (Upload is done manually.)
- *  2015-03-02  E:V:A       Added TinyDB import for SharedPreferences alternative
- *  2015-03-03  E:V:A       Replaced getSystemProp with TinyDB Boolean "ocid_downloaded" in Runnable()
- *  2015-04-18  banjaxbanjo Removed timer that checked for neighbouring cells so it now checks onCellChange
- *  2015-07-23  E:V:A       Changed API from 16 to 17 and to use DeviceApi18.java instead of old.
- *  2015-07-30  E:V:A       Added vibration for no nc_list detection, test cleanup
- *
  */
 
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener{

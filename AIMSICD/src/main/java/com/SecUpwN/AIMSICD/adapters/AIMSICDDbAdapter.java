@@ -58,17 +58,6 @@ import io.freefair.android.util.logging.Logger;
  * because the new db column for this is TEXT?
  * [ ] getAverageSignalStrength() // rx_signal
  * <p/>
- * <p/>
- * ChangeLog:
- * <p/>
- * 2015-01-22  E:V:A   Started DBe_import migration
- * 2015-01-23  E:V:A   ~~changed silent sms column names~~ NOT!
- * Added EventLog table
- * 2015-07-16  E:V:A   Post DB design migration cleanup, see special notes below and
- * ref issue #214.
- * <p/>
- * <p/>
- * <p/>
  * Notes:
  * <p/>
  * ======  !! IMPORTANT !!  ======================================================================

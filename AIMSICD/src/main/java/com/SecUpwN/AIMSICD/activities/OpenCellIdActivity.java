@@ -31,11 +31,6 @@ import io.freefair.android.util.logging.Logger;
  *
  *  TODO:
  *              [ ] Add toast for every server response code/message
- *
- *  ChangeLog:
- *
- *      2015-07-19  E:V:A       Added new server response codes, removed old comments
- *
  */
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;

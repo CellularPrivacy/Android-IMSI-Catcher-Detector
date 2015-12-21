@@ -62,13 +62,6 @@ import io.freefair.android.util.logging.Logger;
  *              [ ] Need to increase time for long AT commands like "AT+COPS=?" (~30 sec)
  *              [ ] Need a "no" timeout to watch output for while, or let's make it 10 minutes.
  *                  Perhaps with a manual stop?
- *
- *  ChangeLog:
- *              2015-02-11  E:V:A       Testing to add back some old working code
- *              2015-02-16  scintill    Made some code changes and added /utils/atcmd/...
- *              2015-02-11  E:V:A       Added 10 minutes timeout
- *
- *
  */
 public class AtCommandFragment extends Fragment {
 

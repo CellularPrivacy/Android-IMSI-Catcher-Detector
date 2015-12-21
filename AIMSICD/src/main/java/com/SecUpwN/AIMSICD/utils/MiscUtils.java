@@ -30,13 +30,6 @@ import io.freefair.android.util.logging.Logger;
 
 /**
  * Description:     TODO
- *
- *
- * ChangeLog:
- *
- *      banjaxbanjo     20150304    First PR
- *      E:V:A           20150704    Changed TAGs and fixed some formatting
- *
  */
 public class MiscUtils {
 

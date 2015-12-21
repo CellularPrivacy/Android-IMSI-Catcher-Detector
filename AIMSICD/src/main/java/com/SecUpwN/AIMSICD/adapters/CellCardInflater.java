@@ -23,10 +23,6 @@ import com.SecUpwN.AIMSICD.R;
  *
  *
  *  Issues:     TODO:  !! === I'm not sure this is the right place... == !! --E:V:A
- *
- *  ChangeLog:
- *
- *
  *  Notes:
  *
  */

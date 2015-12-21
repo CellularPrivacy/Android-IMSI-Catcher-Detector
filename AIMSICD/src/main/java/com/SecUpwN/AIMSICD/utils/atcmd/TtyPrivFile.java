@@ -17,10 +17,6 @@ import java.io.IOException;
  *
  *
  *  Notes:
- *
- *
- *  ChangeLog:
- *
  */
 public class TtyPrivFile extends TtyStream {
 

@@ -18,10 +18,6 @@ package com.SecUpwN.AIMSICD.adapters;
  *  Issues:
  *          [ ] See AIMSICDDbAdapter.java line518
  *              - How to find the right values (timestamp, lat, lan, accu) for saving in the db
- *
- *  ChangeLog:
- *
- *
  *  -----------------------------------------------------------------------------------------
  *  Notes:
  *

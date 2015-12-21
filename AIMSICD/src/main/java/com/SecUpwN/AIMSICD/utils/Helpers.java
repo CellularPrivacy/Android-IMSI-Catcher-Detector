@@ -70,10 +70,6 @@ import java.util.List;
  *
  *
  * Issues:          AS complaints that several of these methods are not used...
- *
- * ChangeLog:
- *              2015-05-08   SecUpwN   Added Toast Extender for longer toasts
- *
  */
  public class Helpers {
 
@@ -206,15 +202,6 @@ import java.util.List;
     *  Dependencies:    GeoLocation.java
     *
     *  Used:
-    *
-    *  ChangeLog:
-    *
-    *      2015-01-22   E:V:A   Removed some restrictive payload items, leaving MCC.
-    *      2015-01-23   E:V:A   Tightened the BBOX from 10 to 5 Km, because of above.
-    *      2015-01-24   E:V:A   Re-imposed the MNC constraint.
-    *      2015-02-13   E:V:A   Tightened the BBOX from 5 to 2 Km, and added it to Log.
-    *
-    *
     * @param cell Current Cell Information
     *
     */

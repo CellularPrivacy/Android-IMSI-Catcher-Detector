@@ -29,9 +29,6 @@ import io.freefair.android.util.logging.Logger;
  *
  *              More common is that modem AT CoP is on:  /dev/smd0
  *              while the Bluetooth modem (which also us AT CoP is on: /dev/smd7
- *
- *  ChangeLog:
- *
  */
 public abstract class AtCommandTerminal {
 

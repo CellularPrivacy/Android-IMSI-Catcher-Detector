@@ -70,8 +70,6 @@ import java.util.List;
  * Dependencies:    TODO: Write a few words about where the content of this is used.
  * <p>
  * Issues:
- * <p>
- * ChangeLog: 2015-07-31  E:V:A       Added a restart of AIMSICDDbAdapter after deleting DB
  */
 public class AIMSICD extends BaseActivity implements AsyncResponse {
 
