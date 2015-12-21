@@ -86,6 +86,7 @@ dependencies {
     //compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'io.freefair.android-injection:injection:1.0.0-rc1'
+    compile 'io.freefair.android-injection:logging:1.0.0-rc1'
     //https://github.com/lp0/slf4j-android
     compile 'com.github.Stericson:RootShell:d708ae1f0a'
     compile 'org.slf4j:slf4j-api:1.7.12'

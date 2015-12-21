@@ -7,7 +7,6 @@ package com.SecUpwN.AIMSICD;
 
 
 import android.app.Activity;
-import android.app.Application;
 import android.util.SparseArray;
 
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
@@ -18,15 +17,18 @@ import com.squareup.okhttp.OkHttpClient;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.modules.AndroidLoggerModule;
+import io.freefair.android.injection.ui.InjectionApplication;
 import io.freefair.android.util.logging.Logger;
 
 // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
 //import com.squareup.leakcanary.LeakCanary;
 
-public class AppAIMSICD extends Application {
+public class AppAIMSICD extends InjectionApplication {
 
-    private final Logger log = AndroidLogger.forClass(AppAIMSICD.class);
+    @Inject
+    private Logger log;
 
     private OkHttpClient okHttpClient;
 
@@ -42,6 +44,7 @@ public class AppAIMSICD extends Application {
 
     @Override
     public void onCreate() {
+        new AndroidLoggerModule().configure(getInjector());
         super.onCreate();
         // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
         //LeakCanary.install(this);

@@ -24,7 +24,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -53,8 +53,8 @@ import io.freefair.android.util.logging.Logger;
 
 public class DebugLogs extends BaseActivity {
 
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(DebugLogs.class);
+    @Inject
+    private Logger log;
 
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;

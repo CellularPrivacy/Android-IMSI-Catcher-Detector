@@ -56,7 +56,7 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -84,8 +84,8 @@ import io.freefair.android.util.logging.Logger;
 
 public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(MapViewerOsmDroid.class);
+    @Inject
+    private Logger log;
     public static final String updateOpenCellIDMarkers = "update_open_cell_markers";
 
     private MapView mMap;

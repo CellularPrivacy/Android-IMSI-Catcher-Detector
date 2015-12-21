@@ -11,14 +11,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.Status;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.ui.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -26,9 +26,10 @@ import io.freefair.android.util.logging.Logger;
  *
  * @author Tor Henning Ueland
  */
-public class BaseActivity extends AppCompatActivity {
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(BaseActivity.class);
+public class BaseActivity extends InjectionAppCompatActivity {
+
+    @Inject
+    private Logger log;
 
     /**
      * Triggered when GUI is opened

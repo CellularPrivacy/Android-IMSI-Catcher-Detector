@@ -18,13 +18,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.telephony.TelephonyManager;
-
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,6 +61,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.util.logging.Logger;
+
 /**
  * Description:     TODO: Please add some comments about this class
  * <p>
@@ -73,8 +73,8 @@ import java.util.List;
  */
 public class AIMSICD extends BaseActivity implements AsyncResponse {
 
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(AIMSICD.class);
+    @Inject
+    private Logger log;
 
     private final Context mContext = this;
     private boolean mBound;

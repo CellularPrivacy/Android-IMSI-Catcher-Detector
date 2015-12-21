@@ -22,7 +22,7 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -34,8 +34,9 @@ import io.freefair.android.util.logging.Logger;
  */
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(OpenCellIdActivity.class);
+
+    @Inject
+    private Logger log;
     private ProgressDialog pd;
 
     //TODO: @Inject
