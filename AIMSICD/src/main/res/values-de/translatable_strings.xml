@@ -202,7 +202,7 @@
    
     <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Flach</string>
-    <string name="ui_icon_sense">Sinn</string>
+    <string name="ui_icon_sense">Sinnlich</string>
     <string name="ui_icon_white">Weiß</string>
     <string name="map_type_terrain">Gelände</string>
     <string name="map_type_normal">Normal</string>
@@ -396,7 +396,7 @@
     <string name="the_string_was_added_to_db">Zeichenkette zur Datenbank hinzugefügt</string>
     <string name="failed_to_add_the_string_to_db">Hinzufügen der Zeichenkette zur Datenbank fehlgeschlagen</string>
 
-    <string name="pref_notification_vibrate_enable_title">Vibration an</string>
+    <string name="pref_notification_vibrate_enable_title">Vibration aktivieren</string>
     <string name="pref_notification_vibrate_enable_summary">Vibriere bei Benachrichtigungs-Wechsel</string>
     <string name="pref_notification_settings">Benachrichtigungs-Einstellungen</string>
     <string name="notification_vibrate_idle">Ruhezustand</string>
@@ -404,6 +404,6 @@
     <string name="notification_vibrate_medium">Mittel</string>
     <string name="notification_vibrate_alarm">Alarm</string>
     
-    <string name="pref_notification_vibrate_min_level_title">Vibration bei Gefahrenstufe</string>
+    <string name="pref_notification_vibrate_min_level_title">Vibriere bei Bedrohung</string>
     <string name="pref_notification_vibrate_min_level_summary">Wähle Gefahrenstufe für Vibrationsbeginn</string>
     </resources>
