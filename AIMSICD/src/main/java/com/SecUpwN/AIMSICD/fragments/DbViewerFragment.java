@@ -43,13 +43,6 @@ import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsData;
  * Issues:
  * <p/>
  * Notes:          See issue #234 for details on how to format the UI
- * <p/>
- * ChangeLog:
- * <p/>
- * 2015-07-14      E:V:A       Changed the display names of several items (see issue #234)
- * 2015-07-31      E:V:A       Added comments and changed some inflater data to avoid using:
- * DBTableColumnIds.java. More to do... Use string convert trick:
- * "" + int = "string"  (See EventLog for example)
  */
 public final class DbViewerFragment extends Fragment {
 

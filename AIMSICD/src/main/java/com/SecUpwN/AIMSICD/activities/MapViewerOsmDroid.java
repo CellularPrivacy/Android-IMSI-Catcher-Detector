@@ -80,12 +80,6 @@ import io.freefair.android.util.logging.Logger;
  * https://github.com/osmdroid/osmdroid/issues/49
  * https://github.com/osmdroid/osmdroid/issues/81
  * https://code.google.com/p/osmbonuspack/issues/detail?id=102
- * <p/>
- * ChangeLog:
- * <p/>
- * 2015-01-22  E:V:A   Changed: setLocationUpdateMinTime:    60000 to 10000 ms
- * setLocationUpdateMinDistance: 1000 to 100 meters
- * 2015-02-12  E:V:A   Added:   mMap.setMaxZoomLevel(19);
  */
 
 public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {

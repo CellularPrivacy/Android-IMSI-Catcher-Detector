@@ -29,8 +29,6 @@ import java.util.Map;
  *
  *  Example usage:
  *
- *  ChangeLog:      2015-03-02  E:V:A   Added from repo (see links below)
- *
  *  See:
  *    http://stackoverflow.com/questions/5734721/android-shared-preferences
  *    https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo/

@@ -28,10 +28,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  *
  *
  *  Notes:
- *
- *
- *  ChangeLog:
- *
  */
 
 /*package*/
