@@ -404,4 +404,6 @@
     <string name="notification_vibrate_medium">Mittel</string>
     <string name="notification_vibrate_alarm">Alarm</string>
     
+    <string name="pref_notification_vibrate_min_level_title">Vibration bei Gefahrenstufe</string>
+    <string name="pref_notification_vibrate_min_level_summary">Wähle Gefahrenstufe für Vibrationsbeginn</string>
     </resources>
