@@ -3,9 +3,8 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.fragments;
+package com.SecUpwN.AIMSICD.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,14 +17,13 @@ import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
 
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.app.InjectionFragment;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 
-@XmlLayout(R.layout.about_fragment)
-public class AboutFragment extends InjectionFragment {
+@XmlLayout(R.layout.activity_about)
+public class AboutActivity extends InjectionAppCompatActivity {
 
     @InjectView(R.id.aimsicd_credits_link)
     private Button btncredits;
@@ -37,49 +35,49 @@ public class AboutFragment extends InjectionFragment {
     private TextView BuildozerView;
 
     @Override
-    public void onViewCreated(View v, Bundle savedInstanceState) {
-        super.onViewCreated(v, savedInstanceState);
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    
         String version = BuildConfig.VERSION_NAME;
         versionNumber.setText(getString(R.string.app_version) + version);
 
         String buildNumber = BuildConfig.BUILD_NUMBER;
 
         if (buildNumber != null) {
-            BuildozerView = (TextView) v.findViewById(R.id.buildozer_buildnumber);
+            BuildozerView = (TextView) findViewById(R.id.buildozer_buildnumber);
             BuildozerView.setText(getString(R.string.buildnumber) + buildNumber);
             BuildozerView.setVisibility(View.VISIBLE);
         }
 
         //GitHub WIKI Link
-        View tv = v.findViewById(R.id.aimsicd_wiki_link);
+        View tv = findViewById(R.id.aimsicd_wiki_link);
         setLink(tv, R.string.aimsicd_wiki_link);
 
         //GitHub Website Link
-        tv = v.findViewById(R.id.aimsicd_github_link);
+        tv = findViewById(R.id.aimsicd_github_link);
         setLink(tv, R.string.aimsicd_github_link);
 
         //Disclaimer Link
-        tv = v.findViewById(R.id.aimsicd_disclaimer_link);
+        tv = findViewById(R.id.aimsicd_disclaimer_link);
         setLink(tv, R.string.disclaimer_link);
 
         //GitHub Contribution Link
-        tv = v.findViewById(R.id.aimsicd_contribute_link);
+        tv = findViewById(R.id.aimsicd_contribute_link);
         setLink(tv, R.string.aimsicd_contribute_link);
 
         //WIP Release Link
-        tv = v.findViewById(R.id.aimsicd_release_link);
+        tv = findViewById(R.id.aimsicd_release_link);
         setLink(tv, R.string.aimsicd_release_link);
 
         //Changelog Link
-        tv = v.findViewById(R.id.aimsicd_changelog_link);
+        tv = findViewById(R.id.aimsicd_changelog_link);
         setLink(tv, R.string.aimsicd_changelog_link);
 
         //License Link
-        tv = v.findViewById(R.id.aimsicd_license_link);
+        tv = findViewById(R.id.aimsicd_license_link);
         setLink(tv, R.string.aimsicd_license_link);
 
-        View imgView_idle = v.findViewById(R.id.imgView_idle);
+        View imgView_idle = findViewById(R.id.imgView_idle);
         imgView_idle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +85,7 @@ public class AboutFragment extends InjectionFragment {
             }
         });
 
-        View imgView_normal = v.findViewById(R.id.imgView_normal);
+        View imgView_normal = findViewById(R.id.imgView_normal);
         imgView_normal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +93,7 @@ public class AboutFragment extends InjectionFragment {
             }
         });
 
-        View imgView_medium = v.findViewById(R.id.imgView_medium);
+        View imgView_medium = findViewById(R.id.imgView_medium);
         imgView_medium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +101,7 @@ public class AboutFragment extends InjectionFragment {
             }
         });
 
-        View imgView_high = v.findViewById(R.id.imgView_high);
+        View imgView_high = findViewById(R.id.imgView_high);
         imgView_high.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +109,7 @@ public class AboutFragment extends InjectionFragment {
             }
         });
 
-        View imgView_danger = v.findViewById(R.id.imgView_danger);
+        View imgView_danger = findViewById(R.id.imgView_danger);
         imgView_danger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +117,7 @@ public class AboutFragment extends InjectionFragment {
             }
         });
 
-        View imgView_run = v.findViewById(R.id.imgView_run);
+        View imgView_run = findViewById(R.id.imgView_run);
         imgView_run.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,20 +139,15 @@ public class AboutFragment extends InjectionFragment {
         btncredits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), CreditsRollActivity.class);
+                Intent i = new Intent(AboutActivity.this, CreditsRollActivity.class);
                 startActivity(i);
             }
         });
 
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
     private void showInfoDialog(Status status) {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(this)
                 .setIcon(status.getIcon())
                 .setTitle(getString(R.string.status) + "\t" + getString(status.getName()))
                 .setMessage(status.getDescription())

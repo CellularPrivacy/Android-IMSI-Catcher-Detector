@@ -29,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.SecUpwN.AIMSICD.activities.AboutActivity;
 import com.SecUpwN.AIMSICD.activities.BaseActivity;
 import com.SecUpwN.AIMSICD.activities.DebugLogs;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
@@ -37,7 +38,6 @@ import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
-import com.SecUpwN.AIMSICD.fragments.AboutFragment;
 import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
@@ -272,8 +272,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 title = getString(R.string.app_name_short);
                 break;
             case DrawerMenu.ID.APPLICATION.ABOUT:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new AboutFragment()).commit();
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
                 break;
             case DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA:
                 // Request uploading here?

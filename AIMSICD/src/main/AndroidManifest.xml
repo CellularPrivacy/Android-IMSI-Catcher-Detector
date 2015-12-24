@@ -86,6 +86,11 @@
         </activity>
 
         <activity
+            android:name=".activities.AboutActivity"
+            android:label="@string/about_aimsicd"
+            android:parentActivityName=".AIMSICD" />
+
+        <activity
             android:name=".activities.DebugLogs"
             android:icon="@drawable/ic_action_settings"
             android:label="@string/title_debug_logs"
