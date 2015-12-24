@@ -75,7 +75,7 @@
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">About AIMSICD</string>
-    <string name="app_version">Version: </string>
+    <string name="app_version">Version: %s</string>
     <string name="buildnumber">Build Number: %s</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
     <string name="aimsicd_about_info3">Android-based project to detect and avoid fake base stations (IMSI-Catchers) in GSM/UMTS Networks.</string>

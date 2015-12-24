@@ -59,7 +59,7 @@
     <string name="upload_bts">Ngarko të dhënat e BTS</string>
 
     <string name="about_aimsicd">Rreth AIMSICD</string>
-    <string name="app_version">Versioni: </string>
+    <string name="app_version">Versioni: %s</string>
     <string name="aimsicd_about_info3">Projekt i bazuar në sistemin android për të identifukuar dhe mënjanuar kulla të gabuara/ të rrema (IMSI-Catchers) në rrjetet GSM/UMTS.</string>
     <string name="about_github">AIMSICD në GitHub</string>
     <string name="about_wiki">DOKUMENTACIONI</string>

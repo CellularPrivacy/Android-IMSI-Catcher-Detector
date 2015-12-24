@@ -37,14 +37,11 @@ public class AboutActivity extends InjectionAppCompatActivity {
     @InjectView(R.id.git_sha)
     private TextView gitShaTextView;
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    
-        String version = BuildConfig.VERSION_NAME;
-        versionNumber.setText(getString(R.string.app_version) + version);
 
+        versionNumber.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
         buildNumberTextView.setText(getString(R.string.buildnumber, BuildConfig.BUILD_NUMBER));
         gitShaTextView.setText(getString(R.string.git_sha, BuildConfig.GIT_SHA));
 
