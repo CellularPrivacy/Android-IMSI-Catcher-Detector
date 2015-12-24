@@ -10,7 +10,6 @@ package com.SecUpwN.AIMSICD.smsdetection;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,12 +21,14 @@ import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 
 import java.util.ArrayList;
 
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
-public class AdvancedUserSmsActivity extends AppCompatActivity {
+public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
 
-    //TODO: @Inject
+    @Inject
     private final Logger log = AndroidLogger.forClass(AdvancedUserSmsActivity.class);
 
     ListView listViewAdv;

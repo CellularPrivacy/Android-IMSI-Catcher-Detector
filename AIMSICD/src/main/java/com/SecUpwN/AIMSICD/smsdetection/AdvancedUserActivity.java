@@ -10,7 +10,6 @@ package com.SecUpwN.AIMSICD.smsdetection;
 
 import android.content.ContentValues;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,13 +24,16 @@ import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 
 import java.util.ArrayList;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.Logger;
 
-public class AdvancedUserActivity extends AppCompatActivity {
+@XmlLayout(R.layout.activity_advanced_user)
+public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(AdvancedUserActivity.class);
+    @Inject
+    private Logger log;
 
     private ListView listViewAdv;
     private AIMSICDDbAdapter dbAccess;
@@ -43,7 +45,6 @@ public class AdvancedUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advanced_user);
         dbAccess = new AIMSICDDbAdapter(getApplicationContext());
 
         insertButton = (Button) findViewById(R.id.btn_insert);
