@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.annotation.XmlMenu;
 import io.freefair.android.util.logging.Logger;
@@ -62,21 +63,23 @@ public class DebugLogs extends BaseActivity {
     private boolean updateLogs = true;
     private boolean isRadioLogs = true; // Including this, should be a toggle.
 
-    private TextView logView = null;
-    private Button btnClear = null;
-    private Button btnCopy = null;
-    private Button btnStop = null;
+    @InjectView(R.id.debug_log_view)
+    private TextView logView;
+
+    @InjectView(R.id.btnClear)
+    private Button btnClear;
+
+    @InjectView(R.id.btnCopy)
+    private Button btnCopy;
+
+    @InjectView(R.id.btnStopLogs)
+    private Button btnStop;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Show the Up button in the action bar.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        logView = (TextView) findViewById(R.id.debug_log_view);
-        btnClear = (Button) findViewById(R.id.btnClear);
-        btnStop = (Button) findViewById(R.id.btnStopLogs);
-        btnCopy = (Button) findViewById(R.id.btnCopy);
 
         runOnUiThread(new Runnable() {
             @Override

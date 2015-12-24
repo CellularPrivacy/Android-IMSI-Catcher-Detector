@@ -29,6 +29,7 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 
+import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 
@@ -41,18 +42,18 @@ public class CreditsRollActivity extends InjectionAppCompatActivity implements S
 
     private static final float SCROLL_ANIM_DURATION = 20000;    // [ms] = 30 s
 
+    @InjectView(R.id.creditsroll)
     private CreditsRollView mCreditsRollView;
     private boolean mScrolling;
+
+    @InjectView(R.id.seekbar)
     private SeekBar mSeekBar;
     private ValueAnimator mScrollAnimator;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSeekBar = (SeekBar) findViewById(R.id.seekbar);
         mSeekBar.setOnSeekBarChangeListener(this);
-
-        mCreditsRollView = (CreditsRollView) findViewById(R.id.creditsroll);
         mCreditsRollView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

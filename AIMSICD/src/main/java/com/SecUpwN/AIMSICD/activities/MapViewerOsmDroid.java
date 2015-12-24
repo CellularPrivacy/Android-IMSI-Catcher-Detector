@@ -56,6 +56,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.annotation.XmlMenu;
 import io.freefair.android.util.logging.Logger;
@@ -90,6 +91,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
     private Logger log;
     public static final String updateOpenCellIDMarkers = "update_open_cell_markers";
 
+    @InjectView(R.id.mapview)
     private MapView mMap;
     private AIMSICDDbAdapter mDbHelper;
     private SharedPreferences prefs;
@@ -276,43 +278,34 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
      * Location update settings
      */
     private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            mMap = (MapView) findViewById(R.id.mapview);
 
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                mMap.setBuiltInZoomControls(true);
-                mMap.setMultiTouchControls(true);
-                mMap.setMinZoomLevel(3);
-                mMap.setMaxZoomLevel(19); // Latest OSM can go to 21!
-                mMap.getTileProvider().createTileCache();
-                mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), mMap);
+        // Check if we were successful in obtaining the map.
+        mMap.setBuiltInZoomControls(true);
+        mMap.setMultiTouchControls(true);
+        mMap.setMinZoomLevel(3);
+        mMap.setMaxZoomLevel(19); // Latest OSM can go to 21!
+        mMap.getTileProvider().createTileCache();
+        mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), mMap);
 
-                ScaleBarOverlay mScaleBarOverlay = new ScaleBarOverlay(this);
-                mScaleBarOverlay.setScaleBarOffset(getResources().getDisplayMetrics().widthPixels / 2, 10);
-                mScaleBarOverlay.setCentred(true);
+        ScaleBarOverlay mScaleBarOverlay = new ScaleBarOverlay(this);
+        mScaleBarOverlay.setScaleBarOffset(getResources().getDisplayMetrics().widthPixels / 2, 10);
+        mScaleBarOverlay.setCentred(true);
 
-                // Sets cluster pin color
-                mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(MapViewerOsmDroid.this);
-                BitmapDrawable mapPinDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_map_pin_orange);
-                mCellTowerGridMarkerClusterer.setIcon(mapPinDrawable == null ? null : mapPinDrawable.getBitmap());
+        // Sets cluster pin color
+        mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(MapViewerOsmDroid.this);
+        BitmapDrawable mapPinDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_map_pin_orange);
+        mCellTowerGridMarkerClusterer.setIcon(mapPinDrawable == null ? null : mapPinDrawable.getBitmap());
 
-                GpsMyLocationProvider gpsMyLocationProvider = new GpsMyLocationProvider(MapViewerOsmDroid.this.getBaseContext());
-                gpsMyLocationProvider.setLocationUpdateMinDistance(100); // [m]  // Set the minimum distance for location updates
-                gpsMyLocationProvider.setLocationUpdateMinTime(10000);   // [ms] // Set the minimum time interval for location updates
-                mMyLocationOverlay = new MyLocationNewOverlay(MapViewerOsmDroid.this.getBaseContext(), gpsMyLocationProvider, mMap);
-                mMyLocationOverlay.setDrawAccuracyEnabled(true);
+        GpsMyLocationProvider gpsMyLocationProvider = new GpsMyLocationProvider(MapViewerOsmDroid.this.getBaseContext());
+        gpsMyLocationProvider.setLocationUpdateMinDistance(100); // [m]  // Set the minimum distance for location updates
+        gpsMyLocationProvider.setLocationUpdateMinTime(10000);   // [ms] // Set the minimum time interval for location updates
+        mMyLocationOverlay = new MyLocationNewOverlay(MapViewerOsmDroid.this.getBaseContext(), gpsMyLocationProvider, mMap);
+        mMyLocationOverlay.setDrawAccuracyEnabled(true);
 
-                mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
-                mMap.getOverlays().add(mMyLocationOverlay);
-                mMap.getOverlays().add(mCompassOverlay);
-                mMap.getOverlays().add(mScaleBarOverlay);
-
-            } else {
-                Helpers.msgShort(this, getString(R.string.unable_to_create_map));
-            }
-        }
+        mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
+        mMap.getOverlays().add(mMyLocationOverlay);
+        mMap.getOverlays().add(mCompassOverlay);
+        mMap.getOverlays().add(mScaleBarOverlay);
     }
 
     @Override
