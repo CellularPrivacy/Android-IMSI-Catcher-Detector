@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import io.freefair.android.injection.app.InjectionApplication;
 import io.freefair.android.injection.modules.AndroidLoggerModule;
 import io.freefair.android.injection.modules.OkHttpModule;
-import io.freefair.android.injection.ui.InjectionAppCompatActivity;
-import io.freefair.android.injection.ui.InjectionApplication;
 import io.freefair.android.util.logging.Logger;
 
 // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
@@ -43,8 +43,8 @@ public class AppAIMSICD extends InjectionApplication {
 
     @Override
     public void onCreate() {
-        new AndroidLoggerModule().configure(getInjector());
-        OkHttpModule.withCache(this).configure(getInjector());
+        addModule(new AndroidLoggerModule());
+        addModule(OkHttpModule.withCache(this));
         super.onCreate();
         // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
         //LeakCanary.install(this);

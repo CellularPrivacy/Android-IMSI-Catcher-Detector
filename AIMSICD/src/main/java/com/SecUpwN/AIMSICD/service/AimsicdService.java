@@ -24,7 +24,6 @@
 
 package com.SecUpwN.AIMSICD.service;
 
-import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
@@ -43,8 +42,8 @@ import com.SecUpwN.AIMSICD.smsdetection.SmsDetector;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.GeoLocation;
 
-import io.freefair.android.injection.InjectionContainer;
 import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.app.InjectionService;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -52,7 +51,7 @@ import io.freefair.android.util.logging.Logger;
  *                  cells with or without GPS enabled.
  *                  TODO: better and more detailed explanation!
  */
-public class AimsicdService extends Service {
+public class AimsicdService extends InjectionService {
 
     @Inject
     private Logger log;
@@ -91,8 +90,6 @@ public class AimsicdService extends Service {
     @Override
     public void onCreate() {
         setTheme(R.style.AppTheme);
-
-        InjectionContainer.getInstance().inject(this);
 
         signalStrengthTracker = new SignalStrengthTracker(getBaseContext());
 

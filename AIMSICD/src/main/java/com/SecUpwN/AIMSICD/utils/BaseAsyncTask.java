@@ -13,7 +13,7 @@ import com.SecUpwN.AIMSICD.AppAIMSICD;
 
 import java.lang.ref.WeakReference;
 
-import io.freefair.android.injection.ui.InjectionAppCompatActivity;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 
 public abstract class BaseAsyncTask<TParams, TProgress, TResult> extends AsyncTask<TParams, TProgress, TResult> {
     protected AppAIMSICD mApp;

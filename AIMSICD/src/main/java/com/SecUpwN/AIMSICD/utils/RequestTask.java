@@ -33,7 +33,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import io.freefair.android.injection.annotation.Inject;
-import io.freefair.android.injection.ui.InjectionAppCompatActivity;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.Logger;
 
 /**
