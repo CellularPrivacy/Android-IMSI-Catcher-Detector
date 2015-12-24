@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -50,7 +51,7 @@ import io.freefair.android.util.logging.Logger;
  *
  *  TODO:   [ ]     We should add an XPrivacy button (or automatic) to add XPrivacy filters when used.
  */
-
+@XmlLayout(R.layout.activity_debug_logs)
 public class DebugLogs extends BaseActivity {
 
     @Inject
@@ -68,7 +69,6 @@ public class DebugLogs extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_debug_logs);
         // Show the Up button in the action bar.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

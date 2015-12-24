@@ -57,6 +57,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -81,7 +82,7 @@ import io.freefair.android.util.logging.Logger;
  * https://github.com/osmdroid/osmdroid/issues/81
  * https://code.google.com/p/osmbonuspack/issues/detail?id=102
  */
-
+@XmlLayout(R.layout.map)
 public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
     @Inject
@@ -122,7 +123,6 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         log.info("Starting MapViewer");
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.map);
         setUpMapIfNeeded();
 
         mDbHelper = new AIMSICDDbAdapter(this);

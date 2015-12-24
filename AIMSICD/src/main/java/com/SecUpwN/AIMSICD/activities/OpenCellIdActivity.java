@@ -22,6 +22,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 
 import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -31,6 +32,7 @@ import io.freefair.android.util.logging.Logger;
  *  TODO:
  *              [ ] Add toast for every server response code/message
  */
+@XmlLayout(R.layout.activity_open_cell_id)
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;
 
@@ -44,7 +46,6 @@ public class OpenCellIdActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_open_cell_id);
 
         prefs = getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
     }

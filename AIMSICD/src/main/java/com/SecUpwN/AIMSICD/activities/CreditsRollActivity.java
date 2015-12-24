@@ -29,13 +29,14 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 
+import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 
 //import android.animation.Animator;
 //import android.animation.ObjectAnimator;
 //import android.animation.ValueAnimator;
 
-
+@XmlLayout(R.layout.creditroll)
 public class CreditsRollActivity extends InjectionAppCompatActivity implements SeekBar.OnSeekBarChangeListener {
 
     private static final float SCROLL_ANIM_DURATION = 20000;    // [ms] = 30 s
@@ -47,7 +48,6 @@ public class CreditsRollActivity extends InjectionAppCompatActivity implements S
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.creditroll);
 
         mSeekBar = (SeekBar) findViewById(R.id.seekbar);
         mSeekBar.setOnSeekBarChangeListener(this);
