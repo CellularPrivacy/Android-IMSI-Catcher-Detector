@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
 import io.freefair.android.util.logging.AndroidLogger;
@@ -65,7 +66,8 @@ import io.freefair.android.util.logging.Logger;
 @XmlLayout(R.layout.at_command_fragment)
 public class AtCommandFragment extends InjectionFragment {
 
-    private final Logger log = AndroidLogger.forClass(AtCommandFragment.class);
+    @Inject
+    private Logger log;
 
     //Return value constants
     private static final int SERIAL_INIT_OK = 100;
