@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -37,6 +34,9 @@ import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
 import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsCardInflater;
 import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsData;
 
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionFragment;
+
 /**
  * Description:    Class that handles the display of the items in the 'Database Viewer' (DBV)
  * <p/>
@@ -44,7 +44,8 @@ import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsData;
  * <p/>
  * Notes:          See issue #234 for details on how to format the UI
  */
-public final class DbViewerFragment extends Fragment {
+@XmlLayout(R.layout.db_view)
+public final class DbViewerFragment extends InjectionFragment {
 
     private AIMSICDDbAdapter mDb;
     private StatesDbViewer mTableSelected;
@@ -63,9 +64,10 @@ public final class DbViewerFragment extends Fragment {
         mDb = new AIMSICDDbAdapter(activity.getBaseContext());
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.db_view, container, false);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         lv = (ListView) view.findViewById(R.id.list_view);
         emptyView = view.findViewById(R.id.db_list_empty);
@@ -166,8 +168,6 @@ public final class DbViewerFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
-
-        return view;
     }
 
     /**
