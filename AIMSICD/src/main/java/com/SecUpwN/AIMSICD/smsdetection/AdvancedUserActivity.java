@@ -10,7 +10,6 @@ package com.SecUpwN.AIMSICD.smsdetection;
 
 import android.content.ContentValues;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,31 +24,36 @@ import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 
 import java.util.ArrayList;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.Logger;
 
-public class AdvancedUserActivity extends AppCompatActivity {
+@XmlLayout(R.layout.activity_advanced_user)
+public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(AdvancedUserActivity.class);
+    @Inject
+    private Logger log;
 
+    @InjectView(R.id.listView_Adv_Activity)
     private ListView listViewAdv;
     private AIMSICDDbAdapter dbAccess;
+
+    @InjectView(R.id.btn_insert)
     private Button insertButton;
+
+    @InjectView(R.id.edit_adv_user_string)
     private EditText editAdvUserDet;
+
+    @InjectView(R.id.spinner)
     private Spinner spinner;
     private ArrayList<AdvanceUserItems> msgItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advanced_user);
         dbAccess = new AIMSICDDbAdapter(getApplicationContext());
-
-        insertButton = (Button) findViewById(R.id.btn_insert);
-        editAdvUserDet = (EditText) findViewById(R.id.edit_adv_user_string);
-        spinner = (Spinner) findViewById(R.id.spinner);
-        listViewAdv = (ListView) findViewById(R.id.listView_Adv_Activity);
 
         try {
             msgItems = dbAccess.getDetectionStrings();

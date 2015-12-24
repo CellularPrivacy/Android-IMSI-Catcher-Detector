@@ -7,28 +7,29 @@ package com.SecUpwN.AIMSICD;
 
 
 import android.app.Activity;
-import android.app.Application;
 import android.util.SparseArray;
 
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
 import com.SecUpwN.AIMSICD.utils.BaseAsyncTask;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
-import com.squareup.okhttp.OkHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import io.freefair.android.injection.app.InjectionApplication;
+import io.freefair.android.injection.modules.AndroidLoggerModule;
+import io.freefair.android.injection.modules.OkHttpModule;
 import io.freefair.android.util.logging.Logger;
 
 // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
 //import com.squareup.leakcanary.LeakCanary;
 
-public class AppAIMSICD extends Application {
+public class AppAIMSICD extends InjectionApplication {
 
-    private final Logger log = AndroidLogger.forClass(AppAIMSICD.class);
-
-    private OkHttpClient okHttpClient;
+    @Inject
+    private Logger log;
 
     /**
      * Maps between an activity class name and the list of currently running
@@ -42,13 +43,13 @@ public class AppAIMSICD extends Application {
 
     @Override
     public void onCreate() {
+        addModule(new AndroidLoggerModule());
+        addModule(OkHttpModule.withCache(this));
         super.onCreate();
         // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
         //LeakCanary.install(this);
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
-
-        okHttpClient = new OkHttpClient();
     }
 
     public void removeTask(BaseAsyncTask<?, ?, ?> pTask) {
@@ -103,7 +104,7 @@ public class AppAIMSICD extends Application {
         }
     }
 
-    public void attach(Activity activity) {
+    public void attach(InjectionAppCompatActivity activity) {
         if (activity == null) {
             return;
         }
@@ -115,9 +116,5 @@ public class AppAIMSICD extends Application {
                 task.setActivity(activity);
             }
         }
-    }
-
-    public OkHttpClient getOkHttpClient() {
-        return okHttpClient;
     }
 }

@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 
-import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
@@ -22,7 +21,8 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -32,24 +32,22 @@ import io.freefair.android.util.logging.Logger;
  *  TODO:
  *              [ ] Add toast for every server response code/message
  */
+@XmlLayout(R.layout.activity_open_cell_id)
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(OpenCellIdActivity.class);
+
+    @Inject
+    private Logger log;
     private ProgressDialog pd;
 
-    //TODO: @Inject
+    @Inject
     private OkHttpClient okHttpClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_open_cell_id);
 
         prefs = getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-
-        //TODO: Use a dependency injection for this
-        okHttpClient = ((AppAIMSICD)getApplication()).getOkHttpClient();
     }
 
     public void onAcceptedClicked(View v) {

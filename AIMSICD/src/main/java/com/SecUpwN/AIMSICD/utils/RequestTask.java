@@ -11,10 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
-
-import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
@@ -35,6 +31,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import io.freefair.android.util.logging.Logger;
 
 /**
  *
@@ -89,15 +89,19 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     public static final char RESTORE_DATABASE = 4;              // Restore DB from CSV files
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
 
-    private final Logger log = AndroidLogger.forClass(RequestTask.class);
+    @Inject
+    private Logger log;
 
     private AIMSICDDbAdapter mDbAdapter;
     private Context mAppContext;
     private char mType;
     private int mTimeOut;
 
-    public RequestTask(Context context, char type) {
-        super((Activity)context);
+    @Inject
+    private OkHttpClient okHttpClient;
+
+    public RequestTask(InjectionAppCompatActivity context, char type) {
+        super(context);
         this.mType = type;
         this.mAppContext = context.getApplicationContext();
         this.mDbAdapter = new AIMSICDDbAdapter(mAppContext);
@@ -106,8 +110,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     @Override
     protected String doInBackground(String... commandString) {
-
-        OkHttpClient okHttpClient = ((AppAIMSICD)getActivity().getApplication()).getOkHttpClient();
 
         // We need to create a separate case for UPLOADING to DBe (OCID, MLS etc)
         switch (mType) {

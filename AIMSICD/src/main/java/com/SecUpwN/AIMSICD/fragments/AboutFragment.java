@@ -11,11 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -23,110 +20,112 @@ import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
 
-public class AboutFragment extends Fragment {
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionFragment;
 
+@XmlLayout(R.layout.about_fragment)
+public class AboutFragment extends InjectionFragment {
+
+    @InjectView(R.id.aimsicd_credits_link)
     private Button btncredits;
 
+    @InjectView(R.id.aimsicd_version)
+    private TextView versionNumber;
+
+    @InjectView(R.id.buildozer_buildnumber)
+    private TextView BuildozerView;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onViewCreated(View v, Bundle savedInstanceState) {
+        super.onViewCreated(v, savedInstanceState);
 
-        View v = inflater.inflate(R.layout.about_fragment, container, false);
         String version = BuildConfig.VERSION_NAME;
-
-        btncredits = (Button) v.findViewById(R.id.aimsicd_credits_link);
+        versionNumber.setText(getString(R.string.app_version) + version);
 
         String buildNumber = BuildConfig.BUILD_NUMBER;
 
-        TextView versionNumber;
-        TextView BuildozerView;
-        if (v != null) {
-            versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
-            versionNumber.setText(getString(R.string.app_version) + version);
-
-            if (buildNumber != null) {
-                BuildozerView = (TextView) v.findViewById(R.id.buildozer_buildnumber);
-                BuildozerView.setText(getString(R.string.buildnumber) + buildNumber);
-                BuildozerView.setVisibility(View.VISIBLE);
-            }
-
-            //GitHub WIKI Link
-            View tv = v.findViewById(R.id.aimsicd_wiki_link);
-            setLink(tv, R.string.aimsicd_wiki_link);
-
-            //GitHub Website Link
-            tv = v.findViewById(R.id.aimsicd_github_link);
-            setLink(tv, R.string.aimsicd_github_link);
-
-            //Disclaimer Link
-            tv = v.findViewById(R.id.aimsicd_disclaimer_link);
-            setLink(tv, R.string.disclaimer_link);
-
-            //GitHub Contribution Link
-            tv = v.findViewById(R.id.aimsicd_contribute_link);
-            setLink(tv, R.string.aimsicd_contribute_link);
-
-            //WIP Release Link
-            tv = v.findViewById(R.id.aimsicd_release_link);
-            setLink(tv, R.string.aimsicd_release_link);
-
-            //Changelog Link
-            tv = v.findViewById(R.id.aimsicd_changelog_link);
-            setLink(tv, R.string.aimsicd_changelog_link);
-
-            //License Link
-            tv = v.findViewById(R.id.aimsicd_license_link);
-            setLink(tv, R.string.aimsicd_license_link);
-
-            View imgView_idle = v.findViewById(R.id.imgView_idle);
-            imgView_idle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showInfoDialog(Status.IDLE);
-                }
-            });
-
-            View imgView_normal = v.findViewById(R.id.imgView_normal);
-            imgView_normal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showInfoDialog(Status.NORMAL);
-                }
-            });
-
-            View imgView_medium = v.findViewById(R.id.imgView_medium);
-            imgView_medium.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showInfoDialog(Status.MEDIUM);
-                }
-            });
-
-            View imgView_high = v.findViewById(R.id.imgView_high);
-            imgView_high.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showInfoDialog(Status.HIGH);
-                }
-            });
-
-            View imgView_danger = v.findViewById(R.id.imgView_danger);
-            imgView_danger.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showInfoDialog(Status.DANGER);
-                }
-            });
-
-            View imgView_run = v.findViewById(R.id.imgView_run);
-            imgView_run.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showInfoDialog(Status.RUN);
-                }
-            });
+        if (buildNumber != null) {
+            BuildozerView = (TextView) v.findViewById(R.id.buildozer_buildnumber);
+            BuildozerView.setText(getString(R.string.buildnumber) + buildNumber);
+            BuildozerView.setVisibility(View.VISIBLE);
         }
-        return v;
+
+        //GitHub WIKI Link
+        View tv = v.findViewById(R.id.aimsicd_wiki_link);
+        setLink(tv, R.string.aimsicd_wiki_link);
+
+        //GitHub Website Link
+        tv = v.findViewById(R.id.aimsicd_github_link);
+        setLink(tv, R.string.aimsicd_github_link);
+
+        //Disclaimer Link
+        tv = v.findViewById(R.id.aimsicd_disclaimer_link);
+        setLink(tv, R.string.disclaimer_link);
+
+        //GitHub Contribution Link
+        tv = v.findViewById(R.id.aimsicd_contribute_link);
+        setLink(tv, R.string.aimsicd_contribute_link);
+
+        //WIP Release Link
+        tv = v.findViewById(R.id.aimsicd_release_link);
+        setLink(tv, R.string.aimsicd_release_link);
+
+        //Changelog Link
+        tv = v.findViewById(R.id.aimsicd_changelog_link);
+        setLink(tv, R.string.aimsicd_changelog_link);
+
+        //License Link
+        tv = v.findViewById(R.id.aimsicd_license_link);
+        setLink(tv, R.string.aimsicd_license_link);
+
+        View imgView_idle = v.findViewById(R.id.imgView_idle);
+        imgView_idle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInfoDialog(Status.IDLE);
+            }
+        });
+
+        View imgView_normal = v.findViewById(R.id.imgView_normal);
+        imgView_normal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInfoDialog(Status.NORMAL);
+            }
+        });
+
+        View imgView_medium = v.findViewById(R.id.imgView_medium);
+        imgView_medium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInfoDialog(Status.MEDIUM);
+            }
+        });
+
+        View imgView_high = v.findViewById(R.id.imgView_high);
+        imgView_high.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInfoDialog(Status.HIGH);
+            }
+        });
+
+        View imgView_danger = v.findViewById(R.id.imgView_danger);
+        imgView_danger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInfoDialog(Status.DANGER);
+            }
+        });
+
+        View imgView_run = v.findViewById(R.id.imgView_run);
+        imgView_run.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInfoDialog(Status.RUN);
+            }
+        });
     }
 
     private void setLink(View b, final int link) {

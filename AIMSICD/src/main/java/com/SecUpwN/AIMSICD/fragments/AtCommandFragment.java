@@ -11,11 +11,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,7 +34,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionFragment;
 import io.freefair.android.util.logging.Logger;
 
 
@@ -63,9 +63,11 @@ import io.freefair.android.util.logging.Logger;
  *              [ ] Need a "no" timeout to watch output for while, or let's make it 10 minutes.
  *                  Perhaps with a manual stop?
  */
-public class AtCommandFragment extends Fragment {
+@XmlLayout(R.layout.at_command_fragment)
+public class AtCommandFragment extends InjectionFragment {
 
-    private final Logger log = AndroidLogger.forClass(AtCommandFragment.class);
+    @Inject
+    private Logger log;
 
     //Return value constants
     private static final int SERIAL_INIT_OK = 100;
@@ -78,39 +80,43 @@ public class AtCommandFragment extends Fragment {
     private String mSerialDevice;
     private int mTimeout;
 
+    @InjectView(R.id.atcommandView)
     private RelativeLayout mAtCommandLayout;
+
+    @InjectView(R.id.at_command_error)
     private TextView mAtCommandError;
+
+    @InjectView(R.id.serial_device)
     private TextView mSerialDeviceDisplay;
 
+    @InjectView(R.id.response)
     private TextView mAtResponse;
+
+    @InjectView(R.id.at_command)
     private EditText mAtCommand;
+
+    @InjectView(R.id.serial_device_spinner)
     private Spinner mSerialDeviceSpinner;
+
+    @InjectView(R.id.serial_device_spinner_title)
     private TextView mSerialDeviceSpinnerLabel;
 
     private AtCommandTerminal mCommandTerminal;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.at_command_fragment, container, false);
-        if (view != null) {
-            mAtCommandLayout = (RelativeLayout) view.findViewById(R.id.atcommandView);
-            mAtCommandError = (TextView) view.findViewById(R.id.at_command_error);
-            Button atCommandExecute = (Button) view.findViewById(R.id.execute);
-            mSerialDeviceDisplay = (TextView) view.findViewById(R.id.serial_device);
-            mAtResponse = (TextView) view.findViewById(R.id.response);
-            mAtCommand = (EditText) view.findViewById(R.id.at_command);
-            atCommandExecute.setOnClickListener(new btnClick());
-            mSerialDeviceSpinner = (Spinner) view.findViewById(R.id.serial_device_spinner);
-            mSerialDeviceSpinner.setOnItemSelectedListener(new spinnerListener());
-            mSerialDeviceSpinnerLabel = (TextView) view.findViewById(R.id.serial_device_spinner_title);
-            Spinner timeoutSpinner = (Spinner) view.findViewById(R.id.timeout_spinner);
-            timeoutSpinner.setOnItemSelectedListener(new timeoutSpinnerListener());
-            timeoutSpinner.setSelection(1);
-            mTimeout = 5000;
-        }
+    @InjectView(R.id.timeout_spinner)
+    private Spinner timeoutSpinner;
 
-        return view;
+    @InjectView(R.id.execute)
+    private Button atCommandExecute;
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        atCommandExecute.setOnClickListener(new btnClick());
+        mSerialDeviceSpinner.setOnItemSelectedListener(new spinnerListener());
+        timeoutSpinner.setOnItemSelectedListener(new timeoutSpinnerListener());
+        timeoutSpinner.setSelection(1);
+        mTimeout = 5000;
     }
 
     private class timeoutSpinnerListener implements AdapterView.OnItemSelectedListener {

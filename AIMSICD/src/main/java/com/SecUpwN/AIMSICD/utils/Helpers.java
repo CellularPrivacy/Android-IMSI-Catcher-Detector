@@ -26,9 +26,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
-
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
@@ -41,6 +38,10 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 /**
  *
@@ -205,8 +206,8 @@ import java.util.List;
     * @param cell Current Cell Information
     *
     */
-    public static void getOpenCellData(Context context, Cell cell, char type) {
-        if (Helpers.isNetAvailable(context)) {
+    public static void getOpenCellData(InjectionAppCompatActivity injectionActivity, Cell cell, char type) {
+        if (Helpers.isNetAvailable(injectionActivity)) {
             if (!"NA".equals(CellTracker.OCID_API_KEY)) {
                 double earthRadius = 6371.01; // [Km]
                 int radius = 2; // Use a 2 Km radius with center at GPS location.
@@ -243,19 +244,19 @@ import java.util.List;
                     }
 
                     sb.append("&format=csv");
-                    new RequestTask(context, type).execute(sb.toString());
+                    new RequestTask(injectionActivity, type).execute(sb.toString());
                 }
             } else {
-                if(context instanceof MapViewerOsmDroid) {
-                    ((MapViewerOsmDroid)context).setRefreshActionButtonState(false);
+                if(injectionActivity instanceof MapViewerOsmDroid) {
+                    ((MapViewerOsmDroid)injectionActivity).setRefreshActionButtonState(false);
                 }
-                Helpers.sendMsg(context, context.getString(R.string.no_opencellid_key_detected));
+                Helpers.sendMsg(injectionActivity, injectionActivity.getString(R.string.no_opencellid_key_detected));
             }
         } else {
-            if(context instanceof MapViewerOsmDroid) {
-                ((MapViewerOsmDroid)context).setRefreshActionButtonState(false);
+            if(injectionActivity instanceof MapViewerOsmDroid) {
+                ((MapViewerOsmDroid)injectionActivity).setRefreshActionButtonState(false);
             }
-            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(injectionActivity);
             builder.setTitle(R.string.no_network_connection_title)
                     .setMessage(R.string.no_network_connection_message);
             builder.create().show();

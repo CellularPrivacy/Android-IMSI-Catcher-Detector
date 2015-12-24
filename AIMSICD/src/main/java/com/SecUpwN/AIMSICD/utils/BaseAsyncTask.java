@@ -13,16 +13,19 @@ import com.SecUpwN.AIMSICD.AppAIMSICD;
 
 import java.lang.ref.WeakReference;
 
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
+
 public abstract class BaseAsyncTask<TParams, TProgress, TResult> extends AsyncTask<TParams, TProgress, TResult> {
     protected AppAIMSICD mApp;
-    protected WeakReference<Activity> mWeakReferenceActivity;
+    protected WeakReference<InjectionAppCompatActivity> mWeakReferenceActivity;
 
-    public BaseAsyncTask(Activity activity) {
+    public BaseAsyncTask(InjectionAppCompatActivity activity) {
         mWeakReferenceActivity = new WeakReference<>(activity);
         mApp = (AppAIMSICD) activity.getApplication();
+        activity.getInjector().inject(this);
     }
 
-    public void setActivity(Activity activity) {
+    public void setActivity(InjectionAppCompatActivity activity) {
         if (activity == null) {
             mWeakReferenceActivity.clear();
             onActivityDetached();

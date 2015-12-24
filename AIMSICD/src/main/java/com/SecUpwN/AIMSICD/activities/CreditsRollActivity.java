@@ -18,7 +18,6 @@
 package com.SecUpwN.AIMSICD.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
@@ -30,28 +29,31 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
+
 //import android.animation.Animator;
 //import android.animation.ObjectAnimator;
 //import android.animation.ValueAnimator;
 
-
-public class CreditsRollActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
+@XmlLayout(R.layout.creditroll)
+public class CreditsRollActivity extends InjectionAppCompatActivity implements SeekBar.OnSeekBarChangeListener {
 
     private static final float SCROLL_ANIM_DURATION = 20000;    // [ms] = 30 s
 
+    @InjectView(R.id.creditsroll)
     private CreditsRollView mCreditsRollView;
     private boolean mScrolling;
+
+    @InjectView(R.id.seekbar)
     private SeekBar mSeekBar;
     private ValueAnimator mScrollAnimator;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.creditroll);
 
-        mSeekBar = (SeekBar) findViewById(R.id.seekbar);
         mSeekBar.setOnSeekBarChangeListener(this);
-
-        mCreditsRollView = (CreditsRollView) findViewById(R.id.creditsroll);
         mCreditsRollView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

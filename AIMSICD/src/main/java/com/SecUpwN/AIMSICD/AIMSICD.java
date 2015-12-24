@@ -18,13 +18,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.telephony.TelephonyManager;
-
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,6 +61,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.util.logging.Logger;
+
 /**
  * Description:     TODO: Please add some comments about this class
  * <p>
@@ -73,10 +73,9 @@ import java.util.List;
  */
 public class AIMSICD extends BaseActivity implements AsyncResponse {
 
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(AIMSICD.class);
+    @Inject
+    private Logger log;
 
-    private final Context mContext = this;
     private boolean mBound;
     private SharedPreferences prefs;
     private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
@@ -95,7 +94,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     private DrawerMenuActivityConfiguration mNavConf;
 
-    //TODO: @Inject
+    @Inject
     OkHttpClient okHttpClient;
 
     /**
@@ -104,9 +103,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //TODO: Use a dependency Injection for this
-        okHttpClient = ((AppAIMSICD)getApplication()).getOkHttpClient();
 
         moveData();
 
@@ -148,12 +144,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setHomeButtonEnabled(true);
 
-        prefs = mContext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        prefs = getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
 
                 /* Pref listener to enable sms detection on pref change   */
         prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                if (key.equals(mContext.getString(R.string.adv_user_root_pref_key))) {
+                if (key.equals(getString(R.string.adv_user_root_pref_key))) {
                     SmsDetection();
                 }
 
@@ -199,7 +195,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        final String iconType = prefs.getString(mContext.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        final String iconType = prefs.getString(getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
         mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType)));
         mDrawerToggle.syncState();
     }
@@ -220,10 +216,10 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             mBound = false;
         }
 
-        final String PERSIST_SERVICE = mContext.getString(R.string.pref_persistservice_key);
+        final String PERSIST_SERVICE = getString(R.string.pref_persistservice_key);
         boolean persistService = prefs.getBoolean(PERSIST_SERVICE, false);
         if (!persistService) {
-            stopService(new Intent(mContext, AimsicdService.class));
+            stopService(new Intent(this, AimsicdService.class));
         }
     }
 
@@ -281,7 +277,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 break;
             case DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA:
                 // Request uploading here?
-                new RequestTask(mContext, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute("");
+                new RequestTask(this, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute("");
                 // no string needed for csv based upload
                 break;
         }
@@ -298,12 +294,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             Intent intent = new Intent(this, PrefActivity.class);
             startActivity(intent);
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.BACKUP_DB) {
-            new RequestTask(mContext, RequestTask.BACKUP_DATABASE).execute();
+            new RequestTask(this, RequestTask.BACKUP_DATABASE).execute();
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESTORE_DB) {
             if (CellTracker.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
-                Helpers.msgLong(mContext, getString(R.string.unable_to_restore_backup_from_previous_database_version));
+                Helpers.msgLong(this, getString(R.string.unable_to_restore_backup_from_previous_database_version));
             } else {
-                new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
+                new RequestTask(this, RequestTask.RESTORE_DATABASE).execute();
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESET_DB) {
             // WARNING! This deletes the entire database, thus any subsequent DB access will FC app.
@@ -330,13 +326,13 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
-                    Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data));
+                    Helpers.msgLong(this, getString(R.string.contacting_opencellid_for_data));
 
                     cell.setLon(loc.getLongitudeInDegrees());
                     cell.setLat(loc.getLatitudeInDegrees());
-                    Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
+                    Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
                 } else {
-                    Helpers.msgShort(mContext, getString(R.string.waiting_for_location));
+                    Helpers.msgShort(this, getString(R.string.waiting_for_location));
 
                     // This uses the LocationServices to get CID/LAC/MNC/MCC to be used
                     // for grabbing the BTS data from OCID, via their API.
@@ -351,7 +347,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                             mAimsicdService.getCell().getMCC());
                 }
             } else {
-                Helpers.sendMsg(mContext, mContext.getString(R.string.no_opencellid_key_detected));
+                Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.MAIN.ACD) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
@@ -401,7 +397,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                             }
                         });
             } else {
-                Helpers.sendMsg(mContext, mContext.getString(R.string.no_opencellid_key_detected));
+                Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.SEND_DEBUGGING_LOG) {
             Intent i = new Intent(this, DebugLogs.class);
@@ -440,10 +436,10 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         if (Float.floatToRawIntBits(location[0]) == 0
                 && Float.floatToRawIntBits(location[1]) != 0) {
-            Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data));
-            Helpers.getOpenCellData(mContext, mAimsicdService.getCell(), RequestTask.DBE_DOWNLOAD_REQUEST);
+            Helpers.msgLong(this, getString(R.string.contacting_opencellid_for_data));
+            Helpers.getOpenCellData(this, mAimsicdService.getCell(), RequestTask.DBE_DOWNLOAD_REQUEST);
         } else {
-            Helpers.msgLong(mContext, mContext.getString(R.string.unable_to_determine_last_location));
+            Helpers.msgLong(this, getString(R.string.unable_to_determine_last_location));
         }
     }
 
@@ -457,7 +453,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                         mAimsicdService.setCell(cell);
                         Intent intent = new Intent(AimsicdService.UPDATE_DISPLAY);
                         intent.putExtra("update", true);
-                        mContext.sendBroadcast(intent);
+                        sendBroadcast(intent);
                     }
                 }
             }
@@ -486,7 +482,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 mAimsicdService.checkLocationServices();
             }
 
-            if (!mAimsicdService.isSmsTracking() && prefs.getBoolean(mContext.getString(R.string.adv_user_root_pref_key), false)) {
+            if (!mAimsicdService.isSmsTracking() && prefs.getBoolean(getString(R.string.adv_user_root_pref_key), false)) {
                     /*Auto Start sms detection here if:
                     *    isSmsTracking = false <---- not running
                     *    root sms enabled = true
@@ -629,15 +625,15 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
 
     private void SmsDetection() {
-        boolean root_sms = prefs.getBoolean(mContext.getString(R.string.adv_user_root_pref_key), false); // default is false
+        boolean root_sms = prefs.getBoolean(getString(R.string.adv_user_root_pref_key), false); // default is false
 
         if (root_sms && !mAimsicdService.isSmsTracking()) {
             mAimsicdService.startSmsTracking();
-            Helpers.msgShort(mContext, "SMS Detection Started");
+            Helpers.msgShort(this, "SMS Detection Started");
             log.info("SMS Detection Thread Started");
         } else if (!root_sms && mAimsicdService.isSmsTracking()) {
             mAimsicdService.stopSmsTracking();
-            Helpers.msgShort(mContext, "Sms Detection Stopped");
+            Helpers.msgShort(this, "Sms Detection Stopped");
             log.info("SMS Detection Thread Stopped");
         }
     }
