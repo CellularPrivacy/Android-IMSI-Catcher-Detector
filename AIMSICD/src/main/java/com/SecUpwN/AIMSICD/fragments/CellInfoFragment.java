@@ -47,6 +47,7 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
 
@@ -84,13 +85,27 @@ public class CellInfoFragment extends InjectionFragment {
 
     private List<Cell> neighboringCells;
 
-    //Layout items
+    @InjectView(R.id.list_view)
     private ListView lv;
+
+    @InjectView(R.id.neighbouring_cells)
     private TextView mNeighbouringCells;
+
+    @InjectView(R.id.neighbouring_number)
     private TextView mNeighbouringTotal;
+
+    @InjectView(R.id.neighbouring_total)
     private TableRow mNeighbouringTotalView;
+
+    @InjectView(R.id.ciphering_indicator_title)
     private TextView mCipheringIndicatorLabel;
+
+    @InjectView(R.id.ciphering_indicator)
     private TextView mCipheringIndicator;
+
+    @InjectView(R.id.button_refresh)
+    private Button refresh;
+
 
     private final Runnable timerRunnable = new Runnable() {
 
@@ -143,15 +158,6 @@ public class CellInfoFragment extends InjectionFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        lv = (ListView) view.findViewById(R.id.list_view);
-        mNeighbouringCells =        (TextView) view.findViewById(R.id.neighbouring_cells);
-        mNeighbouringTotal =        (TextView) view.findViewById(R.id.neighbouring_number);
-        mNeighbouringTotalView =    (TableRow) view.findViewById(R.id.neighbouring_total);
-        mCipheringIndicatorLabel =  (TextView) view.findViewById(R.id.ciphering_indicator_title);
-        mCipheringIndicator =       (TextView) view.findViewById(R.id.ciphering_indicator);
-
-        // We can also manually refresh by hitting the button
-        Button refresh = (Button) view.findViewById(R.id.button_refresh);
         refresh.setOnClickListener(new btnClick());
     }
 

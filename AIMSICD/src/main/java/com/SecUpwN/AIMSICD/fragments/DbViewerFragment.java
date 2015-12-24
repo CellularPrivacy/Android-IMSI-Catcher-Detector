@@ -34,6 +34,7 @@ import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
 import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsCardInflater;
 import com.SecUpwN.AIMSICD.smsdetection.DetectionStringsData;
 
+import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
 
@@ -50,9 +51,13 @@ public final class DbViewerFragment extends InjectionFragment {
     private AIMSICDDbAdapter mDb;
     private StatesDbViewer mTableSelected;
 
-    // Layout items
+    @InjectView(R.id.table_spinner)
     private Spinner tblSpinner;
+
+    @InjectView(R.id.list_view)
     private ListView lv;
+
+    @InjectView(R.id.db_list_empty)
     private View emptyView;
 
     public DbViewerFragment() {
@@ -69,9 +74,6 @@ public final class DbViewerFragment extends InjectionFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        lv = (ListView) view.findViewById(R.id.list_view);
-        emptyView = view.findViewById(R.id.db_list_empty);
-        tblSpinner = (Spinner) view.findViewById(R.id.table_spinner);
         DbViewerSpinnerAdapter mSpinnerAdapter = new DbViewerSpinnerAdapter(getActivity(), R.layout.item_spinner_db_viewer);
         tblSpinner.setAdapter(mSpinnerAdapter);
         tblSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

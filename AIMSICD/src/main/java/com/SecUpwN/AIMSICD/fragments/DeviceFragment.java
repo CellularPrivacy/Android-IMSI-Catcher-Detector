@@ -25,15 +25,16 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.widget.HighlightTextView;
 import com.kaichunlin.transition.animation.AnimationManager;
 
+import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
-import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
 @XmlLayout(R.layout.device)
 public class DeviceFragment extends InjectionFragment {
 
-    private final Logger log = AndroidLogger.forClass(DeviceFragment.class);
+    @Inject
+    private Logger log;
 
     private AimsicdService mAimsicdService;
     private boolean mBound;

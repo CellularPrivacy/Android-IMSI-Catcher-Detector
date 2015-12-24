@@ -20,28 +20,30 @@ import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
 
+import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
 
 @XmlLayout(R.layout.about_fragment)
 public class AboutFragment extends InjectionFragment {
 
+    @InjectView(R.id.aimsicd_credits_link)
     private Button btncredits;
+
+    @InjectView(R.id.aimsicd_version)
+    TextView versionNumber;
+
+    @InjectView(R.id.buildozer_buildnumber)
+    TextView BuildozerView;
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
 
         String version = BuildConfig.VERSION_NAME;
-
-        btncredits = (Button) v.findViewById(R.id.aimsicd_credits_link);
+        versionNumber.setText(getString(R.string.app_version) + version);
 
         String buildNumber = BuildConfig.BUILD_NUMBER;
-
-        TextView versionNumber;
-        TextView BuildozerView;
-        versionNumber = (TextView) v.findViewById(R.id.aimsicd_version);
-        versionNumber.setText(getString(R.string.app_version) + version);
 
         if (buildNumber != null) {
             BuildozerView = (TextView) v.findViewById(R.id.buildozer_buildnumber);

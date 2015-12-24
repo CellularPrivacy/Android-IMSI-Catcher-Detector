@@ -35,9 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
-import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
 
@@ -80,32 +80,40 @@ public class AtCommandFragment extends InjectionFragment {
     private String mSerialDevice;
     private int mTimeout;
 
+    @InjectView(R.id.atcommandView)
     private RelativeLayout mAtCommandLayout;
+
+    @InjectView(R.id.at_command_error)
     private TextView mAtCommandError;
+
+    @InjectView(R.id.serial_device)
     private TextView mSerialDeviceDisplay;
 
+    @InjectView(R.id.response)
     private TextView mAtResponse;
+
+    @InjectView(R.id.at_command)
     private EditText mAtCommand;
+
+    @InjectView(R.id.serial_device_spinner)
     private Spinner mSerialDeviceSpinner;
+
+    @InjectView(R.id.serial_device_spinner_title)
     private TextView mSerialDeviceSpinnerLabel;
 
     private AtCommandTerminal mCommandTerminal;
 
+    @InjectView(R.id.timeout_spinner)
+    Spinner timeoutSpinner;
+
+    @InjectView(R.id.execute)
+    Button atCommandExecute;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAtCommandLayout = (RelativeLayout) view.findViewById(R.id.atcommandView);
-        mAtCommandError = (TextView) view.findViewById(R.id.at_command_error);
-        Button atCommandExecute = (Button) view.findViewById(R.id.execute);
-        mSerialDeviceDisplay = (TextView) view.findViewById(R.id.serial_device);
-        mAtResponse = (TextView) view.findViewById(R.id.response);
-        mAtCommand = (EditText) view.findViewById(R.id.at_command);
         atCommandExecute.setOnClickListener(new btnClick());
-        mSerialDeviceSpinner = (Spinner) view.findViewById(R.id.serial_device_spinner);
         mSerialDeviceSpinner.setOnItemSelectedListener(new spinnerListener());
-        mSerialDeviceSpinnerLabel = (TextView) view.findViewById(R.id.serial_device_spinner_title);
-        Spinner timeoutSpinner = (Spinner) view.findViewById(R.id.timeout_spinner);
         timeoutSpinner.setOnItemSelectedListener(new timeoutSpinnerListener());
         timeoutSpinner.setSelection(1);
         mTimeout = 5000;

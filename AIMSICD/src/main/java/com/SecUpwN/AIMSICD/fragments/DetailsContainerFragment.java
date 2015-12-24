@@ -15,6 +15,7 @@ import android.view.View;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.DetailsPagerAdapter;
 
+import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
 
@@ -23,7 +24,13 @@ import io.freefair.android.injection.app.InjectionFragment;
  */
 @XmlLayout(R.layout.fragment_details_container)
 public class DetailsContainerFragment extends InjectionFragment {
-    ViewPager vp;
+
+    @InjectView(R.id.details_pager)
+    private ViewPager vp;
+
+    @InjectView(R.id.details_pager_tab_strip)
+    private PagerTabStrip tabStrip;
+
     DetailsPagerAdapter adapter;
     int initialPage = -1;
 
@@ -33,10 +40,8 @@ public class DetailsContainerFragment extends InjectionFragment {
 
         adapter = new DetailsPagerAdapter(getChildFragmentManager(), getActivity());
 
-        PagerTabStrip tabStrip = (PagerTabStrip) view.findViewById(R.id.details_pager_tab_strip);
         tabStrip.setBackgroundColor(Color.BLACK);
 
-        vp = (ViewPager) view.findViewById(R.id.details_pager);
         vp.setAdapter(adapter);
 
         if (initialPage >= 0) {
