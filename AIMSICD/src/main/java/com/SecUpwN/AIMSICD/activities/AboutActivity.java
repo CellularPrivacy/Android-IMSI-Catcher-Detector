@@ -5,6 +5,7 @@
  */
 package com.SecUpwN.AIMSICD.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -147,6 +148,12 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 .setIcon(status.getIcon())
                 .setTitle(getString(R.string.status) + "\t" + getString(status.getName()))
                 .setMessage(status.getDescription())
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
                 .show();
     }
 
