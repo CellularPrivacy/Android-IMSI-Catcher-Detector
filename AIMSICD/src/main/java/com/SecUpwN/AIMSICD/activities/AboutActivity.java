@@ -31,9 +31,13 @@ public class AboutActivity extends InjectionAppCompatActivity {
     @InjectView(R.id.aimsicd_version)
     private TextView versionNumber;
 
-    @InjectView(R.id.buildozer_buildnumber)
-    private TextView BuildozerView;
+    @InjectView(R.id.build_number)
+    private TextView buildNumberTextView;
 
+    @InjectView(R.id.git_sha)
+    private TextView gitShaTextView;
+
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +45,8 @@ public class AboutActivity extends InjectionAppCompatActivity {
         String version = BuildConfig.VERSION_NAME;
         versionNumber.setText(getString(R.string.app_version) + version);
 
-        String buildNumber = BuildConfig.BUILD_NUMBER;
-
-        if (buildNumber != null) {
-            BuildozerView = (TextView) findViewById(R.id.buildozer_buildnumber);
-            BuildozerView.setText(getString(R.string.buildnumber) + buildNumber);
-            BuildozerView.setVisibility(View.VISIBLE);
-        }
+        buildNumberTextView.setText(getString(R.string.buildnumber, BuildConfig.BUILD_NUMBER));
+        gitShaTextView.setText(getString(R.string.git_sha, BuildConfig.GIT_SHA));
 
         //GitHub WIKI Link
         View tv = findViewById(R.id.aimsicd_wiki_link);
