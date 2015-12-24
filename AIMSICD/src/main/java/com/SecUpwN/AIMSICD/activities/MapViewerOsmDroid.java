@@ -25,7 +25,6 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.SecUpwN.AIMSICD.AppAIMSICD;
@@ -58,6 +57,7 @@ import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.annotation.XmlMenu;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -83,6 +83,7 @@ import io.freefair.android.util.logging.Logger;
  * https://code.google.com/p/osmbonuspack/issues/detail?id=102
  */
 @XmlLayout(R.layout.map)
+@XmlMenu(R.menu.map_viewer_menu)
 public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
     @Inject
@@ -120,8 +121,8 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        log.info("Starting MapViewer");
         super.onCreate(savedInstanceState);
+        log.info("Starting MapViewer");
 
         setUpMapIfNeeded();
 
@@ -317,13 +318,6 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.mOptionsMenu = menu;
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.map_viewer_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
     }
 

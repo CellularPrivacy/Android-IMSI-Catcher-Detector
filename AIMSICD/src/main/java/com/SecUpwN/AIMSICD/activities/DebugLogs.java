@@ -10,7 +10,6 @@ import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +25,7 @@ import java.io.InputStreamReader;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.annotation.XmlMenu;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -52,6 +52,7 @@ import io.freefair.android.util.logging.Logger;
  *  TODO:   [ ]     We should add an XPrivacy button (or automatic) to add XPrivacy filters when used.
  */
 @XmlLayout(R.layout.activity_debug_logs)
+@XmlMenu(R.menu.activity_debug_logs)
 public class DebugLogs extends BaseActivity {
 
     @Inject
@@ -155,14 +156,6 @@ public class DebugLogs extends BaseActivity {
 
         btnStop.setText(getString(R.string.btn_stop_logs));
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_debug_logs, menu);
-        return true;
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

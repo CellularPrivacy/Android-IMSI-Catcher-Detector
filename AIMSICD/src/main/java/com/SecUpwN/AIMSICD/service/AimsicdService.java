@@ -89,6 +89,7 @@ public class AimsicdService extends InjectionService {
 
     @Override
     public void onCreate() {
+        super.onCreate();
         setTheme(R.style.AppTheme);
 
         signalStrengthTracker = new SignalStrengthTracker(getBaseContext());
