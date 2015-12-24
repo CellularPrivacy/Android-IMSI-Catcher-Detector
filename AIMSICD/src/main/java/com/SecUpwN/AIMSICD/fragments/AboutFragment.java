@@ -31,10 +31,10 @@ public class AboutFragment extends InjectionFragment {
     private Button btncredits;
 
     @InjectView(R.id.aimsicd_version)
-    TextView versionNumber;
+    private TextView versionNumber;
 
     @InjectView(R.id.buildozer_buildnumber)
-    TextView BuildozerView;
+    private TextView BuildozerView;
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {

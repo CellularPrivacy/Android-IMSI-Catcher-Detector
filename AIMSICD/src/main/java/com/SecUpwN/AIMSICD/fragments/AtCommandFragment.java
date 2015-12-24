@@ -104,10 +104,10 @@ public class AtCommandFragment extends InjectionFragment {
     private AtCommandTerminal mCommandTerminal;
 
     @InjectView(R.id.timeout_spinner)
-    Spinner timeoutSpinner;
+    private Spinner timeoutSpinner;
 
     @InjectView(R.id.execute)
-    Button atCommandExecute;
+    private Button atCommandExecute;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
