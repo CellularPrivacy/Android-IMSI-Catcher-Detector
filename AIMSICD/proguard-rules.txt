@@ -1,10 +1,10 @@
+-dontobfuscate
 -verbose
 -optimizationpasses 5
 -dontpreverify
 -dump class_files.txt
 -printseeds seeds.txt
 -printusage unused.txt
--printmapping mapping.txt
 
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
