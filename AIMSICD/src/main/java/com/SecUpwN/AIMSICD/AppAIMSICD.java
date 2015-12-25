@@ -23,9 +23,6 @@ import io.freefair.android.injection.modules.AndroidLoggerModule;
 import io.freefair.android.injection.modules.OkHttpModule;
 import io.freefair.android.util.logging.Logger;
 
-// DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
-//import com.squareup.leakcanary.LeakCanary;
-
 public class AppAIMSICD extends InjectionApplication {
 
     @Inject
