@@ -59,7 +59,7 @@
     <string name="upload_bts">Last opp BTS-data</string>
 
     <string name="about_aimsicd">Om AIMSICD</string>
-    <string name="app_version">Versjon: </string>
+    <string name="app_version">Versjon: %s</string>
     <string name="aimsicd_about_info3">Android-basert prosjekt for å oppdage og unngå falske basestasjoner (IMSI-fangere) i GSM/UMTS-nettverk.</string>
     <string name="about_github">AIMSICD på GitHub</string>
     <string name="about_wiki">Dokumentasjon (WIKI)</string>

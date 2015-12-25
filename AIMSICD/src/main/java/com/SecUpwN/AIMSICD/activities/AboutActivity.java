@@ -3,9 +3,9 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.fragments;
+package com.SecUpwN.AIMSICD.activities;
 
-import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,14 +18,13 @@ import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.CreditsRollActivity;
 
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.app.InjectionFragment;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 
-@XmlLayout(R.layout.about_fragment)
-public class AboutFragment extends InjectionFragment {
+@XmlLayout(R.layout.activity_about)
+public class AboutActivity extends InjectionAppCompatActivity {
 
     @InjectView(R.id.aimsicd_credits_link)
     private Button btncredits;
@@ -33,94 +32,98 @@ public class AboutFragment extends InjectionFragment {
     @InjectView(R.id.aimsicd_version)
     private TextView versionNumber;
 
-    @InjectView(R.id.buildozer_buildnumber)
-    private TextView BuildozerView;
+    @InjectView(R.id.build_number)
+    private TextView buildNumberTextView;
+
+    @InjectView(R.id.git_sha)
+    private TextView gitShaTextView;
+
+
+    @InjectView(R.id.textViewIdle)
+    private TextView idleTextView;
+    @InjectView(R.id.textViewOk)
+    private TextView okTextView;
+    @InjectView(R.id.textViewMedium)
+    private TextView mediumTextView;
+    @InjectView(R.id.textViewHigh)
+    private TextView highTextView;
+    @InjectView(R.id.textViewDanger)
+    private TextView dangerTextView;
+    @InjectView(R.id.textViewSkull)
+    private TextView skullTextView;
 
     @Override
-    public void onViewCreated(View v, Bundle savedInstanceState) {
-        super.onViewCreated(v, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        String version = BuildConfig.VERSION_NAME;
-        versionNumber.setText(getString(R.string.app_version) + version);
-
-        String buildNumber = BuildConfig.BUILD_NUMBER;
-
-        if (buildNumber != null) {
-            BuildozerView = (TextView) v.findViewById(R.id.buildozer_buildnumber);
-            BuildozerView.setText(getString(R.string.buildnumber) + buildNumber);
-            BuildozerView.setVisibility(View.VISIBLE);
-        }
+        versionNumber.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
+        buildNumberTextView.setText(getString(R.string.buildnumber, BuildConfig.BUILD_NUMBER));
+        gitShaTextView.setText(getString(R.string.git_sha, BuildConfig.GIT_SHA));
 
         //GitHub WIKI Link
-        View tv = v.findViewById(R.id.aimsicd_wiki_link);
+        View tv = findViewById(R.id.aimsicd_wiki_link);
         setLink(tv, R.string.aimsicd_wiki_link);
 
         //GitHub Website Link
-        tv = v.findViewById(R.id.aimsicd_github_link);
+        tv = findViewById(R.id.aimsicd_github_link);
         setLink(tv, R.string.aimsicd_github_link);
 
         //Disclaimer Link
-        tv = v.findViewById(R.id.aimsicd_disclaimer_link);
+        tv = findViewById(R.id.aimsicd_disclaimer_link);
         setLink(tv, R.string.disclaimer_link);
 
         //GitHub Contribution Link
-        tv = v.findViewById(R.id.aimsicd_contribute_link);
+        tv = findViewById(R.id.aimsicd_contribute_link);
         setLink(tv, R.string.aimsicd_contribute_link);
 
         //WIP Release Link
-        tv = v.findViewById(R.id.aimsicd_release_link);
+        tv = findViewById(R.id.aimsicd_release_link);
         setLink(tv, R.string.aimsicd_release_link);
 
         //Changelog Link
-        tv = v.findViewById(R.id.aimsicd_changelog_link);
+        tv = findViewById(R.id.aimsicd_changelog_link);
         setLink(tv, R.string.aimsicd_changelog_link);
 
         //License Link
-        tv = v.findViewById(R.id.aimsicd_license_link);
+        tv = findViewById(R.id.aimsicd_license_link);
         setLink(tv, R.string.aimsicd_license_link);
 
-        View imgView_idle = v.findViewById(R.id.imgView_idle);
-        imgView_idle.setOnClickListener(new View.OnClickListener() {
+        idleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.IDLE);
             }
         });
 
-        View imgView_normal = v.findViewById(R.id.imgView_normal);
-        imgView_normal.setOnClickListener(new View.OnClickListener() {
+        okTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.NORMAL);
             }
         });
 
-        View imgView_medium = v.findViewById(R.id.imgView_medium);
-        imgView_medium.setOnClickListener(new View.OnClickListener() {
+        mediumTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.MEDIUM);
             }
         });
 
-        View imgView_high = v.findViewById(R.id.imgView_high);
-        imgView_high.setOnClickListener(new View.OnClickListener() {
+        highTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.HIGH);
             }
         });
 
-        View imgView_danger = v.findViewById(R.id.imgView_danger);
-        imgView_danger.setOnClickListener(new View.OnClickListener() {
+        dangerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.DANGER);
             }
         });
 
-        View imgView_run = v.findViewById(R.id.imgView_run);
-        imgView_run.setOnClickListener(new View.OnClickListener() {
+        skullTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.RUN);
@@ -141,23 +144,24 @@ public class AboutFragment extends InjectionFragment {
         btncredits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), CreditsRollActivity.class);
+                Intent i = new Intent(AboutActivity.this, CreditsRollActivity.class);
                 startActivity(i);
             }
         });
 
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
     private void showInfoDialog(Status status) {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(this)
                 .setIcon(status.getIcon())
                 .setTitle(getString(R.string.status) + "\t" + getString(status.getName()))
                 .setMessage(status.getDescription())
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
                 .show();
     }
 

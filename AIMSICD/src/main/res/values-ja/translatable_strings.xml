@@ -60,7 +60,7 @@
     <string name="upload_bts">BTS データをアップロード</string>
 
     <string name="about_aimsicd">AIMSICD について</string>
-    <string name="app_version">バージョン: </string>
+    <string name="app_version">バージョン: %s</string>
     <string name="aimsicd_about_info3">GSM/UMTS ネットワークで、偽の基地局 (IMSI キャッチャー) を検出して避けるための Android ベースのプロジェクト。</string>
     <string name="about_github">GitHub 上の AIMSICD</string>
     <string name="about_wiki">ドキュメント</string>

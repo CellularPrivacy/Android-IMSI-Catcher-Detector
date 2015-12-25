@@ -46,7 +46,7 @@
     <string name="upload_bts">Вивантажити дані базових станцій</string>
 
     <string name="about_aimsicd">Про AIMSICD</string>
-    <string name="app_version">Версія: </string>
+    <string name="app_version">Версія: %s</string>
     <string name="about_github">AIMSICD на GitHub</string>
     <string name="about_wiki">ДОКУМЕНТАЦІЯ</string>
     <string name="about_desc_icon_idle">Очікування/Завантаження.</string>
