@@ -57,7 +57,7 @@
     <string name="upload_bts">Upload BTS gegevens</string>
 
     <string name="about_aimsicd">Over AIMSICD</string>
-    <string name="app_version">Versie: </string>
+    <string name="app_version">Versie: %s</string>
     <string name="aimsicd_about_info3">Android project om valse basisstations (IMSI-catchers) te vinden in GSM/UMTS netwerken.</string>
     <string name="about_github">AIMSICD op GitHub</string>
     <string name="about_wiki">DOCUMENTATIE</string>

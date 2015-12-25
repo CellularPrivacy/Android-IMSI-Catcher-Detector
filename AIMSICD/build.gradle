@@ -1,7 +1,7 @@
 apply plugin: 'checkstyle'
 apply plugin: 'com.android.application'
 
-def gitSha = 'na'
+def gitSha = null
 try {
     gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 } catch (Exception e) {
@@ -30,6 +30,7 @@ android {
         testApplicationId "com.SecUpwN.AIMSICD.test"
 
         buildConfigField 'String', 'BUILD_NUMBER', (buildNumber == null ? 'null' : "\"${buildNumber}\"")
+        buildConfigField 'String', 'GIT_SHA', (gitSha == null ? 'null' : "\"${gitSha}\"")
     }
     buildTypes {
         debug {
@@ -38,18 +39,12 @@ android {
             } catch (MissingPropertyException e) {
                 buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
             }
-            if (!gitSha.equals('na')) {
-                versionNameSuffix '-' + gitSha
-            } else {
-                versionNameSuffix '-debug'
-            }
+            versionNameSuffix '-debug'
         }
         release {
             buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-
-            versionNameSuffix '-release'
         }
     }
     compileOptions {
