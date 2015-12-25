@@ -46,8 +46,6 @@ public class AppAIMSICD extends InjectionApplication {
         addModule(new AndroidLoggerModule());
         addModule(OkHttpModule.withCache(this));
         super.onCreate();
-        // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
-        //LeakCanary.install(this);
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
     }
