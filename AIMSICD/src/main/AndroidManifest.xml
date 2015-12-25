@@ -92,7 +92,6 @@
             android:parentActivityName=".AIMSICD">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
-                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.INFO"/>
             </intent-filter>
         </activity>
