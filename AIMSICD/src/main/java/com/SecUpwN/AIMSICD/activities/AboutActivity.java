@@ -38,6 +38,20 @@ public class AboutActivity extends InjectionAppCompatActivity {
     @InjectView(R.id.git_sha)
     private TextView gitShaTextView;
 
+
+    @InjectView(R.id.textViewIdle)
+    private TextView idleTextView;
+    @InjectView(R.id.textViewOk)
+    private TextView okTextView;
+    @InjectView(R.id.textViewMedium)
+    private TextView mediumTextView;
+    @InjectView(R.id.textViewHigh)
+    private TextView highTextView;
+    @InjectView(R.id.textViewDanger)
+    private TextView dangerTextView;
+    @InjectView(R.id.textViewSkull)
+    private TextView skullTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,48 +88,42 @@ public class AboutActivity extends InjectionAppCompatActivity {
         tv = findViewById(R.id.aimsicd_license_link);
         setLink(tv, R.string.aimsicd_license_link);
 
-        View imgView_idle = findViewById(R.id.imgView_idle);
-        imgView_idle.setOnClickListener(new View.OnClickListener() {
+        idleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.IDLE);
             }
         });
 
-        View imgView_normal = findViewById(R.id.imgView_normal);
-        imgView_normal.setOnClickListener(new View.OnClickListener() {
+        okTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.NORMAL);
             }
         });
 
-        View imgView_medium = findViewById(R.id.imgView_medium);
-        imgView_medium.setOnClickListener(new View.OnClickListener() {
+        mediumTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.MEDIUM);
             }
         });
 
-        View imgView_high = findViewById(R.id.imgView_high);
-        imgView_high.setOnClickListener(new View.OnClickListener() {
+        highTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.HIGH);
             }
         });
 
-        View imgView_danger = findViewById(R.id.imgView_danger);
-        imgView_danger.setOnClickListener(new View.OnClickListener() {
+        dangerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.DANGER);
             }
         });
 
-        View imgView_run = findViewById(R.id.imgView_run);
-        imgView_run.setOnClickListener(new View.OnClickListener() {
+        skullTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showInfoDialog(Status.RUN);
