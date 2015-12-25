@@ -108,7 +108,7 @@ dependencies {
     // OSMBonusPack library to interact with OpenStreetMap data
     compile 'com.github.MKergall.osmbonuspack:OSMBonusPack:v5.6'
     
-    // Android-Transition for animated transition effects
+    // Transition library for animated transition effects
     compile 'com.github.kaichunlin.transition:core:0.9.2'
     
     // ShowcaseView library to highlight specific app elements
