@@ -23,9 +23,6 @@ import io.freefair.android.injection.modules.AndroidLoggerModule;
 import io.freefair.android.injection.modules.OkHttpModule;
 import io.freefair.android.util.logging.Logger;
 
-// DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
-//import com.squareup.leakcanary.LeakCanary;
-
 public class AppAIMSICD extends InjectionApplication {
 
     @Inject
@@ -46,8 +43,6 @@ public class AppAIMSICD extends InjectionApplication {
         addModule(new AndroidLoggerModule());
         addModule(OkHttpModule.withCache(this));
         super.onCreate();
-        // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
-        //LeakCanary.install(this);
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
     }
