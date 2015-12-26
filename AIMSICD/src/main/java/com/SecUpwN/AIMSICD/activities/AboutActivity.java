@@ -126,7 +126,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
         skullTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showInfoDialog(Status.RUN);
+                showInfoDialog(Status.SKULL);
             }
         });
     }
@@ -191,10 +191,10 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 R.string.danger,
                 R.string.detail_info_danger
         ),
-        RUN(
+        SKULL(
                 R.drawable.sense_skull,
-                R.string.run,
-                R.string.detail_info_run
+                R.string.skull,
+                R.string.detail_info_skull
         );
 
         @DrawableRes
