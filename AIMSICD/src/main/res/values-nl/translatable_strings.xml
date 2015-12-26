@@ -166,7 +166,7 @@
     <string name="ui_icon_sense">Gevoeligheid</string>
     <string name="ui_icon_white">Wit</string>
     <string name="map_type_terrain">Gebied</string>
-    <string name="map_type_ok">OK</string>
+    <string name="map_type_normal">Normaal</string>
     <string name="pref_refresh_manual">Handmatig</string>
     <string name="pref_refresh_automatic">Automatisch</string>
     <string name="pref_refresh_2s">2 sec</string>
