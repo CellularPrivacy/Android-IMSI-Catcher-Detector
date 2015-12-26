@@ -5,7 +5,7 @@ def gitSha = null
 try {
     gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 } catch (Exception e) {
-    logger.warn("git not available")
+    logger.warn("git not available", e)
 }
 
 def isCi = "true".equals(System.getenv("CI"))
