@@ -71,7 +71,7 @@
     <string name="about_desc_icon_ok">Alles OK.</string>
     <string name="about_desc_icon_tracked_down">U wordt gevolgd!</string>
     <string name="about_desc_icon_insecure_area">Onveilig service gebied. Ga weg!</string>
-    <string name="about_desc_icon_run">RENNEN! Telefoon wordt gemanipuleerd!</string>
+    <string name="about_desc_icon_skull">RENNEN! Telefoon wordt gemanipuleerd!</string>
     <string name="about_desc_icon_title">Druk op de statusiconen hieronder voor meer informatie:</string>
 
     <string name="network_netid">Netwerk ID:</string>
@@ -154,11 +154,11 @@
 
     <string name="title_activity_about_pop_up">GEDETAILLEERDE UITLEG</string>
     <string name="detail_info_idle">App is inactief of ladend. Er zijn geen beschermingsmaatregelen actief. Open het navigatie menu en zet ze aan in sectie VOLGEN!</string>
-    <string name="detail_info_normal">Geen bedreigingen gevonden. Onze app controleert continue het netwerk aan de hand van de beveiligingsinstellingen die u in het navigatie menu en in voorkeuren aangegeven hebt.</string>
+    <string name="detail_info_ok">Geen bedreigingen gevonden. Onze app controleert continue het netwerk aan de hand van de beveiligingsinstellingen die u in het navigatie menu en in voorkeuren aangegeven hebt.</string>
     <string name="detail_info_medium">Onveilig gebied: minstens 1 nieuwe of onbekende BTS is actief in deze omgeving of gebruikt een onveilige versleutelingsmethode, lager dan A5/3 [detectie is WIP]. Elke gesprek en SMS die in dit gebied gemaakt worden kunnen onderschept en opgeslagen worden. U kunt hier beter vertrekken.</string>
     <string name="detail_info_high">Vijandige dienstenacties gedetecteerd: een IMSI-Catcher (IMSIC) of valse BTS (FBTS) is actief gebruikers aan het volgen. In dit gebied wordt actief gescand. Ga van deze plaats weg, zeker als er politieke onrus heerst. Haal de accu uit uw telefoon of verniel het toestel!</string>
     <string name="detail_info_danger">Vijandig volgen gedetecteerd: een FBTS of IMSIC is U actief aan het volgen en voorkomt dat uw telefoon met uw gebruikelijke beveiligde mobioele provider verbindt. Als u reden heeft om vervolging te vrezen kunt u het beste uw telefoon vernielen en hem als gestolen opgeven.</string>
-    <string name="detail_info_run">Vijandige manipulatie: iemand probeert vanaf een afstand uw telefoon te beinvloeden. Verniel (of verkoop) uw telefoon en haal ergens anders een nieuwe (breng uw huidige toestel niet naar de plaats waar u de nieuwe koopt). Gebruik een nieuwe, anonieme SIM kaart, verander uw belgedrag en waarschuw uw contacten om niet over de telefoon met u te spreken maar direct!</string>
+    <string name="detail_info_skull">Vijandige manipulatie: iemand probeert vanaf een afstand uw telefoon te beinvloeden. Verniel (of verkoop) uw telefoon en haal ergens anders een nieuwe (breng uw huidige toestel niet naar de plaats waar u de nieuwe koopt). Gebruik een nieuwe, anonieme SIM kaart, verander uw belgedrag en waarschuw uw contacten om niet over de telefoon met u te spreken maar direct!</string>
     <string name="open_cell_id_button_cancel">Annuleren</string>
     <string name="open_cell_id_button_ok">OK</string>
 
@@ -166,7 +166,7 @@
     <string name="ui_icon_sense">Gevoeligheid</string>
     <string name="ui_icon_white">Wit</string>
     <string name="map_type_terrain">Gebied</string>
-    <string name="map_type_normal">Normaal</string>
+    <string name="map_type_ok">OK</string>
     <string name="pref_refresh_manual">Handmatig</string>
     <string name="pref_refresh_automatic">Automatisch</string>
     <string name="pref_refresh_2s">2 sec</string>
@@ -234,11 +234,11 @@
     <string name="getting_ocid_api_key">Verkrijgen OpenCellID API sleutel…</string>
     <string name="unable_to_create_map">Kan geen kaart aanmaken!</string>
     <string name="idle">INACTIEF</string>
-    <string name="normal">NORMAAL</string>
+    <string name="ok">OK</string>
     <string name="medium">GEMIDDELD</string>
     <string name="high">HOOG</string>
     <string name="danger">GEVAAR</string>
-    <string name="run">RENNEN!</string>
+    <string name="skull">RENNEN!</string>
 
     <string name="adv_user_info">Dit menu is alleen bedoeld voor ervaren gebruikers.\n\nGeef a.u.b. geen willekeurige karakterreeksen in, dit kan er voor zorgen dat detectie raar gaat doen.\n\nKies het SMS type van het menu om een reeks toe te voegen, type een karakterreeks en druk op invoegen.\n\nOm een karakterreeks te verwijderen uit de database druk lang op de lijstweergave.</string>
     
@@ -314,7 +314,7 @@
 
     <string name="delete_database_msg_success">De database is succesvol verwijderd en opnieuw aangemaakt.\nHerstart de app om oude gegevens uit het geheugen te verwijderen.</string>
 
-    <string name="notification_vibrate_normal">Normaal</string>
+    <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Gemiddeld</string>
     <string name="notification_vibrate_alarm">Alarm</string>
     

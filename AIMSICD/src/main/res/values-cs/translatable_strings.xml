@@ -74,7 +74,7 @@
     <string name="about_desc_icon_ok">Vše je v pořádku.</string>
     <string name="about_desc_icon_tracked_down">Někdo vás sleduje!</string>
     <string name="about_desc_icon_insecure_area">Nebezpečná síťová aktivia! Pozor!</string>
-    <string name="about_desc_icon_run">POPLACH! Někdo na vás útočí!</string>
+    <string name="about_desc_icon_skull">POPLACH! Někdo na vás útočí!</string>
     <string name="about_desc_icon_title">Stiskněte ikonu stavu níže pro více informací:</string>
 
     <string name="network_netid">ID Sítě:</string>
@@ -156,5 +156,5 @@
 
     <string name="title_activity_about_pop_up">DETAILNÍ VYSVĚTLENÍ</string>
     <string name="detail_info_idle">Aplikace je neaktivní nebo se načítá. Detekce ani ochrana není povolena. Otevřete prosím boční menu v aplikaci a povolte je v sekci SLEDOVÁNÍ!</string>
-    <string name="detail_info_normal">Nebyly detekovány nebo nazeleny žádné hrozby. AIMSICD neustále kontroluje vaše síťové připojení podle nastavení, které jste si zvolili v sekci Nastavení a v bočním menu aplikace.</string>
+    <string name="detail_info_ok">Nebyly detekovány nebo nazeleny žádné hrozby. AIMSICD neustále kontroluje vaše síťové připojení podle nastavení, které jste si zvolili v sekci Nastavení a v bočním menu aplikace.</string>
     </resources>

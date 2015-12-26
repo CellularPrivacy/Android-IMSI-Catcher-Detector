@@ -98,7 +98,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
         okTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showInfoDialog(Status.NORMAL);
+                showInfoDialog(Status.OK);
             }
         });
 
@@ -171,10 +171,10 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 R.string.idle,
                 R.string.detail_info_idle
         ),
-        NORMAL(
+        OK(
                 R.drawable.sense_ok,
-                R.string.normal,
-                R.string.detail_info_normal
+                R.string.ok,
+                R.string.detail_info_ok
         ),
         MEDIUM(
                 R.drawable.sense_medium,

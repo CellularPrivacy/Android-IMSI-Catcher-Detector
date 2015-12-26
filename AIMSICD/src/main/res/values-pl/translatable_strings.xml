@@ -84,7 +84,7 @@
     <string name="about_desc_icon_ok">Wszystko OK.</string>
     <string name="about_desc_icon_tracked_down">Jesteś śledzony!</string>
     <string name="about_desc_icon_insecure_area">Niebezpieczny obszar. Opóść go!</string>
-    <string name="about_desc_icon_run">Uciekaj! Telefon ulega manipulacji!</string>
+    <string name="about_desc_icon_skull">Uciekaj! Telefon ulega manipulacji!</string>
     <string name="about_desc_icon_title">Kliknij na ikonę by uzyskać więcej informacji:</string>
 
 
@@ -185,11 +185,11 @@
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">SZCZEGÓŁOWY OPIS</string>
     <string name="detail_info_idle">Aplikacja jest bezczynna lub ładuje się. Żadne środki ochrony lub wykrywania nie są włączone. Otwórz panel nawigacyjny i włącz śledzenie w menu!</string>
-    <string name="detail_info_normal">Nie wykryto żadnych zagrożeń.</string>
+    <string name="detail_info_ok">Nie wykryto żadnych zagrożeń.</string>
     <string name="detail_info_medium">Ta okolica nie jest bezpieczna: wykryto co najmniej jedną nieznaną stację bazową lub używane jest szyfrowanie słabsze niż A5/3. Wszystkie wiadomości i rozmowy w tym rejonie mogą być przechwycone.</string>
     <string name="detail_info_high">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników! Wyjmij baterię z telefoni i unikaj tego miejsca!</string>
     <string name="detail_info_danger">Wykryto wrogie śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci. Jeśli jesteś w niebezpieczeństwie zniszczy swój telefon i kartę SIM i zgłoś ją jako niedawno ukradzioną.</string>
-    <string name="detail_info_run">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
+    <string name="detail_info_skull">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
     <string name="open_cell_id_button_cancel">Anuluj</string>
     <string name="open_cell_id_button_ok">OK</string>
 
@@ -267,11 +267,11 @@
     <string name="describe_the_problem_you_had">W celu uzyskania pomocy opisz swój problem. Problemy bez opisu są automatycznie ignorowane!\n</string>
     <string name="status">Status:</string>
     <string name="idle">OCZEKUJE</string>
-    <string name="normal">ZWYCZAJNY</string>
+    <string name="ok">OK</string>
     <string name="medium">ŚREDNIE</string>
     <string name="high">WYSOKI</string>
     <string name="danger">ZAGROŻENIE</string>
-    <string name="run">UCIEKAJ!</string>
+    <string name="skull">UCIEKAJ!</string>
 
     <!-- Advanced User Settings: SMS Detection Strings -->
     <string name="adv_user_info">To menu jest tylko dla zaawansowanych użytkowników!\n\nProszę nie wprowadzaj losowych ciągów znaków gdyż sprawi to, że wykrywanie nie będzie działać przewidywalnie.\n\nAby dodać łańcuch znaków wybierz typ SMS z rozwijanego menu, wpisz łańcuch znaków i naciśnij dodaj.\n\nAby usunąć z bazy danych przyciśnij dłużej w widoku listy.</string>

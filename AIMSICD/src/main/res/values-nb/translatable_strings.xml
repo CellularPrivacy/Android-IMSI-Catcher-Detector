@@ -73,7 +73,7 @@
     <string name="about_desc_icon_ok">Alt OK.</string>
     <string name="about_desc_icon_tracked_down">Du blir sporet!</string>
     <string name="about_desc_icon_insecure_area">"Utrygt tjenesteområde.  Forlat det!"</string>
-    <string name="about_desc_icon_run">"SPRING!  Håndsettet er manipulert!"</string>
+    <string name="about_desc_icon_skull">"SPRING!  Håndsettet er manipulert!"</string>
     <string name="about_desc_icon_title">Trykk status-ikonet under for detaljert informasjon:</string>
 
     <string name="network_netid">Nettverk-ID:</string>
@@ -154,11 +154,11 @@
 
     <string name="title_activity_about_pop_up">DETALJERT FORKLARING</string>
     <string name="detail_info_idle">Appen pauser eller laster. Ingen beskyttelse eller oppdaging er påslått. Vennligst åpne Navigasjons skuffen og slå dem på i seksjonen SPORING!</string>
-    <string name="detail_info_normal">"Ingen trusler oppdaget. Vår App sjekker konstant ditt nettverk basert  på den beskyttelse du har bestemt i Navigasjons skuffen og Instillinger."</string>
+    <string name="detail_info_ok">"Ingen trusler oppdaget. Vår App sjekker konstant ditt nettverk basert  på den beskyttelse du har bestemt i Navigasjons skuffen og Instillinger."</string>
     <string name="detail_info_medium">"Usikkert Område: Minst 1 ny eller ukjent basestasjon i området, eller med brutt eller usikker kryptering lavere enn A5/3. Anta at alle samtaler eller SMS som utføres hær kan bli  avlyttet og lagret. Du bør forlate området."</string>
     <string name="detail_info_high">Aktive Fientlige Tjenester Oppdaget: En IMSI-Catcher (IMSIC) eller falsk BTS (basestasjon) sporer aktivt brukere. Aktiv sporing foregår i dette området. Du bør unngå dette stedet, spesiellt ved masseansamlinger. Ta ut batteriet eller knus telefonen!</string>
     <string name="detail_info_danger">Aktive Fientlige Tjenester Oppdaget: En IMSI-Catcher (IMSIC) eller falsk BTS (basestasjon) sporer aktivt brukere. Aktiv sporing foregår i dette området. Du bør unngå dette stedet, spesiellt ved masseansamlinger. Ta ut batteriet eller knus telefonen!</string>
-    <string name="detail_info_run"/>
+    <string name="detail_info_skull"/>
     <string name="open_cell_id_button_cancel">Avbryt</string>
     <string name="open_cell_id_button_ok">OK</string>
 
@@ -167,7 +167,7 @@
     <string name="pref_notification_vibrate_min_level_title">Vibrer på trusselnivå</string>
     <string name="pref_notification_vibrate_min_level_summary">Velg minimum trusselnivå å vibrere på</string>
     <string name="notification_vibrate_idle">Pause</string>
-    <string name="notification_vibrate_normal">Normal</string>
+    <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Medium</string>
     <string name="notification_vibrate_alarm">Alarm</string>
     
@@ -246,11 +246,11 @@
     <string name="describe_the_problem_you_had">VIKTIG! Vennligst beskriv problemet du hadde, før du sender loggene. INGEN HJELP UTEN BESKRIVELSE!\n</string>
     <string name="status">Status:</string>
     <string name="idle">PAUSE</string>
-    <string name="normal">NORMAL</string>
+    <string name="ok">OK</string>
     <string name="medium">MEDIUM</string>
     <string name="high">HØY</string>
     <string name="danger">FARE</string>
-    <string name="run">SPRING!</string>
+    <string name="skull">SPRING!</string>
 
     <string name="adv_user_info">Denne menyen er kun for spesialister!\n\nVennligst ikke sett inn vilkårlige strenger fordi det vil få overvåkingen ut av kontroll.\n\nFor å legge til streng velg SMS type fra menyen, sriv inn strengen og trykk Legg til.\n\nFor å slette fra databasen trykk lenge på listevisning.</string>
     

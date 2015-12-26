@@ -74,7 +74,7 @@
     <string name="about_desc_icon_ok">Çdo gjë në rregull.</string>
     <string name="about_desc_icon_tracked_down">Ju jeni gjermuar!</string>
     <string name="about_desc_icon_insecure_area">Ambjent i pasigurtë. Largohuni!</string>
-    <string name="about_desc_icon_run">Në punë! Kufjet e manipuluara!</string>
+    <string name="about_desc_icon_skull">Në punë! Kufjet e manipuluara!</string>
     <string name="about_desc_icon_title">Shtypni ikonën e statusit më poshtë për informacione të detajuara:</string>
 
     <string name="network_netid">ID e rrjetit:</string>

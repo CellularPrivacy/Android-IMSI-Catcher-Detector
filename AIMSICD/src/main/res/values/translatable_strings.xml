@@ -92,7 +92,7 @@
     <string name="about_desc_icon_ok">Everything OK.</string>
     <string name="about_desc_icon_tracked_down">You are being tracked down!</string>
     <string name="about_desc_icon_insecure_area">Insecure Service Area. Leave it!</string>
-    <string name="about_desc_icon_run">RUN! Handset manipulated!</string>
+    <string name="about_desc_icon_skull">RUN! Handset manipulated!</string>
     <string name="about_desc_icon_title">Press Status Icons below for detailed Information:</string>
 
     <!-- CDMA LAYOUT -->
@@ -193,11 +193,11 @@
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILED EXPLANATION</string>
     <string name="detail_info_idle">App is idling or loading. No protection and detection measures are enabled. Please open the Navigation Drawer and enable them in section TRACKING!</string>
-    <string name="detail_info_normal">No threats detected or found. Our App is constantly checking your network based upon the protection measures you\'ve set in the Navigation Drawer and Preferences.</string>
+    <string name="detail_info_ok">No threats detected or found. Our App is constantly checking your network based upon the protection measures you\'ve set in the Navigation Drawer and Preferences.</string>
     <string name="detail_info_medium">Insecure Service Area: At least 1 new or unknown BTS is in operation in this vicinity, or using an insecure (broken) encryption algorithm lower than A5/3 [Detection is WIP]. Expect that any phone calls/SMS made in this area can be intercepted and recorded. You better leave this place now.</string>
     <string name="detail_info_high">Hostile Service Actions Detected: An IMSI-Catcher (IMSIC) or fake BTS (FBTS) is actively tracking users. Active scanning takes place in this area. You should avoid this place, especially if there are political unrest. Take out your battery or kill your phone!</string>
     <string name="detail_info_danger">Hostile Tracking Detected: An FBTS or IMSIC is actively tracking YOU and preventing your phone from connecting through your normal encrypted mobile provider. If you\'re in danger or repercussions, destroy your phone + SIM and report it as recently stolen.</string>
-    <string name="detail_info_run">Hostile Manipulation: Someone is trying to remotely manipulate your handset. Destroy (or sell) your phone and get a new one somewhere far away (don\'t carry your old phone to the changing place)! Use a new (anonymous) SIM card, change calling behavior and warn your friends by talking to them in real life, NOT by calling them!</string>
+    <string name="detail_info_skull">Hostile Manipulation: Someone is trying to remotely manipulate your handset. Destroy (or sell) your phone and get a new one somewhere far away (don\'t carry your old phone to the changing place)! Use a new (anonymous) SIM card, change calling behavior and warn your friends by talking to them in real life, NOT by calling them!</string>
     <string name="open_cell_id_button_cancel">Cancel</string>
     <string name="open_cell_id_button_ok">OK</string>
 
@@ -207,7 +207,7 @@
     <string name="pref_notification_vibrate_min_level_title">Vibrate on threat level</string>
     <string name="pref_notification_vibrate_min_level_summary">Select minimum threat level to vibrate on</string>
     <string name="notification_vibrate_idle">Idle</string>
-    <string name="notification_vibrate_normal">Normal</string>
+    <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Medium</string>
     <string name="notification_vibrate_alarm">Alarm</string>
     
@@ -286,11 +286,11 @@
     <string name="describe_the_problem_you_had">ATTENTION! Please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!\n</string>
     <string name="status">Status:</string>
     <string name="idle">IDLE</string>
-    <string name="normal">NORMAL</string>
+    <string name="ok">OK</string>
     <string name="medium">MEDIUM</string>
     <string name="high">HIGH</string>
     <string name="danger">DANGER</string>
-    <string name="run">RUN!</string>
+    <string name="skull">RUN!</string>
 
     <!-- Advanced User Settings: SMS Detection Strings -->
     <string name="adv_user_info">This menu is for advanced users only!\n\nPlease do not insert random strings because it will cause detection to go out of control.\n\nTo add a string choose the SMS type from the dropdown menu, type your detection string and press insert.\n\nTo delete from database long press on list view.</string>
@@ -389,7 +389,7 @@
 
     <string-array name="pref_notification_vibrate_min_level_entries">
         <item>@string/notification_vibrate_idle</item>
-        <item>@string/notification_vibrate_normal</item>
+        <item>@string/notification_vibrate_ok</item>
         <item>@string/notification_vibrate_medium</item>
         <item>@string/notification_vibrate_alarm</item>
     </string-array>

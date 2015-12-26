@@ -157,7 +157,7 @@
                     android:drawableLeft="@drawable/sense_skull"
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"
-                    android:text="@string/about_desc_icon_run" />
+                    android:text="@string/about_desc_icon_skull" />
             </TableRow>
 
         </TableLayout>

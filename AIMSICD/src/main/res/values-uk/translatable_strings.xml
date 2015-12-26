@@ -112,7 +112,7 @@
     <string name="about_changelog">Перелік змін</string>
     <string name="about_desc_icon_tracked_down">Вас відстежують!</string>
     <string name="about_desc_icon_insecure_area">Небезпечна зона обслуговування. Залиште її!</string>
-    <string name="about_desc_icon_run">Тікай! Маніпулюють телефоном!</string>
+    <string name="about_desc_icon_skull">Тікай! Маніпулюють телефоном!</string>
     <string name="about_desc_icon_title">Натисніть на піктограму стану для отримання більш детальної інформації:</string>
 
     <string name="location_error_title">Визначення координат вимкнуто</string>
@@ -190,7 +190,7 @@
     <string name="status">Стан:</string>
     <string name="serial_device_title">Поточний послідовний пристрій:</string>
     <string name="detail_info_idle">Додаток працює в режимі очікування чи завантаження. Заходи захисту та моніторингу вимкнуто. Будь ласка, відкрийте меню та увімкніть їх в розділі СЛІДКУВАННЯ!</string>
-    <string name="detail_info_normal">Жодних загроз не виявлено. Наш додаток постійно перевіряє вашу мережу на основі заходів захисту, які ви зазначили в меню та налаштуваннях.</string>
+    <string name="detail_info_ok">Жодних загроз не виявлено. Наш додаток постійно перевіряє вашу мережу на основі заходів захисту, які ви зазначили в меню та налаштуваннях.</string>
     <string name="ui_icon_white">Білі</string>
     <string name="map_type_terrain">Земний</string>
     <string name="map_type_normal">Звичайний</string>
