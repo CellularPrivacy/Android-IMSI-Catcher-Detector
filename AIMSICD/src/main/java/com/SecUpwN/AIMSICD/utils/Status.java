@@ -25,7 +25,7 @@ public class Status {
 
     public enum Type {
         ALARM(3), // Which is this?
-        // SKUL, // BLACK
+        // SKULL, // BLACK
         // DANGEROUS, // RED
         // HIGH, // ORANGE
         MEDIUM(2), // YELLOW
