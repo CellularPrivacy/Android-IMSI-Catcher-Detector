@@ -16,7 +16,6 @@ import android.support.v4.content.LocalBroadcastManager;
  * @author Tor Henning Ueland
  */
 public class Status {
-    // TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
     // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
     // Dependencies:  Status.java, CellTracker.java, Icon.java ( + others?)
     // They should be based on the detection scores here: <TBA>
@@ -24,13 +23,12 @@ public class Status {
     private static Type currentStatus;
 
     public enum Type {
-        ALARM(3), // Which is this?
-        // SKULL, // BLACK
-        // DANGEROUS, // RED
-        // HIGH, // ORANGE
-        MEDIUM(2), // YELLOW
-        OK(1), // GREEN
         IDLE(0); // GREY
+        OK(1), // GREEN
+        MEDIUM(2), // YELLOW
+        HIGH(3), // ORANGE
+        DANGER(4), // RED
+        SKULL(5), // BLACK
 
         // Added for sake of deciding if current level is
         // higher or lower than threshold
