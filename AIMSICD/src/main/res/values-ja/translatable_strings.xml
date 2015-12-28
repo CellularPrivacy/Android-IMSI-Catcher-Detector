@@ -332,4 +332,6 @@
     <string name="notification_vibrate_medium">中</string>
     <string name="notification_vibrate_alarm">アラーム</string>
     
+    <string name="buildnumber">ビルド番号: %s</string>
+    <string name="git_sha">Git SHA ハッシュ: %s</string>
     </resources>
