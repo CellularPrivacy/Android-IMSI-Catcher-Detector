@@ -954,17 +954,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     /**
      *  Description:    Set or update the Detection/Status Notification
-     *                  TODO: Please add details!
+     *                  TODO: Need to add status HIGH (Orange) and SKULL (Black)
      *
      *  Issues:
-     *
-     *  [ ] TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
      *      See:  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
      *      and:  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/11#issuecomment-44670204
-     *
-     *      Change names from "IDLE,OK,MEDIUM,ALARM" to:"GRAY,GREEN,YELLOW,ORANGE,RED,BLACK",
-     *      to reflect detection Icon colors. They should be based on the detection scores here:
-     *      <TBA>
      *
      *  [ ] We need to standardize the "contentText" and "tickerText" format
      *
@@ -982,13 +976,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *      being passed into tickerText only when any previous text has
      *      been entirely displayed.
      *
-     *
      *  Dependencies:    Status.java, CellTracker.java, Icon.java ( + others?)
-     *
-     *  ChangeLog:
-     *
-     *     2015-01-22   E:V:A  Added placeholder for "Missing Neighboring Cells Alert"
-     *
      *
      */
     void setNotification() {
@@ -996,7 +984,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         String contentText = "Phone Type " + mDevice.getPhoneType();
 
         if (mFemtoDetected || mTypeZeroSmsDetected) {
-            Status.setCurrentStatus(Status.Type.ALARM, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
+            Status.setCurrentStatus(Status.Type.DANGER, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
         } else if (mChangedLAC) {
             Status.setCurrentStatus(Status.Type.MEDIUM, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
             contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
@@ -1046,7 +1034,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 }
                 break;
 
-            case ALARM: // ORANGE, RED or BLACK ?
+            case DANGER: // RED
                 tickerText = context.getResources().getString(R.string.app_name_short) + " - " + context.getString(R.string.alert_threat_detected); // Hmm, this is vague!
                 if (mFemtoDetected) {
                     contentText = context.getString(R.string.alert_femtocell_connection_detected);
@@ -1234,11 +1222,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     // END Femtocatcher code
     //=================================================================================================
 
-    /**
-     * Description:     TODO: WTF is this?  --E:V:A
-     *
-     *
-     */
     final PhoneStateListener phoneStatelistener = new PhoneStateListener() {
         private void handle() {
             handlePhoneStateChange();
