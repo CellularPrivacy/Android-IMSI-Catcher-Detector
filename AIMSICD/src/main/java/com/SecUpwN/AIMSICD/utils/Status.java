@@ -23,12 +23,12 @@ public class Status {
     private static Type currentStatus;
 
     public enum Type {
-        IDLE(0); // GREY
+        IDLE(0), // GREY
         OK(1), // GREEN
         MEDIUM(2), // YELLOW
         HIGH(3), // ORANGE
         DANGER(4), // RED
-        SKULL(5), // BLACK
+        SKULL(5); // BLACK
 
         // Added for sake of deciding if current level is
         // higher or lower than threshold
