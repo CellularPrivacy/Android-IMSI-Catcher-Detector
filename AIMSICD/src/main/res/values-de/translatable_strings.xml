@@ -404,7 +404,7 @@
     <string name="notification_vibrate_idle">Ruhezustand</string>
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Mittel</string>
-    <string name="notification_vibrate_alarm">Alarm</string>
+    <string name="notification_vibrate_danger">Gefahr</string>
     
     <string name="pref_notification_vibrate_min_level_title">Vibriere bei Bedrohung</string>
     <string name="pref_notification_vibrate_min_level_summary">Wähle Gefahrenstufe für Vibrationsbeginn</string>

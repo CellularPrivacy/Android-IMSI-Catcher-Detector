@@ -42,7 +42,7 @@ public class Icon {
                     case MEDIUM:
                         return R.drawable.flat_medium;
 
-                    case ALARM:
+                    case DANGER:
                         return R.drawable.flat_danger;
 
                     default:
@@ -60,7 +60,7 @@ public class Icon {
                     case MEDIUM:
                         return R.drawable.sense_medium;
 
-                    case ALARM:
+                    case DANGER:
                         return R.drawable.sense_danger;
 
                     default:
@@ -78,7 +78,7 @@ public class Icon {
                     case MEDIUM:
                         return R.drawable.white_medium;
 
-                    case ALARM:
+                    case DANGER:
                         return R.drawable.white_danger;
 
                     default:

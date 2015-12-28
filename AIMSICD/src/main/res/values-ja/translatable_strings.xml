@@ -330,6 +330,6 @@
     <string name="notification_vibrate_idle">アイドル</string>
     <string name="notification_vibrate_ok">標準</string>
     <string name="notification_vibrate_medium">中</string>
-    <string name="notification_vibrate_alarm">アラーム</string>
+    <string name="notification_vibrate_danger">アラーム</string>
     
     </resources>

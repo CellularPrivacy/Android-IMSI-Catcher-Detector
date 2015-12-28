@@ -316,7 +316,7 @@
 
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Gemiddeld</string>
-    <string name="notification_vibrate_alarm">Alarm</string>
+    <string name="notification_vibrate_danger">Danger</string>
     
     <string name="deleted">Verwijderd</string>
     <string name="failed_to_delete">Fout bij het verwijderen</string>

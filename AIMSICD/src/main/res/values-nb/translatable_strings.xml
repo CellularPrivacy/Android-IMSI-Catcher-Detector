@@ -169,7 +169,7 @@
     <string name="notification_vibrate_idle">Pause</string>
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Medium</string>
-    <string name="notification_vibrate_alarm">Alarm</string>
+    <string name="notification_vibrate_danger">Danger</string>
     
     <string name="ui_icon_flat">Flat</string>
     <string name="ui_icon_sense"/>

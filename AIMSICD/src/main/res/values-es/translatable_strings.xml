@@ -322,7 +322,7 @@
     <string name="notification_vibrate_idle">En reposo</string>
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Medio</string>
-    <string name="notification_vibrate_alarm">Alarma</string>
+    <string name="notification_vibrate_danger">Peligro</string>
     
     <string name="deleted">Borrado</string>
     <string name="failed_to_delete">Error al borrar</string>
