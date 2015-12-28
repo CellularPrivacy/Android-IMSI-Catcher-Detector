@@ -330,7 +330,7 @@
     <string name="notification_vibrate_idle">アイドル</string>
     <string name="notification_vibrate_ok">標準</string>
     <string name="notification_vibrate_medium">中</string>
-    <string name="notification_vibrate_danger">アラーム</string>
+    <string name="notification_vibrate_danger">危険</string>
     
     <string name="buildnumber">ビルド番号: %s</string>
     <string name="git_sha">Git SHA ハッシュ: %s</string>
