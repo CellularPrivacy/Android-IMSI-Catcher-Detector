@@ -7,12 +7,17 @@ package com.SecUpwN.AIMSICD;
 
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Vibrator;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseArray;
 
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
+import com.SecUpwN.AIMSICD.enums.Status;
 import com.SecUpwN.AIMSICD.utils.BaseAsyncTask;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +30,13 @@ import io.freefair.android.util.logging.Logger;
 
 public class AppAIMSICD extends InjectionApplication {
 
+    private static WeakReference<AppAIMSICD> instance;
+
+    public static AppAIMSICD getInstance(){
+        return instance.get();
+    }
+
+    private Status currentStatus;
     @Inject
     private Logger log;
 
@@ -40,6 +52,7 @@ public class AppAIMSICD extends InjectionApplication {
 
     @Override
     public void onCreate() {
+        instance = new WeakReference<>(this);
         addModule(new AndroidLoggerModule());
         addModule(OkHttpModule.withCache(this));
         super.onCreate();
@@ -111,5 +124,34 @@ public class AppAIMSICD extends InjectionApplication {
                 task.setActivity(activity);
             }
         }
+    }
+
+    /**
+     * Changes the current status, this will also trigger a local broadcast event
+     * if the new status is different from the previous one
+     */
+    public void setCurrentStatus(Status status, boolean vibrate, int minVibrateLevel) {
+        if (status == null) {
+            status = Status.IDLE;
+        }
+        if (status != currentStatus) {
+            Intent intent = new Intent("StatusChange");
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+            if (vibrate && status.ordinal() >= minVibrateLevel) {
+                ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
+            }
+        }
+        currentStatus = status;
+    }
+
+    /**
+     * Returns the current status
+     */
+    public Status getStatus() {
+        if (currentStatus == null) {
+            return Status.IDLE;
+        }
+        return currentStatus;
     }
 }

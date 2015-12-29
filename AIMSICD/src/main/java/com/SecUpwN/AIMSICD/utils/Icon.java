@@ -5,6 +5,7 @@
  */
 package com.SecUpwN.AIMSICD.utils;
 
+import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.R;
 
 /**
@@ -32,7 +33,7 @@ public class Icon {
     public static int getIcon(Type t) {
         switch(t) {
             case FLAT:
-                switch (Status.getStatus()) {
+                switch (AppAIMSICD.getInstance().getStatus()) {
                     case IDLE:
                         return R.drawable.flat_idle;
 
@@ -50,7 +51,7 @@ public class Icon {
                 }
 
             case SENSE:
-                switch (Status.getStatus()) {
+                switch (AppAIMSICD.getInstance().getStatus()) {
                     case IDLE:
                         return R.drawable.sense_idle;
 
@@ -68,7 +69,7 @@ public class Icon {
                 }
 
             case WHITE:
-                switch (Status.getStatus()) {
+                switch (AppAIMSICD.getInstance().getStatus()) {
                     case IDLE:
                         return R.drawable.white_idle;
 
