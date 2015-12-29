@@ -233,12 +233,12 @@
     <string name="unknown_error_initialising_at_command_injector">Een onbekende fout is opgetreden bij het uitvoeren van AT commando\'s.\nCheck uw logcat voor foutmeldingen en post ze op onze Github.</string>
     <string name="getting_ocid_api_key">Verkrijgen OpenCellID API sleutel…</string>
     <string name="unable_to_create_map">Kan geen kaart aanmaken!</string>
-    <string name="idle">INACTIEF</string>
-    <string name="ok">OK</string>
-    <string name="medium">GEMIDDELD</string>
-    <string name="high">HOOG</string>
-    <string name="danger">GEVAAR</string>
-    <string name="skull">RENNEN!</string>
+    <string name="status_idle">INACTIEF</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">GEMIDDELD</string>
+    <string name="status_high">HOOG</string>
+    <string name="status_danger">GEVAAR</string>
+    <string name="status_skull">RENNEN!</string>
 
     <string name="adv_user_info">Dit menu is alleen bedoeld voor ervaren gebruikers.\n\nGeef a.u.b. geen willekeurige karakterreeksen in, dit kan er voor zorgen dat detectie raar gaat doen.\n\nKies het SMS type van het menu om een reeks toe te voegen, type een karakterreeks en druk op invoegen.\n\nOm een karakterreeks te verwijderen uit de database druk lang op de lijstweergave.</string>
     

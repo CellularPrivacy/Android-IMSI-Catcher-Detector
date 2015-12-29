@@ -273,12 +273,12 @@
     <string name="unable_to_create_map">Karte konnte nicht erstellt werden!</string>
     <string name="describe_the_problem_you_had">ACHTUNG! Bitte das Problem vor dem versenden der Daten beschreiben. KEINE HILFE OHNE BESCHREIBUNG!\n</string>
     <string name="status">Status:</string>
-    <string name="idle">RUHEND</string>
-    <string name="ok">OK</string>
-    <string name="medium">MEDIUM</string>
-    <string name="high">HOCH</string>
-    <string name="danger">GEFAHR</string>
-    <string name="skull">RENN!</string>
+    <string name="status_idle">Ruhend</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">Medium</string>
+    <string name="status_high">Hoch</string>
+    <string name="status_danger">Gefahr</string>
+    <string name="status_skull">Renn!</string>
     
     <!-- Advanced User Settings: SMS Detection Strings-->
     <string name="adv_user_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\nBitte keine zufälligen Zeichenfolgen eingeben, sonst wird die Erkennung beeinträchtigt.\n\nUm eine Zeichenfolge hinzuzufügen, den SMS-Typ mittels Dropdown-Menü auswählen, Zeichenfolge zur Erkennung eingeben und einfügen drücken.\n\nZum löschen den Eintrag in der Liste lang drücken.</string>

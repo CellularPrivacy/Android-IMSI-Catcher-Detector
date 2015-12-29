@@ -285,12 +285,12 @@
     <string name="unable_to_create_map">Unable to create map!</string>
     <string name="describe_the_problem_you_had">ATTENTION! Please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!\n</string>
     <string name="status">Status:</string>
-    <string name="idle">IDLE</string>
-    <string name="ok">OK</string>
-    <string name="medium">MEDIUM</string>
-    <string name="high">HIGH</string>
-    <string name="danger">DANGER</string>
-    <string name="skull">RUN!</string>
+    <string name="status_idle">Idle</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">Medium</string>
+    <string name="status_high">High</string>
+    <string name="status_danger">Danger</string>
+    <string name="status_skull">Run!</string>
 
     <!-- Advanced User Settings: SMS Detection Strings -->
     <string name="adv_user_info">This menu is for advanced users only!\n\nPlease do not insert random strings because it will cause detection to go out of control.\n\nTo add a string choose the SMS type from the dropdown menu, type your detection string and press insert.\n\nTo delete from database long press on list view.</string>

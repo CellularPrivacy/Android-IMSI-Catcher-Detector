@@ -235,12 +235,12 @@
     <string name="unable_to_create_map">No se puede crear el mapa!</string>
     <string name="describe_the_problem_you_had">¡ ATENCIÓN! Por favor describa el problema que tiene antes de enviarnos estos registros. NO HAY AYUDA SIN DESCRIPCIONES!\n</string>
     <string name="status">Estado:</string>
-    <string name="idle">PARADO</string>
-    <string name="ok">OK</string>
-    <string name="medium">MEDIO</string>
-    <string name="high">ALTO</string>
-    <string name="danger">PELIGRO</string>
-    <string name="skull">CORRE!</string>
+    <string name="status_idle">PARADO</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">MEDIO</string>
+    <string name="status_high">ALTO</string>
+    <string name="status_danger">PELIGRO</string>
+    <string name="status_skull">CORRE!</string>
 
     <string name="adv_user_info">"Este menú es solamente para usuarios avanzados!\n\nNo insertar secuencias al azar porque hará que la detección quede inservible.\n\nPara agregar una cadena elegir el tipo de SMS del menú desplegable, Escriba su cadena de deteccion y presione insertar.\n\nPara eliminar la entrada  mantengala presionada en listview."</string>
     

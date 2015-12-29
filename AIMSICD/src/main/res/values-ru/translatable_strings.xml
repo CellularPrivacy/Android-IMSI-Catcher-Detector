@@ -281,12 +281,12 @@
     <string name="unable_to_create_map">Невозможно создать карту!</string>
     <string name="describe_the_problem_you_had">ВНИМАНИЕ! Пожалуйста, опишите проблему, которая у вас была, прежде, чем отправить нам эти журналы. НЕТ ПОМОЩИ БЕЗ ОПИСАНИЯ!\n</string>
     <string name="status">Статус:</string>
-    <string name="idle">Неработающий</string>
-    <string name="ok">OK</string>
-    <string name="medium">Средний</string>
-    <string name="high">Высокий</string>
-    <string name="danger">Опасный</string>
-    <string name="skull">Беги!</string>
+    <string name="status_idle">Неработающий</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">Средний</string>
+    <string name="status_high">Высокий</string>
+    <string name="status_danger">Опасный</string>
+    <string name="status_skull">Беги!</string>
 
     <!-- Section Main-->
     <string name="help_main_current_threat_level">AIMSICD status, neighboring cells, ciphering method indicator.</string>

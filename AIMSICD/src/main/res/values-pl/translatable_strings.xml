@@ -266,12 +266,12 @@
     <string name="unable_to_create_map">Nie powiodło się tworzenie mapy!</string>
     <string name="describe_the_problem_you_had">W celu uzyskania pomocy opisz swój problem. Problemy bez opisu są automatycznie ignorowane!\n</string>
     <string name="status">Status:</string>
-    <string name="idle">OCZEKUJE</string>
-    <string name="ok">OK</string>
-    <string name="medium">ŚREDNIE</string>
-    <string name="high">WYSOKI</string>
-    <string name="danger">ZAGROŻENIE</string>
-    <string name="skull">UCIEKAJ!</string>
+    <string name="status_idle">OCZEKUJE</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">ŚREDNIE</string>
+    <string name="status_high">WYSOKI</string>
+    <string name="status_danger">ZAGROŻENIE</string>
+    <string name="status_skull">UCIEKAJ!</string>
 
     <!-- Advanced User Settings: SMS Detection Strings -->
     <string name="adv_user_info">To menu jest tylko dla zaawansowanych użytkowników!\n\nProszę nie wprowadzaj losowych ciągów znaków gdyż sprawi to, że wykrywanie nie będzie działać przewidywalnie.\n\nAby dodać łańcuch znaków wybierz typ SMS z rozwijanego menu, wpisz łańcuch znaków i naciśnij dodaj.\n\nAby usunąć z bazy danych przyciśnij dłużej w widoku listy.</string>

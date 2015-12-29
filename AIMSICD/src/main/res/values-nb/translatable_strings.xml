@@ -245,12 +245,12 @@
     <string name="unable_to_create_map">Kunne ikke opprette kart!</string>
     <string name="describe_the_problem_you_had">VIKTIG! Vennligst beskriv problemet du hadde, før du sender loggene. INGEN HJELP UTEN BESKRIVELSE!\n</string>
     <string name="status">Status:</string>
-    <string name="idle">PAUSE</string>
-    <string name="ok">OK</string>
-    <string name="medium">MEDIUM</string>
-    <string name="high">HØY</string>
-    <string name="danger">FARE</string>
-    <string name="skull">SPRING!</string>
+    <string name="status_idle">PAUSE</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">MEDIUM</string>
+    <string name="status_high">HØY</string>
+    <string name="status_danger">FARE</string>
+    <string name="status_skull">SPRING!</string>
 
     <string name="adv_user_info">Denne menyen er kun for spesialister!\n\nVennligst ikke sett inn vilkårlige strenger fordi det vil få overvåkingen ut av kontroll.\n\nFor å legge til streng velg SMS type fra menyen, sriv inn strengen og trykk Legg til.\n\nFor å slette fra databasen trykk lenge på listevisning.</string>
     

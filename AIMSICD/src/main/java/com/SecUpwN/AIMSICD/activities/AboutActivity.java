@@ -168,32 +168,32 @@ public class AboutActivity extends InjectionAppCompatActivity {
     public enum Status {
         IDLE(
                 R.drawable.sense_idle,
-                R.string.idle,
+                R.string.status_idle,
                 R.string.detail_info_idle
         ),
         OK(
                 R.drawable.sense_ok,
-                R.string.ok,
+                R.string.status_ok,
                 R.string.detail_info_ok
         ),
         MEDIUM(
                 R.drawable.sense_medium,
-                R.string.medium,
+                R.string.status_medium,
                 R.string.detail_info_medium
         ),
         HIGH(
                 R.drawable.sense_high,
-                R.string.high,
+                R.string.status_high,
                 R.string.detail_info_high
         ),
         DANGER(
                 R.drawable.sense_danger,
-                R.string.danger,
+                R.string.status_danger,
                 R.string.detail_info_danger
         ),
         SKULL(
                 R.drawable.sense_skull,
-                R.string.skull,
+                R.string.status_skull,
                 R.string.detail_info_skull
         );
 

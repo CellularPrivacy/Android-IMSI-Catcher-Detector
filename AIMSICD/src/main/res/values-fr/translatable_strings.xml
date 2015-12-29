@@ -272,12 +272,12 @@
     <string name="unable_to_create_map">Impossible de créer la carte !</string>
     <string name="describe_the_problem_you_had">ATTENTION! Veuillez décrire le problème que vous avez (en anglais !), avant de nous envoyer ces logs. PAS D\'AIDE SANS DESCRIPTION PRÉCISE!\n</string>
     <string name="status">Statut :</string>
-    <string name="idle">Repos</string>
-    <string name="ok">OK</string>
-    <string name="medium">MOYEN</string>
-    <string name="high">HAUT</string>
-    <string name="danger">DANGER</string>
-    <string name="skull">COURREZ !</string>
+    <string name="status_idle">Repos</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">MOYEN</string>
+    <string name="status_high">HAUT</string>
+    <string name="status_danger">DANGER</string>
+    <string name="status_skull">COURREZ !</string>
 
     <!-- Advanced User Settings: SMS Detection Strings -->
     <string name="adv_user_info">Ce menu concerne les utilisateurs avancés seulement!\n\nN\'insérez pas de texte aléatoire ici, cela pourrai rendre le système de détection hors de contrôle.\n\nPour ajouter du texte, sélectionnez le type de SMS dans le menu, tapez votre texte de détection et appuyez sur Insérer.\n\nPour supprimer le texte de la Base de Données, appuyez longuement sur celui-ci dans la Visionneuse.</string>

@@ -239,12 +239,12 @@
     <string name="unable_to_create_map">地図を作成することができません!</string>
     <string name="describe_the_problem_you_had">注意! これらのログを私たちに送信する前に、問題について説明してください。説明がないとヘルプできません!\n</string>
     <string name="status">ステータス:</string>
-    <string name="idle">アイドル</string>
-    <string name="ok">通常</string>
-    <string name="medium">中</string>
-    <string name="high">高</string>
-    <string name="danger">危険</string>
-    <string name="skull">実行!</string>
+    <string name="status_idle">アイドル</string>
+    <string name="status_ok">通常</string>
+    <string name="status_medium">中</string>
+    <string name="status_high">高</string>
+    <string name="status_danger">危険</string>
+    <string name="status_skull">実行!</string>
 
     <string name="adv_user_info">このメニューは、高度なユーザーのみです!\n\n検出が制御不能を引き起こすので、ランダムな文字列を挿入しないでください。\n\n文字列を追加するには、ドロップダウン メニューから SMS の種類を選択し、検出文字列を入力し、挿入を押します。\n\nリスト表示で長押しすると、データベースから削除します。</string>
     
