@@ -184,12 +184,12 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">SZCZEGÓŁOWY OPIS</string>
-    <string name="detail_info_idle">Aplikacja jest bezczynna lub ładuje się. Żadne środki ochrony lub wykrywania nie są włączone. Otwórz panel nawigacyjny i włącz śledzenie w menu!</string>
-    <string name="detail_info_ok">Nie wykryto żadnych zagrożeń.</string>
-    <string name="detail_info_medium">Ta okolica nie jest bezpieczna: wykryto co najmniej jedną nieznaną stację bazową lub używane jest szyfrowanie słabsze niż A5/3. Wszystkie wiadomości i rozmowy w tym rejonie mogą być przechwycone.</string>
-    <string name="detail_info_high">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników! Wyjmij baterię z telefoni i unikaj tego miejsca!</string>
-    <string name="detail_info_danger">Wykryto wrogie śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci. Jeśli jesteś w niebezpieczeństwie zniszczy swój telefon i kartę SIM i zgłoś ją jako niedawno ukradzioną.</string>
-    <string name="detail_info_skull">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
+    <string name="status_idle_detail_info">Aplikacja jest bezczynna lub ładuje się. Żadne środki ochrony lub wykrywania nie są włączone. Otwórz panel nawigacyjny i włącz śledzenie w menu!</string>
+    <string name="status_ok_detail_info">Nie wykryto żadnych zagrożeń.</string>
+    <string name="status_medium_detail_info">Ta okolica nie jest bezpieczna: wykryto co najmniej jedną nieznaną stację bazową lub używane jest szyfrowanie słabsze niż A5/3. Wszystkie wiadomości i rozmowy w tym rejonie mogą być przechwycone.</string>
+    <string name="status_high_detail_info">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników! Wyjmij baterię z telefoni i unikaj tego miejsca!</string>
+    <string name="status_danger_detail_info">Wykryto wrogie śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci. Jeśli jesteś w niebezpieczeństwie zniszczy swój telefon i kartę SIM i zgłoś ją jako niedawno ukradzioną.</string>
+    <string name="status_skull_detail_info">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
     <string name="open_cell_id_button_cancel">Anuluj</string>
     <string name="open_cell_id_button_ok">OK</string>
 

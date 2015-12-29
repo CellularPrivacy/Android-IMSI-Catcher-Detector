@@ -169,32 +169,32 @@ public class AboutActivity extends InjectionAppCompatActivity {
         IDLE(
                 R.drawable.sense_idle,
                 R.string.status_idle,
-                R.string.detail_info_idle
+                R.string.status_idle_detail_info
         ),
         OK(
                 R.drawable.sense_ok,
                 R.string.status_ok,
-                R.string.detail_info_ok
+                R.string.status_ok_detail_info
         ),
         MEDIUM(
                 R.drawable.sense_medium,
                 R.string.status_medium,
-                R.string.detail_info_medium
+                R.string.status_medium_detail_info
         ),
         HIGH(
                 R.drawable.sense_high,
                 R.string.status_high,
-                R.string.detail_info_high
+                R.string.status_high_detail_info
         ),
         DANGER(
                 R.drawable.sense_danger,
                 R.string.status_danger,
-                R.string.detail_info_danger
+                R.string.status_danger_detail_info
         ),
         SKULL(
                 R.drawable.sense_skull,
                 R.string.status_skull,
-                R.string.detail_info_skull
+                R.string.status_skull_detail_info
         );
 
         @DrawableRes
