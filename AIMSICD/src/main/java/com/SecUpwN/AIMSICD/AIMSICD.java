@@ -196,7 +196,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         final String iconType = prefs.getString(getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType)));
+        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD)getApplication()).getStatus()));
         mDrawerToggle.syncState();
     }
 

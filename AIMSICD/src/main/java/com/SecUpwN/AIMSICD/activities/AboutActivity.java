@@ -98,7 +98,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
         okTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showInfoDialog(Status.NORMAL);
+                showInfoDialog(Status.OK);
             }
         });
 
@@ -126,7 +126,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
         skullTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showInfoDialog(Status.RUN);
+                showInfoDialog(Status.SKULL);
             }
         });
 
@@ -167,33 +167,33 @@ public class AboutActivity extends InjectionAppCompatActivity {
     public enum Status {
         IDLE(
                 R.drawable.sense_idle,
-                R.string.idle,
-                R.string.detail_info_idle
+                R.string.status_idle,
+                R.string.status_idle_detail_info
         ),
-        NORMAL(
+        OK(
                 R.drawable.sense_ok,
-                R.string.normal,
-                R.string.detail_info_normal
+                R.string.status_ok,
+                R.string.status_ok_detail_info
         ),
         MEDIUM(
                 R.drawable.sense_medium,
-                R.string.medium,
-                R.string.detail_info_medium
+                R.string.status_medium,
+                R.string.status_medium_detail_info
         ),
         HIGH(
                 R.drawable.sense_high,
-                R.string.high,
-                R.string.detail_info_high
+                R.string.status_high,
+                R.string.status_high_detail_info
         ),
         DANGER(
                 R.drawable.sense_danger,
-                R.string.danger,
-                R.string.detail_info_danger
+                R.string.status_danger,
+                R.string.status_danger_detail_info
         ),
-        RUN(
+        SKULL(
                 R.drawable.sense_skull,
-                R.string.run,
-                R.string.detail_info_run
+                R.string.status_skull,
+                R.string.status_skull_detail_info
         );
 
         @DrawableRes

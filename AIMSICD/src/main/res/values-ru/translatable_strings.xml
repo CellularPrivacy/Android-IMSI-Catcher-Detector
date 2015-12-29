@@ -96,12 +96,12 @@
     <string name="about_changelog">Лог изменений</string>
     <string name="about_license">Соглашение</string>
     <string name="about_credits">CREDITS</string>
-    <string name="about_desc_icon_idle">Ожидание / Загрузка.</string>
-    <string name="about_desc_icon_active_tracking_near">Active tracking close to you!</string>
-    <string name="about_desc_icon_ok">Все OK.</string>
-    <string name="about_desc_icon_tracked_down">Вас отслеживают!</string>
-    <string name="about_desc_icon_insecure_area">Небезопасная зона обслуживания. Покиньте ее!</string>
-    <string name="about_desc_icon_run">Беги! Манипулируют телефоном!</string>
+    <string name="status_idle_about_desc">Ожидание / Загрузка.</string>
+    <string name="status_high_about_desc">Active tracking close to you!</string>
+    <string name="status_ok_about_desc">Все OK.</string>
+    <string name="status_danger_about_desc">Вас отслеживают!</string>
+    <string name="status_medium_about_desc">Небезопасная зона обслуживания. Покиньте ее!</string>
+    <string name="status_skull_about_desc">Беги! Манипулируют телефоном!</string>
     <string name="about_desc_icon_title">Нажмите значки состояния ниже для более подробной информации:</string>
 
     <!-- CDMA LAYOUT -->
@@ -200,12 +200,12 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">Подробное описание</string>
-    <string name="detail_info_idle">Приложение работает в режиме ожидания или загрузки. Меры защиты и обнаружения не включены. Пожалуйста, откройте меню и включите их в разделе СЛЕЖЕНИЕ!</string>
-    <string name="detail_info_normal">Никакие угрозы не обнаружены. Наше приложение постоянно проверять вашу сеть на основе мер защиты, которые вы установили в меню и настройках.</string>
-    <string name="detail_info_medium">Небезопасная зона обслуживания: По крайней мере, 1 новая или неизвестная БС в эксплуатации в этом районе, или с использованием небезопасного (сломанного) алгоритма шифрования меньшего, чем A5 / 3 [Обнаружение WIP]. Ожидайте, что любые телефонные звонки / SMS, сделанные в этой области могут быть перехвачены и зарегистрированы. Вам лучше оставить это место сейчас.</string>
-    <string name="detail_info_high">Враждебные действия обнаружены: IMSI-Перехватчик (IMSIC) или поддельные BTS (FBTS) активно отслеживают пользователей. Активное сканирование происходит в этой области. Вы должны избегать этого места, особенно, если есть политическая нестабильность. Выньте батарею или уничтожьте свой телефон!</string>
-    <string name="detail_info_danger">Враждебные отслеживания обнаружены: FBTS или IMSIC активно отслеживают вас и предотвращают ваш телефон от подключения через обычную зашифрованную мобильную связь. Если вы находитесь в опасности, сломайте ваш телефон + SIM и сообщите, что ваш телефон недавно был украден.</string>
-    <string name="detail_info_run">Враждебные манипуляции: Кто-то пытается удаленно управлять вашим телефоном! Уничтожьте (или продайте) свой телефон и возьмите новый где-то подальше (не носите свой старый телефон с собой)! Используйте новую (анонимную) SIM-карту, измените поведение вызовов и предупредите своих друзей, разговаривая с ними в реальной жизни, НЕ звоня им!</string>
+    <string name="status_idle_detail_info">Приложение работает в режиме ожидания или загрузки. Меры защиты и обнаружения не включены. Пожалуйста, откройте меню и включите их в разделе СЛЕЖЕНИЕ!</string>
+    <string name="status_ok_detail_info">Никакие угрозы не обнаружены. Наше приложение постоянно проверять вашу сеть на основе мер защиты, которые вы установили в меню и настройках.</string>
+    <string name="status_medium_detail_info">Небезопасная зона обслуживания: По крайней мере, 1 новая или неизвестная БС в эксплуатации в этом районе, или с использованием небезопасного (сломанного) алгоритма шифрования меньшего, чем A5 / 3 [Обнаружение WIP]. Ожидайте, что любые телефонные звонки / SMS, сделанные в этой области могут быть перехвачены и зарегистрированы. Вам лучше оставить это место сейчас.</string>
+    <string name="status_high_detail_info">Враждебные действия обнаружены: IMSI-Перехватчик (IMSIC) или поддельные BTS (FBTS) активно отслеживают пользователей. Активное сканирование происходит в этой области. Вы должны избегать этого места, особенно, если есть политическая нестабильность. Выньте батарею или уничтожьте свой телефон!</string>
+    <string name="status_danger_detail_info">Враждебные отслеживания обнаружены: FBTS или IMSIC активно отслеживают вас и предотвращают ваш телефон от подключения через обычную зашифрованную мобильную связь. Если вы находитесь в опасности, сломайте ваш телефон + SIM и сообщите, что ваш телефон недавно был украден.</string>
+    <string name="status_skull_detail_info">Враждебные манипуляции: Кто-то пытается удаленно управлять вашим телефоном! Уничтожьте (или продайте) свой телефон и возьмите новый где-то подальше (не носите свой старый телефон с собой)! Используйте новую (анонимную) SIM-карту, измените поведение вызовов и предупредите своих друзей, разговаривая с ними в реальной жизни, НЕ звоня им!</string>
 
     <string name="open_cell_id_button_cancel">Отмена</string>
     <string name="open_cell_id_button_ok">OK</string>
@@ -245,8 +245,8 @@
     <string name="cell_tracking_active">Отслеживание активной сотовой ячейки.</string>
     <string name="cell_monitoring_active">Cell Monitoring Active.</string>
     <string name="phone_type">Тип телефона</string>
-    <string name="status_idle">Статус: Неработающий.</string>
-    <string name="status_good">Статус: Хорошо. Угроз не обнаружено.</string>
+    <string name="status_idle_description">Статус: Неработающий.</string>
+    <string name="status_ok_description">Статус: Хорошо. Угроз не обнаружено.</string>
     <string name="alert_threat_detected">ТРЕВОГА: Обнаружены некоторые угрозы!</string>
     <string name="alert_femtocell_connection_detected">ТРЕВОГА: Обнаружено соединение с фемтосотой!</string>
     <string name="alert_silent_sms_detected">ТРЕВОГА: обнаруженный бесшумная SMS!</string>
@@ -281,12 +281,12 @@
     <string name="unable_to_create_map">Невозможно создать карту!</string>
     <string name="describe_the_problem_you_had">ВНИМАНИЕ! Пожалуйста, опишите проблему, которая у вас была, прежде, чем отправить нам эти журналы. НЕТ ПОМОЩИ БЕЗ ОПИСАНИЯ!\n</string>
     <string name="status">Статус:</string>
-    <string name="idle">Неработающий</string>
-    <string name="normal">Нормальный</string>
-    <string name="medium">Средний</string>
-    <string name="high">Высокий</string>
-    <string name="danger">Опасный</string>
-    <string name="run">Беги!</string>
+    <string name="status_idle">Неработающий</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">Средний</string>
+    <string name="status_high">Высокий</string>
+    <string name="status_danger">Опасный</string>
+    <string name="status_skull">Беги!</string>
 
     <!-- Section Main-->
     <string name="help_main_current_threat_level">AIMSICD status, neighboring cells, ciphering method indicator.</string>

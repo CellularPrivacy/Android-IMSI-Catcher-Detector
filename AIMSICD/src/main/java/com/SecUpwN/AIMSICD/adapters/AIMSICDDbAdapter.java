@@ -14,13 +14,13 @@ import android.util.SparseArray;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
+import com.SecUpwN.AIMSICD.enums.Status;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.smsdetection.AdvanceUserItems;
 import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
 import com.SecUpwN.AIMSICD.utils.CMDProcessor;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.MiscUtils;
-import com.SecUpwN.AIMSICD.utils.Status;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -2136,8 +2136,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                 // Short 100 ms Vibration
                 // TODO not elegant solution, vibrator invocation should be moved somewhere else imho
                 boolean vibrationEnabled = mPreferences.getBoolean(mContext.getString(R.string.pref_notification_vibrate_enable), true);
-                int thresholdLevel = Integer.valueOf(mPreferences.getString(mContext.getString(R.string.pref_notification_vibrate_min_level), String.valueOf(Status.Type.MEDIUM.level)));
-                boolean higherLevelThanThreshold = Status.Type.MEDIUM.level <= thresholdLevel;
+                int thresholdLevel = Integer.valueOf(mPreferences.getString(mContext.getString(R.string.pref_notification_vibrate_min_level), String.valueOf(Status.MEDIUM.ordinal())));
+                boolean higherLevelThanThreshold = Status.MEDIUM.ordinal() <= thresholdLevel;
 
                 if (vibrationEnabled && higherLevelThanThreshold) {
                     Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
