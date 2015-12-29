@@ -1007,11 +1007,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         switch (Status.getStatus()) {
             case IDLE: // GRAY
                 contentText = context.getString(R.string.phone_type) + mDevice.getPhoneType();
-                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_idle);
+                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_idle_description);
                 break;
 
             case OK: // GREEN
-                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_good);
+                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_good_description);
                 break;
 
             case MEDIUM: // YELLOW

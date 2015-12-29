@@ -235,8 +235,8 @@
     <string name="cell_tracking_active">Tracking des Cellules Activé.</string>
     <string name="cell_monitoring_active">Monitoring des Cellules Activé.</string>
     <string name="phone_type">Type de Téléphone</string>
-    <string name="status_idle">Statut: Inactif.</string>
-    <string name="status_good">Statut: Bon. Aucune Menace Détectée.</string>
+    <string name="status_idle_description">Statut: Inactif.</string>
+    <string name="status_good_description">Statut: Bon. Aucune Menace Détectée.</string>
     <string name="alert_threat_detected">ALERTE : Menace détectée!</string>
     <string name="alert_femtocell_connection_detected">ALERTE : FemtoCell détectée!</string>
     <string name="alert_silent_sms_detected">ALERTE : SMS silencieux détecté!</string>

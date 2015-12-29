@@ -196,8 +196,8 @@
     <string name="cell_tracking_active">Rastreo de Celda Activo.</string>
     <string name="cell_monitoring_active">Monitoreo de Celda Activo.</string>
     <string name="phone_type">Tipo de Telefono</string>
-    <string name="status_idle">Estado: inactivo.</string>
-    <string name="status_good">Estado: Bueno. No se detectaron amenazas.</string>
+    <string name="status_idle_description">Estado: inactivo.</string>
+    <string name="status_good_description">Estado: Bueno. No se detectaron amenazas.</string>
     <string name="alert_threat_detected">ALERTA: Algunas amenazas detectadas!</string>
     <string name="alert_femtocell_connection_detected">ALERTA: Conexión a FemtoCelda detectada!</string>
     <string name="alert_silent_sms_detected">ALERTA: SMS silencioso detectado!</string>

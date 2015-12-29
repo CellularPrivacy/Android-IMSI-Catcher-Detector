@@ -200,8 +200,8 @@
     <string name="cell_tracking_active">基地局の追跡がアクティブです。</string>
     <string name="cell_monitoring_active">基地局の監視がアクティブです。</string>
     <string name="phone_type">電話の種類</string>
-    <string name="status_idle">ステータス: アイドル。</string>
-    <string name="status_good">ステータス: 良好。脅威は検出されませんでした。</string>
+    <string name="status_idle_description">ステータス: アイドル。</string>
+    <string name="status_good_description">ステータス: 良好。脅威は検出されませんでした。</string>
     <string name="alert_threat_detected">警告: いくつかの脅威が検出されました!</string>
     <string name="alert_femtocell_connection_detected">警告: フェムトセル接続が検出されました!</string>
     <string name="alert_silent_sms_detected">警告: サイレント SMS を検出しました!</string>

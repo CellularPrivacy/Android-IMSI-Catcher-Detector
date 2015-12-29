@@ -201,7 +201,7 @@
     <string name="femtocell_detection_active">Виявлення фемтоточок активовано.</string>
     <string name="cell_tracking_active">Відслідковування стільника активовано.</string>
     <string name="cell_monitoring_active">Моніторинг стільника активовано.</string>
-    <string name="status_good">Статус: Все добре. Загроз не виявлено.</string>
+    <string name="status_good_description">Статус: Все добре. Загроз не виявлено.</string>
     <string name="service_state_changed">Статус сервісу змінено!</string>
     <string name="stopped_tracking_femtocell">: Зупинено моніторинг з\'єднання з фемтоточкою.</string>
     <string name="download_error">Помилка завантаження:</string>

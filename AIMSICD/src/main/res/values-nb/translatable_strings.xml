@@ -206,8 +206,8 @@
     <string name="cell_tracking_active">Cellesporing Aktiv.</string>
     <string name="cell_monitoring_active">Celleovervåking Aktiv.</string>
     <string name="phone_type">Telefon Type</string>
-    <string name="status_idle">Status: Pause.</string>
-    <string name="status_good">Status: God. Ingen Trusler oppdaget.</string>
+    <string name="status_idle_description">Status: Pause.</string>
+    <string name="status_good_description">Status: God. Ingen Trusler oppdaget.</string>
     <string name="alert_threat_detected">ALARM: Noen Trusler Oppdaget!</string>
     <string name="alert_femtocell_connection_detected">ALARM: FemtoCell Tilkobling Oppdaget!</string>
     <string name="alert_silent_sms_detected">ALARM: Stille SMS oppdaget!</string>

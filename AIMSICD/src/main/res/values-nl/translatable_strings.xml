@@ -194,8 +194,8 @@
     <string name="hostile_service_area_changing_lac_detected">Vijandig gebied: veranderende LAC waargenomen!</string>
     <string name="femtocell_detection_active">FemtoCell detectie actief.</string>
     <string name="phone_type">Telefoon type</string>
-    <string name="status_idle">Status: inactief.</string>
-    <string name="status_good">Status: goed. Geen risico\'s gedetecteerd..</string>
+    <string name="status_idle_description">Status: inactief.</string>
+    <string name="status_good_description">Status: goed. Geen risico\'s gedetecteerd..</string>
     <string name="alert_threat_detected">ALARM: risico\'s waargenomen!</string>
     <string name="alert_femtocell_connection_detected">ALARM: FemtoCell verbinding gedetecteerd!</string>
     <string name="alert_silent_sms_detected">ALARM: stil SMS bericht waargenomen!</string>
