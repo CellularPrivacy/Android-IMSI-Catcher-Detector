@@ -5,8 +5,14 @@
  */
 package com.SecUpwN.AIMSICD.utils;
 
-import com.SecUpwN.AIMSICD.AppAIMSICD;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.enums.Status;
+
+import io.freefair.android.util.function.Function;
 
 /**
  * Class that holds and returns the correct icon based on requested icon format and
@@ -15,77 +21,105 @@ import com.SecUpwN.AIMSICD.R;
  * @author Tor Henning Ueland
  */
 public class Icon {
+
     public enum Type {
-        FLAT,
-        SENSE,
-        WHITE,
+
+        /**
+         * FLAT Icon-Style
+         */
+        FLAT(
+                new Function<Status, Integer>() {
+                    @NonNull
+                    @Override
+                    public Integer apply(Status status) {
+                        switch (status) {
+                            case IDLE:
+                                return R.drawable.flat_idle;
+                            case OK:
+                                return R.drawable.flat_ok;
+                            case MEDIUM:
+                                return R.drawable.flat_medium;
+                            case HIGH:
+                                return R.drawable.flat_high;
+                            case DANGER:
+                                return R.drawable.flat_danger;
+                            case SKULL:
+                                return R.drawable.flat_skull;
+                            default:
+                                return R.drawable.flat_idle;
+                        }
+                    }
+                }
+        ),
+        /**
+         * SENSE Icon-Style
+         */
+        SENSE(
+                new Function<Status, Integer>() {
+                    @NonNull
+                    @Override
+                    public Integer apply(@Nullable Status status) {
+                        switch (status) {
+                            case IDLE:
+                                return R.drawable.sense_idle;
+                            case OK:
+                                return R.drawable.sense_ok;
+                            case MEDIUM:
+                                return R.drawable.sense_medium;
+                            case HIGH:
+                                return R.drawable.sense_high;
+                            case DANGER:
+                                return R.drawable.sense_danger;
+                            case SKULL:
+                                return R.drawable.sense_skull;
+                            default:
+                                return R.drawable.sense_idle;
+                        }
+                    }
+                }
+        ),
+        /**
+         * WHITE Icon-Style
+         */
+        WHITE(
+                new Function<Status, Integer>() {
+                    @NonNull
+                    @Override
+                    public Integer apply(@Nullable Status status) {
+                        switch (status) {
+                            case IDLE:
+                                return R.drawable.white_idle;
+                            case OK:
+                                return R.drawable.white_ok;
+                            case MEDIUM:
+                                return R.drawable.white_medium;
+                            case HIGH:
+                                return R.drawable.white_high;
+                            case DANGER:
+                                return R.drawable.white_danger;
+                            case SKULL:
+                                return R.drawable.white_skull;
+                            default:
+                                return R.drawable.white_idle;
+                        }
+                    }
+                }
+        );
+
+        Function<Status, Integer> iconMapper;
+
+        Type(Function<Status, Integer> iconMapper) {
+            this.iconMapper = iconMapper;
+        }
     }
 
-    /*
+    /**
      * Returns a icon of the Type $t, what kind of icon is returned is decided
      * from what the current status is.
      */
-    // TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
-    // See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
-    // Dependencies:  Status.java, CellTracker.java, Icon.java ( + others?)
-    // They should be based on the detection scores here: <TBA>
-    // -- E:V:A 2015-01-19
-    public static int getIcon(Type t) {
-        switch(t) {
-            case FLAT:
-                switch (AppAIMSICD.getInstance().getStatus()) {
-                    case IDLE:
-                        return R.drawable.flat_idle;
-
-                    case OK:
-                        return R.drawable.flat_ok;
-
-                    case MEDIUM:
-                        return R.drawable.flat_medium;
-
-                    case DANGER:
-                        return R.drawable.flat_danger;
-
-                    default:
-                        return R.drawable.flat_idle;
-                }
-
-            case SENSE:
-                switch (AppAIMSICD.getInstance().getStatus()) {
-                    case IDLE:
-                        return R.drawable.sense_idle;
-
-                    case OK:
-                        return R.drawable.sense_ok;
-
-                    case MEDIUM:
-                        return R.drawable.sense_medium;
-
-                    case DANGER:
-                        return R.drawable.sense_danger;
-
-                    default:
-                        return R.drawable.sense_idle;
-                }
-
-            case WHITE:
-                switch (AppAIMSICD.getInstance().getStatus()) {
-                    case IDLE:
-                        return R.drawable.white_idle;
-
-                    case OK:
-                        return R.drawable.white_ok;
-
-                    case MEDIUM:
-                        return R.drawable.white_medium;
-
-                    case DANGER:
-                        return R.drawable.white_danger;
-
-                    default:
-                        return R.drawable.white_idle;
-                }
-        }
-        return -1;
+    @SuppressWarnings("ConstantConditions")
+    @DrawableRes
+    public static int getIcon(Type type, Status status) {
+        return type.iconMapper.apply(status);
     }
 }

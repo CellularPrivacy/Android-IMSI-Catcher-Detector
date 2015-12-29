@@ -61,7 +61,7 @@ public class BaseActivity extends InjectionAppCompatActivity {
             @Override
             public void run() {
                 if(getActionBar() != null) {
-                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType)));
+                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD)getApplication()).getStatus()));
                 }
             }
         });

@@ -985,15 +985,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         String contentText = "Phone Type " + mDevice.getPhoneType();
 
         if (mFemtoDetected || mTypeZeroSmsDetected) {
-            AppAIMSICD.getInstance().setCurrentStatus(Status.DANGER, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.DANGER, mVibrateEnabled, mVibrateMinThreatLevel);
         } else if (mChangedLAC) {
-            AppAIMSICD.getInstance().setCurrentStatus(Status.MEDIUM, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.MEDIUM, mVibrateEnabled, mVibrateMinThreatLevel);
             contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
         } else if(mCellIdNotInOpenDb){
-            AppAIMSICD.getInstance().setCurrentStatus(Status.MEDIUM, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.MEDIUM, mVibrateEnabled, mVibrateMinThreatLevel);
             contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
         } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
-            AppAIMSICD.getInstance().setCurrentStatus(Status.OK, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.OK, mVibrateEnabled, mVibrateMinThreatLevel);
             if (mTrackingFemtocell) {
                 contentText = context.getString(R.string.femtocell_detection_active);
             } else if (mTrackingCell) {
@@ -1002,10 +1002,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 contentText = context.getString(R.string.cell_monitoring_active);
             }
         } else {
-            AppAIMSICD.getInstance().setCurrentStatus(Status.IDLE, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.IDLE, mVibrateEnabled, mVibrateMinThreatLevel);
         }
 
-        switch (AppAIMSICD.getInstance().getStatus()) {
+        Status status = getApplication().getStatus();
+        switch (status) {
             case IDLE: // GRAY
                 contentText = context.getString(R.string.phone_type) + mDevice.getPhoneType();
                 tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_idle_description);
@@ -1056,7 +1057,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType));
+        int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType), status);
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconResId);
 
         Notification mBuilder = new NotificationCompat.Builder(context)
@@ -1072,6 +1073,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
+    }
+
+    private AppAIMSICD getApplication() {
+        return AppAIMSICD.getInstance();
     }
 
     /**
