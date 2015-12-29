@@ -79,12 +79,12 @@
     <string name="about_changelog">LISTA ZMIAN</string>
     <string name="about_license">LICENCJA</string>
     <string name="about_credits">TWÓRCY</string>
-    <string name="about_desc_icon_idle">Bezczynność / Ładowanie.</string>
-    <string name="about_desc_icon_active_tracking_near">Aktywne śledzenie blisko Ciebie!</string>
-    <string name="about_desc_icon_ok">Wszystko OK.</string>
-    <string name="about_desc_icon_tracked_down">Jesteś śledzony!</string>
-    <string name="about_desc_icon_insecure_area">Niebezpieczny obszar. Opóść go!</string>
-    <string name="about_desc_icon_skull">Uciekaj! Telefon ulega manipulacji!</string>
+    <string name="status_idle_about_desc">Bezczynność / Ładowanie.</string>
+    <string name="status_high_about_desc">Aktywne śledzenie blisko Ciebie!</string>
+    <string name="status_ok_about_desc">Wszystko OK.</string>
+    <string name="status_danger_about_desc">Jesteś śledzony!</string>
+    <string name="status_medium_about_desc">Niebezpieczny obszar. Opóść go!</string>
+    <string name="status_skull_about_desc">Uciekaj! Telefon ulega manipulacji!</string>
     <string name="about_desc_icon_title">Kliknij na ikonę by uzyskać więcej informacji:</string>
 
 
@@ -229,7 +229,7 @@
     <string name="cell_monitoring_active">Monitoring komórek aktywny.</string>
     <string name="phone_type">Rodzaj telefonu</string>
     <string name="status_idle_description">Status: Oczekuję.</string>
-    <string name="status_good_description">Brak zagrożeń. Wszystko OK.</string>
+    <string name="status_ok_description">Brak zagrożeń. Wszystko OK.</string>
     <string name="alert_threat_detected">UWAGA: Wykryto zagrożenie!</string>
     <string name="alert_femtocell_connection_detected">UWAGA: Wykryto połączenie FemtoCell!</string>
     <string name="alert_silent_sms_detected">UWAGA: Wykryto Silent SMS!</string>

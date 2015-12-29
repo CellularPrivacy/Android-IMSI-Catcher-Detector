@@ -70,12 +70,12 @@
     <string name="about_changelog">変更履歴</string>
     <string name="about_license">ライセンス</string>
     <string name="about_credits">クレジット</string>
-    <string name="about_desc_icon_idle">アイドル / ロード中。</string>
-    <string name="about_desc_icon_active_tracking_near">あなたの近くでアクティブな追跡!</string>
-    <string name="about_desc_icon_ok">すべて OK です。</string>
-    <string name="about_desc_icon_tracked_down">あなたは追跡されています!</string>
-    <string name="about_desc_icon_insecure_area">安全でないサービス エリア。離れてください!</string>
-    <string name="about_desc_icon_skull">実行! 携帯電話の操作!</string>
+    <string name="status_idle_about_desc">アイドル / ロード中。</string>
+    <string name="status_high_about_desc">あなたの近くでアクティブな追跡!</string>
+    <string name="status_ok_about_desc">すべて OK です。</string>
+    <string name="status_danger_about_desc">あなたは追跡されています!</string>
+    <string name="status_medium_about_desc">安全でないサービス エリア。離れてください!</string>
+    <string name="status_skull_about_desc">実行! 携帯電話の操作!</string>
     <string name="about_desc_icon_title">詳細は、下のステータス アイコンを押してください:</string>
 
 
@@ -201,7 +201,7 @@
     <string name="cell_monitoring_active">基地局の監視がアクティブです。</string>
     <string name="phone_type">電話の種類</string>
     <string name="status_idle_description">ステータス: アイドル。</string>
-    <string name="status_good_description">ステータス: 良好。脅威は検出されませんでした。</string>
+    <string name="status_ok_description">ステータス: 良好。脅威は検出されませんでした。</string>
     <string name="alert_threat_detected">警告: いくつかの脅威が検出されました!</string>
     <string name="alert_femtocell_connection_detected">警告: フェムトセル接続が検出されました!</string>
     <string name="alert_silent_sms_detected">警告: サイレント SMS を検出しました!</string>

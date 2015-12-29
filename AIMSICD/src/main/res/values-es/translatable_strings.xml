@@ -69,12 +69,12 @@
     <string name="about_changelog">REGISTRO DE CAMBIOS</string>
     <string name="about_license">LICENCIA</string>
     <string name="about_credits">CREDITOS</string>
-    <string name="about_desc_icon_idle">inactivo / Cargando.</string>
-    <string name="about_desc_icon_active_tracking_near">Rastreo Activo Cerca Suyo!</string>
-    <string name="about_desc_icon_ok">Ningun Problema.</string>
-    <string name="about_desc_icon_tracked_down">Usted esta Siendo Rastreado!</string>
-    <string name="about_desc_icon_insecure_area">Area de Servicio Insegura. Alejese!</string>
-    <string name="about_desc_icon_skull">CORRA! Telefono Manipulado!</string>
+    <string name="status_idle_about_desc">inactivo / Cargando.</string>
+    <string name="status_high_about_desc">Rastreo Activo Cerca Suyo!</string>
+    <string name="status_ok_about_desc">Ningun Problema.</string>
+    <string name="status_danger_about_desc">Usted esta Siendo Rastreado!</string>
+    <string name="status_medium_about_desc">Area de Servicio Insegura. Alejese!</string>
+    <string name="status_skull_about_desc">CORRA! Telefono Manipulado!</string>
     <string name="about_desc_icon_title">Iconos de estado pulse a continuación para obtener información detallada:</string>
 
     <string name="network_netid">ID de Red:</string>
@@ -197,7 +197,7 @@
     <string name="cell_monitoring_active">Monitoreo de Celda Activo.</string>
     <string name="phone_type">Tipo de Telefono</string>
     <string name="status_idle_description">Estado: inactivo.</string>
-    <string name="status_good_description">Estado: Bueno. No se detectaron amenazas.</string>
+    <string name="status_ok_description">Estado: Bueno. No se detectaron amenazas.</string>
     <string name="alert_threat_detected">ALERTA: Algunas amenazas detectadas!</string>
     <string name="alert_femtocell_connection_detected">ALERTA: Conexión a FemtoCelda detectada!</string>
     <string name="alert_silent_sms_detected">ALERTA: SMS silencioso detectado!</string>

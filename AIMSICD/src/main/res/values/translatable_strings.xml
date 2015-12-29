@@ -87,12 +87,12 @@
     <string name="about_changelog">CHANGELOG</string>
     <string name="about_license">LICENSE</string>
     <string name="about_credits">CREDITS</string>
-    <string name="about_desc_icon_idle">Idle / Loading.</string>
-    <string name="about_desc_icon_active_tracking_near">Active tracking close to you!</string>
-    <string name="about_desc_icon_ok">Everything OK.</string>
-    <string name="about_desc_icon_tracked_down">You are being tracked down!</string>
-    <string name="about_desc_icon_insecure_area">Insecure Service Area. Leave it!</string>
-    <string name="about_desc_icon_skull">RUN! Handset manipulated!</string>
+    <string name="status_idle_about_desc">Idle / Loading.</string>
+    <string name="status_high_about_desc">Active tracking close to you!</string>
+    <string name="status_ok_about_desc">Everything OK.</string>
+    <string name="status_danger_about_desc">You are being tracked down!</string>
+    <string name="status_medium_about_desc">Insecure Service Area. Leave it!</string>
+    <string name="status_skull_about_desc">RUN! Handset manipulated!</string>
     <string name="about_desc_icon_title">Press Status Icons below for detailed Information:</string>
 
     <!-- CDMA LAYOUT -->
@@ -247,7 +247,7 @@
     <string name="cell_monitoring_active">Cell Monitoring Active.</string>
     <string name="phone_type">Phone Type</string>
     <string name="status_idle_description">Status: Idle.</string>
-    <string name="status_good_description">Status: Good. No Threats Detected.</string>
+    <string name="status_ok_description">Status: Good. No Threats Detected.</string>
     <string name="alert_threat_detected">ALERT: Some Threat Detected!</string>
     <string name="alert_femtocell_connection_detected">ALERT: FemtoCell Connection Detected!</string>
     <string name="alert_silent_sms_detected">ALERT: Silent SMS detected!</string>

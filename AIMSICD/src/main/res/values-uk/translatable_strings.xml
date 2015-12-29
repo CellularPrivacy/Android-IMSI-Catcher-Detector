@@ -49,8 +49,8 @@
     <string name="app_version">Версія: %s</string>
     <string name="about_github">AIMSICD на GitHub</string>
     <string name="about_wiki">ДОКУМЕНТАЦІЯ</string>
-    <string name="about_desc_icon_idle">Очікування/Завантаження.</string>
-    <string name="about_desc_icon_ok">Все гаразд.</string>
+    <string name="status_idle_about_desc">Очікування/Завантаження.</string>
+    <string name="status_ok_about_desc">Все гаразд.</string>
     <string name="network_netid">ID мережі:</string>
     <string name="network_sysid">ID системи:</string>
     <string name="network_baseid">ID базової станції:</string>
@@ -110,9 +110,9 @@
     <string name="about_disclaimer">ВІДМОВА ВІД ВІДПОВІДАЛЬНОСТІ</string>
     <string name="about_releases">РЕЛІЗИ</string>
     <string name="about_changelog">Перелік змін</string>
-    <string name="about_desc_icon_tracked_down">Вас відстежують!</string>
-    <string name="about_desc_icon_insecure_area">Небезпечна зона обслуговування. Залиште її!</string>
-    <string name="about_desc_icon_skull">Тікай! Маніпулюють телефоном!</string>
+    <string name="status_danger_about_desc">Вас відстежують!</string>
+    <string name="status_medium_about_desc">Небезпечна зона обслуговування. Залиште її!</string>
+    <string name="status_skull_about_desc">Тікай! Маніпулюють телефоном!</string>
     <string name="about_desc_icon_title">Натисніть на піктограму стану для отримання більш детальної інформації:</string>
 
     <string name="location_error_title">Визначення координат вимкнуто</string>
@@ -201,7 +201,7 @@
     <string name="femtocell_detection_active">Виявлення фемтоточок активовано.</string>
     <string name="cell_tracking_active">Відслідковування стільника активовано.</string>
     <string name="cell_monitoring_active">Моніторинг стільника активовано.</string>
-    <string name="status_good_description">Статус: Все добре. Загроз не виявлено.</string>
+    <string name="status_ok_description">Статус: Все добре. Загроз не виявлено.</string>
     <string name="service_state_changed">Статус сервісу змінено!</string>
     <string name="stopped_tracking_femtocell">: Зупинено моніторинг з\'єднання з фемтоточкою.</string>
     <string name="download_error">Помилка завантаження:</string>

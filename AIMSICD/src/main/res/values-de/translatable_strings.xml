@@ -89,12 +89,12 @@
     <string name="about_changelog">ÄNDERUNGEN</string>
     <string name="about_license">LIZENZ</string>
     <string name="about_credits">DANKSAGUNG</string>
-    <string name="about_desc_icon_idle">Ruht / Lädt.</string>
-    <string name="about_desc_icon_active_tracking_near">Verfolgung nahe!</string>
-    <string name="about_desc_icon_ok">Alles in Ordnung.</string>
-    <string name="about_desc_icon_tracked_down">Du wirst verfolgt!</string>
-    <string name="about_desc_icon_insecure_area">Unsichere Zone. Verlassen!</string>
-    <string name="about_desc_icon_skull">RENN! Gerät manipuliert!</string>
+    <string name="status_idle_about_desc">Ruht / Lädt.</string>
+    <string name="status_high_about_desc">Verfolgung nahe!</string>
+    <string name="status_ok_about_desc">Alles in Ordnung.</string>
+    <string name="status_danger_about_desc">Du wirst verfolgt!</string>
+    <string name="status_medium_about_desc">Unsichere Zone. Verlassen!</string>
+    <string name="status_skull_about_desc">RENN! Gerät manipuliert!</string>
     <string name="about_desc_icon_title">Drücke die Status-Symbole für mehr Informationen:</string>
     
     <!-- CDMA LAYOUT -->
@@ -238,7 +238,7 @@
     <string name="cell_monitoring_active">Funkzellen werden beobachtet.</string>
     <string name="phone_type">Telefonart</string>
     <string name="status_idle_description">Status: Ruhend.</string>
-    <string name="status_good_description">Status: Gut. Keine Gefahren erkannt.</string>
+    <string name="status_ok_description">Status: Gut. Keine Gefahren erkannt.</string>
     <string name="alert_threat_detected">ALARM: Eine Gefahr wurde erkannt!</string>
     <string name="alert_femtocell_connection_detected">ALARM: Verbinding mit Femtozelle erkannt!</string>
     <string name="alert_silent_sms_detected">ALARM: Stille SMS erkannt!</string>

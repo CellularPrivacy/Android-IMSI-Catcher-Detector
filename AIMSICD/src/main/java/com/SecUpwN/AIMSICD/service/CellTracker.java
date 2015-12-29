@@ -1013,7 +1013,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 break;
 
             case OK: // GREEN
-                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_good_description);
+                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_ok_description);
                 break;
 
             case MEDIUM: // YELLOW

@@ -69,12 +69,12 @@
     <string name="about_changelog">NDRYSHIMET</string>
     <string name="about_license">LIÇENCA</string>
     <string name="about_credits">PIKËT</string>
-    <string name="about_desc_icon_idle">Bosh / Ngarkuar.</string>
-    <string name="about_desc_icon_active_tracking_near">Gjurmim aktiv afër jush!</string>
-    <string name="about_desc_icon_ok">Çdo gjë në rregull.</string>
-    <string name="about_desc_icon_tracked_down">Ju jeni gjermuar!</string>
-    <string name="about_desc_icon_insecure_area">Ambjent i pasigurtë. Largohuni!</string>
-    <string name="about_desc_icon_skull">Në punë! Kufjet e manipuluara!</string>
+    <string name="status_idle_about_desc">Bosh / Ngarkuar.</string>
+    <string name="status_high_about_desc">Gjurmim aktiv afër jush!</string>
+    <string name="status_ok_about_desc">Çdo gjë në rregull.</string>
+    <string name="status_danger_about_desc">Ju jeni gjermuar!</string>
+    <string name="status_medium_about_desc">Ambjent i pasigurtë. Largohuni!</string>
+    <string name="status_skull_about_desc">Në punë! Kufjet e manipuluara!</string>
     <string name="about_desc_icon_title">Shtypni ikonën e statusit më poshtë për informacione të detajuara:</string>
 
     <string name="network_netid">ID e rrjetit:</string>

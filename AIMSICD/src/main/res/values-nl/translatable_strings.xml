@@ -67,11 +67,11 @@
     <string name="about_changelog">VERANDERINGEN</string>
     <string name="about_license">LICENTIE</string>
     <string name="about_credits">MET DANK AAN</string>
-    <string name="about_desc_icon_active_tracking_near">Actieve tracking dichtbij!</string>
-    <string name="about_desc_icon_ok">Alles OK.</string>
-    <string name="about_desc_icon_tracked_down">U wordt gevolgd!</string>
-    <string name="about_desc_icon_insecure_area">Onveilig service gebied. Ga weg!</string>
-    <string name="about_desc_icon_skull">RENNEN! Telefoon wordt gemanipuleerd!</string>
+    <string name="status_high_about_desc">Actieve tracking dichtbij!</string>
+    <string name="status_ok_about_desc">Alles OK.</string>
+    <string name="status_danger_about_desc">U wordt gevolgd!</string>
+    <string name="status_medium_about_desc">Onveilig service gebied. Ga weg!</string>
+    <string name="status_skull_about_desc">RENNEN! Telefoon wordt gemanipuleerd!</string>
     <string name="about_desc_icon_title">Druk op de statusiconen hieronder voor meer informatie:</string>
 
     <string name="network_netid">Netwerk ID:</string>
@@ -86,7 +86,7 @@
     <string name="pref_autostart_summ">Service automatisch starten bij opstarten telefoon</string>
     <string name="disclaimer">"Door het gebruik van AIMSICD begrijpt u en gaat u er mee akkoord dat AIMSICD een experimenteel en informatief Android programma is dat door verschillende redenen mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het op andere manieren die de ontwikkelaars momenteel nog niet begrijpen omzeild kan worden. U begrijpt en gaat er tevens mee akkoord dat dit de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. "</string>
 
-    <string name="about_desc_icon_idle">Inactief / aan het laden.</string>
+    <string name="status_idle_about_desc">Inactief / aan het laden.</string>
     <string name="pref_persistservice_title">Permanente service</string>
     <string name="pref_persistservice_summ">Service blijft actief na afsluiten applicatie (vink uit om helemaal te sluiten)</string>
     <string name="pref_protection_title">Beveiligingsinstellingen</string>
@@ -195,7 +195,7 @@
     <string name="femtocell_detection_active">FemtoCell detectie actief.</string>
     <string name="phone_type">Telefoon type</string>
     <string name="status_idle_description">Status: inactief.</string>
-    <string name="status_good_description">Status: goed. Geen risico\'s gedetecteerd..</string>
+    <string name="status_ok_description">Status: goed. Geen risico\'s gedetecteerd..</string>
     <string name="alert_threat_detected">ALARM: risico\'s waargenomen!</string>
     <string name="alert_femtocell_connection_detected">ALARM: FemtoCell verbinding gedetecteerd!</string>
     <string name="alert_silent_sms_detected">ALARM: stil SMS bericht waargenomen!</string>

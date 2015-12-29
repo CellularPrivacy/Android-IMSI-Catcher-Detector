@@ -68,12 +68,12 @@
     <string name="about_changelog">ENDRINGSLOGG</string>
     <string name="about_license">LISENS</string>
     <string name="about_credits">CREDITS</string>
-    <string name="about_desc_icon_idle">Venter / Laster</string>
-    <string name="about_desc_icon_active_tracking_near">Aktiv sporing nær deg!</string>
-    <string name="about_desc_icon_ok">Alt OK.</string>
-    <string name="about_desc_icon_tracked_down">Du blir sporet!</string>
-    <string name="about_desc_icon_insecure_area">"Utrygt tjenesteområde.  Forlat det!"</string>
-    <string name="about_desc_icon_skull">"SPRING!  Håndsettet er manipulert!"</string>
+    <string name="status_idle_about_desc">Venter / Laster</string>
+    <string name="status_high_about_desc">Aktiv sporing nær deg!</string>
+    <string name="status_ok_about_desc">Alt OK.</string>
+    <string name="status_danger_about_desc">Du blir sporet!</string>
+    <string name="status_medium_about_desc">"Utrygt tjenesteområde.  Forlat det!"</string>
+    <string name="status_skull_about_desc">"SPRING!  Håndsettet er manipulert!"</string>
     <string name="about_desc_icon_title">Trykk status-ikonet under for detaljert informasjon:</string>
 
     <string name="network_netid">Nettverk-ID:</string>
@@ -207,7 +207,7 @@
     <string name="cell_monitoring_active">Celleovervåking Aktiv.</string>
     <string name="phone_type">Telefon Type</string>
     <string name="status_idle_description">Status: Pause.</string>
-    <string name="status_good_description">Status: God. Ingen Trusler oppdaget.</string>
+    <string name="status_ok_description">Status: God. Ingen Trusler oppdaget.</string>
     <string name="alert_threat_detected">ALARM: Noen Trusler Oppdaget!</string>
     <string name="alert_femtocell_connection_detected">ALARM: FemtoCell Tilkobling Oppdaget!</string>
     <string name="alert_silent_sms_detected">ALARM: Stille SMS oppdaget!</string>

@@ -96,12 +96,12 @@
     <string name="about_changelog">Лог изменений</string>
     <string name="about_license">Соглашение</string>
     <string name="about_credits">CREDITS</string>
-    <string name="about_desc_icon_idle">Ожидание / Загрузка.</string>
-    <string name="about_desc_icon_active_tracking_near">Active tracking close to you!</string>
-    <string name="about_desc_icon_ok">Все OK.</string>
-    <string name="about_desc_icon_tracked_down">Вас отслеживают!</string>
-    <string name="about_desc_icon_insecure_area">Небезопасная зона обслуживания. Покиньте ее!</string>
-    <string name="about_desc_icon_skull">Беги! Манипулируют телефоном!</string>
+    <string name="status_idle_about_desc">Ожидание / Загрузка.</string>
+    <string name="status_high_about_desc">Active tracking close to you!</string>
+    <string name="status_ok_about_desc">Все OK.</string>
+    <string name="status_danger_about_desc">Вас отслеживают!</string>
+    <string name="status_medium_about_desc">Небезопасная зона обслуживания. Покиньте ее!</string>
+    <string name="status_skull_about_desc">Беги! Манипулируют телефоном!</string>
     <string name="about_desc_icon_title">Нажмите значки состояния ниже для более подробной информации:</string>
 
     <!-- CDMA LAYOUT -->
@@ -246,7 +246,7 @@
     <string name="cell_monitoring_active">Cell Monitoring Active.</string>
     <string name="phone_type">Тип телефона</string>
     <string name="status_idle_description">Статус: Неработающий.</string>
-    <string name="status_good_description">Статус: Хорошо. Угроз не обнаружено.</string>
+    <string name="status_ok_description">Статус: Хорошо. Угроз не обнаружено.</string>
     <string name="alert_threat_detected">ТРЕВОГА: Обнаружены некоторые угрозы!</string>
     <string name="alert_femtocell_connection_detected">ТРЕВОГА: Обнаружено соединение с фемтосотой!</string>
     <string name="alert_silent_sms_detected">ТРЕВОГА: обнаруженный бесшумная SMS!</string>

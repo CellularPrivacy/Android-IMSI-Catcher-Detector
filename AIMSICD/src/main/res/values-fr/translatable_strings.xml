@@ -86,12 +86,12 @@
     <string name="about_changelog">CHANGELOG</string>
     <string name="about_license">LICENSE</string>
     <string name="about_credits">CREDITS</string>
-    <string name="about_desc_icon_idle">Au Repos / Chargement.</string>
-    <string name="about_desc_icon_active_tracking_near">Tracking actif près de vous !</string>
-    <string name="about_desc_icon_ok">Tout est OK.</string>
-    <string name="about_desc_icon_tracked_down">Vous êtes traqué !</string>
-    <string name="about_desc_icon_insecure_area">Zone avec un service non sécurisé. Quittez la!</string>
-    <string name="about_desc_icon_skull">COURREZ! Votre Appareil est Manipulé!</string>
+    <string name="status_idle_about_desc">Au Repos / Chargement.</string>
+    <string name="status_high_about_desc">Tracking actif près de vous !</string>
+    <string name="status_ok_about_desc">Tout est OK.</string>
+    <string name="status_danger_about_desc">Vous êtes traqué !</string>
+    <string name="status_medium_about_desc">Zone avec un service non sécurisé. Quittez la!</string>
+    <string name="status_skull_about_desc">COURREZ! Votre Appareil est Manipulé!</string>
     <string name="about_desc_icon_title">Appuyez sur les icônes ci-dessous pour plus d\'informations :</string>
 
 
@@ -236,7 +236,7 @@
     <string name="cell_monitoring_active">Monitoring des Cellules Activé.</string>
     <string name="phone_type">Type de Téléphone</string>
     <string name="status_idle_description">Statut: Inactif.</string>
-    <string name="status_good_description">Statut: Bon. Aucune Menace Détectée.</string>
+    <string name="status_ok_description">Statut: Bon. Aucune Menace Détectée.</string>
     <string name="alert_threat_detected">ALERTE : Menace détectée!</string>
     <string name="alert_femtocell_connection_detected">ALERTE : FemtoCell détectée!</string>
     <string name="alert_silent_sms_detected">ALERTE : SMS silencieux détecté!</string>
