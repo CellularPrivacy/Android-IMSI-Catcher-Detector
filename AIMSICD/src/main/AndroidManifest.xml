@@ -128,9 +128,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.CreditsRollActivity"
-            android:screenOrientation="portrait"> </activity>
-
         <activity
             android:name=".smsdetection.AdvancedUserActivity"
             android:label="@string/title_activity_advanced_user" >

@@ -5,7 +5,6 @@
  */
 package com.SecUpwN.AIMSICD.activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
@@ -129,6 +129,19 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 showInfoDialog(Status.RUN);
             }
         });
+
+        btncredits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new AlertDialog.Builder(AboutActivity.this)
+                        .setTitle(R.string.about_credits)
+                        .setMessage(MiscUtils.setAssetsString(getApplicationContext()))
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+
+            }
+        });
     }
 
     private void setLink(View b, final int link) {
@@ -140,15 +153,6 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        btncredits.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(AboutActivity.this, CreditsRollActivity.class);
-                startActivity(i);
-            }
-        });
-
     }
 
     private void showInfoDialog(Status status) {
@@ -156,12 +160,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 .setIcon(status.getIcon())
                 .setTitle(getString(R.string.status) + "\t" + getString(status.getName()))
                 .setMessage(status.getDescription())
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+                .setPositiveButton(android.R.string.ok, null)
                 .show();
     }
 
