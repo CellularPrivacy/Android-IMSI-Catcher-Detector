@@ -28,9 +28,6 @@ import java.util.Locale;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
-/**
- * Description:     TODO
- */
 public class MiscUtils {
 
     private static final Logger log = AndroidLogger.forClass(MiscUtils.class);
