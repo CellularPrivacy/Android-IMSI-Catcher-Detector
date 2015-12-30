@@ -47,9 +47,8 @@ import io.freefair.android.injection.app.InjectionService;
 import io.freefair.android.util.logging.Logger;
 
 /**
- *  Description:    This starts the (background?) AIMSICD service to check for SMS and track
- *                  cells with or without GPS enabled.
- *                  TODO: better and more detailed explanation!
+ * This starts the (background?) AIMSICD service to check for SMS and track
+ * cells with or without GPS enabled.
  */
 public class AimsicdService extends InjectionService {
 
