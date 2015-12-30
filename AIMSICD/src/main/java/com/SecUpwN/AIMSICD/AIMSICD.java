@@ -64,13 +64,6 @@ import java.util.List;
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.util.logging.Logger;
 
-/**
- * Description:     TODO: Please add some comments about this class
- * <p>
- * Dependencies:    TODO: Write a few words about where the content of this is used.
- * <p>
- * Issues:
- */
 public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     @Inject
@@ -232,14 +225,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     /**
-     * Description:     Swaps fragments in the main content view
+     * Swaps fragments in the main content view
      */
     void selectItem(int position) {
         NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
         String title = selectedItem.getLabel();
 
         /**
-         * This is a work-around for Issue 42601
+         * This is a work-around for Android Issue 42601
          * https://code.google.com/p/android/issues/detail?id=42601
          *
          * The method getChildFragmentManager() does not clear up
@@ -304,7 +297,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESET_DB) {
             // WARNING! This deletes the entire database, thus any subsequent DB access will FC app.
             //          Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
-            //          See: #581 and Helpers.java
+            //          See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/581 and Helpers.java
             Helpers.askAndDeleteDb(this);
 
 
@@ -647,22 +640,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     /**
-     * Description:     Cell Information Tracking - Enable/Disable
-     * <p>
-     * TODO: Clarify usage and what functions we would like this to provide. - Are we toggling GPS
-     * location tracking? - Are we logging measurement data into DBi? - Are we locking phone to
-     * 2/3/4G operation?
+     * Cell Information Tracking - Enable/Disable
      */
     private void trackCell() {
         mAimsicdService.setCellTracking(mAimsicdService.isTrackingCell());
     }
 
     /**
-     * Description:     Cell Information Monitoring - Enable/Disable
-     * <p>
-     * TODO: Clarify usage and what functions we would like this to provide. - Are we temporarily
-     * disabling AIMSICD monitoring? (IF yes, why not just Quit?) - Are we ignoring Detection
-     * alarms? - Are we logging something?
+     * Cell Information Monitoring - Enable/Disable
      */
     private void monitorCell() {
         mAimsicdService.setCellMonitoring(!mAimsicdService.isMonitoringCell());
@@ -688,10 +673,10 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     /**
      * Moves file from user directory to app-dedicated directory.
-     * <p>
+     * 
      * TODO: Remove move in 2016. All people should have more than enough time to update their
      * AIMSICD this method will be obsolete.
-     * <p>
+     * 
      */
     private void moveData() {
         // /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/
