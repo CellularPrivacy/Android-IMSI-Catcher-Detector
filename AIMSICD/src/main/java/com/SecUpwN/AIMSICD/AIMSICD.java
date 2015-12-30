@@ -97,8 +97,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        moveData();
-
         mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
 
         setContentView(mNavConf.getMainLayout());
@@ -670,5 +668,4 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         super.onStart();
         ((AppAIMSICD) getApplication()).attach(this);
     }
-
 }
