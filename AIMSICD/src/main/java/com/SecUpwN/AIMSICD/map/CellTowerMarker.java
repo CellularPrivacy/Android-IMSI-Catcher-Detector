@@ -79,7 +79,6 @@ public class CellTowerMarker extends Marker {
                 tv.setText(String.valueOf(data.lat));
                 tv = (TextView) v.findViewById(R.id.lng);       // LON
                 tv.setText(String.valueOf(data.lng));
-                // TODO: add PSC and RAT
                 //tv = (TextView) v.findViewById(R.id.psc);     // PSC
                 //tv.setText(data.getPSC());
                 //tv = (TextView) v.findViewById(R.id.rat);     // RAT
