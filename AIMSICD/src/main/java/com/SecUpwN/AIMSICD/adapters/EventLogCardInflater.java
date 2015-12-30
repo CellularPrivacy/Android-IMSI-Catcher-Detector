@@ -13,19 +13,12 @@ import android.widget.TextView;
 import com.SecUpwN.AIMSICD.R;
 
 /**
- *  Brief:          TODO: Please explain its use.
+ *  This class handles the EventLog DB table.
  *
- *  Description:
+ *  Template:     OpenCellIdCardInflater.java
  *
- *      This class handle the EventLog DB table ... TODO: Add info here !
- *
- *  Template:       OpenCellIdCardInflater.java
- *
- *  Dependencies:   EventLogItemData.java
- *                  eventlog_items.xml
- *
- *  Issues:
- *  Notes:
+ *  Dependencies: EventLogItemData.java
+ *                eventlog_items.xml
  *
  */
 public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemData> {
