@@ -29,19 +29,11 @@ import io.freefair.android.util.logging.Logger;
 import java.util.List;
 
 /**
- *  Description:    This class is taking in consideration newly available network info items
- *                  that are only available in the AOS API 18 and above. In this case we're 
- *                  concerned with Wcdma Cell info...  CellInfoWcdma
- *  NOTES:
- *                See:  http://developer.android.com/reference/android/os/Build.VERSION_CODES.html
+ * This class is taking in consideration newly available network info items
+ * that are only available in the AOS API 18 and above. In this case we're 
+ * concerned with Wcdma Cell info (CellInfoWcdma)
  *
- *                JELLY_BEAN      16      Android 4.1
- *                JELLY_BEAN_MR1  17      Android 4.2
- *                JELLY_BEAN_MR2  18      Android 4.3
- *                KITKAT          19      Android 4.4
- *                KITKAT_WATCH    20      Android 4.4W
- *                LOLLIPOP        21      Android 5.xx
- *                LOLLIPOP_MR1    22      Android 5.yy
+ * See: http://developer.android.com/reference/android/os/Build.VERSION_CODES.html
  *
  */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
