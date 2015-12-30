@@ -28,9 +28,6 @@ import io.freefair.android.util.logging.Logger;
 /**
  *  Description:    Popup toast messages asking if user wants to download new API key
  *                  to access OpenCellId services and data.
- *
- *  TODO:
- *              [ ] Add toast for every server response code/message
  */
 @XmlLayout(R.layout.activity_open_cell_id)
 public class OpenCellIdActivity extends BaseActivity {
@@ -134,9 +131,8 @@ public class OpenCellIdActivity extends BaseActivity {
          *                  TODO: And the github issue #303:
          *                  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/303
          *
-         *  TODO:   [ ] Add handlers for other HTTP request and OCID Server error codes:
-         *
          *      OCID status codes http://wiki.opencellid.org/wiki/API#Error_codes
+         *
          *      1 	200 	Cell not found
          *      2 	401 	Invalid API key
          *      3 	400 	Invalid input data
