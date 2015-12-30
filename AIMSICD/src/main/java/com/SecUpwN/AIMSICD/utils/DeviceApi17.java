@@ -28,11 +28,6 @@ import java.util.List;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
-/**
- *  Description:    TODO
- *
- *  Created by toby on 10/10/14.
- */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class DeviceApi17 {
 
