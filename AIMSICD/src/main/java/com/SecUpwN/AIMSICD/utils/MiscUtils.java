@@ -96,11 +96,11 @@ public class MiscUtils {
 
 
     /*
-     *  Description:    Converts logcat timstamp to SQL friendly timstamps
-     *                  We use this to determine if an sms has already been found
+     * Converts logcat timstamp to SQL friendly timstamps
+     * We use this to determine if an sms has already been found
      *
-     *      Converts a timstamp in this format:     06-17 22:06:05.988 D/dalvikvm(24747):
-     *      Returns a timestamp in this format:     20150617223311
+     * Converts a timstamp in this format:     06-17 22:06:05.988 D/dalvikvm(24747):
+     * Returns a timestamp in this format:     20150617223311
      */
     public static String logcatTimeStampParser(String line){
         String[] buffer = line.split(" ");
