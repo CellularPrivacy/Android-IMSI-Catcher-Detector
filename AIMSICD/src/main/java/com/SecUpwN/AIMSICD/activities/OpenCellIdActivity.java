@@ -125,19 +125,19 @@ public class OpenCellIdActivity extends BaseActivity {
 
         /**
          *
-         * Description:     Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
-         *                  For the various server responses, pleas refer to the OpenCellID API wiki:
-         *                  http://wiki.opencellid.org/wiki/API#Error_codes
+         * Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
+         * For the various server responses, pleas refer to the OpenCellID API wiki:
+         * See: http://wiki.opencellid.org/wiki/API#Error_codes
          *
-         *      OCID status codes http://wiki.opencellid.org/wiki/API#Error_codes
+         * OCID status codes http://wiki.opencellid.org/wiki/API#Error_codes
          *
-         *      1 	200 	Cell not found
-         *      2 	401 	Invalid API key
-         *      3 	400 	Invalid input data
-         *      4 	403     Your API key must be white listed in order to run this operation
-         *      5 	500 	Internal server error
-         *      6 	503 	Too many requests. Try later again
-         *      7 	429     Daily limit 1000 requests exceeded for your API key.
+         * 1 	200 	Cell not found
+         * 2 	401 	Invalid API key
+         * 3 	400 	Invalid input data
+         * 4 	403     Your API key must be white listed in order to run this operation
+         * 5 	500 	Internal server error
+         * 6 	503 	Too many requests. Try later again
+         * 7 	429     Daily limit 1000 requests exceeded for your API key.
          *
          * @return null or newly generated key
          */
