@@ -1,11 +1,8 @@
 package com.SecUpwN.AIMSICD.constants;
 /**
- * Description:     These are some static constants that represent the SQLite DB
- *                  table names. These should normally NOT be used, as hardcoded strings
- *                  make everything much more transparent...
- *
- * Note:            Try keep the same order as in the aimsicd.sql tables
- *
+ * These are some static constants that represent the SQLite DB table names.
+ * These should normally NOT be used, as hardcoded strings make everything
+ * much more transparent. Try keep the same order as in the aimsicd.sql tables.
  */
 public class DBTableColumnIds {
     //defaultlocation

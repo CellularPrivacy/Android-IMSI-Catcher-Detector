@@ -15,12 +15,6 @@ import android.telephony.gsm.GsmCellLocation;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
-/**
- * Description:     TODO
- *
- * Issues:
- *              [ ] The use of wrong API for some calls in the cell tracker
- */
 public class Device {
 
     private final Logger log = AndroidLogger.forClass(Device.class);

@@ -16,7 +16,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -50,6 +49,7 @@ import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 import com.SecUpwN.AIMSICD.utils.StackOverflowXmlParser;
+
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -57,20 +57,12 @@ import com.squareup.okhttp.Response;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.util.logging.Logger;
 
-/**
- * Description:     TODO: Please add some comments about this class
- * <p>
- * Dependencies:    TODO: Write a few words about where the content of this is used.
- * <p>
- * Issues:
- */
 public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     @Inject
@@ -103,8 +95,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        moveData();
 
         mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
 
@@ -232,14 +222,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     /**
-     * Description:     Swaps fragments in the main content view
+     * Swaps fragments in the main content view
      */
     void selectItem(int position) {
         NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
         String title = selectedItem.getLabel();
 
         /**
-         * This is a work-around for Issue 42601
+         * This is a work-around for Android Issue 42601
          * https://code.google.com/p/android/issues/detail?id=42601
          *
          * The method getChildFragmentManager() does not clear up
@@ -304,7 +294,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESET_DB) {
             // WARNING! This deletes the entire database, thus any subsequent DB access will FC app.
             //          Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
-            //          See: #581 and Helpers.java
+            //          See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/581 and Helpers.java
             Helpers.askAndDeleteDb(this);
 
 
@@ -647,22 +637,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     /**
-     * Description:     Cell Information Tracking - Enable/Disable
-     * <p>
-     * TODO: Clarify usage and what functions we would like this to provide. - Are we toggling GPS
-     * location tracking? - Are we logging measurement data into DBi? - Are we locking phone to
-     * 2/3/4G operation?
+     * Cell Information Tracking - Enable/Disable
      */
     private void trackCell() {
         mAimsicdService.setCellTracking(mAimsicdService.isTrackingCell());
     }
 
     /**
-     * Description:     Cell Information Monitoring - Enable/Disable
-     * <p>
-     * TODO: Clarify usage and what functions we would like this to provide. - Are we temporarily
-     * disabling AIMSICD monitoring? (IF yes, why not just Quit?) - Are we ignoring Detection
-     * alarms? - Are we logging something?
+     * Cell Information Monitoring - Enable/Disable
      */
     private void monitorCell() {
         mAimsicdService.setCellMonitoring(!mAimsicdService.isMonitoringCell());
@@ -685,35 +667,4 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         super.onStart();
         ((AppAIMSICD) getApplication()).attach(this);
     }
-
-    /**
-     * Moves file from user directory to app-dedicated directory.
-     * <p>
-     * TODO: Remove move in 2016. All people should have more than enough time to update their
-     * AIMSICD this method will be obsolete.
-     * <p>
-     */
-    private void moveData() {
-        // /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/
-        File destinedPath = new File(getExternalFilesDir(null) + File.separator);
-        // /storage/emulated/0/AIMSICD
-        File currentPath = new File(Environment.getExternalStorageDirectory().toString() + "/AIMSICD");
-
-        //checks if  /storage/emulated/0/AIMSICD exists
-        if (currentPath.exists()) {
-            // and if it's a directory, don't touch files
-            if (currentPath.isDirectory()) {
-                //list all files (and folders) in /storage/emulated/0/AIMSICD
-                File[] content = currentPath.listFiles();
-                for (int i = 0; i < content.length; i++) {
-                    File from = new File(content[i].toString());
-                    //move file to new directory
-                    from.renameTo(new File(destinedPath.toString() + content[i].getName().toString()));
-                }
-            }
-            //remove current directory so it won't try to move it again
-            currentPath.delete();
-        }
-    }
-
 }

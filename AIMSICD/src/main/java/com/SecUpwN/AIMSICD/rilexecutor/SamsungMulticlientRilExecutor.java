@@ -33,9 +33,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- *      Description:
- */
 public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
     private final Logger log = AndroidLogger.forClass(SamsungMulticlientRilExecutor.class);

@@ -16,7 +16,6 @@ import com.SecUpwN.AIMSICD.R;
  * Inflater class used in DB viewer (for Measured cell strength measurements)
  *
  * Template:    SilentSmsCardInflater.java
- * TODO:        Fix variable names!!
  *
  * @author Tor Henning Ueland
  */

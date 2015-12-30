@@ -14,18 +14,9 @@ import com.SecUpwN.AIMSICD.R;
 
 
 /**
- * Brief:   TODO: Please explain its use.
- *
- * Description:
- *
- *      This class handle all the AMISICD DataBase ... TODO: Add info here !
- *
- *
- *
- *  Issues:     TODO:  !! === I'm not sure this is the right place... == !! --E:V:A
- *  Notes:
- *
+ * This class handles the AMISICD DataBase
  */
+ 
 public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
 
     @Override

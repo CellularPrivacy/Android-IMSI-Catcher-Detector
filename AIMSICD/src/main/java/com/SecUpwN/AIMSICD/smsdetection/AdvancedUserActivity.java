@@ -128,7 +128,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
     }
 
     /**
-     Reload ListView with new database values
+     * Reload ListView with new database values
      */
     public void loadDbString(){
         ArrayList<AdvanceUserItems> newmsglist;

@@ -6,13 +6,8 @@
 package com.SecUpwN.AIMSICD.map;
 
 /**
- * Description:     Class to hold data for displaying in BTS pin popup dialog
  *
- * Issues:
- *                  [ ] clarify which GPS coordinates are used. Exact of from device?
- *                  [ ] adding more details, similar as for the DB Viewer UI:
- *                      see: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
- *
+ * Class to hold data for displaying in BTS pin popup dialog
  *
  */
 public class MarkerData {

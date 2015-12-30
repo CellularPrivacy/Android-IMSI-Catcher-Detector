@@ -26,11 +26,8 @@ import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.util.logging.Logger;
 
 /**
- *  Description:    Popup toast messages asking if user wants to download new API key
- *                  to access OpenCellId services and data.
- *
- *  TODO:
- *              [ ] Add toast for every server response code/message
+ *  Popup toast messages asking if user wants to download
+ *  new API key to access OpenCellId services and data.
  */
 @XmlLayout(R.layout.activity_open_cell_id)
 public class OpenCellIdActivity extends BaseActivity {
@@ -128,22 +125,19 @@ public class OpenCellIdActivity extends BaseActivity {
 
         /**
          *
-         * Description:     Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
-         *                  For the various server responses, pleas refer to the OpenCellID API wiki:
-         *                  http://wiki.opencellid.org/wiki/API#Error_codes
-         *                  TODO: And the github issue #303:
-         *                  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/303
+         * Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
+         * For the various server responses, pleas refer to the OpenCellID API wiki:
+         * See: http://wiki.opencellid.org/wiki/API#Error_codes
          *
-         *  TODO:   [ ] Add handlers for other HTTP request and OCID Server error codes:
+         * OCID status codes http://wiki.opencellid.org/wiki/API#Error_codes
          *
-         *      OCID status codes http://wiki.opencellid.org/wiki/API#Error_codes
-         *      1 	200 	Cell not found
-         *      2 	401 	Invalid API key
-         *      3 	400 	Invalid input data
-         *      4 	403     Your API key must be white listed in order to run this operation
-         *      5 	500 	Internal server error
-         *      6 	503 	Too many requests. Try later again
-         *      7 	429     Daily limit 1000 requests exceeded for your API key.
+         * 1 	200 	Cell not found
+         * 2 	401 	Invalid API key
+         * 3 	400 	Invalid input data
+         * 4 	403     Your API key must be white listed in order to run this operation
+         * 5 	500 	Internal server error
+         * 6 	503 	Too many requests. Try later again
+         * 7 	429     Daily limit 1000 requests exceeded for your API key.
          *
          * @return null or newly generated key
          */

@@ -7,17 +7,6 @@ package com.SecUpwN.AIMSICD.utils.atcmd;
 
 import java.io.IOException;
 
-
-/**
- *  Description:    ...
- *
- *  Issues:     [ ]
- *
- *              [ ]
- *
- *
- *  Notes:
- */
 public class TtyPrivFile extends TtyStream {
 
     protected Process mReadProc;
