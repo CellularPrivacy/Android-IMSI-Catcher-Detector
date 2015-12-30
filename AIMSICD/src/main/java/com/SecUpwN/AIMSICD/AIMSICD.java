@@ -671,34 +671,4 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         ((AppAIMSICD) getApplication()).attach(this);
     }
 
-    /**
-     * Moves file from user directory to app-dedicated directory.
-     * 
-     * TODO: Remove move in 2016. All people should have more than enough time to update their
-     * AIMSICD this method will be obsolete.
-     * 
-     */
-    private void moveData() {
-        // /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/
-        File destinedPath = new File(getExternalFilesDir(null) + File.separator);
-        // /storage/emulated/0/AIMSICD
-        File currentPath = new File(Environment.getExternalStorageDirectory().toString() + "/AIMSICD");
-
-        //checks if  /storage/emulated/0/AIMSICD exists
-        if (currentPath.exists()) {
-            // and if it's a directory, don't touch files
-            if (currentPath.isDirectory()) {
-                //list all files (and folders) in /storage/emulated/0/AIMSICD
-                File[] content = currentPath.listFiles();
-                for (int i = 0; i < content.length; i++) {
-                    File from = new File(content[i].toString());
-                    //move file to new directory
-                    from.renameTo(new File(destinedPath.toString() + content[i].getName().toString()));
-                }
-            }
-            //remove current directory so it won't try to move it again
-            currentPath.delete();
-        }
-    }
-
 }
