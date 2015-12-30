@@ -13,13 +13,9 @@ import android.widget.TextView;
 import com.SecUpwN.AIMSICD.R;
 
 /**
- *  Description:     Contains the data and definitions of all the items of the XML layout
- *
- *  Dependencies:
- *                  DbViewerFragment.java: BuildTable()
- *                  DbeImportItemData.java
- *                  dbe_import_items.xml
+ * Contains the data and definitions of all the items of the XML layout
  */
+ 
 public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItemData> {
 
     @Override
