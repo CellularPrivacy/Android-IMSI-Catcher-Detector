@@ -14,13 +14,8 @@ import com.SecUpwN.AIMSICD.R;
 
 /**
  *  This class handles the EventLog DB table.
- *
- *  Template:     OpenCellIdCardInflater.java
- *
- *  Dependencies: EventLogItemData.java
- *                eventlog_items.xml
- *
  */
+ 
 public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemData> {
 
     @Override
