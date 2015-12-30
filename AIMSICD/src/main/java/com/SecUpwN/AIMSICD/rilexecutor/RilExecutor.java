@@ -110,9 +110,9 @@ public class RilExecutor {
 
 
     /**
-     * Check the status of the Rill Executor
+     * Check the status of the RIL Executor
      *
-     * @return DetectResult providing access status of the Ril Executor
+     * @return DetectResult providing access status of the RIL Executor
      */
     public DetectResult getRilExecutorStatus() {
         return mRilExecutorDetectResult;
@@ -157,9 +157,9 @@ public class RilExecutor {
 
     /**
      * Executes and receives the Ciphering Information request using
-     * the Rill Executor
+     * the RIL Executor
      *
-     * @return String list response from Rill Executor
+     * @return String list response from RIL Executor
      */
     public List<String> getCipheringInfo() {
         return executeServiceModeCommand(
@@ -171,9 +171,9 @@ public class RilExecutor {
 
     /**
      * Executes and receives the Neighbouring Cell request using
-     * the Rill Executor
+     * the RIL Executor
      *
-     * @return String list response from Rill Executor
+     * @return String list response from RIL Executor
      */
     public List<String> getNeighbours() {
         KeyStep getNeighboursKeySeq[] = new KeyStep[]{
