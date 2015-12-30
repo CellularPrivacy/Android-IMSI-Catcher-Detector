@@ -51,10 +51,6 @@ public class CellTowerMarker extends Marker {
      * more available items as explained in the related issue here:
      * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
      *
-     * Dependency:
-     *              MarkerData.java
-     *              marker_info_window.xml
-     *
      */
     public View getInfoContents(MarkerData data) {
 
