@@ -9,10 +9,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
 
-
-/**
- * Description:    TODO:  What've got here...
- */
 public class Cell implements Parcelable {
 
     // Cell Specific Variables
@@ -391,12 +387,6 @@ public class Cell implements Parcelable {
         return this.rssi;
     }
 
-
-    /**
-     * TODO: What is this, and where is it supposed to be used ???
-     *
-     * @return
-     */
     @Override
     public int hashCode() {
         final int prime = 31;
