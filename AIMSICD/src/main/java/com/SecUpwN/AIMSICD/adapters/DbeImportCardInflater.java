@@ -19,8 +19,6 @@ import com.SecUpwN.AIMSICD.R;
  *                  DbViewerFragment.java: BuildTable()
  *                  DbeImportItemData.java
  *                  dbe_import_items.xml
- *
- *  Issues:
  */
 public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItemData> {
 
