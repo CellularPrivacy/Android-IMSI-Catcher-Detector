@@ -1,6 +1,29 @@
 # CHANGELOG of 'AIMSICD'
 ----------------------
 
+#### [30.12.2015 - WIP-Release v0.1.38-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.38-alpha)
+
+* Changed: Now getting `RootShell` from Maven Repository and disabled proguard obfuscation
+* Changed: Simplified the `CREDITS` view by now using a simple dialog, which fixed API Issues
+* Changed: Now using only one `android.intent.action.MAIN` to prevent Issues when launching
+* Changed: Ensured consistency for status names so that developers know which one triggers
+* Updated: Improved translations for Dutch, Russian, Norwegian Bokmål, Ukrainian and German
+* Updated: Improved version names and removed problematic OEM / Samsung Permissions
+* Updated: Improved notification creation and now compiling with and against API 23
+* Updated: Improved the version name display and made info dialogs easier dismissable
+* Updated: Moved comments, TODO and Issues from a huge number of files into GitHub Issues
+* Updated: Pimped our `AndroidManifest.xml` a bit, About-Screen shows Build-Number and GIT-SHA
+* Updated: Grouped dependencies in `build.gradle` and added descriptions for new developers
+* Updated: Removed `LeakCanary` for now since we don't use it, tweaked the status text-views
+* Added: Enforcing coding guidelines with `checkstyle` rules, added Index to `CONTRIBUTING.md`
+* Added: Dependency injection to inject views, resources and custom objects into everything
+* Fixed: Crash when pressing `CREDITS` and app quitting when retrieving OpenCellID key
+* Fixed: Background dialogs now work properly so that our app does not close right away
+* Fixed: Several smaller improvements to stabilize menu, About-Fragment is now an Activity
+* Fixed: Added permission `android.permission.RECEIVE_BOOT_COMPLETED` to fix launch Issues
+
+---
+
 #### [13.12.2015 - WIP-Release v0.1.37-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.37-alpha)
 
 * Changed: Slimmed down permissions to the bare necessary ones to ensure peace for us privacy geeks
