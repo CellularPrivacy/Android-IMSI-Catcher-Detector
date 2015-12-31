@@ -7,28 +7,38 @@ package com.SecUpwN.AIMSICD;
 
 
 import android.app.Activity;
-import android.app.Application;
+import android.content.Intent;
+import android.os.Vibrator;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseArray;
 
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
+import com.SecUpwN.AIMSICD.enums.Status;
 import com.SecUpwN.AIMSICD.utils.BaseAsyncTask;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
-import com.squareup.okhttp.OkHttpClient;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import io.freefair.android.injection.app.InjectionApplication;
+import io.freefair.android.injection.modules.AndroidLoggerModule;
+import io.freefair.android.injection.modules.OkHttpModule;
 import io.freefair.android.util.logging.Logger;
 
-// DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
-//import com.squareup.leakcanary.LeakCanary;
+public class AppAIMSICD extends InjectionApplication {
 
-public class AppAIMSICD extends Application {
+    private static WeakReference<AppAIMSICD> instance;
 
-    private final Logger log = AndroidLogger.forClass(AppAIMSICD.class);
+    public static AppAIMSICD getInstance(){
+        return instance.get();
+    }
 
-    private OkHttpClient okHttpClient;
+    private Status currentStatus;
+    @Inject
+    private Logger log;
 
     /**
      * Maps between an activity class name and the list of currently running
@@ -42,13 +52,12 @@ public class AppAIMSICD extends Application {
 
     @Override
     public void onCreate() {
+        instance = new WeakReference<>(this);
+        addModule(new AndroidLoggerModule());
+        addModule(OkHttpModule.withCache(this));
         super.onCreate();
-        // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
-        //LeakCanary.install(this);
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
-
-        okHttpClient = new OkHttpClient();
     }
 
     public void removeTask(BaseAsyncTask<?, ?, ?> pTask) {
@@ -103,7 +112,7 @@ public class AppAIMSICD extends Application {
         }
     }
 
-    public void attach(Activity activity) {
+    public void attach(InjectionAppCompatActivity activity) {
         if (activity == null) {
             return;
         }
@@ -117,7 +126,32 @@ public class AppAIMSICD extends Application {
         }
     }
 
-    public OkHttpClient getOkHttpClient() {
-        return okHttpClient;
+    /**
+     * Changes the current status, this will also trigger a local broadcast event
+     * if the new status is different from the previous one
+     */
+    public void setCurrentStatus(Status status, boolean vibrate, int minVibrateLevel) {
+        if (status == null) {
+            status = Status.IDLE;
+        }
+        if (status != currentStatus) {
+            Intent intent = new Intent("StatusChange");
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+            if (vibrate && status.ordinal() >= minVibrateLevel) {
+                ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
+            }
+        }
+        currentStatus = status;
+    }
+
+    /**
+     * Returns the current status
+     */
+    public Status getStatus() {
+        if (currentStatus == null) {
+            return Status.IDLE;
+        }
+        return currentStatus;
     }
 }

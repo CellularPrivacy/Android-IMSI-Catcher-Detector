@@ -10,7 +10,6 @@ package com.SecUpwN.AIMSICD.smsdetection;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,25 +21,29 @@ import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 
 import java.util.ArrayList;
 
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
-public class AdvancedUserSmsActivity extends AppCompatActivity {
+@XmlLayout(R.layout.activity_advanced_sms_user)
+public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
 
-    //TODO: @Inject
+    @Inject
     private final Logger log = AndroidLogger.forClass(AdvancedUserSmsActivity.class);
 
+    @InjectView(R.id.listView_Adv_Sms_Activity)
     ListView listViewAdv;
+
     AIMSICDDbAdapter dbaccess;
     ArrayList<CapturedSmsData> msgitems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advanced_sms_user);
 
         dbaccess = new AIMSICDDbAdapter(getApplicationContext());
-
-        listViewAdv = (ListView)findViewById(R.id.listView_Adv_Sms_Activity);
         msgitems = new ArrayList<>();
 
         try {

@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 
-import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
@@ -22,39 +21,30 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.util.logging.Logger;
 
 /**
- *  Description:    Popup toast messages asking if user wants to download new API key
- *                  to access OpenCellId services and data.
- *
- *  TODO:
- *              [ ] Add toast for every server response code/message
- *
- *  ChangeLog:
- *
- *      2015-07-19  E:V:A       Added new server response codes, removed old comments
- *
+ *  Popup toast messages asking if user wants to download
+ *  new API key to access OpenCellId services and data.
  */
+@XmlLayout(R.layout.activity_open_cell_id)
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(OpenCellIdActivity.class);
+
+    @Inject
+    private Logger log;
     private ProgressDialog pd;
 
-    //TODO: @Inject
+    @Inject
     private OkHttpClient okHttpClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_open_cell_id);
 
         prefs = getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-
-        //TODO: Use a dependency injection for this
-        okHttpClient = ((AppAIMSICD)getApplication()).getOkHttpClient();
     }
 
     public void onAcceptedClicked(View v) {
@@ -135,22 +125,19 @@ public class OpenCellIdActivity extends BaseActivity {
 
         /**
          *
-         * Description:     Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
-         *                  For the various server responses, pleas refer to the OpenCellID API wiki:
-         *                  http://wiki.opencellid.org/wiki/API#Error_codes
-         *                  TODO: And the github issue #303:
-         *                  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/303
+         * Get an API key for Open Cell ID. Do not call this from the UI/Main thread.
+         * For the various server responses, pleas refer to the OpenCellID API wiki:
+         * See: http://wiki.opencellid.org/wiki/API#Error_codes
          *
-         *  TODO:   [ ] Add handlers for other HTTP request and OCID Server error codes:
+         * OCID status codes http://wiki.opencellid.org/wiki/API#Error_codes
          *
-         *      OCID status codes http://wiki.opencellid.org/wiki/API#Error_codes
-         *      1 	200 	Cell not found
-         *      2 	401 	Invalid API key
-         *      3 	400 	Invalid input data
-         *      4 	403     Your API key must be white listed in order to run this operation
-         *      5 	500 	Internal server error
-         *      6 	503 	Too many requests. Try later again
-         *      7 	429     Daily limit 1000 requests exceeded for your API key.
+         * 1 	200 	Cell not found
+         * 2 	401 	Invalid API key
+         * 3 	400 	Invalid input data
+         * 4 	403     Your API key must be white listed in order to run this operation
+         * 5 	500 	Internal server error
+         * 6 	503 	Too many requests. Try later again
+         * 7 	429     Daily limit 1000 requests exceeded for your API key.
          *
          * @return null or newly generated key
          */

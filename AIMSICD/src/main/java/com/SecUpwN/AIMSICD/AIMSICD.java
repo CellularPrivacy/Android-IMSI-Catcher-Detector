@@ -16,23 +16,19 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.telephony.TelephonyManager;
-
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.SecUpwN.AIMSICD.activities.AboutActivity;
 import com.SecUpwN.AIMSICD.activities.BaseActivity;
 import com.SecUpwN.AIMSICD.activities.DebugLogs;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
@@ -41,7 +37,6 @@ import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
-import com.SecUpwN.AIMSICD.fragments.AboutFragment;
 import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
 import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
@@ -54,6 +49,7 @@ import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 import com.SecUpwN.AIMSICD.utils.StackOverflowXmlParser;
+
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -61,25 +57,17 @@ import com.squareup.okhttp.Response;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Description:     TODO: Please add some comments about this class
- * <p>
- * Dependencies:    TODO: Write a few words about where the content of this is used.
- * <p>
- * Issues:
- * <p>
- * ChangeLog: 2015-07-31  E:V:A       Added a restart of AIMSICDDbAdapter after deleting DB
- */
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.util.logging.Logger;
+
 public class AIMSICD extends BaseActivity implements AsyncResponse {
 
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(AIMSICD.class);
+    @Inject
+    private Logger log;
 
-    private final Context mContext = this;
     private boolean mBound;
     private SharedPreferences prefs;
     private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
@@ -98,7 +86,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     private DrawerMenuActivityConfiguration mNavConf;
 
-    //TODO: @Inject
+    @Inject
     OkHttpClient okHttpClient;
 
     /**
@@ -107,11 +95,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //TODO: Use a dependency Injection for this
-        okHttpClient = ((AppAIMSICD)getApplication()).getOkHttpClient();
-
-        moveData();
 
         mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
 
@@ -151,12 +134,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setHomeButtonEnabled(true);
 
-        prefs = mContext.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        prefs = getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
 
                 /* Pref listener to enable sms detection on pref change   */
         prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                if (key.equals(mContext.getString(R.string.adv_user_root_pref_key))) {
+                if (key.equals(getString(R.string.adv_user_root_pref_key))) {
                     SmsDetection();
                 }
 
@@ -202,8 +185,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        final String iconType = prefs.getString(mContext.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType)));
+        final String iconType = prefs.getString(getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD)getApplication()).getStatus()));
         mDrawerToggle.syncState();
     }
 
@@ -223,10 +206,10 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             mBound = false;
         }
 
-        final String PERSIST_SERVICE = mContext.getString(R.string.pref_persistservice_key);
+        final String PERSIST_SERVICE = getString(R.string.pref_persistservice_key);
         boolean persistService = prefs.getBoolean(PERSIST_SERVICE, false);
         if (!persistService) {
-            stopService(new Intent(mContext, AimsicdService.class));
+            stopService(new Intent(this, AimsicdService.class));
         }
     }
 
@@ -239,14 +222,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     /**
-     * Description:     Swaps fragments in the main content view
+     * Swaps fragments in the main content view
      */
     void selectItem(int position) {
         NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
         String title = selectedItem.getLabel();
 
         /**
-         * This is a work-around for Issue 42601
+         * This is a work-around for Android Issue 42601
          * https://code.google.com/p/android/issues/detail?id=42601
          *
          * The method getChildFragmentManager() does not clear up
@@ -279,12 +262,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 title = getString(R.string.app_name_short);
                 break;
             case DrawerMenu.ID.APPLICATION.ABOUT:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new AboutFragment()).commit();
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
                 break;
             case DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA:
                 // Request uploading here?
-                new RequestTask(mContext, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute("");
+                new RequestTask(this, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute("");
                 // no string needed for csv based upload
                 break;
         }
@@ -301,17 +284,17 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             Intent intent = new Intent(this, PrefActivity.class);
             startActivity(intent);
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.BACKUP_DB) {
-            new RequestTask(mContext, RequestTask.BACKUP_DATABASE).execute();
+            new RequestTask(this, RequestTask.BACKUP_DATABASE).execute();
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESTORE_DB) {
             if (CellTracker.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
-                Helpers.msgLong(mContext, getString(R.string.unable_to_restore_backup_from_previous_database_version));
+                Helpers.msgLong(this, getString(R.string.unable_to_restore_backup_from_previous_database_version));
             } else {
-                new RequestTask(mContext, RequestTask.RESTORE_DATABASE).execute();
+                new RequestTask(this, RequestTask.RESTORE_DATABASE).execute();
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESET_DB) {
             // WARNING! This deletes the entire database, thus any subsequent DB access will FC app.
             //          Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
-            //          See: #581 and Helpers.java
+            //          See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/581 and Helpers.java
             Helpers.askAndDeleteDb(this);
 
 
@@ -333,13 +316,13 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
                 GeoLocation loc = mAimsicdService.lastKnownLocation();
                 if (loc != null) {
-                    Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data));
+                    Helpers.msgLong(this, getString(R.string.contacting_opencellid_for_data));
 
                     cell.setLon(loc.getLongitudeInDegrees());
                     cell.setLat(loc.getLatitudeInDegrees());
-                    Helpers.getOpenCellData(mContext, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
+                    Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
                 } else {
-                    Helpers.msgShort(mContext, getString(R.string.waiting_for_location));
+                    Helpers.msgShort(this, getString(R.string.waiting_for_location));
 
                     // This uses the LocationServices to get CID/LAC/MNC/MCC to be used
                     // for grabbing the BTS data from OCID, via their API.
@@ -354,7 +337,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                             mAimsicdService.getCell().getMCC());
                 }
             } else {
-                Helpers.sendMsg(mContext, mContext.getString(R.string.no_opencellid_key_detected));
+                Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.MAIN.ACD) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
@@ -404,7 +387,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                             }
                         });
             } else {
-                Helpers.sendMsg(mContext, mContext.getString(R.string.no_opencellid_key_detected));
+                Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.SEND_DEBUGGING_LOG) {
             Intent i = new Intent(this, DebugLogs.class);
@@ -443,10 +426,10 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         if (Float.floatToRawIntBits(location[0]) == 0
                 && Float.floatToRawIntBits(location[1]) != 0) {
-            Helpers.msgLong(mContext, mContext.getString(R.string.contacting_opencellid_for_data));
-            Helpers.getOpenCellData(mContext, mAimsicdService.getCell(), RequestTask.DBE_DOWNLOAD_REQUEST);
+            Helpers.msgLong(this, getString(R.string.contacting_opencellid_for_data));
+            Helpers.getOpenCellData(this, mAimsicdService.getCell(), RequestTask.DBE_DOWNLOAD_REQUEST);
         } else {
-            Helpers.msgLong(mContext, mContext.getString(R.string.unable_to_determine_last_location));
+            Helpers.msgLong(this, getString(R.string.unable_to_determine_last_location));
         }
     }
 
@@ -460,7 +443,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                         mAimsicdService.setCell(cell);
                         Intent intent = new Intent(AimsicdService.UPDATE_DISPLAY);
                         intent.putExtra("update", true);
-                        mContext.sendBroadcast(intent);
+                        sendBroadcast(intent);
                     }
                 }
             }
@@ -489,7 +472,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 mAimsicdService.checkLocationServices();
             }
 
-            if (!mAimsicdService.isSmsTracking() && prefs.getBoolean(mContext.getString(R.string.adv_user_root_pref_key), false)) {
+            if (!mAimsicdService.isSmsTracking() && prefs.getBoolean(getString(R.string.adv_user_root_pref_key), false)) {
                     /*Auto Start sms detection here if:
                     *    isSmsTracking = false <---- not running
                     *    root sms enabled = true
@@ -632,15 +615,15 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
 
     private void SmsDetection() {
-        boolean root_sms = prefs.getBoolean(mContext.getString(R.string.adv_user_root_pref_key), false); // default is false
+        boolean root_sms = prefs.getBoolean(getString(R.string.adv_user_root_pref_key), false); // default is false
 
         if (root_sms && !mAimsicdService.isSmsTracking()) {
             mAimsicdService.startSmsTracking();
-            Helpers.msgShort(mContext, "SMS Detection Started");
+            Helpers.msgShort(this, "SMS Detection Started");
             log.info("SMS Detection Thread Started");
         } else if (!root_sms && mAimsicdService.isSmsTracking()) {
             mAimsicdService.stopSmsTracking();
-            Helpers.msgShort(mContext, "Sms Detection Stopped");
+            Helpers.msgShort(this, "Sms Detection Stopped");
             log.info("SMS Detection Thread Stopped");
         }
     }
@@ -654,22 +637,14 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     /**
-     * Description:     Cell Information Tracking - Enable/Disable
-     * <p>
-     * TODO: Clarify usage and what functions we would like this to provide. - Are we toggling GPS
-     * location tracking? - Are we logging measurement data into DBi? - Are we locking phone to
-     * 2/3/4G operation?
+     * Cell Information Tracking - Enable/Disable
      */
     private void trackCell() {
         mAimsicdService.setCellTracking(mAimsicdService.isTrackingCell());
     }
 
     /**
-     * Description:     Cell Information Monitoring - Enable/Disable
-     * <p>
-     * TODO: Clarify usage and what functions we would like this to provide. - Are we temporarily
-     * disabling AIMSICD monitoring? (IF yes, why not just Quit?) - Are we ignoring Detection
-     * alarms? - Are we logging something?
+     * Cell Information Monitoring - Enable/Disable
      */
     private void monitorCell() {
         mAimsicdService.setCellMonitoring(!mAimsicdService.isMonitoringCell());
@@ -692,35 +667,4 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         super.onStart();
         ((AppAIMSICD) getApplication()).attach(this);
     }
-
-    /**
-     * Moves file from user directory to app-dedicated directory.
-     * <p>
-     * TODO: Remove move in 2016. All people should have more than enough time to update their
-     * AIMSICD this method will be obsolete.
-     * <p>
-     */
-    private void moveData() {
-        // /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/
-        File destinedPath = new File(getExternalFilesDir(null) + File.separator);
-        // /storage/emulated/0/AIMSICD
-        File currentPath = new File(Environment.getExternalStorageDirectory().toString() + "/AIMSICD");
-
-        //checks if  /storage/emulated/0/AIMSICD exists
-        if (currentPath.exists()) {
-            // and if it's a directory, don't touch files
-            if (currentPath.isDirectory()) {
-                //list all files (and folders) in /storage/emulated/0/AIMSICD
-                File[] content = currentPath.listFiles();
-                for (int i = 0; i < content.length; i++) {
-                    File from = new File(content[i].toString());
-                    //move file to new directory
-                    from.renameTo(new File(destinedPath.toString() + content[i].getName().toString()));
-                }
-            }
-            //remove current directory so it won't try to move it again
-            currentPath.delete();
-        }
-    }
-
 }

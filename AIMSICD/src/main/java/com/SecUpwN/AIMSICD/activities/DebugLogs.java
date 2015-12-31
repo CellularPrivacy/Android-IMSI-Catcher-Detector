@@ -10,7 +10,6 @@ import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +23,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.annotation.XmlMenu;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -49,43 +51,35 @@ import io.freefair.android.util.logging.Logger;
  *                  to the top bar, next to email icon button. **
  *
  *  TODO:   [ ]     We should add an XPrivacy button (or automatic) to add XPrivacy filters when used.
- *
- *  ChangeLog:
- *
- *          2015-01-27  E:V:A   Added "getprop|sort" info to log.
- *          2015-01-28  Toby    Fixed "getprop" info to log (but not sorted)
- *          2015-02-11  E:V:A   Increased to 500 lines and removed "-d" and
- *                              incl. radio log, but not working. Permission problem?
- *          2015-02-24  E:V:A   Silent some spam logs on HTC devices.
- *          2015-07-03  E:V:A   Silent some spam logs from the XPosed framework
- *
  */
-
+@XmlLayout(R.layout.activity_debug_logs)
+@XmlMenu(R.menu.activity_debug_logs)
 public class DebugLogs extends BaseActivity {
 
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(DebugLogs.class);
+    @Inject
+    private Logger log;
 
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
     private boolean isRadioLogs = true; // Including this, should be a toggle.
 
-    private TextView logView = null;
-    private Button btnClear = null;
-    private Button btnCopy = null;
-    private Button btnStop = null;
+    @InjectView(R.id.debug_log_view)
+    private TextView logView;
+
+    @InjectView(R.id.btnClear)
+    private Button btnClear;
+
+    @InjectView(R.id.btnCopy)
+    private Button btnCopy;
+
+    @InjectView(R.id.btnStopLogs)
+    private Button btnStop;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_debug_logs);
         // Show the Up button in the action bar.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        logView = (TextView) findViewById(R.id.debug_log_view);
-        btnClear = (Button) findViewById(R.id.btnClear);
-        btnStop = (Button) findViewById(R.id.btnStopLogs);
-        btnCopy = (Button) findViewById(R.id.btnCopy);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -165,14 +159,6 @@ public class DebugLogs extends BaseActivity {
 
         btnStop.setText(getString(R.string.btn_stop_logs));
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_debug_logs, menu);
-        return true;
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -15,18 +15,6 @@ import android.telephony.gsm.GsmCellLocation;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
-/**
- * Description:     TODO
- *
- * Issues:
- *              [ ] The use of wrong API for some calls in the cell tracker
- *
- * ChangeLog:
- *              2015-07-23  E:V:A   Changed to use DeviceApi18.java instead of 17. Fix? of # 555
- *                                  Do we need an import here??
- *                                  import com.SecUpwN.AIMSICD.utils.DeviceApi18;
- *
- */
 public class Device {
 
     private final Logger log = AndroidLogger.forClass(Device.class);

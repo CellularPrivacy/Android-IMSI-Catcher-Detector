@@ -19,21 +19,6 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-/**
- *  Description:    ...
- *
- *  Issues:     [ ]
- *
- *              [ ]
- *
- *
- *  Notes:
- *
- *
- *  ChangeLog:
- *
- */
-
 /*package*/
 class TtyStream extends AtCommandTerminal {
 

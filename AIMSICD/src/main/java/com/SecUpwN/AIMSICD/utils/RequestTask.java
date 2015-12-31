@@ -11,11 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
-
-import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
@@ -36,6 +31,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import io.freefair.android.util.logging.Logger;
 
 /**
  *
@@ -69,16 +68,6 @@ import java.io.UnsupportedEncodingException;
  * Issues:
  *          [ ] There is no onPreExecute here...perhaps that's why the progress bar is not shown?
  *              see:  http://developer.android.com/reference/android/os/AsyncTask.html
- *
- * ChangeLog:
- *
- *      2015-01-21  E:V:A       Moved code blocks, added placeholder code, disabled upload
- *      2015-02-13  E:V:A       Added onPreExecute() and super keywords & Logs (to be removed when working)
- *      2015-03-01  kairenken   Fixed "DBE_UPLOAD_REQUEST" + button
- *      2015-03-02  kairenken   remove OCID_UPLOAD_PREF: Upload is manual, so this is not needed anymore.
- *      2015-03-03  E:V:A       Replaced dirty SharedPreferences code with TinyDB and Upload result Toast msg.
- *      2015-06-15  SecUpwN     Increased timeout of OCID data download to avoid further retrieval errors
- *
  *  To Fix:
  *
  *      [ ] Explain why BACKUP/RESTORE_DATABASE is in here?
@@ -100,15 +89,19 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     public static final char RESTORE_DATABASE = 4;              // Restore DB from CSV files
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
 
-    private final Logger log = AndroidLogger.forClass(RequestTask.class);
+    @Inject
+    private Logger log;
 
     private AIMSICDDbAdapter mDbAdapter;
     private Context mAppContext;
     private char mType;
     private int mTimeOut;
 
-    public RequestTask(Context context, char type) {
-        super((Activity)context);
+    @Inject
+    private OkHttpClient okHttpClient;
+
+    public RequestTask(InjectionAppCompatActivity context, char type) {
+        super(context);
         this.mType = type;
         this.mAppContext = context.getApplicationContext();
         this.mDbAdapter = new AIMSICDDbAdapter(mAppContext);
@@ -117,8 +110,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     @Override
     protected String doInBackground(String... commandString) {
-
-        OkHttpClient okHttpClient = ((AppAIMSICD)getActivity().getApplication()).getOkHttpClient();
 
         // We need to create a separate case for UPLOADING to DBe (OCID, MLS etc)
         switch (mType) {

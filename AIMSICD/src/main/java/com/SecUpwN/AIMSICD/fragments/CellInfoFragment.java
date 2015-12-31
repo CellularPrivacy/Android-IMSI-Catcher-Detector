@@ -27,11 +27,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableRow;
@@ -49,6 +46,10 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionFragment;
 
 /**
  *  Description:    This class updates the CellInfo fragment. This is also known as
@@ -69,7 +70,8 @@ import java.util.concurrent.TimeUnit;
  *  TODO:   2) Might wanna make the refresh rate lower/higher depending on support
  *
  */
-public class CellInfoFragment extends Fragment {
+@XmlLayout(R.layout.cell_fragment)
+public class CellInfoFragment extends InjectionFragment {
 
     public static final int STOCK_REQUEST = 1;
     public static final int SAMSUNG_MULTIRIL_REQUEST = 2;
@@ -83,13 +85,27 @@ public class CellInfoFragment extends Fragment {
 
     private List<Cell> neighboringCells;
 
-    //Layout items
+    @InjectView(R.id.list_view)
     private ListView lv;
+
+    @InjectView(R.id.neighbouring_cells)
     private TextView mNeighbouringCells;
+
+    @InjectView(R.id.neighbouring_number)
     private TextView mNeighbouringTotal;
+
+    @InjectView(R.id.neighbouring_total)
     private TableRow mNeighbouringTotalView;
+
+    @InjectView(R.id.ciphering_indicator_title)
     private TextView mCipheringIndicatorLabel;
+
+    @InjectView(R.id.ciphering_indicator)
     private TextView mCipheringIndicator;
+
+    @InjectView(R.id.button_refresh)
+    private Button refresh;
+
 
     private final Runnable timerRunnable = new Runnable() {
 
@@ -139,24 +155,10 @@ public class CellInfoFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.cell_fragment,
-                container, false);
-        if (view != null) {
-            lv = (ListView) view.findViewById(R.id.list_view);
-            mNeighbouringCells =        (TextView) view.findViewById(R.id.neighbouring_cells);
-            mNeighbouringTotal =        (TextView) view.findViewById(R.id.neighbouring_number);
-            mNeighbouringTotalView =    (TableRow) view.findViewById(R.id.neighbouring_total);
-            mCipheringIndicatorLabel =  (TextView) view.findViewById(R.id.ciphering_indicator_title);
-            mCipheringIndicator =       (TextView) view.findViewById(R.id.ciphering_indicator);
-
-            // We can also manually refresh by hitting the button
-            Button refresh = (Button) view.findViewById(R.id.button_refresh);
-            refresh.setOnClickListener(new btnClick());
-        }
-        return view;
+        refresh.setOnClickListener(new btnClick());
     }
 
     @Override

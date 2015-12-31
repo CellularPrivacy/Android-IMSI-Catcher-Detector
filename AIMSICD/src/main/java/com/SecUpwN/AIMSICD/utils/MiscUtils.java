@@ -6,16 +6,14 @@
 package com.SecUpwN.AIMSICD.utils;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.NotificationCompat;
-
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import android.support.v4.app.NotificationManagerCompat;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
@@ -27,16 +25,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Description:     TODO
- *
- *
- * ChangeLog:
- *
- *      banjaxbanjo     20150304    First PR
- *      E:V:A           20150704    Changed TAGs and fixed some formatting
- *
- */
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
 public class MiscUtils {
 
     private static final Logger log = AndroidLogger.forClass(MiscUtils.class);
@@ -80,7 +71,7 @@ public class MiscUtils {
                           getResources().getString(R.string.app_name_short)+" - "+getResources().getString(R.string.status_good)                            ,
                           R.drawable.sense_ok,false);
    */
-    public static void showNotification(Context context ,String tickertext,String contentText, int drawable_id,boolean auto_cancel){
+    public static void showNotification(Context context, String tickertext, String contentText, @DrawableRes int drawable_id, boolean auto_cancel) {
         int NOTIFICATION_ID = 1;
 
         Intent notificationIntent = new Intent(context, AIMSICD.class);
@@ -89,7 +80,7 @@ public class MiscUtils {
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), drawable_id);
-        Notification mBuilder =
+        Notification notification =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(drawable_id)
                         .setLargeIcon(largeIcon)
@@ -100,18 +91,16 @@ public class MiscUtils {
                         .setAutoCancel(auto_cancel)
                         .setContentIntent(contentIntent)
                         .build();
-        NotificationManager mNotificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
+        NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification);
     }
 
 
     /*
-     *  Description:    Converts logcat timstamp to SQL friendly timstamps
-     *                  We use this to determine if an sms has already been found
+     * Converts logcat timstamp to SQL friendly timstamps
+     * We use this to determine if an sms has already been found
      *
-     *      Converts a timstamp in this format:     06-17 22:06:05.988 D/dalvikvm(24747):
-     *      Returns a timestamp in this format:     20150617223311
+     * Converts a timstamp in this format:     06-17 22:06:05.988 D/dalvikvm(24747):
+     * Returns a timestamp in this format:     20150617223311
      */
     public static String logcatTimeStampParser(String line){
         String[] buffer = line.split(" ");

@@ -23,19 +23,13 @@ import java.util.Map;
 
 
 /**
- *  Description:    This class simplifies calls to SharedPreferences in a line of code.
- *                  It can also do more like: saving a list of Strings or Integers and Saving images.
- *                  All in 1 line of code!
+ * This class simplifies calls to SharedPreferences in a line of code.
+ * It can also do more like: saving a list of Strings or Integers and Saving images.
  *
- *  Example usage:
+ * See: http://stackoverflow.com/questions/5734721/android-shared-preferences
+ *      https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo/
  *
- *  ChangeLog:      2015-03-02  E:V:A   Added from repo (see links below)
- *
- *  See:
- *    http://stackoverflow.com/questions/5734721/android-shared-preferences
- *    https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo/
- *
- *  Usage:
+ * Usage:
  *
  *  1)
  *      import com.SecUpwN.AIMSICD.utils.TinyDB;

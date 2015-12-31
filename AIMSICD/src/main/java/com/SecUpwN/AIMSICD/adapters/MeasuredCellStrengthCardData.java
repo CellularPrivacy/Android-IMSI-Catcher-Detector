@@ -5,9 +5,6 @@
  */
 package com.SecUpwN.AIMSICD.adapters;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 /**
  *
  * Data card class used in DB viewer (for Measured cell strength measurements)

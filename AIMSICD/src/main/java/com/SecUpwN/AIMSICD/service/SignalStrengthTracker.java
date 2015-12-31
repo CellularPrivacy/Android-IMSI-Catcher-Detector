@@ -71,13 +71,6 @@ import io.freefair.android.util.logging.Logger;
  *
  *          a) For SQLite time reference, see:     https://www.sqlite.org/lang_datefunc.html
  *          b) For Unix/Posix epoch, see:          https://en.wikipedia.org/wiki/Unix_time
- *
- *  ChangeLog
- *
- *      20150703    E:V:A       Changed log TAG to use only TAG for log.info() and mTAG for log.debug/e/v()
- *      20150717    E:V:A       Added back mTAG's and added comments
- *      20150719    E:V:A       Added comments
- *
  * @author Tor Henning Ueland
  */
 public class SignalStrengthTracker {

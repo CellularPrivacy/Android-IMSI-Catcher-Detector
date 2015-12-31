@@ -33,14 +33,22 @@
             android:textSize="16sp"/>
 
         <TextView
-            android:id="@+id/buildozer_buildnumber"
+            android:id="@+id/build_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/buildnumber"
             android:textColor="@color/red_text"
-            android:textSize="16sp"
-            android:visibility="gone"/>
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/git_sha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/git_sha"
+            android:textColor="@color/red_text"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,33 +81,27 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/small_padding">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/sense_idle"
-                    android:id="@+id/imgView_idle" />
-
                 <TextView
+                    android:id="@+id/textViewIdle"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:paddingLeft="@dimen/small_padding"
-                    android:text="@string/about_desc_icon_idle"/>
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/sense_high"
-                    android:id="@+id/imgView_high" />
+                    android:drawableLeft="@drawable/sense_idle"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/status_idle_about_desc" />
 
                 <TextView
+                    android:id="@+id/textViewHigh"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:paddingLeft="@dimen/small_padding"
-                    android:text="@string/about_desc_icon_active_tracking_near"/>
+                    android:drawableLeft="@drawable/sense_high"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/status_high_about_desc" />
             </TableRow>
 
             <TableRow
@@ -107,33 +109,27 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/small_padding">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/sense_ok"
-                    android:id="@+id/imgView_normal" />
-
                 <TextView
+                    android:id="@+id/textViewOk"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:paddingLeft="@dimen/small_padding"
-                    android:text="@string/about_desc_icon_ok"/>
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/sense_danger"
-                    android:id="@+id/imgView_danger" />
+                    android:drawableLeft="@drawable/sense_ok"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/status_ok_about_desc" />
 
                 <TextView
+                    android:id="@+id/textViewDanger"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:paddingLeft="@dimen/small_padding"
-                    android:text="@string/about_desc_icon_tracked_down"/>
+                    android:drawableLeft="@drawable/sense_danger"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/status_danger_about_desc" />
             </TableRow>
 
             <TableRow
@@ -141,33 +137,27 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/small_padding">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/sense_medium"
-                    android:id="@+id/imgView_medium" />
-
                 <TextView
+                    android:id="@+id/textViewMedium"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:paddingLeft="@dimen/small_padding"
-                    android:text="@string/about_desc_icon_insecure_area"/>
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/sense_skull"
-                    android:id="@+id/imgView_run" />
+                    android:drawableLeft="@drawable/sense_medium"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/status_medium_about_desc" />
 
                 <TextView
+                    android:id="@+id/textViewSkull"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:paddingLeft="@dimen/small_padding"
-                    android:text="@string/about_desc_icon_run"/>
+                    android:drawableLeft="@drawable/sense_skull"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/status_skull_about_desc" />
             </TableRow>
 
         </TableLayout>

@@ -11,14 +11,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 
+import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Icon;
-import com.SecUpwN.AIMSICD.utils.Status;
 
-import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -26,9 +26,10 @@ import io.freefair.android.util.logging.Logger;
  *
  * @author Tor Henning Ueland
  */
-public class BaseActivity extends AppCompatActivity {
-    //TODO: @Inject
-    private final Logger log = AndroidLogger.forClass(BaseActivity.class);
+public class BaseActivity extends InjectionAppCompatActivity {
+
+    @Inject
+    private Logger log;
 
     /**
      * Triggered when GUI is opened
@@ -48,7 +49,7 @@ public class BaseActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            log.debug("StatusWatcher received status change to " + Status.getStatus().name() + ", updating icon");
+            log.debug("StatusWatcher received status change to " + ((AppAIMSICD)getApplication()).getStatus().name() + ", updating icon");
             updateIcon(context);
         }
     };
@@ -60,7 +61,7 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(getActionBar() != null) {
-                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType)));
+                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD)getApplication()).getStatus()));
                 }
             }
         });

@@ -28,15 +28,16 @@ import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 
 import com.SecUpwN.AIMSICD.AIMSICD;
+import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.enums.Status;
 import com.SecUpwN.AIMSICD.utils.Cell;
 import com.SecUpwN.AIMSICD.utils.Device;
 import com.SecUpwN.AIMSICD.utils.DeviceApi18;
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.Icon;
-import com.SecUpwN.AIMSICD.utils.Status;
 import com.SecUpwN.AIMSICD.utils.TinyDB;
 
 import java.util.ArrayList;
@@ -70,17 +71,6 @@ import io.freefair.android.util.logging.Logger;
  *              defaults to 25 seconds.
  *
  *              [x] Use TinyDB.java to simplify Shared Preferences usage
- *
- *
- *  ChangeLog
- *
- *  2015-03-02  kairenken   removed OCID_UPLOAD_PREF. (Upload is done manually.)
- *  2015-03-02  E:V:A       Added TinyDB import for SharedPreferences alternative
- *  2015-03-03  E:V:A       Replaced getSystemProp with TinyDB Boolean "ocid_downloaded" in Runnable()
- *  2015-04-18  banjaxbanjo Removed timer that checked for neighbouring cells so it now checks onCellChange
- *  2015-07-23  E:V:A       Changed API from 16 to 17 and to use DeviceApi18.java instead of old.
- *  2015-07-30  E:V:A       Added vibration for no nc_list detection, test cleanup
- *
  */
 
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener{
@@ -327,7 +317,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else if (key.equals(VIBRATE_ENABLE)) {
             mVibrateEnabled = sharedPreferences.getBoolean(VIBRATE_ENABLE, true);
         } else if (key.equals(VIBRATE_MIN_LEVEL)) {
-            mVibrateMinThreatLevel = Integer.valueOf(sharedPreferences.getString(VIBRATE_MIN_LEVEL, String.valueOf(Status.Type.MEDIUM.level)));
+            mVibrateMinThreatLevel = Integer.valueOf(sharedPreferences.getString(VIBRATE_MIN_LEVEL, String.valueOf(Status.MEDIUM.ordinal())));
         }
     }
 
@@ -400,13 +390,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     neighboringCellInfo = cellInfoList;
                 } catch (InterruptedException e) {
                     // TODO: Add a more valuable message here!
-                    // normal
                 }
             }
         }
 
-        //commented because I got NPE here
-        // TODO: Who are you?? --EVA
         //log.debug(mTAG + ": neighbouringCellInfo size: " + neighboringCellInfo.size());
 
         // Add NC list to DBi_measure:nc_list
@@ -478,7 +465,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else if (ncls == 0 && nclp) {
             // Detection 7a
             log.info("ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID());
-            vibrate(100, Status.Type.MEDIUM);
+            vibrate(100, Status.MEDIUM);
             dbHelper.toEventLog(4,"No neighboring cells detected"); // (DF_id, DF_desc)
         } else  {
             // Todo: remove cid string when working.
@@ -558,7 +545,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         dbHelper.toEventLog(1, "Changing LAC");
 
                         // Detection Logs are made in checkLAC()
-                        vibrate(100, Status.Type.MEDIUM);
+                        vibrate(100, Status.MEDIUM);
                         setNotification();
 
                     } else {
@@ -571,7 +558,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             dbHelper.toEventLog(2, "CID not in DBe_import");
 
                             log.info("ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCID());
-                            vibrate(100, Status.Type.MEDIUM);
+                            vibrate(100, Status.MEDIUM);
 
                             mCellIdNotInOpenDb = true;
                             setNotification();
@@ -651,7 +638,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         CELL_TABLE_CLEANSED         = prefs.getBoolean(context.getString(R.string.pref_cell_table_cleansed), false);
         String refreshRate = prefs.getString(context.getString(R.string.pref_refresh_key), "1");
         this.mVibrateEnabled = prefs.getBoolean(context.getString(R.string.pref_notification_vibrate_enable), true);
-        this.mVibrateMinThreatLevel = Integer.valueOf(prefs.getString(context.getString(R.string.pref_notification_vibrate_min_level), String.valueOf(Status.Type.MEDIUM.level)));
+        this.mVibrateMinThreatLevel = Integer.valueOf(prefs.getString(context.getString(R.string.pref_notification_vibrate_min_level), String.valueOf(Status.MEDIUM.ordinal())));
 
         // Default to Automatic ("1")
         if (refreshRate.isEmpty()) {
@@ -968,17 +955,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     /**
      *  Description:    Set or update the Detection/Status Notification
-     *                  TODO: Please add details!
+     *                  TODO: Need to add status HIGH (Orange) and SKULL (Black)
      *
      *  Issues:
-     *
-     *  [ ] TODO: Seem we're missing the other colors here: ORANGE and BLACK (skull)
      *      See:  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons
      *      and:  https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/11#issuecomment-44670204
-     *
-     *      Change names from "IDLE,NORMAL,MEDIUM,ALARM" to:"GRAY,GREEN,YELLOW,ORANGE,RED,BLACK",
-     *      to reflect detection Icon colors. They should be based on the detection scores here:
-     *      <TBA>
      *
      *  [ ] We need to standardize the "contentText" and "tickerText" format
      *
@@ -996,13 +977,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *      being passed into tickerText only when any previous text has
      *      been entirely displayed.
      *
-     *
      *  Dependencies:    Status.java, CellTracker.java, Icon.java ( + others?)
-     *
-     *  ChangeLog:
-     *
-     *     2015-01-22   E:V:A  Added placeholder for "Missing Neighboring Cells Alert"
-     *
      *
      */
     void setNotification() {
@@ -1010,15 +985,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         String contentText = "Phone Type " + mDevice.getPhoneType();
 
         if (mFemtoDetected || mTypeZeroSmsDetected) {
-            Status.setCurrentStatus(Status.Type.ALARM, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.DANGER, mVibrateEnabled, mVibrateMinThreatLevel);
         } else if (mChangedLAC) {
-            Status.setCurrentStatus(Status.Type.MEDIUM, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.MEDIUM, mVibrateEnabled, mVibrateMinThreatLevel);
             contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
         } else if(mCellIdNotInOpenDb){
-            Status.setCurrentStatus(Status.Type.MEDIUM, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.MEDIUM, mVibrateEnabled, mVibrateMinThreatLevel);
             contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
         } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
-            Status.setCurrentStatus(Status.Type.NORMAL, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.OK, mVibrateEnabled, mVibrateMinThreatLevel);
             if (mTrackingFemtocell) {
                 contentText = context.getString(R.string.femtocell_detection_active);
             } else if (mTrackingCell) {
@@ -1027,17 +1002,18 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 contentText = context.getString(R.string.cell_monitoring_active);
             }
         } else {
-            Status.setCurrentStatus(Status.Type.IDLE, this.context, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.IDLE, mVibrateEnabled, mVibrateMinThreatLevel);
         }
 
-        switch (Status.getStatus()) {
+        Status status = getApplication().getStatus();
+        switch (status) {
             case IDLE: // GRAY
                 contentText = context.getString(R.string.phone_type) + mDevice.getPhoneType();
-                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_idle);
+                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_idle_description);
                 break;
 
-            case NORMAL: // GREEN
-                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_good);
+            case OK: // GREEN
+                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_ok_description);
                 break;
 
             case MEDIUM: // YELLOW
@@ -1060,7 +1036,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 }
                 break;
 
-            case ALARM: // ORANGE, RED or BLACK ?
+            case DANGER: // RED
                 tickerText = context.getResources().getString(R.string.app_name_short) + " - " + context.getString(R.string.alert_threat_detected); // Hmm, this is vague!
                 if (mFemtoDetected) {
                     contentText = context.getString(R.string.alert_femtocell_connection_detected);
@@ -1081,7 +1057,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         PendingIntent contentIntent = PendingIntent.getActivity(
                 context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType));
+        int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType), status);
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconResId);
 
         Notification mBuilder = new NotificationCompat.Builder(context)
@@ -1099,12 +1075,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
     }
 
+    private AppAIMSICD getApplication() {
+        return AppAIMSICD.getInstance();
+    }
+
     /**
      * Vibrator helper method, will check current preferences (vibrator enabled, min threat level to vibrate)
      * and act appropriately
      * */
-    private void vibrate(int msec, Status.Type threatLevel) {
-        if (mVibrateEnabled && (threatLevel == null || threatLevel.level >= mVibrateMinThreatLevel)) {
+    private void vibrate(int msec, Status threatLevel) {
+        if (mVibrateEnabled && (threatLevel == null || threatLevel.ordinal() >= mVibrateMinThreatLevel)) {
             Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             v.vibrate(msec);
         }
@@ -1248,11 +1228,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     // END Femtocatcher code
     //=================================================================================================
 
-    /**
-     * Description:     TODO: WTF is this?  --E:V:A
-     *
-     *
-     */
     final PhoneStateListener phoneStatelistener = new PhoneStateListener() {
         private void handle() {
             handlePhoneStateChange();

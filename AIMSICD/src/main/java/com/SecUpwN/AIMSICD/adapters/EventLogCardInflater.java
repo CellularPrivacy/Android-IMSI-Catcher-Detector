@@ -13,25 +13,9 @@ import android.widget.TextView;
 import com.SecUpwN.AIMSICD.R;
 
 /**
- *  Brief:          TODO: Please explain its use.
- *
- *  Description:
- *
- *      This class handle the EventLog DB table ... TODO: Add info here !
- *
- *  Template:       OpenCellIdCardInflater.java
- *
- *  Dependencies:   EventLogItemData.java
- *                  eventlog_items.xml
- *
- *  Issues:
- *
- *  ChangeLog:
- *
- *
- *  Notes:
- *
+ *  This class handles the EventLog DB table.
  */
+ 
 public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemData> {
 
     @Override

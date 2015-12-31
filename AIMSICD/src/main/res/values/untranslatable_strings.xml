@@ -8,7 +8,6 @@
 
 
     <string name="aimsicd_about_info" translatable="false">Android IMSI-Catcher Detector (AIMSICD)</string>
-    <string name="buildnumber" translatable="false">Build Number: </string>
     <string name="aimsicd_wiki_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki</string>
     <string name="aimsicd_contribute_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/CONTRIBUTING.md</string>
     <string name="disclaimer_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/DISCLAIMER</string>

@@ -1,55 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.SecUpwN.AIMSICD">
+    package="com.SecUpwN.AIMSICD"
+    tools:ignore="GoogleAppIndexingWarning">
 
-    <!-- If we ever wanna make this a system app, we can add the following 2 lines above:
-          coreApp="true"
-          android:sharedUserId="android.uid.system"> -->
+    <!--
+        Privacy Enthusiasts: Please read our Permissions Statement linked below!
+        https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Permissions
+    -->
 
-    <!-- PERMISSIONS ARE SORTED BY AOS PERMISSION AND 3rd PARTY ACCESS. KEEP THIS! -->
-    <!-- https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Permissions -->
-
-    <!-- Normal Android third-party permissions -->
-    <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
+    <!-- Normal Android third-party permissions, sorted for better viewing -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- SPECIAL PERMISSIONS TO BE ADDED AFTER THIS LINE. /> -->
-    <!-- To list all available (used) Android permissions on a device, use:
-         # `pm list permissions -g`  -->
 
-    <!-- These are OEM / Samsung Permissions -->
-    <uses-permission android:name="android.phone.receiveDetailedCallState"/>
-    <uses-permission android:name="com.android.permission.HANDOVER_STATUS"/>
-    <uses-permission android:name="com.sec.android.app.controlpanel.permission.PRIVATE"/>
-    <uses-permission android:name="com.sec.android.app.factorymode.permission.KEYSTRING"/>
-    <uses-permission android:name="com.sec.android.app.cm.permission.PERMISSION_MANAGEMENT"/>
-    <uses-permission android:name="com.sec.android.app.phoneutil.permission.KEYSTRING"/>
-    <uses-permission android:name="com.sec.android.app.servicemodeapp.permission.KEYSTRING"/>
-    <uses-permission android:name="com.sec.android.phone.permission.DATA_ROAMING_SETTINGS_ENHANCED"/>
-    <uses-permission android:name="com.sec.android.phone.permission.READ_CALL_SETTINGS"/>
-    <uses-permission android:name="com.sec.android.phone.permission.WRITE_CALL_SETTINGS"/>
-    <!-- uses-permission android:name="com.sec.factory.permission.ALLOWFTCLIENTCPOBIND"/>
-    <uses-permission android:name="com.sec.factory.permission.BT_ID_WRITE"/ -->
-    <uses-permission android:name="com.sec.factory.permission.KEYSTRING"/>
-    <uses-permission android:name="com.sec.modem.settings.permission.KEYSTRING"/>
-    <!-- uses-permission android:name="diagandroid.app.receiveDetailedApplicationState"/>
-    <uses-permission android:name="diagandroid.data.receivePDPContextState"/>
-    <uses-permission android:name="diagandroid.phone.receiveDetailedCallState"/ -->
+    <!--
+        May be needed (in the future) to access SIM related functions
+        <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
+    -->
 
-    <!-- May be needed (in the future) to access SIM related functions -->
-    <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
-   
     <application
             tools:replace="allowBackup"
             android:allowBackup="false"
@@ -100,9 +83,18 @@
             android:name=".activities.OpenCellIdActivity"
             android:icon="@drawable/ic_action_settings"
             android:label="@string/title_ocid_key"
-            android:theme="@android:style/Theme.Holo.Dialog"
             android:parentActivityName=".activities.PrefActivity"
             android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+        </activity>
+
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="@string/about_aimsicd"
+            android:parentActivityName=".AIMSICD">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.INFO"/>
+            </intent-filter>
         </activity>
 
         <activity
@@ -136,10 +128,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
-
-        <activity android:name=".activities.CreditsRollActivity"
-            android:theme="@android:style/Theme.Dialog"
-            android:screenOrientation="portrait"> </activity>
 
         <activity
             android:name=".smsdetection.AdvancedUserActivity"
