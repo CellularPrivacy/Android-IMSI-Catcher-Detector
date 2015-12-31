@@ -18,7 +18,7 @@ if(isTravis) {
     buildNumber = System.getenv("BUILDOZER_BUILDNUMBER")
 }
 
-version = '0.1.37-alpha'
+version = '0.1.38-alpha'
 
 android {
     compileSdkVersion 23
@@ -26,7 +26,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
-        versionCode 37
+        versionCode 38
         testApplicationId "com.SecUpwN.AIMSICD.test"
 
         buildConfigField 'String', 'BUILD_NUMBER', (buildNumber == null ? 'null' : "\"${buildNumber}\"")
