@@ -38,81 +38,36 @@ import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
 /**
- * Description:
- * <p/>
- * This class handle all the AMISICD DataBase maintenance operations, like
+ * This class handles all the AMISICD DataBase maintenance operations, like
  * creation, population, updates, backup, restore and various selections.
- * <p/>
- * <p/>
- * <p/>
- * Current Issues: TODO
- * <p/>
- * [ ] We'd like to Export the entire DB (like a dump), so we need ...
- * [x] Clarify the difference between cell.getCID() and CellID (see insertCell() below.)
- * [ ] prepareOpenCellUploadData() this needs to be updated and re-coded
- * [ ] all functions related to SignalStrengthTracker.java need to be updated
- * [ ] cleanseCellTable()  I think this is complete it's used in CellTracker.java
- * not SignalStrengthTracker.java
- * [ ] addSignalStrength( int cellID, int signal, String timestamp )
- * The timestamp is stored as String.valueOf(System.currentTimeMillis());
- * because the new db column for this is TEXT?
- * [ ] getAverageSignalStrength() // rx_signal
- * <p/>
- * Notes:
- * <p/>
- * ======  !! IMPORTANT !!  ======================================================================
- * For damn good reasons, we should try to stay with mDb.rawQuery() and NOT with mDb.query().
+ * 
+ * IMPORTANT: We should try to stay with mDb.rawQuery() and NOT with mDb.query().
  * In fact we should try to avoid the entire AOS SQLite API as much as possible, to keep our
  * queries and SQL related clean, portable and neat. That's what most developers understand.
- * <p/>
+ * Our Database is now kept open and is only closed on app exit (no need to open/close).
+ * 
  * See:
+ * 
  * [1] http://stackoverflow.com/questions/1122679/querying-and-working-with-cursors-in-sqlite-on-android
  * [2] http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#rawQuery%28java.lang.String,%20java.lang.String%5B%5D%29
- * ===============================================================================================
- * <p/>
- * +   Some examples we can use:
- * <p/>
+ * 
+ * Examples:
+ * 
  * 1) "Proper" style:
  * rawQuery("SELECT id, name FROM people WHERE name = ? AND id = ?", new String[] {"David", "2"});
- * <p/>
+ * 
  * 2) Hack style: (avoiding the use of "?")
  * String q = "SELECT * FROM customer WHERE _id = " + customerDbId  ;
  * Cursor mCursor = mDb.rawQuery(q, null);
- * <p/>
+ * 
  * 3) Info on execSQL():
  * Execute a single SQL statement that is NOT a SELECT or when passed with an argument a
  * SELECT/INSERT/UPDATE/DELETE statement. Suggested use with: ALTER, CREATE or DROP.
- * <p/>
- * +   A few words about DB "Cursors":
+ * 
+ * 4) A few words about DB "Cursors":
  * http://developer.android.com/reference/android/database/Cursor.html
  * http://stackoverflow.com/questions/3861558/what-are-the-benefits-of-using-database-cursor
- * <p/>
- * <p/>
- * ===============================================================================================
- * POST DB Overhaul Notes (by banjaxbanjo)
- * ===============================================================================================
- * <p/>
- * [x] Database is now kept open and is only closed on app exit (no need to .open/close )
- * ^^^ This is correct!  DO NOT CHANGE THIS BEHAVIOUR EVER!!
- * <p/>
- * [x] Default Locations now preloaded in DB
- * [x] BackupDB() is now working with all new tables
- * [x] RestoreDB() is now working with all new tables
- * [x] Download OCID is working with new DbeImport Table
- * [x] EventLog has been updated
- * [x] insertBTS/insertBtsMeasure replaces insertCell/insertLocation
- * [x] insertDBeImport replaces insertOpenCell
- * [x] insertEventLog replaces insertDetection
- * [x] returnEventLogData() replaces getEventLogData()
- * [x] returnSmsData( replaces getSilentSmsData()
- * [x] returnDBiBts() replaces getCellData()
- * [x] returnDBiMeasure() replaces getLocationData()
- * [x] returnDBeImport() replaces getOpenCellIDData()
- * [x] "updateOpenCellID" renamed to "populateDBe_import"
- * [x] removed populateDefaultMCC() as now these are preloaded
- * [x] restoreDB()/backupDB() now restores/backup with new tables
- * [x] removed: public class DbHelper extends SQLiteOpenHelper as we are now going with pre populated DB
- * [x] A lot of code refactored to suit new DB changes
+ * 
  */
 public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
@@ -169,13 +124,13 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Creates an empty SQLite Database file on the system and rewrites it with
-     * our own pre-fabricated AIMSICD.db.
-     * <p/>
-     * NOTES:           This is a modified version to suit of needs of this guys great guide on
-     * how to build a pre compiled db for android. Cheers Juan-Manuel Fluxà
-     * See:
-     * http://www.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
+     * Creates an empty SQLite Database file on the system
+     * and rewrites it with our own pre-fabricated AIMSICD.db.
+     * 
+     * NOTE: This is a modified version to suit our needs of this
+     * guys great guide on how to build a pre-compiled DB for Android. Cheers Juan-Manuel Fluxà.
+     * 
+     * See: http://www.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
      **/
     public boolean createDataBase() {
         if (!checkDataBase()) {
@@ -219,7 +174,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Copies your database from your local assets-folder to the just created
+     * Copies your database from your local assets-folder to the just created
      * empty database in the system folder, from where it can be accessed and handled.
      * This is done by transferring byte stream.
      */
@@ -267,10 +222,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     // ====================================================================
 
     /**
-     * Description:     This is used in the AIMSICD framework Tests to delete cells.
-     * see: ../src/androidTest/java/com.SecUpwN.test/.
-     * <p/>
-     * Issues:          TODO: See comments below!
+     * This is used in the AIMSICD framework Tests to delete cells.
+     * See: ../src/androidTest/java/com.SecUpwN.test/.
      *
      * @param cellId This method deletes a cell with CID from CELL_TABLE
      * @return result of deleting that CID
@@ -311,7 +264,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
 
     /**
-     * Description:     Returns Cell Information (DBi_bts) database contents
+     * Returns Cell Information (DBi_bts) database contents
      * this returns BTSs that we logged and is called from
      * MapViewerOsmDroid.java to display cells on map
      */
@@ -320,12 +273,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Returns Cell Information for contribution to the OpenCellID project
-     * <p/>
-     * Function:        Return a list of all rows from the DBi_measure table
-     * where isSubmitted is not 1.
-     * <p/>
-     * Dependencies:
+     * Returns Cell Information for contribution to the OpenCellID project
+     * by listing all rows from the DBi_measure table where isSubmitted is not 1.
      */
     public Cursor getOCIDSubmitData() {
 
@@ -347,23 +296,11 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     // ====================================================================
 
     /**
-     * Description:    This take a "Cell" bundle (from API) as input and uses its CID to check
-     * in the DBi_measure (?) if there is already an associated LAC. It then
-     * compares the API LAC to that of the DBi_Measure LAC.
-     * <p/>
-     * Issues:     [ ] We should make all detections outside of AIMSICDDbAdapter.java in a
-     * separate module as described in the diagram in GH issue #215.
-     * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/215
-     * where it is referred to as "Detection Module" (DET)...
-     * <p/>
-     * [ ] Seem we're querying too much, when we only need items: 1,3,4,8,11
-     * (Try to avoid over query to improve performance.)
-     * <p/>
-     * [ ]  V V V V
-     * <p/>
-     * This is using the LAC found by API and comparing to LAC found from a previous
-     * measurement in the "DBi_measure". This is NOT depending on "DBe_import".
-     * This works for now...but we probably should consider populating "DBi_measure"
+     * This is using the LAC found by API and comparing to LAC found from a
+     * previous measurement in the "DBi_measure". It then compares the API LAC
+     * to that of the DBi_Measure LAC. This is NOT depending on "DBe_import".
+     *
+     * This works for now, but we probably should consider populating "DBi_measure"
      * as soon as the API gets a new LAC. Then the detection can be done by SQL,
      * and by just comparing last 2 LAC entries for same CID.
      */
@@ -393,24 +330,18 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
 
     /**
-     * Description:     UPDATE DBi_measure to indicate if OpenCellID DB contribution has been made
+     * UPDATE DBi_measure to indicate if OpenCellID DB contribution has been made
      */
     public void ocidProcessed() {
         ContentValues ocidValues = new ContentValues();
         ocidValues.put("isSubmitted", 1); // isSubmitted
-        // TODO:    rewrite mDb.query to use mDb.rawQuery ??
-        // Perhaps: "UPDATE DBi_measure VALUES isSubmitted=1 WHERE isSubmitted<>1;" ???
         mDb.update("DBi_measure", ocidValues, "isSubmitted<>?", new String[]{"1"}); // isSubmitted
     }
 
 
     /**
-     * Description:     This returns all BTS in the DBe_import by current sim card network
-     * rather than returning other bts from different networks and slowing
-     * down map view
-     * <p/>
-     * Note:            TODO:   This might be unnecessary as the DBe_import should only use MCC/MNC
-     * as currently used by SIM service provider
+     * This returns all BTS in the DBe_import by current sim card network rather
+     * than returning other bts from different networks and slowing down map view
      */
     public Cursor returnOcidBtsByNetwork(int mcc, int mnc) {
         String query = String.format(
@@ -439,18 +370,11 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Remove all but the last row, unless its CID is invalid...
-     * <p/>
-     * Dependencies:    CellTracker.java:  ( dbHelper.cleanseCellTable(); )
-     * <p/>
-     * Issues:          [ ] This will not work if: PRAGMA foreign_key=ON, then we need to delete
-     * the corresponding DBi_measure entries before / as well.
-     * <p/>
-     * [ ] TODO: It is UNCLEAR why this is needed!! It's probably an artifact of old DB tables??
-     * TODO: Consider changing or removing!
-     * <p/>
-     * Notes:           Do we need to clean LAC as well? (Test with airplane-mode or roaming)
-     * - probably not since a APM would give both LAC and CID as "-1".
+     * Remove all but the last row, unless its CID is invalid.
+     * 
+     * This will not work if: PRAGMA foreign_key=ON, then we need to
+     * delete the corresponding DBi_measure entries before / as well.
+     *
      */
     public void cleanseCellTable() {
         // This removes all but the last row in the "DBi_bts" table
@@ -466,18 +390,10 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Prepares the CSV file used to upload new data to the OCID server.
-     * <p/>
-     * Issues:          TODO:
-     * [ ] Add "act" in upload data for the DBi_measure:RAT
-     * [ ] function getOCIDSubmitData() is not fully working ==> DB join not yet implemented
-     * [ ] skip (or change) progress bar, since CSV write is too fast to be seen.
-     * <p/>
-     * Note:            Q: Where is this file?
-     * A: It is wherever your device has mounted its SDCard.
-     * For example, in:  /data/media/0/AIMSICD/OpenCellID
-     * <p/>
+     * Prepares the CSV file used to upload new data to the OCID server.
+     * 
      * OCID CSV upload format:
+     *
      * "cellid"        = CID (in UMTS long format)
      * "measured_at"   = time
      * "rating"        = gpsd_accu
@@ -546,33 +462,22 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
 
     /**
-     * Description:    Parses the downloaded CSV from OpenCellID and uses it to populate
-     * "DBe_import" table.
-     * <p/>
-     * <p/>
-     * Dependency:     RequestTask.java :: onPostExecute()
-     * insertDBeImport()
-     * Issues:
-     * <p/>
-     * [ ]     Progress bar is not shown or is the operation too quick to be seen?
-     * [ ]     Why are we only populating 8 items out of 19?
-     * From downloaded OCID CSV file:  (19 items)
-     * <p/>
-     * NOTES:
-     * <p/>
+     * Parses the downloaded CSV from OpenCellID and uses it to populate "DBe_import" table.
+     * 
      * a)  We do not include "rej_cause" in backups. set to 0 as default
      * b)  Unfortunately there are 2 important missing items in the OCID CSV file:
      * - "time_first"
      * - "time_last"
+     *
      * c)  In addition the OCID data often contain unexplained negative values for one or both of:
      * - "samples"
      * - "range"
-     * <p/>
+     * 
      * d) The difference between "Cellid" and "cid", is that "cellid" is the "Long CID",
      * consisting of RNC and a multiplier:
      * Long CID = 65536 * RNC + CID
      * See FAQ.
-     * <p/>
+     * 
      * ========================================================================
      * For details on available OpenCellID API DB values, see:
      * http://wiki.opencellid.org/wiki/API
@@ -580,7 +485,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      * ========================================================================
      * # head -2 opencellid.csv
      * lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,tac,pci,sid,nid,bid
-     * <p/>
+     * 
      * 0 lat                      TEXT
      * 1 lon                      TEXT
      * 2 mcc                      INTEGER
@@ -717,13 +622,11 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     //=============================================================================================
 
     /**
-     * Description:    Restores the database tables from a previously Exported CSV files.
+     * Restores the database tables from a previously Exported CSV files.
      * One CSV file per table with the name:  "aimsicd-<table_name>.csv"
-     * <p/>
-     * Issues:         [ ]
-     * <p/>
-     * Notes:      1) Restoring the DB can be done from a monolithic SQLite3 DB by (check!):
-     * # sqlite3 aimsicd.db <aimsicd.dump
+     * 
+     * Restoring the DB can be done from a monolithic SQLite3 DB by
+     * # sqlite3 aimsicd.db <aimsicd.dump>
      */
     public boolean restoreDB() {
         try {
@@ -940,29 +843,22 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:    Dumps the internal aimsicd.db to a file called "aimsicd_dump.db".
-     * <p/>
-     * Requires:       root + SQLite3 binary
-     * <p/>
-     * Where?          Used in backupDB() and depend on the  MONO_DB_DUMP  boolean.
-     * <p/>
-     * Notes:  1) We probably also need to test if we have the sqlite3 binary. (See Busybox checking code.)
-     * <p/>
-     * 2) Apparently pipes doesn't work from Java... No idea why, as they appear to work
-     * in the AtCommandFragment.java... for checking for /dev/ files.
-     * <p/>
-     * 3) We can use either ".dump" or ".backup", but "dump" makes an SQL file,
-     * whereas "backup" make a binary SQLite DB.
-     * <p/>
+     * Dumps the internal aimsicd.db to a file called "aimsicd_dump.db".
+     * Used in: backupDB() and depends on the MONO_DB_DUMP boolean.
+     * Requires: Root and SQLite3 binary
+     * 
+     * We can use either ".dump" or ".backup", but "dump" makes an SQL file,
+     * whereas "backup" make a binary SQLite DB. See examples below:
+     * 
      * a) # sqlite3 aimsicd.db '.dump' | gzip -c >aimsicd.dump.gz
      * b) # sqlite3 aimsicd.db '.dump' >aimsicd.dump
      * c) # sqlite3 aimsicd.db '.backup aimsicd.back'
-     * <p/>
+     * 
      * execString = "/system/xbin/sqlite3 " + dir + "aimsicd.db '.dump' | gzip -c >" + file;
      * execString = "/system/xbin/sqlite3 " + aimdir + "aimsicd.db '.dump' >" + file;
      * execString = "/system/xbin/sqlite3 " + aimdir + "aimsicd.db '.backup " +file + "'";
-     * <p/>
-     * 4) To re-import use:
+     * 
+     * To re-import use:
      * # zcat aimsicd.dump.gz | sqlite3 aimsicd.db
      */
     private void dumpDB() {
@@ -986,11 +882,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
 
     /**
-     * Description:    Backup the database tables to CSV files (or monolithic dump file)
-     * <p/>
-     * Depends:        On the Boolean MONO_DB_DUMP to indicate if we want to try to
-     * dump a monolithic DB using the rooted shell + sqlite3 binary
-     * method above.
+     * Backup the database tables to CSV files (or monolithic dump file)
+     * Requires: Root, SQLite3 binary and MONO_DB_DUMP boolean.
      *
      * @return boolean indicating backup outcome
      */
@@ -1010,12 +903,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * TODO:  Is this redundant? REMOVE?
-     * Description:    Exports the database tables to CSV files
-     * <p/>
-     * Issues:         [ ] We should consider having a better file selector here, so that
-     * the user can select his own location for storing the backup files.
-     * [ ] Don't use progress bar for each column item, but instead each table.
+     * Exports the database tables to CSV files
      *
      * @param tableName String representing table name to export
      */
@@ -1062,53 +950,24 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     // ====================================================================
 
     /**
-     * What:           This is the DBe_import data consistency check
-     * <p/>
-     * Description:    This method checks each imported BTS data for consistency
-     * and correctness according to general 3GPP LAC/CID/RAT rules
-     * and according to the app settings:
-     * <p/>
+     * This is the DBe_import data consistency check wich checks each
+     * imported BTS data for consistency and correctness according to general
+     * 3GPP LAC/CID/RAT rules and according to the app settings:
+     * 
      * tf_settings         (currently hard-coded)
      * min_gps_precision   (currently hard-coded)
-     * <p/>
+     * 
      * So there are really two steps in this procedure:
      * a) Remove bad BTSs from DBe_import
      * b) Mark unsafe BTSs in the DBe_import with "rej_cause" value.
-     * <p/>
-     * See:    #253    http://tinyurl.com/lybrfxb
-     * #203    http://tinyurl.com/mzgjdcz
-     * <p/>
-     * We filter:
-     * <p/>
-     * Used:
-     * RequestTask.java :: onPostExecute()
-     * <p/>
-     * Issues:
-     * <p/>
-     * [ ] Look into "long CID" and "Short CID" for UMTS/LTE...
-     * http://wiki.opencellid.org/wiki/FAQ
-     * <p/>
+     * 
      * The formula for the long cell ID is as follows:
      * Long CID = 65536 * RNC + CID
-     * <p/>
+     * 
      * If you have the Long CID, you can get RNC and CID in the following way:
      * RNC = Long CID / 65536 (integer division)
      * CID = Long CID mod 65536 (modulo operation)
-     * <p/>
-     * TODO:   (1) Implement some kind of counter, to count how many cells was removed.
-     * TODO:   (2) Better description of what was removed.
-     * TODO:   (3) Give a return value for success/failure
-     * TODO:   (4) Implement the "rej_cause" check and UPDATE table.
-     * <p/>
-     * Notes:   (a) By using rawQuery, we could count the number of items affected.
-     * mDb.rawQuery(sqlq, null);
-     * But rawQuery() is not executed until there is an associated Cursor operation!
-     * <p/>
-     * (b)
-     * <p/>
-     * <p/>
-     * ChangeLog:
-     * 2015-08-01  E:V:A           Updated Queries to reflect new DB structure
+     * 
      */
     public void checkDBe() {
         // We hard-code these for now, but should be in the settings eventually
@@ -1193,16 +1052,12 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     // =======================================================================================
 
     /**
-     * Description:     Remove too old signal strengths entries from DBi_measure table,
+     * Remove too old signal strengths entries from DBi_measure table,
      * given a particular LAC,CID,PSC,RAT (or all?).
-     * <p/>
-     * TODO: Why do we need this at all?
-     * <p/>
-     * Note:            WARNING!    Do not remove based upon time only, as that would remove
+     * 
+     * WARNING: Do not remove based upon time only, as that would remove
      * all other measurement entries as well.
-     * <p/>
-     * Issues:          TODO:   timestamp in DBi_measure is a String,
-     * but the one from SignalStrengthTracker is a long
+     *
      */
 
     public void cleanseCellStrengthTables(long maxTime) {
@@ -1289,20 +1144,14 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     //====================================================================
 
     /**
-     * Description:     When inserting strings it has to be in the format:
+     * When inserting strings it has to be in the format:
      * "i am a type 0 string". These strings can be found in main logcat.
-     * <p/>
-     * Issues:          [ ] Need to change time data type to INTEGER in DB
-     * <p/>
-     * NOTES:
-     * <p/>
+     * 
      * TYPE0 SILENTVOICE FLASH <--- These have to be in CAPS
      * ContentValues newconvalues = new ContentValues();
      * newconvalues.put(DETECTION_STRINGS_LOGCAT_STRING, "your string goes here");
      * newconvalues.put(DETECTION_STRINGS_SMS_TYPE, "TYPE0");
      * database.insert(DETECTION_STRINGS_TABLE_NAME,,null,newconvalues);
-     * <p/>
-     * ChangeLog:
      */
     public boolean insertNewDetectionString(ContentValues newString) {
 
@@ -1635,24 +1484,12 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:    This method is used to insert and populate the downloaded or previously
+     * This method is used to insert and populate the downloaded or previously
      * backed up OCID details into the DBe_import database table.
-     * <p/>
+     * 
      * It also prevents adding multiple entries of the same cell-id, when OCID
      * downloads are repeated.
-     * <p/>
-     * Issues:     [ ] None, but see GH issue #303 for a smarter OCID download handler.
-     * <p/>
-     * Notes:       a) Move to:  CellTracker.java  see:
-     * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/290#issuecomment-72303486
-     * b) OCID CellID is of the "long form" (>65535) when available...
-     * c) is also used to where CSV data is populating the opencellid table.
-     * <p/>
-     * -
-     * <p/>
-     * TODO:       @EVA update comments as not I don't think there is an issue with this
-     * <p/>
-     * banjaxbanjo: What do you mean?
+     * 
      */
     public void insertDBeImport(String db_src, String rat, int mcc, int mnc, int lac,
                                 int cid, int psc, String lat, String lon, int isGpsExact,
@@ -1691,7 +1528,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Created this because we don't need to insert all the data in this table
+     * Created this because we don't need to insert all the data in this table
      * since we don't yet have items like TMSI etc.
      */
     public void insertBTS(Cell cell) {
@@ -1878,13 +1715,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Inserts a measurement into the DBi_measure and DBi_bts tables
-     * Used be restoreDB()
-     * Issues:
-     * [ ] Still not adding entry to DBi_bts
-     * [ ] Where is this used and how?
-     * [ ] MAYBE it's current use is still okay?
-     * [ ] TODO: Using bts_id is WRONG! That is a foreign key id in the DBi_bts and used in DBi_measure
+     * Inserts a measurement into the DBi_measure and DBi_bts tables
      */
     public void insertDbiMeasure(int bts_id,
                                  String nc_list,
@@ -1947,15 +1778,10 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     This inserts Detection Flag data that is used to fine tune the various
+     * This inserts Detection Flag data that is used to fine tune the various
      * available detection mechanisms. (See Detection List in issue #230)
-     * <p/>
-     * These parameters are described elsewhere, but should be included here
-     * for completeness and reference.
-     * <p/>
-     * There's also a CounterMeasure id to link to possible future counter measures.
-     * Issues:
-     * [ ]
+     * 
+     * There's also a CounterMeasure ID to link to possible future counter measures.
      */
     public void insertDetectionFlags(int code,
                                      String name,
@@ -1987,25 +1813,13 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Inserts log data into the EventLog table, using data provided by
+     * Inserts log data into the EventLog table, using data provided by
      * the TelephonyManager (TM) or an already backed up EvenLog database...
-     * <p/>
+     * 
      * If you just need to add an event with currently connected TM data such
      * as CID,LAC,PSC,GPS, then use the simple version called toEventLog(),
      * defined below.
-     * <p/>
-     * Used in:         AIMSICDDbAdapter.java (here)
-     * CellTracker.java
-     * SmsDetector.java
-     * <p/>
-     * Issues:          [ ] ALL events should be logged!!
-     * [ ] To avoid repeated copies, only check last DB entries
-     * [ ] Before inserting event, check that LAC/CID are not "-1".
-     * [ ] Any related notifications are better put here as well, right?
-     * [ ]
-     * <p/>
-     * Description of EventLog DF_id:   TODO: check and fix
-     * <p/>
+     *
      * DF_id   DF_desc
      * ---------------
      * 1       changing lac
@@ -2015,26 +1829,18 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      * 5       "Detected WAP PUSH SMS"
      * 6       "Detected WAP PUSH (2) SMS"
      * 7
-     * <p/>
-     * Notes:           a)  Table item order:
-     * <p/>
+     *
+     * Table item order:
+     * 
      * time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
-     * <p/>
-     * b)  We need to check if cell is not in OCID  Events are not continuously
-     * logged to the database as it currently stands. If the same cell shows
-     * up it will again be dumped to the event log and will fill up pretty
-     * quickly.
-     * <p/>
-     * banjaxobanjo What do you mean here? ALL events should be logged!
-     * <p/>
-     * c) To select last lines use:
-     * <p/>
+     * 
+     * To select last lines use:
+     * 
      * SELECT * FROM EventLog WHERE LAC=30114 AND CID=779149 AND DF_id=1 ORDER BY _id DESC LIMIT 1;
      * SELECT * FROM EventLog WHERE _id=(SELECT max(_id) FROM EventLog) AND LAC=30114 AND CID=779149 AND DF_id=1;
-     * <p/>
-     * <p/>
+     * 
      * Query examples for future devs:
-     * <p/>
+     * 
      * SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id BETWEEN 1 AND 4
      * SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 1" Changing LAC
      * SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 2" Cell not in OCID
@@ -2159,12 +1965,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
 
     /**
-     * Description:     Inserts BTS Sector Type data into the SectorType table
-     * <p/>
-     * Issues:
-     * [ ]
-     * <p/>
-     * Notes:
+     * Inserts BTS Sector Type data into the SectorType table
      */
     public void insertSectorType(String description) {
         ContentValues sectorType = new ContentValues();
@@ -2173,12 +1974,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Inserts SMS Detection Strings data into the "DetectionStrings" table
-     * <p/>
-     * Issues:
-     * [ ]
-     * <p/>
-     * Notes:
+     * Inserts SMS Detection Strings data into the "DetectionStrings" table
      */
     public void insertDetectionStrings(String det_str, String sms_type) {
 
@@ -2201,12 +1997,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Inserts detected silent SMS data into "SmsData" table
-     * <p/>
-     * Issues:
-     * [ ]
-     * <p/>
-     * Notes:
+     * Inserts detected silent SMS data into "SmsData" table
      */
     public void insertSmsData(String time,
                               String number,
@@ -2243,10 +2034,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:    This checks if a cell with a given CID already exists
-     * in the (DBe_import) database.
-     * <p/>
-     * Dependencies:   CellTracker()
+     * This checks if a cell with a given CID already exists in the (DBe_import) database.
      */
     public boolean openCellExists(int cellID) {
         String qry = String.format("SELECT CID FROM DBe_import WHERE CID = %d", cellID);
@@ -2257,10 +2045,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Check if CID and LAC is already in DBi_bts
-     * <p/>
-     * NOTES:           Warning, this is only for checking, if used to get info,
-     * replace "CID,LAC" with "*"
+     * Check if CID and LAC is already in DBi_bts
+     * WARNING: This is only for checking, if used to get info, replace "CID,LAC" with "*"
      */
     public boolean cellInDbiBts(int lac, int cellID) {
 
@@ -2274,12 +2060,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Description:     Check if CID (currently bts_id) is already in DBi_measure
-     * <p/>
-     * Issues:          TODO: replace "bts_id" with DBi_bts:CID
-     * [ ] This is redundant because of cellInDbiBts
-     * <p/>
-     * Dependencies:    TODO: where is this used?
+     * Check if CID (currently bts_id) is already in DBi_measure
      */
     public boolean cellInDbiMeasure(int cellID) {
         String query = String.format(
