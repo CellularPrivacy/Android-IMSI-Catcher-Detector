@@ -25,6 +25,8 @@
 * Fixed: Simplified version display in About Fragment, improved `lint` and fixed `buildnumbers`
 * Fixed: Ensured OpenCellID string consistency so that everyone know which database is meant
 
+---
+
 #### [15.11.2015 - WIP-Release v0.1.36-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.36-alpha-b00)
 
 * Changed: **We're now back from a huge break and intend to improve our project in all areas!**
@@ -39,17 +41,23 @@
 * Fixed: Handled unchecked type of `getSelectedItem()` return
 * Fixed: Avoided NPE on `result.close();`
 
+---
+
 #### [20.09.2015 - WIP-Release v0.1.35-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.35-alpha-b00)
 
 * Changed: Improved code quality and better error handling
 * Added: Animated updates on "Phone/SIM Details" page
 * Fixed: Resolved many security and performance issues [[#613](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/613)]
 
+---
+
 #### 16.09.2015 - WIP-Internal v0.1.33-alpha-build-01
 
 * Updated: Old formatting updates for cleaner code structure
 * Added: Database support for BtsLoc table in `aimsicd.db`
 * Added: Translations for Japanese, Albanian, Spanish and Polish
+
+---
 
 #### [09.08.2015 - WIP-Release v0.1.34-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.34-alpha-b00)
 
@@ -381,7 +389,7 @@
 
 * Changed: Customized build script in `.travis.yml` to override CoverityScan limits
 * Changed: Made toast property static and non-final, splitting toast creation for `msgShort`
-* Removed: Commented out `LeakCanary` until this libray has reived some code improvemens
+* Removed: Commented out `LeakCanary` until this libray has reived some code improvements
 * Fixed: Toasts are now displayed in the ccorrect position and duration to really read them
 
 ---
