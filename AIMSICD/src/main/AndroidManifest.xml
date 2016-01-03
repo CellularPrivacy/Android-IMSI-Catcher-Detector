@@ -98,6 +98,11 @@
         </activity>
 
         <activity
+            android:name=".activities.AtCommandActivity"
+            android:label="@string/at_command_title"
+            android:parentActivityName=".AIMSICD" />
+
+        <activity
             android:name=".activities.DebugLogs"
             android:icon="@drawable/ic_action_settings"
             android:label="@string/title_debug_logs"
