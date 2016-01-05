@@ -107,7 +107,7 @@ dependencies {
     
     // Bugsnag error monitoring to detect and diagnose crashes
     // https://github.com/freefair/advanced-bugsnag-android
-    compile 'io.freefair:advanced-bugsnag-android:+'
+    compile 'com.github.freefair:advanced-bugsnag-android:ec4955bb2c'
 
     // ShowcaseView library to highlight specific app elements
     //compile 'com.github.amlcurran.showcaseview:library:5.3.0'
