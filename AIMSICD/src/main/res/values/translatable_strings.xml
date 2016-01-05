@@ -209,7 +209,7 @@
     <string name="notification_vibrate_idle">Idle</string>
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Medium</string>
-    <string name="notification_vibrate_danger">Gefahr</string>
+    <string name="notification_vibrate_danger">Danger</string>
     
     <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Flat</string>
