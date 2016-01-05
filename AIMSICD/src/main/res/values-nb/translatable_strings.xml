@@ -40,7 +40,7 @@
     <string name="sim_serial">Seriell:</string>
     <string name="device_type">Telefontype:</string>
     <string name="device_imei">IMEI:</string>
-    <string name="device_version">RIL Version:</string>
+    <string name="device_version">Radio Version:</string>
     <string name="network_name">Tilbydernavn:</string>
     <string name="network_code">Tilbyderkode:</string>
     <string name="network_type">Type:</string>
@@ -48,7 +48,7 @@
     <string name="network_cellid">CID:</string>
     <string name="data_activity">Dataaktivitet:</string>
     <string name="data_status">Datastatus:</string>
-    <string name="network_roaming">Roaming:</string>
+    <string name="network_roaming">Søker:</string>
     <string name="network_lte_timing_advance">TA (LTE):</string>
     <string name="button_refresh">Frisk opp</string>
     <string name="drawer_open">Åpne navigasjons skuffe</string>
@@ -146,7 +146,7 @@
     <string name="ocid_api_success">Lagret ny API-nøkkel.</string>
 
     <string name="title_debug_logs">Feilsøkingslogger</string>
-    <string name="btn_clear_logs">Slett</string>
+    <string name="btn_clear_logs">Rensk</string>
     <string name="btn_copy_to_clipboard">Kopier</string>
     <string name="msg_copied_to_clipboard">Logger kopiert til clipboard.</string>
     <string name="btn_stop_logs">Stopp</string>
@@ -169,7 +169,7 @@
     <string name="notification_vibrate_idle">Pause</string>
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Medium</string>
-    <string name="notification_vibrate_danger">Danger</string>
+    <string name="notification_vibrate_danger">Fare</string>
     
     <string name="ui_icon_flat">Flat</string>
     <string name="ui_icon_sense">Sans</string>
