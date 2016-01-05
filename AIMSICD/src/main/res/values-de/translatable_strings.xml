@@ -275,7 +275,7 @@
     <string name="status">Status:</string>
     <string name="status_idle">Ruhend</string>
     <string name="status_ok">OK</string>
-    <string name="status_medium">Medium</string>
+    <string name="status_medium">Mittel</string>
     <string name="status_high">Hoch</string>
     <string name="status_danger">Gefahr</string>
     <string name="status_skull">Renn!</string>
