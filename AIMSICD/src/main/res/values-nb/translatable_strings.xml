@@ -22,7 +22,7 @@
     <string name="cell_lookup">Alle gjeldende celledetaljer</string>
     <string name="send_logs">Feilsøking</string>
     <string name="no_network_connection_title">Ingen Internett-forbindelse</string>
-    <string name="no_network_connection_message">Klarte ikke laste ned OpenCellID-data uten Internettilkobling, vær så snill å slå på datatilkobling!</string>
+    <string name="no_network_connection_message">Klarte ikke laste ned OpenCellID-data uten Internettilkobling, vennligst slå på datatilkobling!</string>
 
     <string name="get_opencellid">Last med BTS-data</string>
 
@@ -41,8 +41,8 @@
     <string name="device_type">Telefontype:</string>
     <string name="device_imei">IMEI:</string>
     <string name="device_version">Radio Version:</string>
-    <string name="network_name">Tilbydernavn:</string>
-    <string name="network_code">Tilbyderkode:</string>
+    <string name="network_name">Operatørnavn:</string>
+    <string name="network_code">Operatørkode:</string>
     <string name="network_type">Type:</string>
     <string name="network_lac">LAC:</string>
     <string name="network_cellid">CID:</string>
@@ -264,7 +264,7 @@
     <string name="adv_user_pref_sms_summary">Slett Oppdaget SMS</string>
    
     <string name="adv_user_root_title">Slå på SMS Oppdagelse</string>
-    <string name="adv_user_root_sum">Root er påkrevet for å aktivere på SMS oppdagelse</string>
+    <string name="adv_user_root_sum">Root er påkrevet for å aktivere SMS oppdagelse</string>
 
     <string name="detection_strings">Oppdagelses Strenger</string>
     <string name="typezero_title">VIKTIG!</string>
@@ -331,5 +331,5 @@
     <string name="the_string_was_added_to_db">Setningen ble lagt til i databasen</string>
     <string name="failed_to_add_the_string_to_db">Fikk ikke lagt til setningen i databasen</string>
 
-    <string name="help_app_debugging">Samle og send feil logger.</string>
+    <string name="help_app_debugging">Samle og send feilmeldingslogger.</string>
     </resources>
