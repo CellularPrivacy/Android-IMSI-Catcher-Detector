@@ -37,7 +37,7 @@ import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
-import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
+import com.SecUpwN.AIMSICD.activities.AtCommandActivity;
 import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
@@ -252,8 +252,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 title = getString(R.string.app_name_short);
                 break;
             case DrawerMenu.ID.MAIN.AT_COMMAND_INTERFACE:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new AtCommandFragment()).commit();
+                Intent atCommandIntent = new Intent(this, AtCommandActivity.class);
+                startActivity(atCommandIntent);
                 break;
             case DrawerMenu.ID.MAIN.DB_VIEWER:
                 getSupportFragmentManager().beginTransaction()
