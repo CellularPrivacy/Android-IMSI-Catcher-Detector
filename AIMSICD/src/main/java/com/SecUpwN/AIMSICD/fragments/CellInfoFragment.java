@@ -70,7 +70,7 @@ import io.freefair.android.injection.app.InjectionFragment;
  *  TODO:   2) Might wanna make the refresh rate lower/higher depending on support
  *
  */
-@XmlLayout(R.layout.cell_fragment)
+@XmlLayout(R.layout.fragment_cell_info)
 public class CellInfoFragment extends InjectionFragment {
 
     public static final int STOCK_REQUEST = 1;
