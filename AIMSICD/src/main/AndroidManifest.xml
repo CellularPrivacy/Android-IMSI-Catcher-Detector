@@ -42,16 +42,18 @@
             android:name=".AppAIMSICD">
 
         <activity
-                android:name=".AIMSICD"
-                android:exported="true"
-                android:label="@string/app_name_short"
-                android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+            android:name=".AIMSICD"
+            android:configChanges="keyboardHidden|screenLayout|screenSize|orientation"
+            android:exported="true"
+            android:label="@string/app_name_short"
+            android:theme="@style/Theme.AIMSICD.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
-                <action android:name="android.intent.action.DELETE"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <category android:name="android.intent.category.DEVELOPMENT_PREFERENCE"/>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.DELETE" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEVELOPMENT_PREFERENCE" />
             </intent-filter>
         </activity>
 
