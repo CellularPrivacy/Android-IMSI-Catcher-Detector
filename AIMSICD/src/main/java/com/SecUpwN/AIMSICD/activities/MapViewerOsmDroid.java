@@ -83,7 +83,7 @@ import io.freefair.android.util.logging.Logger;
  * https://github.com/osmdroid/osmdroid/issues/81
  * https://code.google.com/p/osmbonuspack/issues/detail?id=102
  */
-@XmlLayout(R.layout.map)
+@XmlLayout(R.layout.activity_map_viewer)
 @XmlMenu(R.menu.map_viewer_menu)
 public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
