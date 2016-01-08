@@ -2,7 +2,7 @@
 
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/green_text</item>
     </style>
 
