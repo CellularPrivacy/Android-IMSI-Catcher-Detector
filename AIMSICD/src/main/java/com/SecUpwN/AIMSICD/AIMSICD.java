@@ -84,7 +84,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     private boolean mBound;
     private SharedPreferences prefs;
-    private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
     private Editor prefsEditor;
     private String mDisclaimerAccepted;
     private AimsicdService mAimsicdService;
@@ -119,7 +118,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         prefs = getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
 
                 /* Pref listener to enable sms detection on pref change   */
-        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 if (key.equals(getString(R.string.adv_user_root_pref_key))) {
                     SmsDetection();
@@ -164,10 +163,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         }
     }
 
-    private DetailsPagerAdapter pagerAdapter;
-
     private void initViewPager() {
-        pagerAdapter = new DetailsPagerAdapter(getSupportFragmentManager(), this);
+        DetailsPagerAdapter pagerAdapter = new DetailsPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(pagerAdapter);
     }
 
