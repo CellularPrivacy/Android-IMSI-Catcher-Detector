@@ -133,7 +133,7 @@ public class DrawerMenuActivityConfiguration {
             mNavItems = menu;
 
             if (mMainLayout == 0) {
-                this.mainLayout(R.layout.main);
+                this.mainLayout(R.layout.activity_main);
             }
 
             if (mDrawerLayoutId == 0) {
