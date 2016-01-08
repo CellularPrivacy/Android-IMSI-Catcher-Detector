@@ -316,7 +316,7 @@
 
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Gemiddeld</string>
-    <string name="notification_vibrate_danger">Danger</string>
+    <string name="notification_vibrate_danger">Gevaar</string>
     
     <string name="deleted">Verwijderd</string>
     <string name="failed_to_delete">Fout bij het verwijderen</string>
@@ -328,4 +328,8 @@
     <string name="failed_to_add_the_string_to_db">String aan database toevoegen is mislukt</string>
 
     <string name="pref_notification_settings">Instellingen voor meldingen</string>
+    <string name="buildnumber">Build nummer: %s</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="pref_notification_vibrate_enable_summary">Trillen als notificatie verandert</string>
+    <string name="double_quote_will_cause_db_error">"\" dubbele quote veroorzaakt een db fout "</string>
     </resources>
