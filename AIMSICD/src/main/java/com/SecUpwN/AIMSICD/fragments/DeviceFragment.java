@@ -30,7 +30,7 @@ import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
 import io.freefair.android.util.logging.Logger;
 
-@XmlLayout(R.layout.device)
+@XmlLayout(R.layout.fragment_device)
 public class DeviceFragment extends InjectionFragment {
 
     @Inject
