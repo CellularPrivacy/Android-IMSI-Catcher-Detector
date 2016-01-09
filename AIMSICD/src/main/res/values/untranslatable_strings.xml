@@ -17,6 +17,7 @@
     <string name="aimsicd_license_link" translatable="false">https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/HEAD/LICENSE</string>
     <string name="opencellid_api_get_key" translatable="false">http://opencellid.org/gsmCell/user/generateApiKey</string>
 
+    <string name="pref_enable_gps_key" translatable="false">pref_enable_gps_key</string>
     <string name="pref_enable_cell_monitoring_key" translatable="false">pref_enable_cell_monitoring</string>
     <string name="pref_enable_cell_key" translatable="false">pref_enable_cell_key</string>
     <string name="pref_refresh_key" translatable="false">pref_refresh_key</string>
