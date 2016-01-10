@@ -24,7 +24,6 @@
 
 package com.SecUpwN.AIMSICD.service;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
