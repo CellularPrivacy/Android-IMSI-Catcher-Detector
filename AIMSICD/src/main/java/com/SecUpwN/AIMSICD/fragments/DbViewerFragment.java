@@ -45,7 +45,7 @@ import io.freefair.android.injection.app.InjectionFragment;
  * <p/>
  * Notes:          See issue #234 for details on how to format the UI
  */
-@XmlLayout(R.layout.db_view)
+@XmlLayout(R.layout.fragment_db_viewer)
 public final class DbViewerFragment extends InjectionFragment {
 
     private AIMSICDDbAdapter mDb;
