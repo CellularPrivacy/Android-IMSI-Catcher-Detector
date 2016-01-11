@@ -262,7 +262,7 @@ public class AimsicdService extends InjectionService {
         if (isLocationRequestShowing) return; // only show dialog once
 
         LayoutInflater dialogInflater=(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
-        View dialogView=dialogInflater.inflate(R.layout.layout_request_gps,null,false);
+        View dialogView=dialogInflater.inflate(R.layout.dialog_request_gps,null,false);
         CheckBox rememberChoice=(CheckBox)dialogView.findViewById(R.id.check_choice);
         Button notNow=(Button)dialogView.findViewById(R.id.not_now_button);
         Button enableGPS=(Button)dialogView.findViewById(R.id.enable_gps_button);
