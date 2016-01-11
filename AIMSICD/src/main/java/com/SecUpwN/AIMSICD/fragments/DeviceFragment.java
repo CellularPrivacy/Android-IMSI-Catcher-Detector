@@ -172,7 +172,7 @@ public class DeviceFragment extends InjectionFragment {
             content = (HighlightTextView) getView().findViewById(R.id.sim_operator_name);
             content.updateText(mDevice.getSimOperatorName(), ani);
             content = (HighlightTextView)  getView().findViewById(R.id.sim_imsi);
-            content = (HighlightTextView)  getView().findViewById(R.id.sim_serial);
+//            content.updateText(mDevice.getSimSubs(), ani);
             content.updateText(mDevice.getSimSerial(), ani);
 
             content = (HighlightTextView)  getView().findViewById(R.id.device_type);
