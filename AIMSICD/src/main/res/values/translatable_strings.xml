@@ -105,8 +105,8 @@
     <string name="location_error_message">You cannot track GPS data without enabling Location Services. Enable them now?</string>
 
     <!-- PREFERENCES -->
-    <string name="pref_enable_gps_title">GPS setting</string>
-    <string name="pref_enable_gps_summary">Enable GPS for cell tracking</string>
+    <string name="pref_enable_gps_title">GPS Setting</string>
+    <string name="pref_enable_gps_summary">Enable GPS for Cell Tracking</string>
     <string name="pref_system_title">System Settings</string>
     <string name="pref_autostart_title">Auto Start</string>
     <string name="pref_autostart_summ">Automatically start service on boot</string>
