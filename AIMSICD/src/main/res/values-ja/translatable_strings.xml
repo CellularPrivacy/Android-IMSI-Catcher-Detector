@@ -334,4 +334,6 @@
     
     <string name="buildnumber">ビルド番号: %s</string>
     <string name="git_sha">Git SHA ハッシュ: %s</string>
+    <string name="pref_enable_gps_title">GPS 設定</string>
+    <string name="pref_enable_gps_summary">基地局追跡の GPS を有効にします</string>
     </resources>
