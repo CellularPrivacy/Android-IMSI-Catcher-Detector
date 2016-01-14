@@ -118,7 +118,7 @@
     <string name="pref_femto_title">Femtozellen erkennen</string>
     <string name="pref_femto_summ">(derzeit nur für CDMA-Telefone)</string>
     <string name="pref_femto_action_title">Femtozellen-Schutz</string>
-    <string name="pref_femto_action_summ">Flugmodus bei Erkennung einer Femtozelle erzwingen (Netzwerk muß manuell wieder einschaltet werden)</string>
+    <string name="pref_femto_action_summ">Flugmodus bei Erkennung einer Femtozelle erzwingen (Netzwerk muss manuell wieder einschaltet werden)</string>
     <string name="pref_ui_title">Oberflächeneinstellungen</string>
     <string name="pref_ui_icons_title">Status-Symbole</string>
     <string name="pref_ui_icons_summ">Symboldesign wählen</string>

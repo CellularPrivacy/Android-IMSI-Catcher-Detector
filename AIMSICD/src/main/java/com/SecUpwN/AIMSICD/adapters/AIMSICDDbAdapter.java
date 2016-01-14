@@ -1115,7 +1115,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     public boolean deleteDetectedSms(long deleteme) {
-        String TAG = "AIMSICD";
         String mTAG = "AIMSICDDbAdapter";
 
         try {
