@@ -60,8 +60,8 @@ public class BaseActivity extends InjectionAppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(getActionBar() != null) {
-                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD)getApplication()).getStatus()));
+                if(getSupportActionBar() != null) {
+                    getSupportActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD)getApplication()).getStatus()));
                 }
             }
         });

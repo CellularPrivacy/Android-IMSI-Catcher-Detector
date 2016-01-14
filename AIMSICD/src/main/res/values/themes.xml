@@ -6,5 +6,10 @@
         <item name="colorAccent">@color/green_text</item>
     </style>
 
+    <style name="Theme.AIMSICD.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>
 

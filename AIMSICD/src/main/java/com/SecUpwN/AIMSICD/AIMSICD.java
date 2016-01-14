@@ -17,9 +17,12 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,16 +32,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.activities.AboutActivity;
+import com.SecUpwN.AIMSICD.activities.AtCommandActivity;
 import com.SecUpwN.AIMSICD.activities.BaseActivity;
 import com.SecUpwN.AIMSICD.activities.DebugLogs;
 import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
 import com.SecUpwN.AIMSICD.activities.PrefActivity;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.adapters.DetailsPagerAdapter;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
-import com.SecUpwN.AIMSICD.activities.AtCommandActivity;
-import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.utils.AsyncResponse;
@@ -49,7 +52,6 @@ import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 import com.SecUpwN.AIMSICD.utils.StackOverflowXmlParser;
-
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -61,16 +63,27 @@ import java.io.IOException;
 import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.util.logging.Logger;
 
+@XmlLayout(R.layout.activity_main)
 public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     @Inject
     private Logger log;
 
+    @InjectView(R.id.toolbar)
+    private Toolbar toolbar;
+
+    @InjectView(R.id.viewpager)
+    private ViewPager viewPager;
+
+    @InjectView(R.id.tabs)
+    private TabLayout tabLayout;
+
     private boolean mBound;
     private SharedPreferences prefs;
-    private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
     private Editor prefsEditor;
     private String mDisclaimerAccepted;
     private AimsicdService mAimsicdService;
@@ -79,8 +92,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     private ActionBar mActionBar;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
 
     private long mLastPress = 0;    // Back press to exit timer
 
@@ -96,48 +107,18 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
-
-        setContentView(mNavConf.getMainLayout());
-
-        mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
-        mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
+        setSupportActionBar(toolbar);
         mActionBar = getSupportActionBar();
-        mTitle = mDrawerTitle = getTitle();
 
-        mDrawerList.setAdapter(mNavConf.getBaseAdapter());
+        initNavigationDrawer();
 
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                mActionBar.setTitle(mTitle);
-                invalidateOptionsMenu();
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                mActionBar.setTitle(mDrawerTitle);
-                invalidateOptionsMenu();
-            }
-        };
-
-        // Set the drawer toggle as the DrawerListener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mActionBar.setDisplayHomeAsUpEnabled(true);
-        mActionBar.setHomeButtonEnabled(true);
+        initViewPager();
+        tabLayout.setupWithViewPager(viewPager);
 
         prefs = getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
 
                 /* Pref listener to enable sms detection on pref change   */
-        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 if (key.equals(getString(R.string.adv_user_root_pref_key))) {
                     SmsDetection();
@@ -182,11 +163,38 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         }
     }
 
+    private void initViewPager() {
+        DetailsPagerAdapter pagerAdapter = new DetailsPagerAdapter(getSupportFragmentManager(), this);
+        viewPager.setAdapter(pagerAdapter);
+    }
+
+    private void initNavigationDrawer() {
+        mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
+
+        mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
+        mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
+
+        mDrawerList.setAdapter(mNavConf.getBaseAdapter());
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        );
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
+    }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         final String iconType = prefs.getString(getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD)getApplication()).getStatus()));
+        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD) getApplication()).getStatus()));
         mDrawerToggle.syncState();
     }
 
@@ -226,7 +234,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
      */
     void selectItem(int position) {
         NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
-        String title = selectedItem.getLabel();
 
         /**
          * This is a work-around for Android Issue 42601
@@ -235,31 +242,20 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
          * The method getChildFragmentManager() does not clear up
          * when the Fragment is detached.
          */
-        DetailsContainerFragment mDetailsFrag = new DetailsContainerFragment();
-
         // Create a new fragment
         switch (selectedItem.getId()) {
             case DrawerMenu.ID.MAIN.PHONE_SIM_DETAILS:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, mDetailsFrag).commit();
-                mDetailsFrag.setCurrentPage(0);
-                title = getString(R.string.app_name_short);
+                viewPager.setCurrentItem(0);
                 break;
             case DrawerMenu.ID.MAIN.CURRENT_TREAT_LEVEL:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, mDetailsFrag).commit();
-                mDetailsFrag.setCurrentPage(1);
-                title = getString(R.string.app_name_short);
+                viewPager.setCurrentItem(1);
                 break;
             case DrawerMenu.ID.MAIN.AT_COMMAND_INTERFACE:
                 Intent atCommandIntent = new Intent(this, AtCommandActivity.class);
                 startActivity(atCommandIntent);
                 break;
             case DrawerMenu.ID.MAIN.DB_VIEWER:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, mDetailsFrag).commit();
-                mDetailsFrag.setCurrentPage(2);
-                title = getString(R.string.app_name_short);
+                viewPager.setCurrentItem(2);
                 break;
             case DrawerMenu.ID.APPLICATION.ABOUT:
                 Intent aboutIntent = new Intent(this, AboutActivity.class);
@@ -410,10 +406,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         mDrawerList.setItemChecked(position, true);
 
-        if (selectedItem.updateActionBarTitle()) {
-            setTitle(title);
-        }
-
         if (this.mDrawerLayout.isDrawerOpen(this.mDrawerList)) {
             mDrawerLayout.closeDrawer(mDrawerList);
         }
@@ -448,13 +440,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 }
             }
         }
-    }
-
-
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        mActionBar.setTitle(mTitle);
     }
 
     /**
@@ -499,11 +484,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             //Start Service before binding to keep it resident when activity is destroyed
             startService(intent);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
-            // Display the Device Fragment as the Default View
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, new DetailsContainerFragment())
-                    .commit();
         }
     }
 

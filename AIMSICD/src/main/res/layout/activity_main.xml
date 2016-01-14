@@ -7,15 +7,7 @@
         android:layout_height="match_parent">
 
     <!-- The main content view -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <FrameLayout
-            android:id="@+id/content_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
+    <include layout="@layout/activity_main_content" />
 
     <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer"

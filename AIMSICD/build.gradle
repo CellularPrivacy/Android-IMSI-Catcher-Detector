@@ -82,6 +82,7 @@ dependencies {
     
     // Android Support Libraries
     compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
     
     // OpenCSV (comma-separated values) parser library
     compile 'au.com.bytecode:opencsv:2.4'
