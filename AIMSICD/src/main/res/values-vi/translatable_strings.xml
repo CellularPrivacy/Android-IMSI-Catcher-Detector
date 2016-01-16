@@ -334,4 +334,6 @@
     <string name="the_string_was_added_to_db">Đã thêm chuỗi vào CSDL</string>
     <string name="failed_to_add_the_string_to_db">Thêm chuỗi vào CSDL thất bại</string>
 
+    <string name="n_a">N/A</string>
+
     </resources>
