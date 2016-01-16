@@ -18,8 +18,8 @@
     <string name="restore_database">Khôi phục CSDL</string>
     <string name="preferences">Tuỳ chỉnh</string>
     <string name="press_once_again_to_exit">Nhấn lại để thoát.</string>
-    <string name="cell_lookup">Chi tiết tất cả máy di động hiện thời</string>
-    <string name="send_logs">Gỡ lỗi</string>
+    <string name="cell_lookup">Tất cả chi tiết về máy di động hiện thời</string>
+    <string name="send_logs">Dò lỗi</string>
     <string name="no_network_connection_title">Không có kết nối mạng</string>
     <string name="no_network_connection_message">Không thể tải xuống dữ liệu OpenCellID mà không có mạng, xin bật kết nối dữ liệu!</string>
 
@@ -30,7 +30,7 @@
     <string name="network_info">Thông tin mạng</string>
     <string name="cell_info_title">Mức độ đe dọa hiện thời</string>
     <string name="neighbouring_cells_title">Các máy di động lân cận</string>
-    <string name="ciphering_indicator_title">Chỉ số viết mã</string>
+    <string name="ciphering_indicator_title">Bộ chỉ báo viết mã</string>
     <string name="disclaimer">"Khi sử dụng AIMSICD, bạn hiểu và chấp nhận rằng AIMSICD là một ứng dụng Android thực nghiệm cung cấp nhiều thông tin hữu ích và nó có thể thất bại trong việc phát hiện sự giám sát và theo dõi vì nhiều lý do khác nhau. Bạn cũng hiểu rằng nó có thể bị phá rối hoặc huỷ hoại bởi các công cụ khác mà nhà phát triển chưa hiểu rõ. Vì vậy, bạn cũng chấp nhận và hiểu rằng các công ty và nhà phát triển liên quan đến sản phẩm miễn phí này, trong mọi trường hợp, sẽ không phải chịu trách nhiệm cho bất kỳ hậu quả nào do việc sử dụng phần mềm này gây ra. "</string>
 
     <string name="neighbouring_cells_num_title">Tổng cộng:</string>
@@ -62,7 +62,7 @@
     <string name="app_version">Phiên bản: %s</string>
     <string name="buildnumber">Số bản dựng: %s</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
-    <string name="aimsicd_about_info3">Dự án Android nhằm phát hiện và phòng tránh các trạm cơ sở giả (IMSI-Catchers) trong mạng GSM/UMTS.</string>
+    <string name="aimsicd_about_info3">Dự án Android nhằm phát hiện và tránh các trạm cơ sở giả (IMSI-Catchers) trong hệ thống mạng GSM/UMTS.</string>
     <string name="about_github">AIMSICD trên GitHub</string>
     <string name="about_wiki">TÀI LIỆU</string>
     <string name="about_contribute">ĐÓNG GÓP</string>
@@ -75,7 +75,7 @@
     <string name="status_high_about_desc">Hoạt động theo dõi đang ở rất gần!</string>
     <string name="status_ok_about_desc">Mọi việc vẫn ổn.</string>
     <string name="status_danger_about_desc">Bạn đang bị theo dõi!</string>
-    <string name="status_medium_about_desc">Khu vực dịch vụ không bảo mật. Xin tránh xa!</string>
+    <string name="status_medium_about_desc">Khu vực dịch vụ kém bảo mật. Xin tránh xa!</string>
     <string name="status_skull_about_desc">CHẠY ĐI! Thiết bị cầm tay đã bị xâm nhập!</string>
     <string name="about_desc_icon_title">Nhấn vào các biểu tượng trạng thái dưới đây để biết thông tin chi tiết:</string>
 
@@ -87,10 +87,10 @@
     <string name="location_error_message">Bạn không thể theo dõi dữ liệu GPS mà không bật các dịch vụ vị trí. Bật chúng ngay?</string>
 
     <string name="pref_enable_gps_title">Cài đặt GPS</string>
-    <string name="pref_enable_gps_summary">Bật GPS để theo dõi thiết bị di động</string>
+    <string name="pref_enable_gps_summary">Bật GPS để theo dõi máy di động</string>
     <string name="pref_system_title">Cài đặt hệ thống</string>
-    <string name="pref_autostart_title">Tự động khởi chạy</string>
-    <string name="pref_autostart_summ">Tự động khởi chạy dịch vụ khi khởi động</string>
+    <string name="pref_autostart_title">Tự khởi chạy</string>
+    <string name="pref_autostart_summ">Tự khởi chạy dịch vụ khi khởi động</string>
     <string name="pref_persistservice_title">Dịch vụ liên tục</string>
     <string name="pref_persistservice_summ">Dịch vụ sẽ tiếp tục chạy sau khi thoát khỏi ứng dụng (bỏ chọn để đóng hoàn toàn)</string>
     <string name="pref_protection_title">Cài đặt bảo vệ</string>
@@ -98,16 +98,16 @@
     <string name="pref_enable_cell_title">Theo dõi máy di động</string>
     <string name="pref_enable_cell_summ">Bật tự động theo dõi máy di động</string>
     <string name="pref_femto_title">Phát hiện Femtocell</string>
-    <string name="pref_femto_summ">(hiện thời CHỈ điện thoại CDMA)</string>
+    <string name="pref_femto_summ">(hiện thời CHỈ dành cho điện thoại CDMA)</string>
     <string name="pref_femto_action_title">Bảo vệ Femtocell</string>
     <string name="pref_femto_action_summ">Buộc dùng chế độ máy bay khi phát hiện Femtocell (bật lại mạng theo cách thủ công)</string>
     <string name="pref_ui_title">Cài đặt giao diện</string>
     <string name="pref_ui_icons_title">Biểu tượng-trạng thái</string>
     <string name="pref_ui_icons_summ">Chọn chủ đề biểu tượng</string>
     <string name="pref_refresh_title">Tốc độ làm mới</string>
-    <string name="pref_refresh_summ">Kiểm soát tần số cập nhật thiết bị\nLựa chọn hiện thời: %s</string>
+    <string name="pref_refresh_summ">Kiểm soát tần suất cập nhật thiết bị\nLựa chọn hiện thời: %s</string>
     <string name="pref_ocid_title">Cài đặt OpenCellID</string>
-    <string name="pref_ocid_key_title">Khoá API cho OpenCellID</string>
+    <string name="pref_ocid_key_title">Khoá API OpenCellID</string>
     <string name="pref_ocid_key_summ">Nhập khóa API OpenCellID của bạn ở đây</string>
     <string name="pref_enable_cell_monitoring_title">Giám sát máy di động</string>
     <string name="pref_enable_cell_monitoring_summ">Bật tự động giám sát máy di động</string>
@@ -145,7 +145,7 @@
     <string name="sms_message">Đã phát hiện SMS ngầm!\nChi tiết: Xem trình đọc CSDL.</string>
     <string name="table_contains_no_data">Bảng không có dữ liệu nào để hiển thị.</string>
 
-    <string name="title_ocid_key">Khoá API cho OpenCellID</string>
+    <string name="title_ocid_key">Khoá API OpenCellID</string>
     <string name="message_request_api_key">Nhấn OK để yêu cầu một khóa API từ OpenCellID.org. Nó sẽ cho phép bạn tải xuống dữ liệu của họ và xem nó trong bản đồ. Nó cũng sẽ cho phép bạn tải lên dữ liệu di động. Lưu ý rằng nếu bạn không tải lên dữ liệu di động trong vòng 20 ngày, khóa API của bạn có thể trở nên vô hiệu.</string>
     <string name="ocid_api_error">"Lỗi khi nhận khoá: "</string>
     <string name="ocid_api_success">Đã lưu khóa API mới.</string>
@@ -196,7 +196,7 @@
     <string name="timeout_spinner_20_sec">20 giây</string>
     <string name="timeout_spinner_30_sec">30 giây</string>
     <string name="timeout_spinner_10_min">10 phút</string>
-    <string name="main">Chính</string>
+    <string name="main">Trình đơn chính</string>
     <string name="settings">Cài đặt</string>
     <string name="application">Ứng dụng</string>
     <string name="monitoring_cell_information">Kiểm soát thông tin máy di động.</string>
@@ -206,7 +206,7 @@
     <string name="only_one_key_per_day">Chỉ một yêu cầu khoá API mới mỗi 24 giờ!\nXin thử lại sau.</string>
     <string name="cell_id_doesnt_exist_in_db">ID máy di động không có trong CSDL OpenCellID!</string>
     <string name="hostile_service_area_changing_lac_detected">Khu vực dịch vụ nguy hiểm: Đã phát hiện thay đổi LAC!</string>
-    <string name="femtocell_detection_active">Phát hiện FemtoCell đang chạy.</string>
+    <string name="femtocell_detection_active">Phát hiện FemtoCell đang hoạt động.</string>
     <string name="cell_tracking_active">Theo dõi máy di động đang hoạt động.</string>
     <string name="cell_monitoring_active">Giám sát máy di động đang hoạt động.</string>
     <string name="phone_type">Loại điện thoại</string>
