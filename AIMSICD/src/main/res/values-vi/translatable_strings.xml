@@ -208,4 +208,130 @@
     <string name="hostile_service_area_changing_lac_detected">Khu vực dịch vụ nguy hiểm: Đã phát hiện thay đổi LAC!</string>
     <string name="femtocell_detection_active">Phát hiện FemtoCell đang chạy.</string>
     <string name="cell_tracking_active">Theo dõi máy di động đang hoạt động.</string>
+    <string name="cell_monitoring_active">Giám sát máy di động đang hoạt động.</string>
+    <string name="phone_type">Loại điện thoại</string>
+    <string name="status_idle_description">Trạng thái: Nhàn rỗi.</string>
+    <string name="status_ok_description">Trạng thái: Tốt. Chưa phát hiện mối đe doạ nào.</string>
+    <string name="alert_threat_detected">CẢNH BÁO: Đã phát hiện một số mối đe doạ!</string>
+    <string name="alert_femtocell_connection_detected">CẢNH BÁO: Đã phát hiện kết nối FemtoCell!</string>
+    <string name="alert_silent_sms_detected">CẢNH BÁO: Đã phát hiện SMS ngầm!</string>
+    <string name="alert_mwi_detected">CẢNH BÁO: Đã phát hiện bộ báo chờ tin nhắn!</string>
+    <string name="alert_silent_wap_sms_detected">CẢNH BÁO: Đã phát hiện SMS push WAP!</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD chỉ có thể phát hiện kết nối FemtoCell trên thiết bị CDMA.</string>
+    <string name="service_state_changed">Đã đổi trạng thái dịch vụ!</string>
+    <string name="stopped_tracking_femtocell">: Đã ngừng theo dõi kết nối FemtoCell.</string>
+    <string name="alert_femtocell_tracking_detected">CẢNH BÁO: Đã phát hiện hoạt động theo dõi FemtoCell!</string>
+    <string name="refreshing_every">Làm mới mỗi</string>
+    <string name="refreshing_now">Đang làm mới ngay…</string>
+    <string name="seconds">giây.</string>
+    <string name="contacting_opencellid_for_data">Liên hệ với OpenCellID cho dữ liệu...\nCó thể mất đến một phút.</string>
+    <string name="unable_to_determine_last_location">Không thể xác định vị trí cuối cùng của bạn.\nBật dịch vụ vị trí và thử lại.</string>
+    <string name="no_tracked_locations_found">Không có địa điểm theo dõi nào được hiển thị trên bản đồ.</string>
+    <string name="no_data_for_publishing">Không có dữ liệu nào để phát hành.</string>
+    <string name="download_error">Lỗi tải xuống:</string>
+    <string name="opencellid_data_successfully_received">Tiếp nhận thành công dữ liệu OpenCellID.</string>
+    <string name="error_retrieving_opencellid_data">Lỗi tiếp nhận dữ liệu OpenCellID.\nHãy kiểm tra mạng của bạn!</string>
+    <string name="opencellid_data_successfully_received_markers_updated">Tiếp nhận thành công dữ liệu OpenCellID.\nĐã cập nhật đánh dấu bản đồ.</string>
+    <string name="uploaded_bts_data_successfully">Đã tải dữ liệu BTS lên OpenCellID thành công.</string>
+    <string name="error_uploading_bts_data">Lỗi khi tải dữ liệu BTS lên máy chủ OpenCellID!</string>
+    <string name="restore_database_completed_title">Khôi phục thành công.</string>
+    <string name="restore_database_completed">Hoàn tất khôi phục CSDL.</string>
+    <string name="error_restoring_database">Lỗi khi khôi phục CSDL.</string>
+    <string name="database_backup_successfully_saved_to">Sao lưu thành công CSDL vào:</string>
+    <string name="error_backing_up_data">Lỗi khi sao lưu CSDL.</string>
+    <string name="no_opencellid_key_detected">Không phát hiện khóa API OpenCellID nào!\nXin nhập khoá của bạn trong cài đặt trước đã.</string>
+    <string name="refreshing_display">Đang làm mới hiển thị</string>
+    <string name="unable_to_acquire_root_access">Không thể nhận quyền truy cập ROOT trên thiết bị của bạn.\nNhập lệnh AT yêu cầu quyền truy cập ROOT cho Trạm .\nHãy kiểm tra nếu thiết bị ĐÃ ROOT và thử lại.</string>
+    <string name="unable_to_detect_busybox">Không thấy Busybox trên thiết bị của bạn.\nNhập lệnh AT cần các thành phần của Busybox để có thể hoạt động chính xác.\nHãy kiểm tra xem thiết bị đã cài đặt Busybox chưa và thử lại.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Đã xảy lỗi lạ cố chiếm dụng các thiết bị nối tiếp.\nXin kiểm tra logcat cho bất kỳ lỗi gì và gửi lên Github của chúng tôi.</string>
+    <string name="unknown_error_initialising_at_command_injector">Đã xảy lỗi lạ cố kích hoạt trình nhập lệnh AT.\nXin kiểm tra logcat cho bất kỳ lỗi gì và gửi lên Github của chúng tôi.</string>
+    <string name="getting_ocid_api_key">Đang nhận khoá API OpenCellID…</string>
+    <string name="unable_to_create_map">Không thể tạo bản đồ!</string>
+    <string name="describe_the_problem_you_had">CHÚ Ý! Hãy mô tả vấn đề bạn đã gặp phải trước khi gửi cho chúng tôi nhật ký này. SẼ KHÔNG TRỢ GIÚP NẾU KHÔNG CÓ BẢN MÔ TẢ!\n</string>
+    <string name="status">Trạng thái:</string>
+    <string name="status_idle">Nhàn rỗi</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">Trung bình</string>
+    <string name="status_high">Cao</string>
+    <string name="status_danger">Nguy hiểm</string>
+    <string name="status_skull">Chạy đi!</string>
+
+    <string name="adv_user_info">Trình đơn này chỉ dành cho người dùng nâng cao!\n\nXin đừng chèn các chuỗi ngẫu nhiên vì nó sẽ đẩy hoạt động phát hiện ra khỏi tầm kiểm soát.\n\nĐể thêm một chuỗi, chọn loại SMS từ trình đơn thả xuống, gõ chuỗi phát hiện và nhấn chèn.\n\nĐể xoá khỏi CSDL, nhấn giữ trên danh sách.</string>
+    
+    <string name="adv_user_sms_info">Trình đơn này chỉ dành cho người dùng nâng cao!\nĐể xoá một SMS đã phát hiện, nhấn giữ nó trong danh sách.</string>
+    <string name="title_activity_advanced_user">Xoá SMS đã phát hiện</string>
+
+    <string name="adv_user_pref_header">Cài đặt người dùng nâng cao</string>
+    <string name="adv_user_pref_launch">Chuỗi phát hiện</string>
+    <string name="adv_user_pref_sms_launch">Xoá SMS</string>
+    <string name="adv_user_pref_summary">Chèn và xoá chuỗi phát hiện</string>
+    <string name="adv_user_pref_sms_summary">Xoá SMS đã phát hiện</string>
+   
+    <string name="adv_user_root_title">Bật phát hiện SMS</string>
+    <string name="adv_user_root_sum">Cần có Root để bật phát hiện SMS</string>
+
+    <string name="detection_strings">Các chuỗi phát hiện</string>
+    <string name="typezero_title">CHÚ Ý!</string>
+    <string name="typezero_header">Đã phát hiện SMS ngầm</string>
+    <string name="typezero_data">Đã phát hiện tin nhắn Type-0!\nChi tiết: Xem trình đọc CSDL.</string>
+    <string name="typemwi_title">CHÚ Ý!</string>
+    <string name="typemwi_header">Đã phát hiện MWI</string>
+    <string name="typemwi_data">Đã phát hiện bộ chỉ báo chờ tin nhắn!\nChi tiết: Xem trình đọc CSDL.</string>
+    <string name="typewap_header">Đã phát hiện push WAP</string>
+    <string name="typewap_data">Đã phát hiện tin nhắn SMS push WAP!\nChi tiết: Xem trình đọc CSDL.</string>
+
+
+    <string name="help_main_current_threat_level">Trạng thái mối đe dọa AIMSICD, các máy di động lân cận, bộ chỉ báo phương pháp viết mã.</string>
+    <string name="help_main_phone_sim_details">Chi tiết nhà cung cấp SIM mạng, IMEI, TMSI.</string>
+    <string name="help_main_acd">Hiển thị so sánh chi tiết của máy di động đang kết nối với các dữ liệu (nếu có) tìm thấy trong OpenCellID và chỉ rõ những khác biệt.</string>
+    <string name="help_main_database_viewer">Xem các bảng CSDL khác nhau hiện có.</string>
+    <string name="help_main_antenna_map_view">Bản đồ các ăng-ten lân cận đã màu hoá.</string>
+    <string name="help_main_at_command_interface">Giao diện cho phép gửi lệnh AT đến bộ xử lý dải tín hiệu thấp tần (yêu cầu ROOT).</string>
+
+    <string name="help_tracking_toggle_attack_detection">Bắt đầu/dừng phát hiện tấn công và thu thập chi tiết máy di động vào các bảng CSDL nội bộ.</string>
+    <string name="help_tracking_toggle_cell_tracking">Bắt đầu theo dõi các máy di động nhằm hiển thị trên trình xem bản đồ ăng-ten và sau đó có thể sẽ tải lên OpenCellID.</string>
+
+    <string name="help_settings_preferences">Các cài đặt AIMSICD như là quy tắc bảo vệ, số lần thăm dò và hành vi dịch vụ.</string>
+    <string name="help_settings_backup_db">Sao lưu CSDL SQLite3 vào thẻ SD.</string>
+    <string name="help_settings_restore_db">Khôi phục CSDL SQLite3 từ thẻ SD.</string>
+    <string name="help_settings_reset_db">Xoá và cài lại tất cả hoặc các bảng CSDL được chỉ định.</string>
+    <string name="help_settings_export_db_to_csv">Xuất các bảng CSDL vào những tập tin CSV riêng lẻ.</string>
+    <string name="help_settings_import_db_from_csv">Nhập các bảng CSDL từ những tập tin CSV riêng lẻ.</string>
+
+    <string name="help_app_add_get_ocid_api_key">Nhận khóa API để sử dụng CSDL OpenCellID khi tải dữ liệu…</string>
+    <string name="help_app_about">Đã giải thích biểu tượng trạng thái và dự án.</string>
+    <string name="help_app_download_local_bts">Tải về CSDL OpenCellID.</string>
+    <string name="help_app_upload_local_bts">Tải BTS của bạn lên CSDL OpenCellID.</string>
+    <string name="help_app_debugging">Thu thập và gửi lịch sử lỗi.</string>
+    <string name="help_app_quit">Thoát ứng dụng.</string>
+    <string name="waiting_for_location">Đang chờ vị trí…</string>
+    <string name="unable_to_restore_backup_from_previous_database_version">Không thể khôi phục sao lưu từ phiên bản CSDL trước đó do cấu trúc đã thay đổi!</string>
+    <string name="unique_bts_data">Dữ liệu BTS độc nhất</string>
+    <string name="bts_measurements">Phép đo BTS</string>
+    <string name="imported_ocid_data">Đã nhập dữ liệu OpenCellID</string>
+    <string name="default_mmc_locations">Vị trí MCC mặc định</string>
+    <string name="silent_sms">SMS ngầm</string>
+    <string name="eventlog">Lịch sử sự kiện</string>
+    <string name="measured_signal_strengths">Cường độ tín hiệu đã đo</string>
+
+    <string name="at_command_response_looking">*** Đang tìm các thiết bị nối tiếp AT...\n</string>
+    <string name="at_command_response_found">"Tìm thấy: "</string>
+    <string name="at_command_response_setup_complete">*** Hoàn tất cài đặt ***\n</string>
+
+    <string name="currently_connected_bts">BTS hiện đã kết nối</string>
+    <string name="well_known_encrypted_bts">BTS được mã hóa phổ biến</string>
+    <string name="unknown_or_insecure_bts">BTS lạ hoặc kém bảo mật</string>
+    <string name="new_or_recently_added_bts">BTS mới hoặc vừa thêm gần đây</string>
+
+    <string name="delete_database_msg_success">Đã xoá và tạo mới thành công CSDL.\nHãy khởi động lại ứng dụng để xoá các giá trị cũ đã có trong bộ nhớ.</string>
+
+    <string name="invalid_key_try_later">Khoá OpenCellId không hợp lệ, hãy thử lại sau.</string>
+    <string name="getting_ocid_key">Đang nhận khoá API OpenCellId...</string>
+
+    <string name="deleted">Đã xoá</string>
+    <string name="failed_to_delete">Không xoá được</string>
+    <string name="double_quote_will_cause_db_error">"Chưa thêm chuỗi\nDấu ngoặc kép \" sẽ gây lỗi CSDL "</string>
+    <string name="the_string_was_added_to_db">Đã thêm chuỗi vào CSDL</string>
+    <string name="failed_to_add_the_string_to_db">Thêm chuỗi vào CSDL thất bại</string>
+
     </resources>
