@@ -6,8 +6,8 @@
     <string name="quit">Stoppen</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Annuleren</string>
-    <string name="text_agree">Akkoord</string>
-    <string name="text_disagree">Niet akkoord</string>
+    <string name="text_agree">Ik ga akkoord</string>
+    <string name="text_disagree">Ik ga niet akkoord</string>
 
     <string name="disclaimer_title">DISCLAIMER</string>
     <string name="toggle_attack_detection">Aanvalsdetectie aan/uit</string>
@@ -84,7 +84,7 @@
     <string name="pref_system_title">Systeeminstellingen</string>
     <string name="pref_autostart_title">Automatisch starten</string>
     <string name="pref_autostart_summ">Service automatisch starten bij opstarten telefoon</string>
-    <string name="disclaimer">"Door het gebruik van AIMSICD begrijpt u en gaat u er mee akkoord dat AIMSICD een experimenteel en informatief Android programma is dat door verschillende redenen mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het op andere manieren die de ontwikkelaars momenteel nog niet begrijpen omzeild kan worden. U begrijpt en gaat er tevens mee akkoord dat dit de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. "</string>
+    <string name="disclaimer">"Door het gebruik van AIMSICD begrijpt u en gaat u er mee akkoord dat AIMSICD een experimenteel en informatieve Android applicatie is dat door verschillende redenen mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het omzeild of verslagen kan worden door methodes die de ontwikkelaars momenteel nog niet begrijpen. U begrijpt en gaat er tevens mee akkoord dat dit de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. "</string>
 
     <string name="status_idle_about_desc">Inactief / aan het laden.</string>
     <string name="pref_persistservice_title">Permanente service</string>
@@ -319,17 +319,19 @@
     <string name="notification_vibrate_danger">Gevaar</string>
     
     <string name="deleted">Verwijderd</string>
-    <string name="failed_to_delete">Fout bij het verwijderen</string>
+    <string name="failed_to_delete">Verwijderen mislukt</string>
     <string name="the_string_was_added_to_db">De string is toegevoegd aan de database</string>
     <string name="pref_notification_vibrate_enable_title">Trilfunctie Inschakelen</string>
     <string name="pref_notification_vibrate_min_level_title">Vibreren bij gevarenniveau</string>
     <string name="pref_notification_vibrate_min_level_summary">Selecteer het minimum gevarenniveau voor de trilfunctie</string>
     <string name="notification_vibrate_idle">Inactief</string>
-    <string name="failed_to_add_the_string_to_db">String aan database toevoegen is mislukt</string>
+    <string name="failed_to_add_the_string_to_db">String toevoegen aan de database mislukt</string>
 
     <string name="pref_notification_settings">Instellingen voor meldingen</string>
     <string name="buildnumber">Build nummer: %s</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
     <string name="pref_notification_vibrate_enable_summary">Trillen als notificatie verandert</string>
-    <string name="double_quote_will_cause_db_error">"\" dubbele quote veroorzaakt een db fout "</string>
+    <string name="double_quote_will_cause_db_error">"String niet toegevoegd\n\" dubbele aanhalingstekens veroorzaken een db fout "</string>
+    <string name="pref_enable_gps_title">GPS instellingen</string>
+    <string name="pref_enable_gps_summary">GPS inschakelen voor Cell tracking</string>
     </resources>
