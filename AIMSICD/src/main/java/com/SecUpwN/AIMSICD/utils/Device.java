@@ -8,10 +8,13 @@ package com.SecUpwN.AIMSICD.utils;
 import android.content.Context;
 import android.location.Location;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 
+import io.freefair.android.util.function.Optional;
+import io.freefair.android.util.function.Supplier;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
@@ -27,14 +30,14 @@ public class Device {
     private String mDataStateShort;
     private String mNetName;
     private String mMncmcc;
-    private String mSimCountry;
+    private Optional<String> mSimCountry;
     private String mPhoneType;
     private String mIMEI;
     private String mIMEIV;
-    private String mSimOperator;
-    private String mSimOperatorName;
-    private String mSimSerial;
-    private String mSimSubs;
+    private Optional<String> mSimOperator;
+    private Optional<String> mSimOperatorName;
+    private Optional<String> mSimSerial;
+    private Optional<String> mSimSubs;
     private String mDataActivityType;
     private String mDataActivityTypeShort;
     private boolean mRoaming;
@@ -147,15 +150,14 @@ public class Device {
         return mPhoneID;
     }
 
-    private String getSimInformation(String simInfo, String errorMsg) {
+    private Optional<String> getSimInformation(Supplier<String> simInfoSupplier) {
         try {
-            if(simInfo != null && !simInfo.isEmpty())
-                return simInfo;
+            return Optional.ofNullable(simInfoSupplier.get());
         } catch (Exception e) {
             // SIM methods can cause Exceptions on some devices
-            log.error(String.format("%s %s", errorMsg, e.toString()));
+            log.error("Failed to get SIM-Information", e);
         }
-        return "N/A";
+        return Optional.empty();
     }
 
     /**
@@ -163,14 +165,20 @@ public class Device {
      *
      * @return string of SIM Country data
      */
-    String getSimCountry(TelephonyManager tm) {
-        return getSimInformation(tm.getSimCountryIso(), "GetSimCountry");
+    Optional<String> getSimCountry(final TelephonyManager tm) {
+        return getSimInformation(new Supplier<String>() {
+            @Nullable
+            @Override
+            public String get() {
+                return tm.getSimCountryIso();
+            }
+        });
     }
 
     /**
      * SIM Country data
      */
-    public String getSimCountry() {
+    public Optional<String> getSimCountry() {
         return mSimCountry;
     }
 
@@ -179,11 +187,17 @@ public class Device {
      *
      * @return string of SIM Operator data
      */
-    public String getSimOperator(TelephonyManager tm) {
-        return getSimInformation(tm.getSimOperator(), "GetSimOperator");
+    public Optional<String> getSimOperator(final TelephonyManager tm) {
+        return getSimInformation(new Supplier<String>() {
+            @Nullable
+            @Override
+            public String get() {
+                return tm.getSimOperator();
+            }
+        });
     }
 
-    public String getSimOperator() {
+    public Optional<String> getSimOperator() {
         return mSimOperator;
     }
 
@@ -192,11 +206,17 @@ public class Device {
      *
      * @return string of SIM Operator Name
      */
-    String getSimOperatorName(TelephonyManager tm) {
-        return getSimInformation(tm.getSimOperatorName(), "GetSimOperatorName");
+    Optional<String> getSimOperatorName(final TelephonyManager tm) {
+        return getSimInformation(new Supplier<String>() {
+            @Nullable
+            @Override
+            public String get() {
+                return tm.getSimOperatorName();
+            }
+        });
     }
 
-    public String getSimOperatorName() {
+    public Optional<String> getSimOperatorName() {
         return mSimOperatorName;
     }
 
@@ -205,11 +225,17 @@ public class Device {
      *
      * @return string of SIM Subscriber ID data
      */
-    String getSimSubs(TelephonyManager tm) {
-        return getSimInformation(tm.getSubscriberId(), "GetSimSubs");
+    Optional<String> getSimSubs(final TelephonyManager tm) {
+        return getSimInformation(new Supplier<String>() {
+            @Nullable
+            @Override
+            public String get() {
+                return tm.getSubscriberId();
+            }
+        });
     }
 
-    public String getSimSubs() {
+    public Optional<String> getSimSubs() {
         return mSimSubs;
     }
 
@@ -218,11 +244,17 @@ public class Device {
      *
      * @return string of SIM Serial Number data
      */
-    String getSimSerial(TelephonyManager tm) {
-        return getSimInformation(tm.getSimSerialNumber(), "GetSimSerial");
+    Optional<String> getSimSerial(final TelephonyManager tm) {
+        return getSimInformation(new Supplier<String>() {
+            @Nullable
+            @Override
+            public String get() {
+                return tm.getSimSerialNumber();
+            }
+        });
     }
 
-    public String getSimSerial() {
+    public Optional<String> getSimSerial() {
         return mSimSerial;
     }
 

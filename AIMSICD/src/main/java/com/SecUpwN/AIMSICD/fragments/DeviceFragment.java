@@ -165,16 +165,18 @@ public class DeviceFragment extends InjectionFragment {
                 tr.setVisibility(View.VISIBLE);
             }
 
+            String notAvailable = getString(R.string.n_a);
+
             content = (HighlightTextView)  getView().findViewById(R.id.sim_country);
-            content.updateText(mDevice.getSimCountry(), ani);
+            content.updateText(mDevice.getSimCountry().orElse(notAvailable), ani);
             content = (HighlightTextView)  getView().findViewById(R.id.sim_operator_id);
-            content.updateText(mDevice.getSimOperator(), ani);
+            content.updateText(mDevice.getSimOperator().orElse(notAvailable), ani);
             content = (HighlightTextView) getView().findViewById(R.id.sim_operator_name);
-            content.updateText(mDevice.getSimOperatorName(), ani);
+            content.updateText(mDevice.getSimOperatorName().orElse(notAvailable), ani);
             content = (HighlightTextView)  getView().findViewById(R.id.sim_imsi);
-            content.updateText(mDevice.getSimSubs(), ani);
+            content.updateText(mDevice.getSimSubs().orElse(notAvailable), ani);
             content = (HighlightTextView)  getView().findViewById(R.id.sim_serial);
-            content.updateText(mDevice.getSimSerial(), ani);
+            content.updateText(mDevice.getSimSerial().orElse(notAvailable), ani);
 
             content = (HighlightTextView)  getView().findViewById(R.id.device_type);
             content.updateText(mDevice.getPhoneType(), ani);
