@@ -51,10 +51,6 @@ public class CellTowerMarker extends Marker {
      * more available items as explained in the related issue here:
      * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
      *
-     * Dependency:
-     *              MarkerData.java
-     *              marker_info_window.xml
-     *
      */
     public View getInfoContents(MarkerData data) {
 
@@ -79,7 +75,6 @@ public class CellTowerMarker extends Marker {
                 tv.setText(String.valueOf(data.lat));
                 tv = (TextView) v.findViewById(R.id.lng);       // LON
                 tv.setText(String.valueOf(data.lng));
-                // TODO: add PSC and RAT
                 //tv = (TextView) v.findViewById(R.id.psc);     // PSC
                 //tv.setText(data.getPSC());
                 //tv = (TextView) v.findViewById(R.id.rat);     // RAT

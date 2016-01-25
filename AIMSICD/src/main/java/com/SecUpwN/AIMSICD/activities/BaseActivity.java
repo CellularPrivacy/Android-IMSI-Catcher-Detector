@@ -26,7 +26,7 @@ import io.freefair.android.util.logging.Logger;
  *
  * @author Tor Henning Ueland
  */
-public class BaseActivity extends InjectionAppCompatActivity {
+public abstract class BaseActivity extends InjectionAppCompatActivity {
 
     @Inject
     private Logger log;

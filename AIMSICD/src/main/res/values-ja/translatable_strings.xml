@@ -330,8 +330,12 @@
     <string name="notification_vibrate_idle">アイドル</string>
     <string name="notification_vibrate_ok">標準</string>
     <string name="notification_vibrate_medium">中</string>
-    <string name="notification_vibrate_danger">アラーム</string>
+    <string name="notification_vibrate_danger">危険</string>
     
     <string name="buildnumber">ビルド番号: %s</string>
     <string name="git_sha">Git SHA ハッシュ: %s</string>
+    <string name="pref_enable_gps_title">GPS 設定</string>
+    <string name="pref_enable_gps_summary">基地局追跡の GPS を有効にします</string>
+    <string name="n_a">N/A</string>
+
     </resources>

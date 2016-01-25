@@ -28,20 +28,8 @@ import java.lang.reflect.Method;
 import dalvik.system.DexFile;
 
 /**
- *  Description:    Class using reflection to grant access to the private hidden
- *                  android.os.SystemProperties class
- *
- *  Dependency:     SystemProperties.java
- *
- *  Usage:          Helpers.java
- *
- *  Issues:
- *              [ ]  Can simplify the code according to below link
- *
- *  Notes:
- *
- *    https://github.com/android/platform_frameworks_base/blob/master/core/java/android/os/SystemProperties.java
- *    http://stackoverflow.com/a/28402378/1147688
+ * Class using reflection to grant access to the private hidden
+ * android.os.SystemProperties class
  */
 public class SystemPropertiesReflection {
 

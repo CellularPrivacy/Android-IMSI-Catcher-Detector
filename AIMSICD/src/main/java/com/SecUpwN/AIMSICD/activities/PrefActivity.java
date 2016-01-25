@@ -20,12 +20,6 @@ public class PrefActivity extends BaseActivity {
         loadFragment();
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        loadFragment();
-    }
-
     private void loadFragment() {
         PrefFragment settingsFragment = new PrefFragment();
         FragmentManager fragmentManager = getFragmentManager();

@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- *  Description:    TODO: please add this...
+ *  StackOverflowXmlParser populates a List of entries with data from the feed
  */
 public class StackOverflowXmlParser {
     // We don't use namespaces
