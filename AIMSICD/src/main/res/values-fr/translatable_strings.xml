@@ -48,7 +48,7 @@
     <string name="cell_info_title">Niveau de Menace Actuel</string>
     <string name="neighbouring_cells_title">Cellules Voisines</string>
     <string name="ciphering_indicator_title">Indicateur du Chiffrement</string>
-    <string name="neighbouring_cells_num_title">Total:</string>
+    <string name="neighbouring_cells_num_title">Total :</string>
     <string name="sim_country">Pays:</string>
     <string name="sim_operator_id">ID de l\'Opérateur:</string>
     <string name="sim_operator_name">Nom de l\'Opérateur :</string>
@@ -102,7 +102,7 @@
 
     <!-- LOCATION HELPER -->
     <string name="location_error_title">Service de Localisation Désactivé</string>
-    <string name="location_error_message">Impossible de vérifier la bonne position des antennes sans activer le Service de Localisation. L\'activer?</string>
+    <string name="location_error_message">Vous ne pouvez pas suivre les données GPS sans activer les Services de localisation. Les activer maintenant ?</string>
 
     <!-- PREFERENCES -->
     <string name="pref_system_title">Paramètres AIMSICD</string>
