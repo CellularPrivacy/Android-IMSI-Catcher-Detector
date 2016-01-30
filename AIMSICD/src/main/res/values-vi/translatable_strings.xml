@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">Theo dõi</string>
     <string name="device_info">Thông tin điện thoại/SIM</string>
     <string name="map_view">Trình xem bản đồ ăng-ten</string>
@@ -336,4 +336,5 @@
 
     <string name="n_a">N/A</string>
 
+    <string name="database_settings">Cài đặt CSDL</string>
     </resources>
