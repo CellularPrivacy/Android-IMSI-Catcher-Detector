@@ -29,7 +29,7 @@
     <string name="toggle_cell_tracking">Commencer à localiser les cellules</string>
     <string name="backup_database">Sauvegarder la Base de Donnée</string>
     <string name="clear_database">Effacer/Réinitialiser la Base De Donnée</string>
-    <string name="clear_database_question">Toutes les données vont être effacées.\nÊtes vous sûr ?</string>
+    <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr?</string>
     <string name="restore_database">Restaurer la Base de Données</string>
     <string name="preferences">Préférences</string>
     <string name="press_once_again_to_exit">Appuyez une seconde fois pour quitter.</string>
@@ -51,7 +51,7 @@
     <string name="neighbouring_cells_num_title">Total :</string>
     <string name="sim_country">Pays :</string>
     <string name="sim_operator_id">Identifiant de l’opérateur :</string>
-    <string name="sim_operator_name">Nom de l\'Opérateur :</string>
+    <string name="sim_operator_name">Nom de l’opérateur :</string>
     <string name="sim_imsi">IMSI :</string>
     <string name="sim_serial">Numéro de Série :</string>
     <string name="device_type">Type de Téléphone :</string>
@@ -69,7 +69,7 @@
     <string name="button_refresh">Rafraichir</string>
     <string name="drawer_open">Ouvrir le Menu</string>
     <string name="drawer_close">Fermer le Menu</string>
-    <string name="network_psc">PSC :</string>
+    <string name="network_psc">PSC :</string>
 
     <!-- Upload BTS to OpenCellID -->
     <string name="upload_bts">Uploader les BTS sur OpenCellID</string>
@@ -92,12 +92,12 @@
     <string name="status_danger_about_desc">Vous êtes traqué !</string>
     <string name="status_medium_about_desc">Zone de service dangereuse. Quittez-là !</string>
     <string name="status_skull_about_desc">COUREZ ! Votre appareil est manipulé !</string>
-    <string name="about_desc_icon_title">Appuyez sur les icônes ci-dessous pour plus d\'informations :</string>
+    <string name="about_desc_icon_title">Appuyez sur les icones de statut ci-dessous pour plus d’informations :</string>
 
 
     <!-- CDMA LAYOUT -->
-    <string name="network_netid">ID du Réseau :</string>
-    <string name="network_sysid">ID du Système :</string>
+    <string name="network_netid">Identifiant du réseau :</string>
+    <string name="network_sysid">Identifiant du système :</string>
     <string name="network_baseid">ID de la Station de Base(BTS) :</string>
 
     <!-- LOCATION HELPER -->
@@ -161,12 +161,12 @@
 
     <!-- AT Command Interface  -->
     <string name="at_command_title">Interface de commande AT</string>
-    <string name="response_label">Réponse :</string>
+    <string name="response_label">Réponse :</string>
     <string name="execute_at">Exécuter</string>
     <string name="serial_device_title">Périphérique de série actuel :</string>
     <string name="serial_device_prompt">Sélectionnez un périphérique Série</string>
     <string name="serial_device_spinner_title">Périphériques détectés :</string>
-    <string name="timeout_spinner_title">Délai maximum :</string>
+    <string name="timeout_spinner_title">Délai dépassé :</string>
     <string name="timeout_spinner_prompt">Sélectionnez le délai Maximum</string>
     <string name="command_hint">Entrez la commande AT ici.</string>
 
@@ -179,7 +179,7 @@
     <string name="title_ocid_key">clé de l\'API OpenCellID</string>
     <string name="message_request_api_key">Appuyez sur OK pour demander une clé de l\'API d\'OpenCellID.org. Cela vous permettra de télécharger leurs données et de les afficher dans la carte. Cela vous permettra également d\'uploader des données sur les cellules. Notez que si vous n\'uploadez pas de données sur les cellules dans les 20 jours, votre clé API peut devenir inactive.</string>
     <string name="ocid_api_error">Erreur lors de l\'obtention de la clé: </string>
-    <string name="ocid_api_success">Nouvelle clé de l\'API sauvegardée.</string>
+    <string name="ocid_api_success">Nouvelle clé API enregistrée.</string>
 
     <!-- Debug logs -->
     <string name="title_debug_logs">Logs de Debugging</string>
@@ -230,7 +230,7 @@
     <string name="stopped_tracking_cell_information">Arrêt du tracking des Cellules.</string>
     <string name="only_one_key_per_day">Une seule demande de clé d\'API est possible par 24h!\nEssayez plus tard.</string>
     <string name="cell_id_doesnt_exist_in_db">L’identifiant de la cellule n’est pas dans la base de données OpenCelllID !</string>
-    <string name="hostile_service_area_changing_lac_detected">Zone Hostile : Changement de LAC Détecté !</string>
+    <string name="hostile_service_area_changing_lac_detected">Zone de service hostile : changement de LAC détecté !</string>
     <string name="femtocell_detection_active">Détection des FemtoCellules Activé.</string>
     <string name="cell_tracking_active">Tracking des Cellules Activé.</string>
     <string name="cell_monitoring_active">Monitoring des Cellules Activé.</string>
@@ -245,7 +245,7 @@
     <string name="femtocell_only_on_cdma_devices">AIMSICD ne peut détecter les connexions FemtoCellules que sur les appareils CDMA.</string>
     <string name="service_state_changed">État du service changé !</string>
     <string name="stopped_tracking_femtocell">: Arrêt du tracking des FemtoCellules.</string>
-    <string name="alert_femtocell_tracking_detected">ALERTE : Tracking par FemtoCell détecté !</string>
+    <string name="alert_femtocell_tracking_detected">ALERTE : pistage par femtocell détecté !</string>
     <string name="refreshing_every">Rafraichir tous les</string>
     <string name="refreshing_now">Raffaichissement…</string>
     <string name="seconds">secondes.</string>
@@ -253,9 +253,9 @@
     <string name="unable_to_determine_last_location">Impossible de déterminer votre dernière position.\nActivez les services et réessayez.</string>
     <string name="no_tracked_locations_found">Aucune position à afficher sur la carte.</string>
     <string name="no_data_for_publishing">Aucune donnée à publier.</string>
-    <string name="download_error">Erreur de téléchargement :</string>
+    <string name="download_error">Erreur de téléchargement :</string>
     <string name="opencellid_data_successfully_received">Données OpenCellID reçues avec succès.</string>
-    <string name="error_retrieving_opencellid_data">Erreur lors de la récupération des données OpenCellID.\nVérifiez votre réseau !</string>
+    <string name="error_retrieving_opencellid_data">Erreur lors de la récupération des données OpenCellID.\nVérifiez votre réseau !</string>
     <string name="opencellid_data_successfully_received_markers_updated">Données OpenCellID reçues avec succès.\nCarte Mise à jour.</string>
     <string name="uploaded_bts_data_successfully">Envoi des données BTS à OpenCellID réussi.</string>
     <string name="error_uploading_bts_data">Erreur lors de l’envoi des données BTS aux les serveurs d’OpenCellID !</string>
@@ -267,11 +267,11 @@
     <string name="refreshing_display">Rafraîchissement de l\'écran</string>
     <string name="unable_to_acquire_root_access">Impossible d\'obtenir l\'accès ROOT.\nL\'injection de commandes AT à besoin d\'un accès terminal en tant que ROOT.\nVéréfiez que votre téléphone est rooté et réessayez.</string>
     <string name="unable_to_detect_busybox">Busybox non trouvé.\nL\'injection de commandes AT a besoin de Busybox pour fonctionner correctement.\nVéréfiez que votre appareil possède Busybox et ressayez.</string>
-    <string name="unknown_error_trying_to_acquire_serial_device">Une erreur inconnue  est survenu lors de l\'accès au périphérique Série.\nVéréfiez les logs et postez les erreurs sur Github.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Une erreur inconnue s’est produite lors de l’accès au périphérique série.\nVérifiez les messages d’erreurs de vos journaux et postez-les sur notre dépôt GitHub.</string>
     <string name="getting_ocid_api_key">Obtention d\'une clé de l\'API d\'OpenCellID…</string>
-    <string name="unable_to_create_map">Impossible de créer la carte !</string>
+    <string name="unable_to_create_map">Impossible de créer la carte !</string>
     <string name="describe_the_problem_you_had">ATTENTION! Veuillez décrire le problème que vous avez (en anglais !), avant de nous envoyer ces logs. PAS D\'AIDE SANS DESCRIPTION PRÉCISE!\n</string>
-    <string name="status">Statut :</string>
+    <string name="status">Statut :</string>
     <string name="status_idle">Repos</string>
     <string name="status_ok">OK</string>
     <string name="status_medium">MOYEN</string>
@@ -298,10 +298,10 @@
 
     <!-- Detected SMS string for custom popup -->
     <string name="detection_strings">Texte de Détection</string>
-    <string name="typezero_title">ATTENTION !</string>
+    <string name="typezero_title">ATTENTION !</string>
     <string name="typezero_header">SMS Silencieux Détecté</string>
     <string name="typezero_data">Message Type-0 Détecté!\nDétails: Voir la Base de Données.</string>
-    <string name="typemwi_title">ATTENTION !</string>
+    <string name="typemwi_title">ATTENTION !</string>
     <string name="typemwi_header">SMS MWI Détecté</string>
     <string name="typemwi_data">SMS de contrôle de la messagerie vocale (MWI) Détecté!\nDétails: Voir la Base de Données.</string>
     <string name="typewap_header">SMS Wap Push Détecté</string>
@@ -386,12 +386,12 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-<string name="unknown_error_initialising_at_command_injector">Erreur inconnue lors de l\'initialisation de l\'injecteur de commandes AT.\nMerci de chercher les erreurs dans le logcat et de les poster sur Github.</string>
-    <string name="invalid_key_try_later">Clé OpenCellId invalide, merci de réessayer plus tard.</string>
-    <string name="getting_ocid_key">Demande d\'une clé OpenCellID…</string>
+<string name="unknown_error_initialising_at_command_injector">Une erreur inconnue s’est produite lors de l’initialisation de l’injecteur de commandes AT.\nVeuillez vérifier les messages d’erreurs dans vos journaux et postez-les sur notre dépôt GitHub.</string>
+    <string name="invalid_key_try_later">Clé OpenCellID invalide, veuillez réessayer plus tard.</string>
+    <string name="getting_ocid_key">Obtention d’une clé API d’OpenCellID…</string>
 
     <string name="restore_database_completed_title">Restauration réussie.</string>
-    <string name="delete_database_msg_success">Base de données supprimée et recréée avec succès.\nVeuillez redémarrer l\'application pour nettoyer les anciennes données de la mémoire.</string>
+    <string name="delete_database_msg_success">La base de données a été effacée et recréée avec succès.\nVeuillez redémarrer l’application pour effacer les anciennes valeurs toujours présentes en mémoire.</string>
 
     <string name="deleted">Supprimé</string>
     <string name="failed_to_delete">Échec de la suppression</string>
