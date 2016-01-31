@@ -333,56 +333,56 @@
     <string name="help_main_at_command_interface">Interfaccia che permette di mandare comandi AT to Baseband Processor (Richiede ROOT).</string>
 
     <!-- Section Tracking -->
-    <string name="help_tracking_toggle_attack_detection">Start/stop attack detection and collect cell details into internal database tables.</string>
-    <string name="help_tracking_toggle_cell_tracking">Start to track cells for display on the Antenna Map Viewer and possibly later upload to OpenCellID.</string>
+    <string name="help_tracking_toggle_attack_detection">Avvia/Ferma rilevamento attacchi e colleziona i dati delle celle nelle tabelle del database.</string>
+    <string name="help_tracking_toggle_cell_tracking">Inizia a monitorare le celle per la visualizzazione nella mappa delle antenne e il possibile caricamento di dati to OpenCellID.</string>
 
     <!-- Section Settings -->
-    <string name="help_settings_preferences">AIMSICD settings such as protection rules, polling times and service behaviour.</string>
-    <string name="help_settings_backup_db">Backup SQLite3 DB to SD-Card.</string>
-    <string name="help_settings_restore_db">Restore SQLite3 DB from SD-Card.</string>
-    <string name="help_settings_reset_db">Clear and reset all or specified DB table(s).</string>
-    <string name="help_settings_export_db_to_csv">Export DB tables into individual CSV files.</string>
-    <string name="help_settings_import_db_from_csv">Import DB table(s) from individual CSV file(s).</string>
+    <string name="help_settings_preferences">AIMSICD impostazioni come norme di protezione, tempo di controllo e comportamento servizi.</string>
+    <string name="help_settings_backup_db">Salvataggio Database SQLite3 in SD-Card.</string>
+    <string name="help_settings_restore_db">Ripristino Database SQLite3 da SD-Card.</string>
+    <string name="help_settings_reset_db">Cancella tutte le tabelle del Database.</string>
+    <string name="help_settings_export_db_to_csv">Esporta le tabelle del Databse in un singolo file CVS.</string>
+    <string name="help_settings_import_db_from_csv">Importa le tabelle del Databse da un singolo file CVS</string>
 
     <!-- Section Application -->
-    <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data…</string>
-    <string name="help_app_about">Status Icons and Project explained.</string>
-    <string name="help_app_download_local_bts">Downloads the OpenCellID Database.</string>
-    <string name="help_app_upload_local_bts">Uploads your BTS to the OpenCellID Database.</string>
-    <string name="help_app_debugging">Collect and send error logs.</string>
-    <string name="help_app_quit">Exit this app.</string>
-    <string name="waiting_for_location">Waiting for location…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Unable to restore backup from previous database version due to structural changes!</string>
-    <string name="unique_bts_data">Unique BTS Data</string>
-    <string name="bts_measurements">BTS Measurements</string>
-    <string name="imported_ocid_data">Imported OpenCellID Data</string>
-    <string name="default_mmc_locations">Default MCC Locations</string>
+    <string name="help_app_add_get_ocid_api_key">Ottieni una chiave API per usare il database OpenCellID per caricare e scaricare dati…</string>
+    <string name="help_app_about">Icone di stato e Project spiegato.</string>
+    <string name="help_app_download_local_bts">Scarica il database OpenCellID.</string>
+    <string name="help_app_upload_local_bts">Carica il tuo BTS nel database OpenCellID.</string>
+    <string name="help_app_debugging">Colleziona e manda il logs degli errori.</string>
+    <string name="help_app_quit">Esci dall\'applicazione.</string>
+    <string name="waiting_for_location">Aspetta per la posizone…</string>
+    <string name="unable_to_restore_backup_from_previous_database_version">impossibile ripristinare il salvataggio del database dalla versione precedente a causa di cambiamenti strutturali!</string>
+    <string name="unique_bts_data">Unico BTS Dati</string>
+    <string name="bts_measurements">Misure BTS</string>
+    <string name="imported_ocid_data">Dati OpenCellID importati</string>
+    <string name="default_mmc_locations">Posizioni MCC di Default</string>
     <string name="silent_sms">Silent SMS</string>
-    <string name="eventlog">EventLog</string>
-    <string name="measured_signal_strengths">Measured Signal Strengths</string>
+    <string name="eventlog">Log degli eventi</string>
+    <string name="measured_signal_strengths">Forza segnale misurato</string>
 
-    <string name="at_command_response_looking">*** Looking for AT serial devices…\n</string>
-    <string name="at_command_response_found">Found: </string>
-    <string name="at_command_response_setup_complete">*** Setup Complete ***\n</string>
+    <string name="at_command_response_looking">*** Cercando dispositivi seriali AT…\n</string>
+    <string name="at_command_response_found">Trovato: </string>
+    <string name="at_command_response_setup_complete">*** Configurazione Completata ***\n</string>
 
-    <string name="currently_connected_bts">Currently connected BTS</string>
-    <string name="well_known_encrypted_bts">Well known encrypted BTS</string>
-    <string name="unknown_or_insecure_bts">Unknown or insecure BTS</string>
-    <string name="new_or_recently_added_bts">New or recently added BTS</string>
+    <string name="currently_connected_bts">BTS Attualmente Connesso</string>
+    <string name="well_known_encrypted_bts">BTS noto e cripato</string>
+    <string name="unknown_or_insecure_bts">BTS sconosciuto o non sicuro</string>
+    <string name="new_or_recently_added_bts">BTS nuovo o recentemente aggiunto</string>
 
     <!-- Section Delete DB -->
-    <string name="delete_database_msg_success">Database deleted and recreated successfully.\nPlease restart app to clear old values already in memory.</string>
+    <string name="delete_database_msg_success">Database cancellato e ricreato successivamente.\nPerfavore riavvia l\'applicazione per cancellare i valori vecchi presenti in memoria.</string>
 
     <!-- Section OCID Download API key -->
-    <string name="invalid_key_try_later">Invalid OpenCellId key, try again later.</string>
-    <string name="getting_ocid_key">Getting OpenCellId API Key...</string>
+    <string name="invalid_key_try_later">Chiave OpenCellId non valida, riprova più tardi.</string>
+    <string name="getting_ocid_key">Ottenendo chiave API OpenCellId…</string>
 
     <!-- Advanced user menu -->
-    <string name="deleted">Deleted</string>
-    <string name="failed_to_delete">Failed to delete</string>
-    <string name="double_quote_will_cause_db_error">"String not added\n \" double quote will cause db error "</string>
-    <string name="the_string_was_added_to_db">The string was added to database</string>
-    <string name="failed_to_add_the_string_to_db">Failed to add the string to database</string>
+    <string name="deleted">Cancellato</string>
+    <string name="failed_to_delete">Fallito la rimozione</string>
+    <string name="double_quote_will_cause_db_error">"Stringa non aggiunta\n \" doppia quota causa errori al database "</string>
+    <string name="the_string_was_added_to_db">La stringa è stata aggiunta al Database</string>
+    <string name="failed_to_add_the_string_to_db">Fallito l\'aggiunta della stringa nel Database</string>
     <string name="n_a">N/A</string>
 
     <string-array name="pref_ui_icons_entries">
