@@ -193,40 +193,35 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILED EXPLANATION</string>
-    <string name="status_idle_detail_info">L\'applicazione è inattiva o in carimento. No protection and detection measures are enabled. Please open the Navigation Drawer and enable them in section
-        TRACKING!</string>
-    <string name="status_ok_detail_info">No threats detected or found. Our App is constantly checking your network based upon the protection measures you\'ve set in the Navigation
-        Drawer and Preferences.</string>
-    <string name="status_medium_detail_info">Insecure Service Area: At least 1 new or unknown BTS is in operation in this vicinity, or using an insecure (broken) encryption algorithm
-        lower than A5/3 [Detection is WIP]. Expect that any phone calls/SMS made in this area can be intercepted and recorded. You better leave this place now.</string>
-    <string name="status_high_detail_info">Hostile Service Actions Detected: An IMSI-Catcher (IMSIC) or fake BTS (FBTS) is actively tracking users. Active scanning takes place in this
-        area. You should avoid this place, especially if there are political unrest. Take out your battery or kill your phone!</string>
-    <string name="status_danger_detail_info">Hostile Tracking Detected: An FBTS or IMSIC is actively tracking YOU and preventing your phone from connecting through your normal
-        encrypted mobile provider. If you\'re in danger or repercussions, destroy your phone + SIM and report it as recently stolen.</string>
-    <string name="status_skull_detail_info">Hostile Manipulation: Someone is trying to remotely manipulate your handset. Destroy (or sell) your phone and get a new one somewhere
-        far away (don\'t carry your old phone to the changing place)! Use a new (anonymous) SIM card, change calling behavior and warn your friends by talking to them in real life,
-        NOT by calling them!</string>
-    <string name="open_cell_id_button_cancel">Cancel</string>
-    <string name="open_cell_id_button_ok">OK</string>
+    <string name="status_idle_detail_info">L\'applicazione è inattiva o in carimento. Nessuna misuta di protezione o rilevamento è attiva.
+        Perfavore apri la barra laterale e attivalo nella sezione TRACCIAMENTO!</string>
+    <string name="status_ok_detail_info">Nessun pericolo rilevato o trovato. La nostra applicazione sta costantemente verificando la tua connessione internet al fine di garantire le impostazioni di sicurezza impostate nella barra di navigazione e nelle preferenze.</string>
+    <string name="status_medium_detail_info">Area di servizio non sicura: Almeno una nuova o sconosciuta BTS è operante qua vicino, o sta utilizzando un algoritmo di crittografia non sicuro (corrotto) inferiore di A5/3 [Rilevamento è WIP]. Aspettarsi che le chiamate e SMS fatti in questa area possano essere intercettate e registrate. Sarebbe meglio lasciare questo posto ora.</string>
+    <string name="status_high_detail_info">Servizio ostile rilevato: Un IMSI-Catcher (IMSIC) o un finto BTS (FBTS) sta tracciando degli utenti. Sta avvenendo una scansione in questa zona. Dovresti evitare questo posto, soprattutto se ci sono disordini politici. Rimuovi la batteria o sbarazzati del telefono!</string>
+    <string name="status_danger_detail_info">Tracciamento ostile rilevato: Un FBTS o IMSIC ti sta tracciando e impendendo al tuo telefono la connessione criptata al tuo normale provider telefonico. Se sei in pericolo, distruggi il tuo telefono e la SIM e segnalalo come un recente furto.</string>
+    <string name="status_skull_detail_info">Manipolazione ostile: Qualcuno sta provando a manipolare in modo remoto il tuo telefono. Distruggi (o vendi) il tuo telefono e comprane uno nuovo da qualche parte lontano
+        (non portare il tuo vecchio telefono con te)! Usa una nuova (anonima) SIM cards, cambia le tue modalita di chiamata e avvisa i tuoi amici (nella vita reale NON chiamandoli!)</string>
+    <string name="open_cell_id_button_cancel">Annullare</string>
+    <string name="open_cell_id_button_ok">Conferma</string>
 
     <!-- Vibration Preference -->
-    <string name="pref_notification_vibrate_enable_title">Enable Vibration</string>
-    <string name="pref_notification_vibrate_enable_summary">Vibrate when notification changes</string>
-    <string name="pref_notification_vibrate_min_level_title">Vibrate on threat level</string>
-    <string name="pref_notification_vibrate_min_level_summary">Select minimum threat level to vibrate on</string>
-    <string name="notification_vibrate_idle">Idle</string>
-    <string name="notification_vibrate_ok">OK</string>
-    <string name="notification_vibrate_medium">Medium</string>
-    <string name="notification_vibrate_danger">Danger</string>
+    <string name="pref_notification_vibrate_enable_title">Attiva Vibrazione</string>
+    <string name="pref_notification_vibrate_enable_summary">Vibra quando la notifica cambia</string>
+    <string name="pref_notification_vibrate_min_level_title">Vibra per il livello di minaccia</string>
+    <string name="pref_notification_vibrate_min_level_summary">Selezione il livello minimo di minaccia per il quale si vuole la vibrazione</string>
+    <string name="notification_vibrate_idle">Inattivo</string>
+    <string name="notification_vibrate_ok">Normale</string>
+    <string name="notification_vibrate_medium">Medio</string>
+    <string name="notification_vibrate_danger">Pericoloso</string>
     
     <!-- UI Icon Preferences -->
-    <string name="ui_icon_flat">Flat</string>
-    <string name="ui_icon_sense">Sense</string>
-    <string name="ui_icon_white">White</string>
-    <string name="map_type_terrain">Terrain</string>
-    <string name="map_type_normal">Normal</string>
-    <string name="pref_refresh_manual">Manual</string>
-    <string name="pref_refresh_automatic">Automatic</string>
+    <string name="ui_icon_flat">Piatta</string>
+    <string name="ui_icon_sense">Rilievo</string>
+    <string name="ui_icon_white">Bianco</string>
+    <string name="map_type_terrain">Terreno</string>
+    <string name="map_type_normal">Normale</string>
+    <string name="pref_refresh_manual">Manuale</string>
+    <string name="pref_refresh_automatic">Automatico</string>
     <string name="pref_refresh_2s">2 sec</string>
     <string name="pref_refresh_5s">5 sec</string>
     <string name="pref_refresh_10s">10 sec</string>
@@ -240,13 +235,13 @@
     <string name="timeout_spinner_20_sec">20 sec</string>
     <string name="timeout_spinner_30_sec">30 sec</string>
     <string name="timeout_spinner_10_min">10 min</string>
-    <string name="main">Main</string>
-    <string name="settings">Settings</string>
-    <string name="application">Application</string>
-    <string name="monitoring_cell_information">Monitoring Cell Information.</string>
-    <string name="stopped_monitoring_cell_information">Stopped monitoring Cell Information.</string>
-    <string name="tracking_cell_information">Tracking Cell Information.</string>
-    <string name="stopped_tracking_cell_information">Stopped tracking Cell Information.</string>
+    <string name="main">Principale</string>
+    <string name="settings">Impostazioni</string>
+    <string name="application">Applicatione</string>
+    <string name="monitoring_cell_information">Informazioni monitoraggio celle.</string>
+    <string name="stopped_monitoring_cell_information">Informazioni monitoraggio celle fermato.</string>
+    <string name="tracking_cell_information">Informazioni tracciamento celle.</string>
+    <string name="stopped_tracking_cell_information">Informazioni tracciamento celle fermato.</string>
     <string name="only_one_key_per_day">Only one new API key request per 24 hours!\nPlease try again later.</string>
     <string name="cell_id_doesnt_exist_in_db">Cell ID not in OpenCellID Database!</string>
     <string name="hostile_service_area_changing_lac_detected">Hostile Service Area: Changing LAC Detected!</string>
