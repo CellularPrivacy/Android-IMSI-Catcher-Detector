@@ -282,8 +282,8 @@
     <string name="refreshing_display">Aggiornando display</string>
     <string name="unable_to_acquire_root_access">Impossibile ottenere i permessi di ROOT sul tuo dispositivo.\nInjection comandi AT richiede l\'accesso al terminale con i privilegi di ROOT.\nPerfavore verifica che il tuo dispositivo sia rootato e riprova.</string>
     <string name="unable_to_detect_busybox">Impossibile rilevare BusyBox.\nInjection comandi AT richiede Busybox per funzionare correttamente.\nPerfavore verifica che nel tuo dispositivo sia installato BusyBox e riprova.</string>
-    <string name="unknown_error_trying_to_acquire_serial_device">Si è verificato un errore sconosciuto provando ad acquisire il dispositivo seriale.\nPerfavore controlla il tuo Logcat e segnalaci l'errore nella nostra pagina Github.</string>
-    <string name="unknown_error_initialising_at_command_injector">Si è verificato un errore sconosciuto provando ad inizializzare il AT Command Injector.\nPerfavore controlla il tuo Logcat e segnalaci l'errore nella nostra pagina Github.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Si è verificato un errore sconosciuto provando ad acquisire il dispositivo seriale.\nPerfavore controlla il tuo Logcat e segnalaci l\'errore nella nostra pagina Github.</string>
+    <string name="unknown_error_initialising_at_command_injector">Si è verificato un errore sconosciuto provando ad inizializzare il AT Command Injector.\nPerfavore controlla il tuo Logcat e segnalaci l\'errore nella nostra pagina Github.</string>
     <string name="getting_ocid_api_key">Ottendendo chiavi API OpenCellID…</string>
     <string name="unable_to_create_map">Impossibile creare la mappa!</string>
     <string name="describe_the_problem_you_had">ATTENZIONE! Perfavore descrivi i problemi da te riscontrati, prima di mandarci il log. I LOG SENZA DESCRIZIONE VENGONO SCARTATI!\n</string>
