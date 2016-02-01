@@ -29,14 +29,14 @@
     <string name="toggle_cell_tracking">Commencer à localiser les cellules</string>
     <string name="backup_database">Sauvegarder la Base de Donnée</string>
     <string name="clear_database">Effacer/Réinitialiser la Base De Donnée</string>
-    <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr?</string>
+    <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr ?</string>
     <string name="restore_database">Restaurer la Base de Données</string>
     <string name="preferences">Préférences</string>
     <string name="press_once_again_to_exit">Appuyez une seconde fois pour quitter.</string>
     <string name="cell_lookup">Détails sur la/les cellule(s) actuelles</string>
     <string name="send_logs">Débogage</string>
     <string name="no_network_connection_title">Aucune Connexion Internet</string>
-    <string name="no_network_connection_message">Impossible de télécharger les données OpenCellID sans connexion à Internet ! Veuillez activer la connexion de données.</string>
+    <string name="no_network_connection_message">Impossible de télécharger les données OpenCellID sans connexion à Internet, veuillez activer la connexion de données !</string>
 
     <!-- MAP VIEWER -->
     <string name="get_opencellid">Télécharger les BTS depuis OpenCellID</string>
@@ -191,7 +191,7 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">EXPLICATION DÉTAILLÉE</string>
-    <string name="status_idle_detail_info">L’application est inactif ou en chargement. Aucune mesure de protection ou de détection n’est activée. Veuillez les activer dans la section PISTAGE du panneau de navigation.</string>
+    <string name="status_idle_detail_info">L’application est inactif ou en chargement. Aucune mesure de protection ou de détection n’est activée. Veuillez les activer dans la section PISTAGE du panneau de navigation !</string>
     <string name="status_ok_detail_info">Aucune menace détectée. Notre application vérifie constamment votre réseau à partir des mesures de protections que vous avez paramétré dans le menu et les préférences.</string>
     <string name="status_medium_detail_info">Zone avec un service non sécurisé : Au moins une BTS est nouvelle ou inconnue dans les environs, ou bien celle-ci utilise un système de chiffrement considéré comme non sur (inférieure à A5/3). Considérez que tout appel/SMS envoyé ou reçu dans cette zone peut être interceptée et enregistrée. Vous devriez quitter cet endroit.</string>
     <string name="status_high_detail_info">Actions hostiles de la part d\'un service détecté: Un IMSI-Catcher ou une fausse BTS est actuellement en train de traquer ses utilisateurs. Scan actif dans cette zone. Vous devriez quitter cette place, particulièrement s’il y a des troubles politiques. Enlevez votre batterie ou détruisez votre téléphone !</string>
