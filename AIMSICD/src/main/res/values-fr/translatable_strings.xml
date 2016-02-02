@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
     <!-- Drawer -->
@@ -414,4 +414,5 @@
     <string name="failed_to_add_the_string_to_db">Échec lors de l’ajout de la chaîne de caractères à la base de données</string>
     <string name="n_a">Indisponible</string>
 
+    <string name="database_settings">Base de données</string>
     </resources>
