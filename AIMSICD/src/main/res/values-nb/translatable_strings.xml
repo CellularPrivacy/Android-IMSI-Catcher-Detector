@@ -9,17 +9,17 @@
     <string name="text_agree">Jeg er enig</string>
     <string name="text_disagree">Jeg er uenig</string>
 
-    <string name="disclaimer_title">Ansvarsfraskrivelse</string>
+    <string name="disclaimer_title">VIKTIG</string>
     <string name="disclaimer">"Ved å bruke AIMSICD har du forstått og godtatt at AIMSICD er en experimentell og informativ Android applikasjon som kan feile i å oppdage sporing og overvåkning av flere årsaker. Du er også klar over at den kan bli lurt og slått av årsaker ukjent for utviklerne. Du forstår og at utviklerne og selskap tilknyttet denne gratisappen ikke kan holdes ansvarlig for resultater og konsekvenser vedrørende bruken av denne applikasjonen. "</string>
 
     <string name="toggle_attack_detection">Styr angrepsoppdaging</string>
     <string name="toggle_cell_tracking">Styr cellesporing</string>
     <string name="backup_database">Sikkerhetskopier database</string>
-    <string name="clear_database">Nullstill/Tilbakestill database</string>
+    <string name="clear_database">Nullstill database</string>
     <string name="clear_database_question">Alle data vil slettes.\nEr du sikker?</string>
     <string name="restore_database">Tilbakefør database</string>
     <string name="press_once_again_to_exit">Trykk på nytt for å gå ut.</string>
-    <string name="cell_lookup">Alle gjeldende celledetaljer</string>
+    <string name="cell_lookup">Alle Nåværende celledetaljer</string>
     <string name="send_logs">Feilsøking</string>
     <string name="no_network_connection_title">Ingen Internett-forbindelse</string>
     <string name="no_network_connection_message">Klarte ikke laste ned OpenCellID-data uten Internettilkobling, vennligst slå på datatilkobling!</string>
@@ -29,7 +29,7 @@
     <string name="device_info_title">Enhetsinformasjon</string>
     <string name="sim_info_title">SIM-informasjon</string>
     <string name="network_info">Nettverksinformasjon</string>
-    <string name="cell_info_title">Gjeldende trusselsnivå</string>
+    <string name="cell_info_title">Nåværende Trusselnivå</string>
     <string name="neighbouring_cells_title">Naboceller</string>
     <string name="ciphering_indicator_title">Krypterings Indikator</string>
     <string name="neighbouring_cells_num_title">Total:</string>
@@ -50,7 +50,7 @@
     <string name="data_status">Datastatus:</string>
     <string name="network_roaming">Søker:</string>
     <string name="network_lte_timing_advance">TA (LTE):</string>
-    <string name="button_refresh">Frisk opp</string>
+    <string name="button_refresh">Oppdater</string>
     <string name="drawer_open">Åpne navigasjons skuffe</string>
     <string name="preferences">Innstillinger</string>
     <string name="drawer_close">Lukk navigasjons skuffe</string>
@@ -62,7 +62,7 @@
     <string name="app_version">Versjon: %s</string>
     <string name="aimsicd_about_info3">Android-basert prosjekt for å oppdage og unngå falske basestasjoner (IMSI-fangere) i GSM/UMTS-nettverk.</string>
     <string name="about_github">AIMSICD på GitHub</string>
-    <string name="about_wiki">Dokumentasjon (WIKI)</string>
+    <string name="about_wiki">DOKUMENTASJON</string>
     <string name="about_contribute">BIDRA</string>
     <string name="about_releases">UTGAVER</string>
     <string name="about_changelog">ENDRINGSLOGG</string>
@@ -72,7 +72,7 @@
     <string name="status_high_about_desc">Aktiv sporing nær deg!</string>
     <string name="status_ok_about_desc">Allt OK.</string>
     <string name="status_danger_about_desc">Du blir sporet!</string>
-    <string name="status_medium_about_desc">"Utrygt tjenesteområde.  Forlat det!"</string>
+    <string name="status_medium_about_desc">"Utrygt Område.  Forlat det!"</string>
     <string name="status_skull_about_desc">"SPRING!  Håndsettet er manipulert!"</string>
     <string name="about_desc_icon_title">Trykk status-ikonet under for detaljert informasjon:</string>
 
@@ -126,7 +126,7 @@
     <string name="table_names_prompt">Velg Liste</string>
     <string name="database_export_successful">Vellykket eksport</string>
 
-    <string name="at_command_title">AT kommando Interface</string>
+    <string name="at_command_title">AT kommando Linje</string>
     <string name="response_label">Tilbakemelding:</string>
     <string name="execute_at">Utfør</string>
     <string name="serial_device_title">Nåværende Seriell Enhet:</string>
@@ -195,7 +195,7 @@
     <string name="settings">Instillinger</string>
     <string name="application">Applikasjon</string>
     <string name="monitoring_cell_information">Overvåker Celle Informasjon.</string>
-    <string name="about_disclaimer">Ansvarsfraskrivelse</string>
+    <string name="about_disclaimer">VIKTIG</string>
     <string name="stopped_monitoring_cell_information">Stoppet å Overvåker Celle Informasjon.</string>
     <string name="tracking_cell_information">Sporer Celle Informasjon.</string>
     <string name="stopped_tracking_cell_information">Stoppet sporing av Celle Information.</string>
@@ -217,8 +217,8 @@
     <string name="service_state_changed">Service Status endret!</string>
     <string name="stopped_tracking_femtocell">:Stoppet sporing av FemtoCell forbindelser.</string>
     <string name="alert_femtocell_tracking_detected">ALARM: FemtoCell Sporing oppdaget!</string>
-    <string name="refreshing_every">Oppfrisker alle</string>
-    <string name="refreshing_now">Oppfrisker nå…</string>
+    <string name="refreshing_every">Oppdaterer alle</string>
+    <string name="refreshing_now">Oppdaterer nå…</string>
     <string name="seconds">sekunder.</string>
     <string name="contacting_opencellid_for_data">Kontakter OpenCellID for data...\nDette kan ta opptil ett minutt.</string>
     <string name="unable_to_determine_last_location">Kan ikke bestemme din siste posisjon.\nSlå på GPS og prøv igjen.</string>
@@ -236,7 +236,7 @@
     <string name="database_backup_successfully_saved_to">Database vellykket sikkerhetskopiert til:</string>
     <string name="error_backing_up_data">Feil under sikkerhetskopiering av database.</string>
     <string name="no_opencellid_key_detected">Ingen OpenCellID API nøkkel oppdaget!\nVennligst skriv inn din nøkkel under innstillinger først.</string>
-    <string name="refreshing_display">Oppfrisker Skjerm</string>
+    <string name="refreshing_display">Oppdaterer Skjerm</string>
     <string name="unable_to_acquire_root_access">Klarte ikke å få ROOT tilgang på din enhet.\nAT kommando injection krever ROOT Terminal tilgang.\nVennligst undersøk om din enhet er ROOTET og prøv igjen.</string>
     <string name="unable_to_detect_busybox">Kunne ikke oppdage BusyBox på din enhet.\nAT kommando Injection krever BusyBoks komponenter for å virke korrekt.\nVennligst undersøk om din enhet har BusyBoks installert og prøv igen.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">En ukjent feil har oppstått under forsøk på å nå serielenheten.\nVennligst undersøk din logcat for feil og post dem på vår Github.</string>
@@ -282,9 +282,9 @@
     <string name="help_main_acd">Vis detaljert sammenligning av nåværende tilknyttet celle, med data (hvis noen) funnet i OpenCellID og merk forskjellen.</string>
     <string name="help_main_database_viewer">Se de forskjellige DB listene vi har.</string>
     <string name="help_main_antenna_map_view">Kart med fargekodede antenner i nærheten.</string>
-    <string name="help_main_at_command_interface">Interface som tillater sending av AT kommandoer til Baseband Prosessor (krever ROOT).</string>
+    <string name="help_main_at_command_interface">Kommandolinje som tillater sending av AT kommandoer til Baseband Prosessor (krever ROOT).</string>
 
-    <string name="help_tracking_toggle_attack_detection">Start/stop angrepsoppdagelse og samle celledetaljer inn i database lister.</string>
+    <string name="help_tracking_toggle_attack_detection">Start/stop angrepsoppdagelse og samle celledetaljer inn i interne database lister.</string>
     <string name="buildnumber">Versjon Nummer: %s</string>
     <string name="git_sha">Git SHA-Signering: %s</string>
     <string name="help_tracking_toggle_cell_tracking">Start å søke celler for å vise i Antenne Kartet og muligens laste dem opp senere til OpenCellID.</string>
@@ -292,7 +292,7 @@
     <string name="help_settings_preferences">AIMSICD instillinger som beskyttelsesregler, hyppighet og service oppførsel.</string>
     <string name="help_settings_backup_db">Backup SQLite3 DB til SD-Kort.</string>
     <string name="help_settings_restore_db">Tilbakefør SQLite3 DB til SD-Kort.</string>
-    <string name="help_settings_reset_db">Rensk og nullstill alle eller spesifiserte DB liste(r).</string>
+    <string name="help_settings_reset_db">Nullstill alle eller spesifiserte DB liste(r).</string>
     <string name="help_settings_export_db_to_csv">Eksporter DB lister til individuelle CSV filer.</string>
     <string name="help_settings_import_db_from_csv">Importer DB liste(r) fra individuelle CSV filer.</string>
 
