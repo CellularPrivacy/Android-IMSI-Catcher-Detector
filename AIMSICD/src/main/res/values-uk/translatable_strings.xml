@@ -325,4 +325,15 @@
     <string name="status_danger_detail_info">Виявлено вороже відслідковування: FBTS чи IMSIC активно відслідковують вас та запобігають підключенню до звичайної зашифрованої мережі. Якщо ви знаходитесь в небезпеці, зламайте та викиньте ваш телефон+SIM, та повідомте, що ваш телефон нещодавно було викрадено.</string>
     <string name="adv_user_info">Це меню лише для досвідчених користувачів!\n\nБудь ласка, не вставляйте аби що в рядок, оскільки це може зіпсувати систему виявлення.\n\nАби додати рядок, оберіть тип SMS із спадаючого меню, введіт рядок виявлення та натисніть «вставити».\n\nАби видалити запис, використовуйте довге утримання на необхідному елементі.</string>
     
+    <string name="status_high_about_desc">Активне відслідковування поряд з вами!</string>
+    <string name="pref_enable_gps_title">Налаштування GPS</string>
+    <string name="pref_enable_gps_summary">Увімкнути GPS для відслідковування стільника</string>
+    <string name="help_main_current_threat_level">Статус загрози AIMSICD, сусідні стільники, індикатор методу шифрування.</string>
+    <string name="help_main_database_viewer">Перегляд таблиць бази даних.</string>
+    <string name="help_main_antenna_map_view">Карта з кольоровими позначками сусідніх антен.</string>
+    <string name="help_main_at_command_interface">Інтерфейс дозволяє надсилати AT команди до процесора (Потребує прав ROOT).</string>
+
+    <string name="help_settings_preferences">Налаштування AIMSICD, такі як правила захисту, час опитування та поведінку служби.</string>
+    <string name="n_a">Н/Д</string>
+
     </resources>
