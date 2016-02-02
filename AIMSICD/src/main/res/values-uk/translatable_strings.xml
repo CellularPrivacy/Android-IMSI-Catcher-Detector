@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">Слідкування</string>
     <string name="device_info">Подробиці Телефон/SIM</string>
     <string name="map_view">Перегляд карти антен</string>
@@ -336,4 +336,5 @@
     <string name="help_settings_preferences">Налаштування AIMSICD, такі як правила захисту, час опитування та поведінку служби.</string>
     <string name="n_a">Н/Д</string>
 
+    <string name="database_settings">База даних</string>
     </resources>
