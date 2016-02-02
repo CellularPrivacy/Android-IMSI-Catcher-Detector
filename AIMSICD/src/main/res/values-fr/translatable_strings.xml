@@ -4,8 +4,8 @@
     <!-- Drawer -->
     <string name="tracking">Pistage</string>
     <string name="device_info">Détails Téléphone/Carte SIM</string>
-    <string name="map_view">Carte des Antennes Relai</string>
-    <string name="db_viewer">Visionneuse de la Base de Donnée</string>
+    <string name="map_view">Carte des Antennes Relais</string>
+    <string name="db_viewer">Visionneuse de la Base de Données</string>
     <string name="quit">Quitter</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Annuler</string>
@@ -27,8 +27,8 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Démarrer/arrêter la détection des attaques</string>
     <string name="toggle_cell_tracking">Commencer à localiser les cellules</string>
-    <string name="backup_database">Sauvegarder la Base de Donnée</string>
-    <string name="clear_database">Effacer/Réinitialiser la Base De Donnée</string>
+    <string name="backup_database">Sauvegarder la Base de Données</string>
+    <string name="clear_database">Effacer/Réinitialiser la Base De Données</string>
     <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr ?</string>
     <string name="restore_database">Restaurer la Base de Données</string>
     <string name="preferences">Préférences</string>
