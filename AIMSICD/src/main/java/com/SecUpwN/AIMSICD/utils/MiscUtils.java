@@ -44,7 +44,7 @@ public class MiscUtils {
                 rline = reader.readLine().replace("'","\\'").replace("\\n","");
             }
         } catch (Exception ee) {
-            log.error(ee.getMessage());
+            log.error(ee.toString());
         } finally {
             if(reader != null) {
                 try {
