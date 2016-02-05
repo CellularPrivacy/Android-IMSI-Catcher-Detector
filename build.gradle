@@ -6,11 +6,15 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
-        classpath 'io.freefair:gradle-plugins:2.0.0-beta1'
+        classpath 'io.freefair:gradle-plugins:2.0.0-beta3'
     }
 }
 
 apply plugin: 'io.freefair.git-version'
+
+gitVersion {
+    tagPrefix 'v'
+}
 
 allprojects {
     repositories {
