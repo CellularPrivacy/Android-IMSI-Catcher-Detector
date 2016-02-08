@@ -35,7 +35,7 @@ android:
 # Additional components
      - extra-android-m2repository
 
-before_install: openssl aes-256-cbc -K $encrypted_c8bcb12e3e60_key -iv $encrypted_c8bcb12e3e60_iv -in keystore.jks.enc -out keystore.jks -d
+before_install: openssl aes-256-cbc -K $encrypted_dc771c3300d2_key -iv $encrypted_dc771c3300d2_iv -in keystore.jks.enc -out keystore.jks -d
 
 
 script: ./gradlew build check
