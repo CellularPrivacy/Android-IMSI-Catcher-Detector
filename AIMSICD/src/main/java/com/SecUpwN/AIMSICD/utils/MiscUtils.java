@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
+import java.io.IOException;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
@@ -35,28 +35,31 @@ public class MiscUtils {
     public static String setAssetsString(Context context){
         BufferedReader reader = null;
         StringBuilder buildassets = new StringBuilder();
-        try {
+        try{
             reader = new BufferedReader(new InputStreamReader(context.getAssets().open("CREDITS")));
-            String rline = reader.readLine().replace("'","\\'").replace("\\n","");
 
-            while (rline != null ) {
-                buildassets.append(rline).append("\n");
-                rline = reader.readLine().replace("'","\\'").replace("\\n","");
+            String rline;
+            while ((rline = reader.readLine()) != null ) {
+                buildassets.append(rline.replace("'","\\'").replace("\\n","") + "\n");
             }
-        } catch (Exception ee) {
+
+        } catch (IOException ee) {
             log.error(ee.getMessage());
         } finally {
             if(reader != null) {
                 try {
                     reader.close();
-                } catch (Exception ee) {
+                } catch (IOException ee) {
                     log.error(ee.getMessage());
                 }
             }
         }
+        return (buildassets.toString().isEmpty())
+                ? "Error Loading Credits"
+                : buildassets.toString();
 
-        return buildassets.toString();
     }
+
 
     public static String getCurrentTimeStamp(){
         //yyyyMMddHHmmss <-- this format is needed for OCID upload
