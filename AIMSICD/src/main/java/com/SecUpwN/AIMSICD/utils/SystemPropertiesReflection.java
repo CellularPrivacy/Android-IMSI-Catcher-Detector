@@ -19,13 +19,12 @@ package com.SecUpwN.AIMSICD.utils;
 
 import android.content.Context;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
-
 import java.io.File;
 import java.lang.reflect.Method;
 
 import dalvik.system.DexFile;
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 /**
  * Class using reflection to grant access to the private hidden
