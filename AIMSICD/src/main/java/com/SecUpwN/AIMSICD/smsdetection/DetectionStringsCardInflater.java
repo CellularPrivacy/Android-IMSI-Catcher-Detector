@@ -45,7 +45,7 @@ public class DetectionStringsCardInflater implements IAdapterViewInflater<Detect
         private final TextView d_type;
 
 
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
             //
             d_string =         (TextView) mRootView.findViewById(R.id.tv_det_str_info);

@@ -54,7 +54,6 @@ import java.util.Map;
 */
 public class TinyDB {
 
-    private Context mContext;
     private SharedPreferences preferences;
 
     //prevent direct initialisation
@@ -62,8 +61,7 @@ public class TinyDB {
     }
 
     public void init(Context appContext) {
-        mContext = appContext;
-        preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
     }
 
     public String getString(String key) {

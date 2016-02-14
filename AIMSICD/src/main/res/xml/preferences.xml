@@ -16,6 +16,10 @@
             android:key="@string/pref_persistservice_key"
             android:summary="@string/pref_persistservice_summ"
             android:title="@string/pref_persistservice_title"/>
+        <CheckBoxPreference android:defaultValue="false"
+            android:key="@string/pref_enable_gps_key"
+            android:summary="@string/pref_enable_gps_summary"
+            android:title="@string/pref_enable_gps_title" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/pref_enable_cell_key"
@@ -123,4 +127,4 @@
                 android:targetPackage="com.SecUpwN.AIMSICD"/>
         </Preference>
     </PreferenceCategory>
-used</PreferenceScreen>
+</PreferenceScreen>

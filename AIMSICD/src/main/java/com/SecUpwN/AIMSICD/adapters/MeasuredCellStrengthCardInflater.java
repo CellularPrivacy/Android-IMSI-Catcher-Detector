@@ -48,7 +48,7 @@ public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<Me
         private final TextView rss;
         private final TextView time;
 
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
 
             cid =   (TextView) mRootView.findViewById(R.id.tv_measure_cid);

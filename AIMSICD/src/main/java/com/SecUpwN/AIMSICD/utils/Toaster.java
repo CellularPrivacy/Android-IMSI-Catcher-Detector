@@ -17,22 +17,10 @@ public class Toaster {
     private static final long TOAST_DURATION_MILLS = 6000; //change if need longer
     private static Toast toast;
 
-    // Private constructor. Prevents instantiation from other classes.
-    private Toaster() { }
- 
     /**
-     * Initializes singleton.
-     *
-     * ToasterHolder is loaded on the first execution of Toaster.getInstance()
-     * or the first access to ToasterHolder.INSTANCE, not before.
+     * Private constructor. Prevents instantiation from other classes.
      */
-    private static class ToasterHolder {
-        private static final Toaster INSTANCE = new Toaster();
-    }
- 
-    public static Toaster getInstance() {
-        return ToasterHolder.INSTANCE;
-    }
+    private Toaster() { }
 
     /**
      * Long toast message

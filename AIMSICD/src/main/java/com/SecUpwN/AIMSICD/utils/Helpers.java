@@ -57,20 +57,6 @@ import io.freefair.android.util.logging.Logger;
  *                  - get System properties
  *                  - Check for SU and BusyBox
  *
- * Dependencies:    This is used all over the place, the non-trivial ones are in:
- *
- *                      AIMSICD.java
- *                      AtCommandFragment.java
- *                      Device.java
- *                      MapViewerOsmDroid.java
- *                      RequestTask.java
- *                      RilExecutor.java
- *
- *
- *                  get/setprop:    SystemPropertiesReflection.java
- *
- *
- * Issues:          AS complaints that several of these methods are not used...
  */
  public class Helpers {
 
@@ -89,9 +75,7 @@ import io.freefair.android.util.logging.Logger;
     * @param msg     Message to send
     */
     public static void msgLong(Context context, String msg) {
-        if (context != null && msg != null) {
-            Toaster.getInstance().msgLong(context, msg);
-        }
+        Toaster.msgLong(context, msg);
     }
    /**
     * Description:      Short toast message
@@ -105,9 +89,7 @@ import io.freefair.android.util.logging.Logger;
     * @param msg     Message to send
     */
     public static void msgShort(Context context, String msg) {
-        if (context != null && msg != null) {
-            Toaster.getInstance().msgShort(context, msg);
-        }
+        Toaster.msgShort(context, msg);
     }
    /**
     * Description:      Long toast message
@@ -121,9 +103,7 @@ import io.freefair.android.util.logging.Logger;
     * @param msg     Message to send
     */
     public static void sendMsg(Context context, String msg) {
-        if (context != null && msg != null) {
-            Toaster.getInstance().msgLong(context, msg);
-        }
+        Toaster.msgLong(context, msg);
     }
 
     /**

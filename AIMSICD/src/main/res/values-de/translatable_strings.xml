@@ -118,7 +118,7 @@
     <string name="pref_femto_title">Femtozellen erkennen</string>
     <string name="pref_femto_summ">(derzeit nur für CDMA-Telefone)</string>
     <string name="pref_femto_action_title">Femtozellen-Schutz</string>
-    <string name="pref_femto_action_summ">Flugmodus bei Erkennung einer Femtozelle erzwingen (Netzwerk muß manuell wieder einschaltet werden)</string>
+    <string name="pref_femto_action_summ">Flugmodus bei Erkennung einer Femtozelle erzwingen (Netzwerk muss manuell wieder einschaltet werden)</string>
     <string name="pref_ui_title">Oberflächeneinstellungen</string>
     <string name="pref_ui_icons_title">Status-Symbole</string>
     <string name="pref_ui_icons_summ">Symboldesign wählen</string>
@@ -275,7 +275,7 @@
     <string name="status">Status:</string>
     <string name="status_idle">Ruhend</string>
     <string name="status_ok">OK</string>
-    <string name="status_medium">Medium</string>
+    <string name="status_medium">Mittel</string>
     <string name="status_high">Hoch</string>
     <string name="status_danger">Gefahr</string>
     <string name="status_skull">Renn!</string>
@@ -408,4 +408,7 @@
     
     <string name="pref_notification_vibrate_min_level_title">Vibriere bei Bedrohung</string>
     <string name="pref_notification_vibrate_min_level_summary">Wähle Gefahrenstufe für Vibrationsbeginn</string>
+    <string name="pref_enable_gps_title">GPS-Einstellung</string>
+    <string name="pref_enable_gps_summary">Aktiviere GPS für Funkzellenverfolgung</string>
+    <string name="n_a">N/V</string>
     </resources>

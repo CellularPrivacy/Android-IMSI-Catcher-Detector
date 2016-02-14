@@ -34,7 +34,10 @@ android:
      - android-23
 # Additional components
      - extra-android-m2repository
-     
+
+before_install: 'openssl aes-256-cbc -K $encrypted_dc771c3300d2_key -iv $encrypted_dc771c3300d2_iv -in keystore.jks.enc -out keystore.jks -d || true'
+
+
 script: ./gradlew build check
 # Coverity Scan Settings
 #-----------------------
@@ -48,3 +51,18 @@ addons:
     build_command_prepend: "./gradlew clean"
     build_command: "./gradlew build"
     branch_pattern: master
+
+before_deploy: cd AIMSICD/build/outputs/apk; md5sum *.apk > md5sums.txt; cd -
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: hWL8k4eTm6RBA6JtY+zL/bFFm+f2eM466kKlHBrywukSXAThgX8VzHVu9I8u9bL1yP2j8R9XHmG+C49Fy8NZ85Hmj5ECFg3dGRhfxAzr3o3deP3Kaeo+LozGhOy/z2PvOPyHS7XqOK8kk8gmoMJ9jvhz+wFAbW9GxhKLYBMn81E=
+  file:
+    - AIMSICD/build/outputs/apk/AIMSICD-normal-debug.apk
+    - AIMSICD/build/outputs/apk/AIMSICD-system-debug.apk
+    - AIMSICD/build/outputs/apk/md5sums.txt
+  on:
+    repo: SecUpwN/Android-IMSI-Catcher-Detector
+    tags: true

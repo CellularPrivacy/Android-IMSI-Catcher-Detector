@@ -249,11 +249,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         return null;
     }
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
-
     /**
      *  Description:    This is where we:
      *

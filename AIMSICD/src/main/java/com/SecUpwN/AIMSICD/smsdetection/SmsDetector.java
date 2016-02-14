@@ -64,7 +64,6 @@ public final class SmsDetector extends Thread {
 
     private final Logger log = AndroidLogger.forClass(SmsDetector.class);
 
-    private BufferedReader mLogcatReader;
     private AimsicdService mAIMSICDService;
     private boolean mBound;
     private AIMSICDDbAdapter mDbAdapter;
@@ -86,7 +85,7 @@ public final class SmsDetector extends Thread {
         mContext = context;
         mDbAdapter = new AIMSICDDbAdapter(context);
 
-        ArrayList<AdvanceUserItems> silent_string = mDbAdapter.getDetectionStrings();
+        List<AdvanceUserItems> silent_string = mDbAdapter.getDetectionStrings();
 
         LOADED_DETECTION_STRINGS = new String[silent_string.size()];
         for (int x = 0; x < silent_string.size(); x++) {
@@ -141,6 +140,7 @@ public final class SmsDetector extends Thread {
     public void run() {
         setSmsDetectionState(true);
 
+        BufferedReader mLogcatReader;
         try {
             Thread.sleep(500);
 

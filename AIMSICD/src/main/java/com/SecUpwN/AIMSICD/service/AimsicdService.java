@@ -24,8 +24,8 @@
 
 package com.SecUpwN.AIMSICD.service;
 
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -33,8 +33,14 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
@@ -51,6 +57,10 @@ import io.freefair.android.util.logging.Logger;
  * cells with or without GPS enabled.
  */
 public class AimsicdService extends InjectionService {
+
+    public static boolean isGPSchoiceChecked;
+    public static final String GPS_REMEMBER_CHOICE="remember choice";
+    SharedPreferences gpsPreferences;
 
     @Inject
     private Logger log;
@@ -91,6 +101,7 @@ public class AimsicdService extends InjectionService {
         super.onCreate();
         setTheme(R.style.AppTheme);
 
+
         signalStrengthTracker = new SignalStrengthTracker(getBaseContext());
 
         mAccelerometerMonitor = new AccelerometerMonitor(this, new Runnable() {
@@ -128,7 +139,10 @@ public class AimsicdService extends InjectionService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        gpsPreferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        isGPSchoiceChecked=gpsPreferences.getBoolean(GPS_REMEMBER_CHOICE,false);
         return START_STICKY;
+
     }
 
     @Override
@@ -239,7 +253,7 @@ public class AimsicdService extends InjectionService {
     }
 
     public void checkLocationServices() {
-        if (mCellTracker.isTrackingCell() && !mLocationTracker.isGPSOn()) {
+        if (mCellTracker.isTrackingCell() && !mLocationTracker.isGPSOn() &&!isGPSchoiceChecked) {
             enableLocationServices();
         }
     }
@@ -247,11 +261,18 @@ public class AimsicdService extends InjectionService {
     private void enableLocationServices() {
         if (isLocationRequestShowing) return; // only show dialog once
 
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setMessage(R.string.location_error_message)
-                .setTitle(R.string.location_error_title)
+        LayoutInflater dialogInflater=(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+        View dialogView=dialogInflater.inflate(R.layout.dialog_request_gps,null,false);
+        CheckBox rememberChoice=(CheckBox)dialogView.findViewById(R.id.check_choice);
+        Button notNow=(Button)dialogView.findViewById(R.id.not_now_button);
+        Button enableGPS=(Button)dialogView.findViewById(R.id.enable_gps_button);
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(this)
+                /*.setMessage(R.string.location_error_message)
+                .setTitle(R.string.location_error_title)*/
+                .setView(dialogView)
                 .setCancelable(false)
-                .setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
+                /*.setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         isLocationRequestShowing = false;
                         Intent gpsSettings = new Intent(
@@ -265,8 +286,53 @@ public class AimsicdService extends InjectionService {
                         isLocationRequestShowing = false;
                         setCellTracking(false);
                     }
-                })
+                })*/
                 .create();
+
+        rememberChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked)
+                {
+                    isGPSchoiceChecked=true;
+                    gpsPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor=gpsPreferences.edit();
+                    editor.putBoolean(GPS_REMEMBER_CHOICE,isGPSchoiceChecked);
+                    editor.apply();
+
+                }
+                else {
+                    isGPSchoiceChecked=false;
+                }
+            }
+        });
+
+        notNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isLocationRequestShowing = false;
+                setCellTracking(false);
+                alertDialog.cancel();
+                alertDialog.dismiss();
+            }
+        });
+
+        enableGPS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isLocationRequestShowing = false;
+                Intent gpsSettings = new Intent(
+                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                gpsSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                alertDialog.cancel();
+                alertDialog.dismiss();
+                startActivity(gpsSettings);
+            }
+        });
+
         alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         alertDialog.show();
         isLocationRequestShowing = true;
@@ -281,7 +347,8 @@ public class AimsicdService extends InjectionService {
 
         @Override
         public void onProviderDisabled(String provider) {
-            if (mCellTracker.isTrackingCell() && provider.equals(LocationManager.GPS_PROVIDER)) {
+            if (mCellTracker.isTrackingCell() && provider.equals(LocationManager.GPS_PROVIDER) &&
+                    !isGPSchoiceChecked) {
                 enableLocationServices();
             }
         }

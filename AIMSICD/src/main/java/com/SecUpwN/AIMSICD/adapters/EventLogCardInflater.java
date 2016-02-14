@@ -53,7 +53,7 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
         private final TextView mRecordId;
         private final TextView mExample;
 
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
 
             mtime =         (TextView) mRootView.findViewById(R.id.time);

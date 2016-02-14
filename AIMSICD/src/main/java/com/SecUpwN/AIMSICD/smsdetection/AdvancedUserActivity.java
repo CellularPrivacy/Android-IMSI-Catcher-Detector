@@ -23,6 +23,7 @@ import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
@@ -48,7 +49,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
     @InjectView(R.id.spinner)
     private Spinner spinner;
-    private ArrayList<AdvanceUserItems> msgItems;
+    private List<AdvanceUserItems> msgItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +132,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
      * Reload ListView with new database values
      */
     public void loadDbString(){
-        ArrayList<AdvanceUserItems> newmsglist;
+        List<AdvanceUserItems> newmsglist;
         try {
         /* There should be at least 1 detection string in db so not to cause an error */
             newmsglist = dbAccess.getDetectionStrings();

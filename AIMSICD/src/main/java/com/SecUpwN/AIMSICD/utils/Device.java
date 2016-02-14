@@ -8,10 +8,13 @@ package com.SecUpwN.AIMSICD.utils;
 import android.content.Context;
 import android.location.Location;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 
+import io.freefair.android.util.function.Optional;
+import io.freefair.android.util.function.Supplier;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
@@ -27,14 +30,14 @@ public class Device {
     private String mDataStateShort;
     private String mNetName;
     private String mMncmcc;
-    private String mSimCountry;
+    private Optional<String> mSimCountry;
     private String mPhoneType;
     private String mIMEI;
     private String mIMEIV;
-    private String mSimOperator;
-    private String mSimOperatorName;
-    private String mSimSerial;
-    private String mSimSubs;
+    private Optional<String> mSimOperator;
+    private Optional<String> mSimOperatorName;
+    private Optional<String> mSimSerial;
+    private Optional<String> mSimSubs;
     private String mDataActivityType;
     private String mDataActivityTypeShort;
     private boolean mRoaming;
@@ -119,24 +122,12 @@ public class Device {
         }
 
         // SIM Information
-        int simState = tm.getSimState();
-        switch (simState) {
-
-            case (TelephonyManager.SIM_STATE_ABSENT):
-            case (TelephonyManager.SIM_STATE_NETWORK_LOCKED):
-            case (TelephonyManager.SIM_STATE_PIN_REQUIRED):
-            case (TelephonyManager.SIM_STATE_PUK_REQUIRED):
-            case (TelephonyManager.SIM_STATE_UNKNOWN):
-                break;
-            case (TelephonyManager.SIM_STATE_READY): {
-                mSimCountry = getSimCountry(tm);
-                // Get the operator code of the active SIM (MCC + MNC)
-                mSimOperator = getSimOperator(tm);
-                mSimOperatorName = getSimOperatorName(tm);
-                mSimSerial = getSimSerial(tm);
-                mSimSubs = getSimSubs(tm);
-            }
-        }
+        mSimCountry = getSimCountry(tm);
+        // Get the operator code of the active SIM (MCC + MNC)
+        mSimOperator = getSimOperator(tm);
+        mSimOperatorName = getSimOperatorName(tm);
+        mSimSerial = getSimSerial(tm);
+        mSimSubs = getSimSubs(tm);
 
         mDataActivityType = getDataActivity(tm);
         mDataState = getDataState(tm);
@@ -159,35 +150,35 @@ public class Device {
         return mPhoneID;
     }
 
+    private Optional<String> getSimInformation(Supplier<String> simInfoSupplier) {
+        try {
+            return Optional.ofNullable(simInfoSupplier.get());
+        } catch (Exception e) {
+            // SIM methods can cause Exceptions on some devices
+            log.error("Failed to get SIM-Information", e);
+        }
+        return Optional.empty();
+    }
+
     /**
      * SIM Country
      *
      * @return string of SIM Country data
      */
-    String getSimCountry(TelephonyManager tm) {
-        try {
-            if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
-                mSimCountry = (tm.getSimCountryIso() != null) ? tm.getSimCountryIso() : "N/A";
-            } else {
-                mSimCountry = "N/A";
+    Optional<String> getSimCountry(final TelephonyManager tm) {
+        return getSimInformation(new Supplier<String>() {
+            @Nullable
+            @Override
+            public String get() {
+                return tm.getSimCountryIso();
             }
-        } catch (Exception e) {
-            // SIM methods can cause Exceptions on some devices
-            mSimCountry = "N/A";
-            log.error("GetSimCountry " + e);
-        }
-
-        if (mSimCountry.isEmpty()) {
-            mSimCountry = "N/A";
-        }
-
-        return mSimCountry;
+        });
     }
 
     /**
      * SIM Country data
      */
-    public String getSimCountry() {
+    public Optional<String> getSimCountry() {
         return mSimCountry;
     }
 
@@ -196,27 +187,17 @@ public class Device {
      *
      * @return string of SIM Operator data
      */
-    public String getSimOperator(TelephonyManager tm) {
-        try {
-            if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
-                mSimOperator = (tm.getSimOperator() != null) ? tm.getSimOperator() : "N/A";
-            } else {
-                mSimOperator = "N/A";
+    public Optional<String> getSimOperator(final TelephonyManager tm) {
+        return getSimInformation(new Supplier<String>() {
+            @Nullable
+            @Override
+            public String get() {
+                return tm.getSimOperator();
             }
-        } catch (Exception e) {
-            // SIM methods can cause Exceptions on some devices
-            mSimOperator = "N/A";
-            log.error("GetSimOperator " + e.getMessage(), e);
-        }
-
-        if (mSimOperator.isEmpty()) {
-            mSimOperator = "N/A";
-        }
-
-        return mSimOperator;
+        });
     }
 
-    public String getSimOperator() {
+    public Optional<String> getSimOperator() {
         return mSimOperator;
     }
 
@@ -225,27 +206,17 @@ public class Device {
      *
      * @return string of SIM Operator Name
      */
-    String getSimOperatorName(TelephonyManager tm) {
-        try {
-            if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
-                mSimOperatorName = (tm.getSimOperatorName() != null) ? tm.getSimOperatorName() : "N/A";
-            } else {
-                mSimOperatorName = "N/A";
+    Optional<String> getSimOperatorName(final TelephonyManager tm) {
+        return getSimInformation(new Supplier<String>() {
+            @Nullable
+            @Override
+            public String get() {
+                return tm.getSimOperatorName();
             }
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            //SIM methods can cause Exceptions on some devices
-            mSimOperatorName = "N/A";
-        }
-
-        if (mSimOperatorName.isEmpty()) {
-            mSimOperatorName = "N/A";
-        }
-
-        return mSimOperatorName;
+        });
     }
 
-    public String getSimOperatorName() {
+    public Optional<String> getSimOperatorName() {
         return mSimOperatorName;
     }
 
@@ -254,27 +225,17 @@ public class Device {
      *
      * @return string of SIM Subscriber ID data
      */
-    String getSimSubs(TelephonyManager tm) {
-        try {
-            if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
-                mSimSubs = (tm.getSubscriberId() != null) ? tm.getSubscriberId() : "N/A";
-            } else {
-                mSimSubs = "N/A";
+    Optional<String> getSimSubs(final TelephonyManager tm) {
+        return getSimInformation(new Supplier<String>() {
+            @Nullable
+            @Override
+            public String get() {
+                return tm.getSubscriberId();
             }
-        } catch (Exception e) {
-            //Some devices don't like this method
-            mSimSubs = "N/A";
-            log.error("GetSimSubs "+e.getMessage(), e);
-        }
-
-        if (mSimSubs.isEmpty()) {
-            mSimSubs = "N/A";
-        }
-
-        return mSimSubs;
+        });
     }
 
-    public String getSimSubs() {
+    public Optional<String> getSimSubs() {
         return mSimSubs;
     }
 
@@ -283,28 +244,17 @@ public class Device {
      *
      * @return string of SIM Serial Number data
      */
-    String getSimSerial(TelephonyManager tm) {
-        try {
-            if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
-                mSimSerial = (tm.getSimSerialNumber() != null) ? tm.getSimSerialNumber()
-                        : "N/A";
-            } else {
-                mSimSerial = "N/A";
+    Optional<String> getSimSerial(final TelephonyManager tm) {
+        return getSimInformation(new Supplier<String>() {
+            @Nullable
+            @Override
+            public String get() {
+                return tm.getSimSerialNumber();
             }
-        } catch (Exception e) {
-            // SIM methods can cause Exceptions on some devices
-            mSimSerial = "N/A";
-            log.error("GetSimSerial " + e);
-        }
-
-        if (mSimSerial.isEmpty()) {
-            mSimSerial = "N/A";
-        }
-
-        return mSimSerial;
+        });
     }
 
-    public String getSimSerial() {
+    public Optional<String> getSimSerial() {
         return mSimSerial;
     }
 

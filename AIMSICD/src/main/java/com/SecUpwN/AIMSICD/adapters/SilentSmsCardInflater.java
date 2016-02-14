@@ -44,7 +44,7 @@ public class SilentSmsCardInflater implements IAdapterViewInflater<SilentSmsCard
         private final TextView mTimestamp;
         private final TextView mExample;
 
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
             mAddress =          (TextView) mRootView.findViewById(R.id.address);
             mDisplayAddress =   (TextView) mRootView.findViewById(R.id.display_address);

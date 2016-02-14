@@ -10,7 +10,6 @@ public class DrawerMenuSection implements NavDrawerItem {
     private static final int SECTION_TYPE = 0;
     private int id;
     private String label;
-    private int icon;
 
     private DrawerMenuSection() {
     }
@@ -36,7 +35,6 @@ public class DrawerMenuSection implements NavDrawerItem {
     }
 
     public void setmIconId(int icon) {
-        this.icon = icon;
     }
 
     @Override

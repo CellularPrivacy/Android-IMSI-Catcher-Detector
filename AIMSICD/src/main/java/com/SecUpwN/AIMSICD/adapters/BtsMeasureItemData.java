@@ -314,6 +314,4 @@ public class BtsMeasureItemData  {
                 //,
         );
     }
-
-
 }

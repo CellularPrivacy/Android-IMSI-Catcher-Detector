@@ -46,7 +46,7 @@ public class OpenCellIdCardInflater implements IAdapterViewInflater<CardItemData
         private final TextView mSamples;
         private final TextView mRecordId;
 
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
             mCellID =   (TextView) mRootView.findViewById(R.id.cellID);
             mLac =      (TextView) mRootView.findViewById(R.id.lac);

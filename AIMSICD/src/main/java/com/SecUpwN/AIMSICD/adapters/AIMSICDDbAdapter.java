@@ -1090,11 +1090,11 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     // ====================================================================
     //      Get all detection strings
     // ====================================================================
-    public ArrayList<AdvanceUserItems> getDetectionStrings() {
+    public List<AdvanceUserItems> getDetectionStrings() {
 
         Cursor cursor = mDb.rawQuery("SELECT * FROM DetectionStrings", null);
 
-        ArrayList<AdvanceUserItems> detectionStrings = new ArrayList<>();
+        List<AdvanceUserItems> detectionStrings = new ArrayList<>();
 
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
@@ -1115,7 +1115,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     public boolean deleteDetectedSms(long deleteme) {
-        String TAG = "AIMSICD";
         String mTAG = "AIMSICDDbAdapter";
 
         try {

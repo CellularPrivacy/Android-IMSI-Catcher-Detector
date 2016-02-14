@@ -3,10 +3,8 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.fragments;
+package com.SecUpwN.AIMSICD.activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -37,7 +35,7 @@ import java.util.List;
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.app.InjectionFragment;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.Logger;
 
 
@@ -63,8 +61,8 @@ import io.freefair.android.util.logging.Logger;
  *              [ ] Need a "no" timeout to watch output for while, or let's make it 10 minutes.
  *                  Perhaps with a manual stop?
  */
-@XmlLayout(R.layout.at_command_fragment)
-public class AtCommandFragment extends InjectionFragment {
+@XmlLayout(R.layout.activity_at_command)
+public class AtCommandActivity extends InjectionAppCompatActivity {
 
     @Inject
     private Logger log;
@@ -76,7 +74,6 @@ public class AtCommandFragment extends InjectionFragment {
     private static final int BUSYBOX_UNAVAILABLE = 103;
     private static final List<String> mSerialDevices = new ArrayList<>();
 
-    private Context mContext;
     private String mSerialDevice;
     private int mTimeout;
 
@@ -110,8 +107,8 @@ public class AtCommandFragment extends InjectionFragment {
     private Button atCommandExecute;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         atCommandExecute.setOnClickListener(new btnClick());
         mSerialDeviceSpinner.setOnItemSelectedListener(new spinnerListener());
         timeoutSpinner.setOnItemSelectedListener(new timeoutSpinnerListener());
@@ -171,12 +168,6 @@ public class AtCommandFragment extends InjectionFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mContext = activity.getBaseContext();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mCommandTerminal != null) {
@@ -195,16 +186,16 @@ public class AtCommandFragment extends InjectionFragment {
                 mAtCommandLayout.setVisibility(View.VISIBLE);
                 break;
             case ROOT_UNAVAILABLE:
-                mAtCommandError.setText(mContext.getString(R.string.unable_to_acquire_root_access));
+                mAtCommandError.setText(R.string.unable_to_acquire_root_access);
                 break;
             case BUSYBOX_UNAVAILABLE:
-                mAtCommandError.setText(mContext.getString(R.string.unable_to_detect_busybox));
+                mAtCommandError.setText(R.string.unable_to_detect_busybox);
                 break;
             case SERIAL_INIT_ERROR:
-                mAtCommandError.setText(mContext.getString(R.string.unknown_error_trying_to_acquire_serial_device));
+                mAtCommandError.setText(R.string.unknown_error_trying_to_acquire_serial_device);
                 break;
             default:
-                mAtCommandError.setText(mContext.getString(R.string.unknown_error_initialising_at_command_injector));
+                mAtCommandError.setText(R.string.unknown_error_initialising_at_command_injector);
                 break;
         }
 
@@ -270,7 +261,7 @@ public class AtCommandFragment extends InjectionFragment {
             // THIS IS A BAD IDEA       TODO: Consider removing
             // Use RIL Serial Device details from the System Property
             try {
-                String rilDevice = Helpers.getSystemProp(mContext, "rild.libargs", "UNKNOWN");
+                String rilDevice = Helpers.getSystemProp(this, "rild.libargs", "UNKNOWN");
                 mSerialDevice = ("UNKNOWN".equals(rilDevice) ? rilDevice : rilDevice.substring(3));
 
                 if (!"UNKNOWN".equals(mSerialDevice)) {
@@ -341,7 +332,7 @@ public class AtCommandFragment extends InjectionFragment {
         if (!mSerialDevices.isEmpty()) {
             String[] entries = new String[mSerialDevices.size()];
             entries = mSerialDevices.toArray(entries);
-            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(mContext,
+            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_item, entries);
             mSerialDeviceSpinner.setAdapter(spinnerAdapter);
             mSerialDeviceSpinner.setVisibility(View.VISIBLE);
