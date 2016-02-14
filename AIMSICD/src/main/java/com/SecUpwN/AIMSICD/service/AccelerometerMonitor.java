@@ -61,9 +61,15 @@ public class AccelerometerMonitor {
                     float deltaY = Math.abs(mLastY - y);
                     float deltaZ = Math.abs(mLastZ - z);
 
-                    if (deltaX < ACCELEROMETER_NOISE) deltaX = 0.0f;
-                    if (deltaY < ACCELEROMETER_NOISE) deltaY = 0.0f;
-                    if (deltaZ < ACCELEROMETER_NOISE) deltaZ = 0.0f;
+                    if (deltaX < ACCELEROMETER_NOISE) {
+                        deltaX = 0.0f;
+                    }
+                    if (deltaY < ACCELEROMETER_NOISE) {
+                        deltaY = 0.0f;
+                    }
+                    if (deltaZ < ACCELEROMETER_NOISE) {
+                        deltaZ = 0.0f;
+                    }
 
                     mLastX = x;
                     mLastY = y;

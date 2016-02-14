@@ -60,8 +60,9 @@ public class Device {
             DeviceApi18.loadCellInfo(tm, this);
         }
 
-        if (mCell == null)
+        if (mCell == null) {
             mCell = new Cell();
+        }
 
         switch (mPhoneID) {
 
@@ -72,10 +73,12 @@ public class Device {
                 mMncmcc = tm.getNetworkOperator();
                 if (mMncmcc != null && mMncmcc.length() >= 5 ) {
                     try {
-                        if (mCell.getMCC() == Integer.MAX_VALUE)
+                        if (mCell.getMCC() == Integer.MAX_VALUE) {
                             mCell.setMCC(Integer.parseInt(tm.getNetworkOperator().substring(0, 3)));
-                        if (mCell.getMNC() == Integer.MAX_VALUE)
+                        }
+                        if (mCell.getMNC() == Integer.MAX_VALUE) {
                             mCell.setMNC(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
+                        }
                     } catch (Exception e) {
                         log.info("MncMcc parse exception: ", e);
                     }
@@ -108,10 +111,12 @@ public class Device {
                                 "ro.cdma.home.operator.numeric", "UNKNOWN");
                         if (!homeOperator.contains("UNKNOWN")) {
                             try {
-                                if (mCell.getMCC() == Integer.MAX_VALUE)
+                                if (mCell.getMCC() == Integer.MAX_VALUE) {
                                     mCell.setMCC(Integer.valueOf(homeOperator.substring(0, 3)));
-                                if (mCell.getMNC() == Integer.MAX_VALUE)
+                                }
+                                if (mCell.getMNC() == Integer.MAX_VALUE) {
                                     mCell.setMNC(Integer.valueOf(homeOperator.substring(3, 5)));
+                                }
                             } catch (Exception e) {
                                 log.info("HomeOperator parse exception - " + e.getMessage(), e);
                             }
@@ -307,7 +312,9 @@ public class Device {
      * @return string representing device Network Type
      */
     public String getNetworkTypeName() {
-        if (mCell == null) return "Unknown";
+        if (mCell == null) {
+            return "Unknown";
+        }
 
         switch (mCell.getNetType()) {
             case TelephonyManager.NETWORK_TYPE_1xRTT:
@@ -517,7 +524,9 @@ public class Device {
         mCell.setDBM(signalDbm);
     }
 
-    public int getSignalDBm() { return mCell.getDBM();}
+    public int getSignalDBm() {
+        return mCell.getDBM();
+    }
 
     /**
      * Update Network Type

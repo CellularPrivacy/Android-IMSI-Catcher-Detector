@@ -196,8 +196,11 @@ public class AimsicdService extends InjectionService {
     }
 
     public void setTrackingFemtocell(boolean track) {
-        if (track) mCellTracker.startTrackingFemto();
-        else mCellTracker.stopTrackingFemto();
+        if (track) {
+            mCellTracker.startTrackingFemto();
+        } else {
+            mCellTracker.stopTrackingFemto();
+        }
     }
 
     // SMS Detection Thread
@@ -259,7 +262,9 @@ public class AimsicdService extends InjectionService {
     }
 
     private void enableLocationServices() {
-        if (isLocationRequestShowing) return; // only show dialog once
+        if (isLocationRequestShowing) {
+            return; // only show dialog once
+        }
 
         LayoutInflater dialogInflater=(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
         View dialogView=dialogInflater.inflate(R.layout.dialog_request_gps,null,false);
@@ -293,16 +298,14 @@ public class AimsicdService extends InjectionService {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if (isChecked)
-                {
+                if (isChecked) {
                     isGPSchoiceChecked=true;
                     gpsPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor=gpsPreferences.edit();
                     editor.putBoolean(GPS_REMEMBER_CHOICE,isGPSchoiceChecked);
                     editor.apply();
 
-                }
-                else {
+                } else {
                     isGPSchoiceChecked=false;
                 }
             }

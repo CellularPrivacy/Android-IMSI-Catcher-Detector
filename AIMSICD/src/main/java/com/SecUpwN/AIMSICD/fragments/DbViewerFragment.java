@@ -150,7 +150,9 @@ public final class DbViewerFragment extends InjectionFragment {
 
                     @Override
                     protected void onPostExecute(BaseInflaterAdapter adapter) {
-                        if (getActivity() == null) return; // fragment detached
+                        if (getActivity() == null) {
+                            return; // fragment detached
+                        }
 
                         lv.setEmptyView(emptyView);
                         if (adapter != null) {

@@ -93,8 +93,9 @@ public class OpenCellIdActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            if (s == null || s.isEmpty())
+            if (s == null || s.isEmpty()) {
                 return;
+            }
 
             // Check key validity (is done on foreign server)
             if (isKeyValid(s)) {

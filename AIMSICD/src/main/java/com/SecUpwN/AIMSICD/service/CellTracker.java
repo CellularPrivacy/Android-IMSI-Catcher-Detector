@@ -339,8 +339,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public List<Cell> updateNeighbouringCells() {
         List<Cell> neighboringCells = new ArrayList<>();
         List<NeighboringCellInfo> neighboringCellInfo = tm.getNeighboringCellInfo();
-        if(neighboringCellInfo == null)
+        if(neighboringCellInfo == null) {
             neighboringCellInfo = new ArrayList<>();
+        }
 
         Boolean nclp = tinydb.getBoolean("nc_list_present"); // NC list present? (default is false)
 
@@ -372,7 +373,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
-                        if(neighboringCellInfo != null)
+                        if(neighboringCellInfo != null) {
                             if (neighboringCellInfo.size() > 0) {
                                 // Can we think of a better log message here?
                                 log.debug("NeighbouringCellInfo found on " + i + " try. (time based)");
@@ -380,6 +381,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             } else {
                                 continue;
                             }
+                        }
                     }
                     List<NeighboringCellInfo> cellInfoList =
                             new ArrayList<>(neighboringCellBlockingQueue.size() + 1);
@@ -390,6 +392,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     neighboringCellInfo = cellInfoList;
                 } catch (InterruptedException e) {
                     // TODO: Add a more valuable message here!
+                    log.error("", e);
                 }
             }
         }
@@ -452,8 +455,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         log.info("CheckForNeighbourCount()");
 
         Integer ncls = 0;                                       // NC list size
-        if(tm != null && tm.getNeighboringCellInfo() != null)   // See # 383
+        if (tm != null && tm.getNeighboringCellInfo() != null) { // See # 383
             ncls = tm.getNeighboringCellInfo().size();
+        }
         Boolean nclp = tinydb.getBoolean("nc_list_present");    // NC list present? (default is false)
 
         if (ncls > 0) {
@@ -609,8 +613,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         log.info("NeighbouringCellInfo empty - event based polling succeeded!");
         tm.listen(phoneStatelistener, PhoneStateListener.LISTEN_NONE);
-        if(neighboringCellInfo == null)
+        if(neighboringCellInfo == null) {
             neighboringCellInfo = new ArrayList<>();
+        }
         neighboringCellBlockingQueue.addAll(neighboringCellInfo);
     }
 
@@ -784,9 +789,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             // Update Signal Strength
             if (signalStrength.isGsm()) {
                 int dbm;
-                if(signalStrength.getGsmSignalStrength() <= 2 ||
-                        signalStrength.getGsmSignalStrength() ==  NeighboringCellInfo.UNKNOWN_RSSI)
-                {
+                if (signalStrength.getGsmSignalStrength() <= 2 ||
+                        signalStrength.getGsmSignalStrength() == NeighboringCellInfo.UNKNOWN_RSSI) {
                     // Unknown signal strength, get it another way
                     String[] bits = signalStrength.toString().split(" ");
                     dbm = Integer.parseInt(bits[9]);
@@ -1185,11 +1189,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 log.verbose("Telephony Manager is null.");
                 return false;
             }
-        }
-
-        /* if it is an evDo network */
-        //
-        else {
+        } else { /* if it is an evDo network */
             /* get network ID */
             if (tm != null) {
                 CdmaCellLocation c = (CdmaCellLocation) tm.getCellLocation();

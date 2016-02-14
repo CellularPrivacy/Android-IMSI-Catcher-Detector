@@ -74,7 +74,9 @@ public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSms
             smsd_cid.setText(SV(item.getCurrent_cid()));
             smsd_rat.setText(item.getCurrent_nettype());
             String isRoaming = "false";
-            if(item.getCurrent_roam_status() == 1){isRoaming = "true";}
+            if (item.getCurrent_roam_status() == 1) {
+                isRoaming = "true";
+            }
             smsd_roam.setText(isRoaming);
             smsd_lat.setText(String.valueOf(item.getCurrent_gps_lat()));
             smsd_lon.setText(String.valueOf(item.getCurrent_gps_lon()));

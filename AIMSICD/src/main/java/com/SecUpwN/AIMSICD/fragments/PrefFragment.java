@@ -54,9 +54,8 @@ public class PrefFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-                {
-                    Log.e("pref","changed to "+newValue);
+                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    Log.e("pref", "changed to " + newValue);
                     preference.setDefaultValue(newValue);
                     return true;
                 }
@@ -70,20 +69,14 @@ public class PrefFragment extends PreferenceFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1)
-        {
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-            {
-
+        if (requestCode == 1) {
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 gpsPref.setChecked(true);
                 gpsPref.setDefaultValue(true);
-            }
-            else {
+            } else {
                 gpsPref.setDefaultValue(false);
                 gpsPref.setChecked(false);
             }
-
-
         }
     }
 }

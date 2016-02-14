@@ -145,8 +145,9 @@ public class UniqueBtsItemData {
         this.lon = lon;
     }
 
-
-    public String getRecordId() { return mRecordId; }
+    public String getRecordId() {
+        return mRecordId;
+    }
 
     String mcc;
     String mnc;

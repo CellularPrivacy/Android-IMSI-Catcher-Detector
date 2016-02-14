@@ -105,8 +105,9 @@ public class DeviceApi17 {
                                 + "ClassName: " + info.getClass().getSimpleName()
                                 + " ToString: " + info.toString());
                     }
-                    if (pDevice.mCell.isValid())
+                    if (pDevice.mCell.isValid()) {
                         break;
+                    }
                 }
             }
         } catch (NullPointerException npe) {
