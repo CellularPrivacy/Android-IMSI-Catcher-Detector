@@ -11,7 +11,7 @@
 
     <!-- Name Checks -->
     <module name="TreeWalker">
-        <property name="severity" value="warning" />
+        <property name="severity" value="info" />
 
         <module name="ConstantName" />
         <module name="LocalFinalVariableName" />
@@ -51,6 +51,7 @@
             <property name="illegalClassNames" value="java.util.Hashtable"/>
             <property name="illegalClassNames" value="java.util.ArrayList"/>
             <property name="illegalClassNames" value="java.util.LinkedList"/>
+            <property name="illegalClassNames" value="android.util.Log"/>
         </module>
 
         <!--module name="MissingSwitchDefault"/-->
