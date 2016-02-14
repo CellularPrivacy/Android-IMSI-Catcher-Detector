@@ -12,9 +12,6 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
-
 import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.OemCommands;
 
@@ -24,6 +21,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 /*
  * Class to handle Ril and Samsung MultiRil implementation. Used by the Aimsicd Service.
@@ -194,7 +194,7 @@ public class RilExecutor {
 
         public final char keychar;
         public final boolean captureResponse;
-        public KeyStep(char keychar, boolean captureResponse) {
+        KeyStep(char keychar, boolean captureResponse) {
             this.keychar = keychar;
             this.captureResponse = captureResponse;
         }

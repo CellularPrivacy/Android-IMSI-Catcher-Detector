@@ -42,7 +42,7 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
         private final TextView mLng;
         private final TextView mRecordId;
 
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
 
             mCountry =  (TextView) mRootView.findViewById(R.id.country);

@@ -59,7 +59,7 @@ public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItem
 
         private final TextView mRecordId;
 
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
             // TODO: explain these and try to adhere to a naming convention
             // These are the id names as used in the "dbe_import_items.xml" stylesheet

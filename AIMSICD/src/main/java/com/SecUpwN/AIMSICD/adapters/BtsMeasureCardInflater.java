@@ -105,7 +105,7 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
 
         private TextView mRecordId;     //EVA
 
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
 
             bts_id = (TextView) mRootView.findViewById(R.id.tv_bts_measure_bts_id);

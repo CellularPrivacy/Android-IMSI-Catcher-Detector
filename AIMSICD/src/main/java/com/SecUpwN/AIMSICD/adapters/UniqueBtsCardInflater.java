@@ -92,7 +92,7 @@ public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItem
 
 
         // These are the names of the "@+id/xxxx" items in the XML layout file
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
 
             LAC = (TextView) mRootView.findViewById(R.id.tv_uniquebts_lac);

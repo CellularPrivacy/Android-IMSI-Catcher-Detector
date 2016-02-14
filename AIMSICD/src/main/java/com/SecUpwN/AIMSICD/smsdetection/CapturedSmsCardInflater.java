@@ -47,7 +47,7 @@ public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSms
 
 
 
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
             //
             smsd_timestamp = (TextView) mRootView.findViewById(R.id.tv_smsdata_timestamp);

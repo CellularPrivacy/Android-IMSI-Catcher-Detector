@@ -67,7 +67,7 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
         */
 
         // OLD (in old DB tables)
-        public ViewHolder(View rootView) {
+        ViewHolder(View rootView) {
             mRootView = rootView;
             mCellID = (TextView) mRootView.findViewById(R.id.cellID);
             mCellID.setVisibility(View.GONE);
