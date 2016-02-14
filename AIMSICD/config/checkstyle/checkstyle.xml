@@ -42,7 +42,16 @@
         <module name="EmptyStatement" />
 
 
-        <module name="IllegalInstantiation" />
+        <module name="IllegalInstantiation">
+            <property name="classes" value="java.util.Vector"/>
+            <property name="classes" value="java.util.Hashtable"/>
+        </module>
+        <module name="IllegalType">
+            <property name="illegalClassNames" value="java.util.Vector"/>
+            <property name="illegalClassNames" value="java.util.Hashtable"/>
+            <property name="illegalClassNames" value="java.util.ArrayList"/>
+            <property name="illegalClassNames" value="java.util.LinkedList"/>
+        </module>
 
         <!--module name="MissingSwitchDefault"/-->
         <!--module name="RedundantThrows"/-->

@@ -375,7 +375,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 //New function only gets bts from DBe_import by sim network
                 loadOcidMarkersByNetwork();
 
-                LinkedList<CellTowerMarker> items = new LinkedList<>();
+                List<CellTowerMarker> items = new LinkedList<>();
 
                 Cursor c = null;
                 try {
@@ -542,7 +542,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
     private void loadOcidMarkersByNetwork() {
         // Check if OpenCellID data exists and if so load this now
-        LinkedList<CellTowerMarker> items = new LinkedList<>();
+        List<CellTowerMarker> items = new LinkedList<>();
         String networkOperator = tm.getNetworkOperator();
         int currentMmc = 0;
         int currentMnc = 0;

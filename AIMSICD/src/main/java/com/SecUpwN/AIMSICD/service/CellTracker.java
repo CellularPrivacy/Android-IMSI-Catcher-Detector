@@ -381,7 +381,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                 continue;
                             }
                     }
-                    ArrayList<NeighboringCellInfo> cellInfoList =
+                    List<NeighboringCellInfo> cellInfoList =
                             new ArrayList<>(neighboringCellBlockingQueue.size() + 1);
                     while (info != null) {
                         cellInfoList.add(info);

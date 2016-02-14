@@ -17,15 +17,15 @@ import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class AdvanceUserBaseSmsAdapter extends BaseAdapter {
-	private static ArrayList<CapturedSmsData> detectionItemDetails;
+	private static List<CapturedSmsData> detectionItemDetails;
 
 	private LayoutInflater l_Inflater;
 
-	public AdvanceUserBaseSmsAdapter(Context context, ArrayList<CapturedSmsData> results) {
+	public AdvanceUserBaseSmsAdapter(Context context, List<CapturedSmsData> results) {
         detectionItemDetails = results;
 		l_Inflater = LayoutInflater.from(context);
 	}

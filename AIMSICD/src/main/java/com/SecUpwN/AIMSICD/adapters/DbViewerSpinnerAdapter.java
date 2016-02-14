@@ -16,7 +16,7 @@ import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.adapters.Holders.ViewTableNameSpinnerHolder;
 import com.SecUpwN.AIMSICD.enums.StatesDbViewer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DbViewerSpinnerAdapter extends ArrayAdapter<StatesDbViewer> {
 
@@ -25,7 +25,7 @@ public class DbViewerSpinnerAdapter extends ArrayAdapter<StatesDbViewer> {
         mDataList = StatesDbViewer.getStates();
     }
 
-    ArrayList<StatesDbViewer> mDataList;
+    List<StatesDbViewer> mDataList;
 
 
     @Override

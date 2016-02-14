@@ -11,6 +11,7 @@ import com.SecUpwN.AIMSICD.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public enum StatesDbViewer {
 
@@ -36,7 +37,7 @@ public enum StatesDbViewer {
     }
 
 
-    public static ArrayList<StatesDbViewer> getStates() {
+    public static List<StatesDbViewer> getStates() {
         return new ArrayList<>(Arrays.asList(values()));
     }
 
