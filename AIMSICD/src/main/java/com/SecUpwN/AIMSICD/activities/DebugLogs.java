@@ -250,7 +250,7 @@ public class DebugLogs extends BaseActivity {
      * Run a shell command and return the results
      */
     private String runProcess(String command) throws IOException {
-        return runProcess(new String[]{ command });
+        return runProcess(new String[]{command});
     }
 
     /**

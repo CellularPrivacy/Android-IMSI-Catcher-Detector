@@ -34,7 +34,7 @@
             <property name="processJavadoc" value="true" />
         </module>
 
-        <module name="MissingDeprecated"/>
+        <module name="MissingDeprecated" />
 
         <!-- Modifier Checks                                    -->
         <!-- See http://checkstyle.sf.net/config_modifiers.html -->
@@ -71,5 +71,12 @@
         <module name="LeftCurly" />
         <module name="NeedBraces" />
         <module name="RightCurly" />
+
+        <module name="EmptyForInitializerPad" />
+        <module name="EmptyForIteratorPad" />
+        <module name="GenericWhitespace" />
+        <module name="MethodParamPad" />
+        <module name="NoLineWrap" />
+        <module name="NoWhitespaceAfter" />
     </module>
 </module>
