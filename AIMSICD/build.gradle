@@ -54,7 +54,7 @@ android {
             buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            signingConfig file('../keystore.jks').exists() ? signingConfigs.releaseSigningConfig : null
+            signingConfig ( file('../keystore.jks').exists() && project.hasProperty("aimsicd_keystore_password") ) ? signingConfigs.releaseSigningConfig : null
         }
     }
     compileOptions {
