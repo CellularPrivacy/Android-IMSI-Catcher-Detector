@@ -5,17 +5,18 @@
  */
 package com.SecUpwN.AIMSICD.utils;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import android.content.Context;
 
 import com.SecUpwN.AIMSICD.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import android.content.Context;
 
-/*
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
+
+/**
  * These are the OEM commands used by the MulticlientRil ServiceMode menu scraper,
  * and possibly elsewhere. OEM commands (as the name suggests) are device dependent
  * and these particular ones are for Samsung Galaxy S2, AFAIK.
@@ -87,7 +88,7 @@ public class OemCommands {
     public static OemCommands getInstance(Context context) {
         int apiVersion = context.getResources().getInteger(R.integer.config_api_version);
         return new OemCommands(apiVersion);
-	}
+    }
 
     public byte[] getEnterServiceModeData(int modeType, int subType, int query) {
         try {
@@ -97,12 +98,12 @@ public class OemCommands {
             dos.writeByte(OEM_SM_ENTER_MODE_MESSAGE);
             if (mApiVersion == 1) {
                 dos.writeShort(7);
-			} else if (mApiVersion == 2) {
+            } else if (mApiVersion == 2) {
                 dos.writeShort(8);
                 dos.writeByte(4);
-			} else {
+            } else {
                 throw new IllegalArgumentException("Invalid API version " + mApiVersion);
-			}
+            }
             dos.writeByte(modeType);
             dos.writeByte(subType);
             dos.writeByte(query);
@@ -121,12 +122,12 @@ public class OemCommands {
             dos.writeByte(OEM_SM_END_MODE_MESSAGE);
             if (mApiVersion == 1) {
                 dos.writeShort(5);
-			} else if (mApiVersion == 2) {
+            } else if (mApiVersion == 2) {
                 dos.writeShort(6);
                 dos.writeByte(4);
-			} else {
+            } else {
                 throw new IllegalArgumentException("Invalid API version " + mApiVersion);
-			}
+            }
             dos.writeByte(modeType);
             return baos.toByteArray();
         } catch (IOException e) {
@@ -143,12 +144,12 @@ public class OemCommands {
             dos.writeByte(OEM_SM_PROCESS_KEY_MESSAGE);
             if (mApiVersion == 1) {
                 dos.writeShort(6);
-			} else if (mApiVersion == 2) {
+            } else if (mApiVersion == 2) {
                 dos.writeShort(7);
                 dos.writeByte(4);
-			} else {
+            } else {
                 throw new IllegalArgumentException("Invalid API version " + mApiVersion);
-			}
+            }
             dos.writeByte(keycode);
             dos.writeByte(query);
             return baos.toByteArray();
@@ -157,5 +158,4 @@ public class OemCommands {
         }
         return null;
     }
-
 }

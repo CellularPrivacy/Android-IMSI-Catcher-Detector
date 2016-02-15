@@ -688,7 +688,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      *    [ ] TODO: CDMA has to extract the MCC and MNC using something like:
      *
-     *    	String mccMnc = phoneMgr.getNetworkOperator();
+     *      String mccMnc = phoneMgr.getNetworkOperator();
      *      String cdmaMcc = "";
      *      String cdmaMnc = "";
      *      if (mccMnc != null && mccMnc.length() >= 5) {

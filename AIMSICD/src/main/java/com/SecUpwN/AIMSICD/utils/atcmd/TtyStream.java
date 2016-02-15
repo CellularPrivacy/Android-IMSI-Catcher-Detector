@@ -114,8 +114,9 @@ class TtyStream extends AtCommandTerminal {
                         if (line.length() != 0) {
                             lines.add(line);
                         }
-                    	// ignore empty lines
-                    } while (!(line.equals("OK") || line.equals("ERROR") || line.startsWith("+CME ERROR")));
+                        // ignore empty lines
+                    }
+                    while (!(line.equals("OK") || line.equals("ERROR") || line.startsWith("+CME ERROR")));
 
                     // XXX this logging could have sensitive info
                     //log.debug("IO< " + lines);

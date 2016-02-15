@@ -7,7 +7,7 @@
     <module name="FileLength">
         <property name="max" value="2500" />
     </module>
-    <!--module name="FileTabCharacter"/-->
+    <module name="FileTabCharacter" />
 
     <!-- Name Checks -->
     <module name="TreeWalker">
