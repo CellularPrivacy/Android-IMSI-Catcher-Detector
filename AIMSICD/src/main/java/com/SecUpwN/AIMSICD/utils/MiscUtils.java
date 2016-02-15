@@ -18,48 +18,17 @@ import android.support.v4.app.NotificationManagerCompat;
 import com.SecUpwN.AIMSICD.AIMSICD;
 import com.SecUpwN.AIMSICD.R;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.io.IOException;
+
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
 public class MiscUtils {
 
     private static final Logger log = AndroidLogger.forClass(MiscUtils.class);
-
-    public static String setAssetsString(Context context){
-        BufferedReader reader = null;
-        StringBuilder buildassets = new StringBuilder();
-        try{
-            reader = new BufferedReader(new InputStreamReader(context.getAssets().open("CREDITS")));
-
-            String rline;
-            while ((rline = reader.readLine()) != null ) {
-                buildassets.append(rline.replace("'","\\'").replace("\\n","") + "\n");
-            }
-
-        } catch (IOException ee) {
-            log.error(ee.getMessage());
-        } finally {
-            if(reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException ee) {
-                    log.error(ee.getMessage());
-                }
-            }
-        }
-        return (buildassets.toString().isEmpty())
-                ? "Error Loading Credits"
-                : buildassets.toString();
-
-    }
-
 
     public static String getCurrentTimeStamp(){
         //yyyyMMddHHmmss <-- this format is needed for OCID upload
