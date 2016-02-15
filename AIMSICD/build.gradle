@@ -23,15 +23,6 @@ android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
 
-    signingConfigs {
-        releaseSigningConfig {
-            keyAlias project.hasProperty("aimsicd_key_alias") ? aimsicd_key_alias : "dummy"
-            keyPassword project.hasProperty("aimsicd_key_password") ? aimsicd_key_password : "dummy"
-            storeFile file('../keystore.jks')
-            storePassword project.hasProperty("aimsicd_keystore_password") ? aimsicd_keystore_password : "dummy"
-        }
-    }
-
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
@@ -54,7 +45,6 @@ android {
             buildConfigField 'String', 'OPEN_CELLID_API_KEY', '"NA"'
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            signingConfig ( file('../keystore.jks').exists() && project.hasProperty("aimsicd_keystore_password") ) ? signingConfigs.releaseSigningConfig : null
         }
     }
     compileOptions {
@@ -113,5 +103,5 @@ dependencies {
     //compile 'com.github.amlcurran.showcaseview:library:5.3.0'
 }
 
-
+apply from: "signing.gradle"
 apply plugin: "io.freefair.android-checkstyle"
