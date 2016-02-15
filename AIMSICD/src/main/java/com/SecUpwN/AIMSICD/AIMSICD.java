@@ -103,7 +103,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
         mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
         mActionBar = getSupportActionBar();
-        mTitle = mDrawerTitle = getTitle();
+        mTitle =  getTitle();
+        mDrawerTitle = getTitle();
 
         mDrawerList.setAdapter(mNavConf.getBaseAdapter());
 

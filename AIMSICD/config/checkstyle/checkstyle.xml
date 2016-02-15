@@ -43,8 +43,8 @@
 
         <module name="CovariantEquals" />
         <module name="EmptyStatement" />
-
-
+        <module name="OneStatementPerLine" />
+        <module name="InnerAssignment" />
         <module name="IllegalInstantiation">
             <property name="classes" value="java.util.Vector" />
             <property name="classes" value="java.util.Hashtable" />
@@ -56,7 +56,6 @@
             <property name="illegalClassNames" value="java.util.LinkedList" />
             <property name="illegalClassNames" value="android.util.Log" />
         </module>
-
         <module name="MissingSwitchDefault">
             <property name="severity" value="warning" />
         </module>
