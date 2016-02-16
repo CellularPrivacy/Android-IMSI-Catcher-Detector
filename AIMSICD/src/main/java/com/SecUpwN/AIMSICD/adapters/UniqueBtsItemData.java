@@ -23,19 +23,19 @@ package com.SecUpwN.AIMSICD.adapters;
  *
  * NOTE:
  *                  CREATE TABLE "DBi_bts"  (
- *                   "_id"        	INTEGER PRIMARY KEY AUTOINCREMENT,
- *                   "MCC"       	INTEGER NOT NULL,	--
- *                   "MNC"       	INTEGER NOT NULL,	--
- *                   "LAC"       	INTEGER NOT NULL,	--
- *                   "CID"       	INTEGER NOT NULL,	--
- *                   "PSC"       	INTEGER,		--
- *                   "T3212"     	INTEGER DEFAULT 0,	-- Fix java to allow null here
- *                   "A5x"       	INTEGER DEFAULT 0,	-- Fix java to allow null here
- *                   "ST_id"     	INTEGER DEFAULT 0,	-- Fix java to allow null here
- *                   "time_first"	INTEGER,		--
- *                   "time_last" 	INTEGER,		--
- *                   "gps_lat"       REAL NOT NULL,		--
- *                   "gps_lon"       REAL NOT NULL		--
+ *                   "_id"          INTEGER PRIMARY KEY AUTOINCREMENT,
+ *                   "MCC"          INTEGER NOT NULL,   --
+ *                   "MNC"          INTEGER NOT NULL,   --
+ *                   "LAC"          INTEGER NOT NULL,   --
+ *                   "CID"          INTEGER NOT NULL,   --
+ *                   "PSC"          INTEGER,            --
+ *                   "T3212"        INTEGER DEFAULT 0,  -- Fix java to allow null here
+ *                   "A5x"          INTEGER DEFAULT 0,  -- Fix java to allow null here
+ *                   "ST_id"        INTEGER DEFAULT 0,  -- Fix java to allow null here
+ *                   "time_first"   INTEGER,            --
+ *                   "time_last"    INTEGER,            --
+ *                   "gps_lat"       REAL NOT NULL,     --
+ *                   "gps_lon"       REAL NOT NULL      --
  *                   );
  *
  *
@@ -145,8 +145,9 @@ public class UniqueBtsItemData {
         this.lon = lon;
     }
 
-
-    public String getRecordId() { return mRecordId; }
+    public String getRecordId() {
+        return mRecordId;
+    }
 
     String mcc;
     String mnc;

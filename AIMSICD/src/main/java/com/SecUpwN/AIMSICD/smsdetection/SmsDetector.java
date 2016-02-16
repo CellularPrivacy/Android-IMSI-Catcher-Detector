@@ -199,7 +199,8 @@ public final class SmsDetector extends Thread {
                                     String[] wapPostLines = new String[Math.abs(remainingLinesInBuffer)];
                                     String extraLine;
                                     for (int x = 0; x < Math.abs(remainingLinesInBuffer); x++) {
-                                        if ((extraLine = mLogcatReader.readLine()) != null) {
+                                        extraLine = mLogcatReader.readLine();
+                                        if (extraLine != null) {
                                             wapPostLines[x] = extraLine;
                                         }
                                     }

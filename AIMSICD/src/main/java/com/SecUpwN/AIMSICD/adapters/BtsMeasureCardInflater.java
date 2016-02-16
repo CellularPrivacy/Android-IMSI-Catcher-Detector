@@ -28,31 +28,31 @@ import com.SecUpwN.AIMSICD.R;
  *
  *
  *      CREATE TABLE "DBi_measure"  (
- *        "_id"           INTEGER PRIMARY KEY AUTOINCREMENT,
- *        "bts_id"       	INTEGER NOT NULL,	-- DBi_bts:_id
- *        "nc_list"      	TEXT,			    -- Neighboring Cells List (TODO: specify content)
- *        "time"         	INTEGER NOT NULL,	-- [s]
- *        "gpsd_lat"     	REAL,			    -- Device GPS (allow NULL)
- *        "gpsd_lon"     	REAL,			    -- Device GPS (allow NULL)
- *        "gpsd_accu"	INTEGER,		        -- Device GPS position accuracy [m]
- *        "gpse_lat"     	REAL,			    -- Exact GPS		(from where? DBi_import?)
- *        "gpse_lon"     	REAL,			    -- Exact GPS		(from where? DBi_import?)
- *        "bb_power"     	TEXT,			    -- [mW] or [mA]		(from BP power rail usage)
- *        "bb_rf_temp"   	TEXT,			    -- [C]			(from BP internal thermistor)
- *        "tx_power"     	TEXT,			    -- [dBm]		(from BP )
- *        "rx_signal"    	TEXT,			    -- [dBm] or ASU		(from AP/BP)
- *        "rx_stype"     	TEXT,			    -- Reveived Signal power Type [RSSI, ...] etc.
- *        "RAT"		TEXT NOT NULL,		        -- Radio Access Technology
- *        "BCCH"         	TEXT,			    -- Broadcast Channel		-- consider INTEGER
- *        "TMSI"         	TEXT,			    -- Temporary IMSI (hex)
- *        "TA"           	INTEGER DEFAULT 0,	-- Timing Advance (GSM, LTE)	-- allow NULL
- *        "PD"           	INTEGER DEFAULT 0,	-- Propagation Delay (LTE)	-- allow NULL
- *        "BER"          	INTEGER DEFAULT 0,	-- Bit Error Rate		-- allow NULL
- *        "AvgEcNo"      	TEXT,			    -- Average Ec/No		-- consider REAL
- *        "isSubmitted"  	INTEGER DEFAULT 0,	-- * Has been submitted to OCID/MLS etc?
- *        "isNeighbour"  	INTEGER DEFAULT 0,	-- * Is a neighboring BTS? [Is this what we want?]
- *        FOREIGN KEY("bts_id")			        --
- *        REFERENCES "DBi_bts"("_id")		    --
+ *        "_id"             INTEGER PRIMARY KEY AUTOINCREMENT,
+ *        "bts_id"          INTEGER NOT NULL,   -- DBi_bts:_id
+ *        "nc_list"         TEXT,               -- Neighboring Cells List (TODO: specify content)
+ *        "time"            INTEGER NOT NULL,   -- [s]
+ *        "gpsd_lat"        REAL,               -- Device GPS (allow NULL)
+ *        "gpsd_lon"        REAL,               -- Device GPS (allow NULL)
+ *        "gpsd_accu"       INTEGER,            -- Device GPS position accuracy [m]
+ *        "gpse_lat"        REAL,               -- Exact GPS        (from where? DBi_import?)
+ *        "gpse_lon"        REAL,               -- Exact GPS        (from where? DBi_import?)
+ *        "bb_power"        TEXT,               -- [mW] or [mA]     (from BP power rail usage)
+ *        "bb_rf_temp"      TEXT,               -- [C]              (from BP internal thermistor)
+ *        "tx_power"        TEXT,               -- [dBm]            (from BP )
+ *        "rx_signal"       TEXT,               -- [dBm] or ASU     (from AP/BP)
+ *        "rx_stype"        TEXT,               -- Reveived Signal power Type [RSSI, ...] etc.
+ *        "RAT"             TEXT NOT NULL,      -- Radio Access Technology
+ *        "BCCH"            TEXT,               -- Broadcast Channel            -- consider INTEGER
+ *        "TMSI"            TEXT,               -- Temporary IMSI (hex)
+ *        "TA"              INTEGER DEFAULT 0,  -- Timing Advance (GSM, LTE)    -- allow NULL
+ *        "PD"              INTEGER DEFAULT 0,  -- Propagation Delay (LTE)      -- allow NULL
+ *        "BER"             INTEGER DEFAULT 0,  -- Bit Error Rate               -- allow NULL
+ *        "AvgEcNo"         TEXT,               -- Average Ec/No                -- consider REAL
+ *        "isSubmitted"     INTEGER DEFAULT 0,  -- * Has been submitted to OCID/MLS etc?
+ *        "isNeighbour"     INTEGER DEFAULT 0,  -- * Is a neighboring BTS? [Is this what we want?]
+ *        FOREIGN KEY("bts_id")
+ *        REFERENCES "DBi_bts"("_id")
  *      );
  */
 public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureItemData> {

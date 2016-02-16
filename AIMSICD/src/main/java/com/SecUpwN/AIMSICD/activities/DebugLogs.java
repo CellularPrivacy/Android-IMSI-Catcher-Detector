@@ -250,7 +250,7 @@ public class DebugLogs extends BaseActivity {
      * Run a shell command and return the results
      */
     private String runProcess(String command) throws IOException {
-        return runProcess(new String[]{ command });
+        return runProcess(new String[]{command});
     }
 
     /**
@@ -262,10 +262,11 @@ public class DebugLogs extends BaseActivity {
      */
     private String runProcess(String[] command) throws IOException {
         Process process = null;
-        if (command.length == 1)
+        if (command.length == 1) {
             process = Runtime.getRuntime().exec(command[0]);
-        else
+        } else {
             Runtime.getRuntime().exec(command);
+        }
 
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));

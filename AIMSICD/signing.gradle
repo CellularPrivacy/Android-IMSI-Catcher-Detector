@@ -1,0 +1,20 @@
+if (project.hasProperty("aimsicd_key_alias")
+        && project.hasProperty("aimsicd_key_password")
+        && project.hasProperty("aimsicd_keystore_password")
+        && file('../keystore.jks').exists()) {
+    android {
+        signingConfigs {
+            releaseSigningConfig {
+                keyAlias project.hasProperty("aimsicd_key_alias") ? aimsicd_key_alias : "dummy"
+                keyPassword ? aimsicd_key_password : "dummy"
+                storeFile file('../keystore.jks')
+                storePassword project.hasProperty("aimsicd_keystore_password") ? aimsicd_keystore_password : "dummy"
+            }
+        }
+        buildTypes {
+            release {
+                signingConfig signingConfigs.releaseSigningConfig
+            }
+        }
+    }
+}

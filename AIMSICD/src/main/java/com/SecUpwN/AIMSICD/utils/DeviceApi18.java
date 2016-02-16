@@ -23,10 +23,10 @@ import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
+import java.util.List;
+
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
-
-import java.util.List;
 
 /**
  * This class is taking in consideration newly available network info items
@@ -104,8 +104,9 @@ public class DeviceApi18 {
                                 + "\n ClassName: " + info.getClass().getSimpleName()
                                 + "\n ToString: " + info.toString());
                     }
-                    if (pDevice.mCell.isValid())
+                    if (pDevice.mCell.isValid()) {
                         break;
+                    }
                 }
             }
         } catch (NullPointerException npe) {

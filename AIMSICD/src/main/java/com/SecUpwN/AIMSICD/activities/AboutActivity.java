@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.utils.MiscUtils;
 
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
@@ -136,10 +135,9 @@ public class AboutActivity extends InjectionAppCompatActivity {
 
                 new AlertDialog.Builder(AboutActivity.this)
                         .setTitle(R.string.about_credits)
-                        .setMessage(MiscUtils.setAssetsString(getApplicationContext()))
+                        .setMessage(R.string.about_credits_content)
                         .setPositiveButton(android.R.string.ok, null)
                         .show();
-
             }
         });
     }

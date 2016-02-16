@@ -46,19 +46,23 @@ public class MarkerData {
     }
 
     public String getMCC() {
-        if (mcc == null)
+        if (mcc == null) {
             return "000";
-        if (mcc.length() >= 3)
+        }
+        if (mcc.length() >= 3) {
             return mcc;
+        }
 
         return ("000" + mcc).substring(mcc.length());
     }
 
     public String getMNC() {
-        if (mnc == null)
+        if (mnc == null) {
             return "00";
-        if (mnc.length() >= 2)
+        }
+        if (mnc.length() >= 2) {
             return mnc;
+        }
         return ("00" + mnc).substring(mnc.length());
     }
 
@@ -68,8 +72,9 @@ public class MarkerData {
     }
 
     public String getSamples() {
-        if (samples == null || (!openCellID && samples.isEmpty()))
+        if (samples == null || (!openCellID && samples.isEmpty())) {
             return "0";
+        }
         return samples;
     }
 }

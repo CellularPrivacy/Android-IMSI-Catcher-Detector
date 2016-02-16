@@ -1,6 +1,18 @@
 # CHANGELOG of 'AIMSICD'
 ------------------------
 
+#### [16.02.2016 - WIP-Release v0.1.39.1-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.39.1-alpha)
+
+* Removed: Purged more unused imports from `MiscUtils.java`
+* Removed: Purged tabs for cleaning our source code a bit
+* Changed: Now storing our `CREDITS` as a string resource
+* Changed: Made sure to not use inner assignments
+* Added: `checkstyle` checks for blocks and whitespace
+* Fixed: Modified `build.gradle` to fix broken pull requests
+* Fixed: Auto-releases are now working again, added SHA1-Hash
+
+---
+
 #### [14.02.2016 - WIP-Release v0.1.39-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.39-alpha)
 
 * Removed: 2 redundant proguard rules and modifiers, unused imports and dependencies

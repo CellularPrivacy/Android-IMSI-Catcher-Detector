@@ -395,8 +395,9 @@ public class Cell implements Parcelable {
         result = prime * result + lac;
         result = prime * result + mcc;
         result = prime * result + mnc;
-        if (psc != -1)
+        if (psc != -1) {
             result = prime * result + psc;
+        }
         return result;
     }
 

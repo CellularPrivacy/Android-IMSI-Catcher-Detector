@@ -131,7 +131,8 @@ public class DbeImportItemData {
         return REJ_CAUSE;
     }
 
-
-    public String getRecordId() { return mRecordId; }
+    public String getRecordId() {
+        return mRecordId;
+    }
 
 }

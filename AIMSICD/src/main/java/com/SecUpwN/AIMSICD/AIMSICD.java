@@ -103,7 +103,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
         mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
         mActionBar = getSupportActionBar();
-        mTitle = mDrawerTitle = getTitle();
+        mTitle =  getTitle();
+        mDrawerTitle = getTitle();
 
         mDrawerList.setAdapter(mNavConf.getBaseAdapter());
 
@@ -171,7 +172,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                                     new Intent(Intent.ACTION_DELETE, packageUri);
                             startActivity(uninstallIntent);
                             finish();
-                            if (mAimsicdService != null) mAimsicdService.onDestroy();
+                            if (mAimsicdService != null) {
+                                mAimsicdService.onDestroy();
+                            }
                         }
                     });
 
@@ -401,7 +404,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 log.warn("Exception in smstracking module: " + ee.getMessage());
             }
 
-            if (mAimsicdService != null) mAimsicdService.onDestroy();
+            if (mAimsicdService != null) {
+                mAimsicdService.onDestroy();
+            }
             //Close database on Exit
             log.info("Closing db from DrawerMenu.ID.APPLICATION.QUIT");
             new AIMSICDDbAdapter(getApplicationContext()).close();
@@ -491,7 +496,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     private void startService() {
         // don't start service if disclaimer is not accepted
-        if (!prefs.getBoolean(mDisclaimerAccepted, false)) return;
+        if (!prefs.getBoolean(mDisclaimerAccepted, false)) {
+            return;
+        }
 
         if (!mBound) {
             // Bind to LocalService

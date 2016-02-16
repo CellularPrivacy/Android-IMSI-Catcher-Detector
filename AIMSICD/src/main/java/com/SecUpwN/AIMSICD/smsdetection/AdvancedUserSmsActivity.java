@@ -83,8 +83,10 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
                 CapturedSmsData obj_itemDetails = (CapturedSmsData) o;
 
                 if(dbaccess.deleteDetectedSms(obj_itemDetails.getId())){
-                    Toast.makeText(getApplicationContext(),"Deleted Sms Id = \n"+obj_itemDetails.getId(),Toast.LENGTH_SHORT).show();
-                }else {Toast.makeText(getApplicationContext(),"Failed to Delete",Toast.LENGTH_SHORT).show();}
+                    Toast.makeText(getApplicationContext(), "Deleted Sms Id = \n" + obj_itemDetails.getId(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
+                }
 
                 try {
                     loadDbString();

@@ -99,7 +99,9 @@ class TtyStream extends AtCommandTerminal {
                     do {
                         try {
                             line = in.readLine();
-                            if (line == null) throw new IOException("reader closed");
+                            if (line == null) {
+                                throw new IOException("reader closed");
+                            }
                         } catch (IOException e) {
                             log.error("Input IOException", e);
                             if (resultMessage != null) {
@@ -109,9 +111,12 @@ class TtyStream extends AtCommandTerminal {
                             return; // kill thread
                         }
 
-                        if (line.length() != 0) lines.add(line);
-                    	// ignore empty lines
-                    } while (!(line.equals("OK") || line.equals("ERROR") || line.startsWith("+CME ERROR")));
+                        if (line.length() != 0) {
+                            lines.add(line);
+                        }
+                        // ignore empty lines
+                    }
+                    while (!(line.equals("OK") || line.equals("ERROR") || line.startsWith("+CME ERROR")));
 
                     // XXX this logging could have sensitive info
                     //log.debug("IO< " + lines);

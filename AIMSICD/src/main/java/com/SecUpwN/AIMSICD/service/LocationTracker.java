@@ -94,8 +94,9 @@ public final class LocationTracker {
      */
     public boolean notMovedInAWhile() {
         // first-lock, assume no movement
-        if (lastLocationTime <= 0)
+        if (lastLocationTime <= 0) {
             return true;
+        }
 
         // haven't received a GPS update in a while, assume no movement
         return System.currentTimeMillis() - lastLocationTime > MOVEMENT_THRESHOLD_MS;
@@ -141,8 +142,9 @@ public final class LocationTracker {
             }
         }
 
-        if (loc != null)
+        if (loc != null) {
             log.info("Last known location " + loc.toString());
+        }
 
         return loc;
     }

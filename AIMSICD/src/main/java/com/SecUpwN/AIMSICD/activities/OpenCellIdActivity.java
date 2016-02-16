@@ -93,8 +93,9 @@ public class OpenCellIdActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            if (s == null || s.isEmpty())
+            if (s == null || s.isEmpty()) {
                 return;
+            }
 
             // Check key validity (is done on foreign server)
             if (isKeyValid(s)) {
@@ -131,13 +132,13 @@ public class OpenCellIdActivity extends BaseActivity {
          *
          * OCID status codes http://wiki.opencellid.org/wiki/API#Error_codes
          *
-         * 1 	200 	Cell not found
-         * 2 	401 	Invalid API key
-         * 3 	400 	Invalid input data
-         * 4 	403     Your API key must be white listed in order to run this operation
-         * 5 	500 	Internal server error
-         * 6 	503 	Too many requests. Try later again
-         * 7 	429     Daily limit 1000 requests exceeded for your API key.
+         * 1    200 Cell not found
+         * 2    401 Invalid API key
+         * 3    400 Invalid input data
+         * 4    403 Your API key must be white listed in order to run this operation
+         * 5    500 Internal server error
+         * 6    503 Too many requests. Try later again
+         * 7    429 Daily limit 1000 requests exceeded for your API key.
          *
          * @return null or newly generated key
          */

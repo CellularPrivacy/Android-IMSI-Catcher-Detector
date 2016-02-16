@@ -43,8 +43,9 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
             @Override
             public void onClick(View pView) {
                 pView.startAnimation(mBounceHelpButtonAnimation);
-                if (pView.getTag() != null && pView.getTag() instanceof Integer)
+                if (pView.getTag() != null && pView.getTag() instanceof Integer) {
                     showHelpToast((Integer) pView.getTag());
+                }
             }
         };
         mBounceHelpButtonAnimation = AnimationUtils.loadAnimation(appContext, R.anim.action_button_help);
@@ -58,13 +59,12 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
         NavDrawerItem menuItem = this.getItem(position);
-        if ( menuItem.getType() == DrawerMenuItem.ITEM_TYPE ) {
-            view = getItemView(convertView, parent, menuItem );
-        }
-        else {
+        if (menuItem.getType() == DrawerMenuItem.ITEM_TYPE) {
+            view = getItemView(convertView, parent, menuItem);
+        } else {
             view = getSectionView(convertView, parent, menuItem);
         }
-        return view ;
+        return view;
     }
 
     View getItemView(View convertView, ViewGroup parentView, NavDrawerItem navDrawerItem) {

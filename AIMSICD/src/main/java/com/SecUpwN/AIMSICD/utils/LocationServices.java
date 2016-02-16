@@ -14,8 +14,7 @@ import java.io.OutputStream;
 public class LocationServices {
 
     private static void writeData(OutputStream out, int cid, int lac, int mnc, int mcc)
-            throws IOException
-    {
+            throws IOException {
         DataOutputStream dataOutputStream = new DataOutputStream(out);
         dataOutputStream.writeShort(0x0E); // Fct code
 
