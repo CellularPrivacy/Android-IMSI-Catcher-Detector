@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">Sporing</string>
     <string name="device_info">Telefon/SIM-detaljer</string>
     <string name="map_view">Antennekart-fremviser</string>
@@ -24,7 +24,7 @@
     <string name="no_network_connection_title">Ingen Internett-forbindelse</string>
     <string name="no_network_connection_message">Klarte ikke laste ned OpenCellID-data uten Internettilkobling, vennligst slå på datatilkobling!</string>
 
-    <string name="get_opencellid">Last med BTS-data</string>
+    <string name="get_opencellid">Last ned BTS-data</string>
 
     <string name="device_info_title">Enhetsinformasjon</string>
     <string name="sim_info_title">SIM-informasjon</string>
