@@ -21,7 +21,7 @@
     <string name="preferences">Preferencat</string>
     <string name="press_once_again_to_exit">Shtyp përsëri të dalësh.</string>
     <string name="cell_lookup">Të gjitha detajet e deritanishme të kullës</string>
-    <string name="send_logs">Zbulim gabimesh</string>
+    <string name="debugging">Zbulim gabimesh</string>
     <string name="no_network_connection_title">S\'ka lidhje me internetin</string>
     <string name="no_network_connection_message">Nuk është e mundur të tërhiqen të dhënat e OpenCellID pa lidhje interneti, ju lutem aktivizojeni atë!</string>
 

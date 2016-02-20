@@ -16,7 +16,7 @@ import android.util.Log;
 
 import com.SecUpwN.AIMSICD.R;
 
-public class PrefFragment extends PreferenceFragment {
+public class SettingsFragment extends PreferenceFragment {
 
 
     CheckBoxPreference gpsPref;

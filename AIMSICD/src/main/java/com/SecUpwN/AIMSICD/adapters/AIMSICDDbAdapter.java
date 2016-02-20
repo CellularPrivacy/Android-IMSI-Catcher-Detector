@@ -249,7 +249,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      *              whereas in the getOpenCellIDData() cursor, they are arranged as:
      *                 CellID,Lac,Mcc,Mnc,Lat,Lng,AvgSigStr,Samples
      *
-     *              Thus when used in MapViewerOsmDroid.java at loadEntries() and
+     *              Thus when used in MapFragment.java at loadEntries() and
      *              loadOpenCellIDMarkers(), the index used there is completely different
      *              than what could be expected.
      *
@@ -265,7 +265,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     /**
      * Returns Cell Information (DBi_bts) database contents
      * this returns BTSs that we logged and is called from
-     * MapViewerOsmDroid.java to display cells on map
+     * MapFragment.java to display cells on map
      */
     public Cursor getCellData() {
         return returnDBiBts();
@@ -1232,7 +1232,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      * <p/>
      * Used in:
      * DbViewerFragment.java
-     * MapViewerOsmDroid.java
+     * MapFragment.java
      * <p/>
      * Returned Columns:
      * "_id"        INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -19,7 +19,7 @@
     <string name="preferences">Параметри</string>
     <string name="press_once_again_to_exit">Натисніть ще раз для виходу.</string>
     <string name="cell_lookup">Всі поточні відомості про стільник</string>
-    <string name="send_logs">Зневадження</string>
+    <string name="debugging">Зневадження</string>
     <string name="no_network_connection_title">Відсутнє з\'єднання з інтернетом</string>
     <string name="get_opencellid">Завантажити дані базових станцій</string>
 

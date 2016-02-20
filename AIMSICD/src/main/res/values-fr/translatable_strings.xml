@@ -34,7 +34,7 @@
     <string name="preferences">Préférences</string>
     <string name="press_once_again_to_exit">Appuyez une seconde fois pour quitter.</string>
     <string name="cell_lookup">Détails sur la/les cellule(s) actuelles</string>
-    <string name="send_logs">Débogage</string>
+    <string name="debugging">Débogage</string>
     <string name="no_network_connection_title">Aucune Connexion Internet</string>
     <string name="no_network_connection_message">Impossible de télécharger les données OpenCellID sans connexion à Internet, veuillez activer la connexion de données !</string>
 

@@ -9,10 +9,10 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-import com.SecUpwN.AIMSICD.fragments.PrefFragment;
+import com.SecUpwN.AIMSICD.fragments.SettingsFragment;
 
 
-public class PrefActivity extends BaseActivity {
+public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class PrefActivity extends BaseActivity {
     }
 
     private void loadFragment() {
-        PrefFragment settingsFragment = new PrefFragment();
+        SettingsFragment settingsFragment = new SettingsFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(android.R.id.content, settingsFragment);
