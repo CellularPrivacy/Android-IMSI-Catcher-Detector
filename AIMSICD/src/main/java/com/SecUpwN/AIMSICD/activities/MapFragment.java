@@ -313,11 +313,6 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         this.mOptionsMenu = menu;
         inflater.inflate(R.menu.fragment_map_menu, mOptionsMenu);
