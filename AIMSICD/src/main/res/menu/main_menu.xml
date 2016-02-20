@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/toggle_attack_detection"
-        android:icon="@drawable/ic_action_computer"
+        android:checkable="true"
         android:title="@string/toggle_attack_detection"
         app:showAsAction="never" />
     <item
         android:id="@+id/toggle_cell_tracking"
-        android:icon="@drawable/ic_action_computer"
+        android:checkable="true"
         android:title="@string/toggle_cell_tracking"
         app:showAsAction="never" />
 

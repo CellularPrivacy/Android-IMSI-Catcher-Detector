@@ -522,6 +522,11 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        MenuItem toggleAttackDetectionMenuItem = menu.findItem(R.id.toggle_attack_detection);
+        toggleAttackDetectionMenuItem.setChecked(true);
+        MenuItem toggleCellTrackingMenuItem = menu.findItem(R.id.toggle_cell_tracking);
+        toggleCellTrackingMenuItem.setChecked(true);
         return true;
     }
 
@@ -529,9 +534,11 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.toggle_attack_detection:
+                item.setChecked(!item.isChecked());
                 monitorCell();
                 break;
             case R.id.toggle_cell_tracking:
+                item.setChecked(!item.isChecked());
                 trackCell();
                 break;
             case R.id.settings:
