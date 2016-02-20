@@ -1,0 +1,6 @@
+FEMTOCELL? -> can AIMSICD onPrepareOptionsMenu deleted,
+DrawerMenu / Tracking delete
+
+SettingsActivity has an unnecesary fragment
+
+MapFragment: if no Cell id info downloaded dialog/download/better button etc

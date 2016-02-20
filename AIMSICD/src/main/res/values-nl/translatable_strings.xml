@@ -19,7 +19,7 @@
     <string name="preferences">Voorkeuren</string>
     <string name="press_once_again_to_exit">Druk opnieuw om af te sluiten.</string>
     <string name="cell_lookup">Alle gegevens van huidige cel</string>
-    <string name="send_logs">Foutopsporing</string>
+    <string name="debugging">Foutopsporing</string>
     <string name="no_network_connection_title">Geen internet verbinding</string>
     <string name="no_network_connection_message">Kan geen OpenCellID data laden zonder dataverbinding, zet de dataverbinding a.u.b. aan!</string>
 

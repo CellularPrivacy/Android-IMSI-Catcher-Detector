@@ -33,7 +33,7 @@
     <string name="preferences">Параметры</string>
     <string name="press_once_again_to_exit">Нажмите еще раз для выхода.</string>
     <string name="cell_lookup">Все текущие данные соты</string>
-    <string name="send_logs">Отладка</string>
+    <string name="debugging">Отладка</string>
     <string name="no_network_connection_title">Нет интернет-соединения</string>
     <string name="no_network_connection_message">Не удается загрузить данные OpenCellID без интернета, пожалуйста включите передачу данных!</string>
 

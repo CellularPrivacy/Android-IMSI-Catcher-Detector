@@ -56,7 +56,7 @@ public abstract class BaseAsyncTask<TParams, TProgress, TResult> extends AsyncTa
         mApp.removeTask(this);
     }
 
-    protected Activity getActivity() {
+    protected InjectionAppCompatActivity getActivity() {
         return mWeakReferenceActivity.get();
     }
 

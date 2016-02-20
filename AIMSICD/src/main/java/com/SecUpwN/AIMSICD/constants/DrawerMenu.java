@@ -22,7 +22,7 @@ public class DrawerMenu {
          */
         public static final int SECTION_MAIN = 10;
         public static final int SECTION_TRACKING = 20;
-        public static final int SECTION_SETTINGS = 30;
+        public static final int SECTION_DATABASE_SETTINGS = 30;
         public static final int SECTION_APPLICATION = 40;
 
         /**
@@ -32,7 +32,7 @@ public class DrawerMenu {
 
             public static final int CURRENT_TREAT_LEVEL = 100; //Current Threat Level
             public static final int PHONE_SIM_DETAILS = 110; //Phone/SIM Details
-            public static final int ACD = 120; //All Current Cell Details (ACD)
+            public static final int ALL_CURRENT_CELL_DETAILS = 120; //All Current Cell Details
             public static final int DB_VIEWER = 130; //Database Viewer
             public static final int ANTENNA_MAP_VIEW = 140; // Antenna Map View
             public static final int AT_COMMAND_INTERFACE = 150; //AT Command Interface

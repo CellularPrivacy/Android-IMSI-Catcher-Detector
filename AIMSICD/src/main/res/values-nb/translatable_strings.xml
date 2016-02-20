@@ -20,7 +20,7 @@
     <string name="restore_database">Tilbakefør database</string>
     <string name="press_once_again_to_exit">Trykk på nytt for å gå ut.</string>
     <string name="cell_lookup">Alle Nåværende celledetaljer</string>
-    <string name="send_logs">Feilsøking</string>
+    <string name="debugging">Feilsøking</string>
     <string name="no_network_connection_title">Ingen Internett-forbindelse</string>
     <string name="no_network_connection_message">Klarte ikke laste ned OpenCellID-data uten Internettilkobling, vennligst slå på datatilkobling!</string>
 

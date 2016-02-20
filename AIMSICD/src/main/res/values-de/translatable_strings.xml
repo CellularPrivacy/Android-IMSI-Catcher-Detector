@@ -35,7 +35,7 @@
     <string name="preferences">Einstellungen</string>
     <string name="press_once_again_to_exit">Erneut drücken zum Verlassen.</string>
     <string name="cell_lookup">Derzeitige Funkzellen</string>
-    <string name="send_logs">Fehlerbehebung</string>
+    <string name="debugging">Fehlerbehebung</string>
     <string name="no_network_connection_title">Keine Internetverbindung</string>
     <string name="no_network_connection_message">Kein herunterladen der OpenCellID-Daten ohne Internet möglich, bitte Datenverbindung einschalten!</string>
     

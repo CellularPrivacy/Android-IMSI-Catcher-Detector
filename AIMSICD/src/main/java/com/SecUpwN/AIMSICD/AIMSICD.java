@@ -17,11 +17,14 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,14 +34,16 @@ import android.widget.Toast;
 import com.SecUpwN.AIMSICD.activities.AboutActivity;
 import com.SecUpwN.AIMSICD.activities.BaseActivity;
 import com.SecUpwN.AIMSICD.activities.DebugLogs;
-import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
-import com.SecUpwN.AIMSICD.activities.PrefActivity;
+import com.SecUpwN.AIMSICD.activities.MapFragment;
+import com.SecUpwN.AIMSICD.activities.SettingsActivity;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
 import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
-import com.SecUpwN.AIMSICD.activities.AtCommandActivity;
-import com.SecUpwN.AIMSICD.fragments.DetailsContainerFragment;
+import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
+import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
+import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
+import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.SecUpwN.AIMSICD.utils.AsyncResponse;
@@ -49,7 +54,6 @@ import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
 import com.SecUpwN.AIMSICD.utils.StackOverflowXmlParser;
-
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -61,12 +65,8 @@ import java.io.IOException;
 import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
-import io.freefair.android.util.logging.Logger;
 
 public class AIMSICD extends BaseActivity implements AsyncResponse {
-
-    @Inject
-    private Logger log;
 
     private boolean mBound;
     private SharedPreferences prefs;
@@ -82,6 +82,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 
+    private DeviceFragment deviceFragment;
+    private CellInfoFragment cellInfoFragment;
+    private AtCommandFragment atCommandFragment;
+    private DbViewerFragment dbViewerFragment;
+    private MapFragment mapFragment;
+
     private long mLastPress = 0;    // Back press to exit timer
 
     private DrawerMenuActivityConfiguration mNavConf;
@@ -89,16 +95,18 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     @Inject
     OkHttpClient okHttpClient;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        deviceFragment = new DeviceFragment();
+        cellInfoFragment = new CellInfoFragment();
+        atCommandFragment = new AtCommandFragment();
+        dbViewerFragment = new DbViewerFragment();
+        mapFragment = new MapFragment();
 
         mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
-
-        setContentView(mNavConf.getMainLayout());
 
         mDrawerLayout = (DrawerLayout) findViewById(mNavConf.getDrawerLayoutId());
         mDrawerList = (ListView) findViewById(mNavConf.getLeftDrawerId());
@@ -113,14 +121,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */
         ) {
-            /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 mActionBar.setTitle(mTitle);
                 invalidateOptionsMenu();
             }
 
-            /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 mActionBar.setTitle(mDrawerTitle);
@@ -188,7 +194,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         final String iconType = prefs.getString(getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD)getApplication()).getStatus()));
+        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD) getApplication()).getStatus()));
         mDrawerToggle.syncState();
     }
 
@@ -219,75 +225,49 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             mDrawerLayout.closeDrawer(mDrawerList);
-            selectItem(position);
+            selectDrawerItem(position);
         }
     }
 
-    /**
-     * Swaps fragments in the main content view
-     */
-    void selectItem(int position) {
+
+
+
+    void selectDrawerItem(int position) {
         NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
         String title = selectedItem.getLabel();
 
-        /**
-         * This is a work-around for Android Issue 42601
-         * https://code.google.com/p/android/issues/detail?id=42601
-         *
-         * The method getChildFragmentManager() does not clear up
-         * when the Fragment is detached.
-         */
-        DetailsContainerFragment mDetailsFrag = new DetailsContainerFragment();
-
-        // Create a new fragment
         switch (selectedItem.getId()) {
             case DrawerMenu.ID.MAIN.PHONE_SIM_DETAILS:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, mDetailsFrag).commit();
-                mDetailsFrag.setCurrentPage(0);
+                openFragment(deviceFragment);
                 title = getString(R.string.app_name_short);
                 break;
             case DrawerMenu.ID.MAIN.CURRENT_TREAT_LEVEL:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, mDetailsFrag).commit();
-                mDetailsFrag.setCurrentPage(1);
+                openFragment(cellInfoFragment);
                 title = getString(R.string.app_name_short);
                 break;
             case DrawerMenu.ID.MAIN.AT_COMMAND_INTERFACE:
-                Intent atCommandIntent = new Intent(this, AtCommandActivity.class);
-                startActivity(atCommandIntent);
-                break;
-            case DrawerMenu.ID.MAIN.DB_VIEWER:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, mDetailsFrag).commit();
-                mDetailsFrag.setCurrentPage(2);
+                openFragment(atCommandFragment);
                 title = getString(R.string.app_name_short);
                 break;
-            case DrawerMenu.ID.APPLICATION.ABOUT:
-                Intent aboutIntent = new Intent(this, AboutActivity.class);
-                startActivity(aboutIntent);
+            case DrawerMenu.ID.MAIN.DB_VIEWER:
+                openFragment(dbViewerFragment);
+                title = getString(R.string.app_name_short);
                 break;
             case DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA:
                 // Request uploading here?
                 new RequestTask(this, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute("");
                 // no string needed for csv based upload
                 break;
+            case DrawerMenu.ID.MAIN.ANTENNA_MAP_VIEW:
+                openFragment(mapFragment);
+                title = getString(R.string.app_name_short);
+                break;
+            case DrawerMenu.ID.SETTINGS.BACKUP_DB:
+                new RequestTask(this, RequestTask.BACKUP_DATABASE).execute();
+                break;
         }
 
-        if (selectedItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_ATTACK_DETECTION) {
-            monitorCell();
-        } else if (selectedItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_CELL_TRACKING) {
-            trackCell();
-        } else if (selectedItem.getId() == DrawerMenu.ID.TRACKING.TRACK_FEMTOCELL) {
-            trackFemtocell();
-        } else if (selectedItem.getId() == DrawerMenu.ID.MAIN.ANTENNA_MAP_VIEW) {
-            showMap();
-        } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.PREFERENCES) {
-            Intent intent = new Intent(this, PrefActivity.class);
-            startActivity(intent);
-        } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.BACKUP_DB) {
-            new RequestTask(this, RequestTask.BACKUP_DATABASE).execute();
-        } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESTORE_DB) {
+        if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESTORE_DB) {
             if (CellTracker.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
                 Helpers.msgLong(this, getString(R.string.unable_to_restore_backup_from_previous_database_version));
             } else {
@@ -301,47 +281,8 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
 
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA) {
-            if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
-
-                Cell cell = new Cell();
-                TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                String networkOperator = tm.getNetworkOperator();
-
-                if (networkOperator != null) {
-                    int mcc = Integer.parseInt(networkOperator.substring(0, 3));
-                    cell.setMCC(Integer.parseInt(networkOperator.substring(0, 3)));
-                    int mnc = Integer.parseInt(networkOperator.substring(3));
-                    cell.setMNC(Integer.parseInt(networkOperator.substring(3, 5)));
-                    log.debug("CELL:: mcc=" + mcc + " mnc=" + mnc);
-                }
-
-
-                GeoLocation loc = mAimsicdService.lastKnownLocation();
-                if (loc != null) {
-                    Helpers.msgLong(this, getString(R.string.contacting_opencellid_for_data));
-
-                    cell.setLon(loc.getLongitudeInDegrees());
-                    cell.setLat(loc.getLatitudeInDegrees());
-                    Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
-                } else {
-                    Helpers.msgShort(this, getString(R.string.waiting_for_location));
-
-                    // This uses the LocationServices to get CID/LAC/MNC/MCC to be used
-                    // for grabbing the BTS data from OCID, via their API.
-                    // CID Location Async Output Delegate Interface Implementation
-                    LocationServices.LocationAsync locationAsync
-                            = new LocationServices.LocationAsync();
-                    locationAsync.delegate = this;
-                    locationAsync.execute(
-                            mAimsicdService.getCell().getCID(),
-                            mAimsicdService.getCell().getLAC(),
-                            mAimsicdService.getCell().getMNC(),
-                            mAimsicdService.getCell().getMCC());
-                }
-            } else {
-                Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
-            }
-        } else if (selectedItem.getId() == DrawerMenu.ID.MAIN.ACD) {
+            downloadBtsDataIfApiKeyAvailable();
+        } else if (selectedItem.getId() == DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS) {
             if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
 
                 //TODO: Use Retrofit for that
@@ -391,9 +332,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             } else {
                 Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
             }
-        } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.SEND_DEBUGGING_LOG) {
-            Intent i = new Intent(this, DebugLogs.class);
-            startActivity(i);
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.QUIT) {
             try {
                 if (mAimsicdService.isSmsTracking()) {
@@ -420,6 +358,57 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         if (this.mDrawerLayout.isDrawerOpen(this.mDrawerList)) {
             mDrawerLayout.closeDrawer(mDrawerList);
+        }
+    }
+
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.replace(R.id.content_frame, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void downloadBtsDataIfApiKeyAvailable() {
+        if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
+
+            Cell cell = new Cell();
+            TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            String networkOperator = tm.getNetworkOperator();
+
+            if (networkOperator != null) {
+                int mcc = Integer.parseInt(networkOperator.substring(0, 3));
+                cell.setMCC(Integer.parseInt(networkOperator.substring(0, 3)));
+                int mnc = Integer.parseInt(networkOperator.substring(3));
+                cell.setMNC(Integer.parseInt(networkOperator.substring(3, 5)));
+                log.debug("CELL:: mcc=" + mcc + " mnc=" + mnc);
+            }
+
+
+            GeoLocation loc = mAimsicdService.lastKnownLocation();
+            if (loc != null) {
+                Helpers.msgLong(this, getString(R.string.contacting_opencellid_for_data));
+
+                cell.setLon(loc.getLongitudeInDegrees());
+                cell.setLat(loc.getLatitudeInDegrees());
+                Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
+            } else {
+                Helpers.msgShort(this, getString(R.string.waiting_for_location));
+
+                // This uses the LocationServices to get CID/LAC/MNC/MCC to be used
+                // for grabbing the BTS data from OCID, via their API.
+                // CID Location Async Output Delegate Interface Implementation
+                LocationServices.LocationAsync locationAsync
+                        = new LocationServices.LocationAsync();
+                locationAsync.delegate = this;
+                locationAsync.execute(
+                        mAimsicdService.getCell().getCID(),
+                        mAimsicdService.getCell().getLAC(),
+                        mAimsicdService.getCell().getMNC(),
+                        mAimsicdService.getCell().getMCC());
+            }
+        } else {
+            Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
         }
     }
 
@@ -506,10 +495,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             startService(intent);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
-            // Display the Device Fragment as the Default View
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, new DetailsContainerFragment())
-                    .commit();
+            openFragment(deviceFragment);
         }
     }
 
@@ -533,61 +519,35 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mNavConf.getActionMenuItemsToHideWhenDrawerOpen() != null) {
-            boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-            for (int iItem : mNavConf.getActionMenuItemsToHideWhenDrawerOpen()) {
-                menu.findItem(iItem).setVisible(!drawerOpen);
-            }
-        }
-
-        NavDrawerItem femtoTrackingItem = null;
-        NavDrawerItem cellMonitoringItem = null;
-        NavDrawerItem cellTrackingItem = null;
-
-        List<NavDrawerItem> menuItems = mNavConf.getNavItems();
-        for (NavDrawerItem lItem : menuItems) {
-            if (lItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_ATTACK_DETECTION) {
-                cellMonitoringItem = lItem;
-            } else if (lItem.getId() == DrawerMenu.ID.TRACKING.TOGGLE_CELL_TRACKING) {
-                cellTrackingItem = lItem;
-            } else if (lItem.getId() == DrawerMenu.ID.TRACKING.TRACK_FEMTOCELL) {
-                femtoTrackingItem = lItem;
-            }
-        }
-
-        if (mBound) {
-            if (cellMonitoringItem != null) {
-                if (mAimsicdService.isMonitoringCell()) {
-                    cellMonitoringItem.setmIconId(R.drawable.track_cell);
-                } else {
-                    cellMonitoringItem.setmIconId(R.drawable.untrack_cell);
-                }
-                mNavConf.getBaseAdapter().notifyDataSetChanged();
-            }
-            if (cellTrackingItem != null) {
-                if (mAimsicdService.isTrackingCell()) {
-                    cellTrackingItem.setmIconId(R.drawable.track_cell);
-                } else {
-                    cellTrackingItem.setmIconId(R.drawable.untrack_cell);
-                }
-                mNavConf.getBaseAdapter().notifyDataSetChanged();
-            }
-
-            if (femtoTrackingItem != null) {
-                if (mAimsicdService.isTrackingFemtocell()) {
-                    femtoTrackingItem.setmIconId(R.drawable.ic_action_network_cell);
-                } else {
-                    femtoTrackingItem.setmIconId(R.drawable.ic_action_network_cell_not_tracked);
-                }
-                mNavConf.getBaseAdapter().notifyDataSetChanged();
-            }
-        }
-        return super.onPrepareOptionsMenu(menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.toggle_attack_detection:
+                monitorCell();
+                break;
+            case R.id.toggle_cell_tracking:
+                trackCell();
+                break;
+            case R.id.settings:
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent );
+                break;
+            case R.id.about:
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
+                break;
+            case R.id.debugging:
+                Intent i = new Intent(this, DebugLogs.class);
+                startActivity(i);
+                break;
+        }
+
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
@@ -632,14 +592,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             Helpers.msgShort(this, "Sms Detection Stopped");
             log.info("SMS Detection Thread Stopped");
         }
-    }
-
-    /**
-     * Show the Map Viewer Activity
-     */
-    private void showMap() {
-        Intent myIntent = new Intent(this, MapViewerOsmDroid.class);
-        startActivity(myIntent);
     }
 
     /**
