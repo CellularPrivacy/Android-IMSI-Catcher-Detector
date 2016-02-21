@@ -24,11 +24,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
+import com.SecUpwN.AIMSICD.fragments.MapFragment;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 
@@ -227,15 +229,18 @@ import io.freefair.android.util.logging.Logger;
                     new RequestTask(injectionActivity, type).execute(sb.toString());
                 }
             } else {
-                if(injectionActivity instanceof MapViewerOsmDroid) {
-                    ((MapViewerOsmDroid)injectionActivity).setRefreshActionButtonState(false);
+                Fragment myFragment = injectionActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
+                if(myFragment instanceof MapFragment) {
+                    ((MapFragment) myFragment).setRefreshActionButtonState(false);
                 }
                 Helpers.sendMsg(injectionActivity, injectionActivity.getString(R.string.no_opencellid_key_detected));
             }
         } else {
-            if(injectionActivity instanceof MapViewerOsmDroid) {
-                ((MapViewerOsmDroid)injectionActivity).setRefreshActionButtonState(false);
+            Fragment myFragment = injectionActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
+            if(myFragment instanceof MapFragment) {
+                ((MapFragment) myFragment).setRefreshActionButtonState(false);
             }
+
             final AlertDialog.Builder builder = new AlertDialog.Builder(injectionActivity);
             builder.setTitle(R.string.no_network_connection_title)
                     .setMessage(R.string.no_network_connection_message);

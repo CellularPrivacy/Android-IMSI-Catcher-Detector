@@ -104,7 +104,7 @@ public class DrawerMenuItem implements NavDrawerItem {
             case MAIN.CURRENT_TREAT_LEVEL:
                 return R.string.help_main_current_threat_level;
 
-            case MAIN.ACD:
+            case MAIN.ALL_CURRENT_CELL_DETAILS:
                 return R.string.help_main_acd;
 
             case MAIN.DB_VIEWER:

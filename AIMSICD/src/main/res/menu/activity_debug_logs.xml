@@ -7,7 +7,7 @@
     <item
         android:id="@+id/action_send_logs"
         android:icon="@drawable/ic_action_send_logs"
-        android:title="@string/send_logs"
+        android:title="@string/debugging"
         app:showAsAction="always" />
 
     <!-- Attempt to add a logcat radio buffer toggle button -->

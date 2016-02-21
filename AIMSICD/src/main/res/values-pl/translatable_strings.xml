@@ -27,7 +27,7 @@
     <string name="preferences">Ustawienia</string>
     <string name="press_once_again_to_exit">Wciśnij ponownie by wyjść.</string>
     <string name="cell_lookup">Wszystkie informacje o obecnej komórce</string>
-    <string name="send_logs">Debugowanie</string>
+    <string name="debugging">Debugowanie</string>
     <string name="no_network_connection_title">Brak połączenia z Internetem</string>
     <string name="no_network_connection_message">Nie da się pobrać danych z OpenCellID bez połączenia Internetowego. Proszę włączyć połączenie danych!</string>
 

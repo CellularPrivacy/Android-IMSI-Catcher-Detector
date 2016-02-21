@@ -5,7 +5,6 @@
  */
 package com.SecUpwN.AIMSICD.fragments;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -41,9 +40,9 @@ public class DeviceFragment extends InjectionFragment {
     private Context mContext;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mContext = activity.getBaseContext();
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mContext = getActivity().getBaseContext();
         // Bind to LocalService
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);

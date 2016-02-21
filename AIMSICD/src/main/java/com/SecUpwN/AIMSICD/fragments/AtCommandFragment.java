@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.activities;
+package com.SecUpwN.AIMSICD.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,7 +35,7 @@ import java.util.List;
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import io.freefair.android.injection.app.InjectionFragment;
 import io.freefair.android.util.logging.Logger;
 
 
@@ -62,7 +62,7 @@ import io.freefair.android.util.logging.Logger;
  *                  Perhaps with a manual stop?
  */
 @XmlLayout(R.layout.activity_at_command)
-public class AtCommandActivity extends InjectionAppCompatActivity {
+public class AtCommandFragment extends InjectionFragment {
 
     @Inject
     private Logger log;
@@ -107,8 +107,8 @@ public class AtCommandActivity extends InjectionAppCompatActivity {
     private Button atCommandExecute;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         atCommandExecute.setOnClickListener(new btnClick());
         mSerialDeviceSpinner.setOnItemSelectedListener(new spinnerListener());
         timeoutSpinner.setOnItemSelectedListener(new timeoutSpinnerListener());
@@ -261,7 +261,7 @@ public class AtCommandActivity extends InjectionAppCompatActivity {
             // THIS IS A BAD IDEA       TODO: Consider removing
             // Use RIL Serial Device details from the System Property
             try {
-                String rilDevice = Helpers.getSystemProp(this, "rild.libargs", "UNKNOWN");
+                String rilDevice = Helpers.getSystemProp(getActivity(), "rild.libargs", "UNKNOWN");
                 mSerialDevice = ("UNKNOWN".equals(rilDevice) ? rilDevice : rilDevice.substring(3));
 
                 if (!"UNKNOWN".equals(mSerialDevice)) {
@@ -332,7 +332,7 @@ public class AtCommandActivity extends InjectionAppCompatActivity {
         if (!mSerialDevices.isEmpty()) {
             String[] entries = new String[mSerialDevices.size()];
             entries = mSerialDevices.toArray(entries);
-            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
+            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_item, entries);
             mSerialDeviceSpinner.setAdapter(spinnerAdapter);
             mSerialDeviceSpinner.setVisibility(View.VISIBLE);

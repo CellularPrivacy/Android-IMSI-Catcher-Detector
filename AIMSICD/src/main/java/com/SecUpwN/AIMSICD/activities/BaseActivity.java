@@ -29,7 +29,7 @@ import io.freefair.android.util.logging.Logger;
 public abstract class BaseActivity extends InjectionAppCompatActivity {
 
     @Inject
-    private Logger log;
+    protected Logger log;
 
     /**
      * Triggered when GUI is opened

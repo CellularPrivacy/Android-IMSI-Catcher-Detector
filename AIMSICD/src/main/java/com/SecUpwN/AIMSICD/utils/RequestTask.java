@@ -9,12 +9,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.MapViewerOsmDroid;
+import com.SecUpwN.AIMSICD.fragments.MapFragment;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.squareup.okhttp.MediaType;
@@ -87,7 +89,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     public static final char DBE_UPLOAD_REQUEST = 6;            // OCID upload request from "APPLICATION" drawer title
     public static final char BACKUP_DATABASE = 3;               // Backup DB to CSV and AIMSICD_dump.db
     public static final char RESTORE_DATABASE = 4;              // Restore DB from CSV files
-    public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ACD)"
+    public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ALL_CURRENT_CELL_DETAILS)"
 
     @Inject
     private Logger log;
@@ -288,7 +290,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             case DBE_DOWNLOAD_REQUEST_FROM_MAP:
                 if ("Successful".equals(result)) {
                     if (mDbAdapter.populateDBeImport()) {
-                        Intent intent = new Intent(MapViewerOsmDroid.updateOpenCellIDMarkers);
+                        Intent intent = new Intent(MapFragment.updateOpenCellIDMarkers);
                         LocalBroadcastManager.getInstance(mAppContext).sendBroadcast(intent);
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received_markers_updated));
 
@@ -371,12 +373,14 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     }
 
     private void showHideMapProgressBar(boolean pFlag) {
-        Activity lActivity = getActivity();
+        InjectionAppCompatActivity lActivity = getActivity();
         if(BuildConfig.DEBUG && lActivity == null) {
             log.verbose("BaseTask showHideMapProgressBar() activity is null");
         }
-        if (lActivity != null && lActivity instanceof MapViewerOsmDroid) {
-            ((MapViewerOsmDroid) lActivity).setRefreshActionButtonState(pFlag);
+
+        Fragment myFragment = lActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
+        if(myFragment instanceof MapFragment) {
+            ((MapFragment) myFragment).setRefreshActionButtonState(pFlag);
         }
     }
 

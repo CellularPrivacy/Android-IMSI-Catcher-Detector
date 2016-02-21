@@ -21,7 +21,7 @@
     <string name="preferences">Preferências</string>
     <string name="press_once_again_to_exit">Pressione novamente para sair.</string>
     <string name="cell_lookup">Todos os detalhes da célula atual</string>
-    <string name="send_logs">Depurar</string>
+    <string name="debugging">Depurar</string>
     <string name="no_network_connection_title">Sem conexão à internet</string>
     <string name="no_network_connection_message">Sem permissão para transferir dados do OpenCelllD sem conexão à internet, por favor habilite a conexão de dados!</string>
 
