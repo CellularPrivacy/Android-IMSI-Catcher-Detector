@@ -8,16 +8,6 @@ try {
 }
 
 def isCi = "true".equals(System.getenv("CI"))
-def isTravis = "true".equals(System.getenv("TRAVIS"))
-
-def buildNumber = null
-if (isTravis) {
-    buildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
-} else {
-    buildNumber = System.getenv("BUILDOZER_BUILDNUMBER")
-}
-
-version = '0.1.39.1-alpha'
 
 android {
     compileSdkVersion 23
@@ -26,10 +16,10 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
-        versionCode 39
+        versionCode 40
         testApplicationId "com.SecUpwN.AIMSICD.test"
 
-        buildConfigField 'String', 'BUILD_NUMBER', (buildNumber == null ? 'null' : "\"${buildNumber}\"")
+        buildConfigField 'String', 'BUILD_NUMBER', (getBuildNumber() == null ? 'null' : "\"${buildNumber}\"")
         buildConfigField 'String', 'GIT_SHA', (gitSha == null ? 'null' : "\"${gitSha}\"")
     }
     buildTypes {
@@ -52,7 +42,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     lintOptions {
-        warning 'MissingTranslation', 'InvalidPackage'
+        warning 'MissingTranslation', 'InvalidPackage', 'MissingRegistered'
         abortOnError false
 
         xmlReport false
@@ -108,4 +98,18 @@ apply plugin: "io.freefair.android-checkstyle"
 
 checkstyle {
     toolVersion = "6.15"
+}
+
+String getBuildNumber() {
+    String travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
+    if(travisBuildNumber != null) {
+        return "T-$travisBuildNumber"
+    }
+
+    String buildozerBuildNumber = System.getenv("BUILDOZER_BUILDNUMBER")
+    if(buildozerBuildNumber != null) {
+        return "B-$buildozerBuildNumber"
+    }
+
+    return null;
 }

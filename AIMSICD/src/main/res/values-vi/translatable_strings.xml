@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">Theo dõi</string>
     <string name="device_info">Thông tin điện thoại/SIM</string>
     <string name="map_view">Trình xem bản đồ ăng-ten</string>
@@ -19,7 +19,7 @@
     <string name="preferences">Tuỳ chỉnh</string>
     <string name="press_once_again_to_exit">Nhấn lại để thoát.</string>
     <string name="cell_lookup">Tất cả chi tiết về máy di động hiện thời</string>
-    <string name="send_logs">Dò lỗi</string>
+    <string name="debugging">Dò lỗi</string>
     <string name="no_network_connection_title">Không có kết nối mạng</string>
     <string name="no_network_connection_message">Không thể tải xuống dữ liệu OpenCellID mà không có mạng, xin bật kết nối dữ liệu!</string>
 
@@ -336,4 +336,5 @@
 
     <string name="n_a">N/A</string>
 
+    <string name="database_settings">Cài đặt CSDL</string>
     </resources>

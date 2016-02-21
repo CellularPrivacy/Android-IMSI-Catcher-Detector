@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/toggle_attack_detection"
+        android:checkable="true"
+        android:title="@string/toggle_attack_detection"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/toggle_cell_tracking"
+        android:checkable="true"
+        android:title="@string/toggle_cell_tracking"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_action_about"
+        android:title="@string/about_aimsicd"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/debugging"
+        android:icon="@drawable/ic_action_computer"
+        android:title="@string/debugging"
+        app:showAsAction="never" />
+</menu>

@@ -21,7 +21,7 @@
     <string name="preferences">Opciones</string>
     <string name="press_once_again_to_exit">Presiona de nuevo para salir.</string>
     <string name="cell_lookup">Detalles de Celda Actuales</string>
-    <string name="send_logs">Debugeo</string>
+    <string name="debugging">Debugeo</string>
     <string name="no_network_connection_title">Sin Conexion a Internet</string>
     <string name="no_network_connection_message">No se pueden descargar datos de OpenCellID sin conectividad a Internet, active la conexión de datos!</string>
 

@@ -56,7 +56,14 @@ public class AboutActivity extends InjectionAppCompatActivity {
         super.onCreate(savedInstanceState);
 
         versionNumber.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
-        buildNumberTextView.setText(getString(R.string.buildnumber, BuildConfig.BUILD_NUMBER));
+
+        String buildNumber = BuildConfig.BUILD_NUMBER;
+        //noinspection ConstantConditions
+        if (buildNumber == null) {
+            buildNumber = getString(R.string.n_a);
+        }
+        buildNumberTextView.setText(getString(R.string.buildnumber, buildNumber));
+
         gitShaTextView.setText(getString(R.string.git_sha, BuildConfig.GIT_SHA));
 
         //GitHub WIKI Link

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">Sporing</string>
     <string name="device_info">Telefon/SIM-detaljer</string>
     <string name="map_view">Antennekart-fremviser</string>
@@ -20,11 +20,11 @@
     <string name="restore_database">Tilbakefør database</string>
     <string name="press_once_again_to_exit">Trykk på nytt for å gå ut.</string>
     <string name="cell_lookup">Alle Nåværende celledetaljer</string>
-    <string name="send_logs">Feilsøking</string>
+    <string name="debugging">Feilsøking</string>
     <string name="no_network_connection_title">Ingen Internett-forbindelse</string>
     <string name="no_network_connection_message">Klarte ikke laste ned OpenCellID-data uten Internettilkobling, vennligst slå på datatilkobling!</string>
 
-    <string name="get_opencellid">Last med BTS-data</string>
+    <string name="get_opencellid">Last ned BTS-data</string>
 
     <string name="device_info_title">Enhetsinformasjon</string>
     <string name="sim_info_title">SIM-informasjon</string>
@@ -336,4 +336,5 @@
     <string name="pref_enable_gps_summary">Slå på GPS for Cellesporing</string>
     <string name="n_a">Ikke Tilgjengelig</string>
 
+    <string name="database_settings">Database Innstillinger</string>
     </resources>

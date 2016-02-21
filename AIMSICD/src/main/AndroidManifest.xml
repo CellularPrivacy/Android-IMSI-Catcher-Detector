@@ -56,19 +56,7 @@
         </activity>
 
         <activity
-                android:name=".activities.MapViewerOsmDroid"
-                android:exported="true"
-                android:label="@string/map_view"
-                android:parentActivityName=".AIMSICD"
-                android:launchMode="singleInstance"
-                android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".AIMSICD"/>
-        </activity>
-
-        <activity
-                android:name=".activities.PrefActivity"
+                android:name=".activities.SettingsActivity"
                 android:exported="true"
                 android:icon="@drawable/ic_action_settings"
                 android:label="@string/preferences"
@@ -83,7 +71,7 @@
             android:name=".activities.OpenCellIdActivity"
             android:icon="@drawable/ic_action_settings"
             android:label="@string/title_ocid_key"
-            android:parentActivityName=".activities.PrefActivity"
+            android:parentActivityName=".activities.SettingsActivity"
             android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
         </activity>
 
@@ -96,11 +84,6 @@
                 <category android:name="android.intent.category.INFO"/>
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".activities.AtCommandActivity"
-            android:label="@string/at_command_title"
-            android:parentActivityName=".AIMSICD" />
 
         <activity
             android:name=".activities.DebugLogs"

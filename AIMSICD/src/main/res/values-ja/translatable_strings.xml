@@ -22,7 +22,7 @@
     <string name="preferences">プリファレンス</string>
     <string name="press_once_again_to_exit">もう一度押すと終了します。</string>
     <string name="cell_lookup">すべての現在の基地局の詳細</string>
-    <string name="send_logs">デバッグ</string>
+    <string name="debugging">デバッグ</string>
     <string name="no_network_connection_title">インターネット接続がありません</string>
     <string name="no_network_connection_message">インターネット接続がないため OpenCellID データをダウンロードすることができません。データ接続を有効にしてください!</string>
 

@@ -15,7 +15,7 @@
     <string name="backup_database">Záloha databáze</string>
     <string name="restore_database">Obnova databáze</string>
     <string name="preferences">Nastavení</string>
-    <string name="send_logs">Ladění</string>
+    <string name="debugging">Ladění</string>
     <string name="get_opencellid">Stáhnout data BTS</string>
 
     <string name="device_info_title">Informace o zařízení</string>

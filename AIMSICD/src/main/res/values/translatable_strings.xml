@@ -33,7 +33,7 @@
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit.</string>
     <string name="cell_lookup">All Current Cell Details</string>
-    <string name="send_logs">Debugging</string>
+    <string name="debugging">Debugging</string>
     <string name="no_network_connection_title">No Internet Connection</string>
     <string name="no_network_connection_message">Unable to download OpenCellID data without Internet connectivity, please enable data connection!</string>
 
@@ -236,6 +236,7 @@
     <string name="timeout_spinner_10_min">10 min</string>
     <string name="main">Main</string>
     <string name="settings">Settings</string>
+    <string name="database_settings">Database settings</string>
     <string name="application">Application</string>
     <string name="monitoring_cell_information">Monitoring Cell Information.</string>
     <string name="stopped_monitoring_cell_information">Stopped monitoring Cell Information.</string>

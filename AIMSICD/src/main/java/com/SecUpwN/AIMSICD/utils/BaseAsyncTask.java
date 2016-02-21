@@ -6,7 +6,6 @@
 package com.SecUpwN.AIMSICD.utils;
 
 
-import android.app.Activity;
 import android.os.AsyncTask;
 
 import com.SecUpwN.AIMSICD.AppAIMSICD;
@@ -56,7 +55,7 @@ public abstract class BaseAsyncTask<TParams, TProgress, TResult> extends AsyncTa
         mApp.removeTask(this);
     }
 
-    protected Activity getActivity() {
+    protected InjectionAppCompatActivity getActivity() {
         return mWeakReferenceActivity.get();
     }
 
