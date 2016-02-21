@@ -53,10 +53,7 @@ addons:
     branch_pattern: master
 
 before_deploy:
-  - cd AIMSICD/build/outputs/apk
-  - md5sum *-normal-release.apk > md5sum.txt
-  - sha1sum *-normal-release.apk > sha1sum.txt
-  - cd -
+  - cd AIMSICD/build/outputs/apk; ls -la; md5sum *-normal-release.apk > md5sum.txt; sha1sum *-normal-release.apk > sha1sum.txt; cd -
 
 deploy:
   skip_cleanup: true
