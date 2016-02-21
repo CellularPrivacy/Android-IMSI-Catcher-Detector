@@ -10,16 +10,15 @@ buildscript {
     }
 }
 
-apply plugin: 'io.freefair.git-version'
-
-gitVersion {
-    tagPrefix 'v'
-}
-
 allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
     }
-    version = rootProject.version
+
+    apply plugin: 'io.freefair.git-version'
+
+    gitVersion {
+        tagPrefix 'v'
+    }
 }
