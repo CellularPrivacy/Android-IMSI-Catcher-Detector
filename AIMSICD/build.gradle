@@ -9,8 +9,6 @@ try {
 
 def isCi = "true".equals(System.getenv("CI"))
 
-version = '0.1.39.1-alpha'
-
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
