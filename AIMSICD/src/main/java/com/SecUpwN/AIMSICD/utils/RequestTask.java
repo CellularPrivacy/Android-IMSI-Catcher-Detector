@@ -14,7 +14,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.activities.MapFragment;
+import com.SecUpwN.AIMSICD.fragments.MapFragment;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;

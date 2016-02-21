@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.activities;
+package com.SecUpwN.AIMSICD.fragments;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -24,16 +24,15 @@ import android.telephony.CellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.activities.MapPrefActivity;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;

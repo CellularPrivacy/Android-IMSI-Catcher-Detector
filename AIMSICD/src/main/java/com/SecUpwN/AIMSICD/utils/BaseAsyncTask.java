@@ -6,7 +6,6 @@
 package com.SecUpwN.AIMSICD.utils;
 
 
-import android.app.Activity;
 import android.os.AsyncTask;
 
 import com.SecUpwN.AIMSICD.AppAIMSICD;

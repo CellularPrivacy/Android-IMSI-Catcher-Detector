@@ -34,7 +34,7 @@ import android.widget.Toast;
 import com.SecUpwN.AIMSICD.activities.AboutActivity;
 import com.SecUpwN.AIMSICD.activities.BaseActivity;
 import com.SecUpwN.AIMSICD.activities.DebugLogs;
-import com.SecUpwN.AIMSICD.activities.MapFragment;
+import com.SecUpwN.AIMSICD.fragments.MapFragment;
 import com.SecUpwN.AIMSICD.activities.SettingsActivity;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;

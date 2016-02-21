@@ -5,7 +5,6 @@
  */
 package com.SecUpwN.AIMSICD.fragments;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
