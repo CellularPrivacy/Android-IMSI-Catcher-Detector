@@ -1,6 +1,12 @@
 # CHANGELOG of 'AIMSICD'
 ------------------------
 
+#### [21.02.2016 - WIP-Release v0.1.40.1-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.40-alpha)
+
+* Fixed: Travis-CI does now attach the correctly signed APK again
+
+---
+
 #### [21.02.2016 - WIP-Release v0.1.40-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.40-alpha)
 
 * Removed: Purged unused imports and `ATCommandActivity`
