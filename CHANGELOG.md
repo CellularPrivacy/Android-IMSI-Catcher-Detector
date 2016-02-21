@@ -1,6 +1,18 @@
 # CHANGELOG of 'AIMSICD'
 ------------------------
 
+#### [21.02.2016 - WIP-Release v0.1.40-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.40-alpha)
+
+* Removed: Purged unused imports and `ATCommandActivity`
+* Changed: Improved UX by changing main app screens to fragments
+* Changed: Improved UX by moving general screens to new menu bar
+* Updated: Made toggle menu buttons checkable (icons will be removed)
+* Updated: Norwegian Bokmål and Vietnamese translations
+* Added: Calculation of `versionName` from git-tags
+* Fixed: Lint errors and build number display in `About` screen
+
+---
+
 #### [16.02.2016 - WIP-Release v0.1.39.1-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.39.1-alpha)
 
 * Removed: Purged more unused imports from `MiscUtils.java`
