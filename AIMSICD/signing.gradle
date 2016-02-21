@@ -5,10 +5,10 @@ if (project.hasProperty("aimsicd_key_alias")
     android {
         signingConfigs {
             releaseSigningConfig {
-                keyAlias project.hasProperty("aimsicd_key_alias") ? aimsicd_key_alias : "dummy"
-                keyPassword ? aimsicd_key_password : "dummy"
+                keyAlias aimsicd_key_alias
+                keyPassword aimsicd_key_password
                 storeFile file('../keystore.jks')
-                storePassword project.hasProperty("aimsicd_keystore_password") ? aimsicd_keystore_password : "dummy"
+                storePassword aimsicd_keystore_password
             }
         }
         buildTypes {
