@@ -339,5 +339,5 @@
     <string name="n_a">N/A</string>
     <string name="unknown">不明</string>
 
-    <string name="database_settings"></string>
+    <string name="database_settings">データベース</string>
     </resources>
