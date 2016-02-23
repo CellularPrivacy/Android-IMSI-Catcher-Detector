@@ -23,7 +23,10 @@ public class GetProp extends ActivityInstrumentationTestCase2<DebugLogs> {
 
     public void testGetPropsReturnsValue() throws IOException {
         DebugLogs activity = (DebugLogs) getActivity();
-        try { Thread.sleep(1000); } catch (Exception e) {}
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+        }
         String props = activity.getProp();
         Log.d("getprop", props);
         assertTrue(props.trim().length() > 0);
