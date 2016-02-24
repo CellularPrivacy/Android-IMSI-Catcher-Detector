@@ -152,7 +152,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 mCreditsText.setMaxLines(50);
                 final ScrollView mScrollView = new ScrollView(getApplicationContext());
                 mScrollView.addView(mCreditsText);
-                Animation scrollTo =  (Animation)AnimationUtils.loadAnimation(getApplicationContext(), R.anim.credits_dialog_scroll);
+                Animation scrollTo = (Animation)AnimationUtils.loadAnimation(getApplicationContext(), R.anim.credits_dialog_scroll);
                 mCreditsText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -162,9 +162,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 });
                 scrollTo.setAnimationListener(new Animation.AnimationListener() {
                     @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
+                    public void onAnimationStart(Animation animation) {}
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         if (closeAfterFinish) {
@@ -173,8 +171,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
                         }
                     }
                     @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
+                    public void onAnimationRepeat(Animation animation) {}
                 });
                 ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) mCreditsText.getLayoutParams();
                 mlp.setMargins(50, 20, 20, 0);
@@ -186,8 +183,6 @@ public class AboutActivity extends InjectionAppCompatActivity {
                         .setPositiveButton(android.R.string.ok, null)
                         .setView(mScrollView)
                         .show();
-
-
             }
         });
     }
