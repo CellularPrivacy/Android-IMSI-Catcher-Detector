@@ -59,9 +59,12 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.freefair.android.injection.annotation.Inject;
@@ -306,7 +309,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                     sb.append("&cellid=").append(mAimsicdService.getCell().getCID());
                 }
 
-                sb.append("&format=xml");
+                sb.append("&format=json");
 
                 Request request = new Request.Builder()
                         .url(sb.toString())
@@ -323,9 +326,20 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                             @Override
                             public void onResponse(Response response) throws IOException {
                                 try {
-                                    List<Cell> cellList = new StackOverflowXmlParser().parse(response.body().byteStream());
+                                    JSONObject jsonCell = new JSONObject(response.body().string());
+                                    Cell cell = new Cell();
+                                    cell.setLat(jsonCell.getDouble("lat"));
+                                    cell.setLon(jsonCell.getDouble("lon"));
+                                    cell.setMCC(jsonCell.getInt("mcc"));
+                                    cell.setMNC(jsonCell.getInt("mnc"));
+                                    cell.setCID(jsonCell.getInt("cellid"));
+                                    cell.setLAC(jsonCell.getInt("lac"));
+
+                                    List<Cell> cellList = new ArrayList<>();
+                                    cellList.add(cell);
+
                                     AIMSICD.this.processFinish(cellList);
-                                } catch (XmlPullParserException e) {
+                                } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }

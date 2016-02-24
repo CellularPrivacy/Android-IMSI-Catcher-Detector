@@ -58,7 +58,7 @@ public class StackOverflowXmlParser {
     // to their respective "read" methods for processing. Otherwise, skips the tag.
     private Cell readCell(XmlPullParser parser) throws XmlPullParserException, IOException {
         Cell cell = new Cell();
-        parser.require(XmlPullParser.START_TAG, ns, "cell");
+        //parser.require(XmlPullParser.START_TAG, ns, "cell");
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
