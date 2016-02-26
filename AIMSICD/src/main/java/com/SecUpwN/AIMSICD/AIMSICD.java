@@ -379,9 +379,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
             if (networkOperator != null) {
                 int mcc = Integer.parseInt(networkOperator.substring(0, 3));
-                cell.setMCC(Integer.parseInt(networkOperator.substring(0, 3)));
+                cell.setMCC(mcc);
                 int mnc = Integer.parseInt(networkOperator.substring(3));
-                cell.setMNC(Integer.parseInt(networkOperator.substring(3, 5)));
+                cell.setMNC(mnc);
                 log.debug("CELL:: mcc=" + mcc + " mnc=" + mnc);
             }
 
