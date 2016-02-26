@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.CellLocation;
+import android.telephony.TelephonyManager;
 
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
@@ -18,6 +20,7 @@ import com.SecUpwN.AIMSICD.fragments.MapFragment;
 import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu;
 import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
+import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.service.CellTracker;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -98,6 +101,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     private Context mAppContext;
     private char mType;
     private int mTimeOut;
+    private AimsicdService mAimsicdService;
+    private static TelephonyManager tm;
 
     @Inject
     private OkHttpClient okHttpClient;
@@ -281,6 +286,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
                     mDbAdapter.checkDBe();
 
+                    log.debug("Rechecking current cell after OCID download");
+                    recheckCurrentCell();
                     tinydb.putBoolean("ocid_downloaded", true);
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_retrieving_opencellid_data));
@@ -295,6 +302,9 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received_markers_updated));
 
                         mDbAdapter.checkDBe();
+
+                        log.debug("Rechecking current cell after OCID download");
+                        recheckCurrentCell();
                         tinydb.putBoolean("ocid_downloaded", true);
                     }
                 } else {
@@ -348,6 +358,16 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_backing_up_data));
                 }
         }
+    }
+
+    protected void recheckCurrentCell() {
+        if (mAimsicdService == null) {
+            log.warn("AIMSICD service not set, unable to recheck current cell post-OCID update.");
+            return;
+        }
+        tm = (TelephonyManager) mAppContext.getSystemService(Context.TELEPHONY_SERVICE);
+        CellLocation cellLocation = tm.getCellLocation();
+        mAimsicdService.getCellTracker().compareLac(cellLocation);
     }
 
     @Override
