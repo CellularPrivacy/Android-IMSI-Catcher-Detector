@@ -167,7 +167,6 @@ public class AboutActivity extends InjectionAppCompatActivity {
                     public void onAnimationEnd(Animation animation) {
                         if (closeAfterFinish) {
                             mCreditsDialog.cancel();
-                        } else {
                         }
                     }
                     @Override
