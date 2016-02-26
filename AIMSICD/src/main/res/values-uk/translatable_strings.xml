@@ -238,7 +238,7 @@
     <string name="restore_database_completed_title">Відновлення вдало завершено.</string>
     <string name="restore_database_completed">Відновлення бази даних успішно завершено.</string>
     <string name="no_opencellid_key_detected">Не виявлено ключа до OpenCellID API!\nБудь ласка, спершу введіть ваш ключ в налаштуваннях.</string>
-    <string name="refreshing_display">Оновлення дисплею</string>
+    <string name="refreshed_cell_id_info">Оновлення дисплею</string>
     <string name="unable_to_acquire_root_access">Не вдалося отримати root-права на вашому пристрої.\nВони потрібні для ін\'єкцій AT-команд до терміналу.\nБудь ласка, надайте root-права додатку, та спробуйте ще раз.</string>
     <string name="unable_to_detect_busybox">"Не виявлено Busybox  на вашому пристрої.\nДля правильної роботи ін\'єкції AT-команд потрібні компоненти Busybox.\nБудь ласка, перевірте, чи встановлений Busybox на вашому пристрої та спробуйте ще раз."</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Трапилась невідома помилка під час доступу до послідовного пристрою.\nБудь ласка, перевірте вивід logcat на наявність помилок, та відзвітуйте їх на нашу сторінку на Github.</string>

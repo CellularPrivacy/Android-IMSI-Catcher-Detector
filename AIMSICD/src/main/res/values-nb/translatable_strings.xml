@@ -236,7 +236,7 @@
     <string name="database_backup_successfully_saved_to">Database vellykket sikkerhetskopiert til:</string>
     <string name="error_backing_up_data">Feil under sikkerhetskopiering av database.</string>
     <string name="no_opencellid_key_detected">Ingen OpenCellID API nøkkel oppdaget!\nVennligst skriv inn din nøkkel under innstillinger først.</string>
-    <string name="refreshing_display">Oppdaterer Skjerm</string>
+    <string name="refreshed_cell_id_info">Oppdaterer Skjerm</string>
     <string name="unable_to_acquire_root_access">Klarte ikke å få ROOT tilgang på din enhet.\nAT kommando injection krever ROOT Terminal tilgang.\nVennligst undersøk om din enhet er ROOTET og prøv igjen.</string>
     <string name="unable_to_detect_busybox">Kunne ikke oppdage BusyBox på din enhet.\nAT kommando Injection krever BusyBoks komponenter for å virke korrekt.\nVennligst undersøk om din enhet har BusyBoks installert og prøv igen.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">En ukjent feil har oppstått under forsøk på å nå serielenheten.\nVennligst undersøk din logcat for feil og post dem på vår Github.</string>

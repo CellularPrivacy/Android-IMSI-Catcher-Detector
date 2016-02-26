@@ -264,7 +264,7 @@
     <string name="database_backup_successfully_saved_to">Datenbank wurde erfolgreich gesichert nach:</string>
     <string name="error_backing_up_data">Fehler beim Sichern der Datenbank.</string>
     <string name="no_opencellid_key_detected">Kein OpenCellID API-Schlüssel erkannt!\nBitte Schlüssel in Einstellungen eingeben.</string>
-    <string name="refreshing_display">Aktualisiere Anzeige</string>
+    <string name="refreshed_cell_id_info">Aktualisiere Anzeige</string>
     <string name="unable_to_acquire_root_access">Kein ROOT-Zugriff auf Gerät möglich.\nAT-Befehle setzen ROOT-Zugriff voraus.\nBitte prüfen ob das gerät GEROOTET ist und erneut versuchen.</string>
     <string name="unable_to_detect_busybox">Busybox konnte nicht erkannt werden.\nAT-Befehle setzen Busybox-Komponenten für korrekte Funktion voraus.\nBitte prüfen ob Busybox installiert ist und erneut versuchen.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Ein unbekannter Fehler trat beim Zugriffsversuch auf die serielle Schnittstelle auf.\nBitte Fehlerprotokoll prüfen und auf unserem GitHub veröffentlichen.</string>

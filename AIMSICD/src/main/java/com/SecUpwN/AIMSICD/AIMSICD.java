@@ -53,21 +53,8 @@ import com.SecUpwN.AIMSICD.utils.Helpers;
 import com.SecUpwN.AIMSICD.utils.Icon;
 import com.SecUpwN.AIMSICD.utils.LocationServices;
 import com.SecUpwN.AIMSICD.utils.RequestTask;
-import com.SecUpwN.AIMSICD.utils.StackOverflowXmlParser;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import io.freefair.android.injection.annotation.Inject;
 
 public class AIMSICD extends BaseActivity implements AsyncResponse {
 
@@ -94,9 +81,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     private long mLastPress = 0;    // Back press to exit timer
 
     private DrawerMenuActivityConfiguration mNavConf;
-
-    @Inject
-    OkHttpClient okHttpClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -266,18 +250,18 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 openFragment(mapFragment);
                 title = getString(R.string.app_name_short);
                 break;
-            case DrawerMenu.ID.SETTINGS.BACKUP_DB:
+            case DrawerMenu.ID.DATABASE_SETTINGS.BACKUP_DB:
                 new RequestTask(this, RequestTask.BACKUP_DATABASE).execute();
                 break;
         }
 
-        if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESTORE_DB) {
+        if (selectedItem.getId() == DrawerMenu.ID.DATABASE_SETTINGS.RESTORE_DB) {
             if (CellTracker.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
                 Helpers.msgLong(this, getString(R.string.unable_to_restore_backup_from_previous_database_version));
             } else {
                 new RequestTask(this, RequestTask.RESTORE_DATABASE).execute();
             }
-        } else if (selectedItem.getId() == DrawerMenu.ID.SETTINGS.RESET_DB) {
+        } else if (selectedItem.getId() == DrawerMenu.ID.DATABASE_SETTINGS.RESET_DB) {
             // WARNING! This deletes the entire database, thus any subsequent DB access will FC app.
             //          Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
             //          See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/581 and Helpers.java
@@ -286,67 +270,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA) {
             downloadBtsDataIfApiKeyAvailable();
-        } else if (selectedItem.getId() == DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS) {
-            if (CellTracker.OCID_API_KEY != null && !CellTracker.OCID_API_KEY.equals("NA")) {
-
-                //TODO: Use Retrofit for that
-                StringBuilder sb = new StringBuilder();
-                sb.append("http://www.opencellid.org/cell/get?key=").append(CellTracker.OCID_API_KEY);
-
-                if (mAimsicdService.getCell().getMCC() != Integer.MAX_VALUE) {
-                    sb.append("&mcc=").append(mAimsicdService.getCell().getMCC());
-                }
-
-                if (mAimsicdService.getCell().getMNC() != Integer.MAX_VALUE) {
-                    sb.append("&mnc=").append(mAimsicdService.getCell().getMNC());
-                }
-
-                if (mAimsicdService.getCell().getLAC() != Integer.MAX_VALUE) {
-                    sb.append("&lac=").append(mAimsicdService.getCell().getLAC());
-                }
-
-                if (mAimsicdService.getCell().getCID() != Integer.MAX_VALUE) {
-                    sb.append("&cellid=").append(mAimsicdService.getCell().getCID());
-                }
-
-                sb.append("&format=json");
-
-                Request request = new Request.Builder()
-                        .url(sb.toString())
-                        .get()
-                        .build();
-
-                okHttpClient.newCall(request)
-                        .enqueue(new Callback() {
-                            @Override
-                            public void onFailure(Request request, IOException e) {
-
-                            }
-
-                            @Override
-                            public void onResponse(Response response) throws IOException {
-                                try {
-                                    JSONObject jsonCell = new JSONObject(response.body().string());
-                                    Cell cell = new Cell();
-                                    cell.setLat(jsonCell.getDouble("lat"));
-                                    cell.setLon(jsonCell.getDouble("lon"));
-                                    cell.setMCC(jsonCell.getInt("mcc"));
-                                    cell.setMNC(jsonCell.getInt("mnc"));
-                                    cell.setCID(jsonCell.getInt("cellid"));
-                                    cell.setLAC(jsonCell.getInt("lac"));
-
-                                    List<Cell> cellList = new ArrayList<>();
-                                    cellList.add(cell);
-
-                                    AIMSICD.this.processFinish(cellList);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-            } else {
-                Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
-            }
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.QUIT) {
             try {
                 if (mAimsicdService.isSmsTracking()) {
