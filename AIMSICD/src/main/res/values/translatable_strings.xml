@@ -279,7 +279,7 @@
     <string name="database_backup_successfully_saved_to">Database backup successfully saved to:</string>
     <string name="error_backing_up_data">Error backing up database.</string>
     <string name="no_opencellid_key_detected">No OpenCellID API Key detected!\nPlease enter your key in settings first.</string>
-    <string name="refreshing_display">Refreshing display</string>
+    <string name="refreshed_cell_id_info">Refreshed CellId info</string>
     <string name="unable_to_acquire_root_access">Unable to acquire ROOT access on your device.\nAT Command Injection requires ROOT Terminal access.\nPlease check your device is ROOTED and try again.</string>
     <string name="unable_to_detect_busybox">Unable to detect Busybox on your device.\nAT Command Injection requires Busybox components to function correctly.\nPlease check your device has Busybox installed and try again.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">An unknown error has occurred trying to acquire the Serial Device.\nPlease check your logcat for any errors and post them on our Github.</string>
