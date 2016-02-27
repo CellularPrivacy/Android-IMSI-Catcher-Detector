@@ -336,5 +336,5 @@
     <string name="pref_enable_gps_summary">Slå på GPS for Cellesporing</string>
     <string name="n_a">Ikke Tilgjengelig</string>
 
-    <string name="database_settings">Database Innstillinger</string>
+    <string name="database_settings">Database</string>
     </resources>

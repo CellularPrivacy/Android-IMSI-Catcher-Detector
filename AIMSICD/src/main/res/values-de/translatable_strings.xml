@@ -225,6 +225,7 @@
     <string name="timeout_spinner_10_min">10 min</string>
     <string name="main">Hauptmenü</string>
     <string name="settings">Einstellungen</string>
+    <string name="database_settings">Datenbank</string>
     <string name="application">Anwendung</string>
     <string name="monitoring_cell_information">Beobachte Funkzelldaten.</string>
     <string name="stopped_monitoring_cell_information">Beobachtung der Funkzelldaten angehalten.</string>

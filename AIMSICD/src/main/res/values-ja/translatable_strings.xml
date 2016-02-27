@@ -338,5 +338,5 @@
     <string name="pref_enable_gps_summary">基地局追跡の GPS を有効にします</string>
     <string name="n_a">N/A</string>
 
-    <string name="database_settings">データベース設定</string>
+    <string name="database_settings"></string>
     </resources>
