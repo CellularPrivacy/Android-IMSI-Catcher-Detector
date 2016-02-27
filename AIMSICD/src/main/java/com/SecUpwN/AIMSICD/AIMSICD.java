@@ -525,9 +525,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         inflater.inflate(R.menu.main_menu, menu);
 
         MenuItem toggleAttackDetectionMenuItem = menu.findItem(R.id.toggle_attack_detection);
-        toggleAttackDetectionMenuItem.setChecked(true);
+        toggleAttackDetectionMenuItem.setChecked(mAimsicdService.isMonitoringCell());
         MenuItem toggleCellTrackingMenuItem = menu.findItem(R.id.toggle_cell_tracking);
-        toggleCellTrackingMenuItem.setChecked(true);
+        toggleCellTrackingMenuItem.setChecked(mAimsicdService.isTrackingCell());
         return true;
     }
 
@@ -535,12 +535,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.toggle_attack_detection:
-                item.setChecked(!item.isChecked());
                 monitorCell();
+                item.setChecked(mAimsicdService.isMonitoringCell());
                 break;
             case R.id.toggle_cell_tracking:
-                item.setChecked(!item.isChecked());
                 trackCell();
+                item.setChecked(mAimsicdService.isTrackingCell());
                 break;
             case R.id.settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
@@ -606,7 +606,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
      * Cell Information Tracking - Enable/Disable
      */
     private void trackCell() {
-        mAimsicdService.setCellTracking(mAimsicdService.isTrackingCell());
+        mAimsicdService.setCellTracking(!mAimsicdService.isTrackingCell());
     }
 
     /**
