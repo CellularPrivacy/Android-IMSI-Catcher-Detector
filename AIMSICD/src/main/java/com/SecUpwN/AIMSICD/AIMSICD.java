@@ -230,9 +230,6 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         }
     }
 
-
-
-
     void selectDrawerItem(int position) {
         NavDrawerItem selectedItem = mNavConf.getNavItems().get(position);
         String title = selectedItem.getLabel();

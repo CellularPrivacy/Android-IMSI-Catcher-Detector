@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -71,7 +72,7 @@ import io.freefair.android.injection.app.InjectionFragment;
  *
  */
 @XmlLayout(R.layout.fragment_cell_info)
-public class CellInfoFragment extends InjectionFragment {
+public class CellInfoFragment extends InjectionFragment implements SwipeRefreshLayout.OnRefreshListener{
 
     public static final int STOCK_REQUEST = 1;
     public static final int SAMSUNG_MULTIRIL_REQUEST = 2;
@@ -80,7 +81,6 @@ public class CellInfoFragment extends InjectionFragment {
     private RilExecutor rilExecutor;
     private boolean mBound;
     private Context mContext;
-    private Activity mActivity;
     private final Handler timerHandler = new Handler();
 
     private List<Cell> neighboringCells;
@@ -103,8 +103,8 @@ public class CellInfoFragment extends InjectionFragment {
     @InjectView(R.id.ciphering_indicator)
     private TextView mCipheringIndicator;
 
-    @InjectView(R.id.button_refresh)
-    private Button refresh;
+    @InjectView(R.id.swipeRefreshLayout)
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     private final Runnable timerRunnable = new Runnable() {
@@ -115,19 +115,6 @@ public class CellInfoFragment extends InjectionFragment {
             timerHandler.postDelayed(this, CellTracker.REFRESH_RATE);
         }
     };
-
-    public CellInfoFragment() {
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mContext = activity.getBaseContext();
-        mActivity = activity;
-        // Bind to LocalService
-        Intent intent = new Intent(mContext, AimsicdService.class);
-        mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-    }
 
     @Override
     public void onPause() {
@@ -158,7 +145,12 @@ public class CellInfoFragment extends InjectionFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        refresh.setOnClickListener(new btnClick());
+        mContext = getActivity().getBaseContext();
+        // Bind to LocalService
+        Intent intent = new Intent(mContext, AimsicdService.class);
+        mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -191,14 +183,12 @@ public class CellInfoFragment extends InjectionFragment {
         }
     };
 
-    private class btnClick implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Helpers.msgShort(mContext, mAimsicdService.getString(R.string.refreshing_now));
-            updateUI();
-        }
+    @Override
+    public void onRefresh() {
+        updateUI();
+        swipeRefreshLayout.setRefreshing(false);
     }
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -218,7 +208,7 @@ public class CellInfoFragment extends InjectionFragment {
 
     void updateCipheringIndicator() {
         final List<String> list = rilExecutor.getCipheringInfo();
-        mActivity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (list != null) {
@@ -259,7 +249,7 @@ public class CellInfoFragment extends InjectionFragment {
 
     void updateNeighbouringCells() {
         final List<String> list = rilExecutor.getNeighbours();
-        mActivity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (list != null) {
