@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">Sporing</string>
-    <string name="device_info">Telefon/SIM-detaljer</string>
+    <string name="device_info">Telefon/SIM Detaljer</string>
     <string name="map_view">Antenne Kart</string>
     <string name="db_viewer">Databasefremviser</string>
     <string name="quit">Avslutt</string>
@@ -26,7 +26,7 @@
 
     <string name="get_opencellid">Last ned BTS Data</string>
 
-    <string name="device_info_title">Enhetsinformasjon</string>
+    <string name="device_info_title">Telefoninformasjon</string>
     <string name="sim_info_title">SIM Informasjon</string>
     <string name="network_info">Nettverksinformasjon</string>
     <string name="cell_info_title">Nåværende Trusselnivå</string>
@@ -88,7 +88,7 @@
     <string name="pref_autostart_summ">Start tjenesten Automatisk ved oppstart</string>
     <string name="pref_persistservice_title">Kjørende Tjenester</string>
     <string name="pref_persistservice_summ">Tjenester vil fortsette å kjøre etter du avslutter appen (hak av for å totalt avslutte)</string>
-    <string name="pref_protection_title">Beskyttelses Instillinger</string>
+    <string name="pref_protection_title">Beskyttelses Innstillinger</string>
     <string name="pref_notification_settings">Meldingsoppsett</string>
     <string name="pref_enable_cell_title">Cellesporing</string>
     <string name="pref_enable_cell_summ">Slå på Automatisk Cellesporing</string>
@@ -101,7 +101,7 @@
     <string name="pref_ui_icons_summ">Icon Utseende Utvalg</string>
     <string name="pref_refresh_title">Oppfriskningsrate</string>
     <string name="pref_refresh_summ">Kontroler intervall av enhetsoppdateringer\nNåværende intervall:%s</string>
-    <string name="pref_ocid_title">OpenCellID Instillinger</string>
+    <string name="pref_ocid_title">OpenCellID Innstillinger</string>
     <string name="pref_ocid_key_title">OpenCellID API Nøkkel</string>
     <string name="pref_ocid_key_summ">Skriv inn din OpenCellID API Nøkkel hær</string>
     <string name="pref_enable_cell_monitoring_title">Celle Overvåkning</string>
@@ -192,7 +192,7 @@
     <string name="timeout_spinner_30_sec">30 sek</string>
     <string name="timeout_spinner_10_min">10 min</string>
     <string name="main">Hoved</string>
-    <string name="settings">Instillinger</string>
+    <string name="settings">Innstillinger</string>
     <string name="application">Applikasjon</string>
     <string name="monitoring_cell_information">Overvåker Celle Informasjon.</string>
     <string name="about_disclaimer">VIKTIG</string>
@@ -257,7 +257,7 @@
     <string name="adv_user_sms_info">Denne menyen er kun for spesialister!\nFor å slette en oppdaget SMS trykk lenge på listevisning.</string>
     <string name="title_activity_advanced_user">Slett Oppdaget SMS</string>
 
-    <string name="adv_user_pref_header">Spesialist Instillinger</string>
+    <string name="adv_user_pref_header">Spesialist Innstillinger</string>
     <string name="adv_user_pref_launch">"Oppdagelses  Strenger"</string>
     <string name="adv_user_pref_sms_launch">Slett SMS</string>
     <string name="adv_user_pref_summary">Legg til og slett oppdagelses strenger</string>
@@ -289,7 +289,7 @@
     <string name="git_sha">Git SHA-Signering: %s</string>
     <string name="help_tracking_toggle_cell_tracking">Start å søke celler for å vise i Antenne Kartet og muligens laste dem opp senere til OpenCellID.</string>
 
-    <string name="help_settings_preferences">AIMSICD instillinger som beskyttelsesregler, hyppighet og service oppførsel.</string>
+    <string name="help_settings_preferences">AIMSICD innstillinger som beskyttelsesregler, hyppighet og service oppførsel.</string>
     <string name="help_settings_backup_db">Backup SQLite3 DB til SD-Kort.</string>
     <string name="help_settings_restore_db">Tilbakefør SQLite3 DB til SD-Kort.</string>
     <string name="help_settings_reset_db">Nullstill alle eller spesifiserte DB liste(r).</string>
@@ -313,7 +313,7 @@
 
     <string name="at_command_response_looking">***Søker etter AT serielle enheter...\n</string>
     <string name="at_command_response_found">"Funnet: "</string>
-    <string name="at_command_response_setup_complete">***Instillinger Fullført***\n</string>
+    <string name="at_command_response_setup_complete">***Innstillinger Fullført***\n</string>
 
     <string name="currently_connected_bts">Nåværende tilnyttet Basestasjon</string>
     <string name="well_known_encrypted_bts">Godt kjent kryptert Basestasjon</string>
@@ -332,7 +332,7 @@
     <string name="failed_to_add_the_string_to_db">Fikk ikke lagt til setningen i databasen</string>
 
     <string name="help_app_debugging">Samle og send feilmeldingslogger.</string>
-    <string name="pref_enable_gps_title">GPS Instillinger</string>
+    <string name="pref_enable_gps_title">GPS Innstillinger</string>
     <string name="pref_enable_gps_summary">Slå på GPS for Cellesporing</string>
     <string name="n_a">Ikke Tilgjengelig</string>
 
