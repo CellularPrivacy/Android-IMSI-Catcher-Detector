@@ -3,14 +3,14 @@
 
 Thank you for contributing! Please select:
 
-* [Developing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#developing)
-* [Translating](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#translating)
-* [Testing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#testing)
-* [Formatting](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#formatting)
-* [Debugging](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#debugging)
-* [Seeking](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#seeking)
-* [Donating](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#donating)
-* [Respecting](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#code-of-conduct)
+* [Developing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#developing)
+* [Translating](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#translating)
+* [Testing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#testing)
+* [Formatting](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#formatting)
+* [Debugging](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#debugging)
+* [Seeking](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#seeking)
+* [Donating](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#donating)
+* [Respecting](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#code-of-conduct)
 
 ---
 
@@ -148,12 +148,12 @@ We are committed to making participation in this project a harassment-free exper
 
 Examples of unacceptable behavior by participants include:
 
-* The use of sexualized language or imagery  
-* Personal attacks  
-* Trolling or insulting/derogatory comments  
-* Public or private harassment  
-* Publishing other's private information, such as physical or electronic addresses, without explicit permission  
-* Other unethical or unprofessional conduct  
+* The use of sexualized language or imagery
+* Personal attacks
+* Trolling or insulting/derogatory comments
+* Public or private harassment
+* Publishing other's private information, such as physical or electronic addresses, without explicit permission
+* Other unethical or unprofessional conduct
 
 Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
 
