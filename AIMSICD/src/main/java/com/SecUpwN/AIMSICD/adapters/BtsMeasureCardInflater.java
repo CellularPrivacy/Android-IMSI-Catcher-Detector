@@ -8,23 +8,7 @@ import android.widget.TextView;
 import com.SecUpwN.AIMSICD.R;
 
 /**
- * Description:     Contains the data and definitions of all the items of the XML layout
- *
- * Dependencies:
- *                  DbViewerFragment.java: BuildTable()
- *                  BtsMeasureItemData.java
- *                  bts_measure_data.xml
- *
- * TODO:
- *                  [ ] Order all the items according to appearance found in the DB table below
- *                      (Is this the right way to do it?)
- *                  [ ] Only show items currently supported
- *                  [ ] Add record id "n/XXX"
- *
- *
- * NOTE:
- *                  **  LAC and CID are not directly in this table, but referenced through
- *                      the foreign key "bts_id" to the DBi_bts table.
+ * Contains the data and definitions of all the items of the XML layout
  *
  *
  *      CREATE TABLE "DBi_measure"  (
