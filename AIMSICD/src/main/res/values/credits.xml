@@ -3,18 +3,20 @@
 
     <string name="about_credits_content" translatable="false">
         ANDROID IMSI-CATCHER DETECTOR\n
+       <a href="[born in 2012 on XDA-Developers]">http://forum.xda-developers.com/showthread.php?t=1422969</a>\n
         \n
-        [born in 2012 on XDA-Developers]\n
         Website: <a href="https://git.io/AIMSICD">https://git.io/AIMSICD</a>\n
         \n
         This list is in no particular order.\n
         If I forgot YOU, please drop me a hint.\n
+        <a href="https://git.io/v2aur">Click to see ALL contributors on GitHub.</a>\n
         \n
-        THANK YOU EVERYONE! ;-)\n
+        ❤ THANK YOU EVERYONE! ❤\n
         \n
         E:V:A\n
-        for creating this AWESOME project! <![CDATA[<3]]>\n
-        unfortunately he left this project.\n
+        https://github.com/E3V3A\n
+        for creating this AWESOME project!\n
+        Too bad you left, please keep using our app.\n
         \n
         Jofre Palau\n
         <a href="https://github.com/jofrep">https://github.com/jofrep</a>\n
@@ -28,8 +30,8 @@
         \n
         Dipl.-Inf. (FH) Marcus Prem\n
         <a href="https://github.com/He3556\n">https://github.com/He3556\n</a>
-        <a href="http://smartphone-attack-vector.de">http://smartphone-attack-vector.de</a>/\n
-       <a href="http://dm-development.de/">http://dm-development.de/</a>\n
+        <a href="http://smartphone-attack-vector.de">http://smartphone-attack-vector.de</a>\n
+       <a href="http://dm-development.de">http://dm-development.de</a>\n
         for your hardcore contributions.\n
         (also for helping on all articles, dude)!\n
         \n
@@ -55,8 +57,8 @@
         for crafting all the funky artwork.\n
         \n
         Mike Kuketz\n
-        <a href="http://www.kuketz-blog.de/">http://www.kuketz-blog.de</a>\n
-        for fine-tuning and publishing our article.\n
+        <a href="http://www.kuketz-blog.de">http://www.kuketz-blog.de</a>\n
+        for fine-tuning and publishing our article on your wonderful security blog.\n
         Your continuous support ROCKS!\n
         \n
         OsmocomBB\n
@@ -64,20 +66,21 @@
         for CatcherCatcher and more toys.\n
         \n
         iSECPartners\n
-        <a href="https://www.isecpartners.com/">https://www.isecpartners.com/</a>\n
+        <a href="https://www.isecpartners.com">https://www.isecpartners.com</a>\n
         for the source code of FemtoCatcher.\n
         \n
         Security Research Labs\n
-       <a href="https://srlabs.de/">https://srlabs.de/</a>\n
+        <a href="https://srlabs.de">https://srlabs.de</a>\n
         for GSMmap and all the cool tools.\n
         (SPECIAL THANKS to Linus)\n
         \n
         Kristin Paget\n
         <a href="www.tombom.co.uk/blog">www.tombom.co.uk/blog</a>\n
-        for being a beautiful hacker princess.\n
+        for your video about how IMSI-Catcher work\n
+        and for being a beautiful hacker princess.\n
         \n
         DarkCoin Project\n
-        <a href="https://www.darkcoin.io/">https://www.darkcoin.io/</a>\n
+        <a href="https://www.darkcoin.io">https://www.darkcoin.io</a>\n
         for the fully anonymous cryptocurrency.\n
         \n
         andr3jx (InvaderX on XDA)\n
@@ -90,15 +93,15 @@
         for the magic SamsungRilMulticlient.\n
         \n
         Toby Kurien\n
-        <a href="http://www.tobykurien.com/">http://www.tobykurien.com/</a>\n
+        <a href="http://www.tobykurien.com">http://www.tobykurien.com</a>\n
         for your steady commits to our codebase. WE LOVE YOU! :)\n
         \n
         Stephen Erickson\n
         <a href="https://github.com/Stericson">https://github.com/Stericson</a>\n
-        for RootShell and your enduring support.\n
+        for RootShell and your enduring support on many smaller obstacles.\n
         \n
         Scanova\n
-        <a href="http://scanova.io/">http://scanova.io/</a>\n
+        <a href="http://scanova.io">http://scanova.io</a>\n
         for your powerful QR Code Generator.\n
         \n
         Nick Carson from Scanova\n
@@ -106,25 +109,25 @@
         creating our QR Codes - for free!\n
         \n
         GitHub\n
-        <a href="https://github.com/">https://github.com/</a>\n
+        <a href="https://github.com">https://github.com</a>\n
         for your wonderful coding platform.\n
         \n
         Travis CI\n
-        <a href="https://travis-ci.org/">https://travis-ci.org/</a>\n
+        <a href="https://travis-ci.org">https://travis-ci.org</a>\n
         for the Free Hosted Continuous Integration Platform.\n
         \n
         Coverity Scan\n
-        <a href="http://www.coverity.com/">http://www.coverity.com/</a>\n
+        <a href="http://www.coverity.com">http://www.coverity.com</a>\n
         for the Software Testing and\n
         Static Analysis Tools.\n
         \n
         AquaFold\n
-        <a href="http://www.aquafold.com/">http://www.aquafold.com/</a>\n
+        <a href="http://www.aquafold.com">http://www.aquafold.com</a>\n
         for the licenses of the\n
         Universal Database Tool.\n
         \n
         Navicat\n
-        <a href="http://www.navicat.com/">http://www.navicat.com/</a>\n
+        <a href="http://www.navicat.com">http://www.navicat.com</a>\n
         for the licenses of the\n
         Premium Database Administration Tool.\n
         \n
@@ -133,27 +136,27 @@
         for several very useful code sippets.\n
         \n
         The Android Open Source Project\n
-        <a href="http://source.android.com/">http://source.android.com/</a>\n
+        <a href="http://source.android.com">http://source.android.com</a>\n
         for the Android System.\n
         Add a Ciphering Indicator!\n
         \n
         Louis Teboul\n
         <a href="https://github.com/Androguide">https://github.com/Androguide</a>\n
-        for helpful comments and code snippets.\n
+        for helpful comments and code.\n
         \n
         moonopool\n
-        <a href="https://moonopool.wordpress.com/">https://moonopool.wordpress.com/</a>\n
+        <a href="https://moonopool.wordpress.com">https://moonopool.wordpress.com</a>\n
         for publishing our article for the\n
         German Pirate Party!\n
         <a href="https://is.gd/piratenschutz">https://is.gd/piratenschutz</a>\n
         \n
         Tor Henning Ueland\n
-        <a href="http://h3x.no/">http://h3x.no/</a>\n
+        <a href="http://h3x.no">http://h3x.no</a>\n
         for smashing bugs with\n
         T(H)ORS bug smashing hammer.\n
         \n
         Dalibor Nasevic\n
-        <a href="http://dalibornasevic.com/">http://dalibornasevic.com/</a>\n
+        <a href="http://dalibornasevic.com">http://dalibornasevic.com</a>\n
         for your WONDERFUL personal support\n
         on cleaning our GitHub repository!\n
         \n
@@ -196,14 +199,13 @@
         Roberto Tyley\n
         <a href="https://github.com/rtyley">https://github.com/rtyley</a>\n
         for your wonderful BFG Repo-Cleaner.\n
-        https://rtyley.github.io/bfg-repo-cleaner/\n
         \n
         Bountysource\n
-        <a href="https://www.bountysource.com/">https://www.bountysource.com/</a>\n
+        <a href="https://www.bountysource.com">https://www.bountysource.com</a>\n
         for enabling funding of our project. ;-)\n
         \n
         agilob\n
-        <a href="http://b.agilob.net/">http://b.agilob.net/</a>\n
+        <a href="http://b.agilob.net">http://b.agilob.net</a>\n
         for enabling app TRANSLATIONS and\n
         your BOUNTY on silent SMS detection!\n
         \n
@@ -225,7 +227,7 @@
         and all the lovely coding. THANK YOU!\n
         \n
         The Changelog\n
-        <a href="https://changelog.com/">https://changelog.com/</a>\n
+        <a href="https://changelog.com">https://changelog.com</a>\n
         for their podcast and tweet about us!\n
         (SPECIAL THANKS to Jerod)\n
         \n
@@ -236,5 +238,34 @@
         Lars Grefer\n
         <a href="https://github.com/larsgrefer">https://github.com/larsgrefer</a>\n
         for all incredible improvements! ;-)\n
+        \n
+        Michal Čihař\n
+        <a href="https://github.com/nijel">https://github.com/nijel</a>\n
+        for hosting our app on your Weblate service.\n
+        \n
+        Jens Stein\n
+        <a href="https://github.com/jensstein">https://github.com/jensstein</a>\n
+        for your great backup app oandbackup\n
+        and several patches for our app.\n
+        \n
+        Nnabueze Uhiara\n
+        <a href="https://github.com/NezSpencer">https://github.com/NezSpencer</a>\n
+        for fixing that really annoying GPS notifications bug.\n
+        \n
+        tt3mm\n
+        <a href="https://github.com/tt3mm">https://github.com/tt3mm</a>\n
+        for working hard to make our UI/UX shine bright! *.*\n
+        \n
+        Justin Bull\n
+        <a href="https://github.com/f3ndot">https://github.com/f3ndot</a>\n
+        for improving the internal data handling\n
+        and many smaller fixes.\n
+        \n
+        Vlad Todosin\n
+        <a href="https://github.com/VladThodo">https://github.com/VladThodo</a>\n
+        for your improvements of these in-app CREDITS\n
+        and even more wonderful contributions!\n
+        (greetings to your informatics teacher)\n
+        \n
     </string>
 </resources>
