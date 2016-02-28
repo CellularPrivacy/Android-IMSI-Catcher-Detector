@@ -330,4 +330,6 @@
     <string name="failed_to_add_the_string_to_db">Error al añadir la cadena a la base de datos</string>
 
     <string name="double_quote_will_cause_db_error">"Cadena no añadida\nLas comillas dobles \" no están soportadas "</string>
-    </resources>
+
+    <string name="unknown">Desconocido</string>
+</resources>

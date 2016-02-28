@@ -335,6 +335,7 @@
     <string name="failed_to_add_the_string_to_db">Thêm chuỗi vào CSDL thất bại</string>
 
     <string name="n_a">N/A</string>
+    <string name="unknown">Không xác định</string>
 
     <string name="database_settings"></string>
     </resources>

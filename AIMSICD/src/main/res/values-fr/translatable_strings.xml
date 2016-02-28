@@ -413,6 +413,7 @@
     <string name="the_string_was_added_to_db">La chaîne de caractères a été ajoutée à la base de données</string>
     <string name="failed_to_add_the_string_to_db">Échec lors de l’ajout de la chaîne de caractères à la base de données</string>
     <string name="n_a">Indisponible</string>
+    <string name="unknown">Ignoré</string>
 
     <string name="database_settings">Base de données</string>
     </resources>

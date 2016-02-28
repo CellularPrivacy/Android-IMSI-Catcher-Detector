@@ -335,6 +335,7 @@
 
     <string name="help_settings_preferences">Налаштування AIMSICD, такі як правила захисту, час опитування та поведінку служби.</string>
     <string name="n_a">Н/Д</string>
+    <string name="unknown">Невідомий</string>
 
     <string name="database_settings">База даних</string>
     </resources>
