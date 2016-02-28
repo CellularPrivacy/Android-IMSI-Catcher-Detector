@@ -334,4 +334,6 @@
     <string name="double_quote_will_cause_db_error">"String niet toegevoegd\n\" dubbele aanhalingstekens veroorzaken een db fout "</string>
     <string name="pref_enable_gps_title">GPS instellingen</string>
     <string name="pref_enable_gps_summary">GPS inschakelen voor Cell tracking</string>
+
+    <string name="unknown">Onbekend</string>
     </resources>

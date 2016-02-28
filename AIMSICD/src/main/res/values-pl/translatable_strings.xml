@@ -386,4 +386,5 @@
     <string name="restore_database_completed_title">Odzyskiwanie powiodło się.</string>
     <string name="delete_database_msg_success">Baza danych została usunięta i odtworzona.\nProszę zrestartować aplikację by usunąć resztę danych z pamięci.</string>
 
+    <string name="unknown">Nieznany</string>
     </resources>

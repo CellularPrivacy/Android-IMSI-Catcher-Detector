@@ -422,4 +422,5 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
+    <string name="unknown">Неизвестный</string>
 </resources>

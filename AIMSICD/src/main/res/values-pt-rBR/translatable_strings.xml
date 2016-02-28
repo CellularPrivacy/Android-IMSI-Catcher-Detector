@@ -75,4 +75,6 @@
     <string name="status_high_about_desc">Rastreamento ativo próximo a você!</string>
     <string name="status_ok_about_desc">Tudo OK.</string>
     <string name="status_danger_about_desc">Você está sendo monitorado!</string>
+
+    <string name="unknown">Desconhecido</string>
     </resources>
