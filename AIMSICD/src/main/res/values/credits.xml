@@ -3,7 +3,7 @@
 
     <string name="about_credits_content" translatable="false">
         ANDROID IMSI-CATCHER DETECTOR\n
-       <a href="[born in 2012 on XDA-Developers]">http://forum.xda-developers.com/showthread.php?t=1422969</a>\n
+       <a href="(born in 2012 on XDA-Developers)">http://forum.xda-developers.com/showthread.php?t=1422969</a>\n
         \n
         Website: <a href="https://git.io/AIMSICD">https://git.io/AIMSICD</a>\n
         \n
@@ -14,9 +14,10 @@
         ❤ THANK YOU EVERYONE! ❤\n
         \n
         E:V:A\n
-        https://github.com/E3V3A\n
+        <a href="https://github.com/E3V3A">https://github.com/E3V3A</a>\n
         for creating this AWESOME project!\n
-        Too bad you left, please keep using our app.\n
+        Sorry for all the headaches.\n
+        Please keep using our app!\n
         \n
         Jofre Palau\n
         <a href="https://github.com/jofrep">https://github.com/jofrep</a>\n
@@ -76,8 +77,7 @@
         \n
         Kristin Paget\n
         <a href="www.tombom.co.uk/blog">www.tombom.co.uk/blog</a>\n
-        for your video about how IMSI-Catcher work\n
-        and for being a beautiful hacker princess.\n
+        for your talks on how IMSI-Catcher work.\n
         \n
         DarkCoin Project\n
         <a href="https://www.darkcoin.io">https://www.darkcoin.io</a>\n
@@ -241,7 +241,8 @@
         \n
         Michal Čihař\n
         <a href="https://github.com/nijel">https://github.com/nijel</a>\n
-        for hosting our app on your Weblate service.\n
+        for hosting our app translations\n
+        on your Weblate service.\n
         \n
         Jens Stein\n
         <a href="https://github.com/jensstein">https://github.com/jensstein</a>\n
@@ -250,20 +251,22 @@
         \n
         Nnabueze Uhiara\n
         <a href="https://github.com/NezSpencer">https://github.com/NezSpencer</a>\n
-        for fixing that really annoying GPS notifications bug.\n
+        for fixing that really annoying\n
+        GPS notifications bug.\n
         \n
         tt3mm\n
         <a href="https://github.com/tt3mm">https://github.com/tt3mm</a>\n
-        for working hard to make our UI/UX shine bright! *.*\n
+        for working hard to make\n
+        our UI/UX shine bright! *.*\n
         \n
         Justin Bull\n
         <a href="https://github.com/f3ndot">https://github.com/f3ndot</a>\n
-        for improving the internal data handling\n
-        and many smaller fixes.\n
+        for improving our internal\n
+        data handling and many small fixes.\n
         \n
         Vlad Todosin\n
         <a href="https://github.com/VladThodo">https://github.com/VladThodo</a>\n
-        for your improvements of these in-app CREDITS\n
+        for your improvements of these CREDITS\n
         and even more wonderful contributions!\n
         (greetings to your informatics teacher)\n
         \n
