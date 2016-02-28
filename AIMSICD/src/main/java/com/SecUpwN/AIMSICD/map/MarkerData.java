@@ -77,11 +77,7 @@ public class MarkerData {
     }
 
     public String getPSC() {
-        String s = Cell.validatePscValue(psc);
-        if (s.equals(Cell.INVALID_PSC)) {
-            return c.getString(R.string.unknown);
-        }
-        return s;
+        return Cell.validatePscValue(c, psc);
     }
 
     public String getRAT() {

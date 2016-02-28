@@ -210,7 +210,9 @@ public final class DbViewerFragment extends InjectionFragment {
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_MNC))),   // MNC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC))),   // LAC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_CID))),   // CID
-                                Cell.validatePscValue(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC))),      // PSC
+                                Cell.validatePscValue(
+                                        this.getContext(),
+                                        tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC))),          // PSC
                                 //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_T3212))), // T3212
                                 //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_A5x))),   // A5x
                                 //String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBI_BTS_ST_id))), // ST_id
@@ -300,7 +302,9 @@ public final class DbViewerFragment extends InjectionFragment {
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MNC))),            // MNC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_LAC))),            // LAC
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_CID))),            // CID
-                                Cell.validatePscValue(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC))),               // PSC (UMTS only)
+                                Cell.validatePscValue(
+                                        this.getContext(),
+                                        tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC))),               // PSC (UMTS only)
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LAT)),                     // gps_lat
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LON)),                     // gps_lon
                                 String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_IS_GPS_EXACT))),   // isGPSexact
@@ -409,7 +413,9 @@ public final class DbViewerFragment extends InjectionFragment {
                                 "" + tableData.getString(tableData.getColumnIndex("time")),             // time
                                 "" + tableData.getInt(tableData.getColumnIndex("LAC")),                 // LAC
                                 "" + tableData.getInt(tableData.getColumnIndex("CID")),                 // CID
-                                "" + Cell.validatePscValue(tableData.getInt(tableData.getColumnIndex("PSC"))),    // PSC
+                                "" + Cell.validatePscValue(
+                                        this.getContext(),
+                                        tableData.getInt(tableData.getColumnIndex("PSC"))),             // PSC
                                 "" + tableData.getDouble(tableData.getColumnIndex("gpsd_lat")),         // gpsd_lat
                                 "" + tableData.getDouble(tableData.getColumnIndex("gpsd_lon")),         // gpsd_lon
                                 "" + tableData.getInt(tableData.getColumnIndex("gpsd_accu")),           // gpsd_accu (accuracy in [m])

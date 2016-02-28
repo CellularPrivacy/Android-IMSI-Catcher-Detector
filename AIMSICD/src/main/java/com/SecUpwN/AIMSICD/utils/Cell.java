@@ -5,9 +5,12 @@
  */
 package com.SecUpwN.AIMSICD.utils;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
+
+import com.SecUpwN.AIMSICD.R;
 
 public class Cell implements Parcelable {
 
@@ -444,6 +447,27 @@ public class Cell implements Parcelable {
         return this.getCID() != Integer.MAX_VALUE && this.getLAC() != Integer.MAX_VALUE;
     }
 
+    public static String validatePscValue(Context c, String psc) {
+        return validatePscValue(c, Integer.parseInt(psc));
+    }
+
+    /**
+     * Validate PSC is in bounds, return i18n'd "Unknown" if invalid
+     *
+     * @see #validatePscValue(int)
+     *
+     * @param c Used for getString translations
+     * @param psc
+     * @return PSC or "Unknown "if invalid
+     */
+    public static String validatePscValue(Context c, int psc) {
+        String s = validatePscValue(psc);
+        if (s.equals(INVALID_PSC)) {
+            return c.getString(R.string.unknown);
+        }
+        return s;
+    }
+
     public static String validatePscValue(String psc) {
         return validatePscValue(Integer.parseInt(psc));
     }
@@ -457,7 +481,7 @@ public class Cell implements Parcelable {
      * Use this method to translate/i18n a cell's missing PSC value.
      *
      * @param psc
-     * @return
+     * @return PSC or "invalid" untranslated string if invalid
      */
     public static String validatePscValue(int psc) {
         if (psc < 0 || psc > 511) {
