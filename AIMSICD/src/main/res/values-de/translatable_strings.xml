@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     
     <!-- Drawer -->
@@ -193,12 +193,12 @@
   
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILLIERTE BESCHREIBUNG</string>
-    <string name="status_idle_detail_info">App ruht oder lädt. Keine Schutz- und Erkennungsmaßnahmen aktiviert. Im Seitenmenü unter FUNKZELLENVERFOLGUNG die Angriffserkennung aktivieren!</string>
-    <string name="status_ok_detail_info">Keine Gefahren erkannt oder gefunden. Unsere App prüft kontinuierlich das Netzwerk mit den aktivierten Schutzmaßnahmen von Seitenmenü und Einstellungen.</string>
-    <string name="status_medium_detail_info">Unsichere Zone: Mindestens 1 neuer oder unbekannter Mobilfunkmast ist in dieser Gegend aktiv oder verwendet eine unsichere (geknackte) Verschlüsselung niedriger als A5/3 [Erkennung ist noch in Arbeit]. Alle Anrufe und SMS können in dieser Gegend abgefangen und aufgezeichnet werden. Die Gegend sollte sofort verlassen werden.</string>
-    <string name="status_high_detail_info">Feindliche Betriebsaktionen erkannt: Ein IMSI-Catcher (IMSIC) oder gefälschte Mobilfunkstation (FBTS) verfolgt die Nutzer gezielt. Aktive Rasterung findet in dieser Gegend statt. Diese Gegend sollte dringend vermieden werden, vor allen Dingen während politischer Unruhen. Batterie aus Telefon entfernen oder komplett außer Kraft setzen!</string>
-    <string name="status_danger_detail_info">Feindliche Verfolgung erkannt: Ein FBTS oder IMSIC verfolgt DICH aktiv und verhindert die Verbindung Deines Telefons mit dem echten verschlüsselten Netz Deines Mobilfunkbetreibers. Bei Gefahr oder Konsequenzen sollte das Telefon zerstört und die SIM als gestohlen gemeldet werden.</string>
-    <string name="status_skull_detail_info">Feindliche Manipulation: Jemand versucht aus der Ferne dieses Telefon zu manipulieren. Zerstöre (oder verkaufe) das Telefon und besorge weit weg ein Neues (altes Telefon nicht zum Wechselplatz mitnehmen)! Nutze eine neue (anonyme) SIM, verändere Dein Telefonieverhalten und warne Deine Kontakte im echten Leben, NICHT mittels Anruf!</string>
+    <string name="status_idle_detail_info">App ruht oder lädt. Keine Schutz- und Erkennungsmaßnahmen aktiviert. Bitte die Angriffserkennung einschalten!</string>
+    <string name="status_ok_detail_info">Keine Gefahren erkannt. Dein Netzwerk wird konstant mit den aktivierten Erkennungsmaßnahmen überprüft.</string>
+    <string name="status_medium_detail_info">Unsichere Zone: Mindestens 1 neuer oder unbekannter Mobilfunkmast ist in dieser Gegend aktiv oder verwendet eine unsichere (geknackte) Verschlüsselung niedriger als A5/3. Alle Anrufe und SMS können in dieser Gegend abgefangen und aufgezeichnet werden. Du solltest diesen Ort verlassen.</string>
+    <string name="status_high_detail_info">Feindliche Betriebsaktionen erkannt: Ein IMSI-Catcher (IMSIC) oder gefälschte Mobilfunkstation (FBTS) verfolgt die Nutzer gezielt. Aktive Rasterung findet in dieser Gegend statt. Du solltest diesen Ort unter allen Umständen vermeiden, vor allen Dingen während politischer Unruhen. Batterie und SIM-Karte entfernen!</string>
+    <string name="status_danger_detail_info">"Feindliche Verfolgung erkannt: Ein FBTS oder IMSIC verfolgt DICH aktiv und verhindert die Verbindung Deines Telefons mit dem echten verschlüsselten Netz Deines Mobilfunkbetreibers. Bei Gefahr oder Konsequenzen Telefon und SIM-Karte zerstören,  danach als gestohlen melden."</string>
+    <string name="status_skull_detail_info">Feindliche Manipulation: Jemand versucht aus der Ferne dieses Telefon zu manipulieren. Zerstöre (oder verkaufe) das Telefon und besorge weit weg ein Neues (altes Telefon nicht zum Wechselplatz mitnehmen)! Nutze eine neue anonyme SIM-Karte welche auf eine falsche Identität mittels Tor-Browser registriert wurde. Verändere Dein Telefonieverhalten und warne Deine Kontakte im echten Leben über Deine Überwachung, NICHT mittels Anruf!</string>
     <string name="open_cell_id_button_cancel">Abbrechen</string>
     <string name="open_cell_id_button_ok">OK</string>
    
