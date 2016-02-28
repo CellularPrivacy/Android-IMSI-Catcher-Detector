@@ -149,7 +149,6 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 final TextView mCreditsText = new TextView(getApplicationContext());
                 mCreditsText.setText(R.string.about_credits_content);
                 mCreditsText.setTextSize(18);
-                mCreditsText.setMaxLines(50);
                 final ScrollView mScrollView = new ScrollView(getApplicationContext());
                 mScrollView.addView(mCreditsText);
                 Animation scrollTo = (Animation)AnimationUtils.loadAnimation(getApplicationContext(), R.anim.credits_dialog_scroll);
@@ -172,6 +171,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
                     @Override
                     public void onAnimationRepeat(Animation animation) {}
                 });
+                scrollTo.setDuration(countLines(getResources().getString(R.string.about_credits_content)) * 500);
                 ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) mCreditsText.getLayoutParams();
                 mlp.setMargins(50, 20, 20, 0);
                 mCreditsText.setTypeface(Typeface.DEFAULT_BOLD);
@@ -268,6 +268,10 @@ public class AboutActivity extends InjectionAppCompatActivity {
         @StringRes
         public int getDescription() {
             return description;
+        }
+        private  int countLines(String mString){
+        String[] lines = mString.split("\r\n|\r|\n");
+        return  lines.length;
         }
     }
 }
