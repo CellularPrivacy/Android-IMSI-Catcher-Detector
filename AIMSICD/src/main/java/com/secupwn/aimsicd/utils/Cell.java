@@ -479,7 +479,7 @@ public class Cell implements Parcelable {
             case TelephonyManager.NETWORK_TYPE_EDGE:
                 return "EDGE";
             case TelephonyManager.NETWORK_TYPE_EHRPD:
-                return "EHRPD";
+                return "eHRPD";
             case TelephonyManager.NETWORK_TYPE_EVDO_0:
                 return "EVDO rev. 0";
             case TelephonyManager.NETWORK_TYPE_EVDO_A:
@@ -493,7 +493,7 @@ public class Cell implements Parcelable {
             case TelephonyManager.NETWORK_TYPE_HSPA:
                 return "HSPA";
             case TelephonyManager.NETWORK_TYPE_HSPAP:
-                return "HSPAP";
+                return "HSPA+";
             case TelephonyManager.NETWORK_TYPE_HSUPA:
                 return "HSUPA";
             case TelephonyManager.NETWORK_TYPE_IDEN:

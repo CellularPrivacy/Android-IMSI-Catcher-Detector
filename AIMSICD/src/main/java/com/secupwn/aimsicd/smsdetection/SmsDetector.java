@@ -18,7 +18,6 @@ import android.view.WindowManager;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.service.AimsicdService;
-import com.secupwn.aimsicd.utils.Device;
 import com.secupwn.aimsicd.utils.MiscUtils;
 
 import java.io.BufferedReader;
@@ -294,7 +293,7 @@ public final class SmsDetector extends Thread {
         capturedSms.setSmsType("TYPE0");
         capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLAC());
         capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCID());
-        capturedSms.setCurrent_nettype(Device.getNetworkTypeName(mAIMSICDService.getCell().getNetType()));
+        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRAT());
         int isRoaming = 0;
 
         if ("true".equals(mAIMSICDService.getCellTracker().getDevice().isRoaming())) {
@@ -327,7 +326,7 @@ public final class SmsDetector extends Thread {
         capturedSms.setSmsType("MWI");
         capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLAC());
         capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCID());
-        capturedSms.setCurrent_nettype(Device.getNetworkTypeName(mAIMSICDService.getCell().getNetType()));
+        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRAT());
         int isRoaming = 0;
         if ("true".equals(mAIMSICDService.getCellTracker().getDevice().isRoaming())) {
             isRoaming = 1;
@@ -357,7 +356,7 @@ public final class SmsDetector extends Thread {
         capturedSms.setSmsType("WAPPUSH");
         capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLAC());
         capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCID());
-        capturedSms.setCurrent_nettype(Device.getNetworkTypeName(mAIMSICDService.getCell().getNetType()));
+        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRAT());
         int isRoaming = 0;
         if ("true".equals(mAIMSICDService.getCellTracker().getDevice().isRoaming())) {
             isRoaming = 1;

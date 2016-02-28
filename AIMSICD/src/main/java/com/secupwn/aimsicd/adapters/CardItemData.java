@@ -6,7 +6,6 @@
 package com.secupwn.aimsicd.adapters;
 
 import com.secupwn.aimsicd.utils.Cell;
-import com.secupwn.aimsicd.utils.Device;
 
 /**
  *  Description:    TODO: A few comments please!
@@ -96,7 +95,7 @@ public class CardItemData {
         }
 
         if (cell.getNetType() != Integer.MAX_VALUE && cell.getNetType() != -1) {
-            mNet = "Type: " + cell.getNetType() + " - " + Device.getNetworkTypeName(cell.getNetType());
+            mNet = "Type: " + cell.getNetType() + " - " + cell.getRAT();
         } else {
             mNet = "N/A";
         }
