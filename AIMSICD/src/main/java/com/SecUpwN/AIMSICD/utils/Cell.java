@@ -15,7 +15,7 @@ import com.SecUpwN.AIMSICD.R;
 
 public class Cell implements Parcelable {
 
-    public final static String INVALID_PSC = "invalid";
+    public static final String INVALID_PSC = "invalid";
 
     // Cell Specific Variables
     private int cid;                // Cell Identification code
