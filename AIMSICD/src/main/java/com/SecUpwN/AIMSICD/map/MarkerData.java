@@ -5,6 +5,11 @@
  */
 package com.SecUpwN.AIMSICD.map;
 
+import android.content.Context;
+
+import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.utils.Cell;
+
 /**
  *
  * Class to hold data for displaying in BTS pin popup dialog
@@ -12,6 +17,7 @@ package com.SecUpwN.AIMSICD.map;
  */
 public class MarkerData {
 
+    Context c;                      // Used for i18n/Strings
     public final String cellID;     // change to "CID"...
     //private final String psc;     // PSC (UMTS)
     public final String lat;        // gpsd_lat or gps_lat
@@ -19,28 +25,33 @@ public class MarkerData {
     public final String lac;        // LAC
     private final String mcc;       // remove and use PC: MCC+MNC
     private final String mnc;       // remove and use PC: MCC+MNC
-    // todo: Add PSC and RAT
-    //private final String psc;     // PSC
-    //private final String rat;     // RAT
+    private final String psc;       // PSC
+    private final String rat;     // RAT
 
     private final String samples;   // samples
     public final boolean openCellID; // ??
 
     public MarkerData(
+               Context context,
                String cell_id,
                String latitude,
                String longitude,
                String local_area_code,
                String mobile_country_code,
                String mobile_network_code,
+               String primary_scrambling_code,
+               String radio_access_technology,
                String samples_taken,
                boolean openCellID_Data) {
+        c = context;
         cellID = cell_id;
         lat = latitude;
         lng = longitude;
         lac = local_area_code;
         mcc = mobile_country_code;
         mnc = mobile_network_code;
+        psc = primary_scrambling_code;
+        rat = radio_access_technology;
         samples = samples_taken;
         openCellID = openCellID_Data;
     }
@@ -64,6 +75,17 @@ public class MarkerData {
             return mnc;
         }
         return ("00" + mnc).substring(mnc.length());
+    }
+
+    public String getPSC() {
+        return Cell.validatePscValue(c, psc);
+    }
+
+    public String getRAT() {
+        if (rat == null || rat.isEmpty()) {
+            return c.getString(R.string.unknown);
+        }
+        return rat;
     }
 
     // (Mobile Network Operator) Provider Code in form: MCC-MNC

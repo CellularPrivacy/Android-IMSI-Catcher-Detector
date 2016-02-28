@@ -5,11 +5,17 @@
  */
 package com.SecUpwN.AIMSICD.utils;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
+import android.telephony.TelephonyManager;
+
+import com.SecUpwN.AIMSICD.R;
 
 public class Cell implements Parcelable {
+
+    public static final String INVALID_PSC = "invalid";
 
     // Cell Specific Variables
     private int cid;                // Cell Identification code
@@ -205,6 +211,19 @@ public class Cell implements Parcelable {
         } else {
             this.psc = psc;
         }
+    }
+
+    /**
+     * Radio Access Technology (RAT)
+     *
+     * Some places in the app refers to this as the Network Type.
+     *
+     * For our purposes, network types displayed to the user is referred to as RAT.
+     *
+     * @return Current cell's Radio Access Technology (e.g. UMTS, GSM) or null if not known
+     */
+    public String getRAT() {
+        return getRatFromInt(this.netType);
     }
 
     /**
@@ -430,9 +449,7 @@ public class Cell implements Parcelable {
         result.append("MCC - ").append(mcc).append("\n");
         result.append("MNC - ").append(mnc).append("\n");
         result.append("DBm - ").append(dbm).append("\n");
-        if (psc != Integer.MAX_VALUE) {
-            result.append("PSC - ").append(psc).append("\n");
-        }
+        result.append("PSC - ").append(validatePscValue(psc)).append("\n");
         result.append("Type - ").append(netType).append("\n");
         result.append("Lon - ").append(lon).append("\n");
         result.append("Lat - ").append(lat).append("\n");
@@ -442,6 +459,97 @@ public class Cell implements Parcelable {
 
     public boolean isValid() {
         return this.getCID() != Integer.MAX_VALUE && this.getLAC() != Integer.MAX_VALUE;
+    }
+
+    /**
+     * Get a human-readable string of RAT/Network Type
+     *
+     * Frustratingly it looks like the app uses RAT & Network Type interchangably with both either
+     * being an integer representation (TelephonyManager's constants) or a human-readable string.
+     *
+     * @param netType The integer representation of the network type, via TelephonyManager
+     * @return Human-readable representation of network type (e.g. "EDGE", "LTE")
+     */
+    public static String getRatFromInt(int netType) {
+        switch (netType) {
+            case TelephonyManager.NETWORK_TYPE_1xRTT:
+                return "1xRTT";
+            case TelephonyManager.NETWORK_TYPE_CDMA:
+                return "CDMA";
+            case TelephonyManager.NETWORK_TYPE_EDGE:
+                return "EDGE";
+            case TelephonyManager.NETWORK_TYPE_EHRPD:
+                return "EHRPD";
+            case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                return "EVDO rev. 0";
+            case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                return "EVDO rev. A";
+            case TelephonyManager.NETWORK_TYPE_EVDO_B:
+                return "EVDO rev. B";
+            case TelephonyManager.NETWORK_TYPE_GPRS:
+                return "GPRS";
+            case TelephonyManager.NETWORK_TYPE_HSDPA:
+                return "HSDPA";
+            case TelephonyManager.NETWORK_TYPE_HSPA:
+                return "HSPA";
+            case TelephonyManager.NETWORK_TYPE_HSPAP:
+                return "HSPAP";
+            case TelephonyManager.NETWORK_TYPE_HSUPA:
+                return "HSUPA";
+            case TelephonyManager.NETWORK_TYPE_IDEN:
+                return "iDen";
+            case TelephonyManager.NETWORK_TYPE_LTE:
+                return "LTE";
+            case TelephonyManager.NETWORK_TYPE_UMTS:
+                return "UMTS";
+            case TelephonyManager.NETWORK_TYPE_UNKNOWN:
+                return "Unknown";
+            default:
+                return String.valueOf(netType);
+        }
+    }
+
+    public static String validatePscValue(Context c, String psc) {
+        return validatePscValue(c, Integer.parseInt(psc));
+    }
+
+    /**
+     * Validate PSC is in bounds, return i18n'd "Unknown" if invalid
+     *
+     * @see #validatePscValue(int)
+     *
+     * @param c Used for getString translations
+     * @param psc
+     * @return PSC or "Unknown "if invalid
+     */
+    public static String validatePscValue(Context c, int psc) {
+        String s = validatePscValue(psc);
+        if (s.equals(INVALID_PSC)) {
+            return c.getString(R.string.unknown);
+        }
+        return s;
+    }
+
+    public static String validatePscValue(String psc) {
+        return validatePscValue(Integer.parseInt(psc));
+    }
+
+    /**
+     * Validate PSC is in bounds
+     *
+     * Database import stores cell's PSC as "666" if its absent in OCID. This method will return
+     * "invalid" instead.
+     *
+     * Use this method to translate/i18n a cell's missing PSC value.
+     *
+     * @param psc
+     * @return PSC or "invalid" untranslated string if invalid
+     */
+    public static String validatePscValue(int psc) {
+        if (psc < 0 || psc > 511) {
+            return INVALID_PSC;
+        }
+        return String.valueOf(psc);
     }
 
     // Parcelling
