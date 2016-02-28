@@ -269,9 +269,10 @@ public class AboutActivity extends InjectionAppCompatActivity {
         public int getDescription() {
             return description;
         }
-        private  int countLines(String mString){
-        String[] lines = mString.split("\r\n|\r|\n");
-        return  lines.length;
-        }
     }
+    private  int countLines(String mString){
+    String[] lines = mString.split("\r\n|\r|\n");
+    return  lines.length;
+    }
+    
 }
