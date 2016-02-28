@@ -3,7 +3,7 @@
 
     <string name="about_credits_content" translatable="false">
         ANDROID IMSI-CATCHER DETECTOR\n
-       <a href="(born in 2012 on XDA-Developers)">http://forum.xda-developers.com/showthread.php?t=1422969</a>\n
+       <a href="http://forum.xda-developers.com/showthread.php?t=1422969">[born in 2012 on XDA-Developers]</a>\n
         \n
         Website: <a href="https://git.io/AIMSICD">https://git.io/AIMSICD</a>\n
         \n
@@ -266,8 +266,8 @@
         \n
         Vlad Todosin\n
         <a href="https://github.com/VladThodo">https://github.com/VladThodo</a>\n
-        for your improvements of these CREDITS\n
-        and even more wonderful contributions!\n
+        for your CREDITS improvements and\n
+        even more wonderful contributions!\n
         (greetings to your informatics teacher)\n
         \n
     </string>
