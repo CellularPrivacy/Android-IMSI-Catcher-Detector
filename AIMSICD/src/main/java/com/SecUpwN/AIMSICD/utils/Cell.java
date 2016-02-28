@@ -11,6 +11,8 @@ import android.os.SystemClock;
 
 public class Cell implements Parcelable {
 
+    public final static String INVALID_PSC = "invalid";
+
     // Cell Specific Variables
     private int cid;                // Cell Identification code
     private int lac;                // Location Area Code
@@ -430,9 +432,7 @@ public class Cell implements Parcelable {
         result.append("MCC - ").append(mcc).append("\n");
         result.append("MNC - ").append(mnc).append("\n");
         result.append("DBm - ").append(dbm).append("\n");
-        if (psc != Integer.MAX_VALUE) {
-            result.append("PSC - ").append(psc).append("\n");
-        }
+        result.append("PSC - ").append(validatePscValue(psc)).append("\n");
         result.append("Type - ").append(netType).append("\n");
         result.append("Lon - ").append(lon).append("\n");
         result.append("Lat - ").append(lat).append("\n");
@@ -442,6 +442,28 @@ public class Cell implements Parcelable {
 
     public boolean isValid() {
         return this.getCID() != Integer.MAX_VALUE && this.getLAC() != Integer.MAX_VALUE;
+    }
+
+    public static String validatePscValue(String psc) {
+        return validatePscValue(Integer.parseInt(psc));
+    }
+
+    /**
+     * Validate PSC is in bounds
+     *
+     * Database import stores cell's PSC as "666" if its absent in OCID. This method will return
+     * "invalid" instead.
+     *
+     * Use this method to translate/i18n a cell's missing PSC value.
+     *
+     * @param psc
+     * @return
+     */
+    public static String validatePscValue(int psc) {
+        if (psc < 0 || psc > 511) {
+            return INVALID_PSC;
+        }
+        return String.valueOf(psc);
     }
 
     // Parcelling

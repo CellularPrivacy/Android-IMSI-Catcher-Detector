@@ -566,8 +566,9 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 //                                cid = csvCellID.get(rowCounter)[12],         //int   short CID [<65536]
                                 psc = csvCellID.get(rowCounter)[13];         //int
 
-                        // TODO: WHAT IS THIS DOING? Can we remove?
-                        // (There shouldn't be any bad PSCs in the import...)
+                        // Some OCID data may not contain PSC so we indicate this with an out-of-range
+                        // PSC value. Should be -1 but hey people already imported so we're stuck with
+                        // this.
                         int iPsc = 666;
                         if (psc != null && !psc.isEmpty()) {
                             iPsc = Integer.parseInt(psc);

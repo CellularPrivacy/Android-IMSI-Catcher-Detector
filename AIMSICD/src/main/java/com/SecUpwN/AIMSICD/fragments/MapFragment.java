@@ -400,6 +400,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         final int lac = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC));        // LAC
                         final int mcc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_MCC));        // MCC
                         final int mnc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_MNC));        // MNC
+                        final int psc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC));        // PSC
                         final double dLat = c.getDouble(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LAT)); // Lat
                         final double dLng = c.getDouble(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LON)); // Lon
 
@@ -424,12 +425,14 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                                     "Cell ID: " + cellID,
                                     "", loc,
                                     new MarkerData(
+                                            getContext(),
                                             String.valueOf(cellID),
                                             String.valueOf(loc.getLatitude()),
                                             String.valueOf(loc.getLongitude()),
                                             String.valueOf(lac),
                                             String.valueOf(mcc),
                                             String.valueOf(mnc),
+                                            String.valueOf(psc),
                                             "", false)
                             );
                             // The pin of our current position
@@ -483,12 +486,14 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                                 getString(R.string.cell_id_label) + cell.getCID(),
                                 "", loc,
                                 new MarkerData(
+                                        getContext(),
                                         String.valueOf(cell.getCID()),
                                         String.valueOf(loc.getLatitude()),
                                         String.valueOf(loc.getLongitude()),
                                         String.valueOf(cell.getLAC()),
                                         String.valueOf(cell.getMCC()),
                                         String.valueOf(cell.getMNC()),
+                                        String.valueOf(cell.getPSC()),
                                         "", false));
 
                         // The pin of other BTS
@@ -569,6 +574,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                 final int lac = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_LAC));
                 final int mcc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MCC));
                 final int mnc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MNC));
+                final int psc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC));
                 final double dLat = Double.parseDouble(c.getString(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LAT)));
                 final double dLng = Double.parseDouble(c.getString(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LON)));
                 final GeoPoint location = new GeoPoint(dLat, dLng);
@@ -579,12 +585,14 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         "Cell ID: " + cellID,
                         "", location,
                         new MarkerData(
+                                getContext(),
                                 String.valueOf(cellID),
                                 String.valueOf(location.getLatitude()),
                                 String.valueOf(location.getLongitude()),
                                 String.valueOf(lac),
                                 String.valueOf(mcc),
                                 String.valueOf(mnc),
+                                String.valueOf(psc),
                                 String.valueOf(samples),
                                 false));
 

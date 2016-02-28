@@ -384,6 +384,7 @@
     <string name="the_string_was_added_to_db">The string was added to database</string>
     <string name="failed_to_add_the_string_to_db">Failed to add the string to database</string>
     <string name="n_a">N/A</string>
+    <string name="unknown">Unknown</string>
 
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
