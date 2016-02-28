@@ -453,16 +453,53 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         super.onPause();
     }
 
+    /**
+     * Invoked only once during app's lifetime. For successive calls see
+     * {@link #onPrepareOptionsMenu(Menu)}. Both used primarily to determine checkboxes for tracking
+     * and detection.
+     *
+     * Because the service may not available on app boot, we default to false until the service
+     * boots. Once that occurs, the checkboxes are driven by the service's status.
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
 
         MenuItem toggleAttackDetectionMenuItem = menu.findItem(R.id.toggle_attack_detection);
-        toggleAttackDetectionMenuItem.setChecked(mAimsicdService.isMonitoringCell());
         MenuItem toggleCellTrackingMenuItem = menu.findItem(R.id.toggle_cell_tracking);
-        toggleCellTrackingMenuItem.setChecked(mAimsicdService.isTrackingCell());
+
+        // The service may not exist on first app boot. Choose sane defaults
+        if (mAimsicdService == null) {
+            toggleAttackDetectionMenuItem.setChecked(false);
+            toggleCellTrackingMenuItem.setChecked(false);
+        } else {
+            toggleAttackDetectionMenuItem.setChecked(mAimsicdService.isMonitoringCell());
+            toggleCellTrackingMenuItem.setChecked(mAimsicdService.isTrackingCell());
+        }
         return true;
+    }
+
+    /**
+     * Display latest cell tracking & attack detection truth when opening menu over & over
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Bail early if there's no service to get the facts from
+        if (mAimsicdService == null) {
+            return super.onPrepareOptionsMenu(menu);
+        }
+        MenuItem toggleAttackDetectionMenuItem = menu.findItem(R.id.toggle_attack_detection);
+        MenuItem toggleCellTrackingMenuItem = menu.findItem(R.id.toggle_cell_tracking);
+        toggleAttackDetectionMenuItem.setChecked(mAimsicdService.isMonitoringCell());
+        toggleCellTrackingMenuItem.setChecked(mAimsicdService.isTrackingCell());
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
