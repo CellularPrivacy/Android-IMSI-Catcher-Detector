@@ -22,11 +22,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.utils.MiscUtils;
 import com.SecUpwN.AIMSICD.utils.Toaster;
 
 import io.freefair.android.injection.annotation.InjectView;
