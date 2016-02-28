@@ -3,4 +3,4 @@
     android:fromYDelta="0%"
     android:interpolator="@android:anim/linear_interpolator"
     android:repeatCount="0"
-    android:toYDelta="-101&" />
+    android:toYDelta="-101%" />
