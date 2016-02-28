@@ -5,6 +5,7 @@
  */
 package com.SecUpwN.AIMSICD.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -12,6 +13,8 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
+import android.text.method.LinkMovementMethod;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -19,9 +22,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.SecUpwN.AIMSICD.BuildConfig;
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.utils.MiscUtils;
+import com.SecUpwN.AIMSICD.utils.Toaster;
 
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
@@ -57,6 +63,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
     @InjectView(R.id.textViewSkull)
     private TextView skullTextView;
     private boolean closeAfterFinish = true;
+    private Context mContext = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,12 +153,18 @@ public class AboutActivity extends InjectionAppCompatActivity {
             AlertDialog mCreditsDialog;
             @Override
             public void onClick(View view) {
-                final TextView mCreditsText = new TextView(getApplicationContext());
+                final TextView mCreditsTitle = new TextView(getApplicationContext());
+                final TextView mCreditsText = new TextView(mContext);
+                final ScrollView mScrollView = new ScrollView(getApplicationContext());
                 mCreditsText.setText(R.string.about_credits_content);
                 mCreditsText.setTextSize(18);
-                final ScrollView mScrollView = new ScrollView(getApplicationContext());
+                mCreditsText.setTypeface(Typeface.DEFAULT_BOLD);
+                mCreditsTitle.setText(R.string.about_credits);
+                mCreditsTitle.setTypeface(Typeface.DEFAULT_BOLD);
+                mCreditsTitle.setTextSize(20);
+                mCreditsTitle.setGravity(Gravity.CENTER_HORIZONTAL);
                 mScrollView.addView(mCreditsText);
-                Animation scrollTo = (Animation)AnimationUtils.loadAnimation(getApplicationContext(), R.anim.credits_dialog_scroll);
+                Animation scrollTo =  (Animation)AnimationUtils.loadAnimation(getApplicationContext(), R.anim.credits_dialog_scroll);
                 mCreditsText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -161,27 +174,33 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 });
                 scrollTo.setAnimationListener(new Animation.AnimationListener() {
                     @Override
-                    public void onAnimationStart(Animation animation) {}
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         if (closeAfterFinish) {
                             mCreditsDialog.cancel();
                         }
                     }
+
                     @Override
-                    public void onAnimationRepeat(Animation animation) {}
+                    public void onAnimationRepeat(Animation animation) {
+                    }
                 });
+                mCreditsText.setGravity(Gravity.CENTER_HORIZONTAL);
+                mCreditsText.setMovementMethod(LinkMovementMethod.getInstance());
                 scrollTo.setDuration(countLines(getResources().getString(R.string.about_credits_content)) * 500);
-                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) mCreditsText.getLayoutParams();
-                mlp.setMargins(50, 20, 20, 0);
-                mCreditsText.setTypeface(Typeface.DEFAULT_BOLD);
                 mCreditsText.startAnimation(scrollTo);
                 closeAfterFinish = true;
                 mCreditsDialog = new AlertDialog.Builder(AboutActivity.this)
-                        .setTitle(R.string.about_credits)
+                        .setCustomTitle(mCreditsTitle)
                         .setPositiveButton(android.R.string.ok, null)
                         .setView(mScrollView)
                         .show();
+
+
             }
         });
     }
@@ -271,8 +290,9 @@ public class AboutActivity extends InjectionAppCompatActivity {
         }
     }
     private  int countLines(String mString){
-    String[] lines = mString.split("\r\n|\r|\n");
-    return  lines.length;
+        String[] lines = mString.split("\r\n|\r|\n");
+        return  lines.length;
     }
-    
+
+
 }
