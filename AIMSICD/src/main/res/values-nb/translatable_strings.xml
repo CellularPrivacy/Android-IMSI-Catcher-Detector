@@ -338,4 +338,5 @@
     <string name="unknown">Ukjent</string>
 
     <string name="database_settings">Database</string>
+    <string name="download_timed_out">OpenCellID API forespørsel tidsavbrudd Prøv igjen senere?</string>
     </resources>
