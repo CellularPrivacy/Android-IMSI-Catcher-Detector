@@ -26,8 +26,7 @@ public class MarkerData {
     private final String mcc;       // remove and use PC: MCC+MNC
     private final String mnc;       // remove and use PC: MCC+MNC
     private final String psc;       // PSC
-    // todo: Add RAT/Radio
-    //private final String rat;     // RAT
+    private final String rat;     // RAT
 
     private final String samples;   // samples
     public final boolean openCellID; // ??
@@ -41,6 +40,7 @@ public class MarkerData {
                String mobile_country_code,
                String mobile_network_code,
                String primary_scrambling_code,
+               String radio_access_technology,
                String samples_taken,
                boolean openCellID_Data) {
         c = context;
@@ -51,6 +51,7 @@ public class MarkerData {
         mcc = mobile_country_code;
         mnc = mobile_network_code;
         psc = primary_scrambling_code;
+        rat = radio_access_technology;
         samples = samples_taken;
         openCellID = openCellID_Data;
     }
@@ -81,10 +82,11 @@ public class MarkerData {
     }
 
     public String getRAT() {
-        // TODO: 2016-02-27 drive this
-        return "ToDo";
+        if (rat == null || rat.isEmpty()) {
+            return c.getString(R.string.unknown);
+        }
+        return rat;
     }
-
 
     // (Mobile Network Operator) Provider Code in form: MCC-MNC
     public String getPC() {

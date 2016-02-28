@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.utils.Cell;
 
 /**
  * Contains the data and definitions of all the items of the XML layout
@@ -134,7 +135,10 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
 //            tx_power.setText(item.getTx_power());
             rx_signal.setText(item.getRx_signal());
 //            rx_stype.setText(item.getRx_stype());
-            rat.setText(item.getRat());
+            // TODO: 2016-02-27 Someone has got to unify RAT as either an int or human-string
+            // This converts a string of a number to an integer and then gets the human-string
+            // From the number.
+            rat.setText(Cell.getRatFromInt(Integer.parseInt(item.getRat())));
 //            BCCH.setText(item.getBCCH());
 //            TMSI.setText(item.getTMSI());
 //            TA.setText(item.getTA());
