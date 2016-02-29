@@ -316,9 +316,7 @@ public class Device {
             return "Unknown";
         }
 
-        // TODO: 2016-02-28 Why do we do an assignment? Getters shouldn't have side effects
-        mNetType = mCell.getRAT();
-        return mNetType;
+        return mCell.getRAT();
     }
 
     String getDataActivity(TelephonyManager tm) {
