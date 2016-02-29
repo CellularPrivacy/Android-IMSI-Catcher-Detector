@@ -340,4 +340,5 @@
     <string name="unknown">不明</string>
 
     <string name="database_settings">データベース</string>
+    <string name="download_timed_out">OpenCellID API リクエストがタイムアウトしました。後でもう一度試しますか?</string>
     </resources>
