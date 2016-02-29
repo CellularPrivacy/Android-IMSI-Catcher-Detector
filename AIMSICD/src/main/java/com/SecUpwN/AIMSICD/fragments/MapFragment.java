@@ -401,8 +401,8 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         final int mcc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_MCC));        // MCC
                         final int mnc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_MNC));        // MNC
                         final int psc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC));        // PSC
-                        // TODO: 2016-02-27 Is there a reason why #DBI_BTS_RAT doesn't exist?
-                        // final String rat = c.getString(c.getColumnIndex(DBTableColumnIds.DBI_BTS_RAT));   // RAT
+                        final String rat = Cell.getRatFromInt(
+                                c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_JOINED_RAT)));        // RAT
                         final double dLat = c.getDouble(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LAT)); // Lat
                         final double dLng = c.getDouble(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LON)); // Lon
 
@@ -435,7 +435,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                                             String.valueOf(mcc),
                                             String.valueOf(mnc),
                                             String.valueOf(psc),
-                                            null,
+                                            rat,
                                             "", false)
                             );
                             // The pin of our current position
