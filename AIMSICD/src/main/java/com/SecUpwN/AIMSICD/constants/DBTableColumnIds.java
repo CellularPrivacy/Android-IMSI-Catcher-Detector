@@ -75,6 +75,7 @@ public class DBTableColumnIds {
     public static final String DBI_BTS_TIME_LAST = "time_last";
     public static final String DBI_BTS_LAT = "gps_lat";
     public static final String DBI_BTS_LON = "gps_lon";
+    public static final String DBI_BTS_JOINED_RAT = "RAT";
 
     //DBi_measure
     public static final String DBI_MEASURE_TABLE_NAME = "DBi_measure";

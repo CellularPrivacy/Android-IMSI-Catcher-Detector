@@ -263,12 +263,18 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
 
     /**
-     * Returns Cell Information (DBi_bts) database contents
-     * this returns BTSs that we logged and is called from
-     * MapFragment.java to display cells on map
+     * <p>Returns Cell Information (DBi_bts) database contents this returns BTSs that we logged and is
+     * called from MapFragment.java to display cells on map</p>
+     *
+     * <p>Because RAT is stored in measurement table. JOIN the two table together for a complete
+     * picture.</p>
+     *
+     * <p>TODO: 2016-02-28 Consider if this is the best way to get the info. Database schema refactor?</p>
+     *
+     * @see #returnDBiBtsWithRAT()
      */
     public Cursor getCellData() {
-        return returnDBiBts();
+        return returnDBiBtsWithRAT();
     }
 
     /**
@@ -1277,6 +1283,10 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     */
     public Cursor returnDBiBts() {
         return mDb.rawQuery("SELECT * FROM DBi_bts", null);
+    }
+    public Cursor returnDBiBtsWithRAT() {
+        // Basically the same as above, but with RAT from a joined, related table
+        return mDb.rawQuery("SELECT DBi_bts.*, DBi_measure.RAT FROM DBi_bts JOIN DBi_measure ON DBi_measure.bts_id = DBi_bts.CID", null);
     }
 
     // TODO: THESE ARE OUTDATED!! Please see design and update
