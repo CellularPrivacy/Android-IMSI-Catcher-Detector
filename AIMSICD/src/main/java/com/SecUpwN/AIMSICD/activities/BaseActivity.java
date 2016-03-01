@@ -14,6 +14,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.SecUpwN.AIMSICD.AppAIMSICD;
 import com.SecUpwN.AIMSICD.R;
+import com.SecUpwN.AIMSICD.enums.Status;
 import com.SecUpwN.AIMSICD.service.AimsicdService;
 import com.SecUpwN.AIMSICD.utils.Icon;
 
@@ -56,12 +57,15 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
 
     private void updateIcon(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-        final String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        final String iconTypeString = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        final Icon.Type iconType = Icon.Type.valueOf(iconTypeString);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(getActionBar() != null) {
-                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD)getApplication()).getStatus()));
+                if(getSupportActionBar() != null) {
+                    Status status = ((AppAIMSICD) getApplication()).getStatus();
+                    int newIcon = Icon.getIcon(iconType, status);
+                    getSupportActionBar().setIcon(newIcon);
                 }
             }
         });
