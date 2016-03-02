@@ -1006,8 +1006,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 contentText = context.getString(R.string.cell_tracking_active);
             } if(mMonitoringCell){
                 contentText = context.getString(R.string.cell_monitoring_active);
-            }
-            else{
+            } else{
                 getApplication().setCurrentStatus(Status.IDLE,mVibrateEnabled,mVibrateMinThreatLevel);
             }
         } else {
