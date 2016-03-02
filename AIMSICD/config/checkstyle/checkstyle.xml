@@ -78,7 +78,8 @@
         <module name="NoLineWrap" />
         <module name="NoWhitespaceAfter" />
         <module name="NoWhitespaceBefore" />
-        <module name="WhitespaceAfter"/>
-        <module name="WhitespaceAround"/>
+        <module name="TypecastParenPad" />
+        <module name="WhitespaceAfter" />
+        <module name="WhitespaceAround" />
     </module>
 </module>
