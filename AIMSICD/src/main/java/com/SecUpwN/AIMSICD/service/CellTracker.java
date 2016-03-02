@@ -1000,83 +1000,90 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             getApplication().setCurrentStatus(Status.OK, mVibrateEnabled, mVibrateMinThreatLevel);
             if (mTrackingFemtocell) {
                 contentText = context.getString(R.string.femtocell_detection_active);
-            } else if (mTrackingCell) {
+            } else
+
+            if (mTrackingCell) {
                 contentText = context.getString(R.string.cell_tracking_active);
-            } else {
+            } if(mMonitoringCell){
                 contentText = context.getString(R.string.cell_monitoring_active);
+            }
+            else{
+                getApplication().setCurrentStatus(Status.IDLE,mVibrateEnabled,mVibrateMinThreatLevel);
             }
         } else {
             getApplication().setCurrentStatus(Status.IDLE, mVibrateEnabled, mVibrateMinThreatLevel);
         }
 
-        Status status = getApplication().getStatus();
-        switch (status) {
-            case IDLE: // GRAY
-                contentText = context.getString(R.string.phone_type) + mDevice.getPhoneType();
-                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_idle_description);
-                break;
 
-            case OK: // GREEN
-                tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_ok_description);
-                break;
+            Status status = getApplication().getStatus();
+            switch (status) {
+                case IDLE: // GRAY
+                    contentText = context.getString(R.string.phone_type) + mDevice.getPhoneType();
+                    tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_idle_description);
+                    break;
 
-            case MEDIUM: // YELLOW
-                // Initialize tickerText as the app name string
-                // See multiple detection comments above.
-                tickerText = context.getResources().getString(R.string.app_name_short);
-                if (mChangedLAC) {
-                    //Append changing LAC text
-                    contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
-                    tickerText += " - " + contentText;
-                    // See #264 and ask He3556
-                    //} else if (mNoNCList)  {
-                    //    tickerText += " - BTS doesn't provide any neighbors!";
-                    //    contentText = "CID: " + cellid + " is not providing a neighboring cell list!";
+                case OK: // GREEN
+                    tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_ok_description);
+                    break;
 
-                } else if (mCellIdNotInOpenDb) {
-                    //Append Cell ID not existing in external db text
-                    contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
-                    tickerText += " - " + contentText;
-                }
-                break;
+                case MEDIUM: // YELLOW
+                    // Initialize tickerText as the app name string
+                    // See multiple detection comments above.
+                    tickerText = context.getResources().getString(R.string.app_name_short);
+                    if (mChangedLAC) {
+                        //Append changing LAC text
+                        contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
+                        tickerText += " - " + contentText;
+                        // See #264 and ask He3556
+                        //} else if (mNoNCList)  {
+                        //    tickerText += " - BTS doesn't provide any neighbors!";
+                        //    contentText = "CID: " + cellid + " is not providing a neighboring cell list!";
 
-            case DANGER: // RED
-                tickerText = context.getResources().getString(R.string.app_name_short) + " - " + context.getString(R.string.alert_threat_detected); // Hmm, this is vague!
-                if (mFemtoDetected) {
-                    contentText = context.getString(R.string.alert_femtocell_connection_detected);
-                } else if (mTypeZeroSmsDetected) {
-                    contentText = context.getString(R.string.alert_silent_sms_detected);
-                }
+                    } else if (mCellIdNotInOpenDb) {
+                        //Append Cell ID not existing in external db text
+                        contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
+                        tickerText += " - " + contentText;
+                    }
+                    break;
 
-                break;
-            default:
-                tickerText = context.getResources().getString(R.string.main_app_name);
-                break;
-        }
+                case DANGER: // RED
+                    tickerText = context.getResources().getString(R.string.app_name_short) + " - " + context.getString(R.string.alert_threat_detected); // Hmm, this is vague!
+                    if (mFemtoDetected) {
+                        contentText = context.getString(R.string.alert_femtocell_connection_detected);
+                    } else if (mTypeZeroSmsDetected) {
+                        contentText = context.getString(R.string.alert_silent_sms_detected);
+                    }
 
-        // TODO: Explanation (see above)
-        Intent notificationIntent = new Intent(context, AIMSICD.class);
-        notificationIntent.putExtra("silent_sms", mTypeZeroSmsDetected);
-        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
-        PendingIntent contentIntent = PendingIntent.getActivity(
-                context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType), status);
-        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconResId);
+                    break;
+                default:
+                    tickerText = context.getResources().getString(R.string.main_app_name);
+                    break;
+            }
 
-        Notification mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(iconResId)
-                .setLargeIcon(largeIcon)
-                .setTicker(tickerText)
-                .setContentTitle(context.getResources().getString(R.string.main_app_name))
-                .setContentText(contentText)
-                .setOngoing(true)
-                .setAutoCancel(false)
-                .setContentIntent(contentIntent)
-                .build();
-        NotificationManager mNotificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
+            // TODO: Explanation (see above)
+            Intent notificationIntent = new Intent(context, AIMSICD.class);
+            notificationIntent.putExtra("silent_sms", mTypeZeroSmsDetected);
+            notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
+            PendingIntent contentIntent = PendingIntent.getActivity(
+                    context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+            int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType), status);
+            Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconResId);
+
+            Notification mBuilder = new NotificationCompat.Builder(context)
+                    .setSmallIcon(iconResId)
+                    .setLargeIcon(largeIcon)
+                    .setTicker(tickerText)
+                    .setContentTitle(context.getResources().getString(R.string.main_app_name))
+                    .setContentText(contentText)
+                    .setOngoing(true)
+                    .setAutoCancel(false)
+                    .setContentIntent(contentIntent)
+                    .build();
+            NotificationManager mNotificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
+
     }
 
     private AppAIMSICD getApplication() {
