@@ -1000,13 +1000,15 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             getApplication().setCurrentStatus(Status.OK, mVibrateEnabled, mVibrateMinThreatLevel);
             if (mTrackingFemtocell) {
                 contentText = context.getString(R.string.femtocell_detection_active);
-            } else
-
-            if (mTrackingCell) {
+            } 
+            else
+            if (mTrackingCell){
                 contentText = context.getString(R.string.cell_tracking_active);
-            } if(mMonitoringCell){
+            } 
+            if(mMonitoringCell){
                 contentText = context.getString(R.string.cell_monitoring_active);
-            } else{
+            } 
+            else{
                 getApplication().setCurrentStatus(Status.IDLE,mVibrateEnabled,mVibrateMinThreatLevel);
             }
         } else {
