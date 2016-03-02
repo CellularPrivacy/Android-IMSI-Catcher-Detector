@@ -69,7 +69,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
 
     View getItemView(View convertView, ViewGroup parentView, NavDrawerItem navDrawerItem) {
 
-        DrawerMenuItem menuItem = (DrawerMenuItem) navDrawerItem ;
+        DrawerMenuItem menuItem = (DrawerMenuItem) navDrawerItem;
         NavMenuItemHolder navMenuItemHolder = null;
 
         if (convertView == null) {
@@ -81,8 +81,8 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
             ImageView lInfoButton = (ImageView) convertView.findViewById(R.id.drawer_menu_item_info_button);
 
             navMenuItemHolder = new NavMenuItemHolder();
-            navMenuItemHolder.itemName = labelView ;
-            navMenuItemHolder.itemIcon = iconView ;
+            navMenuItemHolder.itemName = labelView;
+            navMenuItemHolder.itemIcon = iconView;
             navMenuItemHolder.itemInfoButton = lInfoButton;
 
             convertView.setTag(navMenuItemHolder);
@@ -104,13 +104,13 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
             navMenuItemHolder.itemInfoButton.setOnClickListener(null);
         }
 
-        return convertView ;
+        return convertView;
     }
 
     View getSectionView(View convertView, ViewGroup parentView,
             NavDrawerItem navDrawerItem) {
 
-        DrawerMenuSection menuSection = (DrawerMenuSection) navDrawerItem ;
+        DrawerMenuSection menuSection = (DrawerMenuSection) navDrawerItem;
         NavMenuSectionHolder navMenuItemHolder = null;
 
         if (convertView == null) {
@@ -119,7 +119,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
                     .findViewById( R.id.drawer_menu_section_label );
 
             navMenuItemHolder = new NavMenuSectionHolder();
-            navMenuItemHolder.itemName = labelView ;
+            navMenuItemHolder.itemName = labelView;
             convertView.setTag(navMenuItemHolder);
         }
 
@@ -129,7 +129,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
 
         navMenuItemHolder.itemName.setText(menuSection.getLabel());
 
-        return convertView ;
+        return convertView;
     }
 
     @Override
