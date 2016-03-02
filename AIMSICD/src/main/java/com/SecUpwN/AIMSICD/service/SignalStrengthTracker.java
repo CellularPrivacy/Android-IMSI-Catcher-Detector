@@ -119,7 +119,7 @@ public class SignalStrengthTracker {
             return;
         }
 
-        if ( now - (sleepTimeBetweenSignalRegistration * 1000) > lastRegistrationTime) {
+        if (now - (sleepTimeBetweenSignalRegistration * 1000) > lastRegistrationTime) {
             long diff = now - lastRegistrationTime;
             log.info("Scheduling signal strength calculation from CID: " + cellID +
                     " @ " + signalStrength + " dBm. Last registration was " + diff + "ms ago.");
@@ -129,7 +129,7 @@ public class SignalStrengthTracker {
 
         }
 
-        if ( now - (sleepTimeBetweenCleanup * 1000) > lastCleanupTime) {
+        if (now - (sleepTimeBetweenCleanup * 1000) > lastCleanupTime) {
             log.info("Removing old signal strength entries from DB.");
 
             // cleanupOldData();//

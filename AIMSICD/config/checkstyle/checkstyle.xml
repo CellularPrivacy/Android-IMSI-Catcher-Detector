@@ -78,6 +78,7 @@
         <module name="NoLineWrap" />
         <module name="NoWhitespaceAfter" />
         <module name="NoWhitespaceBefore" />
+        <module name="ParenPad" />
         <module name="SeparatorWrap">
             <property name="tokens" value="DOT"/>
             <property name="option" value="nl"/>

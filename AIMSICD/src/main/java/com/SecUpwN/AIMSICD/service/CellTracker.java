@@ -405,7 +405,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     " LAC:" + neighbourCell.getLac() +
                     " CID:" + neighbourCell.getCid() +
                     " PSC:" + neighbourCell.getPsc() +
-                    " RSSI:" + neighbourCell.getRssi() );
+                    " RSSI:" + neighbourCell.getRssi());
 
             final Cell cell = new Cell(
                     neighbourCell.getCid(),
@@ -461,7 +461,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         Boolean nclp = tinydb.getBoolean("nc_list_present");    // NC list present? (default is false)
 
         if (ncls > 0) {
-            log.debug("NeighbouringCellInfo size: " + ncls );
+            log.debug("NeighbouringCellInfo size: " + ncls);
             if (!nclp) {
                 log.debug("Setting nc_list_present to: true");
                 tinydb.putBoolean("nc_list_present", true);
@@ -557,7 +557,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     }
 
                     // Check if CID is in DBe_import DB (issue #91)
-                    if ( tinydb.getBoolean("ocid_downloaded") ) {
+                    if (tinydb.getBoolean("ocid_downloaded")) {
                         if (!dbHelper.openCellExists(mMonitorCell.getCID())) {
                             dbHelper.toEventLog(2, "CID not in DBe_import");
 

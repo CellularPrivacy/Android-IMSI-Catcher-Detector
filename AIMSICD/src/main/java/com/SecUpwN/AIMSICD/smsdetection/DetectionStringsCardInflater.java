@@ -55,8 +55,8 @@ public class DetectionStringsCardInflater implements IAdapterViewInflater<Detect
         }
 
         public void updateDisplay(DetectionStringsData item) {
-            d_string.setText(      item.getDetectionString());
-            d_type.setText(       item.getDetectionType());
+            d_string.setText(item.getDetectionString());
+            d_type.setText(item.getDetectionType());
         }
     }
 }

@@ -57,12 +57,12 @@ public class SilentSmsCardInflater implements IAdapterViewInflater<SilentSmsCard
         }
 
         public void updateDisplay(SilentSmsCardData item) {
-            mAddress.setText(       item.getAddress());
+            mAddress.setText(item.getAddress());
             mDisplayAddress.setText(item.getDisplayAddress());
-            mMessageClass.setText(  item.getMessageClass());
-            mServiceCentre.setText( item.getServiceCentre());
-            mMessageBody.setText(   item.getMessage());
-            mTimestamp.setText(     item.getTimestamp());
+            mMessageClass.setText(item.getMessageClass());
+            mServiceCentre.setText(item.getServiceCentre());
+            mMessageBody.setText(item.getMessage());
+            mTimestamp.setText(item.getTimestamp());
             if (item.isFakeData()) {
                 mExample.setText(mRootView.getContext().getString(R.string.example));
                 mExample.setVisibility(View.VISIBLE);

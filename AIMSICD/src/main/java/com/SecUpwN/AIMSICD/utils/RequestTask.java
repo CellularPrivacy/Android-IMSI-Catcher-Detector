@@ -205,7 +205,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     } else {
                         // This returns "-1" for streamed response (Chunked Transfer Encoding)
                         total = response.body().contentLength();
-                        if (total == -1 ) {
+                        if (total == -1) {
                             log.debug("doInBackground DBE_DOWNLOAD_REQUEST total not returned!");
                             total = 1024; // Let's set it arbitrarily to something other than "-1"
                         } else {

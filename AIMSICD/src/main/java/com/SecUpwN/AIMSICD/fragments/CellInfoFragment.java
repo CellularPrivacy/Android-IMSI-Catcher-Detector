@@ -232,7 +232,7 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
         if (neighboringCells.size() != 0) {
 
             BaseInflaterAdapter<CardItemData> adapter
-                    = new BaseInflaterAdapter<>( new CellCardInflater() );
+                    = new BaseInflaterAdapter<>(new CellCardInflater());
             int i = 1;
             int total = neighboringCells.size();
             for (Cell cell : neighboringCells) {

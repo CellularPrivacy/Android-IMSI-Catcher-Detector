@@ -515,7 +515,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 break;
             case R.id.settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                startActivity(settingsIntent );
+                startActivity(settingsIntent);
                 break;
             case R.id.about:
                 Intent aboutIntent = new Intent(this, AboutActivity.class);

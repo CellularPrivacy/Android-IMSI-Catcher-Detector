@@ -34,7 +34,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
     private static Context appContext;
  
     @SuppressLint("ShowToast")
-    public DrawerMenuAdapter(Context context, int textViewResourceId, List<NavDrawerItem> objects ) {
+    public DrawerMenuAdapter(Context context, int textViewResourceId, List<NavDrawerItem> objects) {
         super(context, textViewResourceId, objects);
         inflater = LayoutInflater.from(context);
         appContext = context.getApplicationContext();
@@ -73,11 +73,11 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
         NavMenuItemHolder navMenuItemHolder = null;
 
         if (convertView == null) {
-            convertView = inflater.inflate( R.layout.drawer_item, parentView, false);
+            convertView = inflater.inflate(R.layout.drawer_item, parentView, false);
             TextView labelView = (TextView) convertView
-                    .findViewById( R.id.drawer_menu_item_label );
+                    .findViewById(R.id.drawer_menu_item_label);
             ImageView iconView = (ImageView) convertView
-                    .findViewById( R.id.drawer_menu_item_icon );
+                    .findViewById(R.id.drawer_menu_item_icon);
             ImageView lInfoButton = (ImageView) convertView.findViewById(R.id.drawer_menu_item_info_button);
 
             navMenuItemHolder = new NavMenuItemHolder();
@@ -88,7 +88,7 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
             convertView.setTag(navMenuItemHolder);
         }
 
-        if ( navMenuItemHolder == null ) {
+        if (navMenuItemHolder == null) {
             navMenuItemHolder = (NavMenuItemHolder) convertView.getTag();
         }
 
@@ -114,16 +114,16 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
         NavMenuSectionHolder navMenuItemHolder = null;
 
         if (convertView == null) {
-            convertView = inflater.inflate( R.layout.drawer_section, parentView, false);
+            convertView = inflater.inflate(R.layout.drawer_section, parentView, false);
             TextView labelView = (TextView) convertView
-                    .findViewById( R.id.drawer_menu_section_label );
+                    .findViewById(R.id.drawer_menu_section_label);
 
             navMenuItemHolder = new NavMenuSectionHolder();
             navMenuItemHolder.itemName = labelView;
             convertView.setTag(navMenuItemHolder);
         }
 
-        if ( navMenuItemHolder == null ) {
+        if (navMenuItemHolder == null) {
             navMenuItemHolder = (NavMenuSectionHolder) convertView.getTag();
         }
 

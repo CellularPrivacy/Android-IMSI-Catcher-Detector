@@ -14,7 +14,7 @@ public class DrawerMenuSection implements NavDrawerItem {
     private DrawerMenuSection() {
     }
 
-    public static DrawerMenuSection create( int id, String label ) {
+    public static DrawerMenuSection create(int id, String label) {
         DrawerMenuSection section = new DrawerMenuSection();
         section.setId(id);
         section.setLabel(label);

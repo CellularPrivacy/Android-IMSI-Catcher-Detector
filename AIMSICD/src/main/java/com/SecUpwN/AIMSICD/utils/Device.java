@@ -71,7 +71,7 @@ public class Device {
             case TelephonyManager.PHONE_TYPE_GSM:
                 mPhoneType = "GSM";
                 mMncmcc = tm.getNetworkOperator();
-                if (mMncmcc != null && mMncmcc.length() >= 5 ) {
+                if (mMncmcc != null && mMncmcc.length() >= 5) {
                     try {
                         if (mCell.getMCC() == Integer.MAX_VALUE) {
                             mCell.setMCC(Integer.parseInt(tm.getNetworkOperator().substring(0, 3)));
