@@ -306,7 +306,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     t = 15L; // Automatic refresh rate is 15 seconds
                     break;
                 default:
-                    t = (long) rate;// Default is 1 sec (from above)
+                    t = (long) rate; // Default is 1 sec (from above)
                     break;
             }
             REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
@@ -470,7 +470,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             // Detection 7a
             log.info("ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCID());
             vibrate(100, Status.MEDIUM);
-            dbHelper.toEventLog(4,"No neighboring cells detected"); // (DF_id, DF_desc)
+            dbHelper.toEventLog(4, "No neighboring cells detected"); // (DF_id, DF_desc)
         } else  {
             // Todo: remove cid string when working.
             log.debug("NC list not supported by AOS on this device. Nothing to do.");
@@ -593,7 +593,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                 1,
                                 "Changing LAC"
                         );*/
-                        dbHelper.toEventLog(1,"Changing LAC");
+                        dbHelper.toEventLog(1, "Changing LAC");
                         setNotification();
                     } else {
                         mChangedLAC = false;
@@ -1007,7 +1007,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             if (mMonitoringCell) {
                 contentText = context.getString(R.string.cell_monitoring_active);
             } else {
-                getApplication().setCurrentStatus(Status.IDLE,mVibrateEnabled,mVibrateMinThreatLevel);
+                getApplication().setCurrentStatus(Status.IDLE, mVibrateEnabled, mVibrateMinThreatLevel);
             }
         } else {
             getApplication().setCurrentStatus(Status.IDLE, mVibrateEnabled, mVibrateMinThreatLevel);

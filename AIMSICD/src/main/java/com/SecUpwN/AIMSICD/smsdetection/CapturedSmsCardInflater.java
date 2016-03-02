@@ -42,8 +42,8 @@ public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSms
     private class ViewHolder {
 
         private final View mRootView;
-        private final TextView smsd_timestamp,smsd_smstype,smsd_number,smsd_data,
-                smsd_lac,smsd_cid,smsd_rat,smsd_roam,smsd_lat,smsd_lon;
+        private final TextView smsd_timestamp, smsd_smstype, smsd_number, smsd_data,
+                smsd_lac, smsd_cid, smsd_rat, smsd_roam, smsd_lat, smsd_lon;
 
 
 

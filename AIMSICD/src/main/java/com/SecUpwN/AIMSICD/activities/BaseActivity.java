@@ -49,7 +49,7 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            log.debug("StatusWatcher received status change to " + ((AppAIMSICD)getApplication()).getStatus().name() + ", updating icon");
+            log.debug("StatusWatcher received status change to " + ((AppAIMSICD) getApplication()).getStatus().name() + ", updating icon");
             updateIcon(context);
         }
     };
@@ -61,7 +61,7 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
             @Override
             public void run() {
                 if (getActionBar() != null) {
-                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD)getApplication()).getStatus()));
+                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD) getApplication()).getStatus()));
                 }
             }
         });

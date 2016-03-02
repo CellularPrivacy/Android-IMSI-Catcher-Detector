@@ -26,9 +26,9 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
         final String gps_key = getResources().getString(R.string.pref_enable_gps_key);
-        locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-        gpsPref = (CheckBoxPreference)findPreference(gps_key);
+        gpsPref = (CheckBoxPreference) findPreference(gps_key);
         gpsPref.setDefaultValue(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
         gpsPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

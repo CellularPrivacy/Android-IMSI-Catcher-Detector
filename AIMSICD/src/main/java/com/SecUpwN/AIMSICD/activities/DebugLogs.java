@@ -320,7 +320,7 @@ public class DebugLogs extends BaseActivity {
                                 logView.setText(logs);
 
                                 // scroll to the bottom of the log display
-                                final ScrollView scroll = ((ScrollView)logView.getParent());
+                                final ScrollView scroll = ((ScrollView) logView.getParent());
                                 scroll.post(new Runnable() {
                                     @Override
                                     public void run() {

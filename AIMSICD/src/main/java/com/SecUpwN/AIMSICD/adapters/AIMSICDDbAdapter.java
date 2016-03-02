@@ -656,7 +656,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                     try {
                                         insertDefaultLocation(
                                                 records.get(i)[1],       // country
-                                                Integer.parseInt(records.get(i)[2]),// MCC
+                                                Integer.parseInt(records.get(i)[2]), // MCC
                                                 records.get(i)[3],       // lat
                                                 records.get(i)[4]        // lon
                                         );
@@ -1908,8 +1908,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         int lac = CellTracker.mMonitorCell.getLAC();                // LAC
         int cid = CellTracker.mMonitorCell.getCID();                // CID
         int psc = CellTracker.mMonitorCell.getPSC();                // PSC [UMTS,LTE]
-        String gpsd_lat = String.valueOf(CellTracker.mMonitorCell.getLat());// gpsd_lat
-        String gpsd_lon = String.valueOf(CellTracker.mMonitorCell.getLon());// gpsd_lon
+        String gpsd_lat = String.valueOf(CellTracker.mMonitorCell.getLat()); // gpsd_lat
+        String gpsd_lon = String.valueOf(CellTracker.mMonitorCell.getLon()); // gpsd_lon
         int gpsd_accu = (int) CellTracker.mMonitorCell.getAccuracy();        // gpsd_accu
 
         // skip CID/LAC of "-1" (due to crappy API, Roaming or Air-Plane Mode)

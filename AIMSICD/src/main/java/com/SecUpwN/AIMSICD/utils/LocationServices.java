@@ -82,7 +82,7 @@ public class LocationServices {
                 e.printStackTrace();
             }*/
 
-            return new float[] {0.0f,0.0f};
+            return new float[] {0.0f, 0.0f};
         }
 
         @Override

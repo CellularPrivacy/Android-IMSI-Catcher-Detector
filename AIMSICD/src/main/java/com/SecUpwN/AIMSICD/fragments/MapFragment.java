@@ -337,7 +337,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         cell.setLat(lastKnown.getLatitudeInDegrees());
                         setRefreshActionButtonState(true);
                         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
-                        Helpers.getOpenCellData((InjectionAppCompatActivity)getActivity(), cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
+                        Helpers.getOpenCellData((InjectionAppCompatActivity) getActivity(), cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                         return true;
                     }
                 }
@@ -349,7 +349,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                     cell.setLon(loc.getLongitude());
                     setRefreshActionButtonState(true);
                     TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
-                    Helpers.getOpenCellData((InjectionAppCompatActivity)getActivity(), cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
+                    Helpers.getOpenCellData((InjectionAppCompatActivity) getActivity(), cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
                 } else {
                     Helpers.msgLong(getActivity(),
                             getString(R.string.unable_to_determine_last_location));

@@ -140,7 +140,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
                         Response response = okHttpClient.newCall(request).execute();
 
-                        publishProgress(80,100);
+                        publishProgress(80, 100);
                         if (response != null) {
                             log.info("OCID Upload Response: "
                                     + response.code() + " - "
@@ -210,7 +210,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                             total = 1024; // Let's set it arbitrarily to something other than "-1"
                         } else {
                             log.debug("doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
-                            publishProgress((int) (0.25 * total), (int)total); // Let's show something!
+                            publishProgress((int) (0.25 * total), (int) total); // Let's show something!
                         }
 
                         FileOutputStream output = new FileOutputStream(file, false);
@@ -221,7 +221,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                             // writing data to file
                             output.write(data, 0, count);
                             progress += count;
-                            publishProgress(progress, (int)total);
+                            publishProgress(progress, (int) total);
                         }
                         input.close();
                         // flushing output

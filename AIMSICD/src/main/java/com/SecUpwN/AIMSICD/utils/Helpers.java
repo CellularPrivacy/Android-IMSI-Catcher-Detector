@@ -344,7 +344,7 @@ import io.freefair.android.util.logging.Logger;
                         pContext.deleteDatabase("aimsicd.db");
                         new AIMSICDDbAdapter(pContext);
                         pContext.startService(new Intent(pContext, AimsicdService.class));
-                        msgLong(pContext,pContext.getString(R.string.delete_database_msg_success));
+                        msgLong(pContext, pContext.getString(R.string.delete_database_msg_success));
                     }
                 })
                 .setMessage(pContext.getString(R.string.clear_database_question))

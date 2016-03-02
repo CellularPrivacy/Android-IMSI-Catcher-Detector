@@ -34,7 +34,7 @@ public class TtyPrivFile extends TtyStream {
         try {
             // Have to do this to get readproc to exit.
             // I guess it gets blocked waiting for input, so let's give it some.
-            mOutputStream.write("ATE0\r".getBytes("ASCII"));// disable local Echo
+            mOutputStream.write("ATE0\r".getBytes("ASCII")); // disable local Echo
             mOutputStream.flush();
         } catch (IOException e) {
             log.error("moutputstream didnt close", e);

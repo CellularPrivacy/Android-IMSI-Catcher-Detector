@@ -160,7 +160,7 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 mCreditsTitle.setTextSize(20);
                 mCreditsTitle.setGravity(Gravity.CENTER_HORIZONTAL);
                 mScrollView.addView(mCreditsText);
-                Animation scrollTo =  (Animation)AnimationUtils.loadAnimation(getApplicationContext(), R.anim.credits_dialog_scroll);
+                Animation scrollTo = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.credits_dialog_scroll);
                 mCreditsText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

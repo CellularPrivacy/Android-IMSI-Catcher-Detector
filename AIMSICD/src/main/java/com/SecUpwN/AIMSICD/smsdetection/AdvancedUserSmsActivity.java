@@ -74,7 +74,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
 
 
 
-        listViewAdv.setAdapter(new AdvanceUserBaseSmsAdapter(getApplicationContext(),msgitems));
+        listViewAdv.setAdapter(new AdvanceUserBaseSmsAdapter(getApplicationContext(), msgitems));
 
         listViewAdv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
