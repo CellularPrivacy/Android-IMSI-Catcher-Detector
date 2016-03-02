@@ -77,7 +77,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
                 String itemDetail = itemDetails.getDetection_string();
 
-                if(dbAccess.deleteDetectionString(itemDetails.getDetection_string())) {
+                if (dbAccess.deleteDetectionString(itemDetails.getDetection_string())) {
                     Toast.makeText(getApplicationContext(),
                             getString(R.string.deleted) + ": " + itemDetail, Toast.LENGTH_SHORT).show();
                 } else {
@@ -87,7 +87,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
                 try {
                     loadDbString();
-                } catch (Exception ee){
+                } catch (Exception ee) {
                     log.debug("Error loading db string", ee);
                 }
                 return false;
@@ -131,7 +131,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
     /**
      * Reload ListView with new database values
      */
-    public void loadDbString(){
+    public void loadDbString() {
         List<AdvanceUserItems> newmsglist;
         try {
         /* There should be at least 1 detection string in db so not to cause an error */

@@ -30,7 +30,7 @@ public class MiscUtils {
 
     private static final Logger log = AndroidLogger.forClass(MiscUtils.class);
 
-    public static String getCurrentTimeStamp(){
+    public static String getCurrentTimeStamp() {
         //yyyyMMddHHmmss <-- this format is needed for OCID upload
         return new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date());
     }
@@ -74,7 +74,7 @@ public class MiscUtils {
      * Converts a timstamp in this format:     06-17 22:06:05.988 D/dalvikvm(24747):
      * Returns a timestamp in this format:     20150617223311
      */
-    public static String logcatTimeStampParser(String line){
+    public static String logcatTimeStampParser(String line) {
         String[] buffer = line.split(" ");
 
         line = String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + buffer[0] + buffer[1];

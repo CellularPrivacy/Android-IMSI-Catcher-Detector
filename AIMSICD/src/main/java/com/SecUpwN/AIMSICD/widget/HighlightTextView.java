@@ -30,7 +30,7 @@ public class HighlightTextView extends TextView {
     }
 
     public void updateText(CharSequence text) {
-        AnimationManager animationManager=new AnimationManager();
+        AnimationManager animationManager = new AnimationManager();
         updateText(text, animationManager);
         animationManager.startAnimation(DURATION);
     }
@@ -42,7 +42,7 @@ public class HighlightTextView extends TextView {
         } else {
             final int currentColor = getCurrentTextColor();
             ViewTransitionBuilder.transit(this).addTransitionHandler(new ScaledTransitionHandler() {
-                ArgbEvaluator argbEvaluator=new ArgbEvaluator();
+                ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
                 @Override
                 protected void onUpdateScaledProgress(TransitionController transitionController, View view, float modifiedProgress) {
@@ -50,7 +50,7 @@ public class HighlightTextView extends TextView {
                 }
             }).range(0f, 0.2f).buildAnimationFor(animationManager);
             ViewTransitionBuilder.transit(this).addTransitionHandler(new ScaledTransitionHandler() {
-                ArgbEvaluator argbEvaluator=new ArgbEvaluator();
+                ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
                 @Override
                 protected void onUpdateScaledProgress(TransitionController transitionController, View view, float modifiedProgress) {

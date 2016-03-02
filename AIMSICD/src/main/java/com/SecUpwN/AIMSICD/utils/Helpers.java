@@ -230,14 +230,14 @@ import io.freefair.android.util.logging.Logger;
                 }
             } else {
                 Fragment myFragment = injectionActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
-                if(myFragment instanceof MapFragment) {
+                if (myFragment instanceof MapFragment) {
                     ((MapFragment) myFragment).setRefreshActionButtonState(false);
                 }
                 Helpers.sendMsg(injectionActivity, injectionActivity.getString(R.string.no_opencellid_key_detected));
             }
         } else {
             Fragment myFragment = injectionActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
-            if(myFragment instanceof MapFragment) {
+            if (myFragment instanceof MapFragment) {
                 ((MapFragment) myFragment).setRefreshActionButtonState(false);
             }
 

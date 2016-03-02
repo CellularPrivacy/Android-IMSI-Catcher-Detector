@@ -105,9 +105,9 @@ public class OpenCellIdActivity extends BaseActivity {
 
                 Helpers.msgShort(OpenCellIdActivity.this, getString(R.string.ocid_api_success));
 
-            } else if(s.contains("Error: You can not register new account")){
+            } else if (s.contains("Error: You can not register new account")) {
                 Helpers.msgLong(getApplicationContext(), getString(R.string.only_one_key_per_day));
-            } else if(s.contains("Bad Request")){
+            } else if (s.contains("Bad Request")) {
                 Helpers.msgShort(OpenCellIdActivity.this, "Bad Request 400, 403 or 500 error ");
             } else {
                 Helpers.msgShort(OpenCellIdActivity.this, "Unknown error please view logcat");
@@ -165,7 +165,7 @@ public class OpenCellIdActivity extends BaseActivity {
                 log.debug("OCID Code 2: Invalid API Key! :" + htmlResponse);
                 return htmlResponse;
 
-            } else if(responseCode == 400){
+            } else if (responseCode == 400) {
                 log.debug("OCID Code 3: Invalid input data: " + htmlResponse);
                 return "Bad Request"; // For making a toast!
 
@@ -173,7 +173,7 @@ public class OpenCellIdActivity extends BaseActivity {
                 log.debug("OCID Code 4:  Your API key must be white listed: " + htmlResponse);
                 return "Bad Request"; // For making a toast!
 
-            } else if(responseCode == 500){
+            } else if (responseCode == 500) {
                 log.debug("OCID Code 5: Remote internal server error: " + htmlResponse);
                 return "Bad Request"; // For making a toast!
 
@@ -181,7 +181,7 @@ public class OpenCellIdActivity extends BaseActivity {
                 log.debug("OCID Code 6: Reached 24hr API key request limit: " + htmlResponse);
                 return htmlResponse;
 
-            } else if(responseCode == 429){
+            } else if (responseCode == 429) {
                 log.debug("OCID Code 7: Exceeded daily request limit (1000) for your API key: " + htmlResponse);
                 return htmlResponse;
 

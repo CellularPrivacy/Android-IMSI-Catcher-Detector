@@ -313,7 +313,7 @@ public class AtCommandFragment extends InjectionFragment {
                             if (!line.trim().isEmpty() && line.contains("/dev/")) {
                                 int place = line.indexOf("=") + 1;
                                 mSerialDevices.add(line.substring(place, line.length() - 1));
-                                mAtResponse.append(getString(R.string.at_command_response_found)+line.substring(place, line.length() - 1) + "\n");
+                                mAtResponse.append(getString(R.string.at_command_response_found) + line.substring(place, line.length() - 1) + "\n");
                             }
                         }
                         super.commandOutput(id, line);

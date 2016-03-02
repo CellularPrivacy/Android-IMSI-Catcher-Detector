@@ -45,7 +45,7 @@ public class LocationServices {
     }
 
     public static class LocationAsync extends AsyncTask<Integer, Void, float[]> {
-        public AsyncResponse delegate=null;
+        public AsyncResponse delegate = null;
 
         @Override
         protected float[] doInBackground(Integer... params) {

@@ -83,9 +83,9 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
             mDF_id.setText(     item.getDF_id());
             mDF_desc.setText(   item.getDF_desc());
 
-            mRecordId.setText(  item.getRecordId());
-            if(item.isFakeData()) {
-                mExample.setText(mRootView.getContext().getString(R.string.example))  ;
+            mRecordId.setText(item.getRecordId());
+            if (item.isFakeData()) {
+                mExample.setText(mRootView.getContext().getString(R.string.example));
                 mExample.setVisibility(View.VISIBLE);
             } else {
                 mExample.setVisibility(View.GONE);

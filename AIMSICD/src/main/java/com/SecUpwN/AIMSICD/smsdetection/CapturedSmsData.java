@@ -56,7 +56,7 @@ public class CapturedSmsData {
     }
 
 
-    public CapturedSmsData(){
+    public CapturedSmsData() {
 
     }
 

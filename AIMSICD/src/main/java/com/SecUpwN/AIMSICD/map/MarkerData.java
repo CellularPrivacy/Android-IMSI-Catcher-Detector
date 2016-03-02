@@ -90,7 +90,7 @@ public class MarkerData {
 
     // (Mobile Network Operator) Provider Code in form: MCC-MNC
     public String getPC() {
-        return getMCC() +"-"+ getMNC();
+        return getMCC() + "-" + getMNC();
     }
 
     public String getSamples() {

@@ -59,7 +59,7 @@ import io.freefair.android.util.logging.Logger;
 public class AimsicdService extends InjectionService {
 
     public static boolean isGPSchoiceChecked;
-    public static final String GPS_REMEMBER_CHOICE="remember choice";
+    public static final String GPS_REMEMBER_CHOICE = "remember choice";
     SharedPreferences gpsPreferences;
 
     @Inject
@@ -139,8 +139,8 @@ public class AimsicdService extends InjectionService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        gpsPreferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        isGPSchoiceChecked=gpsPreferences.getBoolean(GPS_REMEMBER_CHOICE,false);
+        gpsPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        isGPSchoiceChecked = gpsPreferences.getBoolean(GPS_REMEMBER_CHOICE, false);
         return START_STICKY;
 
     }
@@ -209,7 +209,7 @@ public class AimsicdService extends InjectionService {
     }
 
     public void startSmsTracking() {
-        if(!isSmsTracking()) {
+        if (!isSmsTracking()) {
             log.info("Sms Detection Thread Started");
             smsdetector = new SmsDetector(this);
             smsdetector.startSmsDetection();
@@ -217,7 +217,7 @@ public class AimsicdService extends InjectionService {
     }
 
     public void stopSmsTracking() {
-        if(isSmsTracking()) {
+        if (isSmsTracking()) {
             smsdetector.stopSmsDetection();
             log.info("Sms Detection Thread Stopped");
         }
@@ -256,7 +256,7 @@ public class AimsicdService extends InjectionService {
     }
 
     public void checkLocationServices() {
-        if (mCellTracker.isTrackingCell() && !mLocationTracker.isGPSOn() &&!isGPSchoiceChecked) {
+        if (mCellTracker.isTrackingCell() && !mLocationTracker.isGPSOn() && !isGPSchoiceChecked) {
             enableLocationServices();
         }
     }
@@ -266,11 +266,11 @@ public class AimsicdService extends InjectionService {
             return; // only show dialog once
         }
 
-        LayoutInflater dialogInflater=(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
-        View dialogView=dialogInflater.inflate(R.layout.dialog_request_gps,null,false);
-        CheckBox rememberChoice=(CheckBox)dialogView.findViewById(R.id.check_choice);
-        Button notNow=(Button)dialogView.findViewById(R.id.not_now_button);
-        Button enableGPS=(Button)dialogView.findViewById(R.id.enable_gps_button);
+        LayoutInflater dialogInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View dialogView = dialogInflater.inflate(R.layout.dialog_request_gps, null, false);
+        CheckBox rememberChoice = (CheckBox) dialogView.findViewById(R.id.check_choice);
+        Button notNow = (Button) dialogView.findViewById(R.id.not_now_button);
+        Button enableGPS = (Button) dialogView.findViewById(R.id.enable_gps_button);
 
         final AlertDialog alertDialog = new AlertDialog.Builder(this)
                 /*.setMessage(R.string.location_error_message)
@@ -299,14 +299,14 @@ public class AimsicdService extends InjectionService {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
-                    isGPSchoiceChecked=true;
-                    gpsPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor=gpsPreferences.edit();
-                    editor.putBoolean(GPS_REMEMBER_CHOICE,isGPSchoiceChecked);
+                    isGPSchoiceChecked = true;
+                    gpsPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = gpsPreferences.edit();
+                    editor.putBoolean(GPS_REMEMBER_CHOICE, isGPSchoiceChecked);
                     editor.apply();
 
                 } else {
-                    isGPSchoiceChecked=false;
+                    isGPSchoiceChecked = false;
                 }
             }
         });

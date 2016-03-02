@@ -504,7 +504,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.toggle_attack_detection:
                 monitorCell();
                 item.setChecked(mAimsicdService.isMonitoringCell());

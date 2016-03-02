@@ -119,7 +119,7 @@ public class SignalStrengthTracker {
             return;
         }
 
-        if( now - (sleepTimeBetweenSignalRegistration*1000) > lastRegistrationTime) {
+        if ( now - (sleepTimeBetweenSignalRegistration * 1000) > lastRegistrationTime) {
             long diff = now - lastRegistrationTime;
             log.info("Scheduling signal strength calculation from CID: " + cellID +
                     " @ " + signalStrength + " dBm. Last registration was " + diff + "ms ago.");
@@ -129,7 +129,7 @@ public class SignalStrengthTracker {
 
         }
 
-        if( now - (sleepTimeBetweenCleanup*1000) > lastCleanupTime) {
+        if ( now - (sleepTimeBetweenCleanup * 1000) > lastCleanupTime) {
             log.info("Removing old signal strength entries from DB.");
 
             // cleanupOldData();//
@@ -143,7 +143,7 @@ public class SignalStrengthTracker {
      *  (days * number of seconds in a day) * seconds to milliseconds
      */
     private void cleanupOldData() {
-        long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved*86400))*1000); // [ms] Number of days
+        long maxTime = (System.currentTimeMillis() - ((maximumNumberOfDaysSaved * 86400)) * 1000); // [ms] Number of days
         //TODO
         //mDbHelper.cleanseCellStrengthTables(maxTime);
         averageSignalCache.clear();
@@ -151,7 +151,7 @@ public class SignalStrengthTracker {
 
     private boolean deviceIsMoving() {
         // Is device moving?
-        return System.currentTimeMillis() - lastMovementDetected < minimumIdleTime*1000; // [ms]
+        return System.currentTimeMillis() - lastMovementDetected < minimumIdleTime * 1000; // [ms]
     }
 
     /**
@@ -164,7 +164,7 @@ public class SignalStrengthTracker {
     public boolean isMysterious(int cellID, int signalStrength) {
 
         // If moving, return false
-        if(deviceIsMoving()) {
+        if (deviceIsMoving()) {
             log.info("Cannot check signal strength for CID: " + cellID + " because of device movements.");
             return false;
         }
@@ -172,7 +172,7 @@ public class SignalStrengthTracker {
         int storedAvg;
 
         // Cached?
-        if(averageSignalCache.get(cellID) != null) {
+        if (averageSignalCache.get(cellID) != null) {
             storedAvg = averageSignalCache.get(cellID);
             log.debug("Cached average SS for CID: " + cellID + " is: " + storedAvg);
         } else {
@@ -183,7 +183,7 @@ public class SignalStrengthTracker {
         }
 
         boolean result;
-        if(storedAvg > signalStrength) {
+        if (storedAvg > signalStrength) {
             result = storedAvg - signalStrength > mysteriousSignalDifference;
         } else {
             result = signalStrength - storedAvg > mysteriousSignalDifference;

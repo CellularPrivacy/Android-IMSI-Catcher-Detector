@@ -73,7 +73,7 @@ import io.freefair.android.util.logging.Logger;
  *              [x] Use TinyDB.java to simplify Shared Preferences usage
  */
 
-public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final Logger log = AndroidLogger.forClass(CellTracker.class);
 
@@ -190,13 +190,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     public void stop() {
-        if(isMonitoringCell()) {
+        if (isMonitoringCell()) {
             setCellMonitoring(false);
         }
-        if(isTrackingCell()){
+        if (isTrackingCell()) {
             setCellTracking(false);
         }
-        if(isTrackingFemtocell()){
+        if (isTrackingFemtocell()) {
             stopTrackingFemto();
         }
         cancelNotification();
@@ -339,7 +339,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public List<Cell> updateNeighbouringCells() {
         List<Cell> neighboringCells = new ArrayList<>();
         List<NeighboringCellInfo> neighboringCellInfo = tm.getNeighboringCellInfo();
-        if(neighboringCellInfo == null) {
+        if (neighboringCellInfo == null) {
             neighboringCellInfo = new ArrayList<>();
         }
 
@@ -360,7 +360,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             } else {
                 tm.listen(phoneStatelistener,
                         PhoneStateListener.LISTEN_CELL_LOCATION |
-                                PhoneStateListener.LISTEN_CELL_INFO|                // API 17
+                                PhoneStateListener.LISTEN_CELL_INFO |                // API 17
                                 PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
                                 PhoneStateListener.LISTEN_SERVICE_STATE |
                                 PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
@@ -373,7 +373,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
-                        if(neighboringCellInfo != null) {
+                        if (neighboringCellInfo != null) {
                             if (neighboringCellInfo.size() > 0) {
                                 // Can we think of a better log message here?
                                 log.debug("NeighbouringCellInfo found on " + i + " try. (time based)");
@@ -451,7 +451,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *          [x] We need to use a global and persistent variable and not a system property
      *
      */
-    public void checkForNeighbourCount(CellLocation location){
+    public void checkForNeighbourCount(CellLocation location) {
         log.info("CheckForNeighbourCount()");
 
         Integer ncls = 0;                                       // NC list size
@@ -531,7 +531,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *              2015-0x-xx  banjaxbanjo     Update: ??? (hey dude what did you do?)
      *
      */
-    public void compareLac(CellLocation location){
+    public void compareLac(CellLocation location) {
         switch (mDevice.getPhoneID()) {
 
             case TelephonyManager.PHONE_TYPE_NONE:
@@ -613,7 +613,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         log.info("NeighbouringCellInfo empty - event based polling succeeded!");
         tm.listen(phoneStatelistener, PhoneStateListener.LISTEN_NONE);
-        if(neighboringCellInfo == null) {
+        if (neighboringCellInfo == null) {
             neighboringCellInfo = new ArrayList<>();
         }
         neighboringCellBlockingQueue.addAll(neighboringCellInfo);
@@ -652,9 +652,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         int rate = Integer.parseInt(refreshRate);
         long t;
-        if(rate == 1) {
+        if (rate == 1) {
             t = 15L; // Automatic refresh rate is 15 seconds
-        }else {
+        } else {
             t = ((long) rate); // Default is 1 sec (from above)
         }
 
@@ -993,7 +993,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else if (mChangedLAC) {
             getApplication().setCurrentStatus(Status.MEDIUM, mVibrateEnabled, mVibrateMinThreatLevel);
             contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
-        } else if(mCellIdNotInOpenDb){
+        } else if (mCellIdNotInOpenDb) {
             getApplication().setCurrentStatus(Status.MEDIUM, mVibrateEnabled, mVibrateMinThreatLevel);
             contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
         } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
@@ -1001,10 +1001,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             if (mTrackingFemtocell) {
                 contentText = context.getString(R.string.femtocell_detection_active);
             } else
-            if (mTrackingCell){
+            if (mTrackingCell) {
                 contentText = context.getString(R.string.cell_tracking_active);
             } 
-            if(mMonitoringCell){
+            if (mMonitoringCell) {
                 contentText = context.getString(R.string.cell_monitoring_active);
             } else {
                 getApplication().setCurrentStatus(Status.IDLE,mVibrateEnabled,mVibrateMinThreatLevel);

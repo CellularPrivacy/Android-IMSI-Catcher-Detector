@@ -77,5 +77,6 @@
         <module name="MethodParamPad" />
         <module name="NoLineWrap" />
         <module name="NoWhitespaceAfter" />
+        <module name="WhitespaceAround"/>
     </module>
 </module>

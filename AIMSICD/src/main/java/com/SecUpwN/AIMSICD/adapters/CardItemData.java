@@ -72,7 +72,7 @@ public class CardItemData {
     public CardItemData(Cell cell, String recordId) {
 
         if (cell.getCID() != Integer.MAX_VALUE && cell.getCID() != -1) {
-            mCellID = "CID: " + cell.getCID() + "  (0x" + Integer.toHexString(cell.getCID()) +")";
+            mCellID = "CID: " + cell.getCID() + "  (0x" + Integer.toHexString(cell.getCID()) + ")";
         } else {
             mCellID = "N/A";
         }

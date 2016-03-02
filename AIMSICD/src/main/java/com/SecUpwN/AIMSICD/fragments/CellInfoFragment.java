@@ -70,7 +70,7 @@ import io.freefair.android.injection.app.InjectionFragment;
  *
  */
 @XmlLayout(R.layout.fragment_cell_info)
-public class CellInfoFragment extends InjectionFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class CellInfoFragment extends InjectionFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final int STOCK_REQUEST = 1;
     public static final int SAMSUNG_MULTIRIL_REQUEST = 2;

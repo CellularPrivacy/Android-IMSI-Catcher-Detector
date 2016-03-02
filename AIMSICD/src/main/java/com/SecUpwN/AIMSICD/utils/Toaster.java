@@ -31,7 +31,7 @@ public class Toaster {
      */
     public static void msgLong(final Context context, final String msg) {
         if (context != null && msg != null) {
-            if (toast!=null){
+            if (toast != null) {
                 toast.cancel();
             }
 
@@ -64,7 +64,7 @@ public class Toaster {
      */
     public static void msgShort(final Context context, final String msg) {
         if (context != null && msg != null) {
-            if (toast!=null){
+            if (toast != null) {
                 toast.cancel();
             }
             new Handler(context.getMainLooper()).post(new Runnable() {

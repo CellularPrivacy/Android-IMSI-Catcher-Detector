@@ -85,7 +85,7 @@ public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSms
         }
     }
 
-    public String SV(int value){
+    public String SV(int value) {
         return String.valueOf(value);
     }
 }

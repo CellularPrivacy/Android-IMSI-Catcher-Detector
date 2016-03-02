@@ -44,7 +44,7 @@ public class DeviceApi18 {
     public static void loadCellInfo(TelephonyManager tm, Device pDevice) {
         int lCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
         try {
-            if(pDevice.mCell == null) {
+            if (pDevice.mCell == null) {
                 pDevice.mCell = new Cell();
             }
             List<CellInfo> cellInfoList = tm.getAllCellInfo();

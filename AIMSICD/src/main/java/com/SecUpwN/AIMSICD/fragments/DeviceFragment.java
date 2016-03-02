@@ -44,7 +44,7 @@ import io.freefair.android.injection.app.InjectionFragment;
 import io.freefair.android.util.logging.Logger;
 
 @XmlLayout(R.layout.fragment_device)
-public class DeviceFragment extends InjectionFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class DeviceFragment extends InjectionFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     private Logger log;
@@ -286,7 +286,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
             cell.setCID(jsonCell.getInt("cellid"));
             cell.setLAC(jsonCell.getInt("lac"));
             return cell;
-        }catch(JSONException | IOException e){
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -304,7 +304,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
         }
     }
 
-    private void refreshFailed(){
+    private void refreshFailed() {
         Helpers.msgShort(mContext, "Failed to refresh CellId. Check network connection.");
         swipeRefreshLayout.setRefreshing(false);
     }

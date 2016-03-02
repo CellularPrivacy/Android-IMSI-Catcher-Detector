@@ -82,7 +82,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
                 Object o = listViewAdv.getItemAtPosition(position);
                 CapturedSmsData obj_itemDetails = (CapturedSmsData) o;
 
-                if(dbaccess.deleteDetectedSms(obj_itemDetails.getId())){
+                if (dbaccess.deleteDetectedSms(obj_itemDetails.getId())) {
                     Toast.makeText(getApplicationContext(), "Deleted Sms Id = \n" + obj_itemDetails.getId(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
@@ -99,7 +99,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
         });
 
     }
-    public void loadDbString(){
+    public void loadDbString() {
         List<CapturedSmsData> newmsglist = new ArrayList<>();
 
         try {

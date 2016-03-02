@@ -141,7 +141,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         Response response = okHttpClient.newCall(request).execute();
 
                         publishProgress(80,100);
-                        if (response!= null) {
+                        if (response != null) {
                             log.info("OCID Upload Response: "
                                     + response.code() + " - "
                                     + response.message());
@@ -318,7 +318,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     Activity lActivity = getActivity();
 
                     //Activity may be detached or destroyed
-                    if(lActivity != null) {
+                    if (lActivity != null) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
                         builder.setTitle(R.string.restore_database_completed_title).setMessage(
                                 lActivity.getString(R.string.restore_database_completed));
@@ -338,7 +338,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     Activity lActivity = getActivity();
 
                     //Activity may be detached or destroyed
-                    if(lActivity != null) {
+                    if (lActivity != null) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
                         builder.setTitle(R.string.database_export_successful).setMessage(
                                 lActivity.getString(R.string.database_backup_successfully_saved_to) + "\n" + AIMSICDDbAdapter.mExternalFilesDirPath);
@@ -374,12 +374,12 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     private void showHideMapProgressBar(boolean pFlag) {
         InjectionAppCompatActivity lActivity = getActivity();
-        if(BuildConfig.DEBUG && lActivity == null) {
+        if (BuildConfig.DEBUG && lActivity == null) {
             log.verbose("BaseTask showHideMapProgressBar() activity is null");
         }
 
         Fragment myFragment = lActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
-        if(myFragment instanceof MapFragment) {
+        if (myFragment instanceof MapFragment) {
             ((MapFragment) myFragment).setRefreshActionButtonState(pFlag);
         }
     }

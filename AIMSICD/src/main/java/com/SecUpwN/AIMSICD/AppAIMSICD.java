@@ -32,7 +32,7 @@ public class AppAIMSICD extends InjectionApplication {
 
     private static WeakReference<AppAIMSICD> instance;
 
-    public static AppAIMSICD getInstance(){
+    public static AppAIMSICD getInstance() {
         return instance.get();
     }
 
