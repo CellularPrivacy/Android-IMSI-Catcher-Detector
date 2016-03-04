@@ -71,13 +71,15 @@ public class CardItemData {
 
     public CardItemData(Cell cell, String recordId) {
 
-        if (cell.getCID() != Integer.MAX_VALUE && cell.getCID() != -1) {
+        // valid CID values >=0
+        if (cell.getCID() != Integer.MAX_VALUE && cell.getCID() >= 0) {
             mCellID = "CID: " + cell.getCID() + "  (0x" + Integer.toHexString(cell.getCID()) + ")";
         } else {
             mCellID = "N/A";
         }
 
-        if (cell.getLAC() != Integer.MAX_VALUE && cell.getLAC() != -1) {
+        // valid lac values >=1
+        if (cell.getLAC() != Integer.MAX_VALUE && cell.getLAC() >= 1) {
             mLac = "LAC: " + cell.getLAC();
         } else {
             mLac = "N/A";
