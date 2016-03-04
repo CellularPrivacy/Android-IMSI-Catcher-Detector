@@ -17,6 +17,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.telephony.CellInfo;
 import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
@@ -1069,8 +1070,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType), status);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconResId);
 
+        int color = context.getResources().getColor(status.getColor());
+
             Notification mBuilder = new NotificationCompat.Builder(context)
-                    .setSmallIcon(iconResId)
+                    .setSmallIcon(R.drawable.tower48)
+                    .setColor(color)
                     .setLargeIcon(largeIcon)
                     .setTicker(tickerText)
                     .setContentTitle(context.getResources().getString(R.string.main_app_name))
@@ -1079,9 +1083,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     .setAutoCancel(false)
                     .setContentIntent(contentIntent)
                     .build();
-            NotificationManager mNotificationManager =
-                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
+
+        NotificationManagerCompat
+                .from(context)
+                .notify(NOTIFICATION_ID, mBuilder);
 
     }
 
