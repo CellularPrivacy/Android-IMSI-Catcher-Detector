@@ -7,7 +7,7 @@ package com.secupwn.aimsicd.constants;
 
 /**
  * Constants for TinyDb
- * <p>Relates to {@link com.SecUpwN.AIMSICD.utils.TinyDB}<br />
+ * <p>Relates to {@link com.secupwn.aimsicd.utils.TinyDB}<br />
  */
 public class TinyDbKeys {
 

@@ -12,7 +12,7 @@ public class DrawerMenu {
 
     /**
      * Constants of id for NavDrawerItem
-     * <p>Relates to {@link com.SecUpwN.AIMSICD.drawer.NavDrawerItem#getId()}<br />
+     * <p>Relates to {@link com.secupwn.aimsicd.drawer.NavDrawerItem#getId()}<br />
      */
     public static class ID {
 

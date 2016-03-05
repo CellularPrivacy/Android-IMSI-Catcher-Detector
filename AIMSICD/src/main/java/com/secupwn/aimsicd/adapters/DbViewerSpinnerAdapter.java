@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.Holders.ViewTableNameSpinnerHolder;
+import com.secupwn.aimsicd.adapters.holders.ViewTableNameSpinnerHolder;
 import com.secupwn.aimsicd.enums.StatesDbViewer;
 
 import java.util.List;
