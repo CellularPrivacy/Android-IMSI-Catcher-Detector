@@ -19,7 +19,7 @@
  *      51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  **/
 
-package com.SecUpwN.AIMSICD.utils;
+package com.secupwn.aimsicd.utils;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;

@@ -4,7 +4,7 @@
  * -----------------------------------------------------------
  */
 
-package com.SecUpwN.AIMSICD.smsdetection;
+package com.secupwn.aimsicd.smsdetection;
 
 import android.content.ComponentName;
 import android.content.Context;

@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.service;
+package com.secupwn.aimsicd.service;
 
 import android.content.Context;
 import android.hardware.Sensor;

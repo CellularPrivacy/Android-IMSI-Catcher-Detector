@@ -1,4 +1,4 @@
-package com.SecUpwN.AIMSICD.enums;
+package com.secupwn.aimsicd.enums;
 
 import android.support.annotation.StringRes;
 

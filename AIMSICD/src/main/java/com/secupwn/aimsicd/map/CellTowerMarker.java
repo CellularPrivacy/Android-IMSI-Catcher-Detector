@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.map;
+package com.secupwn.aimsicd.map;
 
 import android.app.AlertDialog;
 import android.content.Context;

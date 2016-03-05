@@ -6,7 +6,7 @@
 
 /* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
 
-package com.SecUpwN.AIMSICD.smsdetection;
+package com.secupwn.aimsicd.smsdetection;
 
 import android.content.ContentValues;
 import android.os.Bundle;

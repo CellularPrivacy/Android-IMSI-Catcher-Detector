@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.drawer;
+package com.secupwn.aimsicd.drawer;
 
 import com.SecUpwN.AIMSICD.R;
 import com.SecUpwN.AIMSICD.constants.DrawerMenu.ID.APPLICATION;

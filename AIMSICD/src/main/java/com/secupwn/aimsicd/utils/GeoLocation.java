@@ -17,7 +17,7 @@
  * @version 22 September 2010
  */
 
-package com.SecUpwN.AIMSICD.utils;
+package com.secupwn.aimsicd.utils;
 
 public class GeoLocation {
 

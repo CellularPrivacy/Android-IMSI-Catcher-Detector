@@ -22,7 +22,7 @@
  * limitations under the License.
  */
 
-package com.SecUpwN.AIMSICD.service;
+package com.secupwn.aimsicd.service;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

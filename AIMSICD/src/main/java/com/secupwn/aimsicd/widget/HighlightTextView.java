@@ -1,4 +1,4 @@
-package com.SecUpwN.AIMSICD.widget;
+package com.secupwn.aimsicd.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

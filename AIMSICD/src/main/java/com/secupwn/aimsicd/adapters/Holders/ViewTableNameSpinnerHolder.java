@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.adapters.Holders;
+package com.secupwn.aimsicd.adapters.Holders;
 
 
 import android.widget.TextView;

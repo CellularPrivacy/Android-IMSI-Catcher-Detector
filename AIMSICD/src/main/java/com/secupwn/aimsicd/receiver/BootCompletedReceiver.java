@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.receiver;
+package com.secupwn.aimsicd.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

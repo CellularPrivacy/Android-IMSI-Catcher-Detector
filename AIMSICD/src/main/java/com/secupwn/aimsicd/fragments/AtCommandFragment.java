@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.fragments;
+package com.secupwn.aimsicd.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;

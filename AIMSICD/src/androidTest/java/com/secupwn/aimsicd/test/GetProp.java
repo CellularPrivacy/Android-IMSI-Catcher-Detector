@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.test;
+package com.secupwn.aimsicd.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;

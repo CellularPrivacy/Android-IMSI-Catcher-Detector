@@ -1,4 +1,4 @@
-package com.SecUpwN.AIMSICD.adapters;
+package com.secupwn.aimsicd.adapters;
 
 import android.content.ContentValues;
 import android.content.Context;

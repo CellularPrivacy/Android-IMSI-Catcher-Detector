@@ -1,4 +1,4 @@
-package com.SecUpwN.AIMSICD.utils;
+package com.secupwn.aimsicd.utils;
 
 import android.location.Location;
 

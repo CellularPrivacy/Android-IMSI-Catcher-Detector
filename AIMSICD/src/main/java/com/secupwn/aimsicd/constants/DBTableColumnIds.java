@@ -1,4 +1,4 @@
-package com.SecUpwN.AIMSICD.constants;
+package com.secupwn.aimsicd.constants;
 /**
  * These are some static constants that represent the SQLite DB table names.
  * These should normally NOT be used, as hardcoded strings make everything

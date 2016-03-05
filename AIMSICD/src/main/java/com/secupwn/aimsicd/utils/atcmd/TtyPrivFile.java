@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.utils.atcmd;
+package com.secupwn.aimsicd.utils.atcmd;
 
 import java.io.IOException;
 

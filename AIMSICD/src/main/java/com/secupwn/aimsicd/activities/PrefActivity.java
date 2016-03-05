@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.activities;
+package com.secupwn.aimsicd.activities;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

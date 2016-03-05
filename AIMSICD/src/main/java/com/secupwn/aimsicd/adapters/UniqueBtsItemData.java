@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD.adapters;
+package com.secupwn.aimsicd.adapters;
 
 /**
  * Description:     Contains the data and definitions of all the items of the XML layout
