@@ -22,8 +22,8 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.BuildConfig;
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.BuildConfig;
+import com.secupwn.aimsicd.R;
 
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;

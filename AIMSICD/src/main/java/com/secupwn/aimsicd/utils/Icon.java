@@ -9,8 +9,8 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.enums.Status;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.enums.Status;
 
 import io.freefair.android.util.function.Function;
 

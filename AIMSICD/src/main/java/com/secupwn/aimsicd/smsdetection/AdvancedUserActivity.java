@@ -18,9 +18,9 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.constants.DBTableColumnIds;
 
 import java.util.ArrayList;
 import java.util.List;

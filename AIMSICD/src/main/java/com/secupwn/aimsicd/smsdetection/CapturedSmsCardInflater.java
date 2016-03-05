@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
-import com.SecUpwN.AIMSICD.adapters.IAdapterViewInflater;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.adapters.BaseInflaterAdapter;
+import com.secupwn.aimsicd.adapters.IAdapterViewInflater;
 
 
 public class CapturedSmsCardInflater implements IAdapterViewInflater<CapturedSmsData> {

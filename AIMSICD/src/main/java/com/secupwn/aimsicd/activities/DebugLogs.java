@@ -16,8 +16,8 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.utils.Helpers;
 
 import java.io.BufferedReader;
 import java.io.IOException;

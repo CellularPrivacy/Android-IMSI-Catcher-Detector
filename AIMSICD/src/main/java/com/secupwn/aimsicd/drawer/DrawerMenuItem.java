@@ -5,10 +5,10 @@
  */
 package com.secupwn.aimsicd.drawer;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.constants.DrawerMenu.ID.APPLICATION;
-import com.SecUpwN.AIMSICD.constants.DrawerMenu.ID.MAIN;
-import com.SecUpwN.AIMSICD.constants.DrawerMenu.ID.DATABASE_SETTINGS;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.constants.DrawerMenu.ID.APPLICATION;
+import com.secupwn.aimsicd.constants.DrawerMenu.ID.MAIN;
+import com.secupwn.aimsicd.constants.DrawerMenu.ID.DATABASE_SETTINGS;
 
 public class DrawerMenuItem implements NavDrawerItem {
 

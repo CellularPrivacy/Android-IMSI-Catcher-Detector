@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 
 import java.util.List;
 

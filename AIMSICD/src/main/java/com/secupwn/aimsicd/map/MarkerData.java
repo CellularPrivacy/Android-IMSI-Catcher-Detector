@@ -7,8 +7,8 @@ package com.secupwn.aimsicd.map;
 
 import android.content.Context;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.utils.Cell;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.utils.Cell;
 
 /**
  *

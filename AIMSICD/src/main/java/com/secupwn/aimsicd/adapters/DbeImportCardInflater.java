@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 
 /**
  * Contains the data and definitions of all the items of the XML layout

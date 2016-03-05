@@ -16,12 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.constants.DrawerMenu;
-import com.SecUpwN.AIMSICD.drawer.DrawerMenuItem;
-import com.SecUpwN.AIMSICD.drawer.DrawerMenuSection;
-import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
-import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.constants.DrawerMenu;
+import com.secupwn.aimsicd.drawer.DrawerMenuItem;
+import com.secupwn.aimsicd.drawer.DrawerMenuSection;
+import com.secupwn.aimsicd.drawer.NavDrawerItem;
+import com.secupwn.aimsicd.utils.Helpers;
 
 import java.util.List;
 

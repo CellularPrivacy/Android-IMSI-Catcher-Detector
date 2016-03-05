@@ -27,12 +27,12 @@ import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.fragments.MapFragment;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.constants.DrawerMenu;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.service.CellTracker;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.fragments.MapFragment;
+import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.constants.DrawerMenu;
+import com.secupwn.aimsicd.service.AimsicdService;
+import com.secupwn.aimsicd.service.CellTracker;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

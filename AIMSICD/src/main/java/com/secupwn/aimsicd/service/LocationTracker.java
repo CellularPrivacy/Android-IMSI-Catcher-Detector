@@ -14,11 +14,11 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.GeoLocation;
-import com.SecUpwN.AIMSICD.utils.TruncatedLocation;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.utils.Cell;
+import com.secupwn.aimsicd.utils.GeoLocation;
+import com.secupwn.aimsicd.utils.TruncatedLocation;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;

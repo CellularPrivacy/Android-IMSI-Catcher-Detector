@@ -2,7 +2,7 @@ package com.secupwn.aimsicd.enums;
 
 import android.support.annotation.StringRes;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 
 public enum Status {
     /**

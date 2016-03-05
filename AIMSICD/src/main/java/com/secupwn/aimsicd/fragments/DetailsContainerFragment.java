@@ -12,8 +12,8 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.DetailsPagerAdapter;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.adapters.DetailsPagerAdapter;
 
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;

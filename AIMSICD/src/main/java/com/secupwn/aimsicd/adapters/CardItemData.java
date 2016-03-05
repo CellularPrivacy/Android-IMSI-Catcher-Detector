@@ -5,8 +5,8 @@
  */
 package com.secupwn.aimsicd.adapters;
 
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.Device;
+import com.secupwn.aimsicd.utils.Cell;
+import com.secupwn.aimsicd.utils.Device;
 
 /**
  *  Description:    TODO: A few comments please!

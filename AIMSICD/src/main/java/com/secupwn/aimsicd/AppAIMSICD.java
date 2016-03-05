@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD;
+package com.secupwn.aimsicd;
 
 
 import android.app.Activity;
@@ -12,10 +12,10 @@ import android.os.Vibrator;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseArray;
 
-import com.SecUpwN.AIMSICD.constants.TinyDbKeys;
-import com.SecUpwN.AIMSICD.enums.Status;
-import com.SecUpwN.AIMSICD.utils.BaseAsyncTask;
-import com.SecUpwN.AIMSICD.utils.TinyDB;
+import com.secupwn.aimsicd.constants.TinyDbKeys;
+import com.secupwn.aimsicd.enums.Status;
+import com.secupwn.aimsicd.utils.BaseAsyncTask;
+import com.secupwn.aimsicd.utils.TinyDB;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.SecUpwN.AIMSICD;
+package com.secupwn.aimsicd;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -31,28 +31,28 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.SecUpwN.AIMSICD.activities.AboutActivity;
-import com.SecUpwN.AIMSICD.activities.BaseActivity;
-import com.SecUpwN.AIMSICD.activities.DebugLogs;
-import com.SecUpwN.AIMSICD.fragments.MapFragment;
-import com.SecUpwN.AIMSICD.activities.SettingsActivity;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.constants.DrawerMenu;
-import com.SecUpwN.AIMSICD.drawer.DrawerMenuActivityConfiguration;
-import com.SecUpwN.AIMSICD.drawer.NavDrawerItem;
-import com.SecUpwN.AIMSICD.fragments.AtCommandFragment;
-import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
-import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
-import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.service.CellTracker;
-import com.SecUpwN.AIMSICD.utils.AsyncResponse;
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.GeoLocation;
-import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.Icon;
-import com.SecUpwN.AIMSICD.utils.LocationServices;
-import com.SecUpwN.AIMSICD.utils.RequestTask;
+import com.secupwn.aimsicd.activities.AboutActivity;
+import com.secupwn.aimsicd.activities.BaseActivity;
+import com.secupwn.aimsicd.activities.DebugLogs;
+import com.secupwn.aimsicd.fragments.MapFragment;
+import com.secupwn.aimsicd.activities.SettingsActivity;
+import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.constants.DrawerMenu;
+import com.secupwn.aimsicd.drawer.DrawerMenuActivityConfiguration;
+import com.secupwn.aimsicd.drawer.NavDrawerItem;
+import com.secupwn.aimsicd.fragments.AtCommandFragment;
+import com.secupwn.aimsicd.fragments.CellInfoFragment;
+import com.secupwn.aimsicd.fragments.DbViewerFragment;
+import com.secupwn.aimsicd.fragments.DeviceFragment;
+import com.secupwn.aimsicd.service.AimsicdService;
+import com.secupwn.aimsicd.service.CellTracker;
+import com.secupwn.aimsicd.utils.AsyncResponse;
+import com.secupwn.aimsicd.utils.Cell;
+import com.secupwn.aimsicd.utils.GeoLocation;
+import com.secupwn.aimsicd.utils.Helpers;
+import com.secupwn.aimsicd.utils.Icon;
+import com.secupwn.aimsicd.utils.LocationServices;
+import com.secupwn.aimsicd.utils.RequestTask;
 
 import java.util.List;
 
@@ -240,7 +240,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                 break;
             case DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA:
                 // Request uploading here?
-                new RequestTask(this, com.SecUpwN.AIMSICD.utils.RequestTask.DBE_UPLOAD_REQUEST).execute("");
+                new RequestTask(this, com.secupwn.aimsicd.utils.RequestTask.DBE_UPLOAD_REQUEST).execute("");
                 // no string needed for csv based upload
                 break;
             case DrawerMenu.ID.MAIN.ANTENNA_MAP_VIEW:

@@ -15,11 +15,11 @@ import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.utils.Device;
-import com.SecUpwN.AIMSICD.utils.MiscUtils;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.service.AimsicdService;
+import com.secupwn.aimsicd.utils.Device;
+import com.secupwn.aimsicd.utils.MiscUtils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

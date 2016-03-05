@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 /**
  *
  * Inflater class used in DB viewer (for Measured cell strength measurements)

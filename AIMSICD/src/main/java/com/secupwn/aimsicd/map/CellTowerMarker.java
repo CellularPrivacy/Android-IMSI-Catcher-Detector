@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.util.GeoPoint;

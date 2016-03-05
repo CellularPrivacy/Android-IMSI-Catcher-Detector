@@ -19,10 +19,10 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.atcmd.AtCommandTerminal;
-import com.SecUpwN.AIMSICD.utils.atcmd.TtyPrivFile;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.utils.Helpers;
+import com.secupwn.aimsicd.utils.atcmd.AtCommandTerminal;
+import com.secupwn.aimsicd.utils.atcmd.TtyPrivFile;
 import com.stericson.RootShell.RootShell;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootShell.execution.Shell;

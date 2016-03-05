@@ -14,7 +14,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 
 public class SettingsFragment extends PreferenceFragment {
 

@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 import com.kaichunlin.transition.ViewTransitionBuilder;
 import com.kaichunlin.transition.animation.AnimationManager;
 import com.kaichunlin.transition.internal.TransitionController;

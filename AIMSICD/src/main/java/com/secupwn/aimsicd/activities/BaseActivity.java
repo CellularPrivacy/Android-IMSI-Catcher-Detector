@@ -12,10 +12,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.SecUpwN.AIMSICD.AppAIMSICD;
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.utils.Icon;
+import com.secupwn.aimsicd.AppAIMSICD;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.service.AimsicdService;
+import com.secupwn.aimsicd.utils.Icon;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;

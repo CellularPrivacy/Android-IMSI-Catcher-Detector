@@ -7,7 +7,7 @@ package com.secupwn.aimsicd.service;
 
 import android.content.Context;
 
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 
 import java.util.HashMap;
 

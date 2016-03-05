@@ -11,7 +11,7 @@ import android.os.Parcelable;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 
 public class Cell implements Parcelable {
 

@@ -33,15 +33,15 @@ import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.BaseInflaterAdapter;
-import com.SecUpwN.AIMSICD.adapters.CardItemData;
-import com.SecUpwN.AIMSICD.adapters.CellCardInflater;
-import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.service.CellTracker;
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.adapters.BaseInflaterAdapter;
+import com.secupwn.aimsicd.adapters.CardItemData;
+import com.secupwn.aimsicd.adapters.CellCardInflater;
+import com.secupwn.aimsicd.rilexecutor.RilExecutor;
+import com.secupwn.aimsicd.service.AimsicdService;
+import com.secupwn.aimsicd.service.CellTracker;
+import com.secupwn.aimsicd.utils.Cell;
+import com.secupwn.aimsicd.utils.Helpers;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

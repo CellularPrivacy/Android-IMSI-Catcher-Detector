@@ -24,7 +24,7 @@ package com.secupwn.aimsicd.utils;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.SecUpwN.AIMSICD.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 
 import java.io.File;
 import java.io.FileWriter;

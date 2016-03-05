@@ -9,7 +9,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-import com.SecUpwN.AIMSICD.fragments.PrefFragment;
+import com.secupwn.aimsicd.fragments.PrefFragment;
 
 
 public class PrefActivity extends BaseActivity {

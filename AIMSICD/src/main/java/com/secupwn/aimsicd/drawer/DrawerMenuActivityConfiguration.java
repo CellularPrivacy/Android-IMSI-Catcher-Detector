@@ -8,9 +8,9 @@ package com.secupwn.aimsicd.drawer;
 import android.content.Context;
 import android.widget.BaseAdapter;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.DrawerMenuAdapter;
-import com.SecUpwN.AIMSICD.constants.DrawerMenu;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.adapters.DrawerMenuAdapter;
+import com.secupwn.aimsicd.constants.DrawerMenu;
 
 import java.util.ArrayList;
 import java.util.List;

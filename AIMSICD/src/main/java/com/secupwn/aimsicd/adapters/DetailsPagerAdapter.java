@@ -10,10 +10,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.fragments.CellInfoFragment;
-import com.SecUpwN.AIMSICD.fragments.DbViewerFragment;
-import com.SecUpwN.AIMSICD.fragments.DeviceFragment;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.fragments.CellInfoFragment;
+import com.secupwn.aimsicd.fragments.DbViewerFragment;
+import com.secupwn.aimsicd.fragments.DeviceFragment;
 
 /**
  * Adapter to allow swiping between various detail fragments

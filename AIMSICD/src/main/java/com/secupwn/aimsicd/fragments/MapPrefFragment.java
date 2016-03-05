@@ -8,7 +8,7 @@ package com.secupwn.aimsicd.fragments;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 
 public class MapPrefFragment extends PreferenceFragment {
 

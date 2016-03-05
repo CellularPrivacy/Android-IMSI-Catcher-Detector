@@ -11,10 +11,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
-import com.SecUpwN.AIMSICD.service.CellTracker;
-import com.SecUpwN.AIMSICD.utils.Helpers;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.service.AimsicdService;
+import com.secupwn.aimsicd.service.CellTracker;
+import com.secupwn.aimsicd.utils.Helpers;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;

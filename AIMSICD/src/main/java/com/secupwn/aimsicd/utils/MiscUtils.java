@@ -15,8 +15,8 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
-import com.SecUpwN.AIMSICD.AIMSICD;
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.AIMSICD;
+import com.secupwn.aimsicd.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

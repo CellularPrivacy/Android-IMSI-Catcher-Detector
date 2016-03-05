@@ -7,7 +7,7 @@ package com.secupwn.aimsicd.utils;
 
 import android.content.Context;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

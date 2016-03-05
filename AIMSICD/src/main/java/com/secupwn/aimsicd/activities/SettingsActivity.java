@@ -9,7 +9,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-import com.SecUpwN.AIMSICD.fragments.SettingsFragment;
+import com.secupwn.aimsicd.fragments.SettingsFragment;
 
 
 public class SettingsActivity extends BaseActivity {

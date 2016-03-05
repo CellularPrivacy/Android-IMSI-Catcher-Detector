@@ -12,8 +12,8 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 
-import com.SecUpwN.AIMSICD.utils.Helpers;
-import com.SecUpwN.AIMSICD.utils.OemCommands;
+import com.secupwn.aimsicd.utils.Helpers;
+import com.secupwn.aimsicd.utils.OemCommands;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

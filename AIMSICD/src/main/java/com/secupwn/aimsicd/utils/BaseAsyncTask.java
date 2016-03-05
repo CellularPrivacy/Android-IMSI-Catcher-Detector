@@ -8,7 +8,7 @@ package com.secupwn.aimsicd.utils;
 
 import android.os.AsyncTask;
 
-import com.SecUpwN.AIMSICD.AppAIMSICD;
+import com.secupwn.aimsicd.AppAIMSICD;
 
 import java.lang.ref.WeakReference;
 

@@ -32,7 +32,7 @@ import java.util.Map;
  * Usage:
  *
  *  1)
- *      import com.SecUpwN.AIMSICD.utils.TinyDB;
+ *      import com.secupwn.aimsicd.utils.TinyDB;
  *      ...
  *      TinyDB tinydb = TinyDB.getInstance(); //Possibly mContext if already declared in AppAIMSICD via method init(AppContext).
  *
@@ -45,7 +45,7 @@ import java.util.Map;
  *      tinydb.putImagePNG("DropBox/WorkImages", "MeAtlunch.png", lunchBitmap);
  *
  *  2)
- *      import com.SecUpwN.AIMSICD.utils.TinyDB;
+ *      import com.secupwn.aimsicd.utils.TinyDB;
  *      ...
  *      TinyDB.getInstance().putInt("clickCount", 2);
  *      TinyDB.getInstance().putFloat("xPoint", 3.6f);

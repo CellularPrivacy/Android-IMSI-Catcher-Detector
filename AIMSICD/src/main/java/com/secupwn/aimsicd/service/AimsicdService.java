@@ -42,11 +42,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.rilexecutor.RilExecutor;
-import com.SecUpwN.AIMSICD.smsdetection.SmsDetector;
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.GeoLocation;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.rilexecutor.RilExecutor;
+import com.secupwn.aimsicd.smsdetection.SmsDetector;
+import com.secupwn.aimsicd.utils.Cell;
+import com.secupwn.aimsicd.utils.GeoLocation;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionService;

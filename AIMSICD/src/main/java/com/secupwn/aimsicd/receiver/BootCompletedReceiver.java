@@ -13,8 +13,8 @@ import android.content.SharedPreferences;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.service.AimsicdService;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.service.AimsicdService;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 

@@ -12,15 +12,15 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.SparseArray;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.constants.DBTableColumnIds;
-import com.SecUpwN.AIMSICD.enums.Status;
-import com.SecUpwN.AIMSICD.service.CellTracker;
-import com.SecUpwN.AIMSICD.smsdetection.AdvanceUserItems;
-import com.SecUpwN.AIMSICD.smsdetection.CapturedSmsData;
-import com.SecUpwN.AIMSICD.utils.CMDProcessor;
-import com.SecUpwN.AIMSICD.utils.Cell;
-import com.SecUpwN.AIMSICD.utils.MiscUtils;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.constants.DBTableColumnIds;
+import com.secupwn.aimsicd.enums.Status;
+import com.secupwn.aimsicd.service.CellTracker;
+import com.secupwn.aimsicd.smsdetection.AdvanceUserItems;
+import com.secupwn.aimsicd.smsdetection.CapturedSmsData;
+import com.secupwn.aimsicd.utils.CMDProcessor;
+import com.secupwn.aimsicd.utils.Cell;
+import com.secupwn.aimsicd.utils.MiscUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -7,7 +7,7 @@ package com.secupwn.aimsicd.enums;
 
 import android.content.Context;
 
-import com.SecUpwN.AIMSICD.R;
+import com.secupwn.aimsicd.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

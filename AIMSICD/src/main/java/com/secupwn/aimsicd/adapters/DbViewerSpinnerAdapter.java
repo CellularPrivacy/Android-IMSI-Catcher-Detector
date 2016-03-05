@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.SecUpwN.AIMSICD.R;
-import com.SecUpwN.AIMSICD.adapters.Holders.ViewTableNameSpinnerHolder;
-import com.SecUpwN.AIMSICD.enums.StatesDbViewer;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.adapters.Holders.ViewTableNameSpinnerHolder;
+import com.secupwn.aimsicd.enums.StatesDbViewer;
 
 import java.util.List;
 
