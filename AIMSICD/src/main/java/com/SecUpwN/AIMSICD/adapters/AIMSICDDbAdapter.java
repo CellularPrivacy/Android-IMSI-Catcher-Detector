@@ -315,18 +315,27 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         Cursor bts_cursor = mDb.rawQuery(query, null);
 
         while (bts_cursor.moveToNext()) {
-            // 1=LAC, 8=Accuracy, 11=Time
-            if (cell.getLAC() != bts_cursor.getInt(bts_cursor.getColumnIndex("LAC"))) {
-                log.info("ALERT: Changing LAC on CID: " + cell.getCID()
+            // 1=LAC, 8=Accuracy, 11=Time <<---- what is this!??
+
+            // valid lac >=1 and valid cid >=0 and all else is just buggy android api
+            if (cell.getLAC() >= 1 && cell.getCID() >= 0) {
+                log.debug("Valid lac and cid: lac = " + cell.getLAC() + "cid = " + cell.getCID());
+                if (cell.getLAC() != bts_cursor.getInt(bts_cursor.getColumnIndex("LAC"))) {
+                    log.info("ALERT: Changing LAC on CID: " + cell.getCID()
                         + " LAC(API): " + cell.getLAC()
                         + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
 
+                    bts_cursor.close();
+                    return false;
+                } else {
+                    log.verbose("LAC checked - no change on CID:" + cell.getCID()
+                            + " LAC(API): " + cell.getLAC()
+                            + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
+                }
+            } else {
+                log.debug("Invalid lac or cid: lac = " + cell.getLAC() + "cid = " + cell.getCID());
                 bts_cursor.close();
                 return false;
-            } else {
-                log.verbose("LAC checked - no change on CID:" + cell.getCID()
-                        + " LAC(API): " + cell.getLAC()
-                        + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
             }
         }
         bts_cursor.close();
@@ -1912,8 +1921,11 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         String gpsd_lon = String.valueOf(CellTracker.mMonitorCell.getLon()); // gpsd_lon
         int gpsd_accu = (int) CellTracker.mMonitorCell.getAccuracy();        // gpsd_accu
 
-        // skip CID/LAC of "-1" (due to crappy API, Roaming or Air-Plane Mode)
-        if (cid != -1 || lac != -1) {
+        // skip CID/LAC of less than 0 (due to crappy API, Roaming or Air-Plane Mode)
+        // 16 bits, 0-65535 are valid CID values
+        // also skip LAC less than 1 (not a valid LAC that a phone can connect to)
+        // 16 bits, 1-65520 are valid LAC values
+        if (cid >= 0 && lac >= 1) { // bug fix
             // Check if LAST entry is the same!
             String query = String.format(
                     "SELECT * from EventLog WHERE _id=(SELECT max(_id) from EventLog) AND CID=%d AND LAC=%d AND PSC=%d AND DF_id=%d",

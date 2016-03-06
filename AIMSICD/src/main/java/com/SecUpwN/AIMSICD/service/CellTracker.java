@@ -113,7 +113,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private static Context context;
 
     public CellTracker(Context context, SignalStrengthTracker sst) {
-        this.context = context;
+        CellTracker.context = context;
         this.signalStrengthTracker = sst;
 
         // Creating tinydb here to avoid: "TinyDb tinydb = new TinyDb(context);"
@@ -392,7 +392,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     neighboringCellInfo = cellInfoList;
                 } catch (InterruptedException e) {
                     // TODO: Add a more valuable message here!
-                    log.error("", e);
+                    log.error("unknown error ", e);
                 }
             }
         }
