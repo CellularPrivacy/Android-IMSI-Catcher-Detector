@@ -24,7 +24,6 @@ public class Device {
 
     public Cell mCell;
     private int mPhoneID = -1;
-    private String mNetType;
     private String mCellInfo;
     private String mDataState;
     private String mDataStateShort;
@@ -56,7 +55,6 @@ public class Device {
         mRoaming = tm.isNetworkRoaming();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            mNetType = getNetworkTypeName();
             DeviceApi18.loadCellInfo(tm, this);
         }
 
@@ -316,119 +314,7 @@ public class Device {
             return "Unknown";
         }
 
-        switch (mCell.getNetType()) {
-            case TelephonyManager.NETWORK_TYPE_1xRTT:
-                mNetType = "1xRTT";
-                break;
-            case TelephonyManager.NETWORK_TYPE_CDMA:
-                mNetType = "CDMA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EDGE:
-                mNetType = "EDGE";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EHRPD:
-                mNetType = "eHRPD";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_0:
-                mNetType = "EVDO rev. 0";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_A:
-                mNetType = "EVDO rev. A";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_B:
-                mNetType = "EVDO rev. B";
-                break;
-            case TelephonyManager.NETWORK_TYPE_GPRS:
-                mNetType = "GPRS";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSDPA:
-                mNetType = "HSDPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSPA:
-                mNetType = "HSPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSPAP:
-                mNetType = "HSPA+";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSUPA:
-                mNetType = "HSUPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_IDEN:
-                mNetType = "iDen";
-                break;
-            case TelephonyManager.NETWORK_TYPE_LTE:
-                mNetType = "LTE";
-                break;
-            case TelephonyManager.NETWORK_TYPE_UMTS:
-                mNetType = "UMTS";
-                break;
-            case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-                mNetType = "Unknown";
-                break;
-        }
-
-        return mNetType;
-    }
-
-    /**
-     * Network Type
-     *
-     * @return string representing device Network Type
-     */
-    public static String getNetworkTypeName(int netType) {
-        String networkType = "Unknown";
-        switch (netType) {
-            case TelephonyManager.NETWORK_TYPE_1xRTT:
-                networkType = "1xRTT";
-                break;
-            case TelephonyManager.NETWORK_TYPE_CDMA:
-                networkType = "CDMA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EDGE:
-                networkType = "EDGE";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EHRPD:
-                networkType = "eHRPD";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_0:
-                networkType = "EVDO_0";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_A:
-                networkType = "EVDO_A";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_B:
-                networkType = "EVDO_B";
-                break;
-            case TelephonyManager.NETWORK_TYPE_GPRS:
-                networkType = "GPRS";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSDPA:
-                networkType = "HSDPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSPA:
-                networkType = "HSPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSPAP:
-                networkType = "HSPA+";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSUPA:
-                networkType = "HSUPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_IDEN:
-                networkType = "iDEN";
-                break;
-            case TelephonyManager.NETWORK_TYPE_LTE:
-                networkType = "LTE";
-                break;
-            case TelephonyManager.NETWORK_TYPE_UMTS:
-                networkType = "UMTS";
-                break;
-            case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-                networkType = "Unknown";
-                break;
-        }
-
-        return networkType;
+        return mCell.getRAT();
     }
 
     String getDataActivity(TelephonyManager tm) {
