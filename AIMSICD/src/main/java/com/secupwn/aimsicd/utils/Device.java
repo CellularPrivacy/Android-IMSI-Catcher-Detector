@@ -24,7 +24,6 @@ public class Device {
 
     public Cell mCell;
     private int mPhoneID = -1;
-    private String mNetType;
     private String mCellInfo;
     private String mDataState;
     private String mDataStateShort;
@@ -56,7 +55,6 @@ public class Device {
         mRoaming = tm.isNetworkRoaming();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            mNetType = getNetworkTypeName();
             DeviceApi18.loadCellInfo(tm, this);
         }
 
