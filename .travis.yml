@@ -27,10 +27,10 @@ notifications:
 android:
   components:
 # We are using the latest revision of Android SDK Tools
-     - platform-tools
-     - tools
+     - platform-tools-preview
+     - tools-preview
 # The BuildTools version we are using for our project
-     - build-tools-24.0.0
+     - build-tools-24.0.0-preview
      - android-N
 # Additional components
      - extra-android-m2repository
