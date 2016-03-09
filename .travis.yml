@@ -30,8 +30,8 @@ android:
      - platform-tools
      - tools
 # The BuildTools version we are using for our project
-     - build-tools-23.0.2
-     - android-23
+     - build-tools-24.0.0
+     - android-N
 # Additional components
      - extra-android-m2repository
 
