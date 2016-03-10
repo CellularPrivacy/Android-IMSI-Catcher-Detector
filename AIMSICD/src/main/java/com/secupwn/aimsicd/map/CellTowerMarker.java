@@ -7,7 +7,6 @@ package com.secupwn.aimsicd.map;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TableRow;
@@ -97,11 +96,8 @@ public class CellTowerMarker extends Marker {
             AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
             dialog.setTitle(cellTowerMarker.getTitle());
             dialog.setView(getInfoContents(cellTowerMarker.getMarkerData()));
-            dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
+            dialog.setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                dialogInterface.dismiss();
             });
             dialog.show();
 

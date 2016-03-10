@@ -10,14 +10,14 @@ try {
 def isCi = "true".equals(System.getenv("CI"))
 
 android {
-    compileSdkVersion 'android-N'
+    compileSdkVersion 23
     buildToolsVersion '24.0.0 rc1'
 
 
     defaultConfig {
         applicationId "com.SecUpwN.AIMSICD"
         minSdkVersion 16
-        targetSdkVersion 'N' // Do not change: Working Icons on Android 5+
+        targetSdkVersion 23 // Do not change: Working Icons on Android 5+
         versionCode 40
         testApplicationId "com.SecUpwN.AIMSICD.test"
 

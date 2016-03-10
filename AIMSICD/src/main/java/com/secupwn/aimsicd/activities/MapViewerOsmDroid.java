@@ -444,12 +444,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
                     } while (c.moveToNext());
                 } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Helpers.msgLong(MapViewerOsmDroid.this, getString(R.string.no_tracked_locations_found));
-                        }
-                    });
+                    runOnUiThread(() -> Helpers.msgLong(MapViewerOsmDroid.this, getString(R.string.no_tracked_locations_found)));
                 }
 
                 GeoPoint ret = new GeoPoint(0, 0);

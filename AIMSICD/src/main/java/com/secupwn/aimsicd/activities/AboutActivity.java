@@ -103,47 +103,17 @@ public class AboutActivity extends InjectionAppCompatActivity {
         tv = findViewById(R.id.aimsicd_license_link);
         setLink(tv, R.string.aimsicd_license_link);
 
-        idleTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showInfoDialog(Status.IDLE);
-            }
-        });
+        idleTextView.setOnClickListener(view -> showInfoDialog(Status.IDLE));
 
-        okTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showInfoDialog(Status.OK);
-            }
-        });
+        okTextView.setOnClickListener(view -> showInfoDialog(Status.OK));
 
-        mediumTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showInfoDialog(Status.MEDIUM);
-            }
-        });
+        mediumTextView.setOnClickListener(view -> showInfoDialog(Status.MEDIUM));
 
-        highTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showInfoDialog(Status.HIGH);
-            }
-        });
+        highTextView.setOnClickListener(view -> showInfoDialog(Status.HIGH));
 
-        dangerTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showInfoDialog(Status.DANGER);
-            }
-        });
+        dangerTextView.setOnClickListener(view -> showInfoDialog(Status.DANGER));
 
-        skullTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showInfoDialog(Status.SKULL);
-            }
-        });
+        skullTextView.setOnClickListener(view -> showInfoDialog(Status.SKULL));
 
         btncredits.setOnClickListener(new View.OnClickListener() {
             AlertDialog mCreditsDialog;
@@ -161,12 +131,9 @@ public class AboutActivity extends InjectionAppCompatActivity {
                 mCreditsTitle.setGravity(Gravity.CENTER_HORIZONTAL);
                 mScrollView.addView(mCreditsText);
                 Animation scrollTo = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.credits_dialog_scroll);
-                mCreditsText.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        closeAfterFinish = false;
-                        mCreditsText.clearAnimation();
-                    }
+                mCreditsText.setOnClickListener(v -> {
+                    closeAfterFinish = false;
+                    mCreditsText.clearAnimation();
                 });
                 scrollTo.setAnimationListener(new Animation.AnimationListener() {
                     @Override
@@ -202,13 +169,10 @@ public class AboutActivity extends InjectionAppCompatActivity {
     }
 
     private void setLink(View b, final int link) {
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse(getResources().getString(link)));
-                startActivity(intent);
-            }
+        b.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(getResources().getString(link)));
+            startActivity(intent);
         });
     }
 

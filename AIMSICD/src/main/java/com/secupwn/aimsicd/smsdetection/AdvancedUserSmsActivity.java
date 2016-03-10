@@ -10,8 +10,6 @@ package com.secupwn.aimsicd.smsdetection;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -76,26 +74,22 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
 
         listViewAdv.setAdapter(new AdvanceUserBaseSmsAdapter(getApplicationContext(), msgitems));
 
-        listViewAdv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> a, View v, int position, long id) {
-                Object o = listViewAdv.getItemAtPosition(position);
-                CapturedSmsData obj_itemDetails = (CapturedSmsData) o;
+        listViewAdv.setOnItemLongClickListener((a, v, position, id) -> {
+            Object o = listViewAdv.getItemAtPosition(position);
+            CapturedSmsData obj_itemDetails = (CapturedSmsData) o;
 
-                if (dbaccess.deleteDetectedSms(obj_itemDetails.getId())) {
-                    Toast.makeText(getApplicationContext(), "Deleted Sms Id = \n" + obj_itemDetails.getId(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
-                }
-
-                try {
-                    loadDbString();
-                } catch (Exception ee) {
-                    log.debug("", ee);
-                }
-                return false;
+            if (dbaccess.deleteDetectedSms(obj_itemDetails.getId())) {
+                Toast.makeText(getApplicationContext(), "Deleted Sms Id = \n" + obj_itemDetails.getId(), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
             }
 
+            try {
+                loadDbString();
+            } catch (Exception ee) {
+                log.debug("", ee);
+            }
+            return false;
         });
 
     }

@@ -81,43 +81,29 @@ public class DebugLogs extends BaseActivity {
         // Show the Up button in the action bar.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                logView.setFocusable(false);
+        runOnUiThread(() -> logView.setFocusable(false));
+
+        btnClear.setOnClickListener(view -> {
+            try {
+                clearLogs();
+            } catch (IOException e) {
+                log.error("Error clearing logs", e);
             }
         });
 
-        btnClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    clearLogs();
-                } catch (IOException e) {
-                    log.error("Error clearing logs", e);
-                }
-            }
+        btnCopy.setOnClickListener(view -> {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            ClipData cd = ClipData.newPlainText("log", logView.getText());
+            clipboard.setPrimaryClip(cd);
+            Helpers.msgShort(DebugLogs.this, getString(R.string.msg_copied_to_clipboard));
         });
 
-        btnCopy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                ClipData cd = ClipData.newPlainText("log", logView.getText());
-                clipboard.setPrimaryClip(cd);
-                Helpers.msgShort(DebugLogs.this, getString(R.string.msg_copied_to_clipboard));
-            }
-        });
-
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (updateLogs) {
-                    updateLogs = false;
-                    btnStop.setText(getString(R.string.btn_start_logs));
-                } else {
-                    startLogging();
-                }
+        btnStop.setOnClickListener(view -> {
+            if (updateLogs) {
+                updateLogs = false;
+                btnStop.setText(getString(R.string.btn_start_logs));
+            } else {
+                startLogging();
             }
         });
 
@@ -296,12 +282,7 @@ public class DebugLogs extends BaseActivity {
                     log.error("Error clearing logs", e);
                 }
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        logView.setText("");
-                    }
-                });
+                runOnUiThread(() -> logView.setText(""));
             }
         }.start();
     }
@@ -313,21 +294,18 @@ public class DebugLogs extends BaseActivity {
                 try {
                     final String logs = getLogs();
                     if (!logs.equals(logView.getText().toString())) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // update log display
-                                logView.setText(logs);
+                        runOnUiThread(() -> {
+                            // update log display
+                            logView.setText(logs);
 
-                                // scroll to the bottom of the log display
-                                final ScrollView scroll = ((ScrollView) logView.getParent());
-                                scroll.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        scroll.fullScroll(View.FOCUS_DOWN);
-                                    }
-                                });
-                            }
+                            // scroll to the bottom of the log display
+                            final ScrollView scroll = ((ScrollView) logView.getParent());
+                            scroll.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    scroll.fullScroll(View.FOCUS_DOWN);
+                                }
+                            });
                         });
                     }
                 } catch (IOException e) {

@@ -20,7 +20,6 @@ package com.secupwn.aimsicd.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -28,9 +27,9 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.fragments.MapFragment;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
+import com.secupwn.aimsicd.fragments.MapFragment;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.service.CellTracker;
 
@@ -331,21 +330,15 @@ import io.freefair.android.util.logging.Logger;
      */
     public static void askAndDeleteDb(final Context pContext) {
         AlertDialog lAlertDialog = new AlertDialog.Builder(pContext)
-                .setNegativeButton(R.string.open_cell_id_button_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
+                .setNegativeButton(R.string.open_cell_id_button_cancel, (dialog, which) -> {
                 })
-                .setPositiveButton(R.string.open_cell_id_button_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Probably put in try/catch in case file removal fails...
-                        pContext.stopService(new Intent(pContext, AimsicdService.class));
-                        pContext.deleteDatabase("aimsicd.db");
-                        new AIMSICDDbAdapter(pContext);
-                        pContext.startService(new Intent(pContext, AimsicdService.class));
-                        msgLong(pContext, pContext.getString(R.string.delete_database_msg_success));
-                    }
+                .setPositiveButton(R.string.open_cell_id_button_ok, (dialog, which) -> {
+                    // Probably put in try/catch in case file removal fails...
+                    pContext.stopService(new Intent(pContext, AimsicdService.class));
+                    pContext.deleteDatabase("aimsicd.db");
+                    new AIMSICDDbAdapter(pContext);
+                    pContext.startService(new Intent(pContext, AimsicdService.class));
+                    msgLong(pContext, pContext.getString(R.string.delete_database_msg_success));
                 })
                 .setMessage(pContext.getString(R.string.clear_database_question))
                 .setTitle(R.string.clear_database)

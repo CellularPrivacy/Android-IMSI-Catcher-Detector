@@ -206,14 +206,11 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
 
     void updateCipheringIndicator() {
         final List<String> list = rilExecutor.getCipheringInfo();
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (list != null) {
-                    mCipheringIndicatorLabel.setVisibility(View.VISIBLE);
-                    mCipheringIndicator.setVisibility(View.VISIBLE);
-                    mCipheringIndicator.setText(TextUtils.join("\n", list));
-                }
+        getActivity().runOnUiThread(() -> {
+            if (list != null) {
+                mCipheringIndicatorLabel.setVisibility(View.VISIBLE);
+                mCipheringIndicator.setVisibility(View.VISIBLE);
+                mCipheringIndicator.setText(TextUtils.join("\n", list));
             }
         });
     }
@@ -247,14 +244,11 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
 
     void updateNeighbouringCells() {
         final List<String> list = rilExecutor.getNeighbours();
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (list != null) {
-                    mNeighbouringCells.setText(TextUtils.join("\n", list));
-                    mNeighbouringCells.setVisibility(View.VISIBLE);
-                    mNeighbouringTotalView.setVisibility(View.GONE);
-                }
+        getActivity().runOnUiThread(() -> {
+            if (list != null) {
+                mNeighbouringCells.setText(TextUtils.join("\n", list));
+                mNeighbouringCells.setVisibility(View.VISIBLE);
+                mNeighbouringTotalView.setVisibility(View.GONE);
             }
         });
     }
