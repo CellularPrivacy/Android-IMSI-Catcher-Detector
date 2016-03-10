@@ -34,6 +34,7 @@ android:
 # The BuildTools version we are using for our project
      - build-tools-24.0.0-preview
      - android-N
+     - android-23
 # Additional components
      - extra-android-m2repository
 
