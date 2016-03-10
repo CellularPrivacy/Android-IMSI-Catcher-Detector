@@ -27,6 +27,8 @@ notifications:
 android:
   components:
 # We are using the latest revision of Android SDK Tools
+     - platform-tools
+     - tools
      - platform-tools-preview
      - tools-preview
 # The BuildTools version we are using for our project
