@@ -6,6 +6,7 @@
 # ---------------------------------------------------------------
 
 language: android
+jdk: oraclejdk8
 sudo: false
 
 cache:

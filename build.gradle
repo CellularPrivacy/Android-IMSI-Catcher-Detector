@@ -5,7 +5,7 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.+'
+        classpath 'com.android.tools.build:gradle:2.1.0-alpha1'
         classpath 'io.freefair:gradle-plugins:2.0.0-beta4'
     }
 }
