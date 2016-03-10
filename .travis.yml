@@ -5,55 +5,31 @@
 # https://rkh.github.io/travis-encrypt/public/index.html
 # ---------------------------------------------------------------
 
-# Travis CI Settings
-#-------------------
-
 language: android
+sudo: false
+
 # Turning off caching to avoid caching Issues
 cache: false
-# Using the new Container-Based Infrastructure
-sudo: false
+
 env:
   global:
-# Encrypted Tokens
-#-----------------
-
-# Encrypted Coverity Scan Token
+    # Encrypted Coverity Scan Token
     - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
-# Encrypted internal chat Token
-notifications:
-  hipchat:
-    - secure: "I2XmQkFCyKZHW2NeClYyl3FND80YkqLtYo+Rn3ftS4xjEg6VfGgDv6AlvQ+b+oZg7RZI6nKia9OLZxAxVBOHw6UcJJnurJx4hfAIBZAihIiNpZPj1c9wGgv4D+M6zi3rgbJRZ2Tz6IKJvHC+CD3LApeJR9kH15lDWbD7YZ0UI7E="
+
 android:
   components:
-# We are using the latest revision of Android SDK Tools
-     - platform-tools
-     - tools
-     - platform-tools-preview
-     - tools-preview
-# The BuildTools version we are using for our project
-     - build-tools-24.0.0-preview
-     - android-N
-     - android-23
-# Additional components
-     - extra-android-m2repository
+    - platform-tools
+    - tools
+    - platform-tools-preview
+    - tools-preview
+    - build-tools-24.0.0-preview
+    - android-23
+    - android-N
+    - extra-android-m2repository
 
 before_install: 'openssl aes-256-cbc -K $encrypted_dc771c3300d2_key -iv $encrypted_dc771c3300d2_iv -in keystore.jks.enc -out keystore.jks -d || true'
 
-
 script: ./gradlew build check
-# Coverity Scan Settings
-#-----------------------
-
-addons:
-  coverity_scan:
-    project:
-      name: "SecUpwN/Android-IMSI-Catcher-Detector"
-    notification_email: annoyed@coverity.notifications
-# Scan results: http://scan.coverity.com/projects/3346
-    build_command_prepend: "./gradlew clean"
-    build_command: "./gradlew build"
-    branch_pattern: master
 
 before_deploy:
   - cd AIMSICD/build/outputs/apk; ls -la; md5sum *-normal-release.apk > md5sum.txt; sha1sum *-normal-release.apk > sha1sum.txt; cd -
@@ -70,3 +46,16 @@ deploy:
   on:
     repo: SecUpwN/Android-IMSI-Catcher-Detector
     tags: true
+
+addons:
+  coverity_scan: #Scan results: http://scan.coverity.com/projects/3346
+    project:
+      name: "SecUpwN/Android-IMSI-Catcher-Detector"
+    notification_email: annoyed@coverity.notifications
+    build_command_prepend: "./gradlew clean"
+    build_command: "./gradlew build"
+    branch_pattern: master
+
+notifications:
+  hipchat:
+    - secure: "I2XmQkFCyKZHW2NeClYyl3FND80YkqLtYo+Rn3ftS4xjEg6VfGgDv6AlvQ+b+oZg7RZI6nKia9OLZxAxVBOHw6UcJJnurJx4hfAIBZAihIiNpZPj1c9wGgv4D+M6zi3rgbJRZ2Tz6IKJvHC+CD3LApeJR9kH15lDWbD7YZ0UI7E="
