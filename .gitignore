@@ -1,3 +1,7 @@
+
+# Keystores
+keystore.jks
+
 # Built application files
 *.apk
 *.ap_
@@ -65,3 +69,4 @@ signing.properties
 import-summary.txt
 manifest-merger*.txt
 .navigation/
+scratchpad

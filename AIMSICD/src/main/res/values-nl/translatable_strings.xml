@@ -6,8 +6,8 @@
     <string name="quit">Stoppen</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Annuleren</string>
-    <string name="text_agree">Akkoord</string>
-    <string name="text_disagree">Niet akkoord</string>
+    <string name="text_agree">Ik ga akkoord</string>
+    <string name="text_disagree">Ik ga niet akkoord</string>
 
     <string name="disclaimer_title">DISCLAIMER</string>
     <string name="toggle_attack_detection">Aanvalsdetectie aan/uit</string>
@@ -19,7 +19,7 @@
     <string name="preferences">Voorkeuren</string>
     <string name="press_once_again_to_exit">Druk opnieuw om af te sluiten.</string>
     <string name="cell_lookup">Alle gegevens van huidige cel</string>
-    <string name="send_logs">Foutopsporing</string>
+    <string name="debugging">Foutopsporing</string>
     <string name="no_network_connection_title">Geen internet verbinding</string>
     <string name="no_network_connection_message">Kan geen OpenCellID data laden zonder dataverbinding, zet de dataverbinding a.u.b. aan!</string>
 
@@ -67,11 +67,11 @@
     <string name="about_changelog">VERANDERINGEN</string>
     <string name="about_license">LICENTIE</string>
     <string name="about_credits">MET DANK AAN</string>
-    <string name="about_desc_icon_active_tracking_near">Actieve tracking dichtbij!</string>
-    <string name="about_desc_icon_ok">Alles OK.</string>
-    <string name="about_desc_icon_tracked_down">U wordt gevolgd!</string>
-    <string name="about_desc_icon_insecure_area">Onveilig service gebied. Ga weg!</string>
-    <string name="about_desc_icon_run">RENNEN! Telefoon wordt gemanipuleerd!</string>
+    <string name="status_high_about_desc">Actieve tracking dichtbij!</string>
+    <string name="status_ok_about_desc">Alles OK.</string>
+    <string name="status_danger_about_desc">U wordt gevolgd!</string>
+    <string name="status_medium_about_desc">Onveilig service gebied. Ga weg!</string>
+    <string name="status_skull_about_desc">RENNEN! Telefoon wordt gemanipuleerd!</string>
     <string name="about_desc_icon_title">Druk op de statusiconen hieronder voor meer informatie:</string>
 
     <string name="network_netid">Netwerk ID:</string>
@@ -84,9 +84,9 @@
     <string name="pref_system_title">Systeeminstellingen</string>
     <string name="pref_autostart_title">Automatisch starten</string>
     <string name="pref_autostart_summ">Service automatisch starten bij opstarten telefoon</string>
-    <string name="disclaimer">"Door het gebruik van AIMSICD begrijpt u en gaat u er mee akkoord dat AIMSICD een experimenteel en informatief Android programma is dat door verschillende redenen mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het op andere manieren die de ontwikkelaars momenteel nog niet begrijpen omzeild kan worden. U begrijpt en gaat er tevens mee akkoord dat dit de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. "</string>
+    <string name="disclaimer">"Door het gebruik van AIMSICD begrijpt u en gaat u er mee akkoord dat AIMSICD een experimenteel en informatieve Android applicatie is dat door verschillende redenen mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het omzeild of verslagen kan worden door methodes die de ontwikkelaars momenteel nog niet begrijpen. U begrijpt en gaat er tevens mee akkoord dat dit de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. "</string>
 
-    <string name="about_desc_icon_idle">Inactief / aan het laden.</string>
+    <string name="status_idle_about_desc">Inactief / aan het laden.</string>
     <string name="pref_persistservice_title">Permanente service</string>
     <string name="pref_persistservice_summ">Service blijft actief na afsluiten applicatie (vink uit om helemaal te sluiten)</string>
     <string name="pref_protection_title">Beveiligingsinstellingen</string>
@@ -153,12 +153,12 @@
     <string name="btn_start_logs">Start</string>
 
     <string name="title_activity_about_pop_up">GEDETAILLEERDE UITLEG</string>
-    <string name="detail_info_idle">App is inactief of ladend. Er zijn geen beschermingsmaatregelen actief. Open het navigatie menu en zet ze aan in sectie VOLGEN!</string>
-    <string name="detail_info_normal">Geen bedreigingen gevonden. Onze app controleert continue het netwerk aan de hand van de beveiligingsinstellingen die u in het navigatie menu en in voorkeuren aangegeven hebt.</string>
-    <string name="detail_info_medium">Onveilig gebied: minstens 1 nieuwe of onbekende BTS is actief in deze omgeving of gebruikt een onveilige versleutelingsmethode, lager dan A5/3 [detectie is WIP]. Elke gesprek en SMS die in dit gebied gemaakt worden kunnen onderschept en opgeslagen worden. U kunt hier beter vertrekken.</string>
-    <string name="detail_info_high">Vijandige dienstenacties gedetecteerd: een IMSI-Catcher (IMSIC) of valse BTS (FBTS) is actief gebruikers aan het volgen. In dit gebied wordt actief gescand. Ga van deze plaats weg, zeker als er politieke onrus heerst. Haal de accu uit uw telefoon of verniel het toestel!</string>
-    <string name="detail_info_danger">Vijandig volgen gedetecteerd: een FBTS of IMSIC is U actief aan het volgen en voorkomt dat uw telefoon met uw gebruikelijke beveiligde mobioele provider verbindt. Als u reden heeft om vervolging te vrezen kunt u het beste uw telefoon vernielen en hem als gestolen opgeven.</string>
-    <string name="detail_info_run">Vijandige manipulatie: iemand probeert vanaf een afstand uw telefoon te beinvloeden. Verniel (of verkoop) uw telefoon en haal ergens anders een nieuwe (breng uw huidige toestel niet naar de plaats waar u de nieuwe koopt). Gebruik een nieuwe, anonieme SIM kaart, verander uw belgedrag en waarschuw uw contacten om niet over de telefoon met u te spreken maar direct!</string>
+    <string name="status_idle_detail_info">App is inactief of ladend. Er zijn geen beschermingsmaatregelen actief. Open het navigatie menu en zet ze aan in sectie VOLGEN!</string>
+    <string name="status_ok_detail_info">Geen bedreigingen gevonden. Onze app controleert continue het netwerk aan de hand van de beveiligingsinstellingen die u in het navigatie menu en in voorkeuren aangegeven hebt.</string>
+    <string name="status_medium_detail_info">Onveilig gebied: minstens 1 nieuwe of onbekende BTS is actief in deze omgeving of gebruikt een onveilige versleutelingsmethode, lager dan A5/3 [detectie is WIP]. Elke gesprek en SMS die in dit gebied gemaakt worden kunnen onderschept en opgeslagen worden. U kunt hier beter vertrekken.</string>
+    <string name="status_high_detail_info">Vijandige dienstenacties gedetecteerd: een IMSI-Catcher (IMSIC) of valse BTS (FBTS) is actief gebruikers aan het volgen. In dit gebied wordt actief gescand. Ga van deze plaats weg, zeker als er politieke onrus heerst. Haal de accu uit uw telefoon of verniel het toestel!</string>
+    <string name="status_danger_detail_info">Vijandig volgen gedetecteerd: een FBTS of IMSIC is U actief aan het volgen en voorkomt dat uw telefoon met uw gebruikelijke beveiligde mobioele provider verbindt. Als u reden heeft om vervolging te vrezen kunt u het beste uw telefoon vernielen en hem als gestolen opgeven.</string>
+    <string name="status_skull_detail_info">Vijandige manipulatie: iemand probeert vanaf een afstand uw telefoon te beinvloeden. Verniel (of verkoop) uw telefoon en haal ergens anders een nieuwe (breng uw huidige toestel niet naar de plaats waar u de nieuwe koopt). Gebruik een nieuwe, anonieme SIM kaart, verander uw belgedrag en waarschuw uw contacten om niet over de telefoon met u te spreken maar direct!</string>
     <string name="open_cell_id_button_cancel">Annuleren</string>
     <string name="open_cell_id_button_ok">OK</string>
 
@@ -194,8 +194,8 @@
     <string name="hostile_service_area_changing_lac_detected">Vijandig gebied: veranderende LAC waargenomen!</string>
     <string name="femtocell_detection_active">FemtoCell detectie actief.</string>
     <string name="phone_type">Telefoon type</string>
-    <string name="status_idle">Status: inactief.</string>
-    <string name="status_good">Status: goed. Geen risico\'s gedetecteerd..</string>
+    <string name="status_idle_description">Status: inactief.</string>
+    <string name="status_ok_description">Status: goed. Geen risico\'s gedetecteerd..</string>
     <string name="alert_threat_detected">ALARM: risico\'s waargenomen!</string>
     <string name="alert_femtocell_connection_detected">ALARM: FemtoCell verbinding gedetecteerd!</string>
     <string name="alert_silent_sms_detected">ALARM: stil SMS bericht waargenomen!</string>
@@ -226,19 +226,19 @@
     <string name="uploaded_bts_data_successfully">BTS gegevens succesvol verstuurd naar OpenCellID.</string>
     <string name="error_uploading_bts_data">Fout bij het opsturen van BTS gegevens naar OpenCellID servers!</string>
     <string name="no_opencellid_key_detected">Geen OpenCellID API sleutel gevonden!\nStel uw sleutel eerst in de instellingen in.</string>
-    <string name="refreshing_display">Scherm verversen</string>
+    <string name="refreshed_cell_id_info">Scherm verversen</string>
     <string name="unable_to_acquire_root_access">Kan geen ROOT toegang op uw toestel krijgen.\nVersturen van AT commando\'s vereist ROOT terminal toegang.\nControleer of uw apparaat ROOT toegang heeft en probeer opnieuw.</string>
     <string name="unable_to_detect_busybox">Kan busybox niet vinden op uw apparaat.\nHet versturen van AT commando\'s vereist busybox componenten.\nControleer of busybox geïnstalleerd is en probeer opnieuw.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Er is een onbekende fout opgetreden met het serieel apparaat.\nCheck uw logcat voor foutmeldingen en post ze op onze Github.</string>
     <string name="unknown_error_initialising_at_command_injector">Een onbekende fout is opgetreden bij het uitvoeren van AT commando\'s.\nCheck uw logcat voor foutmeldingen en post ze op onze Github.</string>
     <string name="getting_ocid_api_key">Verkrijgen OpenCellID API sleutel…</string>
     <string name="unable_to_create_map">Kan geen kaart aanmaken!</string>
-    <string name="idle">INACTIEF</string>
-    <string name="normal">NORMAAL</string>
-    <string name="medium">GEMIDDELD</string>
-    <string name="high">HOOG</string>
-    <string name="danger">GEVAAR</string>
-    <string name="run">RENNEN!</string>
+    <string name="status_idle">INACTIEF</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">GEMIDDELD</string>
+    <string name="status_high">HOOG</string>
+    <string name="status_danger">GEVAAR</string>
+    <string name="status_skull">RENNEN!</string>
 
     <string name="adv_user_info">Dit menu is alleen bedoeld voor ervaren gebruikers.\n\nGeef a.u.b. geen willekeurige karakterreeksen in, dit kan er voor zorgen dat detectie raar gaat doen.\n\nKies het SMS type van het menu om een reeks toe te voegen, type een karakterreeks en druk op invoegen.\n\nOm een karakterreeks te verwijderen uit de database druk lang op de lijstweergave.</string>
     
@@ -314,18 +314,26 @@
 
     <string name="delete_database_msg_success">De database is succesvol verwijderd en opnieuw aangemaakt.\nHerstart de app om oude gegevens uit het geheugen te verwijderen.</string>
 
-    <string name="notification_vibrate_normal">Normaal</string>
+    <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Gemiddeld</string>
-    <string name="notification_vibrate_alarm">Alarm</string>
+    <string name="notification_vibrate_danger">Gevaar</string>
     
     <string name="deleted">Verwijderd</string>
-    <string name="failed_to_delete">Fout bij het verwijderen</string>
+    <string name="failed_to_delete">Verwijderen mislukt</string>
     <string name="the_string_was_added_to_db">De string is toegevoegd aan de database</string>
     <string name="pref_notification_vibrate_enable_title">Trilfunctie Inschakelen</string>
     <string name="pref_notification_vibrate_min_level_title">Vibreren bij gevarenniveau</string>
     <string name="pref_notification_vibrate_min_level_summary">Selecteer het minimum gevarenniveau voor de trilfunctie</string>
     <string name="notification_vibrate_idle">Inactief</string>
-    <string name="failed_to_add_the_string_to_db">String aan database toevoegen is mislukt</string>
+    <string name="failed_to_add_the_string_to_db">String toevoegen aan de database mislukt</string>
 
     <string name="pref_notification_settings">Instellingen voor meldingen</string>
+    <string name="buildnumber">Build nummer: %s</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="pref_notification_vibrate_enable_summary">Trillen als notificatie verandert</string>
+    <string name="double_quote_will_cause_db_error">"String niet toegevoegd\n\" dubbele aanhalingstekens veroorzaken een db fout "</string>
+    <string name="pref_enable_gps_title">GPS instellingen</string>
+    <string name="pref_enable_gps_summary">GPS inschakelen voor Cell tracking</string>
+
+    <string name="unknown">Onbekend</string>
     </resources>

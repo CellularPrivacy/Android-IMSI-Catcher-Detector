@@ -9,7 +9,6 @@
 
     <LinearLayout
         android:id="@+id/aboutView"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -90,7 +89,7 @@
                     android:drawableLeft="@drawable/sense_idle"
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"
-                    android:text="@string/about_desc_icon_idle" />
+                    android:text="@string/status_idle_about_desc" />
 
                 <TextView
                     android:id="@+id/textViewHigh"
@@ -101,7 +100,7 @@
                     android:drawableLeft="@drawable/sense_high"
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"
-                    android:text="@string/about_desc_icon_active_tracking_near" />
+                    android:text="@string/status_high_about_desc" />
             </TableRow>
 
             <TableRow
@@ -118,7 +117,7 @@
                     android:drawableLeft="@drawable/sense_ok"
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"
-                    android:text="@string/about_desc_icon_ok" />
+                    android:text="@string/status_ok_about_desc" />
 
                 <TextView
                     android:id="@+id/textViewDanger"
@@ -129,7 +128,7 @@
                     android:drawableLeft="@drawable/sense_danger"
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"
-                    android:text="@string/about_desc_icon_tracked_down" />
+                    android:text="@string/status_danger_about_desc" />
             </TableRow>
 
             <TableRow
@@ -146,7 +145,7 @@
                     android:drawableLeft="@drawable/sense_medium"
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"
-                    android:text="@string/about_desc_icon_insecure_area" />
+                    android:text="@string/status_medium_about_desc" />
 
                 <TextView
                     android:id="@+id/textViewSkull"
@@ -157,7 +156,7 @@
                     android:drawableLeft="@drawable/sense_skull"
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"
-                    android:text="@string/about_desc_icon_run" />
+                    android:text="@string/status_skull_about_desc" />
             </TableRow>
 
         </TableLayout>

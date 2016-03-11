@@ -21,7 +21,7 @@
     <string name="preferences">Opciones</string>
     <string name="press_once_again_to_exit">Presiona de nuevo para salir.</string>
     <string name="cell_lookup">Detalles de Celda Actuales</string>
-    <string name="send_logs">Debugeo</string>
+    <string name="debugging">Debugeo</string>
     <string name="no_network_connection_title">Sin Conexion a Internet</string>
     <string name="no_network_connection_message">No se pueden descargar datos de OpenCellID sin conectividad a Internet, active la conexión de datos!</string>
 
@@ -69,12 +69,12 @@
     <string name="about_changelog">REGISTRO DE CAMBIOS</string>
     <string name="about_license">LICENCIA</string>
     <string name="about_credits">CREDITOS</string>
-    <string name="about_desc_icon_idle">inactivo / Cargando.</string>
-    <string name="about_desc_icon_active_tracking_near">Rastreo Activo Cerca Suyo!</string>
-    <string name="about_desc_icon_ok">Ningun Problema.</string>
-    <string name="about_desc_icon_tracked_down">Usted esta Siendo Rastreado!</string>
-    <string name="about_desc_icon_insecure_area">Area de Servicio Insegura. Alejese!</string>
-    <string name="about_desc_icon_run">CORRA! Telefono Manipulado!</string>
+    <string name="status_idle_about_desc">inactivo / Cargando.</string>
+    <string name="status_high_about_desc">Rastreo Activo Cerca Suyo!</string>
+    <string name="status_ok_about_desc">Ningun Problema.</string>
+    <string name="status_danger_about_desc">Usted esta Siendo Rastreado!</string>
+    <string name="status_medium_about_desc">Area de Servicio Insegura. Alejese!</string>
+    <string name="status_skull_about_desc">CORRA! Telefono Manipulado!</string>
     <string name="about_desc_icon_title">Iconos de estado pulse a continuación para obtener información detallada:</string>
 
     <string name="network_netid">ID de Red:</string>
@@ -153,12 +153,12 @@
     <string name="btn_start_logs">Iniciar</string>
 
     <string name="title_activity_about_pop_up">EXPLICACIÓN DETALLADA</string>
-    <string name="detail_info_idle">La Aplicación está detenida o cargando. No hay medidas de protección o detección activas. Por favor abra la barra de navegación y Activelas bajo la seccion de Rastreo!</string>
-    <string name="detail_info_normal">"No se  detectaron o encontraron Amenazas. Nuestra aplicación verifica constantemente su red basada en las medidas de protección que se han seleccionado en la barra de la navegación y configuracion."</string>
-    <string name="detail_info_medium">Área de servicio insegura: por lo menos 1BTS nuevo o desconocido está en funcionamiento en esta vecindad, o usando un algoritmo de cifrado (roto) inseguro menor a A5/3 [detección es WIP]. Esperar que cualquier llamadas/SMS en este ámbito pueda ser interceptado y registrado. Mejor Alejarse de este lugar ahora.</string>
-    <string name="detail_info_high">"Detectado de acciones de servicio hostiles: Un IMSI-Catcher (IMSIC) o BTS falso (FBTS) esta seguimiendo activamente a los usuarios. Rastreo activo se lleva a cabo en esta área. Usted debe salir AHORA  de este lugar especialmente si hay disturbios políticos. Sacar la batería o tirar el teléfono!"</string>
-    <string name="detail_info_danger">Rastreo hostil detectado: Un FBTS o IMSIC Lo esta Rastreando activamente e impide que el teléfono se conecte a través de su proveedor móvil encriptado normal. Si estás en peligro o teme repercusiones, destruya su teléfono y la SIM y reportelo como robado recientemente.</string>
-    <string name="detail_info_run">Manipulación hostil: Alguien está intentando manipular remotamente tu teléfono. Destrui (o vende) tu teléfono y obtene uno nuevo en algún lugar lejano (no lleves tu teléfono antiguo al lugar de cambio). Utiliza una nueva tarjeta SIM (anónima), cambiar el comportamiento de llamadas y avisa a tus amigos hablando con ellos en persona, no por telefono!</string>
+    <string name="status_idle_detail_info">La Aplicación está detenida o cargando. No hay medidas de protección o detección activas. Por favor abra la barra de navegación y Activelas bajo la seccion de Rastreo!</string>
+    <string name="status_ok_detail_info">"No se  detectaron o encontraron Amenazas. Nuestra aplicación verifica constantemente su red basada en las medidas de protección que se han seleccionado en la barra de la navegación y configuracion."</string>
+    <string name="status_medium_detail_info">Área de servicio insegura: por lo menos 1BTS nuevo o desconocido está en funcionamiento en esta vecindad, o usando un algoritmo de cifrado (roto) inseguro menor a A5/3 [detección es WIP]. Esperar que cualquier llamadas/SMS en este ámbito pueda ser interceptado y registrado. Mejor Alejarse de este lugar ahora.</string>
+    <string name="status_high_detail_info">"Detectado de acciones de servicio hostiles: Un IMSI-Catcher (IMSIC) o BTS falso (FBTS) esta seguimiendo activamente a los usuarios. Rastreo activo se lleva a cabo en esta área. Usted debe salir AHORA  de este lugar especialmente si hay disturbios políticos. Sacar la batería o tirar el teléfono!"</string>
+    <string name="status_danger_detail_info">Rastreo hostil detectado: Un FBTS o IMSIC Lo esta Rastreando activamente e impide que el teléfono se conecte a través de su proveedor móvil encriptado normal. Si estás en peligro o teme repercusiones, destruya su teléfono y la SIM y reportelo como robado recientemente.</string>
+    <string name="status_skull_detail_info">Manipulación hostil: Alguien está intentando manipular remotamente tu teléfono. Destrui (o vende) tu teléfono y obtene uno nuevo en algún lugar lejano (no lleves tu teléfono antiguo al lugar de cambio). Utiliza una nueva tarjeta SIM (anónima), cambiar el comportamiento de llamadas y avisa a tus amigos hablando con ellos en persona, no por telefono!</string>
     <string name="open_cell_id_button_cancel">Cancelar</string>
     <string name="open_cell_id_button_ok">OK</string>
 
@@ -196,8 +196,8 @@
     <string name="cell_tracking_active">Rastreo de Celda Activo.</string>
     <string name="cell_monitoring_active">Monitoreo de Celda Activo.</string>
     <string name="phone_type">Tipo de Telefono</string>
-    <string name="status_idle">Estado: inactivo.</string>
-    <string name="status_good">Estado: Bueno. No se detectaron amenazas.</string>
+    <string name="status_idle_description">Estado: inactivo.</string>
+    <string name="status_ok_description">Estado: Bueno. No se detectaron amenazas.</string>
     <string name="alert_threat_detected">ALERTA: Algunas amenazas detectadas!</string>
     <string name="alert_femtocell_connection_detected">ALERTA: Conexión a FemtoCelda detectada!</string>
     <string name="alert_silent_sms_detected">ALERTA: SMS silencioso detectado!</string>
@@ -226,7 +226,7 @@
     <string name="database_backup_successfully_saved_to">Backup de base de datos guardado con éxito en:</string>
     <string name="error_backing_up_data">Error de copia de seguridad de base de datos.</string>
     <string name="no_opencellid_key_detected">Ninguna llave OpenCellID API detectada.\nIntroduzca primero su clave en el menu de configuración.</string>
-    <string name="refreshing_display">Display de Actualizacion</string>
+    <string name="refreshed_cell_id_info">Display de Actualizacion</string>
     <string name="unable_to_acquire_root_access">"No se pudo obtener acceso ROOT en el dispositivo.\nLa  inyección de comando AT requiere acceso ROOT Terminal.\nPor favor, compruebe que el dispositivo esta ROOTEADO y vuelva a intentarlo."</string>
     <string name="unable_to_detect_busybox">No se ha podido detectar Busybox en el dispositivo.\nLa inyección de comando AT requiere componentes de Busybox para funcionar correctamente.\nPor favor compruebe que su dispositivo tiene Busybox instalado y vuelva a intentarlo.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Se ha producido un error desconocido tratando de adquirir el dispositivo de serie.\nBusca los errores en logcat y publicalos en nuestro Github.</string>
@@ -235,12 +235,12 @@
     <string name="unable_to_create_map">No se puede crear el mapa!</string>
     <string name="describe_the_problem_you_had">¡ ATENCIÓN! Por favor describa el problema que tiene antes de enviarnos estos registros. NO HAY AYUDA SIN DESCRIPCIONES!\n</string>
     <string name="status">Estado:</string>
-    <string name="idle">PARADO</string>
-    <string name="normal">NORMAL</string>
-    <string name="medium">MEDIO</string>
-    <string name="high">ALTO</string>
-    <string name="danger">PELIGRO</string>
-    <string name="run">CORRE!</string>
+    <string name="status_idle">PARADO</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">MEDIO</string>
+    <string name="status_high">ALTO</string>
+    <string name="status_danger">PELIGRO</string>
+    <string name="status_skull">CORRE!</string>
 
     <string name="adv_user_info">"Este menú es solamente para usuarios avanzados!\n\nNo insertar secuencias al azar porque hará que la detección quede inservible.\n\nPara agregar una cadena elegir el tipo de SMS del menú desplegable, Escriba su cadena de deteccion y presione insertar.\n\nPara eliminar la entrada  mantengala presionada en listview."</string>
     
@@ -320,9 +320,9 @@
     <string name="pref_notification_vibrate_min_level_title">Vibrar por nivel de amenaza</string>
     <string name="pref_notification_vibrate_min_level_summary">Seleccionar nivel mínimo de amenaza en el que vibrar</string>
     <string name="notification_vibrate_idle">En reposo</string>
-    <string name="notification_vibrate_normal">Normal</string>
+    <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Medio</string>
-    <string name="notification_vibrate_alarm">Alarma</string>
+    <string name="notification_vibrate_danger">Peligro</string>
     
     <string name="deleted">Borrado</string>
     <string name="failed_to_delete">Error al borrar</string>
@@ -330,4 +330,6 @@
     <string name="failed_to_add_the_string_to_db">Error al añadir la cadena a la base de datos</string>
 
     <string name="double_quote_will_cause_db_error">"Cadena no añadida\nLas comillas dobles \" no están soportadas "</string>
-    </resources>
+
+    <string name="unknown">Desconocido</string>
+</resources>

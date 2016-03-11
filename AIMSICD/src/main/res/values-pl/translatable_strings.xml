@@ -27,7 +27,7 @@
     <string name="preferences">Ustawienia</string>
     <string name="press_once_again_to_exit">Wciśnij ponownie by wyjść.</string>
     <string name="cell_lookup">Wszystkie informacje o obecnej komórce</string>
-    <string name="send_logs">Debugowanie</string>
+    <string name="debugging">Debugowanie</string>
     <string name="no_network_connection_title">Brak połączenia z Internetem</string>
     <string name="no_network_connection_message">Nie da się pobrać danych z OpenCellID bez połączenia Internetowego. Proszę włączyć połączenie danych!</string>
 
@@ -79,12 +79,12 @@
     <string name="about_changelog">LISTA ZMIAN</string>
     <string name="about_license">LICENCJA</string>
     <string name="about_credits">TWÓRCY</string>
-    <string name="about_desc_icon_idle">Bezczynność / Ładowanie.</string>
-    <string name="about_desc_icon_active_tracking_near">Aktywne śledzenie blisko Ciebie!</string>
-    <string name="about_desc_icon_ok">Wszystko OK.</string>
-    <string name="about_desc_icon_tracked_down">Jesteś śledzony!</string>
-    <string name="about_desc_icon_insecure_area">Niebezpieczny obszar. Opóść go!</string>
-    <string name="about_desc_icon_run">Uciekaj! Telefon ulega manipulacji!</string>
+    <string name="status_idle_about_desc">Bezczynność / Ładowanie.</string>
+    <string name="status_high_about_desc">Aktywne śledzenie blisko Ciebie!</string>
+    <string name="status_ok_about_desc">Wszystko OK.</string>
+    <string name="status_danger_about_desc">Jesteś śledzony!</string>
+    <string name="status_medium_about_desc">Niebezpieczny obszar. Opóść go!</string>
+    <string name="status_skull_about_desc">Uciekaj! Telefon ulega manipulacji!</string>
     <string name="about_desc_icon_title">Kliknij na ikonę by uzyskać więcej informacji:</string>
 
 
@@ -184,12 +184,12 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">SZCZEGÓŁOWY OPIS</string>
-    <string name="detail_info_idle">Aplikacja jest bezczynna lub ładuje się. Żadne środki ochrony lub wykrywania nie są włączone. Otwórz panel nawigacyjny i włącz śledzenie w menu!</string>
-    <string name="detail_info_normal">Nie wykryto żadnych zagrożeń.</string>
-    <string name="detail_info_medium">Ta okolica nie jest bezpieczna: wykryto co najmniej jedną nieznaną stację bazową lub używane jest szyfrowanie słabsze niż A5/3. Wszystkie wiadomości i rozmowy w tym rejonie mogą być przechwycone.</string>
-    <string name="detail_info_high">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników! Wyjmij baterię z telefoni i unikaj tego miejsca!</string>
-    <string name="detail_info_danger">Wykryto wrogie śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci. Jeśli jesteś w niebezpieczeństwie zniszczy swój telefon i kartę SIM i zgłoś ją jako niedawno ukradzioną.</string>
-    <string name="detail_info_run">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
+    <string name="status_idle_detail_info">Aplikacja jest bezczynna lub ładuje się. Żadne środki ochrony lub wykrywania nie są włączone. Otwórz panel nawigacyjny i włącz śledzenie w menu!</string>
+    <string name="status_ok_detail_info">Nie wykryto żadnych zagrożeń.</string>
+    <string name="status_medium_detail_info">Ta okolica nie jest bezpieczna: wykryto co najmniej jedną nieznaną stację bazową lub używane jest szyfrowanie słabsze niż A5/3. Wszystkie wiadomości i rozmowy w tym rejonie mogą być przechwycone.</string>
+    <string name="status_high_detail_info">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników! Wyjmij baterię z telefoni i unikaj tego miejsca!</string>
+    <string name="status_danger_detail_info">Wykryto wrogie śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci. Jeśli jesteś w niebezpieczeństwie zniszczy swój telefon i kartę SIM i zgłoś ją jako niedawno ukradzioną.</string>
+    <string name="status_skull_detail_info">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
     <string name="open_cell_id_button_cancel">Anuluj</string>
     <string name="open_cell_id_button_ok">OK</string>
 
@@ -228,8 +228,8 @@
     <string name="cell_tracking_active">Śledzenie komórek aktywne.</string>
     <string name="cell_monitoring_active">Monitoring komórek aktywny.</string>
     <string name="phone_type">Rodzaj telefonu</string>
-    <string name="status_idle">Status: Oczekuję.</string>
-    <string name="status_good">Brak zagrożeń. Wszystko OK.</string>
+    <string name="status_idle_description">Status: Oczekuję.</string>
+    <string name="status_ok_description">Brak zagrożeń. Wszystko OK.</string>
     <string name="alert_threat_detected">UWAGA: Wykryto zagrożenie!</string>
     <string name="alert_femtocell_connection_detected">UWAGA: Wykryto połączenie FemtoCell!</string>
     <string name="alert_silent_sms_detected">UWAGA: Wykryto Silent SMS!</string>
@@ -257,7 +257,7 @@
     <string name="database_backup_successfully_saved_to">Kopia zapasowa zapisana do:</string>
     <string name="error_backing_up_data">Błąd tworzenia kopii zapasowej.</string>
     <string name="no_opencellid_key_detected">Brak klucza API OpenCellID. Musisz najpierw wpisać lub pobrać swój klucz.</string>
-    <string name="refreshing_display">Odświeżanie ekranu</string>
+    <string name="refreshed_cell_id_info">Odświeżanie ekranu</string>
     <string name="unable_to_acquire_root_access">Nie udało się usyskać praw ROOTa. Interface komend AT wymaga praw ROOTa. Sprawdź swoje urządzenie i spróbuj ponownie.</string>
     <string name="unable_to_detect_busybox">Nie udało się odnaleźć BusyBox na Twoim urządzeniu. Interface komend AT wymaga BusyBoxa! Sprawdź swoje urządzenie i spróbuj ponownie.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Wystąpił nieznany bład przy próbie uzyskania klucza seryjnego urządzenia. Prosimy o sprawdzenie logów i przesłanie ich do nas na Github.</string>
@@ -266,12 +266,12 @@
     <string name="unable_to_create_map">Nie powiodło się tworzenie mapy!</string>
     <string name="describe_the_problem_you_had">W celu uzyskania pomocy opisz swój problem. Problemy bez opisu są automatycznie ignorowane!\n</string>
     <string name="status">Status:</string>
-    <string name="idle">OCZEKUJE</string>
-    <string name="normal">ZWYCZAJNY</string>
-    <string name="medium">ŚREDNIE</string>
-    <string name="high">WYSOKI</string>
-    <string name="danger">ZAGROŻENIE</string>
-    <string name="run">UCIEKAJ!</string>
+    <string name="status_idle">OCZEKUJE</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">ŚREDNIE</string>
+    <string name="status_high">WYSOKI</string>
+    <string name="status_danger">ZAGROŻENIE</string>
+    <string name="status_skull">UCIEKAJ!</string>
 
     <!-- Advanced User Settings: SMS Detection Strings -->
     <string name="adv_user_info">To menu jest tylko dla zaawansowanych użytkowników!\n\nProszę nie wprowadzaj losowych ciągów znaków gdyż sprawi to, że wykrywanie nie będzie działać przewidywalnie.\n\nAby dodać łańcuch znaków wybierz typ SMS z rozwijanego menu, wpisz łańcuch znaków i naciśnij dodaj.\n\nAby usunąć z bazy danych przyciśnij dłużej w widoku listy.</string>
@@ -386,4 +386,5 @@
     <string name="restore_database_completed_title">Odzyskiwanie powiodło się.</string>
     <string name="delete_database_msg_success">Baza danych została usunięta i odtworzona.\nProszę zrestartować aplikację by usunąć resztę danych z pamięci.</string>
 
+    <string name="unknown">Nieznany</string>
     </resources>

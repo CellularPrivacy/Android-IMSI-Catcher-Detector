@@ -1,4 +1,3 @@
-apply plugin: 'checkstyle'
 apply plugin: 'com.android.application'
 
 def gitSha = null
@@ -9,27 +8,19 @@ try {
 }
 
 def isCi = "true".equals(System.getenv("CI"))
-def isTravis = "true".equals(System.getenv("TRAVIS"))
-
-def buildNumber = null
-if(isTravis) {
-    buildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
-} else {
-    buildNumber = System.getenv("BUILDOZER_BUILDNUMBER")
-}
-
-version = '0.1.37-alpha'
 
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
+
     defaultConfig {
+        applicationId "com.SecUpwN.AIMSICD"
         minSdkVersion 16
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
-        versionCode 37
+        versionCode 40
         testApplicationId "com.SecUpwN.AIMSICD.test"
 
-        buildConfigField 'String', 'BUILD_NUMBER', (buildNumber == null ? 'null' : "\"${buildNumber}\"")
+        buildConfigField 'String', 'BUILD_NUMBER', (getBuildNumber() == null ? 'null' : "\"${buildNumber}\"")
         buildConfigField 'String', 'GIT_SHA', (gitSha == null ? 'null' : "\"${gitSha}\"")
     }
     buildTypes {
@@ -52,7 +43,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     lintOptions {
-        warning 'MissingTranslation', 'InvalidPackage'
+        warning 'MissingTranslation', 'InvalidPackage', 'MissingRegistered'
         abortOnError false
 
         xmlReport false
@@ -65,7 +56,6 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/LICENSE.txt'
     }
-
     productFlavors {
         system {
             versionName "$project.version-system"
@@ -79,47 +69,50 @@ android {
 dependencies {
     // DO NOT REMOVE BELOW COMMENTED-OUT CODE BEFORE ASKING!
     // Please group dependencies for better review like below.
-    
+
     // Android Support Libraries
     compile 'com.android.support:appcompat-v7:23.1.1'
-    
+
     // OpenCSV (comma-separated values) parser library
     compile 'au.com.bytecode:opencsv:2.4'
-    
+
     // Easy to use Root Shell for Android Applications
     compile 'com.github.Stericson:RootShell:d708ae1f0a'
-    
-    // SLF4J binding for the Android logger
-    // https://github.com/lp0/slf4j-android
-    compile 'eu.lp0.slf4j:slf4j-android:1.7.12-0'
-    compile 'org.slf4j:slf4j-api:1.7.12'
-    
+
     // Dependency Injection for Android
-    compile 'io.freefair.android-injection:injection:1.0.0-rc2'
-    compile 'io.freefair.android-injection:logging:1.0.0-rc2'
-    compile 'io.freefair.android-injection:okhttp:1.0.0-rc2'
+    compile 'io.freefair.android-injection:injection:2.0.0-beta1'
+    compile 'io.freefair.android-injection:logging:2.0.0-beta1'
+    compile 'io.freefair.android-injection:okhttp:2.0.0-beta1'
 
     // OSMBonusPack library to interact with OpenStreetMap data
     compile 'com.github.MKergall.osmbonuspack:OSMBonusPack:v5.6'
-    
+
     // Transition library for animated transition effects
     compile 'com.github.kaichunlin.transition:core:0.9.2'
-    
-    // Bugsnag error monitoring to detect and diagnose crashes
-    // https://github.com/freefair/advanced-bugsnag-android
-    compile 'com.github.freefair:advanced-bugsnag-android:ec4955bb2c'
+
+    compile 'com.bugsnag:bugsnag-android:+'
 
     // ShowcaseView library to highlight specific app elements
     //compile 'com.github.amlcurran.showcaseview:library:5.3.0'
 }
 
-check.dependsOn 'checkstyle'
+apply from: "signing.gradle"
+apply plugin: "io.freefair.android-checkstyle"
 
-task checkstyle(type: Checkstyle) {
-    source 'src'
-    include '**/*.java'
+checkstyle {
+    toolVersion = "6.15"
+}
 
+String getBuildNumber() {
+    String travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
+    if(travisBuildNumber != null) {
+        return "T-$travisBuildNumber"
+    }
 
+    String buildozerBuildNumber = System.getenv("BUILDOZER_BUILDNUMBER")
+    if(buildozerBuildNumber != null) {
+        return "B-$buildozerBuildNumber"
+    }
 
-    classpath = files()
+    return null;
 }

@@ -16,6 +16,10 @@
             android:key="@string/pref_persistservice_key"
             android:summary="@string/pref_persistservice_summ"
             android:title="@string/pref_persistservice_title"/>
+        <CheckBoxPreference android:defaultValue="false"
+            android:key="@string/pref_enable_gps_key"
+            android:summary="@string/pref_enable_gps_summary"
+            android:title="@string/pref_enable_gps_title" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/pref_enable_cell_key"
@@ -95,8 +99,8 @@
             android:summary="@string/pref_ocid_requestkey_summary">
             <intent
                 android:action="android.intent.action.MAIN"
-                android:targetClass="com.SecUpwN.AIMSICD.activities.OpenCellIdActivity"
-                android:targetPackage="com.SecUpwN.AIMSICD"/>
+                android:targetClass="com.secupwn.aimsicd.activities.OpenCellIdActivity"
+                android:targetPackage="com.secupwn.aimsicd"/>
         </Preference>
         <EditTextPreference
             android:key="@string/pref_ocid_key"
@@ -111,16 +115,16 @@
             android:summary="@string/adv_user_pref_summary">
             <intent
                 android:action="android.intent.action.MAIN"
-                android:targetClass="com.SecUpwN.AIMSICD.smsdetection.AdvancedUserActivity"
-                android:targetPackage="com.SecUpwN.AIMSICD"/>
+                android:targetClass="com.secupwn.aimsicd.smsdetection.AdvancedUserActivity"
+                android:targetPackage="com.secupwn.aimsicd"/>
         </Preference>
         <Preference
             android:title="@string/adv_user_pref_sms_launch"
             android:summary="@string/adv_user_pref_sms_summary">
             <intent
                 android:action="android.intent.action.MAIN"
-                android:targetClass="com.SecUpwN.AIMSICD.smsdetection.AdvancedUserSmsActivity"
-                android:targetPackage="com.SecUpwN.AIMSICD"/>
+                android:targetClass="com.secupwn.aimsicd.smsdetection.AdvancedUserSmsActivity"
+                android:targetPackage="com.secupwn.aimsicd"/>
         </Preference>
     </PreferenceCategory>
-used</PreferenceScreen>
+</PreferenceScreen>

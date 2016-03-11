@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     
     <!-- Drawer -->
@@ -35,7 +35,7 @@
     <string name="preferences">Einstellungen</string>
     <string name="press_once_again_to_exit">Erneut drücken zum Verlassen.</string>
     <string name="cell_lookup">Derzeitige Funkzellen</string>
-    <string name="send_logs">Fehlerbehebung</string>
+    <string name="debugging">Fehlerbehebung</string>
     <string name="no_network_connection_title">Keine Internetverbindung</string>
     <string name="no_network_connection_message">Kein herunterladen der OpenCellID-Daten ohne Internet möglich, bitte Datenverbindung einschalten!</string>
     
@@ -89,12 +89,12 @@
     <string name="about_changelog">ÄNDERUNGEN</string>
     <string name="about_license">LIZENZ</string>
     <string name="about_credits">DANKSAGUNG</string>
-    <string name="about_desc_icon_idle">Ruht / Lädt.</string>
-    <string name="about_desc_icon_active_tracking_near">Verfolgung nahe!</string>
-    <string name="about_desc_icon_ok">Alles in Ordnung.</string>
-    <string name="about_desc_icon_tracked_down">Du wirst verfolgt!</string>
-    <string name="about_desc_icon_insecure_area">Unsichere Zone. Verlassen!</string>
-    <string name="about_desc_icon_run">RENN! Gerät manipuliert!</string>
+    <string name="status_idle_about_desc">Ruht / Lädt.</string>
+    <string name="status_high_about_desc">Verfolgung nahe!</string>
+    <string name="status_ok_about_desc">Alles in Ordnung.</string>
+    <string name="status_danger_about_desc">Du wirst verfolgt!</string>
+    <string name="status_medium_about_desc">Unsichere Zone. Verlassen!</string>
+    <string name="status_skull_about_desc">RENN! Gerät manipuliert!</string>
     <string name="about_desc_icon_title">Drücke die Status-Symbole für mehr Informationen:</string>
     
     <!-- CDMA LAYOUT -->
@@ -118,7 +118,7 @@
     <string name="pref_femto_title">Femtozellen erkennen</string>
     <string name="pref_femto_summ">(derzeit nur für CDMA-Telefone)</string>
     <string name="pref_femto_action_title">Femtozellen-Schutz</string>
-    <string name="pref_femto_action_summ">Flugmodus bei Erkennung einer Femtozelle erzwingen (Netzwerk muß manuell wieder einschaltet werden)</string>
+    <string name="pref_femto_action_summ">Flugmodus bei Erkennung einer Femtozelle erzwingen (Netzwerk muss manuell wieder einschaltet werden)</string>
     <string name="pref_ui_title">Oberflächeneinstellungen</string>
     <string name="pref_ui_icons_title">Status-Symbole</string>
     <string name="pref_ui_icons_summ">Symboldesign wählen</string>
@@ -193,12 +193,12 @@
   
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILLIERTE BESCHREIBUNG</string>
-    <string name="detail_info_idle">App ruht oder lädt. Keine Schutz- und Erkennungsmaßnahmen aktiviert. Im Seitenmenü unter FUNKZELLENVERFOLGUNG die Angriffserkennung aktivieren!</string>
-    <string name="detail_info_normal">Keine Gefahren erkannt oder gefunden. Unsere App prüft kontinuierlich das Netzwerk mit den aktivierten Schutzmaßnahmen von Seitenmenü und Einstellungen.</string>
-    <string name="detail_info_medium">Unsichere Zone: Mindestens 1 neuer oder unbekannter Mobilfunkmast ist in dieser Gegend aktiv oder verwendet eine unsichere (geknackte) Verschlüsselung niedriger als A5/3 [Erkennung ist noch in Arbeit]. Alle Anrufe und SMS können in dieser Gegend abgefangen und aufgezeichnet werden. Die Gegend sollte sofort verlassen werden.</string>
-    <string name="detail_info_high">Feindliche Betriebsaktionen erkannt: Ein IMSI-Catcher (IMSIC) oder gefälschte Mobilfunkstation (FBTS) verfolgt die Nutzer gezielt. Aktive Rasterung findet in dieser Gegend statt. Diese Gegend sollte dringend vermieden werden, vor allen Dingen während politischer Unruhen. Batterie aus Telefon entfernen oder komplett außer Kraft setzen!</string>
-    <string name="detail_info_danger">Feindliche Verfolgung erkannt: Ein FBTS oder IMSIC verfolgt DICH aktiv und verhindert die Verbindung Deines Telefons mit dem echten verschlüsselten Netz Deines Mobilfunkbetreibers. Bei Gefahr oder Konsequenzen sollte das Telefon zerstört und die SIM als gestohlen gemeldet werden.</string>
-    <string name="detail_info_run">Feindliche Manipulation: Jemand versucht aus der Ferne dieses Telefon zu manipulieren. Zerstöre (oder verkaufe) das Telefon und besorge weit weg ein Neues (altes Telefon nicht zum Wechselplatz mitnehmen)! Nutze eine neue (anonyme) SIM, verändere Dein Telefonieverhalten und warne Deine Kontakte im echten Leben, NICHT mittels Anruf!</string>
+    <string name="status_idle_detail_info">App ruht oder lädt. Keine Schutz- und Erkennungsmaßnahmen aktiviert. Bitte die Angriffserkennung einschalten!</string>
+    <string name="status_ok_detail_info">Keine Gefahren erkannt. Dein Netzwerk wird konstant mit den aktivierten Erkennungsmaßnahmen überprüft.</string>
+    <string name="status_medium_detail_info">Unsichere Zone: Mindestens 1 neuer oder unbekannter Mobilfunkmast ist in dieser Gegend aktiv oder verwendet eine unsichere (geknackte) Verschlüsselung niedriger als A5/3. Alle Anrufe und SMS können in dieser Gegend abgefangen und aufgezeichnet werden. Diesen Ort schnell verlassen.</string>
+    <string name="status_high_detail_info">Feindliche Betriebsaktionen erkannt: Ein IMSI-Catcher (IMSIC) oder gefälschte Mobilfunkstation (FBTS) verfolgt die Nutzer gezielt. Aktive Rasterung findet in dieser Gegend statt. Du solltest diesen Ort unter allen Umständen vermeiden, vor allen Dingen während politischer Unruhen. Batterie und SIM-Karte entfernen!</string>
+    <string name="status_danger_detail_info">"Feindliche Verfolgung erkannt: Ein FBTS oder IMSIC verfolgt DICH aktiv und verhindert die Verbindung Deines Telefons mit dem echten verschlüsselten Netz Deines Mobilfunkbetreibers. Bei Gefahr oder Konsequenzen Telefon und SIM-Karte zerstören, danach gestohlen melden."</string>
+    <string name="status_skull_detail_info">Feindliche Manipulation: Jemand versucht aus der Ferne dieses Telefon zu manipulieren. Zerstöre oder verkaufe das Telefon und besorge weit weg ein Neues. Das alte Telefon nicht zum Wechselplatz mitnehmen! Nutze eine neue anonyme SIM-Karte welche auf eine falsche Identität mittels Tor-Browser registriert wurde. Verändere Dein Telefonieverhalten und warne Deine Kontakte im echten Leben über Deine Überwachung, NICHT per Anruf!</string>
     <string name="open_cell_id_button_cancel">Abbrechen</string>
     <string name="open_cell_id_button_ok">OK</string>
    
@@ -225,6 +225,7 @@
     <string name="timeout_spinner_10_min">10 min</string>
     <string name="main">Hauptmenü</string>
     <string name="settings">Einstellungen</string>
+    <string name="database_settings">Datenbank</string>
     <string name="application">Anwendung</string>
     <string name="monitoring_cell_information">Beobachte Funkzelldaten.</string>
     <string name="stopped_monitoring_cell_information">Beobachtung der Funkzelldaten angehalten.</string>
@@ -237,8 +238,8 @@
     <string name="cell_tracking_active">Funkzellen werden aufgezeichnet.</string>
     <string name="cell_monitoring_active">Funkzellen werden beobachtet.</string>
     <string name="phone_type">Telefonart</string>
-    <string name="status_idle">Status: Ruhend.</string>
-    <string name="status_good">Status: Gut. Keine Gefahren erkannt.</string>
+    <string name="status_idle_description">Status: Ruhend.</string>
+    <string name="status_ok_description">Status: Gut. Keine Gefahren erkannt.</string>
     <string name="alert_threat_detected">ALARM: Eine Gefahr wurde erkannt!</string>
     <string name="alert_femtocell_connection_detected">ALARM: Verbinding mit Femtozelle erkannt!</string>
     <string name="alert_silent_sms_detected">ALARM: Stille SMS erkannt!</string>
@@ -264,7 +265,7 @@
     <string name="database_backup_successfully_saved_to">Datenbank wurde erfolgreich gesichert nach:</string>
     <string name="error_backing_up_data">Fehler beim Sichern der Datenbank.</string>
     <string name="no_opencellid_key_detected">Kein OpenCellID API-Schlüssel erkannt!\nBitte Schlüssel in Einstellungen eingeben.</string>
-    <string name="refreshing_display">Aktualisiere Anzeige</string>
+    <string name="refreshed_cell_id_info">Aktualisiere Anzeige</string>
     <string name="unable_to_acquire_root_access">Kein ROOT-Zugriff auf Gerät möglich.\nAT-Befehle setzen ROOT-Zugriff voraus.\nBitte prüfen ob das gerät GEROOTET ist und erneut versuchen.</string>
     <string name="unable_to_detect_busybox">Busybox konnte nicht erkannt werden.\nAT-Befehle setzen Busybox-Komponenten für korrekte Funktion voraus.\nBitte prüfen ob Busybox installiert ist und erneut versuchen.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Ein unbekannter Fehler trat beim Zugriffsversuch auf die serielle Schnittstelle auf.\nBitte Fehlerprotokoll prüfen und auf unserem GitHub veröffentlichen.</string>
@@ -273,12 +274,12 @@
     <string name="unable_to_create_map">Karte konnte nicht erstellt werden!</string>
     <string name="describe_the_problem_you_had">ACHTUNG! Bitte das Problem vor dem versenden der Daten beschreiben. KEINE HILFE OHNE BESCHREIBUNG!\n</string>
     <string name="status">Status:</string>
-    <string name="idle">RUHEND</string>
-    <string name="normal">NORMAL</string>
-    <string name="medium">MEDIUM</string>
-    <string name="high">HOCH</string>
-    <string name="danger">GEFAHR</string>
-    <string name="run">RENN!</string>
+    <string name="status_idle">Ruhend</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">Mittel</string>
+    <string name="status_high">Hoch</string>
+    <string name="status_danger">Gefahr</string>
+    <string name="status_skull">Renn!</string>
     
     <!-- Advanced User Settings: SMS Detection Strings-->
     <string name="adv_user_info">Dieses Menü ist nur für fortgeschrittene Benutzer!\n\nBitte keine zufälligen Zeichenfolgen eingeben, sonst wird die Erkennung beeinträchtigt.\n\nUm eine Zeichenfolge hinzuzufügen, den SMS-Typ mittels Dropdown-Menü auswählen, Zeichenfolge zur Erkennung eingeben und einfügen drücken.\n\nZum löschen den Eintrag in der Liste lang drücken.</string>
@@ -402,10 +403,14 @@
     <string name="pref_notification_vibrate_enable_summary">Vibriere bei Benachrichtigungs-Wechsel</string>
     <string name="pref_notification_settings">Benachrichtigungs-Einstellungen</string>
     <string name="notification_vibrate_idle">Ruhezustand</string>
-    <string name="notification_vibrate_normal">Normal</string>
+    <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Mittel</string>
-    <string name="notification_vibrate_alarm">Alarm</string>
+    <string name="notification_vibrate_danger">Gefahr</string>
     
     <string name="pref_notification_vibrate_min_level_title">Vibriere bei Bedrohung</string>
     <string name="pref_notification_vibrate_min_level_summary">Wähle Gefahrenstufe für Vibrationsbeginn</string>
+    <string name="pref_enable_gps_title">GPS-Einstellung</string>
+    <string name="pref_enable_gps_summary">Aktiviere GPS für Funkzellenverfolgung</string>
+    <string name="n_a">N/V</string>
+    <string name="unknown">Unbekannt</string>
     </resources>

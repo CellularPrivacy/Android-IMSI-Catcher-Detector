@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">追跡中</string>
     <string name="device_info">電話/SIM 詳細</string>
     <string name="map_view">アンテナ地図ビューアー</string>
@@ -22,7 +22,7 @@
     <string name="preferences">プリファレンス</string>
     <string name="press_once_again_to_exit">もう一度押すと終了します。</string>
     <string name="cell_lookup">すべての現在の基地局の詳細</string>
-    <string name="send_logs">デバッグ</string>
+    <string name="debugging">デバッグ</string>
     <string name="no_network_connection_title">インターネット接続がありません</string>
     <string name="no_network_connection_message">インターネット接続がないため OpenCellID データをダウンロードすることができません。データ接続を有効にしてください!</string>
 
@@ -70,12 +70,12 @@
     <string name="about_changelog">変更履歴</string>
     <string name="about_license">ライセンス</string>
     <string name="about_credits">クレジット</string>
-    <string name="about_desc_icon_idle">アイドル / ロード中。</string>
-    <string name="about_desc_icon_active_tracking_near">あなたの近くでアクティブな追跡!</string>
-    <string name="about_desc_icon_ok">すべて OK です。</string>
-    <string name="about_desc_icon_tracked_down">あなたは追跡されています!</string>
-    <string name="about_desc_icon_insecure_area">安全でないサービス エリア。離れてください!</string>
-    <string name="about_desc_icon_run">実行! 携帯電話の操作!</string>
+    <string name="status_idle_about_desc">アイドル / ロード中。</string>
+    <string name="status_high_about_desc">あなたの近くでアクティブな追跡!</string>
+    <string name="status_ok_about_desc">すべて OK です。</string>
+    <string name="status_danger_about_desc">あなたは追跡されています!</string>
+    <string name="status_medium_about_desc">安全でないサービス エリア。離れてください!</string>
+    <string name="status_skull_about_desc">実行! 携帯電話の操作!</string>
     <string name="about_desc_icon_title">詳細は、下のステータス アイコンを押してください:</string>
 
 
@@ -155,8 +155,8 @@
     <string name="btn_start_logs">開始</string>
 
     <string name="title_activity_about_pop_up">詳細な説明</string>
-    <string name="detail_info_idle">アプリはアイドリングまたはロード中です。保護と検出の対策が有効になっていません。ナビゲーション ドロワーを開いて、追跡セクションでそれらを有効にしてください!</string>
-    <string name="detail_info_normal">脅威は検出または発見していません。アプリは、ナビゲーション ドロワーとプリファレンスで設定した保護対策に基づいて、常にネットワークをチェックしています。</string>
+    <string name="status_idle_detail_info">アプリはアイドリングまたはロード中です。保護と検出の対策が有効になっていません。攻撃検出を切り替えてください!</string>
+    <string name="status_ok_detail_info">脅威は検出していません。有効にした検出の設定に基づいて、常にネットワークをチェックしています。</string>
     <string name="help_main_at_command_interface">ベースバンド プロセッサに AT コマンドを送信できるようにするインターフェイスです (ROOT が必要)。</string>
 
     <string name="open_cell_id_button_cancel">キャンセル</string>
@@ -191,17 +191,17 @@
     <string name="stopped_tracking_cell_information">基地局情報の追跡を停止します。</string>
     <string name="only_one_key_per_day">新しい API キー要求は 24 時間に 1 回だけです!\n後でもう一度試してください。</string>
     <string name="cell_id_doesnt_exist_in_db">セル ID が OpenCellID データベースに存在しません!</string>
-    <string name="detail_info_medium">安全でないサービス エリア: この付近に少なくとも 1 つの新しいまたは未知の BTS が運用中です。あるいは A5/3 よりも低い、安全でない (壊れた) 暗号化アルゴリズムを使用しています [検出は WIP]。このエリアの通話/SMS は傍受や記録される可能性があります。あなたは今すぐこの場所を離れたほうがよいです。</string>
-    <string name="detail_info_high">敵対的なサービスの活動を検出しました: IMSI キャッチャー (IMSIC) または偽の BTS (FBTS) が積極的にユーザーを追跡します。このエリアでアクティブなスキャンが行われます。特に政情不安がある場合は、この場所を避ける必要があります。お使いのバッテリーを取りはずすか、携帯電話を破壊します!</string>
-    <string name="detail_info_danger">敵対的な追跡を検出しました: FBTS または IMSIC が積極的にあなたを追跡し、お使いの携帯電話が通常の暗号化された携帯電話会社を介した接続を防止します。あなたが危険や影響を受けている場合は、お使いの電話 + SIM を破壊し、最近盗まれたものとして報告してください。</string>
-    <string name="detail_info_run">敵対的な操作: 誰かがリモートであなたの携帯電話を操作しようとしています。あなたの携帯電話を破壊 (または売却) し、どこか遠隔地で新しいものを取得してください (変更する場所にあなたの古い携帯電話を持っていかないでください)! 新しい (匿名の) SIM カードを使用して、呼び出しの振る舞いを変えて、あなたの友人に、実生活で話すことによって警告します。電話で伝えないでください!</string>
+    <string name="status_medium_detail_info">安全でないサービス エリア: この付近に少なくとも 1 つの新しいまたは未知の BTS が運用中か、A5/3 よりも低い、安全でない (壊れた) 暗号化アルゴリズムを使用しています。このエリアの通話/SMS は傍受や記録される可能性があります。すぐにこの場所から離れてください。</string>
+    <string name="status_high_detail_info">敵対的なサービスの活動を検出しました: IMSI キャッチャー (IMSIC) または偽の BTS (FBTS) がアクティブにユーザーを追跡しています。このエリアでアクティブなスキャンが行われます。あらゆる意味で、この場所を避ける必要があります。特に政情不安がある場合。お使いのバッテリーと SIM カードを取りはずしてください!</string>
+    <string name="status_danger_detail_info">敵対的な追跡を検出しました: FBTS または IMSIC がアクティブにあなたを追跡し、お使いの携帯電話で通常の暗号化された携帯電話会社を介した接続を行うことができないようにします。あなたが危険や影響を受けている場合は、お使いの電話と SIM を破壊し、その後で最近盗まれたと報告してください。</string>
+    <string name="status_skull_detail_info">敵対的な操作: 誰かがリモートであなたの携帯電話を操作しようとしています。あなたの携帯電話を破壊または売却し、遠隔地で新しいものを入手してください。交換する場所に古い携帯電話を持っていかないでください! Tor ブラウザーを介した偽の身元で登録した、新しい匿名の SIM カードを使用してください。通話の動作を変えて、実際に対面で話すことによって監視されていることを連絡先に警告します。電話で伝えないでください!</string>
     <string name="hostile_service_area_changing_lac_detected">敵対的なサービス エリア: LAC の変更を検出しました!</string>
     <string name="femtocell_detection_active">フェムトセル検出がアクティブです。</string>
     <string name="cell_tracking_active">基地局の追跡がアクティブです。</string>
     <string name="cell_monitoring_active">基地局の監視がアクティブです。</string>
     <string name="phone_type">電話の種類</string>
-    <string name="status_idle">ステータス: アイドル。</string>
-    <string name="status_good">ステータス: 良好。脅威は検出されませんでした。</string>
+    <string name="status_idle_description">ステータス: アイドル。</string>
+    <string name="status_ok_description">ステータス: 良好。脅威は検出されませんでした。</string>
     <string name="alert_threat_detected">警告: いくつかの脅威が検出されました!</string>
     <string name="alert_femtocell_connection_detected">警告: フェムトセル接続が検出されました!</string>
     <string name="alert_silent_sms_detected">警告: サイレント SMS を検出しました!</string>
@@ -230,7 +230,7 @@
     <string name="database_backup_successfully_saved_to">データベースのバックアップを正常に保存しました:</string>
     <string name="error_backing_up_data">データベースのバックアップ中にエラー。</string>
     <string name="no_opencellid_key_detected">OpenCellID API キーは検出しませんでした!\n最初に、設定でキーを入力してください。</string>
-    <string name="refreshing_display">表示の更新中</string>
+    <string name="refreshed_cell_id_info">表示の更新中</string>
     <string name="unable_to_acquire_root_access">お使いのデバイスで ROOT アクセスを取得できません。\nAT コマンド インジェクションで ROOT ターミナル アクセスが必要です。\nお使いのデバイスを ROOT 化していることを確認して、もう一度試してください。</string>
     <string name="unable_to_detect_busybox">お使いのデバイスで Busybox を検出できません。\n正しく機能するために、AT コマンド インジェクションで Busybox コンポーネントが必要です。\nお使いのデバイスに Busybox がインストールされていることを確認して、もう一度試してください。</string>
     <string name="unknown_error_trying_to_acquire_serial_device">シリアル デバイスを取得しようとして、不明なエラーが発生しました。\nlogcat のすべてのエラーを確認して、私たちの Github 上にそれを投稿してください。</string>
@@ -239,12 +239,12 @@
     <string name="unable_to_create_map">地図を作成することができません!</string>
     <string name="describe_the_problem_you_had">注意! これらのログを私たちに送信する前に、問題について説明してください。説明がないとヘルプできません!\n</string>
     <string name="status">ステータス:</string>
-    <string name="idle">アイドル</string>
-    <string name="normal">通常</string>
-    <string name="medium">中</string>
-    <string name="high">高</string>
-    <string name="danger">危険</string>
-    <string name="run">実行!</string>
+    <string name="status_idle">アイドル</string>
+    <string name="status_ok">通常</string>
+    <string name="status_medium">中</string>
+    <string name="status_high">高</string>
+    <string name="status_danger">危険</string>
+    <string name="status_skull">実行!</string>
 
     <string name="adv_user_info">このメニューは、高度なユーザーのみです!\n\n検出が制御不能を引き起こすので、ランダムな文字列を挿入しないでください。\n\n文字列を追加するには、ドロップダウン メニューから SMS の種類を選択し、検出文字列を入力し、挿入を押します。\n\nリスト表示で長押しすると、データベースから削除します。</string>
     
@@ -328,10 +328,16 @@
     <string name="pref_notification_vibrate_min_level_title">脅威レベルで振動</string>
     <string name="pref_notification_vibrate_min_level_summary">振動をオンにする最小の脅威レベルを選択します</string>
     <string name="notification_vibrate_idle">アイドル</string>
-    <string name="notification_vibrate_normal">標準</string>
+    <string name="notification_vibrate_ok">標準</string>
     <string name="notification_vibrate_medium">中</string>
-    <string name="notification_vibrate_alarm">アラーム</string>
+    <string name="notification_vibrate_danger">危険</string>
     
     <string name="buildnumber">ビルド番号: %s</string>
     <string name="git_sha">Git SHA ハッシュ: %s</string>
+    <string name="pref_enable_gps_title">GPS 設定</string>
+    <string name="pref_enable_gps_summary">基地局追跡の GPS を有効にします</string>
+    <string name="n_a">N/A</string>
+    <string name="unknown">不明</string>
+
+    <string name="database_settings">データベース</string>
     </resources>

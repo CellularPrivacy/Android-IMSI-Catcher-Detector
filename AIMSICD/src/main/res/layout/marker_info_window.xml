@@ -77,8 +77,8 @@
             android:layout_gravity="end"/>
 
         <TextView
-            android:id="@+id/wtf1"
-            android:text="ToDo"
+            android:id="@+id/psc"
+            android:text=""
             android:textColor="@color/standard_grey"
             android:padding="2dip"
             android:gravity="start"/>
@@ -97,8 +97,8 @@
             android:layout_gravity="end"/>
 
         <TextView
-            android:id="@+id/wtf2"
-            android:text="ToDo"
+            android:id="@+id/rat"
+            android:text=""
             android:textColor="@color/standard_grey"
             android:padding="2dip"
             android:gravity="start"/>

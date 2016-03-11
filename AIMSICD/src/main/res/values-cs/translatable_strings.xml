@@ -15,7 +15,7 @@
     <string name="backup_database">Záloha databáze</string>
     <string name="restore_database">Obnova databáze</string>
     <string name="preferences">Nastavení</string>
-    <string name="send_logs">Ladění</string>
+    <string name="debugging">Ladění</string>
     <string name="get_opencellid">Stáhnout data BTS</string>
 
     <string name="device_info_title">Informace o zařízení</string>
@@ -69,12 +69,12 @@
     <string name="about_changelog">ZÁZNAM ZMĚN</string>
     <string name="about_license">LICENCE</string>
     <string name="about_credits">ZÁSLUHY</string>
-    <string name="about_desc_icon_idle">Nečinný / Načítání.</string>
-    <string name="about_desc_icon_active_tracking_near">Aktivní sledování blízko vás!</string>
-    <string name="about_desc_icon_ok">Vše je v pořádku.</string>
-    <string name="about_desc_icon_tracked_down">Někdo vás sleduje!</string>
-    <string name="about_desc_icon_insecure_area">Nebezpečná síťová aktivia! Pozor!</string>
-    <string name="about_desc_icon_run">POPLACH! Někdo na vás útočí!</string>
+    <string name="status_idle_about_desc">Nečinný / Načítání.</string>
+    <string name="status_high_about_desc">Aktivní sledování blízko vás!</string>
+    <string name="status_ok_about_desc">Vše je v pořádku.</string>
+    <string name="status_danger_about_desc">Někdo vás sleduje!</string>
+    <string name="status_medium_about_desc">Nebezpečná síťová aktivia! Pozor!</string>
+    <string name="status_skull_about_desc">POPLACH! Někdo na vás útočí!</string>
     <string name="about_desc_icon_title">Stiskněte ikonu stavu níže pro více informací:</string>
 
     <string name="network_netid">ID Sítě:</string>
@@ -155,6 +155,8 @@
     <string name="btn_start_logs">Spustit</string>
 
     <string name="title_activity_about_pop_up">DETAILNÍ VYSVĚTLENÍ</string>
-    <string name="detail_info_idle">Aplikace je neaktivní nebo se načítá. Detekce ani ochrana není povolena. Otevřete prosím boční menu v aplikaci a povolte je v sekci SLEDOVÁNÍ!</string>
-    <string name="detail_info_normal">Nebyly detekovány nebo nazeleny žádné hrozby. AIMSICD neustále kontroluje vaše síťové připojení podle nastavení, které jste si zvolili v sekci Nastavení a v bočním menu aplikace.</string>
+    <string name="status_idle_detail_info">Aplikace je neaktivní nebo se načítá. Detekce ani ochrana není povolena. Otevřete prosím boční menu v aplikaci a povolte je v sekci SLEDOVÁNÍ!</string>
+    <string name="status_ok_detail_info">Nebyly detekovány nebo nazeleny žádné hrozby. AIMSICD neustále kontroluje vaše síťové připojení podle nastavení, které jste si zvolili v sekci Nastavení a v bočním menu aplikace.</string>
+
+    <string name="unknown">Neznámý</string>
     </resources>

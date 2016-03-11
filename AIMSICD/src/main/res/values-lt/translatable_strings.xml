@@ -46,4 +46,5 @@
     <string name="network_roaming">Roaming:</string>
     <string name="network_lte_timing_advance">TA (LTE):</string>
     <string name="button_refresh">Atnaujinti</string>
+    <string name="unknown">Sconosciuto</string>
     </resources>

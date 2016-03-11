@@ -1,6 +1,6 @@
 # Android IMSI-Catcher Detector
 
-[![BuildStatus](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector.svg)](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector) [![DevelopmentStatus](http://img.shields.io/badge/Development-ALPHA-brightgreen.svg)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status) [![CoverityScan](https://scan.coverity.com/projects/3346/badge.svg)](https://scan.coverity.com/projects/3346) [![Translations](https://hosted.weblate.org/widgets/aimsicd/-/shields-badge.svg)](https://hosted.weblate.org/projects/aimsicd/strings/)
+[![BuildStatus](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector.svg)](https://travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector) [![DevelopmentStatus](https://img.shields.io/badge/Development-ALPHA-brightgreen.svg)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status) [![CoverityScan](https://scan.coverity.com/projects/3346/badge.svg)](https://scan.coverity.com/projects/3346) [![Translations](https://hosted.weblate.org/widgets/aimsicd/-/shields-badge.svg)](https://hosted.weblate.org/projects/aimsicd/strings/)
 [![Bountysource](https://www.bountysource.com/badge/team?team_id=40338&style=bounties_received)](https://www.bountysource.com/teams/android-imsi-catcher-detector/issues?utm_source=Android%20IMSI-Catcher%20Detector&utm_medium=shield&utm_campaign=bounties_received)
 
 --
@@ -26,8 +26,8 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 
 * [What it does](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#what-it-does)
 * [Why use it](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#why-use-it)
-* [**Contributing**](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md)
-* [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#debugging)
+* [**Contributing**](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md)
+* [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#debugging)
 * [Warnings](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#warnings)
 * [Research](https://spideroak.com/browse/share/AIMSICD/GitHub)
 * [Support](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#support)
@@ -97,7 +97,7 @@ Although this project is fully Open Source, developing AIMSICD is a lot of work 
 
 ### License
 
-This project is completely licensed [GPLv3+](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE).
+[![GPLv3+](http://gplv3.fsf.org/gplv3-127x51.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE)
 
 ---
 
