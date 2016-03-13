@@ -226,7 +226,7 @@
     <string name="database_backup_successfully_saved_to">Backup de base de datos guardado con éxito en:</string>
     <string name="error_backing_up_data">Error de copia de seguridad de base de datos.</string>
     <string name="no_opencellid_key_detected">Ninguna llave OpenCellID API detectada.\nIntroduzca primero su clave en el menu de configuración.</string>
-    <string name="refreshing_display">Display de Actualizacion</string>
+    <string name="refreshed_cell_id_info">Display de Actualizacion</string>
     <string name="unable_to_acquire_root_access">"No se pudo obtener acceso ROOT en el dispositivo.\nLa  inyección de comando AT requiere acceso ROOT Terminal.\nPor favor, compruebe que el dispositivo esta ROOTEADO y vuelva a intentarlo."</string>
     <string name="unable_to_detect_busybox">No se ha podido detectar Busybox en el dispositivo.\nLa inyección de comando AT requiere componentes de Busybox para funcionar correctamente.\nPor favor compruebe que su dispositivo tiene Busybox instalado y vuelva a intentarlo.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Se ha producido un error desconocido tratando de adquirir el dispositivo de serie.\nBusca los errores en logcat y publicalos en nuestro Github.</string>
@@ -330,4 +330,6 @@
     <string name="failed_to_add_the_string_to_db">Error al añadir la cadena a la base de datos</string>
 
     <string name="double_quote_will_cause_db_error">"Cadena no añadida\nLas comillas dobles \" no están soportadas "</string>
-    </resources>
+
+    <string name="unknown">Desconocido</string>
+</resources>

@@ -158,12 +158,12 @@
     <string name="btn_start_logs">Bắt đầu</string>
 
     <string name="title_activity_about_pop_up">GIẢI THÍCH CHI TIẾT</string>
-    <string name="status_idle_detail_info">Ứng dụng đang nhàn rỗi hoặc đang tải. Chưa bật biện pháp phát hiện và bảo vệ nào. Xin mở Ngăn điều hướng và kích hoạt chúng trong mục THEO DÕI!</string>
-    <string name="status_ok_detail_info">Không phát hiện mối đe doạ nào. Ứng dụng của chúng tôi đang liên tục kiểm tra mạng của bạn dựa trên các biện pháp bảo vệ mà bạn đã thiết lập trong Ngăn điều hướng và Tuỳ chỉnh.</string>
-    <string name="status_medium_detail_info">Khu vực dịch vụ không bảo mật: Có ít nhất 1 BTS mới hoặc không xác định đang hoạt động trong vùng lân cận này, hoặc đang sử dụng thuật toán mã hoá kém bảo mật (đã bị phá) thấp hơn A5/3 [Phát hiện là WIP]. Bất kỳ cuộc gọi/SMS nào thực hiện trong khu vực này có thể bị chặn và ghi lại. Bạn nên rời khỏi đây ngay.</string>
-    <string name="status_high_detail_info">Đã phát hiện các hoạt động dịch vụ nguy hiểm: Một IMSI-Catcher (IMSIC) hoặc BTS giả (FBTS) đang theo dõi người dùng. Có hoạt động quét diễn ra trong khu vực. Bạn nên tránh xa nơi này, đặc biệt là khi tại đây có tình trạng bất ổn chính trị. Hãy tháo pin hoặc tắt điện thoại!</string>
-    <string name="status_danger_detail_info">Đã phát hiện hoạt động theo dõi nguy hiểm: Một FBTS hoặc IMSIC đang theo dõi BẠN và ngăn điện thoại của bạn kết nối thông qua nhà cung cấp mạng di động đã mã hoá thông thường. Nếu bạn đang trong tình trạng nguy hiểm, hãy phá nát điện thoại + SIM và báo cáo rằng nó vừa bị đánh cắp.</string>
-    <string name="status_skull_detail_info">Điều khiển nguy hiểm: Ai đó đang cố điều khiển từ xa thiết bị cầm tay của bạn. Hãy phá huỷ (hoặc bán) điện thoại và mua một cái mới ở một nơi nào đó thật xa (đừng mang theo điện thoại cũ đến nơi đổi máy)! Sử dụng một thẻ SIM mới (ẩn danh), thay đổi hành vi gọi điện và cảnh báo bạn bè bằng cách nói chuyện trực tiếp với họ chứ KHÔNG PHẢI qua gọi điện!</string>
+    <string name="status_idle_detail_info">Ứng dụng đang nhàn rỗi hoặc đang tải. Chưa bật biện pháp phát hiện và bảo vệ nào. Xin bật tính năng phát hiện tấn công!</string>
+    <string name="status_ok_detail_info">Không phát hiện mối đe doạ nào. Mạng của bạn đang được kiểm tra liên tục dựa trên các thiết lập phát hiện đã bật.</string>
+    <string name="status_medium_detail_info">Khu vực dịch vụ không bảo mật: Có ít nhất 1 BTS mới hoặc không xác định đang hoạt động trong vùng lân cận này, hoặc đang sử dụng thuật toán mã hoá kém bảo mật (đã bị phá) thấp hơn A5/3. Bất kỳ cuộc gọi/SMS nào thực hiện trong khu vực này có thể bị chặn và ghi lại. Hãy rời khỏi đây ngay.</string>
+    <string name="status_high_detail_info">Đã phát hiện các hoạt động dịch vụ nguy hiểm: Một IMSI-Catcher (IMSIC) hoặc BTS giả (FBTS) đang theo dõi người dùng. Có hoạt động quét diễn ra trong khu vực. Bạn nên tránh xa nơi này, đặc biệt là khi tại đây có bất ổn chính trị. Hãy tháo pin hoặc tắt điện thoại!</string>
+    <string name="status_danger_detail_info">Đã phát hiện hoạt động theo dõi nguy hiểm: Một FBTS hoặc IMSIC đang theo dõi BẠN và ngăn điện thoại của bạn kết nối thông qua nhà cung cấp mạng di động đã mã hoá thông thường. Nếu bạn đang trong tình trạng nguy hiểm, hãy phá nát điện thoại và SIM rồi báo rằng nó vừa bị đánh cắp.</string>
+    <string name="status_skull_detail_info">Điều khiển nguy hiểm: Ai đó đang cố điều khiển từ xa thiết bị cầm tay của bạn. Hãy phá huỷ hoặc bán điện thoại và mua một cái mới ở một nơi thật xa. Đừng mang theo điện thoại cũ đến nơi đổi máy! Sử dụng một thẻ SIM ẩn danh mới với danh tính giả thông qua trình duyệt Tor. Thay đổi hành vi gọi điện và cảnh báo liên hệ của bạn về nguy cơ bị giám sát bằng cách nói chuyện trực tiếp với họ chứ KHÔNG qua điện thoại!</string>
     <string name="open_cell_id_button_cancel">Huỷ</string>
     <string name="open_cell_id_button_ok">OK</string>
 
@@ -240,7 +240,7 @@
     <string name="database_backup_successfully_saved_to">Sao lưu thành công CSDL vào:</string>
     <string name="error_backing_up_data">Lỗi khi sao lưu CSDL.</string>
     <string name="no_opencellid_key_detected">Không phát hiện khóa API OpenCellID nào!\nXin nhập khoá của bạn trong cài đặt trước đã.</string>
-    <string name="refreshing_display">Đang làm mới hiển thị</string>
+    <string name="refreshed_cell_id_info">Đang làm mới hiển thị</string>
     <string name="unable_to_acquire_root_access">Không thể nhận quyền truy cập ROOT trên thiết bị của bạn.\nNhập lệnh AT yêu cầu quyền truy cập ROOT cho Trạm .\nHãy kiểm tra nếu thiết bị ĐÃ ROOT và thử lại.</string>
     <string name="unable_to_detect_busybox">Không thấy Busybox trên thiết bị của bạn.\nNhập lệnh AT cần các thành phần của Busybox để có thể hoạt động chính xác.\nHãy kiểm tra xem thiết bị đã cài đặt Busybox chưa và thử lại.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Đã xảy lỗi lạ cố chiếm dụng các thiết bị nối tiếp.\nXin kiểm tra logcat cho bất kỳ lỗi gì và gửi lên Github của chúng tôi.</string>
@@ -335,6 +335,7 @@
     <string name="failed_to_add_the_string_to_db">Thêm chuỗi vào CSDL thất bại</string>
 
     <string name="n_a">N/A</string>
+    <string name="unknown">Không xác định</string>
 
-    <string name="database_settings">Cài đặt CSDL</string>
+    <string name="database_settings">Cơ sở dữ liệu</string>
     </resources>

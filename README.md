@@ -26,8 +26,8 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 
 * [What it does](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#what-it-does)
 * [Why use it](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#why-use-it)
-* [**Contributing**](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md)
-* [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#debugging)
+* [**Contributing**](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md)
+* [Bug Tracker](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#debugging)
 * [Warnings](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#warnings)
 * [Research](https://spideroak.com/browse/share/AIMSICD/GitHub)
 * [Support](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector#support)

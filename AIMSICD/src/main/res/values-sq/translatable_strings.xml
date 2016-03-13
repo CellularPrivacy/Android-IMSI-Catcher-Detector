@@ -109,4 +109,5 @@
     <string name="pref_request_ocid_key">Apliko për një çelës API OpenCellID</string>
     <string name="pref_ocid_requestkey_summary">Apliko një çelës për hapjen e të dhënave OpenCellID</string>
 
+    <string name="unknown">i panjohur</string>
     </resources>

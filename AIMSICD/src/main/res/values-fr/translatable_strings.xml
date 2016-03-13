@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
     <!-- Drawer -->
@@ -264,7 +264,7 @@
     <string name="database_backup_successfully_saved_to">Sauvegarde de la base de donnée réussi, emplacement :</string>
     <string name="error_backing_up_data">Erreur lors de la sauvegarde de la Base De Donnée.</string>
     <string name="no_opencellid_key_detected">Clé de l’API d’OpenCellID non trouvée!\nEntrez d’abord une clé dans les paramètres.</string>
-    <string name="refreshing_display">Rafraîchissement de l\'écran</string>
+    <string name="refreshed_cell_id_info">Rafraîchissement de l\'écran</string>
     <string name="unable_to_acquire_root_access">Impossible d\'obtenir l\'accès ROOT.\nL\'injection de commandes AT à besoin d\'un accès terminal en tant que ROOT.\nVéréfiez que votre téléphone est rooté et réessayez.</string>
     <string name="unable_to_detect_busybox">Busybox non trouvé.\nL\'injection de commandes AT a besoin de Busybox pour fonctionner correctement.\nVéréfiez que votre appareil possède Busybox et ressayez.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Une erreur inconnue s’est produite lors de l’accès au périphérique série.\nVérifiez les messages d’erreurs de vos journaux et postez-les sur notre dépôt GitHub.</string>
@@ -413,5 +413,7 @@
     <string name="the_string_was_added_to_db">La chaîne de caractères a été ajoutée à la base de données</string>
     <string name="failed_to_add_the_string_to_db">Échec lors de l’ajout de la chaîne de caractères à la base de données</string>
     <string name="n_a">Indisponible</string>
+    <string name="unknown">Ignoré</string>
 
+    <string name="database_settings">Base de données</string>
     </resources>

@@ -11,18 +11,21 @@
 
     <!-- Name Checks -->
     <module name="TreeWalker">
-        <property name="severity" value="info" />
 
-        <module name="ConstantName" />
-        <module name="LocalFinalVariableName" />
-        <module name="LocalVariableName" />
-        <module name="MemberName" />
-        <module name="MethodName" />
-        <module name="ParameterName" />
-        <module name="StaticVariableName" />
-        <module name="TypeName" />
+        <!--module name="ConstantName" /-->
+        <!--module name="LocalFinalVariableName" /-->
+        <!--module name="LocalVariableName" /-->
+        <!--module name="MemberName" /-->
+        <!--module name="MethodName" /-->
+        <!--module name="ParameterName" /-->
+        <!--module name="StaticVariableName" /-->
+        <!--module name="TypeName" /-->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$" />
+        </module>
     </module>
     <module name="TreeWalker">
+
 
         <!-- Checks for imports                              -->
         <!-- See http://checkstyle.sf.net/config_import.html -->
@@ -77,5 +80,14 @@
         <module name="MethodParamPad" />
         <module name="NoLineWrap" />
         <module name="NoWhitespaceAfter" />
+        <module name="NoWhitespaceBefore" />
+        <module name="ParenPad" />
+        <module name="SeparatorWrap">
+            <property name="tokens" value="DOT"/>
+            <property name="option" value="nl"/>
+        </module>
+        <module name="TypecastParenPad" />
+        <module name="WhitespaceAfter" />
+        <module name="WhitespaceAround" />
     </module>
 </module>

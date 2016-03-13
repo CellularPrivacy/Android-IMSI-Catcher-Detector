@@ -1,6 +1,44 @@
 # CHANGELOG of 'AIMSICD'
 ------------------------
 
+#### [13.03.2016 - WIP-Release v0.1.41-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.41-alpha)
+
+* Removed: Some now unused Icons from previous UI/UX have been removed
+* Removed: Purged side-effect on `#getNetworkTypeName()` and unused device's `mNetType`
+* Changed: Made `cell.java` adhere to JLS for static keyword order
+* Changed: Refresh/loading animations and actions now use `SwipeRefreshLayout`
+* Changed: Renamed java packages to lowercase to fit new checkstyle rulesets
+* Changed: Refactored RAT/Network Type into one place and restructured `travis.yml`
+* Updated: Aligned wording `Database` in `Navigation Drawer`
+* Updated: Code of Conduct to Version is now at version 1.4
+* Updated: Let Travis cache the downloaded gradle-wrapper and jars
+* Updated: Improved Status Icon descriptions in `About` for better understanding
+* Updated: Japanese, Norwegian Bokmål, French, Ukrainian, German and Vietnamese
+* Updated: `CREDITS` have been centered and improved with clickable links and animation
+* Updated: Latest gradle and gradle plugin version, Index of `README` linked to `.github`
+* Added: Pull Request and Issue Templates as well as `CONTRIBUTING.md` added into `.github`
+* Added: The local cell identifier `PSC` is shown when clicking marked cells
+* Added: Null-guard service before driving menu options to avoid NPE on new installs
+* Added: Added `onPrepareOptionsMenu` implementation that will redraw the checkboxes
+* Added: Human-readable display of RAT in map marker details populated by `DBi_bts`
+* Added: Turned RAT/Network Type integer in `BTS Measurements` into human-readable text
+* Added: Checkstyle rules `WhitespaceAround`, `WhitespaceBefore`, `NoWhitespaceBefore`
+* Added: Checkstyle rules `WhitespaceAfter`, `TypecastParenPad`, `SeparatorWrap`
+* Added: Checkstyle rules `ParenPad` and `PackageName`
+* Fixed: Auto-Versioning is being done correctly again
+* Fixed: `Toggle Cell Tracking` does not re-enable itself anymore
+* Fixed: Stopped infinite spinning of OpenCellID data downloading marker
+* Fixed: Not truncating MNC integer after 2 chars in OCID download anymore
+* Fixed: Status Icon `IDLE` is displaying again when turning off `Attack Detection`
+
+---
+
+#### [21.02.2016 - WIP-Release v0.1.40.1-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.40.1-alpha)
+
+* Fixed: Travis-CI does now attach the correctly signed APK again
+
+---
+
 #### [21.02.2016 - WIP-Release v0.1.40-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.40-alpha)
 
 * Removed: Purged unused imports and `ATCommandActivity`

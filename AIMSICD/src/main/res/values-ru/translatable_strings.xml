@@ -278,7 +278,7 @@
     <string name="database_backup_successfully_saved_to">Резервная копия базы данных успешна сохранена в:</string>
     <string name="error_backing_up_data">Ошибка резервного копирования базы данных.</string>
     <string name="no_opencellid_key_detected">Не обнаружен ключ API OpenCellID!\nПожалуйста, введите Ваш ключ в настройках.</string>
-    <string name="refreshing_display">Обновление дисплея</string>
+    <string name="refreshed_cell_id_info">Обновление дисплея</string>
     <string name="unable_to_acquire_root_access">Невозможно получить РУТ-доступ на Вашем устройстве.\nДля AT-команд требуется ROOT доступ к терминалу.\nПожалуйста, проверьте наличие прав РУТ на Вашем устройстве и попробуйте еще раз.</string>
     <string name="unable_to_detect_busybox">Невозможно обнаружить Busybox на Вашем устройстве.\nДля правильной работы с AT-командами требуются компоненты Busybox.\nПожалуйста, проверьте, что Busybox установлен на Ваше устройство, и попробуйте снова.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Произошла неизвестная ошибка при попытке получения Serial Device.\nПожалуйста, проверьте логкат на возможные ошибки и отправьте их на Github.</string>
@@ -422,4 +422,5 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
+    <string name="unknown">Неизвестный</string>
 </resources>

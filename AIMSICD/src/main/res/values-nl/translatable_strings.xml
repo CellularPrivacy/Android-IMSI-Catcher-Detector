@@ -226,7 +226,7 @@
     <string name="uploaded_bts_data_successfully">BTS gegevens succesvol verstuurd naar OpenCellID.</string>
     <string name="error_uploading_bts_data">Fout bij het opsturen van BTS gegevens naar OpenCellID servers!</string>
     <string name="no_opencellid_key_detected">Geen OpenCellID API sleutel gevonden!\nStel uw sleutel eerst in de instellingen in.</string>
-    <string name="refreshing_display">Scherm verversen</string>
+    <string name="refreshed_cell_id_info">Scherm verversen</string>
     <string name="unable_to_acquire_root_access">Kan geen ROOT toegang op uw toestel krijgen.\nVersturen van AT commando\'s vereist ROOT terminal toegang.\nControleer of uw apparaat ROOT toegang heeft en probeer opnieuw.</string>
     <string name="unable_to_detect_busybox">Kan busybox niet vinden op uw apparaat.\nHet versturen van AT commando\'s vereist busybox componenten.\nControleer of busybox geïnstalleerd is en probeer opnieuw.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Er is een onbekende fout opgetreden met het serieel apparaat.\nCheck uw logcat voor foutmeldingen en post ze op onze Github.</string>
@@ -334,4 +334,6 @@
     <string name="double_quote_will_cause_db_error">"String niet toegevoegd\n\" dubbele aanhalingstekens veroorzaken een db fout "</string>
     <string name="pref_enable_gps_title">GPS instellingen</string>
     <string name="pref_enable_gps_summary">GPS inschakelen voor Cell tracking</string>
+
+    <string name="unknown">Onbekend</string>
     </resources>
