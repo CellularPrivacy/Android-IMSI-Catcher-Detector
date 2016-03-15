@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
-        classpath 'io.freefair:gradle-plugins:2.0.0-beta4'
+        classpath 'io.freefair:gradle-plugins:2.0.0-beta5'
     }
 }
 
@@ -17,8 +17,6 @@ allprojects {
     }
 
     apply plugin: 'io.freefair.git-version'
+    gitTagPrefix = 'v'
 
-    gitVersion {
-        tagPrefix 'v'
-    }
 }
