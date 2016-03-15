@@ -14,9 +14,10 @@ android {
     buildToolsVersion '23.0.2'
 
     defaultConfig {
+        applicationId "com.SecUpwN.AIMSICD"
         minSdkVersion 16
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
-        versionCode 40
+        versionCode 41
         testApplicationId "com.SecUpwN.AIMSICD.test"
 
         buildConfigField 'String', 'BUILD_NUMBER', (getBuildNumber() == null ? 'null' : "\"${buildNumber}\"")
