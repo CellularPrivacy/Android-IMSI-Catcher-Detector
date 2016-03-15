@@ -6,7 +6,6 @@
 package com.secupwn.aimsicd.service;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -951,11 +950,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * Cancel and remove the persistent notification
      */
     public void cancelNotification() {
-        NotificationManager notificationManager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager != null) {
-            notificationManager.cancel(NOTIFICATION_ID);
-        }
+        NotificationManagerCompat.from(context).cancel(NOTIFICATION_ID);
     }
 
     /**
