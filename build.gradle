@@ -9,7 +9,12 @@ buildscript {
         classpath 'io.freefair:gradle-plugins:2.0.0-beta5'
     }
 }
-
+try {
+     "git fetch --tags -v".execute()
+} catch (Exception e){
+    logger.warn("git fetch failed")
+    logger.debug(e.message, e)
+}
 allprojects {
     repositories {
         jcenter()
