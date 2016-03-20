@@ -10,7 +10,9 @@ buildscript {
     }
 }
 try {
-     "git fetch --tags -v".execute()
+    def text = "git fetch --tags -v".execute([], project.getProjectDir()).text
+    logger.info("git fetch successful")
+    logger.debug(text)
 } catch (Exception e){
     logger.warn("git fetch failed")
     logger.debug(e.message, e)
