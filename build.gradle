@@ -9,18 +9,20 @@ buildscript {
         classpath 'io.freefair:gradle-plugins:2.0.0-beta5'
     }
 }
-try {
-    def text = "git fetch --tags -v".execute([], project.getProjectDir()).text
-    logger.info("git fetch successful")
-    logger.debug(text)
-} catch (Exception e){
-    logger.warn("git fetch failed")
-    logger.debug(e.message, e)
-}
+
 allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
+    }
+
+    try {
+        def text = "git fetch --tags -v".execute([], project.getProjectDir()).text
+        logger.info("git fetch successful")
+        logger.debug(text)
+    } catch (Exception e){
+        logger.warn("git fetch failed")
+        logger.debug(e.message, e)
     }
 
     apply plugin: 'io.freefair.git-version'
