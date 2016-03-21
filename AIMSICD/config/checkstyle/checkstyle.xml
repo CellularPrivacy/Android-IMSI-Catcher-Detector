@@ -58,6 +58,7 @@
             <property name="illegalClassNames" value="java.util.ArrayList" />
             <property name="illegalClassNames" value="java.util.LinkedList" />
             <property name="illegalClassNames" value="android.util.Log" />
+            <property name="illegalClassNames" value="android.app.NotificationManager" />
         </module>
         <module name="MissingSwitchDefault">
             <property name="severity" value="warning" />

@@ -6,7 +6,6 @@
 package com.secupwn.aimsicd.service;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +16,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.telephony.CellInfo;
 import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
@@ -950,11 +950,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * Cancel and remove the persistent notification
      */
     public void cancelNotification() {
-        NotificationManager notificationManager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager != null) {
-            notificationManager.cancel(NOTIFICATION_ID);
-        }
+        NotificationManagerCompat.from(context).cancel(NOTIFICATION_ID);
     }
 
     /**
@@ -1069,8 +1065,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType), status);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconResId);
 
+        int color = context.getResources().getColor(status.getColor());
+
             Notification mBuilder = new NotificationCompat.Builder(context)
-                    .setSmallIcon(iconResId)
+                    .setSmallIcon(R.drawable.tower48)
+                    .setColor(color)
                     .setLargeIcon(largeIcon)
                     .setTicker(tickerText)
                     .setContentTitle(context.getResources().getString(R.string.main_app_name))
@@ -1079,9 +1078,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     .setAutoCancel(false)
                     .setContentIntent(contentIntent)
                     .build();
-            NotificationManager mNotificationManager =
-                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(NOTIFICATION_ID, mBuilder);
+
+        NotificationManagerCompat
+                .from(context)
+                .notify(NOTIFICATION_ID, mBuilder);
 
     }
 

@@ -84,6 +84,8 @@ dependencies {
     compile 'io.freefair.android-injection:logging:2.0.0-beta1'
     compile 'io.freefair.android-injection:okhttp:2.0.0-beta1'
 
+    compile 'io.freefair.android-colors:material:1.2.0'
+
     // OSMBonusPack library to interact with OpenStreetMap data
     compile 'com.github.MKergall.osmbonuspack:OSMBonusPack:v5.6'
 
