@@ -3,14 +3,14 @@
 
 Thank you for contributing! Please select:
 
-* [Developing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#developing)
-* [Translating](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#translating)
-* [Testing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#testing)
-* [Formatting](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#formatting)
-* [Debugging](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#debugging)
-* [Seeking](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#seeking)
-* [Donating](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#donating)
-* [Respecting](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#code-of-conduct)
+* [Developing](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#developing)
+* [Translating](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#translating)
+* [Testing](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#testing)
+* [Formatting](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#formatting)
+* [Debugging](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#debugging)
+* [Seeking](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#seeking)
+* [Donating](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#donating)
+* [Respecting](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#code-of-conduct)
 
 ---
 
@@ -20,11 +20,11 @@ Feel invited to develop with us using these steps:
 
 1. [Fork our repository](https://help.github.com/articles/fork-a-repo/) and optionally give it a star when you like it.
 2. Download your fork using a Git client like [SmartGit](http://www.syntevo.com/smartgit/) (all platforms).
-3. Pick [an Issue](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues) you'd like to work on. Introduce yourself in that Issue.
+3. Pick [an Issue](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues) you'd like to work on. Introduce yourself in that Issue.
 4. Work on resolving the Issue you picked using your local code copy.
-5. Follow our [Style Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Style-Guide) for higher code quality and corporate design.
+5. Follow our [Style Guide](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Style-Guide) for higher code quality and corporate design.
 6. Test your changes and submit a [pull request](https://help.github.com/articles/using-pull-requests/) when we shall add it.
-7. Don't be shy to ask for help in an Issue and feel invited to [contact us](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact).
+7. Don't be shy to ask for help in an Issue and feel invited to [contact us](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Contact).
 
 ---
 
@@ -43,11 +43,11 @@ Let our app start up in your native language!
 
 Can't code (yet)? No problem, we love you too!
 
-1. Grab our [latest Release](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases) (or even better: [compile `development` branch](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/development)).
-2. Read and understand our [WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki) and **fully agree** to our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER).
-3. Test our app on demonstrations and riots (warning: [Privacy](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Privacy/) at risk). 
+1. Grab our [latest Release](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases) (or even better: [compile `development` branch](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/tree/development)).
+2. Read and understand our [WIKI](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki) and **fully agree** to our [Disclaimer](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER).
+3. Test our app on demonstrations and riots (warning: [Privacy](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Privacy/) at risk). 
 4. Test all functions of our app and check for possible translation bugs.
-5. Share [our website](https://secupwn.github.io/Android-IMSI-Catcher-Detector) and [Media Material](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Media-Material) or [tweet about us](https://twitter.com/AIMSICD).
+5. Share [our website](https://secupwn.github.io/Android-IMSI-Catcher-Detector) and [Media Material](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Media-Material) or [tweet about us](https://twitter.com/AIMSICD).
 
 ---
 
@@ -73,9 +73,9 @@ Thanks for helping us squashing bugs! Please be patient.
 **Important Bug Submission Rules:**
 
 1. **SAFETY FIRST:** Remove CID, LAT, IMEI, IMSI and phone number from logs you submit!
-2. ALWAYS use the [latest release](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases). Preferrably  [build the `development` branch from source](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Building).
-3. If you use [Xprivacy](https://github.com/M66B/XPrivacy) read and understand [THIS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Permissions) first! Give our app another try after reading.
-4. App still mocking around? See our [open Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues) and look if your Issue already exists.
+2. ALWAYS use the [latest release](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases). Preferrably  [build the `development` branch from source](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Building).
+3. If you use [Xprivacy](https://github.com/M66B/XPrivacy) read and understand [THIS](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Permissions) first! Give our app another try after reading.
+4. App still mocking around? See our [open Issues](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues) and look if your Issue already exists.
 5. If your Issue does not exist yet, open a new Issue and give it a short descriptive title.
 6. Describe your Issue as thoroughly as possible and *add logs* so that we can reproduce it.
 8. Maintain your filed Issues! Nothing is more annoying than unresponsive bug reporters.
@@ -136,7 +136,7 @@ Special positions we are currently seeking skilled people for:
 
 Thank you for encouraging our developers!
 
-* Feel invited to donate using [this guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Donations).
+* Feel invited to donate using [this guide](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Donations).
 
 ---
 
@@ -197,7 +197,7 @@ further defined and clarified by project maintainers.
 **Enforcement**
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the [project maintainer.](https://github.com/SecUpwN) All
+reported by contacting the [project maintainer](https://github.com/SecUpwN). All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
