@@ -100,7 +100,7 @@
             <intent
                 android:action="android.intent.action.MAIN"
                 android:targetClass="com.secupwn.aimsicd.activities.OpenCellIdActivity"
-                android:targetPackage="com.secupwn.aimsicd"/>
+                android:targetPackage="com.SecUpwN.AIMSICD"/>
         </Preference>
         <EditTextPreference
             android:key="@string/pref_ocid_key"
@@ -116,7 +116,7 @@
             <intent
                 android:action="android.intent.action.MAIN"
                 android:targetClass="com.secupwn.aimsicd.smsdetection.AdvancedUserActivity"
-                android:targetPackage="com.secupwn.aimsicd"/>
+                android:targetPackage="com.SecUpwN.AIMSICD"/>
         </Preference>
         <Preference
             android:title="@string/adv_user_pref_sms_launch"
@@ -124,7 +124,7 @@
             <intent
                 android:action="android.intent.action.MAIN"
                 android:targetClass="com.secupwn.aimsicd.smsdetection.AdvancedUserSmsActivity"
-                android:targetPackage="com.secupwn.aimsicd"/>
+                android:targetPackage="com.SecUpwN.AIMSICD"/>
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>
