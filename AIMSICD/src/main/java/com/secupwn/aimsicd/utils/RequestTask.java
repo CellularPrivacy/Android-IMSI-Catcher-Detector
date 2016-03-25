@@ -33,6 +33,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.SocketTimeoutException;
+import java.util.concurrent.TimeUnit;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
@@ -99,15 +101,36 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     private char mType;
     private int mTimeOut;
 
+    private AsyncTaskCompleteListener mListener;
+
     @Inject
     private OkHttpClient okHttpClient;
 
-    public RequestTask(InjectionAppCompatActivity context, char type) {
+    /**
+     *
+     * @param context App context
+     * @param type What type of request to be performed (download OCID, upload OCID, DB backup, etc.)
+     * @param listener Allows the caller of RequestTask to implement success/fail callbacks
+     */
+    public RequestTask(InjectionAppCompatActivity context, char type, AsyncTaskCompleteListener listener) {
         super(context);
         this.mType = type;
         this.mAppContext = context.getApplicationContext();
         this.mDbAdapter = new AIMSICDDbAdapter(mAppContext);
         this.mTimeOut = REQUEST_TIMEOUT_MAPS;
+        this.mListener = listener;
+    }
+
+    /**
+     * @deprecated Use {@link #RequestTask(InjectionAppCompatActivity, char, AsyncTaskCompleteListener)}
+     *             instead because of the listener callback interface.
+     * @param context
+     * @param type
+     */
+    @Deprecated
+    public RequestTask(InjectionAppCompatActivity context, char type) {
+        this(context, type, null);
+        log.warn("RequestTask(InjectionAppCompatActivity, char) is deprecated in favour of using listener callbacks");
     }
 
     @Override
@@ -188,7 +211,17 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                             .get()
                             .build();
 
-                    Response response = okHttpClient.newCall(request).execute();
+                    Response response;
+                    try {
+                        // OCID's API can be slow. Give it up to a minute to do its job. Since this
+                        // is a backgrounded task, it's ok to wait for a while.
+                        okHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
+                        response = okHttpClient.newCall(request).execute();
+                        okHttpClient.setReadTimeout(10, TimeUnit.SECONDS); // Restore back to default
+                    } catch (SocketTimeoutException e) {
+                        log.warn("Trying to talk to OCID timed out after 60 seconds. API is slammed? Throttled?");
+                        return "Timeout";
+                    }
 
                     if (response.code() != 200) {
                         try {
@@ -280,8 +313,9 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     }
 
                     mDbAdapter.checkDBe();
-
                     tinydb.putBoolean("ocid_downloaded", true);
+                } else if ("Timeout".equals(result)) {
+                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_timed_out));
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_retrieving_opencellid_data));
                 }
@@ -297,6 +331,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         mDbAdapter.checkDBe();
                         tinydb.putBoolean("ocid_downloaded", true);
                     }
+                } else if ("Timeout".equals(result)) {
+                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_timed_out));
                 } else {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_retrieving_opencellid_data));
                 }
@@ -348,6 +384,13 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_backing_up_data));
                 }
         }
+        if (mListener != null) {
+            if ("Successful".equals(result)) {
+                mListener.onAsyncTaskSucceeded();
+            } else {
+                mListener.onAsyncTaskFailed(result);
+            }
+        }
     }
 
     @Override
@@ -393,5 +436,16 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
      */
     public static String getOCDBDownloadDirectoryPath(Context context) {
         return (context.getExternalFilesDir(null) + File.separator) + "OpenCellID/";
+    }
+
+    /**
+     * The interface to be implemented by the caller of RequestTask so it can perform contextual
+     * actions once the async task is completed.
+     *
+     * E.g. rechecking current cell in the newly updated database after OCID download.
+     */
+    public interface AsyncTaskCompleteListener {
+        void onAsyncTaskSucceeded();
+        void onAsyncTaskFailed(String result);
     }
 }

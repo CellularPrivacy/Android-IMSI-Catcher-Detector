@@ -550,8 +550,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                         // Detection Logs are made in checkLAC()
                         vibrate(100, Status.MEDIUM);
-                        setNotification();
-
                     } else {
                         mChangedLAC = false;
                     }
@@ -565,7 +563,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             vibrate(100, Status.MEDIUM);
 
                             mCellIdNotInOpenDb = true;
-                            setNotification();
                         } else {
                             mCellIdNotInOpenDb = false;
                         }
@@ -594,14 +591,22 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                 "Changing LAC"
                         );*/
                         dbHelper.toEventLog(1, "Changing LAC");
-                        setNotification();
                     } else {
                         mChangedLAC = false;
                     }
-
                 }
         }
+        setNotification();
+    }
 
+    /**
+     * Check device's current cell location's LAC against local database AND verify cell's CID
+     * exists in the OCID database.
+     *
+     * @see #compareLac(CellLocation)
+     */
+    public void compareLacAndOpenDb() {
+        compareLac(tm.getCellLocation());
     }
 
     // Where is this used?
