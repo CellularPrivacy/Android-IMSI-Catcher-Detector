@@ -326,7 +326,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
                 cell.setLon(loc.getLongitudeInDegrees());
                 cell.setLat(loc.getLatitudeInDegrees());
-                Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST);
+                Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST, mAimsicdService);
             } else {
                 Helpers.msgShort(this, getString(R.string.waiting_for_location));
 
@@ -355,7 +355,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         if (Float.floatToRawIntBits(location[0]) == 0
                 && Float.floatToRawIntBits(location[1]) != 0) {
             Helpers.msgLong(this, getString(R.string.contacting_opencellid_for_data));
-            Helpers.getOpenCellData(this, mAimsicdService.getCell(), RequestTask.DBE_DOWNLOAD_REQUEST);
+            Helpers.getOpenCellData(this, mAimsicdService.getCell(), RequestTask.DBE_DOWNLOAD_REQUEST, mAimsicdService);
         } else {
             Helpers.msgLong(this, getString(R.string.unable_to_determine_last_location));
         }

@@ -334,7 +334,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                         cell.setLat(lastKnown.getLatitudeInDegrees());
                         setRefreshActionButtonState(true);
                         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
-                        Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
+                        Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP, mAimsicdService);
                         return true;
                     }
                 }
@@ -347,7 +347,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                     cell.setLon(loc.getLongitude());
                     setRefreshActionButtonState(true);
                     TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
-                    Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP);
+                    Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP, mAimsicdService);
                 } else {
                     Helpers.msgLong(this,
                             getString(R.string.unable_to_determine_last_location));

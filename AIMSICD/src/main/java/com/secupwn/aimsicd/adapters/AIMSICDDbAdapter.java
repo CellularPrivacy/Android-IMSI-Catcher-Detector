@@ -308,6 +308,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      * This works for now, but we probably should consider populating "DBi_measure"
      * as soon as the API gets a new LAC. Then the detection can be done by SQL,
      * and by just comparing last 2 LAC entries for same CID.
+     *
+     * @return false if LAC is not OK (Cell's LAC differs from Cell's LAC previously stored value in DB)
      */
     public boolean checkLAC(Cell cell) {
         String query = String.format("SELECT * FROM DBi_bts WHERE CID = %d", cell.getCID());  //CID
