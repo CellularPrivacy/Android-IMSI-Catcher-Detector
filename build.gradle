@@ -17,8 +17,14 @@ allprojects {
     }
 
     println "TAG LIST START"
+    println 'git --version'.execute([], project.rootDir).text
     println 'git tag --list'.execute([], project.rootDir).text
-    println 'git fetch --tags'.execute([], project.rootDir).text
+    println "GIT FETCH"
+    println 'git fetch --tags -v'.execute([], project.rootDir).text
+    println 'GIT DESCRIBE'
+    println 'git describe --abbrev=0 --tags --match v*'.execute([], project.rootDir).text
+    println 'GIT TAG AT HEAD'
+    println 'git tag --points-at HEAD -l v*'.execute([], project.rootDir).text
     println "TAG LIST END"
 
     apply plugin: 'io.freefair.git-version'
