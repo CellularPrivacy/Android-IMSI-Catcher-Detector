@@ -16,6 +16,10 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 
+    println "TAG LIST START"
+    println 'git tag --list'.execute([], project.rootDir).text
+    println "TAG LIST END"
+
     apply plugin: 'io.freefair.git-version'
     gitTagPrefix = 'v'
 
