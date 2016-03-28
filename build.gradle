@@ -23,6 +23,8 @@ allprojects {
     println 'git fetch --tags -v'.execute([], project.rootDir).text
     println 'GIT DESCRIBE'
     println 'git describe --abbrev=0 --tags --match v*'.execute([], project.rootDir).text
+    println 'GIT DESCRIBE 2'
+    println 'git describe --abbrev=0 --tags'.execute([], project.rootDir).text
     println 'GIT TAG AT HEAD'
     println 'git tag --points-at HEAD -l v*'.execute([], project.rootDir).text
     println "TAG LIST END"
