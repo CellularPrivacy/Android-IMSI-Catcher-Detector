@@ -28,7 +28,7 @@ import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 
 import com.secupwn.aimsicd.MainActivity;
-import com.secupwn.aimsicd.AppAIMSICD;
+import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
@@ -1090,8 +1090,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     }
 
-    private AppAIMSICD getApplication() {
-        return AppAIMSICD.getInstance();
+    private AndroidIMSICatcherDetector getApplication() {
+        return AndroidIMSICatcherDetector.getInstance();
     }
 
     /**

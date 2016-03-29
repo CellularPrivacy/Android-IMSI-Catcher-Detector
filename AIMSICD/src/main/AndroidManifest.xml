@@ -39,7 +39,7 @@
             android:icon="@drawable/sense_danger"
             android:label="@string/main_app_name"
             android:theme="@style/AppTheme"
-            android:name=".AppAIMSICD">
+            android:name=".AndroidIMSICatcherDetector">
 
         <activity
                 android:name=".MainActivity"

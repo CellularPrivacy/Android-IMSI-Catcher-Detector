@@ -182,7 +182,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         final String iconType = prefs.getString(getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD) getApplication()).getStatus()));
+        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AndroidIMSICatcherDetector) getApplication()).getStatus()));
         mDrawerToggle.syncState();
     }
 
@@ -596,12 +596,12 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
     public void onStop() {
         super.onStop();
-        ((AppAIMSICD) getApplication()).detach(this);
+        ((AndroidIMSICatcherDetector) getApplication()).detach(this);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        ((AppAIMSICD) getApplication()).attach(this);
+        ((AndroidIMSICatcherDetector) getApplication()).attach(this);
     }
 }

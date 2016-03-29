@@ -27,7 +27,7 @@ import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.secupwn.aimsicd.AppAIMSICD;
+import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
@@ -633,13 +633,13 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
     public void onStop() {
         super.onStop();
-        ((AppAIMSICD) getApplication()).detach(this);
+        ((AndroidIMSICatcherDetector) getApplication()).detach(this);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        ((AppAIMSICD) getApplication()).attach(this);
+        ((AndroidIMSICatcherDetector) getApplication()).attach(this);
         if (TinyDB.getInstance().getBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP)) {
             setRefreshActionButtonState(false);
         }

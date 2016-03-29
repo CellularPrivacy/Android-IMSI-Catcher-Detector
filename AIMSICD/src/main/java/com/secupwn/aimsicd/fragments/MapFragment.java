@@ -29,7 +29,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.secupwn.aimsicd.AppAIMSICD;
+import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.activities.MapPrefActivity;
@@ -636,7 +636,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
     @Override
     public void onStart() {
         super.onStart();
-        ((AppAIMSICD) getActivity().getApplication()).attach((InjectionAppCompatActivity) getActivity());
+        ((AndroidIMSICatcherDetector) getActivity().getApplication()).attach((InjectionAppCompatActivity) getActivity());
         if (TinyDB.getInstance().getBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP)) {
             setRefreshActionButtonState(false);
         }
