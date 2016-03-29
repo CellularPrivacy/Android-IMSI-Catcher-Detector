@@ -44,8 +44,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     lintOptions {
-        warning 'MissingTranslation', 'InvalidPackage', 'MissingRegistered'
-        abortOnError false
+        warning 'MissingTranslation', 'InvalidPackage'
 
         xmlReport false
         htmlReport !isCi
