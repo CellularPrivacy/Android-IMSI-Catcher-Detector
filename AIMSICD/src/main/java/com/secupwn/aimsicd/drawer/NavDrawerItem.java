@@ -5,11 +5,13 @@
  */
 package com.secupwn.aimsicd.drawer;
 
+import android.support.annotation.DrawableRes;
+
 public interface NavDrawerItem {
     int getId();
     String getLabel();
     void setLabel(String label);
-    void setmIconId(int icon);
+    void setIconId(@DrawableRes int icon);
     int getType();
     boolean isEnabled();
     boolean updateActionBarTitle();

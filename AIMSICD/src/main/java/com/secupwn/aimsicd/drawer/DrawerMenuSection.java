@@ -5,6 +5,11 @@
  */
 package com.secupwn.aimsicd.drawer;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class DrawerMenuSection implements NavDrawerItem {
 
     private static final int SECTION_TYPE = 0;
@@ -26,28 +31,12 @@ public class DrawerMenuSection implements NavDrawerItem {
         return SECTION_TYPE;
     }
 
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public void setmIconId(int icon) {
+    public void setIconId(int icon) {
     }
 
     @Override
     public boolean isEnabled() {
         return false;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override

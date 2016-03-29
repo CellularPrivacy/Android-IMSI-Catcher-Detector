@@ -96,9 +96,9 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
         }
 
         public void updateDisplay(CardItemData item) {
-            if (!item.getCellID().contains("N/A")) {
+            if (!item.getCellId().contains("N/A")) {
                 mCellID.setVisibility(View.VISIBLE);
-                mCellID.setText(item.getCellID());
+                mCellID.setText(item.getCellId());
             }
 
             if (!item.getPsc().contains("N/A")) {
@@ -121,9 +121,9 @@ public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
                 mLat.setText(item.getLat());
             }
 
-            if (!item.getLng().contains("N/A")) {
+            if (!item.getLon().contains("N/A")) {
                 mLng.setVisibility(View.VISIBLE);
-                mLng.setText(item.getLng());
+                mLng.setText(item.getLon());
             }
 
             if (!item.getMcc().contains("N/A")) {

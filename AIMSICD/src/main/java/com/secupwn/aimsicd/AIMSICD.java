@@ -313,9 +313,9 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
             if (networkOperator != null) {
                 int mcc = Integer.parseInt(networkOperator.substring(0, 3));
-                cell.setMCC(mcc);
+                cell.setMcc(mcc);
                 int mnc = Integer.parseInt(networkOperator.substring(3));
-                cell.setMNC(mnc);
+                cell.setMnc(mnc);
                 log.debug("CELL:: mcc=" + mcc + " mnc=" + mnc);
             }
 
@@ -337,10 +337,10 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
                         = new LocationServices.LocationAsync();
                 locationAsync.delegate = this;
                 locationAsync.execute(
-                        mAimsicdService.getCell().getCID(),
-                        mAimsicdService.getCell().getLAC(),
-                        mAimsicdService.getCell().getMNC(),
-                        mAimsicdService.getCell().getMCC());
+                        mAimsicdService.getCell().getCid(),
+                        mAimsicdService.getCell().getLac(),
+                        mAimsicdService.getCell().getMnc(),
+                        mAimsicdService.getCell().getMcc());
             }
         } else {
             Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));

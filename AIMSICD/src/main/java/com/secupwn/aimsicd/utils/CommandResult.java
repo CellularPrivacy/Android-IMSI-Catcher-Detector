@@ -32,26 +32,30 @@ import java.io.IOException;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import lombok.Getter;
 
 @SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
 
     private final Logger log = AndroidLogger.forClass(CommandResult.class);
-    private long mStartTime;
-    private int mExitValue;
-    private String mStdout;
-    private String mStderr;
-    private long mEndTime;
+    private long startTime;
+    @Getter
+    private int exitValue;
+    @Getter
+    private String stdOut;
+    @Getter
+    private String stdErr;
+    private long endTime;
 
     public CommandResult(long startTime, int exitValue,
                          String stdout, String stderr, long endTime) {
-        this.mStartTime = startTime;
-        this.mExitValue = exitValue;
-        this.mStdout = stdout;
-        this.mStderr = stderr;
-        this.mEndTime = endTime;
+        this.startTime = startTime;
+        this.exitValue = exitValue;
+        this.stdOut = stdout;
+        this.stdErr = stderr;
+        this.endTime = endTime;
 
-        log.debug("Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
+        log.debug("Time to execute: " + (this.endTime - this.startTime) + " ns (nanoseconds)");
         // this is set last so log from here
         checkForErrors();
     }
@@ -65,31 +69,19 @@ public class CommandResult implements Parcelable {
     }
 
     public boolean success() {
-        return (mExitValue == 0);
-    }
-
-    public String getStderr() {
-        return mStderr;
-    }
-
-    public String getStdout() {
-        return mStdout;
-    }
-
-    public Integer getExitValue() {
-        return mExitValue;
+        return (exitValue == 0);
     }
 
     @SuppressWarnings("UnnecessaryExplicitNumericCast")
     private void checkForErrors() {
-        if (mExitValue != 0 || !mStderr.trim().isEmpty()) {
+        if (exitValue != 0 || !stdErr.trim().isEmpty()) {
             // don't log the commands that failed
             // because the cpu was offline
             boolean skipOfflineCpu =
                     // if core is off locking fails
-                    mStderr.contains("chmod: /sys/devices/system/cpu/cpu")
+                    stdErr.contains("chmod: /sys/devices/system/cpu/cpu")
                             // if core is off applying cpu freqs fails
-                            || mStderr.contains(": can't create /sys/devices/system/cpu/cpu");
+                            || stdErr.contains(": can't create /sys/devices/system/cpu/cpu");
             String lineEnding = System.getProperty("line.separator");
             FileWriter errorWriter = null;
             try {
@@ -131,21 +123,21 @@ public class CommandResult implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(mStartTime);
-        parcel.writeInt(mExitValue);
-        parcel.writeString(mStdout);
-        parcel.writeString(mStderr);
-        parcel.writeLong(mEndTime);
+        parcel.writeLong(startTime);
+        parcel.writeInt(exitValue);
+        parcel.writeString(stdOut);
+        parcel.writeString(stdErr);
+        parcel.writeLong(endTime);
     }
 
     @Override
     public String toString() {
         return "CommandResult{" +
-                ", mStartTime=" + mStartTime +
-                ", mExitValue=" + mExitValue +
-                ", stdout='" + mStdout + "'" +
-                ", stderr='" + mStderr + "'" +
-                ", mEndTime=" + mEndTime +
+                ", startTime=" + startTime +
+                ", exitValue=" + exitValue +
+                ", stdout='" + stdOut + "'" +
+                ", stderr='" + stdErr + "'" +
+                ", endTime=" + endTime +
                 '}';
     }
 
@@ -171,21 +163,21 @@ public class CommandResult implements Parcelable {
 
         CommandResult that = (CommandResult) o;
 
-        return (mStartTime == that.mStartTime &&
-                mExitValue == that.mExitValue &&
-                mStdout.equals(that.mStdout) &&
-                mStderr.equals(that.mStderr) &&
-                mEndTime == that.mEndTime);
+        return (startTime == that.startTime &&
+                exitValue == that.exitValue &&
+                stdOut.equals(that.stdOut) &&
+                stdErr.equals(that.stdErr) &&
+                endTime == that.endTime);
     }
 
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + (int) (mStartTime ^ (mStartTime >>> 32));
-        result = 31 * result + mExitValue;
-        result = 31 * result + (mStdout != null ? mStdout.hashCode() : 0);
-        result = 31 * result + (mStderr != null ? mStderr.hashCode() : 0);
-        result = 31 * result + (int) (mEndTime ^ (mEndTime >>> 32));
+        result = 31 * result + (int) (startTime ^ (startTime >>> 32));
+        result = 31 * result + exitValue;
+        result = 31 * result + (stdOut != null ? stdOut.hashCode() : 0);
+        result = 31 * result + (stdErr != null ? stdErr.hashCode() : 0);
+        result = 31 * result + (int) (endTime ^ (endTime >>> 32));
         return result;
     }
 }

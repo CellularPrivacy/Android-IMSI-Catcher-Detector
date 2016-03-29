@@ -72,16 +72,16 @@ public class StackOverflowXmlParser {
                     cell.setLon(readDouble(parser));
                     break;
                 case "mcc":
-                    cell.setMCC(readInt(parser));
+                    cell.setMcc(readInt(parser));
                     break;
                 case "mnc":
-                    cell.setMNC(readInt(parser));
+                    cell.setMnc(readInt(parser));
                     break;
                 case "cellid":
-                    cell.setCID(readInt(parser));
+                    cell.setCid(readInt(parser));
                     break;
                 case "lac":
-                    cell.setLAC(readInt(parser));
+                    cell.setLac(readInt(parser));
                     break;
                 default:
                     skip(parser);

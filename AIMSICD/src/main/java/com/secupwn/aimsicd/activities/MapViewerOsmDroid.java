@@ -455,7 +455,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 GeoPoint ret = new GeoPoint(0, 0);
                 if (mBound) {
                     try {
-                        int mcc = mAimsicdService.getCell().getMCC();
+                        int mcc = mAimsicdService.getCell().getMcc();
                         double[] d = mDbHelper.getDefaultLocation(mcc);
                         ret = new GeoPoint(d[0], d[1]);
                     } catch (Exception e) {
@@ -484,18 +484,18 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                     try {
                         loc = new GeoPoint(cell.getLat(), cell.getLon());
                         CellTowerMarker ovm = new CellTowerMarker(MapViewerOsmDroid.this, mMap,
-                                getString(R.string.cell_id_label) + cell.getCID(),
+                                getString(R.string.cell_id_label) + cell.getCid(),
                                 "", loc,
                                 new MarkerData(
                                         getApplicationContext(),
-                                        String.valueOf(cell.getCID()),
+                                        String.valueOf(cell.getCid()),
                                         String.valueOf(loc.getLatitude()),
                                         String.valueOf(loc.getLongitude()),
-                                        String.valueOf(cell.getLAC()),
-                                        String.valueOf(cell.getMCC()),
-                                        String.valueOf(cell.getMNC()),
-                                        String.valueOf(cell.getPSC()),
-                                        String.valueOf(cell.getRAT()),
+                                        String.valueOf(cell.getLac()),
+                                        String.valueOf(cell.getMcc()),
+                                        String.valueOf(cell.getMnc()),
+                                        String.valueOf(cell.getPsc()),
+                                        String.valueOf(cell.getRat()),
                                         "", false));
 
                         // The pin of other BTS

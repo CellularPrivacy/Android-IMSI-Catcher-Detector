@@ -29,6 +29,7 @@ import java.util.List;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import lombok.Getter;
 
 /**
  * Description: Detects mysterious SMS by scraping Logcat entries.
@@ -291,12 +292,12 @@ public final class SmsDetector extends Thread {
         capturedSms.setSenderMsg(smsText == null ? "null" : num);
         capturedSms.setSmsTimestamp(logcat_timestamp);
         capturedSms.setSmsType("TYPE0");
-        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLAC());
-        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCID());
-        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRAT());
+        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLac());
+        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCid());
+        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRat());
         int isRoaming = 0;
 
-        if ("true".equals(mAIMSICDService.getCellTracker().getDevice().isRoaming())) {
+        if (mAIMSICDService.getCellTracker().getDevice().isRoaming()) {
             isRoaming = 1;
         }
         capturedSms.setCurrent_roam_status(isRoaming);
@@ -324,11 +325,11 @@ public final class SmsDetector extends Thread {
         capturedSms.setSenderMsg(smsText == null ? "null" : smsText);
         capturedSms.setSmsTimestamp(logcat_timestamp);
         capturedSms.setSmsType("MWI");
-        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLAC());
-        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCID());
-        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRAT());
+        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLac());
+        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCid());
+        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRat());
         int isRoaming = 0;
-        if ("true".equals(mAIMSICDService.getCellTracker().getDevice().isRoaming())) {
+        if (mAIMSICDService.getCellTracker().getDevice().isRoaming()) {
             isRoaming = 1;
         }
         capturedSms.setCurrent_roam_status(isRoaming);
@@ -354,11 +355,11 @@ public final class SmsDetector extends Thread {
         capturedSms.setSenderMsg(smsText == null ? "null" : smsText);
         capturedSms.setSmsTimestamp(logcat_timestamp);
         capturedSms.setSmsType("WAPPUSH");
-        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLAC());
-        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCID());
-        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRAT());
+        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLac());
+        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCid());
+        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRat());
         int isRoaming = 0;
-        if ("true".equals(mAIMSICDService.getCellTracker().getDevice().isRoaming())) {
+        if (mAIMSICDService.getCellTracker().getDevice().isRoaming()) {
             isRoaming = 1;
         }
         capturedSms.setCurrent_roam_status(isRoaming);
@@ -449,6 +450,7 @@ public final class SmsDetector extends Thread {
         }
     };
 
+    @Getter
     public enum SmsType {
         SILENT(
                 R.string.alert_silent_sms_detected,
@@ -481,21 +483,6 @@ public final class SmsDetector extends Thread {
             this.alert = alert;
             this.title = title;
             this.message = message;
-        }
-
-        @StringRes
-        public int getAlert() {
-            return alert;
-        }
-
-        @StringRes
-        public int getTitle() {
-            return title;
-        }
-
-        @StringRes
-        public int getMessage() {
-            return message;
         }
     }
 }

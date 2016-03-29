@@ -17,31 +17,56 @@ import io.freefair.android.util.function.Optional;
 import io.freefair.android.util.function.Supplier;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 public class Device {
 
-    private final Logger log = AndroidLogger.forClass(Device.class);
+    private static final Logger log = AndroidLogger.forClass(Device.class);
 
     public Cell mCell;
-    private int mPhoneID = -1;
-    private String mCellInfo;
-    private String mDataState;
-    private String mDataStateShort;
-    private String mNetName;
-    private String mMncmcc;
-    private Optional<String> mSimCountry;
-    private String mPhoneType;
-    private String mIMEI;
-    private String mIMEIV;
-    private Optional<String> mSimOperator;
-    private Optional<String> mSimOperatorName;
-    private Optional<String> mSimSerial;
-    private Optional<String> mSimSubs;
-    private String mDataActivityType;
-    private String mDataActivityTypeShort;
-    private boolean mRoaming;
+    /**
+     * integer representation of Phone Type
+     */
+    private int phoneId = -1;
+    @Setter
+    private String cellInfo;
+    @Setter
+    private String dataState;
+    @Setter
+    private String dataStateShort;
+    /**
+     * Network Operator Name
+     */
+    @Setter
+    private String networkName;
+    private String mncMcc;
+    private Optional<String> simCountry;
+    private String phoneType;
+    /**
+     * Device IMEI
+     */
+    private String iMEI;
+    /**
+     * Device IMEI Version
+     */
+    private String iMEIv;
+    private Optional<String> simOperator;
+    private Optional<String> simOperatorName;
+    private Optional<String> simSerial;
+    private Optional<String> simSubs;
+    @Setter
+    private String dataActivityType;
+    @Setter
+    private String dataActivityTypeShort;
+    private boolean roaming;
 
-    private Location mLastLocation;
+    /**
+     * Cell object representing last known location
+     */
+    @Setter
+    private Location lastLocation;
 
     /**
      * Refreshes all device specific details
@@ -49,10 +74,10 @@ public class Device {
     public void refreshDeviceInfo(TelephonyManager tm, Context context) {
 
         //Phone type and associated details
-        mIMEI = tm.getDeviceId();
-        mIMEIV = tm.getDeviceSoftwareVersion();
-        mPhoneID = tm.getPhoneType();
-        mRoaming = tm.isNetworkRoaming();
+        iMEI = tm.getDeviceId();
+        iMEIv = tm.getDeviceSoftwareVersion();
+        phoneId = tm.getPhoneType();
+        roaming = tm.isNetworkRoaming();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             DeviceApi18.loadCellInfo(tm, this);
@@ -62,58 +87,58 @@ public class Device {
             mCell = new Cell();
         }
 
-        switch (mPhoneID) {
+        switch (phoneId) {
 
             case TelephonyManager.PHONE_TYPE_NONE:
             case TelephonyManager.PHONE_TYPE_SIP:
             case TelephonyManager.PHONE_TYPE_GSM:
-                mPhoneType = "GSM";
-                mMncmcc = tm.getNetworkOperator();
-                if (mMncmcc != null && mMncmcc.length() >= 5) {
+                phoneType = "GSM";
+                mncMcc = tm.getNetworkOperator();
+                if (mncMcc != null && mncMcc.length() >= 5) {
                     try {
-                        if (mCell.getMCC() == Integer.MAX_VALUE) {
-                            mCell.setMCC(Integer.parseInt(tm.getNetworkOperator().substring(0, 3)));
+                        if (mCell.getMcc() == Integer.MAX_VALUE) {
+                            mCell.setMcc(Integer.parseInt(tm.getNetworkOperator().substring(0, 3)));
                         }
-                        if (mCell.getMNC() == Integer.MAX_VALUE) {
-                            mCell.setMNC(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
+                        if (mCell.getMnc() == Integer.MAX_VALUE) {
+                            mCell.setMnc(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
                         }
                     } catch (Exception e) {
                         log.info("MncMcc parse exception: ", e);
                     }
                 }
-                mNetName = tm.getNetworkOperatorName();
+                networkName = tm.getNetworkOperatorName();
                 if (!mCell.isValid()) {
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
                     if (gsmCellLocation != null) {
-                        mCell.setCID(gsmCellLocation.getCid());
-                        mCell.setLAC(gsmCellLocation.getLac());
-                        mCell.setPSC(gsmCellLocation.getPsc());
+                        mCell.setCid(gsmCellLocation.getCid());
+                        mCell.setLac(gsmCellLocation.getLac());
+                        mCell.setPsc(gsmCellLocation.getPsc());
                     }
                 }
                 break;
 
             case TelephonyManager.PHONE_TYPE_CDMA:
-                mPhoneType = "CDMA";
+                phoneType = "CDMA";
                 if (!mCell.isValid()) {
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
                     if (cdmaCellLocation != null) {
-                        mCell.setCID(cdmaCellLocation.getBaseStationId());
-                        mCell.setLAC(cdmaCellLocation.getNetworkId());
-                        mCell.setSID(cdmaCellLocation.getSystemId()); // one of these must be a bug !!
+                        mCell.setCid(cdmaCellLocation.getBaseStationId());
+                        mCell.setLac(cdmaCellLocation.getNetworkId());
+                        mCell.setSid(cdmaCellLocation.getSystemId()); // one of these must be a bug !!
                         // See: http://stackoverflow.com/questions/8088046/android-how-to-identify-carrier-on-cdma-network
                         // and: https://github.com/klinker41/android-smsmms/issues/26
-                        mCell.setMNC(cdmaCellLocation.getSystemId()); // todo: check! (Also CellTracker.java)
+                        mCell.setMnc(cdmaCellLocation.getSystemId()); // todo: check! (Also CellTracker.java)
 
                         //Retrieve MCC through System Property
                         String homeOperator = Helpers.getSystemProp(context,
                                 "ro.cdma.home.operator.numeric", "UNKNOWN");
                         if (!homeOperator.contains("UNKNOWN")) {
                             try {
-                                if (mCell.getMCC() == Integer.MAX_VALUE) {
-                                    mCell.setMCC(Integer.valueOf(homeOperator.substring(0, 3)));
+                                if (mCell.getMcc() == Integer.MAX_VALUE) {
+                                    mCell.setMcc(Integer.valueOf(homeOperator.substring(0, 3)));
                                 }
-                                if (mCell.getMNC() == Integer.MAX_VALUE) {
-                                    mCell.setMNC(Integer.valueOf(homeOperator.substring(3, 5)));
+                                if (mCell.getMnc() == Integer.MAX_VALUE) {
+                                    mCell.setMnc(Integer.valueOf(homeOperator.substring(3, 5)));
                                 }
                             } catch (Exception e) {
                                 log.info("HomeOperator parse exception - " + e.getMessage(), e);
@@ -125,32 +150,15 @@ public class Device {
         }
 
         // SIM Information
-        mSimCountry = getSimCountry(tm);
+        simCountry = getSimCountry(tm);
         // Get the operator code of the active SIM (MCC + MNC)
-        mSimOperator = getSimOperator(tm);
-        mSimOperatorName = getSimOperatorName(tm);
-        mSimSerial = getSimSerial(tm);
-        mSimSubs = getSimSubs(tm);
+        simOperator = getSimOperator(tm);
+        simOperatorName = getSimOperatorName(tm);
+        simSerial = getSimSerial(tm);
+        simSubs = getSimSubs(tm);
 
-        mDataActivityType = getDataActivity(tm);
-        mDataState = getDataState(tm);
-    }
-
-    public String getCellInfo() {
-        return mCellInfo;
-    }
-
-    public void setCellInfo(String cellInfo) {
-        mCellInfo = cellInfo;
-    }
-
-    /**
-     * Phone Type ID
-     *
-     * @return integer representation of Phone Type
-     */
-    public int getPhoneID() {
-        return mPhoneID;
+        dataActivityType = getDataActivityType(tm);
+        dataState = getDataState(tm);
     }
 
     private Optional<String> getSimInformation(Supplier<String> simInfoSupplier) {
@@ -179,13 +187,6 @@ public class Device {
     }
 
     /**
-     * SIM Country data
-     */
-    public Optional<String> getSimCountry() {
-        return mSimCountry;
-    }
-
-    /**
      * SIM Operator
      *
      * @return string of SIM Operator data
@@ -198,10 +199,6 @@ public class Device {
                 return tm.getSimOperator();
             }
         });
-    }
-
-    public Optional<String> getSimOperator() {
-        return mSimOperator;
     }
 
     /**
@@ -219,10 +216,6 @@ public class Device {
         });
     }
 
-    public Optional<String> getSimOperatorName() {
-        return mSimOperatorName;
-    }
-
     /**
      * SIM Subscriber ID
      *
@@ -236,10 +229,6 @@ public class Device {
                 return tm.getSubscriberId();
             }
         });
-    }
-
-    public Optional<String> getSimSubs() {
-        return mSimSubs;
     }
 
     /**
@@ -257,53 +246,6 @@ public class Device {
         });
     }
 
-    public Optional<String> getSimSerial() {
-        return mSimSerial;
-    }
-
-    public String getPhoneType() {
-        return mPhoneType;
-    }
-
-    /**
-     * IMEI
-     *
-     * @return string representing device IMEI
-     */
-    public String getIMEI() {
-        return mIMEI;
-    }
-
-    /**
-     * IMEI Version / Device Software Version
-     *
-     * @return string representing device IMEI Version
-     */
-    public String getIMEIv() {
-        return mIMEIV;
-    }
-
-    /**
-     * Sets Network Operator Name
-     *
-     */
-    public void setNetworkName(String networkName) {
-        mNetName = networkName;
-    }
-
-    public String getNetworkName() {
-        return mNetName;
-    }
-
-    /**
-     * Network Operator
-     *
-     * @return string representing the Network Operator
-     */
-    public String getMncMcc() {
-        return mMncmcc;
-    }
-
     /**
      * Network Type
      *
@@ -314,104 +256,72 @@ public class Device {
             return "Unknown";
         }
 
-        return mCell.getRAT();
+        return mCell.getRat();
     }
 
-    String getDataActivity(TelephonyManager tm) {
+    String getDataActivityType(TelephonyManager tm) {
         int direction = tm.getDataActivity();
-        mDataActivityTypeShort = "un";
-        mDataActivityType = "undef";
+        dataActivityTypeShort = "un";
+        dataActivityType = "undef";
 
         switch (direction) {
             case TelephonyManager.DATA_ACTIVITY_NONE:
-                mDataActivityTypeShort = "No";
-                mDataActivityType = "None";
+                dataActivityTypeShort = "No";
+                dataActivityType = "None";
                 break;
             case TelephonyManager.DATA_ACTIVITY_IN:
-                mDataActivityTypeShort = "In";
-                mDataActivityType = "In";
+                dataActivityTypeShort = "In";
+                dataActivityType = "In";
                 break;
             case TelephonyManager.DATA_ACTIVITY_OUT:
-                mDataActivityTypeShort = "Ou";
-                mDataActivityType = "Out";
+                dataActivityTypeShort = "Ou";
+                dataActivityType = "Out";
                 break;
             case TelephonyManager.DATA_ACTIVITY_INOUT:
-                mDataActivityTypeShort = "IO";
-                mDataActivityType = "In-Out";
+                dataActivityTypeShort = "IO";
+                dataActivityType = "In-Out";
                 break;
             case TelephonyManager.DATA_ACTIVITY_DORMANT:
-                mDataActivityTypeShort = "Do";
-                mDataActivityType = "Dormant";
+                dataActivityTypeShort = "Do";
+                dataActivityType = "Dormant";
                 break;
         }
 
-        return mDataActivityType;
-    }
-
-    public String getDataActivity() {
-        return mDataActivityType;
+        return dataActivityType;
     }
 
     String getDataState(TelephonyManager tm) {
         int state = tm.getDataState();
-        mDataState = "undef";
-        mDataStateShort = "un";
+        dataState = "undef";
+        dataStateShort = "un";
         switch (state) {
             case TelephonyManager.DATA_DISCONNECTED:
-                mDataState = "Disconnected";
-                mDataStateShort = "Di";
+                dataState = "Disconnected";
+                dataStateShort = "Di";
                 break;
             case TelephonyManager.DATA_CONNECTING:
-                mDataState = "Connecting";
-                mDataStateShort = "Ct";
+                dataState = "Connecting";
+                dataStateShort = "Ct";
                 break;
             case TelephonyManager.DATA_CONNECTED:
-                mDataState = "Connected";
-                mDataStateShort = "Cd";
+                dataState = "Connected";
+                dataStateShort = "Cd";
                 break;
             case TelephonyManager.DATA_SUSPENDED:
-                mDataState = "Suspended";
-                mDataStateShort = "Su";
+                dataState = "Suspended";
+                dataStateShort = "Su";
                 break;
         }
 
-        return mDataState;
-    }
-
-    public String getDataState() {
-        return mDataState;
-    }
-
-    public String getDataActivityTypeShort() {
-        return mDataActivityTypeShort;
-    }
-
-    public void setDataActivityTypeShort(String dataActivityTypeShort) {
-        mDataActivityTypeShort = dataActivityTypeShort;
-    }
-
-    public String getDataStateShort() {
-        return mDataStateShort;
-    }
-
-    public void setDataStateShort(String dataStateShort) {
-        mDataStateShort = dataStateShort;
-    }
-
-    public void setDataActivityType(String dataActivityType) {
-        mDataActivityType = dataActivityType;
-    }
-
-    public void setDataState(String dataState) {
-        mDataState = dataState;
+        return dataState;
     }
 
     public void setSignalDbm(int signalDbm) {
-        mCell.setDBM(signalDbm);
+        mCell.setDbm(signalDbm);
     }
 
     public int getSignalDBm() {
-        return mCell.getDBM();
+        return mCell.getDbm();
     }
 
     /**
@@ -419,27 +329,5 @@ public class Device {
      */
     public void setNetID(TelephonyManager tm) {
         mCell.setNetType(tm.getNetworkType());
-    }
-
-    /**
-     * Mobile Roaming
-     *
-     * @return string representing Roaming status (True/False)
-     */
-    public String isRoaming() {
-        return String.valueOf(mRoaming);
-    }
-
-    public void setLastLocation(Location location) {
-        mLastLocation = location;
-    }
-
-    /**
-     * Attempts to retrieve the Last Known Location from the device
-     *
-     * @return Cell object representing last known location
-     */
-    public Location getLastLocation() {
-        return mLastLocation;
     }
 }

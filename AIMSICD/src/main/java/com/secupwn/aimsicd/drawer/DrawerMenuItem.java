@@ -5,20 +5,28 @@
  */
 package com.secupwn.aimsicd.drawer;
 
+import android.support.annotation.DrawableRes;
+
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.constants.DrawerMenu.ID.APPLICATION;
-import com.secupwn.aimsicd.constants.DrawerMenu.ID.MAIN;
 import com.secupwn.aimsicd.constants.DrawerMenu.ID.DATABASE_SETTINGS;
+import com.secupwn.aimsicd.constants.DrawerMenu.ID.MAIN;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class DrawerMenuItem implements NavDrawerItem {
 
     public static final int ITEM_TYPE = 1;
 
-    private int mId;
-    private String mLabel;
-    private int mIconId;
-    private boolean mUpdateActionBarTitle;
-    private boolean mIsShowInfoButton;
+    private int id;
+    private String label;
+    @DrawableRes
+    private int iconId;
+    private boolean updateActionBarTitle;
+    private boolean showInfoButton;
 
     private DrawerMenuItem() {
     }
@@ -32,39 +40,15 @@ public class DrawerMenuItem implements NavDrawerItem {
         DrawerMenuItem item = new DrawerMenuItem();
         item.setId(pMenuId);
         item.setLabel(pLabel);
-        item.setmIconId(pIconDrawableId);
+        item.setIconId(pIconDrawableId);
         item.setUpdateActionBarTitle(pUpdateActionBarTitle);
-        item.setIsShowInfoButton(pIsShowInfoButton);
+        item.setShowInfoButton(pIsShowInfoButton);
         return item;
     }
 
     @Override
     public int getType() {
         return ITEM_TYPE;
-    }
-
-    public int getId() {
-        return mId;
-    }
-
-    void setId(int pId) {
-        mId = pId;
-    }
-
-    public String getLabel() {
-        return mLabel;
-    }
-
-    public void setLabel(String pLabel) {
-        mLabel = pLabel;
-    }
-
-    public int getIconId() {
-        return mIconId;
-    }
-
-    public void setmIconId(int pIcon) {
-        mIconId = pIcon;
     }
 
     @Override
@@ -74,19 +58,7 @@ public class DrawerMenuItem implements NavDrawerItem {
 
     @Override
     public boolean updateActionBarTitle() {
-        return mUpdateActionBarTitle;
-    }
-
-    void setUpdateActionBarTitle(boolean pUpdateActionBarTitle) {
-        mUpdateActionBarTitle = pUpdateActionBarTitle;
-    }
-
-    public boolean isShowInfoButton() {
-        return mIsShowInfoButton;
-    }
-
-    public void setIsShowInfoButton(boolean pIsShowInfoButton) {
-        mIsShowInfoButton = pIsShowInfoButton;
+        return isUpdateActionBarTitle();
     }
 
     /**
@@ -95,7 +67,7 @@ public class DrawerMenuItem implements NavDrawerItem {
      */
     public int getHelpStringId() {
 
-        switch (mId) {
+        switch (id) {
 
             case MAIN.PHONE_SIM_DETAILS:
                 return R.string.help_main_phone_sim_details;
