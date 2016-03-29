@@ -15,7 +15,7 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
-import com.secupwn.aimsicd.AIMSICD;
+import com.secupwn.aimsicd.MainActivity;
 import com.secupwn.aimsicd.R;
 
 import java.text.SimpleDateFormat;
@@ -46,7 +46,7 @@ public class MiscUtils {
     public static void showNotification(Context context, String tickertext, String contentText, @DrawableRes int drawable_id, boolean auto_cancel) {
         int NOTIFICATION_ID = 1;
 
-        Intent notificationIntent = new Intent(context, AIMSICD.class);
+        Intent notificationIntent = new Intent(context, MainActivity.class);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
 
         PendingIntent contentIntent = PendingIntent.getActivity(

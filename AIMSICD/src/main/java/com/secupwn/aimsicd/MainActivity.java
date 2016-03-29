@@ -56,7 +56,7 @@ import com.secupwn.aimsicd.utils.RequestTask;
 
 import java.util.List;
 
-public class AIMSICD extends BaseActivity implements AsyncResponse {
+public class MainActivity extends BaseActivity implements AsyncResponse {
 
     private boolean mBound;
     private SharedPreferences prefs;
@@ -425,7 +425,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         if (!mBound) {
             // Bind to LocalService
-            Intent intent = new Intent(AIMSICD.this, AimsicdService.class);
+            Intent intent = new Intent(MainActivity.this, AimsicdService.class);
             //Start Service before binding to keep it resident when activity is destroyed
             startService(intent);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
