@@ -392,7 +392,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                  */
                 if (c != null && c.moveToFirst()) {
                     do {
-                        if (isCancelled()) {
+                        if (isCancelled() || !isAdded()) {
                             return null;
                         }
                         // The indexing here is that of DB table
@@ -470,7 +470,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                 // plot neighbouring cells
                 while (mAimsicdService == null) {
                     try {
-                        if (isCancelled()) {
+                        if (isCancelled() || !isAdded()) {
                             return null;
                         }
                         Thread.sleep(100);
@@ -480,7 +480,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                 }
                 List<Cell> nc = mAimsicdService.getCellTracker().updateNeighbouringCells();
                 for (Cell cell : nc) {
-                    if (isCancelled()) {
+                    if (isCancelled() || !isAdded()) {
                         return null;
                     }
                     try {
