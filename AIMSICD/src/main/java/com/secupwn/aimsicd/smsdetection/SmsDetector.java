@@ -141,7 +141,7 @@ public final class SmsDetector extends Thread {
     public void run() {
         setSmsDetectionState(true);
 
-        @Cleanup BufferedReader mLogcatReader;
+        BufferedReader mLogcatReader;
         try {
             Thread.sleep(500);
 
@@ -240,6 +240,12 @@ public final class SmsDetector extends Thread {
             } catch (InterruptedException e) {
                 log.error("Interrupted Exception", e);
             }
+        }
+
+        try {
+            mLogcatReader.close();
+        } catch (IOException ee) {
+            log.error("IOE Error closing BufferedReader", ee);
         }
     }
 
