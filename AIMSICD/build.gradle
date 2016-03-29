@@ -92,6 +92,8 @@ dependencies {
     // Transition library for animated transition effects
     compile 'com.github.kaichunlin.transition:core:0.9.2'
 
+    compile 'com.bugsnag:bugsnag-android:+'
+
     // ShowcaseView library to highlight specific app elements
     //compile 'com.github.amlcurran.showcaseview:library:5.3.0'
 }
