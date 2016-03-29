@@ -424,7 +424,7 @@ public final class DbViewerFragment extends InjectionFragment {
                                 "" + (tableData.getPosition() + 1) + " / " + count                      // item:  "n/X"
                         );
                         // TODO: Explain how to use this?
-                        data.setIsFakeData(isExample(data));
+                        data.setFakeData(isExample(data));
                         adapter.addItem(data, false);
                     }
                     if (!tableData.isClosed()) {
@@ -466,11 +466,11 @@ public final class DbViewerFragment extends InjectionFragment {
     private boolean isExample(EventLogItemData pEventLogItemData) {
         return pEventLogItemData != null &&
                 pEventLogItemData.getLac().contains(Examples.EVENT_LOG_DATA.LAC) &&
-                pEventLogItemData.getCellID().contains(Examples.EVENT_LOG_DATA.CID) &&
+                pEventLogItemData.getCellId().contains(Examples.EVENT_LOG_DATA.CID) &&
                 pEventLogItemData.getPsc().contains(Examples.EVENT_LOG_DATA.PSC) &&
                 pEventLogItemData.getLat().contains(Examples.EVENT_LOG_DATA.GPSD_LAT) &&
-                pEventLogItemData.getLng().contains(Examples.EVENT_LOG_DATA.GPSD_LON) &&
-                pEventLogItemData.getgpsd_accu().contains(Examples.EVENT_LOG_DATA.GPSD_ACCU) &&
+                pEventLogItemData.getLon().contains(Examples.EVENT_LOG_DATA.GPSD_LON) &&
+                pEventLogItemData.getGpsd_accu().contains(Examples.EVENT_LOG_DATA.GPSD_ACCU) &&
                 pEventLogItemData.getDF_id().contains(Examples.EVENT_LOG_DATA.DF_ID);
     }
 

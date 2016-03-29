@@ -61,12 +61,12 @@ public class OpenCellIdCardInflater implements IAdapterViewInflater<CardItemData
         }
 
         public void updateDisplay(CardItemData item) {
-            mCellID.setText(item.getCellID());
+            mCellID.setText(item.getCellId());
             mLac.setText(item.getLac());
             mMcc.setText(item.getMcc());
             mMnc.setText(item.getMnc());
             mLat.setText(item.getLat());
-            mLng.setText(item.getLng());
+            mLng.setText(item.getLon());
             mAvgSigStr.setText(item.getAvgSigStr());
             mSamples.setText(item.getSamples());
             mRecordId.setText(item.getRecordId());

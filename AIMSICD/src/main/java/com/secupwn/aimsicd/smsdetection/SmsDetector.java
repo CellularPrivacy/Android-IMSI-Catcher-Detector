@@ -29,6 +29,7 @@ import java.util.List;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import lombok.Getter;
 
 /**
  * Description: Detects mysterious SMS by scraping Logcat entries.
@@ -449,6 +450,7 @@ public final class SmsDetector extends Thread {
         }
     };
 
+    @Getter
     public enum SmsType {
         SILENT(
                 R.string.alert_silent_sms_detected,
@@ -481,21 +483,6 @@ public final class SmsDetector extends Thread {
             this.alert = alert;
             this.title = title;
             this.message = message;
-        }
-
-        @StringRes
-        public int getAlert() {
-            return alert;
-        }
-
-        @StringRes
-        public int getTitle() {
-            return title;
-        }
-
-        @StringRes
-        public int getMessage() {
-            return message;
         }
     }
 }

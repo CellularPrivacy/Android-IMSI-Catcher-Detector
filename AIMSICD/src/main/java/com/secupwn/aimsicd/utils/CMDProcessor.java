@@ -76,9 +76,9 @@ public final class CMDProcessor {
         //  - Result not shown in pop-up...
         CommandResult r = runShellCommand("id");
         StringBuilder out = new StringBuilder(0);
-        out.append(r.getStdout());
+        out.append(r.getStdOut());
         out.append(" ; ");
-        out.append(r.getStderr());
+        out.append(r.getStdErr());
         log.debug("canSU() su[" + r.getExitValue() + "]: " + out);
         return r.success();
     }

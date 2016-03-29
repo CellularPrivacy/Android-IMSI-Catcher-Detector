@@ -15,46 +15,25 @@ import com.secupwn.aimsicd.constants.DrawerMenu;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public class DrawerMenuActivityConfiguration {
 
-    private int mMainLayout;
-    private int mDrawerLayoutId;
-    private int mLeftDrawerId;
-    private int[] mActionMenuItemsToHideWhenDrawerOpen;
-    private List<NavDrawerItem> mNavItems;
-    private BaseAdapter mBaseAdapter;
+    private int mainLayout;
+    private int drawerLayoutId;
+    private int leftDrawerId;
+    private int[] actionMenuItemsToHideWhenDrawerOpen;
+    private List<NavDrawerItem> navItems;
+    private BaseAdapter baseAdapter;
 
     private DrawerMenuActivityConfiguration(Builder pBuilder) {
-        mMainLayout = pBuilder.mMainLayout;
-        mDrawerLayoutId = pBuilder.mDrawerLayoutId;
-        mLeftDrawerId = pBuilder.mLeftDrawerId;
-        mActionMenuItemsToHideWhenDrawerOpen = pBuilder.mActionMenuItemsToHideWhenDrawerOpen;
-        mNavItems = pBuilder.mNavItems;
-        mBaseAdapter = pBuilder.mBaseAdapter;
-    }
-
-    public int getMainLayout() {
-        return mMainLayout;
-    }
-
-    public int getDrawerLayoutId() {
-        return mDrawerLayoutId;
-    }
-
-    public int getLeftDrawerId() {
-        return mLeftDrawerId;
-    }
-
-    public int[] getActionMenuItemsToHideWhenDrawerOpen() {
-        return mActionMenuItemsToHideWhenDrawerOpen;
-    }
-
-    public List<NavDrawerItem> getNavItems() {
-        return mNavItems;
-    }
-
-    public BaseAdapter getBaseAdapter() {
-        return mBaseAdapter;
+        mainLayout = pBuilder.mMainLayout;
+        drawerLayoutId = pBuilder.mDrawerLayoutId;
+        leftDrawerId = pBuilder.mLeftDrawerId;
+        actionMenuItemsToHideWhenDrawerOpen = pBuilder.mActionMenuItemsToHideWhenDrawerOpen;
+        navItems = pBuilder.mNavItems;
+        baseAdapter = pBuilder.mBaseAdapter;
     }
 
     public static class Builder {

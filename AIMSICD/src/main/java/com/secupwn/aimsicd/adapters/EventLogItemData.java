@@ -5,6 +5,9 @@
  */
 package com.secupwn.aimsicd.adapters;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  *  Description:    Class to show data of table "EventLog" in "Database Viewer"
  *
@@ -31,21 +34,22 @@ package com.secupwn.aimsicd.adapters;
  *
  * ------------------------------------------------------------------------------------------
  */
+@Getter
 public class EventLogItemData {
     // OLD (in old DB tables)
-    private final String mTimestamp;
-    private final String mCellID;
-    private final String mLac;
-    private final String mPsc;
-    private final String mLat;
-    private final String mLng;
-    private final String mgpsd_accu;
-    private final String mDF_id;
-    private final String mDF_desc;
+    private final String timestamp;
+    private final String cellId;
+    private final String lac;
+    private final String psc;
+    private final String lat;
+    private final String lon;
+    private final String gpsd_accu;
+    private final String dF_id;
+    private final String dF_desc;
 
-    private final String mRecordId;
-    private boolean mIsFakeData;
-
+    private final String recordId;
+    @Setter
+    private boolean fakeData;
 
     public EventLogItemData(
                 String time,
@@ -87,66 +91,17 @@ public class EventLogItemData {
 
                             String pRecordId,
                             boolean pIsFakeData) {
-        mTimestamp = pTime;
-        mLac = pLAC;
-        mCellID = pCID;
-        mPsc = pPSC;
-        mLat = pGpsd_lat;
-        mLng = pGpsd_lon;
-        mgpsd_accu = pGpsd_accu;
-        mDF_id = pDF_id;
-        mDF_desc = pDF_desc;
+        timestamp = pTime;
+        lac = pLAC;
+        cellId = pCID;
+        psc = pPSC;
+        lat = pGpsd_lat;
+        lon = pGpsd_lon;
+        gpsd_accu = pGpsd_accu;
+        dF_id = pDF_id;
+        dF_desc = pDF_desc;
 
-        mRecordId = pRecordId;
-        mIsFakeData = pIsFakeData;
-    }
-
-    public String getTimestamp() {
-        return mTimestamp;
-    }
-
-    public String getCellID() {
-        return mCellID;
-    }
-
-    public String getLac() {
-        return mLac;
-    }
-
-    public String getPsc() {
-        return mPsc;
-    }
-
-    public String getLat() {
-        return mLat;
-    }
-
-    public String getLng() {
-        return mLng;
-    }
-
-    public String getgpsd_accu() {
-        return mgpsd_accu;
-    }
-
-    public String getDF_id() {
-        return mDF_id;
-    }
-
-    public String getDF_desc() {
-        return mDF_desc;
-    }
-
-
-    public String getRecordId() {
-        return mRecordId;
-    }
-
-    public boolean isFakeData() {
-        return mIsFakeData;
-    }
-
-    public void setIsFakeData(boolean pIsFakeData) {
-        mIsFakeData = pIsFakeData;
+        recordId = pRecordId;
+        fakeData = pIsFakeData;
     }
 }

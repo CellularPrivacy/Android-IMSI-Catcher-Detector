@@ -5,6 +5,9 @@ import android.support.annotation.StringRes;
 
 import com.secupwn.aimsicd.R;
 
+import lombok.Getter;
+
+@Getter
 public enum Status {
     /**
      * Grey
@@ -40,15 +43,5 @@ public enum Status {
     Status(@StringRes int name, @ColorRes int color) {
         this.name = name;
         this.color = color;
-    }
-
-    @StringRes
-    public int getName() {
-        return name;
-    }
-
-    @ColorRes
-    public int getColor() {
-        return color;
     }
 }

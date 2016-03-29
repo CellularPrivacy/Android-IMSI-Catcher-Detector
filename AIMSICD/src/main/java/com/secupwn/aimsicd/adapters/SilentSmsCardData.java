@@ -8,6 +8,9 @@ package com.secupwn.aimsicd.adapters;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class SilentSmsCardData {
 
     private final String mAddress;
@@ -16,7 +19,8 @@ public class SilentSmsCardData {
     private final String mServiceCentre;
     private final String mMessage;
     private final long mTimestamp;
-    private boolean mIsFakeData;
+    @Getter @Setter
+    private boolean fakeData;
 
     public SilentSmsCardData(String address, String displayAddress, String messageClass,
             String serviceCentre, String messageBody, long timestamp) {
@@ -77,13 +81,5 @@ public class SilentSmsCardData {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.getDefault());
         String dateString = formatter.format(mTimestamp);
         return "Timestamp: " + dateString;
-    }
-
-    public boolean isFakeData() {
-        return mIsFakeData;
-    }
-
-    public void setIsFakeData(boolean pIsFakeData) {
-        mIsFakeData = pIsFakeData;
     }
 }

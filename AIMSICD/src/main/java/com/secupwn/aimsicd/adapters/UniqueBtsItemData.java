@@ -5,6 +5,9 @@
  */
 package com.secupwn.aimsicd.adapters;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Description:     Contains the data and definitions of all the items of the XML layout
  *
@@ -43,126 +46,24 @@ package com.secupwn.aimsicd.adapters;
  *                  2015-07-27  E:V:A           Added placeholders for missing items, Fixed T3212 typo
  */
 
+@Getter
+@Setter
 public class UniqueBtsItemData {
 
-    public String getCid() {
-        return cid;
-    }
+    private String mcc;
+    private String mnc;
+    private String lac;
+    private String cid;
+    private String psc;
+    private String t3212;
+    private String a5x;
+    private String st_id;
+    private String time_first;
+    private String time_last;
+    private String lat;
+    private String lon;
 
-    public void setCid(String cid) {
-        this.cid = cid;
-    }
-
-    public String getLac() {
-        return lac;
-    }
-
-    public void setLac(String lac) {
-        this.lac = lac;
-    }
-
-    public String getMcc() {
-        return mcc;
-    }
-
-    public void setMcc(String mcc) {
-        this.mcc = mcc;
-    }
-
-    public String getMnc() {
-        return mnc;
-    }
-
-    public void setMnc(String mnc) {
-        this.mnc = mnc;
-    }
-
-    public String getTime_first() {
-        return time_first;
-    }
-
-    public void setTime_first(String time_first) {
-        this.time_first = time_first;
-    }
-
-    public String getTime_last() {
-        return time_last;
-    }
-
-    public void setTime_last(String time_last) {
-        this.time_last = time_last;
-    }
-
-    public String getPsc() {
-        return psc;
-    }
-
-    public void setPsc(String psc) {
-        this.psc = psc;
-    }
-
-    // START new ==============================================================
-    public String getT3212() {
-        return t3212;
-    }
-
-    public void setT3212(String t3212) {
-        this.t3212 = t3212;
-    }
-
-    public String getA5x() {
-        return a5x;
-    }
-
-    public void setA5x(String a5x) {
-        this.a5x = a5x;
-    }
-
-    public String getStId() {
-        return st_id;
-    }
-
-    public void setStId(String st_id) {
-        this.st_id = st_id;
-    }
-
-
-    // END new ==============================================================
-
-    public String getLat() {
-        return lat;
-    }
-
-    public void setLat(String lat) {
-        this.lat = lat;
-    }
-
-    public String getLon() {
-        return lon;
-    }
-
-    public void setLon(String lon) {
-        this.lon = lon;
-    }
-
-    public String getRecordId() {
-        return mRecordId;
-    }
-
-    String mcc;
-    String mnc;
-    String lac;
-    String cid;
-    String psc;
-    String t3212;
-    String a5x;
-    String st_id;
-    String time_first;
-    String time_last;
-    String lat;
-    String lon;
-
-    String mRecordId;
+    private String recordId;
 
     public UniqueBtsItemData(
             String imcc,
@@ -192,7 +93,7 @@ public class UniqueBtsItemData {
             //t3212 = it3212;
             //a5x = ia5x;
             //st_id = ist_id;
-            mRecordId = iRecordId;
+            recordId = iRecordId;
     }
 
 }
