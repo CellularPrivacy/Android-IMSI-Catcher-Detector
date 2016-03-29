@@ -36,6 +36,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import lombok.Cleanup;
 
 /**
  * This class handles all the AMISICD DataBase maintenance operations, like
@@ -179,9 +180,9 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      */
     private void copyDataBase() throws IOException {
         // Open your local DB as the input stream
-        InputStream myInput = mContext.getAssets().open(DB_NAME);
+        @Cleanup InputStream myInput = mContext.getAssets().open(DB_NAME);
         // Open the empty DB as the output stream
-        OutputStream myOutput = new FileOutputStream(mDatabasePath);
+        @Cleanup OutputStream myOutput = new FileOutputStream(mDatabasePath);
 
         // Transfer bytes from the input file to the output file
         byte[] buffer = new byte[1024];
@@ -191,8 +192,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         }
         // Close the streams
         myOutput.flush();
-        myOutput.close();
-        myInput.close();
     }
 
     public AIMSICDDbAdapter open() throws SQLException {

@@ -15,6 +15,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Cleanup;
+
 
 /**
  *  StackOverflowXmlParser populates a List of entries with data from the feed
@@ -24,15 +26,11 @@ public class StackOverflowXmlParser {
     private static final String ns = null;
 
     public List<Cell> parse(InputStream in) throws XmlPullParserException, IOException {
-        try {
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(in, null);
-            parser.nextTag();
-            return readCells(parser);
-        } finally {
-            in.close();
-        }
+        @Cleanup XmlPullParser parser = Xml.newPullParser();
+        parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+        parser.setInput(in, null);
+        parser.nextTag();
+        return readCells(parser);
     }
 
     private List<Cell> readCells(XmlPullParser parser) throws XmlPullParserException, IOException {
