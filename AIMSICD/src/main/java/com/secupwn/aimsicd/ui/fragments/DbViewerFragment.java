@@ -1,4 +1,4 @@
-package com.secupwn.aimsicd.fragments;
+package com.secupwn.aimsicd.ui.fragments;
 
 import android.app.Activity;
 import android.database.Cursor;

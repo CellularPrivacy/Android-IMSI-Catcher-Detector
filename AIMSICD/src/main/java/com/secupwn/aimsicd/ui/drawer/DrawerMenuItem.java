@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.secupwn.aimsicd.drawer;
+package com.secupwn.aimsicd.ui.drawer;
 
 import android.support.annotation.DrawableRes;
 

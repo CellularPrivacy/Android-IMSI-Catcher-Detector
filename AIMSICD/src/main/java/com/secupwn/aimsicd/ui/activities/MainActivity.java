@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.secupwn.aimsicd;
+package com.secupwn.aimsicd.ui.activities;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -31,19 +31,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.secupwn.aimsicd.activities.AboutActivity;
-import com.secupwn.aimsicd.activities.BaseActivity;
-import com.secupwn.aimsicd.activities.DebugLogs;
-import com.secupwn.aimsicd.fragments.MapFragment;
-import com.secupwn.aimsicd.activities.SettingsActivity;
+import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.ui.fragments.MapFragment;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
-import com.secupwn.aimsicd.drawer.DrawerMenuActivityConfiguration;
-import com.secupwn.aimsicd.drawer.NavDrawerItem;
-import com.secupwn.aimsicd.fragments.AtCommandFragment;
-import com.secupwn.aimsicd.fragments.CellInfoFragment;
-import com.secupwn.aimsicd.fragments.DbViewerFragment;
-import com.secupwn.aimsicd.fragments.DeviceFragment;
+import com.secupwn.aimsicd.ui.drawer.DrawerMenuActivityConfiguration;
+import com.secupwn.aimsicd.ui.drawer.NavDrawerItem;
+import com.secupwn.aimsicd.ui.fragments.AtCommandFragment;
+import com.secupwn.aimsicd.ui.fragments.CellInfoFragment;
+import com.secupwn.aimsicd.ui.fragments.DbViewerFragment;
+import com.secupwn.aimsicd.ui.fragments.DeviceFragment;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.service.CellTracker;
 import com.secupwn.aimsicd.utils.AsyncResponse;

@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.secupwn.aimsicd.fragments;
+package com.secupwn.aimsicd.ui.fragments;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,7 +25,7 @@ import com.secupwn.aimsicd.service.CellTracker;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.Device;
 import com.secupwn.aimsicd.utils.Helpers;
-import com.secupwn.aimsicd.widget.HighlightTextView;
+import com.secupwn.aimsicd.ui.widget.HighlightTextView;
 import com.kaichunlin.transition.animation.AnimationManager;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;

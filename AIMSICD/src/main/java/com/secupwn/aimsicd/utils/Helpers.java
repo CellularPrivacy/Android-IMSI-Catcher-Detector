@@ -28,7 +28,7 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.fragments.MapFragment;
+import com.secupwn.aimsicd.ui.fragments.MapFragment;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
 import com.secupwn.aimsicd.service.AimsicdService;

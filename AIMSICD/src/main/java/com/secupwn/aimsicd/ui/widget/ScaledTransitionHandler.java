@@ -1,4 +1,4 @@
-package com.secupwn.aimsicd.widget;
+package com.secupwn.aimsicd.ui.widget;
 
 import android.view.View;
 
