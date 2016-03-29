@@ -312,22 +312,22 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      * @return false if LAC is not OK (Cell's LAC differs from Cell's LAC previously stored value in DB)
      */
     public boolean checkLAC(Cell cell) {
-        String query = String.format("SELECT * FROM DBi_bts WHERE CID = %d", cell.getCID());  //CID
+        String query = String.format("SELECT * FROM DBi_bts WHERE CID = %d", cell.getCid());  //CID
 
         Cursor bts_cursor = mDb.rawQuery(query, null);
 
         while (bts_cursor.moveToNext()) {
             // 1=LAC, 8=Accuracy, 11=Time
-            if (cell.getLAC() != bts_cursor.getInt(bts_cursor.getColumnIndex("LAC"))) {
-                log.info("ALERT: Changing LAC on CID: " + cell.getCID()
-                        + " LAC(API): " + cell.getLAC()
+            if (cell.getLac() != bts_cursor.getInt(bts_cursor.getColumnIndex("LAC"))) {
+                log.info("ALERT: Changing LAC on CID: " + cell.getCid()
+                        + " LAC(API): " + cell.getLac()
                         + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
 
                 bts_cursor.close();
                 return false;
             } else {
-                log.verbose("LAC checked - no change on CID:" + cell.getCID()
-                        + " LAC(API): " + cell.getLAC()
+                log.verbose("LAC checked - no change on CID:" + cell.getCid()
+                        + " LAC(API): " + cell.getLac()
                         + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
             }
         }
@@ -1540,14 +1540,14 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     public void insertBTS(Cell cell) {
 
         // If LAC and CID are not already in DBi_bts, then add them.
-        if (!cellInDbiBts(cell.getLAC(), cell.getCID())) {
+        if (!cellInDbiBts(cell.getLac(), cell.getCid())) {
             ContentValues values = new ContentValues();
 
-            values.put("MCC", cell.getMCC());
-            values.put("MNC", cell.getMNC());
-            values.put("LAC", cell.getLAC());
-            values.put("CID", cell.getCID());
-            values.put("PSC", cell.getPSC());
+            values.put("MCC", cell.getMcc());
+            values.put("MNC", cell.getMnc());
+            values.put("LAC", cell.getLac());
+            values.put("CID", cell.getCid());
+            values.put("PSC", cell.getPsc());
 
             // TODO: setting these to 0 because if empty causing error in DB Restore
             values.put("T3212", 0);  // TODO
@@ -1583,17 +1583,17 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             // This is the native update equivalent to:
             // "UPDATE Dbi_bts time_last=...,gps_lat=..., gps_lon=... WHERE CID=..."
             // update (String table, ContentValues values, String whereClause, String[] whereArgs)
-            mDb.update("DBi_bts", values, "CID=?", new String[]{Integer.toString(cell.getCID())});
+            mDb.update("DBi_bts", values, "CID=?", new String[]{Integer.toString(cell.getCid())});
 
-            log.info("DBi_bts updated: CID=" + cell.getCID() + " LAC=" + cell.getLAC());
+            log.info("DBi_bts updated: CID=" + cell.getCid() + " LAC=" + cell.getLac());
         }
 
         // TODO: This doesn't make sense, if it's in DBi_bts it IS part of DBi_measure!
         // Checking to see if CID (now bts_id) is already in DBi_measure, if not add it.
-        if (!cellInDbiMeasure(cell.getCID())) {
+        if (!cellInDbiMeasure(cell.getCid())) {
             ContentValues dbiMeasure = new ContentValues();
 
-            dbiMeasure.put("bts_id", cell.getCID());                    // TODO: No!! Comment this out!
+            dbiMeasure.put("bts_id", cell.getCid());                    // TODO: No!! Comment this out!
             dbiMeasure.put("nc_list", "no_data");                       // TODO: Better with "n/a" or "0", where are we getting this?
             dbiMeasure.put("time", MiscUtils.getCurrentTimeStamp());
 
@@ -1611,7 +1611,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
             dbiMeasure.put("bb_power", "0");                            //TODO: This is not yet available, setting to "0"
             dbiMeasure.put("tx_power", "0");                             //TODO putting 0 here as we don't have this value yet
-            dbiMeasure.put("rx_signal", String.valueOf(cell.getDBM())); //TODO putting cell.getDBM() here so we have some signal for OCID upload.
+            dbiMeasure.put("rx_signal", String.valueOf(cell.getDbm())); //TODO putting cell.getDBM() here so we have some signal for OCID upload.
             dbiMeasure.put("RAT", String.valueOf(cell.getNetType()));
             dbiMeasure.put("TA", cell.getTimingAdvance());              //TODO does this actually get timing advance?
             dbiMeasure.put("BER", 0);                                    //TODO setting 0 because we don't have data yet.
@@ -1619,7 +1619,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             dbiMeasure.put("isNeighbour", 0);
 
             mDb.insert("DBi_measure", null, dbiMeasure);
-            log.info("DBi_measure inserted bts_id=" + cell.getCID());  // TODO: NO!!
+            log.info("DBi_measure inserted bts_id=" + cell.getCid());  // TODO: NO!!
 
         } else {
             // Updating DBi_measure tables if already exists.
@@ -1649,8 +1649,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             //    dbiMeasure.put("tx_power", String.valueOf(cell.getRssi()));
             //    dbiMeasure.put("rx_signal",String.valueOf(cell.getRssi()));
             //}
-            if (cell.getDBM() > 0) {
-                dbiMeasure.put("rx_signal", String.valueOf(cell.getDBM())); // [dBm]
+            if (cell.getDbm() > 0) {
+                dbiMeasure.put("rx_signal", String.valueOf(cell.getDbm())); // [dBm]
             }
 
             //dbiMeasure.put("rx_stype",rx_stype);
@@ -1667,8 +1667,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
             //dbiMeasure.put("AvgEcNo",AvgEcNo);                // TODO: I need to check this...
 
-            mDb.update("DBi_measure", dbiMeasure, "bts_id=?", new String[]{Integer.toString(cell.getCID())});
-            log.info("DBi_measure updated bts_id=" + cell.getCID());
+            mDb.update("DBi_measure", dbiMeasure, "bts_id=?", new String[]{Integer.toString(cell.getCid())});
+            log.info("DBi_measure updated bts_id=" + cell.getCid());
 
         }
 
@@ -1907,9 +1907,9 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     public void toEventLog(int DF_id, String DF_desc) {
 
         String time = MiscUtils.getCurrentTimeStamp();                    // time
-        int lac = CellTracker.mMonitorCell.getLAC();                // LAC
-        int cid = CellTracker.mMonitorCell.getCID();                // CID
-        int psc = CellTracker.mMonitorCell.getPSC();                // PSC [UMTS,LTE]
+        int lac = CellTracker.mMonitorCell.getLac();                // LAC
+        int cid = CellTracker.mMonitorCell.getCid();                // CID
+        int psc = CellTracker.mMonitorCell.getPsc();                // PSC [UMTS,LTE]
         String gpsd_lat = String.valueOf(CellTracker.mMonitorCell.getLat()); // gpsd_lat
         String gpsd_lon = String.valueOf(CellTracker.mMonitorCell.getLon()); // gpsd_lon
         int gpsd_accu = (int) CellTracker.mMonitorCell.getAccuracy();        // gpsd_accu

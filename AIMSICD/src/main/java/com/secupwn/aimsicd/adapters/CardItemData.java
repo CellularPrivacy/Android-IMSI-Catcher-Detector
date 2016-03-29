@@ -70,46 +70,46 @@ public class CardItemData {
 
     public CardItemData(Cell cell, String recordId) {
 
-        if (cell.getCID() != Integer.MAX_VALUE && cell.getCID() != -1) {
-            mCellID = "CID: " + cell.getCID() + "  (0x" + Integer.toHexString(cell.getCID()) + ")";
+        if (cell.getCid() != Integer.MAX_VALUE && cell.getCid() != -1) {
+            mCellID = "CID: " + cell.getCid() + "  (0x" + Integer.toHexString(cell.getCid()) + ")";
         } else {
             mCellID = "N/A";
         }
 
-        if (cell.getLAC() != Integer.MAX_VALUE && cell.getLAC() != -1) {
-            mLac = "LAC: " + cell.getLAC();
+        if (cell.getLac() != Integer.MAX_VALUE && cell.getLac() != -1) {
+            mLac = "LAC: " + cell.getLac();
         } else {
             mLac = "N/A";
         }
 
-        if (cell.getMCC() != Integer.MAX_VALUE && cell.getMCC() != 0) {
-            mMcc = "MCC: " + cell.getMCC();
+        if (cell.getMcc() != Integer.MAX_VALUE && cell.getMcc() != 0) {
+            mMcc = "MCC: " + cell.getMcc();
         } else {
             mMcc = "N/A";
         }
 
-        if (cell.getMNC() != Integer.MAX_VALUE && cell.getMNC() != 0) {
-            mMnc = "MNC: " + cell.getMNC();
+        if (cell.getMnc() != Integer.MAX_VALUE && cell.getMnc() != 0) {
+            mMnc = "MNC: " + cell.getMnc();
         } else {
             mMnc = "N/A";
         }
 
         if (cell.getNetType() != Integer.MAX_VALUE && cell.getNetType() != -1) {
-            mNet = "Type: " + cell.getNetType() + " - " + cell.getRAT();
+            mNet = "Type: " + cell.getNetType() + " - " + cell.getRat();
         } else {
             mNet = "N/A";
         }
 
-        if (cell.getPSC() != Integer.MAX_VALUE && cell.getPSC() != -1) {
-            mPsc = "PSC: " + cell.getPSC();
+        if (cell.getPsc() != Integer.MAX_VALUE && cell.getPsc() != -1) {
+            mPsc = "PSC: " + cell.getPsc();
         } else {
             mPsc = "N/A";
         }
 
         if (cell.getRssi() != Integer.MAX_VALUE && cell.getRssi() != -1) {
             mSignal = "RSSI: " + cell.getRssi();
-        } else if (cell.getDBM() != Integer.MAX_VALUE && cell.getDBM() != -1) {
-            mSignal = "dBm: " + cell.getDBM();
+        } else if (cell.getDbm() != Integer.MAX_VALUE && cell.getDbm() != -1) {
+            mSignal = "dBm: " + cell.getDbm();
         } else {
             mSignal = "N/A";
         }
