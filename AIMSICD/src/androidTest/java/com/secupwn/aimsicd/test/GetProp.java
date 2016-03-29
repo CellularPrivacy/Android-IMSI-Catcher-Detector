@@ -8,7 +8,7 @@ package com.secupwn.aimsicd.test;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-import com.secupwn.aimsicd.activities.DebugLogs;
+import com.secupwn.aimsicd.ui.activities.DebugLogs;
 
 import java.io.IOException;
 

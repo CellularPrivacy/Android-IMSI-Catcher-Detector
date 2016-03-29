@@ -39,10 +39,10 @@
             android:icon="@drawable/sense_danger"
             android:label="@string/main_app_name"
             android:theme="@style/AppTheme"
-            android:name=".AppAIMSICD">
+            android:name=".AndroidIMSICatcherDetector">
 
         <activity
-                android:name=".AIMSICD"
+                android:name=".ui.activities.MainActivity"
                 android:exported="true"
                 android:label="@string/app_name_short"
                 android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
@@ -56,11 +56,11 @@
         </activity>
 
         <activity
-                android:name=".activities.SettingsActivity"
+                android:name=".ui.activities.SettingsActivity"
                 android:exported="true"
                 android:icon="@drawable/ic_action_settings"
                 android:label="@string/preferences"
-                android:parentActivityName=".AIMSICD"
+                android:parentActivityName=".ui.activities.MainActivity"
                 android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -68,17 +68,17 @@
         </activity>
 
         <activity
-            android:name=".activities.OpenCellIdActivity"
+            android:name=".ui.activities.OpenCellIdActivity"
             android:icon="@drawable/ic_action_settings"
             android:label="@string/title_ocid_key"
-            android:parentActivityName=".activities.SettingsActivity"
+            android:parentActivityName=".ui.activities.SettingsActivity"
             android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
         </activity>
 
         <activity
-            android:name=".activities.AboutActivity"
+            android:name=".ui.activities.AboutActivity"
             android:label="@string/about_aimsicd"
-            android:parentActivityName=".AIMSICD">
+            android:parentActivityName=".ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.INFO"/>
@@ -86,19 +86,19 @@
         </activity>
 
         <activity
-            android:name=".activities.DebugLogs"
+            android:name=".ui.activities.DebugLogs"
             android:icon="@drawable/ic_action_settings"
             android:label="@string/title_debug_logs"
-            android:parentActivityName=".AIMSICD"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
         </activity>
 
         <activity
-                android:name=".activities.MapPrefActivity"
+                android:name=".ui.activities.MapPrefActivity"
                 android:exported="true"
                 android:icon="@drawable/ic_action_settings"
                 android:label="@string/preferences"
-                android:parentActivityName=".AIMSICD">
+                android:parentActivityName=".ui.activities.MainActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

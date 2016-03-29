@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.secupwn.aimsicd.activities;
+package com.secupwn.aimsicd.ui.fragments;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -25,11 +25,14 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.secupwn.aimsicd.AppAIMSICD;
+import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.ui.activities.MapPrefActivity;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
@@ -58,7 +61,8 @@ import java.util.List;
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.annotation.XmlMenu;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import io.freefair.android.injection.app.InjectionFragment;
 import io.freefair.android.util.logging.Logger;
 
 /**
@@ -84,8 +88,7 @@ import io.freefair.android.util.logging.Logger;
  * https://code.google.com/p/osmbonuspack/issues/detail?id=102
  */
 @XmlLayout(R.layout.activity_map_viewer)
-@XmlMenu(R.menu.activity_map_viewer)
-public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
+public final class MapFragment extends InjectionFragment implements OnSharedPreferenceChangeListener {
 
     @Inject
     private Logger log;
@@ -118,26 +121,29 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         }
     };
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         log.info("Starting MapViewer");
 
         setUpMapIfNeeded();
 
-        mDbHelper = new AIMSICDDbAdapter(this);
-        tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        mDbHelper = new AIMSICDDbAdapter(getActivity());
+        tm = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
 
         // Bind to LocalService
-        Intent intent = new Intent(this, AimsicdService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        Intent intent = new Intent(getActivity(), AimsicdService.class);
+        getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CELL_LOCATION |
                 PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -145,17 +151,17 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         super.onResume();
         setUpMapIfNeeded();
 
-        prefs = this.getSharedPreferences(
+        prefs = getActivity().getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter(updateOpenCellIDMarkers));
 
         if (!mBound) {
             // Bind to LocalService
-            Intent intent = new Intent(this, AimsicdService.class);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+            Intent intent = new Intent(getActivity(), AimsicdService.class);
+            getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
         loadPreferences();
@@ -170,27 +176,12 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         }
     }
 
+
     @Override
-    protected void onDestroy() {
+    public void onDestroyView() {
         super.onDestroy();
-        prefs.unregisterOnSharedPreferenceChangeListener(this);
-        // Unbind from the service
-        if (mBound) {
-            unbindService(mConnection);
-            mBound = false;
-        }
 
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
-
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
         if (mCompassOverlay != null) {
             mCompassOverlay.disableCompass();
         }
@@ -198,6 +189,18 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         if (mMyLocationOverlay != null) {
             mMyLocationOverlay.disableMyLocation();
         }
+
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
+        // Unbind from the service
+        if (mBound) {
+            getActivity().unbindService(mConnection);
+            mBound = false;
+        }
+
+        TelephonyManager tm = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
+
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
     }
 
     private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -244,7 +247,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
     // Load the default map type from preferences
     private void loadPreferences() {
         String mapTypePref = getResources().getString(R.string.pref_map_type_key);
-        prefs = getSharedPreferences(
+        prefs = getActivity().getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         if (prefs.contains(mapTypePref)) {
             int mapType = Integer.parseInt(prefs.getString(mapTypePref, "0"));
@@ -285,21 +288,21 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         mMap.setMinZoomLevel(3);
         mMap.setMaxZoomLevel(19); // Latest OSM can go to 21!
         mMap.getTileProvider().createTileCache();
-        mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), mMap);
+        mCompassOverlay = new CompassOverlay(getActivity(), new InternalCompassOrientationProvider(getActivity()), mMap);
 
-        ScaleBarOverlay mScaleBarOverlay = new ScaleBarOverlay(this);
+        ScaleBarOverlay mScaleBarOverlay = new ScaleBarOverlay(getActivity());
         mScaleBarOverlay.setScaleBarOffset(getResources().getDisplayMetrics().widthPixels / 2, 10);
         mScaleBarOverlay.setCentred(true);
 
         // Sets cluster pin color
-        mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(MapViewerOsmDroid.this);
+        mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(getActivity());
         BitmapDrawable mapPinDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_map_pin_orange);
         mCellTowerGridMarkerClusterer.setIcon(mapPinDrawable == null ? null : mapPinDrawable.getBitmap());
 
-        GpsMyLocationProvider gpsMyLocationProvider = new GpsMyLocationProvider(MapViewerOsmDroid.this.getBaseContext());
+        GpsMyLocationProvider gpsMyLocationProvider = new GpsMyLocationProvider(getActivity().getBaseContext());
         gpsMyLocationProvider.setLocationUpdateMinDistance(100); // [m]  // Set the minimum distance for location updates
         gpsMyLocationProvider.setLocationUpdateMinTime(10000);   // [ms] // Set the minimum time interval for location updates
-        mMyLocationOverlay = new MyLocationNewOverlay(MapViewerOsmDroid.this.getBaseContext(), gpsMyLocationProvider, mMap);
+        mMyLocationOverlay = new MyLocationNewOverlay(getActivity().getBaseContext(), gpsMyLocationProvider, mMap);
         mMyLocationOverlay.setDrawAccuracyEnabled(true);
 
         mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
@@ -309,9 +312,9 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         this.mOptionsMenu = menu;
-        return super.onCreateOptionsMenu(menu);
+        inflater.inflate(R.menu.fragment_map_menu, mOptionsMenu);
     }
 
     @Override
@@ -319,14 +322,14 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.map_preferences:
-                Intent intent = new Intent(this, MapPrefActivity.class);
+                Intent intent = new Intent(getActivity(), MapPrefActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.get_opencellid: {
                 if (mBound) {
                     GeoLocation lastKnown = mAimsicdService.lastKnownLocation();
                     if (lastKnown != null) {
-                        Helpers.msgLong(this,
+                        Helpers.msgLong(getActivity(),
                                 getString(R.string.contacting_opencellid_for_data));
                         Cell cell;
                         cell = mAimsicdService.getCell();
@@ -334,22 +337,21 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                         cell.setLat(lastKnown.getLatitudeInDegrees());
                         setRefreshActionButtonState(true);
                         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
-                        Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP, mAimsicdService);
+                        Helpers.getOpenCellData((InjectionAppCompatActivity) getActivity(), cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP, mAimsicdService);
                         return true;
                     }
                 }
 
                 if (loc != null) {
-                    Helpers.msgLong(this,
-                            getString(R.string.contacting_opencellid_for_data));
+                    Helpers.msgLong(getActivity(), getString(R.string.contacting_opencellid_for_data));
                     Cell cell = new Cell();
                     cell.setLat(loc.getLatitude());
                     cell.setLon(loc.getLongitude());
                     setRefreshActionButtonState(true);
                     TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
-                    Helpers.getOpenCellData(this, cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP, mAimsicdService);
+                    Helpers.getOpenCellData((InjectionAppCompatActivity) getActivity(), cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP, mAimsicdService);
                 } else {
-                    Helpers.msgLong(this,
+                    Helpers.msgLong(getActivity(),
                             getString(R.string.unable_to_determine_last_location));
                 }
                 return true;
@@ -390,7 +392,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                  */
                 if (c != null && c.moveToFirst()) {
                     do {
-                        if (isCancelled()) {
+                        if (isCancelled() || !isAdded()) {
                             return null;
                         }
                         // The indexing here is that of DB table
@@ -399,8 +401,8 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                         final int mcc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_MCC));        // MCC
                         final int mnc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_MNC));        // MNC
                         final int psc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC));        // PSC
-                        // TODO: 2016-02-27 Is there a reason why #DBI_BTS_RAT doesn't exist?
-                        // final String rat = c.getString(c.getColumnIndex(DBTableColumnIds.DBI_BTS_RAT));  // RAT
+                        final String rat = Cell.getRatFromInt(
+                                c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_JOINED_RAT)));        // RAT
                         final double dLat = c.getDouble(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LAT)); // Lat
                         final double dLng = c.getDouble(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LON)); // Lon
 
@@ -421,11 +423,11 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                                 || Double.doubleToRawLongBits(dLng) != 0) {
                             loc = new GeoPoint(dLat, dLng);
 
-                            CellTowerMarker ovm = new CellTowerMarker(MapViewerOsmDroid.this, mMap,
+                            CellTowerMarker ovm = new CellTowerMarker(getActivity(), mMap,
                                     "Cell ID: " + cellID,
                                     "", loc,
                                     new MarkerData(
-                                            getApplicationContext(),
+                                            getContext(),
                                             String.valueOf(cellID),
                                             String.valueOf(loc.getLatitude()),
                                             String.valueOf(loc.getLongitude()),
@@ -433,7 +435,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                                             String.valueOf(mcc),
                                             String.valueOf(mnc),
                                             String.valueOf(psc),
-                                            null,
+                                            rat,
                                             "", false)
                             );
                             // The pin of our current position
@@ -444,10 +446,10 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
                     } while (c.moveToNext());
                 } else {
-                    runOnUiThread(new Runnable() {
+                    getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Helpers.msgLong(MapViewerOsmDroid.this, getString(R.string.no_tracked_locations_found));
+                            Helpers.msgLong(getActivity(), getString(R.string.no_tracked_locations_found));
                         }
                     });
                 }
@@ -468,7 +470,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 // plot neighbouring cells
                 while (mAimsicdService == null) {
                     try {
-                        if (isCancelled()) {
+                        if (isCancelled() || !isAdded()) {
                             return null;
                         }
                         Thread.sleep(100);
@@ -478,16 +480,16 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 }
                 List<Cell> nc = mAimsicdService.getCellTracker().updateNeighbouringCells();
                 for (Cell cell : nc) {
-                    if (isCancelled()) {
+                    if (isCancelled() || !isAdded()) {
                         return null;
                     }
                     try {
                         loc = new GeoPoint(cell.getLat(), cell.getLon());
-                        CellTowerMarker ovm = new CellTowerMarker(MapViewerOsmDroid.this, mMap,
+                        CellTowerMarker ovm = new CellTowerMarker(getActivity(), mMap,
                                 getString(R.string.cell_id_label) + cell.getCid(),
                                 "", loc,
                                 new MarkerData(
-                                        getApplicationContext(),
+                                        getContext(),
                                         String.valueOf(cell.getCid()),
                                         String.valueOf(loc.getLatitude()),
                                         String.valueOf(loc.getLongitude()),
@@ -584,11 +586,11 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 //where is c.getString(6)AvgSigStr
                 final int samples = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_SAMPLES));
                 // Add map marker for CellID
-                CellTowerMarker ovm = new CellTowerMarker(this, mMap,
+                CellTowerMarker ovm = new CellTowerMarker(getActivity(), mMap,
                         "Cell ID: " + cellID,
                         "", location,
                         new MarkerData(
-                                getApplicationContext(),
+                                getContext(),
                                 String.valueOf(cellID),
                                 String.valueOf(location.getLatitude()),
                                 String.valueOf(location.getLongitude()),
@@ -610,7 +612,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        final String KEY_MAP_TYPE = getBaseContext().getString(R.string.pref_map_type_key);
+        final String KEY_MAP_TYPE = getActivity().getBaseContext().getString(R.string.pref_map_type_key);
         if (key.equals(KEY_MAP_TYPE)) {
             int item = Integer.parseInt(sharedPreferences.getString(key, "0"));
             setupMapType(item);
@@ -631,15 +633,10 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
     }
 
 
-    public void onStop() {
-        super.onStop();
-        ((AppAIMSICD) getApplication()).detach(this);
-    }
-
     @Override
     public void onStart() {
         super.onStart();
-        ((AppAIMSICD) getApplication()).attach(this);
+        ((AndroidIMSICatcherDetector) getActivity().getApplication()).attach((InjectionAppCompatActivity) getActivity());
         if (TinyDB.getInstance().getBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP)) {
             setRefreshActionButtonState(false);
         }

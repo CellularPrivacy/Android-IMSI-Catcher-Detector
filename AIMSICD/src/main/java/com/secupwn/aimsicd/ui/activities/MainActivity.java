@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.secupwn.aimsicd;
+package com.secupwn.aimsicd.ui.activities;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -31,19 +31,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.secupwn.aimsicd.activities.AboutActivity;
-import com.secupwn.aimsicd.activities.BaseActivity;
-import com.secupwn.aimsicd.activities.DebugLogs;
-import com.secupwn.aimsicd.fragments.MapFragment;
-import com.secupwn.aimsicd.activities.SettingsActivity;
+import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
+import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.ui.fragments.MapFragment;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
-import com.secupwn.aimsicd.drawer.DrawerMenuActivityConfiguration;
-import com.secupwn.aimsicd.drawer.NavDrawerItem;
-import com.secupwn.aimsicd.fragments.AtCommandFragment;
-import com.secupwn.aimsicd.fragments.CellInfoFragment;
-import com.secupwn.aimsicd.fragments.DbViewerFragment;
-import com.secupwn.aimsicd.fragments.DeviceFragment;
+import com.secupwn.aimsicd.ui.drawer.DrawerMenuActivityConfiguration;
+import com.secupwn.aimsicd.ui.drawer.NavDrawerItem;
+import com.secupwn.aimsicd.ui.fragments.AtCommandFragment;
+import com.secupwn.aimsicd.ui.fragments.CellInfoFragment;
+import com.secupwn.aimsicd.ui.fragments.DbViewerFragment;
+import com.secupwn.aimsicd.ui.fragments.DeviceFragment;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.service.CellTracker;
 import com.secupwn.aimsicd.utils.AsyncResponse;
@@ -56,7 +54,7 @@ import com.secupwn.aimsicd.utils.RequestTask;
 
 import java.util.List;
 
-public class AIMSICD extends BaseActivity implements AsyncResponse {
+public class MainActivity extends BaseActivity implements AsyncResponse {
 
     private boolean mBound;
     private SharedPreferences prefs;
@@ -182,7 +180,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         final String iconType = prefs.getString(getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD) getApplication()).getStatus()));
+        mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AndroidIMSICatcherDetector) getApplication()).getStatus()));
         mDrawerToggle.syncState();
     }
 
@@ -425,7 +423,7 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
         if (!mBound) {
             // Bind to LocalService
-            Intent intent = new Intent(AIMSICD.this, AimsicdService.class);
+            Intent intent = new Intent(MainActivity.this, AimsicdService.class);
             //Start Service before binding to keep it resident when activity is destroyed
             startService(intent);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -596,12 +594,12 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
 
     public void onStop() {
         super.onStop();
-        ((AppAIMSICD) getApplication()).detach(this);
+        ((AndroidIMSICatcherDetector) getApplication()).detach(this);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        ((AppAIMSICD) getApplication()).attach(this);
+        ((AndroidIMSICatcherDetector) getApplication()).attach(this);
     }
 }

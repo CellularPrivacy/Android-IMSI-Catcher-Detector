@@ -30,11 +30,11 @@ import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class AppAIMSICD extends InjectionApplication {
+public class AndroidIMSICatcherDetector extends InjectionApplication {
 
-    private static WeakReference<AppAIMSICD> instance;
+    private static WeakReference<AndroidIMSICatcherDetector> instance;
 
-    public static AppAIMSICD getInstance() {
+    public static AndroidIMSICatcherDetector getInstance() {
         return instance.get();
     }
 
@@ -48,7 +48,7 @@ public class AppAIMSICD extends InjectionApplication {
      */
     private SparseArray<List<BaseAsyncTask<?, ?, ?>>> mActivityTaskMap;
 
-    public AppAIMSICD() {
+    public AndroidIMSICatcherDetector() {
         mActivityTaskMap = new SparseArray<>();
     }
 

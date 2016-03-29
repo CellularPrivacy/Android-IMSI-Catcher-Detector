@@ -27,8 +27,8 @@ import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 
-import com.secupwn.aimsicd.AIMSICD;
-import com.secupwn.aimsicd.AppAIMSICD;
+import com.secupwn.aimsicd.ui.activities.MainActivity;
+import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
@@ -1061,7 +1061,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             }
 
             // TODO: Explanation (see above)
-            Intent notificationIntent = new Intent(context, AIMSICD.class);
+            Intent notificationIntent = new Intent(context, MainActivity.class);
             notificationIntent.putExtra("silent_sms", mTypeZeroSmsDetected);
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
             PendingIntent contentIntent = PendingIntent.getActivity(
@@ -1090,8 +1090,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     }
 
-    private AppAIMSICD getApplication() {
-        return AppAIMSICD.getInstance();
+    private AndroidIMSICatcherDetector getApplication() {
+        return AndroidIMSICatcherDetector.getInstance();
     }
 
     /**

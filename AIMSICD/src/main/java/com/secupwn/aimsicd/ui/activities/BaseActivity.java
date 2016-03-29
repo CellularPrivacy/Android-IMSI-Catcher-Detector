@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.secupwn.aimsicd.activities;
+package com.secupwn.aimsicd.ui.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.secupwn.aimsicd.AppAIMSICD;
+import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.utils.Icon;
@@ -49,7 +49,7 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            log.debug("StatusWatcher received status change to " + ((AppAIMSICD) getApplication()).getStatus().name() + ", updating icon");
+            log.debug("StatusWatcher received status change to " + ((AndroidIMSICatcherDetector) getApplication()).getStatus().name() + ", updating icon");
             updateIcon(context);
         }
     };
@@ -61,7 +61,7 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
             @Override
             public void run() {
                 if (getActionBar() != null) {
-                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD) getApplication()).getStatus()));
+                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AndroidIMSICatcherDetector) getApplication()).getStatus()));
                 }
             }
         });

@@ -18,9 +18,9 @@ import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.constants.DrawerMenu;
-import com.secupwn.aimsicd.drawer.DrawerMenuItem;
-import com.secupwn.aimsicd.drawer.DrawerMenuSection;
-import com.secupwn.aimsicd.drawer.NavDrawerItem;
+import com.secupwn.aimsicd.ui.drawer.DrawerMenuItem;
+import com.secupwn.aimsicd.ui.drawer.DrawerMenuSection;
+import com.secupwn.aimsicd.ui.drawer.NavDrawerItem;
 import com.secupwn.aimsicd.utils.Helpers;
 
 import java.util.List;

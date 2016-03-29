@@ -29,6 +29,7 @@ import java.util.List;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import lombok.Cleanup;
 import lombok.Getter;
 
 /**
@@ -147,11 +148,10 @@ public final class SmsDetector extends Thread {
             String MODE = "logcat -v time -b radio -b main\n";
             Runtime r = Runtime.getRuntime();
             Process process = r.exec("su");
-            DataOutputStream dos = new DataOutputStream(process.getOutputStream());
+            @Cleanup DataOutputStream dos = new DataOutputStream(process.getOutputStream());
 
             dos.writeBytes(MODE);
             dos.flush();
-            dos.close();
 
             mLogcatReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         } catch (InterruptedException | IOException e) {
