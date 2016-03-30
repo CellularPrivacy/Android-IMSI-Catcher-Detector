@@ -27,12 +27,12 @@ import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 
-import com.secupwn.aimsicd.ui.activities.MainActivity;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.enums.Status;
+import com.secupwn.aimsicd.ui.activities.MainActivity;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.Device;
 import com.secupwn.aimsicd.utils.DeviceApi18;
@@ -47,6 +47,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import lombok.Getter;
 
 /**
  * Description:     Class to handle tracking of cell information
@@ -77,7 +78,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
     private final Logger log = AndroidLogger.forClass(CellTracker.class);
 
-    public static Cell mMonitorCell;
+    @Getter
+    public static Cell monitorCell;
     public static String OCID_API_KEY = null;   // see getOcidKey()
     public static int PHONE_TYPE;               //
     public static int LAST_DB_BACKUP_VERSION;   //
@@ -87,7 +89,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private boolean CELL_TABLE_CLEANSED; // default is FALSE for "boolean", and NULL for "Boolean".
 
     private final int NOTIFICATION_ID = 1;
-    private final Device mDevice = new Device();
+    @Getter
+    private final Device device = new Device();
 
     private static TelephonyManager tm;
     private final SignalStrengthTracker signalStrengthTracker;
@@ -98,19 +101,28 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     //=====================================================
     //  Tracking and Alert Declarations
     //=====================================================
-    private boolean mMonitoringCell;
-    private boolean mTrackingCell;
-    private boolean mTrackingFemtocell;
-    private boolean mFemtoDetected;
-    private boolean mChangedLAC;
-    private boolean mCellIdNotInOpenDb;
-    private boolean mTypeZeroSmsDetected;
-    private boolean mVibrateEnabled;
-    private int mVibrateMinThreatLevel;
+    @Getter
+    private boolean monitoringCell;
+    @Getter
+    private boolean trackingCell;
+    /**
+     * Tracking Femotcell Connections
+     * TODO: Consider REMOVAL!
+     *
+     * @return boolean indicating Femtocell Connection Tracking State
+     */
+    @Getter
+    private boolean trackingFemtocell;
+    private boolean femtoDetected;
+    private boolean changedLAC;
+    private boolean cellIdNotInOpenDb;
+    private boolean typeZeroSmsDetected;
+    private boolean vibrateEnabled;
+    private int vibrateMinThreatLevel;
     private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
 
     private final AIMSICDDbAdapter dbHelper;
-    private static Context context;
+    private Context context;
 
     public CellTracker(Context context, SignalStrengthTracker sst) {
         this.context = context;
@@ -144,18 +156,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             prefsEditor.putBoolean(context.getString(R.string.pref_cell_table_cleansed), true); // set to true
             prefsEditor.apply();
         }
-        mDevice.refreshDeviceInfo(tm, context); // Telephony Manager
-        mMonitorCell = new Cell();
+        device.refreshDeviceInfo(tm, context); // Telephony Manager
+        monitorCell = new Cell();
     }
-
-    public boolean isTrackingCell() {
-        return mTrackingCell;
-    }
-
-    public boolean isMonitoringCell() {
-        return mMonitoringCell;
-    }
-
 
     /**
      * Description:     Cell Information Monitoring
@@ -166,27 +169,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
     public void setCellMonitoring(boolean monitor) {
         if (monitor) {
-            mMonitoringCell = true;
+            monitoringCell = true;
             Helpers.msgShort(context, context.getString(R.string.monitoring_cell_information));
         } else {
-            mMonitoringCell = false;
+            monitoringCell = false;
             Helpers.msgShort(context, context.getString(R.string.stopped_monitoring_cell_information));
         }
         setNotification();
-    }
-
-    public Device getDevice() {
-        return mDevice;
-    }
-
-    /**
-     * Description:     Tracking Femotcell Connections
-     *                  TODO: Consider REMOVAL!
-     *
-     * @return boolean indicating Femtocell Connection Tracking State
-     */
-    public boolean isTrackingFemtocell() {
-        return mTrackingFemtocell;
     }
 
     public void stop() {
@@ -200,7 +189,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             stopTrackingFemto();
         }
         cancelNotification();
-        tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
+        tm.listen(cellSignalListener, PhoneStateListener.LISTEN_NONE);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
 
     }
@@ -241,21 +230,21 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
     public void setCellTracking(boolean track) {
         if (track) {
-            tm.listen(mCellSignalListener,
+            tm.listen(cellSignalListener,
                     PhoneStateListener.LISTEN_CELL_LOCATION |         // gpsd_lat/lon ?
                             PhoneStateListener.LISTEN_SIGNAL_STRENGTHS |      // rx_signal
                             PhoneStateListener.LISTEN_DATA_ACTIVITY |         // No,In,Ou,IO,Do
                             PhoneStateListener.LISTEN_DATA_CONNECTION_STATE | // Di,Ct,Cd,Su
                             PhoneStateListener.LISTEN_CELL_INFO               // !? (Need API 17)
             );
-            mTrackingCell = true;
+            trackingCell = true;
             Helpers.msgShort(context, context.getString(R.string.tracking_cell_information));
         } else {
-            tm.listen(mCellSignalListener, PhoneStateListener.LISTEN_NONE);
-            mDevice.mCell.setLon(0.0);
-            mDevice.mCell.setLat(0.0);
-            mDevice.setCellInfo("[0,0]|nn|nn|"); //default entries into "locationinfo"::Connection
-            mTrackingCell = false;
+            tm.listen(cellSignalListener, PhoneStateListener.LISTEN_NONE);
+            device.cell.setLon(0.0);
+            device.cell.setLat(0.0);
+            device.setCellInfo("[0,0]|nn|nn|"); //default entries into "locationinfo"::Connection
+            trackingCell = false;
             Helpers.msgShort(context, context.getString(R.string.stopped_tracking_cell_information));
         }
         setNotification();
@@ -315,9 +304,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else if (key.equals(OCID_KEY)) {
             getOcidKey();
         } else if (key.equals(VIBRATE_ENABLE)) {
-            mVibrateEnabled = sharedPreferences.getBoolean(VIBRATE_ENABLE, true);
+            vibrateEnabled = sharedPreferences.getBoolean(VIBRATE_ENABLE, true);
         } else if (key.equals(VIBRATE_MIN_LEVEL)) {
-            mVibrateMinThreatLevel = Integer.valueOf(sharedPreferences.getString(VIBRATE_MIN_LEVEL, String.valueOf(Status.MEDIUM.ordinal())));
+            vibrateMinThreatLevel = Integer.valueOf(sharedPreferences.getString(VIBRATE_MIN_LEVEL, String.valueOf(Status.MEDIUM.ordinal())));
         }
     }
 
@@ -468,7 +457,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             }
         } else if (ncls == 0 && nclp) {
             // Detection 7a
-            log.info("ALERT: No neighboring cells detected for CID: " + mDevice.mCell.getCid());
+            log.info("ALERT: No neighboring cells detected for CID: " + device.cell.getCid());
             vibrate(100, Status.MEDIUM);
             dbHelper.toEventLog(4, "No neighboring cells detected"); // (DF_id, DF_desc)
         } else  {
@@ -532,39 +521,39 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      */
     public void compareLac(CellLocation location) {
-        switch (mDevice.getPhoneId()) {
+        switch (device.getPhoneId()) {
 
             case TelephonyManager.PHONE_TYPE_NONE:
             case TelephonyManager.PHONE_TYPE_SIP:
             case TelephonyManager.PHONE_TYPE_GSM:
                 GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
                 if (gsmCellLocation != null) {
-                    mMonitorCell.setLac(gsmCellLocation.getLac());
-                    mMonitorCell.setCid(gsmCellLocation.getCid());
+                    monitorCell.setLac(gsmCellLocation.getLac());
+                    monitorCell.setCid(gsmCellLocation.getCid());
 
                     // Check if LAC is ok
-                    boolean lacOK = dbHelper.checkLAC(mMonitorCell);
+                    boolean lacOK = dbHelper.checkLAC(monitorCell);
                     if (!lacOK) {
-                        mChangedLAC = true;
+                        changedLAC = true;
                         dbHelper.toEventLog(1, "Changing LAC");
 
                         // Detection Logs are made in checkLAC()
                         vibrate(100, Status.MEDIUM);
                     } else {
-                        mChangedLAC = false;
+                        changedLAC = false;
                     }
 
                     // Check if CID is in DBe_import DB (issue #91)
                     if (tinydb.getBoolean("ocid_downloaded")) {
-                        if (!dbHelper.openCellExists(mMonitorCell.getCid())) {
+                        if (!dbHelper.openCellExists(monitorCell.getCid())) {
                             dbHelper.toEventLog(2, "CID not in DBe_import");
 
-                            log.info("ALERT: Connected to unknown CID not in DBe_import: " + mMonitorCell.getCid());
+                            log.info("ALERT: Connected to unknown CID not in DBe_import: " + monitorCell.getCid());
                             vibrate(100, Status.MEDIUM);
 
-                            mCellIdNotInOpenDb = true;
+                            cellIdNotInOpenDb = true;
                         } else {
-                            mCellIdNotInOpenDb = false;
+                            cellIdNotInOpenDb = false;
                         }
                     }
                 }
@@ -573,26 +562,26 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             case TelephonyManager.PHONE_TYPE_CDMA:
                 CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                 if (cdmaCellLocation != null) {
-                    mMonitorCell.setLac(cdmaCellLocation.getNetworkId());
-                    mMonitorCell.setCid(cdmaCellLocation.getBaseStationId());
+                    monitorCell.setLac(cdmaCellLocation.getNetworkId());
+                    monitorCell.setCid(cdmaCellLocation.getBaseStationId());
 
-                    boolean lacOK = dbHelper.checkLAC(mMonitorCell);
+                    boolean lacOK = dbHelper.checkLAC(monitorCell);
                     if (!lacOK) {
-                        mChangedLAC = true;
+                        changedLAC = true;
                         /*dbHelper.insertEventLog(
                                 MiscUtils.getCurrentTimeStamp(),
-                                mMonitorCell.getLAC(),
-                                mMonitorCell.getCid(),
-                                mMonitorCell.getPSC(),//This is giving weird values like 21478364... is this right?
-                                String.valueOf(mMonitorCell.getLat()),
-                                String.valueOf(mMonitorCell.getLon()),
-                                (int)mMonitorCell.getAccuracy(),
+                                monitorCell.getLAC(),
+                                monitorCell.getCid(),
+                                monitorCell.getPSC(),//This is giving weird values like 21478364... is this right?
+                                String.valueOf(monitorCell.getLat()),
+                                String.valueOf(monitorCell.getLon()),
+                                (int)monitorCell.getAccuracy(),
                                 1,
                                 "Changing LAC"
                         );*/
                         dbHelper.toEventLog(1, "Changing LAC");
                     } else {
-                        mChangedLAC = false;
+                        changedLAC = false;
                     }
                 }
         }
@@ -625,7 +614,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     public void refreshDevice() {
-        mDevice.refreshDeviceInfo(tm, context);
+        device.refreshDeviceInfo(tm, context);
     }
 
     /**
@@ -647,8 +636,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         LAST_DB_BACKUP_VERSION      = prefs.getInt(context.getString(R.string.pref_last_database_backup_version), 1);
         CELL_TABLE_CLEANSED         = prefs.getBoolean(context.getString(R.string.pref_cell_table_cleansed), false);
         String refreshRate = prefs.getString(context.getString(R.string.pref_refresh_key), "1");
-        this.mVibrateEnabled = prefs.getBoolean(context.getString(R.string.pref_notification_vibrate_enable), true);
-        this.mVibrateMinThreatLevel = Integer.valueOf(prefs.getString(context.getString(R.string.pref_notification_vibrate_min_level), String.valueOf(Status.MEDIUM.ordinal())));
+        this.vibrateEnabled = prefs.getBoolean(context.getString(R.string.pref_notification_vibrate_enable), true);
+        this.vibrateMinThreatLevel = Integer.valueOf(prefs.getString(context.getString(R.string.pref_notification_vibrate_min_level), String.valueOf(Status.MEDIUM.ordinal())));
 
         // Default to Automatic ("1")
         if (refreshRate.isEmpty()) {
@@ -708,16 +697,16 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *          2015-01-24  E:V:A   FC WTF!? Changed back ^ to "|". (Where is this info parsed?)
      *
      */
-    private final PhoneStateListener mCellSignalListener = new PhoneStateListener() {
+    private final PhoneStateListener cellSignalListener = new PhoneStateListener() {
         public void onCellLocationChanged(CellLocation location) {
 
             checkForNeighbourCount(location);
             compareLac(location);
             refreshDevice();
-            mDevice.setNetID(tm);
-            mDevice.getNetworkTypeName();
+            device.setNetID(tm);
+            device.getNetworkTypeName();
 
-            switch (mDevice.getPhoneId()) {
+            switch (device.getPhoneId()) {
 
                 case TelephonyManager.PHONE_TYPE_NONE:
                 case TelephonyManager.PHONE_TYPE_SIP:
@@ -732,17 +721,17 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                             with different lac then this will also be dump to db.
 
                         */
-                        mDevice.setCellInfo(
+                        device.setCellInfo(
                                 gsmCellLocation.toString() +                // ??
-                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
-                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                        mDevice.getNetworkTypeName() + "|"          // HSPA,LTE etc
+                                        device.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
+                                        device.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
+                                        device.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
 
-                        mDevice.mCell.setLac(gsmCellLocation.getLac());     // LAC
-                        mDevice.mCell.setCid(gsmCellLocation.getCid());     // CID
+                        device.cell.setLac(gsmCellLocation.getLac());     // LAC
+                        device.cell.setCid(gsmCellLocation.getCid());     // CID
                         if (gsmCellLocation.getPsc() != -1) {
-                            mDevice.mCell.setPsc(gsmCellLocation.getPsc()); // PSC
+                            device.cell.setPsc(gsmCellLocation.getPsc()); // PSC
                         }
 
                         /*
@@ -757,17 +746,17 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 case TelephonyManager.PHONE_TYPE_CDMA:
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                     if (cdmaCellLocation != null) {
-                        mDevice.setCellInfo(
+                        device.setCellInfo(
                                 cdmaCellLocation.toString() +                       // ??
-                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
-                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                        mDevice.getNetworkTypeName() + "|"          // HSPA,LTE etc
+                                        device.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
+                                        device.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
+                                        device.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
-                        mDevice.mCell.setLac(cdmaCellLocation.getNetworkId());      // NID
-                        mDevice.mCell.setCid(cdmaCellLocation.getBaseStationId());  // BID
-                        mDevice.mCell.setSid(cdmaCellLocation.getSystemId());       // SID
-                        mDevice.mCell.setMnc(cdmaCellLocation.getSystemId());       // MNC <== BUG!??
-                        mDevice.setNetworkName(tm.getNetworkOperatorName());        // ??
+                        device.cell.setLac(cdmaCellLocation.getNetworkId());      // NID
+                        device.cell.setCid(cdmaCellLocation.getBaseStationId());  // BID
+                        device.cell.setSid(cdmaCellLocation.getSystemId());       // SID
+                        device.cell.setMnc(cdmaCellLocation.getSystemId());       // MNC <== BUG!??
+                        device.setNetworkName(tm.getNetworkOperatorName());        // ??
                     }
             }
 
@@ -802,41 +791,41 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 } else {
                     dbm = signalStrength.getGsmSignalStrength();
                 }
-                mDevice.setSignalDbm(dbm);
+                device.setSignalDbm(dbm);
             } else {
                 int evdoDbm = signalStrength.getEvdoDbm();
                 int cdmaDbm = signalStrength.getCdmaDbm();
 
                 // Use lowest signal to be conservative
-                mDevice.setSignalDbm((cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm);
+                device.setSignalDbm((cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm);
             }
             // Send it to signal tracker
-            signalStrengthTracker.registerSignalStrength(mDevice.mCell.getCid(), mDevice.getSignalDBm());
-            //signalStrengthTracker.isMysterious(mDevice.mCell.getCid(), mDevice.getSignalDBm());
+            signalStrengthTracker.registerSignalStrength(device.cell.getCid(), device.getSignalDBm());
+            //signalStrengthTracker.isMysterious(device.cell.getCid(), device.getSignalDBm());
         }
 
         // In DB:   No,In,Ou,IO,Do
         public void onDataActivity(int direction) {
             switch (direction) {
                 case TelephonyManager.DATA_ACTIVITY_NONE:
-                    mDevice.setDataActivityTypeShort("No");
-                    mDevice.setDataActivityType("None");
+                    device.setDataActivityTypeShort("No");
+                    device.setDataActivityType("None");
                     break;
                 case TelephonyManager.DATA_ACTIVITY_IN:
-                    mDevice.setDataActivityTypeShort("In");
-                    mDevice.setDataActivityType("In");
+                    device.setDataActivityTypeShort("In");
+                    device.setDataActivityType("In");
                     break;
                 case TelephonyManager.DATA_ACTIVITY_OUT:
-                    mDevice.setDataActivityTypeShort("Ou");
-                    mDevice.setDataActivityType("Out");
+                    device.setDataActivityTypeShort("Ou");
+                    device.setDataActivityType("Out");
                     break;
                 case TelephonyManager.DATA_ACTIVITY_INOUT:
-                    mDevice.setDataActivityTypeShort("IO");
-                    mDevice.setDataActivityType("In-Out");
+                    device.setDataActivityTypeShort("IO");
+                    device.setDataActivityType("In-Out");
                     break;
                 case TelephonyManager.DATA_ACTIVITY_DORMANT:
-                    mDevice.setDataActivityTypeShort("Do");
-                    mDevice.setDataActivityType("Dormant");
+                    device.setDataActivityTypeShort("Do");
+                    device.setDataActivityType("Dormant");
                     break;
             }
         }
@@ -845,20 +834,20 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         public void onDataConnectionStateChanged(int state) {
             switch (state) {
                 case TelephonyManager.DATA_DISCONNECTED:
-                    mDevice.setDataState("Disconnected");
-                    mDevice.setDataStateShort("Di");
+                    device.setDataState("Disconnected");
+                    device.setDataStateShort("Di");
                     break;
                 case TelephonyManager.DATA_CONNECTING:
-                    mDevice.setDataState("Connecting");
-                    mDevice.setDataStateShort("Ct");
+                    device.setDataState("Connecting");
+                    device.setDataStateShort("Ct");
                     break;
                 case TelephonyManager.DATA_CONNECTED:
-                    mDevice.setDataState("Connected");
-                    mDevice.setDataStateShort("Cd");
+                    device.setDataState("Connected");
+                    device.setDataStateShort("Cd");
                     break;
                 case TelephonyManager.DATA_SUSPENDED:
-                    mDevice.setDataState("Suspended");
-                    mDevice.setDataStateShort("Su");
+                    device.setDataState("Suspended");
+                    device.setDataStateShort("Su");
                     break;
             }
         }
@@ -894,29 +883,29 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void onLocationChanged(Location loc) {
         // TODO: See issue #555 (DeviceApi17.java is using API 18 CellInfoWcdma calls.
         if (Build.VERSION.SDK_INT > 17) {
-            DeviceApi18.loadCellInfo(tm, mDevice);
+            DeviceApi18.loadCellInfo(tm, device);
         }
 
-        if (!mDevice.mCell.isValid()) {
+        if (!device.cell.isValid()) {
             CellLocation cellLocation = tm.getCellLocation();
             if (cellLocation != null) {
-                switch (mDevice.getPhoneId()) {
+                switch (device.getPhoneId()) {
 
                     case TelephonyManager.PHONE_TYPE_NONE:
                     case TelephonyManager.PHONE_TYPE_SIP:
                     case TelephonyManager.PHONE_TYPE_GSM:
                         GsmCellLocation gsmCellLocation = (GsmCellLocation) cellLocation;
-                        mDevice.mCell.setCid(gsmCellLocation.getCid()); // CID
-                        mDevice.mCell.setLac(gsmCellLocation.getLac()); // LAC
-                        mDevice.mCell.setPsc(gsmCellLocation.getPsc()); // PSC
+                        device.cell.setCid(gsmCellLocation.getCid()); // CID
+                        device.cell.setLac(gsmCellLocation.getLac()); // LAC
+                        device.cell.setPsc(gsmCellLocation.getPsc()); // PSC
                         break;
 
                     case TelephonyManager.PHONE_TYPE_CDMA:
                         CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cellLocation;
-                        mDevice.mCell.setCid(cdmaCellLocation.getBaseStationId()); // BSID ??
-                        mDevice.mCell.setLac(cdmaCellLocation.getNetworkId());     // NID
-                        mDevice.mCell.setSid(cdmaCellLocation.getSystemId());      // SID
-                        mDevice.mCell.setMnc(cdmaCellLocation.getSystemId());      // MNC <== BUG!??
+                        device.cell.setCid(cdmaCellLocation.getBaseStationId()); // BSID ??
+                        device.cell.setLac(cdmaCellLocation.getNetworkId());     // NID
+                        device.cell.setSid(cdmaCellLocation.getSystemId());      // SID
+                        device.cell.setMnc(cdmaCellLocation.getSystemId());      // MNC <== BUG!??
 
                         break;
                 }
@@ -928,12 +917,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         && Double.doubleToRawLongBits(loc.getLongitude()) != 0)) {
 
 
-            mDevice.mCell.setLon(loc.getLongitude());       // gpsd_lon
-            mDevice.mCell.setLat(loc.getLatitude());        // gpsd_lat
-            mDevice.mCell.setSpeed(loc.getSpeed());         // speed        // TODO: Remove, we're not using it!
-            mDevice.mCell.setAccuracy(loc.getAccuracy());   // gpsd_accu
-            mDevice.mCell.setBearing(loc.getBearing());     // -- [deg]??   // TODO: Remove, we're not using it!
-            mDevice.setLastLocation(loc);                   //
+            device.cell.setLon(loc.getLongitude());       // gpsd_lon
+            device.cell.setLat(loc.getLatitude());        // gpsd_lat
+            device.cell.setSpeed(loc.getSpeed());         // speed        // TODO: Remove, we're not using it!
+            device.cell.setAccuracy(loc.getAccuracy());   // gpsd_accu
+            device.cell.setBearing(loc.getBearing());     // -- [deg]??   // TODO: Remove, we're not using it!
+            device.setLastLocation(loc);                   //
 
             // Store last known location in preference
             SharedPreferences.Editor prefsEditor;
@@ -944,9 +933,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             // This only logs a BTS if we have GPS lock
             // TODO: Is correct behaviour? We should consider logging all cells, even without GPS.
-            if (mTrackingCell) {
+            if (trackingCell) {
                 // This also checks that the lac are cid are not in DB before inserting
-                dbHelper.insertBTS(mDevice.mCell);
+                dbHelper.insertBTS(device.cell);
             }
         }
     }
@@ -987,38 +976,38 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      */
     void setNotification() {
         String tickerText;
-        String contentText = "Phone Type " + mDevice.getPhoneType();
+        String contentText = "Phone Type " + device.getPhoneType();
 
-        if (mFemtoDetected || mTypeZeroSmsDetected) {
-            getApplication().setCurrentStatus(Status.DANGER, mVibrateEnabled, mVibrateMinThreatLevel);
-        } else if (mChangedLAC) {
-            getApplication().setCurrentStatus(Status.MEDIUM, mVibrateEnabled, mVibrateMinThreatLevel);
+        if (femtoDetected || typeZeroSmsDetected) {
+            getApplication().setCurrentStatus(Status.DANGER, vibrateEnabled, vibrateMinThreatLevel);
+        } else if (changedLAC) {
+            getApplication().setCurrentStatus(Status.MEDIUM, vibrateEnabled, vibrateMinThreatLevel);
             contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
-        } else if (mCellIdNotInOpenDb) {
-            getApplication().setCurrentStatus(Status.MEDIUM, mVibrateEnabled, mVibrateMinThreatLevel);
+        } else if (cellIdNotInOpenDb) {
+            getApplication().setCurrentStatus(Status.MEDIUM, vibrateEnabled, vibrateMinThreatLevel);
             contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
-        } else if (mTrackingFemtocell || mTrackingCell || mMonitoringCell) {
-            getApplication().setCurrentStatus(Status.OK, mVibrateEnabled, mVibrateMinThreatLevel);
-            if (mTrackingFemtocell) {
+        } else if (trackingFemtocell || trackingCell || monitoringCell) {
+            getApplication().setCurrentStatus(Status.OK, vibrateEnabled, vibrateMinThreatLevel);
+            if (trackingFemtocell) {
                 contentText = context.getString(R.string.femtocell_detection_active);
             } else
-            if (mTrackingCell) {
+            if (trackingCell) {
                 contentText = context.getString(R.string.cell_tracking_active);
             } 
-            if (mMonitoringCell) {
+            if (monitoringCell) {
                 contentText = context.getString(R.string.cell_monitoring_active);
             } else {
-                getApplication().setCurrentStatus(Status.IDLE, mVibrateEnabled, mVibrateMinThreatLevel);
+                getApplication().setCurrentStatus(Status.IDLE, vibrateEnabled, vibrateMinThreatLevel);
             }
         } else {
-            getApplication().setCurrentStatus(Status.IDLE, mVibrateEnabled, mVibrateMinThreatLevel);
+            getApplication().setCurrentStatus(Status.IDLE, vibrateEnabled, vibrateMinThreatLevel);
         }
 
 
-            Status status = getApplication().getStatus();
+        Status status = getApplication().getStatus();
             switch (status) {
                 case IDLE: // GRAY
-                    contentText = context.getString(R.string.phone_type) + mDevice.getPhoneType();
+                    contentText = context.getString(R.string.phone_type) + device.getPhoneType();
                     tickerText = context.getResources().getString(R.string.app_name_short) + " " + context.getString(R.string.status_idle_description);
                     break;
 
@@ -1030,7 +1019,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     // Initialize tickerText as the app name string
                     // See multiple detection comments above.
                     tickerText = context.getResources().getString(R.string.app_name_short);
-                    if (mChangedLAC) {
+                    if (changedLAC) {
                         //Append changing LAC text
                         contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
                         tickerText += " - " + contentText;
@@ -1039,7 +1028,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         //    tickerText += " - BTS doesn't provide any neighbors!";
                         //    contentText = "CID: " + cellid + " is not providing a neighboring cell list!";
 
-                    } else if (mCellIdNotInOpenDb) {
+                    } else if (cellIdNotInOpenDb) {
                         //Append Cell ID not existing in external db text
                         contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
                         tickerText += " - " + contentText;
@@ -1048,9 +1037,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                 case DANGER: // RED
                     tickerText = context.getResources().getString(R.string.app_name_short) + " - " + context.getString(R.string.alert_threat_detected); // Hmm, this is vague!
-                    if (mFemtoDetected) {
+                    if (femtoDetected) {
                         contentText = context.getString(R.string.alert_femtocell_connection_detected);
-                    } else if (mTypeZeroSmsDetected) {
+                    } else if (typeZeroSmsDetected) {
                         contentText = context.getString(R.string.alert_silent_sms_detected);
                     }
 
@@ -1062,8 +1051,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
             // TODO: Explanation (see above)
             Intent notificationIntent = new Intent(context, MainActivity.class);
-            notificationIntent.putExtra("silent_sms", mTypeZeroSmsDetected);
-            notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
+            notificationIntent.putExtra("silent_sms", typeZeroSmsDetected);
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
             PendingIntent contentIntent = PendingIntent.getActivity(
                     context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
@@ -1072,12 +1061,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         int color = context.getResources().getColor(status.getColor());
 
-            Notification mBuilder = new NotificationCompat.Builder(context)
+            Notification notification = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.tower48)
                     .setColor(color)
                     .setLargeIcon(largeIcon)
                     .setTicker(tickerText)
-                    .setContentTitle(context.getResources().getString(R.string.main_app_name))
+                    .setContentTitle(context.getString(R.string.status) + " " + context.getString(status.getName()))
+                    .setContentInfo(context.getResources().getString(R.string.app_name_short))
                     .setContentText(contentText)
                     .setOngoing(true)
                     .setAutoCancel(false)
@@ -1086,7 +1076,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         NotificationManagerCompat
                 .from(context)
-                .notify(NOTIFICATION_ID, mBuilder);
+                .notify(NOTIFICATION_ID, notification);
 
     }
 
@@ -1099,7 +1089,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      * and act appropriately
      * */
     private void vibrate(int msec, Status threatLevel) {
-        if (mVibrateEnabled && (threatLevel == null || threatLevel.ordinal() >= mVibrateMinThreatLevel)) {
+        if (vibrateEnabled && (threatLevel == null || threatLevel.ordinal() >= vibrateMinThreatLevel)) {
             Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             v.vibrate(msec);
         }
@@ -1120,12 +1110,12 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void startTrackingFemto() {
 
         /* Check if it is a CDMA phone */
-        if (mDevice.getPhoneId() != TelephonyManager.PHONE_TYPE_CDMA) {
+        if (device.getPhoneId() != TelephonyManager.PHONE_TYPE_CDMA) {
             Helpers.msgShort(context, context.getString(R.string.femtocell_only_on_cdma_devices));
             return;
         }
 
-        mTrackingFemtocell = true;
+        trackingFemtocell = true;
         mPhoneStateListener = new PhoneStateListener() {
             public void onServiceStateChanged(ServiceState s) {
                 log.debug(context.getString(R.string.service_state_changed));
@@ -1143,7 +1133,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void stopTrackingFemto() {
         if (mPhoneStateListener != null) {
             tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
-            mTrackingFemtocell = false;
+            trackingFemtocell = false;
             setNotification();
             log.verbose(context.getString(R.string.stopped_tracking_femtocell));
         }
@@ -1153,11 +1143,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if (s != null) {
             if (IsConnectedToCdmaFemto(s)) {
                 Helpers.msgShort(context, context.getString(R.string.alert_femtocell_tracking_detected));
-                mFemtoDetected = true;
+                femtoDetected = true;
                 setNotification();
                 //toggleRadio();
             } else {
-                mFemtoDetected = false;
+                femtoDetected = false;
                 setNotification();
             }
         }
@@ -1173,7 +1163,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
          */
 
         /* Get the radio technology */
-        int networkType = mDevice.mCell.getNetType();
+        int networkType = device.cell.getNetType();
 
         /* Check if it is EvDo network */
         boolean evDoNetwork = isEvDoNetwork(networkType);
@@ -1270,13 +1260,4 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
 
     };
-
-    /**
-     * Used in SmsDetector.java
-     */
-    public Cell getMonitorCell() {
-        return mMonitorCell;
-    }
-
-
 }
