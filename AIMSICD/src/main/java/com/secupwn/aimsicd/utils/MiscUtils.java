@@ -15,20 +15,17 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
-import com.secupwn.aimsicd.ui.activities.MainActivity;
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.ui.activities.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MiscUtils {
-
-    private static final Logger log = AndroidLogger.forClass(MiscUtils.class);
 
     public static String getCurrentTimeStamp() {
         //yyyyMMddHHmmss <-- this format is needed for OCID upload
@@ -66,22 +63,33 @@ public class MiscUtils {
         NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification);
     }
 
+    public static final Pattern LOGCAT_TIMESTAMP_PATTERN = Pattern.compile("^(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2}).(\\d{3})");
 
-    /*
-     * Converts logcat timstamp to SQL friendly timstamps
-     * We use this to determine if an sms has already been found
-     *
-     * Converts a timstamp in this format:     06-17 22:06:05.988 D/dalvikvm(24747):
-     * Returns a timestamp in this format:     20150617223311
-     */
-    public static String logcatTimeStampParser(String line) {
-        String[] buffer = line.split(" ");
+    public static Date parseLogcatTimeStamp(String line) {
+        Matcher matcher = LOGCAT_TIMESTAMP_PATTERN.matcher(line);
 
-        line = String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + buffer[0] + buffer[1];
-        //   We don't need the last 4 digits in timestamp ".988" or it is too accurate.
-        return line.substring(0, line.length() - 4)
-                .replace(":", "")
-                .replace(".", "")
-                .replace("-", "");
+        if(matcher.find()) {
+            int month = Integer.valueOf(matcher.group(1));
+            int day = Integer.valueOf(matcher.group(2));
+
+            int hour = Integer.valueOf(matcher.group(3));
+            int minute = Integer.valueOf(matcher.group(4));
+            int second = Integer.valueOf(matcher.group(5));
+            int ms = Integer.valueOf(matcher.group(6));
+
+            Calendar calendar = Calendar.getInstance();
+
+            calendar.set(Calendar.MONTH, month - 1);
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+
+            calendar.set(Calendar.HOUR, hour);
+            calendar.set(Calendar.MINUTE, minute);
+            calendar.set(Calendar.SECOND, second);
+            calendar.set(Calendar.MILLISECOND, ms);
+
+            return calendar.getTime();
+        } else {
+            throw new IllegalArgumentException("Invalid Line");
+        }
     }
 }

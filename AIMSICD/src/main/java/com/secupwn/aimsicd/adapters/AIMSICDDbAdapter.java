@@ -16,8 +16,6 @@ import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.service.CellTracker;
-import com.secupwn.aimsicd.smsdetection.AdvanceUserItems;
-import com.secupwn.aimsicd.smsdetection.CapturedSmsData;
 import com.secupwn.aimsicd.utils.CMDProcessor;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.MiscUtils;
@@ -811,29 +809,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                 case "SectorType":
                                     insertSectorType(records.get(i)[1]);
                                     break;
-
-                                case "DetectionStrings":
-                                    insertDetectionStrings(
-                                            records.get(i)[1],
-                                            records.get(i)[2]);
-                                    break;
-
-                                case "SmsData":
-                                    insertSmsData(
-                                            records.get(i)[1],           //time
-                                            records.get(i)[2],           //number
-                                            records.get(i)[3],           //smsc
-                                            records.get(i)[4],           //message
-                                            records.get(i)[5],           //type
-                                            records.get(i)[6],           //class
-                                            Integer.parseInt(records.get(i)[7]),    //lac
-                                            Integer.parseInt(records.get(i)[8]),    //cid
-                                            records.get(i)[9],           //rat
-                                            Double.parseDouble(records.get(i)[10]), //gps_lat
-                                            Double.parseDouble(records.get(i)[11]), //gps_lon
-                                            Integer.parseInt(records.get(i)[12])    //isRoaming
-                                    );
-                                    break;
                             }
                         }
                     }
@@ -1091,126 +1066,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     // ********************** ALL NEW FUNCTIONS ADDED AFTER THIS LINE *****************************
     //=============================================================================================
 
-    // ====================================================================
-    //      Get all detection strings
-    // ====================================================================
-    public List<AdvanceUserItems> getDetectionStrings() {
-
-        Cursor cursor = mDb.rawQuery("SELECT * FROM DetectionStrings", null);
-
-        List<AdvanceUserItems> detectionStrings = new ArrayList<>();
-
-        if (cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                AdvanceUserItems setItems = new AdvanceUserItems();
-                setItems.setDetection_string(cursor.getString(cursor.getColumnIndex("det_str")));
-                setItems.setDetection_type(cursor.getString(cursor.getColumnIndex("sms_type")));
-                detectionStrings.add(setItems);
-
-            }
-        } else {
-            AdvanceUserItems setItems = new AdvanceUserItems();
-            setItems.setDetection_string("No data");
-            setItems.setDetection_type("No data");
-            detectionStrings.add(setItems);
-        }
-        cursor.close();
-        return detectionStrings;
-    }
-
-    public boolean deleteDetectedSms(long deleteme) {
-        String mTAG = "AIMSICDDbAdapter";
-
-        try {
-            mDb.delete("SmsData", "_id=" + deleteme, null);
-            return true;
-        } catch (Exception ee) {
-            log.info(mTAG + ": Deleting SMS data failed", ee);
-        }
-        return false;
-    }
-
-    public boolean deleteDetectionString(String deleteme) {
-
-        try {
-            mDb.delete("DetectionStrings", "det_str='" + deleteme + "'", null);
-            return true;
-        } catch (Exception ee) {
-            log.info("Deleting detection string failed", ee);
-        }
-        return false;
-
-    }
-
-    //====================================================================
-    //      Insert new detection strings into database
-    //====================================================================
-
-    /**
-     * When inserting strings it has to be in the format:
-     * "i am a type 0 string". These strings can be found in main logcat.
-     * <p/>
-     * TYPE0 SILENTVOICE FLASH <--- These have to be in CAPS
-     * ContentValues newconvalues = new ContentValues();
-     * newconvalues.put(DETECTION_STRINGS_LOGCAT_STRING, "your string goes here");
-     * newconvalues.put(DETECTION_STRINGS_SMS_TYPE, "TYPE0");
-     * database.insert(DETECTION_STRINGS_TABLE_NAME,,null,newconvalues);
-     */
-    public boolean insertNewDetectionString(ContentValues newString) {
-
-        // First check that string not in DB
-        String check4String = String.format(
-                "SELECT * FROM DetectionStrings WHERE det_str = \"%s\"",
-                newString.get("det_str").toString());
-
-        Cursor cursor = mDb.rawQuery(check4String, null);
-        final boolean exists = cursor.getCount() > 0;
-        cursor.close();
-
-        if (exists) {
-            log.info("Detection String already in Database");
-        } else {
-            try {
-                mDb.insert("DetectionStrings", null, newString);
-                log.info("New detection string added.");
-                return true;
-            } catch (Exception ee) {
-                log.info("Adding detection string Failed! ", ee);
-            }
-        }
-        return false;
-    }
-
-    public CapturedSmsData storeCapturedSms(CapturedSmsData smsdata) {
-
-        ContentValues values = new ContentValues();
-
-        values.put("number", smsdata.getSenderNumber());
-        values.put("message", smsdata.getSenderMsg());
-        values.put("time", smsdata.getSmsTimestamp());
-        values.put("type", smsdata.getSmsType());
-        values.put("lac", smsdata.getCurrent_lac());
-        values.put("cid", smsdata.getCurrent_cid());
-        values.put("rat", smsdata.getCurrent_nettype());
-        values.put("isRoaming", smsdata.getCurrent_roam_status());
-        values.put("gps_lat", smsdata.getCurrent_gps_lat());
-        values.put("gps_lon", smsdata.getCurrent_gps_lon());
-
-        long insertId = mDb.insert("SmsData", null, values);
-        smsdata.setId(insertId);
-        return smsdata;
-    }
-
-    // Boolean Check if a give timestamp already exists in SmsData table
-    public boolean isTimeStampInDB(String timestamp) {
-        String check4timestamp = String.format(
-                "SELECT time FROM SmsData WHERE time = \"%s\"", timestamp);
-        Cursor cursor = mDb.rawQuery(check4timestamp, null);
-        final boolean exists = cursor.getCount() > 0;
-        cursor.close();
-        return exists;
-    }
-
     //====================================================================
     //      RETURN DATABASE CURSORS START HERE
     //
@@ -1364,37 +1219,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      */
     public Cursor returnEventLogData() {
         return mDb.rawQuery("SELECT * FROM EventLog", null);
-    }
-
-    /**
-     * Returned Columns:
-     * "_id"            INTEGER PRIMARY KEY AUTOINCREMENT,
-     * "detection_str"  TEXT,
-     * "sms_type"       TEXT--(WapPush MWI TYPE0 etc..)
-     */
-    public Cursor returnDetectionStrings() {
-        return mDb.rawQuery("SELECT * FROM DetectionStrings", null);
-    }
-
-    // TODO: THESE ARE OUTDATED!! Please see design and update
-    /*
-    Returned Columns:
-    "_id"       INTEGER PRIMARY KEY AUTOINCREMENT,
-    "time"      TEXT,
-    "number"    TEXT,
-    "smsc"      TEXT,
-    "message"   TEXT,
-    "type"      TEXT,   -- WapPush MWI TYPE0 etc..)
-    "class"     TEXT,   --(CLASS 0 etc...)
-    "lac"       INTEGER,
-    "cid"       INTEGER,
-    "rat"       TEXT,
-    "gps_lat"   REAL,
-    "gps_lon"   REAL,
-    "isRoaming" INTEGER
- */
-    public Cursor returnSmsData() {
-        return mDb.rawQuery("SELECT * FROM SmsData", null);
     }
 
     //----END OF RETURN DATABASE CURSORS------//
@@ -1976,66 +1800,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         ContentValues sectorType = new ContentValues();
         sectorType.put("description", description);
         mDb.insert("SectorType", null, sectorType);
-    }
-
-    /**
-     * Inserts SMS Detection Strings data into the "DetectionStrings" table
-     */
-    public void insertDetectionStrings(String det_str, String sms_type) {
-
-        ContentValues detectionStrings = new ContentValues();
-        detectionStrings.put("det_str", det_str);
-        detectionStrings.put("sms_type", sms_type);
-
-        String query = String.format(
-                "SELECT * FROM DetectionStrings WHERE det_str = \"%s\" AND sms_type = \"%s\"",
-                det_str, sms_type);
-
-        // Check that the new string is not already in DB then insert
-        Cursor cursor = mDb.rawQuery(query, null);
-        if (cursor.getCount() <= 0) {
-            mDb.insert("DetectionStrings", null, detectionStrings);
-            cursor.close();
-        } else {
-            cursor.close();
-        }
-    }
-
-    /**
-     * Inserts detected silent SMS data into "SmsData" table
-     */
-    public void insertSmsData(String time,
-                              String number,
-                              String smsc,
-                              String message,
-                              String type,
-                              String CLASS, //<-- had to put in uppercase class is used be api
-                              int lac,
-                              int cid,
-                              String rat,
-                              double gps_lat,
-                              double gps_lon,
-                              int isRoaming) {
-
-        ContentValues smsData = new ContentValues();
-
-        smsData.put("time", time);
-        smsData.put("number", number);
-        smsData.put("smsc", smsc);
-        smsData.put("message", message);
-        smsData.put("type", type);
-        smsData.put("class", CLASS);
-        smsData.put("lac", lac);
-        smsData.put("cid", cid);
-        smsData.put("rat", rat);
-        smsData.put("gps_lat", gps_lat);
-        smsData.put("gps_lon", gps_lon);
-        smsData.put("isRoaming", isRoaming);
-
-        // Check that SMS timestamp is not already in DB, then INSERT
-        if (!isTimeStampInDB(time)) {
-            mDb.insert("SmsData", null, smsData);
-        }
     }
 
     /**

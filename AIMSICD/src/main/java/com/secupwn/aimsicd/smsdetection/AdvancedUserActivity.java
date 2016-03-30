@@ -8,7 +8,6 @@
 
 package com.secupwn.aimsicd.smsdetection;
 
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,17 +18,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
-import com.secupwn.aimsicd.constants.DBTableColumnIds;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.secupwn.aimsicd.data.SmsDetectionString;
+import com.secupwn.aimsicd.data.adapter.DetectionStringAdapter;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 @XmlLayout(R.layout.activity_advanced_user)
 public class AdvancedUserActivity extends InjectionAppCompatActivity {
@@ -39,7 +37,6 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
     @InjectView(R.id.listView_Adv_Activity)
     private ListView listViewAdv;
-    private AIMSICDDbAdapter dbAccess;
 
     @InjectView(R.id.btn_insert)
     private Button insertButton;
@@ -49,48 +46,32 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
     @InjectView(R.id.spinner)
     private Spinner spinner;
-    private List<AdvanceUserItems> msgItems;
+
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbAccess = new AIMSICDDbAdapter(getApplicationContext());
 
-        try {
-            msgItems = dbAccess.getDetectionStrings();
-        } catch (Exception ee) {
-            log.error("Database error", ee);
-            msgItems = new ArrayList<>();
-            AdvanceUserItems advUserItems = new AdvanceUserItems();
-            advUserItems.setDetection_string("NO DATA");
-            advUserItems.setDetection_type("No TYPE");
-            msgItems.add(advUserItems);
-        }
+        realm = Realm.getDefaultInstance();
 
-        listViewAdv.setAdapter(new AdvanceUserBaseAdapter(getApplicationContext(), msgItems));
+        RealmResults<SmsDetectionString> msgItems = realm.allObjects(SmsDetectionString.class);
+
+        listViewAdv.setAdapter(new DetectionStringAdapter(this, msgItems, true));
 
         listViewAdv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> a, View v, int position, long id) {
-                Object o = listViewAdv.getItemAtPosition(position);
-                AdvanceUserItems itemDetails = (AdvanceUserItems) o;
+                SmsDetectionString detectionString = (SmsDetectionString) listViewAdv.getItemAtPosition(position);
 
-                String itemDetail = itemDetails.getDetection_string();
+                String string = detectionString.getDetectionString();
 
-                if (dbAccess.deleteDetectionString(itemDetails.getDetection_string())) {
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.deleted) + ": " + itemDetail, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.failed_to_delete)
-                            + " " + itemDetail, Toast.LENGTH_SHORT).show();
-                }
+                detectionString.removeFromRealm();
 
-                try {
-                    loadDbString();
-                } catch (Exception ee) {
-                    log.debug("Error loading db string", ee);
-                }
-                return false;
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.deleted) + ": " + string, Toast.LENGTH_SHORT).show();
+
+                return true;
             }
         });
 
@@ -100,45 +81,30 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
             public void onClick(View view) {
 
                 if (editAdvUserDet.getText().toString().contains("\"")) {
-                    Toast.makeText(getApplicationContext(), R.string.double_quote_will_cause_db_error,
+                    Toast.makeText(AdvancedUserActivity.this, R.string.double_quote_will_cause_db_error,
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    ContentValues store_new_sms_string = new ContentValues();
-                    store_new_sms_string.put(DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING,
-                            editAdvUserDet.getText().toString());
 
-                    store_new_sms_string.put(DBTableColumnIds.DETECTION_STRINGS_SMS_TYPE,
-                            spinner.getSelectedItem().toString());
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            SmsDetectionString detectionString = realm.createObject(SmsDetectionString.class);
 
-                    if (dbAccess.insertNewDetectionString(store_new_sms_string)) {
-                        Toast.makeText(getApplicationContext(), R.string.the_string_was_added_to_db,
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), R.string.failed_to_add_the_string_to_db,
-                                Toast.LENGTH_SHORT).show();
-                    }
+                            detectionString.setDetectionString(editAdvUserDet.getText().toString());
+                            detectionString.setSmsType(spinner.getSelectedItem().toString());
 
-                    try {
-                        loadDbString();
-                    } catch (Exception ee) {
-                        log.error(ee.getMessage(), ee);
-                    }
+                            Toast.makeText(AdvancedUserActivity.this, R.string.the_string_was_added_to_db,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
     }
 
-    /**
-     * Reload ListView with new database values
-     */
-    public void loadDbString() {
-        List<AdvanceUserItems> newmsglist;
-        try {
-        /* There should be at least 1 detection string in db so not to cause an error */
-            newmsglist = dbAccess.getDetectionStrings();
-            listViewAdv.setAdapter(new AdvanceUserBaseAdapter(getApplicationContext(), newmsglist));
-        } catch (Exception ee) {
-            log.error("<AdvanceUserItems>", ee);
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 }

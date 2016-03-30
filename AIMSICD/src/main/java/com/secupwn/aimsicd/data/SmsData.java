@@ -11,7 +11,19 @@ import lombok.Setter;
 public class SmsData extends RealmObject {
 
     private Date timestamp;
-    private String number;
+    private String senderNumber;
     private String message;
+    private String type;
     private Location location;
+    private boolean roaming;
+
+    private int currentLac;
+    private int currentCid;
+    private String currentRat;
+
+    @Override
+    public void removeFromRealm() {
+        location.removeFromRealm();
+        super.removeFromRealm();
+    }
 }

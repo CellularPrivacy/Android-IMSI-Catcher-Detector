@@ -13,6 +13,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseArray;
 
 import com.secupwn.aimsicd.constants.TinyDbKeys;
+import com.secupwn.aimsicd.data.SmsDetectionString;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.utils.BaseAsyncTask;
 import com.secupwn.aimsicd.utils.TinyDB;
@@ -65,8 +66,45 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
 
         Realm.setDefaultConfiguration(realmConfiguration);
 
+        ensureDefaultData();
+
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
+    }
+
+    private void ensureDefaultData() {
+        Realm realm = Realm.getDefaultInstance();
+        if(realm.where(SmsDetectionString.class).count() == 0){
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+
+                    SmsDetectionString smsDetectionString1 = realm.createObject(SmsDetectionString.class);
+                    smsDetectionString1.setDetectionString("Received short message type 0");
+                    smsDetectionString1.setSmsType("TYPE0");
+
+                    SmsDetectionString smsDetectionString2 = realm.createObject(SmsDetectionString.class);
+                    smsDetectionString2.setDetectionString("Received voice mail indicator clear SMS shouldStore=false");
+                    smsDetectionString2.setSmsType("MWI");
+
+                    SmsDetectionString smsDetectionString3 = realm.createObject(SmsDetectionString.class);
+                    smsDetectionString3.setDetectionString("SMS TP-PID:0 data coding scheme: 24");
+                    smsDetectionString3.setSmsType("FLASH");
+
+                    SmsDetectionString smsDetectionString4 = realm.createObject(SmsDetectionString.class);
+                    smsDetectionString4.setDetectionString("isTypeZero=true");
+                    smsDetectionString4.setSmsType("TYPE0");
+
+                    SmsDetectionString smsDetectionString5 = realm.createObject(SmsDetectionString.class);
+                    smsDetectionString5.setDetectionString("incoming msg. Mti 0 ProtocolID 0 DCS 0x04 class -1");
+                    smsDetectionString5.setSmsType("WAPPUSH");
+
+                    SmsDetectionString smsDetectionString6 = realm.createObject(SmsDetectionString.class);
+                    smsDetectionString6.setDetectionString("SMS TP-PID:0 data coding scheme: 4");
+                    smsDetectionString6.setSmsType("WAPPUSH");
+                }
+            });
+        }
     }
 
     public void removeTask(BaseAsyncTask<?, ?, ?> pTask) {

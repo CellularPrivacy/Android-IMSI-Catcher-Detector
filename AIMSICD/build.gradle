@@ -97,6 +97,8 @@ dependencies {
 
     provided "org.projectlombok:lombok:1.16.8"
     apt "org.projectlombok:lombok:1.16.8"
+
+    testCompile 'junit:junit:4.12'
 }
 
 apply from: "signing.gradle"

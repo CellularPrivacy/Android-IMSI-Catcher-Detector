@@ -1,27 +1,25 @@
-/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
- * -----------------------------------------------------------
- * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
- * -----------------------------------------------------------
- */
+package com.secupwn.aimsicd.data.adapter;
 
-/* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
-
-package com.secupwn.aimsicd.smsdetection;
-
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.BaseInflaterAdapter;
-import com.secupwn.aimsicd.adapters.IAdapterViewInflater;
+import com.secupwn.aimsicd.data.SmsDetectionString;
 
-public class DetectionStringsCardInflater implements IAdapterViewInflater<DetectionStringsData> {
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
+
+public class DetectionStringAdapter extends RealmBaseAdapter<SmsDetectionString> {
+
+    public DetectionStringAdapter(Context context, RealmResults<SmsDetectionString> realmResults, boolean automaticUpdate) {
+        super(context, realmResults, automaticUpdate);
+    }
 
     @Override
-    public View inflate(final BaseInflaterAdapter<DetectionStringsData> adapter,
-                        final int pos, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
         if (convertView == null) {
@@ -32,7 +30,7 @@ public class DetectionStringsCardInflater implements IAdapterViewInflater<Detect
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final DetectionStringsData item = adapter.getTItem(pos);
+        SmsDetectionString item = getItem(position);
         holder.updateDisplay(item);
 
         return convertView;
@@ -54,9 +52,9 @@ public class DetectionStringsCardInflater implements IAdapterViewInflater<Detect
             rootView.setTag(this);
         }
 
-        public void updateDisplay(DetectionStringsData item) {
+        public void updateDisplay(SmsDetectionString item) {
             d_string.setText(item.getDetectionString());
-            d_type.setText(item.getDetectionType());
+            d_type.setText(item.getSmsType());
         }
     }
 }

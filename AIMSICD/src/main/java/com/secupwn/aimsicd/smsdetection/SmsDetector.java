@@ -17,6 +17,9 @@ import android.view.WindowManager;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.data.Location;
+import com.secupwn.aimsicd.data.SmsData;
+import com.secupwn.aimsicd.data.SmsDetectionString;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.utils.MiscUtils;
 
@@ -25,10 +28,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
 import lombok.Cleanup;
 import lombok.Getter;
 
@@ -69,7 +74,6 @@ public final class SmsDetector extends Thread {
     private boolean mBound;
     private AIMSICDDbAdapter mDbAdapter;
     private Context mContext;
-    private final String[] LOADED_DETECTION_STRINGS;
     private static final int TYPE0 = 1, MWI = 2, WAP = 3;
     // TODO: replace this with retrieval from AIMSICDDbAdapter
     private static final int LOGCAT_BUFFER_MAX_SIZE = 100;
@@ -85,14 +89,6 @@ public final class SmsDetector extends Thread {
     public SmsDetector(Context context) {
         mContext = context;
         mDbAdapter = new AIMSICDDbAdapter(context);
-
-        List<AdvanceUserItems> silent_string = mDbAdapter.getDetectionStrings();
-
-        LOADED_DETECTION_STRINGS = new String[silent_string.size()];
-        for (int x = 0; x < silent_string.size(); x++) {
-            LOADED_DETECTION_STRINGS[x] = silent_string.get(x).getDetection_string()
-                    + "#" + silent_string.get(x).getDetection_type();
-        }
     }
 
     public static boolean getSmsDetectionState() {
@@ -184,10 +180,10 @@ public final class SmsDetector extends Thread {
                         String bufferedLine = logcatLines.get(counter);
                         switch (checkForSms(bufferedLine)) {
                             case TYPE0:
-                                parseTypeZeroSms(outLines, MiscUtils.logcatTimeStampParser(bufferedLine));
+                                parseTypeZeroSms(outLines, MiscUtils.parseLogcatTimeStamp(bufferedLine));
                                 break;
                             case MWI:
-                                parseMwiSms(outLines, MiscUtils.logcatTimeStampParser(bufferedLine));
+                                parseMwiSms(outLines, MiscUtils.parseLogcatTimeStamp(bufferedLine));
                                 break;
                             case WAP:
                                 int remainingLinesInBuffer = logcatLines.size() - counter - LOGCAT_WAP_EXTRA_LINES;
@@ -226,7 +222,7 @@ public final class SmsDetector extends Thread {
                                     nextAvailableLines[nextLine] = logcatLines.get(counter + nextLine);
                                 }
 
-                                parseWapPushSms(outLines, nextAvailableLines, MiscUtils.logcatTimeStampParser(bufferedLine));
+                                parseWapPushSms(outLines, nextAvailableLines, MiscUtils.parseLogcatTimeStamp(bufferedLine));
                                 break;
                         }
                         counter++;
@@ -250,24 +246,21 @@ public final class SmsDetector extends Thread {
     }
 
     private int checkForSms(String line) {
+
+        Realm realm = Realm.getDefaultInstance();
+
+
         //0 - null 1 = TYPE0, 2 = MWI, 3 = WAPPUSH
-        for (String LOADED_DETECTION_STRING : LOADED_DETECTION_STRINGS) {
+        for (SmsDetectionString detectionString : realm.allObjects(SmsDetectionString.class)) {
             //looping through detection strings to see does logcat line match
-            // memory optimized and precaution for LOADED_DETECTION_STRING being not filled
-            String[] splitDetectionString = LOADED_DETECTION_STRING == null ? null : LOADED_DETECTION_STRING.split("#");
-            if (splitDetectionString == null || splitDetectionString.length < 2 || splitDetectionString[0] == null || splitDetectionString[1] == null) {
-                log.debug("Broken detection string: " + LOADED_DETECTION_STRING);
-                // skip broken detection string
-                continue;
-            }
-            if (line.contains(splitDetectionString[0])) {
-                if ("TYPE0".equalsIgnoreCase(splitDetectionString[1])) {
+            if (line.contains(detectionString.getDetectionString())) {
+                if ("TYPE0".equalsIgnoreCase(detectionString.getSmsType())) {
                     log.info("TYPE0 detected");
                     return TYPE0;
-                } else if ("MWI".equalsIgnoreCase(splitDetectionString[1])) {
+                } else if ("MWI".equalsIgnoreCase(detectionString.getSmsType())) {
                     log.info("MWI detected");
                     return MWI;
-                } else if ("WAPPUSH".equalsIgnoreCase(splitDetectionString[1])) {
+                } else if ("WAPPUSH".equalsIgnoreCase(detectionString.getSmsType())) {
                     log.info("WAPPUSH detected");
                     return WAP;
                 }
@@ -279,101 +272,110 @@ public final class SmsDetector extends Thread {
             // return 0;
             // }
         }
+        realm.close();
+
         return 0;
     }
 
-    private void parseTypeZeroSms(String[] bufferLines, String logcat_timestamp) {
+    private void parseTypeZeroSms(String[] bufferLines, Date logcat_timestamp) {
 
-        CapturedSmsData capturedSms = new CapturedSmsData();
-        String smsText = findSmsData(bufferLines, null);
-        String num = findSmsNumber(bufferLines, null);
+        @Cleanup Realm realm = Realm.getDefaultInstance();
 
-        capturedSms.setSenderNumber(num == null ? "null" : num);
-        capturedSms.setSenderMsg(smsText == null ? "null" : num);
-        capturedSms.setSmsTimestamp(logcat_timestamp);
-        capturedSms.setSmsType("TYPE0");
-        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLac());
-        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCid());
-        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRat());
-        int isRoaming = 0;
-
-        if (mAIMSICDService.getCellTracker().getDevice().isRoaming()) {
-            isRoaming = 1;
-        }
-        capturedSms.setCurrent_roam_status(isRoaming);
-        capturedSms.setCurrent_gps_lat(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
-        capturedSms.setCurrent_gps_lon(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
-
+        long count = realm.where(SmsData.class).equalTo("timestamp", logcat_timestamp).count();
         // Only alert if the timestamp is not in the data base
-        if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
-            mDbAdapter.storeCapturedSms(capturedSms);
+        if (count == 0) {
+            realm.beginTransaction();
+
+            SmsData capturedSms = realm.createObject(SmsData.class);
+            String smsText = findSmsData(bufferLines, null);
+            String num = findSmsNumber(bufferLines, null);
+
+            capturedSms.setSenderNumber(num);
+            capturedSms.setMessage(smsText);
+            capturedSms.setTimestamp(logcat_timestamp);
+            capturedSms.setType("TYPE0");
+            setCurrentLocationData(realm, capturedSms);
+
+            realm.commitTransaction();
+
             mDbAdapter.toEventLog(3, "Detected Type-0 SMS");
             startPopUpInfo(SmsType.SILENT);
         } else {
             log.debug("Detected Sms already logged");
         }
-
     }
 
-    private void parseMwiSms(String[] logcatLines, String logcat_timestamp) {
+    private void parseMwiSms(String[] logcatLines, Date logcat_timestamp) {
 
-        CapturedSmsData capturedSms = new CapturedSmsData();
-        String smsText = findSmsData(logcatLines, null);
-        String num = findSmsNumber(logcatLines, null);
+        @Cleanup Realm realm = Realm.getDefaultInstance();
 
-        capturedSms.setSenderNumber(num == null ? "null" : num);
-        capturedSms.setSenderMsg(smsText == null ? "null" : smsText);
-        capturedSms.setSmsTimestamp(logcat_timestamp);
-        capturedSms.setSmsType("MWI");
-        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLac());
-        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCid());
-        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRat());
-        int isRoaming = 0;
-        if (mAIMSICDService.getCellTracker().getDevice().isRoaming()) {
-            isRoaming = 1;
-        }
-        capturedSms.setCurrent_roam_status(isRoaming);
-        capturedSms.setCurrent_gps_lat(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
-        capturedSms.setCurrent_gps_lon(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
+        long count = realm.where(SmsData.class).equalTo("timestamp", logcat_timestamp).count();
+        // Only alert if the timestamp is not in the data base
+        if (count == 0) {
+            realm.beginTransaction();
 
-        //only alert if timestamp is not in the data base
-        if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
-            mDbAdapter.storeCapturedSms(capturedSms);
+            SmsData capturedSms = realm.createObject(SmsData.class);
+            String smsText = findSmsData(logcatLines, null);
+            String num = findSmsNumber(logcatLines, null);
+
+            capturedSms.setSenderNumber(num);
+            capturedSms.setMessage(smsText);
+            capturedSms.setTimestamp(logcat_timestamp);
+            capturedSms.setType("MWI");
+            setCurrentLocationData(null, capturedSms);
+
+            realm.commitTransaction();
+
             mDbAdapter.toEventLog(4, "Detected MWI SMS");
             startPopUpInfo(SmsType.MWI);
         } else {
-            log.debug(" Detected Sms already logged");
+            log.debug("Detected Sms already logged");
         }
     }
 
-    private void parseWapPushSms(String[] logcatLines, String[] postWapMessageLines, String logcat_timestamp) {
-        CapturedSmsData capturedSms = new CapturedSmsData();
-        String smsText = findSmsData(logcatLines, postWapMessageLines);
-        String num = findSmsNumber(logcatLines, postWapMessageLines);
+    private void parseWapPushSms(String[] logcatLines, String[] postWapMessageLines, Date logcat_timestamp) {
 
-        capturedSms.setSenderNumber(num == null ? "null" : num);
-        capturedSms.setSenderMsg(smsText == null ? "null" : smsText);
-        capturedSms.setSmsTimestamp(logcat_timestamp);
-        capturedSms.setSmsType("WAPPUSH");
-        capturedSms.setCurrent_lac(mAIMSICDService.getCellTracker().getMonitorCell().getLac());
-        capturedSms.setCurrent_cid(mAIMSICDService.getCellTracker().getMonitorCell().getCid());
-        capturedSms.setCurrent_nettype(mAIMSICDService.getCell().getRat());
-        int isRoaming = 0;
-        if (mAIMSICDService.getCellTracker().getDevice().isRoaming()) {
-            isRoaming = 1;
-        }
-        capturedSms.setCurrent_roam_status(isRoaming);
-        capturedSms.setCurrent_gps_lat(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
-        capturedSms.setCurrent_gps_lon(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
+        @Cleanup Realm realm = Realm.getDefaultInstance();
 
-        //only alert if timestamp is not in the data base
-        if (!mDbAdapter.isTimeStampInDB(logcat_timestamp)) {
-            mDbAdapter.storeCapturedSms(capturedSms);
+        long count = realm.where(SmsData.class).equalTo("timestamp", logcat_timestamp).count();
+        // Only alert if the timestamp is not in the data base
+        if (count == 0) {
+            realm.beginTransaction();
+
+            SmsData capturedSms = realm.createObject(SmsData.class);
+            String smsText = findSmsData(logcatLines, postWapMessageLines);
+            String num = findSmsNumber(logcatLines, postWapMessageLines);
+
+            capturedSms.setSenderNumber(num);
+            capturedSms.setMessage(smsText);
+            capturedSms.setTimestamp(logcat_timestamp);
+            capturedSms.setType("WAPPUSH");
+            setCurrentLocationData(realm, capturedSms);
+
+            realm.commitTransaction();
+
             mDbAdapter.toEventLog(6, "Detected WAPPUSH SMS");
             startPopUpInfo(SmsType.WAP_PUSH);
         } else {
             log.debug("Detected SMS already logged");
         }
+    }
+
+    private void setCurrentLocationData(Realm realm, SmsData capturedSms) {
+        capturedSms.setCurrentLac(mAIMSICDService.getCellTracker().getMonitorCell().getLac());
+        capturedSms.setCurrentCid(mAIMSICDService.getCellTracker().getMonitorCell().getCid());
+        capturedSms.setCurrentRat(mAIMSICDService.getCell().getRat());
+        boolean isRoaming = false;
+
+        if (mAIMSICDService.getCellTracker().getDevice().isRoaming()) {
+            isRoaming = true;
+        }
+        capturedSms.setRoaming(isRoaming);
+
+        Location location = realm.createObject(Location.class);
+        location.setLatitude(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
+        location.setLongitude(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
+        capturedSms.setLocation(location);
     }
 
     private String findSmsData(String[] preBuffer, String[] postBuffer) {
