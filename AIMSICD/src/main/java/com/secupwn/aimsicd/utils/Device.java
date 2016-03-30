@@ -25,7 +25,7 @@ public class Device {
 
     private static final Logger log = AndroidLogger.forClass(Device.class);
 
-    public Cell mCell;
+    public Cell cell;
     /**
      * integer representation of Phone Type
      */
@@ -83,8 +83,8 @@ public class Device {
             DeviceApi18.loadCellInfo(tm, this);
         }
 
-        if (mCell == null) {
-            mCell = new Cell();
+        if (cell == null) {
+            cell = new Cell();
         }
 
         switch (phoneId) {
@@ -96,49 +96,49 @@ public class Device {
                 mncMcc = tm.getNetworkOperator();
                 if (mncMcc != null && mncMcc.length() >= 5) {
                     try {
-                        if (mCell.getMcc() == Integer.MAX_VALUE) {
-                            mCell.setMcc(Integer.parseInt(tm.getNetworkOperator().substring(0, 3)));
+                        if (cell.getMcc() == Integer.MAX_VALUE) {
+                            cell.setMcc(Integer.parseInt(tm.getNetworkOperator().substring(0, 3)));
                         }
-                        if (mCell.getMnc() == Integer.MAX_VALUE) {
-                            mCell.setMnc(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
+                        if (cell.getMnc() == Integer.MAX_VALUE) {
+                            cell.setMnc(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
                         }
                     } catch (Exception e) {
                         log.info("MncMcc parse exception: ", e);
                     }
                 }
                 networkName = tm.getNetworkOperatorName();
-                if (!mCell.isValid()) {
+                if (!cell.isValid()) {
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
                     if (gsmCellLocation != null) {
-                        mCell.setCid(gsmCellLocation.getCid());
-                        mCell.setLac(gsmCellLocation.getLac());
-                        mCell.setPsc(gsmCellLocation.getPsc());
+                        cell.setCid(gsmCellLocation.getCid());
+                        cell.setLac(gsmCellLocation.getLac());
+                        cell.setPsc(gsmCellLocation.getPsc());
                     }
                 }
                 break;
 
             case TelephonyManager.PHONE_TYPE_CDMA:
                 phoneType = "CDMA";
-                if (!mCell.isValid()) {
+                if (!cell.isValid()) {
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
                     if (cdmaCellLocation != null) {
-                        mCell.setCid(cdmaCellLocation.getBaseStationId());
-                        mCell.setLac(cdmaCellLocation.getNetworkId());
-                        mCell.setSid(cdmaCellLocation.getSystemId()); // one of these must be a bug !!
+                        cell.setCid(cdmaCellLocation.getBaseStationId());
+                        cell.setLac(cdmaCellLocation.getNetworkId());
+                        cell.setSid(cdmaCellLocation.getSystemId()); // one of these must be a bug !!
                         // See: http://stackoverflow.com/questions/8088046/android-how-to-identify-carrier-on-cdma-network
                         // and: https://github.com/klinker41/android-smsmms/issues/26
-                        mCell.setMnc(cdmaCellLocation.getSystemId()); // todo: check! (Also CellTracker.java)
+                        cell.setMnc(cdmaCellLocation.getSystemId()); // todo: check! (Also CellTracker.java)
 
                         //Retrieve MCC through System Property
                         String homeOperator = Helpers.getSystemProp(context,
                                 "ro.cdma.home.operator.numeric", "UNKNOWN");
                         if (!homeOperator.contains("UNKNOWN")) {
                             try {
-                                if (mCell.getMcc() == Integer.MAX_VALUE) {
-                                    mCell.setMcc(Integer.valueOf(homeOperator.substring(0, 3)));
+                                if (cell.getMcc() == Integer.MAX_VALUE) {
+                                    cell.setMcc(Integer.valueOf(homeOperator.substring(0, 3)));
                                 }
-                                if (mCell.getMnc() == Integer.MAX_VALUE) {
-                                    mCell.setMnc(Integer.valueOf(homeOperator.substring(3, 5)));
+                                if (cell.getMnc() == Integer.MAX_VALUE) {
+                                    cell.setMnc(Integer.valueOf(homeOperator.substring(3, 5)));
                                 }
                             } catch (Exception e) {
                                 log.info("HomeOperator parse exception - " + e.getMessage(), e);
@@ -252,11 +252,11 @@ public class Device {
      * @return string representing device Network Type
      */
     public String getNetworkTypeName() {
-        if (mCell == null) {
+        if (cell == null) {
             return "Unknown";
         }
 
-        return mCell.getRat();
+        return cell.getRat();
     }
 
     String getDataActivityType(TelephonyManager tm) {
@@ -317,17 +317,17 @@ public class Device {
     }
 
     public void setSignalDbm(int signalDbm) {
-        mCell.setDbm(signalDbm);
+        cell.setDbm(signalDbm);
     }
 
     public int getSignalDBm() {
-        return mCell.getDbm();
+        return cell.getDbm();
     }
 
     /**
      * Update Network Type
      */
     public void setNetID(TelephonyManager tm) {
-        mCell.setNetType(tm.getNetworkType());
+        cell.setNetType(tm.getNetworkType());
     }
 }

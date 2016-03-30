@@ -1906,12 +1906,12 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     public void toEventLog(int DF_id, String DF_desc) {
 
         String time = MiscUtils.getCurrentTimeStamp();                    // time
-        int lac = CellTracker.mMonitorCell.getLac();                // LAC
-        int cid = CellTracker.mMonitorCell.getCid();                // CID
-        int psc = CellTracker.mMonitorCell.getPsc();                // PSC [UMTS,LTE]
-        String gpsd_lat = String.valueOf(CellTracker.mMonitorCell.getLat()); // gpsd_lat
-        String gpsd_lon = String.valueOf(CellTracker.mMonitorCell.getLon()); // gpsd_lon
-        int gpsd_accu = (int) CellTracker.mMonitorCell.getAccuracy();        // gpsd_accu
+        int lac = CellTracker.monitorCell.getLac();                // LAC
+        int cid = CellTracker.monitorCell.getCid();                // CID
+        int psc = CellTracker.monitorCell.getPsc();                // PSC [UMTS,LTE]
+        String gpsd_lat = String.valueOf(CellTracker.monitorCell.getLat()); // gpsd_lat
+        String gpsd_lon = String.valueOf(CellTracker.monitorCell.getLon()); // gpsd_lon
+        int gpsd_accu = (int) CellTracker.monitorCell.getAccuracy();        // gpsd_accu
 
         // skip CID/LAC of "-1" (due to crappy API, Roaming or Air-Plane Mode)
         if (cid != -1 || lac != -1) {
