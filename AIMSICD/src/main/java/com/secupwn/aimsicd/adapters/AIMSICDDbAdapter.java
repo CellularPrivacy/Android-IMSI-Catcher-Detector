@@ -1640,7 +1640,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                     RealmResults<Event> events = realm.where(Event.class).findAllSorted("timestamp");
 
                     boolean insertData;
-                    if(events.isEmpty()) {
+                    if (events.isEmpty()) {
                         insertData = true;
                     } else {
                         Event lastEvent = events.last();

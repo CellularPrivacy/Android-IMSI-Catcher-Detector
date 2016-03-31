@@ -19,7 +19,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class Event extends RealmObject{
+public class Event extends RealmObject {
 
     private Date timestamp;
     private String message;
