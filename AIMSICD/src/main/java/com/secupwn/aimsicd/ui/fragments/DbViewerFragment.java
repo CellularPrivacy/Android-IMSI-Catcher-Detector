@@ -125,12 +125,6 @@ public final class DbViewerFragment extends InjectionFragment {
                                     // TODO:     ToBe merged into "DBi_measure:rx_signal"
                                     result = mDb.returnDBiMeasure();
                                     break;
-
-                                // TODO: Not yet implemented...leave as for time being
-                                //case 8: // DETECTION_FLAGS:       ("DetectionFlags")
-                                //    result = mDb.getDetectionFlagsData();
-                                //    break;
-
                                 default:
                                     throw new IllegalArgumentException("Unknown type of table");
                             }

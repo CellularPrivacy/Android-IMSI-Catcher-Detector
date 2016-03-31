@@ -104,61 +104,9 @@ public class DBTableColumnIds {
     public static final String DBI_MEASURE_IS_NEIGHBOUR = "isNeighbour";
     public static final String DBI_MEASURE_FOREIGN_KEY = "bts_id"; // TODO: Remove?
 
-    //DetectionFlags
-    public static final String DETECTION_FLAGS_TABLE_NAME = "DetectionFlags";
-    public static final String DETECTION_FLAGS_ID = "_id";
-    public static final String DETECTION_FLAGS_CODE = "code";
-    public static final String DETECTION_FLAGS_NAME = "name";
-    public static final String DETECTION_FLAGS_DESCRIPTION = "description";
-    public static final String DETECTION_FLAGS_P1 = "p1";
-    public static final String DETECTION_FLAGS_P2 = "p2";
-    public static final String DETECTION_FLAGS_P3 = "p3";
-    public static final String DETECTION_FLAGS_P1_FINE = "p1_fine";
-    public static final String DETECTION_FLAGS_P2_FINE = "p2_fine";
-    public static final String DETECTION_FLAGS_P3_FINE = "p3_fine";
-    public static final String DETECTION_FLAGS_APP_TEXT = "app_text";
-    public static final String DETECTION_FLAGS_FUNC_USE = "func_use";
-    public static final String DETECTION_FLAGS_IS_STATUS = "istatus";
-    public static final String DETECTION_FLAGS_CM_ID = "CM_id";
-
-    //EventLog
-    public static final String EVENTLOG_TABLE_NAME = "EventLog";
-    public static final String EVENTLOG_TIME = "time";
-    public static final String EVENTLOG_LAC = "LAC";
-    public static final String EVENTLOG_CID = "CID";
-    public static final String EVENTLOG_PSC = "PSC";
-    public static final String EVENTLOG_LAT = "gpsd_lat";
-    public static final String EVENTLOG_LON = "gpsd_lon";
-    public static final String EVENTLOG_ACCU = "gpsd_accu";
-    public static final String EVENTLOG_DF_ID = "DF_id";
-    public static final String EVENTLOG_DF_DESC = "DF_description"; // TODO: should be "DF_desc"
-
     //SectorType
     public static final String SECTOR_TYPE_TABLE_NAME = "SectorType";
     public static final String SECTOR_TYPE_ID = "_id";
     public static final String SECTOR_TYPE_DESCRIPTION = "description";
-
-    //DetectionStrings  (For SMS)
-    public static final String DETECTION_STRINGS_TABLE_NAME = "DetectionStrings";
-    public static final String DETECTION_STRINGS_ID = "_id";
-    public static final String DETECTION_STRINGS_LOGCAT_STRING = "det_str";
-    public static final String DETECTION_STRINGS_SMS_TYPE = "sms_type";
-
-    //SmsData  (For SMS)
-    public static final String SMS_DATA_TABLE_NAME = "SmsData";
-    public static final String SMS_DATA_ID = "_id";
-    public static final String SMS_DATA_TIMESTAMP = "time";
-    public static final String SMS_DATA_SENDER_NUMBER = "number";
-    public static final String SMS_DATA_SENDER_SMSC = "smsc";
-    public static final String SMS_DATA_SENDER_MSG = "message";
-    public static final String SMS_DATA_SMS_TYPE = "type";
-    public static final String SMS_DATA_SMS_CLASS = "class";
-    public static final String SMS_DATA_LAC = "lac";
-    public static final String SMS_DATA_CID = "cid";
-    public static final String SMS_DATA_RAT = "rat";
-    public static final String SMS_DATA_GPS_LAT = "gps_lat";
-    public static final String SMS_DATA_GPS_LON = "gps_lon";
-    public static final String SMS_DATA_ROAM_STATE = "isRoaming";
-
 
 }

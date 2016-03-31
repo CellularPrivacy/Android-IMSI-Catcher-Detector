@@ -118,11 +118,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                 DBTableColumnIds.DBE_IMPORT_TABLE_NAME,         // DBe_import:          External: BTS import table
                 DBTableColumnIds.DBI_BTS_TABLE_NAME,            // DBi_bts:             Internal: (physical) BTS data
                 DBTableColumnIds.DBI_MEASURE_TABLE_NAME,        // DBi_measure:         Internal: (volatile) network measurements
-                //DBTableColumnIds.DETECTION_FLAGS_TABLE_NAME,  // DetectionFlags:      Detection Flag description, settings and scoring table
-                DBTableColumnIds.EVENTLOG_TABLE_NAME,           //                      Detection and general EventLog (persistent)
                 //DBTableColumnIds.SECTOR_TYPE_TABLE_NAME,      // SectorType:          BTS tower sector configuration (Many CID, same BTS)
-                DBTableColumnIds.DETECTION_STRINGS_TABLE_NAME,  //                      Detection strings to will be picked up in logcat
-                DBTableColumnIds.SMS_DATA_TABLE_NAME,           //                      Silent SMS details
         };
     }
 
@@ -778,25 +774,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                     }
                                     break;
 
-                                case "DetectionFlags":
-                                    insertDetectionFlags(
-                                            Integer.parseInt(records.get(i)[1]),    //code
-                                            records.get(i)[2],           //name
-                                            records.get(i)[3],           //description
-                                            Integer.parseInt(records.get(i)[4]),    //p1
-                                            Integer.parseInt(records.get(i)[5]),    //p2
-                                            Integer.parseInt(records.get(i)[6]),    //p3
-                                            Double.parseDouble(records.get(i)[7]),  //p1_fine
-                                            Double.parseDouble(records.get(i)[8]),  //p2_fine
-                                            Double.parseDouble(records.get(i)[9]),  //p3_fine
-                                            records.get(i)[10],          //app_text
-                                            records.get(i)[11],          //func_use
-                                            Integer.parseInt(records.get(i)[12]),   //istatus
-                                            Integer.parseInt(records.get(i)[13])    //CM_id
-
-                                    );
-                                    break;
-
                                 case "SectorType":
                                     insertSectorType(records.get(i)[1]);
                                     break;
@@ -1170,27 +1147,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         // "SELECT * FROM DBi_measure, DBi_bts WHERE DBi_measure.bts_id=DBi_bts.CID;"
         // NOTE:  TODO: bts_id should not be populated, then replace with "DBi_measure.bts_id=DBi_bts._id;"
         return mDb.rawQuery("SELECT * FROM DBi_measure", null);
-    }
-
-    /*
-    Returned Columns
-        "_id"           INTEGER PRIMARY KEY,
-        "code"          INTEGER,
-        "name"          TEXT,
-        "description"   TEXT,
-        "p1"            INTEGER,
-        "p2"            INTEGER,
-        "p3"            INTEGER,
-        "p1_fine"       REAL,
-        "p2_fine"       REAL,
-        "p3_fine"       REAL,
-        "app_text"      TEXT,
-        "func_use"      TEXT,
-        "istatus"       INTEGER,
-        "CM_id"         INTEGER
-     */
-    public Cursor returnDetectionFlags() {
-        return mDb.rawQuery("SELECT * FROM DetectionFlags", null);
     }
 
     // TODO: THESE ARE OUTDATED!! Please see design and update
@@ -1578,41 +1534,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             // mDb.insert("DBi_measure, DBi_bts", null, dbiMeasure); // but you'll need the DBi_bts data then as well...
         }
 
-    }
-
-    /**
-     * This inserts Detection Flag data that is used to fine tune the various
-     * available detection mechanisms. (See Detection List in issue #230)
-     * <p/>
-     * There's also a CounterMeasure ID to link to possible future counter measures.
-     */
-    public void insertDetectionFlags(int code,
-                                     String name,
-                                     String description,
-                                     int p1, int p2, int p3,
-                                     double p1_fine, double p2_fine, double p3_fine,
-                                     String app_text,
-                                     String func_use,
-                                     int istatus,
-                                     int CM_id
-    ) {
-
-        ContentValues detectionFlags = new ContentValues();
-        detectionFlags.put("code", code);
-        detectionFlags.put("name", name);
-        detectionFlags.put("description", description);
-        detectionFlags.put("p1", p1);
-        detectionFlags.put("p2", p2);
-        detectionFlags.put("p3", p3);
-        detectionFlags.put("p1_fine", p1_fine);
-        detectionFlags.put("p2_fine", p2_fine);
-        detectionFlags.put("p3_fine", p3_fine);
-        detectionFlags.put("app_text", app_text);
-        detectionFlags.put("func_use", func_use);
-        detectionFlags.put("istatus", istatus);
-        detectionFlags.put("CM_id", CM_id);
-
-        mDb.insert("DetectionFlags", null, detectionFlags);
     }
 
     /**
