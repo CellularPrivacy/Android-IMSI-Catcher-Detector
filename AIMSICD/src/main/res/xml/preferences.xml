@@ -99,7 +99,7 @@
             android:summary="@string/pref_ocid_requestkey_summary">
             <intent
                 android:action="android.intent.action.MAIN"
-                android:targetClass="com.secupwn.aimsicd.activities.OpenCellIdActivity"
+                android:targetClass="com.secupwn.aimsicd.ui.activities.OpenCellIdActivity"
                 android:targetPackage="com.SecUpwN.AIMSICD"/>
         </Preference>
         <EditTextPreference
