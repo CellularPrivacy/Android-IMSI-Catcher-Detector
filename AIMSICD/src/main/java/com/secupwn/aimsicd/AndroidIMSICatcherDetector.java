@@ -74,7 +74,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
 
     private void ensureDefaultData() {
         Realm realm = Realm.getDefaultInstance();
-        if(realm.where(SmsDetectionString.class).count() == 0){
+        if (realm.where(SmsDetectionString.class).count() == 0) {
             realm.executeTransactionAsync(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {

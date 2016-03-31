@@ -68,7 +68,7 @@ public class MiscUtils {
     public static Date parseLogcatTimeStamp(String line) {
         Matcher matcher = LOGCAT_TIMESTAMP_PATTERN.matcher(line);
 
-        if(matcher.find()) {
+        if (matcher.find()) {
             int month = Integer.valueOf(matcher.group(1));
             int day = Integer.valueOf(matcher.group(2));
 
