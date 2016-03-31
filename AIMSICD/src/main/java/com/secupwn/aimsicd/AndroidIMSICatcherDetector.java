@@ -105,6 +105,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
                 }
             });
         }
+        realm.close();
     }
 
     public void removeTask(BaseAsyncTask<?, ?, ?> pTask) {
