@@ -26,7 +26,7 @@ allprojects {
         println 'git tag --list'.execute([], project.rootDir).text
 
         println "GIT FETCH"
-        println 'git fetch --tags -v'.execute([], project.rootDir).text
+        exec('git fetch --tags -v')
 
         println 'GIT DESCRIBE'
         exec('git describe --abbrev=0 --tags --match v*')
