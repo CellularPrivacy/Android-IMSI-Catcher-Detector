@@ -27,6 +27,7 @@ allprojects {
 
         println "GIT FETCH"
         exec('git fetch origin -v')
+        exec('git fetch --unshallow -v')
         exec('git fetch --tags -v')
 
         println 'GIT DESCRIBE'
