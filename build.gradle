@@ -20,28 +20,7 @@ allprojects {
     }
 
     if (System.getenv("BLDZR_BUILD_NUMBER") != null) {
-
-        println "TAG LIST START"
-        println 'git --version'.execute([], project.rootDir).text
-        println 'git tag --list'.execute([], project.rootDir).text
-
-        println "GIT FETCH"
-        exec('git fetch origin -v')
-        exec('git fetch --unshallow -v')
-        exec('git fetch --tags -v')
-
-        println 'GIT DESCRIBE'
-        exec('git describe --abbrev=0 --tags --match v*')
-
-        println 'GIT DESCRIBE 2'
-        exec('git describe --abbrev=0 --tags')
-
-        println 'GIT DESCRIBE 3'
-        exec('git describe')
-
-        println 'GIT TAG AT HEAD'
-        println 'git tag --points-at HEAD -l v*'.execute([], project.rootDir).text
-        println "TAG LIST END"
+        exec('git fetch origin --unshallow --tags -v')
     }
 
     apply plugin: 'io.freefair.git-version'
@@ -57,4 +36,6 @@ private void exec(String cmd) {
     process.closeStreams();
     println text
     println err
+    println "FINISHED: $cmd"
+    println ""
 }
