@@ -13,15 +13,6 @@ public class DBTableColumnIds {
     public static final String DEFAULT_LOCATION_LAT = "lat";
     public static final String DEFAULT_LOCATION_LON = "lon";
 
-    //API_keys
-    public static final String API_KEYS_TABLE_NAME = "API_keys";
-    public static final String API_KEYS_ID = "_id";
-    public static final String API_KEYS_NAME = "name";
-    public static final String API_KEYS_TYPE = "type";
-    public static final String API_KEYS_KEY = "key";
-    public static final String API_KEYS_TIME_ADD = "time_add";
-    public static final String API_KEYS_TIME_EXP = "time_exp";
-
     //CounterMeasures
     public static final String COUNTER_MEASURES_TABLE_NAME = "CounterMeasures";
     public static final String COUNTER_MEASURES_ID = "_id";

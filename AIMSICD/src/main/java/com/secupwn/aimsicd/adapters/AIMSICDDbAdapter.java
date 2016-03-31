@@ -112,7 +112,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                 // I am trying to keep in same order and aimsicd.sql script
                 // Only backing up useful tables, uncomment if you want to backup
                 DBTableColumnIds.DEFAULT_LOCATION_TABLE_NAME,   // defaultLocation:     Default MCC for each country
-                //DBTableColumnIds.API_KEYS_TABLE_NAME,         // API_keys:            API keys for OpenCellID, MLS etc.
                 //DBTableColumnIds.COUNTER_MEASURES_TABLE_NAME, // CounterMeasures:     Counter Measures thresholds and description
                 //DBTableColumnIds.DBE_CAPABILITIES_TABLE_NAME, // DBe_capabilities:    External: MNO & BTS network capabilities
                 DBTableColumnIds.DBE_IMPORT_TABLE_NAME,         // DBe_import:          External: BTS import table
@@ -665,16 +664,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                     }
                                     break;
 
-                                case "API_keys":
-                                    insertApiKeys(
-                                            records.get(i)[1],           //name
-                                            records.get(i)[2],           //type
-                                            records.get(i)[3],           //key
-                                            records.get(i)[4],           //time_add
-                                            records.get(i)[5]            //time_exp
-                                    );
-                                    break;
-
                                 case "CounterMeasures":
                                     insertCounterMeasures(
                                             records.get(i)[1],           //name
@@ -1180,32 +1169,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             mDb.insert("defaultlocation", null, def_location);
         }
         cursor.close();
-    }
-
-    public boolean insertApiKeys(String name,
-                                 String type,
-                                 String key,
-                                 String time_add,
-                                 String time_exp) {
-
-        ContentValues ApiKeys = new ContentValues();
-        ApiKeys.put("name", name);
-        ApiKeys.put("type", type);
-        ApiKeys.put("key", key);
-        ApiKeys.put("time_add", time_add);
-        ApiKeys.put("time_exp", time_exp);
-
-        String query = String.format("SELECT * FROM API_keys WHERE key = \"%s\"", key);
-        Cursor cursor = mDb.rawQuery(query, null);
-
-        // Only insert a new key if the key not already in DB
-        if (cursor.getCount() <= 0) {
-            mDb.insert("API_keys", null, ApiKeys);
-            cursor.close();
-            return true;
-        }
-        cursor.close();
-        return false;
     }
 
     public void insertCounterMeasures(String name, String description,
