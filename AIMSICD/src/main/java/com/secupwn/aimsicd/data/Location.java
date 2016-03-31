@@ -9,4 +9,5 @@ public class Location extends RealmObject {
 
     private double latitude;
     private double longitude;
+    private double accuracy;
 }

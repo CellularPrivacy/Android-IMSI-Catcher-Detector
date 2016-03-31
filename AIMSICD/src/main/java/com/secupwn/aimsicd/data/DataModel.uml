@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="183.5" y="0.0">com.secupwn.aimsicd.data.Location</node>
+    <node x="0.0" y="178.0">com.secupwn.aimsicd.data.Event</node>
+    <node x="272.0" y="145.0">com.secupwn.aimsicd.data.SmsData</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.secupwn.aimsicd.data.SmsData" target="com.secupwn.aimsicd.data.Location">
+      <point x="0.0" y="-113.5" />
+      <point x="428.0" y="120.0" />
+      <point x="323.75" y="120.0" />
+      <point x="46.75" y="47.5" />
+    </edge>
+    <edge source="com.secupwn.aimsicd.data.Event" target="com.secupwn.aimsicd.data.Location">
+      <point x="0.0" y="-80.5" />
+      <point x="126.0" y="120.0" />
+      <point x="230.25" y="120.0" />
+      <point x="-46.75" y="47.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="292.0" y="186.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -47,6 +47,8 @@ import java.util.concurrent.TimeUnit;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import lombok.Cleanup;
 import lombok.Getter;
 
 /**
@@ -459,7 +461,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             // Detection 7a
             log.info("ALERT: No neighboring cells detected for CID: " + device.cell.getCid());
             vibrate(100, Status.MEDIUM);
-            dbHelper.toEventLog(4, "No neighboring cells detected"); // (DF_id, DF_desc)
+            @Cleanup Realm realm = Realm.getDefaultInstance();
+            dbHelper.toEventLog(realm, 4, "No neighboring cells detected"); // (DF_id, DF_desc)
         } else  {
             // Todo: remove cid string when working.
             log.debug("NC list not supported by AOS on this device. Nothing to do.");
@@ -521,6 +524,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *
      */
     public void compareLac(CellLocation location) {
+
+        @Cleanup Realm realm = Realm.getDefaultInstance();
+
         switch (device.getPhoneId()) {
 
             case TelephonyManager.PHONE_TYPE_NONE:
@@ -535,7 +541,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     boolean lacOK = dbHelper.checkLAC(monitorCell);
                     if (!lacOK) {
                         changedLAC = true;
-                        dbHelper.toEventLog(1, "Changing LAC");
+                        dbHelper.toEventLog(realm, 1, "Changing LAC");
 
                         // Detection Logs are made in checkLAC()
                         vibrate(100, Status.MEDIUM);
@@ -546,7 +552,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     // Check if CID is in DBe_import DB (issue #91)
                     if (tinydb.getBoolean("ocid_downloaded")) {
                         if (!dbHelper.openCellExists(monitorCell.getCid())) {
-                            dbHelper.toEventLog(2, "CID not in DBe_import");
+                            dbHelper.toEventLog(realm, 2, "CID not in DBe_import");
 
                             log.info("ALERT: Connected to unknown CID not in DBe_import: " + monitorCell.getCid());
                             vibrate(100, Status.MEDIUM);
@@ -579,7 +585,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                 1,
                                 "Changing LAC"
                         );*/
-                        dbHelper.toEventLog(1, "Changing LAC");
+                        dbHelper.toEventLog(realm, 1, "Changing LAC");
                     } else {
                         changedLAC = false;
                     }

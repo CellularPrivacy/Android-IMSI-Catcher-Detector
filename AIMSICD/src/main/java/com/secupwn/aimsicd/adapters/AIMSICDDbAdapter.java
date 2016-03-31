@@ -14,6 +14,8 @@ import android.util.SparseArray;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
+import com.secupwn.aimsicd.data.Event;
+import com.secupwn.aimsicd.data.Location;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.service.CellTracker;
 import com.secupwn.aimsicd.utils.CMDProcessor;
@@ -28,12 +30,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import lombok.Cleanup;
 
 /**
@@ -792,20 +797,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                     );
                                     break;
 
-                                case "EventLog":
-                                    insertEventLog(
-                                            records.get(i)[1],           //time
-                                            Integer.parseInt(records.get(i)[2]),    //LAC
-                                            Integer.parseInt(records.get(i)[3]),    //CID
-                                            Integer.parseInt(records.get(i)[4]),    //PSC
-                                            records.get(i)[5],           //gpsd_lat
-                                            records.get(i)[6],           //gpsd_lon
-                                            Integer.parseInt(records.get(i)[7]),    //gpsd_accu
-                                            Integer.parseInt(records.get(i)[8]),    //DF_id
-                                            records.get(i)[9]            //DF_desc
-                                    );
-                                    break;
-
                                 case "SectorType":
                                     insertSectorType(records.get(i)[1]);
                                     break;
@@ -1203,23 +1194,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     // TODO: THESE ARE OUTDATED!! Please see design and update
-
-    /**
-     * Returned Columns:
-     * "_id"            INTEGER PRIMARY KEY AUTOINCREMENT,
-     * "time"           TEXT NOT NULL,
-     * "LAC"            INTEGER NOT NULL,
-     * "CID"            INTEGER NOT NULL,
-     * "PSC"            INTEGER,
-     * "gpsd_lat"       TEXT,--Should this be double?
-     * "gpsd_lon"       TEXT,--Should this be double?
-     * "gpsd_accu"      INTEGER,
-     * "DF_id"          INTEGER,
-     * "DF_description" TEXT,
-     */
-    public Cursor returnEventLogData() {
-        return mDb.rawQuery("SELECT * FROM EventLog", null);
-    }
 
     //----END OF RETURN DATABASE CURSORS------//
 
@@ -1642,131 +1616,62 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Inserts log data into the EventLog table, using data provided by
-     * the TelephonyManager (TM) or an already backed up EvenLog database...
-     * <p/>
-     * If you just need to add an event with currently connected TM data such
-     * as CID,LAC,PSC,GPS, then use the simple version called toEventLog(),
-     * defined below.
-     * <p/>
-     * DF_id   DF_desc
-     * ---------------
-     * 1       changing lac
-     * 2       cell no in OCID
-     * 3       "Detected Type-0 SMS"
-     * 4       "Detected MWI SMS"
-     * 5       "Detected WAP PUSH SMS"
-     * 6       "Detected WAP PUSH (2) SMS"
-     * 7
-     * <p/>
-     * Table item order:
-     * <p/>
-     * time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc
-     * <p/>
-     * To select last lines use:
-     * <p/>
-     * SELECT * FROM EventLog WHERE LAC=30114 AND CID=779149 AND DF_id=1 ORDER BY _id DESC LIMIT 1;
-     * SELECT * FROM EventLog WHERE _id=(SELECT max(_id) FROM EventLog) AND LAC=30114 AND CID=779149 AND DF_id=1;
-     * <p/>
-     * Query examples for future devs:
-     * <p/>
-     * SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id BETWEEN 1 AND 4
-     * SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 1" Changing LAC
-     * SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 2" Cell not in OCID
-     * SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 3" Detected SMS
-     * SELECT * FROM EventLog WHERE CID = 1234 AND LAC = 4321 AND DF_id = 4" Unknown T.B.A...     *
+     * Defining a new simpler version of insertEventLog for use in CellTracker.
+     * Please note, that in AMSICDDbAdapter (here) it is also used to backup DB,
+     * in which case we can not use this simpler version!
      */
-    public void insertEventLog(String time,
-                               int lac,
-                               int cid,
-                               int psc,
-                               String gpsd_lat,
-                               String gpsd_lon,
-                               int gpsd_accu,
-                               int DF_id,
-                               String DF_description) {
+    public void toEventLog(Realm realm, final int DF_id, final String DF_desc) {
 
-        if (cid != -1) { // skip CID of "-1" (due to crappy API or roaming or Air-Plane Mode)
-            // ONLY check if LAST entry is the same!
-            String query = String.format(
-                    // "SELECT * FROM EventLog WHERE LAC=%d AND CID=%d AND DF_id=%d ORDER BY _id DESC LIMIT 1",
-                    "SELECT * from EventLog WHERE _id=(SELECT max(_id) from EventLog) AND CID=%d AND LAC=%d AND DF_id=%d",
-                    // was: "SELECT * FROM EventLog WHERE CID = %d AND LAC = %d AND DF_id = %d",
-                    cid, lac, DF_id);
-            Cursor cursor = mDb.rawQuery(query, null);
+        final Date timestamp = new Date();
+        final int lac = CellTracker.monitorCell.getLac();
+        final int cid = CellTracker.monitorCell.getCid();
+        final int psc = CellTracker.monitorCell.getPsc(); //[UMTS,LTE]
+        final double gpsd_lat = CellTracker.monitorCell.getLat();
+        final double gpsd_lon = CellTracker.monitorCell.getLon();
+        final double gpsd_accu = CellTracker.monitorCell.getAccuracy();
 
-            boolean insertData = true;
-            if (cursor.getCount() > 0) {
-                insertData = false;
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+                // skip CID/LAC of "-1" (due to crappy API, Roaming or Air-Plane Mode)
+                if (cid != -1 || lac != -1) {
+                    // Check if LAST entry is the same!
+                    RealmResults<Event> events = realm.where(Event.class).findAllSorted("timestamp");
+
+                    boolean insertData;
+                    if(events.isEmpty()) {
+                        insertData = true;
+                    } else {
+                        Event lastEvent = events.last();
+                        insertData = !(lastEvent.getCellId() == cid && lastEvent.getLac() == lac && lastEvent.getPsc() == psc && lastEvent.getDfId() == DF_id);
+                    }
+                    // WARNING: By skipping duplicate events, we might be missing counts of Type-0 SMS etc.
+
+                    if (insertData) {
+
+                        Event event = realm.createObject(Event.class);
+
+                        event.setTimestamp(timestamp);
+                        event.setLac(lac);
+                        event.setCellId(cid);
+                        event.setPsc(psc);
+
+                        Location location = realm.createObject(Location.class);
+                        location.setLatitude(gpsd_lat);
+                        location.setLongitude(gpsd_lon);
+                        location.setAccuracy(gpsd_accu);
+                        event.setLocation(location);
+
+                        event.setDfId(DF_id);
+                        event.setDfDescription(DF_desc);
+                    }
+                }
             }
-            cursor.close();
-
-            if (insertData) {
-                ContentValues eventLog = new ContentValues();
-
-                eventLog.put("time", time);
-                eventLog.put("LAC", lac);
-                eventLog.put("CID", cid);
-                eventLog.put("PSC", psc);
-                eventLog.put("gpsd_lat", gpsd_lat);
-                eventLog.put("gpsd_lon", gpsd_lon);
-                eventLog.put("gpsd_accu", gpsd_accu);
-                eventLog.put("DF_id", DF_id);
-                eventLog.put("DF_description", DF_description);
-
-                mDb.insert("EventLog", null, eventLog);
-                log.info("InsertEventLog(): Insert detection event into EventLog table with CID=" + cid);
-            } else {
-                // TODO This may need to be removed as it may spam the logcat buffer...
-                log.verbose("InsertEventLog(): Skipped inserting duplicate event into EventLog table with CID=" + cid);
-            }
-        }
-    }
-
-
-    // Defining a new simpler version of insertEventLog for use in CellTracker.
-    // Please note, that in AMSICDDbAdapter (here) it is also used to backup DB,
-    // in which case we can not use this simpler version!
-    public void toEventLog(int DF_id, String DF_desc) {
-
-        String time = MiscUtils.getCurrentTimeStamp();                    // time
-        int lac = CellTracker.monitorCell.getLac();                // LAC
-        int cid = CellTracker.monitorCell.getCid();                // CID
-        int psc = CellTracker.monitorCell.getPsc();                // PSC [UMTS,LTE]
-        String gpsd_lat = String.valueOf(CellTracker.monitorCell.getLat()); // gpsd_lat
-        String gpsd_lon = String.valueOf(CellTracker.monitorCell.getLon()); // gpsd_lon
-        int gpsd_accu = (int) CellTracker.monitorCell.getAccuracy();        // gpsd_accu
-
-        // skip CID/LAC of "-1" (due to crappy API, Roaming or Air-Plane Mode)
-        if (cid != -1 || lac != -1) {
-            // Check if LAST entry is the same!
-            String query = String.format(
-                    "SELECT * from EventLog WHERE _id=(SELECT max(_id) from EventLog) AND CID=%d AND LAC=%d AND PSC=%d AND DF_id=%d",
-                    cid, lac, psc, DF_id);
-            Cursor cursor = mDb.rawQuery(query, null);
-
-            // WARNING: By skipping duplicate events, we might be missing counts of Type-0 SMS etc.
-            boolean insertData = true;
-            if (cursor.getCount() > 0) {
-                insertData = false;
-            }
-            cursor.close();
-
-            if (insertData) {
-                ContentValues eventLog = new ContentValues();
-
-                eventLog.put("time", time);                // time
-                eventLog.put("LAC", lac);                    // LAC
-                eventLog.put("CID", cid);                    // CID
-                eventLog.put("PSC", psc);                    // PSC [UMTS,LTE]
-                eventLog.put("gpsd_lat", gpsd_lat);        // gpsd_lat
-                eventLog.put("gpsd_lon", gpsd_lon);        // gpsd_lon
-                eventLog.put("gpsd_accu", gpsd_accu);        // gpsd_accu
-                eventLog.put("DF_id", DF_id);                // DF_id
-                eventLog.put("DF_description", DF_desc);    // DF_desc
-
-                mDb.insert("EventLog", null, eventLog);
-                log.info("ToEventLog(): Added new event: id=" + DF_id + " time=" + time + " cid=" + cid);
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                log.info("ToEventLog(): Added new event: id=" + DF_id + " time=" + timestamp + " cid=" + cid);
 
                 // Short 100 ms Vibration
                 // TODO not elegant solution, vibrator invocation should be moved somewhere else imho
@@ -1781,15 +1686,8 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
                 // Short sound:
                 // TODO see issue #15
-
             }
-//            else {
-            // TODO This may need to be removed as it may spam the logcat buffer...
-            //log.verbose(mTAG + ":toEventLog(): Skipped inserting duplicate event");
-//            }
-        }
-        // TODO This may need to be removed as it may spam the logcat buffer...
-        //log.verbose(mTAG + ":insertEventLog(): Skipped inserting bad CID/LAC data");
+        });
     }
 
 

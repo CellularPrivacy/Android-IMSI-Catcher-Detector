@@ -20,17 +20,16 @@ import com.secupwn.aimsicd.adapters.DbViewerSpinnerAdapter;
 import com.secupwn.aimsicd.adapters.DbeImportCardInflater;
 import com.secupwn.aimsicd.adapters.DbeImportItemData;
 import com.secupwn.aimsicd.adapters.DefaultLocationCardInflater;
-import com.secupwn.aimsicd.adapters.EventLogCardInflater;
-import com.secupwn.aimsicd.adapters.EventLogItemData;
 import com.secupwn.aimsicd.adapters.MeasuredCellStrengthCardData;
 import com.secupwn.aimsicd.adapters.MeasuredCellStrengthCardInflater;
 import com.secupwn.aimsicd.adapters.UniqueBtsCardInflater;
 import com.secupwn.aimsicd.adapters.UniqueBtsItemData;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
-import com.secupwn.aimsicd.constants.Examples;
+import com.secupwn.aimsicd.data.Event;
 import com.secupwn.aimsicd.data.SmsData;
 import com.secupwn.aimsicd.data.SmsDetectionString;
 import com.secupwn.aimsicd.data.adapter.DetectionStringAdapter;
+import com.secupwn.aimsicd.data.adapter.EventAdapter;
 import com.secupwn.aimsicd.data.adapter.SmsDataAdapter;
 import com.secupwn.aimsicd.enums.StatesDbViewer;
 import com.secupwn.aimsicd.utils.Cell;
@@ -90,6 +89,8 @@ public final class DbViewerFragment extends InjectionFragment {
 
                 if (position == 4) { //Silent SMS
                     setListAdapter(new SmsDataAdapter(getActivity(), realm.allObjects(SmsData.class), true));
+                } else if (position == 6) {
+                    setListAdapter(new EventAdapter(getActivity(), realm.allObjects(Event.class), true));
                 } else if (position == 7) {
                     setListAdapter(new DetectionStringAdapter(getActivity(), realm.allObjects(SmsDetectionString.class), true));
                 } else {
@@ -123,11 +124,6 @@ public final class DbViewerFragment extends InjectionFragment {
                                 case 5: // MEASURED_SIGNAL_STRENGTHS: ("DBi_measure")
                                     // TODO:     ToBe merged into "DBi_measure:rx_signal"
                                     result = mDb.returnDBiMeasure();
-                                    break;
-
-                                case 6: // EVENT_LOG:               ("EventLog")
-                                    // Table: "EventLog"
-                                    result = mDb.returnEventLogData();
                                     break;
 
                                 // TODO: Not yet implemented...leave as for time being
@@ -369,40 +365,6 @@ public final class DbViewerFragment extends InjectionFragment {
                         tableData.close();
                     }
                     return adapter;
-
-                }
-
-                case EVENT_LOG: {           // EventLog
-
-                    BaseInflaterAdapter<EventLogItemData> adapter
-                            = new BaseInflaterAdapter<>(new EventLogCardInflater());
-                    int count = tableData.getCount();
-
-                    // WARNING: Must correspond with:  EventLogCardInflater  and  EventLogItemData
-                    while (tableData.moveToNext()) {
-                        EventLogItemData data = new EventLogItemData(
-                                // Use the trick to automatically converting int/real to strings by adding empty ""s.
-                                "" + tableData.getString(tableData.getColumnIndex("time")),             // time
-                                "" + tableData.getInt(tableData.getColumnIndex("LAC")),                 // LAC
-                                "" + tableData.getInt(tableData.getColumnIndex("CID")),                 // CID
-                                "" + Cell.validatePscValue(
-                                        this.getContext(),
-                                        tableData.getInt(tableData.getColumnIndex("PSC"))),             // PSC
-                                "" + tableData.getDouble(tableData.getColumnIndex("gpsd_lat")),         // gpsd_lat
-                                "" + tableData.getDouble(tableData.getColumnIndex("gpsd_lon")),         // gpsd_lon
-                                "" + tableData.getInt(tableData.getColumnIndex("gpsd_accu")),           // gpsd_accu (accuracy in [m])
-                                "" + tableData.getInt(tableData.getColumnIndex("DF_id")),               // DF_id
-                                "" + tableData.getString(tableData.getColumnIndex("DF_description")),   // TODO: DF_desc
-                                "" + (tableData.getPosition() + 1) + " / " + count                      // item:  "n/X"
-                        );
-                        // TODO: Explain how to use this?
-                        data.setFakeData(isExample(data));
-                        adapter.addItem(data, false);
-                    }
-                    if (!tableData.isClosed()) {
-                        tableData.close();
-                    }
-                    return adapter;
                 }
             }
         } else {
@@ -414,20 +376,6 @@ public final class DbViewerFragment extends InjectionFragment {
     /*=========================================================================
      *          Add Example entries into the Database Viewer tables
      *=========================================================================*/
-
-    // Table:           EventLog
-    // Dependencies:    Examples.java
-    //                  EventLogItemData.java
-    private boolean isExample(EventLogItemData pEventLogItemData) {
-        return pEventLogItemData != null &&
-                pEventLogItemData.getLac().contains(Examples.EVENT_LOG_DATA.LAC) &&
-                pEventLogItemData.getCellId().contains(Examples.EVENT_LOG_DATA.CID) &&
-                pEventLogItemData.getPsc().contains(Examples.EVENT_LOG_DATA.PSC) &&
-                pEventLogItemData.getLat().contains(Examples.EVENT_LOG_DATA.GPSD_LAT) &&
-                pEventLogItemData.getLon().contains(Examples.EVENT_LOG_DATA.GPSD_LON) &&
-                pEventLogItemData.getGpsd_accu().contains(Examples.EVENT_LOG_DATA.GPSD_ACCU) &&
-                pEventLogItemData.getDF_id().contains(Examples.EVENT_LOG_DATA.DF_ID);
-    }
 
     @Override
     public void onStart() {

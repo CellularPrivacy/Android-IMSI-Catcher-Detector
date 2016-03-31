@@ -298,7 +298,7 @@ public final class SmsDetector extends Thread {
 
             realm.commitTransaction();
 
-            mDbAdapter.toEventLog(3, "Detected Type-0 SMS");
+            mDbAdapter.toEventLog(realm, 3, "Detected Type-0 SMS");
             startPopUpInfo(SmsType.SILENT);
         } else {
             log.debug("Detected Sms already logged");
@@ -326,7 +326,7 @@ public final class SmsDetector extends Thread {
 
             realm.commitTransaction();
 
-            mDbAdapter.toEventLog(4, "Detected MWI SMS");
+            mDbAdapter.toEventLog(realm, 4, "Detected MWI SMS");
             startPopUpInfo(SmsType.MWI);
         } else {
             log.debug("Detected Sms already logged");
@@ -354,7 +354,7 @@ public final class SmsDetector extends Thread {
 
             realm.commitTransaction();
 
-            mDbAdapter.toEventLog(6, "Detected WAPPUSH SMS");
+            mDbAdapter.toEventLog(realm, 6, "Detected WAPPUSH SMS");
             startPopUpInfo(SmsType.WAP_PUSH);
         } else {
             log.debug("Detected SMS already logged");
