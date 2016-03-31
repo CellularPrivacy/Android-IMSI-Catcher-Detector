@@ -15,7 +15,7 @@ import android.util.SparseArray;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
 import com.secupwn.aimsicd.data.Event;
-import com.secupwn.aimsicd.data.Location;
+import com.secupwn.aimsicd.data.LocationInfo;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.service.CellTracker;
 import com.secupwn.aimsicd.utils.CMDProcessor;
@@ -1657,11 +1657,11 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                         event.setCellId(cid);
                         event.setPsc(psc);
 
-                        Location location = realm.createObject(Location.class);
-                        location.setLatitude(gpsd_lat);
-                        location.setLongitude(gpsd_lon);
-                        location.setAccuracy(gpsd_accu);
-                        event.setLocation(location);
+                        LocationInfo locationInfo = realm.createObject(LocationInfo.class);
+                        locationInfo.setLatitude(gpsd_lat);
+                        locationInfo.setLongitude(gpsd_lon);
+                        locationInfo.setAccuracy(gpsd_accu);
+                        event.setLocationInfo(locationInfo);
 
                         event.setDfId(DF_id);
                         event.setDfDescription(DF_desc);

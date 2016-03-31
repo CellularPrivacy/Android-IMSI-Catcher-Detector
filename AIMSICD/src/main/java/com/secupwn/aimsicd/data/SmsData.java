@@ -14,7 +14,7 @@ public class SmsData extends RealmObject {
     private String senderNumber;
     private String message;
     private String type;
-    private Location location;
+    private LocationInfo locationInfo;
     private boolean roaming;
 
     private int currentLac;
@@ -23,7 +23,7 @@ public class SmsData extends RealmObject {
 
     @Override
     public void removeFromRealm() {
-        location.removeFromRealm();
+        locationInfo.removeFromRealm();
         super.removeFromRealm();
     }
 }

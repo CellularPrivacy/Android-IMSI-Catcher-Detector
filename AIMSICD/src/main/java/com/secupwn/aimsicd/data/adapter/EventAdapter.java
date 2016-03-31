@@ -78,9 +78,9 @@ public class EventAdapter extends RealmBaseAdapter<Event> {
             mLAC.setText(item.getLac());
             mCID.setText(item.getCellId());
             mPSC.setText(item.getPsc());
-            mgpsd_lat.setText(String.valueOf(item.getLocation().getLatitude()));
-            mgpsd_lon.setText(String.valueOf(item.getLocation().getLongitude()));
-            mgpsd_accu.setText(String.valueOf(item.getLocation().getAccuracy()));
+            mgpsd_lat.setText(String.valueOf(item.getLocationInfo().getLatitude()));
+            mgpsd_lon.setText(String.valueOf(item.getLocationInfo().getLongitude()));
+            mgpsd_accu.setText(String.valueOf(item.getLocationInfo().getAccuracy()));
             mDF_id.setText(String.valueOf(item.getDfId()));
             mDF_desc.setText(item.getDfDescription());
 

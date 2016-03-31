@@ -64,8 +64,8 @@ public class SmsDataAdapter extends RealmBaseAdapter<SmsData> {
             isRoaming = "true";
         }
         holder.smsd_roam.setText(isRoaming);
-        holder.smsd_lat.setText(String.valueOf(getItem(position).getLocation().getLatitude()));
-        holder.smsd_lon.setText(String.valueOf(getItem(position).getLocation().getLongitude()));
+        holder.smsd_lat.setText(String.valueOf(getItem(position).getLocationInfo().getLatitude()));
+        holder.smsd_lon.setText(String.valueOf(getItem(position).getLocationInfo().getLongitude()));
 
         return convertView;
     }

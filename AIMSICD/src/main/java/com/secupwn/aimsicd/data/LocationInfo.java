@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class Location extends RealmObject {
+public class LocationInfo extends RealmObject {
 
     private double latitude;
     private double longitude;

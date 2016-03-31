@@ -17,7 +17,7 @@ import android.view.WindowManager;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
-import com.secupwn.aimsicd.data.Location;
+import com.secupwn.aimsicd.data.LocationInfo;
 import com.secupwn.aimsicd.data.SmsData;
 import com.secupwn.aimsicd.data.SmsDetectionString;
 import com.secupwn.aimsicd.service.AimsicdService;
@@ -372,10 +372,10 @@ public final class SmsDetector extends Thread {
         }
         capturedSms.setRoaming(isRoaming);
 
-        Location location = realm.createObject(Location.class);
-        location.setLatitude(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
-        location.setLongitude(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
-        capturedSms.setLocation(location);
+        LocationInfo locationInfo = realm.createObject(LocationInfo.class);
+        locationInfo.setLatitude(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
+        locationInfo.setLongitude(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
+        capturedSms.setLocationInfo(locationInfo);
     }
 
     private String findSmsData(String[] preBuffer, String[] postBuffer) {
