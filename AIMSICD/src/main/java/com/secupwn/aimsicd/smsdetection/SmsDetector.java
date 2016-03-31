@@ -160,7 +160,7 @@ public final class SmsDetector extends Thread {
         while (getSmsDetectionState()) {
             try {
                 logcatLine = mLogcatReader.readLine();
-                if (logcatLines.size() >= LOGCAT_BUFFER_MAX_SIZE || logcatLine != null) {
+                if (logcatLines.size() <= LOGCAT_BUFFER_MAX_SIZE || logcatLine != null) {
                     logcatLines.add(logcatLine);
                 } else if (logcatLines.size() == 0) {
                     /**

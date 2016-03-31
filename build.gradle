@@ -1,3 +1,5 @@
+import org.codehaus.groovy.runtime.IOGroovyMethods
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
@@ -17,20 +19,23 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 
-    println "TAG LIST START"
-    println 'git --version'.execute([], project.rootDir).text
-    println 'git tag --list'.execute([], project.rootDir).text
-    println "GIT FETCH"
-    println 'git fetch --tags -v'.execute([], project.rootDir).text
-    println 'GIT DESCRIBE'
-    println 'git describe --abbrev=0 --tags --match v*'.execute([], project.rootDir).text
-    println 'GIT DESCRIBE 2'
-    println 'git describe --abbrev=0 --tags'.execute([], project.rootDir).text
-    println 'GIT TAG AT HEAD'
-    println 'git tag --points-at HEAD -l v*'.execute([], project.rootDir).text
-    println "TAG LIST END"
+    if (System.getenv("BLDZR_BUILD_NUMBER") != null) {
+        exec('git fetch origin --unshallow --tags -v')
+    }
 
     apply plugin: 'io.freefair.git-version'
     gitTagPrefix = 'v'
 
+}
+
+private void exec(String cmd) {
+    println "EXEC: $cmd"
+    def process = cmd.execute([], project.rootDir)
+    String text = IOGroovyMethods.getText(new BufferedReader(new InputStreamReader(process.getInputStream())));
+    String err = IOGroovyMethods.getText(new BufferedReader(new InputStreamReader(process.getErrorStream())));
+    process.closeStreams();
+    println text
+    println err
+    println "FINISHED: $cmd"
+    println ""
 }
