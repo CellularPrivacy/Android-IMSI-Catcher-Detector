@@ -33,7 +33,7 @@ public class Cell implements Parcelable {
      * Location Area Code
      */
     @Setter
-    private int lac;
+    private int locationAreaCode;
 
     /**
      * Mobile Country Code
@@ -121,7 +121,7 @@ public class Cell implements Parcelable {
 
     {
         cid = Integer.MAX_VALUE;
-        lac = Integer.MAX_VALUE;
+        locationAreaCode = Integer.MAX_VALUE;
         mcc = Integer.MAX_VALUE;
         mnc = Integer.MAX_VALUE;
         dbm = Integer.MAX_VALUE;
@@ -140,10 +140,10 @@ public class Cell implements Parcelable {
     public Cell() {
     }
 
-    public Cell(int CID, int lac, int mcc, int mnc, int dbm, long timestamp) {
+    public Cell(int CID, int locationAreaCode, int mcc, int mnc, int dbm, long timestamp) {
         super();
         this.cid = CID;
-        this.lac = lac;
+        this.locationAreaCode = locationAreaCode;
         this.mcc = mcc;
         this.mnc = mnc;
         this.dbm = dbm;
@@ -160,9 +160,9 @@ public class Cell implements Parcelable {
         this.bearing = 0.0;
     }
 
-    public Cell(int CID, int lac, int signal, int psc, int netType, boolean dbm) {
+    public Cell(int CID, int locationAreaCode, int signal, int psc, int netType, boolean dbm) {
         this.cid = CID;
-        this.lac = lac;
+        this.locationAreaCode = locationAreaCode;
         this.mcc = Integer.MAX_VALUE;
         this.mnc = Integer.MAX_VALUE;
 
@@ -184,10 +184,10 @@ public class Cell implements Parcelable {
         this.timestamp = SystemClock.currentThreadTimeMillis();
     }
 
-    public Cell(int cid, int lac, int mcc, int mnc, int dbm, double accuracy, double speed,
+    public Cell(int cid, int locationAreaCode, int mcc, int mnc, int dbm, double accuracy, double speed,
                 double bearing, int netType, long timestamp) {
         this.cid = cid;
-        this.lac = lac;
+        this.locationAreaCode = locationAreaCode;
         this.mcc = mcc;
         this.mnc = mnc;
         this.dbm = dbm;
@@ -232,7 +232,7 @@ public class Cell implements Parcelable {
         final int prime = 31;
         int result = 1;
         result = prime * result + cid;
-        result = prime * result + lac;
+        result = prime * result + locationAreaCode;
         result = prime * result + mcc;
         result = prime * result + mnc;
         if (psc != -1) {
@@ -254,10 +254,10 @@ public class Cell implements Parcelable {
         }
         Cell other = (Cell) obj;
         if (this.psc != Integer.MAX_VALUE) {
-            return this.cid == other.getCid() && this.lac == other.getLac() && this.mcc == other
+            return this.cid == other.getCid() && this.locationAreaCode == other.getLocationAreaCode() && this.mcc == other
                     .getMcc() && this.mnc == other.getMnc() && this.psc == other.getPsc();
         } else {
-            return this.cid == other.getCid() && this.lac == other.getLac() && this.mcc == other
+            return this.cid == other.getCid() && this.locationAreaCode == other.getLocationAreaCode() && this.mcc == other
                     .getMcc() && this.mnc == other.getMnc();
         }
     }
@@ -266,7 +266,7 @@ public class Cell implements Parcelable {
         StringBuilder result = new StringBuilder();
 
         result.append("cid - ").append(cid).append("\n");
-        result.append("LAC - ").append(lac).append("\n");
+        result.append("LAC - ").append(locationAreaCode).append("\n");
         result.append("MCC - ").append(mcc).append("\n");
         result.append("MNC - ").append(mnc).append("\n");
         result.append("DBm - ").append(dbm).append("\n");
@@ -279,7 +279,7 @@ public class Cell implements Parcelable {
     }
 
     public boolean isValid() {
-        return this.getCid() != Integer.MAX_VALUE && this.getLac() != Integer.MAX_VALUE;
+        return this.getCid() != Integer.MAX_VALUE && this.getLocationAreaCode() != Integer.MAX_VALUE;
     }
 
     /**
@@ -379,7 +379,7 @@ public class Cell implements Parcelable {
 
         in.readStringArray(data);
         cid = Integer.valueOf(data[0]);
-        lac = Integer.valueOf(data[1]);
+        locationAreaCode = Integer.valueOf(data[1]);
         mcc = Integer.valueOf(data[2]);
         mnc = Integer.valueOf(data[3]);
         dbm = Integer.valueOf(data[4]);
@@ -403,7 +403,7 @@ public class Cell implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[]{
                 String.valueOf(this.cid),
-                String.valueOf(this.lac),
+                String.valueOf(this.locationAreaCode),
                 String.valueOf(this.mcc),
                 String.valueOf(this.mnc),
                 String.valueOf(this.dbm),

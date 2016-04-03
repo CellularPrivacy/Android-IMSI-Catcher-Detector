@@ -336,7 +336,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                 locationAsync.delegate = this;
                 locationAsync.execute(
                         mAimsicdService.getCell().getCid(),
-                        mAimsicdService.getCell().getLac(),
+                        mAimsicdService.getCell().getLocationAreaCode(),
                         mAimsicdService.getCell().getMnc(),
                         mAimsicdService.getCell().getMcc());
             }

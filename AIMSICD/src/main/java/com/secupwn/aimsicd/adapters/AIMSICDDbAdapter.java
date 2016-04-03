@@ -315,16 +315,16 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
         while (bts_cursor.moveToNext()) {
             // 1=LAC, 8=Accuracy, 11=Time
-            if (cell.getLac() != bts_cursor.getInt(bts_cursor.getColumnIndex("LAC"))) {
+            if (cell.getLocationAreaCode() != bts_cursor.getInt(bts_cursor.getColumnIndex("LAC"))) {
                 log.info("ALERT: Changing LAC on CID: " + cell.getCid()
-                        + " LAC(API): " + cell.getLac()
+                        + " LAC(API): " + cell.getLocationAreaCode()
                         + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
 
                 bts_cursor.close();
                 return false;
             } else {
                 log.verbose("LAC checked - no change on CID:" + cell.getCid()
-                        + " LAC(API): " + cell.getLac()
+                        + " LAC(API): " + cell.getLocationAreaCode()
                         + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
             }
         }
@@ -1197,12 +1197,12 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     public void insertBTS(Cell cell) {
 
         // If LAC and CID are not already in DBi_bts, then add them.
-        if (!cellInDbiBts(cell.getLac(), cell.getCid())) {
+        if (!cellInDbiBts(cell.getLocationAreaCode(), cell.getCid())) {
             ContentValues values = new ContentValues();
 
             values.put("MCC", cell.getMcc());
             values.put("MNC", cell.getMnc());
-            values.put("LAC", cell.getLac());
+            values.put("LAC", cell.getLocationAreaCode());
             values.put("CID", cell.getCid());
             values.put("PSC", cell.getPsc());
 
@@ -1242,7 +1242,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             // update (String table, ContentValues values, String whereClause, String[] whereArgs)
             mDb.update("DBi_bts", values, "CID=?", new String[]{Integer.toString(cell.getCid())});
 
-            log.info("DBi_bts updated: CID=" + cell.getCid() + " LAC=" + cell.getLac());
+            log.info("DBi_bts updated: CID=" + cell.getCid() + " LAC=" + cell.getLocationAreaCode());
         }
 
         // TODO: This doesn't make sense, if it's in DBi_bts it IS part of DBi_measure!
@@ -1448,7 +1448,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     public void toEventLog(Realm realm, final int DF_id, final String DF_desc) {
 
         final Date timestamp = new Date();
-        final int lac = CellTracker.monitorCell.getLac();
+        final int lac = CellTracker.monitorCell.getLocationAreaCode();
         final int cid = CellTracker.monitorCell.getCid();
         final int psc = CellTracker.monitorCell.getPsc(); //[UMTS,LTE]
         final double gpsd_lat = CellTracker.monitorCell.getLat();
@@ -1469,7 +1469,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                         insertData = true;
                     } else {
                         Event lastEvent = events.last();
-                        insertData = !(lastEvent.getCellId() == cid && lastEvent.getLac() == lac && lastEvent.getPsc() == psc && lastEvent.getDfId() == DF_id);
+                        insertData = !(lastEvent.getCellId() == cid && lastEvent.getLocationAreaCode() == lac && lastEvent.getPsc() == psc && lastEvent.getDfId() == DF_id);
                     }
                     // WARNING: By skipping duplicate events, we might be missing counts of Type-0 SMS etc.
 
@@ -1478,7 +1478,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                         Event event = realm.createObject(Event.class);
 
                         event.setTimestamp(timestamp);
-                        event.setLac(lac);
+                        event.setLocationAreaCode(lac);
                         event.setCellId(cid);
                         event.setPsc(psc);
 

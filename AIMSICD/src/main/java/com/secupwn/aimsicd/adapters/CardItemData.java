@@ -79,8 +79,8 @@ public class CardItemData {
             cellId = "N/A";
         }
 
-        if (cell.getLac() != Integer.MAX_VALUE && cell.getLac() != -1) {
-            lac = "LAC: " + cell.getLac();
+        if (cell.getLocationAreaCode() != Integer.MAX_VALUE && cell.getLocationAreaCode() != -1) {
+            lac = "LAC: " + cell.getLocationAreaCode();
         } else {
             lac = "N/A";
         }

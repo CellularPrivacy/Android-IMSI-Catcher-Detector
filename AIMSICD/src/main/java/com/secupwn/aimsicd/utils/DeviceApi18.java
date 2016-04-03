@@ -63,7 +63,7 @@ public class DeviceApi18 {
                         pDevice.cell.setCid(identityGsm.getCid());
                         pDevice.cell.setMcc(identityGsm.getMcc());
                         pDevice.cell.setMnc(identityGsm.getMnc());
-                        pDevice.cell.setLac(identityGsm.getLac());
+                        pDevice.cell.setLocationAreaCode(identityGsm.getLac());
 
                     } else if (info instanceof CellInfoCdma) {
                         final CellSignalStrengthCdma cdma = ((CellInfoCdma) info).getCellSignalStrength();
@@ -73,7 +73,7 @@ public class DeviceApi18 {
                         // Cell Identity
                         pDevice.cell.setCid(identityCdma.getBasestationId());
                         pDevice.cell.setMnc(identityCdma.getSystemId());
-                        pDevice.cell.setLac(identityCdma.getNetworkId());
+                        pDevice.cell.setLocationAreaCode(identityCdma.getNetworkId());
                         pDevice.cell.setSid(identityCdma.getSystemId());
 
                     } else if (info instanceof CellInfoLte) {
@@ -93,7 +93,7 @@ public class DeviceApi18 {
                         // Signal Strength
                         pDevice.cell.setDbm(wcdma.getDbm());
                         // Cell Identity
-                        pDevice.cell.setLac(identityWcdma.getLac());
+                        pDevice.cell.setLocationAreaCode(identityWcdma.getLac());
                         pDevice.cell.setMcc(identityWcdma.getMcc());
                         pDevice.cell.setMnc(identityWcdma.getMnc());
                         pDevice.cell.setCid(identityWcdma.getCid());

@@ -17,7 +17,7 @@ public class SmsData extends RealmObject {
     private LocationInfo locationInfo;
     private boolean roaming;
 
-    private int currentLac;
+    private int currentLocationAreaCode;
     private int currentCid;
     private String currentRat;
 

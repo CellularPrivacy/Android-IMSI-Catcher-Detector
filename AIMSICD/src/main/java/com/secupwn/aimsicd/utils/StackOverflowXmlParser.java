@@ -81,7 +81,7 @@ public class StackOverflowXmlParser {
                     cell.setCid(readInt(parser));
                     break;
                 case "lac":
-                    cell.setLac(readInt(parser));
+                    cell.setLocationAreaCode(readInt(parser));
                     break;
                 default:
                     skip(parser);

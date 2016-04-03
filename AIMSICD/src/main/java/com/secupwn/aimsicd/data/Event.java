@@ -9,7 +9,7 @@ import lombok.Setter;
 /**
  * DF_id   DF_desc
  * ---------------
- * 1       changing lac
+ * 1       changing locationAreaCode
  * 2       cell no in OCID
  * 3       "Detected Type-0 SMS"
  * 4       "Detected MWI SMS"
@@ -27,7 +27,7 @@ public class Event extends RealmObject {
     private LocationInfo locationInfo;
 
     private int cellId;
-    private int lac;
+    private int locationAreaCode;
     private int psc;
 
     private int dfId;

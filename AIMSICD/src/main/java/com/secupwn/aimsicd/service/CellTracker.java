@@ -534,7 +534,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             case TelephonyManager.PHONE_TYPE_GSM:
                 GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
                 if (gsmCellLocation != null) {
-                    monitorCell.setLac(gsmCellLocation.getLac());
+                    monitorCell.setLocationAreaCode(gsmCellLocation.getLac());
                     monitorCell.setCid(gsmCellLocation.getCid());
 
                     // Check if LAC is ok
@@ -568,7 +568,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             case TelephonyManager.PHONE_TYPE_CDMA:
                 CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                 if (cdmaCellLocation != null) {
-                    monitorCell.setLac(cdmaCellLocation.getNetworkId());
+                    monitorCell.setLocationAreaCode(cdmaCellLocation.getNetworkId());
                     monitorCell.setCid(cdmaCellLocation.getBaseStationId());
 
                     boolean lacOK = dbHelper.checkLAC(monitorCell);
@@ -724,7 +724,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         //TODO
                         /*@EVA
                             Is it a good idea to dump all cells to db because if we spot a known cell
-                            with different lac then this will also be dump to db.
+                            with different locationAreaCode then this will also be dump to db.
 
                         */
                         device.setCellInfo(
@@ -734,7 +734,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                         device.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
 
-                        device.cell.setLac(gsmCellLocation.getLac());     // LAC
+                        device.cell.setLocationAreaCode(gsmCellLocation.getLac());     // LAC
                         device.cell.setCid(gsmCellLocation.getCid());     // CID
                         if (gsmCellLocation.getPsc() != -1) {
                             device.cell.setPsc(gsmCellLocation.getPsc()); // PSC
@@ -758,7 +758,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                         device.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
                                         device.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
-                        device.cell.setLac(cdmaCellLocation.getNetworkId());      // NID
+                        device.cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());      // NID
                         device.cell.setCid(cdmaCellLocation.getBaseStationId());  // BID
                         device.cell.setSid(cdmaCellLocation.getSystemId());       // SID
                         device.cell.setMnc(cdmaCellLocation.getSystemId());       // MNC <== BUG!??
@@ -902,14 +902,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     case TelephonyManager.PHONE_TYPE_GSM:
                         GsmCellLocation gsmCellLocation = (GsmCellLocation) cellLocation;
                         device.cell.setCid(gsmCellLocation.getCid()); // CID
-                        device.cell.setLac(gsmCellLocation.getLac()); // LAC
+                        device.cell.setLocationAreaCode(gsmCellLocation.getLac()); // LAC
                         device.cell.setPsc(gsmCellLocation.getPsc()); // PSC
                         break;
 
                     case TelephonyManager.PHONE_TYPE_CDMA:
                         CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cellLocation;
                         device.cell.setCid(cdmaCellLocation.getBaseStationId()); // BSID ??
-                        device.cell.setLac(cdmaCellLocation.getNetworkId());     // NID
+                        device.cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());     // NID
                         device.cell.setSid(cdmaCellLocation.getSystemId());      // SID
                         device.cell.setMnc(cdmaCellLocation.getSystemId());      // MNC <== BUG!??
 
@@ -940,7 +940,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             // This only logs a BTS if we have GPS lock
             // TODO: Is correct behaviour? We should consider logging all cells, even without GPS.
             if (trackingCell) {
-                // This also checks that the lac are cid are not in DB before inserting
+                // This also checks that the locationAreaCode are cid are not in DB before inserting
                 dbHelper.insertBTS(device.cell);
             }
         }

@@ -111,7 +111,7 @@ public class Device {
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
                     if (gsmCellLocation != null) {
                         cell.setCid(gsmCellLocation.getCid());
-                        cell.setLac(gsmCellLocation.getLac());
+                        cell.setLocationAreaCode(gsmCellLocation.getLac());
                         cell.setPsc(gsmCellLocation.getPsc());
                     }
                 }
@@ -123,7 +123,7 @@ public class Device {
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
                     if (cdmaCellLocation != null) {
                         cell.setCid(cdmaCellLocation.getBaseStationId());
-                        cell.setLac(cdmaCellLocation.getNetworkId());
+                        cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());
                         cell.setSid(cdmaCellLocation.getSystemId()); // one of these must be a bug !!
                         // See: http://stackoverflow.com/questions/8088046/android-how-to-identify-carrier-on-cdma-network
                         // and: https://github.com/klinker41/android-smsmms/issues/26

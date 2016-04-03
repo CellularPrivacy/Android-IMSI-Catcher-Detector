@@ -492,7 +492,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                                         String.valueOf(cell.getCid()),
                                         String.valueOf(loc.getLatitude()),
                                         String.valueOf(loc.getLongitude()),
-                                        String.valueOf(cell.getLac()),
+                                        String.valueOf(cell.getLocationAreaCode()),
                                         String.valueOf(cell.getMcc()),
                                         String.valueOf(cell.getMnc()),
                                         String.valueOf(cell.getPsc()),

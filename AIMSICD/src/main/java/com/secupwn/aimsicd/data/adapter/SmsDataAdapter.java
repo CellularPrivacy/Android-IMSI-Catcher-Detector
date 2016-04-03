@@ -56,7 +56,7 @@ public class SmsDataAdapter extends RealmBaseAdapter<SmsData> {
         holder.smsd_smstype.setText(getItem(position).getType());
         holder.smsd_number.setText(getItem(position).getSenderNumber());
         holder.smsd_data.setText(getItem(position).getMessage());
-        holder.smsd_lac.setText(SV(getItem(position).getCurrentLac()));
+        holder.smsd_lac.setText(SV(getItem(position).getCurrentLocationAreaCode()));
         holder.smsd_cid.setText(SV(getItem(position).getCurrentCid()));
         holder.smsd_rat.setText(getItem(position).getCurrentRat());
         String isRoaming = "false";
