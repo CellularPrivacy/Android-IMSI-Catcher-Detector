@@ -309,7 +309,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
             TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             String networkOperator = tm.getNetworkOperator();
 
-            if (networkOperator != null) {
+            if (networkOperator != null && !networkOperator.isEmpty()) {
                 int mcc = Integer.parseInt(networkOperator.substring(0, 3));
                 cell.setMcc(mcc);
                 int mnc = Integer.parseInt(networkOperator.substring(3));
