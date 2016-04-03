@@ -1,6 +1,6 @@
 # Android IMSI-Catcher Detector
 
-[![BuildStatus](https://travis-ci.org/CellularPrivacy/Android-IMSI-Catcher-Detector.svg)](https://travis-ci.org/CellularPrivacy/Android-IMSI-Catcher-Detector) [![DevelopmentStatus](https://img.shields.io/badge/Development-ALPHA-brightgreen.svg)](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Development-Status) [![CoverityScan](https://scan.coverity.com/projects/3346/badge.svg)](https://scan.coverity.com/projects/3346) [![Translations](https://hosted.weblate.org/widgets/aimsicd/-/shields-badge.svg)](https://hosted.weblate.org/projects/aimsicd/strings/)
+[![BuildStatus](https://travis-ci.org/CellularPrivacy/Android-IMSI-Catcher-Detector.svg)](https://travis-ci.org/CellularPrivacy/Android-IMSI-Catcher-Detector) [![DevelopmentStatus](https://img.shields.io/badge/Development-ALPHA-brightgreen.svg)](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Development-Status) [![CoverityScan](https://scan.coverity.com/projects/3346/badge.svg)](https://scan.coverity.com/projects/3346) [![Translations](https://hosted.weblate.org/widgets/aimsicd/-/svg-badge.svg)](https://hosted.weblate.org/projects/aimsicd/strings/)
 [![Bountysource](https://www.bountysource.com/badge/team?team_id=40338&style=bounties_received)](https://www.bountysource.com/teams/android-imsi-catcher-detector/issues?utm_source=Android%20IMSI-Catcher%20Detector&utm_medium=shield&utm_campaign=bounties_received)
 
 --
