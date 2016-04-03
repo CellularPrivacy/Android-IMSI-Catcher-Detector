@@ -14,9 +14,9 @@ import android.util.SparseArray;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
-import com.secupwn.aimsicd.data.DefaultLocation;
-import com.secupwn.aimsicd.data.Event;
-import com.secupwn.aimsicd.data.LocationInfo;
+import com.secupwn.aimsicd.data.model.DefaultLocation;
+import com.secupwn.aimsicd.data.model.Event;
+import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.service.CellTracker;
 import com.secupwn.aimsicd.utils.CMDProcessor;

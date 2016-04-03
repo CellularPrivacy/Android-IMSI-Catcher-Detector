@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.data.Event;
+import com.secupwn.aimsicd.data.model.Event;
 
 import java.text.DateFormat;
 

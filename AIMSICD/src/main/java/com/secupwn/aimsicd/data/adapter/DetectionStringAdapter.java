@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.data.SmsDetectionString;
+import com.secupwn.aimsicd.data.model.SmsDetectionString;
 
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;

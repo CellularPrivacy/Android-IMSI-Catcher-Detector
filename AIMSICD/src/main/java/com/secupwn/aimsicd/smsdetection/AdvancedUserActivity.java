@@ -18,7 +18,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.data.SmsDetectionString;
+import com.secupwn.aimsicd.data.model.SmsDetectionString;
 import com.secupwn.aimsicd.data.adapter.DetectionStringAdapter;
 
 import io.freefair.android.injection.annotation.Inject;

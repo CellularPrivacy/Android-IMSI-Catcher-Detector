@@ -1,4 +1,4 @@
-package com.secupwn.aimsicd.data;
+package com.secupwn.aimsicd.data.model;
 
 import io.realm.RealmObject;
 import lombok.Getter;

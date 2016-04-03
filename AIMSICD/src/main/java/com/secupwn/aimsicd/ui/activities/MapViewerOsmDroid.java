@@ -33,7 +33,7 @@ import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
-import com.secupwn.aimsicd.data.LocationInfo;
+import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.map.CellTowerGridMarkerClusterer;
 import com.secupwn.aimsicd.map.CellTowerMarker;
 import com.secupwn.aimsicd.map.MarkerData;

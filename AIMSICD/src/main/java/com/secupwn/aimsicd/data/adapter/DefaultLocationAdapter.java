@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.data.DefaultLocation;
+import com.secupwn.aimsicd.data.model.DefaultLocation;
 
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;

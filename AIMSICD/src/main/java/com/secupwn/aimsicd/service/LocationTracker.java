@@ -16,7 +16,7 @@ import android.os.Bundle;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
-import com.secupwn.aimsicd.data.LocationInfo;
+import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.GeoLocation;
 import com.secupwn.aimsicd.utils.TruncatedLocation;

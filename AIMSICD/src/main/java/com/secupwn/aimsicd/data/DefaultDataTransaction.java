@@ -1,5 +1,9 @@
 package com.secupwn.aimsicd.data;
 
+import com.secupwn.aimsicd.data.model.DefaultLocation;
+import com.secupwn.aimsicd.data.model.LocationInfo;
+import com.secupwn.aimsicd.data.model.SmsDetectionString;
+
 import io.realm.Realm;
 
 public class DefaultDataTransaction implements Realm.Transaction {

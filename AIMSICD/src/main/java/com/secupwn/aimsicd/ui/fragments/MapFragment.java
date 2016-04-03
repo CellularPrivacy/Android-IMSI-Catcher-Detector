@@ -32,7 +32,7 @@ import android.view.View;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.data.LocationInfo;
+import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.ui.activities.MapPrefActivity;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;

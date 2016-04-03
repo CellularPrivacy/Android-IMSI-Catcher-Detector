@@ -17,9 +17,9 @@ import android.view.WindowManager;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
-import com.secupwn.aimsicd.data.LocationInfo;
-import com.secupwn.aimsicd.data.SmsData;
-import com.secupwn.aimsicd.data.SmsDetectionString;
+import com.secupwn.aimsicd.data.model.LocationInfo;
+import com.secupwn.aimsicd.data.model.SmsData;
+import com.secupwn.aimsicd.data.model.SmsDetectionString;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.utils.MiscUtils;
 

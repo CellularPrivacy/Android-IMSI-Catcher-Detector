@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.data.SmsData;
+import com.secupwn.aimsicd.data.model.SmsData;
 
 import java.util.Date;
 
