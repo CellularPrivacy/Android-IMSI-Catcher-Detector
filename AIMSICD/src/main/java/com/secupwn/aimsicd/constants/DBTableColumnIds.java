@@ -5,21 +5,6 @@ package com.secupwn.aimsicd.constants;
  * much more transparent. Try keep the same order as in the aimsicd.sql tables.
  */
 public class DBTableColumnIds {
-    //defaultlocation
-    public static final String DEFAULT_LOCATION_TABLE_NAME = "defaultlocation";
-    public static final String DEFAULT_LOCATION_ID = "_id";
-    public static final String DEFAULT_LOCATION_COUNTRY = "country";
-    public static final String DEFAULT_LOCATION_MCC = "MCC";
-    public static final String DEFAULT_LOCATION_LAT = "lat";
-    public static final String DEFAULT_LOCATION_LON = "lon";
-
-    //CounterMeasures
-    public static final String COUNTER_MEASURES_TABLE_NAME = "CounterMeasures";
-    public static final String COUNTER_MEASURES_ID = "_id";
-    public static final String COUNTER_MEASURES_NAME = "name";
-    public static final String COUNTER_MEASURES_DESCRIPTION = "description";
-    public static final String COUNTER_MEASURES_THRESH = "thresh";
-    public static final String COUNTER_MEASURES_THFINE = "thfine";
 
     //DBe_capabilities
     public static final String DBE_CAPABILITIES_TABLE_NAME = "DBe_capabilities";

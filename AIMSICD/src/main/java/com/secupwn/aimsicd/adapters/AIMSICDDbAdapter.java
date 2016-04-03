@@ -112,7 +112,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
                 // I am trying to keep in same order and aimsicd.sql script
                 // Only backing up useful tables, uncomment if you want to backup
-                //DBTableColumnIds.COUNTER_MEASURES_TABLE_NAME, // CounterMeasures:     Counter Measures thresholds and description
                 //DBTableColumnIds.DBE_CAPABILITIES_TABLE_NAME, // DBe_capabilities:    External: MNO & BTS network capabilities
                 DBTableColumnIds.DBE_IMPORT_TABLE_NAME,         // DBe_import:          External: BTS import table
                 DBTableColumnIds.DBI_BTS_TABLE_NAME,            // DBi_bts:             Internal: (physical) BTS data
@@ -643,15 +642,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
                             switch (table) {
 
-                                case "CounterMeasures":
-                                    insertCounterMeasures(
-                                            records.get(i)[1],           //name
-                                            records.get(i)[2],           //description
-                                            Integer.parseInt(records.get(i)[3]),    //thresh
-                                            Double.parseDouble(records.get(i)[4])   //thfine
-                                    );
-                                    break;
-
                                 case "DBe_capabilities":
                                     insertDBeCapabilities(
                                             records.get(i)[1],           //MCC
@@ -1111,18 +1101,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     //====================================================================
     //      START OF INSERT FUNCTIONS
     //====================================================================
-
-    public void insertCounterMeasures(String name, String description,
-                                      int thresh, double thfine) {
-
-        ContentValues counterMeasures = new ContentValues();
-        counterMeasures.put("name", name);
-        counterMeasures.put("description", description);
-        counterMeasures.put("thresh", thresh);
-        counterMeasures.put("thfine", thfine);
-
-        mDb.insert("CounterMeasures", null, counterMeasures);
-    }
 
     /**
      * "MCC"        TEXT,
