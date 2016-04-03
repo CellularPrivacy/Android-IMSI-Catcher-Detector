@@ -1,6 +1,25 @@
 # CHANGELOG of 'AIMSICD'
 ------------------------
 
+#### [03.04.2016 - WIP-Release v0.1.42-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.42-alpha)
+
+* Changed: Moved whole project and all links into new organization `CellularPrivacy`
+* Changed: Set `targetSdk` to `22` and use a better visible white notification icon
+* Changed: Now using `Lombok` for handling cells, replaced more getters and setters
+* Changed: Renamed `MainActivity` and application to `AndroidIMSICatcherDetector`
+* Updated: Translations for Chinese, Japanese, Vietnamese and Norwegian Bokmål
+* Updated: Moved to gradle version 2.12, grouped UI packages and activated Lint
+* Updated: Let streams be closed by `Lombok` and improved notification content
+* Updated: Improved `CellTracker` and updated `DISCLAIMER` in our repository
+* Added: New `Lombok` dependency for adding handlers to further shorten our code
+* Added: Current development state `ALPHA` has been added to in-app disclaimer
+* Fixed: Automatic version naming does not show `unspecified-normal` anymore
+* Fixed: Multiple force closes on `OpenCellID` database requests have been solved
+* Fixed: Now rechecking current cells after downloading `OpenCellID` data
+* Fixed: Prevent crash by returning `null` if `MapFragment` is not attached to activity
+* Fixed: Lines in LogCat are now added to buffer again to improve SMS detection
+* Fixed: Resolved crash when trying to download `OpenCellID` data in airplane mode
+
 #### [13.03.2016 - WIP-Release v0.1.41-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.41-alpha)
 
 * Removed: Some now unused Icons from previous UI/UX have been removed
