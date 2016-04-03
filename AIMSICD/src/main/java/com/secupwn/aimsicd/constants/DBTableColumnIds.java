@@ -6,16 +6,6 @@ package com.secupwn.aimsicd.constants;
  */
 public class DBTableColumnIds {
 
-    //DBe_capabilities
-    public static final String DBE_CAPABILITIES_TABLE_NAME = "DBe_capabilities";
-    public static final String DBE_CAPABILITIES_ID = "_id";
-    public static final String DBE_CAPABILITIES_MCC = "MCC";
-    public static final String DBE_CAPABILITIES_MNC = "MNC";
-    public static final String DBE_CAPABILITIES_LAC = "LAC";
-    public static final String DBE_CAPABILITIES_OP_NAME = "op_name";
-    public static final String DBE_CAPABILITIES_BAND_PLAN = "band_plan";
-    public static final String DBE_CAPABILITIES_EXPAND = "__EXPAND__";
-
     //DBe_import
     public static final String DBE_IMPORT_TABLE_NAME = "DBe_import";
     public static final String DBE_IMPORT_ID = "_id";

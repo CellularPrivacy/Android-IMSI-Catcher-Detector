@@ -112,7 +112,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
                 // I am trying to keep in same order and aimsicd.sql script
                 // Only backing up useful tables, uncomment if you want to backup
-                //DBTableColumnIds.DBE_CAPABILITIES_TABLE_NAME, // DBe_capabilities:    External: MNO & BTS network capabilities
                 DBTableColumnIds.DBE_IMPORT_TABLE_NAME,         // DBe_import:          External: BTS import table
                 DBTableColumnIds.DBI_BTS_TABLE_NAME,            // DBi_bts:             Internal: (physical) BTS data
                 DBTableColumnIds.DBI_MEASURE_TABLE_NAME,        // DBi_measure:         Internal: (volatile) network measurements
@@ -641,18 +640,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
                             switch (table) {
 
-                                case "DBe_capabilities":
-                                    insertDBeCapabilities(
-                                            records.get(i)[1],           //MCC
-                                            records.get(i)[2],           //MNC
-                                            records.get(i)[3],           //LAC
-                                            records.get(i)[4],           //op_name
-                                            records.get(i)[5],           //band_plan
-                                            records.get(i)[6]            //__EXPAND___
-                                    );
-
-                                    break;
-
                                 case "DBe_import":
                                     try {
                                         insertDBeImport(
@@ -1096,29 +1083,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     //====================================================================
     //      START OF INSERT FUNCTIONS
     //====================================================================
-
-    /**
-     * "MCC"        TEXT,
-     * "MNC"        TEXT,
-     * "LAC"        TEXT,
-     * "op_name"    TEXT,
-     * "band_plan"  TEXT,
-     * "__EXPAND__" TEXT
-     */
-    public void insertDBeCapabilities(String mcc, String mnc, String lac, String op_name,
-                                      String bandPlan, String __EXPAND__) {
-
-        ContentValues dbeCapabilities = new ContentValues();
-
-        dbeCapabilities.put("MCC", mcc);
-        dbeCapabilities.put("MNC", mnc);
-        dbeCapabilities.put("LAC", lac);
-        dbeCapabilities.put("op_name", op_name);
-        dbeCapabilities.put("band_plan", bandPlan);
-        dbeCapabilities.put("__EXPAND__", __EXPAND__);
-
-        mDb.insert("DBe_capabilities", null, dbeCapabilities);
-    }
 
     /**
      * This method is used to insert and populate the downloaded or previously
