@@ -80,9 +80,4 @@ public class DBTableColumnIds {
     public static final String DBI_MEASURE_IS_NEIGHBOUR = "isNeighbour";
     public static final String DBI_MEASURE_FOREIGN_KEY = "bts_id"; // TODO: Remove?
 
-    //SectorType
-    public static final String SECTOR_TYPE_TABLE_NAME = "SectorType";
-    public static final String SECTOR_TYPE_ID = "_id";
-    public static final String SECTOR_TYPE_DESCRIPTION = "description";
-
 }

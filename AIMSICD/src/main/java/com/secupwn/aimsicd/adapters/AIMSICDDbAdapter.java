@@ -116,7 +116,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                 DBTableColumnIds.DBE_IMPORT_TABLE_NAME,         // DBe_import:          External: BTS import table
                 DBTableColumnIds.DBI_BTS_TABLE_NAME,            // DBi_bts:             Internal: (physical) BTS data
                 DBTableColumnIds.DBI_MEASURE_TABLE_NAME,        // DBi_measure:         Internal: (volatile) network measurements
-                //DBTableColumnIds.SECTOR_TYPE_TABLE_NAME,      // SectorType:          BTS tower sector configuration (Many CID, same BTS)
         };
     }
 
@@ -730,10 +729,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                     } catch (Exception ee) {
                                         log.error("RestoreDB: Error in insertDbiMeasure()", ee);
                                     }
-                                    break;
-
-                                case "SectorType":
-                                    insertSectorType(records.get(i)[1]);
                                     break;
                             }
                         }
@@ -1491,16 +1486,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                 // TODO see issue #15
             }
         });
-    }
-
-
-    /**
-     * Inserts BTS Sector Type data into the SectorType table
-     */
-    public void insertSectorType(String description) {
-        ContentValues sectorType = new ContentValues();
-        sectorType.put("description", description);
-        mDb.insert("SectorType", null, sectorType);
     }
 
     /**
