@@ -180,7 +180,7 @@ public final class DbViewerFragment extends InjectionFragment {
      * <p/>
      * This is where the text labels are created for each column in
      * the Database Viewer (DBV). For details of how this should be presented, see:
-     * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
+     * https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/234
      * <p/>
      * Lat/Lng:     Latitude / Longitude (We should use "Lon" instead of "Lng".)
      * AvgSignal:   Average Signal Strength

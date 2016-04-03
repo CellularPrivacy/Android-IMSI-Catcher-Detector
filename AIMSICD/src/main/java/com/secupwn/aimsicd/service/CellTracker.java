@@ -429,7 +429,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *              b)  In TinyDB, the getBoolean() returns "false" by default, if empty.
      *
      *              c)   This will be called on every cell change (ref:  issue #346)
-     *              d)  *** https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/383
+     *              d)  *** https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/383
      *
      *  Issue:
      *          [ ] We need a timer or "something" to reverse a positive detection once

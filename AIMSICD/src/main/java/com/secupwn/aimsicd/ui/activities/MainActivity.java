@@ -258,8 +258,8 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
             }
         } else if (selectedItem.getId() == DrawerMenu.ID.DATABASE_SETTINGS.RESET_DB) {
             // WARNING! This deletes the entire database, thus any subsequent DB access will FC app.
-            //          Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
-            //          See: https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/581 and Helpers.java
+            // Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
+            // See: https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/581 and Helpers.java
             Helpers.askAndDeleteDb(this);
 
 

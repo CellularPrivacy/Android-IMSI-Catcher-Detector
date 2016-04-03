@@ -49,7 +49,7 @@ public class CellTowerMarker extends Marker {
      *
      * The info window could be more advanced, if possible, by using
      * more available items as explained in the related issue here:
-     * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
+     * https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/234
      *
      */
     public View getInfoContents(MarkerData data) {

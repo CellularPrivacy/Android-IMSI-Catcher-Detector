@@ -1,9 +1,8 @@
-# Test changes of this .travis.yml config before submitting them:
-# http://lint.travis-ci.org/SecUpwN/Android-IMSI-Catcher-Detector
-# ---------------------------------------------------------------
-# Encrypt Travis CI settings using this tool by Konstantin Haase:
-# https://rkh.github.io/travis-encrypt/public/index.html
-# ---------------------------------------------------------------
+# Test all changes of this .travis.yml config file before submitting them:
+# https://yaml.travis-ci.org/CellularPrivacy/Android-IMSI-Catcher-Detector
+# ------------------------------------------------------------------------
+# Encrypt settings: https://rkh.github.io/travis-encrypt/public/index.html
+# ------------------------------------------------------------------------
 
 language: android
 sudo: false
@@ -45,13 +44,13 @@ deploy:
     - AIMSICD/build/outputs/apk/md5sum.txt
     - AIMSICD/build/outputs/apk/sha1sum.txt
   on:
-    repo: SecUpwN/Android-IMSI-Catcher-Detector
+    repo: CellularPrivacy/Android-IMSI-Catcher-Detector
     tags: true
 
 addons:
   coverity_scan: #Scan results: http://scan.coverity.com/projects/3346
     project:
-      name: "SecUpwN/Android-IMSI-Catcher-Detector"
+      name: "CellularPrivacy/Android-IMSI-Catcher-Detector"
     notification_email: annoyed@coverity.notifications
     build_command_prepend: "./gradlew clean"
     build_command: "./gradlew build"
