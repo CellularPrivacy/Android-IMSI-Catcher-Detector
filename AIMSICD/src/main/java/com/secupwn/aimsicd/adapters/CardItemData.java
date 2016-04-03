@@ -103,8 +103,8 @@ public class CardItemData {
             net = "N/A";
         }
 
-        if (cell.getPsc() != Integer.MAX_VALUE && cell.getPsc() != -1) {
-            psc = "PSC: " + cell.getPsc();
+        if (cell.getPrimaryScramblingCode() != Integer.MAX_VALUE && cell.getPrimaryScramblingCode() != -1) {
+            psc = "PSC: " + cell.getPrimaryScramblingCode();
         } else {
             psc = "N/A";
         }

@@ -64,7 +64,7 @@ public class DefaultLocationAdapter extends RealmBaseAdapter<DefaultLocation> {
 
         public void updateDisplay(DefaultLocation item, int position) {
             mCountry.setText(item.getCountry());
-            mMcc.setText(item.getMcc());
+            mMcc.setText(item.getMobileCountryCode());
             mLat.setText(String.valueOf(item.getLocationInfo().getLatitude()));
             mLng.setText(String.valueOf(item.getLocationInfo().getLongitude()));
             mRecordId.setText(position);

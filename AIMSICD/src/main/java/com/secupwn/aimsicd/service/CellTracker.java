@@ -737,7 +737,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         device.cell.setLocationAreaCode(gsmCellLocation.getLac());     // LAC
                         device.cell.setCid(gsmCellLocation.getCid());     // CID
                         if (gsmCellLocation.getPsc() != -1) {
-                            device.cell.setPsc(gsmCellLocation.getPsc()); // PSC
+                            device.cell.setPrimaryScramblingCode(gsmCellLocation.getPsc()); // PSC
                         }
 
                         /*
@@ -903,7 +903,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         GsmCellLocation gsmCellLocation = (GsmCellLocation) cellLocation;
                         device.cell.setCid(gsmCellLocation.getCid()); // CID
                         device.cell.setLocationAreaCode(gsmCellLocation.getLac()); // LAC
-                        device.cell.setPsc(gsmCellLocation.getPsc()); // PSC
+                        device.cell.setPrimaryScramblingCode(gsmCellLocation.getPsc()); // PSC
                         break;
 
                     case TelephonyManager.PHONE_TYPE_CDMA:

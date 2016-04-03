@@ -12,6 +12,6 @@ public class DefaultLocation extends RealmObject {
     private String country;
 
     @PrimaryKey
-    private int mcc;
+    private int mobileCountryCode;
     private LocationInfo locationInfo;
 }

@@ -314,7 +314,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                 cell.setMcc(mcc);
                 int mnc = Integer.parseInt(networkOperator.substring(3));
                 cell.setMnc(mnc);
-                log.debug("CELL:: mcc=" + mcc + " mnc=" + mnc);
+                log.debug("CELL:: mobileCountryCode=" + mcc + " mnc=" + mnc);
             }
 
 

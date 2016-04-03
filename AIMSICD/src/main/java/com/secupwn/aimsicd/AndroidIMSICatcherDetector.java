@@ -330,7 +330,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
                     DefaultLocation defaultLocation = new DefaultLocation();
                     defaultLocation.setLocationInfo(locationInfo);
                     defaultLocation.setCountry(country);
-                    defaultLocation.setMcc(mcc);
+                    defaultLocation.setMobileCountryCode(mcc);
 
                     realm.copyToRealm(defaultLocation);
                 }

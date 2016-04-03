@@ -57,7 +57,7 @@ public class Cell implements Parcelable {
     /**
      * Primary Scrambling Code
      */
-    private int psc;
+    private int primaryScramblingCode;
 
     /**
      * Relative Signal Strength Indicator [dBm, asu etc.]
@@ -125,7 +125,7 @@ public class Cell implements Parcelable {
         mcc = Integer.MAX_VALUE;
         mnc = Integer.MAX_VALUE;
         dbm = Integer.MAX_VALUE;
-        psc = Integer.MAX_VALUE;
+        primaryScramblingCode = Integer.MAX_VALUE;
         rssi = Integer.MAX_VALUE;
         timingAdvance = Integer.MAX_VALUE;
         sid = Integer.MAX_VALUE;
@@ -148,7 +148,7 @@ public class Cell implements Parcelable {
         this.mnc = mnc;
         this.dbm = dbm;
         this.rssi = Integer.MAX_VALUE;
-        this.psc = Integer.MAX_VALUE;
+        this.primaryScramblingCode = Integer.MAX_VALUE;
         this.timestamp = timestamp;
         this.timingAdvance = Integer.MAX_VALUE;
         this.sid = Integer.MAX_VALUE;
@@ -160,7 +160,7 @@ public class Cell implements Parcelable {
         this.bearing = 0.0;
     }
 
-    public Cell(int CID, int locationAreaCode, int signal, int psc, int netType, boolean dbm) {
+    public Cell(int CID, int locationAreaCode, int signal, int primaryScramblingCode, int netType, boolean dbm) {
         this.cid = CID;
         this.locationAreaCode = locationAreaCode;
         this.mcc = Integer.MAX_VALUE;
@@ -171,7 +171,7 @@ public class Cell implements Parcelable {
         } else {
             this.rssi = signal;
         }
-        this.psc = psc;
+        this.primaryScramblingCode = primaryScramblingCode;
 
         this.netType = netType;
         this.timingAdvance = Integer.MAX_VALUE;
@@ -204,13 +204,13 @@ public class Cell implements Parcelable {
     /**
      * Set Primary Scrambling Code (PSC) of current Cell
      *
-     * @param psc Primary Scrambling Code
+     * @param primaryScramblingCode Primary Scrambling Code
      */
-    public void setPsc(int psc) {
-        if (psc == -1) {
-            this.psc = Integer.MAX_VALUE;
+    public void setPrimaryScramblingCode(int primaryScramblingCode) {
+        if (primaryScramblingCode == -1) {
+            this.primaryScramblingCode = Integer.MAX_VALUE;
         } else {
-            this.psc = psc;
+            this.primaryScramblingCode = primaryScramblingCode;
         }
     }
 
@@ -235,8 +235,8 @@ public class Cell implements Parcelable {
         result = prime * result + locationAreaCode;
         result = prime * result + mcc;
         result = prime * result + mnc;
-        if (psc != -1) {
-            result = prime * result + psc;
+        if (primaryScramblingCode != -1) {
+            result = prime * result + primaryScramblingCode;
         }
         return result;
     }
@@ -253,9 +253,9 @@ public class Cell implements Parcelable {
             return false;
         }
         Cell other = (Cell) obj;
-        if (this.psc != Integer.MAX_VALUE) {
+        if (this.primaryScramblingCode != Integer.MAX_VALUE) {
             return this.cid == other.getCid() && this.locationAreaCode == other.getLocationAreaCode() && this.mcc == other
-                    .getMcc() && this.mnc == other.getMnc() && this.psc == other.getPsc();
+                    .getMcc() && this.mnc == other.getMnc() && this.primaryScramblingCode == other.getPrimaryScramblingCode();
         } else {
             return this.cid == other.getCid() && this.locationAreaCode == other.getLocationAreaCode() && this.mcc == other
                     .getMcc() && this.mnc == other.getMnc();
@@ -270,7 +270,7 @@ public class Cell implements Parcelable {
         result.append("MCC - ").append(mcc).append("\n");
         result.append("MNC - ").append(mnc).append("\n");
         result.append("DBm - ").append(dbm).append("\n");
-        result.append("PSC - ").append(validatePscValue(psc)).append("\n");
+        result.append("PSC - ").append(validatePscValue(primaryScramblingCode)).append("\n");
         result.append("Type - ").append(netType).append("\n");
         result.append("Lon - ").append(lon).append("\n");
         result.append("Lat - ").append(lat).append("\n");
@@ -383,7 +383,7 @@ public class Cell implements Parcelable {
         mcc = Integer.valueOf(data[2]);
         mnc = Integer.valueOf(data[3]);
         dbm = Integer.valueOf(data[4]);
-        psc = Integer.valueOf(data[5]);
+        primaryScramblingCode = Integer.valueOf(data[5]);
         rssi = Integer.valueOf(data[6]);
         timingAdvance = Integer.valueOf(data[7]);
         sid = Integer.valueOf(data[8]);
@@ -407,7 +407,7 @@ public class Cell implements Parcelable {
                 String.valueOf(this.mcc),
                 String.valueOf(this.mnc),
                 String.valueOf(this.dbm),
-                String.valueOf(this.psc),
+                String.valueOf(this.primaryScramblingCode),
                 String.valueOf(this.rssi),
                 String.valueOf(this.timingAdvance),
                 String.valueOf(this.sid),

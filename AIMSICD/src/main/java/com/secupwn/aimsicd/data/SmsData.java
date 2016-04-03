@@ -18,8 +18,8 @@ public class SmsData extends RealmObject {
     private boolean roaming;
 
     private int currentLocationAreaCode;
-    private int currentCid;
-    private String currentRat;
+    private int currentCellId;
+    private String currentRadioAccessTechnology;
 
     @Override
     public void removeFromRealm() {

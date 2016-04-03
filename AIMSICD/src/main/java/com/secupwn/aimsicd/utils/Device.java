@@ -112,7 +112,7 @@ public class Device {
                     if (gsmCellLocation != null) {
                         cell.setCid(gsmCellLocation.getCid());
                         cell.setLocationAreaCode(gsmCellLocation.getLac());
-                        cell.setPsc(gsmCellLocation.getPsc());
+                        cell.setPrimaryScramblingCode(gsmCellLocation.getPsc());
                     }
                 }
                 break;

@@ -165,9 +165,9 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
                 tr.setVisibility(View.GONE);
             }
 
-            if (mAimsicdService.getCell().getPsc() != Integer.MAX_VALUE) {
+            if (mAimsicdService.getCell().getPrimaryScramblingCode() != Integer.MAX_VALUE) {
                 content = (HighlightTextView)  getView().findViewById(R.id.network_psc);
-                content.updateText(String.valueOf(mAimsicdService.getCell().getPsc()), ani);
+                content.updateText(String.valueOf(mAimsicdService.getCell().getPrimaryScramblingCode()), ani);
                 tr = (TableRow) getView().findViewById(R.id.primary_scrambling_code);
                 tr.setVisibility(View.VISIBLE);
             }

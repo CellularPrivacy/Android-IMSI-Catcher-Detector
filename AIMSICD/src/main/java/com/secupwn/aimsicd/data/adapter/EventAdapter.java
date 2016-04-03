@@ -77,7 +77,7 @@ public class EventAdapter extends RealmBaseAdapter<Event> {
             mtime.setText(DateFormat.getDateTimeInstance().format(item.getTimestamp()));          // need fix ?
             mLAC.setText(item.getLocationAreaCode());
             mCID.setText(item.getCellId());
-            mPSC.setText(item.getPsc());
+            mPSC.setText(item.getPrimaryScramblingCode());
             mgpsd_lat.setText(String.valueOf(item.getLocationInfo().getLatitude()));
             mgpsd_lon.setText(String.valueOf(item.getLocationInfo().getLongitude()));
             mgpsd_accu.setText(String.valueOf(item.getLocationInfo().getAccuracy()));

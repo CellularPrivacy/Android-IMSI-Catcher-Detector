@@ -497,7 +497,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                                         String.valueOf(cell.getLocationAreaCode()),
                                         String.valueOf(cell.getMcc()),
                                         String.valueOf(cell.getMnc()),
-                                        String.valueOf(cell.getPsc()),
+                                        String.valueOf(cell.getPrimaryScramblingCode()),
                                         String.valueOf(cell.getRat()),
                                         "", false));
 

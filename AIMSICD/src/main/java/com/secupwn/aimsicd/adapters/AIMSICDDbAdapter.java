@@ -357,7 +357,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         @Cleanup Realm realm = Realm.getDefaultInstance();
 
         return realm.where(DefaultLocation.class)
-                .equalTo("mcc", mcc)
+                .equalTo("mobileCountryCode", mcc)
                 .findAll()
                 .first()
                 .getLocationInfo();
@@ -1204,7 +1204,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             values.put("MNC", cell.getMnc());
             values.put("LAC", cell.getLocationAreaCode());
             values.put("CID", cell.getCid());
-            values.put("PSC", cell.getPsc());
+            values.put("PSC", cell.getPrimaryScramblingCode());
 
             // TODO: setting these to 0 because if empty causing error in DB Restore
             values.put("T3212", 0);  // TODO
@@ -1450,7 +1450,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         final Date timestamp = new Date();
         final int lac = CellTracker.monitorCell.getLocationAreaCode();
         final int cid = CellTracker.monitorCell.getCid();
-        final int psc = CellTracker.monitorCell.getPsc(); //[UMTS,LTE]
+        final int psc = CellTracker.monitorCell.getPrimaryScramblingCode(); //[UMTS,LTE]
         final double gpsd_lat = CellTracker.monitorCell.getLat();
         final double gpsd_lon = CellTracker.monitorCell.getLon();
         final double gpsd_accu = CellTracker.monitorCell.getAccuracy();
@@ -1469,7 +1469,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                         insertData = true;
                     } else {
                         Event lastEvent = events.last();
-                        insertData = !(lastEvent.getCellId() == cid && lastEvent.getLocationAreaCode() == lac && lastEvent.getPsc() == psc && lastEvent.getDfId() == DF_id);
+                        insertData = !(lastEvent.getCellId() == cid && lastEvent.getLocationAreaCode() == lac && lastEvent.getPrimaryScramblingCode() == psc && lastEvent.getDfId() == DF_id);
                     }
                     // WARNING: By skipping duplicate events, we might be missing counts of Type-0 SMS etc.
 
@@ -1480,7 +1480,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                         event.setTimestamp(timestamp);
                         event.setLocationAreaCode(lac);
                         event.setCellId(cid);
-                        event.setPsc(psc);
+                        event.setPrimaryScramblingCode(psc);
 
                         LocationInfo locationInfo = realm.createObject(LocationInfo.class);
                         locationInfo.setLatitude(gpsd_lat);

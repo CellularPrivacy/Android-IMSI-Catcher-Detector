@@ -97,7 +97,7 @@ public class DeviceApi18 {
                         pDevice.cell.setMcc(identityWcdma.getMcc());
                         pDevice.cell.setMnc(identityWcdma.getMnc());
                         pDevice.cell.setCid(identityWcdma.getCid());
-                        pDevice.cell.setPsc(identityWcdma.getPsc());
+                        pDevice.cell.setPrimaryScramblingCode(identityWcdma.getPsc());
 
                     } else {
                         log.info("Unknown type of cell signal!"

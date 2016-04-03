@@ -28,7 +28,7 @@ public class Event extends RealmObject {
 
     private int cellId;
     private int locationAreaCode;
-    private int psc;
+    private int primaryScramblingCode;
 
     private int dfId;
     private String dfDescription;
