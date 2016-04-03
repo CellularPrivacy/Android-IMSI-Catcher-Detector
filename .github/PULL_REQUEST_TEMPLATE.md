@@ -5,8 +5,8 @@
 #### Agreements
 >Please check these boxes to ensure you've actually read and understood these important rules!
 
-- [ ] **I have reviewed and accepted the [guidelines for contributing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md) to this project.**
-- [ ] **I have reviewed and closely followed the [Style Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Style-Guide) for this Android app.**
+- [ ] **I have reviewed and accepted the [guidelines for contributing](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md) to this project.**
+- [ ] **I have reviewed and closely followed the [Style Guide](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Style-Guide) for this Android app.**
 
 ---
 
@@ -20,6 +20,7 @@
 
 - [ ] Bugfix (non-breaking change which fixes an existing issue)
 - [ ] New feature (non-breaking change which adds functionality)
+- [ ] Refactor (restructuring of existing code without changing its external functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 
 ---

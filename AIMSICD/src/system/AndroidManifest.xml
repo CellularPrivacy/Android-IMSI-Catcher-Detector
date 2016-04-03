@@ -6,8 +6,8 @@
     android:sharedUserId="android.uid.system"
     tools:ignore="ProtectedPermissions">
 
-    <!-- PERMISSIONS ARE SORTED BY AOS PERMISSION AND 3rd PARTY ACCESS. KEEP THIS! -->
-    <!-- https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Permissions -->
+    <!-- PERMISSIONS ARE SORTED BY AOS PERMISSION AND 3rd PARTY ACCESS. PLEASE KEEP THIS! -->
+    <!-- https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Permissions -->
 
     <!-- SPECIAL PERMISSIONS TO BE ADDED AFTER THIS LINE. /> -->
     <!-- To list all available (used) Android permissions on a device, use:

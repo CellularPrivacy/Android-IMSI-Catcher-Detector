@@ -42,69 +42,69 @@ public class DeviceApi18 {
     public static final Logger log = AndroidLogger.forClass(DeviceApi18.class);
 
     public static void loadCellInfo(TelephonyManager tm, Device pDevice) {
-        int lCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
+        int lCurrentApiVersion = Build.VERSION.SDK_INT;
         try {
-            if (pDevice.mCell == null) {
-                pDevice.mCell = new Cell();
+            if (pDevice.cell == null) {
+                pDevice.cell = new Cell();
             }
             List<CellInfo> cellInfoList = tm.getAllCellInfo();
             if (cellInfoList != null) {
                 for (final CellInfo info : cellInfoList) {
 
                     //Network Type
-                    pDevice.mCell.setNetType(tm.getNetworkType());
+                    pDevice.cell.setNetType(tm.getNetworkType());
 
                     if (info instanceof CellInfoGsm) {
                         final CellSignalStrengthGsm gsm = ((CellInfoGsm) info).getCellSignalStrength();
                         final CellIdentityGsm identityGsm = ((CellInfoGsm) info).getCellIdentity();
                         // Signal Strength
-                        pDevice.mCell.setDBM(gsm.getDbm()); // [dBm]
+                        pDevice.cell.setDbm(gsm.getDbm()); // [dBm]
                         // Cell Identity
-                        pDevice.mCell.setCID(identityGsm.getCid());
-                        pDevice.mCell.setMCC(identityGsm.getMcc());
-                        pDevice.mCell.setMNC(identityGsm.getMnc());
-                        pDevice.mCell.setLAC(identityGsm.getLac());
+                        pDevice.cell.setCid(identityGsm.getCid());
+                        pDevice.cell.setMcc(identityGsm.getMcc());
+                        pDevice.cell.setMnc(identityGsm.getMnc());
+                        pDevice.cell.setLac(identityGsm.getLac());
 
                     } else if (info instanceof CellInfoCdma) {
                         final CellSignalStrengthCdma cdma = ((CellInfoCdma) info).getCellSignalStrength();
                         final CellIdentityCdma identityCdma = ((CellInfoCdma) info).getCellIdentity();
                         // Signal Strength
-                        pDevice.mCell.setDBM(cdma.getDbm());
+                        pDevice.cell.setDbm(cdma.getDbm());
                         // Cell Identity
-                        pDevice.mCell.setCID(identityCdma.getBasestationId());
-                        pDevice.mCell.setMNC(identityCdma.getSystemId());
-                        pDevice.mCell.setLAC(identityCdma.getNetworkId());
-                        pDevice.mCell.setSID(identityCdma.getSystemId());
+                        pDevice.cell.setCid(identityCdma.getBasestationId());
+                        pDevice.cell.setMnc(identityCdma.getSystemId());
+                        pDevice.cell.setLac(identityCdma.getNetworkId());
+                        pDevice.cell.setSid(identityCdma.getSystemId());
 
                     } else if (info instanceof CellInfoLte) {
                         final CellSignalStrengthLte lte = ((CellInfoLte) info).getCellSignalStrength();
                         final CellIdentityLte identityLte = ((CellInfoLte) info).getCellIdentity();
                         // Signal Strength
-                        pDevice.mCell.setDBM(lte.getDbm());
-                        pDevice.mCell.setTimingAdvance(lte.getTimingAdvance());
+                        pDevice.cell.setDbm(lte.getDbm());
+                        pDevice.cell.setTimingAdvance(lte.getTimingAdvance());
                         // Cell Identity
-                        pDevice.mCell.setMCC(identityLte.getMcc());
-                        pDevice.mCell.setMNC(identityLte.getMnc());
-                        pDevice.mCell.setCID(identityLte.getCi());
+                        pDevice.cell.setMcc(identityLte.getMcc());
+                        pDevice.cell.setMnc(identityLte.getMnc());
+                        pDevice.cell.setCid(identityLte.getCi());
 
                     } else if  (lCurrentApiVersion >= Build.VERSION_CODES.JELLY_BEAN_MR2 && info instanceof CellInfoWcdma) {
                         final CellSignalStrengthWcdma wcdma = ((CellInfoWcdma) info).getCellSignalStrength();
                         final CellIdentityWcdma identityWcdma = ((CellInfoWcdma) info).getCellIdentity();
                         // Signal Strength
-                        pDevice.mCell.setDBM(wcdma.getDbm());
+                        pDevice.cell.setDbm(wcdma.getDbm());
                         // Cell Identity
-                        pDevice.mCell.setLAC(identityWcdma.getLac());
-                        pDevice.mCell.setMCC(identityWcdma.getMcc());
-                        pDevice.mCell.setMNC(identityWcdma.getMnc());
-                        pDevice.mCell.setCID(identityWcdma.getCid());
-                        pDevice.mCell.setPSC(identityWcdma.getPsc());
+                        pDevice.cell.setLac(identityWcdma.getLac());
+                        pDevice.cell.setMcc(identityWcdma.getMcc());
+                        pDevice.cell.setMnc(identityWcdma.getMnc());
+                        pDevice.cell.setCid(identityWcdma.getCid());
+                        pDevice.cell.setPsc(identityWcdma.getPsc());
 
                     } else {
                         log.info("Unknown type of cell signal!"
                                 + "\n ClassName: " + info.getClass().getSimpleName()
                                 + "\n ToString: " + info.toString());
                     }
-                    if (pDevice.mCell.isValid()) {
+                    if (pDevice.cell.isValid()) {
                         break;
                     }
                 }

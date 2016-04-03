@@ -75,11 +75,11 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
         public void updateDisplay(EventLogItemData item) {
             mtime.setText(item.getTimestamp());          // need fix ?
             mLAC.setText(item.getLac());
-            mCID.setText(item.getCellID());
+            mCID.setText(item.getCellId());
             mPSC.setText(item.getPsc());
             mgpsd_lat.setText(item.getLat());
-            mgpsd_lon.setText(item.getLng());
-            mgpsd_accu.setText(item.getgpsd_accu());
+            mgpsd_lon.setText(item.getLon());
+            mgpsd_accu.setText(item.getGpsd_accu());
             mDF_id.setText(item.getDF_id());
             mDF_desc.setText(item.getDF_desc());
 

@@ -1,5 +1,8 @@
 package com.secupwn.aimsicd.adapters;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Description:     Contains the data and definitions of all the items of the XML layout
  *
@@ -41,186 +44,9 @@ package com.secupwn.aimsicd.adapters;
  *        REFERENCES "DBi_bts"("_id")
  *      );
  */
+@Getter
+@Setter
 public class BtsMeasureItemData  {
-    public String getBts_id() {
-        return bts_id;
-    }
-
-    public void setBts_id(String bts_id) {
-        this.bts_id = bts_id;
-    }
-
-    public String getNc_list() {
-        return nc_list;
-    }
-
-    public void setNc_list(String nc_list) {
-        this.nc_list = nc_list;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getGpsd_lat() {
-        return gpsd_lat;
-    }
-
-    public void setGpsd_lat(String gpsd_lat) {
-        this.gpsd_lat = gpsd_lat;
-    }
-
-    public String getGpsd_lon() {
-        return gpsd_lon;
-    }
-
-    public void setGpsd_lon(String gpsd_lon) {
-        this.gpsd_lon = gpsd_lon;
-    }
-
-    public String getGpsd_accu() {
-        return gpsd_accu;
-    }
-
-    public void setGpsd_accu(String gpsd_accu) {
-        this.gpsd_accu = gpsd_accu;
-    }
-
-    public String getGpse_lat() {
-        return gpse_lat;
-    }
-
-    public void setGpse_lat(String gpse_lat) {
-        this.gpse_lat = gpse_lat;
-    }
-
-    public String getGpse_lon() {
-        return gpse_lon;
-    }
-
-    public void setGpse_lon(String gpse_lon) {
-        this.gpse_lon = gpse_lon;
-    }
-
-    public String getBb_power() {
-        return bb_power;
-    }
-
-    public void setBb_power(String bb_power) {
-        this.bb_power = bb_power;
-    }
-
-    public String getBb_rf_temp() {
-        return bb_rf_temp;
-    }
-
-    public void setBb_rf_temp(String bb_rf_temp) {
-        this.bb_rf_temp = bb_rf_temp;
-    }
-
-    public String getTx_power() {
-        return tx_power;
-    }
-
-    public void setTx_power(String tx_power) {
-        this.tx_power = tx_power;
-    }
-
-    public String getRx_signal() {
-        return rx_signal;
-    }
-
-    public void setRx_signal(String rx_signal) {
-        this.rx_signal = rx_signal;
-    }
-
-    public String getRx_stype() {
-        return rx_stype;
-    }
-
-    public void setRx_stype(String rx_stype) {
-        this.rx_stype = rx_stype;
-    }
-
-    public String getRat() {
-        return rat;
-    }
-
-    public void setRat(String rat) {
-        this.rat = rat;
-    }
-
-    public String getBCCH() {
-        return BCCH;
-    }
-
-    public void setBCCH(String BCCH) {
-        this.BCCH = BCCH;
-    }
-
-    public String getTMSI() {
-        return TMSI;
-    }
-
-    public void setTMSI(String TMSI) {
-        this.TMSI = TMSI;
-    }
-
-    public String getTA() {
-        return TA;
-    }
-
-    public void setTA(String TA) {
-        this.TA = TA;
-    }
-
-    public String getPD() {
-        return PD;
-    }
-
-    public void setPD(String PD) {
-        this.PD = PD;
-    }
-
-    public String getBER() {
-        return BER;
-    }
-
-    public void setBER(String BER) {
-        this.BER = BER;
-    }
-
-    public String getAvgEcNo() {
-        return AvgEcNo;
-    }
-
-    public void setAvgEcNo(String avgEcNo) {
-        AvgEcNo = avgEcNo;
-    }
-
-    public String getIsSubmitted() {
-        return isSubmitted;
-    }
-
-    public void setIsSubmitted(String isSubmitted) {
-        this.isSubmitted = isSubmitted;
-    }
-
-    public String getIsNeighbour() {
-        return isNeighbour;
-    }
-
-    public void setIsNeighbour(String isNeighbour) {
-        this.isNeighbour = isNeighbour;
-    }
-
-    public String getRecordId() {
-        return mRecordId;
-    }
 
     private String bts_id;
     private String nc_list;
@@ -245,7 +71,7 @@ public class BtsMeasureItemData  {
     private String isSubmitted;
     private String isNeighbour;
 
-    private String mRecordId;
+    private String recordId;
 
     public BtsMeasureItemData(
             String _bts_id,
@@ -295,7 +121,7 @@ public class BtsMeasureItemData  {
         this.isSubmitted = _isSubmitted;
         this.isNeighbour = _isNeighbour;
 
-        this.mRecordId = _mRecordId;
+        this.recordId = _mRecordId;
     }
 
     public BtsMeasureItemData(String... args) {
@@ -310,7 +136,7 @@ public class BtsMeasureItemData  {
                 args[7],    // rat
                 args[8],    // isSubmitted
                 args[9],    // isNeighbour
-                args[10]    // mRecordId        // EVA
+                args[10]    // recordId        // EVA
                 //,
         );
     }

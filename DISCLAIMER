@@ -8,9 +8,10 @@ In our world with broken privacy and legal threats, we think this is important:
    monitoring progress. It's no secret anymore - so stop gawking, start contributing! ;-)
    
 2. Our app is licensed under GPL v3+, but we'd appreciate a hint what you did with our code.
+   Instead of just copying our hard work and rebranding it, we'd be much more happy if you
+   contribute your improvements and changes via pull requests back to our original codebase.
    You'll find a copy of the current license here (please always include within copies):
-   https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/LICENSE
-   Futhermore, you MUST add this: http://forum.xda-developers.com/showthread.php?t=1422969
+   https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/master/LICENSE
    
 3. This product is meant for educational purposes only. It is, by any means, a Proof-of-Concept (PoC).
    Using our App will not guarantee that you will be shielded against surveillance of any form.

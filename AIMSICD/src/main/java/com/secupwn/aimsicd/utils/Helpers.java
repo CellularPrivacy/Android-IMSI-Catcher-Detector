@@ -28,7 +28,7 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.fragments.MapFragment;
+import com.secupwn.aimsicd.ui.fragments.MapFragment;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
 import com.secupwn.aimsicd.service.AimsicdService;
@@ -189,6 +189,9 @@ import io.freefair.android.util.logging.Logger;
     *
     */
     public static void getOpenCellData(InjectionAppCompatActivity injectionActivity, Cell cell, char type) {
+        getOpenCellData(injectionActivity, cell, type, null);
+    }
+    public static void getOpenCellData(InjectionAppCompatActivity injectionActivity, Cell cell, char type, final AimsicdService service) {
         if (Helpers.isNetAvailable(injectionActivity)) {
             if (!"NA".equals(CellTracker.OCID_API_KEY)) {
                 double earthRadius = 6371.01; // [Km]
@@ -216,17 +219,26 @@ import io.freefair.android.util.logging.Logger;
                             .append(CellTracker.OCID_API_KEY).append("&BBOX=")
                             .append(boundParameter);
 
-                    log.info("OCID MCC is set to: " + cell.getMCC());
-                    if (cell.getMCC() != Integer.MAX_VALUE) {
-                        sb.append("&mcc=").append(cell.getMCC());
+                    log.info("OCID MCC is set to: " + cell.getMcc());
+                    if (cell.getMcc() != Integer.MAX_VALUE) {
+                        sb.append("&mcc=").append(cell.getMcc());
                     }
-                    log.info("OCID MNC is set to: " + cell.getMNC());
-                    if (cell.getMNC() != Integer.MAX_VALUE) {
-                        sb.append("&mnc=").append(cell.getMNC());
+                    log.info("OCID MNC is set to: " + cell.getMnc());
+                    if (cell.getMnc() != Integer.MAX_VALUE) {
+                        sb.append("&mnc=").append(cell.getMnc());
                     }
 
                     sb.append("&format=csv");
-                    new RequestTask(injectionActivity, type).execute(sb.toString());
+                    new RequestTask(injectionActivity, type, new RequestTask.AsyncTaskCompleteListener() {
+                        @Override
+                        public void onAsyncTaskSucceeded() {
+                            log.verbose("RequestTask's OCID download was successful. Callback rechecking connected cell against database");
+                            service.getCellTracker().compareLacAndOpenDb();
+                        }
+
+                        @Override
+                        public void onAsyncTaskFailed(String result) { }
+                    }).execute(sb.toString());
                 }
             } else {
                 Fragment myFragment = injectionActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));

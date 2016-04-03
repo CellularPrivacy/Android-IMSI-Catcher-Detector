@@ -172,11 +172,11 @@ public class AimsicdService extends InjectionService {
     }
 
     public Cell getCell() {
-        return mCellTracker.getDevice().mCell;
+        return mCellTracker.getDevice().cell;
     }
 
     public void setCell(Cell cell) {
-        mCellTracker.getDevice().mCell = cell;
+        mCellTracker.getDevice().cell = cell;
     }
 
     public boolean isTrackingCell() {

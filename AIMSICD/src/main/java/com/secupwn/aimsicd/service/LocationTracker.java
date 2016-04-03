@@ -129,9 +129,9 @@ public final class LocationTracker {
                     try {
                         Cell cell = context.getCell();
                         if (cell != null) {
-                            log.debug("Looking up MCC " + cell.getMCC());
+                            log.debug("Looking up MCC " + cell.getMcc());
 
-                            double[] defLoc = mDbHelper.getDefaultLocation(cell.getMCC());
+                            double[] defLoc = mDbHelper.getDefaultLocation(cell.getMcc());
 
                             loc = GeoLocation.fromDegrees(defLoc[0], defLoc[1]);
                         }

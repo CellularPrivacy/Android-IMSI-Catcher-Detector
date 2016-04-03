@@ -2,15 +2,16 @@ package com.secupwn.aimsicd.utils;
 
 import android.location.Location;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
-
 import java.text.NumberFormat;
 import java.text.ParseException;
+
+import io.freefair.android.util.logging.AndroidLogger;
+import io.freefair.android.util.logging.Logger;
 
 /**
  * Created by Marvin Arnold on 1/07/15.
  */
+@SuppressWarnings("ParcelCreator")
 public class TruncatedLocation extends Location {
 
     private static final Logger log = AndroidLogger.forClass(TruncatedLocation.class);

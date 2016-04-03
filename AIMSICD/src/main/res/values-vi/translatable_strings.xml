@@ -338,4 +338,5 @@
     <string name="unknown">Không xác định</string>
 
     <string name="database_settings">Cơ sở dữ liệu</string>
+    <string name="download_timed_out">Yêu cầu OpenCellID API đã quá thời gian chờ. Thử lại sau?</string>
     </resources>

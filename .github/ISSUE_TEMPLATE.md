@@ -5,9 +5,9 @@
 #### Agreements
 >Please check these boxes to ensure you've actually read and understood these important rules!
 
-- [ ] **I have reviewed and accepted the [guidelines for contributing](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md) to this project.**
-- [ ] **I have searched the [open Issues](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues) and made sure I am not filing a duplicate.**
-- [ ] **I have read the notes on [debugging](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#debugging) and will properly maintain this Issue.**
+- [ ] **I have reviewed and accepted the [guidelines for contributing](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md) to this project.**
+- [ ] **I have searched the [open Issues](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues) and made sure I am not filing a duplicate.**
+- [ ] **I have read the notes on [debugging](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#debugging) and will properly maintain this Issue.**
 
 
 ---

@@ -58,7 +58,7 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
             mCountry.setText(item.getCountry());
             mMcc.setText(item.getMcc());
             mLat.setText(item.getLat());
-            mLng.setText(item.getLng());
+            mLng.setText(item.getLon());
             mRecordId.setText(item.getRecordId());
         }
     }

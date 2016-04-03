@@ -8,19 +8,19 @@ package com.secupwn.aimsicd.utils;
 
 import android.os.AsyncTask;
 
-import com.secupwn.aimsicd.AppAIMSICD;
+import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 
 import java.lang.ref.WeakReference;
 
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 
 public abstract class BaseAsyncTask<TParams, TProgress, TResult> extends AsyncTask<TParams, TProgress, TResult> {
-    protected AppAIMSICD mApp;
+    protected AndroidIMSICatcherDetector mApp;
     protected WeakReference<InjectionAppCompatActivity> mWeakReferenceActivity;
 
     public BaseAsyncTask(InjectionAppCompatActivity activity) {
         mWeakReferenceActivity = new WeakReference<>(activity);
-        mApp = (AppAIMSICD) activity.getApplication();
+        mApp = (AndroidIMSICatcherDetector) activity.getApplication();
         activity.getInjector().inject(this);
     }
 

@@ -8,44 +8,25 @@
 
 package com.secupwn.aimsicd.smsdetection;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class DetectionStringsData {
 
-    private final String mDetection_string;
-    private final String mDetection_type;
-    private boolean mIsFakeData;
+    private final String detectionString;
+    private final String detectionType;
+    private boolean fakeData;
 
 
-
-
-    public DetectionStringsData(String detection_string,
-                                String detection_type) {
-        this(detection_string,
-                detection_type,
-                false);
+    public DetectionStringsData(String detectionString, String detectionType) {
+        this(detectionString, detectionType, false);
     }
 
-    public DetectionStringsData(String pString,
-                                String pType,
-                                boolean pIsFakeData) {
-        mDetection_string = pString;
-        mDetection_type = pType;
-
-        mIsFakeData = pIsFakeData;
-    }
-
-    public String getDetectionString() {
-        return mDetection_string;
-    }
-
-    public String getDetectionType() {
-        return mDetection_type;
-    }
-
-    public boolean isFakeData() {
-        return mIsFakeData;
-    }
-
-    public void setIsFakeData(boolean pIsFakeData) {
-        mIsFakeData = pIsFakeData;
+    public DetectionStringsData(String pString, String pType, boolean pIsFakeData) {
+        detectionString = pString;
+        detectionType = pType;
+        fakeData = pIsFakeData;
     }
 }
