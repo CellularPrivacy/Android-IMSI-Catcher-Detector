@@ -16,6 +16,7 @@ import android.os.Bundle;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.data.LocationInfo;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.GeoLocation;
 import com.secupwn.aimsicd.utils.TruncatedLocation;
@@ -131,9 +132,9 @@ public final class LocationTracker {
                         if (cell != null) {
                             log.debug("Looking up MCC " + cell.getMcc());
 
-                            double[] defLoc = mDbHelper.getDefaultLocation(cell.getMcc());
+                            LocationInfo defLoc = mDbHelper.getDefaultLocation(cell.getMcc());
 
-                            loc = GeoLocation.fromDegrees(defLoc[0], defLoc[1]);
+                            loc = GeoLocation.fromDegrees(defLoc.getLatitude(), defLoc.getLongitude());
                         }
                     } catch (Exception e) {
                         log.error("Unable to get location from MCC", e);

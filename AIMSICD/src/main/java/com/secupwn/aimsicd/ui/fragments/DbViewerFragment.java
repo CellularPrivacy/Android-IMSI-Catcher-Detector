@@ -15,19 +15,19 @@ import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.adapters.BaseInflaterAdapter;
 import com.secupwn.aimsicd.adapters.BtsMeasureCardInflater;
 import com.secupwn.aimsicd.adapters.BtsMeasureItemData;
-import com.secupwn.aimsicd.adapters.CardItemData;
 import com.secupwn.aimsicd.adapters.DbViewerSpinnerAdapter;
 import com.secupwn.aimsicd.adapters.DbeImportCardInflater;
 import com.secupwn.aimsicd.adapters.DbeImportItemData;
-import com.secupwn.aimsicd.adapters.DefaultLocationCardInflater;
 import com.secupwn.aimsicd.adapters.MeasuredCellStrengthCardData;
 import com.secupwn.aimsicd.adapters.MeasuredCellStrengthCardInflater;
 import com.secupwn.aimsicd.adapters.UniqueBtsCardInflater;
 import com.secupwn.aimsicd.adapters.UniqueBtsItemData;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
+import com.secupwn.aimsicd.data.DefaultLocation;
 import com.secupwn.aimsicd.data.Event;
 import com.secupwn.aimsicd.data.SmsData;
 import com.secupwn.aimsicd.data.SmsDetectionString;
+import com.secupwn.aimsicd.data.adapter.DefaultLocationAdapter;
 import com.secupwn.aimsicd.data.adapter.DetectionStringAdapter;
 import com.secupwn.aimsicd.data.adapter.EventAdapter;
 import com.secupwn.aimsicd.data.adapter.SmsDataAdapter;
@@ -87,62 +87,66 @@ public final class DbViewerFragment extends InjectionFragment {
                 }
                 mTableSelected = (StatesDbViewer) selectedItem;
 
-                if (position == 4) { //Silent SMS
-                    setListAdapter(new SmsDataAdapter(getActivity(), realm.allObjects(SmsData.class), true));
-                } else if (position == 6) {
-                    setListAdapter(new EventAdapter(getActivity(), realm.allObjects(Event.class), true));
-                } else if (position == 7) {
-                    setListAdapter(new DetectionStringAdapter(getActivity(), realm.allObjects(SmsDetectionString.class), true));
-                } else {
-                    new AsyncTask<Void, Void, ListAdapter>() {
+                switch (position) {
+                    case 3:
+                        setListAdapter(new DefaultLocationAdapter(getActivity(), realm.allObjects(DefaultLocation.class), true));
+                        break;
+                    case 4:  //Silent SMS
+                        setListAdapter(new SmsDataAdapter(getActivity(), realm.allObjects(SmsData.class), true));
+                        break;
+                    case 6:
+                        setListAdapter(new EventAdapter(getActivity(), realm.allObjects(Event.class), true));
+                        break;
+                    case 7:
+                        setListAdapter(new DetectionStringAdapter(getActivity(), realm.allObjects(SmsDetectionString.class), true));
+                        break;
+                    default:
+                        new AsyncTask<Void, Void, ListAdapter>() {
 
-                        @Override
-                        protected ListAdapter doInBackground(Void... params) {
-                            //# mDb.open();
-                            Cursor result;
+                            @Override
+                            protected ListAdapter doInBackground(Void... params) {
+                                //# mDb.open();
+                                Cursor result;
 
-                            switch (position) {
-                                case 0: // UNIQUE_BTS_DATA          ("DBi_bts")
-                                    // The unique BTSs we have been connected to in the past
-                                    result = mDb.returnDBiBts();
-                                    break;
+                                switch (position) {
+                                    case 0: // UNIQUE_BTS_DATA          ("DBi_bts")
+                                        // The unique BTSs we have been connected to in the past
+                                        result = mDb.returnDBiBts();
+                                        break;
 
-                                case 1: // BTS_MEASUREMENTS:        ("DBi_measure")
-                                    // All BTS measurements we have done since start
-                                    result = mDb.returnDBiMeasure();
-                                    break;
+                                    case 1: // BTS_MEASUREMENTS:        ("DBi_measure")
+                                        // All BTS measurements we have done since start
+                                        result = mDb.returnDBiMeasure();
+                                        break;
 
-                                case 2: // IMPORTED_OCID_DATA:      ("DBe_import")
-                                    // All Externally imported BTS data (from OCID, MLS, etc)
-                                    result = mDb.returnDBeImport();
-                                    break;
+                                    case 2: // IMPORTED_OCID_DATA:      ("DBe_import")
+                                        // All Externally imported BTS data (from OCID, MLS, etc)
+                                        result = mDb.returnDBeImport();
+                                        break;
 
-                                case 3: // DEFAULT_MCC_LOCATIONS:   ("defaultlocation")
-                                    // Default MCC location codes and approx corresponding GPS locations
-                                    result = mDb.returnDefaultLocation();
-                                    break;
-                                case 5: // MEASURED_SIGNAL_STRENGTHS: ("DBi_measure")
-                                    // TODO:     ToBe merged into "DBi_measure:rx_signal"
-                                    result = mDb.returnDBiMeasure();
-                                    break;
-                                default:
-                                    throw new IllegalArgumentException("Unknown type of table");
+                                    case 5: // MEASURED_SIGNAL_STRENGTHS: ("DBi_measure")
+                                        // TODO:     ToBe merged into "DBi_measure:rx_signal"
+                                        result = mDb.returnDBiMeasure();
+                                        break;
+                                    default:
+                                        throw new IllegalArgumentException("Unknown type of table");
+                                }
+
+                                BaseInflaterAdapter adapter = null;
+                                if (result != null) {
+                                    adapter = BuildTable(result);
+                                    result.close();
+                                }
+
+                                return adapter;
                             }
 
-                            BaseInflaterAdapter adapter = null;
-                            if (result != null) {
-                                adapter = BuildTable(result);
-                                result.close();
+                            @Override
+                            protected void onPostExecute(ListAdapter adapter) {
+                                setListAdapter(adapter);
                             }
-
-                            return adapter;
-                        }
-
-                        @Override
-                        protected void onPostExecute(ListAdapter adapter) {
-                            setListAdapter(adapter);
-                        }
-                    }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        break;
                 }
             }
 
@@ -309,28 +313,6 @@ public final class DbViewerFragment extends InjectionFragment {
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_LAST)),                   // time_last
                                 tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_REJ_CAUSE)),                   // rej_cause
                                 (tableData.getPosition() + 1) + " / " + count                                                           // item:  "n/X"
-                        );
-                        adapter.addItem(data, false);
-                    }
-                    if (!tableData.isClosed()) {
-                        tableData.close();
-                    }
-                    return adapter;
-                }
-
-                case DEFAULT_MCC_LOCATIONS: {       // defaultlocation
-
-                    BaseInflaterAdapter<CardItemData> adapter
-                            = new BaseInflaterAdapter<>(new DefaultLocationCardInflater());
-                    int count = tableData.getCount();
-
-                    while (tableData.moveToNext()) {
-                        CardItemData data = new CardItemData(
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DEFAULT_LOCATION_COUNTRY)),           // country
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DEFAULT_LOCATION_MCC))),  // MCC
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DEFAULT_LOCATION_LAT)),               // lat
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DEFAULT_LOCATION_LON)),               // lon
-                                (tableData.getPosition() + 1) + " / " + count                                                       // item:  "n/X"
                         );
                         adapter.addItem(data, false);
                     }

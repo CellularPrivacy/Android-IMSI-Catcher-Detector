@@ -32,6 +32,7 @@ import android.view.View;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.data.LocationInfo;
 import com.secupwn.aimsicd.ui.activities.MapPrefActivity;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
@@ -458,8 +459,8 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                 if (mBound) {
                     try {
                         int mcc = mAimsicdService.getCell().getMcc();
-                        double[] d = mDbHelper.getDefaultLocation(mcc);
-                        ret = new GeoPoint(d[0], d[1]);
+                        LocationInfo d = mDbHelper.getDefaultLocation(mcc);
+                        ret = new GeoPoint(d.getLatitude(), d.getLongitude());
                     } catch (Exception e) {
                         log.error("Error getting default location!", e);
                     }

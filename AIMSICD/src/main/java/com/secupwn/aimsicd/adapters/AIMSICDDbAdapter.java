@@ -14,6 +14,7 @@ import android.util.SparseArray;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
+import com.secupwn.aimsicd.data.DefaultLocation;
 import com.secupwn.aimsicd.data.Event;
 import com.secupwn.aimsicd.data.LocationInfo;
 import com.secupwn.aimsicd.enums.Status;
@@ -111,7 +112,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
                 // I am trying to keep in same order and aimsicd.sql script
                 // Only backing up useful tables, uncomment if you want to backup
-                DBTableColumnIds.DEFAULT_LOCATION_TABLE_NAME,   // defaultLocation:     Default MCC for each country
                 //DBTableColumnIds.COUNTER_MEASURES_TABLE_NAME, // CounterMeasures:     Counter Measures thresholds and description
                 //DBTableColumnIds.DBE_CAPABILITIES_TABLE_NAME, // DBe_capabilities:    External: MNO & BTS network capabilities
                 DBTableColumnIds.DBE_IMPORT_TABLE_NAME,         // DBe_import:          External: BTS import table
@@ -353,24 +353,15 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         return mDb.rawQuery(query, null);
     }
 
-    public double[] getDefaultLocation(int mcc) {
-        String query = String.format(
-                "SELECT lat, lon FROM defaultlocation WHERE MCC = %d", mcc);
+    public LocationInfo getDefaultLocation(int mcc) {
+        @Cleanup Realm realm = Realm.getDefaultInstance();
 
-        double[] loc = new double[2];
-        Cursor cursor = mDb.rawQuery(query, null);
+        return realm.where(DefaultLocation.class)
+                .equalTo("mcc", mcc)
+                .findAll()
+                .first()
+                .getLocationInfo();
 
-        if (cursor != null && cursor.moveToFirst()) {
-            loc[0] = Double.parseDouble(cursor.getString(cursor.getColumnIndex("lat")));
-            loc[1] = Double.parseDouble(cursor.getString(cursor.getColumnIndex("lon")));
-        } else {
-            loc[0] = 0.0;
-            loc[1] = 0.0;
-        }
-        if (cursor != null) {
-            cursor.close();
-        }
-        return loc;
     }
 
     /**
@@ -651,18 +642,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                         for (int i = 1; i < lines; i++) {
 
                             switch (table) {
-                                case "defaultlocation":
-                                    try {
-                                        insertDefaultLocation(
-                                                records.get(i)[1],       // country
-                                                Integer.parseInt(records.get(i)[2]), // MCC
-                                                records.get(i)[3],       // lat
-                                                records.get(i)[4]        // lon
-                                        );
-                                    } catch (Exception ee) {
-                                        log.error("RestoreDB: Error in insertDefaultLocation()", ee);
-                                    }
-                                    break;
 
                                 case "CounterMeasures":
                                     insertCounterMeasures(
@@ -1034,19 +1013,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     // TODO:  "Returned Columns" comments updated.
     //====================================================================
 
-    /*
-        Returned Columns:
-        "_id"       INTEGER PRIMARY KEY,
-        "country"   TEXT,
-        "MCC"       INTEGER,
-        "lat"       TEXT,
-        "lon"       TEXT
-        returns Default Mcc Locations
-     */
-    public Cursor returnDefaultLocation() {
-        return mDb.rawQuery("SELECT * FROM defaultlocation", null);
-    }
-
     /**
      * Returns DBe_import contents
      * <p/>
@@ -1145,31 +1111,6 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     //====================================================================
     //      START OF INSERT FUNCTIONS
     //====================================================================
-
-    // TODO: Remove this, it's confusing and doesn't seem necessary!
-    public void insertDefaultLocation(String country, int mcc, String lat, String lon) {
-
-        ContentValues def_location = new ContentValues();
-        def_location.put("country", country);
-        def_location.put("MCC", mcc);
-        def_location.put("lat", lat);
-        def_location.put("lon", lon);
-
-        // Check that the country and MCC not known in the DefaultLocation DB to avoid duplicates
-        // TODO: @banjaxbanjo:  Please clarify its use:
-        //                      Why would there be duplicates?
-        //                      All countries are pre-loaded??
-        String query = String.format(
-                "SELECT * FROM defaultlocation WHERE country = \"%s\" AND MCC = %d ",
-                country, mcc);
-
-        Cursor cursor = mDb.rawQuery(query, null);
-        if (cursor.getCount() <= 0) {
-            // <= 0 means country is not in database yet
-            mDb.insert("defaultlocation", null, def_location);
-        }
-        cursor.close();
-    }
 
     public void insertCounterMeasures(String name, String description,
                                       int thresh, double thfine) {
