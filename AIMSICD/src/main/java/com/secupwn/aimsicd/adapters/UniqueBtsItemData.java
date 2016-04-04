@@ -20,7 +20,6 @@ import lombok.Setter;
  *                  [ ] Fix typo T3213 to be T3212
  *                  [ ] Order all the items according to appearance found in the DB table below
  *                  [ ] Add DB items: T3212, A5x and ST_id
- *                  [ ] If (exact) gpse_lat/lon doesn't exist in DBe_import, set Lat/Lon to "-"
  *
  *
  *

@@ -22,9 +22,6 @@ import com.secupwn.aimsicd.R;
  * TODO:
  *                  [ ] Order all the items according to appearance found in the DB table below
  *                  [ ] Add DB items: T3212, A5x and ST_id
- *                  [ ] If (exact) gpse_lat/lon doesn't exist in DBe_import, set Lat/Lon to "-"
- *
- *
  *
  * NOTE:
  *                  CREATE TABLE "DBi_bts"  (
@@ -85,8 +82,8 @@ public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItem
 
         private final TextView TIME_FIRST;
         private final TextView TIME_LAST;
-        private final TextView LAT; // These are exact GPS coordinates if found in DBe_import, else "-"
-        private final TextView LON; // These are exact GPS coordinates if found in DBe_import, else "-"
+        private final TextView LAT;
+        private final TextView LON;
 
         private final TextView RecordId;
 
@@ -129,8 +126,8 @@ public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItem
             TIME_FIRST.setText(item.getTime_first());
             TIME_LAST.setText(item.getTime_last());
 
-            LAT.setText(String.valueOf(item.getLat())); // DBe_import
-            LON.setText(String.valueOf(item.getLon())); // DBe_import
+            LAT.setText(String.valueOf(item.getLat()));
+            LON.setText(String.valueOf(item.getLon()));
 
             RecordId.setText(item.getRecordId());
         }

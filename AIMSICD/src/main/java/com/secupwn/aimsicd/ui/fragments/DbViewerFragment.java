@@ -16,21 +16,21 @@ import com.secupwn.aimsicd.adapters.BaseInflaterAdapter;
 import com.secupwn.aimsicd.adapters.BtsMeasureCardInflater;
 import com.secupwn.aimsicd.adapters.BtsMeasureItemData;
 import com.secupwn.aimsicd.adapters.DbViewerSpinnerAdapter;
-import com.secupwn.aimsicd.adapters.DbeImportCardInflater;
-import com.secupwn.aimsicd.adapters.DbeImportItemData;
 import com.secupwn.aimsicd.adapters.MeasuredCellStrengthCardData;
 import com.secupwn.aimsicd.adapters.MeasuredCellStrengthCardInflater;
 import com.secupwn.aimsicd.adapters.UniqueBtsCardInflater;
 import com.secupwn.aimsicd.adapters.UniqueBtsItemData;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
-import com.secupwn.aimsicd.data.model.DefaultLocation;
-import com.secupwn.aimsicd.data.model.Event;
-import com.secupwn.aimsicd.data.model.SmsData;
-import com.secupwn.aimsicd.data.model.SmsDetectionString;
 import com.secupwn.aimsicd.data.adapter.DefaultLocationAdapter;
 import com.secupwn.aimsicd.data.adapter.DetectionStringAdapter;
 import com.secupwn.aimsicd.data.adapter.EventAdapter;
+import com.secupwn.aimsicd.data.adapter.ImportAdapter;
 import com.secupwn.aimsicd.data.adapter.SmsDataAdapter;
+import com.secupwn.aimsicd.data.model.DefaultLocation;
+import com.secupwn.aimsicd.data.model.Event;
+import com.secupwn.aimsicd.data.model.Import;
+import com.secupwn.aimsicd.data.model.SmsData;
+import com.secupwn.aimsicd.data.model.SmsDetectionString;
 import com.secupwn.aimsicd.enums.StatesDbViewer;
 import com.secupwn.aimsicd.utils.Cell;
 
@@ -88,6 +88,9 @@ public final class DbViewerFragment extends InjectionFragment {
                 mTableSelected = (StatesDbViewer) selectedItem;
 
                 switch (position) {
+                    case 2:
+                        setListAdapter(new ImportAdapter(getActivity(), realm.allObjects(Import.class), true));
+                        break;
                     case 3:
                         setListAdapter(new DefaultLocationAdapter(getActivity(), realm.allObjects(DefaultLocation.class), true));
                         break;
@@ -117,11 +120,6 @@ public final class DbViewerFragment extends InjectionFragment {
                                     case 1: // BTS_MEASUREMENTS:        ("DBi_measure")
                                         // All BTS measurements we have done since start
                                         result = mDb.returnDBiMeasure();
-                                        break;
-
-                                    case 2: // IMPORTED_OCID_DATA:      ("DBe_import")
-                                        // All Externally imported BTS data (from OCID, MLS, etc)
-                                        result = mDb.returnDBeImport();
                                         break;
 
                                     case 5: // MEASURED_SIGNAL_STRENGTHS: ("DBi_measure")
@@ -271,55 +269,6 @@ public final class DbViewerFragment extends InjectionFragment {
                     }
                     return adapter;
 
-                }
-
-                case IMPORTED_OCID_DATA: {      // DBe_import
-                    /*
-                     * Table: DBe_import
-                     *
-                     *   CSV:  lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,  tac,pci,sid,nid,bid
-                     *
-                     *   new:   DBe_import
-                     *          _id,DBsource,RAT,MCC,MNC,LAC,CID,PSC,gps_lat,gps_lon,isGPSexact,avg_range,avg_signal,samples,time_first,time_last,rej_cause
-                     *
-                     *  Thus for OCID data we cannot use: time_first or time_last.
-                     *
-                     */
-                    BaseInflaterAdapter<DbeImportItemData> adapter
-                            = new BaseInflaterAdapter<>(new DbeImportCardInflater());
-                    int count = tableData.getCount();
-
-                    while (tableData.moveToNext()) {
-                        // WARNING! The ORDER and number of these are crucial, and need to correspond
-                        // to what's found in:  DbeImportCardInflater.java and DbeImportItemData.java
-                        // MUST also correspond to the imported OCID CSV order... ???
-                        DbeImportItemData data = new DbeImportItemData(
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_DBSOURCE)),                    // DBsource
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_RAT)),                         // RAT
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MCC))),            // MCC
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MNC))),            // MNC
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_LAC))),            // LAC
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_CID))),            // CID
-                                Cell.validatePscValue(
-                                        this.getContext(),
-                                        tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC))),               // PSC (UMTS only)
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LAT)),                     // gps_lat
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LON)),                     // gps_lon
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_IS_GPS_EXACT))),   // isGPSexact
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_AVG_RANGE))),      // avg_range
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_AVG_SIGNAL))),     // avg_signal
-                                String.valueOf(tableData.getInt(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_SAMPLES))),        // samples
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_FIRST)),                  // time_first
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_TIME_LAST)),                   // time_last
-                                tableData.getString(tableData.getColumnIndex(DBTableColumnIds.DBE_IMPORT_REJ_CAUSE)),                   // rej_cause
-                                (tableData.getPosition() + 1) + " / " + count                                                           // item:  "n/X"
-                        );
-                        adapter.addItem(data, false);
-                    }
-                    if (!tableData.isClosed()) {
-                        tableData.close();
-                    }
-                    return adapter;
                 }
 
                 case MEASURED_SIGNAL_STRENGTHS: {       // DBi_measure:rx_signal

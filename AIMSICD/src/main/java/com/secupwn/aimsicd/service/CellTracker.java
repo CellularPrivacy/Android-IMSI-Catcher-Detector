@@ -510,10 +510,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *                  There is a "timer" here (REFRESH_RATE), what exactly is it timing?
      *                  "Every REFRESH_RATE seconds, get connected cell details."
      *
-     *  Notes:
-     *              a) Check if CellID (CID) is in DBe_import (OpenCell) database (issue #91)
-     *                 See news in: issue #290 and compare to AIMSICDDbAdapter.java
-     *
      *  Issues:     [ ] We shouldn't do any detection here!
      *              [ ] We might wanna use a listener to do this?
      *                  Are there any reasons why not using a listener?
@@ -549,12 +545,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         changedLAC = false;
                     }
 
-                    // Check if CID is in DBe_import DB (issue #91)
                     if (tinydb.getBoolean("ocid_downloaded")) {
-                        if (!dbHelper.openCellExists(monitorCell.getCid())) {
-                            dbHelper.toEventLog(realm, 2, "CID not in DBe_import");
+                        if (!dbHelper.openCellExists(realm, monitorCell.getCid())) {
+                            dbHelper.toEventLog(realm, 2, "CID not in Import realm");
 
-                            log.info("ALERT: Connected to unknown CID not in DBe_import: " + monitorCell.getCid());
+                            log.info("ALERT: Connected to unknown CID not in Import realm: " + monitorCell.getCid());
                             vibrate(100, Status.MEDIUM);
 
                             cellIdNotInOpenDb = true;

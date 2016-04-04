@@ -6,26 +6,6 @@ package com.secupwn.aimsicd.constants;
  */
 public class DBTableColumnIds {
 
-    //DBe_import
-    public static final String DBE_IMPORT_TABLE_NAME = "DBe_import";
-    public static final String DBE_IMPORT_ID = "_id";
-    public static final String DBE_IMPORT_DBSOURCE = "DBsource";
-    public static final String DBE_IMPORT_RAT = "RAT";
-    public static final String DBE_IMPORT_MCC = "MCC";
-    public static final String DBE_IMPORT_MNC = "MNC";
-    public static final String DBE_IMPORT_LAC = "LAC";
-    public static final String DBE_IMPORT_CID = "CID";
-    public static final String DBE_IMPORT_PSC = "PSC";
-    public static final String DBE_IMPORT_GPS_LAT = "gps_lat";
-    public static final String DBE_IMPORT_GPS_LON = "gps_lon";
-    public static final String DBE_IMPORT_IS_GPS_EXACT = "isGPSexact";
-    public static final String DBE_IMPORT_AVG_RANGE = "avg_range";
-    public static final String DBE_IMPORT_AVG_SIGNAL = "avg_signal";
-    public static final String DBE_IMPORT_SAMPLES = "samples";
-    public static final String DBE_IMPORT_TIME_FIRST = "time_first";
-    public static final String DBE_IMPORT_TIME_LAST = "time_last";
-    public static final String DBE_IMPORT_REJ_CAUSE = "rej_cause";
-
     //DBi_bts
     public static final String DBI_BTS_TABLE_NAME = "DBi_bts";
     public static final String DBI_BTS_ID = "_id";

@@ -14,11 +14,11 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.ui.fragments.MapFragment;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
 import com.secupwn.aimsicd.service.CellTracker;
+import com.secupwn.aimsicd.ui.fragments.MapFragment;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -39,6 +39,8 @@ import java.util.concurrent.TimeUnit;
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import lombok.Cleanup;
 
 /**
  *
@@ -48,7 +50,7 @@ import io.freefair.android.util.logging.Logger;
  *      the backing up of the database. The download function currently requests a CVS file
  *      from OCID though an API query. The parsing of this CVS file is done in the
  *      "AIMSICDDbAdapter.java" adapter, which put the downloaded data into the
- *      "DBe_import" table. This should be a read-only table, in the sense that no new
+ *      {@link com.secupwn.aimsicd.data.model.Import Import} realm. This should be a read-only table, in the sense that no new
  *      BTS or info should be added there. The indexing there can be very tricky when
  *      later displayed in "DbViewerFragment.java", as they are different.
  *
@@ -285,23 +287,22 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     }
 
     /**
-     *  Description:    This is where we:
-     *
-     *                  1) Check the success for OCID data download
-     *                  2) call the updateOpenCellID() to populate the DBe_import table
-     *                  3) call the checkDBe() to cleanup bad cells from imported data
-     *                  4) present a failure/success toast message
-     *                  5) set a shared preference to indicate that data has been downloaded:
-     *                      "ocid_downloaded true"
-     *
-     *  Issues:
-     *                  [ ] checkDBe() is incomplete, due to missing RAT column in DBe_import
-     *
+     * This is where we:
+     * <ol>
+     * <li>Check the success for OCID data download</li>
+     * <li>call the updateOpenCellID() to populate the {@link com.secupwn.aimsicd.data.model.Import Import} realm</li>
+     * <li>call the {@link AIMSICDDbAdapter#checkDBe()} to cleanup bad cells from imported data</li>
+     * <li>present a failure/success toast message</li>
+     * <li>set a shared preference to indicate that data has been downloaded:
+     * {@code ocid_downloaded true}</li>
+     * </ol>
      */
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         TinyDB tinydb = TinyDB.getInstance();
+
+        @Cleanup Realm realm = Realm.getDefaultInstance();
 
         switch (mType) {
             case DBE_DOWNLOAD_REQUEST:
@@ -312,7 +313,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received));
                     }
 
-                    mDbAdapter.checkDBe();
+                    realm.executeTransaction(mDbAdapter.checkDBe());
                     tinydb.putBoolean("ocid_downloaded", true);
                 } else if ("Timeout".equals(result)) {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_timed_out));
@@ -328,7 +329,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         LocalBroadcastManager.getInstance(mAppContext).sendBroadcast(intent);
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received_markers_updated));
 
-                        mDbAdapter.checkDBe();
+                        realm.executeTransaction(mDbAdapter.checkDBe());
                         tinydb.putBoolean("ocid_downloaded", true);
                     }
                 } else if ("Timeout".equals(result)) {

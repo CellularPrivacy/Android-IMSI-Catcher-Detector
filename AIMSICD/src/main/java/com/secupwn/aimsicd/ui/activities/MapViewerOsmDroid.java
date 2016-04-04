@@ -33,6 +33,7 @@ import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DBTableColumnIds;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
+import com.secupwn.aimsicd.data.model.Import;
 import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.map.CellTowerGridMarkerClusterer;
 import com.secupwn.aimsicd.map.CellTowerMarker;
@@ -61,6 +62,9 @@ import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.annotation.XmlMenu;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import lombok.Cleanup;
 
 /**
  * Description:    TODO: add details
@@ -373,7 +377,6 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
                 mCellTowerGridMarkerClusterer.getItems().clear();
 
-                //New function only gets bts from DBe_import by sim network
                 loadOcidMarkersByNetwork();
 
                 List<CellTowerMarker> items = new LinkedList<>();
@@ -566,46 +569,47 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
             currentMmc = Integer.parseInt(networkOperator.substring(0, 3));
             currentMnc = Integer.parseInt(networkOperator.substring(3));
         }
-        // DBe_import tower pins.
+
         Drawable cellTowerMarkerIcon = getResources().getDrawable(R.drawable.ic_map_pin_green);
 
-        Cursor c = mDbHelper.returnOcidBtsByNetwork(currentMmc, currentMnc);
-        if (c.moveToFirst()) {
-            do {
-                // CellID,Lac,Mcc,Mnc,Lat,Lng,AvgSigStr,Samples
-                final int cellID = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_CID));
-                final int lac = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_LAC));
-                final int mcc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MCC));
-                final int mnc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MNC));
-                final int psc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC));
-                final String rat = c.getString(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_RAT));
-                final double dLat = Double.parseDouble(c.getString(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LAT)));
-                final double dLng = Double.parseDouble(c.getString(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LON)));
-                final GeoPoint location = new GeoPoint(dLat, dLng);
-                //where is c.getString(6)AvgSigStr
-                final int samples = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_SAMPLES));
-                // Add map marker for CellID
-                CellTowerMarker ovm = new CellTowerMarker(this, mMap,
-                        "Cell ID: " + cellID,
-                        "", location,
-                        new MarkerData(
-                                getApplicationContext(),
-                                String.valueOf(cellID),
-                                String.valueOf(location.getLatitude()),
-                                String.valueOf(location.getLongitude()),
-                                String.valueOf(lac),
-                                String.valueOf(mcc),
-                                String.valueOf(mnc),
-                                String.valueOf(psc),
-                                rat,
-                                String.valueOf(samples),
-                                false));
+        @Cleanup Realm realm = Realm.getDefaultInstance();
 
-                ovm.setIcon(cellTowerMarkerIcon);
-                items.add(ovm);
-            } while (c.moveToNext());
+        RealmResults<Import> c = mDbHelper.returnOcidBtsByNetwork(realm, currentMmc, currentMnc).findAll();
+
+        for (Import anImport : c) {
+
+            // CellID,Lac,Mcc,Mnc,Lat,Lng,AvgSigStr,Samples
+            final int cellID = anImport.getCellId();
+            final int lac = anImport.getLocationAreaCode();
+            final int mcc = anImport.getMobileCountryCode();
+            final int mnc = anImport.getMobileNetworkCode();
+            final int psc = anImport.getPrimaryScramblingCode();
+            final String rat = anImport.getRadioAccessTechnology();
+            final double dLat = anImport.getLocationInfo().getLatitude();
+            final double dLng = anImport.getLocationInfo().getLongitude();
+            final GeoPoint location = new GeoPoint(dLat, dLng);
+            //where is c.getString(6)AvgSigStr
+            final int samples = anImport.getSamples();
+            // Add map marker for CellID
+            CellTowerMarker ovm = new CellTowerMarker(this, mMap,
+                    "Cell ID: " + cellID,
+                    "", location,
+                    new MarkerData(
+                            getApplicationContext(),
+                            String.valueOf(cellID),
+                            String.valueOf(location.getLatitude()),
+                            String.valueOf(location.getLongitude()),
+                            String.valueOf(lac),
+                            String.valueOf(mcc),
+                            String.valueOf(mnc),
+                            String.valueOf(psc),
+                            rat,
+                            String.valueOf(samples),
+                            false));
+
+            ovm.setIcon(cellTowerMarkerIcon);
+            items.add(ovm);
         }
-        c.close();
 
         mCellTowerGridMarkerClusterer.addAll(items);
     }
@@ -630,7 +634,6 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
             }
         }
     }
-
 
     public void onStop() {
         super.onStop();
