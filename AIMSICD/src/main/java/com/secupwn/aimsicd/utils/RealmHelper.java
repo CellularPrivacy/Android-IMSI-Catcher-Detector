@@ -6,11 +6,11 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.data.model.BTS;
+import com.secupwn.aimsicd.data.model.BaseTransceiverStation;
 import com.secupwn.aimsicd.data.model.DefaultLocation;
 import com.secupwn.aimsicd.data.model.Event;
+import com.secupwn.aimsicd.data.model.GpsLocation;
 import com.secupwn.aimsicd.data.model.Import;
-import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.data.model.Measure;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.service.CellTracker;
@@ -80,12 +80,12 @@ public final class RealmHelper {
      * @return false if LAC is not OK (Cell's LAC differs from Cell's LAC previously stored value in DB)
      */
     public boolean checkLAC(Realm realm, Cell cell) {
-        RealmResults<BTS> btsRealmResults = realm.where(BTS.class)
+        RealmResults<BaseTransceiverStation> baseStationRealmResults = realm.where(BaseTransceiverStation.class)
                 .equalTo("cellId", cell.getCellId())
                 .findAll();
 
-        for (BTS bts : btsRealmResults) {
-            int lac = bts.getLocationAreaCode();
+        for (BaseTransceiverStation baseStation : baseStationRealmResults) {
+            int lac = baseStation.getLocationAreaCode();
 
             if (cell.getLocationAreaCode() != lac) {
                 log.info("ALERT: Changing LAC on CID: " + cell.getCellId()
@@ -132,12 +132,12 @@ public final class RealmHelper {
                 .equalTo("mobileNetworkCode", mnc);
     }
 
-    public LocationInfo getDefaultLocation(Realm realm, int mcc) {
+    public GpsLocation getDefaultLocation(Realm realm, int mcc) {
         return realm.where(DefaultLocation.class)
                 .equalTo("mobileCountryCode", mcc)
                 .findAll()
                 .first()
-                .getLocationInfo();
+                .getGpsLocation();
 
     }
 
@@ -152,14 +152,14 @@ public final class RealmHelper {
 
             @Override
             public void execute(Realm realm) {
-                realm.where(BTS.class)
+                realm.where(BaseTransceiverStation.class)
                         .equalTo("cellId", -1)
                         .or()
                         .equalTo("cellId", Integer.MAX_VALUE)
                         .findAll()
                         .clear();
             }
-        } ;
+        };
     }
 
     /**
@@ -209,10 +209,10 @@ public final class RealmHelper {
 
                     for (Measure measure : c) {
                         csvWrite.writeNext(
-                                String.valueOf(measure.getBts().getMobileCountryCode()),
-                                String.valueOf(measure.getBts().getMobileNetworkCode()),
-                                String.valueOf(measure.getBts().getLocationAreaCode()),
-                                String.valueOf(measure.getBts().getCellId()),
+                                String.valueOf(measure.getBaseStation().getMobileCountryCode()),
+                                String.valueOf(measure.getBaseStation().getMobileNetworkCode()),
+                                String.valueOf(measure.getBaseStation().getLocationAreaCode()),
+                                String.valueOf(measure.getBaseStation().getCellId()),
                                 String.valueOf(measure.getGpsd().getLongitude()),
                                 String.valueOf(measure.getGpsd().getLatitude()),
                                 String.valueOf(measure.getRxSignal()),
@@ -482,7 +482,7 @@ public final class RealmHelper {
 
     public int getAverageSignalStrength(Realm realm, int cellID) {
         return (int) realm.where(Measure.class)
-                .equalTo("bts.cellId", cellID)
+                .equalTo("baseStation.cellId", cellID)
                 .average("rxSignal");
     }
 
@@ -527,11 +527,11 @@ public final class RealmHelper {
                     anImport.setCellId(cid);
                     anImport.setPrimaryScramblingCode(psc);
 
-                    LocationInfo locationInfo = realm.createObject(LocationInfo.class);
-                    locationInfo.setLatitude(lat);
-                    locationInfo.setLongitude(lon);
+                    GpsLocation gpsLocation = realm.createObject(GpsLocation.class);
+                    gpsLocation.setLatitude(lat);
+                    gpsLocation.setLongitude(lon);
 
-                    anImport.setLocationInfo(locationInfo);
+                    anImport.setGpsLocation(gpsLocation);
                     anImport.setGpsExact(isGpsExact);
                     anImport.setAvgRange(avg_range);
                     anImport.setAvgSignal(avg_signal);
@@ -555,21 +555,21 @@ public final class RealmHelper {
         if (!cellInDbiBts(realm, cell.getLocationAreaCode(), cell.getCellId())) {
 
             realm.beginTransaction();
-            BTS bts = realm.createObject(BTS.class);
+            BaseTransceiverStation baseStation = realm.createObject(BaseTransceiverStation.class);
 
-            bts.setMobileCountryCode(cell.getMobileCountryCode());
-            bts.setMobileNetworkCode(cell.getMobileNetworkCode());
-            bts.setLocationAreaCode(cell.getLocationAreaCode());
-            bts.setCellId(cell.getCellId());
-            bts.setPrimaryScramblingCode(cell.getPrimaryScramblingCode());
+            baseStation.setMobileCountryCode(cell.getMobileCountryCode());
+            baseStation.setMobileNetworkCode(cell.getMobileNetworkCode());
+            baseStation.setLocationAreaCode(cell.getLocationAreaCode());
+            baseStation.setCellId(cell.getCellId());
+            baseStation.setPrimaryScramblingCode(cell.getPrimaryScramblingCode());
 
-            bts.setTimeFirst(new Date());
-            bts.setTimeLast(new Date());
+            baseStation.setTimeFirst(new Date());
+            baseStation.setTimeLast(new Date());
 
-            LocationInfo locationInfo = realm.createObject(LocationInfo.class);
-            locationInfo.setLatitude(cell.getLat());  // TODO NO! These should be exact GPS from Import or by manual addition!
-            locationInfo.setLongitude(cell.getLon());  // TODO NO! These should be exact GPS from Import or by manual addition!
-            bts.setLocationInfo(locationInfo);
+            GpsLocation gpsLocation = realm.createObject(GpsLocation.class);
+            gpsLocation.setLatitude(cell.getLat());  // TODO NO! These should be exact GPS from Import or by manual addition!
+            gpsLocation.setLongitude(cell.getLon());  // TODO NO! These should be exact GPS from Import or by manual addition!
+            baseStation.setGpsLocation(gpsLocation);
 
             realm.commitTransaction();
 
@@ -577,11 +577,11 @@ public final class RealmHelper {
             // If cell is already in the DB, update it to last time seen and
             // update its GPS coordinates, if not 0.0
 
-            BTS bts = realm.where(BTS.class).equalTo("cellId", cell.getCellId()).findFirst();
+            BaseTransceiverStation baseStation = realm.where(BaseTransceiverStation.class).equalTo("cellId", cell.getCellId()).findFirst();
 
             realm.beginTransaction();
 
-            bts.setTimeLast(new Date());
+            baseStation.setTimeLast(new Date());
 
             // TODO NO! These should be exact GPS from Import or by manual addition!
             // Only update if GPS coordinates are good
@@ -589,11 +589,11 @@ public final class RealmHelper {
                     && Double.doubleToRawLongBits(cell.getLat()) != 0
                     && Double.doubleToRawLongBits(cell.getLon()) != 0
                     && Double.doubleToRawLongBits(cell.getLon()) != 0) {
-                if(bts.getLocationInfo() == null){
-                    bts.setLocationInfo(realm.createObject(LocationInfo.class));
+                if (baseStation.getGpsLocation() == null) {
+                    baseStation.setGpsLocation(realm.createObject(GpsLocation.class));
                 }
-                bts.getLocationInfo().setLatitude(cell.getLat());
-                bts.getLocationInfo().setLongitude(cell.getLon());
+                baseStation.getGpsLocation().setLatitude(cell.getLat());
+                baseStation.getGpsLocation().setLongitude(cell.getLon());
             }
 
             realm.commitTransaction();
@@ -608,20 +608,20 @@ public final class RealmHelper {
             realm.beginTransaction();
             Measure measure = realm.createObject(Measure.class);
 
-            BTS bts = realm.where(BTS.class).equalTo("cellId", cell.getCellId()).findFirst();
+            BaseTransceiverStation baseStation = realm.where(BaseTransceiverStation.class).equalTo("cellId", cell.getCellId()).findFirst();
 
-            measure.setBts(bts);
+            measure.setBaseStation(baseStation);
             measure.setTime(new Date());
 
-            LocationInfo locationInfo = realm.createObject(LocationInfo.class);
-            locationInfo.setLatitude(cell.getLat());
-            locationInfo.setLongitude(cell.getLon());
-            locationInfo.setAccuracy(cell.getAccuracy());
-            measure.setGpsd(locationInfo);
+            GpsLocation gpsLocation = realm.createObject(GpsLocation.class);
+            gpsLocation.setLatitude(cell.getLat());
+            gpsLocation.setLongitude(cell.getLon());
+            gpsLocation.setAccuracy(cell.getAccuracy());
+            measure.setGpsd(gpsLocation);
 
             measure.setRxSignal(cell.getDbm());
             measure.setRadioAccessTechnology(String.valueOf(cell.getRat()));
-            measure.setTa(cell.getTimingAdvance()); //TODO does this actually get timing advance?
+            measure.setTimingAdvance(cell.getTimingAdvance()); //TODO does this actually get timing advance?
             measure.setSubmitted(false);
             measure.setNeighbour(false);
 
@@ -633,7 +633,7 @@ public final class RealmHelper {
 
             realm.beginTransaction();
             RealmResults<Measure> all = realm.where(Measure.class)
-                    .equalTo("bts.cellId", cell.getCellId())
+                    .equalTo("baseStation.cellId", cell.getCellId())
                     .findAll();
 
             for (Measure measure : all) {
@@ -653,7 +653,7 @@ public final class RealmHelper {
                 }
 
                 if (cell.getTimingAdvance() > 0) {
-                    measure.setTa(cell.getTimingAdvance()); // Only available on API >16 on LTE
+                    measure.setTimingAdvance(cell.getTimingAdvance()); // Only available on API >16 on LTE
                 }
             }
             realm.commitTransaction();
@@ -705,11 +705,11 @@ public final class RealmHelper {
                         event.setCellId(cid);
                         event.setPrimaryScramblingCode(psc);
 
-                        LocationInfo locationInfo = realm.createObject(LocationInfo.class);
-                        locationInfo.setLatitude(gpsd_lat);
-                        locationInfo.setLongitude(gpsd_lon);
-                        locationInfo.setAccuracy(gpsd_accu);
-                        event.setLocationInfo(locationInfo);
+                        GpsLocation gpsLocation = realm.createObject(GpsLocation.class);
+                        gpsLocation.setLatitude(gpsd_lat);
+                        gpsLocation.setLongitude(gpsd_lon);
+                        gpsLocation.setAccuracy(gpsd_accu);
+                        event.setGpsLocation(gpsLocation);
 
                         event.setDfId(DF_id);
                         event.setDfDescription(DF_desc);
@@ -746,10 +746,10 @@ public final class RealmHelper {
     }
 
     /**
-     * Check if {@link BTS#cellId CID} and {@link BTS#locationAreaCode LAC} is already in {@link BTS} realm
+     * Check if {@link BaseTransceiverStation#cellId CID} and {@link BaseTransceiverStation#locationAreaCode LAC} is already in {@link BaseTransceiverStation} realm
      */
     public boolean cellInDbiBts(Realm realm, int lac, int cellID) {
-        long count = realm.where(BTS.class)
+        long count = realm.where(BaseTransceiverStation.class)
                 .equalTo("locationAreaCode", lac)
                 .equalTo("cellId", cellID)
                 .count();
@@ -758,15 +758,15 @@ public final class RealmHelper {
     }
 
     /**
-     * Check if {@link BTS#cellId CID} is already in the {@link Measure} realm
+     * Check if {@link BaseTransceiverStation#cellId CID} is already in the {@link Measure} realm
      *
      * @param realm The realm to use
-     * @param cellId The {@link BTS#cellId cellId} to look for
+     * @param cellId The {@link BaseTransceiverStation#cellId cellId} to look for
      * @return true if a {@link Measure} is found with the given cellId
      */
     public boolean cellInDbiMeasure(Realm realm, int cellId) {
         long count = realm.where(Measure.class)
-                .equalTo("bts.cellId", cellId)
+                .equalTo("baseStation.cellId", cellId)
                 .count();
 
         return count > 0;

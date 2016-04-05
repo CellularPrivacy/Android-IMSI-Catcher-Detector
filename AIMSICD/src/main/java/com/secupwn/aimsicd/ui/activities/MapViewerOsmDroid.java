@@ -29,11 +29,10 @@ import android.view.MenuItem;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
-import com.secupwn.aimsicd.data.model.BTS;
+import com.secupwn.aimsicd.data.model.BaseTransceiverStation;
+import com.secupwn.aimsicd.data.model.GpsLocation;
 import com.secupwn.aimsicd.data.model.Import;
-import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.map.CellTowerGridMarkerClusterer;
 import com.secupwn.aimsicd.map.CellTowerMarker;
 import com.secupwn.aimsicd.map.MarkerData;
@@ -41,6 +40,7 @@ import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.GeoLocation;
 import com.secupwn.aimsicd.utils.Helpers;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.utils.RequestTask;
 import com.secupwn.aimsicd.utils.TinyDB;
 
@@ -382,24 +382,21 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
                 @Cleanup Realm realm = Realm.getDefaultInstance();
 
-                RealmResults<BTS> allCells = realm.allObjects(BTS.class);
-                /*
-                    This function is getting cells we logged from DBi_bts
-                 */
-                if (allCells.size() > 0) {
-                    for(BTS c : allCells) {
+                RealmResults<BaseTransceiverStation> baseStations = realm.allObjects(BaseTransceiverStation.class);
+                if (baseStations.size() > 0) {
+                    for (BaseTransceiverStation baseStation : baseStations) {
                         if (isCancelled()) {
                             return null;
                         }
                         // The indexing here is that of DB table
-                        final int cellID = c.getCellId();
-                        final int lac = c.getLocationAreaCode();
-                        final int mcc = c.getMobileCountryCode();
-                        final int mnc = c.getMobileNetworkCode();
-                        final int psc = c.getPrimaryScramblingCode();
+                        final int cellID = baseStation.getCellId();
+                        final int lac = baseStation.getLocationAreaCode();
+                        final int mcc = baseStation.getMobileCountryCode();
+                        final int mnc = baseStation.getMobileNetworkCode();
+                        final int psc = baseStation.getPrimaryScramblingCode();
 
-                        final double dLat = c.getLocationInfo().getLatitude();
-                        final double dLng = c.getLocationInfo().getLongitude();
+                        final double dLat = baseStation.getGpsLocation().getLatitude();
+                        final double dLng = baseStation.getGpsLocation().getLongitude();
 
                         if (Double.doubleToRawLongBits(dLat) == 0
                                 && Double.doubleToRawLongBits(dLng) == 0) {
@@ -453,7 +450,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 if (mBound) {
                     try {
                         int mcc = mAimsicdService.getCell().getMobileCountryCode();
-                        LocationInfo d = mDbHelper.getDefaultLocation(realm, mcc);
+                        GpsLocation d = mDbHelper.getDefaultLocation(realm, mcc);
                         ret = new GeoPoint(d.getLatitude(), d.getLongitude());
                     } catch (Exception e) {
                         log.error("Error getting default location!", e);
@@ -564,9 +561,9 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
         @Cleanup Realm realm = Realm.getDefaultInstance();
 
-        RealmResults<Import> c = mDbHelper.returnOcidBtsByNetwork(realm, currentMmc, currentMnc).findAll();
+        RealmResults<Import> importRealmResults = mDbHelper.returnOcidBtsByNetwork(realm, currentMmc, currentMnc).findAll();
 
-        for (Import anImport : c) {
+        for (Import anImport : importRealmResults) {
 
             // CellID,Lac,Mcc,Mnc,Lat,Lng,AvgSigStr,Samples
             final int cellID = anImport.getCellId();
@@ -575,8 +572,8 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
             final int mnc = anImport.getMobileNetworkCode();
             final int psc = anImport.getPrimaryScramblingCode();
             final String rat = anImport.getRadioAccessTechnology();
-            final double dLat = anImport.getLocationInfo().getLatitude();
-            final double dLng = anImport.getLocationInfo().getLongitude();
+            final double dLat = anImport.getGpsLocation().getLatitude();
+            final double dLng = anImport.getGpsLocation().getLongitude();
             final GeoPoint location = new GeoPoint(dLat, dLng);
             //where is c.getString(6)AvgSigStr
             final int samples = anImport.getSamples();

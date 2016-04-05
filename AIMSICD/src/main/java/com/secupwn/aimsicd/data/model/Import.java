@@ -19,7 +19,7 @@ public class Import extends RealmObject {
     private int locationAreaCode;
     private int cellId;
     private int primaryScramblingCode;
-    private LocationInfo locationInfo;
+    private GpsLocation gpsLocation;
     private boolean gpsExact;
     private int avgRange;
     private int avgSignal;

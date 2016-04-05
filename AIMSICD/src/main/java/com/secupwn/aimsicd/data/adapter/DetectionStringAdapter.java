@@ -30,8 +30,8 @@ public class DetectionStringAdapter extends RealmBaseAdapter<SmsDetectionString>
             holder = (ViewHolder) convertView.getTag();
         }
 
-        SmsDetectionString item = getItem(position);
-        holder.updateDisplay(item);
+        SmsDetectionString smsDetectionString = getItem(position);
+        holder.updateDisplay(smsDetectionString);
 
         return convertView;
     }
@@ -45,16 +45,15 @@ public class DetectionStringAdapter extends RealmBaseAdapter<SmsDetectionString>
 
         ViewHolder(View rootView) {
             mRootView = rootView;
-            //
-            d_string =         (TextView) mRootView.findViewById(R.id.tv_det_str_info);
-            d_type =          (TextView) mRootView.findViewById(R.id.tv_det_type_info);
+            d_string = (TextView) mRootView.findViewById(R.id.tv_det_str_info);
+            d_type = (TextView) mRootView.findViewById(R.id.tv_det_type_info);
 
             rootView.setTag(this);
         }
 
-        public void updateDisplay(SmsDetectionString item) {
-            d_string.setText(item.getDetectionString());
-            d_type.setText(item.getSmsType());
+        public void updateDisplay(SmsDetectionString smsDetectionString) {
+            d_string.setText(smsDetectionString.getDetectionString());
+            d_type.setText(smsDetectionString.getSmsType());
         }
     }
 }

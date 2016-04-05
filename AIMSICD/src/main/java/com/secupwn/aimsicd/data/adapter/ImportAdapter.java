@@ -37,8 +37,8 @@ public class ImportAdapter extends RealmBaseAdapter<Import> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final Import item = getItem(position);
-        holder.updateDisplay(item, position);
+        final Import anImport = getItem(position);
+        holder.updateDisplay(anImport, position);
         return convertView;
     }
 
@@ -90,26 +90,26 @@ public class ImportAdapter extends RealmBaseAdapter<Import> {
             rootView.setTag(this);
         }
 
-        public void updateDisplay(Import item, int pos) {
-            DB_SOURCE.setText(item.getDbSource());
-            RAT.setText(String.valueOf(item.getRadioAccessTechnology()));
-            MCC.setText(String.valueOf(item.getMobileCountryCode()));
-            MNC.setText(String.valueOf(item.getMobileNetworkCode()));
-            LAC.setText(String.valueOf(item.getLocationAreaCode()));
-            CID.setText(String.valueOf(item.getCellId()));
-            PSC.setText(String.valueOf(item.getPrimaryScramblingCode()));
-            GPS_LAT.setText(String.valueOf(item.getLocationInfo().getLatitude()));
-            GPS_LON.setText(String.valueOf(item.getLocationInfo().getLongitude()));
-            IS_GPS_EXACT.setText(String.valueOf(item.isGpsExact()));
-            AVG_RANGE.setText(String.valueOf(item.getAvgRange()));
-            AVG_SIGNAL.setText(String.valueOf(item.getAvgSignal()));
-            SAMPLES.setText(String.valueOf(item.getSamples()));
+        public void updateDisplay(Import anImport, int pos) {
+            DB_SOURCE.setText(anImport.getDbSource());
+            RAT.setText(String.valueOf(anImport.getRadioAccessTechnology()));
+            MCC.setText(String.valueOf(anImport.getMobileCountryCode()));
+            MNC.setText(String.valueOf(anImport.getMobileNetworkCode()));
+            LAC.setText(String.valueOf(anImport.getLocationAreaCode()));
+            CID.setText(String.valueOf(anImport.getCellId()));
+            PSC.setText(String.valueOf(anImport.getPrimaryScramblingCode()));
+            GPS_LAT.setText(String.valueOf(anImport.getGpsLocation().getLatitude()));
+            GPS_LON.setText(String.valueOf(anImport.getGpsLocation().getLongitude()));
+            IS_GPS_EXACT.setText(String.valueOf(anImport.isGpsExact()));
+            AVG_RANGE.setText(String.valueOf(anImport.getAvgRange()));
+            AVG_SIGNAL.setText(String.valueOf(anImport.getAvgSignal()));
+            SAMPLES.setText(String.valueOf(anImport.getSamples()));
 
             DateFormat df = DateFormat.getDateTimeInstance();
-            TIME_FIRST.setText(df.format(item.getTimeFirst()));
-            TIME_LAST.setText(df.format(item.getTimeLast()));
+            TIME_FIRST.setText(df.format(anImport.getTimeFirst()));
+            TIME_LAST.setText(df.format(anImport.getTimeLast()));
 
-            REJ_CAUSE.setText(String.valueOf(item.getRejCause()));
+            REJ_CAUSE.setText(String.valueOf(anImport.getRejCause()));
 
             mRecordId.setText(String.valueOf(pos));
         }

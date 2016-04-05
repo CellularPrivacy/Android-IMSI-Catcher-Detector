@@ -9,17 +9,17 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.data.model.BaseTransceiverStation;
 import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.adapters.DbViewerSpinnerAdapter;
 import com.secupwn.aimsicd.data.adapter.MeasureAdapter;
 import com.secupwn.aimsicd.adapters.MeasuredCellStrengthAdapter;
-import com.secupwn.aimsicd.data.adapter.BtsAdapter;
+import com.secupwn.aimsicd.data.adapter.BaseStationAdapter;
 import com.secupwn.aimsicd.data.adapter.DefaultLocationAdapter;
 import com.secupwn.aimsicd.data.adapter.DetectionStringAdapter;
 import com.secupwn.aimsicd.data.adapter.EventAdapter;
 import com.secupwn.aimsicd.data.adapter.ImportAdapter;
 import com.secupwn.aimsicd.data.adapter.SmsDataAdapter;
-import com.secupwn.aimsicd.data.model.BTS;
 import com.secupwn.aimsicd.data.model.DefaultLocation;
 import com.secupwn.aimsicd.data.model.Event;
 import com.secupwn.aimsicd.data.model.Import;
@@ -83,7 +83,7 @@ public final class DbViewerFragment extends InjectionFragment {
 
                 switch (position) {
                     case 0:
-                        setListAdapter(new BtsAdapter(getActivity(), realm.allObjects(BTS.class), true));
+                        setListAdapter(new BaseStationAdapter(getActivity(), realm.allObjects(BaseTransceiverStation.class), true));
                         break;
                     case 1:
                         setListAdapter(new MeasureAdapter(getActivity(), realm.allObjects(Measure.class), true));

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.data.model.BTS;
+import com.secupwn.aimsicd.data.model.BaseTransceiverStation;
 
 import java.text.DateFormat;
 
@@ -20,15 +20,13 @@ import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
 /**
- * Description:     Contains the data and definitions of all the items of the XML layout
- *
- *
- * TODO:
- *                  [ ] Add DB items: T3212, A5x and ST_id
+ * Contains the data and definitions of all the items of the XML layout
+ * <p/>
+ * TODO: Add DB items: T3212, A5x and ST_id
  */
-public class BtsAdapter extends RealmBaseAdapter<BTS> {
+public class BaseStationAdapter extends RealmBaseAdapter<BaseTransceiverStation> {
 
-    public BtsAdapter(Context context, RealmResults<BTS> realmResults, boolean automaticUpdate) {
+    public BaseStationAdapter(Context context, RealmResults<BaseTransceiverStation> realmResults, boolean automaticUpdate) {
         super(context, realmResults, automaticUpdate);
     }
 
@@ -44,7 +42,7 @@ public class BtsAdapter extends RealmBaseAdapter<BTS> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final BTS item = getItem(position);
+        final BaseTransceiverStation item = getItem(position);
         holder.updateDisplay(item, position);
 
         return convertView;
@@ -81,40 +79,40 @@ public class BtsAdapter extends RealmBaseAdapter<BTS> {
             MCC = (TextView) mRootView.findViewById(R.id.tv_uniquebts_mcc);
             MNC = (TextView) mRootView.findViewById(R.id.tv_uniquebts_mnc);
             PSC = (TextView) mRootView.findViewById(R.id.tv_uniquebts_psc);
-            T3212 =     (TextView) mRootView.findViewById(R.id.tv_uniquebts_t3212);
-            A5X =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_a5x);
-            ST_ID =     (TextView) mRootView.findViewById(R.id.tv_uniquebts_st_id);
+            T3212 = (TextView) mRootView.findViewById(R.id.tv_uniquebts_t3212);
+            A5X = (TextView) mRootView.findViewById(R.id.tv_uniquebts_a5x);
+            ST_ID = (TextView) mRootView.findViewById(R.id.tv_uniquebts_st_id);
             TIME_FIRST = (TextView) mRootView.findViewById(R.id.tv_uniquebts_time_first);
             TIME_LAST = (TextView) mRootView.findViewById(R.id.tv_uniquebts_time_last);
-            LAT =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_lat);
-            LON =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_lon);
+            LAT = (TextView) mRootView.findViewById(R.id.tv_uniquebts_lat);
+            LON = (TextView) mRootView.findViewById(R.id.tv_uniquebts_lon);
 
             RecordId = (TextView) mRootView.findViewById(R.id.record_id);
             rootView.setTag(this);
         }
 
-        public void updateDisplay(BTS item, int position) {
+        public void updateDisplay(BaseTransceiverStation baseStation, int position) {
 
-            LAC.setText(String.valueOf(item.getLocationAreaCode()));
-            CID.setText(String.valueOf(item.getCellId()));
+            LAC.setText(String.valueOf(baseStation.getLocationAreaCode()));
+            CID.setText(String.valueOf(baseStation.getCellId()));
 
-            MCC.setText(String.valueOf(item.getMobileCountryCode()));
-            MNC.setText(String.valueOf(item.getMobileNetworkCode()));
-            PSC.setText(String.valueOf(item.getPrimaryScramblingCode()));
+            MCC.setText(String.valueOf(baseStation.getMobileCountryCode()));
+            MNC.setText(String.valueOf(baseStation.getMobileNetworkCode()));
+            PSC.setText(String.valueOf(baseStation.getPrimaryScramblingCode()));
 
             // TODO: Get values from DB when available
 
-            T3212.setText(R.string.n_a);   //T3212.setText(item.getT3212());
-            A5X.setText(R.string.n_a);     //A5X.setText(item.getA5x());
-            ST_ID.setText(R.string.n_a);   //ST_ID.setText(item.getStId());
+            T3212.setText(R.string.n_a);   //T3212.setText(baseStation.getT3212());
+            A5X.setText(R.string.n_a);     //A5X.setText(baseStation.getA5x());
+            ST_ID.setText(R.string.n_a);   //ST_ID.setText(baseStation.getStId());
 
 
             DateFormat dateFormat = DateFormat.getDateTimeInstance();
-            TIME_FIRST.setText(dateFormat.format(item.getTimeFirst()));
-            TIME_LAST.setText(dateFormat.format(item.getTimeLast()));
+            TIME_FIRST.setText(dateFormat.format(baseStation.getTimeFirst()));
+            TIME_LAST.setText(dateFormat.format(baseStation.getTimeLast()));
 
-            LAT.setText(String.valueOf(item.getLocationInfo().getLatitude()));
-            LON.setText(String.valueOf(item.getLocationInfo().getLongitude()));
+            LAT.setText(String.valueOf(baseStation.getGpsLocation().getLatitude()));
+            LON.setText(String.valueOf(baseStation.getGpsLocation().getLongitude()));
 
             RecordId.setText(String.valueOf(position));
         }

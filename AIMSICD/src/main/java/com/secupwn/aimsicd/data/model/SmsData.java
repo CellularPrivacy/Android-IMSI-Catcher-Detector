@@ -14,16 +14,16 @@ public class SmsData extends RealmObject {
     private String senderNumber;
     private String message;
     private String type;
-    private LocationInfo locationInfo;
+    private GpsLocation gpsLocation;
     private boolean roaming;
 
-    private int currentLocationAreaCode;
-    private int currentCellId;
-    private String currentRadioAccessTechnology;
+    private int locationAreaCode;
+    private int cellId;
+    private String radioAccessTechnology;
 
     @Override
     public void removeFromRealm() {
-        locationInfo.removeFromRealm();
+        gpsLocation.removeFromRealm();
         super.removeFromRealm();
     }
 }

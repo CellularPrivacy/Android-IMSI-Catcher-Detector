@@ -9,9 +9,8 @@ import lombok.Setter;
 @Setter
 public class DefaultLocation extends RealmObject {
 
-    private String country;
-
     @PrimaryKey
     private int mobileCountryCode;
-    private LocationInfo locationInfo;
+    private String country;
+    private GpsLocation gpsLocation;
 }

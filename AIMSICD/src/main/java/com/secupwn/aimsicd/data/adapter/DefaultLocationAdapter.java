@@ -35,8 +35,8 @@ public class DefaultLocationAdapter extends RealmBaseAdapter<DefaultLocation> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final DefaultLocation item = getItem(position);
-        holder.updateDisplay(item, position);
+        final DefaultLocation defaultLocation = getItem(position);
+        holder.updateDisplay(defaultLocation, position);
 
         return convertView;
     }
@@ -62,11 +62,11 @@ public class DefaultLocationAdapter extends RealmBaseAdapter<DefaultLocation> {
             rootView.setTag(this);
         }
 
-        public void updateDisplay(DefaultLocation item, int position) {
-            mCountry.setText(item.getCountry());
-            mMcc.setText(item.getMobileCountryCode());
-            mLat.setText(String.valueOf(item.getLocationInfo().getLatitude()));
-            mLng.setText(String.valueOf(item.getLocationInfo().getLongitude()));
+        public void updateDisplay(DefaultLocation defaultLocation, int position) {
+            mCountry.setText(defaultLocation.getCountry());
+            mMcc.setText(defaultLocation.getMobileCountryCode());
+            mLat.setText(String.valueOf(defaultLocation.getGpsLocation().getLatitude()));
+            mLng.setText(String.valueOf(defaultLocation.getGpsLocation().getLongitude()));
             mRecordId.setText(position);
         }
     }

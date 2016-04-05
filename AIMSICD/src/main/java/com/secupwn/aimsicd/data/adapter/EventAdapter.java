@@ -32,8 +32,8 @@ public class EventAdapter extends RealmBaseAdapter<Event> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final Event item = getItem(position);
-        holder.updateDisplay(item, position);
+        final Event event = getItem(position);
+        holder.updateDisplay(event, position);
 
         return convertView;
     }
@@ -73,19 +73,19 @@ public class EventAdapter extends RealmBaseAdapter<Event> {
             rootView.setTag(this);
         }
 
-        public void updateDisplay(Event item, int position) {
-            mtime.setText(DateFormat.getDateTimeInstance().format(item.getTimestamp()));          // need fix ?
-            mLAC.setText(item.getLocationAreaCode());
-            mCID.setText(item.getCellId());
-            mPSC.setText(item.getPrimaryScramblingCode());
-            mgpsd_lat.setText(String.valueOf(item.getLocationInfo().getLatitude()));
-            mgpsd_lon.setText(String.valueOf(item.getLocationInfo().getLongitude()));
-            mgpsd_accu.setText(String.valueOf(item.getLocationInfo().getAccuracy()));
-            mDF_id.setText(String.valueOf(item.getDfId()));
-            mDF_desc.setText(item.getDfDescription());
+        public void updateDisplay(Event event, int position) {
+            mtime.setText(DateFormat.getDateTimeInstance().format(event.getTimestamp()));          // need fix ?
+            mLAC.setText(event.getLocationAreaCode());
+            mCID.setText(event.getCellId());
+            mPSC.setText(event.getPrimaryScramblingCode());
+            mgpsd_lat.setText(String.valueOf(event.getGpsLocation().getLatitude()));
+            mgpsd_lon.setText(String.valueOf(event.getGpsLocation().getLongitude()));
+            mgpsd_accu.setText(String.valueOf(event.getGpsLocation().getAccuracy()));
+            mDF_id.setText(String.valueOf(event.getDfId()));
+            mDF_desc.setText(event.getDfDescription());
 
             mRecordId.setText(String.valueOf(position));
-            if (item.isFakeData()) {
+            if (event.isFakeData()) {
                 mExample.setText(mRootView.getContext().getString(R.string.example));
                 mExample.setVisibility(View.VISIBLE);
             } else {

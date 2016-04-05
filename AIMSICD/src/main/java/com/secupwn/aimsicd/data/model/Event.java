@@ -24,7 +24,7 @@ public class Event extends RealmObject {
     private Date timestamp;
     private String message;
 
-    private LocationInfo locationInfo;
+    private GpsLocation gpsLocation;
 
     private int cellId;
     private int locationAreaCode;
@@ -37,7 +37,7 @@ public class Event extends RealmObject {
 
     @Override
     public void removeFromRealm() {
-        locationInfo.removeFromRealm();
+        gpsLocation.removeFromRealm();
         super.removeFromRealm();
     }
 }

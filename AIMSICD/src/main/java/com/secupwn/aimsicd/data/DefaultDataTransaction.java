@@ -1,7 +1,7 @@
 package com.secupwn.aimsicd.data;
 
 import com.secupwn.aimsicd.data.model.DefaultLocation;
-import com.secupwn.aimsicd.data.model.LocationInfo;
+import com.secupwn.aimsicd.data.model.GpsLocation;
 import com.secupwn.aimsicd.data.model.SmsDetectionString;
 
 import io.realm.Realm;
@@ -254,12 +254,12 @@ public class DefaultDataTransaction implements Realm.Transaction {
 
     private void storeDefaultLocation(Realm realm, int mcc, String country, double lat, double lon) {
 
-        LocationInfo locationInfo = new LocationInfo();
-        locationInfo.setLatitude(lat);
-        locationInfo.setLongitude(lon);
+        GpsLocation gpsLocation = new GpsLocation();
+        gpsLocation.setLatitude(lat);
+        gpsLocation.setLongitude(lon);
 
         DefaultLocation defaultLocation = new DefaultLocation();
-        defaultLocation.setLocationInfo(locationInfo);
+        defaultLocation.setGpsLocation(gpsLocation);
         defaultLocation.setCountry(country);
         defaultLocation.setMobileCountryCode(mcc);
 

@@ -56,16 +56,16 @@ public class SmsDataAdapter extends RealmBaseAdapter<SmsData> {
         holder.smsd_smstype.setText(getItem(position).getType());
         holder.smsd_number.setText(getItem(position).getSenderNumber());
         holder.smsd_data.setText(getItem(position).getMessage());
-        holder.smsd_lac.setText(SV(getItem(position).getCurrentLocationAreaCode()));
-        holder.smsd_cid.setText(SV(getItem(position).getCurrentCellId()));
-        holder.smsd_rat.setText(getItem(position).getCurrentRadioAccessTechnology());
+        holder.smsd_lac.setText(SV(getItem(position).getLocationAreaCode()));
+        holder.smsd_cid.setText(SV(getItem(position).getCellId()));
+        holder.smsd_rat.setText(getItem(position).getRadioAccessTechnology());
         String isRoaming = "false";
         if (getItem(position).isRoaming()) {
             isRoaming = "true";
         }
         holder.smsd_roam.setText(isRoaming);
-        holder.smsd_lat.setText(String.valueOf(getItem(position).getLocationInfo().getLatitude()));
-        holder.smsd_lon.setText(String.valueOf(getItem(position).getLocationInfo().getLongitude()));
+        holder.smsd_lat.setText(String.valueOf(getItem(position).getGpsLocation().getLatitude()));
+        holder.smsd_lon.setText(String.valueOf(getItem(position).getGpsLocation().getLongitude()));
 
         return convertView;
     }

@@ -68,7 +68,7 @@ public class MeasuredCellStrengthAdapter extends RealmBaseAdapter<Measure> {
         }
 
         public void updateDisplay(Measure item) {
-            cid.setText(item.getBts().getCellId());
+            cid.setText(item.getBaseStation().getCellId());
             rss.setText(item.getRxSignal());
             time.setText(DateFormat.getDateTimeInstance().format(item.getTime()));
         }

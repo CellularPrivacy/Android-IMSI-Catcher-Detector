@@ -102,7 +102,7 @@ public class MeasureAdapter extends RealmBaseAdapter<Measure> {
 
         public void updateDisplay(Measure item, int position) {
 
-            bts_id.setText(item.getBts().getCellId());
+            bts_id.setText(item.getBaseStation().getCellId());
             nc_list.setText(item.getNcList());
             time.setText(DateFormat.getDateTimeInstance().format(item.getTime()));
             gpsd_lat.setText(String.valueOf(item.getGpsd().getLatitude()));

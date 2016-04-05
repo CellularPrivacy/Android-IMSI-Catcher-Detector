@@ -15,10 +15,10 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.utils.RealmHelper;
-import com.secupwn.aimsicd.data.model.LocationInfo;
+import com.secupwn.aimsicd.data.model.GpsLocation;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.GeoLocation;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.utils.TruncatedLocation;
 
 import io.freefair.android.util.logging.AndroidLogger;
@@ -135,7 +135,7 @@ public final class LocationTracker {
                             log.debug("Looking up MCC " + cell.getMobileCountryCode());
 
                             @Cleanup Realm realm = Realm.getDefaultInstance();
-                            LocationInfo defLoc = mDbHelper.getDefaultLocation(realm, cell.getMobileCountryCode());
+                            GpsLocation defLoc = mDbHelper.getDefaultLocation(realm, cell.getMobileCountryCode());
 
                             loc = GeoLocation.fromDegrees(defLoc.getLatitude(), defLoc.getLongitude());
                         }

@@ -31,11 +31,10 @@ import android.view.View;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
-import com.secupwn.aimsicd.data.model.BTS;
+import com.secupwn.aimsicd.data.model.BaseTransceiverStation;
+import com.secupwn.aimsicd.data.model.GpsLocation;
 import com.secupwn.aimsicd.data.model.Import;
-import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.data.model.Measure;
 import com.secupwn.aimsicd.map.CellTowerGridMarkerClusterer;
 import com.secupwn.aimsicd.map.CellTowerMarker;
@@ -45,6 +44,7 @@ import com.secupwn.aimsicd.ui.activities.MapPrefActivity;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.GeoLocation;
 import com.secupwn.aimsicd.utils.Helpers;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.utils.RequestTask;
 import com.secupwn.aimsicd.utils.TinyDB;
 
@@ -384,28 +384,28 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
                 List<CellTowerMarker> items = new LinkedList<>();
 
-                RealmResults<BTS> cellData = realm.where(BTS.class).findAll();
+                RealmResults<BaseTransceiverStation> baseStations = realm.where(BaseTransceiverStation.class).findAll();
 
                 /*
                     This function is getting cells we logged from DBi_bts
                  */
-                if (cellData.size() > 0) {
-                    for (BTS c : cellData) {
+                if (baseStations.size() > 0) {
+                    for (BaseTransceiverStation baseStation : baseStations) {
 
                         if (isCancelled() || !isAdded()) {
                             return null;
                         }
                         // The indexing here is that of DB table
-                        final int cellID = c.getCellId();
-                        final int lac = c.getLocationAreaCode();
-                        final int mcc = c.getMobileCountryCode();
-                        final int mnc = c.getMobileNetworkCode();
-                        final int psc = c.getPrimaryScramblingCode();
+                        final int cellID = baseStation.getCellId();
+                        final int lac = baseStation.getLocationAreaCode();
+                        final int mcc = baseStation.getMobileCountryCode();
+                        final int mnc = baseStation.getMobileNetworkCode();
+                        final int psc = baseStation.getPrimaryScramblingCode();
 
-                        Measure first = realm.where(Measure.class).equalTo("bts.cellId", c.getCellId()).findFirst();
+                        Measure first = realm.where(Measure.class).equalTo("baseStation.cellId", baseStation.getCellId()).findFirst();
                         final String rat = first.getRadioAccessTechnology();
-                        final double dLat = c.getLocationInfo().getLatitude();
-                        final double dLng = c.getLocationInfo().getLongitude();
+                        final double dLat = baseStation.getGpsLocation().getLatitude();
+                        final double dLng = baseStation.getGpsLocation().getLongitude();
 
                         if (Double.doubleToRawLongBits(dLat) == 0
                                 && Double.doubleToRawLongBits(dLng) == 0) {
@@ -458,7 +458,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                 if (mBound) {
                     try {
                         int mcc = mAimsicdService.getCell().getMobileCountryCode();
-                        LocationInfo d = mDbHelper.getDefaultLocation(realm, mcc);
+                        GpsLocation d = mDbHelper.getDefaultLocation(realm, mcc);
                         ret = new GeoPoint(d.getLatitude(), d.getLongitude());
                     } catch (Exception e) {
                         log.error("Error getting default location!", e);
@@ -569,8 +569,8 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
         @Cleanup Realm realm = Realm.getDefaultInstance();
 
-        RealmResults<Import> c = mDbHelper.returnOcidBtsByNetwork(realm, currentMmc, currentMnc).findAll();
-        for (Import anImport : c) {
+        RealmResults<Import> importRealmResults = mDbHelper.returnOcidBtsByNetwork(realm, currentMmc, currentMnc).findAll();
+        for (Import anImport : importRealmResults) {
 
             final int cellID = anImport.getCellId();
             final int lac = anImport.getLocationAreaCode();
@@ -578,8 +578,8 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
             final int mnc = anImport.getMobileNetworkCode();
             final int psc = anImport.getPrimaryScramblingCode();
             final String rat = anImport.getRadioAccessTechnology();
-            final double dLat = anImport.getLocationInfo().getLatitude();
-            final double dLng = anImport.getLocationInfo().getLongitude();
+            final double dLat = anImport.getGpsLocation().getLatitude();
+            final double dLng = anImport.getGpsLocation().getLongitude();
             final GeoPoint location = new GeoPoint(dLat, dLng);
             //where is c.getString(6)AvgSigStr
             final int samples = anImport.getSamples();
@@ -627,7 +627,6 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
             }
         }
     }
-
 
     @Override
     public void onStart() {

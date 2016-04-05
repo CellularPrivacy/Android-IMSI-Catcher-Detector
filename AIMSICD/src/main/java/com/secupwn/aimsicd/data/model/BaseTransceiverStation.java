@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BTS extends RealmObject {
+public class BaseTransceiverStation extends RealmObject {
 
     private int mobileCountryCode;
     private int mobileNetworkCode;
@@ -20,11 +20,11 @@ public class BTS extends RealmObject {
     private int stId;
     private Date timeFirst;
     private Date timeLast;
-    private LocationInfo locationInfo;
+    private GpsLocation gpsLocation;
 
     @Override
     public void removeFromRealm() {
-        locationInfo.removeFromRealm();
+        gpsLocation.removeFromRealm();
         super.removeFromRealm();
     }
 }

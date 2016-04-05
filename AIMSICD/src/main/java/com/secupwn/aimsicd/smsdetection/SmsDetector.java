@@ -16,8 +16,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.data.model.GpsLocation;
 import com.secupwn.aimsicd.utils.RealmHelper;
-import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.data.model.SmsData;
 import com.secupwn.aimsicd.data.model.SmsDetectionString;
 import com.secupwn.aimsicd.service.AimsicdService;
@@ -362,9 +362,9 @@ public final class SmsDetector extends Thread {
     }
 
     private void setCurrentLocationData(Realm realm, SmsData capturedSms) {
-        capturedSms.setCurrentLocationAreaCode(mAIMSICDService.getCellTracker().getMonitorCell().getLocationAreaCode());
-        capturedSms.setCurrentCellId(mAIMSICDService.getCellTracker().getMonitorCell().getCellId());
-        capturedSms.setCurrentRadioAccessTechnology(mAIMSICDService.getCell().getRat());
+        capturedSms.setLocationAreaCode(mAIMSICDService.getCellTracker().getMonitorCell().getLocationAreaCode());
+        capturedSms.setCellId(mAIMSICDService.getCellTracker().getMonitorCell().getCellId());
+        capturedSms.setRadioAccessTechnology(mAIMSICDService.getCell().getRat());
         boolean isRoaming = false;
 
         if (mAIMSICDService.getCellTracker().getDevice().isRoaming()) {
@@ -372,10 +372,10 @@ public final class SmsDetector extends Thread {
         }
         capturedSms.setRoaming(isRoaming);
 
-        LocationInfo locationInfo = realm.createObject(LocationInfo.class);
-        locationInfo.setLatitude(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
-        locationInfo.setLongitude(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
-        capturedSms.setLocationInfo(locationInfo);
+        GpsLocation gpsLocation = realm.createObject(GpsLocation.class);
+        gpsLocation.setLatitude(mAIMSICDService.lastKnownLocation().getLatitudeInDegrees());
+        gpsLocation.setLongitude(mAIMSICDService.lastKnownLocation().getLongitudeInDegrees());
+        capturedSms.setGpsLocation(gpsLocation);
     }
 
     private String findSmsData(String[] preBuffer, String[] postBuffer) {
