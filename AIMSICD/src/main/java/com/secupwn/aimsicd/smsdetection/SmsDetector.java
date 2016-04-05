@@ -47,7 +47,7 @@ import lombok.Getter;
  * This is by no means a complete detection method but gives us something to work off.
  * <p/>
  * For latest list of working phones/models, please see:
- * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/532
+ * https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/532
  * <p/>
  * PHONE:Samsung S5      MODEL:SM-G900F      ANDROID_VER:4.4.2   TYPE0:YES MWI:YES
  * PHONE:Samsung S4-min  MODEL:GT-I9195      ANDROID_VER:4.2.2   TYPE0:YES MWI:YES

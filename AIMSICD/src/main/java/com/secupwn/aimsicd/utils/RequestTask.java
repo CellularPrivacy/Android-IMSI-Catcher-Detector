@@ -417,9 +417,11 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             log.verbose("BaseTask showHideMapProgressBar() activity is null");
         }
 
-        Fragment myFragment = lActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
-        if (myFragment instanceof MapFragment) {
-            ((MapFragment) myFragment).setRefreshActionButtonState(pFlag);
+        if (lActivity != null) {
+            Fragment myFragment = lActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
+            if (myFragment instanceof MapFragment) {
+                ((MapFragment) myFragment).setRefreshActionButtonState(pFlag);
+            }
         }
     }
 
