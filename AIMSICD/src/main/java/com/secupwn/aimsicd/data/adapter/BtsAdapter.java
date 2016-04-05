@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.secupwn.aimsicd.adapters;
+package com.secupwn.aimsicd.data.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -26,9 +26,9 @@ import io.realm.RealmResults;
  * TODO:
  *                  [ ] Add DB items: T3212, A5x and ST_id
  */
-public class UniqueBtsAdapter extends RealmBaseAdapter<BTS> {
+public class BtsAdapter extends RealmBaseAdapter<BTS> {
 
-    public UniqueBtsAdapter(Context context, RealmResults<BTS> realmResults, boolean automaticUpdate) {
+    public BtsAdapter(Context context, RealmResults<BTS> realmResults, boolean automaticUpdate) {
         super(context, realmResults, automaticUpdate);
     }
 

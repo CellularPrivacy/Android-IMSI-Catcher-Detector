@@ -1,4 +1,4 @@
-package com.secupwn.aimsicd.adapters;
+package com.secupwn.aimsicd.data.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
