@@ -306,7 +306,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 // if `result` is null, it will evaluate to false, no need to check for null
                 if ("Successful".equals(result)) {
 
-                    if (mDbAdapter.populateDBeImport()) {
+                    if (mDbAdapter.populateDBeImport(realm)) {
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received));
                     }
 
@@ -321,7 +321,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
             case DBE_DOWNLOAD_REQUEST_FROM_MAP:
                 if ("Successful".equals(result)) {
-                    if (mDbAdapter.populateDBeImport()) {
+                    if (mDbAdapter.populateDBeImport(realm)) {
                         Intent intent = new Intent(MapFragment.updateOpenCellIDMarkers);
                         LocalBroadcastManager.getInstance(mAppContext).sendBroadcast(intent);
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received_markers_updated));

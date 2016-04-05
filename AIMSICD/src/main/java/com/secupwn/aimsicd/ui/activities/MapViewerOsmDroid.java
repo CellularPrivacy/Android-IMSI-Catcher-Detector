@@ -453,7 +453,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 if (mBound) {
                     try {
                         int mcc = mAimsicdService.getCell().getMcc();
-                        LocationInfo d = mDbHelper.getDefaultLocation(mcc);
+                        LocationInfo d = mDbHelper.getDefaultLocation(realm, mcc);
                         ret = new GeoPoint(d.getLatitude(), d.getLongitude());
                     } catch (Exception e) {
                         log.error("Error getting default location!", e);

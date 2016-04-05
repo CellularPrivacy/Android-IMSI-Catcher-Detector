@@ -23,6 +23,8 @@ import com.secupwn.aimsicd.utils.TruncatedLocation;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import lombok.Cleanup;
 
 /**
  * Class to handle GPS location tracking
@@ -132,7 +134,8 @@ public final class LocationTracker {
                         if (cell != null) {
                             log.debug("Looking up MCC " + cell.getMcc());
 
-                            LocationInfo defLoc = mDbHelper.getDefaultLocation(cell.getMcc());
+                            @Cleanup Realm realm = Realm.getDefaultInstance();
+                            LocationInfo defLoc = mDbHelper.getDefaultLocation(realm, cell.getMcc());
 
                             loc = GeoLocation.fromDegrees(defLoc.getLatitude(), defLoc.getLongitude());
                         }

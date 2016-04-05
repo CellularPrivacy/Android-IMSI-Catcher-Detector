@@ -29,7 +29,6 @@ import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import lombok.Cleanup;
 
 /**
  * This class handles all the AMISICD DataBase maintenance operations, like
@@ -133,9 +132,7 @@ public final class RealmHelper {
                 .equalTo("mobileNetworkCode", mnc);
     }
 
-    public LocationInfo getDefaultLocation(int mcc) {
-        @Cleanup Realm realm = Realm.getDefaultInstance();
-
+    public LocationInfo getDefaultLocation(Realm realm, int mcc) {
         return realm.where(DefaultLocation.class)
                 .equalTo("mobileCountryCode", mcc)
                 .findAll()
@@ -285,7 +282,7 @@ public final class RealmHelper {
      * 54.63376,25.160243,246,3,20,1294,0,-1,1,1,GSM,,,,,,,,
      * ========================================================================
      */
-    public boolean populateDBeImport() {
+    public boolean populateDBeImport(Realm realm) {
         // This was not finding the file on a Samsung S5
         // String fileName = Environment.getExternalStorageDirectory()+ "/AIMSICD/OpenCellID/opencellid.csv";
         String fileName = mContext.getExternalFilesDir(null) + File.separator + "OpenCellID/opencellid.csv";
@@ -306,7 +303,6 @@ public final class RealmHelper {
                     int lines = csvCellID.size();
                     log.info("UpdateOpenCellID: OCID CSV size (lines): " + lines);
 
-                    @Cleanup Realm realm = Realm.getDefaultInstance();
                     int rowCounter;
                     for (rowCounter = 1; rowCounter < lines; rowCounter++) {
                         // Insert details into OpenCellID Database using:  insertDBeImport()
@@ -376,10 +372,6 @@ public final class RealmHelper {
             }
         }
     }
-
-    // ====================================================================
-    //      Cleanup and filtering of DB tables
-    // ====================================================================
 
     /**
      * This is the {@link Import} data consistency check wich checks each
@@ -488,24 +480,11 @@ public final class RealmHelper {
 
     }
 
-
-    // =======================================================================================
-    //      Signal Strengths Table
-    // =======================================================================================
-
     public int getAverageSignalStrength(Realm realm, int cellID) {
         return (int) realm.where(Measure.class)
                 .equalTo("bts.cellId", cellID)
                 .average("rxSignal");
     }
-
-    //=============================================================================================
-    // ********************** ALL NEW FUNCTIONS ADDED AFTER THIS LINE *****************************
-    //=============================================================================================
-
-    //====================================================================
-    //      START OF INSERT FUNCTIONS
-    //====================================================================
 
     /**
      * This method is used to insert and populate the downloaded or previously
@@ -532,7 +511,6 @@ public final class RealmHelper {
             final Date time_last,
             final Integer rej_cause
     ) {
-
         return new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
