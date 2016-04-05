@@ -5,50 +5,35 @@
  */
 package com.secupwn.aimsicd.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.data.model.BTS;
+
+import java.text.DateFormat;
+
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
 
 /**
  * Description:     Contains the data and definitions of all the items of the XML layout
  *
- * Dependencies:
- *                  UniqueBtsItemData.java
- *                  unique_bts_data.xml
  *
  * TODO:
- *                  [ ] Order all the items according to appearance found in the DB table below
  *                  [ ] Add DB items: T3212, A5x and ST_id
- *
- * NOTE:
- *                  CREATE TABLE "DBi_bts"  (
- *                   "_id"          INTEGER PRIMARY KEY AUTOINCREMENT,
- *                   "MCC"          INTEGER NOT NULL,
- *                   "MNC"          INTEGER NOT NULL,
- *                   "LAC"          INTEGER NOT NULL,
- *                   "CID"          INTEGER NOT NULL,
- *                   "PSC"          INTEGER,
- *                   "T3212"        INTEGER DEFAULT 0,  -- Fix java to allow null here
- *                   "A5x"          INTEGER DEFAULT 0,  -- Fix java to allow null here
- *                   "ST_id"        INTEGER DEFAULT 0,  -- Fix java to allow null here
- *                   "time_first"   INTEGER,
- *                   "time_last"    INTEGER,
- *                   "gps_lat"      REAL NOT NULL,
- *                   "gps_lon"      REAL NOT NULL
- *                   );
- *
- *
- * ChangeLog:
- *                  2015-07-27  E:V:A           Added placeholders for missing items
  */
-public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItemData> {
+public class UniqueBtsAdapter extends RealmBaseAdapter<BTS> {
+
+    public UniqueBtsAdapter(Context context, RealmResults<BTS> realmResults, boolean automaticUpdate) {
+        super(context, realmResults, automaticUpdate);
+    }
 
     @Override
-    public View inflate(final BaseInflaterAdapter<UniqueBtsItemData> adapter,
-                        final int pos, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
         if (convertView == null) {
@@ -59,8 +44,8 @@ public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItem
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final UniqueBtsItemData item = adapter.getTItem(pos);
-        holder.updateDisplay(item);
+        final BTS item = getItem(position);
+        holder.updateDisplay(item, position);
 
         return convertView;
     }
@@ -69,7 +54,6 @@ public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItem
 
         private final View mRootView;
 
-        // TODO: Order these and the rest, as in DB table (shown above)
         private final TextView LAC;
         private final TextView CID;
         private final TextView MCC;
@@ -109,27 +93,30 @@ public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItem
             rootView.setTag(this);
         }
 
-        public void updateDisplay(UniqueBtsItemData item) {
+        public void updateDisplay(BTS item, int position) {
 
-            LAC.setText(item.getLac());
-            CID.setText(item.getCid());
+            LAC.setText(String.valueOf(item.getLocationAreaCode()));
+            CID.setText(String.valueOf(item.getCellId()));
 
-            MCC.setText(item.getMcc());
-            MNC.setText(item.getMnc());
-            PSC.setText(item.getPsc());
+            MCC.setText(String.valueOf(item.getMobileCountryCode()));
+            MNC.setText(String.valueOf(item.getMobileNetworkCode()));
+            PSC.setText(String.valueOf(item.getPrimaryScramblingCode()));
 
             // TODO: Get values from DB when available
-            T3212.setText("n/a");   //T3212.setText(item.getT3212());
-            A5X.setText("n/a");     //A5X.setText(item.getA5x());
-            ST_ID.setText("n/a");   //ST_ID.setText(item.getStId());
 
-            TIME_FIRST.setText(item.getTime_first());
-            TIME_LAST.setText(item.getTime_last());
+            T3212.setText(R.string.n_a);   //T3212.setText(item.getT3212());
+            A5X.setText(R.string.n_a);     //A5X.setText(item.getA5x());
+            ST_ID.setText(R.string.n_a);   //ST_ID.setText(item.getStId());
 
-            LAT.setText(String.valueOf(item.getLat()));
-            LON.setText(String.valueOf(item.getLon()));
 
-            RecordId.setText(item.getRecordId());
+            DateFormat dateFormat = DateFormat.getDateTimeInstance();
+            TIME_FIRST.setText(dateFormat.format(item.getTimeFirst()));
+            TIME_LAST.setText(dateFormat.format(item.getTimeLast()));
+
+            LAT.setText(String.valueOf(item.getLocationInfo().getLatitude()));
+            LON.setText(String.valueOf(item.getLocationInfo().getLongitude()));
+
+            RecordId.setText(String.valueOf(position));
         }
     }
 }

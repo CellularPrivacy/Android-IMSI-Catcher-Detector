@@ -13,6 +13,8 @@ import java.util.HashMap;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import lombok.Cleanup;
 
 /**
  *  Description:    Class that calculates cell signal strength averages and decides if a
@@ -177,7 +179,8 @@ public class SignalStrengthTracker {
             log.debug("Cached average SS for CID: " + cellID + " is: " + storedAvg);
         } else {
             // Not cached, check DB
-            storedAvg = mDbHelper.getAverageSignalStrength(cellID); // DBi_measure:rx_signal
+            @Cleanup Realm realm = Realm.getDefaultInstance();
+            storedAvg = mDbHelper.getAverageSignalStrength(realm, cellID);
             averageSignalCache.put(cellID, storedAvg);
             log.debug("Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
         }

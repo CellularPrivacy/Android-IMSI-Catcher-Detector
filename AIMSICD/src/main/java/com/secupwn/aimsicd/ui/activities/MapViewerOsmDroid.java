@@ -13,7 +13,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -31,8 +30,8 @@ import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
-import com.secupwn.aimsicd.constants.DBTableColumnIds;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
+import com.secupwn.aimsicd.data.model.BTS;
 import com.secupwn.aimsicd.data.model.Import;
 import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.map.CellTowerGridMarkerClusterer;
@@ -381,32 +380,26 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
                 List<CellTowerMarker> items = new LinkedList<>();
 
-                Cursor c = null;
-                try {
-                    // Grab cell data from CELL_TABLE (cellinfo) --> DBi_bts
-                    c = mDbHelper.getCellData();
-                } catch (IllegalStateException ix) {
-                    log.error("Problem getting data from CELL_TABLE", ix);
-                }
+                @Cleanup Realm realm = Realm.getDefaultInstance();
 
+                RealmResults<BTS> allCells = realm.allObjects(BTS.class);
                 /*
                     This function is getting cells we logged from DBi_bts
                  */
-                if (c != null && c.moveToFirst()) {
-                    do {
+                if (allCells.size() > 0) {
+                    for(BTS c : allCells) {
                         if (isCancelled()) {
                             return null;
                         }
                         // The indexing here is that of DB table
-                        final int cellID = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_CID));     // CID
-                        final int lac = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC));        // LAC
-                        final int mcc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_MCC));        // MCC
-                        final int mnc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_MNC));        // MNC
-                        final int psc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC));        // PSC
-                        // TODO: 2016-02-27 Is there a reason why #DBI_BTS_RAT doesn't exist?
-                        // final String rat = c.getString(c.getColumnIndex(DBTableColumnIds.DBI_BTS_RAT));  // RAT
-                        final double dLat = c.getDouble(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LAT)); // Lat
-                        final double dLng = c.getDouble(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LON)); // Lon
+                        final int cellID = c.getCellId();
+                        final int lac = c.getLocationAreaCode();
+                        final int mcc = c.getMobileCountryCode();
+                        final int mnc = c.getMobileNetworkCode();
+                        final int psc = c.getPrimaryScramblingCode();
+
+                        final double dLat = c.getLocationInfo().getLatitude();
+                        final double dLng = c.getLocationInfo().getLongitude();
 
                         if (Double.doubleToRawLongBits(dLat) == 0
                                 && Double.doubleToRawLongBits(dLng) == 0) {
@@ -446,7 +439,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                             items.add(ovm);
                         }
 
-                    } while (c.moveToNext());
+                    }
                 } else {
                     runOnUiThread(new Runnable() {
                         @Override
@@ -465,9 +458,6 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                     } catch (Exception e) {
                         log.error("Error getting default location!", e);
                     }
-                }
-                if (c != null) {
-                    c.close();
                 }
                 // plot neighbouring cells
                 while (mAimsicdService == null) {

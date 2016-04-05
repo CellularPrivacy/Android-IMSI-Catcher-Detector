@@ -18,19 +18,12 @@ import android.support.v4.app.NotificationManagerCompat;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.ui.activities.MainActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MiscUtils {
-
-    public static String getCurrentTimeStamp() {
-        //yyyyMMddHHmmss <-- this format is needed for OCID upload
-        return new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date());
-    }
 
     /*
       Call This function from any activity to set notification:

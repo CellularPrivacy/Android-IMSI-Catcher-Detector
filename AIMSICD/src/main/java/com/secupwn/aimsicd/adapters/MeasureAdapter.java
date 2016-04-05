@@ -1,50 +1,30 @@
 package com.secupwn.aimsicd.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.utils.Cell;
+import com.secupwn.aimsicd.data.model.Measure;
+
+import java.text.DateFormat;
+
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
 
 /**
  * Contains the data and definitions of all the items of the XML layout
- *
- *
- *      CREATE TABLE "DBi_measure"  (
- *        "_id"             INTEGER PRIMARY KEY AUTOINCREMENT,
- *        "bts_id"          INTEGER NOT NULL,   -- DBi_bts:_id
- *        "nc_list"         TEXT,               -- Neighboring Cells List (TODO: specify content)
- *        "time"            INTEGER NOT NULL,   -- [s]
- *        "gpsd_lat"        REAL,               -- Device GPS (allow NULL)
- *        "gpsd_lon"        REAL,               -- Device GPS (allow NULL)
- *        "gpsd_accu"       INTEGER,            -- Device GPS position accuracy [m]
- *        "gpse_lat"        REAL,               -- Exact GPS        (from where? DBi_import?)
- *        "gpse_lon"        REAL,               -- Exact GPS        (from where? DBi_import?)
- *        "bb_power"        TEXT,               -- [mW] or [mA]     (from BP power rail usage)
- *        "bb_rf_temp"      TEXT,               -- [C]              (from BP internal thermistor)
- *        "tx_power"        TEXT,               -- [dBm]            (from BP )
- *        "rx_signal"       TEXT,               -- [dBm] or ASU     (from AP/BP)
- *        "rx_stype"        TEXT,               -- Reveived Signal power Type [RSSI, ...] etc.
- *        "RAT"             TEXT NOT NULL,      -- Radio Access Technology
- *        "BCCH"            TEXT,               -- Broadcast Channel            -- consider INTEGER
- *        "TMSI"            TEXT,               -- Temporary IMSI (hex)
- *        "TA"              INTEGER DEFAULT 0,  -- Timing Advance (GSM, LTE)    -- allow NULL
- *        "PD"              INTEGER DEFAULT 0,  -- Propagation Delay (LTE)      -- allow NULL
- *        "BER"             INTEGER DEFAULT 0,  -- Bit Error Rate               -- allow NULL
- *        "AvgEcNo"         TEXT,               -- Average Ec/No                -- consider REAL
- *        "isSubmitted"     INTEGER DEFAULT 0,  -- * Has been submitted to OCID/MLS etc?
- *        "isNeighbour"     INTEGER DEFAULT 0,  -- * Is a neighboring BTS? [Is this what we want?]
- *        FOREIGN KEY("bts_id")
- *        REFERENCES "DBi_bts"("_id")
- *      );
  */
-public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureItemData> {
+public class MeasureAdapter extends RealmBaseAdapter<Measure> {
+
+    public MeasureAdapter(Context context, RealmResults<Measure> realmResults, boolean automaticUpdate) {
+        super(context, realmResults, automaticUpdate);
+    }
 
     @Override
-    public View inflate(final BaseInflaterAdapter<BtsMeasureItemData> adapter,
-                        final int pos, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
         if (convertView == null) {
@@ -55,8 +35,8 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final BtsMeasureItemData item = adapter.getTItem(pos);
-        holder.updateDisplay(item);
+        final Measure item = getItem(position);
+        holder.updateDisplay(item, position);
 
         return convertView;
     }
@@ -120,35 +100,35 @@ public class BtsMeasureCardInflater implements IAdapterViewInflater<BtsMeasureIt
             rootView.setTag(this);
         }
 
-        public void updateDisplay(BtsMeasureItemData item) {
+        public void updateDisplay(Measure item, int position) {
 
-           bts_id.setText(item.getBts_id());
-            nc_list.setText(item.getNc_list());
-            time.setText(item.getTime());
-            gpsd_lat.setText(item.getGpsd_lat());
-            gpsd_lon.setText(item.getGpsd_lon());
-            gpsd_accu.setText(item.getGpsd_accu());
+            bts_id.setText(item.getBts().getCellId());
+            nc_list.setText(item.getNcList());
+            time.setText(DateFormat.getDateTimeInstance().format(item.getTime()));
+            gpsd_lat.setText(String.valueOf(item.getGpsd().getLatitude()));
+            gpsd_lon.setText(String.valueOf(item.getGpsd().getLongitude()));
+            gpsd_accu.setText(String.valueOf(item.getGpsd().getAccuracy()));
 //            gpse_lat.setText(item.getGpse_lat());
 //            gpse_lon.setText(item.getGpse_lon());
 //            bb_power.setText(item.getBb_power());
 //            bb_rf_temp.setText(item.getBb_rf_temp());
 //            tx_power.setText(item.getTx_power());
-            rx_signal.setText(item.getRx_signal());
+            rx_signal.setText(item.getRxSignal());
 //            rx_stype.setText(item.getRx_stype());
             // TODO: 2016-02-27 Someone has got to unify RAT as either an int or human-string
             // This converts a string of a number to an integer and then gets the human-string
             // From the number.
-            rat.setText(Cell.getRatFromInt(Integer.parseInt(item.getRat())));
+            rat.setText(item.getRadioAccessTechnology());
 //            BCCH.setText(item.getBCCH());
 //            TMSI.setText(item.getTMSI());
 //            TA.setText(item.getTA());
 //            PD.setText(item.getPD());
 //            BER.setText(item.getBER());
 //            AvgEcNo.setText(item.getAvgEcNo());
-            isSubmitted.setText(item.getIsSubmitted());
-            isNeighbour.setText(item.getIsNeighbour());
+            isSubmitted.setText(String.valueOf(item.isSubmitted()));
+            isNeighbour.setText(String.valueOf(item.isNeighbour()));
 
-            mRecordId.setText(item.getRecordId());      // EVA
+            mRecordId.setText(String.valueOf(position));      // EVA
         }
     }
 }

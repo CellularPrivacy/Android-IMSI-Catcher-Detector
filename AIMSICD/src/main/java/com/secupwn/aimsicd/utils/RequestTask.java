@@ -143,7 +143,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             // OCID upload request from "APPLICATION" drawer title
             case DBE_UPLOAD_REQUEST:
                 try {
-                    boolean prepared = mDbAdapter.prepareOpenCellUploadData();
+                    @Cleanup Realm realm = Realm.getDefaultInstance();
+                    boolean prepared = mDbAdapter.prepareOpenCellUploadData(realm);
 
                     log.info("OCID upload data prepared - " + String.valueOf(prepared));
                     if (prepared) {
@@ -171,7 +172,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                                     + response.code() + " - "
                                     + response.message());
                             if (response.code() == 200) {
-                                mDbAdapter.ocidProcessed();
+                                Realm.Transaction transaction = mDbAdapter.ocidProcessed();
+                                realm.executeTransaction(transaction);
                             }
                             publishProgress(95, 100);
                         }
@@ -271,15 +273,11 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 }
 
             case BACKUP_DATABASE:
-                if (mDbAdapter.backupDB()) {
-                    return "Successful";
-                }
+                log.error("BACKUP_DATABASE not implemented");
                 return null;
 
             case RESTORE_DATABASE:
-                if (mDbAdapter.restoreDB()) {
-                    return "Successful";
-                }
+                log.error("RESTORE_DATABASE not implemented");
                 return null;
         }
 
@@ -370,8 +368,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 if ("Successful".equals(result)) {
 
                     // strings.xml: pref_last_db_backup_version
-                    //tinydb.putInt(mContext.getString(R.string.pref_last_database_backup_version), AIMSICDDbAdapter.DATABASE_VERSION); //TODO
-                    tinydb.putInt("pref_last_db_backup_version", AIMSICDDbAdapter.DATABASE_VERSION);
                     Activity lActivity = getActivity();
 
                     //Activity may be detached or destroyed

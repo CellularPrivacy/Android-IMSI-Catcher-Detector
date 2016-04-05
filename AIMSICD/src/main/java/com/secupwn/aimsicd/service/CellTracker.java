@@ -84,7 +84,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public static Cell monitorCell;
     public static String OCID_API_KEY = null;   // see getOcidKey()
     public static int PHONE_TYPE;               //
-    public static int LAST_DB_BACKUP_VERSION;   //
     public static long REFRESH_RATE;            // [s] The DeviceInfo refresh rate (arrays.xml)
     public static final String SILENT_SMS = "SILENT_SMS_DETECTED";
 
@@ -126,7 +125,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private final AIMSICDDbAdapter dbHelper;
     private Context context;
 
-    public CellTracker(Context context, SignalStrengthTracker sst) {
+    public CellTracker(final Context context, SignalStrengthTracker sst) {
         this.context = context;
         this.signalStrengthTracker = sst;
 
@@ -152,11 +151,18 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         // (b) having cleared the preferences.
         // Subsequent runs are prevented by a hidden boolean preference. See: loadPreferences()
         if (!CELL_TABLE_CLEANSED) {
-            dbHelper.cleanseCellTable();
-            SharedPreferences.Editor prefsEditor;
-            prefsEditor = prefs.edit();
-            prefsEditor.putBoolean(context.getString(R.string.pref_cell_table_cleansed), true); // set to true
-            prefsEditor.apply();
+            @Cleanup Realm realm = Realm.getDefaultInstance();
+            Realm.Transaction transaction = dbHelper.cleanseCellTable();
+
+            realm.executeTransactionAsync(transaction, new Realm.Transaction.OnSuccess() {
+                @Override
+                public void onSuccess() {
+                    SharedPreferences.Editor prefsEditor;
+                    prefsEditor = prefs.edit();
+                    prefsEditor.putBoolean(context.getString(R.string.pref_cell_table_cleansed), true);
+                    prefsEditor.apply();
+                }
+            });
         }
         device.refreshDeviceInfo(tm, context); // Telephony Manager
         monitorCell = new Cell();
@@ -301,8 +307,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     break;
             }
             REFRESH_RATE = TimeUnit.SECONDS.toMillis(t);
-        } else if (key.equals(DB_VERSION)) {
-            LAST_DB_BACKUP_VERSION = sharedPreferences.getInt(DB_VERSION, 1);
         } else if (key.equals(OCID_KEY)) {
             getOcidKey();
         } else if (key.equals(VIBRATE_ENABLE)) {
@@ -534,7 +538,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     monitorCell.setCid(gsmCellLocation.getCid());
 
                     // Check if LAC is ok
-                    boolean lacOK = dbHelper.checkLAC(monitorCell);
+                    boolean lacOK = dbHelper.checkLAC(realm, monitorCell);
                     if (!lacOK) {
                         changedLAC = true;
                         dbHelper.toEventLog(realm, 1, "Changing LAC");
@@ -566,7 +570,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     monitorCell.setLocationAreaCode(cdmaCellLocation.getNetworkId());
                     monitorCell.setCid(cdmaCellLocation.getBaseStationId());
 
-                    boolean lacOK = dbHelper.checkLAC(monitorCell);
+                    boolean lacOK = dbHelper.checkLAC(realm, monitorCell);
                     if (!lacOK) {
                         changedLAC = true;
                         /*dbHelper.insertEventLog(
@@ -634,7 +638,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         boolean trackCellPref   = prefs.getBoolean(context.getString(R.string.pref_enable_cell_key), true);
         boolean monitorCellPref = prefs.getBoolean(context.getString(R.string.pref_enable_cell_monitoring_key), true);
 
-        LAST_DB_BACKUP_VERSION      = prefs.getInt(context.getString(R.string.pref_last_database_backup_version), 1);
         CELL_TABLE_CLEANSED         = prefs.getBoolean(context.getString(R.string.pref_cell_table_cleansed), false);
         String refreshRate = prefs.getString(context.getString(R.string.pref_refresh_key), "1");
         this.vibrateEnabled = prefs.getBoolean(context.getString(R.string.pref_notification_vibrate_enable), true);
@@ -936,7 +939,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             // TODO: Is correct behaviour? We should consider logging all cells, even without GPS.
             if (trackingCell) {
                 // This also checks that the locationAreaCode are cid are not in DB before inserting
-                dbHelper.insertBTS(device.cell);
+                @Cleanup Realm realm = Realm.getDefaultInstance();
+                dbHelper.insertBTS(realm, device.cell);
             }
         }
     }
