@@ -134,7 +134,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
                     tr = (TableRow) getView().findViewById(R.id.gsm_cellid);
                     tr.setVisibility(View.VISIBLE);
                     content = (HighlightTextView)  getView().findViewById(R.id.network_cellid);
-                    content.updateText(String.valueOf(mAimsicdService.getCell().getCid()), ani);
+                    content.updateText(String.valueOf(mAimsicdService.getCell().getCellId()), ani);
                     break;
                 }
 
@@ -150,7 +150,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
                     tr = (TableRow) getView().findViewById(R.id.cdma_baseid);
                     tr.setVisibility(View.VISIBLE);
                     content = (HighlightTextView)  getView().findViewById(R.id.network_baseid);
-                    content.updateText(String.valueOf(mAimsicdService.getCell().getCid()), ani);
+                    content.updateText(String.valueOf(mAimsicdService.getCell().getCellId()), ani);
                     break;
                 }
             }
@@ -256,17 +256,17 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
         StringBuilder sb = new StringBuilder();
         sb.append("http://www.opencellid.org/cell/get?key=").append(CellTracker.OCID_API_KEY);
 
-        if (mAimsicdService.getCell().getMcc() != Integer.MAX_VALUE) {
-            sb.append("&mcc=").append(mAimsicdService.getCell().getMcc());
+        if (mAimsicdService.getCell().getMobileCountryCode() != Integer.MAX_VALUE) {
+            sb.append("&mcc=").append(mAimsicdService.getCell().getMobileCountryCode());
         }
-        if (mAimsicdService.getCell().getMnc() != Integer.MAX_VALUE) {
-            sb.append("&mnc=").append(mAimsicdService.getCell().getMnc());
+        if (mAimsicdService.getCell().getMobileNetworkCode() != Integer.MAX_VALUE) {
+            sb.append("&mnc=").append(mAimsicdService.getCell().getMobileNetworkCode());
         }
         if (mAimsicdService.getCell().getLocationAreaCode() != Integer.MAX_VALUE) {
             sb.append("&lac=").append(mAimsicdService.getCell().getLocationAreaCode());
         }
-        if (mAimsicdService.getCell().getCid() != Integer.MAX_VALUE) {
-            sb.append("&cellid=").append(mAimsicdService.getCell().getCid());
+        if (mAimsicdService.getCell().getCellId() != Integer.MAX_VALUE) {
+            sb.append("&cellid=").append(mAimsicdService.getCell().getCellId());
         }
         sb.append("&format=json");
         return new Request.Builder()
@@ -281,9 +281,9 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
             Cell cell = new Cell();
             cell.setLat(jsonCell.getDouble("lat"));
             cell.setLon(jsonCell.getDouble("lon"));
-            cell.setMcc(jsonCell.getInt("mcc"));
-            cell.setMnc(jsonCell.getInt("mnc"));
-            cell.setCid(jsonCell.getInt("cellid"));
+            cell.setMobileCountryCode(jsonCell.getInt("mcc"));
+            cell.setMobileNetworkCode(jsonCell.getInt("mnc"));
+            cell.setCellId(jsonCell.getInt("cellid"));
             cell.setLocationAreaCode(jsonCell.getInt("lac"));
             return cell;
         } catch (JSONException | IOException e) {

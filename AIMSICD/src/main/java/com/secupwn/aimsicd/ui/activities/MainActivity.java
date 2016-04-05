@@ -303,10 +303,10 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
             if (networkOperator != null) {
                 int mcc = Integer.parseInt(networkOperator.substring(0, 3));
-                cell.setMcc(mcc);
+                cell.setMobileCountryCode(mcc);
                 int mnc = Integer.parseInt(networkOperator.substring(3));
-                cell.setMnc(mnc);
-                log.debug("CELL:: mobileCountryCode=" + mcc + " mnc=" + mnc);
+                cell.setMobileNetworkCode(mnc);
+                log.debug("CELL:: mobileCountryCode=" + mcc + " mobileNetworkCode=" + mnc);
             }
 
 
@@ -327,10 +327,10 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                         = new LocationServices.LocationAsync();
                 locationAsync.delegate = this;
                 locationAsync.execute(
-                        mAimsicdService.getCell().getCid(),
+                        mAimsicdService.getCell().getCellId(),
                         mAimsicdService.getCell().getLocationAreaCode(),
-                        mAimsicdService.getCell().getMnc(),
-                        mAimsicdService.getCell().getMcc());
+                        mAimsicdService.getCell().getMobileNetworkCode(),
+                        mAimsicdService.getCell().getMobileCountryCode());
             }
         } else {
             Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));

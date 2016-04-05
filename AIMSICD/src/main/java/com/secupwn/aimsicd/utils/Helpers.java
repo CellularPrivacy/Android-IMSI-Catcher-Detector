@@ -218,13 +218,13 @@ import io.freefair.android.util.logging.Logger;
                             .append(CellTracker.OCID_API_KEY).append("&BBOX=")
                             .append(boundParameter);
 
-                    log.info("OCID MCC is set to: " + cell.getMcc());
-                    if (cell.getMcc() != Integer.MAX_VALUE) {
-                        sb.append("&mcc=").append(cell.getMcc());
+                    log.info("OCID MCC is set to: " + cell.getMobileCountryCode());
+                    if (cell.getMobileCountryCode() != Integer.MAX_VALUE) {
+                        sb.append("&mcc=").append(cell.getMobileCountryCode());
                     }
-                    log.info("OCID MNC is set to: " + cell.getMnc());
-                    if (cell.getMnc() != Integer.MAX_VALUE) {
-                        sb.append("&mnc=").append(cell.getMnc());
+                    log.info("OCID MNC is set to: " + cell.getMobileNetworkCode());
+                    if (cell.getMobileNetworkCode() != Integer.MAX_VALUE) {
+                        sb.append("&mnc=").append(cell.getMobileNetworkCode());
                     }
 
                     sb.append("&format=csv");

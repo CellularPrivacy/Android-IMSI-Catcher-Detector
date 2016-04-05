@@ -452,7 +452,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 GeoPoint ret = new GeoPoint(0, 0);
                 if (mBound) {
                     try {
-                        int mcc = mAimsicdService.getCell().getMcc();
+                        int mcc = mAimsicdService.getCell().getMobileCountryCode();
                         LocationInfo d = mDbHelper.getDefaultLocation(realm, mcc);
                         ret = new GeoPoint(d.getLatitude(), d.getLongitude());
                     } catch (Exception e) {
@@ -478,16 +478,16 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                     try {
                         loc = new GeoPoint(cell.getLat(), cell.getLon());
                         CellTowerMarker ovm = new CellTowerMarker(MapViewerOsmDroid.this, mMap,
-                                getString(R.string.cell_id_label) + cell.getCid(),
+                                getString(R.string.cell_id_label) + cell.getCellId(),
                                 "", loc,
                                 new MarkerData(
                                         getApplicationContext(),
-                                        String.valueOf(cell.getCid()),
+                                        String.valueOf(cell.getCellId()),
                                         String.valueOf(loc.getLatitude()),
                                         String.valueOf(loc.getLongitude()),
                                         String.valueOf(cell.getLocationAreaCode()),
-                                        String.valueOf(cell.getMcc()),
-                                        String.valueOf(cell.getMnc()),
+                                        String.valueOf(cell.getMobileCountryCode()),
+                                        String.valueOf(cell.getMobileNetworkCode()),
                                         String.valueOf(cell.getPrimaryScramblingCode()),
                                         String.valueOf(cell.getRat()),
                                         "", false));

@@ -96,11 +96,11 @@ public class Device {
                 mncMcc = tm.getNetworkOperator();
                 if (mncMcc != null && mncMcc.length() >= 5) {
                     try {
-                        if (cell.getMcc() == Integer.MAX_VALUE) {
-                            cell.setMcc(Integer.parseInt(tm.getNetworkOperator().substring(0, 3)));
+                        if (cell.getMobileCountryCode() == Integer.MAX_VALUE) {
+                            cell.setMobileCountryCode(Integer.parseInt(tm.getNetworkOperator().substring(0, 3)));
                         }
-                        if (cell.getMnc() == Integer.MAX_VALUE) {
-                            cell.setMnc(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
+                        if (cell.getMobileNetworkCode() == Integer.MAX_VALUE) {
+                            cell.setMobileNetworkCode(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
                         }
                     } catch (Exception e) {
                         log.info("MncMcc parse exception: ", e);
@@ -110,7 +110,7 @@ public class Device {
                 if (!cell.isValid()) {
                     GsmCellLocation gsmCellLocation = (GsmCellLocation) tm.getCellLocation();
                     if (gsmCellLocation != null) {
-                        cell.setCid(gsmCellLocation.getCid());
+                        cell.setCellId(gsmCellLocation.getCid());
                         cell.setLocationAreaCode(gsmCellLocation.getLac());
                         cell.setPrimaryScramblingCode(gsmCellLocation.getPsc());
                     }
@@ -122,23 +122,23 @@ public class Device {
                 if (!cell.isValid()) {
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
                     if (cdmaCellLocation != null) {
-                        cell.setCid(cdmaCellLocation.getBaseStationId());
+                        cell.setCellId(cdmaCellLocation.getBaseStationId());
                         cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());
                         cell.setSid(cdmaCellLocation.getSystemId()); // one of these must be a bug !!
                         // See: http://stackoverflow.com/questions/8088046/android-how-to-identify-carrier-on-cdma-network
                         // and: https://github.com/klinker41/android-smsmms/issues/26
-                        cell.setMnc(cdmaCellLocation.getSystemId()); // todo: check! (Also CellTracker.java)
+                        cell.setMobileNetworkCode(cdmaCellLocation.getSystemId()); // todo: check! (Also CellTracker.java)
 
                         //Retrieve MCC through System Property
                         String homeOperator = Helpers.getSystemProp(context,
                                 "ro.cdma.home.operator.numeric", "UNKNOWN");
                         if (!homeOperator.contains("UNKNOWN")) {
                             try {
-                                if (cell.getMcc() == Integer.MAX_VALUE) {
-                                    cell.setMcc(Integer.valueOf(homeOperator.substring(0, 3)));
+                                if (cell.getMobileCountryCode() == Integer.MAX_VALUE) {
+                                    cell.setMobileCountryCode(Integer.valueOf(homeOperator.substring(0, 3)));
                                 }
-                                if (cell.getMnc() == Integer.MAX_VALUE) {
-                                    cell.setMnc(Integer.valueOf(homeOperator.substring(3, 5)));
+                                if (cell.getMobileNetworkCode() == Integer.MAX_VALUE) {
+                                    cell.setMobileNetworkCode(Integer.valueOf(homeOperator.substring(3, 5)));
                                 }
                             } catch (Exception e) {
                                 log.info("HomeOperator parse exception - " + e.getMessage(), e);

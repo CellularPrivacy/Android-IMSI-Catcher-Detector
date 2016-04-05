@@ -81,20 +81,20 @@ public final class RealmHelper {
      */
     public boolean checkLAC(Realm realm, Cell cell) {
         RealmResults<BTS> btsRealmResults = realm.where(BTS.class)
-                .equalTo("cellId", cell.getCid())
+                .equalTo("cellId", cell.getCellId())
                 .findAll();
 
         for (BTS bts : btsRealmResults) {
             int lac = bts.getLocationAreaCode();
 
             if (cell.getLocationAreaCode() != lac) {
-                log.info("ALERT: Changing LAC on CID: " + cell.getCid()
+                log.info("ALERT: Changing LAC on CID: " + cell.getCellId()
                         + " LAC(API): " + cell.getLocationAreaCode()
                         + " LAC(DBi): " + lac);
 
                 return false;
             } else {
-                log.verbose("LAC checked - no change on CID:" + cell.getCid()
+                log.verbose("LAC checked - no change on CID:" + cell.getCellId()
                         + " LAC(API): " + cell.getLocationAreaCode()
                         + " LAC(DBi): " + lac);
             }
@@ -552,15 +552,15 @@ public final class RealmHelper {
     public void insertBTS(Realm realm, Cell cell) {
 
         // If LAC and CID are not already in BTS realm, then add them.
-        if (!cellInDbiBts(realm, cell.getLocationAreaCode(), cell.getCid())) {
+        if (!cellInDbiBts(realm, cell.getLocationAreaCode(), cell.getCellId())) {
 
             realm.beginTransaction();
             BTS bts = realm.createObject(BTS.class);
 
-            bts.setMobileCountryCode(cell.getMcc());
-            bts.setMobileNetworkCode(cell.getMnc());
+            bts.setMobileCountryCode(cell.getMobileCountryCode());
+            bts.setMobileNetworkCode(cell.getMobileNetworkCode());
             bts.setLocationAreaCode(cell.getLocationAreaCode());
-            bts.setCellId(cell.getCid());
+            bts.setCellId(cell.getCellId());
             bts.setPrimaryScramblingCode(cell.getPrimaryScramblingCode());
 
             bts.setTimeFirst(new Date());
@@ -577,7 +577,7 @@ public final class RealmHelper {
             // If cell is already in the DB, update it to last time seen and
             // update its GPS coordinates, if not 0.0
 
-            BTS bts = realm.where(BTS.class).equalTo("cellId", cell.getCid()).findFirst();
+            BTS bts = realm.where(BTS.class).equalTo("cellId", cell.getCellId()).findFirst();
 
             realm.beginTransaction();
 
@@ -598,17 +598,17 @@ public final class RealmHelper {
 
             realm.commitTransaction();
 
-            log.info("BTS updated: CID=" + cell.getCid() + " LAC=" + cell.getLocationAreaCode());
+            log.info("BTS updated: CID=" + cell.getCellId() + " LAC=" + cell.getLocationAreaCode());
         }
 
         // TODO: This doesn't make sense, if it's in DBi_bts it IS part of DBi_measure!
         // Checking to see if CID (now bts_id) is already in DBi_measure, if not add it.
-        if (!cellInDbiMeasure(realm, cell.getCid())) {
+        if (!cellInDbiMeasure(realm, cell.getCellId())) {
 
             realm.beginTransaction();
             Measure measure = realm.createObject(Measure.class);
 
-            BTS bts = realm.where(BTS.class).equalTo("cellId", cell.getCid()).findFirst();
+            BTS bts = realm.where(BTS.class).equalTo("cellId", cell.getCellId()).findFirst();
 
             measure.setBts(bts);
             measure.setTime(new Date());
@@ -626,14 +626,14 @@ public final class RealmHelper {
             measure.setNeighbour(false);
 
             realm.commitTransaction();
-            log.info("Measure inserted cellId=" + cell.getCid());
+            log.info("Measure inserted cellId=" + cell.getCellId());
 
         } else {
             // Updating DBi_measure tables if already exists.
 
             realm.beginTransaction();
             RealmResults<Measure> all = realm.where(Measure.class)
-                    .equalTo("bts.cellId", cell.getCid())
+                    .equalTo("bts.cellId", cell.getCellId())
                     .findAll();
 
             for (Measure measure : all) {
@@ -657,7 +657,7 @@ public final class RealmHelper {
                 }
             }
             realm.commitTransaction();
-            log.info("DBi_measure updated bts_id=" + cell.getCid());
+            log.info("DBi_measure updated bts_id=" + cell.getCellId());
 
         }
 
@@ -672,7 +672,7 @@ public final class RealmHelper {
 
         final Date timestamp = new Date();
         final int lac = CellTracker.monitorCell.getLocationAreaCode();
-        final int cid = CellTracker.monitorCell.getCid();
+        final int cid = CellTracker.monitorCell.getCellId();
         final int psc = CellTracker.monitorCell.getPrimaryScramblingCode(); //[UMTS,LTE]
         final double gpsd_lat = CellTracker.monitorCell.getLat();
         final double gpsd_lon = CellTracker.monitorCell.getLon();

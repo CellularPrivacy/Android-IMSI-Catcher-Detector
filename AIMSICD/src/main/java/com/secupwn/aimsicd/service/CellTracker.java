@@ -463,7 +463,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             }
         } else if (ncls == 0 && nclp) {
             // Detection 7a
-            log.info("ALERT: No neighboring cells detected for CID: " + device.cell.getCid());
+            log.info("ALERT: No neighboring cells detected for CID: " + device.cell.getCellId());
             vibrate(100, Status.MEDIUM);
             @Cleanup Realm realm = Realm.getDefaultInstance();
             dbHelper.toEventLog(realm, 4, "No neighboring cells detected"); // (DF_id, DF_desc)
@@ -535,7 +535,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 GsmCellLocation gsmCellLocation = (GsmCellLocation) location;
                 if (gsmCellLocation != null) {
                     monitorCell.setLocationAreaCode(gsmCellLocation.getLac());
-                    monitorCell.setCid(gsmCellLocation.getCid());
+                    monitorCell.setCellId(gsmCellLocation.getCid());
 
                     // Check if LAC is ok
                     boolean lacOK = dbHelper.checkLAC(realm, monitorCell);
@@ -550,10 +550,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     }
 
                     if (tinydb.getBoolean("ocid_downloaded")) {
-                        if (!dbHelper.openCellExists(realm, monitorCell.getCid())) {
+                        if (!dbHelper.openCellExists(realm, monitorCell.getCellId())) {
                             dbHelper.toEventLog(realm, 2, "CID not in Import realm");
 
-                            log.info("ALERT: Connected to unknown CID not in Import realm: " + monitorCell.getCid());
+                            log.info("ALERT: Connected to unknown CID not in Import realm: " + monitorCell.getCellId());
                             vibrate(100, Status.MEDIUM);
 
                             cellIdNotInOpenDb = true;
@@ -568,7 +568,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                 if (cdmaCellLocation != null) {
                     monitorCell.setLocationAreaCode(cdmaCellLocation.getNetworkId());
-                    monitorCell.setCid(cdmaCellLocation.getBaseStationId());
+                    monitorCell.setCellId(cdmaCellLocation.getBaseStationId());
 
                     boolean lacOK = dbHelper.checkLAC(realm, monitorCell);
                     if (!lacOK) {
@@ -733,7 +733,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         );
 
                         device.cell.setLocationAreaCode(gsmCellLocation.getLac());     // LAC
-                        device.cell.setCid(gsmCellLocation.getCid());     // CID
+                        device.cell.setCellId(gsmCellLocation.getCid());     // CID
                         if (gsmCellLocation.getPsc() != -1) {
                             device.cell.setPrimaryScramblingCode(gsmCellLocation.getPsc()); // PSC
                         }
@@ -757,9 +757,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                         device.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
                         device.cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());      // NID
-                        device.cell.setCid(cdmaCellLocation.getBaseStationId());  // BID
+                        device.cell.setCellId(cdmaCellLocation.getBaseStationId());  // BID
                         device.cell.setSid(cdmaCellLocation.getSystemId());       // SID
-                        device.cell.setMnc(cdmaCellLocation.getSystemId());       // MNC <== BUG!??
+                        device.cell.setMobileNetworkCode(cdmaCellLocation.getSystemId());       // MNC <== BUG!??
                         device.setNetworkName(tm.getNetworkOperatorName());        // ??
                     }
             }
@@ -804,7 +804,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 device.setSignalDbm((cdmaDbm < evdoDbm) ? cdmaDbm : evdoDbm);
             }
             // Send it to signal tracker
-            signalStrengthTracker.registerSignalStrength(device.cell.getCid(), device.getSignalDBm());
+            signalStrengthTracker.registerSignalStrength(device.cell.getCellId(), device.getSignalDBm());
             //signalStrengthTracker.isMysterious(device.cell.getCid(), device.getSignalDBm());
         }
 
@@ -899,17 +899,17 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     case TelephonyManager.PHONE_TYPE_SIP:
                     case TelephonyManager.PHONE_TYPE_GSM:
                         GsmCellLocation gsmCellLocation = (GsmCellLocation) cellLocation;
-                        device.cell.setCid(gsmCellLocation.getCid()); // CID
+                        device.cell.setCellId(gsmCellLocation.getCid()); // CID
                         device.cell.setLocationAreaCode(gsmCellLocation.getLac()); // LAC
                         device.cell.setPrimaryScramblingCode(gsmCellLocation.getPsc()); // PSC
                         break;
 
                     case TelephonyManager.PHONE_TYPE_CDMA:
                         CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cellLocation;
-                        device.cell.setCid(cdmaCellLocation.getBaseStationId()); // BSID ??
+                        device.cell.setCellId(cdmaCellLocation.getBaseStationId()); // BSID ??
                         device.cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());     // NID
                         device.cell.setSid(cdmaCellLocation.getSystemId());      // SID
-                        device.cell.setMnc(cdmaCellLocation.getSystemId());      // MNC <== BUG!??
+                        device.cell.setMobileNetworkCode(cdmaCellLocation.getSystemId());      // MNC <== BUG!??
 
                         break;
                 }

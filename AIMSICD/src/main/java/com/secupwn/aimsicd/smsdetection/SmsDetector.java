@@ -363,7 +363,7 @@ public final class SmsDetector extends Thread {
 
     private void setCurrentLocationData(Realm realm, SmsData capturedSms) {
         capturedSms.setCurrentLocationAreaCode(mAIMSICDService.getCellTracker().getMonitorCell().getLocationAreaCode());
-        capturedSms.setCurrentCellId(mAIMSICDService.getCellTracker().getMonitorCell().getCid());
+        capturedSms.setCurrentCellId(mAIMSICDService.getCellTracker().getMonitorCell().getCellId());
         capturedSms.setCurrentRadioAccessTechnology(mAIMSICDService.getCell().getRat());
         boolean isRoaming = false;
 

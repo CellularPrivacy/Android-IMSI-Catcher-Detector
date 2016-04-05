@@ -132,10 +132,10 @@ public final class LocationTracker {
                     try {
                         Cell cell = context.getCell();
                         if (cell != null) {
-                            log.debug("Looking up MCC " + cell.getMcc());
+                            log.debug("Looking up MCC " + cell.getMobileCountryCode());
 
                             @Cleanup Realm realm = Realm.getDefaultInstance();
-                            LocationInfo defLoc = mDbHelper.getDefaultLocation(realm, cell.getMcc());
+                            LocationInfo defLoc = mDbHelper.getDefaultLocation(realm, cell.getMobileCountryCode());
 
                             loc = GeoLocation.fromDegrees(defLoc.getLatitude(), defLoc.getLongitude());
                         }
