@@ -9,7 +9,7 @@
 
     <string name="aimsicd_about_info" translatable="false">Android IMSI-Catcher Detector (AIMSICD)</string>
     <string name="aimsicd_wiki_link" translatable="false">https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki</string>
-    <string name="aimsicd_contribute_link" translatable="false">https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md</string>
+    <string name="aimsicd_contribute_link" translatable="false">https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/HEAD/.github/CONTRIBUTING.md</string>
     <string name="disclaimer_link" translatable="false">https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/HEAD/DISCLAIMER</string>
     <string name="aimsicd_github_link" translatable="false">https://secupwn.github.io/Android-IMSI-Catcher-Detector/</string>
     <string name="aimsicd_release_link" translatable="false">https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases</string>
