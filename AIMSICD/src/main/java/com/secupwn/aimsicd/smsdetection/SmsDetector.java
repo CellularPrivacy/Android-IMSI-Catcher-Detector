@@ -16,7 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.data.model.SmsData;
 import com.secupwn.aimsicd.data.model.SmsDetectionString;
@@ -72,7 +72,7 @@ public final class SmsDetector extends Thread {
 
     private AimsicdService mAIMSICDService;
     private boolean mBound;
-    private AIMSICDDbAdapter mDbAdapter;
+    private RealmHelper mDbAdapter;
     private Context mContext;
     private static final int TYPE0 = 1, MWI = 2, WAP = 3;
     // TODO: replace this with retrieval from AIMSICDDbAdapter
@@ -88,7 +88,7 @@ public final class SmsDetector extends Thread {
 
     public SmsDetector(Context context) {
         mContext = context;
-        mDbAdapter = new AIMSICDDbAdapter(context);
+        mDbAdapter = new RealmHelper(context);
     }
 
     public static boolean getSmsDetectionState() {

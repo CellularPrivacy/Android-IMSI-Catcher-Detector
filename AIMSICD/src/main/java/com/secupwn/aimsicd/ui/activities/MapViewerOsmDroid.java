@@ -29,7 +29,7 @@ import android.view.MenuItem;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
 import com.secupwn.aimsicd.data.model.BTS;
 import com.secupwn.aimsicd.data.model.Import;
@@ -97,7 +97,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
     @InjectView(R.id.mapview)
     private MapView mMap;
-    private AIMSICDDbAdapter mDbHelper;
+    private RealmHelper mDbHelper;
     private SharedPreferences prefs;
     private AimsicdService mAimsicdService;
     private boolean mBound;
@@ -132,7 +132,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
         setUpMapIfNeeded();
 
-        mDbHelper = new AIMSICDDbAdapter(this);
+        mDbHelper = new RealmHelper(this);
         tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
         // Bind to LocalService

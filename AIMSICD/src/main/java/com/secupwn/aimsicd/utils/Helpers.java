@@ -29,7 +29,6 @@ import android.text.TextUtils;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.ui.fragments.MapFragment;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.service.CellTracker;
@@ -354,7 +353,7 @@ import io.freefair.android.util.logging.Logger;
                         // Probably put in try/catch in case file removal fails...
                         pContext.stopService(new Intent(pContext, AimsicdService.class));
                         pContext.deleteDatabase("aimsicd.db");
-                        new AIMSICDDbAdapter(pContext);
+                        new RealmHelper(pContext);
                         pContext.startService(new Intent(pContext, AimsicdService.class));
                         msgLong(pContext, pContext.getString(R.string.delete_database_msg_success));
                     }

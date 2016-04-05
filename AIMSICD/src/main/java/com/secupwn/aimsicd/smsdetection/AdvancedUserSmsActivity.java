@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.data.model.SmsData;
 import com.secupwn.aimsicd.data.adapter.SmsDataAdapter;
 
@@ -39,7 +39,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
     @InjectView(R.id.listView_Adv_Sms_Activity)
     ListView listViewAdv;
 
-    AIMSICDDbAdapter dbaccess;
+    RealmHelper dbaccess;
 
     private Realm realm;
 
@@ -49,7 +49,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
 
         realm = Realm.getDefaultInstance();
 
-        dbaccess = new AIMSICDDbAdapter(getApplicationContext());
+        dbaccess = new RealmHelper(getApplicationContext());
         RealmResults<SmsData> msgitems = realm.where(SmsData.class).findAll();
 
         listViewAdv.setAdapter(new SmsDataAdapter(getApplicationContext(), msgitems, true));

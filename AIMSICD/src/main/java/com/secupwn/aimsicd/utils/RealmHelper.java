@@ -1,4 +1,4 @@
-package com.secupwn.aimsicd.adapters;
+package com.secupwn.aimsicd.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,7 +14,6 @@ import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.data.model.Measure;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.service.CellTracker;
-import com.secupwn.aimsicd.utils.Cell;
 
 import java.io.File;
 import java.io.FileReader;
@@ -41,43 +40,19 @@ import lombok.Cleanup;
  * [1] http://stackoverflow.com/questions/1122679/querying-and-working-with-cursors-in-sqlite-on-android
  * [2] http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#rawQuery%28java.lang.String,%20java.lang.String%5B%5D%29
  */
-public final class AIMSICDDbAdapter {
-    private final Logger log = AndroidLogger.forClass(AIMSICDDbAdapter.class);
+public final class RealmHelper {
+    private final Logger log = AndroidLogger.forClass(RealmHelper.class);
 
     private Context mContext;
     private SharedPreferences mPreferences;
     public static String mExternalFilesDirPath;
 
-    public AIMSICDDbAdapter(Context context) {
+    public RealmHelper(Context context) {
         mContext = context;
         mPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         mExternalFilesDirPath = mContext.getExternalFilesDir(null) + File.separator;
         //e.g. /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/
     }
-
-    // ====================================================================
-    //      Populate the DB tables  (INSERT)
-    // ====================================================================
-
-    /* ====================================================================
-     *      mDb.query statements (get)        SELECT
-     * ====================================================================
-     *  IMPORTANT!  The SQL queries as presented here are not in the same order
-     *              as in the DB tables themselves, therefore it may be hard
-     *              to easily match the various items when using the Cursors
-     *              as shown below.
-     *
-     *              Thus when used in MapFragment.java at loadEntries() and
-     *              loadOpenCellIDMarkers(), the index used there is completely different
-     *              than what could be expected.
-     *
-     *  ISSUES:     [ ] To avoid un-necessary future code obscurity, we should rearrange
-     *                  all Cursor queries to reflect the actual DB table order.
-     *                  Todo: This is a tedious job...
-     *                  TODO: Also AVOID using this type of Query!!
-     *
-     * ====================================================================
-     */
 
     /**
      * Returns Cell Information for contribution to the OpenCellID project

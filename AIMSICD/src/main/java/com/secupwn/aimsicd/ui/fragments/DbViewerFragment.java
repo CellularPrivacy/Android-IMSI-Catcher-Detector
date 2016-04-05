@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.adapters.DbViewerSpinnerAdapter;
 import com.secupwn.aimsicd.adapters.MeasureAdapter;
 import com.secupwn.aimsicd.adapters.MeasuredCellStrengthAdapter;
@@ -43,7 +43,7 @@ import io.realm.Realm;
 @XmlLayout(R.layout.fragment_db_viewer)
 public final class DbViewerFragment extends InjectionFragment {
 
-    private AIMSICDDbAdapter mDb;
+    private RealmHelper mDb;
     private StatesDbViewer mTableSelected;
 
     @InjectView(R.id.table_spinner)
@@ -63,7 +63,7 @@ public final class DbViewerFragment extends InjectionFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mDb = new AIMSICDDbAdapter(activity.getBaseContext());
+        mDb = new RealmHelper(activity.getBaseContext());
     }
 
     @Override

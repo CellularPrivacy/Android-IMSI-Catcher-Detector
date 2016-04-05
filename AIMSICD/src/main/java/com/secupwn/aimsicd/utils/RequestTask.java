@@ -14,7 +14,6 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
 import com.secupwn.aimsicd.service.CellTracker;
@@ -98,7 +97,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     @Inject
     private Logger log;
 
-    private AIMSICDDbAdapter mDbAdapter;
+    private RealmHelper mDbAdapter;
     private Context mAppContext;
     private char mType;
     private int mTimeOut;
@@ -118,7 +117,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         super(context);
         this.mType = type;
         this.mAppContext = context.getApplicationContext();
-        this.mDbAdapter = new AIMSICDDbAdapter(mAppContext);
+        this.mDbAdapter = new RealmHelper(mAppContext);
         this.mTimeOut = REQUEST_TIMEOUT_MAPS;
         this.mListener = listener;
     }
@@ -289,7 +288,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
      * <ol>
      * <li>Check the success for OCID data download</li>
      * <li>call the updateOpenCellID() to populate the {@link com.secupwn.aimsicd.data.model.Import Import} realm</li>
-     * <li>call the {@link AIMSICDDbAdapter#checkDBe()} to cleanup bad cells from imported data</li>
+     * <li>call the {@link RealmHelper#checkDBe()} to cleanup bad cells from imported data</li>
      * <li>present a failure/success toast message</li>
      * <li>set a shared preference to indicate that data has been downloaded:
      * {@code ocid_downloaded true}</li>
@@ -374,7 +373,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     if (lActivity != null) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
                         builder.setTitle(R.string.database_export_successful).setMessage(
-                                lActivity.getString(R.string.database_backup_successfully_saved_to) + "\n" + AIMSICDDbAdapter.mExternalFilesDirPath);
+                                lActivity.getString(R.string.database_backup_successfully_saved_to) + "\n" + RealmHelper.mExternalFilesDirPath);
                         builder.create().show();
                     }
                 } else {

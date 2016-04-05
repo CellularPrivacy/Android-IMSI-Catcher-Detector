@@ -30,7 +30,7 @@ import android.telephony.gsm.GsmCellLocation;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.ui.activities.MainActivity;
 import com.secupwn.aimsicd.utils.Cell;
@@ -122,7 +122,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private int vibrateMinThreatLevel;
     private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
 
-    private final AIMSICDDbAdapter dbHelper;
+    private final RealmHelper dbHelper;
     private Context context;
 
     public CellTracker(final Context context, SignalStrengthTracker sst) {
@@ -144,7 +144,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         PHONE_TYPE = tm.getPhoneType(); // PHONE_TYPE_GSM/CDMA/SIP/NONE
 
-        dbHelper = new AIMSICDDbAdapter(context);
+        dbHelper = new RealmHelper(context);
 
         // Remove all but the last DBi_bts entry, after:
         // (a) starting CellTracker for the first time or

@@ -31,7 +31,7 @@ import android.view.View;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
 import com.secupwn.aimsicd.data.model.BTS;
 import com.secupwn.aimsicd.data.model.Import;
@@ -101,7 +101,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
     @InjectView(R.id.mapview)
     private MapView mMap;
-    private AIMSICDDbAdapter mDbHelper;
+    private RealmHelper mDbHelper;
     private SharedPreferences prefs;
     private AimsicdService mAimsicdService;
     private boolean mBound;
@@ -133,7 +133,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
         setUpMapIfNeeded();
 
-        mDbHelper = new AIMSICDDbAdapter(getActivity());
+        mDbHelper = new RealmHelper(getActivity());
         tm = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
 
         // Bind to LocalService

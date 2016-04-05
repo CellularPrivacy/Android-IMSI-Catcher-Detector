@@ -15,7 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.data.model.LocationInfo;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.GeoLocation;
@@ -42,7 +42,7 @@ public final class LocationTracker {
     private Location lastLocation;
     private static final long GPS_MIN_UPDATE_TIME = 10000;
     private static final float GPS_MIN_UPDATE_DISTANCE = 10;
-    private AIMSICDDbAdapter mDbHelper;
+    private RealmHelper mDbHelper;
 
     public LocationTracker(AimsicdService service, LocationListener extLocationListener) {
         this.context = service;
@@ -52,7 +52,7 @@ public final class LocationTracker {
         mLocationListener = new MyLocationListener();
         prefs = context.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-        mDbHelper = new AIMSICDDbAdapter(context);
+        mDbHelper = new RealmHelper(context);
     }
 
     public void start() {

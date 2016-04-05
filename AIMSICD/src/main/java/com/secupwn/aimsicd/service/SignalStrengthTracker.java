@@ -7,7 +7,7 @@ package com.secupwn.aimsicd.service;
 
 import android.content.Context;
 
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.utils.RealmHelper;
 
 import java.util.HashMap;
 
@@ -89,13 +89,13 @@ public class SignalStrengthTracker {
     private Long lastCleanupTime;       // Timestamp for last cleanup of DB
     private HashMap<Integer, Integer> averageSignalCache = new HashMap<>();
     private long lastMovementDetected = 0l; // ??
-    private AIMSICDDbAdapter mDbHelper;
+    private RealmHelper mDbHelper;
 
     public SignalStrengthTracker(Context context) {
         lastMovementDetected = System.currentTimeMillis();
         lastRegistrationTime = System.currentTimeMillis();
         lastCleanupTime      = System.currentTimeMillis();
-        mDbHelper = new AIMSICDDbAdapter(context);
+        mDbHelper = new RealmHelper(context);
     }
 
     /**
