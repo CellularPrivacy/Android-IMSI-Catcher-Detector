@@ -19,6 +19,8 @@ import java.text.DateFormat;
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
+import static java.lang.String.valueOf;
+
 /**
  * Contains the data and definitions of all the items of the XML layout
  * <p/>
@@ -93,12 +95,12 @@ public class BaseStationAdapter extends RealmBaseAdapter<BaseTransceiverStation>
 
         public void updateDisplay(BaseTransceiverStation baseStation, int position) {
 
-            LAC.setText(String.valueOf(baseStation.getLocationAreaCode()));
-            CID.setText(String.valueOf(baseStation.getCellId()));
+            LAC.setText(valueOf(baseStation.getLocationAreaCode()));
+            CID.setText(valueOf(baseStation.getCellId()));
 
-            MCC.setText(String.valueOf(baseStation.getMobileCountryCode()));
-            MNC.setText(String.valueOf(baseStation.getMobileNetworkCode()));
-            PSC.setText(String.valueOf(baseStation.getPrimaryScramblingCode()));
+            MCC.setText(valueOf(baseStation.getMobileCountryCode()));
+            MNC.setText(valueOf(baseStation.getMobileNetworkCode()));
+            PSC.setText(valueOf(baseStation.getPrimaryScramblingCode()));
 
             // TODO: Get values from DB when available
 
@@ -111,10 +113,10 @@ public class BaseStationAdapter extends RealmBaseAdapter<BaseTransceiverStation>
             TIME_FIRST.setText(dateFormat.format(baseStation.getTimeFirst()));
             TIME_LAST.setText(dateFormat.format(baseStation.getTimeLast()));
 
-            LAT.setText(String.valueOf(baseStation.getGpsLocation().getLatitude()));
-            LON.setText(String.valueOf(baseStation.getGpsLocation().getLongitude()));
+            LAT.setText(valueOf(baseStation.getGpsLocation().getLatitude()));
+            LON.setText(valueOf(baseStation.getGpsLocation().getLongitude()));
 
-            RecordId.setText(String.valueOf(position));
+            RecordId.setText(valueOf(position));
         }
     }
 }

@@ -81,6 +81,7 @@ public final class DbViewerFragment extends InjectionFragment {
                 }
                 mTableSelected = (StatesDbViewer) selectedItem;
 
+                realm.refresh();
                 switch (position) {
                     case 0:
                         setListAdapter(new BaseStationAdapter(getActivity(), realm.allObjects(BaseTransceiverStation.class), true));

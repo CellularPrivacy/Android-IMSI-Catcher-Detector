@@ -21,6 +21,8 @@ import java.util.Date;
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
+import static java.lang.String.valueOf;
+
 
 public class SmsDataAdapter extends RealmBaseAdapter<SmsData> {
     
@@ -56,16 +58,16 @@ public class SmsDataAdapter extends RealmBaseAdapter<SmsData> {
         holder.smsd_smstype.setText(getItem(position).getType());
         holder.smsd_number.setText(getItem(position).getSenderNumber());
         holder.smsd_data.setText(getItem(position).getMessage());
-        holder.smsd_lac.setText(SV(getItem(position).getLocationAreaCode()));
-        holder.smsd_cid.setText(SV(getItem(position).getCellId()));
+        holder.smsd_lac.setText(valueOf(getItem(position).getLocationAreaCode()));
+        holder.smsd_cid.setText(valueOf(getItem(position).getCellId()));
         holder.smsd_rat.setText(getItem(position).getRadioAccessTechnology());
         String isRoaming = "false";
         if (getItem(position).isRoaming()) {
             isRoaming = "true";
         }
         holder.smsd_roam.setText(isRoaming);
-        holder.smsd_lat.setText(String.valueOf(getItem(position).getGpsLocation().getLatitude()));
-        holder.smsd_lon.setText(String.valueOf(getItem(position).getGpsLocation().getLongitude()));
+        holder.smsd_lat.setText(valueOf(getItem(position).getGpsLocation().getLatitude()));
+        holder.smsd_lon.setText(valueOf(getItem(position).getGpsLocation().getLongitude()));
 
         return convertView;
     }
@@ -74,9 +76,5 @@ public class SmsDataAdapter extends RealmBaseAdapter<SmsData> {
 
         TextView smsd_timestamp, smsd_smstype, smsd_number, smsd_data,
                 smsd_lac, smsd_cid, smsd_rat, smsd_roam, smsd_lat, smsd_lon;
-    }
-
-    public String SV(int value) {
-        return String.valueOf(value);
     }
 }

@@ -636,7 +636,8 @@ public final class RealmHelper {
                     .equalTo("baseStation.cellId", cell.getCellId())
                     .findAll();
 
-            for (Measure measure : all) {
+            for (int i = 0; i < all.size(); i++) {
+                Measure measure = all.get(i);
 
                 if (Double.doubleToRawLongBits(cell.getLat()) != 0
                         && Double.doubleToRawLongBits(cell.getLon()) != 0) {

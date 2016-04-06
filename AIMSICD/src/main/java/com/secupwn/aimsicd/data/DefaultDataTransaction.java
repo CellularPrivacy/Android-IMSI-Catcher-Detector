@@ -10,7 +10,8 @@ public class DefaultDataTransaction implements Realm.Transaction {
     @Override
     public void execute(Realm realm) {
 
-        if (realm.where(SmsDetectionString.class).count() == 0) {
+        long count = realm.where(SmsDetectionString.class).count();
+        if (count == 0) {
             SmsDetectionString smsDetectionString1 = realm.createObject(SmsDetectionString.class);
             smsDetectionString1.setDetectionString("Received short message type 0");
             smsDetectionString1.setSmsType("TYPE0");
@@ -252,17 +253,26 @@ public class DefaultDataTransaction implements Realm.Transaction {
 
     }
 
-    private void storeDefaultLocation(Realm realm, int mcc, String country, double lat, double lon) {
+    private void storeDefaultLocation(Realm realm, int mobileCountryCode, String country, double latitude, double longitude) {
 
-        GpsLocation gpsLocation = new GpsLocation();
-        gpsLocation.setLatitude(lat);
-        gpsLocation.setLongitude(lon);
+        DefaultLocation location = realm.where(DefaultLocation.class)
+                .equalTo("mobileCountryCode", mobileCountryCode)
+                .equalTo("country", country)
+                .findFirst();
 
-        DefaultLocation defaultLocation = new DefaultLocation();
-        defaultLocation.setGpsLocation(gpsLocation);
-        defaultLocation.setCountry(country);
-        defaultLocation.setMobileCountryCode(mcc);
+        if(location == null) {
+            location = realm.createObject(DefaultLocation.class);
+        }
 
-        realm.copyToRealm(defaultLocation);
+        location.setCountry(country);
+        location.setMobileCountryCode(mobileCountryCode);
+
+        if(location.getGpsLocation() == null) {
+            location.setGpsLocation(realm.createObject(GpsLocation.class));
+        }
+
+        location.getGpsLocation().setLatitude(latitude);
+        location.getGpsLocation().setLongitude(longitude);
+
     }
 }

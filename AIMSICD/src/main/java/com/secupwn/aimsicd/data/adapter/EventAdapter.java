@@ -14,6 +14,10 @@ import java.text.DateFormat;
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static java.lang.String.valueOf;
+
 public class EventAdapter extends RealmBaseAdapter<Event> {
 
     public EventAdapter(Context context, RealmResults<Event> realmResults, boolean automaticUpdate) {
@@ -75,21 +79,21 @@ public class EventAdapter extends RealmBaseAdapter<Event> {
 
         public void updateDisplay(Event event, int position) {
             mtime.setText(DateFormat.getDateTimeInstance().format(event.getTimestamp()));          // need fix ?
-            mLAC.setText(event.getLocationAreaCode());
-            mCID.setText(event.getCellId());
-            mPSC.setText(event.getPrimaryScramblingCode());
-            mgpsd_lat.setText(String.valueOf(event.getGpsLocation().getLatitude()));
-            mgpsd_lon.setText(String.valueOf(event.getGpsLocation().getLongitude()));
-            mgpsd_accu.setText(String.valueOf(event.getGpsLocation().getAccuracy()));
-            mDF_id.setText(String.valueOf(event.getDfId()));
+            mLAC.setText(valueOf(event.getLocationAreaCode()));
+            mCID.setText(valueOf(event.getCellId()));
+            mPSC.setText(valueOf(event.getPrimaryScramblingCode()));
+            mgpsd_lat.setText(valueOf(event.getGpsLocation().getLatitude()));
+            mgpsd_lon.setText(valueOf(event.getGpsLocation().getLongitude()));
+            mgpsd_accu.setText(valueOf(event.getGpsLocation().getAccuracy()));
+            mDF_id.setText(valueOf(event.getDfId()));
             mDF_desc.setText(event.getDfDescription());
 
-            mRecordId.setText(String.valueOf(position));
+            mRecordId.setText(valueOf(position));
             if (event.isFakeData()) {
                 mExample.setText(mRootView.getContext().getString(R.string.example));
-                mExample.setVisibility(View.VISIBLE);
+                mExample.setVisibility(VISIBLE);
             } else {
-                mExample.setVisibility(View.GONE);
+                mExample.setVisibility(GONE);
             }
         }
     }

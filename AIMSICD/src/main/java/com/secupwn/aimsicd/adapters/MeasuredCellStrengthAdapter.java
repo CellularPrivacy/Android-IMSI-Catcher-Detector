@@ -19,6 +19,8 @@ import java.text.DateFormat;
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
+import static java.lang.String.valueOf;
+
 /**
  *
  * Inflater class used in DB viewer (for Measured cell strength measurements)
@@ -68,8 +70,8 @@ public class MeasuredCellStrengthAdapter extends RealmBaseAdapter<Measure> {
         }
 
         public void updateDisplay(Measure item) {
-            cid.setText(item.getBaseStation().getCellId());
-            rss.setText(item.getRxSignal());
+            cid.setText(valueOf(item.getBaseStation().getCellId()));
+            rss.setText(valueOf(item.getRxSignal()));
             time.setText(DateFormat.getDateTimeInstance().format(item.getTime()));
         }
     }

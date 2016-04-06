@@ -17,6 +17,8 @@ import com.secupwn.aimsicd.data.model.DefaultLocation;
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
+import static java.lang.String.valueOf;
+
 public class DefaultLocationAdapter extends RealmBaseAdapter<DefaultLocation> {
 
     public DefaultLocationAdapter(Context context, RealmResults<DefaultLocation> realmResults, boolean automaticUpdate) {
@@ -64,10 +66,10 @@ public class DefaultLocationAdapter extends RealmBaseAdapter<DefaultLocation> {
 
         public void updateDisplay(DefaultLocation defaultLocation, int position) {
             mCountry.setText(defaultLocation.getCountry());
-            mMcc.setText(defaultLocation.getMobileCountryCode());
-            mLat.setText(String.valueOf(defaultLocation.getGpsLocation().getLatitude()));
-            mLng.setText(String.valueOf(defaultLocation.getGpsLocation().getLongitude()));
-            mRecordId.setText(position);
+            mMcc.setText(valueOf(defaultLocation.getMobileCountryCode()));
+            mLat.setText(valueOf(defaultLocation.getGpsLocation().getLatitude()));
+            mLng.setText(valueOf(defaultLocation.getGpsLocation().getLongitude()));
+            mRecordId.setText(valueOf(position));
         }
     }
 }

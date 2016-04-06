@@ -43,6 +43,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
     @Inject
     private Logger log;
 
+    Realm realm;
     /**
      * Maps between an activity class name and the list of currently running
      * AsyncTasks that were spawned while it was active.
@@ -65,17 +66,26 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
                 .build();
 
         Realm.setDefaultConfiguration(realmConfiguration);
+        realm = Realm.getDefaultInstance();
 
-        ensureDefaultData();
+        realm.executeTransactionAsync(
+                new DefaultDataTransaction(),
+                new Realm.Transaction.OnSuccess() {
+                    @Override
+                    public void onSuccess() {
+                        log.debug("Loading default data successful");
+                    }
+                },
+                new Realm.Transaction.OnError() {
+                    @Override
+                    public void onError(Throwable error) {
+                        log.error("Error loading default data", error);
+                    }
+                }
+        );
 
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
-    }
-
-    private void ensureDefaultData() {
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(new DefaultDataTransaction());
-        realm.close();
     }
 
     public void removeTask(BaseAsyncTask<?, ?, ?> pTask) {
