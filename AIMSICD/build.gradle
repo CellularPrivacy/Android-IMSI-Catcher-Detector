@@ -12,7 +12,7 @@ def isCi = "true".equals(System.getenv("CI"))
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
         applicationId "com.SecUpwN.AIMSICD"
