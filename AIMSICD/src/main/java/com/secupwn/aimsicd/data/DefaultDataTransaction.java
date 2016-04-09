@@ -260,19 +260,18 @@ public class DefaultDataTransaction implements Realm.Transaction {
                 .equalTo("country", country)
                 .findFirst();
 
-        if(location == null) {
+        if (location == null) {
             location = realm.createObject(DefaultLocation.class);
         }
 
         location.setCountry(country);
         location.setMobileCountryCode(mobileCountryCode);
 
-        if(location.getGpsLocation() == null) {
+        if (location.getGpsLocation() == null) {
             location.setGpsLocation(realm.createObject(GpsLocation.class));
         }
 
         location.getGpsLocation().setLatitude(latitude);
         location.getGpsLocation().setLongitude(longitude);
-
     }
 }
