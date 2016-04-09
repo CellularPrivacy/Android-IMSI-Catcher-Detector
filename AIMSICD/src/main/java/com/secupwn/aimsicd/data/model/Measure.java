@@ -14,7 +14,7 @@ public class Measure extends RealmObject {
     private BaseTransceiverStation baseStation;
     @Required
     private Date time;
-    private GpsLocation gpsd;
+    private GpsLocation gpsLocation;
     private int rxSignal;
     @Required
     private String radioAccessTechnology;
@@ -24,7 +24,7 @@ public class Measure extends RealmObject {
 
     @Override
     public void removeFromRealm() {
-        getGpsd().removeFromRealm();
+        getGpsLocation().removeFromRealm();
         super.removeFromRealm();
     }
 }

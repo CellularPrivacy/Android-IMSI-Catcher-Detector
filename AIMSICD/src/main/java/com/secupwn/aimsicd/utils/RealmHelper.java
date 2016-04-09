@@ -203,12 +203,12 @@ public final class RealmHelper {
                                 String.valueOf(measure.getBaseStation().getMobileNetworkCode()),
                                 String.valueOf(measure.getBaseStation().getLocationAreaCode()),
                                 String.valueOf(measure.getBaseStation().getCellId()),
-                                String.valueOf(measure.getGpsd().getLongitude()),
-                                String.valueOf(measure.getGpsd().getLatitude()),
+                                String.valueOf(measure.getGpsLocation().getLongitude()),
+                                String.valueOf(measure.getGpsLocation().getLatitude()),
                                 String.valueOf(measure.getRxSignal()),
                                 String.valueOf(measure.getTime().getTime()),
                                 //c.getString(c.getColumnIndex("RAT")),                     // OCID: "act" TODO
-                                String.valueOf(measure.getGpsd().getAccuracy())
+                                String.valueOf(measure.getGpsLocation().getAccuracy())
                         );
                     }
                     csvWrite.close();
@@ -601,7 +601,7 @@ public final class RealmHelper {
             gpsLocation.setLatitude(cell.getLat());
             gpsLocation.setLongitude(cell.getLon());
             gpsLocation.setAccuracy(cell.getAccuracy());
-            measure.setGpsd(gpsLocation);
+            measure.setGpsLocation(gpsLocation);
 
             measure.setRxSignal(cell.getDbm());
             measure.setRadioAccessTechnology(String.valueOf(cell.getRat()));
@@ -625,12 +625,12 @@ public final class RealmHelper {
 
                 if (Double.doubleToRawLongBits(cell.getLat()) != 0
                         && Double.doubleToRawLongBits(cell.getLon()) != 0) {
-                    measure.getGpsd().setLatitude(cell.getLat());
-                    measure.getGpsd().setLongitude(cell.getLon());
+                    measure.getGpsLocation().setLatitude(cell.getLat());
+                    measure.getGpsLocation().setLongitude(cell.getLon());
                 }
                 if (Double.doubleToRawLongBits(cell.getAccuracy()) != 0
                         && cell.getAccuracy() > 0) {
-                    measure.getGpsd().setAccuracy(cell.getAccuracy());
+                    measure.getGpsLocation().setAccuracy(cell.getAccuracy());
                 }
 
                 if (cell.getDbm() > 0) {

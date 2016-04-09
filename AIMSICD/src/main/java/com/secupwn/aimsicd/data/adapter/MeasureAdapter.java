@@ -106,9 +106,9 @@ public class MeasureAdapter extends RealmBaseAdapter<Measure> {
 
             bts_id.setText(valueOf(item.getBaseStation().getCellId()));
             time.setText(DateFormat.getDateTimeInstance().format(item.getTime()));
-            gpsd_lat.setText(valueOf(item.getGpsd().getLatitude()));
-            gpsd_lon.setText(valueOf(item.getGpsd().getLongitude()));
-            gpsd_accu.setText(valueOf(item.getGpsd().getAccuracy()));
+            gpsd_lat.setText(valueOf(item.getGpsLocation().getLatitude()));
+            gpsd_lon.setText(valueOf(item.getGpsLocation().getLongitude()));
+            gpsd_accu.setText(valueOf(item.getGpsLocation().getAccuracy()));
             rx_signal.setText(valueOf(item.getRxSignal()));
 //            rx_stype.setText(item.getRx_stype());
             // TODO: 2016-02-27 Someone has got to unify RAT as either an int or human-string
