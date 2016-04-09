@@ -33,11 +33,6 @@ import io.realm.RealmResults;
 /**
  * This class handles all the AMISICD DataBase maintenance operations, like
  * creation, population, updates, backup, restore and various selections.
- * <p/>
- * See:
- * <p/>
- * [1] http://stackoverflow.com/questions/1122679/querying-and-working-with-cursors-in-sqlite-on-android
- * [2] http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#rawQuery%28java.lang.String,%20java.lang.String%5B%5D%29
  */
 public final class RealmHelper {
     private final Logger log = AndroidLogger.forClass(RealmHelper.class);
@@ -63,10 +58,6 @@ public final class RealmHelper {
                 .notEqualTo("submitted", true)
                 .findAll();
     }
-
-    // ====================================================================
-    //      Various DB operations
-    // ====================================================================
 
     /**
      * This is using the LAC found by API and comparing to LAC found from a
@@ -111,9 +102,10 @@ public final class RealmHelper {
         return new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                RealmResults<Measure> all = realm.where(Measure.class).findAll();
+                RealmResults<Measure> measures = realm.where(Measure.class).findAll();
 
-                for (Measure measure : all) {
+                for (int i = 0; i < measures.size(); i++) {
+                    Measure measure = measures.get(i);
                     measure.setSubmitted(true);
                 }
             }
@@ -142,10 +134,8 @@ public final class RealmHelper {
     }
 
     /**
-     * Remove all but the last row, unless its CID is invalid.
-     * <p/>
-     * This will not work if: PRAGMA foreign_key=ON, then we need to
-     * delete the corresponding DBi_measure entries before / as well.
+     * Remove all {@link BaseTransceiverStation BTS} with invalid {@link BaseTransceiverStation#cellId CID}
+     * @return The Transaction to execute
      */
     public Realm.Transaction cleanseCellTable() {
         return new Realm.Transaction() {
@@ -350,8 +340,7 @@ public final class RealmHelper {
                                 Integer.parseInt(range),    // avg_range [m]
                                 Integer.parseInt(samples),  // samples
                                 new Date(),                 // time_first  (not in OCID)
-                                new Date(),                 // time_last   (not in OCID)
-                                null                           // TODO: rej_cause , set default 0
+                                new Date()                 // time_last   (not in OCID)
                         );
                         realm.executeTransaction(transaction);
                     }
@@ -400,12 +389,9 @@ public final class RealmHelper {
 //        int tf_settings = 30;         // [days] Minimum acceptable number of days since "time_first" seen.
                 int min_gps_precision = 50;   // [m]    Minimum acceptable GPS accuracy in meters.
 
-                String sqlQuery;                // SQL Query string
-
                 //=============================================================
                 //===  DELETE bad cells from BTS data
                 //=============================================================
-
 
                 log.debug("CheckDBe() Attempting to delete bad import data from Imports database...");
 
@@ -508,8 +494,7 @@ public final class RealmHelper {
             final int avg_signal,
             final int samples,
             final Date time_first,
-            final Date time_last,
-            final Integer rej_cause
+            final Date time_last
     ) {
         return new Realm.Transaction() {
             @Override
@@ -538,7 +523,6 @@ public final class RealmHelper {
                     anImport.setSamples(samples);
                     anImport.setTimeFirst(time_first);
                     anImport.setTimeLast(time_last);
-                    anImport.setRejCause(rej_cause);
 
                 }
             }

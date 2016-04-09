@@ -33,8 +33,6 @@ public class Event extends RealmObject {
     private int dfId;
     private String dfDescription;
 
-    private boolean fakeData;
-
     @Override
     public void removeFromRealm() {
         gpsLocation.removeFromRealm();

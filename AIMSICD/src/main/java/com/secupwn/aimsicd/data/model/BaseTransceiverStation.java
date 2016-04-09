@@ -15,9 +15,6 @@ public class BaseTransceiverStation extends RealmObject {
     private int locationAreaCode;
     private int cellId;
     private int primaryScramblingCode;
-    private int t3212;
-    private int a5x;
-    private int stId;
     private Date timeFirst;
     private Date timeLast;
     private GpsLocation gpsLocation;

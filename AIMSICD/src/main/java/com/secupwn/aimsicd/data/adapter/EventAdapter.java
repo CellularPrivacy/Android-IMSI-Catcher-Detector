@@ -14,8 +14,6 @@ import java.text.DateFormat;
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 import static java.lang.String.valueOf;
 
 public class EventAdapter extends RealmBaseAdapter<Event> {
@@ -89,12 +87,6 @@ public class EventAdapter extends RealmBaseAdapter<Event> {
             mDF_desc.setText(event.getDfDescription());
 
             mRecordId.setText(valueOf(position));
-            if (event.isFakeData()) {
-                mExample.setText(mRootView.getContext().getString(R.string.example));
-                mExample.setVisibility(VISIBLE);
-            } else {
-                mExample.setVisibility(GONE);
-            }
         }
     }
 }
