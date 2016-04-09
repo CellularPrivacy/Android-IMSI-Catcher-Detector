@@ -54,7 +54,6 @@ public class EventAdapter extends RealmBaseAdapter<Event> {
         private final TextView mDF_desc;
 
         private final TextView mRecordId;
-        private final TextView mExample;
 
         ViewHolder(View rootView) {
             mRootView = rootView;
@@ -70,7 +69,6 @@ public class EventAdapter extends RealmBaseAdapter<Event> {
             mDF_desc =      (TextView) mRootView.findViewById(R.id.DF_desc);
 
             mRecordId =     (TextView) mRootView.findViewById(R.id.record_id);
-            mExample =      (TextView) mRootView.findViewById(R.id.example);
 
             rootView.setTag(this);
         }

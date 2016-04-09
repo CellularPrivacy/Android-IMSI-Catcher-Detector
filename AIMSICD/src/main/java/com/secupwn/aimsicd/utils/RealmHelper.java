@@ -207,7 +207,6 @@ public final class RealmHelper {
                                 String.valueOf(measure.getGpsLocation().getLatitude()),
                                 String.valueOf(measure.getRxSignal()),
                                 String.valueOf(measure.getTime().getTime()),
-                                //c.getString(c.getColumnIndex("RAT")),                     // OCID: "act" TODO
                                 String.valueOf(measure.getGpsLocation().getAccuracy())
                         );
                     }

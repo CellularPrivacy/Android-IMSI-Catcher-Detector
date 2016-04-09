@@ -110,17 +110,7 @@ public class MeasureAdapter extends RealmBaseAdapter<Measure> {
             gpsd_lon.setText(valueOf(item.getGpsLocation().getLongitude()));
             gpsd_accu.setText(valueOf(item.getGpsLocation().getAccuracy()));
             rx_signal.setText(valueOf(item.getRxSignal()));
-//            rx_stype.setText(item.getRx_stype());
-            // TODO: 2016-02-27 Someone has got to unify RAT as either an int or human-string
-            // This converts a string of a number to an integer and then gets the human-string
-            // From the number.
             rat.setText(item.getRadioAccessTechnology());
-//            BCCH.setText(item.getBCCH());
-//            TMSI.setText(item.getTMSI());
-//            TA.setText(item.getTA());
-//            PD.setText(item.getPD());
-//            BER.setText(item.getBER());
-//            AvgEcNo.setText(item.getAvgEcNo());
             isSubmitted.setText(valueOf(item.isSubmitted()));
             isNeighbour.setText(valueOf(item.isNeighbour()));
 

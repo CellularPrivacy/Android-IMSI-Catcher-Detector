@@ -102,13 +102,6 @@ public class BaseStationAdapter extends RealmBaseAdapter<BaseTransceiverStation>
             MNC.setText(valueOf(baseStation.getMobileNetworkCode()));
             PSC.setText(valueOf(baseStation.getPrimaryScramblingCode()));
 
-            // TODO: Get values from DB when available
-
-            T3212.setText(R.string.n_a);   //T3212.setText(baseStation.getT3212());
-            A5X.setText(R.string.n_a);     //A5X.setText(baseStation.getA5x());
-            ST_ID.setText(R.string.n_a);   //ST_ID.setText(baseStation.getStId());
-
-
             DateFormat dateFormat = DateFormat.getDateTimeInstance();
             TIME_FIRST.setText(dateFormat.format(baseStation.getTimeFirst()));
             TIME_LAST.setText(dateFormat.format(baseStation.getTimeLast()));
