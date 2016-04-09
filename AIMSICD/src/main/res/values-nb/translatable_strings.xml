@@ -10,7 +10,7 @@
     <string name="text_disagree">Jeg er uenig</string>
 
     <string name="disclaimer_title">VIKTIG</string>
-    <string name="disclaimer">"Ved å bruke AIMSICD har du forstått og godtatt at AIMSICD er en experimentell og informativ Android applikasjon som kan feile i å oppdage sporing og overvåkning av flere årsaker. Du er også klar over at den kan bli lurt og slått av årsaker ukjent for utviklerne. Du forstår og at utviklerne og selskap tilknyttet denne gratisappen ikke kan holdes ansvarlig for resultater og konsekvenser vedrørende bruken av denne applikasjonen. "</string>
+    <string name="disclaimer">"Ved å bruke AIMSICD har du forstått og godtatt at AIMSICD er en experimentell og informativ Android applikasjon som kan feile i å oppdage sporing og overvåkning av flere årsaker. Du er også klar over at den kan bli lurt og slått av årsaker ukjent for utviklerne. Du forstår og at utviklerne og selskap tilknyttet denne gratisappen ikke kan holdes ansvarlig for resultater og konsekvenser vedrørende bruken av denne applikasjonen.  UTVIKLINGS-STADIE: ALPHA! "</string>
 
     <string name="toggle_attack_detection">Styr Angrepsoppdaging</string>
     <string name="toggle_cell_tracking">Styr Cellesporing</string>
