@@ -5,7 +5,6 @@
  */
 package com.secupwn.aimsicd;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Vibrator;

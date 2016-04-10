@@ -679,11 +679,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *    Issues:
      *
      *    [ ] We see that "Connection" items are messed up. What is the purpose of these?
-     *
-     *    $ sqlite3.exe -header -csv aimsicd.db 'select * from locationinfo;'
-     *      _id,Lac,CellID,Net,Lat,Lng,Signal,Connection,Timestamp
-     *      1,10401,6828111,10, 54.6787,25.2869, 24, "[10401,6828111,126]No|Di|HSPA|", "2015-01-21 20:45:10"
-     *
      *    [ ] TODO: CDMA has to extract the MCC and MNC using something like:
      *
      *      String mccMnc = phoneMgr.getNetworkOperator();
@@ -777,11 +772,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
          *              a good idea, by trial and error.
          *
          *              See note in : SignalStrengthTracker.java
-         *
-         *  Notes:
-         *
-         *
-         *
          */
         public void onSignalStrengthsChanged(SignalStrength signalStrength) {
             // Update Signal Strength
@@ -859,30 +849,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     };
 
     /**
-     * Description:    Add entries to the "DBi_measure" DB table
-     *
-     * Issues:
-     *                  [ ]
-     *
-     * Notes:           (a)
-     *
-     *
-     * TODO:  Remove OLD notes below, once we have new ones relevant to our new table
-     *
-     *  From "locationinfo":
-     *
-     *      $ sqlite3.exe -header aimsicd.db 'select * from locationinfo;'
-     *      _id|Lac|CellID|Net|Lat|Lng|Signal|Connection|Timestamp
-     *      1|10401|6828xxx|10|54.67874392|25.28693531|24|[10401,6828320,126]No|Di|HSPA||2015-01-21 20:45:10
-     *
-     *  From "cellinfo":
-     *
-     *      $ sqlite3.exe -header aimsicd.db 'select * from cellinfo;'
-     *      _id|Lac|CellID|Net|Lat|Lng|Signal|Mcc|Mnc|Accuracy|Speed|Direction|NetworkType|MeasurementTaken|OCID_SUBMITTED|Timestamp
-     *      1|10401|6828xxx|10|54.67874392|25.28693531|24|246|2|69.0|0.0|0.0|HSPA|82964|0|2015-01-21 20:45:10
-     *
-     *  Issues:
-     *
+     * Add entries to the {@link com.secupwn.aimsicd.data.model.Measure Measure} realm
      */
     public void onLocationChanged(Location loc) {
         // TODO: See issue #555 (DeviceApi17.java is using API 18 CellInfoWcdma calls.
