@@ -106,6 +106,7 @@ dependencies {
 
 apply from: "signing.gradle"
 apply plugin: "io.freefair.android-checkstyle"
+apply plugin: "io.freefair.android-javadoc-jar"
 
 checkstyle {
     toolVersion = "6.15"
