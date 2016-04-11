@@ -12,10 +12,8 @@
     <string name="disclaimer_title">ВІДМОВА ВІД ВІДПОВІДАЛЬНОСТІ</string>
     <string name="toggle_attack_detection">Перемикач виявлення атаки</string>
     <string name="toggle_cell_tracking">Перемикач слідкування за стільниками</string>
-    <string name="backup_database">Створити резервну копію БД</string>
     <string name="clear_database">Очистити/скинути БД</string>
     <string name="clear_database_question">Всі дані будуть стерті.\nПродовжити?</string>
-    <string name="restore_database">Відновити базу даних</string>
     <string name="preferences">Параметри</string>
     <string name="press_once_again_to_exit">Натисніть ще раз для виходу.</string>
     <string name="cell_lookup">Всі поточні відомості про стільник</string>
@@ -275,11 +273,7 @@
     <string name="typewap_data">Виявлено WAP Push SMS повідомлення!\nПодробиці: Дивіться в переглядачі бази даних.</string>
 
 
-    <string name="help_settings_backup_db">Резервна копія бази даних на SD-картку.</string>
-    <string name="help_settings_restore_db">Відновити резервну копію бази даних з SD-картки.</string>
     <string name="help_settings_reset_db">Очистити чи скинути всі чи деякі таблиці бази даних.</string>
-    <string name="help_settings_export_db_to_csv">Експортувати базу даних до CSV файлу.</string>
-    <string name="help_settings_import_db_from_csv">Імпортувати базу даних з CSV файлів.</string>
 
     <string name="help_app_add_get_ocid_api_key">Отримати ключ API для використання бази даних OpenCellID, можливості завантажувати та вивантажувати дані…</string>
     <string name="help_app_about">Піктограми стану та пояснення проекту.</string>

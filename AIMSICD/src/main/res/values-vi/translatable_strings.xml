@@ -12,10 +12,8 @@
     <string name="disclaimer_title">MIỄN TRỪ TRÁCH NHIỆM</string>
     <string name="toggle_attack_detection">Bật tắt phát hiện tấn công</string>
     <string name="toggle_cell_tracking">Bật tắt theo dõi máy di động</string>
-    <string name="backup_database">Sao lưu CSDL</string>
     <string name="clear_database">Xoá/cài lại CSDL</string>
     <string name="clear_database_question">Tất cả dữ liệu sẽ bị xóa.\nBạn có chắc không?</string>
-    <string name="restore_database">Khôi phục CSDL</string>
     <string name="preferences">Tuỳ chỉnh</string>
     <string name="press_once_again_to_exit">Nhấn lại để thoát.</string>
     <string name="cell_lookup">Tất cả chi tiết về máy di động hiện thời</string>
@@ -292,11 +290,7 @@
     <string name="help_tracking_toggle_cell_tracking">Bắt đầu theo dõi các máy di động nhằm hiển thị trên trình xem bản đồ ăng-ten và sau đó có thể sẽ tải lên OpenCellID.</string>
 
     <string name="help_settings_preferences">Các cài đặt AIMSICD như là quy tắc bảo vệ, số lần thăm dò và hành vi dịch vụ.</string>
-    <string name="help_settings_backup_db">Sao lưu CSDL SQLite3 vào thẻ SD.</string>
-    <string name="help_settings_restore_db">Khôi phục CSDL SQLite3 từ thẻ SD.</string>
     <string name="help_settings_reset_db">Xoá và cài lại tất cả hoặc các bảng CSDL được chỉ định.</string>
-    <string name="help_settings_export_db_to_csv">Xuất các bảng CSDL vào những tập tin CSV riêng lẻ.</string>
-    <string name="help_settings_import_db_from_csv">Nhập các bảng CSDL từ những tập tin CSV riêng lẻ.</string>
 
     <string name="help_app_add_get_ocid_api_key">Nhận khóa API để sử dụng CSDL OpenCellID khi tải dữ liệu…</string>
     <string name="help_app_about">Đã giải thích biểu tượng trạng thái và dự án.</string>

@@ -20,10 +20,8 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Démarrer/arrêter la détection des attaques</string>
     <string name="toggle_cell_tracking">Commencer à localiser les cellules</string>
-    <string name="backup_database">Sauvegarder la Base de Données</string>
     <string name="clear_database">Effacer/Réinitialiser la Base De Données</string>
     <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr ?</string>
-    <string name="restore_database">Restaurer la Base de Données</string>
     <string name="preferences">Préférences</string>
     <string name="press_once_again_to_exit">Appuyez une seconde fois pour quitter.</string>
     <string name="cell_lookup">Détails sur la/les cellule(s) actuelles</string>
@@ -315,11 +313,7 @@
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">paramètres AIMSICD : règles de protection, temps de requètes et comportement du réseau.</string>
-    <string name="help_settings_backup_db">Sauvegarder la base de donnée SQLite3 vers la Carte-SD.</string>
-    <string name="help_settings_restore_db">Restaurer la base de donnée SQLite3 depuis la Carte-SD.</string>
     <string name="help_settings_reset_db">Effacer les tables sélectionnées de la Base de Données.</string>
-    <string name="help_settings_export_db_to_csv">Exporter les tables de la Base de Donnée vers différent fichiers CSV.</string>
-    <string name="help_settings_import_db_from_csv">Importer une table de la Base de Donnée depuis un fichier CSV.</string>
 
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Obtenir une clé pour utiliser la base de donnée d\'OpenCellID pour uploader vos données…</string>

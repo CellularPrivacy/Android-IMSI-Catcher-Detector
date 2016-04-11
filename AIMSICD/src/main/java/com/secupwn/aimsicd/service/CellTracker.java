@@ -275,7 +275,6 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         final String KEY_UI_ICONS = context.getString(R.string.pref_ui_icons_key);
         final String FEMTO_DETECTION =  context.getString(R.string.pref_femto_detection_key);
         final String REFRESH = context.getString(R.string.pref_refresh_key);
-        final String DB_VERSION = context.getString(R.string.pref_last_database_backup_version);
         final String OCID_KEY = context.getString(R.string.pref_ocid_key);
         final String VIBRATE_ENABLE = context.getString(R.string.pref_notification_vibrate_enable);
         final String VIBRATE_MIN_LEVEL = context.getString(R.string.pref_notification_vibrate_min_level);

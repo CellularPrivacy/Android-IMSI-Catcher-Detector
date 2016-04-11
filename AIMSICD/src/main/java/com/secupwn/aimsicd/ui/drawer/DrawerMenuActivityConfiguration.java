@@ -91,8 +91,6 @@ public class DrawerMenuActivityConfiguration {
 
             //Section Settings
             menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_DATABASE_SETTINGS, mContext.getString(R.string.database_settings)));
-            menu.add(DrawerMenuItem.create(DrawerMenu.ID.DATABASE_SETTINGS.BACKUP_DB, mContext.getString(R.string.backup_database), R.drawable.ic_action_import_export, false));   // Backup Database
-            menu.add(DrawerMenuItem.create(DrawerMenu.ID.DATABASE_SETTINGS.RESTORE_DB, mContext.getString(R.string.restore_database), R.drawable.ic_action_import_export, false));  // Restore Database
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.DATABASE_SETTINGS.RESET_DB, mContext.getString(R.string.clear_database), R.drawable.ic_action_delete_database, false));  // Reset Database
 
             //Section Application

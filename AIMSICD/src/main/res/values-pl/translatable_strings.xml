@@ -20,10 +20,8 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Wykrywanie przełącz Atak</string>
     <string name="toggle_cell_tracking">Przełącz Śledzenie komórki</string>
-    <string name="backup_database">Kopia zapasowa bazy danych</string>
     <string name="clear_database">Wyczyść bazę danych</string>
     <string name="clear_database_question">Wszystkie dane zostaną skasowane.\nNa pewno?</string>
-    <string name="restore_database">Odzyskaj bazę danych</string>
     <string name="preferences">Ustawienia</string>
     <string name="press_once_again_to_exit">Wciśnij ponownie by wyjść.</string>
     <string name="cell_lookup">Wszystkie informacje o obecnej komórce</string>
@@ -316,11 +314,7 @@
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">Ustawienia AIMSICD, czas odświeżania i zachowanie serwisów.</string>
-    <string name="help_settings_backup_db">Utwórz kopię zapasową bazy danych na karcie SD.</string>
-    <string name="help_settings_restore_db">Wczytaj bazę danych z karty.</string>
     <string name="help_settings_reset_db">Wyczyść wszystkie tabele bazy danych.</string>
-    <string name="help_settings_export_db_to_csv">Eksport z bazy danych do plików CSV.</string>
-    <string name="help_settings_import_db_from_csv">Importuj do bazy danych z plików CSV.</string>
 
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Uzyskaj klucz API do OpenCellID by pobierać i wysyłać dane…</string>

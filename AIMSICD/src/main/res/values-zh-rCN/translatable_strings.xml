@@ -11,10 +11,8 @@
     <string name="disclaimer_title">免责声明</string>
     <string name="toggle_attack_detection">切换攻击检测</string>
     <string name="toggle_cell_tracking">切换蜂窝跟踪</string>
-    <string name="backup_database">备份数据库</string>
     <string name="clear_database">清除/重置数据库</string>
     <string name="clear_database_question">所有数据将被删除。\n您确定吗？</string>
-    <string name="restore_database">恢复数据库</string>
     <string name="preferences">首选项</string>
     <string name="press_once_again_to_exit">再次按下将退出。</string>
     <string name="cell_lookup">当前所有蜂窝详细信息</string>
@@ -296,12 +294,8 @@
     <string name="help_app_download_local_bts">下载 OpenCellID 数据库。</string>
     <string name="help_app_about">状态图标和项目说明。</string>
     <string name="help_app_add_get_ocid_api_key">获取一个 API 密钥以使用 OpenCellID 数据库，包括上传和下载数据…</string>
-    <string name="help_settings_import_db_from_csv">从一个 CSV 文件导入数据表。</string>
 
-    <string name="help_settings_export_db_to_csv">导出数据表到单个 CSV 文件。</string>
     <string name="help_settings_reset_db">清除并重置所有或特定数据表。</string>
-    <string name="help_settings_restore_db">从 SD卡 恢复 SQLite3 数据库。</string>
-    <string name="help_settings_backup_db">备份 SQLite3 数据库到 SD卡。</string>
     <string name="help_settings_preferences">AIMSICD 设置，诸如保护规则，轮询时间和服务行为。</string>
     <string name="help_tracking_toggle_cell_tracking">开始跟踪蜂窝信息以显示在天线地图查看器上，以及可选上传到 OpenCellID。</string>
 

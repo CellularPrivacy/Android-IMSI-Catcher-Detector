@@ -14,10 +14,8 @@
 
     <string name="toggle_attack_detection">Kyq diktimin e sulmit</string>
     <string name="toggle_cell_tracking">Kyq përgjimin e kullës</string>
-    <string name="backup_database">Arshivo të dhënat bazë</string>
     <string name="clear_database">Pastro/Rikthe të dhënat bazë</string>
     <string name="clear_database_question">Të gjithë të dhënat do të fshihen.\nA jeni i sigurtë?</string>
-    <string name="restore_database">Rikthe të dhënat bazë</string>
     <string name="preferences">Preferencat</string>
     <string name="press_once_again_to_exit">Shtyp përsëri të dalësh.</string>
     <string name="cell_lookup">Të gjitha detajet e deritanishme të kullës</string>

@@ -26,10 +26,8 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Включение обнаружения атаки</string>
     <string name="toggle_cell_tracking">Включение отслеживания соты</string>
-    <string name="backup_database">Рез. копия базы данных</string>
     <string name="clear_database">Очистка/сброс базы данных</string>
     <string name="clear_database_question">Все данные будут удалены.\nВы уверены?</string>
-    <string name="restore_database">Восстановление базы данных</string>
     <string name="preferences">Параметры</string>
     <string name="press_once_again_to_exit">Нажмите еще раз для выхода.</string>
     <string name="cell_lookup">Все текущие данные соты</string>
@@ -337,11 +335,7 @@
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">Настройки AIMSICD, такие как правила защиты, время опроса и поведение службы.</string>
-    <string name="help_settings_backup_db">Резервная копия БД SQLite3 на SD-карту.</string>
-    <string name="help_settings_restore_db">Восстановление копии БД SQLite3 с SD-карты.</string>
     <string name="help_settings_reset_db">Очистка или сброс всех или указанных таблиц БД.</string>
-    <string name="help_settings_export_db_to_csv">Экспорт таблиц БД в отдельные CSV-файлы.</string>
-    <string name="help_settings_import_db_from_csv">Импорт таблиц БД из отдельных CSV-файлов.</string>
 
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Получение ключа API для использования базы данных OpenCellID при выгрузке и загрузке данных…</string>

@@ -14,10 +14,8 @@
 
     <string name="toggle_attack_detection">Habilitar Deteccion de Ataque</string>
     <string name="toggle_cell_tracking">Habilitar Rastreo de Celda</string>
-    <string name="backup_database">Copiar Base de Datos</string>
     <string name="clear_database">Limpiar/Resetear Base de Datos</string>
     <string name="clear_database_question">Se borrara toda la informacion\nEsta Seguro?</string>
-    <string name="restore_database">Restaurar Base de Datos</string>
     <string name="preferences">Opciones</string>
     <string name="press_once_again_to_exit">Presiona de nuevo para salir.</string>
     <string name="cell_lookup">Detalles de Celda Actuales</string>
@@ -278,11 +276,7 @@
     <string name="help_tracking_toggle_cell_tracking">Empezar a Rastrear las celdas para mostrarlas en el visor de antena y posiblemente más adelante subir a la OpenCellID.</string>
 
     <string name="help_settings_preferences">Configuración de AIMSICD como las normas de protección, tiempos de consulta y comportamiento de servicio.</string>
-    <string name="help_settings_backup_db">Backup Base de datos SQLite3 a tarjeta SD.</string>
-    <string name="help_settings_restore_db">Restaurar Base de datos SQLite3 desde la tarjeta SD.</string>
     <string name="help_settings_reset_db">Limpiar y resetear todas o algunas tablas en las bases de datos.</string>
-    <string name="help_settings_export_db_to_csv">Exportar Bases de Datos a archivos CSV individuales.</string>
-    <string name="help_settings_import_db_from_csv">Importar Tablas de bases de datos de archivos CSV individuales.</string>
 
     <string name="help_app_add_get_ocid_api_key">Obtener una llave API para usar la base de datos OpenCellID para cargar y descargar datos…</string>
     <string name="help_app_about">Iconos de estado y explicacion del proyecto.</string>

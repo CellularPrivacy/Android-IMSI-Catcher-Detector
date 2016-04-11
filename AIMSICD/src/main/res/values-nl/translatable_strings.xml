@@ -12,10 +12,8 @@
     <string name="disclaimer_title">DISCLAIMER</string>
     <string name="toggle_attack_detection">Aanvalsdetectie aan/uit</string>
     <string name="toggle_cell_tracking">Celtracking aan/uit</string>
-    <string name="backup_database">Backup Database</string>
     <string name="clear_database">Database leegmaken</string>
     <string name="clear_database_question">Alle gegevens worden verwijderd\nWeet u het zeker?</string>
-    <string name="restore_database">Database terugzetten</string>
     <string name="preferences">Voorkeuren</string>
     <string name="press_once_again_to_exit">Druk opnieuw om af te sluiten.</string>
     <string name="cell_lookup">Alle gegevens van huidige cel</string>
@@ -278,11 +276,7 @@
     <string name="help_tracking_toggle_cell_tracking">Start het volgen van cellen om ze op de antennekaart te tonen en ze later te versturen naar OpenCellID.</string>
 
     <string name="help_settings_preferences">AIMSICD instellingen zoals beschermingsregels, contactfrequentie en service gedrag.</string>
-    <string name="help_settings_backup_db">Backup SQLite3 DB naar de SD-kaart.</string>
-    <string name="help_settings_restore_db">Herstel SQLite3 DB vanaf de SD-kaart.</string>
     <string name="help_settings_reset_db">Alle of gespecificeerde tabellen leegmaken.</string>
-    <string name="help_settings_export_db_to_csv">Exporteer DB tabellen naar CSV bestanden.</string>
-    <string name="help_settings_import_db_from_csv">Importeer DB tabellen vanuit CSV bestanden.</string>
 
     <string name="help_app_add_get_ocid_api_key">Verkrijg een API sleutel voor de OpenCellID database om gegevens te up- en downloaden…</string>
     <string name="help_app_about">Status iconen en uitleg over het project.</string>

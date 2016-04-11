@@ -14,10 +14,8 @@
 
     <string name="toggle_attack_detection">Abilita rilevamento attacchi</string>
     <string name="toggle_cell_tracking">Abilita tracciamento celle</string>
-    <string name="backup_database">Backup database</string>
     <string name="clear_database">Pulisci database</string>
     <string name="clear_database_question">Tutti i dati saranno eliminati.\nSei sicuro?</string>
-    <string name="restore_database">Ripristina database</string>
     <string name="preferences">Preferenze</string>
     <string name="press_once_again_to_exit">Premi ancora per uscire.</string>
     <string name="cell_lookup">Dettagli celle correnti</string>
@@ -294,11 +292,7 @@
     <string name="help_tracking_toggle_cell_tracking">Traccia celle per visualizzarle sulla mappa antenne ed eventualmente caricarle su OpenCellID.</string>
 
     <string name="help_settings_preferences">Impostazioni AIMSICD come regole di protezione, tempi di richiesta e comportamento del servizio.</string>
-    <string name="help_settings_backup_db">Salva SQLite3 DB su SD-Card.</string>
-    <string name="help_settings_restore_db">Ripristina SQLite3 DB da SD-Card.</string>
     <string name="help_settings_reset_db">Pulisci tabella/e DB.</string>
-    <string name="help_settings_export_db_to_csv">Esporta tabelle DB in file CSV individuali.</string>
-    <string name="help_settings_import_db_from_csv">Importa tabelle DB da file CSV individuali.</string>
 
     <string name="help_app_add_get_ocid_api_key">Ottieni una API Key per usare il database OpenCellID e caricare/scaricare dati…</string>
     <string name="help_app_about">Spiegazione icone di stato e progetto.</string>

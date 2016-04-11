@@ -26,10 +26,8 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Toggle Attack Detection</string>
     <string name="toggle_cell_tracking">Toggle Cell Tracking</string>
-    <string name="backup_database">Backup Database</string>
     <string name="clear_database">Clear/Reset Database</string>
     <string name="clear_database_question">All data will be deleted.\nAre you sure?</string>
-    <string name="restore_database">Restore Database</string>
     <string name="preferences">Preferences</string>
     <string name="press_once_again_to_exit">Press again to exit.</string>
     <string name="cell_lookup">All Current Cell Details</string>
@@ -339,11 +337,7 @@
 
     <!-- Section Settings -->
     <string name="help_settings_preferences">AIMSICD settings such as protection rules, polling times and service behaviour.</string>
-    <string name="help_settings_backup_db">Backup SQLite3 DB to SD-Card.</string>
-    <string name="help_settings_restore_db">Restore SQLite3 DB from SD-Card.</string>
     <string name="help_settings_reset_db">Clear and reset all or specified DB table(s).</string>
-    <string name="help_settings_export_db_to_csv">Export DB tables into individual CSV files.</string>
-    <string name="help_settings_import_db_from_csv">Import DB table(s) from individual CSV file(s).</string>
 
     <!-- Section Application -->
     <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data…</string>

@@ -5,8 +5,6 @@
  */
 package com.secupwn.aimsicd.utils;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -90,8 +88,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
     public static final char DBE_UPLOAD_REQUEST = 6;            // OCID upload request from "APPLICATION" drawer title
-    public static final char BACKUP_DATABASE = 3;               // Backup DB to CSV and AIMSICD_dump.db
-    public static final char RESTORE_DATABASE = 4;              // Restore DB from CSV files
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ALL_CURRENT_CELL_DETAILS)"
 
     @Inject
@@ -270,14 +266,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     log.warn("Problem reading data from steam", e);
                     return null;
                 }
-
-            case BACKUP_DATABASE:
-                log.error("BACKUP_DATABASE not implemented");
-                return null;
-
-            case RESTORE_DATABASE:
-                log.error("RESTORE_DATABASE not implemented");
-                return null;
         }
 
         return null;
@@ -345,40 +333,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_uploading_bts_data));
                 }
                 break;
-
-            case RESTORE_DATABASE:
-                if ("Successful".equals(result)) {
-                    Helpers.msgShort(mAppContext, mAppContext.getString(R.string.restore_database_completed));
-                    Activity lActivity = getActivity();
-
-                    //Activity may be detached or destroyed
-                    if (lActivity != null) {
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
-                        builder.setTitle(R.string.restore_database_completed_title).setMessage(
-                                lActivity.getString(R.string.restore_database_completed));
-                        builder.create().show();
-                    }
-                } else {
-                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_restoring_database));
-                }
-                break;
-
-            case BACKUP_DATABASE:
-                if ("Successful".equals(result)) {
-
-                    // strings.xml: pref_last_db_backup_version
-                    Activity lActivity = getActivity();
-
-                    //Activity may be detached or destroyed
-                    if (lActivity != null) {
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
-                        builder.setTitle(R.string.database_export_successful).setMessage(
-                                lActivity.getString(R.string.database_backup_successfully_saved_to) + "\n" + RealmHelper.mExternalFilesDirPath);
-                        builder.create().show();
-                    }
-                } else {
-                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_backing_up_data));
-                }
         }
         if (mListener != null) {
             if ("Successful".equals(result)) {

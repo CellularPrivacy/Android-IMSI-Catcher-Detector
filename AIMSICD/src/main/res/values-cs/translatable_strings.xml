@@ -12,8 +12,6 @@
     <string name="disclaimer_title">VAROVÁNÍ</string>
     <string name="toggle_attack_detection">Zjišťovat útoky</string>
     <string name="toggle_cell_tracking">Sledovat buňky</string>
-    <string name="backup_database">Záloha databáze</string>
-    <string name="restore_database">Obnova databáze</string>
     <string name="preferences">Nastavení</string>
     <string name="debugging">Ladění</string>
     <string name="get_opencellid">Stáhnout data BTS</string>

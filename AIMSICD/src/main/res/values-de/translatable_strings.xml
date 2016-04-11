@@ -28,10 +28,8 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Angriffserkennung\nein/ausschalten</string>
     <string name="toggle_cell_tracking">Funkzellen aufzeichnen</string>
-    <string name="backup_database">Datenbank sichern</string>
     <string name="clear_database">Datenbank löschen / zurücksetzen</string>
     <string name="clear_database_question">Alle Daten werden gelöscht.\nSind Sie sicher?</string>
-    <string name="restore_database">Datenbank wiederherstellen</string>
     <string name="preferences">Einstellungen</string>
     <string name="press_once_again_to_exit">Erneut drücken zum Verlassen.</string>
     <string name="cell_lookup">Derzeitige Funkzellen</string>
@@ -321,12 +319,8 @@
     
     <!-- Section Settings-->
     <string name="help_settings_preferences">AIMSICD-Einstellungen wie Schutzregeln, Aktualisierungszeiten und Dienstverhalten.</string>
-    <string name="help_settings_backup_db">SQLite3-Datenbank auf SD-Karte sichern.</string>
-    <string name="help_settings_restore_db">SQLite3-Datenbank wiederherstellen.</string>
     <string name="help_settings_reset_db">Alle oder bestimmte Datenbanken zurücksetzen und löschen.</string>
-    <string name="help_settings_export_db_to_csv">Datenbanktabellen in einzelne CSV-Dateien exportieren.</string>
-    <string name="help_settings_import_db_from_csv">Datenbanktabellen aus einzelnen CSV-Dateien importieren.</string>
-    
+
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">API-Schlüssel für die Nutzung der OpenCellID-Datenbanken sowie hoch- und herunterladen der Daten anfordern…</string>
     <string name="help_app_about">Status-Symbole und Erklärung des Projekts.</string>

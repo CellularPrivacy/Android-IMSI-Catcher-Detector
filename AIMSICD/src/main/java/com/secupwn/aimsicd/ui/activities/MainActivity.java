@@ -244,14 +244,9 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                 openFragment(mapFragment);
                 title = getString(R.string.app_name_short);
                 break;
-            case DrawerMenu.ID.DATABASE_SETTINGS.BACKUP_DB:
-                new RequestTask(this, RequestTask.BACKUP_DATABASE).execute();
-                break;
         }
 
-        if (selectedItem.getId() == DrawerMenu.ID.DATABASE_SETTINGS.RESTORE_DB) {
-            new RequestTask(this, RequestTask.RESTORE_DATABASE).execute();
-        } else if (selectedItem.getId() == DrawerMenu.ID.DATABASE_SETTINGS.RESET_DB) {
+        if (selectedItem.getId() == DrawerMenu.ID.DATABASE_SETTINGS.RESET_DB) {
             // WARNING! This deletes the entire database, thus any subsequent DB access will FC app.
             // Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
             // See: https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/581 and Helpers.java
