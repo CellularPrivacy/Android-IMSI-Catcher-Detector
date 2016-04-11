@@ -148,7 +148,6 @@
         <item>@string/measured_signal_strengths</item>
         <item>@string/eventlog</item>
     </string-array>
-    <string name="database_export_successful">Eksport powiódł się</string>
 
     <!-- AT Command Interface  -->
     <string name="at_command_title">Interface komend AT</string>
@@ -250,10 +249,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">Poprawnie odebrano dane. Punkty na mapie zostały zaktualizowane.</string>
     <string name="uploaded_bts_data_successfully">Dane do OpenCellID zostały przesłane.</string>
     <string name="error_uploading_bts_data">Błąd wysyłania danych do OpenCellID!</string>
-    <string name="restore_database_completed">Odzyskano bazę danych.</string>
-    <string name="error_restoring_database">Błąd przywracania bazy danych.</string>
-    <string name="database_backup_successfully_saved_to">Kopia zapasowa zapisana do:</string>
-    <string name="error_backing_up_data">Błąd tworzenia kopii zapasowej.</string>
     <string name="no_opencellid_key_detected">Brak klucza API OpenCellID. Musisz najpierw wpisać lub pobrać swój klucz.</string>
     <string name="refreshed_cell_id_info">Odświeżanie ekranu</string>
     <string name="unable_to_acquire_root_access">Nie udało się usyskać praw ROOTa. Interface komend AT wymaga praw ROOTa. Sprawdź swoje urządzenie i spróbuj ponownie.</string>
@@ -324,7 +319,6 @@
     <string name="help_app_debugging">Wczytaj i wyślij logi.</string>
     <string name="help_app_quit">Zakończ działanie aplikacji.</string>
     <string name="waiting_for_location">Oczekiwanie na lokalizację…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Nie udało się odzyskać kopii z poprzedniej wersji bazy danych!</string>
     <string name="unique_bts_data">Unikalne dane BTS</string>
     <string name="bts_measurements">Pomiary BTS</string>
     <string name="imported_ocid_data">Importowane dane OpenCellID</string>
@@ -377,7 +371,6 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-    <string name="restore_database_completed_title">Odzyskiwanie powiodło się.</string>
     <string name="delete_database_msg_success">Baza danych została usunięta i odtworzona.\nProszę zrestartować aplikację by usunąć resztę danych z pamięci.</string>
 
     <string name="unknown">Nieznany</string>

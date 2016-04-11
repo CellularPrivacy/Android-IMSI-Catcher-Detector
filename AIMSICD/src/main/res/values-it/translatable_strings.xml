@@ -127,7 +127,6 @@
     <string name="lng_label">"Lon: "</string>
 
     <string name="table_names_prompt">Seleziona tabella</string>
-    <string name="database_export_successful">Esportazione riuscita</string>
 
     <string name="at_command_title">Interfaccia comandi AT</string>
     <string name="response_label">Risposta:</string>
@@ -234,11 +233,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">Dati OpenCellID ricevuti con successo.\nMarcatori mappa aggiornati.</string>
     <string name="uploaded_bts_data_successfully">Dati BTS caricati su OpenCellID con successo.</string>
     <string name="error_uploading_bts_data">Errore caricamento dati BTS sui server OpenCellID!</string>
-    <string name="restore_database_completed_title">Ripristino riuscito.</string>
-    <string name="restore_database_completed">Ripristino database completato.</string>
-    <string name="error_restoring_database">Errore ripristino database.</string>
-    <string name="database_backup_successfully_saved_to">Backup database salvato in:</string>
-    <string name="error_backing_up_data">Errore backup database.</string>
     <string name="no_opencellid_key_detected">Nessuna OpenCellID API Key!\nInserisci prima la tua chiave nelle impostazioni.</string>
     <string name="refreshed_cell_id_info">Info CellID aggiornate</string>
     <string name="unable_to_acquire_root_access">Impossibile ottenere i permessi di ROOT.\nAT Command Injection richiede accesso al terminale ROOT.\nAssicurati di fare il ROOT del dispositivo e riprova.</string>
@@ -301,7 +295,6 @@
     <string name="help_app_debugging">Raccogli e invia registro errori.</string>
     <string name="help_app_quit">Chiudi app.</string>
     <string name="waiting_for_location">In attesa della posizione…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Impossibile ripristinare backup da precedente versione del database per modifiche strutturali!</string>
     <string name="unique_bts_data">Dati BTS unici</string>
     <string name="bts_measurements">Misurazioni BTS</string>
     <string name="imported_ocid_data">Dati OpenCellID importati</string>

@@ -148,7 +148,6 @@
         <item>@string/measured_signal_strengths</item>
         <item>@string/eventlog</item>
     </string-array>
-    <string name="database_export_successful">Succès de l\'Exportation</string>
 
     <!-- AT Command Interface  -->
     <string name="at_command_title">Interface de commande AT</string>
@@ -250,10 +249,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">Données OpenCellID reçues avec succès.\nCarte Mise à jour.</string>
     <string name="uploaded_bts_data_successfully">Envoi des données BTS à OpenCellID réussi.</string>
     <string name="error_uploading_bts_data">Erreur lors de l’envoi des données BTS aux les serveurs d’OpenCellID !</string>
-    <string name="restore_database_completed">Base de Données restaurée.</string>
-    <string name="error_restoring_database">Erreur lors de la restauration de la Base de Donnée.</string>
-    <string name="database_backup_successfully_saved_to">Sauvegarde de la base de donnée réussi, emplacement :</string>
-    <string name="error_backing_up_data">Erreur lors de la sauvegarde de la Base De Donnée.</string>
     <string name="no_opencellid_key_detected">Clé de l’API d’OpenCellID non trouvée!\nEntrez d’abord une clé dans les paramètres.</string>
     <string name="refreshed_cell_id_info">Rafraîchissement de l\'écran</string>
     <string name="unable_to_acquire_root_access">Impossible d\'obtenir l\'accès ROOT.\nL\'injection de commandes AT à besoin d\'un accès terminal en tant que ROOT.\nVéréfiez que votre téléphone est rooté et réessayez.</string>
@@ -323,7 +318,6 @@
     <string name="help_app_debugging">Afficher et envoyer les logs d\'application.</string>
     <string name="help_app_quit">Quitter cette application.</string>
     <string name="waiting_for_location">Recherche de votre localisation en cours…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Impossible restaurer la base de données à cause de ses modifications structurelles !</string>
     <string name="unique_bts_data">Données BTS Uniques</string>
     <string name="bts_measurements">Données BTS</string>
     <string name="imported_ocid_data">Données importées d’OpenCellID</string>
@@ -377,7 +371,6 @@
     <string name="invalid_key_try_later">Clé OpenCellID invalide, veuillez réessayer plus tard.</string>
     <string name="getting_ocid_key">Obtention d’une clé API d’OpenCellID…</string>
 
-    <string name="restore_database_completed_title">Restauration réussie.</string>
     <string name="delete_database_msg_success">La base de données a été effacée et recréée avec succès.\nVeuillez redémarrer l’application pour effacer les anciennes valeurs toujours présentes en mémoire.</string>
 
     <string name="deleted">Supprimé</string>

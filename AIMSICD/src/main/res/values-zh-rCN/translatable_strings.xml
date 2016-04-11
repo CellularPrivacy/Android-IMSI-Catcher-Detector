@@ -103,7 +103,6 @@
     <string name="samples_label">"样本: "</string>
     <string name="open_cell_id_label">OpenCellID 数据</string>
     <string name="table_names_prompt">选择表格</string>
-    <string name="database_export_successful">导出成功</string>
 
     <string name="at_command_title">AT 命令接口</string>
     <string name="response_label">响应:</string>
@@ -215,11 +214,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID 数据接收成功。\n地图标记已更新。</string>
     <string name="uploaded_bts_data_successfully">已成功上传 BTS 数据到 OpenCellID。</string>
     <string name="error_uploading_bts_data">上传 BTS 数据到 OpenCellID 服务器时出错！</string>
-    <string name="restore_database_completed_title">恢复成功。</string>
-    <string name="restore_database_completed">恢复数据库成功完成。</string>
-    <string name="error_restoring_database">恢复数据库时出错。</string>
-    <string name="database_backup_successfully_saved_to">数据库备份成功，已保存到：</string>
-    <string name="error_backing_up_data">备份数据库时出错。</string>
     <string name="refreshed_cell_id_info">已刷新细胞信息</string>
     <string name="no_opencellid_key_detected">未检测到 OpenCellID API 密钥！\n请先在设置中输入您的密钥。</string>
     <string name="getting_ocid_api_key">正在获取 OpenCellID API 密钥…</string>
@@ -287,7 +281,6 @@
 
     <string name="at_command_response_found">"找到： "</string>
     <string name="at_command_response_looking">*** 正在查找 AT 串行设备…\n</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">无法从以前的数据库版本恢复，因为结构已变化！</string>
     <string name="help_app_debugging">收集和发送错误日志。</string>
     <string name="help_app_quit">退出此应用。</string>
     <string name="help_app_upload_local_bts">上传您的 BTS 到 OpenCellID 数据库。</string>

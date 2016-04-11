@@ -122,7 +122,6 @@
     <string name="lng_label">"Lon: "</string>
 
     <string name="table_names_prompt">Seleccionar Tabla</string>
-    <string name="database_export_successful">Exportación exitosa</string>
 
     <string name="at_command_title">Interfaz de comandos AT</string>
     <string name="response_label">Respuesta:</string>
@@ -218,11 +217,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">Datos de OpenCellID recibidos con éxito.\nMarcadores actualizados.</string>
     <string name="uploaded_bts_data_successfully">Datos de BTS cargados a OpenCellID Exitosamente.</string>
     <string name="error_uploading_bts_data">Error al cargar datos BTS a los servidores de OpenCellID!</string>
-    <string name="restore_database_completed_title">Restauración exitosa.</string>
-    <string name="restore_database_completed">Restauracion de base de datos Exitosa.</string>
-    <string name="error_restoring_database">Error restaurando base de datos.</string>
-    <string name="database_backup_successfully_saved_to">Backup de base de datos guardado con éxito en:</string>
-    <string name="error_backing_up_data">Error de copia de seguridad de base de datos.</string>
     <string name="no_opencellid_key_detected">Ninguna llave OpenCellID API detectada.\nIntroduzca primero su clave en el menu de configuración.</string>
     <string name="refreshed_cell_id_info">Display de Actualizacion</string>
     <string name="unable_to_acquire_root_access">"No se pudo obtener acceso ROOT en el dispositivo.\nLa  inyección de comando AT requiere acceso ROOT Terminal.\nPor favor, compruebe que el dispositivo esta ROOTEADO y vuelva a intentarlo."</string>
@@ -285,7 +279,6 @@
     <string name="help_app_debugging">Recopilar y enviar registros de errores.</string>
     <string name="help_app_quit">Salir de esta aplicación.</string>
     <string name="waiting_for_location">Esperando ubicación…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">No se pueden restaurar copias de seguridad de la versión anterior de la base de datos debido a cambios estructurales!</string>
     <string name="unique_bts_data">Datos únicos BTS</string>
     <string name="bts_measurements">Mediciones de BTS</string>
     <string name="imported_ocid_data">Datos importados OpenCellID</string>

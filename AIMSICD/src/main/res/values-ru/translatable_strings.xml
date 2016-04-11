@@ -158,7 +158,6 @@
         <item>@string/measured_signal_strengths</item>
         <item>@string/eventlog</item>
     </string-array>
-    <string name="database_export_successful">Экспорт выполнен</string>
 
     <!-- AT Command Interface  -->
     <string name="at_command_title">Командный интерфейс AT</string>
@@ -270,11 +269,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">Данные OpenCellID успешно приняты.\nМаркеры карты обновлены.</string>
     <string name="uploaded_bts_data_successfully">Данные БС для OpenCellID выгружены успешно.</string>
     <string name="error_uploading_bts_data">Ошибка при выгрузке данных БС для OpenCellID серверов!</string>
-    <string name="restore_database_completed_title">Восстановление выполнено.</string>
-    <string name="restore_database_completed">Восстановление базы данных успешно завершено.</string>
-    <string name="error_restoring_database">Ошибка восстановления базы данных.</string>
-    <string name="database_backup_successfully_saved_to">Резервная копия базы данных успешна сохранена в:</string>
-    <string name="error_backing_up_data">Ошибка резервного копирования базы данных.</string>
     <string name="no_opencellid_key_detected">Не обнаружен ключ API OpenCellID!\nПожалуйста, введите Ваш ключ в настройках.</string>
     <string name="refreshed_cell_id_info">Обновление дисплея</string>
     <string name="unable_to_acquire_root_access">Невозможно получить РУТ-доступ на Вашем устройстве.\nДля AT-команд требуется ROOT доступ к терминалу.\nПожалуйста, проверьте наличие прав РУТ на Вашем устройстве и попробуйте еще раз.</string>
@@ -345,7 +339,6 @@
     <string name="help_app_debugging">Сбор и отправка сообщений об ошибках.</string>
     <string name="help_app_quit">Выход из приложения.</string>
     <string name="waiting_for_location">Ожидание местоположения…</string>
-	<string name="unable_to_restore_backup_from_previous_database_version">Невозможно восстановить базу данных из предыдущей версии базы данных из-за структурных изменений!</string>
     <string name="unique_bts_data">Уникальные данные БС</string>
     <string name="bts_measurements">Измерения БС</string>
     <string name="imported_ocid_data">Импортированные данные OpenCellID</string>

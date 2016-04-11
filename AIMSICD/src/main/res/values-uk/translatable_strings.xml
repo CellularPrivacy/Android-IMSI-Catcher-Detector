@@ -82,7 +82,6 @@
     <string name="lng_label">"Довгота: "</string>
 
     <string name="table_names_prompt">Оберіть таблицю</string>
-    <string name="database_export_successful">Успішно експортовано</string>
 
     <string name="response_label">Відповідь:</string>
     <string name="execute_at">Виконання</string>
@@ -205,9 +204,6 @@
     <string name="download_error">Помилка завантаження:</string>
     <string name="opencellid_data_successfully_received">Дані OpenCellID успішно прийнято.</string>
     <string name="error_retrieving_opencellid_data">Помилка під час отримання OpenCellID даних.\nПеревірте вашу мережу!</string>
-    <string name="error_restoring_database">Помилка відновлення бази даних.</string>
-    <string name="database_backup_successfully_saved_to">Резервну копію бази даних успішно скопійовано до:</string>
-    <string name="error_backing_up_data">Помилка резервного копіювання бази даних.</string>
     <string name="sim_serial">Серійний номер:</string>
     <string name="status_medium_detail_info">Небезпечна зона: Принаймні одна нова, або незнайома БС у зоні обслуговування, або використовується небезпечний (скомпрометований) алгоритм шифрування, нижчий за A5/3. Чекайте, що будь які дзвінки та СМС, зроблені у цій зоні можуть бути перехоплені та зареєстровані. Вам краще як найшвидше залишите це місце.</string>
     <string name="status_high_detail_info">Виявлені ворожі дії: IMSI-перехоплювач (IMSIC) або підробна БС (FBTS) відстежують користувачів. В цій зоні відбувається активне сканування. Ви повинні в будь якому разі залишити це місце, особливо, якщо це якась політична нестабільність. Зніміть батарею та витягніть SIM картку!</string>
@@ -233,8 +229,6 @@
     <string name="no_data_for_publishing">Відсутні доступні дані для публікації.</string>
     <string name="uploaded_bts_data_successfully">Дані BTS для OpenCellID вдало вивантажено.</string>
     <string name="error_uploading_bts_data">Трапилась помилка під час вивантаження BTS даних на сервера OpenCellID!</string>
-    <string name="restore_database_completed_title">Відновлення вдало завершено.</string>
-    <string name="restore_database_completed">Відновлення бази даних успішно завершено.</string>
     <string name="no_opencellid_key_detected">Не виявлено ключа до OpenCellID API!\nБудь ласка, спершу введіть ваш ключ в налаштуваннях.</string>
     <string name="refreshed_cell_id_info">Оновлення дисплею</string>
     <string name="unable_to_acquire_root_access">Не вдалося отримати root-права на вашому пристрої.\nВони потрібні для ін\'єкцій AT-команд до терміналу.\nБудь ласка, надайте root-права додатку, та спробуйте ще раз.</string>
@@ -281,7 +275,6 @@
     <string name="help_app_upload_local_bts">Вивантажити ваші дані BTS до бази даних OpenCellID.</string>
     <string name="help_app_debugging">Зібрати та відправити звіти з помилками.</string>
     <string name="help_app_quit">Закрити цей додаток.</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Неможливо відновити базу даних з резервної копії попередньої версії через значні структурні зміни!</string>
     <string name="unique_bts_data">Унікальні дані BTS</string>
     <string name="bts_measurements">Вимірювання BTS</string>
     <string name="imported_ocid_data">Імпортовані OpenCellID дані</string>

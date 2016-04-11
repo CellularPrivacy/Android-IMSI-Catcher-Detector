@@ -122,7 +122,6 @@
     <string name="lng_label">"Lon: "</string>
 
     <string name="table_names_prompt">Selecteer tabel</string>
-    <string name="database_export_successful">Export succesvol</string>
 
     <string name="at_command_title">AT commandointerface</string>
     <string name="response_label">Antwoord:</string>
@@ -204,11 +203,6 @@
     <string name="femtocell_only_on_cdma_devices">AIMSICD kan femtocellen alleen op CDMA toestellen detecteren.</string>
     <string name="seconds">seconden.</string>
     <string name="download_error">Fout bij downloaden:</string>
-    <string name="restore_database_completed_title">Terugzetten gelukt.</string>
-    <string name="restore_database_completed">Terugzetten database geslaagd.</string>
-    <string name="error_restoring_database">Fout bij terugzetten database.</string>
-    <string name="database_backup_successfully_saved_to">Database backup opgeslagen in:</string>
-    <string name="error_backing_up_data">Fout bij database backup.</string>
     <string name="service_state_changed">Diensttoestand is veranderd!</string>
     <string name="stopped_tracking_femtocell">Gestopt met het bijhouden van Femtocal verbindingen.</string>
     <string name="alert_femtocell_tracking_detected">ALARM: Femtocel volgen gedetecteerd!</string>
@@ -285,7 +279,6 @@
     <string name="help_app_debugging">Verzamel en verstuur foutberichten.</string>
     <string name="help_app_quit">Deze app afsluiten.</string>
     <string name="waiting_for_location">Wachten op locatie…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Kan de backup van een oud databaseformaat niet terugzetten omdat de database structuur gewijzigd is!</string>
     <string name="unique_bts_data">Unieke BTS gegevens</string>
     <string name="bts_measurements">BTS metingen</string>
     <string name="imported_ocid_data">OpenCellID gegevens geïmporteerd</string>

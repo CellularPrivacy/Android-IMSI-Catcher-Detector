@@ -124,7 +124,6 @@
     <string name="lng_label">"経度: "</string>
 
     <string name="table_names_prompt">テーブルを選択</string>
-    <string name="database_export_successful">正常にエクスポートしました</string>
 
     <string name="at_command_title">AT コマンド インターフェイス</string>
     <string name="response_label">応答:</string>
@@ -222,11 +221,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID データを正常に受信しました。\n地図マーカーを更新します。</string>
     <string name="uploaded_bts_data_successfully">OpenCellID に BTS データを正常にアップロードしました。</string>
     <string name="error_uploading_bts_data">OpenCellID サーバーに BTS データをアップロード中にエラー!</string>
-    <string name="restore_database_completed_title">正常に復元しました。</string>
-    <string name="restore_database_completed">正常にデータベースの復元を完了しました。</string>
-    <string name="error_restoring_database">データベースの復元中にエラー。</string>
-    <string name="database_backup_successfully_saved_to">データベースのバックアップを正常に保存しました:</string>
-    <string name="error_backing_up_data">データベースのバックアップ中にエラー。</string>
     <string name="no_opencellid_key_detected">OpenCellID API キーは検出しませんでした!\n最初に、設定でキーを入力してください。</string>
     <string name="refreshed_cell_id_info">表示の更新中</string>
     <string name="unable_to_acquire_root_access">お使いのデバイスで ROOT アクセスを取得できません。\nAT コマンド インジェクションで ROOT ターミナル アクセスが必要です。\nお使いのデバイスを ROOT 化していることを確認して、もう一度試してください。</string>
@@ -287,7 +281,6 @@
     <string name="help_app_debugging">エラー ログを収集して送信します。</string>
     <string name="help_app_quit">このアプリを終了します。</string>
     <string name="waiting_for_location">位置情報の待機中…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">構造が変更されたため、以前のデータベース バージョンからバックアップを復元することができません!</string>
     <string name="unique_bts_data">固有の BTS データ</string>
     <string name="bts_measurements">BTS 測定結果</string>
     <string name="imported_ocid_data">インポートした OpenCellID データ</string>

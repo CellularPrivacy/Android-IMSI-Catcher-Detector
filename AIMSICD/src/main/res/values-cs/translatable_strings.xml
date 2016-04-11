@@ -122,7 +122,6 @@
     <string name="lng_label"/>
 
     <string name="table_names_prompt">Vybrat Tabulku</string>
-    <string name="database_export_successful">Export proběhl úspěšně</string>
 
     <string name="at_command_title">Rozhraní AT příkazů</string>
     <string name="response_label">Odpověď:</string>

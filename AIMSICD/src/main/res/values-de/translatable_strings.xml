@@ -157,8 +157,7 @@
         <item>@string/measured_signal_strengths</item>
         <item>@string/eventlog</item>
     </string-array>
-    <string name="database_export_successful">Export erfolgreich</string>
-    
+
     <!-- AT Command Interface  -->
     <string name="at_command_title">AT-Befehlskonsole</string>
     <string name="response_label">Reaktion:</string>
@@ -258,10 +257,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID-Daten erfolgreich empfangen.\nAntennen aktualisiert.</string>
     <string name="uploaded_bts_data_successfully">BTS-Daten erfolgreich zu OpenCellID hochgeladen.</string>
     <string name="error_uploading_bts_data">Fehler beim hochladen zum OpenCellID-Server!</string>
-    <string name="restore_database_completed">Wiederherstelung der Datenbank erfolgreich.</string>
-    <string name="error_restoring_database">Fehler beim Wiederherstellen der Datenbank.</string>
-    <string name="database_backup_successfully_saved_to">Datenbank wurde erfolgreich gesichert nach:</string>
-    <string name="error_backing_up_data">Fehler beim Sichern der Datenbank.</string>
     <string name="no_opencellid_key_detected">Kein OpenCellID API-Schlüssel erkannt!\nBitte Schlüssel in Einstellungen eingeben.</string>
     <string name="refreshed_cell_id_info">Aktualisiere Anzeige</string>
     <string name="unable_to_acquire_root_access">Kein ROOT-Zugriff auf Gerät möglich.\nAT-Befehle setzen ROOT-Zugriff voraus.\nBitte prüfen ob das gerät GEROOTET ist und erneut versuchen.</string>
@@ -329,7 +324,6 @@
     <string name="help_app_debugging">Fehlerprotokolle sammeln und versenden.</string>
     <string name="help_app_quit">Diese App verlassen.</string>
     <string name="waiting_for_location">Standort wird ermittelt…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Alte Datenbank kann auf Grund struktureller Änderungen nicht wiederhergestellt werden!</string>
     <string name="unique_bts_data">Eindeutige BTS-Daten</string>
     <string name="bts_measurements">BTS-Messungen</string>
     <string name="imported_ocid_data">Importierte OpenCellID-Daten</string>
@@ -383,8 +377,7 @@
 
     <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
     <string name="getting_ocid_key">Besorge OpenCellID-Schlüssel...</string>
-    
-    <string name="restore_database_completed_title">Wiederherstellung erfolgreich.</string>
+
     <string name="delete_database_msg_success">Datenbank gelöscht und erfolgreich neu erstellt.\nBitte App neu starten um alte Werte aus dem Speicher zu löschen.</string>
 
     <string name="deleted">Gelöscht</string>
