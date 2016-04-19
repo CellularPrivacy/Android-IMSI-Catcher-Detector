@@ -15,9 +15,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.utils.RealmHelper;
-import com.secupwn.aimsicd.data.model.SmsData;
 import com.secupwn.aimsicd.data.adapter.SmsDataAdapter;
+import com.secupwn.aimsicd.data.model.SmsData;
+import com.secupwn.aimsicd.utils.RealmHelper;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
@@ -57,10 +57,14 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
         listViewAdv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> a, View v, int position, long id) {
-                Object o = listViewAdv.getItemAtPosition(position);
-                SmsData obj_itemDetails = (SmsData) o;
+                final SmsData smsData = (SmsData) listViewAdv.getItemAtPosition(position);
 
-                obj_itemDetails.removeFromRealm();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        smsData.removeFromRealm();
+                    }
+                });
 
                 Toast.makeText(a.getContext(), "Deleted Sms", LENGTH_SHORT).show();
 

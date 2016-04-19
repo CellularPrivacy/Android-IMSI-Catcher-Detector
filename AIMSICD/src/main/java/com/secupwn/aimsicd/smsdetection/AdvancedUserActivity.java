@@ -18,8 +18,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.data.model.SmsDetectionString;
 import com.secupwn.aimsicd.data.adapter.DetectionStringAdapter;
+import com.secupwn.aimsicd.data.model.SmsDetectionString;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
@@ -62,11 +62,16 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
         listViewAdv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> a, View v, int position, long id) {
-                SmsDetectionString detectionString = (SmsDetectionString) listViewAdv.getItemAtPosition(position);
+                final SmsDetectionString detectionString = (SmsDetectionString) listViewAdv.getItemAtPosition(position);
 
                 String string = detectionString.getDetectionString();
 
-                detectionString.removeFromRealm();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        detectionString.removeFromRealm();
+                    }
+                });
 
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.deleted) + ": " + string, Toast.LENGTH_SHORT).show();
