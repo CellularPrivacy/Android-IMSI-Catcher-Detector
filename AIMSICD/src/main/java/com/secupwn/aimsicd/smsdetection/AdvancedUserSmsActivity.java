@@ -50,7 +50,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
         realm = Realm.getDefaultInstance();
 
         dbaccess = new RealmHelper(getApplicationContext());
-        RealmResults<SmsData> msgitems = realm.where(SmsData.class).findAll();
+        RealmResults<SmsData> msgitems = realm.where(SmsData.class).findAllSorted("timestamp");
 
         listViewAdv.setAdapter(new SmsDataAdapter(getApplicationContext(), msgitems, true));
 
