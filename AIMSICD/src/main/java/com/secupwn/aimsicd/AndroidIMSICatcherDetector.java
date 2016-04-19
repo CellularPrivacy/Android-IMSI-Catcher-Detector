@@ -42,7 +42,6 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
     @Inject
     private Logger log;
 
-    Realm realm;
     /**
      * Maps between an activity class name and the list of currently running
      * AsyncTasks that were spawned while it was active.
@@ -65,7 +64,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
                 .build();
 
         Realm.setDefaultConfiguration(realmConfiguration);
-        realm = Realm.getDefaultInstance();
+        final Realm realm = Realm.getDefaultInstance();
 
         realm.executeTransactionAsync(
                 new DefaultDataTransaction(),
@@ -73,12 +72,14 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
                     @Override
                     public void onSuccess() {
                         log.debug("Loading default data successful");
+                        realm.close();
                     }
                 },
                 new Realm.Transaction.OnError() {
                     @Override
                     public void onError(Throwable error) {
                         log.error("Error loading default data", error);
+                        realm.close();
                     }
                 }
         );
