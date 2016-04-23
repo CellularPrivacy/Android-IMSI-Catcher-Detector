@@ -27,25 +27,25 @@ public class Cell implements Parcelable {
      * Cell Identification code
      */
     @Setter
-    private int cid;
+    private int cellId;
 
     /**
      * Location Area Code
      */
     @Setter
-    private int lac;
+    private int locationAreaCode;
 
     /**
      * Mobile Country Code
      */
     @Setter
-    private int mcc;
+    private int mobileCountryCode;
 
     /**
      * Mobile Network Code
      */
     @Setter
-    private int mnc;
+    private int mobileNetworkCode;
 
     /**
      * [dBm] RX signal "power"
@@ -57,7 +57,7 @@ public class Cell implements Parcelable {
     /**
      * Primary Scrambling Code
      */
-    private int psc;
+    private int primaryScramblingCode;
 
     /**
      * Relative Signal Strength Indicator [dBm, asu etc.]
@@ -120,12 +120,12 @@ public class Cell implements Parcelable {
     private double lat;
 
     {
-        cid = Integer.MAX_VALUE;
-        lac = Integer.MAX_VALUE;
-        mcc = Integer.MAX_VALUE;
-        mnc = Integer.MAX_VALUE;
+        cellId = Integer.MAX_VALUE;
+        locationAreaCode = Integer.MAX_VALUE;
+        mobileCountryCode = Integer.MAX_VALUE;
+        mobileNetworkCode = Integer.MAX_VALUE;
         dbm = Integer.MAX_VALUE;
-        psc = Integer.MAX_VALUE;
+        primaryScramblingCode = Integer.MAX_VALUE;
         rssi = Integer.MAX_VALUE;
         timingAdvance = Integer.MAX_VALUE;
         sid = Integer.MAX_VALUE;
@@ -140,15 +140,15 @@ public class Cell implements Parcelable {
     public Cell() {
     }
 
-    public Cell(int CID, int lac, int mcc, int mnc, int dbm, long timestamp) {
+    public Cell(int CID, int locationAreaCode, int mobileCountryCode, int mobileNetworkCode, int dbm, long timestamp) {
         super();
-        this.cid = CID;
-        this.lac = lac;
-        this.mcc = mcc;
-        this.mnc = mnc;
+        this.cellId = CID;
+        this.locationAreaCode = locationAreaCode;
+        this.mobileCountryCode = mobileCountryCode;
+        this.mobileNetworkCode = mobileNetworkCode;
         this.dbm = dbm;
         this.rssi = Integer.MAX_VALUE;
-        this.psc = Integer.MAX_VALUE;
+        this.primaryScramblingCode = Integer.MAX_VALUE;
         this.timestamp = timestamp;
         this.timingAdvance = Integer.MAX_VALUE;
         this.sid = Integer.MAX_VALUE;
@@ -160,18 +160,18 @@ public class Cell implements Parcelable {
         this.bearing = 0.0;
     }
 
-    public Cell(int CID, int lac, int signal, int psc, int netType, boolean dbm) {
-        this.cid = CID;
-        this.lac = lac;
-        this.mcc = Integer.MAX_VALUE;
-        this.mnc = Integer.MAX_VALUE;
+    public Cell(int CID, int locationAreaCode, int signal, int primaryScramblingCode, int netType, boolean dbm) {
+        this.cellId = CID;
+        this.locationAreaCode = locationAreaCode;
+        this.mobileCountryCode = Integer.MAX_VALUE;
+        this.mobileNetworkCode = Integer.MAX_VALUE;
 
         if (dbm) {
             this.dbm = signal;
         } else {
             this.rssi = signal;
         }
-        this.psc = psc;
+        this.primaryScramblingCode = primaryScramblingCode;
 
         this.netType = netType;
         this.timingAdvance = Integer.MAX_VALUE;
@@ -184,12 +184,12 @@ public class Cell implements Parcelable {
         this.timestamp = SystemClock.currentThreadTimeMillis();
     }
 
-    public Cell(int cid, int lac, int mcc, int mnc, int dbm, double accuracy, double speed,
+    public Cell(int cellId, int locationAreaCode, int mobileCountryCode, int mobileNetworkCode, int dbm, double accuracy, double speed,
                 double bearing, int netType, long timestamp) {
-        this.cid = cid;
-        this.lac = lac;
-        this.mcc = mcc;
-        this.mnc = mnc;
+        this.cellId = cellId;
+        this.locationAreaCode = locationAreaCode;
+        this.mobileCountryCode = mobileCountryCode;
+        this.mobileNetworkCode = mobileNetworkCode;
         this.dbm = dbm;
         this.rssi = Integer.MAX_VALUE;
         this.timingAdvance = Integer.MAX_VALUE;
@@ -204,13 +204,13 @@ public class Cell implements Parcelable {
     /**
      * Set Primary Scrambling Code (PSC) of current Cell
      *
-     * @param psc Primary Scrambling Code
+     * @param primaryScramblingCode Primary Scrambling Code
      */
-    public void setPsc(int psc) {
-        if (psc == -1) {
-            this.psc = Integer.MAX_VALUE;
+    public void setPrimaryScramblingCode(int primaryScramblingCode) {
+        if (primaryScramblingCode == -1) {
+            this.primaryScramblingCode = Integer.MAX_VALUE;
         } else {
-            this.psc = psc;
+            this.primaryScramblingCode = primaryScramblingCode;
         }
     }
 
@@ -231,12 +231,12 @@ public class Cell implements Parcelable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + cid;
-        result = prime * result + lac;
-        result = prime * result + mcc;
-        result = prime * result + mnc;
-        if (psc != -1) {
-            result = prime * result + psc;
+        result = prime * result + cellId;
+        result = prime * result + locationAreaCode;
+        result = prime * result + mobileCountryCode;
+        result = prime * result + mobileNetworkCode;
+        if (primaryScramblingCode != -1) {
+            result = prime * result + primaryScramblingCode;
         }
         return result;
     }
@@ -253,24 +253,24 @@ public class Cell implements Parcelable {
             return false;
         }
         Cell other = (Cell) obj;
-        if (this.psc != Integer.MAX_VALUE) {
-            return this.cid == other.getCid() && this.lac == other.getLac() && this.mcc == other
-                    .getMcc() && this.mnc == other.getMnc() && this.psc == other.getPsc();
+        if (this.primaryScramblingCode != Integer.MAX_VALUE) {
+            return this.cellId == other.getCellId() && this.locationAreaCode == other.getLocationAreaCode() && this.mobileCountryCode == other
+                    .getMobileCountryCode() && this.mobileNetworkCode == other.getMobileNetworkCode() && this.primaryScramblingCode == other.getPrimaryScramblingCode();
         } else {
-            return this.cid == other.getCid() && this.lac == other.getLac() && this.mcc == other
-                    .getMcc() && this.mnc == other.getMnc();
+            return this.cellId == other.getCellId() && this.locationAreaCode == other.getLocationAreaCode() && this.mobileCountryCode == other
+                    .getMobileCountryCode() && this.mobileNetworkCode == other.getMobileNetworkCode();
         }
     }
 
     public String toString() {
         StringBuilder result = new StringBuilder();
 
-        result.append("cid - ").append(cid).append("\n");
-        result.append("LAC - ").append(lac).append("\n");
-        result.append("MCC - ").append(mcc).append("\n");
-        result.append("MNC - ").append(mnc).append("\n");
+        result.append("cid - ").append(cellId).append("\n");
+        result.append("LAC - ").append(locationAreaCode).append("\n");
+        result.append("MCC - ").append(mobileCountryCode).append("\n");
+        result.append("MNC - ").append(mobileNetworkCode).append("\n");
         result.append("DBm - ").append(dbm).append("\n");
-        result.append("PSC - ").append(validatePscValue(psc)).append("\n");
+        result.append("PSC - ").append(validatePscValue(primaryScramblingCode)).append("\n");
         result.append("Type - ").append(netType).append("\n");
         result.append("Lon - ").append(lon).append("\n");
         result.append("Lat - ").append(lat).append("\n");
@@ -279,7 +279,7 @@ public class Cell implements Parcelable {
     }
 
     public boolean isValid() {
-        return this.getCid() != Integer.MAX_VALUE && this.getLac() != Integer.MAX_VALUE;
+        return this.getCellId() != Integer.MAX_VALUE && this.getLocationAreaCode() != Integer.MAX_VALUE;
     }
 
     /**
@@ -378,12 +378,12 @@ public class Cell implements Parcelable {
         String[] data = new String[15];
 
         in.readStringArray(data);
-        cid = Integer.valueOf(data[0]);
-        lac = Integer.valueOf(data[1]);
-        mcc = Integer.valueOf(data[2]);
-        mnc = Integer.valueOf(data[3]);
+        cellId = Integer.valueOf(data[0]);
+        locationAreaCode = Integer.valueOf(data[1]);
+        mobileCountryCode = Integer.valueOf(data[2]);
+        mobileNetworkCode = Integer.valueOf(data[3]);
         dbm = Integer.valueOf(data[4]);
-        psc = Integer.valueOf(data[5]);
+        primaryScramblingCode = Integer.valueOf(data[5]);
         rssi = Integer.valueOf(data[6]);
         timingAdvance = Integer.valueOf(data[7]);
         sid = Integer.valueOf(data[8]);
@@ -402,12 +402,12 @@ public class Cell implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[]{
-                String.valueOf(this.cid),
-                String.valueOf(this.lac),
-                String.valueOf(this.mcc),
-                String.valueOf(this.mnc),
+                String.valueOf(this.cellId),
+                String.valueOf(this.locationAreaCode),
+                String.valueOf(this.mobileCountryCode),
+                String.valueOf(this.mobileNetworkCode),
                 String.valueOf(this.dbm),
-                String.valueOf(this.psc),
+                String.valueOf(this.primaryScramblingCode),
                 String.valueOf(this.rssi),
                 String.valueOf(this.timingAdvance),
                 String.valueOf(this.sid),

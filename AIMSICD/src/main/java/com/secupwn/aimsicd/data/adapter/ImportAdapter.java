@@ -3,24 +3,32 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.secupwn.aimsicd.adapters;
+package com.secupwn.aimsicd.data.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.data.model.Import;
 
-/**
- * Contains the data and definitions of all the items of the XML layout
- */
- 
-public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItemData> {
+import java.text.DateFormat;
+
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
+
+import static java.lang.String.valueOf;
+
+public class ImportAdapter extends RealmBaseAdapter<Import> {
+
+    public ImportAdapter(Context context, RealmResults<Import> realmResults, boolean automaticUpdate) {
+        super(context, realmResults, automaticUpdate);
+    }
 
     @Override
-    public View inflate(final BaseInflaterAdapter<DbeImportItemData> adapter,
-                        final int pos, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
         if (convertView == null) {
@@ -31,8 +39,8 @@ public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItem
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final DbeImportItemData item = adapter.getTItem(pos);
-        holder.updateDisplay(item);
+        final Import anImport = getItem(position);
+        holder.updateDisplay(anImport, position);
         return convertView;
     }
 
@@ -84,25 +92,28 @@ public class DbeImportCardInflater implements IAdapterViewInflater<DbeImportItem
             rootView.setTag(this);
         }
 
-        public void updateDisplay(DbeImportItemData item) {
-            DB_SOURCE.setText(item.getDB_SOURCE());
-            RAT.setText(item.getRAT());
-            MCC.setText(item.getMCC());
-            MNC.setText(item.getMNC());
-            LAC.setText(item.getLAC());
-            CID.setText(item.getCID());
-            PSC.setText(item.getPSC());
-            GPS_LAT.setText(item.getGPS_LAT());
-            GPS_LON.setText(item.getGPS_LON());
-            IS_GPS_EXACT.setText(item.getIS_GPS_EXACT());
-            AVG_RANGE.setText(item.getAVG_RANGE());
-            AVG_SIGNAL.setText(item.getAVG_SIGNAL());
-            SAMPLES.setText(item.getSAMPLES());
-            TIME_FIRST.setText(item.getTIME_FIRST());
-            TIME_LAST.setText(item.getTIME_LAST());
-            REJ_CAUSE.setText(item.getREJ_CAUSE());
+        public void updateDisplay(Import anImport, int pos) {
+            DB_SOURCE.setText(anImport.getDbSource());
+            RAT.setText(anImport.getRadioAccessTechnology());
+            MCC.setText(valueOf(anImport.getMobileCountryCode()));
+            MNC.setText(valueOf(anImport.getMobileNetworkCode()));
+            LAC.setText(valueOf(anImport.getLocationAreaCode()));
+            CID.setText(valueOf(anImport.getCellId()));
+            PSC.setText(valueOf(anImport.getPrimaryScramblingCode()));
+            GPS_LAT.setText(valueOf(anImport.getGpsLocation().getLatitude()));
+            GPS_LON.setText(valueOf(anImport.getGpsLocation().getLongitude()));
+            IS_GPS_EXACT.setText(valueOf(anImport.isGpsExact()));
+            AVG_RANGE.setText(valueOf(anImport.getAvgRange()));
+            AVG_SIGNAL.setText(valueOf(anImport.getAvgSignal()));
+            SAMPLES.setText(valueOf(anImport.getSamples()));
 
-            mRecordId.setText(item.getRecordId());
+            DateFormat df = DateFormat.getDateTimeInstance();
+            TIME_FIRST.setText(df.format(anImport.getTimeFirst()));
+            TIME_LAST.setText(df.format(anImport.getTimeLast()));
+
+            REJ_CAUSE.setText(valueOf(anImport.getRejCause()));
+
+            mRecordId.setText(valueOf(pos));
         }
     }
 }

@@ -42,15 +42,7 @@ public class DrawerMenu {
          * Constants of item of 'settings' section of menu
          */
         public static class DATABASE_SETTINGS {
-
-            public static final int BACKUP_DB = 310; //Backup DataBase
-            public static final int RESTORE_DB = 320; //Restore DataBase
             public static final int RESET_DB = 330; //Reset DataBase
-            //TODO need to implement
-            public static final int EXPORT_DB_TO_CVS = 340; //Export DataBase to CSV files
-            //TODO need to implement
-            public static final int IMPORT_DB_FROM_CVS = 350; //Import DataBase from CSV file(s)
-
         }
 
         /**

@@ -15,13 +15,16 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.data.model.GpsLocation;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.GeoLocation;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.utils.TruncatedLocation;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import lombok.Cleanup;
 
 /**
  * Class to handle GPS location tracking
@@ -41,7 +44,7 @@ public final class LocationTracker {
     private Location lastLocation;
     private static final long GPS_MIN_UPDATE_TIME = 10000;
     private static final float GPS_MIN_UPDATE_DISTANCE = 10;
-    private AIMSICDDbAdapter mDbHelper;
+    private RealmHelper mDbHelper;
 
     public LocationTracker(AimsicdService service, LocationListener extLocationListener) {
         this.context = service;
@@ -51,7 +54,7 @@ public final class LocationTracker {
         mLocationListener = new MyLocationListener();
         prefs = context.getSharedPreferences(
                 AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
-        mDbHelper = new AIMSICDDbAdapter(context);
+        mDbHelper = new RealmHelper(context);
     }
 
     public void start() {
@@ -129,11 +132,12 @@ public final class LocationTracker {
                     try {
                         Cell cell = context.getCell();
                         if (cell != null) {
-                            log.debug("Looking up MCC " + cell.getMcc());
+                            log.debug("Looking up MCC " + cell.getMobileCountryCode());
 
-                            double[] defLoc = mDbHelper.getDefaultLocation(cell.getMcc());
+                            @Cleanup Realm realm = Realm.getDefaultInstance();
+                            GpsLocation defLoc = mDbHelper.getDefaultLocation(realm, cell.getMobileCountryCode());
 
-                            loc = GeoLocation.fromDegrees(defLoc[0], defLoc[1]);
+                            loc = GeoLocation.fromDegrees(defLoc.getLatitude(), defLoc.getLongitude());
                         }
                     } catch (Exception e) {
                         log.error("Unable to get location from MCC", e);

@@ -12,10 +12,8 @@
     <string name="disclaimer_title">MIỄN TRỪ TRÁCH NHIỆM</string>
     <string name="toggle_attack_detection">Bật tắt phát hiện tấn công</string>
     <string name="toggle_cell_tracking">Bật tắt theo dõi máy di động</string>
-    <string name="backup_database">Sao lưu CSDL</string>
     <string name="clear_database">Xoá/cài lại CSDL</string>
     <string name="clear_database_question">Tất cả dữ liệu sẽ bị xóa.\nBạn có chắc không?</string>
-    <string name="restore_database">Khôi phục CSDL</string>
     <string name="preferences">Tuỳ chỉnh</string>
     <string name="press_once_again_to_exit">Nhấn lại để thoát.</string>
     <string name="cell_lookup">Tất cả chi tiết về máy di động hiện thời</string>
@@ -129,7 +127,6 @@
     <string name="lng_label">"Kinh độ: "</string>
 
     <string name="table_names_prompt">Chọn bảng</string>
-    <string name="database_export_successful">Xuất thành công</string>
 
     <string name="at_command_title">Giao diện lệnh AT</string>
     <string name="response_label">Phản hồi:</string>
@@ -234,11 +231,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">Tiếp nhận thành công dữ liệu OpenCellID.\nĐã cập nhật đánh dấu bản đồ.</string>
     <string name="uploaded_bts_data_successfully">Đã tải dữ liệu BTS lên OpenCellID thành công.</string>
     <string name="error_uploading_bts_data">Lỗi khi tải dữ liệu BTS lên máy chủ OpenCellID!</string>
-    <string name="restore_database_completed_title">Khôi phục thành công.</string>
-    <string name="restore_database_completed">Hoàn tất khôi phục CSDL.</string>
-    <string name="error_restoring_database">Lỗi khi khôi phục CSDL.</string>
-    <string name="database_backup_successfully_saved_to">Sao lưu thành công CSDL vào:</string>
-    <string name="error_backing_up_data">Lỗi khi sao lưu CSDL.</string>
     <string name="no_opencellid_key_detected">Không phát hiện khóa API OpenCellID nào!\nXin nhập khoá của bạn trong cài đặt trước đã.</string>
     <string name="refreshed_cell_id_info">Đang làm mới hiển thị</string>
     <string name="unable_to_acquire_root_access">Không thể nhận quyền truy cập ROOT trên thiết bị của bạn.\nNhập lệnh AT yêu cầu quyền truy cập ROOT cho Trạm .\nHãy kiểm tra nếu thiết bị ĐÃ ROOT và thử lại.</string>
@@ -292,11 +284,7 @@
     <string name="help_tracking_toggle_cell_tracking">Bắt đầu theo dõi các máy di động nhằm hiển thị trên trình xem bản đồ ăng-ten và sau đó có thể sẽ tải lên OpenCellID.</string>
 
     <string name="help_settings_preferences">Các cài đặt AIMSICD như là quy tắc bảo vệ, số lần thăm dò và hành vi dịch vụ.</string>
-    <string name="help_settings_backup_db">Sao lưu CSDL SQLite3 vào thẻ SD.</string>
-    <string name="help_settings_restore_db">Khôi phục CSDL SQLite3 từ thẻ SD.</string>
     <string name="help_settings_reset_db">Xoá và cài lại tất cả hoặc các bảng CSDL được chỉ định.</string>
-    <string name="help_settings_export_db_to_csv">Xuất các bảng CSDL vào những tập tin CSV riêng lẻ.</string>
-    <string name="help_settings_import_db_from_csv">Nhập các bảng CSDL từ những tập tin CSV riêng lẻ.</string>
 
     <string name="help_app_add_get_ocid_api_key">Nhận khóa API để sử dụng CSDL OpenCellID khi tải dữ liệu…</string>
     <string name="help_app_about">Đã giải thích biểu tượng trạng thái và dự án.</string>
@@ -305,7 +293,6 @@
     <string name="help_app_debugging">Thu thập và gửi lịch sử lỗi.</string>
     <string name="help_app_quit">Thoát ứng dụng.</string>
     <string name="waiting_for_location">Đang chờ vị trí…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Không thể khôi phục sao lưu từ phiên bản CSDL trước đó do cấu trúc đã thay đổi!</string>
     <string name="unique_bts_data">Dữ liệu BTS độc nhất</string>
     <string name="bts_measurements">Phép đo BTS</string>
     <string name="imported_ocid_data">Đã nhập dữ liệu OpenCellID</string>

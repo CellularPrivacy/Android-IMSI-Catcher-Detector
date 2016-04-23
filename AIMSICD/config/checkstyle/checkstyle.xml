@@ -4,9 +4,7 @@
 
 <module name="Checker">
     <module name="NewlineAtEndOfFile" />
-    <module name="FileLength">
-        <property name="max" value="2500" />
-    </module>
+    <module name="FileLength" />
     <module name="FileTabCharacter" />
 
     <!-- Name Checks -->
@@ -59,6 +57,7 @@
             <property name="illegalClassNames" value="java.util.LinkedList" />
             <property name="illegalClassNames" value="android.util.Log" />
             <property name="illegalClassNames" value="android.app.NotificationManager" />
+            <property name="illegalClassNames" value="android.database.Cursor" />
         </module>
         <module name="MissingSwitchDefault">
             <property name="severity" value="warning" />

@@ -30,7 +30,6 @@
     <string name="disclaimer_accepted" translatable="false">disclaimer_accepted</string>
     <string name="data_last_lat_lon" translatable="false">data_last_lat_lon</string>
     <string name="pref_cell_table_cleansed" translatable="false">pref_cell_table_cleansed</string>
-    <string name="pref_last_database_backup_version" translatable="false">pref_last_db_backup_version</string>
     <string name="pref_femto_action_key" translatable="false">pref_femto_action</string>
     <string name="pref_persistservice_key" translatable="false">pref_persistservice_service</string>
 

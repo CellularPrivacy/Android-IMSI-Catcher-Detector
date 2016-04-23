@@ -5,8 +5,6 @@
  */
 package com.secupwn.aimsicd.utils;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -14,11 +12,10 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.ui.fragments.MapFragment;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
 import com.secupwn.aimsicd.service.CellTracker;
+import com.secupwn.aimsicd.ui.fragments.MapFragment;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -39,6 +36,8 @@ import java.util.concurrent.TimeUnit;
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import lombok.Cleanup;
 
 /**
  *
@@ -48,7 +47,7 @@ import io.freefair.android.util.logging.Logger;
  *      the backing up of the database. The download function currently requests a CVS file
  *      from OCID though an API query. The parsing of this CVS file is done in the
  *      "AIMSICDDbAdapter.java" adapter, which put the downloaded data into the
- *      "DBe_import" table. This should be a read-only table, in the sense that no new
+ *      {@link com.secupwn.aimsicd.data.model.Import Import} realm. This should be a read-only table, in the sense that no new
  *      BTS or info should be added there. The indexing there can be very tricky when
  *      later displayed in "DbViewerFragment.java", as they are different.
  *
@@ -89,14 +88,12 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     public static final char DBE_DOWNLOAD_REQUEST = 1;          // OCID download request from "APPLICATION" drawer title
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
     public static final char DBE_UPLOAD_REQUEST = 6;            // OCID upload request from "APPLICATION" drawer title
-    public static final char BACKUP_DATABASE = 3;               // Backup DB to CSV and AIMSICD_dump.db
-    public static final char RESTORE_DATABASE = 4;              // Restore DB from CSV files
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ALL_CURRENT_CELL_DETAILS)"
 
     @Inject
     private Logger log;
 
-    private AIMSICDDbAdapter mDbAdapter;
+    private RealmHelper mDbAdapter;
     private Context mAppContext;
     private char mType;
     private int mTimeOut;
@@ -116,7 +113,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
         super(context);
         this.mType = type;
         this.mAppContext = context.getApplicationContext();
-        this.mDbAdapter = new AIMSICDDbAdapter(mAppContext);
+        this.mDbAdapter = new RealmHelper(mAppContext);
         this.mTimeOut = REQUEST_TIMEOUT_MAPS;
         this.mListener = listener;
     }
@@ -141,7 +138,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
             // OCID upload request from "APPLICATION" drawer title
             case DBE_UPLOAD_REQUEST:
                 try {
-                    boolean prepared = mDbAdapter.prepareOpenCellUploadData();
+                    @Cleanup Realm realm = Realm.getDefaultInstance();
+                    boolean prepared = mDbAdapter.prepareOpenCellUploadData(realm);
 
                     log.info("OCID upload data prepared - " + String.valueOf(prepared));
                     if (prepared) {
@@ -169,7 +167,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                                     + response.code() + " - "
                                     + response.message());
                             if (response.code() == 200) {
-                                mDbAdapter.ocidProcessed();
+                                Realm.Transaction transaction = mDbAdapter.ocidProcessed();
+                                realm.executeTransaction(transaction);
                             }
                             publishProgress(95, 100);
                         }
@@ -267,52 +266,39 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     log.warn("Problem reading data from steam", e);
                     return null;
                 }
-
-            case BACKUP_DATABASE:
-                if (mDbAdapter.backupDB()) {
-                    return "Successful";
-                }
-                return null;
-
-            case RESTORE_DATABASE:
-                if (mDbAdapter.restoreDB()) {
-                    return "Successful";
-                }
-                return null;
         }
 
         return null;
     }
 
     /**
-     *  Description:    This is where we:
-     *
-     *                  1) Check the success for OCID data download
-     *                  2) call the updateOpenCellID() to populate the DBe_import table
-     *                  3) call the checkDBe() to cleanup bad cells from imported data
-     *                  4) present a failure/success toast message
-     *                  5) set a shared preference to indicate that data has been downloaded:
-     *                      "ocid_downloaded true"
-     *
-     *  Issues:
-     *                  [ ] checkDBe() is incomplete, due to missing RAT column in DBe_import
-     *
+     * This is where we:
+     * <ol>
+     * <li>Check the success for OCID data download</li>
+     * <li>call the updateOpenCellID() to populate the {@link com.secupwn.aimsicd.data.model.Import Import} realm</li>
+     * <li>call the {@link RealmHelper#checkDBe()} to cleanup bad cells from imported data</li>
+     * <li>present a failure/success toast message</li>
+     * <li>set a shared preference to indicate that data has been downloaded:
+     * {@code ocid_downloaded true}</li>
+     * </ol>
      */
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         TinyDB tinydb = TinyDB.getInstance();
 
+        @Cleanup Realm realm = Realm.getDefaultInstance();
+
         switch (mType) {
             case DBE_DOWNLOAD_REQUEST:
                 // if `result` is null, it will evaluate to false, no need to check for null
                 if ("Successful".equals(result)) {
 
-                    if (mDbAdapter.populateDBeImport()) {
+                    if (mDbAdapter.populateDBeImport(realm)) {
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received));
                     }
 
-                    mDbAdapter.checkDBe();
+                    realm.executeTransaction(mDbAdapter.checkDBe());
                     tinydb.putBoolean("ocid_downloaded", true);
                 } else if ("Timeout".equals(result)) {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_timed_out));
@@ -323,12 +309,12 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
             case DBE_DOWNLOAD_REQUEST_FROM_MAP:
                 if ("Successful".equals(result)) {
-                    if (mDbAdapter.populateDBeImport()) {
+                    if (mDbAdapter.populateDBeImport(realm)) {
                         Intent intent = new Intent(MapFragment.updateOpenCellIDMarkers);
                         LocalBroadcastManager.getInstance(mAppContext).sendBroadcast(intent);
                         Helpers.msgShort(mAppContext, mAppContext.getString(R.string.opencellid_data_successfully_received_markers_updated));
 
-                        mDbAdapter.checkDBe();
+                        realm.executeTransaction(mDbAdapter.checkDBe());
                         tinydb.putBoolean("ocid_downloaded", true);
                     }
                 } else if ("Timeout".equals(result)) {
@@ -347,42 +333,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_uploading_bts_data));
                 }
                 break;
-
-            case RESTORE_DATABASE:
-                if ("Successful".equals(result)) {
-                    Helpers.msgShort(mAppContext, mAppContext.getString(R.string.restore_database_completed));
-                    Activity lActivity = getActivity();
-
-                    //Activity may be detached or destroyed
-                    if (lActivity != null) {
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
-                        builder.setTitle(R.string.restore_database_completed_title).setMessage(
-                                lActivity.getString(R.string.restore_database_completed));
-                        builder.create().show();
-                    }
-                } else {
-                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_restoring_database));
-                }
-                break;
-
-            case BACKUP_DATABASE:
-                if ("Successful".equals(result)) {
-
-                    // strings.xml: pref_last_db_backup_version
-                    //tinydb.putInt(mContext.getString(R.string.pref_last_database_backup_version), AIMSICDDbAdapter.DATABASE_VERSION); //TODO
-                    tinydb.putInt("pref_last_db_backup_version", AIMSICDDbAdapter.DATABASE_VERSION);
-                    Activity lActivity = getActivity();
-
-                    //Activity may be detached or destroyed
-                    if (lActivity != null) {
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(lActivity);
-                        builder.setTitle(R.string.database_export_successful).setMessage(
-                                lActivity.getString(R.string.database_backup_successfully_saved_to) + "\n" + AIMSICDDbAdapter.mExternalFilesDirPath);
-                        builder.create().show();
-                    }
-                } else {
-                    Helpers.msgLong(mAppContext, mAppContext.getString(R.string.error_backing_up_data));
-                }
         }
         if (mListener != null) {
             if ("Successful".equals(result)) {

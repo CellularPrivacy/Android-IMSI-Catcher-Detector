@@ -8,7 +8,6 @@
 
 package com.secupwn.aimsicd.smsdetection;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,11 +15,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
-import com.secupwn.aimsicd.constants.DBTableColumnIds;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.secupwn.aimsicd.data.adapter.SmsDataAdapter;
+import com.secupwn.aimsicd.data.model.SmsData;
+import com.secupwn.aimsicd.utils.RealmHelper;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
@@ -28,6 +25,10 @@ import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import io.realm.RealmResults;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 @XmlLayout(R.layout.activity_advanced_sms_user)
 public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
@@ -38,97 +39,45 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
     @InjectView(R.id.listView_Adv_Sms_Activity)
     ListView listViewAdv;
 
-    AIMSICDDbAdapter dbaccess;
-    List<CapturedSmsData> msgitems;
+    RealmHelper dbaccess;
+
+    private Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dbaccess = new AIMSICDDbAdapter(getApplicationContext());
-        msgitems = new ArrayList<>();
+        realm = Realm.getDefaultInstance();
 
-        try {
-            Cursor smscur = dbaccess.returnSmsData();
-            if (smscur.getCount() > 0) {
-                while (smscur.moveToNext()) {
-                    CapturedSmsData getdata = new CapturedSmsData();
-                    getdata.setId(smscur.getLong(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_ID)));
-                    getdata.setSmsTimestamp(smscur.getString(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_TIMESTAMP)));
-                    getdata.setSmsType(smscur.getString(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_SMS_TYPE)));
-                    getdata.setSenderNumber(smscur.getString(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_SENDER_NUMBER)));
-                    getdata.setSenderMsg(smscur.getString(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_SENDER_MSG)));
-                    getdata.setCurrent_lac(smscur.getInt(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_LAC)));
-                    getdata.setCurrent_cid(smscur.getInt(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_CID)));
-                    getdata.setCurrent_nettype(smscur.getString(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_RAT)));
-                    getdata.setCurrent_roam_status(smscur.getInt(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_ROAM_STATE)));
-                    getdata.setCurrent_gps_lat(smscur.getDouble(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_GPS_LAT)));
-                    getdata.setCurrent_gps_lon(smscur.getDouble(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_GPS_LON)));
-                    msgitems.add(getdata);
-                }
-            }
-            smscur.close();
+        dbaccess = new RealmHelper(getApplicationContext());
+        RealmResults<SmsData> msgitems = realm.where(SmsData.class).findAllSorted("timestamp");
 
-        } catch (Exception ee) {
-            log.error("DB ERROR", ee);
-        }
-
-
-
-        listViewAdv.setAdapter(new AdvanceUserBaseSmsAdapter(getApplicationContext(), msgitems));
+        listViewAdv.setAdapter(new SmsDataAdapter(getApplicationContext(), msgitems, true));
 
         listViewAdv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> a, View v, int position, long id) {
-                Object o = listViewAdv.getItemAtPosition(position);
-                CapturedSmsData obj_itemDetails = (CapturedSmsData) o;
+                final SmsData smsData = (SmsData) listViewAdv.getItemAtPosition(position);
 
-                if (dbaccess.deleteDetectedSms(obj_itemDetails.getId())) {
-                    Toast.makeText(getApplicationContext(), "Deleted Sms Id = \n" + obj_itemDetails.getId(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Failed to Delete", Toast.LENGTH_SHORT).show();
-                }
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        smsData.removeFromRealm();
+                    }
+                });
 
-                try {
-                    loadDbString();
-                } catch (Exception ee) {
-                    log.debug("", ee);
-                }
-                return false;
+                Toast.makeText(a.getContext(), "Deleted Sms", LENGTH_SHORT).show();
+
+                return true;
             }
 
         });
 
     }
-    public void loadDbString() {
-        List<CapturedSmsData> newmsglist = new ArrayList<>();
 
-        try {
-            Cursor smscur = dbaccess.returnSmsData();
-
-            if (smscur.getCount() > 0) {
-                while (smscur.moveToNext()) {
-                    CapturedSmsData getdata = new CapturedSmsData();
-                    getdata.setId(smscur.getLong(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_ID)));
-                    getdata.setSmsTimestamp(smscur.getString(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_TIMESTAMP)));
-                    getdata.setSmsType(smscur.getString(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_SMS_TYPE)));
-                    getdata.setSenderNumber(smscur.getString(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_SENDER_NUMBER)));
-                    getdata.setSenderMsg(smscur.getString(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_SENDER_MSG)));
-                    getdata.setCurrent_lac(smscur.getInt(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_LAC)));
-                    getdata.setCurrent_cid(smscur.getInt(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_CID)));
-                    getdata.setCurrent_nettype(smscur.getString(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_RAT)));
-                    getdata.setCurrent_roam_status(smscur.getInt(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_ROAM_STATE)));
-                    getdata.setCurrent_gps_lat(smscur.getDouble(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_GPS_LAT)));
-                    getdata.setCurrent_gps_lon(smscur.getDouble(smscur.getColumnIndex(DBTableColumnIds.SMS_DATA_GPS_LON)));
-                    newmsglist.add(getdata);
-                }
-            }
-
-            smscur.close();
-            listViewAdv.setAdapter(new AdvanceUserBaseSmsAdapter(getApplicationContext(), newmsglist));
-        } catch (Exception ee) {
-            log.error("DB ERROR", ee);
-        }
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 }

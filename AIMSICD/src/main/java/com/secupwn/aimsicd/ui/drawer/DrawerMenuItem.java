@@ -84,20 +84,8 @@ public class DrawerMenuItem implements NavDrawerItem {
             case MAIN.AT_COMMAND_INTERFACE:
                 return R.string.help_main_at_command_interface;
 
-            case DATABASE_SETTINGS.BACKUP_DB:
-                return R.string.help_settings_backup_db;
-
-            case DATABASE_SETTINGS.RESTORE_DB:
-                return R.string.help_settings_restore_db;
-
             case DATABASE_SETTINGS.RESET_DB:
                 return R.string.help_settings_reset_db;
-
-            case DATABASE_SETTINGS.EXPORT_DB_TO_CVS:
-                return R.string.help_settings_export_db_to_csv;
-
-            case DATABASE_SETTINGS.IMPORT_DB_FROM_CVS:
-                return R.string.help_settings_import_db_from_csv;
 
             case APPLICATION.DOWNLOAD_LOCAL_BTS_DATA:
                 return R.string.help_app_download_local_bts;

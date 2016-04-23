@@ -14,10 +14,8 @@
 
     <string name="toggle_attack_detection">Styr Angrepsoppdaging</string>
     <string name="toggle_cell_tracking">Styr Cellesporing</string>
-    <string name="backup_database">Sikkerhetskopier Database</string>
     <string name="clear_database">Nullstill Database</string>
     <string name="clear_database_question">Alle data vil slettes.\nEr du sikker?</string>
-    <string name="restore_database">Tilbakefør Database</string>
     <string name="press_once_again_to_exit">Trykk på nytt for å Avslutte.</string>
     <string name="cell_lookup">Alle Nåværende Celledetaljer</string>
     <string name="debugging">Feilsøking</string>
@@ -124,7 +122,6 @@
     <string name="lng_label">"Lengdegrad: "</string>
 
     <string name="table_names_prompt">Velg Liste</string>
-    <string name="database_export_successful">Vellykket eksport</string>
 
     <string name="at_command_title">AT kommando Linje</string>
     <string name="response_label">Tilbakemelding:</string>
@@ -230,11 +227,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data vellykket mottatt.\nKart Markører oppdatert.</string>
     <string name="uploaded_bts_data_successfully">"Opplasting av  BTD data til OpenCellID vellykket."</string>
     <string name="error_uploading_bts_data">Feil under opplasting av OpenCellID data til serverne!</string>
-    <string name="restore_database_completed_title">Gjennoppretting Vellykket.</string>
-    <string name="restore_database_completed">Gjennoppretting av database vellykket.</string>
-    <string name="error_restoring_database">Feil under gjennoppretting av database.</string>
-    <string name="database_backup_successfully_saved_to">Database vellykket sikkerhetskopiert til:</string>
-    <string name="error_backing_up_data">Feil under sikkerhetskopiering av database.</string>
     <string name="no_opencellid_key_detected">Ingen OpenCellID API nøkkel oppdaget!\nVennligst skriv inn din nøkkel under innstillinger først.</string>
     <string name="refreshed_cell_id_info">Oppdaterer Skjerm</string>
     <string name="unable_to_acquire_root_access">Klarte ikke å få ROOT tilgang på din enhet.\nAT kommando injection krever ROOT Terminal tilgang.\nVennligst undersøk om din enhet er ROOTET og prøv igjen.</string>
@@ -290,11 +282,7 @@
     <string name="help_tracking_toggle_cell_tracking">Start å søke celler for å vise i Antenne Kartet og muligens laste dem opp senere til OpenCellID.</string>
 
     <string name="help_settings_preferences">AIMSICD innstillinger som beskyttelsesregler, hyppighet og service oppførsel.</string>
-    <string name="help_settings_backup_db">Backup SQLite3 DB til SD-Kort.</string>
-    <string name="help_settings_restore_db">Tilbakefør SQLite3 DB til SD-Kort.</string>
     <string name="help_settings_reset_db">Nullstill alle eller spesifiserte DB liste(r).</string>
-    <string name="help_settings_export_db_to_csv">Eksporter DB lister til individuelle CSV filer.</string>
-    <string name="help_settings_import_db_from_csv">Importer DB liste(r) fra individuelle CSV filer.</string>
 
     <string name="help_app_add_get_ocid_api_key">Motta API nøkkel for å bruke OpenCellID database til å opplaste og nedlaste data…</string>
     <string name="help_app_about">Status Icon og Project forklaring.</string>
@@ -302,7 +290,6 @@
     <string name="help_app_upload_local_bts">Last opp Basestasjoner til OpenCellID Database.</string>
     <string name="help_app_quit">Avslutt denne Appen.</string>
     <string name="waiting_for_location">Venter på posisjon…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Klarte ikke tilbakeføre backup fra tidligere database grunnet nye struktur forandringer!</string>
     <string name="unique_bts_data">Spesifikk Basestasjon Data</string>
     <string name="bts_measurements">Basestasjon Målinger</string>
     <string name="imported_ocid_data">Importert OpenCellID Data</string>

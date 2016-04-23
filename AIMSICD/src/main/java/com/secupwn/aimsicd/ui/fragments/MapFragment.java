@@ -13,7 +13,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -32,17 +31,20 @@ import android.view.View;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.ui.activities.MapPrefActivity;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
-import com.secupwn.aimsicd.constants.DBTableColumnIds;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
+import com.secupwn.aimsicd.data.model.BaseTransceiverStation;
+import com.secupwn.aimsicd.data.model.GpsLocation;
+import com.secupwn.aimsicd.data.model.Import;
+import com.secupwn.aimsicd.data.model.Measure;
 import com.secupwn.aimsicd.map.CellTowerGridMarkerClusterer;
 import com.secupwn.aimsicd.map.CellTowerMarker;
 import com.secupwn.aimsicd.map.MarkerData;
 import com.secupwn.aimsicd.service.AimsicdService;
+import com.secupwn.aimsicd.ui.activities.MapPrefActivity;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.GeoLocation;
 import com.secupwn.aimsicd.utils.Helpers;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.utils.RequestTask;
 import com.secupwn.aimsicd.utils.TinyDB;
 
@@ -64,6 +66,9 @@ import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.injection.app.InjectionFragment;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import lombok.Cleanup;
 
 /**
  * Description:    TODO: add details
@@ -96,7 +101,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
     @InjectView(R.id.mapview)
     private MapView mMap;
-    private AIMSICDDbAdapter mDbHelper;
+    private RealmHelper mDbHelper;
     private SharedPreferences prefs;
     private AimsicdService mAimsicdService;
     private boolean mBound;
@@ -128,7 +133,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
         setUpMapIfNeeded();
 
-        mDbHelper = new AIMSICDDbAdapter(getActivity());
+        mDbHelper = new RealmHelper(getActivity());
         tm = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
 
         // Bind to LocalService
@@ -371,40 +376,36 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
             @Override
             protected GeoPoint doInBackground(Void... voids) {
                 //int signal;
+                @Cleanup Realm realm = Realm.getDefaultInstance();
 
                 mCellTowerGridMarkerClusterer.getItems().clear();
 
-                //New function only gets bts from DBe_import by sim network
                 loadOcidMarkersByNetwork();
 
                 List<CellTowerMarker> items = new LinkedList<>();
 
-                Cursor c = null;
-                try {
-                    // Grab cell data from CELL_TABLE (cellinfo) --> DBi_bts
-                    c = mDbHelper.getCellData();
-                } catch (IllegalStateException ix) {
-                    log.error("Problem getting data from CELL_TABLE", ix);
-                }
+                RealmResults<BaseTransceiverStation> baseStations = realm.where(BaseTransceiverStation.class).findAll();
 
                 /*
                     This function is getting cells we logged from DBi_bts
                  */
-                if (c != null && c.moveToFirst()) {
-                    do {
+                if (baseStations.size() > 0) {
+                    for (BaseTransceiverStation baseStation : baseStations) {
+
                         if (isCancelled() || !isAdded()) {
                             return null;
                         }
                         // The indexing here is that of DB table
-                        final int cellID = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_CID));     // CID
-                        final int lac = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LAC));        // LAC
-                        final int mcc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_MCC));        // MCC
-                        final int mnc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_MNC));        // MNC
-                        final int psc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_PSC));        // PSC
-                        final String rat = Cell.getRatFromInt(
-                                c.getInt(c.getColumnIndex(DBTableColumnIds.DBI_BTS_JOINED_RAT)));        // RAT
-                        final double dLat = c.getDouble(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LAT)); // Lat
-                        final double dLng = c.getDouble(c.getColumnIndex(DBTableColumnIds.DBI_BTS_LON)); // Lon
+                        final int cellID = baseStation.getCellId();
+                        final int lac = baseStation.getLocationAreaCode();
+                        final int mcc = baseStation.getMobileCountryCode();
+                        final int mnc = baseStation.getMobileNetworkCode();
+                        final int psc = baseStation.getPrimaryScramblingCode();
+
+                        Measure first = realm.where(Measure.class).equalTo("baseStation.cellId", baseStation.getCellId()).findFirst();
+                        final String rat = first.getRadioAccessTechnology();
+                        final double dLat = baseStation.getGpsLocation().getLatitude();
+                        final double dLng = baseStation.getGpsLocation().getLongitude();
 
                         if (Double.doubleToRawLongBits(dLat) == 0
                                 && Double.doubleToRawLongBits(dLng) == 0) {
@@ -443,8 +444,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
                             items.add(ovm);
                         }
-
-                    } while (c.moveToNext());
+                    }
                 } else {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -457,15 +457,12 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                 GeoPoint ret = new GeoPoint(0, 0);
                 if (mBound) {
                     try {
-                        int mcc = mAimsicdService.getCell().getMcc();
-                        double[] d = mDbHelper.getDefaultLocation(mcc);
-                        ret = new GeoPoint(d[0], d[1]);
+                        int mcc = mAimsicdService.getCell().getMobileCountryCode();
+                        GpsLocation d = mDbHelper.getDefaultLocation(realm, mcc);
+                        ret = new GeoPoint(d.getLatitude(), d.getLongitude());
                     } catch (Exception e) {
                         log.error("Error getting default location!", e);
                     }
-                }
-                if (c != null) {
-                    c.close();
                 }
                 // plot neighbouring cells
                 while (mAimsicdService == null) {
@@ -486,17 +483,17 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                     try {
                         loc = new GeoPoint(cell.getLat(), cell.getLon());
                         CellTowerMarker ovm = new CellTowerMarker(getActivity(), mMap,
-                                getString(R.string.cell_id_label) + cell.getCid(),
+                                getString(R.string.cell_id_label) + cell.getCellId(),
                                 "", loc,
                                 new MarkerData(
                                         getContext(),
-                                        String.valueOf(cell.getCid()),
+                                        String.valueOf(cell.getCellId()),
                                         String.valueOf(loc.getLatitude()),
                                         String.valueOf(loc.getLongitude()),
-                                        String.valueOf(cell.getLac()),
-                                        String.valueOf(cell.getMcc()),
-                                        String.valueOf(cell.getMnc()),
-                                        String.valueOf(cell.getPsc()),
+                                        String.valueOf(cell.getLocationAreaCode()),
+                                        String.valueOf(cell.getMobileCountryCode()),
+                                        String.valueOf(cell.getMobileNetworkCode()),
+                                        String.valueOf(cell.getPrimaryScramblingCode()),
                                         String.valueOf(cell.getRat()),
                                         "", false));
 
@@ -567,46 +564,45 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
             currentMmc = Integer.parseInt(networkOperator.substring(0, 3));
             currentMnc = Integer.parseInt(networkOperator.substring(3));
         }
-        // DBe_import tower pins.
+
         Drawable cellTowerMarkerIcon = getResources().getDrawable(R.drawable.ic_map_pin_green);
 
-        Cursor c = mDbHelper.returnOcidBtsByNetwork(currentMmc, currentMnc);
-        if (c.moveToFirst()) {
-            do {
-                // CellID,Lac,Mcc,Mnc,Lat,Lng,AvgSigStr,Samples
-                final int cellID = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_CID));
-                final int lac = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_LAC));
-                final int mcc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MCC));
-                final int mnc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_MNC));
-                final int psc = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_PSC));
-                final String rat = c.getString(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_RAT));
-                final double dLat = Double.parseDouble(c.getString(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LAT)));
-                final double dLng = Double.parseDouble(c.getString(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_GPS_LON)));
-                final GeoPoint location = new GeoPoint(dLat, dLng);
-                //where is c.getString(6)AvgSigStr
-                final int samples = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_SAMPLES));
-                // Add map marker for CellID
-                CellTowerMarker ovm = new CellTowerMarker(getActivity(), mMap,
-                        "Cell ID: " + cellID,
-                        "", location,
-                        new MarkerData(
-                                getContext(),
-                                String.valueOf(cellID),
-                                String.valueOf(location.getLatitude()),
-                                String.valueOf(location.getLongitude()),
-                                String.valueOf(lac),
-                                String.valueOf(mcc),
-                                String.valueOf(mnc),
-                                String.valueOf(psc),
-                                rat,
-                                String.valueOf(samples),
-                                false));
+        @Cleanup Realm realm = Realm.getDefaultInstance();
 
-                ovm.setIcon(cellTowerMarkerIcon);
-                items.add(ovm);
-            } while (c.moveToNext());
+        RealmResults<Import> importRealmResults = mDbHelper.returnOcidBtsByNetwork(realm, currentMmc, currentMnc).findAll();
+        for (Import anImport : importRealmResults) {
+
+            final int cellID = anImport.getCellId();
+            final int lac = anImport.getLocationAreaCode();
+            final int mcc = anImport.getMobileCountryCode();
+            final int mnc = anImport.getMobileNetworkCode();
+            final int psc = anImport.getPrimaryScramblingCode();
+            final String rat = anImport.getRadioAccessTechnology();
+            final double dLat = anImport.getGpsLocation().getLatitude();
+            final double dLng = anImport.getGpsLocation().getLongitude();
+            final GeoPoint location = new GeoPoint(dLat, dLng);
+            //where is c.getString(6)AvgSigStr
+            final int samples = anImport.getSamples();
+            // Add map marker for CellID
+            CellTowerMarker ovm = new CellTowerMarker(getActivity(), mMap,
+                    "Cell ID: " + cellID,
+                    "", location,
+                    new MarkerData(
+                            getContext(),
+                            String.valueOf(cellID),
+                            String.valueOf(location.getLatitude()),
+                            String.valueOf(location.getLongitude()),
+                            String.valueOf(lac),
+                            String.valueOf(mcc),
+                            String.valueOf(mnc),
+                            String.valueOf(psc),
+                            rat,
+                            String.valueOf(samples),
+                            false));
+
+            ovm.setIcon(cellTowerMarkerIcon);
+            items.add(ovm);
         }
-        c.close();
 
         mCellTowerGridMarkerClusterer.addAll(items);
     }
@@ -631,7 +627,6 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
             }
         }
     }
-
 
     @Override
     public void onStart() {

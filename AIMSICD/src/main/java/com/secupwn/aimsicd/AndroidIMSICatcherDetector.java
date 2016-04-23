@@ -5,7 +5,6 @@
  */
 package com.secupwn.aimsicd;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Vibrator;
@@ -13,6 +12,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseArray;
 
 import com.secupwn.aimsicd.constants.TinyDbKeys;
+import com.secupwn.aimsicd.data.DefaultDataTransaction;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.utils.BaseAsyncTask;
 import com.secupwn.aimsicd.utils.TinyDB;
@@ -27,6 +27,8 @@ import io.freefair.android.injection.app.InjectionApplication;
 import io.freefair.android.injection.modules.AndroidLoggerModule;
 import io.freefair.android.injection.modules.OkHttpModule;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class AndroidIMSICatcherDetector extends InjectionApplication {
 
@@ -56,6 +58,32 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
         addModule(new AndroidLoggerModule());
         addModule(OkHttpModule.withCache(this));
         super.onCreate();
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+        final Realm realm = Realm.getDefaultInstance();
+
+        realm.executeTransactionAsync(
+                new DefaultDataTransaction(),
+                new Realm.Transaction.OnSuccess() {
+                    @Override
+                    public void onSuccess() {
+                        log.debug("Loading default data successful");
+                        realm.close();
+                    }
+                },
+                new Realm.Transaction.OnError() {
+                    @Override
+                    public void onError(Throwable error) {
+                        log.error("Error loading default data", error);
+                        realm.close();
+                    }
+                }
+        );
+
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
     }
@@ -154,4 +182,5 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
         }
         return currentStatus;
     }
+
 }

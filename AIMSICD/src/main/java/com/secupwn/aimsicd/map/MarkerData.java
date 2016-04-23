@@ -19,7 +19,7 @@ public class MarkerData {
 
     Context c;                      // Used for i18n/Strings
     public final String cellID;     // change to "CID"...
-    //private final String psc;     // PSC (UMTS)
+    //private final String primaryScramblingCode;     // PSC (UMTS)
     public final String lat;        // gpsd_lat or gps_lat
     public final String lng;        // gpsd_lon or gps_lon    TODO: change to "lon"...
     public final String lac;        // LAC

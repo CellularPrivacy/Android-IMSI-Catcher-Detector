@@ -33,17 +33,16 @@ import android.widget.Toast;
 
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.ui.fragments.MapFragment;
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
+import com.secupwn.aimsicd.service.AimsicdService;
+import com.secupwn.aimsicd.service.CellTracker;
 import com.secupwn.aimsicd.ui.drawer.DrawerMenuActivityConfiguration;
 import com.secupwn.aimsicd.ui.drawer.NavDrawerItem;
 import com.secupwn.aimsicd.ui.fragments.AtCommandFragment;
 import com.secupwn.aimsicd.ui.fragments.CellInfoFragment;
 import com.secupwn.aimsicd.ui.fragments.DbViewerFragment;
 import com.secupwn.aimsicd.ui.fragments.DeviceFragment;
-import com.secupwn.aimsicd.service.AimsicdService;
-import com.secupwn.aimsicd.service.CellTracker;
+import com.secupwn.aimsicd.ui.fragments.MapFragment;
 import com.secupwn.aimsicd.utils.AsyncResponse;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.GeoLocation;
@@ -245,18 +244,9 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                 openFragment(mapFragment);
                 title = getString(R.string.app_name_short);
                 break;
-            case DrawerMenu.ID.DATABASE_SETTINGS.BACKUP_DB:
-                new RequestTask(this, RequestTask.BACKUP_DATABASE).execute();
-                break;
         }
 
-        if (selectedItem.getId() == DrawerMenu.ID.DATABASE_SETTINGS.RESTORE_DB) {
-            if (CellTracker.LAST_DB_BACKUP_VERSION < AIMSICDDbAdapter.DATABASE_VERSION) {
-                Helpers.msgLong(this, getString(R.string.unable_to_restore_backup_from_previous_database_version));
-            } else {
-                new RequestTask(this, RequestTask.RESTORE_DATABASE).execute();
-            }
-        } else if (selectedItem.getId() == DrawerMenu.ID.DATABASE_SETTINGS.RESET_DB) {
+        if (selectedItem.getId() == DrawerMenu.ID.DATABASE_SETTINGS.RESET_DB) {
             // WARNING! This deletes the entire database, thus any subsequent DB access will FC app.
             // Therefore we need to either restart app or run AIMSICDDbAdapter, to rebuild DB.
             // See: https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/581 and Helpers.java
@@ -277,9 +267,6 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
             if (mAimsicdService != null) {
                 mAimsicdService.onDestroy();
             }
-            //Close database on Exit
-            log.info("Closing db from DrawerMenu.ID.APPLICATION.QUIT");
-            new AIMSICDDbAdapter(getApplicationContext()).close();
             finish();
         }
 
@@ -311,10 +298,10 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
             if (networkOperator != null && !networkOperator.isEmpty()) {
                 int mcc = Integer.parseInt(networkOperator.substring(0, 3));
-                cell.setMcc(mcc);
+                cell.setMobileCountryCode(mcc);
                 int mnc = Integer.parseInt(networkOperator.substring(3));
-                cell.setMnc(mnc);
-                log.debug("CELL:: mcc=" + mcc + " mnc=" + mnc);
+                cell.setMobileNetworkCode(mnc);
+                log.debug("CELL:: mobileCountryCode=" + mcc + " mobileNetworkCode=" + mnc);
             }
 
 
@@ -335,10 +322,10 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                         = new LocationServices.LocationAsync();
                 locationAsync.delegate = this;
                 locationAsync.execute(
-                        mAimsicdService.getCell().getCid(),
-                        mAimsicdService.getCell().getLac(),
-                        mAimsicdService.getCell().getMnc(),
-                        mAimsicdService.getCell().getMcc());
+                        mAimsicdService.getCell().getCellId(),
+                        mAimsicdService.getCell().getLocationAreaCode(),
+                        mAimsicdService.getCell().getMobileNetworkCode(),
+                        mAimsicdService.getCell().getMobileCountryCode());
             }
         } else {
             Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
@@ -549,9 +536,6 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
             } catch (Exception ee) {
                 log.error("Error: Stopping SMS detection : " + ee.getMessage());
             }
-            // Close database on Exit
-            log.info("Closing db from onBackPressed()");
-            new AIMSICDDbAdapter(getApplicationContext()).close();
             finish();
         }
     }

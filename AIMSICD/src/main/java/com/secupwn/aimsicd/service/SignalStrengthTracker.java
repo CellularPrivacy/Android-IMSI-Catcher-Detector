@@ -7,12 +7,14 @@ package com.secupwn.aimsicd.service;
 
 import android.content.Context;
 
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
+import com.secupwn.aimsicd.utils.RealmHelper;
 
 import java.util.HashMap;
 
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+import io.realm.Realm;
+import lombok.Cleanup;
 
 /**
  *  Description:    Class that calculates cell signal strength averages and decides if a
@@ -38,39 +40,6 @@ import io.freefair.android.util.logging.Logger;
  *      [ ] Need to add RAT detection for each signal, as to above. Since we could have different
  *          signal due to different RAT, for the same cell (LAC/CID). (@He3556 please confirm.)
  *          This means that the SQL query will be a little more complicated.
- *
- *      [ ] Correctly set the time in the database. Our database is using TEXT in all its time
- *          related entries, like "time", "time_first" and "time_Last". So what do we put there?
- *
- *          We have two options:
- *
- *          1) Change the time fields to use INTEGER so that we can use the "unixepoch" (Unix time)
- *             [no of seconds since 1970-01-01] to perform numerical comparisons directly in SQL.
- *
- *                  # To compute the current unix timestamp.
- *                  SELECT strftime('%s','now');
- *
- *          2) Store as TEXT in DB and convert all times to/from TEXT type. (Note, this is not
- *             how SQLIte3 handles date and time. See references below.
- *
- *  Note:
- *                  Apparently SQLite3 can use any data type for date operations, due to affinity:
- *                  http://www.sqlite.org/datatype3.html
- *
- *  Conclusion:     The java "int" data type is a 32-bit signed two's complement integer.
- *                  The Minimum value is: - 2,147,483,648 (-2^31) and
- *                  the Maximum value is:   2,147,483,647 (inclusive) (2^31 -1).
- *                  This is the equivalent of the Unix Epoch of:
- *
- *                           sqlite> select datetime(2147483647, 'unixepoch');
- *                           2038-01-19 03:14:07
- *
- *                  ==> We can be very happy to use "int" and thus try to use (1).
- *
- *  References:
- *
- *          a) For SQLite time reference, see:     https://www.sqlite.org/lang_datefunc.html
- *          b) For Unix/Posix epoch, see:          https://en.wikipedia.org/wiki/Unix_time
  * @author Tor Henning Ueland
  */
 public class SignalStrengthTracker {
@@ -87,13 +56,13 @@ public class SignalStrengthTracker {
     private Long lastCleanupTime;       // Timestamp for last cleanup of DB
     private HashMap<Integer, Integer> averageSignalCache = new HashMap<>();
     private long lastMovementDetected = 0l; // ??
-    private AIMSICDDbAdapter mDbHelper;
+    private RealmHelper mDbHelper;
 
     public SignalStrengthTracker(Context context) {
         lastMovementDetected = System.currentTimeMillis();
         lastRegistrationTime = System.currentTimeMillis();
         lastCleanupTime      = System.currentTimeMillis();
-        mDbHelper = new AIMSICDDbAdapter(context);
+        mDbHelper = new RealmHelper(context);
     }
 
     /**
@@ -177,7 +146,8 @@ public class SignalStrengthTracker {
             log.debug("Cached average SS for CID: " + cellID + " is: " + storedAvg);
         } else {
             // Not cached, check DB
-            storedAvg = mDbHelper.getAverageSignalStrength(cellID); // DBi_measure:rx_signal
+            @Cleanup Realm realm = Realm.getDefaultInstance();
+            storedAvg = mDbHelper.getAverageSignalStrength(realm, cellID);
             averageSignalCache.put(cellID, storedAvg);
             log.debug("Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
         }
