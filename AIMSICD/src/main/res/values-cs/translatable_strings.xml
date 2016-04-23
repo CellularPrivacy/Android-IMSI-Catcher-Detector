@@ -186,10 +186,6 @@
     <string name="error_retrieving_opencellid_data">Chyba při načítání dat z OpenCellID. Zkontrolujte vaše připojení k síti!</string>
     <string name="uploaded_bts_data_successfully">Úspěšně odeslána BTS data do OpenCellID.</string>
     <string name="error_uploading_bts_data">Chyba při odesílání BTS dat na OpenCellID servery!</string>
-    <string name="restore_database_completed_title">Obnovení bylo úspěšně.</string>
-    <string name="restore_database_completed">Obnovení databáze bylo úspěšně dokončeno.</string>
-    <string name="database_backup_successfully_saved_to">Záloha databáze úspěšně uložena do:</string>
-    <string name="error_backing_up_data">Chyba při zálohování databáze.</string>
     <string name="refreshed_cell_id_info">Aktualizovány informace o CellId</string>
     <string name="unable_to_acquire_root_access">Na vašem zařízení nelze získat ROOT přístup. Vkládání AT příkazů vyžaduje přístup k ROOT terminalu. Prosím zkontrolujte, zda je vaše zařízení ROOTnuté a opakujte akci.</string>
     <string name="unable_to_detect_busybox">Na vašem zařízení nebyl nalezen Busybox. Vkládání AT příkazů vyžaduje správně fungující komponentu Busybox.\nProsím zkontrolujte, zda že má zařízení Busybox nainstalován a opakujte akci.</string>
@@ -234,11 +230,7 @@
     <string name="help_tracking_toggle_cell_tracking">Zapnout sledování buněk pro zobrazení na mapě antén a možné pozdější nahrání do OpenCellID.</string>
 
     <string name="help_settings_preferences">Nastavení AIMSICD ohledně pravidel ochrany, intervaly dotazování a chování služeb.</string>
-    <string name="help_settings_backup_db">Zálohování SQLite3 DB na SD-kartu.</string>
-    <string name="help_settings_restore_db">Obnovení databáze SQLite3 z SD karty.</string>
     <string name="help_settings_reset_db">Vymazat a obnovit vše nebo konkrétní tabulky DB.</string>
-    <string name="help_settings_export_db_to_csv">Export tabulek DB do jednotlivých souborů CSV.</string>
-    <string name="help_settings_import_db_from_csv">Import jednotlivých tabulek ze souborů CSV.</string>
 
     <string name="help_app_add_get_ocid_api_key">Získejte klíč API pro připojení k OpenCellID databáze k ukládání a stahování dat…</string>
     <string name="help_app_about">Stavové ikony a vysvětlení projektu.</string>
@@ -247,7 +239,6 @@
     <string name="help_app_debugging">Shromáždit a odeslat protokoly chyb.</string>
     <string name="help_app_quit">Ukončení aplikace.</string>
     <string name="waiting_for_location">Čekání na umístění…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Nelze obnovit zálohy z předchozí verze databáze v důsledku změn struktury!</string>
     <string name="unique_bts_data">Unikátní BTS data</string>
     <string name="bts_measurements">BTS měření</string>
     <string name="imported_ocid_data">Importovaná OpenCellID data</string>
@@ -324,7 +315,6 @@
     <string name="unable_to_determine_last_location">Nelze zjistit vaše poslední umístění.\nPovolte služby pro umístění (GPS) a opakujte akci.</string>
     <string name="no_tracked_locations_found">Žádná lokalita se sledováním k zobrazení na mapě.</string>
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data úspěšně přijata.\nMapa značek aktualizována.</string>
-    <string name="error_restoring_database">Chyba při obnovení databáze.</string>
     <string name="no_opencellid_key_detected">Nemáte OpenCellID API klíč! Zadejte prosím váš klíč v Nastavení.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Při pokusu o přístup na sériové zařízení došlo k neznámé chybě.\nZkontrolujte výstup logcat a případné chyby zveřejňěte na Github.\t</string>
     <string name="adv_user_info">Tato nabídka je pouze pro pokročilé uživatele!\n\nProsím, nevkládejte náhodné řetězce, jelikož to způsobí, že nepředvídatelné chování detekčních mechanismů.\n\nChcete-li přidat řetězec vyberte typ SMS z rozbalovací nabídky, zadejte detekční řetězec a stiskněte klávesu insert.\n\nOdstranění z databáze provedete dlouhým stiskem na seznamu zobrazení.</string>
