@@ -259,7 +259,7 @@
     <string name="typewap_data">Mensaje SMS WAP Push detectado!\nDetalles: Ver visor de base de datos.</string>
 
 
-    <string name="help_main_current_threat_level">Estado de amenaza AIMSICD, Celdas Vecinas, indicador de método de cifrado.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">Detalles del proveedor SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Ver comparación detallada de la célula conectada actualmente, con los datos (si existe) en OpenCellID y resaltar las diferencias.</string>
     <string name="help_main_database_viewer">Ver las diferentes tablas de la DB que tenemos.</string>

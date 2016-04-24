@@ -315,7 +315,7 @@
     <string name="status_high_about_desc">Активне відслідковування поряд з вами!</string>
     <string name="pref_enable_gps_title">Налаштування GPS</string>
     <string name="pref_enable_gps_summary">Увімкнути GPS для відслідковування стільника</string>
-    <string name="help_main_current_threat_level">Статус загрози AIMSICD, сусідні стільники, індикатор методу шифрування.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_database_viewer">Перегляд таблиць бази даних.</string>
     <string name="help_main_antenna_map_view">Карта з кольоровими позначками сусідніх антен.</string>
     <string name="help_main_at_command_interface">Інтерфейс дозволяє надсилати AT команди до процесора (Потребує прав ROOT).</string>

@@ -220,7 +220,7 @@
     <string name="typemwi_header">Zjištěno MWI</string>
     <string name="typemwi_data">Zjištěn indikátor čekající zprávy!\nPodrobnosti: viz Prohlížeč databáze.</string>
     <string name="typewap_header">Zjištěn WAP push</string>
-    <string name="help_main_current_threat_level">AIMSICD úroveň ohrožení, sousední buňky, indikátor použitého šifrování.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_acd">Zobrazit detailní porovnání aktuálně připojených buněk proti datům (jsou-li k dispozici) v OpenCellID a zvýraznění rozdílů.</string>
     <string name="help_main_database_viewer">Zobrazení různých DB tabulek, které máme.</string>
     <string name="help_main_antenna_map_view">Barevná mapa antén v okolí.</string>

@@ -245,7 +245,7 @@
     <string name="typemwi_header">检测到 MWI</string>
     <string name="typemwi_data">检测到消息等待指示器！\n详细信息：详见数据库查看器。</string>
     <string name="help_main_phone_sim_details">SIM卡网络提供商的详细信息，IMEI，TMSI。</string>
-    <string name="help_main_current_threat_level">AIMSICD 威胁状态，临近蜂窝，加密方法指示器。</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="typewap_header">检测到 WAP 推送</string>
     <string name="typewap_data">检测到 WAP 推送短信！\n详细信息：详见数据库查看器。</string>
 

@@ -263,7 +263,7 @@
     <string name="typewap_data">WAP プッシュ SMS メッセージを検出しました!\n詳細: データベース ビューアーを参照してください。</string>
 
 
-    <string name="help_main_current_threat_level">AIMSICD 脅威ステータス、隣接する基地局、暗号化方法インジケーター。</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">SIM ネットワーク プロバイダーの詳細、IMEI、TMSI。</string>
     <string name="help_main_acd">OpenCellID で見つかったデータ (ある場合) と、現在接続している基地局の詳細な比較を表示し、違いを強調します。</string>
     <string name="help_main_database_viewer">私たちが持っている別の DB テーブルを表示します。</string>

@@ -295,7 +295,7 @@
 
 
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">Niveau de menace AIMSICD, cellules aux alentours, méthode de chiffrement utilisé.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">Détail du fournisseur de la carte SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Afficher une comparaison détaillée des cellules connectées avec les données (s’il y en a) trouvées dans OpenCelllD et surligner les différences.</string>
     <string name="help_main_database_viewer">Voir les différentes Tables de la Base de Données.</string>

@@ -72,8 +72,8 @@ public class DrawerMenuItem implements NavDrawerItem {
             case MAIN.PHONE_SIM_DETAILS:
                 return R.string.help_main_phone_sim_details;
 
-            case MAIN.CURRENT_TREAT_LEVEL:
-                return R.string.help_main_current_threat_level;
+            case MAIN.NEIGHBOURING_CELLS:
+                return R.string.help_main_neighbouring_cells;
 
             case MAIN.DB_VIEWER:
                 return R.string.help_main_database_viewer;

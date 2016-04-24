@@ -269,7 +269,7 @@
     <string name="typewap_data">WAP Push SMS oppdaget!\nDetaljer: Se Database Viser.</string>
 
 
-    <string name="help_main_current_threat_level">AIMSICD trusselbilde, naboceller, krypterings metode indikator.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">SIM Leverandør detaljer, IMEI, TMSI.</string>
     <string name="help_main_acd">Vis detaljert sammenligning av nåværende tilknyttet celle, med data (hvis noen) funnet i OpenCellID og merk forskjellen.</string>
     <string name="help_main_database_viewer">Se de forskjellige DB listene vi har.</string>

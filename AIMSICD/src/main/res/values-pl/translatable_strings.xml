@@ -296,7 +296,7 @@
 
 
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">Statystyki AIMSICD, pobliskich komórek i metod szyfrowania.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">Szczegóły SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Pokaż szczegółowe porównanie obecnie połączonych komórek używając danych z OpenCellID. Podświetla różnice.</string>
     <string name="help_main_database_viewer">Pokaż tablele baz danych.</string>

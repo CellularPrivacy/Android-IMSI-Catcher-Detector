@@ -29,12 +29,12 @@ public class DrawerMenu {
          */
         public static class MAIN {
 
-            public static final int CURRENT_TREAT_LEVEL = 100; //Current Threat Level
-            public static final int PHONE_SIM_DETAILS = 110; //Phone/SIM Details
+            public static final int NEIGHBOURING_CELLS = 100;       // Neighbouring Cells
+            public static final int PHONE_SIM_DETAILS = 110;        //Phone/SIM Details
             public static final int ALL_CURRENT_CELL_DETAILS = 120; //All Current Cell Details
-            public static final int DB_VIEWER = 130; //Database Viewer
-            public static final int ANTENNA_MAP_VIEW = 140; // Antenna Map View
-            public static final int AT_COMMAND_INTERFACE = 150; //AT Command Interface
+            public static final int DB_VIEWER = 130;                //Database Viewer
+            public static final int ANTENNA_MAP_VIEW = 140;         // Antenna Map View
+            public static final int AT_COMMAND_INTERFACE = 150;     //AT Command Interface
 
         }
 
@@ -49,11 +49,11 @@ public class DrawerMenu {
          * Constants of item of 'application' section of menu
          */
         public static class APPLICATION {
-            public static final int DOWNLOAD_LOCAL_BTS_DATA = 400; //Download Local BST Data FIXME     Is this should be "Download Local OCID Data" ?
-            public static final int UPLOAD_LOCAL_BTS_DATA = 410; //Upload Local BST Data
-            public static final int ADD_GET_OCID_API_KEY = 420; // Add/Get OCID API key
-            public static final int FAQ = 450; // TODO Help/FAQ
-            public static final int QUIT = 460; //Quit
+            public static final int DOWNLOAD_LOCAL_BTS_DATA = 400;  //Download Local BST Data FIXME     Is this should be "Download Local OCID Data" ?
+            public static final int UPLOAD_LOCAL_BTS_DATA = 410;    //Upload Local BST Data
+            public static final int ADD_GET_OCID_API_KEY = 420;     // Add/Get OCID API key
+            public static final int FAQ = 450;                      // TODO Help/FAQ
+            public static final int QUIT = 460;                     //Quit
 
         }
 

@@ -275,7 +275,7 @@
     <string name="typewap_data">Rilevato WAP Push SMS!\nDettagli: vedi database.</string>
 
 
-    <string name="help_main_current_threat_level">Minacce, celle vicine, metodo cifratura.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">Provider rete SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Mostra informazioni dettagliate sulle celle connesse con i dati (se presenti) di OpenCellID ed evidenzia le differenze.</string>
     <string name="help_main_database_viewer">Vedi le diverse tabelle DB disponibili.</string>

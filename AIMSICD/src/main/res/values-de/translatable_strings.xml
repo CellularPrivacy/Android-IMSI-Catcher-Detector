@@ -44,7 +44,7 @@
     <string name="device_info_title">Geräteinformationen</string>
     <string name="sim_info_title">SIM-Informationen</string>
     <string name="network_info">Netzwerkinformationen</string>
-    <string name="cell_info_title">Derzeitige Gefahrenstufe</string>
+    <string name="cell_info_title">Benachbarte Funkzellen</string>
     <string name="neighbouring_cells_title">Benachbarte Funkzellen</string>
     <string name="ciphering_indicator_title">Verschlüsselungsindikator</string>
     <string name="neighbouring_cells_num_title">Gesamt:</string>
@@ -301,7 +301,7 @@
     <string name="typemwi_data">Benachrichtigungsindikator erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
     
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">AIMSICD-Gefahrenstatus, Benachbarte Funkzellen und Verschlüsselungsindikator.</string>
+    <string name="help_main_neighbouring_cells">Zeigt benachbarte Funkzellen.</string>
     <string name="help_main_phone_sim_details">SIM-Details, Netzbetreiber, IMEI und TMSI.</string>
     <string name="help_main_acd">Zeigt detaillierten Vergleich der verbundenen Funkzelle mit den Daten von OpenCellID (wenn vorhanden) und hebt Unterschiede hervor.</string>
     <string name="help_main_database_viewer">Zeigt unsere verschiedenen Datenbanken.</string>

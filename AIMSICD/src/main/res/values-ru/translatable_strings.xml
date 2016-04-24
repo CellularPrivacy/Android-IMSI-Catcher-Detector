@@ -316,7 +316,7 @@
 
 
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">Статус угрозы AIMSICD, соседние соты, индикатор цифрового метода.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">Информация провайдера сети SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Отображение детального сравнения текущей подключенной соты с данными (при их наличии) из OpenCellID и отметка различий.</string>
     <string name="help_main_database_viewer">Просмотр различных имеющихся таблиц баз данных.</string>

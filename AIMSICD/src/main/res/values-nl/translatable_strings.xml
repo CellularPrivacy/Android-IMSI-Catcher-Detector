@@ -259,7 +259,7 @@
     <string name="typewap_data">WAP pushbericht gedetecteerd!\nVoor details zie het database scherm.</string>
 
 
-    <string name="help_main_current_threat_level">AIMSICD dreigingsstatus, naburige cellen, versleutelingsmethode indicator.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">SIM netwerk provider details, IMEI, TMSI.</string>
     <string name="help_main_acd">"Toont een gedetailleerde  vergelijking van de cel waarmee u nu verbonden bent en de gegevens uit OpenCellID en toont de verschillen."</string>
     <string name="help_main_database_viewer">Toon de verschillende DB tabellen.</string>

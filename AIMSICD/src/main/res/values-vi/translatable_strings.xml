@@ -273,7 +273,7 @@
     <string name="typewap_data">Đã phát hiện tin nhắn SMS push WAP!\nChi tiết: Xem trình đọc CSDL.</string>
 
 
-    <string name="help_main_current_threat_level">Trạng thái mối đe dọa AIMSICD, các máy di động lân cận, bộ chỉ báo phương pháp viết mã.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">Chi tiết nhà cung cấp SIM mạng, IMEI, TMSI.</string>
     <string name="help_main_acd">Hiển thị so sánh chi tiết của máy di động đang kết nối với các dữ liệu (nếu có) tìm thấy trong OpenCellID và chỉ rõ những khác biệt.</string>
     <string name="help_main_database_viewer">Xem các bảng CSDL khác nhau hiện có.</string>

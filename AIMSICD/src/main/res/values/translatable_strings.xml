@@ -42,7 +42,7 @@
     <string name="device_info_title">Device Information</string>
     <string name="sim_info_title">SIM Information</string>
     <string name="network_info">Network Information</string>
-    <string name="cell_info_title">Current Threat Level</string>
+    <string name="cell_info_title">Neighbouring Cells</string>
     <string name="neighbouring_cells_title">Neighbouring Cells</string>
     <string name="ciphering_indicator_title">Ciphering Indicator</string>
     <string name="neighbouring_cells_num_title">Total:</string>
@@ -318,7 +318,7 @@
 
 
     <!-- Section Main -->
-    <string name="help_main_current_threat_level">AIMSICD threat status, neighboring cells, ciphering method indicator.</string>
+    <string name="help_main_neighboring_cells">Shows neighboring cells.</string>
     <string name="help_main_phone_sim_details">SIM network provider details, IMEI, TMSI.</string>
     <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OpenCellID and highlight the differences.</string>
     <string name="help_main_database_viewer">View the different DB tables we have.</string>
