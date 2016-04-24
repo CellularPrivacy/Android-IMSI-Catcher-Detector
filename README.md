@@ -99,11 +99,11 @@ Please follow our [Bug Submission Guide](https://github.com/CellularPrivacy/Andr
 
 ### Support
 
-Although our app is fully Open Source, developing it is a lot of work and done by privacy enthusiasts during their free time. If you're a developer yourself, we welcome and credit your [pull requests](https://help.github.com/articles/using-pull-requests/)! To keep developers in a great mood and support development, please consider making a [donation](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Donations). It will be split into appropriate pieces and directly sent to developers who solved the backed Issue.
+Although our app is fully Open Source, developing it is a lot of work and done by privacy enthusiasts during their free time. If you're a developer yourself, we welcome and credit your [pull requests](https://help.github.com/articles/using-pull-requests/)! To keep developers in a great mood and support development, please consider making a [donation](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Donations). It will be split into pieces and directly sent to developers who solved the backed Issue.
 
 ---
 
 ### License
 
 [![GPLv3+](http://gplv3.fsf.org/gplv3-127x51.png)](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/master/LICENSE)
-Please [contribute](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md) to this repository instead of rebranding our app. Thank you very much!
+Please [contribute](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md) to this repository instead of rebranding our app. Thank you!
