@@ -9,7 +9,7 @@
  * 
  * Where he writes: 
  * ""
- * Advanced Cell Fragment added to display the Neighbouring Cell information in two ways firstly
+ * Advanced Cell Fragment added to display the Neighboring Cell information in two ways: Firstly
  * through telephony manager methods which does not work on Samsung Devices, a fallback is available
  * through the methods developed by Alexey and will display if these are successful.
  * Ciphering Indicator also uses Alexey's methods and will display on Samsung devices.
@@ -86,14 +86,14 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
     @InjectView(R.id.list_view)
     private ListView lv;
 
-    @InjectView(R.id.neighbouring_cells)
-    private TextView mNeighbouringCells;
+    @InjectView(R.id.neighboring_cells)
+    private TextView mNeighboringCells;
 
-    @InjectView(R.id.neighbouring_number)
-    private TextView mNeighbouringTotal;
+    @InjectView(R.id.neighboring_number)
+    private TextView mNeighboringTotal;
 
-    @InjectView(R.id.neighbouring_total)
-    private TableRow mNeighbouringTotalView;
+    @InjectView(R.id.neighboring_total)
+    private TableRow mNeighboringTotalView;
 
     @InjectView(R.id.ciphering_indicator_title)
     private TextView mCipheringIndicatorLabel;
@@ -218,17 +218,17 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
         });
     }
 
-    boolean getStockNeighbouringCells() {
+    boolean getStockNeighboringCells() {
         if (mBound) {
-            neighboringCells = mAimsicdService.getCellTracker().updateNeighbouringCells();
+            neighboringCells = mAimsicdService.getCellTracker().updateNeighboringCells();
             return neighboringCells.size() > 0;
         }
 
         return false;
     }
 
-    void updateStockNeighbouringCells() {
-        mNeighbouringTotal.setText(String.valueOf(neighboringCells.size()));
+    void updateStockNeighboringCells() {
+        mNeighboringTotal.setText(String.valueOf(neighboringCells.size()));
         if (neighboringCells.size() != 0) {
 
             BaseInflaterAdapter<CardItemData> adapter
@@ -240,20 +240,20 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
                 adapter.addItem(data, false);
             }
             lv.setAdapter(adapter);
-            mNeighbouringCells.setVisibility(View.GONE);
-            mNeighbouringTotalView.setVisibility(View.VISIBLE);
+            mNeighboringCells.setVisibility(View.GONE);
+            mNeighboringTotalView.setVisibility(View.VISIBLE);
         }
     }
 
-    void updateNeighbouringCells() {
-        final List<String> list = rilExecutor.getNeighbours();
+    void updateNeighboringCells() {
+        final List<String> list = rilExecutor.getNeighbors();
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (list != null) {
-                    mNeighbouringCells.setText(TextUtils.join("\n", list));
-                    mNeighbouringCells.setVisibility(View.VISIBLE);
-                    mNeighbouringTotalView.setVisibility(View.GONE);
+                    mNeighboringCells.setText(TextUtils.join("\n", list));
+                    mNeighboringCells.setVisibility(View.VISIBLE);
+                    mNeighboringTotalView.setVisibility(View.GONE);
                 }
             }
         });
@@ -270,10 +270,10 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
         protected Boolean doInBackground(Integer... type) {
             switch (type[0]) {
                 case STOCK_REQUEST:
-                    return getStockNeighbouringCells();
+                    return getStockNeighboringCells();
                 case SAMSUNG_MULTIRIL_REQUEST:
                     if (mBound) {
-                        updateNeighbouringCells();
+                        updateNeighboringCells();
                         updateCipheringIndicator();
                     }
                     break;
@@ -285,7 +285,7 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
             if (result) {
-                updateStockNeighbouringCells();
+                updateStockNeighboringCells();
             } else {
                 getSamSungMultiRil();
             }
