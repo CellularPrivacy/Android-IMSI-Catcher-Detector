@@ -16,7 +16,6 @@ public class DrawerMenu {
      */
     public static class ID {
 
-
         /**
          * Constants of section of menu
          */
@@ -29,12 +28,12 @@ public class DrawerMenu {
          */
         public static class MAIN {
 
-            public static final int NEIGHBOURING_CELLS = 100;       // Neighbouring Cells
-            public static final int PHONE_SIM_DETAILS = 110;        //Phone/SIM Details
-            public static final int ALL_CURRENT_CELL_DETAILS = 120; //All Current Cell Details
-            public static final int DB_VIEWER = 130;                //Database Viewer
-            public static final int ANTENNA_MAP_VIEW = 140;         // Antenna Map View
-            public static final int AT_COMMAND_INTERFACE = 150;     //AT Command Interface
+            public static final int NEIGHBORING_CELLS = 100;
+            public static final int PHONE_SIM_DETAILS = 110;
+            public static final int ALL_CURRENT_CELL_DETAILS = 120;
+            public static final int DB_VIEWER = 130;
+            public static final int ANTENNA_MAP_VIEW = 140;
+            public static final int AT_COMMAND_INTERFACE = 150;
 
         }
 
