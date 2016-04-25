@@ -29,7 +29,7 @@
     <string name="device_info_title">デバイス情報</string>
     <string name="sim_info_title">SIM 情報</string>
     <string name="network_info">ネットワーク情報</string>
-    <string name="cell_info_title">現在の脅威レベル</string>
+    <string name="cell_info_title">隣接するセル</string>
     <string name="neighbouring_cells_title">近隣の基地局</string>
     <string name="ciphering_indicator_title">暗号化インジケーター</string>
     <string name="neighbouring_cells_num_title">合計:</string>
@@ -263,7 +263,7 @@
     <string name="typewap_data">WAP プッシュ SMS メッセージを検出しました!\n詳細: データベース ビューアーを参照してください。</string>
 
 
-    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_neighboring_cells">隣接するセルを表示します。</string>
     <string name="help_main_phone_sim_details">SIM ネットワーク プロバイダーの詳細、IMEI、TMSI。</string>
     <string name="help_main_acd">OpenCellID で見つかったデータ (ある場合) と、現在接続している基地局の詳細な比較を表示し、違いを強調します。</string>
     <string name="help_main_database_viewer">私たちが持っている別の DB テーブルを表示します。</string>
