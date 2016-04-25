@@ -20,7 +20,7 @@ public class Measure extends RealmObject {
     private String radioAccessTechnology;
     private int timingAdvance;
     private boolean submitted;
-    private boolean neighbour;
+    private boolean neighbor;
 
     @Override
     public void removeFromRealm() {

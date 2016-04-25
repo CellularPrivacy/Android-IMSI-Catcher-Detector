@@ -68,9 +68,9 @@ public class MeasureAdapter extends RealmBaseAdapter<Measure> {
         private TextView BER;
         private TextView AvgEcNo;
         private TextView isSubmitted;
-        private TextView isNeighbour;
+        private TextView isNeighbor;
 
-        private TextView mRecordId;     //EVA
+        private TextView mRecordId;
 
         ViewHolder(View rootView) {
             mRootView = rootView;
@@ -96,7 +96,7 @@ public class MeasureAdapter extends RealmBaseAdapter<Measure> {
             //BER = (TextView) mRootView.findViewById(R.id.tv_bts_measure_BER);
             //AvgEcNo = (TextView) mRootView.findViewById(R.id.tv_bts_measure_AvgEcNo);
             isSubmitted = (TextView) mRootView.findViewById(R.id.tv_bts_measure_isSubmitted);
-            isNeighbour = (TextView) mRootView.findViewById(R.id.tv_bts_measure_isNeighbour);
+            isNeighbor = (TextView) mRootView.findViewById(R.id.tv_bts_measure_isNeighbor);
 
             mRecordId = (TextView) mRootView.findViewById(R.id.record_id);      // EVA
             rootView.setTag(this);
@@ -112,7 +112,7 @@ public class MeasureAdapter extends RealmBaseAdapter<Measure> {
             rx_signal.setText(valueOf(item.getRxSignal()));
             rat.setText(item.getRadioAccessTechnology());
             isSubmitted.setText(valueOf(item.isSubmitted()));
-            isNeighbour.setText(valueOf(item.isNeighbour()));
+            isNeighbor.setText(valueOf(item.isNeighbor()));
 
             mRecordId.setText(valueOf(position));
         }

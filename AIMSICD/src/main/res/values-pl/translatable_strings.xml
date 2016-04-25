@@ -37,9 +37,9 @@
     <string name="sim_info_title">Informacje o SIM</string>
     <string name="network_info">Informacje o sieci</string>
     <string name="cell_info_title">Informacje o komórce</string>
-    <string name="neighbouring_cells_title">Sąsiednie komórki</string>
+    <string name="neighboring_cells_title">Sąsiednie komórki</string>
     <string name="ciphering_indicator_title">Wskaźnik szyfrowania</string>
-    <string name="neighbouring_cells_num_title">Razem:</string>
+    <string name="neighboring_cells_num_title">Razem:</string>
     <string name="sim_country">Kraj:</string>
     <string name="sim_operator_id">ID operatora:</string>
     <string name="sim_operator_name">Nazwa operatora:</string>

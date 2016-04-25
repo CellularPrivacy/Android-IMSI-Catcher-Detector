@@ -101,7 +101,7 @@
 
     <string name="no_network_connection_message">Не вдається завантажити OpenCellID дані без інтернету, будь ласка, з\'єднайтеся із мережею для передачі даних!</string>
 
-    <string name="neighbouring_cells_num_title">Підсумок:</string>
+    <string name="neighboring_cells_num_title">Підсумок:</string>
     <string name="network_lac">Код місце-розташування:</string>
     <string name="about_contribute">ВНЕСОК</string>
     <string name="about_disclaimer">ВІДМОВА ВІД ВІДПОВІДАЛЬНОСТІ</string>
@@ -120,7 +120,7 @@
 
     <string name="deleted">Видалено</string>
     <string name="failed_to_delete">Не вдалося видалити</string>
-    <string name="neighbouring_cells_title">Сусідні стільники</string>
+    <string name="neighboring_cells_title">Сусідні стільники</string>
     <string name="network_cellid">CID:</string>
     <string name="about_license">ЛІЦЕНЗІЯ</string>
     <string name="data_activity">Активність даних:</string>

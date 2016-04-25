@@ -192,8 +192,8 @@
     <string name="refreshing_now">正在刷新…</string>
     <string name="seconds">秒。</string>
     <string name="ciphering_indicator_title">加密指示器</string>
-    <string name="neighbouring_cells_title">临近蜂窝</string>
-    <string name="neighbouring_cells_num_title">总计:</string>
+    <string name="neighboring_cells_title">临近蜂窝</string>
+    <string name="neighboring_cells_num_title">总计:</string>
     <string name="sim_country">国家:</string>
     <string name="sim_operator_id">运营商 ID:</string>
     <string name="drawer_close">关闭导航抽屉</string>

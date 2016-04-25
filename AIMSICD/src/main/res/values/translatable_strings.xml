@@ -42,10 +42,10 @@
     <string name="device_info_title">Device Information</string>
     <string name="sim_info_title">SIM Information</string>
     <string name="network_info">Network Information</string>
-    <string name="cell_info_title">Neighbouring Cells</string>
-    <string name="neighbouring_cells_title">Neighbouring Cells</string>
+    <string name="cell_info_title">Neighboring Cells</string>
+    <string name="neighboring_cells_title">Neighboring Cells</string>
     <string name="ciphering_indicator_title">Ciphering Indicator</string>
-    <string name="neighbouring_cells_num_title">Total:</string>
+    <string name="neighboring_cells_num_title">Total:</string>
     <string name="sim_country">Country:</string>
     <string name="sim_operator_id">Operator ID:</string>
     <string name="sim_operator_name">Operator Name:</string>

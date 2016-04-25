@@ -19,7 +19,7 @@
     <string name="device_info_title">Informace o zařízení</string>
     <string name="sim_info_title">Informace o SIM</string>
     <string name="network_info">Informace o síti</string>
-    <string name="neighbouring_cells_num_title">Celkem:</string>
+    <string name="neighboring_cells_num_title">Celkem:</string>
     <string name="sim_country">Země:</string>
     <string name="sim_operator_id">ID operátora:</string>
     <string name="sim_operator_name">Název operátora:</string>
@@ -43,7 +43,7 @@
     <string name="no_network_connection_message">Nepodařilo se stáhnout data z OpenCellID, chybí připojení k internetu!</string>
 
     <string name="cell_info_title">Aktuální Úroveň Ohrožení</string>
-    <string name="neighbouring_cells_title">Sousední buňky</string>
+    <string name="neighboring_cells_title">Sousední buňky</string>
     <string name="ciphering_indicator_title">Indikace použitého šifrování</string>
     <string name="sim_serial">Serial No:</string>
     <string name="data_activity">Datová aktivita:</string>

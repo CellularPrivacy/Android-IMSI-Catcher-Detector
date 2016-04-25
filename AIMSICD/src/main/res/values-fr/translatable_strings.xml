@@ -37,9 +37,9 @@
     <string name="sim_info_title">Informations sur la Carte SIM</string>
     <string name="network_info">Information Sur le Réseau Mobile</string>
     <string name="cell_info_title">Niveau de Menace Actuel</string>
-    <string name="neighbouring_cells_title">Cellules Voisines</string>
+    <string name="neighboring_cells_title">Cellules Voisines</string>
     <string name="ciphering_indicator_title">Indicateur du Chiffrement</string>
-    <string name="neighbouring_cells_num_title">Total :</string>
+    <string name="neighboring_cells_num_title">Total :</string>
     <string name="sim_country">Pays :</string>
     <string name="sim_operator_id">Identifiant de l’opérateur :</string>
     <string name="sim_operator_name">Nom de l’opérateur :</string>

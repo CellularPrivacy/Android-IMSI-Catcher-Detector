@@ -27,9 +27,9 @@
     <string name="sim_info_title">SIM gegevens</string>
     <string name="network_info">Netwerkgegevens</string>
     <string name="cell_info_title">Huidig gevarenniveau</string>
-    <string name="neighbouring_cells_title">Buurcellen</string>
+    <string name="neighboring_cells_title">Buurcellen</string>
     <string name="ciphering_indicator_title">Encryptie indicator</string>
-    <string name="neighbouring_cells_num_title">Totaal:</string>
+    <string name="neighboring_cells_num_title">Totaal:</string>
     <string name="sim_country">Land:</string>
     <string name="sim_operator_id">Operator ID:</string>
     <string name="sim_operator_name">Operator naam:</string>
