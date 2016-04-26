@@ -43,9 +43,9 @@
     <string name="sim_info_title">Информация о SIM</string>
     <string name="network_info">Информация сети</string>
     <string name="cell_info_title">Текущий уровень угрозы</string>
-    <string name="neighbouring_cells_title">Соседние ячейки сотовой связи</string>
+    <string name="neighboring_cells_title">Соседние ячейки сотовой связи</string>
     <string name="ciphering_indicator_title">Индикатор шифрования</string>
-    <string name="neighbouring_cells_num_title">Всего:</string>
+    <string name="neighboring_cells_num_title">Всего:</string>
     <string name="sim_country">Страна:</string>
     <string name="sim_operator_id">ID оператора:</string>
     <string name="sim_operator_name">Название оператора:</string>

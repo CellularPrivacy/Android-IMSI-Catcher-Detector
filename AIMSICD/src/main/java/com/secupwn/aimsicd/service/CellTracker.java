@@ -324,13 +324,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     /**
-     *  Description:    Updates Neighbouring Cell details
+     *  Description:    Updates Neighboring Cell details
      *
      *                  TODO: add more details...
      *
      *
      */
-    public List<Cell> updateNeighbouringCells() {
+    public List<Cell> updateNeighboringCells() {
         List<Cell> neighboringCells = new ArrayList<>();
         List<NeighboringCellInfo> neighboringCellInfo = tm.getNeighboringCellInfo();
         if (neighboringCellInfo == null) {
@@ -342,7 +342,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         //if nclp = true then check for neighboringCellInfo
         if (neighboringCellInfo != null && neighboringCellInfo.size() == 0 && nclp) {
 
-            log.info("NeighbouringCellInfo is empty: start polling...");
+            log.info("NeighboringCellInfo is empty: start polling...");
 
             // Try to poll the neighboring cells for a few seconds
             neighboringCellBlockingQueue = new LinkedBlockingQueue<>(100); // TODO What is this ??
@@ -363,14 +363,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             // TODO: Consider removing ??
             for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
                 try {
-                    log.debug("NeighbouringCellInfo empty: trying " + i);
+                    log.debug("NeighboringCellInfo empty: trying " + i);
                     NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
                         if (neighboringCellInfo != null) {
                             if (neighboringCellInfo.size() > 0) {
                                 // Can we think of a better log message here?
-                                log.debug("NeighbouringCellInfo found on " + i + " try. (time based)");
+                                log.debug("NeighboringCellInfo found on " + i + " try. (time based)");
                                 break;
                             } else {
                                 continue;
@@ -391,22 +391,22 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             }
         }
 
-        //log.debug(mTAG + ": neighbouringCellInfo size: " + neighboringCellInfo.size());
+        //log.debug(mTAG + ": neighboringCellInfo size: " + neighboringCellInfo.size());
 
         // Add NC list to DBi_measure:nc_list
-        for (NeighboringCellInfo neighbourCell : neighboringCellInfo) {
-            log.info("NeighbouringCellInfo -" +
-                    " LAC:" + neighbourCell.getLac() +
-                    " CID:" + neighbourCell.getCid() +
-                    " PSC:" + neighbourCell.getPsc() +
-                    " RSSI:" + neighbourCell.getRssi());
+        for (NeighboringCellInfo neighborCell : neighboringCellInfo) {
+            log.info("NeighboringCellInfo -" +
+                    " LAC:" + neighborCell.getLac() +
+                    " CID:" + neighborCell.getCid() +
+                    " PSC:" + neighborCell.getPsc() +
+                    " RSSI:" + neighborCell.getRssi());
 
             final Cell cell = new Cell(
-                    neighbourCell.getCid(),
-                    neighbourCell.getLac(),
-                    neighbourCell.getRssi(),
-                    neighbourCell.getPsc(),
-                    neighbourCell.getNetworkType(), false);
+                    neighborCell.getCid(),
+                    neighborCell.getLac(),
+                    neighborCell.getRssi(),
+                    neighborCell.getPsc(),
+                    neighborCell.getNetworkType(), false);
             neighboringCells.add(cell);
         }
         return neighboringCells;
@@ -441,12 +441,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
      *              we're out and away from the fake BTS cell.
      *          [ ] We need to add this to EventLog
      *          [ ] We need to add detection tickers etc...
-     *          [ ] Attention to the spelling of "neighbor" (USA) Vs. "neighbour" (Eng world)
      *          [x] We need to use a global and persistent variable and not a system property
      *
      */
-    public void checkForNeighbourCount(CellLocation location) {
-        log.info("CheckForNeighbourCount()");
+    public void checkForNeighborCount(CellLocation location) {
+        log.info("CheckForNeighborCount()");
 
         Integer ncls = 0;                                       // NC list size
         if (tm != null && tm.getNeighboringCellInfo() != null) { // See # 383
@@ -455,7 +454,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         Boolean nclp = tinydb.getBoolean("nc_list_present");    // NC list present? (default is false)
 
         if (ncls > 0) {
-            log.debug("NeighbouringCellInfo size: " + ncls);
+            log.debug("NeighboringCellInfo size: " + ncls);
             if (!nclp) {
                 log.debug("Setting nc_list_present to: true");
                 tinydb.putBoolean("nc_list_present", true);
@@ -609,7 +608,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             return;
         }
 
-        log.info("NeighbouringCellInfo empty - event based polling succeeded!");
+        log.info("NeighboringCellInfo empty - event based polling succeeded!");
         tm.listen(phoneStatelistener, PhoneStateListener.LISTEN_NONE);
         if (neighboringCellInfo == null) {
             neighboringCellInfo = new ArrayList<>();
@@ -698,7 +697,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private final PhoneStateListener cellSignalListener = new PhoneStateListener() {
         public void onCellLocationChanged(CellLocation location) {
 
-            checkForNeighbourCount(location);
+            checkForNeighborCount(location);
             compareLac(location);
             refreshDevice();
             device.setNetID(tm);

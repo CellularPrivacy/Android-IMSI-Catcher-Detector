@@ -29,9 +29,9 @@
     <string name="sim_info_title">Informazioni SIM</string>
     <string name="network_info">Informazioni rete</string>
     <string name="cell_info_title">Livello di minaccia attuale</string>
-    <string name="neighbouring_cells_title">Celle vicine</string>
+    <string name="neighboring_cells_title">Celle vicine</string>
     <string name="ciphering_indicator_title">Indicatore codifica</string>
-    <string name="neighbouring_cells_num_title">Totale:</string>
+    <string name="neighboring_cells_num_title">Totale:</string>
     <string name="sim_country">Paese:</string>
     <string name="sim_operator_id">ID operatore:</string>
     <string name="sim_operator_name">Nome operatore:</string>

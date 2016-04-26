@@ -464,7 +464,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         log.error("Error getting default location!", e);
                     }
                 }
-                // plot neighbouring cells
+                // plot neighboring cells
                 while (mAimsicdService == null) {
                     try {
                         if (isCancelled() || !isAdded()) {
@@ -475,7 +475,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         log.warn("thread interrupted", e);
                     }
                 }
-                List<Cell> nc = mAimsicdService.getCellTracker().updateNeighbouringCells();
+                List<Cell> nc = mAimsicdService.getCellTracker().updateNeighboringCells();
                 for (Cell cell : nc) {
                     if (isCancelled() || !isAdded()) {
                         return null;
@@ -501,7 +501,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_orange));
                         items.add(ovm);
                     } catch (Exception e) {
-                        log.error("Error plotting neighbouring cells", e);
+                        log.error("Error plotting neighboring cells", e);
                     }
                 }
 

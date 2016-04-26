@@ -43,9 +43,9 @@
     <string name="sim_info_title">SIM Information</string>
     <string name="network_info">Network Information</string>
     <string name="cell_info_title">Neighbouring Cells</string>
-    <string name="neighbouring_cells_title">Neighbouring Cells</string>
+    <string name="neighboring_cells_title">Neighbouring Cells</string>
     <string name="ciphering_indicator_title">Ciphering Indicator</string>
-    <string name="neighbouring_cells_num_title">Total:</string>
+    <string name="neighboring_cells_num_title">Total:</string>
     <string name="sim_country">Country:</string>
     <string name="sim_operator_id">Operator ID:</string>
     <string name="sim_operator_name">Operator Name:</string>
@@ -318,7 +318,7 @@
 
 
     <!-- Section Main -->
-    <string name="help_main_neighboring_cells">Shows neighboring cells.</string>
+    <string name="help_main_neighboring_cells">Shows neighbouring cells.</string>
     <string name="help_main_phone_sim_details">SIM network provider details, IMEI, TMSI.</string>
     <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OpenCellID and highlight the differences.</string>
     <string name="help_main_database_viewer">View the different DB tables we have.</string>

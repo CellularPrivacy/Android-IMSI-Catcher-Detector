@@ -29,9 +29,9 @@
     <string name="sim_info_title">Informacione mbi SIM-Kartën</string>
     <string name="network_info">Informacione mbi rrjetin</string>
     <string name="cell_info_title">Niveli i deritanishëm i rrezikut</string>
-    <string name="neighbouring_cells_title">Kullat e afërta</string>
+    <string name="neighboring_cells_title">Kullat e afërta</string>
     <string name="ciphering_indicator_title">Treguesi kodues</string>
-    <string name="neighbouring_cells_num_title">Gjithsej:</string>
+    <string name="neighboring_cells_num_title">Gjithsej:</string>
     <string name="sim_country">Vendi:</string>
     <string name="sim_operator_id">ID e operatorit:</string>
     <string name="sim_operator_name">Emri i operatorit:</string>

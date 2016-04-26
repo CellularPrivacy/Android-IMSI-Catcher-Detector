@@ -28,9 +28,9 @@
     <string name="sim_info_title">SIM Informasjon</string>
     <string name="network_info">Nettverksinformasjon</string>
     <string name="cell_info_title">Nåværende Trusselnivå</string>
-    <string name="neighbouring_cells_title">Naboceller</string>
+    <string name="neighboring_cells_title">Naboceller</string>
     <string name="ciphering_indicator_title">Krypterings Indikator</string>
-    <string name="neighbouring_cells_num_title">Total:</string>
+    <string name="neighboring_cells_num_title">Total:</string>
     <string name="sim_country">Land:</string>
     <string name="sim_operator_id">Operatør ID:</string>
     <string name="sim_operator_name">Operatørnavn:</string>

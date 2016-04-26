@@ -606,7 +606,7 @@ public final class RealmHelper {
             measure.setRadioAccessTechnology(String.valueOf(cell.getRat()));
             measure.setTimingAdvance(cell.getTimingAdvance()); //TODO does this actually get timing advance?
             measure.setSubmitted(false);
-            measure.setNeighbour(false);
+            measure.setNeighbor(false);
 
             realm.commitTransaction();
             log.info("Measure inserted cellId=" + cell.getCellId());

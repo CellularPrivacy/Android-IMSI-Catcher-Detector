@@ -27,11 +27,11 @@
     <string name="sim_info_title">Thông tin SIM</string>
     <string name="network_info">Thông tin mạng</string>
     <string name="cell_info_title">Mức độ đe dọa hiện thời</string>
-    <string name="neighbouring_cells_title">Các máy di động lân cận</string>
+    <string name="neighboring_cells_title">Các máy di động lân cận</string>
     <string name="ciphering_indicator_title">Bộ chỉ báo viết mã</string>
     <string name="disclaimer">"Khi sử dụng AIMSICD, bạn hiểu và chấp nhận rằng AIMSICD là một ứng dụng Android thực nghiệm cung cấp nhiều thông tin hữu ích và nó có thể thất bại trong việc phát hiện sự giám sát và theo dõi vì nhiều lý do khác nhau. Bạn cũng hiểu rằng nó có thể bị phá rối hoặc huỷ hoại bởi các công cụ khác mà nhà phát triển chưa hiểu rõ. Vì vậy, bạn cũng chấp nhận và hiểu rằng các công ty và nhà phát triển liên quan đến sản phẩm miễn phí này, trong mọi trường hợp, sẽ không phải chịu trách nhiệm cho bất kỳ hậu quả nào do việc sử dụng phần mềm này gây ra. "</string>
 
-    <string name="neighbouring_cells_num_title">Tổng cộng:</string>
+    <string name="neighboring_cells_num_title">Tổng cộng:</string>
     <string name="sim_country">Quốc gia:</string>
     <string name="sim_operator_id">ID nhà điều hành:</string>
     <string name="sim_operator_name">Tên nhà điều hành:</string>

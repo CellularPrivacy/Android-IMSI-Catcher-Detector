@@ -170,22 +170,22 @@ public class RilExecutor {
     }
 
     /**
-     * Executes and receives the Neighbouring Cell request using
+     * Executes and receives the Neighboring Cell request using
      * the RIL Executor
      *
      * @return String list response from RIL Executor
      */
-    public List<String> getNeighbours() {
-        KeyStep getNeighboursKeySeq[] = new KeyStep[]{
+    public List<String> getNeighbors() {
+        KeyStep getNeighborsKeySeq[] = new KeyStep[]{
                 new KeyStep('\0', false),
-                new KeyStep('1', false), // [1] DEBUG SCREEN
-                new KeyStep('4', true), // [4] NEIGHBOUR CELL
+                new KeyStep('1', false),    // [1] DEBUG SCREEN
+                new KeyStep('4', true),     // [4] NEIGHBOR CELL
         };
 
         return executeServiceModeCommand(
                 OemCommands.OEM_SM_TYPE_TEST_MANUAL,
                 OemCommands.OEM_SM_TYPE_SUB_ENTER,
-                Arrays.asList(getNeighboursKeySeq)
+                Arrays.asList(getNeighborsKeySeq)
         );
 
     }

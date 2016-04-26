@@ -25,7 +25,7 @@
     <string name="network_info">Tinklo informacija</string>
     <string name="cell_info_title">Dabartinis grėsmės lygis</string>
     <string name="ciphering_indicator_title">Šifro indikatorius</string>
-    <string name="neighbouring_cells_num_title">Viso:</string>
+    <string name="neighboring_cells_num_title">Viso:</string>
     <string name="sim_country">Šalis:</string>
     <string name="sim_operator_id">Operatoriaus ID:</string>
     <string name="sim_operator_name">Operatoriaus pavadinimas:</string>

@@ -223,7 +223,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                 openFragment(deviceFragment);
                 title = getString(R.string.app_name_short);
                 break;
-            case DrawerMenu.ID.MAIN.NEIGHBOURING_CELLS:
+            case DrawerMenu.ID.MAIN.NEIGHBORING_CELLS:
                 openFragment(cellInfoFragment);
                 title = getString(R.string.app_name_short);
                 break;

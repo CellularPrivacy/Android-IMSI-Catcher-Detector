@@ -30,9 +30,9 @@
     <string name="sim_info_title">SIM 情報</string>
     <string name="network_info">ネットワーク情報</string>
     <string name="cell_info_title">隣接するセル</string>
-    <string name="neighbouring_cells_title">近隣の基地局</string>
+    <string name="neighboring_cells_title">近隣の基地局</string>
     <string name="ciphering_indicator_title">暗号化インジケーター</string>
-    <string name="neighbouring_cells_num_title">合計:</string>
+    <string name="neighboring_cells_num_title">合計:</string>
     <string name="sim_country">国:</string>
     <string name="sim_operator_id">オペレーター ID:</string>
     <string name="sim_operator_name">オペレーター名:</string>

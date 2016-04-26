@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cell_info_title">Neighboring Cells</string>
+    <string name="neighboring_cells_title">Neighboring Cells</string>
+    <string name="help_main_neighboring_cells">Shows neighboring cells.</string>
+</resources>
