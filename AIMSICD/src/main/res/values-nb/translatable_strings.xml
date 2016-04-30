@@ -27,7 +27,7 @@
     <string name="device_info_title">Telefoninformasjon</string>
     <string name="sim_info_title">SIM Informasjon</string>
     <string name="network_info">Nettverksinformasjon</string>
-    <string name="cell_info_title">Nåværende Trusselnivå</string>
+    <string name="cell_info_title">NaboCeller</string>
     <string name="neighboring_cells_title">Naboceller</string>
     <string name="ciphering_indicator_title">Krypterings Indikator</string>
     <string name="neighboring_cells_num_title">Total:</string>
@@ -269,7 +269,7 @@
     <string name="typewap_data">WAP Push SMS oppdaget!\nDetaljer: Se Database Viser.</string>
 
 
-    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_neighboring_cells">Viser NaboCeller.</string>
     <string name="help_main_phone_sim_details">SIM Leverandør detaljer, IMEI, TMSI.</string>
     <string name="help_main_acd">Vis detaljert sammenligning av nåværende tilknyttet celle, med data (hvis noen) funnet i OpenCellID og merk forskjellen.</string>
     <string name="help_main_database_viewer">Se de forskjellige DB listene vi har.</string>
