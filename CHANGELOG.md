@@ -1,6 +1,21 @@
 # CHANGELOG of 'AIMSICD'
 ------------------------
 
+#### [01.05.2016 - WIP-Release v0.1.43-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.43-alpha)
+
+* Removed: Old comments, dead code, strings and icons have been removed
+* Changed: Finally moved to a completely new and hopefully much better working `realm` database
+* Updated: Now using gradle plugin version 2.0.0 and build tools version 23.0.3
+* Updated: Improved Travis builds with `preDexLibraries !isCi` and updated `checkstyle`
+* Updated: Simplified Chinese, Japanase, Norwegian Bokmål, Ukrainian, Italian, French and Czech
+* Added: Javadoc generation in `build.gradle` and readability improvements for `README`
+* Added: Different translations for American english as part of the inconsistent spelling fix
+* Fixed: Translations badge in project `README` and link to `CONTRIBUTE` in `About` menu
+* Fixed: Unexpected forcecloses when trying to download data from OpenCellID and `lint`
+* Fixed: Inconsistent spelling (neighbouring vs. neighboring) resolved to *neighboring*
+
+---
+
 #### [03.04.2016 - WIP-Release v0.1.42-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.42-alpha)
 
 * Changed: Moved whole project and all links into new organization `CellularPrivacy`
@@ -19,6 +34,8 @@
 * Fixed: Prevent crash by returning `null` if `MapFragment` is not attached to activity
 * Fixed: Lines in LogCat are now added to buffer again to improve SMS detection
 * Fixed: Resolved crash when trying to download `OpenCellID` data in airplane mode
+
+---
 
 #### [13.03.2016 - WIP-Release v0.1.41-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.41-alpha)
 
