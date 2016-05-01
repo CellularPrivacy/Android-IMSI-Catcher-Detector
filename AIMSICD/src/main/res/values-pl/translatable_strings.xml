@@ -20,10 +20,8 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Wykrywanie przełącz Atak</string>
     <string name="toggle_cell_tracking">Przełącz Śledzenie komórki</string>
-    <string name="backup_database">Kopia zapasowa bazy danych</string>
     <string name="clear_database">Wyczyść bazę danych</string>
     <string name="clear_database_question">Wszystkie dane zostaną skasowane.\nNa pewno?</string>
-    <string name="restore_database">Odzyskaj bazę danych</string>
     <string name="preferences">Ustawienia</string>
     <string name="press_once_again_to_exit">Wciśnij ponownie by wyjść.</string>
     <string name="cell_lookup">Wszystkie informacje o obecnej komórce</string>
@@ -39,9 +37,9 @@
     <string name="sim_info_title">Informacje o SIM</string>
     <string name="network_info">Informacje o sieci</string>
     <string name="cell_info_title">Informacje o komórce</string>
-    <string name="neighbouring_cells_title">Sąsiednie komórki</string>
+    <string name="neighboring_cells_title">Sąsiednie komórki</string>
     <string name="ciphering_indicator_title">Wskaźnik szyfrowania</string>
-    <string name="neighbouring_cells_num_title">Razem:</string>
+    <string name="neighboring_cells_num_title">Razem:</string>
     <string name="sim_country">Kraj:</string>
     <string name="sim_operator_id">ID operatora:</string>
     <string name="sim_operator_name">Nazwa operatora:</string>
@@ -150,7 +148,6 @@
         <item>@string/measured_signal_strengths</item>
         <item>@string/eventlog</item>
     </string-array>
-    <string name="database_export_successful">Eksport powiódł się</string>
 
     <!-- AT Command Interface  -->
     <string name="at_command_title">Interface komend AT</string>
@@ -252,10 +249,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">Poprawnie odebrano dane. Punkty na mapie zostały zaktualizowane.</string>
     <string name="uploaded_bts_data_successfully">Dane do OpenCellID zostały przesłane.</string>
     <string name="error_uploading_bts_data">Błąd wysyłania danych do OpenCellID!</string>
-    <string name="restore_database_completed">Odzyskano bazę danych.</string>
-    <string name="error_restoring_database">Błąd przywracania bazy danych.</string>
-    <string name="database_backup_successfully_saved_to">Kopia zapasowa zapisana do:</string>
-    <string name="error_backing_up_data">Błąd tworzenia kopii zapasowej.</string>
     <string name="no_opencellid_key_detected">Brak klucza API OpenCellID. Musisz najpierw wpisać lub pobrać swój klucz.</string>
     <string name="refreshed_cell_id_info">Odświeżanie ekranu</string>
     <string name="unable_to_acquire_root_access">Nie udało się usyskać praw ROOTa. Interface komend AT wymaga praw ROOTa. Sprawdź swoje urządzenie i spróbuj ponownie.</string>
@@ -303,7 +296,7 @@
 
 
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">Statystyki AIMSICD, pobliskich komórek i metod szyfrowania.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">Szczegóły SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Pokaż szczegółowe porównanie obecnie połączonych komórek używając danych z OpenCellID. Podświetla różnice.</string>
     <string name="help_main_database_viewer">Pokaż tablele baz danych.</string>
@@ -316,11 +309,7 @@
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">Ustawienia AIMSICD, czas odświeżania i zachowanie serwisów.</string>
-    <string name="help_settings_backup_db">Utwórz kopię zapasową bazy danych na karcie SD.</string>
-    <string name="help_settings_restore_db">Wczytaj bazę danych z karty.</string>
     <string name="help_settings_reset_db">Wyczyść wszystkie tabele bazy danych.</string>
-    <string name="help_settings_export_db_to_csv">Eksport z bazy danych do plików CSV.</string>
-    <string name="help_settings_import_db_from_csv">Importuj do bazy danych z plików CSV.</string>
 
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Uzyskaj klucz API do OpenCellID by pobierać i wysyłać dane…</string>
@@ -330,7 +319,6 @@
     <string name="help_app_debugging">Wczytaj i wyślij logi.</string>
     <string name="help_app_quit">Zakończ działanie aplikacji.</string>
     <string name="waiting_for_location">Oczekiwanie na lokalizację…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Nie udało się odzyskać kopii z poprzedniej wersji bazy danych!</string>
     <string name="unique_bts_data">Unikalne dane BTS</string>
     <string name="bts_measurements">Pomiary BTS</string>
     <string name="imported_ocid_data">Importowane dane OpenCellID</string>
@@ -383,7 +371,6 @@
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
 
-    <string name="restore_database_completed_title">Odzyskiwanie powiodło się.</string>
     <string name="delete_database_msg_success">Baza danych została usunięta i odtworzona.\nProszę zrestartować aplikację by usunąć resztę danych z pamięci.</string>
 
     <string name="unknown">Nieznany</string>

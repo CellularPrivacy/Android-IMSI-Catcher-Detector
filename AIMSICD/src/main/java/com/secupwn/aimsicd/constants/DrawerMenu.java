@@ -16,7 +16,6 @@ public class DrawerMenu {
      */
     public static class ID {
 
-
         /**
          * Constants of section of menu
          */
@@ -29,12 +28,12 @@ public class DrawerMenu {
          */
         public static class MAIN {
 
-            public static final int CURRENT_TREAT_LEVEL = 100; //Current Threat Level
-            public static final int PHONE_SIM_DETAILS = 110; //Phone/SIM Details
-            public static final int ALL_CURRENT_CELL_DETAILS = 120; //All Current Cell Details
-            public static final int DB_VIEWER = 130; //Database Viewer
-            public static final int ANTENNA_MAP_VIEW = 140; // Antenna Map View
-            public static final int AT_COMMAND_INTERFACE = 150; //AT Command Interface
+            public static final int NEIGHBORING_CELLS = 100;
+            public static final int PHONE_SIM_DETAILS = 110;
+            public static final int ALL_CURRENT_CELL_DETAILS = 120;
+            public static final int DB_VIEWER = 130;
+            public static final int ANTENNA_MAP_VIEW = 140;
+            public static final int AT_COMMAND_INTERFACE = 150;
 
         }
 
@@ -42,26 +41,18 @@ public class DrawerMenu {
          * Constants of item of 'settings' section of menu
          */
         public static class DATABASE_SETTINGS {
-
-            public static final int BACKUP_DB = 310; //Backup DataBase
-            public static final int RESTORE_DB = 320; //Restore DataBase
             public static final int RESET_DB = 330; //Reset DataBase
-            //TODO need to implement
-            public static final int EXPORT_DB_TO_CVS = 340; //Export DataBase to CSV files
-            //TODO need to implement
-            public static final int IMPORT_DB_FROM_CVS = 350; //Import DataBase from CSV file(s)
-
         }
 
         /**
          * Constants of item of 'application' section of menu
          */
         public static class APPLICATION {
-            public static final int DOWNLOAD_LOCAL_BTS_DATA = 400; //Download Local BST Data FIXME     Is this should be "Download Local OCID Data" ?
-            public static final int UPLOAD_LOCAL_BTS_DATA = 410; //Upload Local BST Data
-            public static final int ADD_GET_OCID_API_KEY = 420; // Add/Get OCID API key
-            public static final int FAQ = 450; // TODO Help/FAQ
-            public static final int QUIT = 460; //Quit
+            public static final int DOWNLOAD_LOCAL_BTS_DATA = 400;  //Download Local BST Data FIXME     Is this should be "Download Local OCID Data" ?
+            public static final int UPLOAD_LOCAL_BTS_DATA = 410;    //Upload Local BST Data
+            public static final int ADD_GET_OCID_API_KEY = 420;     // Add/Get OCID API key
+            public static final int FAQ = 450;                      // TODO Help/FAQ
+            public static final int QUIT = 460;                     //Quit
 
         }
 

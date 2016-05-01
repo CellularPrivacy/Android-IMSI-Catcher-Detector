@@ -3,20 +3,30 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package com.secupwn.aimsicd.adapters;
+package com.secupwn.aimsicd.data.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.data.model.DefaultLocation;
 
-public class DefaultLocationCardInflater implements IAdapterViewInflater<CardItemData> {
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
+
+import static java.lang.String.valueOf;
+
+public class DefaultLocationAdapter extends RealmBaseAdapter<DefaultLocation> {
+
+    public DefaultLocationAdapter(Context context, RealmResults<DefaultLocation> realmResults, boolean automaticUpdate) {
+        super(context, realmResults, automaticUpdate);
+    }
 
     @Override
-    public View inflate(final BaseInflaterAdapter<CardItemData> adapter, final int pos,
-            View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
         if (convertView == null) {
@@ -27,8 +37,8 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final CardItemData item = adapter.getTItem(pos);
-        holder.updateDisplay(item);
+        final DefaultLocation defaultLocation = getItem(position);
+        holder.updateDisplay(defaultLocation, position);
 
         return convertView;
     }
@@ -54,12 +64,12 @@ public class DefaultLocationCardInflater implements IAdapterViewInflater<CardIte
             rootView.setTag(this);
         }
 
-        public void updateDisplay(CardItemData item) {
-            mCountry.setText(item.getCountry());
-            mMcc.setText(item.getMcc());
-            mLat.setText(item.getLat());
-            mLng.setText(item.getLon());
-            mRecordId.setText(item.getRecordId());
+        public void updateDisplay(DefaultLocation defaultLocation, int position) {
+            mCountry.setText(defaultLocation.getCountry());
+            mMcc.setText(valueOf(defaultLocation.getMobileCountryCode()));
+            mLat.setText(valueOf(defaultLocation.getGpsLocation().getLatitude()));
+            mLng.setText(valueOf(defaultLocation.getGpsLocation().getLongitude()));
+            mRecordId.setText(valueOf(position));
         }
     }
 }

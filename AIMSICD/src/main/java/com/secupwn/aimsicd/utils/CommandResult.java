@@ -24,8 +24,6 @@ package com.secupwn.aimsicd.utils;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -85,7 +83,7 @@ public class CommandResult implements Parcelable {
             String lineEnding = System.getProperty("line.separator");
             FileWriter errorWriter = null;
             try {
-                File errorLogFile = new File(AIMSICDDbAdapter.mExternalFilesDirPath + "error.txt");
+                File errorLogFile = new File(RealmHelper.mExternalFilesDirPath + "error.txt");
                 if (!errorLogFile.exists()) {
                     errorLogFile.createNewFile();
                 }

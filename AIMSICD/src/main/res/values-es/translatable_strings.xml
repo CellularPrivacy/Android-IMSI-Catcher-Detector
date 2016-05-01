@@ -14,10 +14,8 @@
 
     <string name="toggle_attack_detection">Habilitar Deteccion de Ataque</string>
     <string name="toggle_cell_tracking">Habilitar Rastreo de Celda</string>
-    <string name="backup_database">Copiar Base de Datos</string>
     <string name="clear_database">Limpiar/Resetear Base de Datos</string>
     <string name="clear_database_question">Se borrara toda la informacion\nEsta Seguro?</string>
-    <string name="restore_database">Restaurar Base de Datos</string>
     <string name="preferences">Opciones</string>
     <string name="press_once_again_to_exit">Presiona de nuevo para salir.</string>
     <string name="cell_lookup">Detalles de Celda Actuales</string>
@@ -31,9 +29,9 @@
     <string name="sim_info_title">Informacion de SIM</string>
     <string name="network_info">Informacion de Red</string>
     <string name="cell_info_title">Nivel de Amenaza Actual</string>
-    <string name="neighbouring_cells_title">Celdas Vecinas</string>
+    <string name="neighboring_cells_title">Celdas Vecinas</string>
     <string name="ciphering_indicator_title">Indicador de Cifrado</string>
-    <string name="neighbouring_cells_num_title">Total:</string>
+    <string name="neighboring_cells_num_title">Total:</string>
     <string name="sim_country">País:</string>
     <string name="sim_operator_id">ID de Operador:</string>
     <string name="sim_operator_name">Nombre de Operador:</string>
@@ -124,7 +122,6 @@
     <string name="lng_label">"Lon: "</string>
 
     <string name="table_names_prompt">Seleccionar Tabla</string>
-    <string name="database_export_successful">Exportación exitosa</string>
 
     <string name="at_command_title">Interfaz de comandos AT</string>
     <string name="response_label">Respuesta:</string>
@@ -220,11 +217,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">Datos de OpenCellID recibidos con éxito.\nMarcadores actualizados.</string>
     <string name="uploaded_bts_data_successfully">Datos de BTS cargados a OpenCellID Exitosamente.</string>
     <string name="error_uploading_bts_data">Error al cargar datos BTS a los servidores de OpenCellID!</string>
-    <string name="restore_database_completed_title">Restauración exitosa.</string>
-    <string name="restore_database_completed">Restauracion de base de datos Exitosa.</string>
-    <string name="error_restoring_database">Error restaurando base de datos.</string>
-    <string name="database_backup_successfully_saved_to">Backup de base de datos guardado con éxito en:</string>
-    <string name="error_backing_up_data">Error de copia de seguridad de base de datos.</string>
     <string name="no_opencellid_key_detected">Ninguna llave OpenCellID API detectada.\nIntroduzca primero su clave en el menu de configuración.</string>
     <string name="refreshed_cell_id_info">Display de Actualizacion</string>
     <string name="unable_to_acquire_root_access">"No se pudo obtener acceso ROOT en el dispositivo.\nLa  inyección de comando AT requiere acceso ROOT Terminal.\nPor favor, compruebe que el dispositivo esta ROOTEADO y vuelva a intentarlo."</string>
@@ -267,7 +259,7 @@
     <string name="typewap_data">Mensaje SMS WAP Push detectado!\nDetalles: Ver visor de base de datos.</string>
 
 
-    <string name="help_main_current_threat_level">Estado de amenaza AIMSICD, Celdas Vecinas, indicador de método de cifrado.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">Detalles del proveedor SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Ver comparación detallada de la célula conectada actualmente, con los datos (si existe) en OpenCellID y resaltar las diferencias.</string>
     <string name="help_main_database_viewer">Ver las diferentes tablas de la DB que tenemos.</string>
@@ -278,11 +270,7 @@
     <string name="help_tracking_toggle_cell_tracking">Empezar a Rastrear las celdas para mostrarlas en el visor de antena y posiblemente más adelante subir a la OpenCellID.</string>
 
     <string name="help_settings_preferences">Configuración de AIMSICD como las normas de protección, tiempos de consulta y comportamiento de servicio.</string>
-    <string name="help_settings_backup_db">Backup Base de datos SQLite3 a tarjeta SD.</string>
-    <string name="help_settings_restore_db">Restaurar Base de datos SQLite3 desde la tarjeta SD.</string>
     <string name="help_settings_reset_db">Limpiar y resetear todas o algunas tablas en las bases de datos.</string>
-    <string name="help_settings_export_db_to_csv">Exportar Bases de Datos a archivos CSV individuales.</string>
-    <string name="help_settings_import_db_from_csv">Importar Tablas de bases de datos de archivos CSV individuales.</string>
 
     <string name="help_app_add_get_ocid_api_key">Obtener una llave API para usar la base de datos OpenCellID para cargar y descargar datos…</string>
     <string name="help_app_about">Iconos de estado y explicacion del proyecto.</string>
@@ -291,7 +279,6 @@
     <string name="help_app_debugging">Recopilar y enviar registros de errores.</string>
     <string name="help_app_quit">Salir de esta aplicación.</string>
     <string name="waiting_for_location">Esperando ubicación…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">No se pueden restaurar copias de seguridad de la versión anterior de la base de datos debido a cambios estructurales!</string>
     <string name="unique_bts_data">Datos únicos BTS</string>
     <string name="bts_measurements">Mediciones de BTS</string>
     <string name="imported_ocid_data">Datos importados OpenCellID</string>

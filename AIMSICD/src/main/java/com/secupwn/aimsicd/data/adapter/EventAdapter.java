@@ -1,26 +1,29 @@
-/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project
- * -----------------------------------------------------------
- * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
- * -----------------------------------------------------------
- */
-package com.secupwn.aimsicd.adapters;
+package com.secupwn.aimsicd.data.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.data.model.Event;
 
-/**
- *  This class handles the EventLog DB table.
- */
- 
-public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemData> {
+import java.text.DateFormat;
+
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
+
+import static java.lang.String.valueOf;
+
+public class EventAdapter extends RealmBaseAdapter<Event> {
+
+    public EventAdapter(Context context, RealmResults<Event> realmResults, boolean automaticUpdate) {
+        super(context, realmResults, automaticUpdate);
+    }
 
     @Override
-    public View inflate(final BaseInflaterAdapter<EventLogItemData> adapter,
-                        final int pos, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
         if (convertView == null) {
@@ -31,8 +34,8 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final EventLogItemData item = adapter.getTItem(pos);
-        holder.updateDisplay(item);
+        final Event event = getItem(position);
+        holder.updateDisplay(event, position);
 
         return convertView;
     }
@@ -51,7 +54,6 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
         private final TextView mDF_desc;
 
         private final TextView mRecordId;
-        private final TextView mExample;
 
         ViewHolder(View rootView) {
             mRootView = rootView;
@@ -67,29 +69,22 @@ public class EventLogCardInflater implements IAdapterViewInflater<EventLogItemDa
             mDF_desc =      (TextView) mRootView.findViewById(R.id.DF_desc);
 
             mRecordId =     (TextView) mRootView.findViewById(R.id.record_id);
-            mExample =      (TextView) mRootView.findViewById(R.id.example);
 
             rootView.setTag(this);
         }
 
-        public void updateDisplay(EventLogItemData item) {
-            mtime.setText(item.getTimestamp());          // need fix ?
-            mLAC.setText(item.getLac());
-            mCID.setText(item.getCellId());
-            mPSC.setText(item.getPsc());
-            mgpsd_lat.setText(item.getLat());
-            mgpsd_lon.setText(item.getLon());
-            mgpsd_accu.setText(item.getGpsd_accu());
-            mDF_id.setText(item.getDF_id());
-            mDF_desc.setText(item.getDF_desc());
+        public void updateDisplay(Event event, int position) {
+            mtime.setText(DateFormat.getDateTimeInstance().format(event.getTimestamp()));          // need fix ?
+            mLAC.setText(valueOf(event.getLocationAreaCode()));
+            mCID.setText(valueOf(event.getCellId()));
+            mPSC.setText(valueOf(event.getPrimaryScramblingCode()));
+            mgpsd_lat.setText(valueOf(event.getGpsLocation().getLatitude()));
+            mgpsd_lon.setText(valueOf(event.getGpsLocation().getLongitude()));
+            mgpsd_accu.setText(valueOf(event.getGpsLocation().getAccuracy()));
+            mDF_id.setText(valueOf(event.getDfId()));
+            mDF_desc.setText(event.getDfDescription());
 
-            mRecordId.setText(item.getRecordId());
-            if (item.isFakeData()) {
-                mExample.setText(mRootView.getContext().getString(R.string.example));
-                mExample.setVisibility(View.VISIBLE);
-            } else {
-                mExample.setVisibility(View.GONE);
-            }
+            mRecordId.setText(valueOf(position));
         }
     }
 }

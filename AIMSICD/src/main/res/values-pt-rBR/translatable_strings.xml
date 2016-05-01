@@ -14,10 +14,8 @@
 
     <string name="toggle_attack_detection">Detecção de ataques de alternância</string>
     <string name="toggle_cell_tracking">Rastreamento de células de alternância</string>
-    <string name="backup_database">Cópia de segurança de banco de dados</string>
     <string name="clear_database">Limpar/Restabelecer banco de dados</string>
     <string name="clear_database_question">Todos os dados serão eliminados\nVocê tem certeza?</string>
-    <string name="restore_database">Restabelecer banco de dados</string>
     <string name="preferences">Preferências</string>
     <string name="press_once_again_to_exit">Pressione novamente para sair.</string>
     <string name="cell_lookup">Todos os detalhes da célula atual</string>
@@ -31,9 +29,9 @@
     <string name="sim_info_title">Informação do SIM</string>
     <string name="network_info">Rede de informação</string>
     <string name="cell_info_title">Nível de ameaça atual</string>
-    <string name="neighbouring_cells_title">células vizinhas</string>
+    <string name="neighboring_cells_title">células vizinhas</string>
     <string name="ciphering_indicator_title">Indicador de codificação</string>
-    <string name="neighbouring_cells_num_title">Total:</string>
+    <string name="neighboring_cells_num_title">Total:</string>
     <string name="sim_country">País</string>
     <string name="sim_operator_id">ID do operador:</string>
     <string name="sim_operator_name">Nome do operador:</string>

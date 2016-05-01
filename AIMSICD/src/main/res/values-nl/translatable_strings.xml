@@ -12,10 +12,8 @@
     <string name="disclaimer_title">DISCLAIMER</string>
     <string name="toggle_attack_detection">Aanvalsdetectie aan/uit</string>
     <string name="toggle_cell_tracking">Celtracking aan/uit</string>
-    <string name="backup_database">Backup Database</string>
     <string name="clear_database">Database leegmaken</string>
     <string name="clear_database_question">Alle gegevens worden verwijderd\nWeet u het zeker?</string>
-    <string name="restore_database">Database terugzetten</string>
     <string name="preferences">Voorkeuren</string>
     <string name="press_once_again_to_exit">Druk opnieuw om af te sluiten.</string>
     <string name="cell_lookup">Alle gegevens van huidige cel</string>
@@ -29,9 +27,9 @@
     <string name="sim_info_title">SIM gegevens</string>
     <string name="network_info">Netwerkgegevens</string>
     <string name="cell_info_title">Huidig gevarenniveau</string>
-    <string name="neighbouring_cells_title">Buurcellen</string>
+    <string name="neighboring_cells_title">Buurcellen</string>
     <string name="ciphering_indicator_title">Encryptie indicator</string>
-    <string name="neighbouring_cells_num_title">Totaal:</string>
+    <string name="neighboring_cells_num_title">Totaal:</string>
     <string name="sim_country">Land:</string>
     <string name="sim_operator_id">Operator ID:</string>
     <string name="sim_operator_name">Operator naam:</string>
@@ -124,7 +122,6 @@
     <string name="lng_label">"Lon: "</string>
 
     <string name="table_names_prompt">Selecteer tabel</string>
-    <string name="database_export_successful">Export succesvol</string>
 
     <string name="at_command_title">AT commandointerface</string>
     <string name="response_label">Antwoord:</string>
@@ -206,11 +203,6 @@
     <string name="femtocell_only_on_cdma_devices">AIMSICD kan femtocellen alleen op CDMA toestellen detecteren.</string>
     <string name="seconds">seconden.</string>
     <string name="download_error">Fout bij downloaden:</string>
-    <string name="restore_database_completed_title">Terugzetten gelukt.</string>
-    <string name="restore_database_completed">Terugzetten database geslaagd.</string>
-    <string name="error_restoring_database">Fout bij terugzetten database.</string>
-    <string name="database_backup_successfully_saved_to">Database backup opgeslagen in:</string>
-    <string name="error_backing_up_data">Fout bij database backup.</string>
     <string name="service_state_changed">Diensttoestand is veranderd!</string>
     <string name="stopped_tracking_femtocell">Gestopt met het bijhouden van Femtocal verbindingen.</string>
     <string name="alert_femtocell_tracking_detected">ALARM: Femtocel volgen gedetecteerd!</string>
@@ -267,7 +259,7 @@
     <string name="typewap_data">WAP pushbericht gedetecteerd!\nVoor details zie het database scherm.</string>
 
 
-    <string name="help_main_current_threat_level">AIMSICD dreigingsstatus, naburige cellen, versleutelingsmethode indicator.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">SIM netwerk provider details, IMEI, TMSI.</string>
     <string name="help_main_acd">"Toont een gedetailleerde  vergelijking van de cel waarmee u nu verbonden bent en de gegevens uit OpenCellID en toont de verschillen."</string>
     <string name="help_main_database_viewer">Toon de verschillende DB tabellen.</string>
@@ -278,11 +270,7 @@
     <string name="help_tracking_toggle_cell_tracking">Start het volgen van cellen om ze op de antennekaart te tonen en ze later te versturen naar OpenCellID.</string>
 
     <string name="help_settings_preferences">AIMSICD instellingen zoals beschermingsregels, contactfrequentie en service gedrag.</string>
-    <string name="help_settings_backup_db">Backup SQLite3 DB naar de SD-kaart.</string>
-    <string name="help_settings_restore_db">Herstel SQLite3 DB vanaf de SD-kaart.</string>
     <string name="help_settings_reset_db">Alle of gespecificeerde tabellen leegmaken.</string>
-    <string name="help_settings_export_db_to_csv">Exporteer DB tabellen naar CSV bestanden.</string>
-    <string name="help_settings_import_db_from_csv">Importeer DB tabellen vanuit CSV bestanden.</string>
 
     <string name="help_app_add_get_ocid_api_key">Verkrijg een API sleutel voor de OpenCellID database om gegevens te up- en downloaden…</string>
     <string name="help_app_about">Status iconen en uitleg over het project.</string>
@@ -291,7 +279,6 @@
     <string name="help_app_debugging">Verzamel en verstuur foutberichten.</string>
     <string name="help_app_quit">Deze app afsluiten.</string>
     <string name="waiting_for_location">Wachten op locatie…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Kan de backup van een oud databaseformaat niet terugzetten omdat de database structuur gewijzigd is!</string>
     <string name="unique_bts_data">Unieke BTS gegevens</string>
     <string name="bts_measurements">BTS metingen</string>
     <string name="imported_ocid_data">OpenCellID gegevens geïmporteerd</string>

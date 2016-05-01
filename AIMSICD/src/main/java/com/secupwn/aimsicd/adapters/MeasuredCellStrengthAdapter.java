@@ -5,25 +5,36 @@
  */
 package com.secupwn.aimsicd.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.data.model.Measure;
+
+import java.text.DateFormat;
+
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
+
+import static java.lang.String.valueOf;
+
 /**
  *
  * Inflater class used in DB viewer (for Measured cell strength measurements)
  *
- * Template:    SilentSmsCardInflater.java
- *
  * @author Tor Henning Ueland
  */
-public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<MeasuredCellStrengthCardData> {
+public class MeasuredCellStrengthAdapter extends RealmBaseAdapter<Measure> {
+
+    public MeasuredCellStrengthAdapter(Context context, RealmResults<Measure> realmResults, boolean automaticUpdate) {
+        super(context, realmResults, automaticUpdate);
+    }
 
     @Override
-    public View inflate(final BaseInflaterAdapter<MeasuredCellStrengthCardData> adapter, final int pos,
-                        View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
         if (convertView == null) {
@@ -34,7 +45,7 @@ public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<Me
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final MeasuredCellStrengthCardData item = adapter.getTItem(pos);
+        final Measure item = getItem(position);
         holder.updateDisplay(item);
 
         return convertView;
@@ -58,10 +69,10 @@ public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<Me
             rootView.setTag(this);
         }
 
-        public void updateDisplay(MeasuredCellStrengthCardData item) {
-            cid.setText(item.getCellID());
-            rss.setText(item.getSignal());
-            time.setText(item.getTimestamp());
+        public void updateDisplay(Measure item) {
+            cid.setText(valueOf(item.getBaseStation().getCellId()));
+            rss.setText(valueOf(item.getRxSignal()));
+            time.setText(DateFormat.getDateTimeInstance().format(item.getTime()));
         }
     }
 }

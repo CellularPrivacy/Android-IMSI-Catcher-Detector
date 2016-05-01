@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:text="@string/neighbouring_cells_title"
+                android:text="@string/neighboring_cells_title"
                 android:layout_span="2"
                 android:textColor="@color/green_text"
                 android:padding="4dip"/>
@@ -51,11 +51,11 @@
             <TableRow
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:id="@+id/neighbouring_total">
+                android:id="@+id/neighboring_total">
 
                 <TextView
-                    android:id="@+id/neighbouring_number_label"
-                    android:text="@string/neighbouring_cells_num_title"
+                    android:id="@+id/neighboring_number_label"
+                    android:text="@string/neighboring_cells_num_title"
                     android:textColor="@color/white"
                     android:padding="2dip"
                     android:gravity="end"
@@ -63,7 +63,7 @@
                     android:layout_width="fill_parent"/>
 
                 <TextView
-                    android:id="@+id/neighbouring_number"
+                    android:id="@+id/neighboring_number"
                     android:text="@string/empty"
                     android:textColor="@color/medium_blue"
                     android:padding="2dip"
@@ -75,7 +75,7 @@
                 android:gravity="start">
 
                 <TextView
-                    android:id="@+id/neighbouring_cells"
+                    android:id="@+id/neighboring_cells"
                     android:text=""
                     android:layout_weight="1"
                     android:textColor="@color/white"

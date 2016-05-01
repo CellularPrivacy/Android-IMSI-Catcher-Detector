@@ -6,46 +6,34 @@
 
 /* Coded by Paul Kinsella <paulkinsella29@yahoo.ie> */
 
-package com.secupwn.aimsicd.smsdetection;
+package com.secupwn.aimsicd.data.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.data.model.SmsData;
 
-import java.util.List;
+import java.util.Date;
+
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
+
+import static java.lang.String.valueOf;
 
 
-public class AdvanceUserBaseSmsAdapter extends BaseAdapter {
-    private static List<CapturedSmsData> detectionItemDetails;
-
-    private LayoutInflater l_Inflater;
-
-    public AdvanceUserBaseSmsAdapter(Context context, List<CapturedSmsData> results) {
-        detectionItemDetails = results;
-        l_Inflater = LayoutInflater.from(context);
-    }
-
-    public int getCount() {
-        return detectionItemDetails.size();
-    }
-
-    public Object getItem(int position) {
-        return detectionItemDetails.get(position);
-    }
-
-    public long getItemId(int position) {
-        return position;
+public class SmsDataAdapter extends RealmBaseAdapter<SmsData> {
+    
+    public SmsDataAdapter(Context context, RealmResults<SmsData> realmResults, boolean automaticUpdate) {
+        super(context, realmResults, automaticUpdate);
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = l_Inflater.inflate(R.layout.adv_user_sms_listview, parent, false);
+            convertView = inflater.inflate(R.layout.adv_user_sms_listview, parent, false);
             holder = new ViewHolder();
             holder.smsd_timestamp = (TextView) convertView.findViewById(R.id.tv_adv_smsdata_timestamp);
             holder.smsd_smstype = (TextView) convertView.findViewById(R.id.tv_adv_smsdata_smstype);
@@ -64,20 +52,22 @@ public class AdvanceUserBaseSmsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.smsd_timestamp.setText(detectionItemDetails.get(position).getSmsTimestamp());
-        holder.smsd_smstype.setText(detectionItemDetails.get(position).getSmsType());
-        holder.smsd_number.setText(detectionItemDetails.get(position).getSenderNumber());
-        holder.smsd_data.setText(detectionItemDetails.get(position).getSenderMsg());
-        holder.smsd_lac.setText(SV(detectionItemDetails.get(position).getCurrent_lac()));
-        holder.smsd_cid.setText(SV(detectionItemDetails.get(position).getCurrent_cid()));
-        holder.smsd_rat.setText(detectionItemDetails.get(position).getCurrent_nettype());
+        Date timestamp = getItem(position).getTimestamp();
+        
+        holder.smsd_timestamp.setText(java.text.DateFormat.getDateTimeInstance().format(timestamp));
+        holder.smsd_smstype.setText(getItem(position).getType());
+        holder.smsd_number.setText(getItem(position).getSenderNumber());
+        holder.smsd_data.setText(getItem(position).getMessage());
+        holder.smsd_lac.setText(valueOf(getItem(position).getLocationAreaCode()));
+        holder.smsd_cid.setText(valueOf(getItem(position).getCellId()));
+        holder.smsd_rat.setText(getItem(position).getRadioAccessTechnology());
         String isRoaming = "false";
-        if (detectionItemDetails.get(position).getCurrent_roam_status() == 1) {
+        if (getItem(position).isRoaming()) {
             isRoaming = "true";
         }
         holder.smsd_roam.setText(isRoaming);
-        holder.smsd_lat.setText(String.valueOf(detectionItemDetails.get(position).getCurrent_gps_lat()));
-        holder.smsd_lon.setText(String.valueOf(detectionItemDetails.get(position).getCurrent_gps_lon()));
+        holder.smsd_lat.setText(valueOf(getItem(position).getGpsLocation().getLatitude()));
+        holder.smsd_lon.setText(valueOf(getItem(position).getGpsLocation().getLongitude()));
 
         return convertView;
     }
@@ -86,9 +76,5 @@ public class AdvanceUserBaseSmsAdapter extends BaseAdapter {
 
         TextView smsd_timestamp, smsd_smstype, smsd_number, smsd_data,
                 smsd_lac, smsd_cid, smsd_rat, smsd_roam, smsd_lat, smsd_lon;
-    }
-
-    public String SV(int value) {
-        return String.valueOf(value);
     }
 }

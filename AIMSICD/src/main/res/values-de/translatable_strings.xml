@@ -28,10 +28,8 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Angriffserkennung\nein/ausschalten</string>
     <string name="toggle_cell_tracking">Funkzellen aufzeichnen</string>
-    <string name="backup_database">Datenbank sichern</string>
     <string name="clear_database">Datenbank löschen / zurücksetzen</string>
     <string name="clear_database_question">Alle Daten werden gelöscht.\nSind Sie sicher?</string>
-    <string name="restore_database">Datenbank wiederherstellen</string>
     <string name="preferences">Einstellungen</string>
     <string name="press_once_again_to_exit">Erneut drücken zum Verlassen.</string>
     <string name="cell_lookup">Derzeitige Funkzellen</string>
@@ -46,10 +44,10 @@
     <string name="device_info_title">Geräteinformationen</string>
     <string name="sim_info_title">SIM-Informationen</string>
     <string name="network_info">Netzwerkinformationen</string>
-    <string name="cell_info_title">Derzeitige Gefahrenstufe</string>
-    <string name="neighbouring_cells_title">Benachbarte Funkzellen</string>
+    <string name="cell_info_title">Benachbarte Funkzellen</string>
+    <string name="neighboring_cells_title">Benachbarte Funkzellen</string>
     <string name="ciphering_indicator_title">Verschlüsselungsindikator</string>
-    <string name="neighbouring_cells_num_title">Gesamt:</string>
+    <string name="neighboring_cells_num_title">Gesamt:</string>
     <string name="sim_country">Land:</string>
     <string name="sim_operator_id">Betreiber-ID:</string>
     <string name="sim_operator_name">Betreiber:</string>
@@ -159,8 +157,7 @@
         <item>@string/measured_signal_strengths</item>
         <item>@string/eventlog</item>
     </string-array>
-    <string name="database_export_successful">Export erfolgreich</string>
-    
+
     <!-- AT Command Interface  -->
     <string name="at_command_title">AT-Befehlskonsole</string>
     <string name="response_label">Reaktion:</string>
@@ -260,10 +257,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID-Daten erfolgreich empfangen.\nAntennen aktualisiert.</string>
     <string name="uploaded_bts_data_successfully">BTS-Daten erfolgreich zu OpenCellID hochgeladen.</string>
     <string name="error_uploading_bts_data">Fehler beim hochladen zum OpenCellID-Server!</string>
-    <string name="restore_database_completed">Wiederherstelung der Datenbank erfolgreich.</string>
-    <string name="error_restoring_database">Fehler beim Wiederherstellen der Datenbank.</string>
-    <string name="database_backup_successfully_saved_to">Datenbank wurde erfolgreich gesichert nach:</string>
-    <string name="error_backing_up_data">Fehler beim Sichern der Datenbank.</string>
     <string name="no_opencellid_key_detected">Kein OpenCellID API-Schlüssel erkannt!\nBitte Schlüssel in Einstellungen eingeben.</string>
     <string name="refreshed_cell_id_info">Aktualisiere Anzeige</string>
     <string name="unable_to_acquire_root_access">Kein ROOT-Zugriff auf Gerät möglich.\nAT-Befehle setzen ROOT-Zugriff voraus.\nBitte prüfen ob das gerät GEROOTET ist und erneut versuchen.</string>
@@ -308,7 +301,7 @@
     <string name="typemwi_data">Benachrichtigungsindikator erkannt!\nDetails: Siehe Datenbankbetrachter.</string>
     
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">AIMSICD-Gefahrenstatus, Benachbarte Funkzellen und Verschlüsselungsindikator.</string>
+    <string name="help_main_neighboring_cells">Zeigt benachbarte Funkzellen.</string>
     <string name="help_main_phone_sim_details">SIM-Details, Netzbetreiber, IMEI und TMSI.</string>
     <string name="help_main_acd">Zeigt detaillierten Vergleich der verbundenen Funkzelle mit den Daten von OpenCellID (wenn vorhanden) und hebt Unterschiede hervor.</string>
     <string name="help_main_database_viewer">Zeigt unsere verschiedenen Datenbanken.</string>
@@ -321,12 +314,8 @@
     
     <!-- Section Settings-->
     <string name="help_settings_preferences">AIMSICD-Einstellungen wie Schutzregeln, Aktualisierungszeiten und Dienstverhalten.</string>
-    <string name="help_settings_backup_db">SQLite3-Datenbank auf SD-Karte sichern.</string>
-    <string name="help_settings_restore_db">SQLite3-Datenbank wiederherstellen.</string>
     <string name="help_settings_reset_db">Alle oder bestimmte Datenbanken zurücksetzen und löschen.</string>
-    <string name="help_settings_export_db_to_csv">Datenbanktabellen in einzelne CSV-Dateien exportieren.</string>
-    <string name="help_settings_import_db_from_csv">Datenbanktabellen aus einzelnen CSV-Dateien importieren.</string>
-    
+
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">API-Schlüssel für die Nutzung der OpenCellID-Datenbanken sowie hoch- und herunterladen der Daten anfordern…</string>
     <string name="help_app_about">Status-Symbole und Erklärung des Projekts.</string>
@@ -335,7 +324,6 @@
     <string name="help_app_debugging">Fehlerprotokolle sammeln und versenden.</string>
     <string name="help_app_quit">Diese App verlassen.</string>
     <string name="waiting_for_location">Standort wird ermittelt…</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Alte Datenbank kann auf Grund struktureller Änderungen nicht wiederhergestellt werden!</string>
     <string name="unique_bts_data">Eindeutige BTS-Daten</string>
     <string name="bts_measurements">BTS-Messungen</string>
     <string name="imported_ocid_data">Importierte OpenCellID-Daten</string>
@@ -389,8 +377,7 @@
 
     <string name="invalid_key_try_later">Ungültiger OpenCellID-Schlüssel, bitte später erneut versuchen.</string>
     <string name="getting_ocid_key">Besorge OpenCellID-Schlüssel...</string>
-    
-    <string name="restore_database_completed_title">Wiederherstellung erfolgreich.</string>
+
     <string name="delete_database_msg_success">Datenbank gelöscht und erfolgreich neu erstellt.\nBitte App neu starten um alte Werte aus dem Speicher zu löschen.</string>
 
     <string name="deleted">Gelöscht</string>

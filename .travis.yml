@@ -7,6 +7,8 @@
 language: android
 sudo: false
 
+jdk: oraclejdk8
+
 cache:
   directories:
     - $HOME/.gradle/caches/
@@ -23,7 +25,7 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-23.0.2
+    - build-tools-23.0.3
     - android-23
     - extra-android-m2repository
 

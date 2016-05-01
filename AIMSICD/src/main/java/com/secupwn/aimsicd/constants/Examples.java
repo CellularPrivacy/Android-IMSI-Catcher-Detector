@@ -24,13 +24,4 @@ public class Examples {
         public static final String DF_ID = "2";
     }
 
-    /**
-     * Constants of examples for SilentSmsCardData
-     */
-    public static class SILENT_SMS_CARD_DATA {
-        public static final String ADDRESS = "ADREZZ";
-        public static final String DISPLAY = "DizzPlay";
-    }
-
-
 }

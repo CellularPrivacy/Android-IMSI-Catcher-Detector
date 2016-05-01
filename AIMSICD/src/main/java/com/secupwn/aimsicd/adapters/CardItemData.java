@@ -73,26 +73,26 @@ public class CardItemData {
 
     public CardItemData(Cell cell, String recordId) {
 
-        if (cell.getCid() != Integer.MAX_VALUE && cell.getCid() != -1) {
-            cellId = "CID: " + cell.getCid() + "  (0x" + Integer.toHexString(cell.getCid()) + ")";
+        if (cell.getCellId() != Integer.MAX_VALUE && cell.getCellId() != -1) {
+            cellId = "CID: " + cell.getCellId() + "  (0x" + Integer.toHexString(cell.getCellId()) + ")";
         } else {
             cellId = "N/A";
         }
 
-        if (cell.getLac() != Integer.MAX_VALUE && cell.getLac() != -1) {
-            lac = "LAC: " + cell.getLac();
+        if (cell.getLocationAreaCode() != Integer.MAX_VALUE && cell.getLocationAreaCode() != -1) {
+            lac = "LAC: " + cell.getLocationAreaCode();
         } else {
             lac = "N/A";
         }
 
-        if (cell.getMcc() != Integer.MAX_VALUE && cell.getMcc() != 0) {
-            mcc = "MCC: " + cell.getMcc();
+        if (cell.getMobileCountryCode() != Integer.MAX_VALUE && cell.getMobileCountryCode() != 0) {
+            mcc = "MCC: " + cell.getMobileCountryCode();
         } else {
             mcc = "N/A";
         }
 
-        if (cell.getMnc() != Integer.MAX_VALUE && cell.getMnc() != 0) {
-            mnc = "MNC: " + cell.getMnc();
+        if (cell.getMobileNetworkCode() != Integer.MAX_VALUE && cell.getMobileNetworkCode() != 0) {
+            mnc = "MNC: " + cell.getMobileNetworkCode();
         } else {
             mnc = "N/A";
         }
@@ -103,8 +103,8 @@ public class CardItemData {
             net = "N/A";
         }
 
-        if (cell.getPsc() != Integer.MAX_VALUE && cell.getPsc() != -1) {
-            psc = "PSC: " + cell.getPsc();
+        if (cell.getPrimaryScramblingCode() != Integer.MAX_VALUE && cell.getPrimaryScramblingCode() != -1) {
+            psc = "PSC: " + cell.getPrimaryScramblingCode();
         } else {
             psc = "N/A";
         }

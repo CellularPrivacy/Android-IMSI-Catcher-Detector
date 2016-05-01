@@ -72,16 +72,16 @@ public class StackOverflowXmlParser {
                     cell.setLon(readDouble(parser));
                     break;
                 case "mcc":
-                    cell.setMcc(readInt(parser));
+                    cell.setMobileCountryCode(readInt(parser));
                     break;
                 case "mnc":
-                    cell.setMnc(readInt(parser));
+                    cell.setMobileNetworkCode(readInt(parser));
                     break;
                 case "cellid":
-                    cell.setCid(readInt(parser));
+                    cell.setCellId(readInt(parser));
                     break;
                 case "lac":
-                    cell.setLac(readInt(parser));
+                    cell.setLocationAreaCode(readInt(parser));
                     break;
                 default:
                     skip(parser);

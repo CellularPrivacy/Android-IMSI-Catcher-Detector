@@ -237,12 +237,12 @@
                     android:id="@+id/wtf12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="isNeighbour:"
+                    android:text="isNeighbor:"
                     android:textColor="@color/green_text"
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tv_bts_measure_isNeighbour"
+                    android:id="@+id/tv_bts_measure_isNeighbor"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
@@ -259,7 +259,7 @@
                     android:id="@+id/wtf13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Neighbours:"
+                    android:text="Neighbors:"
                     android:textColor="@color/green_text"
                     android:textSize="12sp" />
 

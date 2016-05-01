@@ -12,10 +12,8 @@
     <string name="disclaimer_title">ВІДМОВА ВІД ВІДПОВІДАЛЬНОСТІ</string>
     <string name="toggle_attack_detection">Перемикач виявлення атаки</string>
     <string name="toggle_cell_tracking">Перемикач слідкування за стільниками</string>
-    <string name="backup_database">Створити резервну копію БД</string>
     <string name="clear_database">Очистити/скинути БД</string>
     <string name="clear_database_question">Всі дані будуть стерті.\nПродовжити?</string>
-    <string name="restore_database">Відновити базу даних</string>
     <string name="preferences">Параметри</string>
     <string name="press_once_again_to_exit">Натисніть ще раз для виходу.</string>
     <string name="cell_lookup">Всі поточні відомості про стільник</string>
@@ -84,7 +82,6 @@
     <string name="lng_label">"Довгота: "</string>
 
     <string name="table_names_prompt">Оберіть таблицю</string>
-    <string name="database_export_successful">Успішно експортовано</string>
 
     <string name="response_label">Відповідь:</string>
     <string name="execute_at">Виконання</string>
@@ -100,11 +97,11 @@
     <string name="btn_stop_logs">Зупинити</string>
     <string name="btn_start_logs">Почати</string>
 
-    <string name="disclaimer">"При використанні AIMSICD ви розумієте та погоджуєтесь, що AIMSICD є експериментальним та інформаційним Android додатком (далі ПО), яке може і не виявити стеження та відслідковування за різними причинами. Ви також розумієте, що додаток можна обійти чи ввести в оману за допомогою інших засобів, які ще не зрозумілі розробникам. Таким чином, ви також погоджуєтесь і розумієте, що розробники та компанії, які пов\'язані з даним ПЗ ні в якому разі не можуть нести відповідальність за результати роботи ПЗ чи результати, які залежать від використання даного ПЗ, а також не несуть ніякої відповідальності за інші збитки (включаючи, без обмежень, у вигляді недоотриманого прибутку, призупинення ділової активності, втрату ділової інформації та інші конкретні збитки), які можуть статися через використання чи неможливість використання ПЗ, також в тому випадку, якщо розробники та компанії, пов\'язані з цим ПЗ, були попереджені про можливість такого збитку. "</string>
+    <string name="disclaimer">"При використанні AIMSICD ви розумієте та погоджуєтесь, що AIMSICD є експериментальним та інформаційним Android додатком (далі ПО), яке може і не виявити стеження та відслідковування за різними причинами. Ви також розумієте, що додаток можна обійти чи ввести в оману за допомогою інших засобів, які ще не зрозумілі розробникам. Таким чином, ви також погоджуєтесь і розумієте, що розробники та компанії, які пов\'язані з даним ПЗ ні в якому разі не можуть нести відповідальність за результати роботи ПЗ чи результати, які залежать від використання даного ПЗ, а також не несуть ніякої відповідальності за інші збитки (включаючи, без обмежень, у вигляді недоотриманого прибутку, призупинення ділової активності, втрату ділової інформації та інші конкретні збитки), які можуть статися через використання чи неможливість використання ПЗ, також в тому випадку, якщо розробники та компанії, пов\'язані з цим ПЗ, були попереджені про можливість такого збитку. СТАН РОЗРОБКИ: ALPHA! "</string>
 
     <string name="no_network_connection_message">Не вдається завантажити OpenCellID дані без інтернету, будь ласка, з\'єднайтеся із мережею для передачі даних!</string>
 
-    <string name="neighbouring_cells_num_title">Підсумок:</string>
+    <string name="neighboring_cells_num_title">Підсумок:</string>
     <string name="network_lac">Код місце-розташування:</string>
     <string name="about_contribute">ВНЕСОК</string>
     <string name="about_disclaimer">ВІДМОВА ВІД ВІДПОВІДАЛЬНОСТІ</string>
@@ -123,7 +120,7 @@
 
     <string name="deleted">Видалено</string>
     <string name="failed_to_delete">Не вдалося видалити</string>
-    <string name="neighbouring_cells_title">Сусідні стільники</string>
+    <string name="neighboring_cells_title">Сусідні стільники</string>
     <string name="network_cellid">CID:</string>
     <string name="about_license">ЛІЦЕНЗІЯ</string>
     <string name="data_activity">Активність даних:</string>
@@ -207,9 +204,6 @@
     <string name="download_error">Помилка завантаження:</string>
     <string name="opencellid_data_successfully_received">Дані OpenCellID успішно прийнято.</string>
     <string name="error_retrieving_opencellid_data">Помилка під час отримання OpenCellID даних.\nПеревірте вашу мережу!</string>
-    <string name="error_restoring_database">Помилка відновлення бази даних.</string>
-    <string name="database_backup_successfully_saved_to">Резервну копію бази даних успішно скопійовано до:</string>
-    <string name="error_backing_up_data">Помилка резервного копіювання бази даних.</string>
     <string name="sim_serial">Серійний номер:</string>
     <string name="status_medium_detail_info">Небезпечна зона: Принаймні одна нова, або незнайома БС у зоні обслуговування, або використовується небезпечний (скомпрометований) алгоритм шифрування, нижчий за A5/3. Чекайте, що будь які дзвінки та СМС, зроблені у цій зоні можуть бути перехоплені та зареєстровані. Вам краще як найшвидше залишите це місце.</string>
     <string name="status_high_detail_info">Виявлені ворожі дії: IMSI-перехоплювач (IMSIC) або підробна БС (FBTS) відстежують користувачів. В цій зоні відбувається активне сканування. Ви повинні в будь якому разі залишити це місце, особливо, якщо це якась політична нестабільність. Зніміть батарею та витягніть SIM картку!</string>
@@ -235,8 +229,6 @@
     <string name="no_data_for_publishing">Відсутні доступні дані для публікації.</string>
     <string name="uploaded_bts_data_successfully">Дані BTS для OpenCellID вдало вивантажено.</string>
     <string name="error_uploading_bts_data">Трапилась помилка під час вивантаження BTS даних на сервера OpenCellID!</string>
-    <string name="restore_database_completed_title">Відновлення вдало завершено.</string>
-    <string name="restore_database_completed">Відновлення бази даних успішно завершено.</string>
     <string name="no_opencellid_key_detected">Не виявлено ключа до OpenCellID API!\nБудь ласка, спершу введіть ваш ключ в налаштуваннях.</string>
     <string name="refreshed_cell_id_info">Оновлення дисплею</string>
     <string name="unable_to_acquire_root_access">Не вдалося отримати root-права на вашому пристрої.\nВони потрібні для ін\'єкцій AT-команд до терміналу.\nБудь ласка, надайте root-права додатку, та спробуйте ще раз.</string>
@@ -275,11 +267,7 @@
     <string name="typewap_data">Виявлено WAP Push SMS повідомлення!\nПодробиці: Дивіться в переглядачі бази даних.</string>
 
 
-    <string name="help_settings_backup_db">Резервна копія бази даних на SD-картку.</string>
-    <string name="help_settings_restore_db">Відновити резервну копію бази даних з SD-картки.</string>
     <string name="help_settings_reset_db">Очистити чи скинути всі чи деякі таблиці бази даних.</string>
-    <string name="help_settings_export_db_to_csv">Експортувати базу даних до CSV файлу.</string>
-    <string name="help_settings_import_db_from_csv">Імпортувати базу даних з CSV файлів.</string>
 
     <string name="help_app_add_get_ocid_api_key">Отримати ключ API для використання бази даних OpenCellID, можливості завантажувати та вивантажувати дані…</string>
     <string name="help_app_about">Піктограми стану та пояснення проекту.</string>
@@ -287,7 +275,6 @@
     <string name="help_app_upload_local_bts">Вивантажити ваші дані BTS до бази даних OpenCellID.</string>
     <string name="help_app_debugging">Зібрати та відправити звіти з помилками.</string>
     <string name="help_app_quit">Закрити цей додаток.</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">Неможливо відновити базу даних з резервної копії попередньої версії через значні структурні зміни!</string>
     <string name="unique_bts_data">Унікальні дані BTS</string>
     <string name="bts_measurements">Вимірювання BTS</string>
     <string name="imported_ocid_data">Імпортовані OpenCellID дані</string>
@@ -328,7 +315,7 @@
     <string name="status_high_about_desc">Активне відслідковування поряд з вами!</string>
     <string name="pref_enable_gps_title">Налаштування GPS</string>
     <string name="pref_enable_gps_summary">Увімкнути GPS для відслідковування стільника</string>
-    <string name="help_main_current_threat_level">Статус загрози AIMSICD, сусідні стільники, індикатор методу шифрування.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_database_viewer">Перегляд таблиць бази даних.</string>
     <string name="help_main_antenna_map_view">Карта з кольоровими позначками сусідніх антен.</string>
     <string name="help_main_at_command_interface">Інтерфейс дозволяє надсилати AT команди до процесора (Потребує прав ROOT).</string>
@@ -338,4 +325,5 @@
     <string name="unknown">Невідомий</string>
 
     <string name="database_settings">База даних</string>
+    <string name="download_timed_out">Вийшов час запиту OpenCellID API. Спробувати пізніше ще раз?</string>
     </resources>

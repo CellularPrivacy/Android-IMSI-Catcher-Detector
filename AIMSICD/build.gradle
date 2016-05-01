@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'realm-android'
 
 def gitSha = null
 try {
@@ -12,13 +12,13 @@ def isCi = "true".equals(System.getenv("CI"))
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
         applicationId "com.SecUpwN.AIMSICD"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 42
+        versionCode 43
         testApplicationId "com.SecUpwN.AIMSICD.test"
 
         buildConfigField 'String', 'BUILD_NUMBER', (getBuildNumber() == null ? 'null' : "\"${buildNumber}\"")
@@ -38,6 +38,9 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+    }
+    dexOptions {
+        preDexLibraries !isCi
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -97,10 +100,13 @@ dependencies {
 
     provided "org.projectlombok:lombok:1.16.8"
     apt "org.projectlombok:lombok:1.16.8"
+
+    testCompile 'junit:junit:4.12'
 }
 
 apply from: "signing.gradle"
 apply plugin: "io.freefair.android-checkstyle"
+apply plugin: "io.freefair.android-javadoc-jar"
 
 checkstyle {
     toolVersion = "6.15"

@@ -11,10 +11,8 @@
     <string name="disclaimer_title">免责声明</string>
     <string name="toggle_attack_detection">切换攻击检测</string>
     <string name="toggle_cell_tracking">切换蜂窝跟踪</string>
-    <string name="backup_database">备份数据库</string>
     <string name="clear_database">清除/重置数据库</string>
     <string name="clear_database_question">所有数据将被删除。\n您确定吗？</string>
-    <string name="restore_database">恢复数据库</string>
     <string name="preferences">首选项</string>
     <string name="press_once_again_to_exit">再次按下将退出。</string>
     <string name="cell_lookup">当前所有蜂窝详细信息</string>
@@ -105,7 +103,6 @@
     <string name="samples_label">"样本: "</string>
     <string name="open_cell_id_label">OpenCellID 数据</string>
     <string name="table_names_prompt">选择表格</string>
-    <string name="database_export_successful">导出成功</string>
 
     <string name="at_command_title">AT 命令接口</string>
     <string name="response_label">响应:</string>
@@ -195,8 +192,8 @@
     <string name="refreshing_now">正在刷新…</string>
     <string name="seconds">秒。</string>
     <string name="ciphering_indicator_title">加密指示器</string>
-    <string name="neighbouring_cells_title">临近蜂窝</string>
-    <string name="neighbouring_cells_num_title">总计:</string>
+    <string name="neighboring_cells_title">临近蜂窝</string>
+    <string name="neighboring_cells_num_title">总计:</string>
     <string name="sim_country">国家:</string>
     <string name="sim_operator_id">运营商 ID:</string>
     <string name="drawer_close">关闭导航抽屉</string>
@@ -217,11 +214,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID 数据接收成功。\n地图标记已更新。</string>
     <string name="uploaded_bts_data_successfully">已成功上传 BTS 数据到 OpenCellID。</string>
     <string name="error_uploading_bts_data">上传 BTS 数据到 OpenCellID 服务器时出错！</string>
-    <string name="restore_database_completed_title">恢复成功。</string>
-    <string name="restore_database_completed">恢复数据库成功完成。</string>
-    <string name="error_restoring_database">恢复数据库时出错。</string>
-    <string name="database_backup_successfully_saved_to">数据库备份成功，已保存到：</string>
-    <string name="error_backing_up_data">备份数据库时出错。</string>
     <string name="refreshed_cell_id_info">已刷新细胞信息</string>
     <string name="no_opencellid_key_detected">未检测到 OpenCellID API 密钥！\n请先在设置中输入您的密钥。</string>
     <string name="getting_ocid_api_key">正在获取 OpenCellID API 密钥…</string>
@@ -253,7 +245,7 @@
     <string name="typemwi_header">检测到 MWI</string>
     <string name="typemwi_data">检测到消息等待指示器！\n详细信息：详见数据库查看器。</string>
     <string name="help_main_phone_sim_details">SIM卡网络提供商的详细信息，IMEI，TMSI。</string>
-    <string name="help_main_current_threat_level">AIMSICD 威胁状态，临近蜂窝，加密方法指示器。</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="typewap_header">检测到 WAP 推送</string>
     <string name="typewap_data">检测到 WAP 推送短信！\n详细信息：详见数据库查看器。</string>
 
@@ -289,19 +281,14 @@
 
     <string name="at_command_response_found">"找到： "</string>
     <string name="at_command_response_looking">*** 正在查找 AT 串行设备…\n</string>
-    <string name="unable_to_restore_backup_from_previous_database_version">无法从以前的数据库版本恢复，因为结构已变化！</string>
     <string name="help_app_debugging">收集和发送错误日志。</string>
     <string name="help_app_quit">退出此应用。</string>
     <string name="help_app_upload_local_bts">上传您的 BTS 到 OpenCellID 数据库。</string>
     <string name="help_app_download_local_bts">下载 OpenCellID 数据库。</string>
     <string name="help_app_about">状态图标和项目说明。</string>
     <string name="help_app_add_get_ocid_api_key">获取一个 API 密钥以使用 OpenCellID 数据库，包括上传和下载数据…</string>
-    <string name="help_settings_import_db_from_csv">从一个 CSV 文件导入数据表。</string>
 
-    <string name="help_settings_export_db_to_csv">导出数据表到单个 CSV 文件。</string>
     <string name="help_settings_reset_db">清除并重置所有或特定数据表。</string>
-    <string name="help_settings_restore_db">从 SD卡 恢复 SQLite3 数据库。</string>
-    <string name="help_settings_backup_db">备份 SQLite3 数据库到 SD卡。</string>
     <string name="help_settings_preferences">AIMSICD 设置，诸如保护规则，轮询时间和服务行为。</string>
     <string name="help_tracking_toggle_cell_tracking">开始跟踪蜂窝信息以显示在天线地图查看器上，以及可选上传到 OpenCellID。</string>
 

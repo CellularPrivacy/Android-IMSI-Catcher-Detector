@@ -26,10 +26,8 @@
     <!-- MENU -->
     <string name="toggle_attack_detection">Включение обнаружения атаки</string>
     <string name="toggle_cell_tracking">Включение отслеживания соты</string>
-    <string name="backup_database">Рез. копия базы данных</string>
     <string name="clear_database">Очистка/сброс базы данных</string>
     <string name="clear_database_question">Все данные будут удалены.\nВы уверены?</string>
-    <string name="restore_database">Восстановление базы данных</string>
     <string name="preferences">Параметры</string>
     <string name="press_once_again_to_exit">Нажмите еще раз для выхода.</string>
     <string name="cell_lookup">Все текущие данные соты</string>
@@ -45,9 +43,9 @@
     <string name="sim_info_title">Информация о SIM</string>
     <string name="network_info">Информация сети</string>
     <string name="cell_info_title">Текущий уровень угрозы</string>
-    <string name="neighbouring_cells_title">Соседние ячейки сотовой связи</string>
+    <string name="neighboring_cells_title">Соседние ячейки сотовой связи</string>
     <string name="ciphering_indicator_title">Индикатор шифрования</string>
-    <string name="neighbouring_cells_num_title">Всего:</string>
+    <string name="neighboring_cells_num_title">Всего:</string>
     <string name="sim_country">Страна:</string>
     <string name="sim_operator_id">ID оператора:</string>
     <string name="sim_operator_name">Название оператора:</string>
@@ -160,7 +158,6 @@
         <item>@string/measured_signal_strengths</item>
         <item>@string/eventlog</item>
     </string-array>
-    <string name="database_export_successful">Экспорт выполнен</string>
 
     <!-- AT Command Interface  -->
     <string name="at_command_title">Командный интерфейс AT</string>
@@ -272,11 +269,6 @@
     <string name="opencellid_data_successfully_received_markers_updated">Данные OpenCellID успешно приняты.\nМаркеры карты обновлены.</string>
     <string name="uploaded_bts_data_successfully">Данные БС для OpenCellID выгружены успешно.</string>
     <string name="error_uploading_bts_data">Ошибка при выгрузке данных БС для OpenCellID серверов!</string>
-    <string name="restore_database_completed_title">Восстановление выполнено.</string>
-    <string name="restore_database_completed">Восстановление базы данных успешно завершено.</string>
-    <string name="error_restoring_database">Ошибка восстановления базы данных.</string>
-    <string name="database_backup_successfully_saved_to">Резервная копия базы данных успешна сохранена в:</string>
-    <string name="error_backing_up_data">Ошибка резервного копирования базы данных.</string>
     <string name="no_opencellid_key_detected">Не обнаружен ключ API OpenCellID!\nПожалуйста, введите Ваш ключ в настройках.</string>
     <string name="refreshed_cell_id_info">Обновление дисплея</string>
     <string name="unable_to_acquire_root_access">Невозможно получить РУТ-доступ на Вашем устройстве.\nДля AT-команд требуется ROOT доступ к терминалу.\nПожалуйста, проверьте наличие прав РУТ на Вашем устройстве и попробуйте еще раз.</string>
@@ -324,7 +316,7 @@
 
 
     <!-- Section Main-->
-    <string name="help_main_current_threat_level">Статус угрозы AIMSICD, соседние соты, индикатор цифрового метода.</string>
+    <string name="help_main_neighboring_cells"></string>
     <string name="help_main_phone_sim_details">Информация провайдера сети SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Отображение детального сравнения текущей подключенной соты с данными (при их наличии) из OpenCellID и отметка различий.</string>
     <string name="help_main_database_viewer">Просмотр различных имеющихся таблиц баз данных.</string>
@@ -337,11 +329,7 @@
 
     <!-- Section Settings-->
     <string name="help_settings_preferences">Настройки AIMSICD, такие как правила защиты, время опроса и поведение службы.</string>
-    <string name="help_settings_backup_db">Резервная копия БД SQLite3 на SD-карту.</string>
-    <string name="help_settings_restore_db">Восстановление копии БД SQLite3 с SD-карты.</string>
     <string name="help_settings_reset_db">Очистка или сброс всех или указанных таблиц БД.</string>
-    <string name="help_settings_export_db_to_csv">Экспорт таблиц БД в отдельные CSV-файлы.</string>
-    <string name="help_settings_import_db_from_csv">Импорт таблиц БД из отдельных CSV-файлов.</string>
 
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Получение ключа API для использования базы данных OpenCellID при выгрузке и загрузке данных…</string>
@@ -351,7 +339,6 @@
     <string name="help_app_debugging">Сбор и отправка сообщений об ошибках.</string>
     <string name="help_app_quit">Выход из приложения.</string>
     <string name="waiting_for_location">Ожидание местоположения…</string>
-	<string name="unable_to_restore_backup_from_previous_database_version">Невозможно восстановить базу данных из предыдущей версии базы данных из-за структурных изменений!</string>
     <string name="unique_bts_data">Уникальные данные БС</string>
     <string name="bts_measurements">Измерения БС</string>
     <string name="imported_ocid_data">Импортированные данные OpenCellID</string>

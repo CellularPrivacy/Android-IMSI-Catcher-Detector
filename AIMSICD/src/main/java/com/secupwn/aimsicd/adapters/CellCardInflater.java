@@ -12,11 +12,6 @@ import android.widget.TextView;
 
 import com.secupwn.aimsicd.R;
 
-
-/**
- * This class handles the AMISICD DataBase
- */
- 
 public class CellCardInflater implements IAdapterViewInflater<CardItemData> {
 
     @Override

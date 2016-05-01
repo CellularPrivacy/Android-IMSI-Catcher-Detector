@@ -11,10 +11,8 @@
     <string name="db_viewer">Duombazės peržiūra</string>
     <string name="toggle_attack_detection">Įjungti atakų aptikimą</string>
     <string name="toggle_cell_tracking">Įjungti radijo bokšto sekimą</string>
-    <string name="backup_database">Atsarginė kopija</string>
     <string name="clear_database">Išvalyti duombazę</string>
     <string name="clear_database_question">Duomenys bus ištrinti.\nTęsti?</string>
-    <string name="restore_database">Atstatyti duombazę</string>
     <string name="preferences">Nustatymai</string>
     <string name="press_once_again_to_exit">Norint uždaryti, spauskite dar kartą.</string>
     <string name="no_network_connection_title">Nėra interneto ryšio</string>
@@ -27,7 +25,7 @@
     <string name="network_info">Tinklo informacija</string>
     <string name="cell_info_title">Dabartinis grėsmės lygis</string>
     <string name="ciphering_indicator_title">Šifro indikatorius</string>
-    <string name="neighbouring_cells_num_title">Viso:</string>
+    <string name="neighboring_cells_num_title">Viso:</string>
     <string name="sim_country">Šalis:</string>
     <string name="sim_operator_id">Operatoriaus ID:</string>
     <string name="sim_operator_name">Operatoriaus pavadinimas:</string>
