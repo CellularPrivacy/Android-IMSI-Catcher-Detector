@@ -22,8 +22,8 @@ public class SmsData extends RealmObject {
     private String radioAccessTechnology;
 
     @Override
-    public void removeFromRealm() {
-        gpsLocation.removeFromRealm();
-        super.removeFromRealm();
+    public void deleteFromRealm() {
+        gpsLocation.deleteFromRealm();
+        super.deleteFromRealm();
     }
 }

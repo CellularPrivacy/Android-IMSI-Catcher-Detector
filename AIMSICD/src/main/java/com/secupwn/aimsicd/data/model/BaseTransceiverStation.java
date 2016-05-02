@@ -20,8 +20,8 @@ public class BaseTransceiverStation extends RealmObject {
     private GpsLocation gpsLocation;
 
     @Override
-    public void removeFromRealm() {
-        gpsLocation.removeFromRealm();
-        super.removeFromRealm();
+    public void deleteFromRealm() {
+        gpsLocation.deleteFromRealm();
+        super.deleteFromRealm();
     }
 }

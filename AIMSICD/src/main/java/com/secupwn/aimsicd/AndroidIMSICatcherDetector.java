@@ -61,28 +61,10 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
 
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
                 .deleteRealmIfMigrationNeeded()
+                .initialData(new DefaultDataTransaction())
                 .build();
 
         Realm.setDefaultConfiguration(realmConfiguration);
-        final Realm realm = Realm.getDefaultInstance();
-
-        realm.executeTransactionAsync(
-                new DefaultDataTransaction(),
-                new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                        log.debug("Loading default data successful");
-                        realm.close();
-                    }
-                },
-                new Realm.Transaction.OnError() {
-                    @Override
-                    public void onError(Throwable error) {
-                        log.error("Error loading default data", error);
-                        realm.close();
-                    }
-                }
-        );
 
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);

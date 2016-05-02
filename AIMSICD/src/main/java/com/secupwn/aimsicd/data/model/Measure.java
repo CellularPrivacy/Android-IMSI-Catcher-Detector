@@ -23,8 +23,8 @@ public class Measure extends RealmObject {
     private boolean neighbor;
 
     @Override
-    public void removeFromRealm() {
-        getGpsLocation().removeFromRealm();
-        super.removeFromRealm();
+    public void deleteFromRealm() {
+        getGpsLocation().deleteFromRealm();
+        super.deleteFromRealm();
     }
 }

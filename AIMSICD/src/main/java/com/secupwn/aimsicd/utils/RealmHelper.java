@@ -147,7 +147,7 @@ public final class RealmHelper {
                         .or()
                         .equalTo("cellId", Integer.MAX_VALUE)
                         .findAll()
-                        .clear();
+                        .deleteAllFromRealm();
             }
         };
     }
@@ -395,7 +395,7 @@ public final class RealmHelper {
                 log.debug("CheckDBe() Attempting to delete bad import data from Imports database...");
 
                 // =========== samples ===========
-                realm.where(Import.class).lessThan("samples", 1).findAll().clear();
+                realm.where(Import.class).lessThan("samples", 1).findAll().deleteAllFromRealm();
 
                 // =========== avg_range ===========
                 // TODO: OCID data marks many good BTS with a negative range so we can't use this yet.
@@ -406,11 +406,11 @@ public final class RealmHelper {
                         .findAll().clear();*/
 
                 // =========== LAC ===========
-                realm.where(Import.class).lessThan("locationAreaCode", 1).findAll().clear();
+                realm.where(Import.class).lessThan("locationAreaCode", 1).findAll().deleteAllFromRealm();
 
                 // We should delete cells with CDMA (4) LAC not in [1,65534] but we can simplify this to:
                 // Delete ANY cells with a LAC not in [1,65534]
-                realm.where(Import.class).greaterThan("locationAreaCode", 65534).findAll().clear();
+                realm.where(Import.class).greaterThan("locationAreaCode", 65534).findAll().deleteAllFromRealm();
 
                 // Delete cells with GSM/UMTS/LTE (1/2/3/13 ??) (or all others?) LAC not in [1,65533]
                 /*realm.where(Import.class)
@@ -419,12 +419,12 @@ public final class RealmHelper {
                         .findAll().clear();*/
 
                 // =========== CID ===========
-                realm.where(Import.class).lessThan("cell", 1).findAll().clear();
+                realm.where(Import.class).lessThan("cell", 1).findAll().deleteAllFromRealm();
 
                 // We should delete cells with UMTS/LTE (3,13) CID not in [1,268435455] (0xFFF FFFF) but
                 // we can simplify this to:
                 // Delete ANY cells with a CID not in [1,268435455]
-                realm.where(Import.class).greaterThan("cellId", 268435455).findAll().clear();
+                realm.where(Import.class).greaterThan("cellId", 268435455).findAll().deleteAllFromRealm();
 
                 // Delete cells with GSM/CDMA (1-3,4) CID not in [1,65534]
                 realm.where(Import.class)
@@ -434,7 +434,7 @@ public final class RealmHelper {
                             .or()
                             .equalTo("radioAccessTechnology", "CDMA")
                         .endGroup()
-                        .findAll().clear();
+                        .findAll().deleteAllFromRealm();
                 log.info("CheckDBe() Deleted BTS entries from Import realm with bad LAC/CID...");
 
                 //=============================================================
