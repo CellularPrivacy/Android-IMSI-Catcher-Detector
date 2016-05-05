@@ -242,6 +242,7 @@
     <string name="only_one_key_per_day">Only one new API key request per 24 hours!\nPlease try again later.</string>
     <string name="cell_id_doesnt_exist_in_db">Cell ID not in OpenCellID Database!</string>
     <string name="hostile_service_area_changing_lac_detected">Hostile Service Area: Changing LAC Detected!</string>
+    <string name="cell_doesnt_provide_any_neighbors">BTS doesn\'t provide any neighbor cells!</string>
     <string name="femtocell_detection_active">FemtoCell Detection Active.</string>
     <string name="cell_tracking_active">Cell Tracking Active.</string>
     <string name="cell_monitoring_active">Cell Monitoring Active.</string>
