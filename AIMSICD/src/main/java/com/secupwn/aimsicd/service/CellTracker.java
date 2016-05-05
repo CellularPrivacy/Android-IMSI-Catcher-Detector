@@ -450,19 +450,22 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         emptyNeighborCellsList = false;
 
-        Integer ncls = 0;                                       // NC list size
+        Integer neighborCellsCount = 0;
         if (tm != null && tm.getNeighboringCellInfo() != null) { // See # 383
-            ncls = tm.getNeighboringCellInfo().size();
+            neighborCellsCount = tm.getNeighboringCellInfo().size();
         }
-        Boolean nclp = tinydb.getBoolean("nc_list_present");    // NC list present? (default is false)
+        
+        // NC list present for that network type? (default is false)
+        String ncListVariableByType = "nc_list_present_" + tm.getNetworkType();
+        Boolean nclSupportedByNetwork = tinydb.getBoolean(ncListVariableByType);
 
-        if (ncls > 0) {
-            log.debug("NeighboringCellInfo size: " + ncls);
-            if (!nclp) {
-                log.debug("Setting nc_list_present to: true");
-                tinydb.putBoolean("nc_list_present", true);
+        if (neighborCellsCount > 0) {
+            log.debug("NeighboringCellInfo size: " + neighborCellsCount);
+            if (!nclSupportedByNetwork)  {
+                log.debug("Setting " + ncListVariableByType + " to: true");
+                tinydb.putBoolean(ncListVariableByType, true);
             }
-        } else if (ncls == 0 && nclp) {
+        } else if (neighborCellsCount == 0 && nclSupportedByNetwork) {
             // Detection 7a
             log.info("ALERT: No neighboring cells detected for CID: " + device.cell.getCellId());
 
@@ -472,9 +475,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             dbHelper.toEventLog(realm, 4, "No neighboring cells detected"); // (DF_id, DF_desc)
         } else  {
             // Todo: remove cid string when working.
-            log.debug("NC list not supported by AOS on this device. Nothing to do.");
-            log.debug(": Setting nc_list_present to: false");
-            tinydb.putBoolean("nc_list_present", false);
+            log.debug("NC list not supported by this networkn type or not supported by AOS on this device. Nothing to do.");
+            log.debug("Setting " + ncListVariableByType + " to: false");
+            tinydb.putBoolean(ncListVariableByType, false);
         }
         setNotification();
     }
