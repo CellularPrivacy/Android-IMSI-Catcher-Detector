@@ -32,7 +32,7 @@ import io.realm.RealmResults;
 
 /**
  * This class handles all the AMISICD DataBase maintenance operations, like
- * creation, population, updates, backup, restore and various selections.
+ * creation, population, updates and various selections.
  */
 public final class RealmHelper {
     private final Logger log = AndroidLogger.forClass(RealmHelper.class);
@@ -225,7 +225,6 @@ public final class RealmHelper {
     /**
      * Parses the downloaded CSV from OpenCellID and uses it to populate "Import" table.
      * <p/>
-     * a)  We do not include "rej_cause" in backups. set to 0 as default
      * b)  Unfortunately there are 2 important missing items in the OCID CSV file:
      * - "time_first"
      * - "time_last"
@@ -649,8 +648,6 @@ public final class RealmHelper {
 
     /**
      * Defining a new simpler version of insertEventLog for use in CellTracker.
-     * Please note, that in AMSICDDbAdapter (here) it is also used to backup DB,
-     * in which case we can not use this simpler version!
      */
     public void toEventLog(Realm realm, final int DF_id, final String DF_desc) {
 
