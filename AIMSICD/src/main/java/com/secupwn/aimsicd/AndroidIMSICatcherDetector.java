@@ -16,6 +16,7 @@ import com.secupwn.aimsicd.data.DefaultDataTransaction;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.utils.BaseAsyncTask;
 import com.secupwn.aimsicd.utils.TinyDB;
+import com.secupwn.aimsicd.utils.UncaughtExceptionLogger;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
 
     @Override
     public void onCreate() {
+        UncaughtExceptionLogger.init();
         instance = new WeakReference<>(this);
         addModule(new AndroidLoggerModule());
         addModule(OkHttpModule.withCache(this));
