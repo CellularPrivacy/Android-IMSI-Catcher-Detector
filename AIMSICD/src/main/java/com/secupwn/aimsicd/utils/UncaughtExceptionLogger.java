@@ -49,8 +49,9 @@ public class UncaughtExceptionLogger implements Thread.UncaughtExceptionHandler,
     public void uncaughtException(Thread thread, Throwable ex) {
         processException(thread, ex);
 
-        if (originalExceptionHandler != null)
+        if (originalExceptionHandler != null) {
             originalExceptionHandler.uncaughtException(thread, ex);
+        }
     }
 
     private void processException(Thread thread, Throwable ex) {
