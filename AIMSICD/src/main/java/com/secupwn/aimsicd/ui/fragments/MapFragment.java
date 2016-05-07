@@ -184,7 +184,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
     @Override
     public void onDestroyView() {
-        super.onDestroy();
+        super.onDestroyView();
 
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
         if (mCompassOverlay != null) {
@@ -195,7 +195,9 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
             mMyLocationOverlay.disableMyLocation();
         }
 
-        prefs.unregisterOnSharedPreferenceChangeListener(this);
+        if(prefs != null) {
+            prefs.unregisterOnSharedPreferenceChangeListener(this);
+        }
         // Unbind from the service
         if (mBound) {
             getActivity().unbindService(mConnection);
