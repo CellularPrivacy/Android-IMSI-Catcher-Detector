@@ -419,7 +419,7 @@ public final class RealmHelper {
                         .findAll().clear();*/
 
                 // =========== CID ===========
-                realm.where(Import.class).lessThan("cell", 1).findAll().deleteAllFromRealm();
+                realm.where(Import.class).lessThan("cellId", 1).findAll().deleteAllFromRealm();
 
                 // We should delete cells with UMTS/LTE (3,13) CID not in [1,268435455] (0xFFF FFFF) but
                 // we can simplify this to:
