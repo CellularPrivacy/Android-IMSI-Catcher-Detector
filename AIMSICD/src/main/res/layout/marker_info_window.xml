@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/mainView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:padding="12dp">
+
+    <!-- todo: We need to add HEX here and align... -->
+    <TableRow
+        android:id="@+id/open_cell_label"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        android:tag="device">
+
+        <TextView
+            android:textSize="14sp"
+            android:text="@string/open_cell_id_label"
+            android:layout_span="2"
+            android:textColor="@color/green_text"
+            android:padding="4dip"/>
+
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/cell_id_label"
+            android:text="@string/cell_id_label"
+            android:textSize="15sp"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/cell_id"
+            android:text="@string/empty"
+            android:textSize="15sp"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/lac_label"
+            android:text="@string/lac_label"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/lac"
+            android:text="@string/empty"
+            android:textSize="15sp"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/mcc_label"
+            android:text="PSC:"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/psc"
+            android:text=""
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/mnc_label"
+            android:text="RAT:"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/rat"
+            android:text=""
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/pc_label"
+            android:text="@string/pc_label"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/pc"
+            android:text="@string/empty"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/lat_label"
+            android:text="@string/lat_label"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/lat"
+            android:text="@string/empty"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/lng_label"
+            android:text="@string/lng_label"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/lng"
+            android:text="@string/empty"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
+    </TableRow>
+
+    <TableRow
+        android:tag="device">
+
+        <TextView
+            android:id="@+id/samples_label"
+            android:text="Samples:"
+            android:textColor="@color/green_text"
+            android:padding="2dip"
+            android:gravity="end"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/samples"
+            android:text="@string/empty"
+            android:textColor="@color/standard_grey"
+            android:padding="2dip"
+            android:gravity="start"/>
+
+    </TableRow>
+
+</TableLayout>

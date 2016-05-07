@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:descendantFocusability="beforeDescendants">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/selector_card_background"
+        android:descendantFocusability="afterDescendants">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:id="@+id/wtf1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Country:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/country"
+                    android:layout_weight="0.1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lat:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/lat"
+                    android:layout_weight="0.1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+            <TextView
+                    android:id="@+id/wtf3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MCC:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/mcc"
+                    android:layout_weight="0.1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lon:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/lng"
+                    android:layout_weight="0.1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TextView
+                android:id="@+id/record_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/medium_blue"
+                android:textSize="12sp"
+                android:gravity="end" />
+
+        </TableLayout>
+    </LinearLayout>
+</FrameLayout>

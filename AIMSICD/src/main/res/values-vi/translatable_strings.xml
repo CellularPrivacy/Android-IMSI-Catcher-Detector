@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="tracking">Theo dõi</string>
+    <string name="device_info">Thông tin điện thoại/SIM</string>
+    <string name="map_view">Trình xem bản đồ ăng-ten</string>
+    <string name="db_viewer">Trình xem CSDL</string>
+    <string name="quit">Thoát</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Huỷ</string>
+    <string name="text_agree">Tôi đồng ý</string>
+    <string name="text_disagree">Tôi không đồng ý</string>
+
+    <string name="disclaimer_title">MIỄN TRỪ TRÁCH NHIỆM</string>
+    <string name="toggle_attack_detection">Bật tắt phát hiện tấn công</string>
+    <string name="toggle_cell_tracking">Bật tắt theo dõi máy di động</string>
+    <string name="clear_database">Xoá/cài lại CSDL</string>
+    <string name="clear_database_question">Tất cả dữ liệu sẽ bị xóa.\nBạn có chắc không?</string>
+    <string name="preferences">Tuỳ chỉnh</string>
+    <string name="press_once_again_to_exit">Nhấn lại để thoát.</string>
+    <string name="cell_lookup">Tất cả chi tiết về máy di động hiện thời</string>
+    <string name="debugging">Dò lỗi</string>
+    <string name="no_network_connection_title">Không có kết nối mạng</string>
+    <string name="no_network_connection_message">Không thể tải xuống dữ liệu OpenCellID mà không có mạng, xin bật kết nối dữ liệu!</string>
+
+    <string name="get_opencellid">Tải xuống dữ liệu BTS</string>
+
+    <string name="device_info_title">Thông tin thiết bị</string>
+    <string name="sim_info_title">Thông tin SIM</string>
+    <string name="network_info">Thông tin mạng</string>
+    <string name="cell_info_title">Mức độ đe dọa hiện thời</string>
+    <string name="neighboring_cells_title">Các máy di động lân cận</string>
+    <string name="ciphering_indicator_title">Bộ chỉ báo viết mã</string>
+    <string name="disclaimer">"Khi sử dụng AIMSICD, bạn hiểu và chấp nhận rằng AIMSICD là một ứng dụng Android thực nghiệm cung cấp nhiều thông tin hữu ích và nó có thể thất bại trong việc phát hiện sự giám sát và theo dõi vì nhiều lý do khác nhau. Bạn cũng hiểu rằng nó có thể bị phá rối hoặc huỷ hoại bởi các công cụ khác mà nhà phát triển chưa hiểu rõ. Vì vậy, bạn cũng chấp nhận và hiểu rằng các công ty và nhà phát triển liên quan đến sản phẩm miễn phí này, trong mọi trường hợp, sẽ không phải chịu trách nhiệm cho bất kỳ hậu quả nào do việc sử dụng phần mềm này gây ra. "</string>
+
+    <string name="neighboring_cells_num_title">Tổng cộng:</string>
+    <string name="sim_country">Quốc gia:</string>
+    <string name="sim_operator_id">ID nhà điều hành:</string>
+    <string name="sim_operator_name">Tên nhà điều hành:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">Số sê-ri:</string>
+    <string name="device_type">Loại điện thoại:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">Phiên bản RIL:</string>
+    <string name="network_name">Tên nhà cung cấp:</string>
+    <string name="network_code">Mã nhà cung cấp:</string>
+    <string name="network_type">Loại:</string>
+    <string name="network_lac">LAC:</string>
+    <string name="network_cellid">CID:</string>
+    <string name="data_activity">Hoạt động dữ liệu:</string>
+    <string name="data_status">Trạng thái dữ liệu:</string>
+    <string name="network_roaming">Chuyển vùng:</string>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="button_refresh">Làm mới</string>
+    <string name="drawer_open">Mở ngăn điều hướng</string>
+    <string name="drawer_close">Đóng ngăn điều hướng</string>
+    <string name="network_psc">PSC:</string>
+
+    <string name="upload_bts">Tải lên dữ liệu BTS</string>
+
+    <string name="about_aimsicd">Về AIMSICD</string>
+    <string name="app_version">Phiên bản: %s</string>
+    <string name="buildnumber">Số bản dựng: %s</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="aimsicd_about_info3">Dự án Android nhằm phát hiện và tránh các trạm cơ sở giả (IMSI-Catchers) trong hệ thống mạng GSM/UMTS.</string>
+    <string name="about_github">AIMSICD trên GitHub</string>
+    <string name="about_wiki">TÀI LIỆU</string>
+    <string name="about_contribute">ĐÓNG GÓP</string>
+    <string name="about_disclaimer">MIỄN TRỪ TRÁCH NHIỆM</string>
+    <string name="about_releases">BẢN PHÁT HÀNH</string>
+    <string name="about_changelog">LỊCH SỬ THAY ĐỔI</string>
+    <string name="about_license">GIẤY PHÉP</string>
+    <string name="about_credits">LỜI TRI ÂN</string>
+    <string name="status_idle_about_desc">Nhàn rỗi / Đang tải.</string>
+    <string name="status_high_about_desc">Hoạt động theo dõi đang ở rất gần!</string>
+    <string name="status_ok_about_desc">Mọi việc vẫn ổn.</string>
+    <string name="status_danger_about_desc">Bạn đang bị theo dõi!</string>
+    <string name="status_medium_about_desc">Khu vực dịch vụ kém bảo mật. Xin tránh xa!</string>
+    <string name="status_skull_about_desc">CHẠY ĐI! Thiết bị cầm tay đã bị xâm nhập!</string>
+    <string name="about_desc_icon_title">Nhấn vào các biểu tượng trạng thái dưới đây để biết thông tin chi tiết:</string>
+
+    <string name="network_netid">ID mạng:</string>
+    <string name="network_sysid">ID hệ thống:</string>
+    <string name="network_baseid">ID trạm cơ sở:</string>
+
+    <string name="location_error_title">Đã tắt dịch vụ vị trí</string>
+    <string name="location_error_message">Bạn không thể theo dõi dữ liệu GPS mà không bật các dịch vụ vị trí. Bật chúng ngay?</string>
+
+    <string name="pref_enable_gps_title">Cài đặt GPS</string>
+    <string name="pref_enable_gps_summary">Bật GPS để theo dõi máy di động</string>
+    <string name="pref_system_title">Cài đặt hệ thống</string>
+    <string name="pref_autostart_title">Tự khởi chạy</string>
+    <string name="pref_autostart_summ">Tự khởi chạy dịch vụ khi khởi động</string>
+    <string name="pref_persistservice_title">Dịch vụ liên tục</string>
+    <string name="pref_persistservice_summ">Dịch vụ sẽ tiếp tục chạy sau khi thoát khỏi ứng dụng (bỏ chọn để đóng hoàn toàn)</string>
+    <string name="pref_protection_title">Cài đặt bảo vệ</string>
+    <string name="pref_notification_settings">Cài đặt thông báo</string>
+    <string name="pref_enable_cell_title">Theo dõi máy di động</string>
+    <string name="pref_enable_cell_summ">Bật tự động theo dõi máy di động</string>
+    <string name="pref_femto_title">Phát hiện Femtocell</string>
+    <string name="pref_femto_summ">(hiện thời CHỈ dành cho điện thoại CDMA)</string>
+    <string name="pref_femto_action_title">Bảo vệ Femtocell</string>
+    <string name="pref_femto_action_summ">Buộc dùng chế độ máy bay khi phát hiện Femtocell (bật lại mạng theo cách thủ công)</string>
+    <string name="pref_ui_title">Cài đặt giao diện</string>
+    <string name="pref_ui_icons_title">Biểu tượng-trạng thái</string>
+    <string name="pref_ui_icons_summ">Chọn chủ đề biểu tượng</string>
+    <string name="pref_refresh_title">Tốc độ làm mới</string>
+    <string name="pref_refresh_summ">Kiểm soát tần suất cập nhật thiết bị\nLựa chọn hiện thời: %s</string>
+    <string name="pref_ocid_title">Cài đặt OpenCellID</string>
+    <string name="pref_ocid_key_title">Khoá API OpenCellID</string>
+    <string name="pref_ocid_key_summ">Nhập khóa API OpenCellID của bạn ở đây</string>
+    <string name="pref_enable_cell_monitoring_title">Giám sát máy di động</string>
+    <string name="pref_enable_cell_monitoring_summ">Bật tự động giám sát máy di động</string>
+    <string name="pref_request_ocid_key">Yêu cầu khóa API OpenCellID</string>
+    <string name="pref_ocid_requestkey_summary">Yêu cầu khóa API cho việc truy cập dữ liệu OpenCellID</string>
+
+    <string name="pref_map_title">Tuỳ chỉnh trình xem bản đồ</string>
+    <string name="pref_map_type_title">Loại bản đồ</string>
+    <string name="pref_map_type_summ">Hiển thị bản đồ theo phong cách khác nhau</string>
+    
+    <string name="cell_id_label">"CID: "</string>
+    <string name="lac_label">"LAC: "</string>
+    <string name="mcc_label">"MCC: "</string>
+    <string name="mnc_label">"MNC: "</string>
+    <string name="pc_label">"PC: "</string>
+    <string name="samples_label">"Mẫu: "</string>
+    <string name="open_cell_id_label">Dữ liệu OpenCellID</string>
+    <string name="lat_label">"Vĩ độ: "</string>
+    <string name="lng_label">"Kinh độ: "</string>
+
+    <string name="table_names_prompt">Chọn bảng</string>
+
+    <string name="at_command_title">Giao diện lệnh AT</string>
+    <string name="response_label">Phản hồi:</string>
+    <string name="execute_at">Thi hành</string>
+    <string name="serial_device_title">Thiết bị nối tiếp hiện thời:</string>
+    <string name="serial_device_prompt">Chọn thiết bị nối tiếp</string>
+    <string name="serial_device_spinner_title">Thiết bị đã phát hiện:</string>
+    <string name="timeout_spinner_title">Thời gian chờ:</string>
+    <string name="timeout_spinner_prompt">Chọn thời gian chờ</string>
+    <string name="command_hint">Nhập lệnh AT vào đây.</string>
+
+    <string name="sms_title">Đã phát hiện SMS ngầm</string>
+    <string name="sms_message">Đã phát hiện SMS ngầm!\nChi tiết: Xem trình đọc CSDL.</string>
+    <string name="table_contains_no_data">Bảng không có dữ liệu nào để hiển thị.</string>
+
+    <string name="title_ocid_key">Khoá API OpenCellID</string>
+    <string name="message_request_api_key">Nhấn OK để yêu cầu một khóa API từ OpenCellID.org. Nó sẽ cho phép bạn tải xuống dữ liệu của họ và xem nó trong bản đồ. Nó cũng sẽ cho phép bạn tải lên dữ liệu di động. Lưu ý rằng nếu bạn không tải lên dữ liệu di động trong vòng 20 ngày, khóa API của bạn có thể trở nên vô hiệu.</string>
+    <string name="ocid_api_error">"Lỗi khi nhận khoá: "</string>
+    <string name="ocid_api_success">Đã lưu khóa API mới.</string>
+
+    <string name="title_debug_logs">Dò lỗi nhật ký</string>
+    <string name="btn_clear_logs">Xoá</string>
+    <string name="btn_copy_to_clipboard">Sao chép</string>
+    <string name="msg_copied_to_clipboard">Đã sao chép nhật ký vào clipboard.</string>
+    <string name="btn_stop_logs">Dừng</string>
+    <string name="btn_start_logs">Bắt đầu</string>
+
+    <string name="title_activity_about_pop_up">GIẢI THÍCH CHI TIẾT</string>
+    <string name="status_idle_detail_info">Ứng dụng đang nhàn rỗi hoặc đang tải. Chưa bật biện pháp phát hiện và bảo vệ nào. Xin bật tính năng phát hiện tấn công!</string>
+    <string name="status_ok_detail_info">Không phát hiện mối đe doạ nào. Mạng của bạn đang được kiểm tra liên tục dựa trên các thiết lập phát hiện đã bật.</string>
+    <string name="status_medium_detail_info">Khu vực dịch vụ không bảo mật: Có ít nhất 1 BTS mới hoặc không xác định đang hoạt động trong vùng lân cận này, hoặc đang sử dụng thuật toán mã hoá kém bảo mật (đã bị phá) thấp hơn A5/3. Bất kỳ cuộc gọi/SMS nào thực hiện trong khu vực này có thể bị chặn và ghi lại. Hãy rời khỏi đây ngay.</string>
+    <string name="status_high_detail_info">Đã phát hiện các hoạt động dịch vụ nguy hiểm: Một IMSI-Catcher (IMSIC) hoặc BTS giả (FBTS) đang theo dõi người dùng. Có hoạt động quét diễn ra trong khu vực. Bạn nên tránh xa nơi này, đặc biệt là khi tại đây có bất ổn chính trị. Hãy tháo pin hoặc tắt điện thoại!</string>
+    <string name="status_danger_detail_info">Đã phát hiện hoạt động theo dõi nguy hiểm: Một FBTS hoặc IMSIC đang theo dõi BẠN và ngăn điện thoại của bạn kết nối thông qua nhà cung cấp mạng di động đã mã hoá thông thường. Nếu bạn đang trong tình trạng nguy hiểm, hãy phá nát điện thoại và SIM rồi báo rằng nó vừa bị đánh cắp.</string>
+    <string name="status_skull_detail_info">Điều khiển nguy hiểm: Ai đó đang cố điều khiển từ xa thiết bị cầm tay của bạn. Hãy phá huỷ hoặc bán điện thoại và mua một cái mới ở một nơi thật xa. Đừng mang theo điện thoại cũ đến nơi đổi máy! Sử dụng một thẻ SIM ẩn danh mới với danh tính giả thông qua trình duyệt Tor. Thay đổi hành vi gọi điện và cảnh báo liên hệ của bạn về nguy cơ bị giám sát bằng cách nói chuyện trực tiếp với họ chứ KHÔNG qua điện thoại!</string>
+    <string name="open_cell_id_button_cancel">Huỷ</string>
+    <string name="open_cell_id_button_ok">OK</string>
+
+    <string name="pref_notification_vibrate_enable_title">Bật báo rung</string>
+    <string name="pref_notification_vibrate_enable_summary">Rung khi thông báo các thay đổi</string>
+    <string name="pref_notification_vibrate_min_level_title">Rung trên cấp độ đe doạ</string>
+    <string name="pref_notification_vibrate_min_level_summary">Chọn mức độ đe doạ tối thiểu để báo rung</string>
+    <string name="notification_vibrate_idle">Nhàn rỗi</string>
+    <string name="notification_vibrate_ok">OK</string>
+    <string name="notification_vibrate_medium">Trung bình</string>
+    <string name="notification_vibrate_danger">Nguy hiểm</string>
+    
+    <string name="ui_icon_flat">Phẳng</string>
+    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_white">Trắng</string>
+    <string name="map_type_terrain">Địa hình</string>
+    <string name="map_type_normal">Thông thường</string>
+    <string name="pref_refresh_manual">Hướng dẫn</string>
+    <string name="pref_refresh_automatic">Tự động</string>
+    <string name="pref_refresh_2s">2 giây</string>
+    <string name="pref_refresh_5s">5 giây</string>
+    <string name="pref_refresh_10s">10 giây</string>
+    <string name="pref_refresh_25s">25 giây</string>
+    <string name="pref_refresh_45s">45 giây</string>
+    <string name="pref_refresh_1_min">1 phút</string>
+    <string name="pref_refresh_5_min">5 phút</string>
+    <string name="timeout_spinner_2_sec">2 giây</string>
+    <string name="timeout_spinner_5_sec">5 giây</string>
+    <string name="timeout_spinner_10_sec">10 giây</string>
+    <string name="timeout_spinner_20_sec">20 giây</string>
+    <string name="timeout_spinner_30_sec">30 giây</string>
+    <string name="timeout_spinner_10_min">10 phút</string>
+    <string name="main">Trình đơn chính</string>
+    <string name="settings">Cài đặt</string>
+    <string name="application">Ứng dụng</string>
+    <string name="monitoring_cell_information">Kiểm soát thông tin máy di động.</string>
+    <string name="stopped_monitoring_cell_information">Ngừng kiểm soát thông tin máy di động.</string>
+    <string name="tracking_cell_information">Đang theo dõi thông tin máy di động.</string>
+    <string name="stopped_tracking_cell_information">Ngừng theo dõi thông tin máy di động.</string>
+    <string name="only_one_key_per_day">Chỉ một yêu cầu khoá API mới mỗi 24 giờ!\nXin thử lại sau.</string>
+    <string name="cell_id_doesnt_exist_in_db">ID máy di động không có trong CSDL OpenCellID!</string>
+    <string name="hostile_service_area_changing_lac_detected">Khu vực dịch vụ nguy hiểm: Đã phát hiện thay đổi LAC!</string>
+    <string name="femtocell_detection_active">Phát hiện FemtoCell đang hoạt động.</string>
+    <string name="cell_tracking_active">Theo dõi máy di động đang hoạt động.</string>
+    <string name="cell_monitoring_active">Giám sát máy di động đang hoạt động.</string>
+    <string name="phone_type">Loại điện thoại</string>
+    <string name="status_idle_description">Trạng thái: Nhàn rỗi.</string>
+    <string name="status_ok_description">Trạng thái: Tốt. Chưa phát hiện mối đe doạ nào.</string>
+    <string name="alert_threat_detected">CẢNH BÁO: Đã phát hiện một số mối đe doạ!</string>
+    <string name="alert_femtocell_connection_detected">CẢNH BÁO: Đã phát hiện kết nối FemtoCell!</string>
+    <string name="alert_silent_sms_detected">CẢNH BÁO: Đã phát hiện SMS ngầm!</string>
+    <string name="alert_mwi_detected">CẢNH BÁO: Đã phát hiện bộ báo chờ tin nhắn!</string>
+    <string name="alert_silent_wap_sms_detected">CẢNH BÁO: Đã phát hiện SMS push WAP!</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD chỉ có thể phát hiện kết nối FemtoCell trên thiết bị CDMA.</string>
+    <string name="service_state_changed">Đã đổi trạng thái dịch vụ!</string>
+    <string name="stopped_tracking_femtocell">: Đã ngừng theo dõi kết nối FemtoCell.</string>
+    <string name="alert_femtocell_tracking_detected">CẢNH BÁO: Đã phát hiện hoạt động theo dõi FemtoCell!</string>
+    <string name="refreshing_every">Làm mới mỗi</string>
+    <string name="refreshing_now">Đang làm mới ngay…</string>
+    <string name="seconds">giây.</string>
+    <string name="contacting_opencellid_for_data">Liên hệ với OpenCellID cho dữ liệu...\nCó thể mất đến một phút.</string>
+    <string name="unable_to_determine_last_location">Không thể xác định vị trí cuối cùng của bạn.\nBật dịch vụ vị trí và thử lại.</string>
+    <string name="no_tracked_locations_found">Không có địa điểm theo dõi nào được hiển thị trên bản đồ.</string>
+    <string name="no_data_for_publishing">Không có dữ liệu nào để phát hành.</string>
+    <string name="download_error">Lỗi tải xuống:</string>
+    <string name="opencellid_data_successfully_received">Tiếp nhận thành công dữ liệu OpenCellID.</string>
+    <string name="error_retrieving_opencellid_data">Lỗi tiếp nhận dữ liệu OpenCellID.\nHãy kiểm tra mạng của bạn!</string>
+    <string name="opencellid_data_successfully_received_markers_updated">Tiếp nhận thành công dữ liệu OpenCellID.\nĐã cập nhật đánh dấu bản đồ.</string>
+    <string name="uploaded_bts_data_successfully">Đã tải dữ liệu BTS lên OpenCellID thành công.</string>
+    <string name="error_uploading_bts_data">Lỗi khi tải dữ liệu BTS lên máy chủ OpenCellID!</string>
+    <string name="no_opencellid_key_detected">Không phát hiện khóa API OpenCellID nào!\nXin nhập khoá của bạn trong cài đặt trước đã.</string>
+    <string name="refreshed_cell_id_info">Đang làm mới hiển thị</string>
+    <string name="unable_to_acquire_root_access">Không thể nhận quyền truy cập ROOT trên thiết bị của bạn.\nNhập lệnh AT yêu cầu quyền truy cập ROOT cho Trạm .\nHãy kiểm tra nếu thiết bị ĐÃ ROOT và thử lại.</string>
+    <string name="unable_to_detect_busybox">Không thấy Busybox trên thiết bị của bạn.\nNhập lệnh AT cần các thành phần của Busybox để có thể hoạt động chính xác.\nHãy kiểm tra xem thiết bị đã cài đặt Busybox chưa và thử lại.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Đã xảy lỗi lạ cố chiếm dụng các thiết bị nối tiếp.\nXin kiểm tra logcat cho bất kỳ lỗi gì và gửi lên Github của chúng tôi.</string>
+    <string name="unknown_error_initialising_at_command_injector">Đã xảy lỗi lạ cố kích hoạt trình nhập lệnh AT.\nXin kiểm tra logcat cho bất kỳ lỗi gì và gửi lên Github của chúng tôi.</string>
+    <string name="getting_ocid_api_key">Đang nhận khoá API OpenCellID…</string>
+    <string name="unable_to_create_map">Không thể tạo bản đồ!</string>
+    <string name="describe_the_problem_you_had">CHÚ Ý! Hãy mô tả vấn đề bạn đã gặp phải trước khi gửi cho chúng tôi nhật ký này. SẼ KHÔNG TRỢ GIÚP NẾU KHÔNG CÓ BẢN MÔ TẢ!\n</string>
+    <string name="status">Trạng thái:</string>
+    <string name="status_idle">Nhàn rỗi</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">Trung bình</string>
+    <string name="status_high">Cao</string>
+    <string name="status_danger">Nguy hiểm</string>
+    <string name="status_skull">Chạy đi!</string>
+
+    <string name="adv_user_info">Trình đơn này chỉ dành cho người dùng nâng cao!\n\nXin đừng chèn các chuỗi ngẫu nhiên vì nó sẽ đẩy hoạt động phát hiện ra khỏi tầm kiểm soát.\n\nĐể thêm một chuỗi, chọn loại SMS từ trình đơn thả xuống, gõ chuỗi phát hiện và nhấn chèn.\n\nĐể xoá khỏi CSDL, nhấn giữ trên danh sách.</string>
+    
+    <string name="adv_user_sms_info">Trình đơn này chỉ dành cho người dùng nâng cao!\nĐể xoá một SMS đã phát hiện, nhấn giữ nó trong danh sách.</string>
+    <string name="title_activity_advanced_user">Xoá SMS đã phát hiện</string>
+
+    <string name="adv_user_pref_header">Cài đặt người dùng nâng cao</string>
+    <string name="adv_user_pref_launch">Chuỗi phát hiện</string>
+    <string name="adv_user_pref_sms_launch">Xoá SMS</string>
+    <string name="adv_user_pref_summary">Chèn và xoá chuỗi phát hiện</string>
+    <string name="adv_user_pref_sms_summary">Xoá SMS đã phát hiện</string>
+   
+    <string name="adv_user_root_title">Bật phát hiện SMS</string>
+    <string name="adv_user_root_sum">Cần có Root để bật phát hiện SMS</string>
+
+    <string name="detection_strings">Các chuỗi phát hiện</string>
+    <string name="typezero_title">CHÚ Ý!</string>
+    <string name="typezero_header">Đã phát hiện SMS ngầm</string>
+    <string name="typezero_data">Đã phát hiện tin nhắn Type-0!\nChi tiết: Xem trình đọc CSDL.</string>
+    <string name="typemwi_title">CHÚ Ý!</string>
+    <string name="typemwi_header">Đã phát hiện MWI</string>
+    <string name="typemwi_data">Đã phát hiện bộ chỉ báo chờ tin nhắn!\nChi tiết: Xem trình đọc CSDL.</string>
+    <string name="typewap_header">Đã phát hiện push WAP</string>
+    <string name="typewap_data">Đã phát hiện tin nhắn SMS push WAP!\nChi tiết: Xem trình đọc CSDL.</string>
+
+
+    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_phone_sim_details">Chi tiết nhà cung cấp SIM mạng, IMEI, TMSI.</string>
+    <string name="help_main_acd">Hiển thị so sánh chi tiết của máy di động đang kết nối với các dữ liệu (nếu có) tìm thấy trong OpenCellID và chỉ rõ những khác biệt.</string>
+    <string name="help_main_database_viewer">Xem các bảng CSDL khác nhau hiện có.</string>
+    <string name="help_main_antenna_map_view">Bản đồ các ăng-ten lân cận đã màu hoá.</string>
+    <string name="help_main_at_command_interface">Giao diện cho phép gửi lệnh AT đến bộ xử lý dải tín hiệu thấp tần (yêu cầu ROOT).</string>
+
+    <string name="help_tracking_toggle_attack_detection">Bắt đầu/dừng phát hiện tấn công và thu thập chi tiết máy di động vào các bảng CSDL nội bộ.</string>
+    <string name="help_tracking_toggle_cell_tracking">Bắt đầu theo dõi các máy di động nhằm hiển thị trên trình xem bản đồ ăng-ten và sau đó có thể sẽ tải lên OpenCellID.</string>
+
+    <string name="help_settings_preferences">Các cài đặt AIMSICD như là quy tắc bảo vệ, số lần thăm dò và hành vi dịch vụ.</string>
+    <string name="help_settings_reset_db">Xoá và cài lại tất cả hoặc các bảng CSDL được chỉ định.</string>
+
+    <string name="help_app_add_get_ocid_api_key">Nhận khóa API để sử dụng CSDL OpenCellID khi tải dữ liệu…</string>
+    <string name="help_app_about">Đã giải thích biểu tượng trạng thái và dự án.</string>
+    <string name="help_app_download_local_bts">Tải về CSDL OpenCellID.</string>
+    <string name="help_app_upload_local_bts">Tải BTS của bạn lên CSDL OpenCellID.</string>
+    <string name="help_app_debugging">Thu thập và gửi lịch sử lỗi.</string>
+    <string name="help_app_quit">Thoát ứng dụng.</string>
+    <string name="waiting_for_location">Đang chờ vị trí…</string>
+    <string name="unique_bts_data">Dữ liệu BTS độc nhất</string>
+    <string name="bts_measurements">Phép đo BTS</string>
+    <string name="imported_ocid_data">Đã nhập dữ liệu OpenCellID</string>
+    <string name="default_mmc_locations">Vị trí MCC mặc định</string>
+    <string name="silent_sms">SMS ngầm</string>
+    <string name="eventlog">Lịch sử sự kiện</string>
+    <string name="measured_signal_strengths">Cường độ tín hiệu đã đo</string>
+
+    <string name="at_command_response_looking">*** Đang tìm các thiết bị nối tiếp AT...\n</string>
+    <string name="at_command_response_found">"Tìm thấy: "</string>
+    <string name="at_command_response_setup_complete">*** Hoàn tất cài đặt ***\n</string>
+
+    <string name="currently_connected_bts">BTS hiện đã kết nối</string>
+    <string name="well_known_encrypted_bts">BTS được mã hóa phổ biến</string>
+    <string name="unknown_or_insecure_bts">BTS lạ hoặc kém bảo mật</string>
+    <string name="new_or_recently_added_bts">BTS mới hoặc vừa thêm gần đây</string>
+
+    <string name="delete_database_msg_success">Đã xoá và tạo mới thành công CSDL.\nHãy khởi động lại ứng dụng để xoá các giá trị cũ đã có trong bộ nhớ.</string>
+
+    <string name="invalid_key_try_later">Khoá OpenCellId không hợp lệ, hãy thử lại sau.</string>
+    <string name="getting_ocid_key">Đang nhận khoá API OpenCellId...</string>
+
+    <string name="deleted">Đã xoá</string>
+    <string name="failed_to_delete">Không xoá được</string>
+    <string name="double_quote_will_cause_db_error">"Chưa thêm chuỗi\nDấu ngoặc kép \" sẽ gây lỗi CSDL "</string>
+    <string name="the_string_was_added_to_db">Đã thêm chuỗi vào CSDL</string>
+    <string name="failed_to_add_the_string_to_db">Thêm chuỗi vào CSDL thất bại</string>
+
+    <string name="n_a">N/A</string>
+    <string name="unknown">Không xác định</string>
+
+    <string name="database_settings">Cơ sở dữ liệu</string>
+    <string name="download_timed_out">Yêu cầu OpenCellID API đã quá thời gian chờ. Thử lại sau?</string>
+    </resources>

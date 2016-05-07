@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.secupwn.aimsicd"
+    tools:ignore="GoogleAppIndexingWarning">
+
+    <!--
+        Privacy Enthusiasts: Please read our Permissions Statement linked below!
+        https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Permissions
+    -->
+
+    <!-- Normal Android third-party permissions, sorted for better viewing -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- SPECIAL PERMISSIONS TO BE ADDED AFTER THIS LINE. /> -->
+
+    <!--
+        May be needed (in the future) to access SIM related functions
+        <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
+    -->
+
+    <application
+            tools:replace="allowBackup"
+            android:allowBackup="false"
+            android:icon="@drawable/sense_danger"
+            android:label="@string/main_app_name"
+            android:theme="@style/AppTheme"
+            android:name=".AndroidIMSICatcherDetector">
+
+        <activity
+                android:name=".ui.activities.MainActivity"
+                android:exported="true"
+                android:label="@string/app_name_short"
+                android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.DELETE"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEVELOPMENT_PREFERENCE"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".ui.activities.SettingsActivity"
+                android:exported="true"
+                android:icon="@drawable/ic_action_settings"
+                android:label="@string/preferences"
+                android:parentActivityName=".ui.activities.MainActivity"
+                android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activities.OpenCellIdActivity"
+            android:icon="@drawable/ic_action_settings"
+            android:label="@string/title_ocid_key"
+            android:parentActivityName=".ui.activities.SettingsActivity"
+            android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+        </activity>
+
+        <activity
+            android:name=".ui.activities.AboutActivity"
+            android:label="@string/about_aimsicd"
+            android:parentActivityName=".ui.activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.INFO"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activities.DebugLogs"
+            android:icon="@drawable/ic_action_settings"
+            android:label="@string/title_debug_logs"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+        </activity>
+
+        <activity
+                android:name=".ui.activities.MapPrefActivity"
+                android:exported="true"
+                android:icon="@drawable/ic_action_settings"
+                android:label="@string/preferences"
+                android:parentActivityName=".ui.activities.MainActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".service.AimsicdService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+
+        <receiver android:name=".receiver.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".smsdetection.AdvancedUserActivity"
+            android:label="@string/title_activity_advanced_user" >
+        </activity>
+        <activity
+            android:name=".smsdetection.AdvancedUserSmsActivity"
+            android:label="@string/title_activity_advanced_user" >
+        </activity>
+    </application>
+
+</manifest>

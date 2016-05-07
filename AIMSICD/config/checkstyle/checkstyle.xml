@@ -1,0 +1,93 @@
+<?xml version="1.0"?><!DOCTYPE module PUBLIC
+    "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+
+<module name="Checker">
+    <module name="NewlineAtEndOfFile" />
+    <module name="FileLength" />
+    <module name="FileTabCharacter" />
+
+    <!-- Name Checks -->
+    <module name="TreeWalker">
+
+        <!--module name="ConstantName" /-->
+        <!--module name="LocalFinalVariableName" /-->
+        <!--module name="LocalVariableName" /-->
+        <!--module name="MemberName" /-->
+        <!--module name="MethodName" /-->
+        <!--module name="ParameterName" /-->
+        <!--module name="StaticVariableName" /-->
+        <!--module name="TypeName" /-->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$" />
+        </module>
+    </module>
+    <module name="TreeWalker">
+
+
+        <!-- Checks for imports                              -->
+        <!-- See http://checkstyle.sf.net/config_import.html -->
+        <module name="AvoidStarImport" />
+        <module name="IllegalImport" />
+        <!-- defaults to sun.* packages -->
+        <module name="RedundantImport" />
+        <module name="UnusedImports">
+            <property name="processJavadoc" value="true" />
+        </module>
+
+        <module name="MissingDeprecated" />
+
+        <!-- Modifier Checks                                    -->
+        <!-- See http://checkstyle.sf.net/config_modifiers.html -->
+        <module name="ModifierOrder" />
+        <module name="RedundantModifier" />
+
+        <module name="CovariantEquals" />
+        <module name="EmptyStatement" />
+        <module name="OneStatementPerLine" />
+        <module name="InnerAssignment" />
+        <module name="IllegalInstantiation">
+            <property name="classes" value="java.util.Vector" />
+            <property name="classes" value="java.util.Hashtable" />
+        </module>
+        <module name="IllegalType">
+            <property name="illegalClassNames" value="java.util.Vector" />
+            <property name="illegalClassNames" value="java.util.Hashtable" />
+            <property name="illegalClassNames" value="java.util.ArrayList" />
+            <property name="illegalClassNames" value="java.util.LinkedList" />
+            <property name="illegalClassNames" value="android.util.Log" />
+            <property name="illegalClassNames" value="android.app.NotificationManager" />
+            <property name="illegalClassNames" value="android.database.Cursor" />
+        </module>
+        <module name="MissingSwitchDefault">
+            <property name="severity" value="warning" />
+        </module>
+        <module name="SimplifyBooleanExpression" />
+        <module name="SimplifyBooleanReturn" />
+
+        <!-- Code style -->
+        <module name="AvoidNestedBlocks">
+            <property name="allowInSwitchCase" value="true" />
+        </module>
+        <module name="EmptyBlock" />
+        <module name="LeftCurly" />
+        <module name="NeedBraces" />
+        <module name="RightCurly" />
+
+        <module name="EmptyForInitializerPad" />
+        <module name="EmptyForIteratorPad" />
+        <module name="GenericWhitespace" />
+        <module name="MethodParamPad" />
+        <module name="NoLineWrap" />
+        <module name="NoWhitespaceAfter" />
+        <module name="NoWhitespaceBefore" />
+        <module name="ParenPad" />
+        <module name="SeparatorWrap">
+            <property name="tokens" value="DOT"/>
+            <property name="option" value="nl"/>
+        </module>
+        <module name="TypecastParenPad" />
+        <module name="WhitespaceAfter" />
+        <module name="WhitespaceAround" />
+    </module>
+</module>

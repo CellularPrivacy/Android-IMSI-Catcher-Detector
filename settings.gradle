@@ -1,1 +1,1 @@
-include ':app', 'third_party:rootshell'
+include ':AIMSICD'

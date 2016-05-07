@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/ciphering_indicator_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@string/ciphering_indicator_title"
+            android:textColor="@color/green_text"
+            android:padding="4dip"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/ciphering_indicator"
+            android:text="@string/empty"
+            android:textColor="@color/white"
+            android:padding="2dip"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ciphering_indicator_title"
+            android:visibility="gone"/>
+
+        <TableLayout
+            android:id="@+id/cellView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1"
+            android:layout_below="@id/ciphering_indicator">
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent">
+                <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="@string/neighboring_cells_title"
+                android:layout_span="2"
+                android:textColor="@color/green_text"
+                android:padding="4dip"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/neighboring_total">
+
+                <TextView
+                    android:id="@+id/neighboring_number_label"
+                    android:text="@string/neighboring_cells_num_title"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <TextView
+                    android:id="@+id/neighboring_number"
+                    android:text="@string/empty"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="start">
+
+                <TextView
+                    android:id="@+id/neighboring_cells"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:layout_gravity="start"
+                    android:layout_width="match_parent"
+                    android:layout_span="2" />
+            </TableRow>
+        </TableLayout>
+
+        <ListView
+                android:id="@+id/list_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:headerDividersEnabled="false"
+                android:footerDividersEnabled="false"
+                android:listSelector="@android:color/transparent"
+                android:cacheColorHint="@android:color/transparent"
+                android:overScrollMode="never"
+                android:fadingEdgeLength="0dp"
+                android:divider="@null"
+                android:dividerHeight="10dp"
+                android:layout_below="@+id/cellView"
+                android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

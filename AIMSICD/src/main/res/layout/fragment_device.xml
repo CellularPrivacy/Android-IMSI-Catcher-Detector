@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefresLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:fadingEdgeLength="0dp">
+        <TableLayout
+            android:id="@+id/mainView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:tag="device">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="@string/device_info_title"
+                    android:layout_span="2"
+                    android:textColor="@color/green_text"
+                    android:padding="4dip"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="device">
+
+                <TextView
+                    android:id="@+id/device_type_label"
+                    android:text="@string/device_type"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/device_type"
+                    android:text="@string/empty"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="start"
+                android:tag="device">
+
+                <TextView
+                    android:id="@+id/device_imei_label"
+                    android:text="@string/device_imei"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/device_imei"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="device">
+
+                <TextView
+                    android:id="@+id/device_version_label"
+                    android:text="@string/device_version"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/device_version"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:tag="sim">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="@string/sim_info_title"
+                    android:layout_span="2"
+                    android:textColor="@color/green_text"
+                    android:padding="5dip"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="sim">
+
+                <TextView
+                    android:id="@+id/sim_country_label"
+                    android:text="@string/sim_country"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_width="fill_parent"
+                    android:layout_gravity="end"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/sim_country"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="sim">
+
+                <TextView
+                    android:id="@+id/sim_operator_id_label"
+                    android:text="@string/sim_operator_id"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/sim_operator_id"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="sim">
+
+                <TextView
+                    android:id="@+id/sim_operator_name_label"
+                    android:text="@string/sim_operator_name"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/sim_operator_name"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="sim">
+
+                <TextView
+                    android:id="@+id/sim_imsi_label"
+                    android:text="@string/sim_imsi"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/sim_imsi"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="sim">
+
+                <TextView
+                    android:id="@+id/sim_serial_label"
+                    android:text="@string/sim_serial"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/sim_serial"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:tag="network">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="@string/network_info"
+                    android:layout_span="2"
+                    android:textColor="@color/green_text"
+                    android:padding="5dip"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="network">
+
+                <TextView
+                    android:id="@+id/network_name_label"
+                    android:text="@string/network_name"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_name"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="network">
+
+                <TextView
+                    android:id="@+id/network_code_label"
+                    android:text="@string/network_code"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_code"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="start"
+                android:tag="network">
+
+                <TextView
+                    android:id="@+id/network_type_label"
+                    android:text="@string/network_type"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_type"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="network">
+
+                <TextView
+                    android:id="@+id/network_lac_label"
+                    android:text="@string/network_lac"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_lac"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/gsm_cellid"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:tag="gsm_network"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/network_cellid_label"
+                    android:text="@string/network_cellid"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_cellid"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/primary_scrambling_code"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/network_psc_label"
+                    android:text="@string/network_psc"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_psc"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:tag="network">
+
+                <TextView
+                    android:id="@+id/network_roaming_label"
+                    android:text="@string/network_roaming"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_roaming"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:tag="network">
+
+                <TextView
+                    android:id="@+id/data_activity_label"
+                    android:text="@string/data_activity"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/data_activity"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:tag="network">
+
+                <TextView
+                    android:id="@+id/data_status_label"
+                    android:text="@string/data_status"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/data_status"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+
+
+            <TableRow
+                android:id="@+id/lte_timing_advance"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:tag="lte"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/network_lte_timing_advance_label"
+                    android:text="@string/network_lte_timing_advance"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_lte_timing_advance"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/cdma_netid"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:tag="cdma"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/network_netid_label"
+                    android:text="@string/network_netid"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_netid"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/cdma_sysid"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:tag="cdma"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/network_sysid_label"
+                    android:text="@string/network_sysid"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_sysid"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/cdma_baseid"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal"
+                android:tag="cdma"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/network_baseid_label"
+                    android:text="@string/network_baseid"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:padding="2dip"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_width="fill_parent"/>
+
+                <com.secupwn.aimsicd.ui.widget.HighlightTextView
+                    android:id="@+id/network_baseid"
+                    android:text="@string/empty"
+                    android:layout_weight="1"
+                    android:textColor="@color/medium_blue"
+                    android:padding="2dip"
+                    android:gravity="start"/>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="tracking">Monitoramento</string>
+    <string name="device_info">Telefone/Detalhes do cartão SIM</string>
+    <string name="map_view">Mapa da antena do observador</string>
+    <string name="db_viewer">Banco de dados do observador</string>
+    <string name="quit">Encerrar</string>
+    <string name="text_ok">Aprovado</string>
+    <string name="text_cancel">Cancelar</string>
+    <string name="text_agree">Concordo</string>
+    <string name="text_disagree">Discordo</string>
+
+    <string name="disclaimer_title">Retratação</string>
+    <string name="disclaimer">"Ao utilizar AIMSICD você compreende e concorda que AIMSICD é uma aplicação Android, experimental e informativa, que pode falhar em rastrear e fiscalizar. Você também entende que pode ser contornadas ou derrotadas por outros meios, não ainda entendido pelos desenvolvedores. Assim, você também concorda que os desenvolvedores e companhias relacionadas a esse produto livre, pode de forma alguma ser responsabilizada por qualquer resultado, dependendo do uso dessa aplicação. "</string>
+
+    <string name="toggle_attack_detection">Detecção de ataques de alternância</string>
+    <string name="toggle_cell_tracking">Rastreamento de células de alternância</string>
+    <string name="clear_database">Limpar/Restabelecer banco de dados</string>
+    <string name="clear_database_question">Todos os dados serão eliminados\nVocê tem certeza?</string>
+    <string name="preferences">Preferências</string>
+    <string name="press_once_again_to_exit">Pressione novamente para sair.</string>
+    <string name="cell_lookup">Todos os detalhes da célula atual</string>
+    <string name="debugging">Depurar</string>
+    <string name="no_network_connection_title">Sem conexão à internet</string>
+    <string name="no_network_connection_message">Sem permissão para transferir dados do OpenCelllD sem conexão à internet, por favor habilite a conexão de dados!</string>
+
+    <string name="get_opencellid">Transferir dados BTS</string>
+
+    <string name="device_info_title">Informação de dispositivo</string>
+    <string name="sim_info_title">Informação do SIM</string>
+    <string name="network_info">Rede de informação</string>
+    <string name="cell_info_title">Nível de ameaça atual</string>
+    <string name="neighboring_cells_title">células vizinhas</string>
+    <string name="ciphering_indicator_title">Indicador de codificação</string>
+    <string name="neighboring_cells_num_title">Total:</string>
+    <string name="sim_country">País</string>
+    <string name="sim_operator_id">ID do operador:</string>
+    <string name="sim_operator_name">Nome do operador:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">Série:</string>
+    <string name="device_type">Tipo de telefone:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">Versão do RIL:</string>
+    <string name="network_name">Nome do provedor:</string>
+    <string name="network_code">Código do provedor:</string>
+    <string name="network_type">Tipo:</string>
+    <string name="network_lac">LAC:</string>
+    <string name="network_cellid">CID:</string>
+    <string name="data_activity">Atividade de dados:</string>
+    <string name="data_status">Status de dado:</string>
+    <string name="network_roaming">Roaming:</string>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="button_refresh">Atualização</string>
+    <string name="drawer_open">Gaveta de navegação aberta</string>
+    <string name="drawer_close">Gaveta de navegação fechada</string>
+    <string name="network_psc">PSC:</string>
+
+    <string name="upload_bts">Carregar dados BTS</string>
+
+    <string name="about_aimsicd">Sobre AIMSICD</string>
+    <string name="app_version">Versão: %s</string>
+    <string name="buildnumber">Número de compilação: %s</string>
+    <string name="git_sha">Git SHA-Hash: %S</string>
+    <string name="aimsicd_about_info3">Projeto baseado em Android para detectar e evitar estações de bases falsas (Coletores-IMSI) em redes GSM/UMTS.</string>
+    <string name="about_github">AIMSICD no GitHub</string>
+    <string name="about_wiki">Documentação</string>
+    <string name="about_contribute">Contribuir</string>
+    <string name="about_disclaimer">Retratação</string>
+    <string name="about_releases">Lançamentos</string>
+    <string name="about_changelog">Mudanças</string>
+    <string name="about_license">Licensa</string>
+    <string name="about_credits">Créditos</string>
+    <string name="status_idle_about_desc">Inativo / Carregando.</string>
+    <string name="status_high_about_desc">Rastreamento ativo próximo a você!</string>
+    <string name="status_ok_about_desc">Tudo OK.</string>
+    <string name="status_danger_about_desc">Você está sendo monitorado!</string>
+
+    <string name="unknown">Desconhecido</string>
+    </resources>

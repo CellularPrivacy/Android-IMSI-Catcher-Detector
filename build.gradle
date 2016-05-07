@@ -1,15 +1,41 @@
+import org.codehaus.groovy.runtime.IOGroovyMethods
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
+        maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.+'
+        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'io.freefair:gradle-plugins:2.0.0-beta5'
+        classpath "io.realm:realm-gradle-plugin:0.89.1"
     }
 }
 
 allprojects {
     repositories {
-        mavenCentral()
+        jcenter()
+        maven { url "https://jitpack.io" }
     }
+
+    if (System.getenv("BLDZR_BUILD_NUMBER") != null) {
+        exec('git fetch origin --unshallow --tags -v')
+    }
+
+    apply plugin: 'io.freefair.git-version'
+    gitTagPrefix = 'v'
+
+}
+
+private void exec(String cmd) {
+    println "EXEC: $cmd"
+    def process = cmd.execute([], project.rootDir)
+    String text = IOGroovyMethods.getText(new BufferedReader(new InputStreamReader(process.getInputStream())));
+    String err = IOGroovyMethods.getText(new BufferedReader(new InputStreamReader(process.getErrorStream())));
+    process.closeStreams();
+    println text
+    println err
+    println "FINISHED: $cmd"
+    println ""
 }

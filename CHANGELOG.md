@@ -1,7 +1,673 @@
 # CHANGELOG of 'AIMSICD'
-----------------------
+------------------------
 
-#### [24.05.2015 - WIP-Release v0.1.28-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.28-alpha-b00)
+#### [01.05.2016 - WIP-Release v0.1.43-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.43-alpha)
+
+* Removed: Old comments, dead code, strings and icons have been removed
+* Changed: Finally moved to a completely new and hopefully much better working `realm` database
+* Updated: Now using gradle plugin version 2.0.0 and build tools version 23.0.3
+* Updated: Improved Travis builds with `preDexLibraries !isCi` and updated `checkstyle`
+* Updated: Simplified Chinese, Japanase, Norwegian Bokmål, Ukrainian, Italian, French and Czech
+* Added: Javadoc generation in `build.gradle` and readability improvements for `README`
+* Added: Different translations for American english as part of the inconsistent spelling fix
+* Fixed: Translations badge in project `README` and link to `CONTRIBUTE` in `About` menu
+* Fixed: Unexpected forcecloses when trying to download data from OpenCellID and `lint`
+* Fixed: Inconsistent spelling (neighbouring vs. neighboring) resolved to *neighboring*
+
+---
+
+#### [03.04.2016 - WIP-Release v0.1.42-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.42-alpha)
+
+* Changed: Moved whole project and all links into new organization `CellularPrivacy`
+* Changed: Set `targetSdk` to `22` and use a better visible white notification icon
+* Changed: Now using `Lombok` for handling cells, replaced more getters and setters
+* Changed: Renamed `MainActivity` and application to `AndroidIMSICatcherDetector`
+* Updated: Translations for Chinese, Japanese, Vietnamese and Norwegian Bokmål
+* Updated: Moved to gradle version 2.12, grouped UI packages and activated Lint
+* Updated: Let streams be closed by `Lombok` and improved notification content
+* Updated: Improved `CellTracker` and updated `DISCLAIMER` in our repository
+* Added: New `Lombok` dependency for adding handlers to further shorten our code
+* Added: Current development state `ALPHA` has been added to in-app disclaimer
+* Fixed: Automatic version naming does not show `unspecified-normal` anymore
+* Fixed: Multiple force closes on `OpenCellID` database requests have been solved
+* Fixed: Now rechecking current cells after downloading `OpenCellID` data
+* Fixed: Prevent crash by returning `null` if `MapFragment` is not attached to activity
+* Fixed: Lines in LogCat are now added to buffer again to improve SMS detection
+* Fixed: Resolved crash when trying to download `OpenCellID` data in airplane mode
+
+---
+
+#### [13.03.2016 - WIP-Release v0.1.41-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.41-alpha)
+
+* Removed: Some now unused Icons from previous UI/UX have been removed
+* Removed: Purged side-effect on `#getNetworkTypeName()` and unused device's `mNetType`
+* Changed: Made `cell.java` adhere to JLS for static keyword order
+* Changed: Refresh/loading animations and actions now use `SwipeRefreshLayout`
+* Changed: Renamed java packages to lowercase to fit new checkstyle rulesets
+* Changed: Refactored RAT/Network Type into one place and restructured `travis.yml`
+* Updated: Aligned wording `Database` in `Navigation Drawer`
+* Updated: Code of Conduct to Version is now at version 1.4
+* Updated: Let Travis cache the downloaded gradle-wrapper and jars
+* Updated: Improved Status Icon descriptions in `About` for better understanding
+* Updated: Japanese, Norwegian Bokmål, French, Ukrainian, German and Vietnamese
+* Updated: `CREDITS` have been centered and improved with clickable links and animation
+* Updated: Latest gradle and gradle plugin version, Index of `README` linked to `.github`
+* Added: Pull Request and Issue Templates as well as `CONTRIBUTING.md` added into `.github`
+* Added: The local cell identifier `PSC` is shown when clicking marked cells
+* Added: Null-guard service before driving menu options to avoid NPE on new installs
+* Added: Added `onPrepareOptionsMenu` implementation that will redraw the checkboxes
+* Added: Human-readable display of RAT in map marker details populated by `DBi_bts`
+* Added: Turned RAT/Network Type integer in `BTS Measurements` into human-readable text
+* Added: Checkstyle rules `WhitespaceAround`, `WhitespaceBefore`, `NoWhitespaceBefore`
+* Added: Checkstyle rules `WhitespaceAfter`, `TypecastParenPad`, `SeparatorWrap`
+* Added: Checkstyle rules `ParenPad` and `PackageName`
+* Fixed: Auto-Versioning is being done correctly again
+* Fixed: `Toggle Cell Tracking` does not re-enable itself anymore
+* Fixed: Stopped infinite spinning of OpenCellID data downloading marker
+* Fixed: Not truncating MNC integer after 2 chars in OCID download anymore
+* Fixed: Status Icon `IDLE` is displaying again when turning off `Attack Detection`
+
+---
+
+#### [21.02.2016 - WIP-Release v0.1.40.1-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.40.1-alpha)
+
+* Fixed: Travis-CI does now attach the correctly signed APK again
+
+---
+
+#### [21.02.2016 - WIP-Release v0.1.40-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.40-alpha)
+
+* Removed: Purged unused imports and `ATCommandActivity`
+* Changed: Improved UX by changing main app screens to fragments
+* Changed: Improved UX by moving general screens to new menu bar
+* Updated: Made toggle menu buttons checkable (icons will be removed)
+* Updated: Norwegian Bokmål and Vietnamese translations
+* Added: Calculation of `versionName` from git-tags
+* Fixed: Lint errors and build number display in `About` screen
+
+---
+
+#### [16.02.2016 - WIP-Release v0.1.39.1-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.39.1-alpha)
+
+* Removed: Purged more unused imports from `MiscUtils.java`
+* Removed: Purged tabs for cleaning our source code a bit
+* Changed: Now storing our `CREDITS` as a string resource
+* Changed: Made sure to not use inner assignments
+* Added: `checkstyle` checks for blocks and whitespace
+* Fixed: Modified `build.gradle` to fix broken pull requests
+* Fixed: Auto-releases are now working again, added SHA1-Hash
+
+---
+
+#### [14.02.2016 - WIP-Release v0.1.39-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.39-alpha)
+
+* Removed: 2 redundant proguard rules and modifiers, unused imports and dependencies
+* Changed: `AtCommand Fragment` has been changed into `AtCommand Activity`
+* Changed: Renamed layout file to `dialog_request_gps` for code consistency
+* Updated: Norwegian Bokmål, English, German, Japanese, Dutch, and Ukrainian
+* Updated: Vietnamese, French, Russian and new Portuguese (Brazil)
+* Updated: Made fields local where possible, simplified Helpers as well as Toasters
+* Updated: Prefixed layouts with `activity_`, `fragment_` and `activity_`, now using Gradle 2.10
+* Updated: Using Optionals as return types and wrap API calls in Suppliers to use the same try-block
+* Updated: Improved `checkstyle` to force newlines at end of files, warn about names and forbidden types
+* **Added: Automatic releases compiled and signed by Travis-CI, automatically added to GitHub! ;-)**
+* Added: New GPS usage switch in `Preferences` to change initial GPS activation preference later again
+* Added: Code of Conduct within our `CONTRIBUTING.md` for respect between all developers
+* Added: Our `AIMSICD` is now also installable and updatable via the wonderfull app [XDALabs](http://forum.xda-developers.com/android/apps-games/labs-t3241866)
+* Fixed: Stationary Overlay solved by removing call to `loadFragment()` from `onRestart()`
+* Fixed: GPS notifications dialog now only shows on first launch to avoid user nagging
+* Fixed: Corrected missing SIM serial and IMSI information and minor inspection issues
+* Fixed: Mixed content in `README` is now consistent with HTTPS links and GPLv3 button
+* Fixed: Minor update of `MiscUtils.java` to prevent crash when clicking the `CREDITS`
+* Fixed: `.travis.yml` now only tries to encrypt our keystore when the vars are present
+
+---
+
+#### [30.12.2015 - WIP-Release v0.1.38-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.38-alpha)
+
+* Changed: Now getting `RootShell` from Maven Repository and disabled proguard obfuscation
+* Changed: Simplified the `CREDITS` view by now using a simple dialog, which fixed API Issues
+* Changed: Now using only one `android.intent.action.MAIN` to prevent Issues when launching
+* Changed: Ensured consistency for status names so that developers know which one triggers
+* Updated: Improved translations for Dutch, Russian, Norwegian Bokmål, Ukrainian and German
+* Updated: Improved version names and removed problematic OEM / Samsung Permissions
+* Updated: Improved notification creation and now compiling with and against API 23
+* Updated: Improved the version name display and made info dialogs easier dismissable
+* Updated: Moved comments, TODO and Issues from a huge number of files into GitHub Issues
+* Updated: Pimped our `AndroidManifest.xml` a bit, About-Screen shows Build-Number and GIT-SHA
+* Updated: Grouped dependencies in `build.gradle` and added descriptions for new developers
+* Updated: Removed `LeakCanary` for now since we don't use it, tweaked the status text-views
+* Added: Enforcing coding guidelines with `checkstyle` rules, added Index to `CONTRIBUTING.md`
+* Added: Dependency injection to inject views, resources and custom objects into everything
+* Fixed: Crash when pressing `CREDITS` and app quitting when retrieving OpenCellID key
+* Fixed: Background dialogs now work properly so that our app does not close right away
+* Fixed: Several smaller improvements to stabilize menu, About-Fragment is now an Activity
+* Fixed: Added permission `android.permission.RECEIVE_BOOT_COMPLETED` to fix launch Issues
+
+---
+
+#### [13.12.2015 - WIP-Release v0.1.37-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.37-alpha)
+
+* Changed: Slimmed down permissions to the bare necessary ones to ensure peace for us privacy geeks
+* Changed: Moving towards a more usable and polished interface by adding a bit Material Design
+* Changed: Versioning from manually editing `AndroidManifest.xml` to using current `commitId`
+* Changed: Replaced deprecated `Apache HttpClient` and `HttpUrlConnection` with `okhttp`
+* Changed: Resized documentation button in About Fragment to fit screen for more devices
+* Changed: Now loading `OSMBonusPack` as Maven dependency, renamed app module to `AIMSICD`
+* Updated: Invalid `PSC` is now shown if saved value is higher than 511 (`PSC` max value)
+* Updated: Now using Gradle Wrapper 2.9 and cleaned up `AIMSICDDbAdapter` implementation
+* Updated: Now using a logging interface and better logging in Activities and Services
+* Updated: Cleaned Proguard rules, several `README` improvements with updated links and guides
+* Removed: Purged unused `activity_open_cell_id.xml`, `split.rb` and `signing.properties`
+* Removed: Purged ProgressBar since it was accessed in a very strange way, will be replaced soon
+* Removed: Purged obsolete and redundant things from our `build.gradle`
+* Added: New translation for Ukrainian and Norwegian Bokmål, improved Japanese and Spanish
+* Added: Gradle magic to also build a system app using system permissions and be included in ROMs
+* Fixed: Calling `msgLong` on background thread (no `looper.prepare`) and `ShowToast` lint error
+* Fixed: Gradle build fixed, ommiting missing translations while assembling release
+* Fixed: `lastLocation` in `LocationTracker` gets assigned, preventing duplicate location reports
+* Fixed: Antenna Map Viewer does not crash any more after fixing StringIndexOutOfBoundsException
+* Fixed: Simplified version display in About Fragment, improved `lint` and fixed `buildnumbers`
+* Fixed: Ensured OpenCellID string consistency so that everyone know which database is meant
+
+---
+
+#### [15.11.2015 - WIP-Release v0.1.36-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.36-alpha-b00)
+
+* Changed: **We're now back from a huge break and intend to improve our project in all areas!**
+* Updated: Improved Japanese, French, Russian German and Czech translations, added Lithuanian
+* Updated: Formatted both comments and code, working torwards an easier code structure
+* Updated: RootShell library pushed to version 1.3, thanked [smarek](https://github.com/smarek) in `CREDITS` for saving us
+* Removed: Unused imports, unused class-global variables and dual `view.findViewById` calls
+* Removed: Unnecessary `return` call and unused `count` variable
+* Added: New vibration options in new menu `NOTIFICATION SETTINGS` (see `Preferences`)
+* Fixed: Phone will no longer vibrate every few seconds on status changes (set it yourself)
+* Fixed: Issue where `getSelectedItem()` was called in `doInBackground`
+* Fixed: Handled unchecked type of `getSelectedItem()` return
+* Fixed: Avoided NPE on `result.close();`
+
+---
+
+#### [20.09.2015 - WIP-Release v0.1.35-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.35-alpha-b00)
+
+* Changed: Improved code quality and better error handling
+* Added: Animated updates on "Phone/SIM Details" page
+* Fixed: Resolved many security and performance issues [[#613](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/pull/613)]
+
+---
+
+#### 16.09.2015 - WIP-Internal v0.1.33-alpha-build-01
+
+* Updated: Old formatting updates for cleaner code structure
+* Added: Database support for BtsLoc table in `aimsicd.db`
+* Added: Translations for Japanese, Albanian, Spanish and Polish
+
+---
+
+#### [09.08.2015 - WIP-Release v0.1.34-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.34-alpha-b00)
+
+* Updated: Finally found a **WHISTLEBLOWER**, removed position from [SEEKING](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/HEAD/CONTRIBUTING.md#seeking) ;-)
+* Added: New language translation into Dutch
+
+---
+
+#### 06.08.2015 - WIP-Internal v0.1.33-alpha-build-02
+
+* Updated: Cleaned up marker info layout (needs more items and work to be done)
+
+---
+
+#### 05.08.2015 - WIP-Internal v0.1.33-alpha-build-01
+
+* Updated: `SmsDetector` is now using `toEventLog()`, fixed typo in `toEventlog`
+* Added: Simplified placeholder for `insertEventLog` in `AIMSICDDbAdapter.java`
+* Moved: Vibration code now resides in `toEventLog` for better maintainance
+
+---
+
+#### [02.08.2015 - WIP-Release v0.1.33-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.33-alpha-b00)
+
+* Updated: Minor formatting of `dbe_import_items.xml` and `detection_sms_db_listview.xml`
+* Updated: Improved `.gitignore` to ignore Android Studio Navigation editor temp files
+* Updated: Improved Japanese and German translations, comments for `Helpers.java`
+* Updated: Refactored string for Type-0 SMS in `aimsicd.db` to improve its detection
+* Added: Implemented `rej_cause` into `DBe_import` and updated existing comments 
+* Added: ProgressBar and updated SQL for `DBcheck()` in `AIMSICDDbAdapter.java`
+* Fixed: Made ProgressBar in `AIMSICDDbAdapter.java` and logs work again
+
+---
+
+#### 01.08.2015 - WIP-Internal v0.1.32-alpha-build-21
+
+* Reverted: Removed code for rechecking cell after OCID download after failed tests
+* Updated: Refreshed Inflater data and comments in `DbViewerFragment.java`
+* Fixed: Re-implemented possibility to delete and reset the internal database
+* Fixed: Corrected typos in language source file `translatable_strings.xml`
+* Fixed: Improved comments and `cleanseCellTable` in `CellTracker.java`
+* Fixed: Corrected many layout Issues of XML for `DbViewerFragment.java`
+
+---
+
+#### 31.07.2015 - WIP-Internal v0.1.32-alpha-build-20
+
+* Updated: Improved formatting of `AIMSICD.java`, `AIMSICDDbAdapter.java` and `Cell.java`
+* Updated: Cleanup of `CellTracker.java`, consider removing old FemtoCell detection code
+* Added: Implemented code for rechecking cell after OCID download (needs intensive testing)
+
+---
+
+#### 31.07.2015 - WIP-Internal v0.1.32-alpha-build-19
+
+* Removed: Purged `CID -1` from EventLog, updated comments in `AIMSICDDbAdapter.java`
+* Added: New restart of `AIMSICDDbAdapter` after deleting the internal database
+* Fixed: Ordered navigation drawer and removed unused imports and attributes
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-18
+
+* Added: Vibration on no nc_list detection as well as many comments and formatting
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-17
+
+* Added: New `insertEventLog` query to prevent duplicates in the EvenLog table
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-16
+
+* Updated: Refreshed comments and fixed a few minor typos in several source files
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-15
+
+* Changed: Placed `DF_id` and `DF_desc` on separate lines for easier log reading
+* Fixed: Refreshed EventLog DBE and formatting to use standard TableLayout
+* Fixed: Reformatted `DBTableColumnIds.java` and `DbViewerFragment.java`
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-14
+
+* Fixed: Corrected several DBV Issues, removed old unused and commented out code
+
+---
+
+#### 30.07.2015 - WIP-Internal v0.1.32-alpha-build-13
+
+* Removed: Purged ProgressBar calls when not visible (e.g. reading/writing CSVs)
+* Fixed: Ordered navigation drawer and removed unused imports and attributes
+* Fixed: Corrected defaultlocations layout and fixed BTS Measurements in DBV
+* Fixed: Corrected typo of `T3212` incorrectly labeled as `T3213`
+
+---
+
+#### 29.07.2015 - WIP-Internal v0.1.32-alpha-build-12
+
+* Changed: 2nd attempt to fix FC in DBV by commenting out `bb_power` in all files
+* Updated: Notes and comments in `AIMSICDDbAdapter.java` have been renewed
+* Added: Clarified difference between CellId and CID in `AIMSICDDbAdapter.java`
+* Fixed: Corrected build error in `BtsMeasureCardInflater.java`
+* Fixed: Corrected Log exceptions to use `.toString()`
+
+---
+
+#### 27.07.2015 - WIP-Internal v0.1.32-alpha-build-11
+
+* Fixed: Corrected BTS Measurements and defaultlocations DBV layout 
+
+---
+
+#### 27.07.2015 - WIP-Internal v0.1.32-alpha-build-10
+
+* Changed: Failed attempt to add "item" number to table layout
+* Updated: Comments added, updated and removed in several files
+* Fixed: Now showing `Unique BTS Data` items as intended in DBV
+* Fixed: Corrected typo of `T3212` incorrectly labeled as `T3213`
+
+---
+
+#### 26.07.2015 - WIP-Internal v0.1.32-alpha-build-09
+
+* Updated: Improved Japanese and Czech language translations (needs contributors)
+* Fixed: OCID download now respects the filter for `MCC`, `MNC` and `LAC` again
+* Fixed: Corrected spelling error to the correct display `DOWNLOAD_LOCAL_BTS_DATA`
+
+---
+
+#### 23.07.2015 - WIP-Internal v0.1.32-alpha-build-08
+
+* Updated: Improved German language translations
+* Added: New `DeviceApi18.java` to counteract wrong API for WCDMA cell info
+* Fixed: API build versions issues for network related items has been resolved
+* Fixed: Layout problems with new DBV xml style sheet have been resolved
+
+---
+
+#### 21.07.2015 - WIP-Internal v0.1.32-alpha-build-07
+
+* Removed: Purged outdated `OCIDResponse.java` since no longer needed
+* Changed: Attempt to reduze the font size in the DB viewer for the `DBe_import`
+* Changed: Restructured `dbe_import_items.xml` for easier readbility to our users
+* Changed: New color scheme within `dbe_import_items.xml` for cleaner overview
+* Changed: Reversed logic code for `isExact`, changable on where data is imported
+* Updated: Comments in `DBTableColumnIds.java` and `SignalStrengthTracker.java`
+* Updated: TAGs and comments in `SmsDetector.java` are now reflecting current state
+* Updated: Cleaned `DbeImportCardInflater.java` and `detection_sms_db_listview.xml`
+* Updated: Improvement to SMS detection of WAP Push SMS messages with a new string
+* Updated: TAGs in `AIMSICDDbAdapter.java` and formatting of `DbViewerFragment.java`
+* Added: New server response codes in OpenCellIdActivity.java, removed old comments
+* Added: New EventLog for changing `LAC` in GSM case (only had it in CDMA until now)
+* Added: Minor comments in `DbViewerFragment.java` to clarify even more table data
+* Added: More notes and TAGs to work on for `AimsicdService.java` and `Cell.java`
+* Fixed: Downgrade of `targetSdkVersion` to `19` fixing whitish Icons on Android 5+
+* Fixed: Repaired `CellTracker` polling neighbouring cells on unsupported phones
+* Fixed: Repaired switched `LAC`/`CID` vs data labels of DBV in `DBe_import` table
+* Fixed: Better comments, spellings and formatting in `AIMSICDDbAdapter.java`
+
+#### 17.07.2015 - WIP-Internal v0.1.32-alpha-build-06
+
+* Moved: `requestNewOCIDKey()` from `Celltracker` to `OpenCellIdActivity`
+* Fixed: Repaired OCID crash when getting key, better DBV layout for `DBe_ipmort`
+
+---
+
+#### 17.07.2015 - WIP-Internal v0.1.32-alpha-build-04
+
+* Updated: Minor changes to correct value for `avg_range` in `AIMSICDDbAdapter.java`
+* Updated: from `DBE_UPLOAD_REQUEST` to `RESTORE_DATABASE` in `RequestTask.java`
+* Added: New string for database restoration popup added in `RequestTask.java`
+* Fixed: `CellTracker` and `RequestTask` are now works along with our new database
+* Fixed: Comments in `CellTracker` have been answered to clarify current functionality
+
+---
+
+#### 16.07.2015 - WIP-Internal v0.1.32-alpha-build-03
+
+* Updated: Shuffling, commenting and formatting of `AIMSICDDbAdapter.java`
+
+---
+
+#### 14.07.2015 - WIP-Internal v0.1.32-alpha-build-02
+
+* Fixed: AIMSICD does not crash anymore when downloading OpenCellID data
+
+---
+
+#### 14.07.2015 - WIP-Internal v0.1.32-alpha-build-01
+
+* Changed: **[MAJOR DATABASE OVERHAUL](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/215)** - huge THANKS flies out to [banjaxbanjo](https://github.com/banjaxbanjo)!
+* Changed: Our new database is now pre-compiled, faster, better and uses correct tables
+* Updated: Improved French and Polish, minor string changes for Database Viewer labels
+
+---
+
+#### [12.07.2015 - WIP-Release v0.1.32-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.32-alpha-b00)
+
+* Updated: Enhanced `AIMSICD.java` for another attempt to fix AIMSICD not closing
+* Updated: French, Polish and Russian translations, added: Czech and Swedish
+* Updated: More updates of MWI detection strings with fixes to avoid failing build
+* Added: Small note in `CONTRIBUTING.md` to actually *finish* the started translations
+* Fixed: Reverted lacells pull request because it caused blockings and exceptions
+
+---
+
+#### 07.07.2015 - WIP-Internal v0.1.31-alpha-build-05
+
+* Changed: Switched Coverity Scan analysis to `master` to avoid Travis-CI failures
+* Updated: Improved French, German and Polish translations (needs more translators)
+* Fixed: Corrected Type-0 silent SMS popup display and tried to fix app not closing
+
+---
+
+#### 07.07.2015 - WIP-Internal v0.1.31-alpha-build-04
+
+* Updated: German translations have been improved upon changes in source strings
+* Fixed: Corrected MWI code and removed unnecessary spaces from detection popup
+
+---
+
+#### 07.07.2015 - WIP-Internal v0.1.31-alpha-build-03
+
+* Updated: German translations have been improved upon changes in source strings
+* Removed: Purged E-Mail address to send logfiles to - a better way will come soon!
+* Removed: Purged invitation to send logfiles for every single detection event
+
+---
+
+#### 07.07.2015 - WIP-Internal v0.1.31-alpha-build-02
+
+* Added: New table for detection tests of Type-0 silent SMS and MWI in [Special SMS](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Special-SMS)
+* Fixed: Declared Message Waiting Indicator strings correctly in our detection code
+
+---
+
+#### 07.07.2015 - WIP-Internal v0.1.31-alpha-build-01
+
+* Updated: Enhanced Type-0 silent SMS detection with main buffer to logcat scraper
+* Updated: Translations via Weblate are now finally getting pulled in automatically
+* Updated: Thanked [thechangelog](https://github.com/thechangelog) in our `CREDITS` for their public announcements
+* Added: Translations into English, German, French, Polish, Japanese and Russian
+
+---
+
+#### [05.07.2015 - WIP-Release v0.1.31-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.31-alpha-b00)
+
+* Removed: Commented out unused imports and re-ordered variable declarations
+* Updated: Shortened badge of `Development Status` in `README` for better display
+* Added: More clarifying code comments in `CellTracker.java`
+
+#### 05.07.2015 - WIP-Internal v0.1.30-alpha-build-16
+
+* Fixed: Cleanup of timestamp code in `MiscUtils.java`
+* Fixed: AIMSICD Status-Icons are now shown correctly in colored style on Android 5+
+
+
+---
+
+#### 04.07.2015 - WIP-Internal v0.1.30-alpha-build-14
+
+* Added: New Log items for MCC and MNC parameters when downloading OCID for debugging
+* Fixed: Reformatted 23 char limitation of Log TAG with our standard TAG, mTAG + "text"
+* Fixed: Corrected MiscUtils TAGs and nulls in CellTracker and improved some formatting
+* Fixed: Silenced even more XPrivacy logcat spam in DebugLogs
+
+---
+
+#### 03.07.2015 - WIP-Internal v0.1.30-alpha-build-13
+
+* Fixed: Comments in `RequestTask.java` have been fixed to reflect code changes
+* Fixed: Silenced some spammy XPrivacy items using `XPrivacy/XRuntime:S Xposed:S`
+
+---
+
+#### 03.07.2015 - WIP-Internal v0.1.30-alpha-build-12
+
+* Added: Weblate translations badge added to our `README` for people to see progress
+* Fixed: AIMSICD should now start again properly on previously complaining devices
+
+---
+
+#### 03.07.2015 - WIP-Internal v0.1.30-alpha-build-11
+
+* Updated: `CREDITS` now reflect the latest awesome additions by our new developers
+* Fixed: Small string fixes and translation improvements to move our new [Weblate](https://hosted.weblate.org/projects/aimsicd/strings/).
+
+---
+
+#### 03.07.2015 - WIP-Internal v0.1.30-alpha-build-10
+
+* Fixed: Now truncating measured and used Lat/Lon GPS coordinates in `LocationTracker`
+
+---
+
+#### 27.06.2015 - WIP-Internal v0.1.30-alpha-build-09
+
+* Changed: Timeout value in `RequestTask.java` has been increased to 80 seconds
+* Fixed: Repaired OCIDCSV parsing which obviously temporarily broke during development
+
+---
+
+#### 27.06.2015 - WIP-Internal v0.1.30-alpha-build-08
+
+* Added: Buildozer Buildnumber to has been added to About View for development builds
+
+---
+
+#### 26.06.2015 - WIP-Internal v0.1.30-alpha-build-07
+
+* Changed: mTAG has been changed as requested to `SamsungMulticlientRilExecutor`
+* Added: Small warning within code to not remove commented out stuff without prior asking
+
+---
+
+#### 25.06.2015 - WIP-Internal v0.1.30-alpha-build-06
+
+* Updated: Log calls updated to common TAGs, added doublepoints and removed whitespaces
+
+---
+
+#### 25.06.2015 - WIP-Internal v0.1.30-alpha-build-05
+
+* Changed: Customized build script in `.travis.yml` to override CoverityScan limits
+* Changed: Made toast property static and non-final, splitting toast creation for `msgShort`
+* Removed: Commented out `LeakCanary` until this libray has reived some code improvements
+* Fixed: Toasts are now displayed in the ccorrect position and duration to really read them
+
+---
+
+#### 24.06.2015 - WIP-Internal v0.1.30-alpha-build-04
+
+* Added: Toasts are now being cancelled on new toast to prevent overlapping of toasts
+
+---
+
+#### 24.06.2015 - WIP-Internal v0.1.30-alpha-build-03
+
+* Fixed: Info box toasts are now shown longer by adding a new singleton toaster
+
+---
+
+#### 23.06.2015 - WIP-Internal v0.1.30-alpha-build-02
+
+* Changed: Context property changed to `appContext` in `DrawerMenuAdapter.java`
+* Removed: Purged `this` prefix of `appContext` as it is not needed anymore
+
+---
+
+#### 23.06.2015 - WIP-Internal v0.1.30-alpha-build-01
+
+* Changed: Help toast has been changed to long toast in `DrawerMenuAdapter.java`
+
+---
+
+#### [21.06.2015 - WIP-Release v0.1.30-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.30-alpha-b00)
+
+* Updated: Refactored OpenCellId activity for better code quality and error handling
+* Updated: A few more wording improvements for our `README` and additions in `CREDITS`
+* Changed: Removed references and links to organizations not supporting our project
+* Changed: Improved `LOGTAG` to use proper class name `SmsDetectionDbHelper`
+* Added: Refresh Rate is now shown on menu entry in `Preferences` without opening it
+* Fixed: Made buttons in `About` menu reappear and fixed code for shrinked buttons
+* Fixed: Resolved reappearance of too many unnecessary database open/close operations
+
+---
+
+#### 17.06.2015 - WIP-Internal v0.1.29-alpha-build-06
+
+* Updated: Slight translation updates of strings due to previous menu changes
+* Changed: Removed unused imports and shrinked some buttons in `About` menu
+* Fixed: Resolved UI Issue in `Database Viewer` and corrected button link naming
+
+---
+
+#### 17.06.2015 - WIP-Internal v0.1.29-alpha-build-05
+
+* Changed: Removed old copyright and code of unused Femtocell toggle button
+* Added: New `logcatTimeStampParser` for friendly timestamp from a logcat string
+* Fixed: Endlessly receiving the same detected SMS has finally come to an end
+* Fixed: Exception on UI and database has been fixed (possibly just tentative)
+
+---
+
+#### 16.06.2015 - WIP-Internal v0.1.29-alpha-build-04
+
+* Updated: Better RIL/API support with refreshed `ServiceMode` parser
+* Updated: Increased timeout of OCID download to avoid retrieval errors
+* Added: New feature to read OCID data from generated [lacells.db](https://github.com/n76/Local-GSM-Backend) as well
+* Fixed: Resolved WIN DEATH when using Advanced User Preferences
+* Fixed: Startup crash fixed with `Lat` and `Lng` in `AIMSICDDbAdapter.java`
+
+--- 
+
+#### 12.06.2015 - WIP-Internal v0.1.29-alpha-build-03
+
+* Changed: Moved hardcoding of OCDB download path to static variable
+* Updated: Refactored OCID CSV parsing and truncated GPS coordinates
+
+---
+
+#### 09.06.2015 - WIP-Internal v0.1.29-alpha-build-02
+
+* Updated: Improved menu translations in `Navigation Drawer` for better understanding
+
+---
+
+#### 08.06.2015 - WIP-Internal v0.1.29-alpha-build-01
+
+* Removed: Purged unused imports and unnecessary `toString` calls
+* Removed: Purged public modifier from interface methods
+* Changed: Switched CoverityScan analysis to branch `development` to analyze current code
+* Changed: Replaced deprecated `GridMarkerClusterer` with `RadiusMarkerClusterer`
+* Changed: Closed some database cursors and replaced `dp` with `sp` for TextViews
+* Updated: License header has been unified across all source files to ensure proper GPL
+* Updated: Refactored `AIMSICDDbAdapter::DbHelper#onCreate` for easier reading
+* Updated: Refactored redundant parsing from get OCID API request
+* Added: Default `locale` has been implemented into `SimpleDateFormat` constructor
+* Added: Now using parent view instead of null when inflating layouts
+* Added: French translations as well as `leakcanary` analysis for detecting leaks
+* Fixed: Minor translation and punctuation improvements in several translation string files
+* Fixed: Corrected filename of CSV loaded in into `AIMSICDDbAdapter#updateOpenCellID`
+
+---
+
+#### [31.05.2015 - WIP-Release v0.1.29-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.29-alpha-b00)
+
+* Added: New WAP Push Detection and corresponding popup as well as custom strings
+* Added: All detection strings will now be added to and loaded from `det_strings.json`
+* Fixed: Small typos in German translation removed, shortened OCID notifications
+
+---
+
+#### 28.05.2015 - WIP-Internal v0.1.28-alpha-build-03
+
+* Changed: Many German translation improvements for much easier understanding
+* Removed: SMS Detection `try` has been purged since it was not needed anymore
+* Updated: Improvements across all translation files for better display of notifications
+* Updated: SMS Detection improved and moved some functions in `CustomPopUp.java`
+* Updated: Moved some Detection functions to `MiscUtils` and added minor comments
+* Moved: Untranslatable strings have been removed from all existing translation files
+* Fixed: Padding issue displaying detected SMS only partially has been resolved
+
+---
+
+#### 27.05.2015 - WIP-Internal v0.1.28-alpha-build-02
+
+* Added: Translations into German have been started, many string improvements
+
+---
+
+#### 25.05.2015 - WIP-Internal v0.1.28-alpha-build-01
+
+* Added: New SMS Detection to detect tracking via silent SMS and silent Voice ;-)
+* Added: New WIKI entry on how to test your own detection strings in [Special SMS](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Special-SMS)
+
+---
+
+#### [24.05.2015 - WIP-Release v0.1.28-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.28-alpha-b00)
 
 * Updated: `CREDITS` now reflect the latest contributions by our developers
 * Changed: Tables in the `Database Viewer` will now be loaded automatically
@@ -28,7 +694,7 @@
 
 ---
 
-#### [10.05.2015 - WIP-Release v0.1.27-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.27-alpha-b00)
+#### [10.05.2015 - WIP-Release v0.1.27-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.27-alpha-b00)
 
 * Removed: Buggy `Toast Extender` for making toasts last longer than 3.5 seconds
 * Changed: Releases will now be published every Sunday to ease developers lifes
@@ -70,7 +736,7 @@
 
 ---
 
-#### [01.05.2015 - WIP-Release v0.1.26-alpha-build-00](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.26-alpha-b00)
+#### [01.05.2015 - WIP-Release v0.1.26-alpha-build-00](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.26-alpha-b00)
 
 * Updated: Added [agilob](https://github.com/agilob) and [DimaKoz](https://github.com/DimaKoz) into our `CREDITS` for their awesome work
 * Updated: Improved descriptions of menu and removed unused resources and a dot
@@ -167,7 +833,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 * Changed: Simplified `README` and made everything much developer-friendly
 * Changed: Sending debugging logs via our app, now **requires** a description
 * Changed: Moved all large folders into our [SpiderOak storage](https://spideroak.com/browse/share/AIMSICD/GitHub) to clean up
-* Added: New [Style Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Style-Guide) to unify look and feel of our app in the near future
+* Added: New [Style Guide](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Style-Guide) to unify look and feel of our app in the near future
 * Added: New section `SEEKING` in `CONTRIBUTING.md` for special positions
 * Added: Warning banner to make people aware of possible false alarms
 
@@ -189,7 +855,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 13.03.2015 - [WIP-Release v0.1.25-alpha-build-35](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b35)
+#### 13.03.2015 - [WIP-Release v0.1.25-alpha-build-35](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b35)
 
 * Changed: Tried to fix the progress bar in the `RequestTask` Download Request
 * Updated: Polished CellTracker from junk comments, added TAGs to Helpers and Device
@@ -200,7 +866,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 05.03.2015 - [WIP-Release v0.1.25-alpha-build-34](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b34)
+#### 05.03.2015 - [WIP-Release v0.1.25-alpha-build-34](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b34)
 
 * Updated: `SCREENSHOTS` have been updated to reflect the latest changes of UI/UX
 * Added: Some more small comments for better understanding of the added `TinyDB`
@@ -237,7 +903,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 * Changed: Cleanup of various old junk and unneeded code comments, silenced spam logs on HTC
 * Changed: ATCoP timout values from the selector have been adjusted to now also be 10 min
-* Removed: ATCoP shell command support has been purged - SecUpwN lost ALL DATA of his phone
+* Removed: ATCoP shell command support has been purged - CellularPrivacy lost ALL DATA of his phone
 * Added: New TinyDB (courtesy of @kcochibili) for easy use of shared & persistent variables
 * Added: Logging if no data available for upload, removed `OCID_UPLOAD_PREF` from `Preferences`
 * Added: Button to upload local BTS Data to OCID and fix issues from former commits
@@ -402,7 +1068,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 #### 17.01.2015 - WIP-Internal v0.1.25-alpha-build-17
 
 * Updated: Added @d-mariano to our `CREDITS` because he has been of awesome help
-* Moved: Contact details of the team members have been moved into [WIKI](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Contact) for better editing
+* Moved: Contact details of the team members have been moved into [WIKI](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Contact) for better editing
 * Fixed: Minor typos in `CHANGELOG.md` and `CONTRIBUTING.md` have been removed
 * Fixed: Persistent Service does not have to be checked and unchecked after fresh install
 
@@ -417,7 +1083,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 14.01.2015 - [WIP-Release v0.1.25-alpha-build-15](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b15)
+#### 14.01.2015 - [WIP-Release v0.1.25-alpha-build-15](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b15)
 
 * News-Alert: We have gone viral with our [official Twitter-Account](https://www.twitter.com/AIMSICD)! Follow and tweet about us!
 * Changed: Color of text for credits of OpenStreetMaps changed within Antenna Map Viewer
@@ -485,7 +1151,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 06.01.2015 - [WIP-Release v0.1.25-alpha-build-9](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b9)
+#### 06.01.2015 - [WIP-Release v0.1.25-alpha-build-9](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b9)
 
 * Improved: Better saving of timestamp for signal detection
 * Changed: Re-adjusted some levels for Signal Strength Tracker
@@ -509,21 +1175,21 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 * News-Alert: It has been **proven** that IMSI-Catchers are currently being deployed and used **at all demonstrations** for and against PEGIDA in Germany to identify participants and spy on their mobile phones!
 * Remember: If you're going to participate in **ANY** demonstration, **LEAVE YOUR PHONE AT HOME!**
 * Improved: `PAPERS` moved to [SpiderOak](https://spideroak.com/browse/share/AIMSICD/GitHub/PAPERS/), repo cleaned to ~35 MB - please **refork** our project!
-* Improved: After you have reforked our project, please follow our new instructions in [Building](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Building)
+* Improved: After you have reforked our project, please follow our new instructions in [Building](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Building)
 * Changed: Map pins are now round dots and use `msgLong` instead of `msgShort` for toaster message
 * Changed: Persistent service is now disabled at startup by default to avoid dev annoyance
 * Added: Minor code comments for easier development (Android Developers: submit your pull requests)
 
 ---
 
-#### 01.01.2015 - [WIP-Release v0.1.25-alpha-build-6](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b6)
+#### 01.01.2015 - [WIP-Release v0.1.25-alpha-build-6](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.25-alpha-b6)
 
 * Improved: **HAPPY NEW YEAR EVERYONE!** We are going to change Release Cycles for you! ;-)
 * Improved: Made `README` easier to read and updated links, hint me on further improvements!
 * Changed: Reverted log level in `SamsungMulticlientRilExecutor` from `i` to `v`
 * Updated: Gave proper credit in `CREDITS` to the latest awesome additions to our team
 * Added: New directory for external pictures and pictures of photographed IMSI-Catchers
-* Added: We now have a fresh [Glossary of Terms](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Glossary-of-Terms) to make it easier for you to contribute
+* Added: We now have a fresh [Glossary of Terms](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Glossary-of-Terms) to make it easier for you to contribute
 * Fixed: Cell signal strength has been fixed to not always show 99db
 * Fixed: `NullPointerException` when `getActionBar()` returns `null` has been purged
 
@@ -532,10 +1198,10 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 #### 29.12.2014 - WIP-Internal v0.1.25-alpha-build-5
 
 * Improved: LAC is now shown in the InfoWindow on the MapViewer
-* Changed: We do **NOT** support DarkCoin donation at the moment. Discuss [#74](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/74)!
+* Changed: We do **NOT** support DarkCoin donation at the moment. Discuss [#74](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/74)!
 * Added: New `SignalStrengthTracker` to detect abnormal and suspicious behavior
 * Added: Notifications about Travis CI builds and GitHub in our internal chats
-* Added: More [similiar projects](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Similar-Projects) arised. We are thankful, but we won't give up!
+* Added: More [similiar projects](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Similar-Projects) arised. We are thankful, but we won't give up!
 * Fixed: Looping builds and error messages from Travis CI should be gone now
 * Fixed: Several small errors arising with new code have been purged ahead of time
 
@@ -632,9 +1298,9 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 03.11.2014 - [WIP-Release v0.1.24-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.24-alpha)
+#### 03.11.2014 - [WIP-Release v0.1.24-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.24-alpha)
 
-* **LAUNCHED:** We are now officially on [Aptoide](http://aimsicd.store.aptoide.com/) and [F-Droid](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD) (builds should appear shortly)
+* **LAUNCHED:** We are now officially on [Aptoide](http://aimsicd.store.aptoide.com/) and [F-Droid](https://f-droid.org/repository/browse/?fdid=com.CellularPrivacy.AIMSICD) (builds should appear shortly)
 * **Changed:** Signing Keys have been renewed so you can make sure we officially build the APK :exclamation:
 * Changed: Reworked all Icons to be rendered in best and highest quality possible
 * Changed: Switched to `PDFMtEd Inspector` to erase metadata since it is safer than just `exiftool`
@@ -878,7 +1544,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 08.07.2014 - [WIP-Release v0.1.23-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.23-alpha)
+#### 08.07.2014 - [WIP-Release v0.1.23-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.23-alpha)
 
 * Updated: General code clean up as well as declaration access tweaks where appropriate
 * Added: Gmaps undocumented API incorporated to translate a GSM CellID into a location value
@@ -889,7 +1555,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 03.07.2014 - [WIP-Release v0.1.22-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.22-alpha)
+#### 03.07.2014 - [WIP-Release v0.1.22-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.22-alpha)
 
 * Updated: Drawer UI components now allow removal of all option menu items
 * Updated: Tracking functions are now available through the first section of the drawer
@@ -914,7 +1580,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 28.06.2014 - [WIP-Release v0.1.21-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.21-alpha)
+#### 28.06.2014 - [WIP-Release v0.1.21-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.21-alpha)
 
 * Updated: Moved large number of methods out of the service and into the Device class
 * Added: Automatic detection system for possible candidates for AT command serial devices
@@ -926,11 +1592,11 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 21.06.2014 - [WIP-Release v0.1.20-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.20-alpha)
+#### 21.06.2014 - [WIP-Release v0.1.20-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.20-alpha)
 
 * Changed: Massive revamp of the UI for the application with newer drawer style UI
 * Updated: AT Command Processor is **ENABLED** now - huge THANKS to [E3V3A](https://github.com/E3V3A)! **ROOT REQUIRED!**
-* Updated: WIKI of [AT Command Processor](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/AT-Command-Processor) improved, please see this before using AT Commands
+* Updated: WIKI of [AT Command Processor](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/AT-Command-Processor) improved, please see this before using AT Commands
 * Improved: Clean up and maintenance of code format, arrangement of imports and formatting style
 * Removed: Unnecessary calls from methods based on fragment lifecycles
 * Added: Method to the service to return the Mobile Country Code (MCC)
@@ -950,7 +1616,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 19.06.2014 - [WIP-Release v0.1.19-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.19-alpha)
+#### 19.06.2014 - [WIP-Release v0.1.19-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.19-alpha)
 
 * Updated: Android API version of Neighbouring Cell Information as it was broken
 * Added: Local Broadcast Receiver handling OpenCellID data and ensure map markers reflect data
@@ -984,8 +1650,8 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 #### 16.06.2014
 
 * Updated: Changed naming of Icons within AimsicdService.java
-* Added: [SCREENSHOTS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/SCREENSHOTS) for all our needs to explain our App - enjoy the eye candy!
-* Added: Initial version of our [official User Guide](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/User-Guide), will be constantly updated
+* Added: [SCREENSHOTS](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/tree/master/SCREENSHOTS) for all our needs to explain our App - enjoy the eye candy!
+* Added: Initial version of our [official User Guide](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/User-Guide), will be constantly updated
 * Fixed: Corrected naming of Icons to reflect the new naming scheme
 
 ---
@@ -996,7 +1662,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 14.06.2014 - [WIP-Release v0.1.18-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.18-alpha)
+#### 14.06.2014 - [WIP-Release v0.1.18-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.18-alpha)
 
 * **ATTENTION**: Backup your Database prior to installing this WIP-Release!
 * Added: Database Restore added to repopulate database tables from exported CSV
@@ -1012,11 +1678,11 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 * Updated: Major revamp of our `README`, making it much fresher and structured
 * Updated: Reworked our WIKI and instructions on how to correctly submit Issues
 * Changed: `StyleGuide` is now `CONTRIBUTING.md` - will be shown when opening Issues
-* Added: We now accept [ANONYMOUS DONATIONS](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) through [DarkCoin](https://www.darkcoin.io/)! ;-)
+* Added: We now accept [ANONYMOUS DONATIONS](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Anonymous-Donations) through [DarkCoin](https://www.darkcoin.io/)! ;-)
 
 ---
 
-#### 27.05.2014 - [WIP-Release v0.1.17-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.17-alpha)
+#### 27.05.2014 - [WIP-Release v0.1.17-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.17-alpha)
 
 * Updated: Better way of how AIMSICD draws and displays any SIM variable & further error handling
 * Changed: Cell & Location tracking functions now require GPS location services to be enabled
@@ -1032,7 +1698,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 21.05.2014 - [WIP-Release v0.1.16-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.16-alpha)
+#### 21.05.2014 - [WIP-Release v0.1.16-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.16-alpha)
 
 * Updated: Disabling Cell tracking will now also disable Location tracking if enabled
 * Updated: Huge code cleanup and updates to a number of areas across a large number of packages
@@ -1044,7 +1710,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 10.05.2014 - [WIP-Release v0.1.15-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.15-alpha)
+#### 10.05.2014 - [WIP-Release v0.1.15-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.15-alpha)
 
 * Updated: Map Viewer type selection moved into a dedicated Map preference fragment
 * Updated: About Page completed with links functioning correctly
@@ -1055,7 +1721,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 06.05.2014 - [WIP-Release v0.1.14-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.14-alpha)
+#### 06.05.2014 - [WIP-Release v0.1.14-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.14-alpha)
 
 * Added: Neighbouring Cell details shown on Cell Information fragment
 * Added: Ciphering Indicator provided through the Samsung MultiRil method by [Alexey Illarionov](https://github.com/illarionov/SamsungRilMulticlient)
@@ -1063,13 +1729,13 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 03.05.2014 - [WIP-Release v0.1.13-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.13-alpha)
+#### 03.05.2014 - [WIP-Release v0.1.13-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.13-alpha)
 
 * Added: Exception handling added to all methods that attempt to draw SIM specific information
 
 ---
 
-#### 03.05.2014 - [WIP-Release v0.1.12-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.12-alpha)
+#### 03.05.2014 - [WIP-Release v0.1.12-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.12-alpha)
 
 * Updated: MASSIVE UI update implementing fragments to enable easy navigation through SWIPING! ;-)
 * Updated: Default icon is now selected within the preferences screen
@@ -1077,7 +1743,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 03.05.2014 - [WIP-Release v0.1.11-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.11-alpha)
+#### 03.05.2014 - [WIP-Release v0.1.11-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.11-alpha)
 
 * Updated: Consolidation of Signal Strength, Data Activity & Data State into one Phone State Listener
 * Updated: Main menu updated to only display FemtoCell detection on CDMA devices only
@@ -1087,7 +1753,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 27.04.2014 - [WIP-Release v0.1.10-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.10-alpha)
+#### 27.04.2014 - [WIP-Release v0.1.10-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.10-alpha)
 
 * Improved: Database Viewer UI tweaked to use a gradient colouring scheme
 * Improved: Map Viewer will fall back to a default location based on MCC and the Countries Capital City
@@ -1095,7 +1761,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 25.04.2014 - [WIP-Release v0.1.9-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.9-alpha)
+#### 25.04.2014 - [WIP-Release v0.1.9-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.9-alpha)
 
 * Improved: Complete rewrite of Database helper functions for better logic of updating/inserting records
 * Changed: Minimum SDK version increased to 16 (JB 4.1)
@@ -1110,7 +1776,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 25.04.2014 - [WIP-Release v0.1.8-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.8-alpha)
+#### 25.04.2014 - [WIP-Release v0.1.8-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.8-alpha)
 
 * **CAUTION:** This version will erase your existing tracking information! Please backup first.
 * Removed: Removed the `CMDProcessor` as this was not being utilised at all
@@ -1120,7 +1786,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 21.04.2014 - [WIP-Release v0.1.7-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.7-alpha)
+#### 21.04.2014 - [WIP-Release v0.1.7-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.7-alpha)
 
 * Added: Enabled CDMA Femtocell Detection for initial testing. (CDMA devices ONLY!)
 * Added: Missing resources for Actionbar icons
@@ -1132,7 +1798,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 11.04.2014 - [WIP-Release v0.1.6-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.6-alpha)
+#### 11.04.2014 - [WIP-Release v0.1.6-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.6-alpha)
 
 * Changed: Project changed to Gradle Build System to make use of Android Studio
 * Added: Google Maps API v2 support to enable new features and gain an API Key
@@ -1141,9 +1807,9 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 09.04.2014 - [WIP-Release v0.1.5-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.5-alpha)
+#### 09.04.2014 - [WIP-Release v0.1.5-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.5-alpha)
 
-* Improved: Universal Compatibility achieved via the [Universal Compatibility Commit](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/24)!
+* Improved: Universal Compatibility achieved via the [Universal Compatibility Commit](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/pull/24)!
 * Reduced functionality of AIMSICD until methods are discovered to issue AT commands.
 * Improved: AIMSICD now can be installed as user application (no ROOT needed)!
 * Improved: AIMSICD should now function on any device. We're open for your feedback!
@@ -1151,23 +1817,23 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 08.04.2014 - [WIP-Release v0.1.4-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.4-alpha)
+#### 08.04.2014 - [WIP-Release v0.1.4-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.4-alpha)
 
 * Updated: `DISCLAIMER` to encourage people to talk to us BEFORE hunting our developers
 * Updated: `CREDITS` to reflect latest contributions (please give me a hint if I missed someone)
 * Removed: Purged folder `MERGESOURCE` to clean up unused code and avoid confusion
-* Added: [SOURCES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/SOURCES). Please actively use it. Know where your code comes from.
+* Added: [SOURCES](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/SOURCES). Please actively use it. Know where your code comes from.
 * Removed: Erased `TODO` and created `WANTED_FEATURES`. Hit us with your ideas there!
-* Complete revamp of our [PAPERS-Directory](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/tree/master/PAPERS). Make sure to grab your nightly lecture.
-* Another new and fresh Iconset has been added with a [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/20) [SgtObst](https://github.com/SgtObst). Cool! :)
-* New [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/21) adding Service, Boot Completed Receiver, TableView and FemtoCatcher Additions
+* Complete revamp of our [PAPERS-Directory](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/tree/master/PAPERS). Make sure to grab your nightly lecture.
+* Another new and fresh Iconset has been added with a [pull request](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/pull/20) [SgtObst](https://github.com/SgtObst). Cool! :)
+* New [pull request](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/pull/21) adding Service, Boot Completed Receiver, TableView and FemtoCatcher Additions
 * To everyone developing here: You're doing a WONDERFUL job! THANK YOU!
 
 ---
 
-#### 06.04.2014 - [WIP-Release v0.1.3-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.3-alpha)
+#### 06.04.2014 - [WIP-Release v0.1.3-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.3-alpha)
 
-* Applause to [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! He submitted a new [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/14) with a complete rewrite of the menu system, implementing the Actionbar, rewrite of the Device class to perform better and change it from a static class, Persistent notification was added and Database helper class was created to provide application wide support.
+* Applause to [xLaMbChOpSx](https://github.com/xLaMbChOpSx)! He submitted a new [pull request](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/pull/14) with a complete rewrite of the menu system, implementing the Actionbar, rewrite of the Device class to perform better and change it from a static class, Persistent notification was added and Database helper class was created to provide application wide support.
 * The old Icons of RawPhone have been fully replaced by the great work of [SgtObst](https://github.com/SgtObst). More to come soon!
 * Our developers are currently working **hard** to find viable ways to acquire the ciphering info
 * If you have **good** ideas or code and are a programmer, perticipate in the [official development thread](http://forum.xda-developers.com/showthread.php?t=1422969) (only technical talk).
@@ -1181,12 +1847,12 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 ---
 
-#### 31.03.2014 - [WIP-Release v0.1.2-alpha](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/tag/v0.1.2-alpha)
+#### 31.03.2014 - [WIP-Release v0.1.2-alpha](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/tag/v0.1.2-alpha)
 
 * This Release has been signed using the platform keys provided in the AOSP source
-* New [pull request](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/7) by [xLaMbChOpSx](https://github.com/xLaMbChOpSx) reducing the target SDK version and update the code.
-* Bookmark our [WIP-RELEASES](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases/) and feel free to [report feedback on XDA](http://forum.xda-developers.com/showthread.php?t=1422969).
-* New [WIKI-Pages](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki) by [xLaMbChOpSx](https://github.com/xLaMbChOpSx) explaining building and installation. HAVE PHUN! ;-)
+* New [pull request](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/pull/7) by [xLaMbChOpSx](https://github.com/xLaMbChOpSx) reducing the target SDK version and update the code.
+* Bookmark our [WIP-RELEASES](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/releases/) and feel free to [report feedback on XDA](http://forum.xda-developers.com/showthread.php?t=1422969).
+* New [WIKI-Pages](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki) by [xLaMbChOpSx](https://github.com/xLaMbChOpSx) explaining building and installation. HAVE PHUN! ;-)
 
 ---
 
@@ -1194,14 +1860,14 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 * Team members have been crawled by IP adresses not connected to any country (probably secret agencies)
 * Members of the famous company Rohde & Schwarz (leading manufacturer of IMSI-Catchers) are watching us
-* We know that with our actions we already have attracked dark forces out there. See our [Disclaimer](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)!
+* We know that with our actions we already have attracked dark forces out there. See our [Disclaimer](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)!
 * Just to mention it: I always have the latest copy of everything. Enjoy!
 
 ---
 
 #### 25.03.2014 - WIP-Release v0.1.1-alpha
 
-* Progress! We've merged an [Intitial Development Commit](/https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/pull/5) by [xLaMbChOpSx](https://github.com/xLaMbChOpSx). HUGE THANKS!
+* Progress! We've merged an [Intitial Development Commit](/https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/pull/5) by [xLaMbChOpSx](https://github.com/xLaMbChOpSx). HUGE THANKS!
 
 ---
 
@@ -1228,7 +1894,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 ---
 
 #### 10.03.2014
-* Added file [CONTRIBUTING](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/blob/master/CONTRIBUTING.md) to avoid neglected commits - please read it before commiting!
+* Added file [CONTRIBUTING](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/master/CONTRIBUTING.md) to avoid neglected commits - please read it before commiting!
 
 ---
 
@@ -1255,7 +1921,7 @@ Updated: Renewed `buildToolsVersion` across the project to keep them current
 
 #### 23.11.2013
 
-* XDA member '[SecUpwN](http://forum.xda-developers.com/member.php?u=4686037)' is still fire and flame for the project, this GitHub is born
+* XDA member '[CellularPrivacy](http://forum.xda-developers.com/member.php?u=4686037)' is still fire and flame for the project, this GitHub is born
 * Added important files of abandoned GitHub-Projects, polished up our own Repository
 
 ---

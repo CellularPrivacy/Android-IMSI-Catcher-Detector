@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:descendantFocusability="beforeDescendants">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/selector_card_background"
+        android:descendantFocusability="afterDescendants">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:id="@+id/wtf1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="bts_id/CID!:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_bts_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_yellow"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/wtf3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAC:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_lac"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lat:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_gpsd_lat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/wtf5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RAT:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_rat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lon:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_gpsd_lon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/wtf7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TMSI:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_tmsi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Accu:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_gpsd_accu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/wtf9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TA:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_ta"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="isSubmitted:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_isSubmitted"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <!-- This is currently not dBm but ASU -->
+                <TextView
+                    android:id="@+id/wtf11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RSS [dBm]:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_rx_signal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="isNeighbor:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_isNeighbor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/wtf13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Neighbors:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_bts_measure_nc_list"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TextView
+                android:id="@+id/record_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/medium_blue"
+                android:textSize="12sp"
+                android:gravity="end" />
+
+        </TableLayout>
+    </LinearLayout>
+</FrameLayout>

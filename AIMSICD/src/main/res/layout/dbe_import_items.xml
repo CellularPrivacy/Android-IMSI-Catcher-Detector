@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:descendantFocusability="beforeDescendants">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/selector_card_background"
+        android:descendantFocusability="afterDescendants">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MCC:"
+                    android:id="@+id/wtf1"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/nMCC"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAC:"
+                    android:id="@+id/wtf2"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/nLAC"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MNC:"
+                    android:id="@+id/wtf3"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/nMNC"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CID:"
+                    android:id="@+id/wtf4"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/nCID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_yellow"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+                
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RAT:"
+                    android:id="@+id/wtf5"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/RAT"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lat:"
+                    android:id="@+id/wtf6"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/ngpsd_lat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PSC:"
+                    android:id="@+id/wtf7"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/nPSC"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lon:"
+                    android:id="@+id/wtf8"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/ngpsd_lon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Samples:"
+                    android:id="@+id/wtf9"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/nSAMPLES"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="isExact:"
+                    android:id="@+id/wtf10"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/is_exact"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AvgSignal: "
+                    android:id="@+id/wtf11"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/navg_signal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="tFirst:"
+                    android:id="@+id/wtf13"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/nTIME_FIRST"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AvgRange: "
+                    android:id="@+id/wtf12"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/navg_range"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="tLast:"
+                    android:id="@+id/wtf14"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/nTIME_LAST"
+                    android:layout_weight="0.1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Source:"
+                    android:id="@+id/wtf15"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/dbsource"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:layout_weight="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="rej_cause: "
+                    android:id="@+id/wtf16"
+                    android:textSize="12sp"
+                    android:textColor="@color/green_text" />
+
+                <TextView
+                    android:id="@+id/nREJ_CAUSE"
+                    android:layout_weight="0.1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/standard_yellow"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TextView
+                android:id="@+id/record_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/medium_blue"
+                android:textSize="12sp"
+                android:gravity="end" />
+            
+        </TableLayout>
+    </LinearLayout>
+</FrameLayout>
+

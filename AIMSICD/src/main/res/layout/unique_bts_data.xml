@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:descendantFocusability="beforeDescendants">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/selector_card_background"
+        android:descendantFocusability="afterDescendants">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:id="@+id/wtf1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CID:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_cid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PSC:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_psc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/wtf3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAC:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_lac"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="T3212:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_t3212"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/wtf5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MCC:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_mcc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="eLat:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_lat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/wtf7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MNC:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_mnc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="eLon:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_lon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/wtf9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A5x:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_a5x"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FirstSeen:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_time_first"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/wtf11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ST_id:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_st_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wtf12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LastSeen:"
+                    android:textColor="@color/green_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_uniquebts_time_last"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textColor="@color/standard_grey"
+                    android:textSize="12sp" />
+
+            </TableRow>
+
+            <TextView
+                android:id="@+id/record_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/medium_blue"
+                android:textSize="12sp"
+                android:gravity="end" />
+
+        </TableLayout>
+    </LinearLayout>
+</FrameLayout>

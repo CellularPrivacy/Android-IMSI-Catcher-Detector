@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="tracking">Sporing</string>
+    <string name="device_info">Telefon/SIM Detaljer</string>
+    <string name="map_view">Antenne Kart</string>
+    <string name="db_viewer">Databasefremviser</string>
+    <string name="quit">Avslutt</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Avbryt</string>
+    <string name="text_agree">Jeg er enig</string>
+    <string name="text_disagree">Jeg er uenig</string>
+
+    <string name="disclaimer_title">VIKTIG</string>
+    <string name="disclaimer">"Ved å bruke AIMSICD har du forstått og godtatt at AIMSICD er en experimentell og informativ Android applikasjon som kan feile i å oppdage sporing og overvåkning av flere årsaker. Du er også klar over at den kan bli lurt og slått av årsaker ukjent for utviklerne. Du forstår og at utviklerne og selskap tilknyttet denne gratisappen ikke kan holdes ansvarlig for resultater og konsekvenser vedrørende bruken av denne applikasjonen.  UTVIKLINGS-STADIE: ALPHA! "</string>
+
+    <string name="toggle_attack_detection">Styr Angrepsoppdaging</string>
+    <string name="toggle_cell_tracking">Styr Cellesporing</string>
+    <string name="clear_database">Nullstill Database</string>
+    <string name="clear_database_question">Alle data vil slettes.\nEr du sikker?</string>
+    <string name="press_once_again_to_exit">Trykk på nytt for å Avslutte.</string>
+    <string name="cell_lookup">Alle Nåværende Celledetaljer</string>
+    <string name="debugging">Feilsøking</string>
+    <string name="no_network_connection_title">Ingen Internettforbindelse</string>
+    <string name="no_network_connection_message">Klarte ikke laste ned OpenCellID data uten Internettilkobling, vennligst slå på datatilgang!</string>
+
+    <string name="get_opencellid">Last ned BTS Data</string>
+
+    <string name="device_info_title">Telefoninformasjon</string>
+    <string name="sim_info_title">SIM Informasjon</string>
+    <string name="network_info">Nettverksinformasjon</string>
+    <string name="cell_info_title">NaboCeller</string>
+    <string name="neighboring_cells_title">Naboceller</string>
+    <string name="ciphering_indicator_title">Krypterings Indikator</string>
+    <string name="neighboring_cells_num_title">Total:</string>
+    <string name="sim_country">Land:</string>
+    <string name="sim_operator_id">Operatør ID:</string>
+    <string name="sim_operator_name">Operatørnavn:</string>
+    <string name="sim_imsi">Simkortnummer:</string>
+    <string name="sim_serial">Serienummer:</string>
+    <string name="device_type">Telefontype:</string>
+    <string name="device_imei">TelefonSerienummer:</string>
+    <string name="device_version">Radio Version:</string>
+    <string name="network_name">Operatørnavn:</string>
+    <string name="network_code">Operatørkode:</string>
+    <string name="network_type">Type:</string>
+    <string name="network_lac">OmrådeCelleID:</string>
+    <string name="network_cellid">CelleID:</string>
+    <string name="data_activity">Dataaktivitet:</string>
+    <string name="data_status">Datastatus:</string>
+    <string name="network_roaming">Søker:</string>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="button_refresh">Oppdater</string>
+    <string name="drawer_open">Åpne Navigasjons Skuffe</string>
+    <string name="preferences">Innstillinger</string>
+    <string name="drawer_close">Lukk Navigasjons Skuffe</string>
+    <string name="network_psc">PSC:</string>
+
+    <string name="upload_bts">Last Opp BTS Data</string>
+
+    <string name="about_aimsicd">Om AIMSICD</string>
+    <string name="app_version">Versjon: %s</string>
+    <string name="aimsicd_about_info3">Android-basert prosjekt for å oppdage og unngå falske basestasjoner (IMSI-fangere) i GSM/UMTS-nettverk.</string>
+    <string name="about_github">AIMSICD på GitHub</string>
+    <string name="about_wiki">DOKUMENTASJON</string>
+    <string name="about_contribute">BIDRA</string>
+    <string name="about_releases">UTGAVER</string>
+    <string name="about_changelog">ENDRINGSLOGG</string>
+    <string name="about_license">LISENS</string>
+    <string name="about_credits">CREDITS</string>
+    <string name="status_idle_about_desc">Venter / Laster.</string>
+    <string name="status_high_about_desc">Aktiv sporing nær deg!</string>
+    <string name="status_ok_about_desc">Allt OK.</string>
+    <string name="status_danger_about_desc">Du blir sporet!</string>
+    <string name="status_medium_about_desc">Utrygt Område. Forlat det!</string>
+    <string name="status_skull_about_desc">"SPRING!  Håndsettet er manipulert!"</string>
+    <string name="about_desc_icon_title">Trykk Status Ikonet under for detaljert informasjon:</string>
+
+    <string name="network_netid">Nettverks ID:</string>
+    <string name="network_sysid">System ID:</string>
+    <string name="network_baseid">Base Stasjon ID:</string>
+
+    <string name="location_error_title">GPS avslått</string>
+    <string name="location_error_message">Du kan ikke spore GPS data uten GPS. Slå på GPS nå?</string>
+
+    <string name="pref_system_title">System Oppsett</string>
+    <string name="pref_autostart_title">Start Automatisk</string>
+    <string name="pref_autostart_summ">Start tjenesten Automatisk ved oppstart</string>
+    <string name="pref_persistservice_title">Kjørende Tjenester</string>
+    <string name="pref_persistservice_summ">Tjenester vil fortsette å kjøre etter du avslutter appen (hak av for å totalt avslutte)</string>
+    <string name="pref_protection_title">Beskyttelses Innstillinger</string>
+    <string name="pref_notification_settings">Meldingsoppsett</string>
+    <string name="pref_enable_cell_title">Cellesporing</string>
+    <string name="pref_enable_cell_summ">Slå på Automatisk Cellesporing</string>
+    <string name="pref_femto_title">Femtocell Oppdaging</string>
+    <string name="pref_femto_summ">(foreløpig KUN CDMA telefoner)</string>
+    <string name="pref_femto_action_title">Femtocell Beskyttelse</string>
+    <string name="pref_femto_action_summ">Fremtving Fly Modus når Femtocell oppdages (slå på igjen nettverk manuellt)</string>
+    <string name="pref_ui_title">Grensesnittoppsett</string>
+    <string name="pref_ui_icons_title">Status-ikoner</string>
+    <string name="pref_ui_icons_summ">Icon Utseende Utvalg</string>
+    <string name="pref_refresh_title">Oppfriskningsrate</string>
+    <string name="pref_refresh_summ">Kontroler intervall av enhetsoppdateringer\nNåværende intervall:%s</string>
+    <string name="pref_ocid_title">OpenCellID Innstillinger</string>
+    <string name="pref_ocid_key_title">OpenCellID API Nøkkel</string>
+    <string name="pref_ocid_key_summ">Skriv inn din OpenCellID API Nøkkel hær</string>
+    <string name="pref_enable_cell_monitoring_title">Celle Overvåkning</string>
+    <string name="pref_enable_cell_monitoring_summ">Slå på Automatisk Celle Overvåkning</string>
+    <string name="pref_request_ocid_key">Be om OpenCellID API Nøkkel</string>
+    <string name="pref_ocid_requestkey_summary">Be om API nøkkel for OpenCellID Datatilgang</string>
+
+    <string name="pref_map_title">Kart Innstillinger</string>
+    <string name="pref_map_type_title">Karttype</string>
+    <string name="pref_map_type_summ">Vis Kart i flere utgaver</string>
+    
+    <string name="cell_id_label">"CelleID: "</string>
+    <string name="lac_label">"OmrådeCelle: "</string>
+    <string name="mcc_label">"Landskode: "</string>
+    <string name="mnc_label">"Nettverkskode: "</string>
+    <string name="pc_label">"PC: "</string>
+    <string name="samples_label">"Eksempler: "</string>
+    <string name="open_cell_id_label">OpenCellID Data</string>
+    <string name="lat_label">"Breddegrad: "</string>
+    <string name="lng_label">"Lengdegrad: "</string>
+
+    <string name="table_names_prompt">Velg Liste</string>
+
+    <string name="at_command_title">AT kommando Linje</string>
+    <string name="response_label">Tilbakemelding:</string>
+    <string name="execute_at">Utfør</string>
+    <string name="serial_device_title">Nåværende Seriell Enhet:</string>
+    <string name="serial_device_prompt">Velg Seriell Enhet</string>
+    <string name="serial_device_spinner_title">Oppdagede Enheter:</string>
+    <string name="timeout_spinner_title">Tidsavbrudd:</string>
+    <string name="timeout_spinner_prompt">Velg Tidsavbrudd</string>
+    <string name="command_hint">Skriv inn AT kommando hær.</string>
+
+    <string name="sms_title">Stille SMS Oppdaget</string>
+    <string name="sms_message">Stille SMS Oppdaget\nDetaljer: Se databasefremviser.</string>
+    <string name="table_contains_no_data">Listen inneholder ingen data å vise.</string>
+
+    <string name="title_ocid_key">OpenCellID API Nøkkel</string>
+    <string name="message_request_api_key">Trykk OK for å be om API nøkkel fra OpenCellID.org. Dette vil gjøre det mulig å laste ned deres data og se dette i kartet. Det vil og gi deg mulighet til å laste opp celle data. Bemerk at du må laste opp data innen 20 dager for å ha API nøkkelen aktiv.</string>
+    <string name="ocid_api_error">"Fikk ikke Nøkkel: "</string>
+    <string name="ocid_api_success">Lagret ny API-nøkkel.</string>
+
+    <string name="title_debug_logs">Feilsøkingslogger</string>
+    <string name="btn_clear_logs">Rensk</string>
+    <string name="btn_copy_to_clipboard">Kopier</string>
+    <string name="msg_copied_to_clipboard">Logger kopiert til clipboard.</string>
+    <string name="btn_stop_logs">Stopp</string>
+    <string name="btn_start_logs">Start</string>
+
+    <string name="title_activity_about_pop_up">DETALJERT FORKLARING</string>
+    <string name="status_idle_detail_info">Appen pauser eller laster. Ingen beskyttelse eller oppdaging er påslått. Vennligsts slå på Angrepsoppdaging!</string>
+    <string name="status_ok_detail_info">Ingen trusler oppdaget. Ditt nettverk sjekkes konstant basert på det du har påslått i Oppdagelses-Innstillinger.</string>
+    <string name="status_medium_detail_info">"Usikkert Område: Minst 1 ny eller ukjent basestasjon i området, eller med brutt eller usikker kryptering lavere enn A5/3. Alle samtaler eller SMS som utføres hær kan bli  avlyttet og lagret. Forlat området Fort."</string>
+    <string name="status_high_detail_info">Aktive Fientlige Tjenester Oppdaget: En IMSI-Catcher (IMSIC) eller falsk BTS (basestasjon) sporer aktivt brukere. Aktiv sporing foregår i dette området. Du bør helst unngå dette stedet, spesiellt ved Masseansamlinger og uro. Ta ut batteriet og SIM kortet!</string>
+    <string name="status_danger_detail_info">Aktive Fientlige Tjenester Oppdaget: En FBTS eller IMSIC sporer DEG og forhindrer din telefon tilkobling gjennom din vanlige krypterte tilkobling. Hvis du er i fare for straffeforfølgelser, ødelegg telefonen og SIM kortet, og rapporter den som nylig stjålet.</string>
+    <string name="status_skull_detail_info">Fientlig Manipulering: Noen forsøker å manipulere telefonen. Knus (eller selg) telefonen og skaff en ny langt borte dærfra. Ikke ta med telefonen til dær du kjøper ny! Bruk et nytt uregistrert SIM kort bestillt gjennom TOR-Nettleser. Bytt ringemønster og varsle dine venner om mulig sporing ved å snakke med dem, IKKE ved å ringe dem!</string>
+    <string name="open_cell_id_button_cancel">Avbryt</string>
+    <string name="open_cell_id_button_ok">OK</string>
+
+    <string name="pref_notification_vibrate_enable_title">Aktiver vibrering</string>
+    <string name="pref_notification_vibrate_enable_summary">Vibrer når varsler endres</string>
+    <string name="pref_notification_vibrate_min_level_title">Vibrer på trusselnivå</string>
+    <string name="pref_notification_vibrate_min_level_summary">Velg minimum trusselnivå å vibrere på</string>
+    <string name="notification_vibrate_idle">Pause</string>
+    <string name="notification_vibrate_ok">OK</string>
+    <string name="notification_vibrate_medium">Middels</string>
+    <string name="notification_vibrate_danger">Fare</string>
+    
+    <string name="ui_icon_flat">Flat</string>
+    <string name="ui_icon_sense">Sans</string>
+    <string name="ui_icon_white">Hvit</string>
+    <string name="map_type_terrain">Terreng</string>
+    <string name="map_type_normal">Normal</string>
+    <string name="pref_refresh_manual">Manuell</string>
+    <string name="pref_refresh_automatic">Automatisk</string>
+    <string name="pref_refresh_2s">2 sek</string>
+    <string name="pref_refresh_5s">5 sek</string>
+    <string name="pref_refresh_10s">10 sek</string>
+    <string name="pref_refresh_25s">25 sek</string>
+    <string name="pref_refresh_45s">45 sek</string>
+    <string name="pref_refresh_1_min">1 min</string>
+    <string name="pref_refresh_5_min">5 min</string>
+    <string name="timeout_spinner_2_sec">2 sek</string>
+    <string name="timeout_spinner_5_sec">5 sek</string>
+    <string name="timeout_spinner_10_sec">10 sek</string>
+    <string name="timeout_spinner_20_sec">20 sek</string>
+    <string name="timeout_spinner_30_sec">30 sek</string>
+    <string name="timeout_spinner_10_min">10 min</string>
+    <string name="main">Hoved</string>
+    <string name="settings">Innstillinger</string>
+    <string name="application">Applikasjon</string>
+    <string name="monitoring_cell_information">Overvåker Celle Informasjon.</string>
+    <string name="about_disclaimer">VIKTIG</string>
+    <string name="stopped_monitoring_cell_information">Stoppet å Overvåker Celle Informasjon.</string>
+    <string name="tracking_cell_information">Sporer Celle Informasjon.</string>
+    <string name="stopped_tracking_cell_information">Stoppet sporing av Celle Information.</string>
+    <string name="only_one_key_per_day">Kun 1 API nøkkel forespøsel pr 24 timer\nPrøv igjen senere.</string>
+    <string name="cell_id_doesnt_exist_in_db">Celle Informasjon ikke i OpenCellID Database!</string>
+    <string name="hostile_service_area_changing_lac_detected">Fientlig Område: Endrende celle Informasjon Oppdaget!</string>
+    <string name="femtocell_detection_active">FemtoCell Oppdaging Aktiv.</string>
+    <string name="cell_tracking_active">Cellesporing Aktiv.</string>
+    <string name="cell_monitoring_active">Celleovervåking Aktiv.</string>
+    <string name="phone_type">Telefon Type</string>
+    <string name="status_idle_description">Status: Pause.</string>
+    <string name="status_ok_description">Status: God. Ingen Trusler oppdaget.</string>
+    <string name="alert_threat_detected">ALARM: Noen Trusler Oppdaget!</string>
+    <string name="alert_femtocell_connection_detected">ALARM: FemtoCell Tilkobling Oppdaget!</string>
+    <string name="alert_silent_sms_detected">ALARM: Stille SMS oppdaget!</string>
+    <string name="alert_mwi_detected">ALARM: Melding Venter indikator oppdaget!</string>
+    <string name="alert_silent_wap_sms_detected">ALARM: WAP Push SMS oppdaget!</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD kan kun oppdage FemtoCell tilkobling på CDMA enheter.</string>
+    <string name="service_state_changed">Service Status endret!</string>
+    <string name="stopped_tracking_femtocell">:Stoppet sporing av FemtoCell forbindelser.</string>
+    <string name="alert_femtocell_tracking_detected">ALARM: FemtoCell Sporing oppdaget!</string>
+    <string name="refreshing_every">Oppdaterer alle</string>
+    <string name="refreshing_now">Oppdaterer nå…</string>
+    <string name="seconds">sekunder.</string>
+    <string name="contacting_opencellid_for_data">Kontakter OpenCellID for data...\nDette kan ta opptil ett minutt.</string>
+    <string name="unable_to_determine_last_location">Kan ikke bestemme din siste posisjon.\nSlå på GPS og prøv igjen.</string>
+    <string name="no_tracked_locations_found">Ingen sporet posisjon funnet til å vise på kartet.</string>
+    <string name="no_data_for_publishing">Ingen data for publisering tilgjengelig.</string>
+    <string name="download_error">Nedlastningsfeil:</string>
+    <string name="opencellid_data_successfully_received">OpenCellID data vellykket mottatt.</string>
+    <string name="error_retrieving_opencellid_data">Feil i Nedlasting av OpenCellID data.\nSjekk Nettforbindelsen!</string>
+    <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data vellykket mottatt.\nKart Markører oppdatert.</string>
+    <string name="uploaded_bts_data_successfully">"Opplasting av  BTD data til OpenCellID vellykket."</string>
+    <string name="error_uploading_bts_data">Feil under opplasting av OpenCellID data til serverne!</string>
+    <string name="no_opencellid_key_detected">Ingen OpenCellID API nøkkel oppdaget!\nVennligst skriv inn din nøkkel under innstillinger først.</string>
+    <string name="refreshed_cell_id_info">Oppdaterer Skjerm</string>
+    <string name="unable_to_acquire_root_access">Klarte ikke å få ROOT tilgang på din enhet.\nAT kommando injection krever ROOT Terminal tilgang.\nVennligst undersøk om din enhet er ROOTET og prøv igjen.</string>
+    <string name="unable_to_detect_busybox">Kunne ikke oppdage BusyBox på din enhet.\nAT kommando Injection krever BusyBoks komponenter for å virke korrekt.\nVennligst undersøk om din enhet har BusyBoks installert og prøv igen.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">En ukjent feil har oppstått under forsøk på å nå serielenheten.\nVennligst undersøk din logcat for feil og post dem på vår Github.</string>
+    <string name="unknown_error_initialising_at_command_injector">En ukjent feil har oppstått under forsøk på å nullstille AT Commado Injector.\nVennligst undersøk din logcat for feil og post dem på vår Github.</string>
+    <string name="getting_ocid_api_key">Henter OpenCellID API Nøkkel…</string>
+    <string name="unable_to_create_map">Kunne ikke opprette kart!</string>
+    <string name="describe_the_problem_you_had">VIKTIG! Vennligst beskriv problemet du hadde, før du sender loggene. INGEN HJELP UTEN BESKRIVELSE!\n</string>
+    <string name="status">Status:</string>
+    <string name="status_idle">PAUSE</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">MEDIUM</string>
+    <string name="status_high">HØY</string>
+    <string name="status_danger">FARE</string>
+    <string name="status_skull">SPRING!</string>
+
+    <string name="adv_user_info">Denne menyen er kun for spesialister!\n\nVennligst ikke sett inn vilkårlige strenger fordi det vil få overvåkingen ut av kontroll.\n\nFor å legge til streng velg SMS type fra menyen, sriv inn strengen og trykk Legg til.\n\nFor å slette fra databasen trykk lenge på listevisning.</string>
+    
+    <string name="adv_user_sms_info">Denne menyen er kun for spesialister!\nFor å slette en oppdaget SMS trykk lenge på listevisning.</string>
+    <string name="title_activity_advanced_user">Slett Oppdaget SMS</string>
+
+    <string name="adv_user_pref_header">Spesialist Innstillinger</string>
+    <string name="adv_user_pref_launch">"Oppdagelses  Strenger"</string>
+    <string name="adv_user_pref_sms_launch">Slett SMS</string>
+    <string name="adv_user_pref_summary">Legg til og slett oppdagelses strenger</string>
+    <string name="adv_user_pref_sms_summary">Slett Oppdaget SMS</string>
+   
+    <string name="adv_user_root_title">Slå på SMS Oppdagelse</string>
+    <string name="adv_user_root_sum">Root er påkrevet for å aktivere SMS oppdagelse</string>
+
+    <string name="detection_strings">Oppdagelses Strenger</string>
+    <string name="typezero_title">VIKTIG!</string>
+    <string name="typezero_header">Stille SMS Oppdaget</string>
+    <string name="typezero_data">Type-0 SMS Oppdaget!\nDetaljer: Se Database Viser.</string>
+    <string name="typemwi_title">VIKTIG!</string>
+    <string name="typemwi_header">MWI Oppdaget</string>
+    <string name="typemwi_data">Beskjed venter indikator oppdaget!\nDetaljer: Se Database Viser.</string>
+    <string name="typewap_header">WAP Push Oppdaget</string>
+    <string name="typewap_data">WAP Push SMS oppdaget!\nDetaljer: Se Database Viser.</string>
+
+
+    <string name="help_main_neighboring_cells">Viser NaboCeller.</string>
+    <string name="help_main_phone_sim_details">SIM Leverandør detaljer, IMEI, TMSI.</string>
+    <string name="help_main_acd">Vis detaljert sammenligning av nåværende tilknyttet celle, med data (hvis noen) funnet i OpenCellID og merk forskjellen.</string>
+    <string name="help_main_database_viewer">Se de forskjellige DB listene vi har.</string>
+    <string name="help_main_antenna_map_view">Kart med fargekodede antenner i nærheten.</string>
+    <string name="help_main_at_command_interface">Kommandolinje som tillater sending av AT kommandoer til Baseband Prosessor (krever ROOT).</string>
+
+    <string name="help_tracking_toggle_attack_detection">Start/stop angrepsoppdagelse og samle celledetaljer inn i interne database lister.</string>
+    <string name="buildnumber">Versjon Nummer: %s</string>
+    <string name="git_sha">Git SHA-Signering: %s</string>
+    <string name="help_tracking_toggle_cell_tracking">Start å søke celler for å vise i Antenne Kartet og muligens laste dem opp senere til OpenCellID.</string>
+
+    <string name="help_settings_preferences">AIMSICD innstillinger som beskyttelsesregler, hyppighet og service oppførsel.</string>
+    <string name="help_settings_reset_db">Nullstill alle eller spesifiserte DB liste(r).</string>
+
+    <string name="help_app_add_get_ocid_api_key">Motta API nøkkel for å bruke OpenCellID database til å opplaste og nedlaste data…</string>
+    <string name="help_app_about">Status Icon og Project forklaring.</string>
+    <string name="help_app_download_local_bts">Last ned OpenCellID Database.</string>
+    <string name="help_app_upload_local_bts">Last opp Basestasjoner til OpenCellID Database.</string>
+    <string name="help_app_quit">Avslutt denne Appen.</string>
+    <string name="waiting_for_location">Venter på posisjon…</string>
+    <string name="unique_bts_data">Spesifikk Basestasjon Data</string>
+    <string name="bts_measurements">Basestasjon Målinger</string>
+    <string name="imported_ocid_data">Importert OpenCellID Data</string>
+    <string name="default_mmc_locations">Standard Landskode Plassering</string>
+    <string name="silent_sms">Stille SMS</string>
+    <string name="eventlog">Hendelseslogg</string>
+    <string name="measured_signal_strengths">Målte Signalstyrker</string>
+
+    <string name="at_command_response_looking">***Søker etter AT serielle enheter...\n</string>
+    <string name="at_command_response_found">"Funnet: "</string>
+    <string name="at_command_response_setup_complete">***Innstillinger Fullført***\n</string>
+
+    <string name="currently_connected_bts">Nåværende tilnyttet Basestasjon</string>
+    <string name="well_known_encrypted_bts">Godt kjent kryptert Basestasjon</string>
+    <string name="unknown_or_insecure_bts">Ukjent eller usikker Basestasjon</string>
+    <string name="new_or_recently_added_bts">Ny eller nylig tillagt Baserstasjon</string>
+
+    <string name="delete_database_msg_success">Database slettet og gjenopprettet vellykket.\nVennligst start Appen på nytt for å renske gamle verdier fra minnet.</string>
+
+    <string name="invalid_key_try_later">"Invalid  OpenCellId nøkkel, prøv igjen senere."</string>
+    <string name="getting_ocid_key">Mottar OpenCellId API Nøkkel...</string>
+
+    <string name="deleted">Slettet</string>
+    <string name="failed_to_delete">Feil under sletting</string>
+    <string name="double_quote_will_cause_db_error">"Setning ikke lagt til\n\"dobbel apostrof vil skape databasefeil "</string>
+    <string name="the_string_was_added_to_db">Setningen ble lagt til i databasen</string>
+    <string name="failed_to_add_the_string_to_db">Fikk ikke lagt til setningen i databasen</string>
+
+    <string name="help_app_debugging">Samle og send feilmeldingslogger.</string>
+    <string name="pref_enable_gps_title">GPS Innstillinger</string>
+    <string name="pref_enable_gps_summary">Slå på GPS for Cellesporing</string>
+    <string name="n_a">Ikke Tilgjengelig</string>
+    <string name="unknown">Ukjent</string>
+
+    <string name="database_settings">Database</string>
+    <string name="download_timed_out">OpenCellID API forespørsel tidsavbrudd Prøv igjen senere?</string>
+    </resources>

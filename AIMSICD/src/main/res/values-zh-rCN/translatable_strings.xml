@@ -1,0 +1,328 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="tracking">跟踪</string>
+    <string name="device_info">手机/SIM卡详细信息</string>
+    <string name="db_viewer">数据库查看器</string>
+    <string name="quit">退出</string>
+    <string name="text_ok">确定</string>
+    <string name="text_cancel">取消</string>
+    <string name="text_agree">我同意</string>
+    <string name="text_disagree">我拒绝</string>
+
+    <string name="disclaimer_title">免责声明</string>
+    <string name="toggle_attack_detection">切换攻击检测</string>
+    <string name="toggle_cell_tracking">切换蜂窝跟踪</string>
+    <string name="clear_database">清除/重置数据库</string>
+    <string name="clear_database_question">所有数据将被删除。\n您确定吗？</string>
+    <string name="preferences">首选项</string>
+    <string name="press_once_again_to_exit">再次按下将退出。</string>
+    <string name="cell_lookup">当前所有蜂窝详细信息</string>
+    <string name="debugging">调试</string>
+    <string name="no_network_connection_title">无互联网连接</string>
+    <string name="get_opencellid">下载 BTS 数据</string>
+
+    <string name="device_info_title">设备信息</string>
+    <string name="no_network_connection_message">无互联网连接将无法下载 OpenCellID 数据，请启用网络连接！</string>
+
+    <string name="sim_info_title">SIM卡信息</string>
+    <string name="network_info">网络信息</string>
+    <string name="cell_info_title">当前威胁级别</string>
+    <string name="sim_operator_name">运营商名称:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">序列号:</string>
+    <string name="device_type">手机类型:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">RIL 版本:</string>
+    <string name="network_name">供应商名称:</string>
+    <string name="network_code">供应商代码:</string>
+    <string name="network_type">类型:</string>
+    <string name="network_lac">LAC:</string>
+    <string name="network_cellid">CID:</string>
+    <string name="data_activity">数据活动:</string>
+    <string name="data_status">数据状态:</string>
+    <string name="network_roaming">漫游状态:</string>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="button_refresh">刷新</string>
+    <string name="drawer_open">打开导航抽屉</string>
+    <string name="about_github">GitHub 上的 AIMSICD</string>
+    <string name="about_wiki">文档</string>
+    <string name="about_contribute">贡献</string>
+    <string name="about_disclaimer">免责声明</string>
+    <string name="about_releases">版本发布</string>
+    <string name="about_changelog">更新日志</string>
+    <string name="about_license">许可协议</string>
+    <string name="status_idle_about_desc">空闲 / 载入中。</string>
+    <string name="about_credits">鸣谢表</string>
+    <string name="status_ok_about_desc">一切良好。</string>
+    <string name="status_danger_about_desc">你正在被追查！</string>
+    <string name="status_medium_about_desc">不安全的服务区。远离它！</string>
+    <string name="network_netid">网络 ID:</string>
+    <string name="network_sysid">系统 ID:</string>
+    <string name="network_baseid">基站 ID:</string>
+
+    <string name="location_error_title">位置服务已禁用</string>
+    <string name="status_skull_about_desc">跑！手机已被操纵！</string>
+    <string name="about_desc_icon_title">按下面的状态图标了解详细信息：</string>
+
+    <string name="location_error_message">您不能在未启用位置服务时跟踪 GPS 数据。是否立即启用？</string>
+
+    <string name="pref_enable_gps_title">GPS 设置</string>
+    <string name="pref_enable_gps_summary">启用 GPS 以进行蜂窝跟踪</string>
+    <string name="pref_system_title">系统设置</string>
+    <string name="pref_autostart_title">自动开始</string>
+    <string name="pref_autostart_summ">启动时自动开始服务</string>
+    <string name="pref_persistservice_title">持久服务</string>
+    <string name="pref_persistservice_summ">服务将在退出本应用后继续运行（取消选中将使其被完全关闭）</string>
+    <string name="pref_protection_title">保护设置</string>
+    <string name="pref_notification_settings">通知设置</string>
+    <string name="pref_enable_cell_title">蜂窝跟踪</string>
+    <string name="pref_enable_cell_summ">启用自动蜂窝跟踪</string>
+    <string name="pref_femto_title">家庭基站检测</string>
+    <string name="pref_femto_summ">(目前仅 CDMA 手机)</string>
+    <string name="pref_femto_action_title">家庭基站保护</string>
+    <string name="pref_femto_action_summ">检测到家庭基站时启用飞行模式 (此后需手动重开网络)</string>
+    <string name="pref_ui_title">界面设置</string>
+    <string name="pref_ui_icons_title">状态图标</string>
+    <string name="pref_ui_icons_summ">选择图标风格</string>
+    <string name="pref_refresh_title">刷新率</string>
+    <string name="pref_refresh_summ">控制设备更新频率\n当前选择：%s</string>
+    <string name="pref_ocid_title">OpenCellID 设置</string>
+    <string name="pref_ocid_key_title">OpenCellID API 密钥</string>
+    <string name="pref_ocid_key_summ">在这里输入您的 OpenCellID API 密钥</string>
+    <string name="pref_enable_cell_monitoring_title">蜂窝监控</string>
+    <string name="pref_enable_cell_monitoring_summ">启用自动蜂窝监控</string>
+    <string name="pref_request_ocid_key">请求 OpenCellID API 密钥</string>
+    <string name="pref_ocid_requestkey_summary">请求 API 密钥用以 OpenCellID 数据访问</string>
+
+    <string name="pref_map_title">地图查看器设置</string>
+    <string name="pref_map_type_title">地图类型</string>
+    <string name="pref_map_type_summ">显示不同风格的地图</string>
+    
+    <string name="lat_label">"纬度: "</string>
+    <string name="lng_label">"经度: "</string>
+
+    <string name="samples_label">"样本: "</string>
+    <string name="open_cell_id_label">OpenCellID 数据</string>
+    <string name="table_names_prompt">选择表格</string>
+
+    <string name="at_command_title">AT 命令接口</string>
+    <string name="response_label">响应:</string>
+    <string name="execute_at">执行</string>
+    <string name="serial_device_title">当前串行设备:</string>
+    <string name="serial_device_prompt">选择串行设备</string>
+    <string name="serial_device_spinner_title">检测到设备:</string>
+    <string name="timeout_spinner_title">超时:</string>
+    <string name="timeout_spinner_prompt">选择超时</string>
+    <string name="command_hint">在这里输入 AT 命令。</string>
+
+    <string name="sms_title">检测到无声短信</string>
+    <string name="sms_message">已检测到无声短信！\n详细信息：详见数据库查看器。</string>
+    <string name="table_contains_no_data">表格中未包含可供显示的数据。</string>
+
+    <string name="title_ocid_key">OpenCellID API 密钥</string>
+    <string name="ocid_api_error">"获取密钥出错: "</string>
+    <string name="ocid_api_success">新的 API 密钥已保存。</string>
+
+    <string name="title_debug_logs">调试日志</string>
+    <string name="btn_clear_logs">清除</string>
+    <string name="btn_copy_to_clipboard">复制</string>
+    <string name="msg_copied_to_clipboard">日志已复制到剪贴板。</string>
+    <string name="btn_stop_logs">停止</string>
+    <string name="btn_start_logs">开始</string>
+
+    <string name="title_activity_about_pop_up">详细解释</string>
+    <string name="open_cell_id_button_cancel">取消</string>
+    <string name="open_cell_id_button_ok">确定</string>
+
+    <string name="pref_notification_vibrate_enable_title">启用振动</string>
+    <string name="pref_notification_vibrate_enable_summary">通知变更时振动</string>
+    <string name="pref_notification_vibrate_min_level_title">威胁级别振动</string>
+    <string name="pref_notification_vibrate_min_level_summary">选择需要振动的最小威胁级别</string>
+    <string name="notification_vibrate_idle">空闲</string>
+    <string name="notification_vibrate_ok">确定</string>
+    <string name="notification_vibrate_medium">中等</string>
+    <string name="notification_vibrate_danger">危险</string>
+    
+    <string name="ui_icon_flat">平面</string>
+    <string name="ui_icon_sense">质感</string>
+    <string name="ui_icon_white">白色</string>
+    <string name="map_type_terrain">地形</string>
+    <string name="map_type_normal">正常</string>
+    <string name="pref_refresh_manual">手动</string>
+    <string name="pref_refresh_automatic">自动</string>
+    <string name="pref_refresh_2s">2秒</string>
+    <string name="pref_refresh_5s">5秒</string>
+    <string name="pref_refresh_10s">10秒</string>
+    <string name="pref_refresh_25s">25秒</string>
+    <string name="pref_refresh_45s">45秒</string>
+    <string name="pref_refresh_1_min">1分钟</string>
+    <string name="pref_refresh_5_min">5分钟</string>
+    <string name="timeout_spinner_2_sec">2秒</string>
+    <string name="timeout_spinner_5_sec">5秒</string>
+    <string name="timeout_spinner_20_sec">20秒</string>
+    <string name="timeout_spinner_10_sec">10秒</string>
+    <string name="timeout_spinner_30_sec">30秒</string>
+    <string name="timeout_spinner_10_min">10分钟</string>
+    <string name="main">主要</string>
+    <string name="settings">设置</string>
+    <string name="database_settings">数据库</string>
+    <string name="application">应用程序</string>
+    <string name="monitoring_cell_information">正在监控蜂窝信息。</string>
+    <string name="tracking_cell_information">正在跟踪蜂窝信息。</string>
+    <string name="stopped_tracking_cell_information">已停止跟踪蜂窝信息。</string>
+    <string name="stopped_monitoring_cell_information">已停止监控蜂窝信息。</string>
+    <string name="alert_silent_wap_sms_detected">警告：检测到 WAP 推送短信(SMS)！</string>
+    <string name="alert_mwi_detected">警告：检测到消息等待指示器！</string>
+    <string name="alert_silent_sms_detected">警告：检测到无声短信！</string>
+    <string name="alert_femtocell_connection_detected">警告：检测到家庭基站连接！</string>
+    <string name="alert_threat_detected">警告：检测到一些威胁！</string>
+    <string name="status_idle_description">状态：空闲。</string>
+    <string name="status_ok_description">状态：良好。未检测到威胁。</string>
+    <string name="cell_monitoring_active">蜂窝监控已启用。</string>
+    <string name="cell_tracking_active">蜂窝跟踪已启用。</string>
+    <string name="phone_type">手机类型</string>
+    <string name="femtocell_detection_active">家庭基站检测已启用。</string>
+    <string name="only_one_key_per_day">每24小时只能请求一个新的 API 密钥！\n请稍后再试。</string>
+    <string name="cell_id_doesnt_exist_in_db">蜂窝 ID 不在 OpenCellID 数据库中！</string>
+    <string name="hostile_service_area_changing_lac_detected">敌意服务区：检测到变更 LAC！</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD 只能检测在 CDMA 设备上的家庭基站连接。</string>
+    <string name="service_state_changed">服务状态已变更！</string>
+    <string name="stopped_tracking_femtocell">：已停止跟踪家庭基站连接。</string>
+    <string name="alert_femtocell_tracking_detected">警告：检测到家庭基站跟踪！</string>
+    <string name="refreshing_every">刷新间隔</string>
+    <string name="refreshing_now">正在刷新…</string>
+    <string name="seconds">秒。</string>
+    <string name="ciphering_indicator_title">加密指示器</string>
+    <string name="neighboring_cells_title">临近蜂窝</string>
+    <string name="neighboring_cells_num_title">总计:</string>
+    <string name="sim_country">国家:</string>
+    <string name="sim_operator_id">运营商 ID:</string>
+    <string name="drawer_close">关闭导航抽屉</string>
+    <string name="upload_bts">上传 BTS 数据</string>
+
+    <string name="map_view">天线地图查看器</string>
+    <string name="about_aimsicd">关于 AIMSICD</string>
+    <string name="app_version">版本: %s</string>
+    <string name="buildnumber">编译编号: %s</string>
+    <string name="status_high_about_desc">主动跟踪在靠近你！</string>
+    <string name="no_data_for_publishing">无数据可发布。</string>
+    <string name="no_tracked_locations_found">没有已跟踪的位置可在地图上显示。</string>
+    <string name="contacting_opencellid_for_data">正在连接 OpenCellID 以获取数据…\n这可能需要长达一分钟。</string>
+    <string name="unable_to_determine_last_location">无法检测您的最后位置。\n请启用位置服务并重试。</string>
+    <string name="download_error">下载出错：</string>
+    <string name="opencellid_data_successfully_received">OpenCellID 数据接收成功。</string>
+    <string name="error_retrieving_opencellid_data">接收 OpenCellID 数据时出错。\n请检查您的网络！</string>
+    <string name="opencellid_data_successfully_received_markers_updated">OpenCellID 数据接收成功。\n地图标记已更新。</string>
+    <string name="uploaded_bts_data_successfully">已成功上传 BTS 数据到 OpenCellID。</string>
+    <string name="error_uploading_bts_data">上传 BTS 数据到 OpenCellID 服务器时出错！</string>
+    <string name="refreshed_cell_id_info">已刷新细胞信息</string>
+    <string name="no_opencellid_key_detected">未检测到 OpenCellID API 密钥！\n请先在设置中输入您的密钥。</string>
+    <string name="getting_ocid_api_key">正在获取 OpenCellID API 密钥…</string>
+    <string name="status_medium">中等</string>
+    <string name="status_ok">良好</string>
+    <string name="status_high">较高</string>
+    <string name="status_danger">危险</string>
+    <string name="status_skull">跑！</string>
+
+    <string name="adv_user_info">此菜单仅面向高级用户！\n\n请不要插入随机字符，那会导致检测失控。\n\n要添加一个字符，从下拉菜单中选择一个 SMS 类型，输入您的检测字符串，然后按插入。\n\n要删除数据库中的内容，请长按列表。</string>
+    
+    <string name="adv_user_sms_info">此菜单仅面向高级用户！\n要删除一个检测到的短信（SMS），点按列表中的它。</string>
+    <string name="title_activity_advanced_user">删除检测到的短信</string>
+
+    <string name="adv_user_pref_header">高级用户设置</string>
+    <string name="adv_user_pref_launch">检测字符串</string>
+    <string name="adv_user_pref_sms_launch">删除短信</string>
+    <string name="adv_user_pref_summary">插入和删除检测字符串</string>
+    <string name="adv_user_pref_sms_summary">删除检测到的短信</string>
+   
+    <string name="adv_user_root_title">启用短信检测</string>
+    <string name="adv_user_root_sum">启用短信（SMS）检测需要 root 权限</string>
+
+    <string name="detection_strings">检测字符串</string>
+    <string name="typezero_title">注意！</string>
+    <string name="typezero_header">检测到无声短信</string>
+    <string name="typezero_data">检测到 Type-0 短信！\n详细信息：详见数据库查看器。</string>
+    <string name="typemwi_title">注意！</string>
+    <string name="typemwi_header">检测到 MWI</string>
+    <string name="typemwi_data">检测到消息等待指示器！\n详细信息：详见数据库查看器。</string>
+    <string name="help_main_phone_sim_details">SIM卡网络提供商的详细信息，IMEI，TMSI。</string>
+    <string name="help_main_neighboring_cells"></string>
+    <string name="typewap_header">检测到 WAP 推送</string>
+    <string name="typewap_data">检测到 WAP 推送短信！\n详细信息：详见数据库查看器。</string>
+
+
+    <string name="waiting_for_location">正在等待位置…</string>
+    <string name="bts_measurements">BTS 测量</string>
+    <string name="unique_bts_data">唯一 BTS 数据</string>
+    <string name="imported_ocid_data">已导入 OpenCellID 数据</string>
+    <string name="default_mmc_locations">默认 MCC 位置</string>
+    <string name="silent_sms">无声短信</string>
+    <string name="eventlog">事件日志</string>
+    <string name="measured_signal_strengths">测量的信号强度</string>
+
+    <string name="failed_to_delete">删除失败</string>
+    <string name="n_a">不可用</string>
+    <string name="unknown">未知</string>
+
+    <string name="failed_to_add_the_string_to_db">添加字符串到数据库失败</string>
+    <string name="the_string_was_added_to_db">字符串已添加到数据库</string>
+    <string name="double_quote_will_cause_db_error">"字符串未被添加\n \" 双引号将导致数据库出错 "</string>
+    <string name="deleted">已删除</string>
+    <string name="getting_ocid_key">正在获取 OpenCellId API 密钥...</string>
+
+    <string name="invalid_key_try_later">无效 OpenCellId 密钥，请稍候重试。</string>
+    <string name="delete_database_msg_success">数据库已删除并已重新创建。\n请重启本应用以清除内存中的旧数值。</string>
+
+    <string name="new_or_recently_added_bts">新的或最近添加的 BTS</string>
+
+    <string name="unknown_or_insecure_bts">未知或不安全 BTS</string>
+    <string name="well_known_encrypted_bts">知名的已加密 BTS</string>
+    <string name="currently_connected_bts">当前连接的 BTS</string>
+    <string name="at_command_response_setup_complete">*** 安装完成 ***\n</string>
+
+    <string name="at_command_response_found">"找到： "</string>
+    <string name="at_command_response_looking">*** 正在查找 AT 串行设备…\n</string>
+    <string name="help_app_debugging">收集和发送错误日志。</string>
+    <string name="help_app_quit">退出此应用。</string>
+    <string name="help_app_upload_local_bts">上传您的 BTS 到 OpenCellID 数据库。</string>
+    <string name="help_app_download_local_bts">下载 OpenCellID 数据库。</string>
+    <string name="help_app_about">状态图标和项目说明。</string>
+    <string name="help_app_add_get_ocid_api_key">获取一个 API 密钥以使用 OpenCellID 数据库，包括上传和下载数据…</string>
+
+    <string name="help_settings_reset_db">清除并重置所有或特定数据表。</string>
+    <string name="help_settings_preferences">AIMSICD 设置，诸如保护规则，轮询时间和服务行为。</string>
+    <string name="help_tracking_toggle_cell_tracking">开始跟踪蜂窝信息以显示在天线地图查看器上，以及可选上传到 OpenCellID。</string>
+
+    <string name="help_tracking_toggle_attack_detection">开始/停止攻击检测，并收集蜂窝详细信息到内部的数据库表。</string>
+    <string name="network_psc">PSC:</string>
+
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="cell_id_label">"CID: "</string>
+    <string name="lac_label">"LAC: "</string>
+    <string name="mcc_label">"MCC: "</string>
+    <string name="mnc_label">"MNC: "</string>
+    <string name="pc_label">"PC: "</string>
+    <string name="status_idle_detail_info">应用目前闲置或正在加载。没有保护和检测措施已启用。请切换攻击检测方式！</string>
+    <string name="status_ok_detail_info">没有检测到威胁。您的网络将持续基于已启用的检测设置被检查。</string>
+    <string name="aimsicd_about_info3">基于 Android 的项目，检测和避免 GSM/UMTS 网络中的伪基站 (IMSI 窃取者)。</string>
+    <string name="help_main_at_command_interface">允许发送 AT 命令到基带处理器的界面 (需要 ROOT 权限)。</string>
+
+    <string name="help_main_antenna_map_view">将附近的天线进行着色并显示在地图上。</string>
+    <string name="help_main_database_viewer">查看我们已存储的各个数据表。</string>
+    <string name="status_idle">空闲</string>
+    <string name="help_main_acd">显示当前已连接蜂窝的详细比较，包括在 OpenCellID 中找到的数据（若有）和高亮差异。</string>
+    <string name="status">状态：</string>
+    <string name="unable_to_create_map">无法创建地图！</string>
+    <string name="describe_the_problem_you_had">注意！在给我们发送日志前，请先描述你遇到的问题。没有描述的求助是无济于事的！\n</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">尝试访问串行设备时发生未知错误。\n请检查您的 logcat 日志了解相关错误，并将它发送到我们的 Github。</string>
+    <string name="unknown_error_initialising_at_command_injector">尝试初始化 AT 命令注入器时发生未知错误。\n请检查您的 logcat 日志了解相关错误，并将它发送到我们的 Github。</string>
+    <string name="unable_to_detect_busybox">无法在您的设备上检测到 Busybox。\nAT 命令注入器需要 Busybox 组件才能正常运行。\n请检查您的设备是否已安装 Busybox，然后重试。</string>
+    <string name="unable_to_acquire_root_access">无法在您的设备上取得 ROOT 权限。\nAT 命令注入器需要 ROOT 终端访问权限。\n请检查您的设备是否已 root，然后重试。</string>
+    <string name="disclaimer">"使用 AIMSICD 即表示您已理解并同意 AIMSICD 是一款实验性、知识性的 Android 应用，它可能因多种原因而无法检测到监视和跟踪。您也理解，它可能被其他方式绕过或骗过，而这种方式可能开发者并不知晓。因此，您必须同意和理解，与此免费产品相关的开发者和公司，不会承担使用此应用程序所带来或导致的任何后果。开发状态：Alpha（内部测试）！ "</string>
+
+    <string name="message_request_api_key">"按确定以请求一个  OpenCellID.org 的 API 密钥。这将允许您下载他们的数据，并在地图上查看。它也将允许您上传蜂窝数据。注意，如果您在20天内没有上传蜂窝数据，您的 API 密钥可能被冻结。"</string>
+    <string name="status_medium_detail_info">不安全的服务区：至少一个新的或未知的 BTS 在附近运行，或者在使用一个不安全、易被破解的弱于 A5/3 的加密算法。任何在此服务区内进行的手机呼叫/短信都可能被截获和记录。赶紧离开这个地方吧。</string>
+    <string name="status_high_detail_info">检测到敌意服务动作：一个 IMSI 窃取者 (IMSIC) 或者虚假 BTS (FBTS) 正在主动跟踪用户群。主动扫描正在此区域内发生。你应该采取各种手段避免到达此地，尤其是政治敏感情况下。拔出你的电池和 SIM 卡吧！</string>
+    <string name="status_danger_detail_info">检测到敌意跟踪：一个 FBTS 或 IMSIC 正在主动跟踪“您”，并且阻止您的手机连接正常的已加密移动服务提供商。如果您处在潜在的危险中，考虑销毁您的手机和 SIM 卡，然后称它已被窃取。</string>
+    <string name="status_skull_detail_info">敌意操作：有人正在尝试远程操控您的手机。考虑销毁或出售您的手机，然后从其他渠道弄一台新的。不要携带你的旧手机并不断改变位置！使用一个新的匿名 SIM 卡和 Tor 浏览器。改变你的通话方式并警告你的同伴他们正在被监视。考虑面对面交流和讨论，避免在此时打电话！</string>
+    <string name="download_timed_out">OpenCellID API 请求超时。稍后重试？</string>
+    </resources>

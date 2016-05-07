@@ -1,0 +1,413 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+
+    <!-- Drawer -->
+    <string name="tracking">Слежение</string>
+    <string name="device_info">Информация о телефоне/SIM</string>
+    <string name="map_view">Карта антенн</string>
+    <string name="db_viewer">Просмотр базы данных</string>
+    <string name="quit">Выход</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Отмена</string>
+    <string name="text_agree">Я согласен</string>
+    <string name="text_disagree">Я не согласен</string>
+
+    <!-- DISCLAIMER -->
+    <string name="disclaimer_title">ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ</string>
+    <string name="disclaimer">Использование Вами AIMSICD означает, что Вы поняли и согласны с тем, что AIMSICD - это
+        эксперментальное и информативное приложение Андроид, которое по ряду причин не
+        всегда может обнаружить наблюдение и слежение. Вы также поняли, что его работу могут
+        блокировать или вносить помехи другие средства, пока не изученные разработчиками.
+        Вы также соглашаетесь и понимаете, что разработчики и компании, связанные с этим
+        бесплатным продуктом, ни в коей мере не могут быть ответственными за результаты или
+        последствия, исходящие из использования этого приложения.
+    </string>
+
+    <!-- MENU -->
+    <string name="toggle_attack_detection">Включение обнаружения атаки</string>
+    <string name="toggle_cell_tracking">Включение отслеживания соты</string>
+    <string name="clear_database">Очистка/сброс базы данных</string>
+    <string name="clear_database_question">Все данные будут удалены.\nВы уверены?</string>
+    <string name="preferences">Параметры</string>
+    <string name="press_once_again_to_exit">Нажмите еще раз для выхода.</string>
+    <string name="cell_lookup">Все текущие данные соты</string>
+    <string name="debugging">Отладка</string>
+    <string name="no_network_connection_title">Нет интернет-соединения</string>
+    <string name="no_network_connection_message">Не удается загрузить данные OpenCellID без интернета, пожалуйста включите передачу данных!</string>
+
+    <!-- MAP VIEWER -->
+    <string name="get_opencellid">Загрузить данные базовых станций</string>
+
+    <!-- LAYOUT -->
+    <string name="device_info_title">Информация об устройстве</string>
+    <string name="sim_info_title">Информация о SIM</string>
+    <string name="network_info">Информация сети</string>
+    <string name="cell_info_title">Текущий уровень угрозы</string>
+    <string name="neighboring_cells_title">Соседние ячейки сотовой связи</string>
+    <string name="ciphering_indicator_title">Индикатор шифрования</string>
+    <string name="neighboring_cells_num_title">Всего:</string>
+    <string name="sim_country">Страна:</string>
+    <string name="sim_operator_id">ID оператора:</string>
+    <string name="sim_operator_name">Название оператора:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">Serial:</string>
+    <string name="device_type">Тип телефона:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">RIL Version:</string>
+    <string name="network_name">Имя провайдера:</string>
+    <string name="network_code">Код провайдера:</string>
+    <string name="network_type">Тип:</string>
+    <string name="network_lac">Код местоположения:</string>
+    <string name="network_cellid">ID ячейки:</string>
+    <string name="data_activity">Данные:</string>
+    <string name="data_status">Статус данных:</string>
+    <string name="network_roaming">Роуминг:</string>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="button_refresh">Обновить</string>
+    <string name="drawer_open">Открыть меню</string>
+    <string name="drawer_close">Закрыть меню</string>
+    <string name="network_psc">PSC:</string>
+
+    <!-- Upload BTS to OpenCellID -->
+    <string name="upload_bts">Выгрузить данные базовых станций</string>
+
+    <!-- ABOUT LAYOUT -->
+    <string name="about_aimsicd">Об AIMSICD</string>
+    <string name="app_version">Версия: %s</string>
+    <string name="buildnumber">Номер сборки: %s</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="aimsicd_about_info3">Проект Андроид для обнаружения ложных базовых станций (IMSI-перехватчиков) в GSM/UMTS сетях.</string>
+    <string name="about_github">AIMSICD на GitHub</string>
+    <string name="about_wiki">ДОКУМЕНТАЦИЯ</string>
+    <string name="about_contribute">ВКЛАД</string>
+    <string name="about_disclaimer">ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ</string>
+    <string name="about_releases">РЕЛИЗЫ</string>
+    <string name="about_changelog">ИСТОРИЯ ИЗМЕНЕНИЙ</string>
+    <string name="about_license">ЛИЦЕНЗИЯ</string>
+    <string name="about_credits">CREDITS</string>
+    <string name="status_idle_about_desc">Ожидание / Загрузка.</string>
+    <string name="status_high_about_desc">Рядом с Вами активное отслеживание!</string>
+    <string name="status_ok_about_desc">Все OK.</string>
+    <string name="status_danger_about_desc">Вас отслеживают!</string>
+    <string name="status_medium_about_desc">Небезопасная зона обслуживания. Покиньте ее!</string>
+    <string name="status_skull_about_desc">БЕГИТЕ! Мошенничество с телефоном!</string>
+    <string name="about_desc_icon_title">Нажмите значки состояния ниже для более подробной информации:</string>
+
+    <!-- CDMA LAYOUT -->
+    <string name="network_netid">ID сети:</string>
+    <string name="network_sysid">ID системы:</string>
+    <string name="network_baseid">ID базовой станции:</string>
+
+    <!-- LOCATION HELPER -->
+    <string name="location_error_title">Службы местоположения отключены</string>
+    <string name="location_error_message">Вы не можете отслеживать данные GPS без служб местоположения. Включить сейчас?</string>
+
+    <!-- PREFERENCES -->
+    <string name="pref_enable_gps_title">Параметры GPS</string>
+    <string name="pref_enable_gps_summary">Включить GPS для отслеживания соты</string>
+    <string name="pref_system_title">Системные настройки</string>
+    <string name="pref_autostart_title">Автозапуск</string>
+    <string name="pref_autostart_summ">Автоматический запуск сервиса при загрузке</string>
+    <string name="pref_persistservice_title">Постоянный сервис</string>
+    <string name="pref_persistservice_summ">Сервис будет продолжать работать после выхода из приложения (уберите отметку, чтобы завершать полностью)</string>
+    <string name="pref_protection_title">Настройки защиты</string>
+    <string name="pref_notification_settings">Настройки уведомлений</string>
+    <string name="pref_enable_cell_title">Отслеживание сотовой сети</string>
+    <string name="pref_enable_cell_summ">Включение автоматического отслеживания сотовой сети</string>
+    <string name="pref_femto_title">Обнаружение Femtocell</string>
+    <string name="pref_femto_summ">(в настоящее время ТОЛЬКО для телефонов CDMA)</string>
+    <string name="pref_femto_action_title">Защита от Femtocell</string>
+    <string name="pref_femto_action_summ">Принудительный режим полета, когда Femtocell обнаружено (обратное подключение к сети вручную)</string>
+    <string name="pref_ui_title">Настройки интерфейса</string>
+    <string name="pref_ui_icons_title">Значки состояния</string>
+    <string name="pref_ui_icons_summ">Выбор темы значков</string>
+    <string name="pref_refresh_title">Частота обновления</string>
+    <string name="pref_refresh_summ">Управление частотой обновления устройства\nТекущий выбор: %s</string>
+    <string name="pref_ocid_title">Настройки OpenCellID</string>
+    <string name="pref_ocid_key_title">Ключ API OpenCellID</string>
+    <string name="pref_ocid_key_summ">Введите здесь Ваш ключ API OpenCellID</string>
+    <string name="pref_enable_cell_monitoring_title">Мониторинг сотовых сетей</string>
+    <string name="pref_enable_cell_monitoring_summ">Включить автоматический мониторинг сотовых сетей</string>
+    <string name="pref_request_ocid_key">Запрос ключа API OpenCellID</string>
+    <string name="pref_ocid_requestkey_summary">Запрос ключа API для доступа к данным OpenCellID</string>
+
+    <!-- MAP PREFERENCES -->
+    <string name="pref_map_title">Настроки просмотра карты</string>
+    <string name="pref_map_type_title">Тип карты</string>
+    <string name="pref_map_type_summ">Отображать карту в различных стилях</string>
+    
+    <!-- MAP INFOWINDOW -->
+    <string name="cell_id_label">CID: </string>
+    <string name="lac_label">LAC: </string>
+    <string name="mcc_label">MCC: </string>
+    <string name="mnc_label">MNC: </string>
+    <string name="pc_label">PC: </string>
+    <string name="samples_label">Образцы: </string>
+    <string name="open_cell_id_label">Данные OpenCellID</string>
+    <string name="lat_label">Широта: </string>
+    <string name="lng_label">Долгота: </string>
+
+    <!-- Database Viewer -->
+    <string name="table_names_prompt">Выберите таблицу</string>
+    <string-array name="table_names">
+        <item>@string/unique_bts_data</item>
+        <item>@string/bts_measurements</item>
+        <item>@string/imported_ocid_data</item>
+        <item>@string/default_mmc_locations</item>
+        <item>@string/silent_sms</item>
+        <item>@string/measured_signal_strengths</item>
+        <item>@string/eventlog</item>
+    </string-array>
+
+    <!-- AT Command Interface  -->
+    <string name="at_command_title">Командный интерфейс AT</string>
+    <string name="response_label">Ответ:</string>
+    <string name="execute_at">Выполнение</string>
+    <string name="serial_device_title">Текущий Serial Device:</string>
+    <string name="serial_device_prompt">Выберите Serial Device</string>
+    <string name="serial_device_spinner_title">Обнаружены устройства:</string>
+    <string name="timeout_spinner_title">Задержка времени:</string>
+    <string name="timeout_spinner_prompt">Выберите задержку времени</string>
+    <string name="command_hint">Введите команду AT здесь.</string>
+
+    <!-- SILENT SMS FRAGMENT -->
+    <string name="sms_title">Бесшумная СМС перехвачена</string>
+    <string name="sms_message">Бесшумная СМС была перехвачена!\nПодробности: см. просмотр базы данных.</string>
+    <string name="table_contains_no_data">Таблица не содержит данных для отображения.</string>
+
+    <!-- Request OpenCellID Key -->
+    <string name="title_ocid_key">Ключ API penCellID</string>
+    <string name="message_request_api_key">Нажмите OK для запроса ключа API из OpenCellID.org. Это позволит Вам загрузить данные и просмотреть их на карте. Это также позволит Вам выгружать данные сотовых сетей. Обратите внимание, что если Вы не выгружаете данные сотовых сетей в течение 20 дней, Ваш ключ API может стать неактивным.</string>
+    <string name="ocid_api_error">Ошибка получения ключа: </string>
+    <string name="ocid_api_success">Сохранен новый ключ API.</string>
+
+    <!-- Debug logs -->
+    <string name="title_debug_logs">Логи отладки</string>
+    <string name="btn_clear_logs">Очистить</string>
+    <string name="btn_copy_to_clipboard">Копировать</string>
+    <string name="msg_copied_to_clipboard">Логи скопированы в буфер обмена.</string>
+    <string name="btn_stop_logs">Стоп</string>
+    <string name="btn_start_logs">Старт</string>
+
+    <!-- Detailed Info Strings -->
+    <string name="title_activity_about_pop_up">ПОДРОБНОЕ ОПИСАНИЕ</string>
+    <string name="status_idle_detail_info">Приложение работает в режиме ожидания или загрузки. Меры защиты и обнаружения не включены. Пожалуйста, откройте меню и включите их в разделе СЛЕЖЕНИЕ!</string>
+    <string name="status_ok_detail_info">Никакие угрозы не обнаружены. Наше приложение постоянно проверяет Вашу сеть на основе защиты, которую Вы установили в меню и настройках.</string>
+    <string name="status_medium_detail_info">Небезопасная зона обслуживания: в данном районе, по крайней мере, 1 новая или неизвестная БС, или с использованием небезопасного (сломанного) алгоритма шифрования, меньшего, чем A5/3 [Обнаружение WIP]. Возможно, что любые телефонные звонки/СМС, сделанные в этой зоне могут быть перехвачены и записаны. Вам лучше покинуть это место.</string>
+    <string name="status_high_detail_info">Обнаружены враждебные действия: IMSI-Перехватчик (IMSIC) или поддельные БС (FBTS) активно отслеживают пользователей. В данной зоне ведется активное сканирование. Вы должны избегать этого места, особенно, если есть политическая нестабильность. Выньте батарею или уничтожьте свой телефон!</string>
+    <string name="status_danger_detail_info">Обнаружены враждебные отслеживания: FBTS или IMSIC активно отслеживают Вас и препятствуют подключению Вашего телефона к Вашей обычной зашифрованной мобильной сети. Если Вы находитесь в опасности, сломайте Ваш телефон + SIM и сообщите о его краже.</string>
+    <string name="status_skull_detail_info">Враждебные манипуляции: кто-то пытается удаленно управлять Вашим телефоном! Уничтожьте (или продайте) свой телефон и возьмите новый где-то подальше (не приносите туда свой старый телефон)! Используйте новую (анонимную) SIM-карту, измените поведение вызовов и предупредите своих друзей, разговаривая с ними в реальной жизни, НЕ по телефону!</string>
+    <string name="open_cell_id_button_cancel">Отмена</string>
+    <string name="open_cell_id_button_ok">OK</string>
+
+    <!-- Vibration Preference -->
+    <string name="pref_notification_vibrate_enable_title">Включить вибрацию</string>
+    <string name="pref_notification_vibrate_enable_summary">Вибрация при изменении уведомлений</string>
+    <string name="pref_notification_vibrate_min_level_title">Вибрация при уровне угрозы</string>
+    <string name="pref_notification_vibrate_min_level_summary">Выберите минимальный уровень угрозы для вибрации</string>
+    <string name="notification_vibrate_idle">Бездействие</string>
+    <string name="notification_vibrate_ok">OK</string>
+    <string name="notification_vibrate_medium">Средний</string>
+    <string name="notification_vibrate_danger">Опасность</string>
+    
+    <!-- UI Icon Preferences -->
+    <string name="ui_icon_flat">Flat</string>
+    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_white">Белый</string>
+    <string name="map_type_terrain">Земля</string>
+    <string name="map_type_normal">Обычный</string>
+    <string name="pref_refresh_manual">Вручную</string>
+    <string name="pref_refresh_automatic">Авто</string>
+    <string name="pref_refresh_2s">2 сек</string>
+    <string name="pref_refresh_5s">5 сек</string>
+    <string name="pref_refresh_10s">10 сек</string>
+    <string name="pref_refresh_25s">25 сек</string>
+    <string name="pref_refresh_45s">45 сек</string>
+    <string name="pref_refresh_1_min">1 мин</string>
+    <string name="pref_refresh_5_min">5 мин</string>
+    <string name="timeout_spinner_2_sec">2 сек</string>
+    <string name="timeout_spinner_5_sec">5 сек</string>
+    <string name="timeout_spinner_10_sec">10 сек</string>
+    <string name="timeout_spinner_20_sec">20 сек</string>
+    <string name="timeout_spinner_30_sec">30 сек</string>
+    <string name="timeout_spinner_10_min">10 мин</string>
+    <string name="main">Главное</string>
+    <string name="settings">Настройки</string>
+    <string name="application">Приложение</string>
+    <string name="monitoring_cell_information">Мониторинг сотовой информации.</string>
+    <string name="stopped_monitoring_cell_information">Мониторинг сотовой информации остановлен.</string>
+    <string name="tracking_cell_information">Отслеживание сотовой информации.</string>
+    <string name="stopped_tracking_cell_information">Отслеживание сотовой информации остановлено.</string>
+    <string name="only_one_key_per_day">Доступен только один запрос нового ключа API в 24 часа!\nПожалуйста, повторите попытку позже.</string>
+    <string name="cell_id_doesnt_exist_in_db">ID соты не существует в базе данных OpenCellID!</string>
+    <string name="hostile_service_area_changing_lac_detected">Враждебная зона обслуживания: обнаружено изменение LAC!</string>
+    <string name="femtocell_detection_active">Обнаружение FemtoCell активно.</string>
+    <string name="cell_tracking_active">Отслеживание соты активно.</string>
+    <string name="cell_monitoring_active">Мониторинг соты активен.</string>
+    <string name="phone_type">Тип телефона</string>
+    <string name="status_idle_description">Статус: бездействие.</string>
+    <string name="status_ok_description">Статус: хорошо. Угроз не обнаружено.</string>
+    <string name="alert_threat_detected">ТРЕВОГА: обнаружены угрозы!</string>
+    <string name="alert_femtocell_connection_detected">ТРЕВОГА: обнаружено соединение с FemtoCell!</string>
+    <string name="alert_silent_sms_detected">ТРЕВОГА: обнаружена бесшумная СМС!</string>
+    <string name="alert_mwi_detected">ТРЕВОГА: обнаружен индикатор ожидания сообщения!</string>
+    <string name="alert_silent_wap_sms_detected">ТРЕВОГА: обнаружена WAP Push СМС!</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD может определять соединение с FemtoCell только на CDMA устройствах.</string>
+    <string name="service_state_changed">Статус сервиса изменен!</string>
+    <string name="stopped_tracking_femtocell">: оОстановлен мониториг соединения с FemtoCell.</string>
+    <string name="alert_femtocell_tracking_detected">ТРЕВОГА: обнаружен мониторинг FemtoCell!</string>
+    <string name="refreshing_every">Обновление каждые</string>
+    <string name="refreshing_now">Обновление…</string>
+    <string name="seconds">секунд.</string>
+    <string name="contacting_opencellid_for_data">Обращение к данным OpenCellID…\nЭто может занять до минуты.</string>
+    <string name="unable_to_determine_last_location">Невозможно определить Ваше последнее местоположение.\nВключите службы местоположения и попробуйте еще раз.</string>
+    <string name="no_tracked_locations_found">Не найдено отслеживаемых местоположений, чтобы показать их на карте.</string>
+    <string name="no_data_for_publishing">Нет доступных данных для публикации.</string>
+    <string name="download_error">Ошибка загрузки:</string>
+    <string name="opencellid_data_successfully_received">Данные OpenCellID успешно приняты.</string>
+    <string name="error_retrieving_opencellid_data">Ошибка при получении данных OpenCellID.\nПроверьте Вашу сеть!</string>
+    <string name="opencellid_data_successfully_received_markers_updated">Данные OpenCellID успешно приняты.\nМаркеры карты обновлены.</string>
+    <string name="uploaded_bts_data_successfully">Данные БС для OpenCellID выгружены успешно.</string>
+    <string name="error_uploading_bts_data">Ошибка при выгрузке данных БС для OpenCellID серверов!</string>
+    <string name="no_opencellid_key_detected">Не обнаружен ключ API OpenCellID!\nПожалуйста, введите Ваш ключ в настройках.</string>
+    <string name="refreshed_cell_id_info">Обновление дисплея</string>
+    <string name="unable_to_acquire_root_access">Невозможно получить РУТ-доступ на Вашем устройстве.\nДля AT-команд требуется ROOT доступ к терминалу.\nПожалуйста, проверьте наличие прав РУТ на Вашем устройстве и попробуйте еще раз.</string>
+    <string name="unable_to_detect_busybox">Невозможно обнаружить Busybox на Вашем устройстве.\nДля правильной работы с AT-командами требуются компоненты Busybox.\nПожалуйста, проверьте, что Busybox установлен на Ваше устройство, и попробуйте снова.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Произошла неизвестная ошибка при попытке получения Serial Device.\nПожалуйста, проверьте логкат на возможные ошибки и отправьте их на Github.</string>
+    <string name="unknown_error_initialising_at_command_injector">Произошла неизвестная ошибка при попытке инициализации ввода команд AT.\nПожалуйста, проверьте логкат на возможные ошибки и отправьте их на Github.</string>
+    <string name="getting_ocid_api_key">Получение ключа API OpenCellID…</string>
+    <string name="unable_to_create_map">Невозможно создать карту!</string>
+    <string name="describe_the_problem_you_had">ВНИМАНИЕ! Пожалуйста, опишите Вашу проблему, прежде, чем отправить нам эти журналы. НЕТ ПОМОЩИ БЕЗ ОПИСАНИЯ!\n</string>
+    <string name="status">Статус:</string>
+    <string name="status_idle">Бездействие</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">Средний</string>
+    <string name="status_high">Высокий</string>
+    <string name="status_danger">Опасный</string>
+    <string name="status_skull">Бегите!</string>
+
+    <!-- Advanced User Settings: SMS Detection Strings -->
+    <string name="adv_user_info">Это меню предназначено только для продвинутых пользователей!\n\nНе вставляйте сюда что попало, иначе Вы можете сломать систему обнаружения.\n\nЧтобы добавить строку, выберите тип СМС из выпадающего меню, введите строку обнаружения и нажмите Вставить.\n\nЧтобы удалить запись из базы данных, нажмите и удерживайте соответствующий пункт в списке.</string>
+    
+    <!-- Advanced User Settings: Delete Detected SMS -->
+    <string name="adv_user_sms_info">Это меню предназначено только для продвинутых пользователей!\nДля удаления обнаруженной СМС удерживайте нажатие на ней в списке.</string>
+    <string name="title_activity_advanced_user">Удалить обнаруженную СМС</string>
+	
+    <string name="adv_user_pref_header">Настройки для продвинутых пользователей</string>
+    <string name="adv_user_pref_launch">Строки обнаружения</string>
+    <string name="adv_user_pref_sms_launch">Удалить СМС</string>
+    <string name="adv_user_pref_summary">Вставить и удалить строки обнаружения</string>
+    <string name="adv_user_pref_sms_summary">Удалить обнаруженную СМС</string>
+   
+    <!-- Advanced User Settings: Enable SMS Detection -->
+    <string name="adv_user_root_title">Включить обнаружение СМС</string>
+    <string name="adv_user_root_sum">Для включения обнаружения СМС необходим рут</string>
+
+    <!-- Detected SMS string for custom popup -->
+    <string name="detection_strings">Строки обнаружения</string>
+    <string name="typezero_title">ВНИМАНИЕ!</string>
+    <string name="typezero_header">Обнаружена бесшумная СМС</string>
+    <string name="typezero_data">Обнаружено сообщение Type-0!\nПодробности: см. просмотр базы данных.</string>
+    <string name="typemwi_title">ВНИМАНИЕ!</string>
+    <string name="typemwi_header">Обнаружен MWI</string>
+    <string name="typemwi_data">Обнаружен индикатор ожидания сообщения!\nПодробности: см. просмотр базы данных.</string>
+    <string name="typewap_header">Обнаружен WAP Push</string>
+    <string name="typewap_data">Обнаружено WAP Push СМС-сообщение!\nПодробности: см. просмотр базы данных.</string>
+
+
+    <!-- Section Main-->
+    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_phone_sim_details">Информация провайдера сети SIM, IMEI, TMSI.</string>
+    <string name="help_main_acd">Отображение детального сравнения текущей подключенной соты с данными (при их наличии) из OpenCellID и отметка различий.</string>
+    <string name="help_main_database_viewer">Просмотр различных имеющихся таблиц баз данных.</string>
+    <string name="help_main_antenna_map_view">Карта соседних антенн с кодами цвета.</string>
+    <string name="help_main_at_command_interface">Интерфейс, позволяющий отправлять AT-команды на процессор диапазона (необходим РУТ).</string>
+
+    <!-- Section Tracking-->
+    <string name="help_tracking_toggle_attack_detection">Запуск/остановка обнаружения атаки и сбор данных о соте во внутреннюю таблицу баз данных.</string>
+    <string name="help_tracking_toggle_cell_tracking">Запуск отслеживания сот для отображения в просмотре карт антенн и возможной выгрузки в последующем на OpenCellID.</string>
+
+    <!-- Section Settings-->
+    <string name="help_settings_preferences">Настройки AIMSICD, такие как правила защиты, время опроса и поведение службы.</string>
+    <string name="help_settings_reset_db">Очистка или сброс всех или указанных таблиц БД.</string>
+
+    <!-- Section Application-->
+    <string name="help_app_add_get_ocid_api_key">Получение ключа API для использования базы данных OpenCellID при выгрузке и загрузке данных…</string>
+    <string name="help_app_about">Объяснения статусных значков и проекта.</string>
+    <string name="help_app_download_local_bts">Загрузка базы данных OpenCellID.</string>
+    <string name="help_app_upload_local_bts">Выгрузка Ваших БС в базу данных OpenCellID.</string>
+    <string name="help_app_debugging">Сбор и отправка сообщений об ошибках.</string>
+    <string name="help_app_quit">Выход из приложения.</string>
+    <string name="waiting_for_location">Ожидание местоположения…</string>
+    <string name="unique_bts_data">Уникальные данные БС</string>
+    <string name="bts_measurements">Измерения БС</string>
+    <string name="imported_ocid_data">Импортированные данные OpenCellID</string>
+    <string name="default_mmc_locations">Местоположения MCC по умолчанию</string>
+    <string name="silent_sms">Бесшумная СМС</string>
+    <string name="eventlog">EventLog</string>
+    <string name="measured_signal_strengths">Измеренная мощность сигнала</string>
+
+    <string name="at_command_response_looking">*** Поиск serial device AT…\n</string>
+    <string name="at_command_response_found">Найдено: </string>
+	<string name="at_command_response_setup_complete">*** Настройка выполнена ***\n</string>
+	
+    <string name="currently_connected_bts">Текущая подключенная БС</string>
+    <string name="well_known_encrypted_bts">Известная зашифрованная БС</string>
+    <string name="unknown_or_insecure_bts">Неизвестная или небезопасная БС</string>
+    <string name="new_or_recently_added_bts">Новая или недавно добавленная БС</string>
+
+    <!-- Section Delete DB -->
+    <string name="delete_database_msg_success">База данных удалена и успешно создана заново.\nПожалуйста, перезагрузите устройство для очистки старых значений, имеющихся в памяти.</string>
+
+    <!-- Section OCID Download API key -->
+    <string name="invalid_key_try_later">Неверный ключ OpenCellId, попробуйте позже.</string>
+    <string name="getting_ocid_key">Получение ключа API OpenCellId...</string>
+
+    <!-- Advanced user menu -->
+    <string name="deleted">Удалено</string>
+    <string name="failed_to_delete">Не удалось удалить</string>
+    <string name="double_quote_will_cause_db_error">"Строка не добавлена\n \" двойные кавычки вызовут ошибку БД "</string>
+    <string name="the_string_was_added_to_db">Строка добавлена в базу данных</string>
+    <string name="failed_to_add_the_string_to_db">Не удалось добавить строку в базу данных</string>
+
+    <string-array name="pref_ui_icons_entries">
+        <item>@string/ui_icon_flat</item>
+        <item>@string/ui_icon_sense</item>
+        <item>@string/ui_icon_white</item>
+    </string-array>
+
+    <string-array name="pref_notification_vibrate_min_level_entries">
+        <item>@string/notification_vibrate_idle</item>
+        <item>@string/notification_vibrate_ok</item>
+        <item>@string/notification_vibrate_medium</item>
+        <item>@string/notification_vibrate_danger</item>
+    </string-array>
+
+    <string-array name="pref_map_type_entries">
+        <item>@string/map_type_normal</item>
+        <item>@string/map_type_terrain</item>
+    </string-array>
+
+    <string-array name="pref_refresh_entries">
+        <item>@string/pref_refresh_manual</item>
+        <item>@string/pref_refresh_automatic</item>
+        <item>@string/pref_refresh_2s</item>
+        <item>@string/pref_refresh_5s</item>
+        <item>@string/pref_refresh_10s</item>
+        <item>@string/pref_refresh_25s</item>
+        <item>@string/pref_refresh_45s</item>
+        <item>@string/pref_refresh_1_min</item>
+        <item>@string/pref_refresh_5_min</item>
+    </string-array>
+
+    <string-array name="timeout_spinner_values">
+        <item>@string/timeout_spinner_2_sec</item>
+        <item>@string/timeout_spinner_5_sec</item>
+        <item>@string/timeout_spinner_10_sec</item>
+        <item>@string/timeout_spinner_20_sec</item>
+        <item>@string/timeout_spinner_30_sec</item>
+        <item>@string/timeout_spinner_10_min</item>
+    </string-array>
+
+    <string name="unknown">Неизвестный</string>
+</resources>

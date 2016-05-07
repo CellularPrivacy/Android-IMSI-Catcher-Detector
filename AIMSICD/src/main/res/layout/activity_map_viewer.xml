@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                tools:context=".MapViewerOsmDroid">
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:linksClickable="true"
+        android:longClickable="false"
+        android:singleLine="true"
+        android:text="@string/osm_contributors"
+        android:textColor="#ff454545"
+        android:textStyle="normal"/>
+
+    <TableLayout
+        android:id="@+id/legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/transparent_white"
+        android:padding="@dimen/small_padding">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:src="@drawable/ic_map_pin_blue"/>
+
+            <TextView
+                android:padding="@dimen/very_small_padding"
+                android:text="@string/currently_connected_bts"
+                android:textColor="@color/black"
+                android:textSize="10sp"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:src="@drawable/ic_map_pin_green"/>
+
+            <TextView
+                android:padding="@dimen/very_small_padding"
+                android:text="@string/well_known_encrypted_bts"
+                android:textColor="@color/black"
+                android:textIsSelectable="false"
+                android:textSize="10sp"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:src="@drawable/ic_map_pin_orange"/>
+
+            <TextView
+                android:padding="@dimen/very_small_padding"
+                android:text="@string/new_or_recently_added_bts"
+                android:textColor="@color/black"
+                android:textSize="10sp"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:src="@drawable/ic_map_pin_red"/>
+
+            <TextView
+                android:padding="@dimen/very_small_padding"
+                android:text="@string/unknown_or_insecure_bts"
+                android:textColor="@color/black"
+                android:textSize="10sp"/>
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>
