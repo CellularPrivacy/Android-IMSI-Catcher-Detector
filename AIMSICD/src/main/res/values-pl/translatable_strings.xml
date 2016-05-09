@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
     <!-- Drawer -->
@@ -14,7 +14,7 @@
 
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">DISCLAIMER</string>
-    <string name="disclaimer">"Używając AIMSICD oświadczasz, że rozumiesz i zgadzasz się z tym, że AIMSICD jest eksperymentalną i informacyjną aplikacją na system Android, która może, z wielu powodów, nie być w stanie wykryć tego, że jesteś nadzorowany czy śledzony. Przyjmujesz także do wiadomości, że program może być pokonany w sposoby jeszcze nie znane deweloperom. Tak więc zgadzasz się i rozumiesz, że deweloperzy i firmy związane z tym darmowym produktem nie mogą być pociągnięte do odpowiedzialności z żadnego powodu niezależnie od wyniku użytkowania tej aplikacji. "</string>
+    <string name="disclaimer">"Używając AIMSICD oświadczasz, że rozumiesz i zgadzasz się z tym, że AIMSICD jest eksperymentalną i informacyjną aplikacją na system Android, która może, z wielu powodów, nie być w stanie wykryć tego, że jesteś nadzorowany czy śledzony. Przyjmujesz także do wiadomości, że program może być pokonany w sposoby jeszcze nie znane deweloperom. Tak więc zgadzasz się i rozumiesz, że deweloperzy i firmy związane z tym darmowym produktem nie mogą być pociągnięte do odpowiedzialności z żadnego powodu niezależnie od wyniku użytkowania tej aplikacji. STAN APLIKACJI: ALPHA "</string>
 
 
     <!-- MENU -->
@@ -36,7 +36,7 @@
     <string name="device_info_title">Informacje o urządzeniu</string>
     <string name="sim_info_title">Informacje o SIM</string>
     <string name="network_info">Informacje o sieci</string>
-    <string name="cell_info_title">Informacje o komórce</string>
+    <string name="cell_info_title">Sąsiednie komórki</string>
     <string name="neighboring_cells_title">Sąsiednie komórki</string>
     <string name="ciphering_indicator_title">Wskaźnik szyfrowania</string>
     <string name="neighboring_cells_num_title">Razem:</string>
@@ -296,7 +296,7 @@
 
 
     <!-- Section Main-->
-    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_neighboring_cells"/>
     <string name="help_main_phone_sim_details">Szczegóły SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Pokaż szczegółowe porównanie obecnie połączonych komórek używając danych z OpenCellID. Podświetla różnice.</string>
     <string name="help_main_database_viewer">Pokaż tablele baz danych.</string>
@@ -374,4 +374,9 @@
     <string name="delete_database_msg_success">Baza danych została usunięta i odtworzona.\nProszę zrestartować aplikację by usunąć resztę danych z pamięci.</string>
 
     <string name="unknown">Nieznany</string>
+    <string name="buildnumber">Numer builda: %s</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="pref_enable_gps_title">Ustawienia GPS</string>
+    <string name="pref_enable_gps_summary">Włącz GPS by śledzić komórki</string>
+    <string name="pref_notification_settings">Ustawienia powiadomień</string>
     </resources>
