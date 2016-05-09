@@ -25,7 +25,7 @@
 
     <string name="sim_info_title">SIM卡信息</string>
     <string name="network_info">网络信息</string>
-    <string name="cell_info_title">当前威胁级别</string>
+    <string name="cell_info_title">附近基站</string>
     <string name="sim_operator_name">运营商名称:</string>
     <string name="sim_imsi">IMSI:</string>
     <string name="sim_serial">序列号:</string>
@@ -245,7 +245,7 @@
     <string name="typemwi_header">检测到 MWI</string>
     <string name="typemwi_data">检测到消息等待指示器！\n详细信息：详见数据库查看器。</string>
     <string name="help_main_phone_sim_details">SIM卡网络提供商的详细信息，IMEI，TMSI。</string>
-    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_neighboring_cells">显示附近基站。</string>
     <string name="typewap_header">检测到 WAP 推送</string>
     <string name="typewap_data">检测到 WAP 推送短信！\n详细信息：详见数据库查看器。</string>
 
@@ -325,4 +325,5 @@
     <string name="status_danger_detail_info">检测到敌意跟踪：一个 FBTS 或 IMSIC 正在主动跟踪“您”，并且阻止您的手机连接正常的已加密移动服务提供商。如果您处在潜在的危险中，考虑销毁您的手机和 SIM 卡，然后称它已被窃取。</string>
     <string name="status_skull_detail_info">敌意操作：有人正在尝试远程操控您的手机。考虑销毁或出售您的手机，然后从其他渠道弄一台新的。不要携带你的旧手机并不断改变位置！使用一个新的匿名 SIM 卡和 Tor 浏览器。改变你的通话方式并警告你的同伴他们正在被监视。考虑面对面交流和讨论，避免在此时打电话！</string>
     <string name="download_timed_out">OpenCellID API 请求超时。稍后重试？</string>
+    <string name="cell_doesnt_provide_any_neighbors">BTS 没有提供任何附近基站！</string>
     </resources>
