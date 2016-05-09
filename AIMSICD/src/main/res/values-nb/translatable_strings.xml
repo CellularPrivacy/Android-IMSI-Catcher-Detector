@@ -244,7 +244,7 @@
     <string name="status_danger">FARE</string>
     <string name="status_skull">SPRING!</string>
 
-    <string name="adv_user_info">Denne menyen er kun for spesialister!\n\nVennligst ikke sett inn vilkårlige strenger fordi det vil få overvåkingen ut av kontroll.\n\nFor å legge til streng velg SMS type fra menyen, sriv inn strengen og trykk Legg til.\n\nFor å slette fra databasen trykk lenge på listevisning.</string>
+    <string name="adv_user_info">Denne menyen er kun for spesialister!\n\nVennligst ikke sett inn vilkårlige strenger fordi det vil få overvåkingen ut av kontroll.\n\nFor å legge til streng velg SMS type fra menyen, skriv inn strengen og trykk Legg til.\n\nFor å slette fra databasen trykk lenge på listevisning.</string>
     
     <string name="adv_user_sms_info">Denne menyen er kun for spesialister!\nFor å slette en oppdaget SMS trykk lenge på listevisning.</string>
     <string name="title_activity_advanced_user">Slett Oppdaget SMS</string>
@@ -325,5 +325,6 @@
     <string name="unknown">Ukjent</string>
 
     <string name="database_settings">Database</string>
-    <string name="download_timed_out">OpenCellID API forespørsel tidsavbrudd Prøv igjen senere?</string>
+    <string name="download_timed_out">OpenCellID API forespørsel tidsavbrudd Prøv igjen senere!?</string>
+    <string name="cell_doesnt_provide_any_neighbors">Bakkestasjonen støtter ikke NaboCeller!</string>
     </resources>
