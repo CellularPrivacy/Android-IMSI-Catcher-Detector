@@ -24,7 +24,7 @@
     <string name="device_info_title">Інформація про пристрій</string>
     <string name="sim_info_title">Інформація про SIM</string>
     <string name="network_info">Інформація про мережу</string>
-    <string name="cell_info_title">Поточний рівень загрози</string>
+    <string name="cell_info_title">Сусідні стільниці</string>
     <string name="ciphering_indicator_title">Індикатор шифрування</string>
     <string name="sim_country">Країна:</string>
     <string name="sim_operator_id">ID оператора:</string>
@@ -315,7 +315,7 @@
     <string name="status_high_about_desc">Активне відслідковування поряд з вами!</string>
     <string name="pref_enable_gps_title">Налаштування GPS</string>
     <string name="pref_enable_gps_summary">Увімкнути GPS для відслідковування стільника</string>
-    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_neighboring_cells">Показати сусідні стільниці.</string>
     <string name="help_main_database_viewer">Перегляд таблиць бази даних.</string>
     <string name="help_main_antenna_map_view">Карта з кольоровими позначками сусідніх антен.</string>
     <string name="help_main_at_command_interface">Інтерфейс дозволяє надсилати AT команди до процесора (Потребує прав ROOT).</string>
