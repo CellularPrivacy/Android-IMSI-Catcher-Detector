@@ -326,4 +326,5 @@
 
     <string name="database_settings">База даних</string>
     <string name="download_timed_out">Вийшов час запиту OpenCellID API. Спробувати пізніше ще раз?</string>
+    <string name="cell_doesnt_provide_any_neighbors">BTS не надає сусідніх стільниць!</string>
     </resources>
