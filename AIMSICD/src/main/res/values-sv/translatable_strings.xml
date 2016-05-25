@@ -1,2 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="device_info">Telefon/SIM-detaljer</string>
+    <string name="db_viewer">Visare för databas</string>
+    <string name="quit">Avsluta</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Avbryt</string>
+    <string name="text_agree">Jag godkänner</string>
+    <string name="text_disagree">Jag godkänner inte</string>
+
+    <string name="disclaimer_title">ANSVARSFRISKRIVNING</string>
+    <string name="clear_database">Rensa/Återställ databas</string>
+    <string name="clear_database_question">Alla data kommer att raderas.\nÄr du säker?</string>
+    <string name="preferences">Egenskaper</string>
+    <string name="press_once_again_to_exit">Tryck igen för att avsluta.</string>
+    <string name="debugging">Felsökning</string>
+    <string name="no_network_connection_title">Ingen internetanslutning</string>
+    <string name="get_opencellid">Ladda ner BTS-data</string>
+
+    <string name="device_info_title">Information om enheten</string>
+    <string name="sim_info_title">Information om SIM</string>
+    <string name="network_info">Information om nätverket</string>
+    </resources>
