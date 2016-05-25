@@ -28,7 +28,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -51,23 +54,22 @@ import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
 
 /**
- *  Description:    This class updates the CellInfo fragment. This is also known as
- *                  the Neighboring Cells info, which is using the MultiRilClient to
- *                  show neighboring cells on the older Samsung Galaxy S2/3 series.
- *                  It's refresh rate is controlled in the settings by:
- *
- *                  arrays.xml:
- *                      pref_refresh_entries    (the names)
- *                      pref_refresh_values     (the values in seconds)
- *
- *
- *  Dependencies:   Seem that this is intimately connected to: CellTracker.java service...
- *
- *
- *  TODO:   1)  Use an IF check, in order not to run the MultiRilClient on non supported devices
- *              as this will cause excessive logcat spam.
- *  TODO:   2) Might wanna make the refresh rate lower/higher depending on support
- *
+ * Description:    This class updates the CellInfo fragment. This is also known as
+ * the Neighboring Cells info, which is using the MultiRilClient to
+ * show neighboring cells on the older Samsung Galaxy S2/3 series.
+ * It's refresh rate is controlled in the settings by:
+ * <p>
+ * arrays.xml:
+ * pref_refresh_entries    (the names)
+ * pref_refresh_values     (the values in seconds)
+ * <p>
+ * <p>
+ * Dependencies:   Seem that this is intimately connected to: CellTracker.java service...
+ * <p>
+ * <p>
+ * TODO:   1)  Use an IF check, in order not to run the MultiRilClient on non supported devices
+ * as this will cause excessive logcat spam.
+ * TODO:   2) Might wanna make the refresh rate lower/higher depending on support
  */
 @XmlLayout(R.layout.fragment_cell_info)
 public class CellInfoFragment extends InjectionFragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -86,24 +88,11 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
     @InjectView(R.id.list_view)
     private ListView lv;
 
-    @InjectView(R.id.neighboring_cells)
-    private TextView mNeighboringCells;
-
-    @InjectView(R.id.neighboring_number)
-    private TextView mNeighboringTotal;
-
-    @InjectView(R.id.neighboring_total)
-    private TableRow mNeighboringTotalView;
-
-    @InjectView(R.id.ciphering_indicator_title)
-    private TextView mCipheringIndicatorLabel;
-
-    @InjectView(R.id.ciphering_indicator)
-    private TextView mCipheringIndicator;
-
     @InjectView(R.id.swipeRefreshLayout)
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    private BaseInflaterAdapter<CardItemData> mBaseInflaterAdapter;
+    private CellInfoAdapter mCellInfoAdapter;
 
     private final Runnable timerRunnable = new Runnable() {
 
@@ -142,6 +131,10 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mBaseInflaterAdapter = new BaseInflaterAdapter<>(new CellCardInflater());
+        mCellInfoAdapter = new CellInfoAdapter(mBaseInflaterAdapter, new CellInfoOverviewData());
+        lv.setAdapter(mCellInfoAdapter);
 
         mContext = getActivity().getBaseContext();
         // Bind to LocalService
@@ -198,8 +191,8 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
 
     private void updateUI() {
         if (mBound && rilExecutor.mMultiRilCompatible) {
-                new CellAsyncTask().execute(SAMSUNG_MULTIRIL_REQUEST);
-            } else {
+            new CellAsyncTask().execute(SAMSUNG_MULTIRIL_REQUEST);
+        } else {
             new CellAsyncTask().execute(STOCK_REQUEST);
         }
     }
@@ -210,9 +203,13 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
             @Override
             public void run() {
                 if (list != null) {
-                    mCipheringIndicatorLabel.setVisibility(View.VISIBLE);
-                    mCipheringIndicator.setVisibility(View.VISIBLE);
-                    mCipheringIndicator.setText(TextUtils.join("\n", list));
+                    CellInfoOverviewData overviewData = new CellInfoOverviewData();
+                    overviewData.mCipheringIndicatorLabelVisibility = View.VISIBLE;
+                    overviewData.mCipheringIndicatorVisibility = View.VISIBLE;
+                    overviewData.mCipheringIndicator = TextUtils.join("\n", list);
+                    if (mCellInfoAdapter != null) {
+                        mCellInfoAdapter.updateCellInfoOverview(overviewData);
+                    }
                 }
             }
         });
@@ -228,21 +225,20 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
     }
 
     void updateStockNeighboringCells() {
-        mNeighboringTotal.setText(String.valueOf(neighboringCells.size()));
+        CellInfoOverviewData overviewData = new CellInfoOverviewData();
+        overviewData.mNeighboringTotal = neighboringCells.size();
+        mBaseInflaterAdapter.clear(false);
         if (neighboringCells.size() != 0) {
-
-            BaseInflaterAdapter<CardItemData> adapter
-                    = new BaseInflaterAdapter<>(new CellCardInflater());
             int i = 1;
             int total = neighboringCells.size();
             for (Cell cell : neighboringCells) {
                 CardItemData data = new CardItemData(cell, i++ + " / " + total);
-                adapter.addItem(data, false);
+                mBaseInflaterAdapter.addItem(data, false);
             }
-            lv.setAdapter(adapter);
-            mNeighboringCells.setVisibility(View.GONE);
-            mNeighboringTotalView.setVisibility(View.VISIBLE);
+            overviewData.mNeighboringCellsVisibility = View.GONE;
+            overviewData.mNeighboringTotalViewVisibility = View.VISIBLE;
         }
+        mCellInfoAdapter.updateCellInfoOverview(overviewData);
     }
 
     void updateNeighboringCells() {
@@ -251,9 +247,13 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
             @Override
             public void run() {
                 if (list != null) {
-                    mNeighboringCells.setText(TextUtils.join("\n", list));
-                    mNeighboringCells.setVisibility(View.VISIBLE);
-                    mNeighboringTotalView.setVisibility(View.GONE);
+                    CellInfoOverviewData overviewData = new CellInfoOverviewData();
+                    overviewData.mNeighboringCells = TextUtils.join("\n", list);
+                    overviewData.mNeighboringCellsVisibility = View.VISIBLE;
+                    overviewData.mNeighboringTotalViewVisibility = View.GONE;
+                    if (mCellInfoAdapter != null) {
+                        mCellInfoAdapter.updateCellInfoOverview(overviewData);
+                    }
                 }
             }
         });
@@ -289,6 +289,116 @@ public class CellInfoFragment extends InjectionFragment implements SwipeRefreshL
             } else {
                 getSamSungMultiRil();
             }
+        }
+    }
+
+    class CellInfoAdapter extends BaseAdapter {
+        private final LayoutInflater mInflater;
+        private final BaseInflaterAdapter<CardItemData> mCardItemDataAdapter;
+        private CellInfoOverviewData mOverview;
+
+        CellInfoAdapter(BaseInflaterAdapter<CardItemData> cardItemDataAdapter,
+                        CellInfoOverviewData overview) {
+            mCardItemDataAdapter = cardItemDataAdapter;
+            mOverview = overview;
+            mInflater = (LayoutInflater) getActivity().getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        void updateCellInfoOverview(CellInfoOverviewData overview) {
+            mOverview = overview;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return mCardItemDataAdapter.getCount() + 1;
+        }
+
+        @Override
+        public Object getItem(int pos) {
+            if (pos == 0) {
+                return null;
+            } else {
+                return mCardItemDataAdapter.getItem(pos + 1);
+            }
+        }
+
+        @Override
+        public long getItemId(int pos) {
+            return pos - 1;
+        }
+
+        @Override
+        public int getItemViewType(int pos) {
+            return pos == 0 ? 0 : 1;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
+        @SuppressWarnings("WrongConstant")
+        @Override
+        public View getView(int pos, View convertView, ViewGroup parent) {
+            if (pos == 0) {
+                CellInfoOverviewHolder holder;
+                if (convertView == null) {
+                    convertView = mInflater.inflate(R.layout.item_cell_info_overview, parent, false);
+                    holder = new CellInfoOverviewHolder(convertView);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (CellInfoOverviewHolder) convertView.getTag();
+                }
+                if (mOverview.mNeighboringCellsVisibility != -1) {
+                    holder.mNeighboringCells.setVisibility(mOverview.mNeighboringCellsVisibility);
+                    holder.mNeighboringCells.setText(mOverview.mNeighboringCells);
+                }
+                if (mOverview.mNeighboringTotalViewVisibility != -1) {
+                    holder.mNeighboringTotalView.setVisibility(mOverview.mNeighboringTotalViewVisibility);
+                    holder.mNeighboringTotal.setText(String.valueOf(mOverview.mNeighboringTotal));
+                }
+                if (mOverview.mCipheringIndicatorLabelVisibility != -1) {
+                    holder.mCipheringIndicatorLabel.setVisibility(mOverview.mCipheringIndicatorLabelVisibility);
+                }
+                if (mOverview.mCipheringIndicatorVisibility != -1) {
+                    holder.mCipheringIndicator.setVisibility(mOverview.mCipheringIndicatorVisibility);
+                    holder.mCipheringIndicator.setText(mOverview.mCipheringIndicator);
+                }
+                return convertView;
+            } else {
+                return mCardItemDataAdapter.getView(pos - 1, convertView, parent);
+            }
+        }
+    }
+
+    class CellInfoOverviewData {
+        String mNeighboringCells;
+        int mNeighboringCellsVisibility = -1;
+
+        int mNeighboringTotal;
+        int mNeighboringTotalViewVisibility = -1;
+
+        int mCipheringIndicatorLabelVisibility = -1;
+
+        String mCipheringIndicator;
+        int mCipheringIndicatorVisibility = -1;
+    }
+
+    class CellInfoOverviewHolder {
+        TextView mNeighboringCells;
+        TextView mNeighboringTotal;
+        TableRow mNeighboringTotalView;
+        TextView mCipheringIndicatorLabel;
+        TextView mCipheringIndicator;
+
+        CellInfoOverviewHolder(View view) {
+            mNeighboringCells = (TextView) view.findViewById(R.id.neighboring_cells);
+            mNeighboringTotal = (TextView) view.findViewById(R.id.neighboring_number);
+            mNeighboringTotalView = (TableRow) view.findViewById(R.id.neighboring_total);
+            mCipheringIndicatorLabel = (TextView) view.findViewById(R.id.ciphering_indicator_title);
+            mCipheringIndicator = (TextView) view.findViewById(R.id.ciphering_indicator);
         }
     }
 }
