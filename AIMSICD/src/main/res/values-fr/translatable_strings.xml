@@ -296,41 +296,41 @@
 
     <!-- Section Main-->
     <string name="help_main_neighboring_cells">Affiche les cellules voisines.</string>
-    <string name="help_main_phone_sim_details">Détail du fournisseur de la carte SIM, IMEI, TMSI.</string>
+    <string name="help_main_phone_sim_details">Détail de l\'opérateur de la carte SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Afficher une comparaison détaillée des cellules connectées avec les données (s’il y en a) trouvées dans OpenCelllD et surligner les différences.</string>
-    <string name="help_main_database_viewer">Voir les différentes Tables de la Base de Données.</string>
+    <string name="help_main_database_viewer">Voir les différentes tables de la base de données.</string>
     <string name="help_main_antenna_map_view">Carte des antennes à proximité.</string>
     <string name="help_main_at_command_interface">Interface permettant d\'envoyer des commandes AT au Baseband (nécessite le ROOT).</string>
 
     <!-- Section Tracking-->
-    <string name="help_tracking_toggle_attack_detection">Démarre/Arrête la surveillance AIMSICD et compare les détails de chaque cellule avec la Base de Donnée.</string>
+    <string name="help_tracking_toggle_attack_detection">Démarre/arrête la détection des attaques et compare les détails de chaque cellule avec la base de données.</string>
     <string name="help_tracking_toggle_cell_tracking">Commencer à localiser les cellules pour les afficher sur la carte des antennes et les envoyer éventuellement à OpenCellID plus tard.</string>
 
     <!-- Section Settings-->
-    <string name="help_settings_preferences">paramètres AIMSICD : règles de protection, temps de requètes et comportement du réseau.</string>
+    <string name="help_settings_preferences">Paramètres AIMSICD : règles de protection, temps de requètes et comportement du réseau.</string>
     <string name="help_settings_reset_db">Effacer les tables sélectionnées de la Base de Données.</string>
 
     <!-- Section Application-->
-    <string name="help_app_add_get_ocid_api_key">Obtenir une clé pour utiliser la base de donnée d\'OpenCellID pour uploader vos données…</string>
+    <string name="help_app_add_get_ocid_api_key">Obtenir une clé pour utiliser la base de donnée d\'OpenCellID pour uploader et télécharger des données…</string>
     <string name="help_app_about">Explication des icônes de statut et du projet.</string>
     <string name="help_app_download_local_bts">Télécharge la base de données OpenCellID.</string>
     <string name="help_app_upload_local_bts">Envoie vos BTS à la base de données OpenCellID.</string>
-    <string name="help_app_debugging">Afficher et envoyer les logs d\'application.</string>
+    <string name="help_app_debugging">Collecter et envoyer les logs d\'erreur.</string>
     <string name="help_app_quit">Quitter cette application.</string>
     <string name="waiting_for_location">Recherche de votre localisation en cours…</string>
-    <string name="unique_bts_data">Données BTS Uniques</string>
+    <string name="unique_bts_data">Données BTS uniques</string>
     <string name="bts_measurements">Données BTS</string>
     <string name="imported_ocid_data">Données importées d’OpenCellID</string>
     <string name="default_mmc_locations">Codes MCC par pays</string>
-    <string name="silent_sms">SMS Silencieux</string>
+    <string name="silent_sms">SMS silencieux</string>
     <string name="eventlog">Événements</string>
-    <string name="measured_signal_strengths">Puissance des signaux Mesurés</string>
+    <string name="measured_signal_strengths">Puissance des signaux mesurés</string>
 
-    <string name="at_command_response_looking">*** Recherche de périphériques AT…\n</string>
-    <string name="at_command_response_found">Trouvé: </string>
+    <string name="at_command_response_looking">*** Recherche de périphériques série AT…\n</string>
+    <string name="at_command_response_found">"Trouvé : "</string>
     <string name="at_command_response_setup_complete">*** Recherche terminée ***\n</string>
 
-    <string name="currently_connected_bts">BTS actuellement connectée à votre Téléphone</string>
+    <string name="currently_connected_bts">BTS actuellement connectée à votre téléphone</string>
     <string name="well_known_encrypted_bts">BTS connu et sécurisé</string>
     <string name="unknown_or_insecure_bts">BTS inconnu ou non-sécurisé</string>
     <string name="new_or_recently_added_bts">BTS nouvelle ou récemment ajoutée</string>
@@ -393,7 +393,7 @@
     <string name="the_string_was_added_to_db">La chaîne de caractères a été ajoutée à la base de données</string>
     <string name="failed_to_add_the_string_to_db">Échec lors de l’ajout de la chaîne de caractères à la base de données</string>
     <string name="n_a">Indisponible</string>
-    <string name="unknown">Ignoré</string>
+    <string name="unknown">Inconnu</string>
 
     <string name="database_settings">Base de données</string>
     <string name="download_timed_out">La requête de l\'API OpenCellID met trop de temps. Réessayer plus tard ?</string>
