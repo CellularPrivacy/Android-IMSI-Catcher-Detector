@@ -26,8 +26,8 @@ import static java.lang.String.valueOf;
 
 public class SmsDataAdapter extends RealmBaseAdapter<SmsData> {
     
-    public SmsDataAdapter(Context context, RealmResults<SmsData> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public SmsDataAdapter(Context context, RealmResults<SmsData> realmResults) {
+        super(context, realmResults);
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {

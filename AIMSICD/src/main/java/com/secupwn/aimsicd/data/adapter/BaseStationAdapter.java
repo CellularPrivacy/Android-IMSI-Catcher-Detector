@@ -28,8 +28,8 @@ import static java.lang.String.valueOf;
  */
 public class BaseStationAdapter extends RealmBaseAdapter<BaseTransceiverStation> {
 
-    public BaseStationAdapter(Context context, RealmResults<BaseTransceiverStation> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public BaseStationAdapter(Context context, RealmResults<BaseTransceiverStation> realmResults) {
+        super(context, realmResults);
     }
 
     @Override

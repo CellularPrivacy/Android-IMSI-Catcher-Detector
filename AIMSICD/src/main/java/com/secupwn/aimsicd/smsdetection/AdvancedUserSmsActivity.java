@@ -52,7 +52,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
         dbaccess = new RealmHelper(getApplicationContext());
         RealmResults<SmsData> msgitems = realm.where(SmsData.class).findAllSorted("timestamp");
 
-        listViewAdv.setAdapter(new SmsDataAdapter(getApplicationContext(), msgitems, true));
+        listViewAdv.setAdapter(new SmsDataAdapter(getApplicationContext(), msgitems));
 
         listViewAdv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -62,7 +62,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        smsData.removeFromRealm();
+                        smsData.deleteFromRealm();
                     }
                 });
 

@@ -21,10 +21,4 @@ public class Measure extends RealmObject {
     private int timingAdvance;
     private boolean submitted;
     private boolean neighbor;
-
-    @Override
-    public void deleteFromRealm() {
-        getGpsLocation().deleteFromRealm();
-        super.deleteFromRealm();
-    }
 }

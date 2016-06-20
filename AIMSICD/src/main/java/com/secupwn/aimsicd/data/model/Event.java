@@ -32,10 +32,4 @@ public class Event extends RealmObject {
 
     private int dfId;
     private String dfDescription;
-
-    @Override
-    public void deleteFromRealm() {
-        gpsLocation.deleteFromRealm();
-        super.deleteFromRealm();
-    }
 }

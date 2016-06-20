@@ -382,7 +382,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
                 @Cleanup Realm realm = Realm.getDefaultInstance();
 
-                RealmResults<BaseTransceiverStation> baseStations = realm.allObjects(BaseTransceiverStation.class);
+                RealmResults<BaseTransceiverStation> baseStations = realm.where(BaseTransceiverStation.class).findAll();
                 if (baseStations.size() > 0) {
                     for (BaseTransceiverStation baseStation : baseStations) {
                         if (isCancelled()) {

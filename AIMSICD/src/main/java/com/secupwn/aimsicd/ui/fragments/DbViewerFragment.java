@@ -81,31 +81,30 @@ public final class DbViewerFragment extends InjectionFragment {
                 }
                 mTableSelected = (StatesDbViewer) selectedItem;
 
-                realm.refresh();
                 switch (position) {
                     case 0:
-                        setListAdapter(new BaseStationAdapter(getActivity(), realm.allObjects(BaseTransceiverStation.class), true));
+                        setListAdapter(new BaseStationAdapter(getActivity(), realm.where(BaseTransceiverStation.class).findAll()));
                         break;
                     case 1:
-                        setListAdapter(new MeasureAdapter(getActivity(), realm.allObjects(Measure.class), true));
+                        setListAdapter(new MeasureAdapter(getActivity(), realm.where(Measure.class).findAll()));
                         break;
                     case 2:
-                        setListAdapter(new ImportAdapter(getActivity(), realm.allObjects(Import.class), true));
+                        setListAdapter(new ImportAdapter(getActivity(), realm.where(Import.class).findAll()));
                         break;
                     case 3:
-                        setListAdapter(new DefaultLocationAdapter(getActivity(), realm.allObjects(DefaultLocation.class), true));
+                        setListAdapter(new DefaultLocationAdapter(getActivity(), realm.where(DefaultLocation.class).findAll()));
                         break;
                     case 4:  //Silent SMS
-                        setListAdapter(new SmsDataAdapter(getActivity(), realm.allObjects(SmsData.class), true));
+                        setListAdapter(new SmsDataAdapter(getActivity(), realm.where(SmsData.class).findAll()));
                         break;
                     case 5:
-                        setListAdapter(new MeasuredCellStrengthAdapter(getActivity(), realm.allObjects(Measure.class), true));
+                        setListAdapter(new MeasuredCellStrengthAdapter(getActivity(), realm.where(Measure.class).findAll()));
                         break;
                     case 6:
-                        setListAdapter(new EventAdapter(getActivity(), realm.allObjects(Event.class), true));
+                        setListAdapter(new EventAdapter(getActivity(), realm.where(Event.class).findAll()));
                         break;
                     case 7:
-                        setListAdapter(new DetectionStringAdapter(getActivity(), realm.allObjects(SmsDetectionString.class), true));
+                        setListAdapter(new DetectionStringAdapter(getActivity(), realm.where(SmsDetectionString.class).findAll()));
                         break;
                     default:
                         throw new IllegalArgumentException("Unknown type of table");

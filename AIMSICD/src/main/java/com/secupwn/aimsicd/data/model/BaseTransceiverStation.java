@@ -18,10 +18,4 @@ public class BaseTransceiverStation extends RealmObject {
     private Date timeFirst;
     private Date timeLast;
     private GpsLocation gpsLocation;
-
-    @Override
-    public void deleteFromRealm() {
-        gpsLocation.deleteFromRealm();
-        super.deleteFromRealm();
-    }
 }

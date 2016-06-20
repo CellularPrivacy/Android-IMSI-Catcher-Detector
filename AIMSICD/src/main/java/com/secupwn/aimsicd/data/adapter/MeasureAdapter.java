@@ -21,8 +21,8 @@ import static java.lang.String.valueOf;
  */
 public class MeasureAdapter extends RealmBaseAdapter<Measure> {
 
-    public MeasureAdapter(Context context, RealmResults<Measure> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public MeasureAdapter(Context context, RealmResults<Measure> realmResults) {
+        super(context, realmResults);
     }
 
     @Override

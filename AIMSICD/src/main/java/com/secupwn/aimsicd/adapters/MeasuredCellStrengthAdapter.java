@@ -29,8 +29,8 @@ import static java.lang.String.valueOf;
  */
 public class MeasuredCellStrengthAdapter extends RealmBaseAdapter<Measure> {
 
-    public MeasuredCellStrengthAdapter(Context context, RealmResults<Measure> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public MeasuredCellStrengthAdapter(Context context, RealmResults<Measure> realmResults) {
+        super(context, realmResults);
     }
 
     @Override

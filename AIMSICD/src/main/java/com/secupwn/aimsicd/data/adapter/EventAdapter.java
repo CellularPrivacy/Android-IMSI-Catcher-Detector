@@ -18,8 +18,8 @@ import static java.lang.String.valueOf;
 
 public class EventAdapter extends RealmBaseAdapter<Event> {
 
-    public EventAdapter(Context context, RealmResults<Event> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public EventAdapter(Context context, RealmResults<Event> realmResults) {
+        super(context, realmResults);
     }
 
     @Override

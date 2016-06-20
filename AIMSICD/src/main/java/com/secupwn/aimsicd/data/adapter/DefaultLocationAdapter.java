@@ -21,8 +21,8 @@ import static java.lang.String.valueOf;
 
 public class DefaultLocationAdapter extends RealmBaseAdapter<DefaultLocation> {
 
-    public DefaultLocationAdapter(Context context, RealmResults<DefaultLocation> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public DefaultLocationAdapter(Context context, RealmResults<DefaultLocation> realmResults) {
+        super(context, realmResults);
     }
 
     @Override
