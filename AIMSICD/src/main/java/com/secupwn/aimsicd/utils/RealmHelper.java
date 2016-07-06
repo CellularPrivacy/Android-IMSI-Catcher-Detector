@@ -444,13 +444,19 @@ public final class RealmHelper {
                 // Increase rej_cause, when:  the GPS position of the BTS is not exact:
                 // NOTE:  In OCID: "changeable"=1 ==> isGPSexact=0
                 for (Import i : realm.where(Import.class).equalTo("gpsExact", false).findAll()) {
-                    i.setRejCause(i.getRejCause() + 3);
+                    Integer j = i.getRejCause();
+                    if (j != null) {
+                        i.setRejCause(j.intValue() + 3);
+                    }
                 }
 
                 // =========== avg_range ===========
                 // Increase rej_cause, when:  the average range is < a minimum GPS precision
                 for (Import i : realm.where(Import.class).lessThan("avgRange", min_gps_precision).findAll()) {
-                    i.setRejCause(i.getRejCause() + 3);
+                    Integer j = i.getRejCause();
+                    if (j != null) {
+                        i.setRejCause(j.intValue() + 3);
+                    }
                 }
 
                 // =========== time_first ===========
