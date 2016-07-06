@@ -34,7 +34,7 @@ before_install:
   - 'openssl aes-256-cbc -K $encrypted_dc771c3300d2_key -iv $encrypted_dc771c3300d2_iv -in keystore.jks.enc -out keystore.jks -d || true'
 
 
-script: ./gradlew build check
+script: ./gradlew --no-daemon build check
 
 before_deploy:
   - cd AIMSICD/build/outputs/apk; ls -la; md5sum *-normal-release.apk > md5sum.txt; sha1sum *-normal-release.apk > sha1sum.txt; cd -
