@@ -30,13 +30,11 @@ android:
     - extra-android-m2repository
 
 before_install:
+  - ulimit -a
   - 'openssl aes-256-cbc -K $encrypted_dc771c3300d2_key -iv $encrypted_dc771c3300d2_iv -in keystore.jks.enc -out keystore.jks -d || true'
 
-install: ./gradlew clean
 
-script: 
-  - './gradlew assemble'
-  - './gradlew build check'
+script: ./gradlew build check
 
 before_deploy:
   - cd AIMSICD/build/outputs/apk; ls -la; md5sum *-normal-release.apk > md5sum.txt; sha1sum *-normal-release.apk > sha1sum.txt; cd -
