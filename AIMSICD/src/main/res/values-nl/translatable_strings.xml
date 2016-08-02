@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">Volgen</string>
     <string name="device_info">Telefoon/SIM details</string>
     <string name="map_view">Antennekaart scherm</string>
@@ -82,7 +82,7 @@
     <string name="pref_system_title">Systeeminstellingen</string>
     <string name="pref_autostart_title">Automatisch starten</string>
     <string name="pref_autostart_summ">Service automatisch starten bij opstarten telefoon</string>
-    <string name="disclaimer">"Door het gebruik van AIMSICD begrijpt u en gaat u er mee akkoord dat AIMSICD een experimenteel en informatieve Android applicatie is dat door verschillende redenen mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het omzeild of verslagen kan worden door methodes die de ontwikkelaars momenteel nog niet begrijpen. U begrijpt en gaat er tevens mee akkoord dat dit de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. "</string>
+    <string name="disclaimer">Door het gebruik van AIMSICD begrijpt u en gaat u er mee akkoord dat AIMSICD een experimenteel en informatieve Android applicatie is dat door verschillende redenen mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het omzeild of verslagen kan worden door methodes die de ontwikkelaars momenteel nog niet begrijpen. U begrijpt en gaat er tevens mee akkoord dat dit de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. ONTWIKKELING STATUS: ALPHA!</string>
 
     <string name="status_idle_about_desc">Inactief / aan het laden.</string>
     <string name="pref_persistservice_title">Permanente service</string>
@@ -259,7 +259,7 @@
     <string name="typewap_data">WAP pushbericht gedetecteerd!\nVoor details zie het database scherm.</string>
 
 
-    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_neighboring_cells"/>
     <string name="help_main_phone_sim_details">SIM netwerk provider details, IMEI, TMSI.</string>
     <string name="help_main_acd">"Toont een gedetailleerde  vergelijking van de cel waarmee u nu verbonden bent en de gegevens uit OpenCellID en toont de verschillen."</string>
     <string name="help_main_database_viewer">Toon de verschillende DB tabellen.</string>
