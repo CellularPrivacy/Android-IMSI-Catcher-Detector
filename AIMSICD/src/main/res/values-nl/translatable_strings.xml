@@ -259,7 +259,7 @@
     <string name="typewap_data">WAP pushbericht gedetecteerd!\nVoor details zie het database scherm.</string>
 
 
-    <string name="help_main_neighboring_cells"/>
+    <string name="help_main_neighboring_cells">Toont naburige cellen.</string>
     <string name="help_main_phone_sim_details">SIM netwerk provider details, IMEI, TMSI.</string>
     <string name="help_main_acd">"Toont een gedetailleerde  vergelijking van de cel waarmee u nu verbonden bent en de gegevens uit OpenCellID en toont de verschillen."</string>
     <string name="help_main_database_viewer">Toon de verschillende DB tabellen.</string>
@@ -323,4 +323,8 @@
     <string name="pref_enable_gps_summary">GPS inschakelen voor Cell tracking</string>
 
     <string name="unknown">Onbekend</string>
+    <string name="database_settings">Database</string>
+    <string name="download_timed_out">OpenCellID API verzoek is verlopen. Later opnieuw proberen?</string>
+    <string name="cell_doesnt_provide_any_neighbors">GSM-mast verstrekt geen naburige cellen!</string>
+    <string name="n_a">NVT</string>
     </resources>
