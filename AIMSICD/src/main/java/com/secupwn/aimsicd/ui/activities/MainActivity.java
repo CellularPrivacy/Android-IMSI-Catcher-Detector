@@ -7,6 +7,7 @@ package com.secupwn.aimsicd.ui.activities;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,9 +15,15 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -78,6 +85,8 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
     private long mLastPress = 0;    // Back press to exit timer
 
     private DrawerMenuActivityConfiguration mNavConf;
+
+    private static final int ACTIVITY_RESULT_SELECT_CELLTOWERS = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -255,6 +264,10 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA) {
             downloadBtsDataIfApiKeyAvailable();
+        } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.IMPORT_CELL_TOWERS_DATA) {
+            Intent pickFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            pickFileIntent.setType("*/*");
+            startActivityForResult(pickFileIntent, ACTIVITY_RESULT_SELECT_CELLTOWERS);
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.QUIT) {
             try {
                 if (mAimsicdService.isSmsTracking()) {
@@ -279,6 +292,97 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         if (this.mDrawerLayout.isDrawerOpen(this.mDrawerList)) {
             mDrawerLayout.closeDrawer(mDrawerList);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ACTIVITY_RESULT_SELECT_CELLTOWERS) {
+            if(resultCode == RESULT_OK){
+                String celltowersPath = resolveContentUriPath(this, data.getData());
+                log.debug("Chosen file: " + String.valueOf(celltowersPath));
+                importCellTowersData(celltowersPath);
+            }
+        }
+    }
+
+    /**
+     * Resolve absolute file path from the content URI.
+     *
+     * Credits: http://stackoverflow.com/a/33014219
+     *
+     * @param context
+     * @param uri content uri
+     * @return resolved absolute file path
+     */
+    @Nullable
+    public static String resolveContentUriPath(final Context context, final Uri uri)
+    {
+        // DocumentProvider
+        if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.KITKAT &&
+                DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if ("com.android.externalstorage.documents".equals(uri.getAuthority())) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+            }
+            // DownloadsProvider
+            else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getUriDataColumn(context, contentUri, null, null);
+            }
+        }
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            return getUriDataColumn(context, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
+    /**
+     * Get the value of the data column for this Uri. This is useful for
+     * MediaStore Uris, and other file-based ContentProviders.
+     *
+     * Credits: http://stackoverflow.com/a/33014219
+     *
+     * @param context The context.
+     * @param uri The Uri to query.
+     * @param selection (Optional) Filter used in the query.
+     * @param selectionArgs (Optional) Selection arguments used in the query.
+     * @return The value of the _data column, which is typically a file path.
+     */
+    @Nullable
+    public static String getUriDataColumn(Context context, Uri uri, String selection,
+                                          String[] selectionArgs) {
+
+        Cursor cursor = null;
+        final String[] projection = { MediaStore.Files.FileColumns.DATA };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(projection[0]);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
     }
 
     private void openFragment(Fragment fragment) {
@@ -329,6 +433,33 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
             }
         } else {
             Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
+        }
+    }
+
+    private void importCellTowersData(String celltowersPath) {
+
+        Cell cell = new Cell();
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String networkOperator = tm.getNetworkOperator();
+
+        if (networkOperator != null && !networkOperator.isEmpty()) {
+            int mcc = Integer.parseInt(networkOperator.substring(0, 3));
+            cell.setMobileCountryCode(mcc);
+            int mnc = Integer.parseInt(networkOperator.substring(3));
+            cell.setMobileNetworkCode(mnc);
+            log.debug("CELL:: mobileCountryCode=" + mcc + " mobileNetworkCode=" + mnc);
+        }
+
+        GeoLocation loc = mAimsicdService.lastKnownLocation();
+        if (loc != null) {
+            Helpers.msgLong(this, getString(R.string.imporing_celltowers_data));
+
+            cell.setLon(loc.getLongitudeInDegrees());
+            cell.setLat(loc.getLatitudeInDegrees());
+            Helpers.importCellTowersData(this, cell, celltowersPath, mAimsicdService);
+
+        } else {
+            Helpers.msgShort(this, getString(R.string.needs_location));
         }
     }
 

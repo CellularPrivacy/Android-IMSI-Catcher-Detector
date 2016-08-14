@@ -293,54 +293,8 @@ public final class RealmHelper {
 
                     int rowCounter;
                     for (rowCounter = 1; rowCounter < lines; rowCounter++) {
-                        // Insert details into OpenCellID Database using:  insertDBeImport()
-                        // Beware of negative values of "range" and "samples"!!
-                        String lat = csvCellID.get(rowCounter)[0],          //TEXT
-                                lon = csvCellID.get(rowCounter)[1],          //TEXT
-                                mcc = csvCellID.get(rowCounter)[2],          //int
-                                mnc = csvCellID.get(rowCounter)[3],          //int
-                                lac = csvCellID.get(rowCounter)[4],          //int
-                                cellid = csvCellID.get(rowCounter)[5],       //int   long CID [>65535]
-                                range = csvCellID.get(rowCounter)[6],        //int
-                                avg_sig = csvCellID.get(rowCounter)[7],      //int
-                                samples = csvCellID.get(rowCounter)[8],      //int
-                                change = csvCellID.get(rowCounter)[9],       //int
-                                radio = csvCellID.get(rowCounter)[10],       //TEXT
-//                                rnc = csvCellID.get(rowCounter)[11],         //int
-//                                cid = csvCellID.get(rowCounter)[12],         //int   short CID [<65536]
-                                psc = csvCellID.get(rowCounter)[13];         //int
 
-                        // Some OCID data may not contain PSC so we indicate this with an out-of-range
-                        // PSC value. Should be -1 but hey people already imported so we're stuck with
-                        // this.
-                        int iPsc = 666;
-                        if (psc != null && !psc.isEmpty()) {
-                            iPsc = Integer.parseInt(psc);
-                        }
-
-                        //Reverse order 1 = 0 & 0 = 1
-                        // what if ichange is 4? ~ agilob
-                        int ichange = Integer.parseInt(change);
-                        ichange = (ichange == 0 ? 1 : 0);
-
-                        Realm.Transaction transaction = insertDBeImport(
-                                "OCID",                     // DBsource
-                                radio,                      // RAT
-                                Integer.parseInt(mcc),      // MCC
-                                Integer.parseInt(mnc),      // MNC
-                                Integer.parseInt(lac),      // LAC
-                                Integer.parseInt(cellid),   // CID (cellid) ?
-                                iPsc,                       // psc
-                                Double.parseDouble(lat),    // gps_lat
-                                Double.parseDouble(lon),    // gps_lon
-                                ichange == 0,               // isGPSexact
-                                Integer.parseInt(avg_sig),  // avg_signal [dBm]
-                                Integer.parseInt(range),    // avg_range [m]
-                                Integer.parseInt(samples),  // samples
-                                new Date(),                 // time_first  (not in OCID)
-                                new Date()                 // time_last   (not in OCID)
-                        );
-                        realm.executeTransaction(transaction);
+                        addCSVRecord(realm, csvCellID.get(rowCounter));
                     }
                     log.debug("PopulateDBeImport(): inserted " + rowCounter + " cells.");
                 }
@@ -358,6 +312,66 @@ public final class RealmHelper {
                 Thread.currentThread().interrupt();
             }
         }
+    }
+
+    public void addCSVRecord(Realm realm, String[] csv) {
+        Date date = new Date();
+        addCSVRecord(realm, csv, date, date);
+    }
+    /**
+     * Adds one CSV record from OpenCellID import to the database to populate "Import" table.
+     *
+     */
+    public void addCSVRecord(Realm realm, String[] csv, Date created, Date updated) {
+
+        // Insert details into OpenCellID Database using:  insertDBeImport()
+        // Beware of negative values of "range" and "samples"!!
+        String lat = csv[0],          //TEXT
+                lon = csv[1],          //TEXT
+                mcc = csv[2],          //int
+                mnc = csv[3],          //int
+                lac = csv[4],          //int
+                cellid = csv[5],       //int   long CID [>65535]
+                range = csv[6],        //int
+                avg_sig = csv[7],      //int
+                samples = csv[8],      //int
+                change = csv[9],       //int
+                radio = csv[10],       //TEXT
+//                  rnc = csv[11],         //int
+//                  cid = csv[12],         //int   short CID [<65536]
+                psc = csv[13];         //int
+
+        // Some OCID data may not contain PSC so we indicate this with an out-of-range
+        // PSC value. Should be -1 but hey people already imported so we're stuck with
+        // this.
+        int iPsc = 666;
+        if (psc != null && !psc.isEmpty()) {
+            iPsc = Integer.parseInt(psc);
+        }
+
+        //Reverse order 1 = 0 & 0 = 1
+        // what if ichange is 4? ~ agilob
+        int ichange = Integer.parseInt(change);
+        ichange = (ichange == 0 ? 1 : 0);
+
+        Realm.Transaction transaction = insertDBeImport(
+                "OCID",                     // DBsource
+                radio,                      // RAT
+                Integer.parseInt(mcc),      // MCC
+                Integer.parseInt(mnc),      // MNC
+                Integer.parseInt(lac),      // LAC
+                Integer.parseInt(cellid),   // CID (cellid) ?
+                iPsc,                       // psc
+                Double.parseDouble(lat),    // gps_lat
+                Double.parseDouble(lon),    // gps_lon
+                ichange == 0,               // isGPSexact
+                Integer.parseInt(avg_sig),  // avg_signal [dBm]
+                Integer.parseInt(range),    // avg_range [m]
+                Integer.parseInt(samples),  // samples
+                created,                    // time_first  (not in OCID)
+                updated                     // time_last   (not in OCID)
+        );
+        realm.executeTransaction(transaction);
     }
 
     /**
@@ -747,7 +761,7 @@ public final class RealmHelper {
     /**
      * Check if {@link BaseTransceiverStation#cellId CID} is already in the {@link Measure} realm
      *
-     * @param realm The realm to use
+     * @param realm  The realm to use
      * @param cellId The {@link BaseTransceiverStation#cellId cellId} to look for
      * @return true if a {@link Measure} is found with the given cellId
      */

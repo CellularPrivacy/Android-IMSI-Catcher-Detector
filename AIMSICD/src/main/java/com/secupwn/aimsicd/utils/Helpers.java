@@ -260,6 +260,50 @@ import io.freefair.android.util.logging.Logger;
     }
 
     /**
+     * Description:      Imports cell data from the specified file
+     *
+     * Used:
+     * @param cell Current Cell Information
+     * @param celltowersPath path to the cell_towers.csv / cell_towers.csv.gz
+     *
+     */
+     public static void importCellTowersData(InjectionAppCompatActivity injectionActivity, Cell cell, String celltowersPath, final AimsicdService service) {
+        if (Helpers.isNetAvailable(injectionActivity)) {
+            int radius = 2; // Use a 2 Km radius with center at GPS location.
+
+            if (Double.doubleToRawLongBits(cell.getLat()) != 0 &&
+                    Double.doubleToRawLongBits(cell.getLon()) != 0) {
+                GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
+
+                new ImportTask(injectionActivity, celltowersPath,
+                        cell.getMobileCountryCode(), cell.getMobileNetworkCode(), currentLoc, radius,
+                        new ImportTask.AsyncTaskCompleteListener() {
+                    @Override
+                    public void onAsyncTaskSucceeded() {
+                        log.verbose("ImportTask's OCID import was successful. Callback rechecking connected cell against database");
+                        service.getCellTracker().compareLacAndOpenDb();
+                    }
+
+                    @Override
+                    public void onAsyncTaskFailed(String result) {
+                    }
+                }).execute();
+            }
+
+        } else {
+            Fragment myFragment = injectionActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
+            if (myFragment instanceof MapFragment) {
+                ((MapFragment) myFragment).setRefreshActionButtonState(false);
+            }
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(injectionActivity);
+            builder.setTitle(R.string.no_network_connection_title)
+                    .setMessage(R.string.no_network_connection_message);
+            builder.create().show();
+        }
+    }
+
+    /**
      * Return a String List representing response from invokeOemRilRequestRaw
      *
      * @param aob Byte array response from invokeOemRilRequestRaw
