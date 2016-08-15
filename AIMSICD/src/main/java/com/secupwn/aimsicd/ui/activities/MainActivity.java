@@ -298,7 +298,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTIVITY_RESULT_SELECT_CELLTOWERS) {
-            if(resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 String celltowersPath = resolveContentUriPath(this, data.getData());
                 log.debug("Chosen file: " + String.valueOf(celltowersPath));
                 importCellTowersData(celltowersPath);
@@ -316,13 +316,12 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
      * @return resolved absolute file path
      */
     @Nullable
-    public static String resolveContentUriPath(final Context context, final Uri uri)
-    {
+    public static String resolveContentUriPath(final Context context, final Uri uri) {
         // DocumentProvider
         if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.KITKAT &&
                 DocumentsContract.isDocumentUri(context, uri)) {
-            // ExternalStorageProvider
             if ("com.android.externalstorage.documents".equals(uri.getAuthority())) {
+                // ExternalStorageProvider
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
@@ -330,23 +329,18 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                 if ("primary".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
-            }
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
             // DownloadsProvider
-            else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
-
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
                         Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
 
                 return getUriDataColumn(context, contentUri, null, null);
             }
-        }
-        // MediaStore (and general)
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            // MediaStore (and general)
             return getUriDataColumn(context, uri, null, null);
-        }
-        // File
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();
         }
         return null;
@@ -369,7 +363,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                                           String[] selectionArgs) {
 
         Cursor cursor = null;
-        final String[] projection = { MediaStore.Files.FileColumns.DATA };
+        final String[] projection = {MediaStore.Files.FileColumns.DATA};
 
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
@@ -379,8 +373,9 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                 return cursor.getString(column_index);
             }
         } finally {
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.close();
+            }
         }
         return null;
     }

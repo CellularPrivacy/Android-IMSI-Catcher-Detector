@@ -12,11 +12,9 @@ import com.secupwn.aimsicd.R;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.Date;
@@ -219,8 +217,9 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
     @NonNull
     private Reader createFileReader() throws IOException {
         InputStream fileStream = new FileInputStream(new File(celltowersPath));
-        if (isPathGzip())
+        if (isPathGzip()) {
             fileStream = new FixedGZIPInputStream(new GZIPInputStream(fileStream));
+        }
         return new InputStreamReader(fileStream);
     }
 
