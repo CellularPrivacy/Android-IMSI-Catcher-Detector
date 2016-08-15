@@ -68,7 +68,7 @@
     <string name="about_aimsicd">Об AIMSICD</string>
     <string name="app_version">Версия: %s</string>
     <string name="buildnumber">Номер сборки: %s</string>
-    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="git_sha">Хэш SHA Git: %s</string>
     <string name="aimsicd_about_info3">Проект Андроид для обнаружения ложных базовых станций (IMSI-перехватчиков) в GSM/UMTS сетях.</string>
     <string name="about_github">AIMSICD на GitHub</string>
     <string name="about_wiki">ДОКУМЕНТАЦИЯ</string>
@@ -204,10 +204,10 @@
     <string name="notification_vibrate_danger">Опасность</string>
     
     <!-- UI Icon Preferences -->
-    <string name="ui_icon_flat">Flat</string>
-    <string name="ui_icon_sense">Sense</string>
-    <string name="ui_icon_white">Белый</string>
-    <string name="map_type_terrain">Земля</string>
+    <string name="ui_icon_flat">Плоская</string>
+    <string name="ui_icon_sense">Настроение</string>
+    <string name="ui_icon_white">Белая</string>
+    <string name="map_type_terrain">Местность</string>
     <string name="map_type_normal">Обычный</string>
     <string name="pref_refresh_manual">Вручную</string>
     <string name="pref_refresh_automatic">Авто</string>
@@ -243,7 +243,7 @@
     <string name="alert_threat_detected">ТРЕВОГА: обнаружены угрозы!</string>
     <string name="alert_femtocell_connection_detected">ТРЕВОГА: обнаружено соединение с FemtoCell!</string>
     <string name="alert_silent_sms_detected">ТРЕВОГА: обнаружена бесшумная СМС!</string>
-    <string name="alert_mwi_detected">ТРЕВОГА: обнаружен индикатор ожидания сообщения!</string>
+    <string name="alert_mwi_detected">ТРЕВОГА: обнаружен индикатор ожидающих сообщений!</string>
     <string name="alert_silent_wap_sms_detected">ТРЕВОГА: обнаружена WAP Push СМС!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD может определять соединение с FemtoCell только на CDMA устройствах.</string>
     <string name="service_state_changed">Статус сервиса изменен!</string>
