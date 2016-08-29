@@ -24,7 +24,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.ParcelFileDescriptor;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
