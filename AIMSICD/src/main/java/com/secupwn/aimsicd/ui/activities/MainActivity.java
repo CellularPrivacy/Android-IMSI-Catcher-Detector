@@ -267,6 +267,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.IMPORT_CELL_TOWERS_DATA) {
             Intent pickFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
             pickFileIntent.setType("*/*");
+            pickFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
             startActivityForResult(pickFileIntent, ACTIVITY_RESULT_SELECT_CELLTOWERS);
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.QUIT) {
             try {
