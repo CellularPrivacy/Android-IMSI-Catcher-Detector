@@ -6,7 +6,6 @@
 package com.secupwn.aimsicd.utils;
 
 import android.content.Context;
-import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 
 import com.secupwn.aimsicd.R;
@@ -42,7 +41,7 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
 
     private RealmHelper mDbAdapter;
     private Context mAppContext;
-    private final ParcelFileDescriptor importFile;
+    private final InputStream importFile;
     private final boolean isGzip;
     private final int mobileCountryCode;
     private final int mobileNetworkCode;
@@ -53,7 +52,7 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
 
     /**
      * @param context           App context
-     * @param importFile        parcel fd pointing to the file cell_towers.csv or cell_towers.csv.gz
+     * @param importFile        input stream pointing to the file cell_towers.csv or cell_towers.csv.gz
      * @param isGzip            whether the importFile is gzipped file
      * @param mobileCountryCode MCC filter
      * @param mobileNetworkCode MNC filter
@@ -62,7 +61,7 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
      * @param listener          Allows the caller of RequestTask to implement success/fail callbacks
      */
     public ImportTask(InjectionAppCompatActivity context,
-                      ParcelFileDescriptor importFile, boolean isGzip,
+                      InputStream importFile, boolean isGzip,
                       int mobileCountryCode, int mobileNetworkCode,
                       GeoLocation currentLocation, int locationRadius,
                       AsyncTaskCompleteListener listener) {
@@ -217,9 +216,9 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
      */
     @NonNull
     private Reader createFileReader() throws IOException {
-        InputStream fileStream = new ParcelFileDescriptor.AutoCloseInputStream(importFile);
+        InputStream fileStream = importFile;
         if (isGzip) {
-            fileStream = new FixedGZIPInputStream(new GZIPInputStream(fileStream));
+            fileStream = new FixedGZIPInputStream(new GZIPInputStream(importFile));
         }
         return new InputStreamReader(fileStream);
     }

@@ -264,12 +264,13 @@ import io.freefair.android.util.logging.Logger;
      * Description:      Imports cell data from the specified file
      *
      * Used:
-     * @param cell Current Cell Information
      * @param celltowersPath path to the cell_towers.csv / cell_towers.csv.gz
+     * @param cell Current Cell Information
+     * @param importFile
      *
      */
      public static void importCellTowersData(InjectionAppCompatActivity injectionActivity, Cell cell,
-                                             ParcelFileDescriptor importFile, boolean isGzip,
+                                             InputStream importFile, boolean isGzip,
                                              final AimsicdService service) {
         if (Helpers.isNetAvailable(injectionActivity)) {
             int radius = 2; // Use a 2 Km radius with center at GPS location.

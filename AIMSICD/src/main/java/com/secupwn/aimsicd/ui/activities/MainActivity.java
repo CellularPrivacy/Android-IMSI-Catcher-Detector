@@ -17,7 +17,6 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.ParcelFileDescriptor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -53,6 +52,7 @@ import com.secupwn.aimsicd.utils.LocationServices;
 import com.secupwn.aimsicd.utils.RequestTask;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements AsyncResponse {
@@ -300,8 +300,8 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                     String type = getContentResolver().getType(data.getData());
                     boolean isGzip = type != null && type.equals("application/octet-stream") &&
                             data.getDataString().endsWith(".gz");
-                    ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(data.getData(), "r");
-                    importCellTowersData(parcelFileDescriptor, isGzip);
+                    InputStream importFile = getContentResolver().openInputStream(data.getData());
+                    importCellTowersData(importFile, isGzip);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     log.error("Cannot open file " + data.getDataString(), e);
@@ -362,7 +362,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         }
     }
 
-    private void importCellTowersData(ParcelFileDescriptor importFile, boolean isGzip) {
+    private void importCellTowersData(InputStream importFile, boolean isGzip) {
 
         Cell cell = new Cell();
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
