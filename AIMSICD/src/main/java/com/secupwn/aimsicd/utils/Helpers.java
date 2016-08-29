@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.ParcelFileDescriptor;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
@@ -267,7 +268,9 @@ import io.freefair.android.util.logging.Logger;
      * @param celltowersPath path to the cell_towers.csv / cell_towers.csv.gz
      *
      */
-     public static void importCellTowersData(InjectionAppCompatActivity injectionActivity, Cell cell, String celltowersPath, final AimsicdService service) {
+     public static void importCellTowersData(InjectionAppCompatActivity injectionActivity, Cell cell,
+                                             ParcelFileDescriptor importFile, boolean isGzip,
+                                             final AimsicdService service) {
         if (Helpers.isNetAvailable(injectionActivity)) {
             int radius = 2; // Use a 2 Km radius with center at GPS location.
 
@@ -275,7 +278,7 @@ import io.freefair.android.util.logging.Logger;
                     Double.doubleToRawLongBits(cell.getLon()) != 0) {
                 GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
-                new ImportTask(injectionActivity, celltowersPath,
+                new ImportTask(injectionActivity, importFile, isGzip,
                         cell.getMobileCountryCode(), cell.getMobileNetworkCode(), currentLoc, radius,
                         new ImportTask.AsyncTaskCompleteListener() {
                     @Override

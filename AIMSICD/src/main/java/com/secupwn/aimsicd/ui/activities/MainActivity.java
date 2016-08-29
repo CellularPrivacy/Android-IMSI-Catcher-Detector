@@ -7,7 +7,6 @@ package com.secupwn.aimsicd.ui.activities;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,15 +14,10 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.support.annotation.Nullable;
+import android.os.ParcelFileDescriptor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -58,6 +52,7 @@ import com.secupwn.aimsicd.utils.Icon;
 import com.secupwn.aimsicd.utils.LocationServices;
 import com.secupwn.aimsicd.utils.RequestTask;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements AsyncResponse {
@@ -300,85 +295,20 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTIVITY_RESULT_SELECT_CELLTOWERS) {
             if (resultCode == RESULT_OK) {
-                String celltowersPath = resolveContentUriPath(this, data.getData());
-                log.debug("Chosen file: " + String.valueOf(celltowersPath));
-                importCellTowersData(celltowersPath);
-            }
-        }
-    }
-
-    /**
-     * Resolve absolute file path from the content URI.
-     *
-     * Credits: http://stackoverflow.com/a/33014219
-     *
-     * @param context
-     * @param uri content uri
-     * @return resolved absolute file path
-     */
-    @Nullable
-    public static String resolveContentUriPath(final Context context, final Uri uri) {
-        // DocumentProvider
-        if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.KITKAT &&
-                DocumentsContract.isDocumentUri(context, uri)) {
-            if ("com.android.externalstorage.documents".equals(uri.getAuthority())) {
-                // ExternalStorageProvider
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                log.debug("Chosen file: " + data.getDataString());
+                try {
+                    String type = getContentResolver().getType(data.getData());
+                    boolean isGzip = type != null && type.equals("application/octet-stream") &&
+                            data.getDataString().endsWith(".gz");
+                    ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(data.getData(), "r");
+                    importCellTowersData(parcelFileDescriptor, isGzip);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    log.error("Cannot open file " + data.getDataString(), e);
+                    Helpers.msgShort(this, getString(R.string.error_importing_celltowers_data));
                 }
-            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
-            // DownloadsProvider
-                final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
-                return getUriDataColumn(context, contentUri, null, null);
-            }
-        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            // MediaStore (and general)
-            return getUriDataColumn(context, uri, null, null);
-        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-        return null;
-    }
-
-    /**
-     * Get the value of the data column for this Uri. This is useful for
-     * MediaStore Uris, and other file-based ContentProviders.
-     *
-     * Credits: http://stackoverflow.com/a/33014219
-     *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
-     * @param selectionArgs (Optional) Selection arguments used in the query.
-     * @return The value of the _data column, which is typically a file path.
-     */
-    @Nullable
-    public static String getUriDataColumn(Context context, Uri uri, String selection,
-                                          String[] selectionArgs) {
-
-        Cursor cursor = null;
-        final String[] projection = {MediaStore.Files.FileColumns.DATA};
-
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
-            if (cursor != null && cursor.moveToFirst()) {
-                final int column_index = cursor.getColumnIndexOrThrow(projection[0]);
-                return cursor.getString(column_index);
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
             }
         }
-        return null;
     }
 
     private void openFragment(Fragment fragment) {
@@ -432,7 +362,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         }
     }
 
-    private void importCellTowersData(String celltowersPath) {
+    private void importCellTowersData(ParcelFileDescriptor importFile, boolean isGzip) {
 
         Cell cell = new Cell();
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -452,7 +382,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
             cell.setLon(loc.getLongitudeInDegrees());
             cell.setLat(loc.getLatitudeInDegrees());
-            Helpers.importCellTowersData(this, cell, celltowersPath, mAimsicdService);
+            Helpers.importCellTowersData(this, cell, importFile, isGzip, mAimsicdService);
 
         } else {
             Helpers.msgShort(this, getString(R.string.needs_location));

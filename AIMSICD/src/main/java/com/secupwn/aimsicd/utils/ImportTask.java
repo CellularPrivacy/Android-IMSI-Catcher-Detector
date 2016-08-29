@@ -6,12 +6,11 @@
 package com.secupwn.aimsicd.utils;
 
 import android.content.Context;
+import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 
 import com.secupwn.aimsicd.R;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -43,7 +42,8 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
 
     private RealmHelper mDbAdapter;
     private Context mAppContext;
-    private final String celltowersPath;
+    private final ParcelFileDescriptor importFile;
+    private final boolean isGzip;
     private final int mobileCountryCode;
     private final int mobileNetworkCode;
     private final GeoLocation currentLocation;
@@ -53,19 +53,22 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
 
     /**
      * @param context           App context
-     * @param celltowersPath    path to file cell_towers.csv or cell_towers.csv.gz
+     * @param importFile        parcel fd pointing to the file cell_towers.csv or cell_towers.csv.gz
+     * @param isGzip            whether the importFile is gzipped file
      * @param mobileCountryCode MCC filter
      * @param mobileNetworkCode MNC filter
      * @param currentLocation   GPS location of cell
      * @param locationRadius    filtering radius
      * @param listener          Allows the caller of RequestTask to implement success/fail callbacks
      */
-    public ImportTask(InjectionAppCompatActivity context, String celltowersPath,
+    public ImportTask(InjectionAppCompatActivity context,
+                      ParcelFileDescriptor importFile, boolean isGzip,
                       int mobileCountryCode, int mobileNetworkCode,
                       GeoLocation currentLocation, int locationRadius,
                       AsyncTaskCompleteListener listener) {
         super(context);
-        this.celltowersPath = celltowersPath;
+        this.importFile = importFile;
+        this.isGzip = isGzip;
         this.mobileCountryCode = mobileCountryCode;
         this.mobileNetworkCode = mobileNetworkCode;
         this.currentLocation = currentLocation;
@@ -113,13 +116,9 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
         try {
             @Cleanup Realm realm = Realm.getDefaultInstance();
 
-            log.info("Importing from: " + celltowersPath);
+            log.info("Importing " + (isGzip ? "gzipped file" : "plain-text file"));
 
-            if (!(new File(celltowersPath).exists())) {
-                log.error("File cannot be found: " + celltowersPath);
-                Helpers.msgLong(mAppContext, "File not found");
-                return "Error";
-            }
+            Long elapsedSeconds = System.currentTimeMillis() / 1000;
 
             // Prepare filtering values
             final String mccFilter = String.valueOf(mobileCountryCode);
@@ -200,6 +199,8 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
             } finally {
                 csvReader.close();
             }
+            elapsedSeconds = (System.currentTimeMillis() / 1000) - elapsedSeconds;
+            log.debug("Importing took " + String.valueOf(elapsedSeconds) + " seconds");
             log.debug("Imported records: " + String.valueOf(progress));
             log.debug("Failed records: " + String.valueOf(failedRecords));
 
@@ -216,15 +217,11 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
      */
     @NonNull
     private Reader createFileReader() throws IOException {
-        InputStream fileStream = new FileInputStream(new File(celltowersPath));
-        if (isPathGzip()) {
+        InputStream fileStream = new ParcelFileDescriptor.AutoCloseInputStream(importFile);
+        if (isGzip) {
             fileStream = new FixedGZIPInputStream(new GZIPInputStream(fileStream));
         }
         return new InputStreamReader(fileStream);
-    }
-
-    private boolean isPathGzip() {
-        return celltowersPath.endsWith(".gz");
     }
 
     @NonNull
