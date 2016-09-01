@@ -50,6 +50,8 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
 
     private AsyncTaskCompleteListener mListener;
 
+    public static final double EARTH_RADIUS = 6371.01;
+
     /**
      * @param context           App context
      * @param importFile        URI pointing to the file cell_towers.csv or cell_towers.csv.gz
@@ -118,7 +120,6 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
             // Prepare filtering values
             final String mccFilter = String.valueOf(mobileCountryCode);
             final String mncFilter = String.valueOf(mobileNetworkCode);
-            double earthRadius = 6371.01; // [Km]
 
             long progress = 0;
             long failedRecords = 0;
@@ -145,7 +146,7 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
                     }
                     GeoLocation location = GeoLocation.fromDegrees(Double.parseDouble(next[7]),
                             Double.parseDouble(next[6]));
-                    if (location.distanceTo(currentLocation, earthRadius) > locationRadius) {
+                    if (location.distanceTo(currentLocation, EARTH_RADIUS) > locationRadius) {
                         continue;
                     }
 
