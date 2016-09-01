@@ -279,6 +279,10 @@ import io.freefair.android.util.logging.Logger;
                     Double.doubleToRawLongBits(cell.getLon()) != 0) {
                 GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
+                log.info("OCID location: " + currentLoc.toString() + "  with radius " + radius + " Km.");
+                log.info("OCID MCC is set to: " + cell.getMobileCountryCode());
+                log.info("OCID MNC is set to: " + cell.getMobileNetworkCode());
+
                 new ImportTask(injectionActivity, importFile,
                         cell.getMobileCountryCode(), cell.getMobileNetworkCode(), currentLoc, radius,
                         new ImportTask.AsyncTaskCompleteListener() {
