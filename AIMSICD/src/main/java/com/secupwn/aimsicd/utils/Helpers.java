@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
@@ -269,7 +270,7 @@ import io.freefair.android.util.logging.Logger;
      *
      */
      public static void importCellTowersData(InjectionAppCompatActivity injectionActivity, Cell cell,
-                                             InputStream importFile, boolean isGzip,
+                                             Uri importFile,
                                              final AimsicdService service) {
         if (Helpers.isNetAvailable(injectionActivity)) {
             int radius = 2; // Use a 2 Km radius with center at GPS location.
@@ -278,7 +279,7 @@ import io.freefair.android.util.logging.Logger;
                     Double.doubleToRawLongBits(cell.getLon()) != 0) {
                 GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
-                new ImportTask(injectionActivity, importFile, isGzip,
+                new ImportTask(injectionActivity, importFile,
                         cell.getMobileCountryCode(), cell.getMobileNetworkCode(), currentLoc, radius,
                         new ImportTask.AsyncTaskCompleteListener() {
                     @Override

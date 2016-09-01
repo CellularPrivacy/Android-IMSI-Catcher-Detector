@@ -51,8 +51,6 @@ import com.secupwn.aimsicd.utils.Icon;
 import com.secupwn.aimsicd.utils.LocationServices;
 import com.secupwn.aimsicd.utils.RequestTask;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements AsyncResponse {
@@ -296,17 +294,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         if (requestCode == ACTIVITY_RESULT_SELECT_CELLTOWERS) {
             if (resultCode == RESULT_OK) {
                 log.debug("Chosen file: " + data.getDataString());
-                try {
-                    String type = getContentResolver().getType(data.getData());
-                    boolean isGzip = type != null && type.equals("application/octet-stream") &&
-                            data.getDataString().endsWith(".gz");
-                    InputStream importFile = getContentResolver().openInputStream(data.getData());
-                    importCellTowersData(importFile, isGzip);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    log.error("Cannot open file " + data.getDataString(), e);
-                    Helpers.msgShort(this, getString(R.string.error_importing_celltowers_data));
-                }
+                importCellTowersData(data.getData());
             }
         }
     }
@@ -362,7 +350,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         }
     }
 
-    private void importCellTowersData(InputStream importFile, boolean isGzip) {
+    private void importCellTowersData(Uri importFile) {
 
         Cell cell = new Cell();
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -382,7 +370,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
             cell.setLon(loc.getLongitudeInDegrees());
             cell.setLat(loc.getLatitudeInDegrees());
-            Helpers.importCellTowersData(this, cell, importFile, isGzip, mAimsicdService);
+            Helpers.importCellTowersData(this, cell, importFile, mAimsicdService);
 
         } else {
             Helpers.msgShort(this, getString(R.string.needs_location));

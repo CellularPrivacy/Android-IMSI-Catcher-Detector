@@ -6,6 +6,7 @@
 package com.secupwn.aimsicd.utils;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.secupwn.aimsicd.R;
@@ -41,8 +42,7 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
 
     private RealmHelper mDbAdapter;
     private Context mAppContext;
-    private final InputStream importFile;
-    private final boolean isGzip;
+    private final Uri importFile;
     private final int mobileCountryCode;
     private final int mobileNetworkCode;
     private final GeoLocation currentLocation;
@@ -52,8 +52,7 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
 
     /**
      * @param context           App context
-     * @param importFile        input stream pointing to the file cell_towers.csv or cell_towers.csv.gz
-     * @param isGzip            whether the importFile is gzipped file
+     * @param importFile        URI pointing to the file cell_towers.csv or cell_towers.csv.gz
      * @param mobileCountryCode MCC filter
      * @param mobileNetworkCode MNC filter
      * @param currentLocation   GPS location of cell
@@ -61,13 +60,12 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
      * @param listener          Allows the caller of RequestTask to implement success/fail callbacks
      */
     public ImportTask(InjectionAppCompatActivity context,
-                      InputStream importFile, boolean isGzip,
+                      Uri importFile,
                       int mobileCountryCode, int mobileNetworkCode,
                       GeoLocation currentLocation, int locationRadius,
                       AsyncTaskCompleteListener listener) {
         super(context);
         this.importFile = importFile;
-        this.isGzip = isGzip;
         this.mobileCountryCode = mobileCountryCode;
         this.mobileNetworkCode = mobileNetworkCode;
         this.currentLocation = currentLocation;
@@ -115,8 +113,6 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
         try {
             @Cleanup Realm realm = Realm.getDefaultInstance();
 
-            log.info("Importing " + (isGzip ? "gzipped file" : "plain-text file"));
-
             Long elapsedSeconds = System.currentTimeMillis() / 1000;
 
             // Prepare filtering values
@@ -127,10 +123,11 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
             long progress = 0;
             long failedRecords = 0;
 
-            CSVReader csvReader = new CSVReader(createFileReader());
+            CSVReader csvReader = null;
             try {
                 String next[];
 
+                csvReader = new CSVReader(createFileReader());
                 csvReader.readNext(); // skip header
 
                 String[] opencellid_csv = new String[14];
@@ -196,7 +193,9 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
                     }
                 }
             } finally {
-                csvReader.close();
+                if (csvReader != null) {
+                    csvReader.close();
+                }
             }
             elapsedSeconds = (System.currentTimeMillis() / 1000) - elapsedSeconds;
             log.debug("Importing took " + String.valueOf(elapsedSeconds) + " seconds");
@@ -216,9 +215,17 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
      */
     @NonNull
     private Reader createFileReader() throws IOException {
-        InputStream fileStream = importFile;
+        String type = mAppContext.getContentResolver().getType(importFile);
+        boolean isGzip = type != null && type.equals("application/octet-stream") &&
+                importFile.toString().endsWith(".gz");
+        log.info("Importing " + (isGzip ? "gzipped file" : "plain-text file") + ": " + importFile);
+
+        InputStream fileStream = mAppContext.getContentResolver().openInputStream(importFile);
+        if (fileStream == null) {
+            throw new IOException("File cannot be opened");
+        }
         if (isGzip) {
-            fileStream = new FixedGZIPInputStream(new GZIPInputStream(importFile));
+            fileStream = new FixedGZIPInputStream(new GZIPInputStream(fileStream));
         }
         return new InputStreamReader(fileStream);
     }
