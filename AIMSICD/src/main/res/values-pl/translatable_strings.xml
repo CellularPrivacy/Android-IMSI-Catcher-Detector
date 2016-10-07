@@ -182,10 +182,10 @@
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">SZCZEGÓŁOWY OPIS</string>
     <string name="status_idle_detail_info">Aplikacja jest bezczynna lub ładuje się. Żadne środki ochrony lub wykrywania nie są włączone. Otwórz panel nawigacyjny i włącz śledzenie w menu!</string>
-    <string name="status_ok_detail_info">Nie wykryto żadnych zagrożeń.</string>
+    <string name="status_ok_detail_info">Nie wykryto żadnych zagrożeń. Twoja sieć jest ciągle sprawdzana zgodnie z ustawieniami.</string>
     <string name="status_medium_detail_info">Ta okolica nie jest bezpieczna: wykryto co najmniej jedną nieznaną stację bazową lub używane jest szyfrowanie słabsze niż A5/3. Wszystkie wiadomości i rozmowy w tym rejonie mogą być przechwycone.</string>
     <string name="status_high_detail_info">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników! Wyjmij baterię z telefoni i unikaj tego miejsca!</string>
-    <string name="status_danger_detail_info">Wykryto wrogie śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci. Jeśli jesteś w niebezpieczeństwie zniszczy swój telefon i kartę SIM i zgłoś ją jako niedawno ukradzioną.</string>
+    <string name="status_danger_detail_info">Wykryto wrogie śledzenie: W pobliżu jest aktywny FBTS lub IMSIC, uniemożliwiając bezpieczne, szyfrowane połączenie z dostawcą sieci. Jeśli jesteś w niebezpieczeństwie zniszcz swój telefon, a kartę SIM zgłoś ją jako zaginioną.</string>
     <string name="status_skull_detail_info">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
     <string name="open_cell_id_button_cancel">Anuluj</string>
     <string name="open_cell_id_button_ok">OK</string>
@@ -296,7 +296,7 @@
 
 
     <!-- Section Main-->
-    <string name="help_main_neighboring_cells"/>
+    <string name="help_main_neighboring_cells">Pokaż sąsiednie komórki.</string>
     <string name="help_main_phone_sim_details">Szczegóły SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Pokaż szczegółowe porównanie obecnie połączonych komórek używając danych z OpenCellID. Podświetla różnice.</string>
     <string name="help_main_database_viewer">Pokaż tablele baz danych.</string>
@@ -321,7 +321,7 @@
     <string name="waiting_for_location">Oczekiwanie na lokalizację…</string>
     <string name="unique_bts_data">Unikalne dane BTS</string>
     <string name="bts_measurements">Pomiary BTS</string>
-    <string name="imported_ocid_data">Importowane dane OpenCellID</string>
+    <string name="imported_ocid_data">Zaimportowane dane z OpenCellID</string>
     <string name="default_mmc_locations">Domyślne lokalizacje MMC</string>
     <string name="silent_sms">Bezgłośny SMS</string>
     <string name="eventlog">Logi zdarzeń</string>
@@ -379,4 +379,23 @@
     <string name="pref_enable_gps_title">Ustawienia GPS</string>
     <string name="pref_enable_gps_summary">Włącz GPS by śledzić komórki</string>
     <string name="pref_notification_settings">Ustawienia powiadomień</string>
+    <string name="pref_notification_vibrate_enable_title">Włacz wibracje</string>
+    <string name="pref_notification_vibrate_enable_summary">Wibruj gdy zmienia się stan powiadomień</string>
+    <string name="pref_notification_vibrate_min_level_title">Wibruj na zmianie poziomu zagrożenia</string>
+    <string name="pref_notification_vibrate_min_level_summary">Wybierz minimalny poziom zagrożenia dla wibracji</string>
+    <string name="notification_vibrate_idle">Wstrzymany</string>
+    <string name="notification_vibrate_ok">OK</string>
+    <string name="notification_vibrate_medium">Średni</string>
+    <string name="notification_vibrate_danger">Zagrożenie</string>
+    
+    <string name="database_settings">Baza danych</string>
+    <string name="cell_doesnt_provide_any_neighbors">BTS nie dostarcza informacji o żadnych sąsiednich komórkach!</string>
+    <string name="download_timed_out">Zapytanie do OpenCellID przekroczyło limit czasu. Spróbować później?</string>
+    <string name="deleted">Usunięto</string>
+    <string name="failed_to_delete">Usuwanie nie powiodło się</string>
+    <string name="double_quote_will_cause_db_error">"String nie został dodany
+dodanie \" spowoduje błąd bazy danych "</string>
+    <string name="the_string_was_added_to_db">Dodano do bazy danych</string>
+    <string name="failed_to_add_the_string_to_db">Nie powiodło się dodawanie do bazy danych</string>
+    <string name="n_a">N/A</string>
     </resources>
