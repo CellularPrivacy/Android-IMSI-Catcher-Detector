@@ -32,7 +32,7 @@
     <string name="neighboring_cells_title">células vizinhas</string>
     <string name="ciphering_indicator_title">Indicador de codificação</string>
     <string name="neighboring_cells_num_title">Total:</string>
-    <string name="sim_country">País</string>
+    <string name="sim_country">País:</string>
     <string name="sim_operator_id">ID do operador:</string>
     <string name="sim_operator_name">Nome do operador:</string>
     <string name="sim_imsi">IMSI:</string>
@@ -76,4 +76,81 @@
 
     <string name="unknown">Desconhecido</string>
     <string name="pref_enable_gps_title">Configurações do GPS</string>
+    <string name="pref_system_title">Configurações do sistema</string>
+    <string name="pref_persistservice_title">Serviço de persistência</string>
+    <string name="pref_protection_title">Configurações de proteção</string>
+    <string name="pref_notification_settings">Configurações de notificações</string>
+    <string name="pref_ui_title">Configurações da interface</string>
+    <string name="pref_refresh_title">Taxa de atualização</string>
+    <string name="pref_map_title">Preferências de visualização do mapa</string>
+    <string name="pref_map_type_title">Tipo do mapa</string>
+    <string name="pref_map_type_summ">Mostrar mapas em estilos diferentes</string>
+    
+    <string name="table_names_prompt">Selecionar tabela</string>
+    <string name="response_label">Resposta:</string>
+    <string name="execute_at">Executar</string>
+    <string name="title_ocid_key">"chave da API da OpenCellID "</string>
+    <string name="btn_clear_logs">Limpar</string>
+    <string name="btn_copy_to_clipboard">Copiar</string>
+    <string name="msg_copied_to_clipboard">Logs copiados para a caixa de transferência.</string>
+    <string name="btn_stop_logs">Parar</string>
+    <string name="btn_start_logs">Iniciar</string>
+
+    <string name="title_activity_about_pop_up">EXPLICAÇÃO DETALHADA</string>
+    <string name="about_desc_icon_title">Presione o Ícone de Status abaixo para informações detalhadas:</string>
+
+    <string name="network_netid">ID da rede:</string>
+    <string name="network_sysid">ID do sistema:</string>
+    <string name="network_baseid">ID da estação base:</string>
+
+    <string name="location_error_title">Serviço de localização desabilitado</string>
+    <string name="pref_ui_icons_summ">Seleção do ícone do tema</string>
+    <string name="pref_ui_icons_title">Ícones de status</string>
+    <string name="pref_refresh_summ">Controle a frequência de atualização dos dispositivos
+Frequência atual: %s</string>
+    <string name="cell_id_label">"CID: "</string>
+    <string name="lac_label">"LAC: "</string>
+    <string name="mcc_label">"MCC: "</string>
+    <string name="mnc_label">"MNC: "</string>
+    <string name="pc_label">"PC: "</string>
+    <string name="samples_label">"Exemplos: "</string>
+    <string name="lat_label">"Latitude: "</string>
+    <string name="lng_label">"Longitude: "</string>
+
+    <string name="serial_device_spinner_title">Detectar dispositivos:</string>
+    <string name="timeout_spinner_title">Timeout:</string>
+    <string name="timeout_spinner_prompt">Selecionar Timeout</string>
+    <string name="ocid_api_success">Nova API key foi salva.</string>
+
+    <string name="title_debug_logs">Logs de depuração</string>
+    <string name="open_cell_id_button_cancel">Cancelar</string>
+    <string name="open_cell_id_button_ok">OK</string>
+
+    <string name="pref_notification_vibrate_enable_title">Habilitar vibração</string>
+    <string name="pref_notification_vibrate_enable_summary">Vibrar quando notificações forem alteradas</string>
+    <string name="notification_vibrate_idle">Idle</string>
+    <string name="notification_vibrate_ok">OK</string>
+    <string name="notification_vibrate_medium">Médio</string>
+    <string name="notification_vibrate_danger">Perigo</string>
+    
+    <string name="map_type_normal">Normal</string>
+    <string name="pref_refresh_manual">Manual</string>
+    <string name="pref_refresh_automatic">Automático</string>
+    <string name="pref_refresh_2s">2 segundos</string>
+    <string name="pref_refresh_5s">5 segundos</string>
+    <string name="pref_refresh_10s">10 segundos</string>
+    <string name="pref_refresh_25s">25 segundos</string>
+    <string name="pref_refresh_45s">45 segundos</string>
+    <string name="pref_refresh_1_min">1 minuto</string>
+    <string name="pref_refresh_5_min">5 minutos</string>
+    <string name="timeout_spinner_2_sec">2 segundos</string>
+    <string name="timeout_spinner_5_sec">5 segundos</string>
+    <string name="timeout_spinner_10_sec">10 segundos</string>
+    <string name="timeout_spinner_20_sec">20 segundos</string>
+    <string name="timeout_spinner_30_sec">30 segundos</string>
+    <string name="timeout_spinner_10_min">10 minutos</string>
+    <string name="main">Principal</string>
+    <string name="settings">Configurações</string>
+    <string name="database_settings">Banco de dados</string>
+    <string name="application">Aplicação</string>
     </resources>
