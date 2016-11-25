@@ -18,7 +18,7 @@
 
 
     <!-- MENU -->
-    <string name="toggle_attack_detection">Wykrywanie przełącz Atak</string>
+    <string name="toggle_attack_detection">Przełącz Wykrywanie Ataków</string>
     <string name="toggle_cell_tracking">Przełącz Śledzenie komórki</string>
     <string name="clear_database">Wyczyść bazę danych</string>
     <string name="clear_database_question">Wszystkie dane zostaną skasowane.\nNa pewno?</string>
@@ -377,7 +377,7 @@
     <string name="buildnumber">Numer builda: %s</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
     <string name="pref_enable_gps_title">Ustawienia GPS</string>
-    <string name="pref_enable_gps_summary">Włącz GPS by śledzić komórki</string>
+    <string name="pref_enable_gps_summary">Włącz GPS aby śledzić komórki</string>
     <string name="pref_notification_settings">Ustawienia powiadomień</string>
     <string name="pref_notification_vibrate_enable_title">Włacz wibracje</string>
     <string name="pref_notification_vibrate_enable_summary">Wibruj gdy zmienia się stan powiadomień</string>
