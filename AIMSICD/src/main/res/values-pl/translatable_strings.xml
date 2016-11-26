@@ -20,7 +20,7 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
 
     <!-- MENU -->
     <string name="toggle_attack_detection">Wykrywanie Ataków</string>
-    <string name="toggle_cell_tracking">Śledzenie Komórek</string>
+    <string name="toggle_cell_tracking">Monitorowanie Stacji Bazowych</string>
     <string name="clear_database">Wyczyść bazę danych</string>
     <string name="clear_database_question">Wszystkie dane zostaną skasowane.\nNa pewno?</string>
     <string name="preferences">Ustawienia</string>
@@ -31,7 +31,7 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
     <string name="no_network_connection_message">Nie da się pobrać danych z OpenCellID bez połączenia Internetowego. Proszę włączyć połączenie danych!</string>
 
     <!-- MAP VIEWER -->
-    <string name="get_opencellid">Pobierz dane lokalnej stacji</string>
+    <string name="get_opencellid">Pobierz Informacje O Stacjach Bazowych</string>
 
     <!-- LAYOUT -->
     <string name="device_info_title">Informacje o urządzeniu</string>
@@ -64,7 +64,7 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
     <string name="network_psc">PSC:</string>
 
     <!-- Upload BTS to OpenCellID -->
-    <string name="upload_bts">Wyślij dane o lokalnych komórkach</string>
+    <string name="upload_bts">Wyślij Informacje O Lokalnych Stacjach Bazowych</string>
 
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">O AIMSICD</string>
@@ -103,7 +103,7 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
     <string name="pref_persistservice_title">Działaj w tyle</string>
     <string name="pref_persistservice_summ">Serwis będzie uruchomiony w tle po wyjściu z aplikacji</string>
     <string name="pref_protection_title">Ustawienia ochrony</string>
-    <string name="pref_enable_cell_title">Śledzenie komórek</string>
+    <string name="pref_enable_cell_title">Automatyczne Monitorowanie</string>
     <string name="pref_enable_cell_summ">Włącz automatyczne śledzenie komórek</string>
     <string name="pref_femto_title">Wykrywanie Femtocell</string>
     <string name="pref_femto_summ">(obecnie TYLKO dla telefonów z CDMA)</string>
@@ -316,7 +316,7 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
     <string name="help_app_add_get_ocid_api_key">Uzyskaj klucz API do OpenCellID by pobierać i wysyłać dane…</string>
     <string name="help_app_about">O nas i kogo wspieramy.</string>
     <string name="help_app_download_local_bts">Pobierz bazę danych OpenCellID.</string>
-    <string name="help_app_upload_local_bts">Wyślij dane o lokalnych BTS do OpenCellID.</string>
+    <string name="help_app_upload_local_bts">Wyślij Informacje O Lokalnych Stacjach Bazowych do OpenCellID.</string>
     <string name="help_app_debugging">Wczytaj i wyślij logi.</string>
     <string name="help_app_quit">Zakończ działanie aplikacji.</string>
     <string name="waiting_for_location">Oczekiwanie na lokalizację…</string>
