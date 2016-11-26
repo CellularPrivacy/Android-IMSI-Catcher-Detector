@@ -14,12 +14,13 @@
 
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">DISCLAIMER</string>
-    <string name="disclaimer">"Używając AIMSICD oświadczasz, że rozumiesz i zgadzasz się z tym, że AIMSICD jest eksperymentalną i informacyjną aplikacją na system Android, która może, z wielu powodów, nie być w stanie wykryć tego, że jesteś nadzorowany czy śledzony. Przyjmujesz także do wiadomości, że program może być pokonany w sposoby jeszcze nie znane deweloperom. Tak więc zgadzasz się i rozumiesz, że deweloperzy i firmy związane z tym darmowym produktem nie mogą być pociągnięte do odpowiedzialności z żadnego powodu niezależnie od wyniku użytkowania tej aplikacji. STAN APLIKACJI: ALPHA "</string>
+    <string name="disclaimer">"Używając AIMSICD oświadczasz, że rozumiesz i zgadzasz się z tym, że AIMSICD jest eksperymentalną i informacyjną aplikacją na system Android, która może, z wielu powodów, nie być w stanie wykryć tego, że jesteś nadzorowany czy śledzony. Przyjmujesz także do wiadomości, że program może być pokonany w sposoby jeszcze nie znane deweloperom. Tak więc zgadzasz się i rozumiesz, że deweloperzy i firmy związane z tym darmowym produktem nie mogą być pociągnięte do odpowiedzialności z żadnego powodu niezależnie od wyniku użytkowania tej aplikacji.
+STAN ROZWOJU APLIKACJI: ALPHA! "</string>
 
 
     <!-- MENU -->
-    <string name="toggle_attack_detection">Przełącz Wykrywanie Ataków</string>
-    <string name="toggle_cell_tracking">Przełącz Śledzenie komórki</string>
+    <string name="toggle_attack_detection">Wykrywanie Ataków</string>
+    <string name="toggle_cell_tracking">Śledzenie Komórek</string>
     <string name="clear_database">Wyczyść bazę danych</string>
     <string name="clear_database_question">Wszystkie dane zostaną skasowane.\nNa pewno?</string>
     <string name="preferences">Ustawienia</string>
@@ -36,7 +37,7 @@
     <string name="device_info_title">Informacje o urządzeniu</string>
     <string name="sim_info_title">Informacje o SIM</string>
     <string name="network_info">Informacje o sieci</string>
-    <string name="cell_info_title">Sąsiednie komórki</string>
+    <string name="cell_info_title">Sąsiednie Stacje Bazowe</string>
     <string name="neighboring_cells_title">Sąsiednie komórki</string>
     <string name="ciphering_indicator_title">Wskaźnik szyfrowania</string>
     <string name="neighboring_cells_num_title">Razem:</string>
@@ -374,7 +375,7 @@
     <string name="delete_database_msg_success">Baza danych została usunięta i odtworzona.\nProszę zrestartować aplikację by usunąć resztę danych z pamięci.</string>
 
     <string name="unknown">Nieznany</string>
-    <string name="buildnumber">Numer builda: %s</string>
+    <string name="buildnumber">Numer Kompilacji: %s</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
     <string name="pref_enable_gps_title">Ustawienia GPS</string>
     <string name="pref_enable_gps_summary">Włącz GPS aby śledzić komórki</string>
