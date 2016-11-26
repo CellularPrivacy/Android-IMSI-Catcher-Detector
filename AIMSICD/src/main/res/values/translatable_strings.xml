@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
     <!-- Drawer -->
@@ -24,8 +24,8 @@
     </string>
 
     <!-- MENU -->
-    <string name="toggle_attack_detection">Toggle Attack Detection</string>
-    <string name="toggle_cell_tracking">Toggle Cell Tracking</string>
+    <string name="toggle_attack_detection">Attack Detection</string>
+    <string name="toggle_cell_tracking">Cell Tracking</string>
     <string name="clear_database">Clear/Reset Database</string>
     <string name="clear_database_question">All data will be deleted.\nAre you sure?</string>
     <string name="preferences">Preferences</string>
@@ -191,7 +191,7 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILED EXPLANATION</string>
-    <string name="status_idle_detail_info">App is idling or loading. No protection and detection measures are enabled. Please toggle attack detection!</string>
+    <string name="status_idle_detail_info">App is idling or loading. No protection and detection measures are enabled. Please enable attack detection!</string>
     <string name="status_ok_detail_info">No threats detected. Your network is constantly being checked based upon the enabled detection settings.</string>
     <string name="status_medium_detail_info">Insecure Service Area: At least 1 new or unknown BTS is in operation in this vicinity, or using an insecure (broken) encryption algorithm lower than A5/3. Any phone calls/SMS made in this area can be intercepted and recorded. Quickly leave this place.</string>
     <string name="status_high_detail_info">Hostile Service Actions Detected: An IMSI-Catcher (IMSIC) or fake BTS (FBTS) is actively tracking users. Active scanning takes place in this area. You should avoid this place by all means, especially if there is political unrest. Take out your battery and SIM card!</string>
