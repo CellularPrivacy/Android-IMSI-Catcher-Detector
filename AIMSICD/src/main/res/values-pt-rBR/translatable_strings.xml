@@ -15,7 +15,7 @@
     <string name="toggle_attack_detection">Detecção de ataques de alternância</string>
     <string name="toggle_cell_tracking">Rastreamento de células de alternância</string>
     <string name="clear_database">Limpar/Restabelecer banco de dados</string>
-    <string name="clear_database_question">Todos os dados serão eliminados\nVocê tem certeza?</string>
+    <string name="clear_database_question">Todos os dados serão eliminados.\nVocê tem certeza?</string>
     <string name="preferences">Preferências</string>
     <string name="press_once_again_to_exit">Pressione novamente para sair.</string>
     <string name="cell_lookup">Todos os detalhes da célula atual</string>
