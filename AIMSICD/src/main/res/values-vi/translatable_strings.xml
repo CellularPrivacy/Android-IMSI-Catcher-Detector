@@ -59,7 +59,7 @@
     <string name="about_aimsicd">Về AIMSICD</string>
     <string name="app_version">Phiên bản: %s</string>
     <string name="buildnumber">Số bản dựng: %s</string>
-    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="git_sha">Hàm băm SHA từ Git: %s</string>
     <string name="aimsicd_about_info3">Dự án Android nhằm phát hiện và tránh các trạm cơ sở giả (IMSI-Catchers) trong hệ thống mạng GSM/UMTS.</string>
     <string name="about_github">AIMSICD trên GitHub</string>
     <string name="about_wiki">TÀI LIỆU</string>
@@ -174,7 +174,7 @@
     <string name="notification_vibrate_danger">Nguy hiểm</string>
     
     <string name="ui_icon_flat">Phẳng</string>
-    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_sense">\"Sense\"</string>
     <string name="ui_icon_white">Trắng</string>
     <string name="map_type_terrain">Địa hình</string>
     <string name="map_type_normal">Thông thường</string>
@@ -321,7 +321,7 @@
     <string name="the_string_was_added_to_db">Đã thêm chuỗi vào CSDL</string>
     <string name="failed_to_add_the_string_to_db">Thêm chuỗi vào CSDL thất bại</string>
 
-    <string name="n_a">N/A</string>
+    <string name="n_a">Không có</string>
     <string name="unknown">Không xác định</string>
 
     <string name="database_settings">Cơ sở dữ liệu</string>
