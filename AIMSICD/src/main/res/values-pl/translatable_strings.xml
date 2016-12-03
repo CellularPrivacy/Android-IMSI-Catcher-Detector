@@ -82,7 +82,7 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
     <string name="status_high_about_desc">Aktywne śledzenie blisko Ciebie!</string>
     <string name="status_ok_about_desc">Wszystko OK.</string>
     <string name="status_danger_about_desc">Jesteś śledzony!</string>
-    <string name="status_medium_about_desc">Niebezpieczny obszar. Opóść go!</string>
+    <string name="status_medium_about_desc">Niebezpieczny obszar. Opuść go!</string>
     <string name="status_skull_about_desc">Uciekaj! Telefon ulega manipulacji!</string>
     <string name="about_desc_icon_title">Kliknij na ikonę by uzyskać więcej informacji:</string>
 
