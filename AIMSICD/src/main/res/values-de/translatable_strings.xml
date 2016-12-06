@@ -26,7 +26,7 @@
     </string>
     
     <!-- MENU -->
-    <string name="toggle_attack_detection">Angriffserkennung\nein/ausschalten</string>
+    <string name="toggle_attack_detection">Angriffserkennung</string>
     <string name="toggle_cell_tracking">Funkzellen aufzeichnen</string>
     <string name="clear_database">Datenbank löschen / zurücksetzen</string>
     <string name="clear_database_question">Alle Daten werden gelöscht.\nSind Sie sicher?</string>
@@ -400,4 +400,6 @@
     <string name="pref_enable_gps_summary">Aktiviere GPS für Funkzellenverfolgung</string>
     <string name="n_a">N/V</string>
     <string name="unknown">Unbekannt</string>
+    <string name="cell_doesnt_provide_any_neighbors">BTS stellt keine Nachbarzellen bereit!</string>
+    <string name="download_timed_out">Die OpenCellID-Api reagiert nicht. Später erneut versuchen?</string>
     </resources>
