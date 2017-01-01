@@ -9,8 +9,8 @@
     <string name="text_disagree">我拒绝</string>
 
     <string name="disclaimer_title">免责声明</string>
-    <string name="toggle_attack_detection">切换攻击检测</string>
-    <string name="toggle_cell_tracking">切换蜂窝跟踪</string>
+    <string name="toggle_attack_detection">攻击检测</string>
+    <string name="toggle_cell_tracking">蜂窝跟踪</string>
     <string name="clear_database">清除/重置数据库</string>
     <string name="clear_database_question">所有数据将被删除。\n您确定吗？</string>
     <string name="preferences">首选项</string>
@@ -301,7 +301,7 @@
     <string name="mcc_label">"MCC: "</string>
     <string name="mnc_label">"MNC: "</string>
     <string name="pc_label">"PC: "</string>
-    <string name="status_idle_detail_info">应用目前闲置或正在加载。没有保护和检测措施已启用。请切换攻击检测方式！</string>
+    <string name="status_idle_detail_info">应用目前闲置或正在加载。没有保护和检测措施已启用。请启用攻击检测！</string>
     <string name="status_ok_detail_info">没有检测到威胁。您的网络将持续基于已启用的检测设置被检查。</string>
     <string name="aimsicd_about_info3">基于 Android 的项目，检测和避免 GSM/UMTS 网络中的伪基站 (IMSI 窃取者)。</string>
     <string name="help_main_at_command_interface">允许发送 AT 命令到基带处理器的界面 (需要 ROOT 权限)。</string>
