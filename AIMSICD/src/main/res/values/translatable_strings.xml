@@ -38,6 +38,9 @@
     <!-- MAP VIEWER -->
     <string name="get_opencellid">Download BTS Data</string>
 
+    <!-- IMPORT CELLTOWERS.CSV -->
+    <string name="import_cell_towers">Import CellTowers Data</string>
+
     <!-- LAYOUT -->
     <string name="device_info_title">Device Information</string>
     <string name="sim_info_title">SIM Information</string>
@@ -274,6 +277,9 @@
     <string name="error_uploading_bts_data">Error in uploading BTS data to OpenCellID servers!</string>
     <string name="no_opencellid_key_detected">No OpenCellID API Key detected!\nPlease enter your key in settings first.</string>
     <string name="refreshed_cell_id_info">Refreshed CellId info</string>
+    <string name="imporing_celltowers_data">Importing CellTowers data…\nThis may take a while.</string>
+    <string name="celltowers_data_successfully_imported">CellTowers data successfully imported.</string>
+    <string name="error_importing_celltowers_data">Error importing CellTowers data.</string>
     <string name="unable_to_acquire_root_access">Unable to acquire ROOT access on your device.\nAT Command Injection requires ROOT Terminal access.\nPlease check your device is ROOTED and try again.</string>
     <string name="unable_to_detect_busybox">Unable to detect Busybox on your device.\nAT Command Injection requires Busybox components to function correctly.\nPlease check your device has Busybox installed and try again.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">An unknown error has occurred trying to acquire the Serial Device.\nPlease check your logcat for any errors and post them on our Github.</string>
@@ -338,10 +344,12 @@
     <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data…</string>
     <string name="help_app_about">Status Icons and Project explained.</string>
     <string name="help_app_download_local_bts">Downloads the OpenCellID Database.</string>
+    <string name="help_app_import_cell_towers">Imports CellTowers Database.</string>
     <string name="help_app_upload_local_bts">Uploads your BTS to the OpenCellID Database.</string>
     <string name="help_app_debugging">Collect and send error logs.</string>
     <string name="help_app_quit">Exit this app.</string>
     <string name="waiting_for_location">Waiting for location…</string>
+    <string name="needs_location">Needs location</string>
     <string name="unique_bts_data">Unique BTS Data</string>
     <string name="bts_measurements">BTS Measurements</string>
     <string name="imported_ocid_data">Imported OpenCellID Data</string>
