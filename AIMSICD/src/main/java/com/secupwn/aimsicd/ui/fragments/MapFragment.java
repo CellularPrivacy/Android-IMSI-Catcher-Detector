@@ -106,7 +106,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
     private AimsicdService mAimsicdService;
     private boolean mBound;
 
-    private GeoPoint loc = null;
+    private GeoPoint mLatestCellLoc = null;
 
     private MyLocationNewOverlay mMyLocationOverlay;
     private CompassOverlay mCompassOverlay;
@@ -178,6 +178,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
         if (mMyLocationOverlay != null) {
             mMyLocationOverlay.enableMyLocation();
+            mMyLocationOverlay.enableFollowLocation();
         }
     }
 
@@ -193,6 +194,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
         if (mMyLocationOverlay != null) {
             mMyLocationOverlay.disableMyLocation();
+            mMyLocationOverlay.disableFollowLocation();
         }
 
         if (prefs != null) {
@@ -289,28 +291,37 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
      */
     private void setUpMapIfNeeded() {
 
+        mMap.getOverlayManager().clear();
         // Check if we were successful in obtaining the map.
         mMap.setBuiltInZoomControls(true);
         mMap.setMultiTouchControls(true);
         mMap.setMinZoomLevel(3);
         mMap.setMaxZoomLevel(19); // Latest OSM can go to 21!
         mMap.getTileProvider().createTileCache();
-        mCompassOverlay = new CompassOverlay(getActivity(), new InternalCompassOrientationProvider(getActivity()), mMap);
+
+        if (mCompassOverlay == null) {
+            mCompassOverlay = new CompassOverlay(getActivity(), new InternalCompassOrientationProvider(getActivity()), mMap);
+        }
 
         ScaleBarOverlay mScaleBarOverlay = new ScaleBarOverlay(getActivity());
         mScaleBarOverlay.setScaleBarOffset(getResources().getDisplayMetrics().widthPixels / 2, 10);
         mScaleBarOverlay.setCentred(true);
 
         // Sets cluster pin color
-        mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(getActivity());
-        BitmapDrawable mapPinDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_map_pin_orange);
-        mCellTowerGridMarkerClusterer.setIcon(mapPinDrawable == null ? null : mapPinDrawable.getBitmap());
+        if (mCellTowerGridMarkerClusterer == null) {
+            mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(getActivity());
+            BitmapDrawable mapPinDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_map_pin_orange);
+            mCellTowerGridMarkerClusterer.setIcon(mapPinDrawable == null ? null : mapPinDrawable.getBitmap());
+        }
 
-        GpsMyLocationProvider gpsMyLocationProvider = new GpsMyLocationProvider(getActivity().getBaseContext());
-        gpsMyLocationProvider.setLocationUpdateMinDistance(100); // [m]  // Set the minimum distance for location updates
-        gpsMyLocationProvider.setLocationUpdateMinTime(10000);   // [ms] // Set the minimum time interval for location updates
-        mMyLocationOverlay = new MyLocationNewOverlay(getActivity().getBaseContext(), gpsMyLocationProvider, mMap);
-        mMyLocationOverlay.setDrawAccuracyEnabled(true);
+        if (mMyLocationOverlay == null) {
+            GpsMyLocationProvider gpsMyLocationProvider = new GpsMyLocationProvider(getActivity().getBaseContext());
+            gpsMyLocationProvider.setLocationUpdateMinDistance(100); // [m]  // Set the minimum distance for location updates
+            gpsMyLocationProvider.setLocationUpdateMinTime(10000);   // [ms] // Set the minimum time interval for location updates
+
+            mMyLocationOverlay = new MyLocationNewOverlay(getActivity().getBaseContext(), gpsMyLocationProvider, mMap);
+            mMyLocationOverlay.setDrawAccuracyEnabled(true);
+        }
 
         mMap.getOverlays().add(mCellTowerGridMarkerClusterer);
         mMap.getOverlays().add(mMyLocationOverlay);
@@ -349,11 +360,11 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                     }
                 }
 
-                if (loc != null) {
+                if (mLatestCellLoc != null) {
                     Helpers.msgLong(getActivity(), getString(R.string.contacting_opencellid_for_data));
                     Cell cell = new Cell();
-                    cell.setLat(loc.getLatitude());
-                    cell.setLon(loc.getLongitude());
+                    cell.setLat(mLatestCellLoc.getLatitude());
+                    cell.setLon(mLatestCellLoc.getLongitude());
                     setRefreshActionButtonState(true);
                     TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, false);
                     Helpers.getOpenCellData((InjectionAppCompatActivity) getActivity(), cell, RequestTask.DBE_DOWNLOAD_REQUEST_FROM_MAP, mAimsicdService);
@@ -424,16 +435,16 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
                         if (Double.doubleToRawLongBits(dLat) != 0
                                 || Double.doubleToRawLongBits(dLng) != 0) {
-                            loc = new GeoPoint(dLat, dLng);
+                            mLatestCellLoc = new GeoPoint(dLat, dLng);
 
                             CellTowerMarker ovm = new CellTowerMarker(getActivity(), mMap,
                                     "Cell ID: " + cellID,
-                                    "", loc,
+                                    "", mLatestCellLoc,
                                     new MarkerData(
                                             getContext(),
                                             String.valueOf(cellID),
-                                            String.valueOf(loc.getLatitude()),
-                                            String.valueOf(loc.getLongitude()),
+                                            String.valueOf(mLatestCellLoc.getLatitude()),
+                                            String.valueOf(mLatestCellLoc.getLongitude()),
                                             String.valueOf(lac),
                                             String.valueOf(mcc),
                                             String.valueOf(mnc),
@@ -483,15 +494,15 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         return null;
                     }
                     try {
-                        loc = new GeoPoint(cell.getLat(), cell.getLon());
+                        mLatestCellLoc = new GeoPoint(cell.getLat(), cell.getLon());
                         CellTowerMarker ovm = new CellTowerMarker(getActivity(), mMap,
                                 getString(R.string.cell_id_label) + cell.getCellId(),
-                                "", loc,
+                                "", mLatestCellLoc,
                                 new MarkerData(
                                         getContext(),
                                         String.valueOf(cell.getCellId()),
-                                        String.valueOf(loc.getLatitude()),
-                                        String.valueOf(loc.getLongitude()),
+                                        String.valueOf(mLatestCellLoc.getLatitude()),
+                                        String.valueOf(mLatestCellLoc.getLongitude()),
                                         String.valueOf(cell.getLocationAreaCode()),
                                         String.valueOf(cell.getMobileCountryCode()),
                                         String.valueOf(cell.getMobileNetworkCode()),
@@ -522,28 +533,34 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
              */
             @Override
             protected void onPostExecute(GeoPoint defaultLoc) {
-                if (loc != null && (Double.doubleToRawLongBits(loc.getLatitude()) != 0
-                        && Double.doubleToRawLongBits(loc.getLongitude()) != 0)) {
-                    mMap.getController().setZoom(16);
-                    mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
-                } else {
-                    if (mBound) {
-                        // Try and find last known location and zoom there
-                        GeoLocation lastLoc = mAimsicdService.lastKnownLocation();
-                        if (lastLoc != null) {
-                            loc = new GeoPoint(lastLoc.getLatitudeInDegrees(),
-                                    lastLoc.getLongitudeInDegrees());
+                boolean movedMap = false;
+                if (mBound) {
+                    // Try and find last known location and zoom there
+                    GeoLocation lastLoc = mAimsicdService.lastKnownLocation();
+                    if (lastLoc != null) {
+                        GeoPoint loc = new GeoPoint(lastLoc.getLatitudeInDegrees(),
+                                lastLoc.getLongitudeInDegrees());
 
-                            mMap.getController().setZoom(16);
-                            mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
-                        } else {
-                            //Use MCC to move camera to an approximate location near Countries Capital
-                            loc = defaultLoc;
-
-                            mMap.getController().setZoom(12);
-                            mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
-                        }
+                        mMap.getController().setZoom(16);
+                        mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
+                        movedMap = true;
                     }
+                }
+                if (!movedMap) {
+                    if (mLatestCellLoc != null && (Double.doubleToRawLongBits(mLatestCellLoc.getLatitude()) != 0
+                            && Double.doubleToRawLongBits(mLatestCellLoc.getLongitude()) != 0)) {
+                        mMap.getController().setZoom(16);
+                        mMap.getController().animateTo(new GeoPoint(mLatestCellLoc.getLatitude(), mLatestCellLoc.getLongitude()));
+                        movedMap = true;
+                    }
+                }
+                if (!movedMap) {
+                    //Use MCC to move camera to an approximate location near Countries Capital
+                    GeoPoint loc = defaultLoc;
+
+                    mMap.getController().setZoom(12);
+                    mMap.getController().animateTo(new GeoPoint(loc.getLatitude(), loc.getLongitude()));
+                    movedMap = true;
                 }
                 if (mCellTowerGridMarkerClusterer != null) {
                     if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer.getItems() != null) {
