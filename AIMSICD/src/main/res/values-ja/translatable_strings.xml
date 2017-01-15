@@ -334,4 +334,12 @@
     <string name="database_settings">データベース</string>
     <string name="download_timed_out">OpenCellID API リクエストがタイムアウトしました。後でもう一度試しますか?</string>
     <string name="cell_doesnt_provide_any_neighbors">BTS は、隣接基地局を提供していません!</string>
+    <string name="import_cell_towers">基地局のデータをインポート</string>
+
+    <string name="imporing_celltowers_data">基地局のデータをインポートしています…
+処理に時間がかかることがあります。</string>
+    <string name="celltowers_data_successfully_imported">基地局のデータを正常にインポートしました。</string>
+    <string name="error_importing_celltowers_data">基地局のデータをインポート中にエラー。</string>
+    <string name="help_app_import_cell_towers">基地局のデータベースをインポートします。</string>
+    <string name="needs_location">場所が必要</string>
     </resources>
