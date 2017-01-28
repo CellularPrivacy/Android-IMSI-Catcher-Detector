@@ -10,10 +10,16 @@
     <string name="text_disagree">Jeg er uenig</string>
 
     <string name="disclaimer_title">VIKTIG</string>
-    <string name="disclaimer">"Ved å bruke AIMSICD har du forstått og godtatt at AIMSICD er en experimentell og informativ Android applikasjon som kan feile i å oppdage sporing og overvåkning av flere årsaker. Du er også klar over at den kan bli lurt og slått av årsaker ukjent for utviklerne. Du forstår og at utviklerne og selskap tilknyttet denne gratisappen ikke kan holdes ansvarlig for resultater og konsekvenser vedrørende bruken av denne applikasjonen.  UTVIKLINGS-STADIE: ALPHA! "</string>
+    <string name="disclaimer">"Ved å bruke AIMSICD har du forstått og godtatt at AIMSICD er en experimentell
+ og informativ Android applikasjon som kan feile i å oppdage sporing og
+ overvåkning av flere årsaker. Du er også klar over at den kan bli lurt eller
+ gi tapt av årsaker ukjent for utviklerne. Du forstår og at utviklerne og selskap
+ tilknyttet denne gratisappen ikke kan holdes ansvarlig for resultater og konsekvenser
+ vedrørende bruken av denne applikasjonen.  UTVIKLINGS-STADIE: ALPHA!
+ "</string>
 
-    <string name="toggle_attack_detection">Styr Angrepsoppdaging</string>
-    <string name="toggle_cell_tracking">Styr Cellesporing</string>
+    <string name="toggle_attack_detection">Angrepsoppdaging</string>
+    <string name="toggle_cell_tracking">Cellesporing</string>
     <string name="clear_database">Nullstill Database</string>
     <string name="clear_database_question">Alle data vil slettes.\nEr du sikker?</string>
     <string name="press_once_again_to_exit">Trykk på nytt for å Avslutte.</string>
@@ -150,7 +156,7 @@
     <string name="btn_start_logs">Start</string>
 
     <string name="title_activity_about_pop_up">DETALJERT FORKLARING</string>
-    <string name="status_idle_detail_info">Appen pauser eller laster. Ingen beskyttelse eller oppdaging er påslått. Vennligsts slå på Angrepsoppdaging!</string>
+    <string name="status_idle_detail_info">Appen er pauset eller laster. Ingen beskyttelse eller oppdaging er aktiv. Vennligsts slå på Angrepsoppdaging!</string>
     <string name="status_ok_detail_info">Ingen trusler oppdaget. Ditt nettverk sjekkes konstant basert på det du har påslått i Oppdagelses-Innstillinger.</string>
     <string name="status_medium_detail_info">"Usikkert Område: Minst 1 ny eller ukjent basestasjon i området, eller med brutt eller usikker kryptering lavere enn A5/3. Alle samtaler eller SMS som utføres hær kan bli  avlyttet og lagret. Forlat området Fort."</string>
     <string name="status_high_detail_info">Aktive Fientlige Tjenester Oppdaget: En IMSI-Catcher (IMSIC) eller falsk BTS (basestasjon) sporer aktivt brukere. Aktiv sporing foregår i dette området. Du bør helst unngå dette stedet, spesiellt ved Masseansamlinger og uro. Ta ut batteriet og SIM kortet!</string>
@@ -327,4 +333,12 @@
     <string name="database_settings">Database</string>
     <string name="download_timed_out">OpenCellID API forespørsel tidsavbrudd Prøv igjen senere!?</string>
     <string name="cell_doesnt_provide_any_neighbors">Bakkestasjonen støtter ikke NaboCeller!</string>
+    <string name="import_cell_towers">"Importer  CellTowers-data"</string>
+
+    <string name="imporing_celltowers_data">Importerer CellTowsers-data...
+Dette kan ta litt tid.</string>
+    <string name="celltowers_data_successfully_imported">Import av CellTowers-data var vellykket.</string>
+    <string name="error_importing_celltowers_data">Import av CellTowers-data feilet.</string>
+    <string name="help_app_import_cell_towers">Importerer CellTowers-database.</string>
+    <string name="needs_location">Trenger plassering</string>
     </resources>
