@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
@@ -246,6 +247,57 @@ import io.freefair.android.util.logging.Logger;
                 }
                 Helpers.sendMsg(injectionActivity, injectionActivity.getString(R.string.no_opencellid_key_detected));
             }
+        } else {
+            Fragment myFragment = injectionActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
+            if (myFragment instanceof MapFragment) {
+                ((MapFragment) myFragment).setRefreshActionButtonState(false);
+            }
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(injectionActivity);
+            builder.setTitle(R.string.no_network_connection_title)
+                    .setMessage(R.string.no_network_connection_message);
+            builder.create().show();
+        }
+    }
+
+    /**
+     * Description:      Imports cell data from the specified file
+     *
+     * Used:
+     * @param celltowersPath path to the cell_towers.csv / cell_towers.csv.gz
+     * @param cell Current Cell Information
+     * @param importFile
+     *
+     */
+     public static void importCellTowersData(InjectionAppCompatActivity injectionActivity, Cell cell,
+                                             Uri importFile,
+                                             final AimsicdService service) {
+        if (Helpers.isNetAvailable(injectionActivity)) {
+            int radius = 2; // Use a 2 Km radius with center at GPS location.
+
+            if (Double.doubleToRawLongBits(cell.getLat()) != 0 &&
+                    Double.doubleToRawLongBits(cell.getLon()) != 0) {
+                GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
+
+                log.info("OCID location: " + currentLoc.toString() + "  with radius " + radius + " Km.");
+                log.info("OCID MCC is set to: " + cell.getMobileCountryCode());
+                log.info("OCID MNC is set to: " + cell.getMobileNetworkCode());
+
+                new ImportTask(injectionActivity, importFile,
+                        cell.getMobileCountryCode(), cell.getMobileNetworkCode(), currentLoc, radius,
+                        new ImportTask.AsyncTaskCompleteListener() {
+                    @Override
+                    public void onAsyncTaskSucceeded() {
+                        log.verbose("ImportTask's OCID import was successful. Callback rechecking connected cell against database");
+                        service.getCellTracker().compareLacAndOpenDb();
+                    }
+
+                    @Override
+                    public void onAsyncTaskFailed(String result) {
+                    }
+                }).execute();
+            }
+
         } else {
             Fragment myFragment = injectionActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
             if (myFragment instanceof MapFragment) {

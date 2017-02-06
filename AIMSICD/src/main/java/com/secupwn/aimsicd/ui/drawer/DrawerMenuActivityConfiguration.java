@@ -96,6 +96,7 @@ public class DrawerMenuActivityConfiguration {
             //Section Application
             menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_APPLICATION, mContext.getString(R.string.application)));
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA, mContext.getString(R.string.get_opencellid), R.drawable.stat_sys_download_anim0, false));
+            menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.IMPORT_CELL_TOWERS_DATA, mContext.getString(R.string.import_cell_towers), R.drawable.stat_sys_download_anim0, false));
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA, mContext.getString(R.string.upload_bts), R.drawable.stat_sys_upload_anim0, false));
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.QUIT, mContext.getString(R.string.quit), R.drawable.ic_action_remove, false));
             mNavItems = menu;

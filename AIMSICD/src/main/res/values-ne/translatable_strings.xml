@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="tracking">पछ्याउनु</string>
+    <string name="device_info">फोन/सिम विवरण</string>
+    <string name="map_view">"antenna नक्सा  निरिक्षक"</string>
+    <string name="db_viewer">database निरिक्षक</string>
+    <string name="quit">छोड्नु</string>
+    <string name="text_ok">हुन्छ</string>
+    <string name="text_cancel">रद्द गर्नु</string>
+    <string name="text_agree">म सहमत छु</string>
+    <string name="text_disagree">म असहमत छु</string>
+
+    <string name="disclaimer_title">अधिकार त्याग गर्ने</string>
+    </resources>

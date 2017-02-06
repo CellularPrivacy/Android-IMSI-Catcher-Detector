@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
     private DrawerMenuActivityConfiguration mNavConf;
 
+    private static final int ACTIVITY_RESULT_SELECT_CELLTOWERS = 1;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,6 +257,11 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA) {
             downloadBtsDataIfApiKeyAvailable();
+        } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.IMPORT_CELL_TOWERS_DATA) {
+            Intent pickFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            pickFileIntent.setType("*/*");
+            pickFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
+            startActivityForResult(pickFileIntent, ACTIVITY_RESULT_SELECT_CELLTOWERS);
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.QUIT) {
             try {
                 if (mAimsicdService.isSmsTracking()) {
@@ -278,6 +285,17 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
         if (this.mDrawerLayout.isDrawerOpen(this.mDrawerList)) {
             mDrawerLayout.closeDrawer(mDrawerList);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ACTIVITY_RESULT_SELECT_CELLTOWERS) {
+            if (resultCode == RESULT_OK) {
+                log.debug("Chosen file: " + data.getDataString());
+                importCellTowersData(data.getData());
+            }
         }
     }
 
@@ -329,6 +347,33 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
             }
         } else {
             Helpers.sendMsg(this, getString(R.string.no_opencellid_key_detected));
+        }
+    }
+
+    private void importCellTowersData(Uri importFile) {
+
+        Cell cell = new Cell();
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String networkOperator = tm.getNetworkOperator();
+
+        if (networkOperator != null && !networkOperator.isEmpty()) {
+            int mcc = Integer.parseInt(networkOperator.substring(0, 3));
+            cell.setMobileCountryCode(mcc);
+            int mnc = Integer.parseInt(networkOperator.substring(3));
+            cell.setMobileNetworkCode(mnc);
+            log.debug("CELL:: mobileCountryCode=" + mcc + " mobileNetworkCode=" + mnc);
+        }
+
+        GeoLocation loc = mAimsicdService.lastKnownLocation();
+        if (loc != null) {
+            Helpers.msgLong(this, getString(R.string.imporing_celltowers_data));
+
+            cell.setLon(loc.getLongitudeInDegrees());
+            cell.setLat(loc.getLatitudeInDegrees());
+            Helpers.importCellTowersData(this, cell, importFile, mAimsicdService);
+
+        } else {
+            Helpers.msgShort(this, getString(R.string.needs_location));
         }
     }
 

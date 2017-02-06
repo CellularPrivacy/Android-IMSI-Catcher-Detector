@@ -118,6 +118,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private boolean changedLAC;
     private boolean cellIdNotInOpenDb;
     private boolean typeZeroSmsDetected;
+    private boolean emptyNeighborCellsList;
     private boolean vibrateEnabled;
     private int vibrateMinThreatLevel;
     private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
@@ -447,30 +448,38 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     public void checkForNeighborCount(CellLocation location) {
         log.info("CheckForNeighborCount()");
 
-        Integer ncls = 0;                                       // NC list size
-        if (tm != null && tm.getNeighboringCellInfo() != null) { // See # 383
-            ncls = tm.getNeighboringCellInfo().size();
-        }
-        Boolean nclp = tinydb.getBoolean("nc_list_present");    // NC list present? (default is false)
+        emptyNeighborCellsList = false;
 
-        if (ncls > 0) {
-            log.debug("NeighboringCellInfo size: " + ncls);
-            if (!nclp) {
-                log.debug("Setting nc_list_present to: true");
-                tinydb.putBoolean("nc_list_present", true);
+        Integer neighborCellsCount = 0;
+        if (tm != null && tm.getNeighboringCellInfo() != null) { // See # 383
+            neighborCellsCount = tm.getNeighboringCellInfo().size();
+        }
+        
+        // NC list present for that network type? (default is false)
+        String ncListVariableByType = "nc_list_present_" + tm.getNetworkType();
+        Boolean nclSupportedByNetwork = tinydb.getBoolean(ncListVariableByType);
+
+        if (neighborCellsCount > 0) {
+            log.debug("NeighboringCellInfo size: " + neighborCellsCount);
+            if (!nclSupportedByNetwork)  {
+                log.debug("Setting " + ncListVariableByType + " to: true");
+                tinydb.putBoolean(ncListVariableByType, true);
             }
-        } else if (ncls == 0 && nclp) {
+        } else if (neighborCellsCount == 0 && nclSupportedByNetwork) {
             // Detection 7a
             log.info("ALERT: No neighboring cells detected for CID: " + device.cell.getCellId());
-            vibrate(100, Status.MEDIUM);
+
+            emptyNeighborCellsList = true;
+
             @Cleanup Realm realm = Realm.getDefaultInstance();
             dbHelper.toEventLog(realm, 4, "No neighboring cells detected"); // (DF_id, DF_desc)
         } else  {
             // Todo: remove cid string when working.
-            log.debug("NC list not supported by AOS on this device. Nothing to do.");
-            log.debug(": Setting nc_list_present to: false");
-            tinydb.putBoolean("nc_list_present", false);
+            log.debug("NC list not supported by this networkn type or not supported by AOS on this device. Nothing to do.");
+            log.debug("Setting " + ncListVariableByType + " to: false");
+            tinydb.putBoolean(ncListVariableByType, false);
         }
+        setNotification();
     }
 
     /**
@@ -953,6 +962,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else if (changedLAC) {
             getApplication().setCurrentStatus(Status.MEDIUM, vibrateEnabled, vibrateMinThreatLevel);
             contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
+        } else if (emptyNeighborCellsList) {
+            getApplication().setCurrentStatus(Status.MEDIUM, vibrateEnabled, vibrateMinThreatLevel);
+            contentText = context.getString(R.string.cell_doesnt_provide_any_neighbors);
         } else if (cellIdNotInOpenDb) {
             getApplication().setCurrentStatus(Status.MEDIUM, vibrateEnabled, vibrateMinThreatLevel);
             contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);
@@ -993,11 +1005,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         //Append changing LAC text
                         contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
                         tickerText += " - " + contentText;
-                        // See #264 and ask He3556
-                        //} else if (mNoNCList)  {
-                        //    tickerText += " - BTS doesn't provide any neighbors!";
-                        //    contentText = "CID: " + cellid + " is not providing a neighboring cell list!";
-
+                    } else if (emptyNeighborCellsList) {
+                        //According to #264
+                        contentText = context.getString(R.string.cell_doesnt_provide_any_neighbors);
+                        tickerText += " - " + contentText;
                     } else if (cellIdNotInOpenDb) {
                         //Append Cell ID not existing in external db text
                         contentText = context.getString(R.string.cell_id_doesnt_exist_in_db);

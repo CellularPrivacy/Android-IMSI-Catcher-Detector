@@ -106,7 +106,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     /**
      *
      * @param context App context
-     * @param type What type of request to be performed (download OCID, upload OCID, DB backup, etc.)
+     * @param type What type of request to be performed (download OCID, upload OCID, etc.)
      * @param listener Allows the caller of RequestTask to implement success/fail callbacks
      */
     public RequestTask(InjectionAppCompatActivity context, char type, AsyncTaskCompleteListener listener) {

@@ -55,9 +55,9 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
         realm = Realm.getDefaultInstance();
 
-        RealmResults<SmsDetectionString> msgItems = realm.allObjects(SmsDetectionString.class);
+        RealmResults<SmsDetectionString> msgItems = realm.where(SmsDetectionString.class).findAll();
 
-        listViewAdv.setAdapter(new DetectionStringAdapter(this, msgItems, true));
+        listViewAdv.setAdapter(new DetectionStringAdapter(this, msgItems));
 
         listViewAdv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -69,7 +69,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        detectionString.removeFromRealm();
+                        detectionString.deleteFromRealm();
                     }
                 });
 

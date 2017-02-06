@@ -10,8 +10,8 @@
     <string name="text_disagree">Tôi không đồng ý</string>
 
     <string name="disclaimer_title">MIỄN TRỪ TRÁCH NHIỆM</string>
-    <string name="toggle_attack_detection">Bật tắt phát hiện tấn công</string>
-    <string name="toggle_cell_tracking">Bật tắt theo dõi máy di động</string>
+    <string name="toggle_attack_detection">Phát hiện sự tấn công</string>
+    <string name="toggle_cell_tracking">Theo dõi sóng di động</string>
     <string name="clear_database">Xoá/cài lại CSDL</string>
     <string name="clear_database_question">Tất cả dữ liệu sẽ bị xóa.\nBạn có chắc không?</string>
     <string name="preferences">Tuỳ chỉnh</string>
@@ -26,10 +26,10 @@
     <string name="device_info_title">Thông tin thiết bị</string>
     <string name="sim_info_title">Thông tin SIM</string>
     <string name="network_info">Thông tin mạng</string>
-    <string name="cell_info_title">Mức độ đe dọa hiện thời</string>
+    <string name="cell_info_title">Các trạm sóng lân cận</string>
     <string name="neighboring_cells_title">Các máy di động lân cận</string>
     <string name="ciphering_indicator_title">Bộ chỉ báo viết mã</string>
-    <string name="disclaimer">"Khi sử dụng AIMSICD, bạn hiểu và chấp nhận rằng AIMSICD là một ứng dụng Android thực nghiệm cung cấp nhiều thông tin hữu ích và nó có thể thất bại trong việc phát hiện sự giám sát và theo dõi vì nhiều lý do khác nhau. Bạn cũng hiểu rằng nó có thể bị phá rối hoặc huỷ hoại bởi các công cụ khác mà nhà phát triển chưa hiểu rõ. Vì vậy, bạn cũng chấp nhận và hiểu rằng các công ty và nhà phát triển liên quan đến sản phẩm miễn phí này, trong mọi trường hợp, sẽ không phải chịu trách nhiệm cho bất kỳ hậu quả nào do việc sử dụng phần mềm này gây ra. "</string>
+    <string name="disclaimer">"Khi sử dụng AIMSICD, bạn hiểu và chấp nhận rằng AIMSICD là một ứng dụng Android thực nghiệm cung cấp nhiều thông tin hữu ích và nó có thể thất bại trong việc phát hiện sự giám sát và theo dõi vì nhiều lý do khác nhau. Bạn cũng hiểu rằng nó có thể bị phá rối hoặc huỷ hoại bởi các công cụ khác mà nhà phát triển chưa hiểu rõ. Vì vậy, bạn cũng chấp nhận và hiểu rằng các công ty và nhà phát triển liên quan đến sản phẩm miễn phí này, trong mọi trường hợp, sẽ không phải chịu trách nhiệm cho bất kỳ hậu quả nào do việc sử dụng phần mềm này gây ra. TRẠNG THÁI: ALPHA! "</string>
 
     <string name="neighboring_cells_num_title">Tổng cộng:</string>
     <string name="sim_country">Quốc gia:</string>
@@ -59,7 +59,7 @@
     <string name="about_aimsicd">Về AIMSICD</string>
     <string name="app_version">Phiên bản: %s</string>
     <string name="buildnumber">Số bản dựng: %s</string>
-    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="git_sha">Hàm băm SHA từ Git: %s</string>
     <string name="aimsicd_about_info3">Dự án Android nhằm phát hiện và tránh các trạm cơ sở giả (IMSI-Catchers) trong hệ thống mạng GSM/UMTS.</string>
     <string name="about_github">AIMSICD trên GitHub</string>
     <string name="about_wiki">TÀI LIỆU</string>
@@ -155,7 +155,7 @@
     <string name="btn_start_logs">Bắt đầu</string>
 
     <string name="title_activity_about_pop_up">GIẢI THÍCH CHI TIẾT</string>
-    <string name="status_idle_detail_info">Ứng dụng đang nhàn rỗi hoặc đang tải. Chưa bật biện pháp phát hiện và bảo vệ nào. Xin bật tính năng phát hiện tấn công!</string>
+    <string name="status_idle_detail_info">Ứng dụng đang nghỉ hoặc đang tải. Chưa kích hoạt cơ chế phát hiện và bảo vệ nào. Xin bật cơ chế phát hiện tấn công!</string>
     <string name="status_ok_detail_info">Không phát hiện mối đe doạ nào. Mạng của bạn đang được kiểm tra liên tục dựa trên các thiết lập phát hiện đã bật.</string>
     <string name="status_medium_detail_info">Khu vực dịch vụ không bảo mật: Có ít nhất 1 BTS mới hoặc không xác định đang hoạt động trong vùng lân cận này, hoặc đang sử dụng thuật toán mã hoá kém bảo mật (đã bị phá) thấp hơn A5/3. Bất kỳ cuộc gọi/SMS nào thực hiện trong khu vực này có thể bị chặn và ghi lại. Hãy rời khỏi đây ngay.</string>
     <string name="status_high_detail_info">Đã phát hiện các hoạt động dịch vụ nguy hiểm: Một IMSI-Catcher (IMSIC) hoặc BTS giả (FBTS) đang theo dõi người dùng. Có hoạt động quét diễn ra trong khu vực. Bạn nên tránh xa nơi này, đặc biệt là khi tại đây có bất ổn chính trị. Hãy tháo pin hoặc tắt điện thoại!</string>
@@ -174,7 +174,7 @@
     <string name="notification_vibrate_danger">Nguy hiểm</string>
     
     <string name="ui_icon_flat">Phẳng</string>
-    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_sense">\"Sense\"</string>
     <string name="ui_icon_white">Trắng</string>
     <string name="map_type_terrain">Địa hình</string>
     <string name="map_type_normal">Thông thường</string>
@@ -273,7 +273,7 @@
     <string name="typewap_data">Đã phát hiện tin nhắn SMS push WAP!\nChi tiết: Xem trình đọc CSDL.</string>
 
 
-    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_neighboring_cells">Hiện các trạm sóng lân cận.</string>
     <string name="help_main_phone_sim_details">Chi tiết nhà cung cấp SIM mạng, IMEI, TMSI.</string>
     <string name="help_main_acd">Hiển thị so sánh chi tiết của máy di động đang kết nối với các dữ liệu (nếu có) tìm thấy trong OpenCellID và chỉ rõ những khác biệt.</string>
     <string name="help_main_database_viewer">Xem các bảng CSDL khác nhau hiện có.</string>
@@ -321,9 +321,10 @@
     <string name="the_string_was_added_to_db">Đã thêm chuỗi vào CSDL</string>
     <string name="failed_to_add_the_string_to_db">Thêm chuỗi vào CSDL thất bại</string>
 
-    <string name="n_a">N/A</string>
+    <string name="n_a">Không có</string>
     <string name="unknown">Không xác định</string>
 
     <string name="database_settings">Cơ sở dữ liệu</string>
     <string name="download_timed_out">Yêu cầu OpenCellID API đã quá thời gian chờ. Thử lại sau?</string>
+    <string name="cell_doesnt_provide_any_neighbors">BTS không cung cấp thông tin các trạm sóng lân cận!</string>
     </resources>

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">Rastreo</string>
     <string name="device_info">Detalles Telefono/SIM</string>
     <string name="db_viewer">Visor de Bases de datos</string>
@@ -10,7 +10,7 @@
     <string name="text_disagree">No acepto</string>
 
     <string name="disclaimer_title">AVISO</string>
-    <string name="disclaimer">"Mediante el uso de AIMSICD usted ha entendido y aceptado que AIMSICD es una aplicación para Android experimental e informativa que puede fallar al detectar vigilancia y rastreo por muchas razones. Usted también entiende que puede ser evitada o derrotada por otros medios, aún no comprendidos por sus desarrolladores. Así también está de acuerdo y entiende que los desarrolladores y las empresas relacionadas con este producto gratuito, pueden de ninguna manera ser considerados responsables de ningún resultado o resultados, en función del uso de esta aplicación. "</string>
+    <string name="disclaimer">"Al utilizar AIMSICD usted entiende y acepta que AIMSICD es una aplicación para Android experimental e informativa que puede fallar al detectar vigilancia y rastreo por múltiples razones. Usted también entiende que puede ser evitada o sobrepasada por otros medios, aún no comprendidos por sus desarrolladores. Así también está de acuerdo y entiende que los desarrolladores y las empresas relacionadas con este producto gratuito, de ninguna manera pueden ser considerados responsables de ningún resultado o resultados, en función del uso de esta aplicación. ESTADO DE DESARROLLO: ALPHA! "</string>
 
     <string name="toggle_attack_detection">Habilitar Deteccion de Ataque</string>
     <string name="toggle_cell_tracking">Habilitar Rastreo de Celda</string>
@@ -28,7 +28,7 @@
     <string name="device_info_title">Informacion de Dispositivo</string>
     <string name="sim_info_title">Informacion de SIM</string>
     <string name="network_info">Informacion de Red</string>
-    <string name="cell_info_title">Nivel de Amenaza Actual</string>
+    <string name="cell_info_title">Celdas vecinas</string>
     <string name="neighboring_cells_title">Celdas Vecinas</string>
     <string name="ciphering_indicator_title">Indicador de Cifrado</string>
     <string name="neighboring_cells_num_title">Total:</string>
@@ -150,12 +150,12 @@
     <string name="btn_start_logs">Iniciar</string>
 
     <string name="title_activity_about_pop_up">EXPLICACIÓN DETALLADA</string>
-    <string name="status_idle_detail_info">La Aplicación está detenida o cargando. No hay medidas de protección o detección activas. Por favor abra la barra de navegación y Activelas bajo la seccion de Rastreo!</string>
-    <string name="status_ok_detail_info">"No se  detectaron o encontraron Amenazas. Nuestra aplicación verifica constantemente su red basada en las medidas de protección que se han seleccionado en la barra de la navegación y configuracion."</string>
-    <string name="status_medium_detail_info">Área de servicio insegura: por lo menos 1BTS nuevo o desconocido está en funcionamiento en esta vecindad, o usando un algoritmo de cifrado (roto) inseguro menor a A5/3 [detección es WIP]. Esperar que cualquier llamadas/SMS en este ámbito pueda ser interceptado y registrado. Mejor Alejarse de este lugar ahora.</string>
-    <string name="status_high_detail_info">"Detectado de acciones de servicio hostiles: Un IMSI-Catcher (IMSIC) o BTS falso (FBTS) esta seguimiendo activamente a los usuarios. Rastreo activo se lleva a cabo en esta área. Usted debe salir AHORA  de este lugar especialmente si hay disturbios políticos. Sacar la batería o tirar el teléfono!"</string>
-    <string name="status_danger_detail_info">Rastreo hostil detectado: Un FBTS o IMSIC Lo esta Rastreando activamente e impide que el teléfono se conecte a través de su proveedor móvil encriptado normal. Si estás en peligro o teme repercusiones, destruya su teléfono y la SIM y reportelo como robado recientemente.</string>
-    <string name="status_skull_detail_info">Manipulación hostil: Alguien está intentando manipular remotamente tu teléfono. Destrui (o vende) tu teléfono y obtene uno nuevo en algún lugar lejano (no lleves tu teléfono antiguo al lugar de cambio). Utiliza una nueva tarjeta SIM (anónima), cambiar el comportamiento de llamadas y avisa a tus amigos hablando con ellos en persona, no por telefono!</string>
+    <string name="status_idle_detail_info">La Aplicación está detenida o cargando. No hay medidas de protección o detección activas. Por favor habilita la detección de ataques!</string>
+    <string name="status_ok_detail_info">No se detectaron amenazas. Tu res es constantemente revisada basa en la configuración de detección activada.</string>
+    <string name="status_medium_detail_info">Área de servicio insegura: por lo menos 1 BTS nuevo o desconocido está en funcionamiento en esta vecindad, o usando un algoritmo de cifrado (roto) inseguro menor a A5/3. Cualquier llamada/SMS en esta área puede ser interceptado y registrado. Aléjate de este lugar rápidamente.</string>
+    <string name="status_high_detail_info">Detectado de acciones de servicio hostiles: Un IMSI-Catcher (IMSIC) o BTS falso (FBTS) esta rastreando activamente a los usuarios. En esta área existe un escaneo activo. Deberías abandonar este lugar por todos los medios, especialmente si existen disturbios políticos. Saca la batería o retira tu tarjta SIM!</string>
+    <string name="status_danger_detail_info">Rastreo hostil detectado: Un FBTS o IMSIC esta RASTREANDOTE activamente e impide que el teléfono se conecte a través de su proveedor móvil encriptado de forma normal. Si estás en peligro o teme repercusiones, destruya su teléfono y la tarjeta SIM, luego reportelo como robado recientemente.</string>
+    <string name="status_skull_detail_info">Manipulación hostil: Alguien está intentando manipular remotamente tu teléfono. Destruye (o vende) tu teléfono y consigue uno nuevo en algún lugar lejano. NO lleves tu teléfono antiguo al lugar de cambio!. Utiliza una nueva tarjeta SIM (anónima o sin registros). Modifica el comportamiento de tus llamadas y avisa a tus amigos que estas siendo monitoreado hablando personalmente con ellos, no por telefono!</string>
     <string name="open_cell_id_button_cancel">Cancelar</string>
     <string name="open_cell_id_button_ok">OK</string>
 
@@ -259,7 +259,7 @@
     <string name="typewap_data">Mensaje SMS WAP Push detectado!\nDetalles: Ver visor de base de datos.</string>
 
 
-    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_neighboring_cells">Mostrar celdas vecinas.</string>
     <string name="help_main_phone_sim_details">Detalles del proveedor SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Ver comparación detallada de la célula conectada actualmente, con los datos (si existe) en OpenCellID y resaltar las diferencias.</string>
     <string name="help_main_database_viewer">Ver las diferentes tablas de la DB que tenemos.</string>
@@ -311,12 +311,21 @@
     <string name="notification_vibrate_medium">Medio</string>
     <string name="notification_vibrate_danger">Peligro</string>
     
-    <string name="deleted">Borrado</string>
+    <string name="deleted">Eliminado</string>
     <string name="failed_to_delete">Error al borrar</string>
     <string name="the_string_was_added_to_db">La cadena fue añadida a la base de datos</string>
     <string name="failed_to_add_the_string_to_db">Error al añadir la cadena a la base de datos</string>
 
-    <string name="double_quote_will_cause_db_error">"Cadena no añadida\nLas comillas dobles \" no están soportadas "</string>
+    <string name="double_quote_will_cause_db_error">"Cadena no añadida
+Las comillas dobles \" provocan erro en la base de datos "</string>
 
     <string name="unknown">Desconocido</string>
-</resources>
+<string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="pref_enable_gps_title">Configuración GPS</string>
+    <string name="pref_enable_gps_summary">Habilitar GPS para rastreo de celdas</string>
+    <string name="database_settings">Base de datos</string>
+    <string name="cell_doesnt_provide_any_neighbors">El BTS no proporciona celdas vecinas!</string>
+    <string name="download_timed_out">Tiempo de espera sobrepasado para API OpenCell ID. Intentar nuevamente?</string>
+    <string name="n_a">N/D</string>
+    <string name="buildnumber">Número de compilación: %s</string>
+    </resources>

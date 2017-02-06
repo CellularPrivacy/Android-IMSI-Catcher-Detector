@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="device_info">Telefon/SIM-detaljer</string>
+    <string name="db_viewer">Visare för databas</string>
+    <string name="quit">Avsluta</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Avbryt</string>
+    <string name="text_agree">Jag godkänner</string>
+    <string name="text_disagree">Jag godkänner inte</string>
+
+    <string name="disclaimer_title">ANSVARSFRISKRIVNING</string>
+    <string name="clear_database">Rensa/Återställ databas</string>
+    <string name="clear_database_question">Alla data kommer att raderas.\nÄr du säker?</string>
+    <string name="preferences">Egenskaper</string>
+    <string name="press_once_again_to_exit">Tryck igen för att avsluta.</string>
+    <string name="debugging">Felsökning</string>
+    <string name="no_network_connection_title">Ingen internetanslutning</string>
+    <string name="get_opencellid">Ladda ner BTS-data</string>
+
+    <string name="device_info_title">Information om enheten</string>
+    <string name="sim_info_title">Information om SIM</string>
+    <string name="network_info">Information om nätverket</string>
+    <string name="tracking">Söker</string>
+    <string name="map_view">Antennkarta</string>
+    <string name="cell_info_title">Enheter nära dig</string>
+    <string name="neighboring_cells_title">Enheter nära dig</string>
+    <string name="ciphering_indicator_title">Kodindikator</string>
+    <string name="neighboring_cells_num_title">Total:</string>
+    <string name="sim_country">Land:</string>
+    <string name="sim_operator_id">Användar-ID:</string>
+    <string name="sim_operator_name">Användarnamn:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">Serienummer:</string>
+    <string name="device_type">Telefonmodell:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">RIL Version:</string>
+    <string name="network_name">Leverantörsnamn:</string>
+    <string name="network_code">Leverantörskod:</string>
+    <string name="network_type">Typ:</string>
+    <string name="network_lac">LAC:</string>
+    <string name="network_cellid">CID:</string>
+    <string name="data_activity">Dataaktivitet:</string>
+    <string name="data_status">Datastatus:</string>
+    <string name="network_roaming">Roaming:</string>
+    <string name="button_refresh">Uppdatera</string>
+    <string name="drawer_open">Öppna navigationsmeny</string>
+    <string name="drawer_close">Stäng navigationsmeny</string>
+    <string name="app_version">Version: %s</string>
+    <string name="about_github">AIMSICD på GitHub</string>
+    <string name="about_wiki">DOKUMENTATION</string>
+    <string name="about_contribute">BIDRA</string>
+    <string name="about_disclaimer">ANSVARSFRISKRIVNING</string>
+    <string name="about_releases">UTGÅVOR</string>
+    <string name="about_license">TILLSTÅND</string>
+    <string name="status_idle_about_desc">Inaktiv / Laddar.</string>
+    <string name="status_ok_about_desc">Allt OK.</string>
+    <string name="status_danger_about_desc">Du blir spårad!</string>
+    <string name="about_desc_icon_title">Tryck på statusikonen nedan för detaljerad information:</string>
+
+    <string name="network_netid">Nätverks-ID:</string>
+    <string name="network_sysid">System-ID:</string>
+    <string name="network_baseid">Basstations-ID:</string>
+
+    </resources>

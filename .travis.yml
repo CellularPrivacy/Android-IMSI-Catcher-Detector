@@ -18,6 +18,7 @@ before_cache:
 
 env:
   global:
+    - GRADLE_OPTS="-Xmx2048m -Xms512m"
     # Encrypted Coverity Scan Token
     - secure: "jRKgZfeAxDhqDIrySBESiij3Ot9cmVQ4CMB+IVpmf7Xjfek6By1ba7Y1lgMdLRPgvLkj3k5mMx1BMx2yeSCBp/+TZJ6Ezj3EVJ6HS2ctkAH4KzsiqlSCKiRgfOqKgzfnftCkNzXCEE3XLVLcv4iT5Ru/EBG85kEDViGrDBP+PxA="
 
@@ -29,7 +30,9 @@ android:
     - android-23
     - extra-android-m2repository
 
-before_install: 'openssl aes-256-cbc -K $encrypted_dc771c3300d2_key -iv $encrypted_dc771c3300d2_iv -in keystore.jks.enc -out keystore.jks -d || true'
+before_install:
+  - 'openssl aes-256-cbc -K $encrypted_dc771c3300d2_key -iv $encrypted_dc771c3300d2_iv -in keystore.jks.enc -out keystore.jks -d || true'
+
 
 script: ./gradlew build check
 

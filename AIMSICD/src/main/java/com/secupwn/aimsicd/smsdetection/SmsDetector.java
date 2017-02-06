@@ -251,7 +251,7 @@ public final class SmsDetector extends Thread {
 
 
         //0 - null 1 = TYPE0, 2 = MWI, 3 = WAPPUSH
-        for (SmsDetectionString detectionString : realm.allObjects(SmsDetectionString.class)) {
+        for (SmsDetectionString detectionString : realm.where(SmsDetectionString.class).findAll()) {
             //looping through detection strings to see does logcat line match
             if (line.contains(detectionString.getDetectionString())) {
                 if ("TYPE0".equalsIgnoreCase(detectionString.getSmsType())) {

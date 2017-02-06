@@ -23,8 +23,8 @@ import static java.lang.String.valueOf;
 
 public class ImportAdapter extends RealmBaseAdapter<Import> {
 
-    public ImportAdapter(Context context, RealmResults<Import> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public ImportAdapter(Context context, RealmResults<Import> realmResults) {
+        super(context, realmResults);
     }
 
     @Override

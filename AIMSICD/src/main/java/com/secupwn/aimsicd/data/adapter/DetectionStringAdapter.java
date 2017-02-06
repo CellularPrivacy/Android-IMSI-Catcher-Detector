@@ -14,8 +14,8 @@ import io.realm.RealmResults;
 
 public class DetectionStringAdapter extends RealmBaseAdapter<SmsDetectionString> {
 
-    public DetectionStringAdapter(Context context, RealmResults<SmsDetectionString> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public DetectionStringAdapter(Context context, RealmResults<SmsDetectionString> realmResults) {
+        super(context, realmResults);
     }
 
     @Override

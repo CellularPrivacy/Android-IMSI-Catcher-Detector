@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
     <!-- Drawer -->
@@ -14,14 +14,7 @@
 
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ</string>
-    <string name="disclaimer">Использование Вами AIMSICD означает, что Вы поняли и согласны с тем, что AIMSICD - это
-        эксперментальное и информативное приложение Андроид, которое по ряду причин не
-        всегда может обнаружить наблюдение и слежение. Вы также поняли, что его работу могут
-        блокировать или вносить помехи другие средства, пока не изученные разработчиками.
-        Вы также соглашаетесь и понимаете, что разработчики и компании, связанные с этим
-        бесплатным продуктом, ни в коей мере не могут быть ответственными за результаты или
-        последствия, исходящие из использования этого приложения.
-    </string>
+    <string name="disclaimer">"Использование Вами AIMSICD означает, что Вы поняли и согласны с тем, что AIMSICD - это экспериментальное и информационное приложение Андроид, которое по ряду причин не всегда может обнаружить наблюдение и слежение. Вы также поняли, что его работу могут блокировать или вносить помехи другие средства, пока не изученные разработчиками. Вы также соглашаетесь и понимаете, что разработчики и компании, связанные с этим бесплатным продуктом, ни в коей мере не могут быть ответственными за результаты или последствия, исходящие из использования этого приложения. СТАТУС РАЗРАБОТКИ: АЛЬФА! "</string>
 
     <!-- MENU -->
     <string name="toggle_attack_detection">Включение обнаружения атаки</string>
@@ -42,7 +35,7 @@
     <string name="device_info_title">Информация об устройстве</string>
     <string name="sim_info_title">Информация о SIM</string>
     <string name="network_info">Информация сети</string>
-    <string name="cell_info_title">Текущий уровень угрозы</string>
+    <string name="cell_info_title">Соседние ячейки</string>
     <string name="neighboring_cells_title">Соседние ячейки сотовой связи</string>
     <string name="ciphering_indicator_title">Индикатор шифрования</string>
     <string name="neighboring_cells_num_title">Всего:</string>
@@ -50,10 +43,10 @@
     <string name="sim_operator_id">ID оператора:</string>
     <string name="sim_operator_name">Название оператора:</string>
     <string name="sim_imsi">IMSI:</string>
-    <string name="sim_serial">Serial:</string>
+    <string name="sim_serial">Серийный номер:</string>
     <string name="device_type">Тип телефона:</string>
     <string name="device_imei">IMEI:</string>
-    <string name="device_version">RIL Version:</string>
+    <string name="device_version">Версия RIL:</string>
     <string name="network_name">Имя провайдера:</string>
     <string name="network_code">Код провайдера:</string>
     <string name="network_type">Тип:</string>
@@ -75,7 +68,7 @@
     <string name="about_aimsicd">Об AIMSICD</string>
     <string name="app_version">Версия: %s</string>
     <string name="buildnumber">Номер сборки: %s</string>
-    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="git_sha">Хэш SHA Git: %s</string>
     <string name="aimsicd_about_info3">Проект Андроид для обнаружения ложных базовых станций (IMSI-перехватчиков) в GSM/UMTS сетях.</string>
     <string name="about_github">AIMSICD на GitHub</string>
     <string name="about_wiki">ДОКУМЕНТАЦИЯ</string>
@@ -191,12 +184,12 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">ПОДРОБНОЕ ОПИСАНИЕ</string>
-    <string name="status_idle_detail_info">Приложение работает в режиме ожидания или загрузки. Меры защиты и обнаружения не включены. Пожалуйста, откройте меню и включите их в разделе СЛЕЖЕНИЕ!</string>
-    <string name="status_ok_detail_info">Никакие угрозы не обнаружены. Наше приложение постоянно проверяет Вашу сеть на основе защиты, которую Вы установили в меню и настройках.</string>
-    <string name="status_medium_detail_info">Небезопасная зона обслуживания: в данном районе, по крайней мере, 1 новая или неизвестная БС, или с использованием небезопасного (сломанного) алгоритма шифрования, меньшего, чем A5/3 [Обнаружение WIP]. Возможно, что любые телефонные звонки/СМС, сделанные в этой зоне могут быть перехвачены и записаны. Вам лучше покинуть это место.</string>
-    <string name="status_high_detail_info">Обнаружены враждебные действия: IMSI-Перехватчик (IMSIC) или поддельные БС (FBTS) активно отслеживают пользователей. В данной зоне ведется активное сканирование. Вы должны избегать этого места, особенно, если есть политическая нестабильность. Выньте батарею или уничтожьте свой телефон!</string>
-    <string name="status_danger_detail_info">Обнаружены враждебные отслеживания: FBTS или IMSIC активно отслеживают Вас и препятствуют подключению Вашего телефона к Вашей обычной зашифрованной мобильной сети. Если Вы находитесь в опасности, сломайте Ваш телефон + SIM и сообщите о его краже.</string>
-    <string name="status_skull_detail_info">Враждебные манипуляции: кто-то пытается удаленно управлять Вашим телефоном! Уничтожьте (или продайте) свой телефон и возьмите новый где-то подальше (не приносите туда свой старый телефон)! Используйте новую (анонимную) SIM-карту, измените поведение вызовов и предупредите своих друзей, разговаривая с ними в реальной жизни, НЕ по телефону!</string>
+    <string name="status_idle_detail_info">Приложение работает в режиме ожидания или загрузки. Меры защиты и обнаружения не включены. Пожалуйста, включите определение атак!</string>
+    <string name="status_ok_detail_info">Никакие угрозы не обнаружены. Ваша сеть непрерывно проверяется на основе включенных настроек обнаружения.</string>
+    <string name="status_medium_detail_info">Небезопасная зона обслуживания: в данном районе, по крайней мере, 1 новая или неизвестная БС, или с использованием небезопасного (сломанного) алгоритма шифрования, слабее, чем A5/3. Любые телефонные звонки/СМС, сделанные в этой зоне, могут быть перехвачены и записаны. Быстро покиньте это место.</string>
+    <string name="status_high_detail_info">Обнаружены враждебные действия: IMSI-Перехватчик (IMSIC) или поддельные БС (FBTS) активно отслеживают пользователей. В данной зоне ведется активное сканирование. Вы должны избегать этого места любыми способами, особенно если есть политическая нестабильность. Выньте батарею и SIM-карту!</string>
+    <string name="status_danger_detail_info">Обнаружены враждебные отслеживания: FBTS или IMSIC активно отслеживают Вас и препятствуют подключению Вашего телефона к Вашей обычной зашифрованной мобильной сети. Если Вы находитесь в опасности, сломайте Ваш телефон и SIM-карту, а затем сообщите о его краже.</string>
+    <string name="status_skull_detail_info">Враждебные манипуляции: кто-то пытается удаленно управлять Вашим телефоном! Уничтожьте (или продайте) свой телефон и возьмите новый подальше. Не приносите свой старый телефон в новое место! Используйте новую анонимную SIM-карту с поддельной личностью, зарегистрированной через браузер Tor. Измените Ваше поведение при вызовах и предупредите своих друзей о слежке в разговоре с ними в реальной жизни, но НЕ по телефону!</string>
     <string name="open_cell_id_button_cancel">Отмена</string>
     <string name="open_cell_id_button_ok">OK</string>
 
@@ -211,10 +204,10 @@
     <string name="notification_vibrate_danger">Опасность</string>
     
     <!-- UI Icon Preferences -->
-    <string name="ui_icon_flat">Flat</string>
-    <string name="ui_icon_sense">Sense</string>
-    <string name="ui_icon_white">Белый</string>
-    <string name="map_type_terrain">Земля</string>
+    <string name="ui_icon_flat">Плоская</string>
+    <string name="ui_icon_sense">Настроение</string>
+    <string name="ui_icon_white">Белая</string>
+    <string name="map_type_terrain">Местность</string>
     <string name="map_type_normal">Обычный</string>
     <string name="pref_refresh_manual">Вручную</string>
     <string name="pref_refresh_automatic">Авто</string>
@@ -250,7 +243,7 @@
     <string name="alert_threat_detected">ТРЕВОГА: обнаружены угрозы!</string>
     <string name="alert_femtocell_connection_detected">ТРЕВОГА: обнаружено соединение с FemtoCell!</string>
     <string name="alert_silent_sms_detected">ТРЕВОГА: обнаружена бесшумная СМС!</string>
-    <string name="alert_mwi_detected">ТРЕВОГА: обнаружен индикатор ожидания сообщения!</string>
+    <string name="alert_mwi_detected">ТРЕВОГА: обнаружен индикатор ожидающих сообщений!</string>
     <string name="alert_silent_wap_sms_detected">ТРЕВОГА: обнаружена WAP Push СМС!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD может определять соединение с FemtoCell только на CDMA устройствах.</string>
     <string name="service_state_changed">Статус сервиса изменен!</string>
@@ -316,7 +309,7 @@
 
 
     <!-- Section Main-->
-    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_neighboring_cells">Показать соседние соты.</string>
     <string name="help_main_phone_sim_details">Информация провайдера сети SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Отображение детального сравнения текущей подключенной соты с данными (при их наличии) из OpenCellID и отметка различий.</string>
     <string name="help_main_database_viewer">Просмотр различных имеющихся таблиц баз данных.</string>
@@ -344,7 +337,7 @@
     <string name="imported_ocid_data">Импортированные данные OpenCellID</string>
     <string name="default_mmc_locations">Местоположения MCC по умолчанию</string>
     <string name="silent_sms">Бесшумная СМС</string>
-    <string name="eventlog">EventLog</string>
+    <string name="eventlog">Журнал</string>
     <string name="measured_signal_strengths">Измеренная мощность сигнала</string>
 
     <string name="at_command_response_looking">*** Поиск serial device AT…\n</string>
@@ -410,4 +403,8 @@
     </string-array>
 
     <string name="unknown">Неизвестный</string>
-</resources>
+<string name="database_settings">База данных</string>
+    <string name="download_timed_out">Превышен таймаут запроса к OpenCellID API. Попробуйте позже?</string>
+    <string name="n_a">Недоступно</string>
+    <string name="cell_doesnt_provide_any_neighbors">BTS не предоставляет соседних сот!</string>
+    </resources>
