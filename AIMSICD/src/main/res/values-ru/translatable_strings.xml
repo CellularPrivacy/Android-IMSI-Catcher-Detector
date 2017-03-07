@@ -14,11 +14,19 @@
 
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ</string>
-    <string name="disclaimer">"Использование Вами AIMSICD означает, что Вы поняли и согласны с тем, что AIMSICD - это экспериментальное и информационное приложение Андроид, которое по ряду причин не всегда может обнаружить наблюдение и слежение. Вы также поняли, что его работу могут блокировать или вносить помехи другие средства, пока не изученные разработчиками. Вы также соглашаетесь и понимаете, что разработчики и компании, связанные с этим бесплатным продуктом, ни в коей мере не могут быть ответственными за результаты или последствия, исходящие из использования этого приложения. СТАТУС РАЗРАБОТКИ: АЛЬФА! "</string>
+    <string name="disclaimer">"Использование Вами AIMSICD означает, что Вы поняли и согласны с тем, что
+AIMSICD - это экспериментальное и информационное приложение Андроид,
+которое по ряду причин не всегда может обнаружить наблюдение и слежение.
+Вы также поняли, что его работу могут блокировать или вносить помехи другие
+средства, пока не изученные разработчиками. Вы также соглашаетесь и понимаете,
+что разработчики и компании, связанные с этим бесплатным продуктом, ни в коей мере
+не могут быть ответственными за результаты или последствия, исходящие из
+использования этого приложения. СТАТУС РАЗРАБОТКИ: АЛЬФА!
+ "</string>
 
     <!-- MENU -->
-    <string name="toggle_attack_detection">Включение обнаружения атаки</string>
-    <string name="toggle_cell_tracking">Включение отслеживания соты</string>
+    <string name="toggle_attack_detection">Обнаружение атаки</string>
+    <string name="toggle_cell_tracking">Отслеживание соты</string>
     <string name="clear_database">Очистка/сброс базы данных</string>
     <string name="clear_database_question">Все данные будут удалены.\nВы уверены?</string>
     <string name="preferences">Параметры</string>
@@ -407,4 +415,12 @@
     <string name="download_timed_out">Превышен таймаут запроса к OpenCellID API. Попробуйте позже?</string>
     <string name="n_a">Недоступно</string>
     <string name="cell_doesnt_provide_any_neighbors">BTS не предоставляет соседних сот!</string>
+    <string name="import_cell_towers">Импорт данных CellTowers</string>
+
+    <string name="imporing_celltowers_data">Импортирую данные CellTowers...
+Это может занять некоторое время.</string>
+    <string name="celltowers_data_successfully_imported">Данные CellTowers успешно импортированы.</string>
+    <string name="error_importing_celltowers_data">Ошибка импорта данных CellTowers.</string>
+    <string name="help_app_import_cell_towers">Импортирует базу данных CellTowers.</string>
+    <string name="needs_location">Необходимо местоположение</string>
     </resources>
