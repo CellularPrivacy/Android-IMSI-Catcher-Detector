@@ -4,7 +4,7 @@
     <!-- Drawer -->
     <string name="tracking">Слежение</string>
     <string name="device_info">Информация о телефоне/SIM</string>
-    <string name="map_view">Карта антенн</string>
+    <string name="map_view">Просмотр карты антенн</string>
     <string name="db_viewer">Просмотр базы данных</string>
     <string name="quit">Выход</string>
     <string name="text_ok">OK</string>
@@ -34,7 +34,7 @@ AIMSICD - это экспериментальное и информационн�
     <string name="cell_lookup">Все текущие данные соты</string>
     <string name="debugging">Отладка</string>
     <string name="no_network_connection_title">Нет интернет-соединения</string>
-    <string name="no_network_connection_message">Не удается загрузить данные OpenCellID без интернета, пожалуйста включите передачу данных!</string>
+    <string name="no_network_connection_message">Не удаётся загрузить данные OpenCellID без интернета, пожалуйста, включите передачу данных!</string>
 
     <!-- MAP VIEWER -->
     <string name="get_opencellid">Загрузить данные базовых станций</string>
@@ -42,7 +42,7 @@ AIMSICD - это экспериментальное и информационн�
     <!-- LAYOUT -->
     <string name="device_info_title">Информация об устройстве</string>
     <string name="sim_info_title">Информация о SIM</string>
-    <string name="network_info">Информация сети</string>
+    <string name="network_info">Информация о сети</string>
     <string name="cell_info_title">Соседние ячейки</string>
     <string name="neighboring_cells_title">Соседние ячейки сотовой связи</string>
     <string name="ciphering_indicator_title">Индикатор шифрования</string>
@@ -85,12 +85,12 @@ AIMSICD - это экспериментальное и информационн�
     <string name="about_releases">РЕЛИЗЫ</string>
     <string name="about_changelog">ИСТОРИЯ ИЗМЕНЕНИЙ</string>
     <string name="about_license">ЛИЦЕНЗИЯ</string>
-    <string name="about_credits">CREDITS</string>
+    <string name="about_credits">СВЕДЕНИЯ ОБ АВТОРАХ</string>
     <string name="status_idle_about_desc">Ожидание / Загрузка.</string>
     <string name="status_high_about_desc">Рядом с Вами активное отслеживание!</string>
     <string name="status_ok_about_desc">Все OK.</string>
     <string name="status_danger_about_desc">Вас отслеживают!</string>
-    <string name="status_medium_about_desc">Небезопасная зона обслуживания. Покиньте ее!</string>
+    <string name="status_medium_about_desc">Небезопасная зона обслуживания. Покиньте её!</string>
     <string name="status_skull_about_desc">БЕГИТЕ! Мошенничество с телефоном!</string>
     <string name="about_desc_icon_title">Нажмите значки состояния ниже для более подробной информации:</string>
 
