@@ -402,4 +402,13 @@
     <string name="unknown">Unbekannt</string>
     <string name="cell_doesnt_provide_any_neighbors">BTS stellt keine Nachbarzellen bereit!</string>
     <string name="download_timed_out">Die OpenCellID-Api reagiert nicht. Später erneut versuchen?</string>
+    <string name="imporing_celltowers_data">Importiere CellTowers Daten...
+Dies kann eine Weile dauern.</string>
+    <string name="celltowers_data_successfully_imported">CellTowers Daten erfolgreich importiert.</string>
+    <string name="error_importing_celltowers_data">Fehler beim Importieren von
+CellTowers Daten.</string>
+    <string name="help_app_import_cell_towers">Importiert CellTowers Datenbank.</string>
+    <string name="needs_location">Benötigt Standort</string>
+    <string name="import_cell_towers">Importiere CellTowers Daten</string>
+
     </resources>
