@@ -325,7 +325,8 @@ programma. ONTWIKKELINGSSTATUS: ALFA!
     <string name="buildnumber">Build nummer: %s</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
     <string name="pref_notification_vibrate_enable_summary">Trillen als notificatie verandert</string>
-    <string name="double_quote_will_cause_db_error">"String niet toegevoegd\n\" dubbele aanhalingstekens veroorzaken een db fout "</string>
+    <string name="double_quote_will_cause_db_error">"String niet toegevoegd
+\" dubbele apostroffen veroorzaken databasefout "</string>
     <string name="pref_enable_gps_title">GPS instellingen</string>
     <string name="pref_enable_gps_summary">GPS inschakelen voor Cell tracking</string>
 
