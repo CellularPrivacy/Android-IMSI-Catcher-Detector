@@ -26,7 +26,7 @@
     <string name="device_info_title">Apparaatgegevens</string>
     <string name="sim_info_title">SIM gegevens</string>
     <string name="network_info">Netwerkgegevens</string>
-    <string name="cell_info_title">Buurcellen</string>
+    <string name="cell_info_title">Nabije masten</string>
     <string name="neighboring_cells_title">Buurcellen</string>
     <string name="ciphering_indicator_title">Encryptie indicator</string>
     <string name="neighboring_cells_num_title">Totaal:</string>
