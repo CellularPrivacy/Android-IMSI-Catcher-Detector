@@ -319,7 +319,7 @@ programma. ONTWIKKELINGSSTATUS: ALFA!
     <string name="pref_notification_vibrate_min_level_title">Vibreren bij gevarenniveau</string>
     <string name="pref_notification_vibrate_min_level_summary">Selecteer het minimum gevarenniveau voor de trilfunctie</string>
     <string name="notification_vibrate_idle">Inactief</string>
-    <string name="failed_to_add_the_string_to_db">String toevoegen aan de database mislukt</string>
+    <string name="failed_to_add_the_string_to_db">Toevoegen van de string aan de database is mislukt</string>
 
     <string name="pref_notification_settings">Instellingen voor meldingen</string>
     <string name="buildnumber">Build nummer: %s</string>
