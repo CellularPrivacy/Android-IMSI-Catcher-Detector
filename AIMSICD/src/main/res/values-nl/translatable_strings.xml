@@ -10,8 +10,8 @@
     <string name="text_disagree">Ik ga niet akkoord</string>
 
     <string name="disclaimer_title">DISCLAIMER</string>
-    <string name="toggle_attack_detection">Aanvalsdetectie aan/uit</string>
-    <string name="toggle_cell_tracking">Celtracking aan/uit</string>
+    <string name="toggle_attack_detection">Aanvalsdetectie</string>
+    <string name="toggle_cell_tracking">Celtracking</string>
     <string name="clear_database">Database leegmaken</string>
     <string name="clear_database_question">Alle gegevens worden verwijderd\nWeet u het zeker?</string>
     <string name="preferences">Voorkeuren</string>
@@ -26,7 +26,7 @@
     <string name="device_info_title">Apparaatgegevens</string>
     <string name="sim_info_title">SIM gegevens</string>
     <string name="network_info">Netwerkgegevens</string>
-    <string name="cell_info_title">Huidig gevarenniveau</string>
+    <string name="cell_info_title">Buurcellen</string>
     <string name="neighboring_cells_title">Buurcellen</string>
     <string name="ciphering_indicator_title">Encryptie indicator</string>
     <string name="neighboring_cells_num_title">Totaal:</string>
@@ -82,7 +82,14 @@
     <string name="pref_system_title">Systeeminstellingen</string>
     <string name="pref_autostart_title">Automatisch starten</string>
     <string name="pref_autostart_summ">Service automatisch starten bij opstarten telefoon</string>
-    <string name="disclaimer">Door het gebruik van AIMSICD begrijpt u en gaat u er mee akkoord dat AIMSICD een experimenteel en informatieve Android applicatie is dat door verschillende redenen mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het omzeild of verslagen kan worden door methodes die de ontwikkelaars momenteel nog niet begrijpen. U begrijpt en gaat er tevens mee akkoord dat dit de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. ONTWIKKELING STATUS: ALPHA!</string>
+    <string name="disclaimer">"Door het gebruik van AIMSICD begrijpt u en gaat u er mee akkoord dat AIMSICD
+een experimentele en informatieve Android-applicatie is die om verschillende redenen
+mogelijk niet in staat is om volgsystemen te detecteren. U begrijpt ook dat het omzeild
+of verslagen kan worden door methodes die de ontwikkelaars momenteel nog niet begrijpen.
+U begrijpt en gaat er tevens mee akkoord dat dit de ontwikkelaars van dit gratis project
+in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit
+programma. ONTWIKKELINGSSTATUS: ALFA!
+ "</string>
 
     <string name="status_idle_about_desc">Inactief / aan het laden.</string>
     <string name="pref_persistservice_title">Permanente service</string>
@@ -138,14 +145,14 @@
     <string name="table_contains_no_data">Tabel bevat geen te tonen gevenens.</string>
 
     <string name="title_ocid_key">OpenCellID API sleutel</string>
-    <string name="message_request_api_key">Druk op OK om een API sleutel van OpenCellID.org aan te vragen. Dit stelt u in staat hun gegevens te downloaden en op de kaart te bekijken. Dit stelt u tevens in staat om celgegevens te uploaden. Let op: als u geen celgegevens upload binnen 20 dagen kan de sleutel inactief worden.</string>
+    <string name="message_request_api_key">Druk op oké om een API-sleutel van OpenCellID.org aan te vragen. Dit stelt u in staat hun gegevens te downloaden en op de kaart te bekijken. Dit stelt u tevens in staat om celgegevens te uploaden. Let op: als u geen celgegevens uploadt binnen 20 dagen kan de sleutel inactief worden.</string>
     <string name="ocid_api_error">"Fout bij aanvragen sleutel: "</string>
-    <string name="ocid_api_success">Nieuwe API sleutel opgeslagen.</string>
+    <string name="ocid_api_success">Nieuwe API-sleutel opgeslagen.</string>
 
-    <string name="title_debug_logs">Debug logboeken</string>
+    <string name="title_debug_logs">Debuglogboeken</string>
     <string name="btn_clear_logs">Leegmaken</string>
-    <string name="btn_copy_to_clipboard">Copieren</string>
-    <string name="msg_copied_to_clipboard">Logs gecopieerd naar het klembord.</string>
+    <string name="btn_copy_to_clipboard">Kopiëren</string>
+    <string name="msg_copied_to_clipboard">Logs gekopieerd naar het klembord.</string>
     <string name="btn_stop_logs">Stop</string>
     <string name="btn_start_logs">Start</string>
 
@@ -327,4 +334,6 @@
     <string name="download_timed_out">OpenCellID API verzoek is verlopen. Later opnieuw proberen?</string>
     <string name="cell_doesnt_provide_any_neighbors">GSM-mast verstrekt geen naburige cellen!</string>
     <string name="n_a">NVT</string>
+    <string name="import_cell_towers">Importeer CellTowers-gegevens</string>
+
     </resources>
