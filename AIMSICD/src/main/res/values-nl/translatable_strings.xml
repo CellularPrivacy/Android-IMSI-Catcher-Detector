@@ -337,4 +337,5 @@ programma. ONTWIKKELINGSSTATUS: ALFA!
     <string name="n_a">NVT</string>
     <string name="import_cell_towers">Importeer CellTowers-gegevens</string>
 
+    <string name="needs_location">Locatie vereist</string>
     </resources>
