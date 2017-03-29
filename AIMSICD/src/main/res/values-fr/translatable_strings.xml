@@ -14,12 +14,20 @@
 
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">AVERTISSEMENT</string>
-    <string name="disclaimer">"En utilisant AIMSICD vous comprenez et acceptez qu\'AIMSICD est une application expérimentale a usage informatif, qui peux échouer à détecter une éventuelle surveillance pour pleins de raisons. Vous comprenez également que l\'application peut être contournée, évitée ou bloquée par d\'autres moyens que les développeurs ne connaissent pas encore. C\'est pourquoi vous acceptez que les développeurs et entreprises liés à ce produit gratuit, ne peuvent en aucun cas être tenu responsable des résultats ou conséquences de l\'usage de cette application. STATUT DE DÉVELOPPEMENT : ALPHA ! "</string>
+    <string name="disclaimer">"En utilisant AIMSICD vous comprenez et acceptez qu\'AIMSICD est une application
+ expérimentale à usage informatif, qui peux échouer à détecter une éventuelle
+ surveillance pour pleins de raisons. Vous comprenez également que
+ l\'application peut être contournée, évitée ou bloquée par d\'autres moyens que
+ les développeurs ne connaissent pas encore. C\'est pourquoi vous acceptez que
+ les développeurs et entreprises liés à ce produit gratuit, ne peuvent en aucun
+ cas être tenu responsable des résultats ou conséquences de l\'usage de cette
+ application. STATUT DE DÉVELOPPEMENT : ALPHA !
+ "</string>
 
 
     <!-- MENU -->
-    <string name="toggle_attack_detection">Démarrer/arrêter la détection des attaques</string>
-    <string name="toggle_cell_tracking">Commencer à localiser les cellules</string>
+    <string name="toggle_attack_detection">Détection des attaques</string>
+    <string name="toggle_cell_tracking">Localiser les cellules</string>
     <string name="clear_database">Effacer/réinitialiser la base de données</string>
     <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr ?</string>
     <string name="preferences">Préférences</string>
