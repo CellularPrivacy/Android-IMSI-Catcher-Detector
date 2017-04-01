@@ -15,18 +15,18 @@
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">AVERTISSEMENT</string>
     <string name="disclaimer">"En utilisant AIMSICD vous comprenez et acceptez qu\'AIMSICD est une application
- expérimentale à usage informatif, qui peux échouer à détecter une éventuelle
- surveillance pour pleins de raisons. Vous comprenez également que
- l\'application peut être contournée, évitée ou bloquée par d\'autres moyens que
+ expérimentale à usage informatif, qui peut échouer à détecter une éventuelle
+ surveillance pour différentes raisons. Vous comprenez également que
+ l\'application peut être contournée, évitée ou bloquée par des moyens que
  les développeurs ne connaissent pas encore. C\'est pourquoi vous acceptez que
- les développeurs et entreprises liés à ce produit gratuit, ne peuvent en aucun
- cas être tenu responsable des résultats ou conséquences de l\'usage de cette
+ les sociétées et les développeurs liés à ce produit gratuit, ne peuvent en aucun
+ cas être tenus responsables des résultats ou conséquences de l\'usage de cette
  application. STATUT DE DÉVELOPPEMENT : ALPHA !
  "</string>
 
 
     <!-- MENU -->
-    <string name="toggle_attack_detection">Détection des attaques</string>
+    <string name="toggle_attack_detection">Détection d\'attaques</string>
     <string name="toggle_cell_tracking">Localiser les cellules</string>
     <string name="clear_database">Effacer/réinitialiser la base de données</string>
     <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr ?</string>
@@ -397,7 +397,8 @@
     <string name="notification_vibrate_medium">Moyen</string>
     <string name="notification_vibrate_danger">Danger</string>
     
-    <string name="double_quote_will_cause_db_error">"Chaîne de caractères non ajouté\nLe guillemet double (\") va provoquer une erreur dans la base de données "</string>
+    <string name="double_quote_will_cause_db_error">"Chaîne de caractères non ajoutée
+Le guillemet double (\") va provoquer une erreur dans la base de données "</string>
     <string name="the_string_was_added_to_db">La chaîne de caractères a été ajoutée à la base de données</string>
     <string name="failed_to_add_the_string_to_db">Échec lors de l’ajout de la chaîne de caractères à la base de données</string>
     <string name="n_a">Indisponible</string>
@@ -406,4 +407,12 @@
     <string name="database_settings">Base de données</string>
     <string name="download_timed_out">La requête de l\'API OpenCellID met trop de temps. Réessayer plus tard ?</string>
     <string name="cell_doesnt_provide_any_neighbors">Une BTS ne fournit aucune cellule voisine !</string>
+    <string name="import_cell_towers">Importer les informations des antennes</string>
+
+    <string name="imporing_celltowers_data">Téléchargement des données des antennes
+cela peut durer un peu.</string>
+    <string name="celltowers_data_successfully_imported">Les données des antennes ont été téléchargées avec succès.</string>
+    <string name="error_importing_celltowers_data">Erreur lors du téléchargement des données des antennes.</string>
+    <string name="help_app_import_cell_towers">Import de la base de données des antennes.</string>
+    <string name="needs_location">Indiquez le lieu</string>
     </resources>
