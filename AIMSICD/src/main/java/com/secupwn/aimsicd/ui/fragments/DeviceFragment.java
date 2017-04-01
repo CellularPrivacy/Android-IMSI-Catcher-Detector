@@ -21,11 +21,11 @@ import android.widget.TableRow;
 
 import com.kaichunlin.transition.animation.AnimationManager;
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.data.DeviceUpdate;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.service.CellTracker;
 import com.secupwn.aimsicd.ui.widget.HighlightTextView;
 import com.secupwn.aimsicd.utils.Cell;
-import com.secupwn.aimsicd.utils.Device;
 import com.secupwn.aimsicd.utils.Helpers;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -138,12 +138,18 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
     public void onResume() {
         super.onResume();
 
-        if (!mBound) {
+        DeviceUpdate deviceUpdate = DeviceUpdate.getLastUpdate();
+        if (deviceUpdate != null) {
+            updateUI(deviceUpdate, false);
+        }
+        if (mBound) {
+            swipeRefreshLayout.setRefreshing(true);
+            onRefresh();
+        } else {
             // Bind to LocalService
             Intent intent = new Intent(mContext, AimsicdService.class);
             mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
-        updateUI();
     }
 
     @Override
@@ -170,7 +176,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             mAimsicdService = ((AimsicdService.AimscidBinder) service).getService();
             mBound = true;
-            updateUI();
+            updateUI(DeviceUpdate.getUpdate(mAimsicdService), true);
         }
 
         @Override
@@ -180,70 +186,75 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
         }
     };
 
-    private void updateUI() {
-        if (mBound) {
-            final AnimationManager ani = new AnimationManager();
+    private void updateHighlightTextView(HighlightTextView view, String value, boolean animate, AnimationManager ani) {
+        if (animate) {
+            view.updateText(value, ani);
+        } else {
+            view.setText(value);
+        }
+    }
 
-            mAimsicdService.getCellTracker().refreshDevice();
-            Device mDevice = mAimsicdService.getCellTracker().getDevice();
-            switch (mDevice.getPhoneId()) {
+    private void updateUI(DeviceUpdate deviceUpdate, boolean animate) {
+        if (!animate || mBound) {
+            final AnimationManager ani = animate ? new AnimationManager() : null;
 
+            switch (deviceUpdate.getPhoneId()) {
                 case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
                 case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
                 case TelephonyManager.PHONE_TYPE_GSM: {
-                    locationAreaCodeView.updateText(String.valueOf(mAimsicdService.getCell().getLocationAreaCode()), ani);
+                    updateHighlightTextView(locationAreaCodeView, deviceUpdate.getLocationAreaCode(), animate, ani);
                     gsmCellIdTableRow.setVisibility(View.VISIBLE);
-                    cellIdView.updateText(String.valueOf(mAimsicdService.getCell().getCellId()), ani);
+                    updateHighlightTextView(cellIdView, deviceUpdate.getCellId(), animate, ani);
                     break;
                 }
 
                 case TelephonyManager.PHONE_TYPE_CDMA: {
                     cdmaNetworkIdRow.setVisibility(View.VISIBLE);
-                    networkIdView.updateText(String.valueOf(mAimsicdService.getCell().getLocationAreaCode()), ani);
+                    updateHighlightTextView(networkIdView, deviceUpdate.getLocationAreaCode(), animate, ani);
 
                     cdmaSystemIdRow.setVisibility(View.VISIBLE);
-                    systemIdView.updateText(String.valueOf(mAimsicdService.getCell().getSid()), ani);
+                    updateHighlightTextView(systemIdView, deviceUpdate.getSystemId(), animate, ani);
 
                     cdmaBaseIdRow.setVisibility(View.VISIBLE);
-                    baseIdView.updateText(String.valueOf(mAimsicdService.getCell().getCellId()), ani);
+                    updateHighlightTextView(baseIdView, deviceUpdate.getCellId(), animate, ani);
                     break;
                 }
                 default:
-                    log.error("unknown phone type: " + mDevice.getPhoneId());
+                    log.error("unknown phone type: " + deviceUpdate.getPhoneId());
             }
 
-            if (mAimsicdService.getCell().getTimingAdvance() != Integer.MAX_VALUE) {
+            if (deviceUpdate.getLteTimingAdvanceInt() != Integer.MAX_VALUE) {
                 lteTimingAdvanceRow.setVisibility(View.VISIBLE);
-                lteTimingAdvanceView.updateText(String.valueOf(mAimsicdService.getCell().getTimingAdvance()), ani);
+                updateHighlightTextView(lteTimingAdvanceView, deviceUpdate.getLteTimingAdvance(), animate, ani);
             } else {
                 lteTimingAdvanceRow.setVisibility(View.GONE);
             }
 
-            if (mAimsicdService.getCell().getPrimaryScramblingCode() != Integer.MAX_VALUE) {
-                primaryScramblingCodeView.updateText(String.valueOf(mAimsicdService.getCell().getPrimaryScramblingCode()), ani);
+            if (deviceUpdate.getPrimaryScramblingCodeInt() != Integer.MAX_VALUE) {
+                updateHighlightTextView(primaryScramblingCodeView, deviceUpdate.getPrimaryScramblingCode(), animate, ani);
                 primaryScramblingCodeRow.setVisibility(View.VISIBLE);
             }
 
-            String notAvailable = getString(R.string.n_a);
+            updateHighlightTextView(simCountryView, deviceUpdate.getSimCountry(), animate, ani);
+            updateHighlightTextView(simOperatorIdView, deviceUpdate.getSimOperatorId(), animate, ani);
+            updateHighlightTextView(simOperatorNameView, deviceUpdate.getSimOperatorName(), animate, ani);
+            updateHighlightTextView(simImsiView, deviceUpdate.getSimImsi(), animate, ani);
+            updateHighlightTextView(simSerialView, deviceUpdate.getSimSerial(), animate, ani);
 
-            simCountryView.updateText(mDevice.getSimCountry().orElse(notAvailable), ani);
-            simOperatorIdView.updateText(mDevice.getSimOperator().orElse(notAvailable), ani);
-            simOperatorNameView.updateText(mDevice.getSimOperatorName().orElse(notAvailable), ani);
-            simImsiView.updateText(mDevice.getSimSubs().orElse(notAvailable), ani);
-            simSerialView.updateText(mDevice.getSimSerial().orElse(notAvailable), ani);
+            updateHighlightTextView(deviceTypeView, deviceUpdate.getDeviceType(), animate, ani);
+            updateHighlightTextView(deviceImeiView, deviceUpdate.getDeviceImei(), animate, ani);
+            updateHighlightTextView(deviceImeiVersionView, deviceUpdate.getDeviceImeiVersion(), animate, ani);
+            updateHighlightTextView(networkNameView, deviceUpdate.getNetworkName(), animate, ani);
+            updateHighlightTextView(networkCodeView, deviceUpdate.getNetworkCode(), animate, ani);
+            updateHighlightTextView(networkTypeView, deviceUpdate.getNetworkType(), animate, ani);
 
-            deviceTypeView.updateText(mDevice.getPhoneType(), ani);
-            deviceImeiView.updateText(mDevice.getIMEI(), ani);
-            deviceImeiVersionView.updateText(mDevice.getIMEIv(), ani);
-            networkNameView.updateText(mDevice.getNetworkName(), ani);
-            networkCodeView.updateText(mDevice.getMncMcc(), ani);
-            networkTypeView.updateText(mDevice.getNetworkTypeName(), ani);
+            updateHighlightTextView(dataActivityTypeView, deviceUpdate.getDataActivityType(), animate, ani);
+            updateHighlightTextView(dataStatusView, deviceUpdate.getDataStatus(), animate, ani);
+            updateHighlightTextView(networkRoamingView, deviceUpdate.getNetworkRoaming(), animate, ani);
 
-            dataActivityTypeView.updateText(mDevice.getDataActivityType(), ani);
-            dataStatusView.updateText(mDevice.getDataState(), ani);
-            networkRoamingView.updateText(String.valueOf(mDevice.isRoaming()), ani);
-
-            ani.startAnimation(5000);
+            if (animate) {
+                ani.startAnimation(5000);
+            }
         }
     }
 
@@ -336,7 +347,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
             if (cell.isValid()) {
                 mAimsicdService.setCell(cell);
                 Helpers.msgShort(mContext, getActivity().getString(R.string.refreshed_cell_id_info));  // TODO re-translating other languages
-                updateUI();
+                updateUI(DeviceUpdate.getUpdate(mAimsicdService), true);
                 swipeRefreshLayout.setRefreshing(false);
             }
         }
@@ -345,5 +356,6 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
     private void refreshFailed() {
         Helpers.msgShort(mContext, "Failed to refresh CellId. Check network connection.");
         swipeRefreshLayout.setRefreshing(false);
+        updateUI(DeviceUpdate.getUpdate(mAimsicdService), true);
     }
 }
