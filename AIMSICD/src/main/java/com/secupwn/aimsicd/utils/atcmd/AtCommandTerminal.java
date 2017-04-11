@@ -10,8 +10,7 @@ import android.os.Message;
 import java.io.File;
 import java.io.IOException;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *  Description:    ...
@@ -30,9 +29,8 @@ import io.freefair.android.util.logging.Logger;
  *              More common is that modem AT CoP is on:  /dev/smd0
  *              while the Bluetooth modem (which also us AT CoP is on: /dev/smd7
  */
+@Slf4j
 public abstract class AtCommandTerminal {
-
-    protected static Logger log = AndroidLogger.forClass(AtCommandTerminal.class);
 
     // message may be null if the response is not needed
     public abstract void send(String s, Message message);

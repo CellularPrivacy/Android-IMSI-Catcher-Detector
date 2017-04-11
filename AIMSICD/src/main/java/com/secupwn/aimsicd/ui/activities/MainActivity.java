@@ -53,6 +53,9 @@ import com.secupwn.aimsicd.utils.RequestTask;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class MainActivity extends BaseActivity implements AsyncResponse {
 
     private boolean mBound;

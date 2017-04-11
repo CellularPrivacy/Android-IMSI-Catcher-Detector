@@ -32,11 +32,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -61,11 +60,9 @@ import io.freefair.android.util.logging.Logger;
  *              [ ] Need a "no" timeout to watch output for while, or let's make it 10 minutes.
  *                  Perhaps with a manual stop?
  */
+@Slf4j
 @XmlLayout(R.layout.activity_at_command)
 public class AtCommandFragment extends InjectionFragment {
-
-    @Inject
-    private Logger log;
 
     //Return value constants
     private static final int SERIAL_INIT_OK = 100;

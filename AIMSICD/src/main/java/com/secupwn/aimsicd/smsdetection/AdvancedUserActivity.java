@@ -21,19 +21,14 @@ import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.data.adapter.DetectionStringAdapter;
 import com.secupwn.aimsicd.data.model.SmsDetectionString;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 @XmlLayout(R.layout.activity_advanced_user)
 public class AdvancedUserActivity extends InjectionAppCompatActivity {
-
-    @Inject
-    private Logger log;
 
     @InjectView(R.id.listView_Adv_Activity)
     private ListView listViewAdv;

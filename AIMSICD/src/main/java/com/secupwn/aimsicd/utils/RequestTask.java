@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.constants.DrawerMenu;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
@@ -33,11 +32,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeUnit;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.Logger;
+import io.freefair.injection.annotation.Inject;
 import io.realm.Realm;
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -78,6 +77,7 @@ import lombok.Cleanup;
  *      [ ] App is blocked while downloading.
  *
  */
+@Slf4j
 public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     //Calling from the menu more extensive(more difficult for sever),
@@ -89,9 +89,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
     public static final char DBE_UPLOAD_REQUEST = 6;            // OCID upload request from "APPLICATION" drawer title
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ALL_CURRENT_CELL_DETAILS)"
-
-    @Inject
-    private Logger log;
 
     private RealmHelper mDbAdapter;
     private Context mAppContext;
@@ -367,8 +364,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     private void showHideMapProgressBar(boolean pFlag) {
         InjectionAppCompatActivity lActivity = getActivity();
-        if (BuildConfig.DEBUG && lActivity == null) {
-            log.verbose("BaseTask showHideMapProgressBar() activity is null");
+        if (lActivity == null) {
+            log.debug("BaseTask showHideMapProgressBar() activity is null");
         }
 
         if (lActivity != null) {

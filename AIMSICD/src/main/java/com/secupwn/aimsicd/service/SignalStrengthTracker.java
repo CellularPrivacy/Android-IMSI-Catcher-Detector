@@ -11,10 +11,9 @@ import com.secupwn.aimsicd.utils.RealmHelper;
 
 import java.util.HashMap;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *  Description:    Class that calculates cell signal strength averages and decides if a
@@ -42,9 +41,8 @@ import lombok.Cleanup;
  *          This means that the SQL query will be a little more complicated.
  * @author Tor Henning Ueland
  */
+@Slf4j
 public class SignalStrengthTracker {
-
-    private final Logger log = AndroidLogger.forClass(SignalStrengthTracker.class);
 
     private static int sleepTimeBetweenSignalRegistration = 60; // [seconds]
     private static int minimumIdleTime              = 30;       // [seconds]

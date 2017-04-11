@@ -18,19 +18,21 @@ import com.secupwn.aimsicd.utils.BaseAsyncTask;
 import com.secupwn.aimsicd.utils.TinyDB;
 import com.secupwn.aimsicd.utils.UncaughtExceptionLogger;
 
+import org.slf4j.impl.HandroidLoggerAdapter;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.injection.app.InjectionApplication;
-import io.freefair.android.injection.modules.AndroidLoggerModule;
 import io.freefair.android.injection.modules.OkHttpModule;
-import io.freefair.android.util.logging.Logger;
+import io.freefair.injection.injector.RuntimeInjector;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class AndroidIMSICatcherDetector extends InjectionApplication {
 
     private static WeakReference<AndroidIMSICatcherDetector> instance;
@@ -40,8 +42,6 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
     }
 
     private Status currentStatus;
-    @Inject
-    private Logger log;
 
     /**
      * Maps between an activity class name and the list of currently running
@@ -55,10 +55,10 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
 
     @Override
     public void onCreate() {
+        HandroidLoggerAdapter.DEBUG = BuildConfig.DEBUG;
         UncaughtExceptionLogger.init();
         instance = new WeakReference<>(this);
-        addModule(new AndroidLoggerModule());
-        addModule(OkHttpModule.withCache(this));
+        RuntimeInjector.getInstance().register(OkHttpModule.withCache(this));
         super.onCreate();
 
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
@@ -80,7 +80,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
             for (BaseAsyncTask<?, ?, ?> lTask : tasks) {
                 if (lTask.equals(pTask)) {
                     tasks.remove(lTask);
-                    log.verbose("BaseTask removed:" + pTask.toString());
+                    log.debug("BaseTask removed: {}", pTask);
 
                     break;
                 }
@@ -105,7 +105,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
             tasks = new ArrayList<>();
             mActivityTaskMap.put(key, tasks);
         }
-        log.verbose("BaseTask added:" + pTask.toString());
+        log.debug("BaseTask added:" + pTask.toString());
         tasks.add(pTask);
     }
 
@@ -114,7 +114,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
             return;
         }
 
-        log.debug("BaseTask detach:" + activity.getClass().getCanonicalName());
+        log.debug("BaseTask detach: {}", activity.getClass().getCanonicalName());
 
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName().hashCode());
         if (tasks != null) {

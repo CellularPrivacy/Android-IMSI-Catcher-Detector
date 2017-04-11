@@ -22,16 +22,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /*
  * Class to handle Ril and Samsung MultiRil implementation. Used by the Aimsicd Service.
  */
+@Slf4j
 public class RilExecutor {
 
-    private final Logger log = AndroidLogger.forClass(RilExecutor.class);
-    
     public boolean mMultiRilCompatible;
 
     /*
@@ -260,7 +258,7 @@ public class RilExecutor {
                             break;
                         }
                         if (result.result == null) {
-                            log.verbose("No need to refresh");
+                            log.debug("No need to refresh");
                             break;
                         }
                         if (lastKeyStep.captureResponse) {

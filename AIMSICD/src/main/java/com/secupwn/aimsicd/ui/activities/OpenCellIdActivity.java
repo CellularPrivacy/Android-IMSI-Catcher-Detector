@@ -21,20 +21,19 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-import io.freefair.android.injection.annotation.Inject;
+import io.freefair.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *  Popup toast messages asking if user wants to download
  *  new API key to access OpenCellId services and data.
  */
+@Slf4j
 @XmlLayout(R.layout.activity_open_cell_id)
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;
 
-    @Inject
-    private Logger log;
     private ProgressDialog pd;
 
     @Inject

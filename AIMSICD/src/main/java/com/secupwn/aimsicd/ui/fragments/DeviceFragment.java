@@ -37,17 +37,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
-import io.freefair.android.util.logging.Logger;
+import io.freefair.injection.annotation.Inject;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @XmlLayout(R.layout.fragment_device)
 public class DeviceFragment extends InjectionFragment implements SwipeRefreshLayout.OnRefreshListener {
-
-    @Inject
-    private Logger log;
 
     @Inject
     OkHttpClient okHttpClient;

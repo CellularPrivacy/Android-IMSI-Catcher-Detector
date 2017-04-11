@@ -60,15 +60,14 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.injection.app.InjectionFragment;
-import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Description:    TODO: add details
@@ -92,11 +91,10 @@ import lombok.Cleanup;
  * https://github.com/osmdroid/osmdroid/issues/81
  * https://code.google.com/p/osmbonuspack/issues/detail?id=102
  */
+@Slf4j
 @XmlLayout(R.layout.activity_map_viewer)
 public final class MapFragment extends InjectionFragment implements OnSharedPreferenceChangeListener {
 
-    @Inject
-    private Logger log;
     public static final String updateOpenCellIDMarkers = "update_open_cell_markers";
 
     @InjectView(R.id.mapview)
@@ -217,7 +215,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
         public void onReceive(Context context, Intent intent) {
             loadEntries();
             if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer != null && mCellTowerGridMarkerClusterer.getItems() != null) {
-                log.verbose("mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                log.debug("mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
             }
 
         }
@@ -564,7 +562,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                 }
                 if (mCellTowerGridMarkerClusterer != null) {
                     if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer.getItems() != null) {
-                        log.verbose("CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                        log.debug("CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
                     }
                     //Drawing markers of cell tower immediately as possible
                     mCellTowerGridMarkerClusterer.invalidate();

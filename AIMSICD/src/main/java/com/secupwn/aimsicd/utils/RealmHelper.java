@@ -24,18 +24,17 @@ import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This class handles all the AMISICD DataBase maintenance operations, like
  * creation, population, updates and various selections.
  */
+@Slf4j
 public final class RealmHelper {
-    private final Logger log = AndroidLogger.forClass(RealmHelper.class);
 
     private Context mContext;
     private SharedPreferences mPreferences;
@@ -85,7 +84,7 @@ public final class RealmHelper {
 
                 return false;
             } else {
-                log.verbose("LAC checked - no change on CID:" + cell.getCellId()
+                log.debug("LAC checked - no change on CID:" + cell.getCellId()
                         + " LAC(API): " + cell.getLocationAreaCode()
                         + " LAC(DBi): " + lac);
             }

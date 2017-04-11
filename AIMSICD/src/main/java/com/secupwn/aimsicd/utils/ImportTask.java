@@ -20,11 +20,10 @@ import java.util.Date;
 import java.util.zip.GZIPInputStream;
 
 import au.com.bytecode.opencsv.CSVReader;
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Description:
@@ -35,10 +34,8 @@ import lombok.Cleanup;
  * fly and filtered by MCC, MNC, location.
  * <p/>
  */
+@Slf4j
 public class ImportTask extends BaseAsyncTask<String, Integer, String> {
-
-    @Inject
-    private Logger log;
 
     private RealmHelper mDbAdapter;
     private Context mAppContext;

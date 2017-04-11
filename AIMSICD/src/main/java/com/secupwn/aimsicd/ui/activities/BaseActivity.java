@@ -17,19 +17,16 @@ import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.utils.Icon;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base activity class, handles code that is shared between all activities
  *
  * @author Tor Henning Ueland
  */
+@Slf4j
 public abstract class BaseActivity extends InjectionAppCompatActivity {
-
-    @Inject
-    protected Logger log;
 
     /**
      * Triggered when GUI is opened

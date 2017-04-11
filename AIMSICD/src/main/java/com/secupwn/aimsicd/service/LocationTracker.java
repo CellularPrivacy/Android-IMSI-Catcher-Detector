@@ -21,17 +21,16 @@ import com.secupwn.aimsicd.utils.GeoLocation;
 import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.utils.TruncatedLocation;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Class to handle GPS location tracking
  */
+@Slf4j
 public final class LocationTracker {
 
-    private final Logger log = AndroidLogger.forClass(LocationTracker.class);
     // how long with no movement detected, before we assume we are not moving
     public static final long MOVEMENT_THRESHOLD_MS = 20 * 1000;
 

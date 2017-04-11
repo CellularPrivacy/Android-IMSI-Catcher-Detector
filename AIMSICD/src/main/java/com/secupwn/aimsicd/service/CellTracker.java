@@ -30,7 +30,6 @@ import android.telephony.gsm.GsmCellLocation;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.ui.activities.MainActivity;
 import com.secupwn.aimsicd.utils.Cell;
@@ -38,6 +37,7 @@ import com.secupwn.aimsicd.utils.Device;
 import com.secupwn.aimsicd.utils.DeviceApi18;
 import com.secupwn.aimsicd.utils.Helpers;
 import com.secupwn.aimsicd.utils.Icon;
+import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.utils.TinyDB;
 
 import java.util.ArrayList;
@@ -45,11 +45,10 @@ import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import lombok.Cleanup;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Description:     Class to handle tracking of cell information
@@ -75,10 +74,8 @@ import lombok.Getter;
  *
  *              [x] Use TinyDB.java to simplify Shared Preferences usage
  */
-
+@Slf4j
 public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private final Logger log = AndroidLogger.forClass(CellTracker.class);
 
     @Getter
     public static Cell monitorCell;
@@ -1116,7 +1113,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
             trackingFemtocell = false;
             setNotification();
-            log.verbose(context.getString(R.string.stopped_tracking_femtocell));
+            log.debug(context.getString(R.string.stopped_tracking_femtocell));
         }
     }
 
@@ -1164,11 +1161,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     return !((networkID < FEMTO_NID_MIN) || (networkID >= FEMTO_NID_MAX));
 
                 } else {
-                    log.verbose("Cell location info is null.");
+                    log.debug("Cell location info is null.");
                     return false;
                 }
             } else {
-                log.verbose("Telephony Manager is null.");
+                log.debug("Telephony Manager is null.");
                 return false;
             }
         } else { /* if it is an evDo network */
@@ -1183,11 +1180,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     int FEMTO_NID_MIN = 0xfa;
                     return !((networkID < FEMTO_NID_MIN) || (networkID >= FEMTO_NID_MAX));
                 } else {
-                    log.verbose("Cell location info is null.");
+                    log.debug("Cell location info is null.");
                     return false;
                 }
             } else {
-                log.verbose("Telephony Manager is null.");
+                log.debug("Telephony Manager is null.");
                 return false;
             }
         }

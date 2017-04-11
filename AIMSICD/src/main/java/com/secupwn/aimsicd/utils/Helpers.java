@@ -29,10 +29,10 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.ui.fragments.MapFragment;
 import com.secupwn.aimsicd.constants.DrawerMenu;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.service.CellTracker;
+import com.secupwn.aimsicd.ui.fragments.MapFragment;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -42,8 +42,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -60,9 +59,9 @@ import io.freefair.android.util.logging.Logger;
  *                  - Check for SU and BusyBox
  *
  */
- public class Helpers {
+@Slf4j
+public class Helpers {
 
-    private static final Logger log = AndroidLogger.forClass(Helpers.class);
     private static final int CHARS_PER_LINE = 34;
 
    /**
@@ -232,7 +231,7 @@ import io.freefair.android.util.logging.Logger;
                     new RequestTask(injectionActivity, type, new RequestTask.AsyncTaskCompleteListener() {
                         @Override
                         public void onAsyncTaskSucceeded() {
-                            log.verbose("RequestTask's OCID download was successful. Callback rechecking connected cell against database");
+                            log.debug("RequestTask's OCID download was successful. Callback rechecking connected cell against database");
                             service.getCellTracker().compareLacAndOpenDb();
                         }
 
@@ -288,7 +287,7 @@ import io.freefair.android.util.logging.Logger;
                         new ImportTask.AsyncTaskCompleteListener() {
                     @Override
                     public void onAsyncTaskSucceeded() {
-                        log.verbose("ImportTask's OCID import was successful. Callback rechecking connected cell against database");
+                        log.debug("ImportTask's OCID import was successful. Callback rechecking connected cell against database");
                         service.getCellTracker().compareLacAndOpenDb();
                     }
 
@@ -320,7 +319,7 @@ import io.freefair.android.util.logging.Logger;
 
         if (aob.length == 0) {
             // WARNING: This one is very chatty!
-            log.verbose("invokeOemRilRequestRaw: byte-list response Length = 0");
+            log.debug("invokeOemRilRequestRaw: byte-list response Length = 0");
             return Collections.emptyList();
         }
         int lines = aob.length / CHARS_PER_LINE;

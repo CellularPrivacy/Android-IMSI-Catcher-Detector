@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.freefair.android.util.function.Optional;
+import io.freefair.util.function.Optional;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 

@@ -28,14 +28,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("AccessOfSystemProperties")
+@Slf4j
 public class CommandResult implements Parcelable {
 
-    private final Logger log = AndroidLogger.forClass(CommandResult.class);
     private long startTime;
     @Getter
     private int exitValue;
