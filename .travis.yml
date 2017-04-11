@@ -5,10 +5,8 @@
 # ------------------------------------------------------------------------
 
 language: android
-dist: trusty
-sudo: false
-
 jdk: oraclejdk8
+sudo: false
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
