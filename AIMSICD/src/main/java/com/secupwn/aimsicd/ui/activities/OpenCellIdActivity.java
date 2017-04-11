@@ -154,38 +154,38 @@ public class OpenCellIdActivity extends BaseActivity {
             String htmlResponse = response.body().string();
 
             // For debugging HTTP server response and codes
-            log.debug("Response Html=" + htmlResponse + " Response Code=" + String.valueOf(responseCode));
+            log.debug("Response Html={} Response Code={}", htmlResponse, String.valueOf(responseCode));
 
             if (responseCode == 200) {
-                log.debug("OCID Code 1: Cell Not found: " + htmlResponse);
+                log.debug("OCID Code 1: Cell Not found: {}", htmlResponse);
                 return htmlResponse;
 
             } else if (responseCode == 401) {
-                log.debug("OCID Code 2: Invalid API Key! :" + htmlResponse);
+                log.debug("OCID Code 2: Invalid API Key! :{}", htmlResponse);
                 return htmlResponse;
 
             } else if (responseCode == 400) {
-                log.debug("OCID Code 3: Invalid input data: " + htmlResponse);
+                log.debug("OCID Code 3: Invalid input data: {}", htmlResponse);
                 return "Bad Request"; // For making a toast!
 
             } else if (responseCode == 403) {
-                log.debug("OCID Code 4:  Your API key must be white listed: " + htmlResponse);
+                log.debug("OCID Code 4:  Your API key must be white listed: {}", htmlResponse);
                 return "Bad Request"; // For making a toast!
 
             } else if (responseCode == 500) {
-                log.debug("OCID Code 5: Remote internal server error: " + htmlResponse);
+                log.debug("OCID Code 5: Remote internal server error: {}", htmlResponse);
                 return "Bad Request"; // For making a toast!
 
             } else if (responseCode == 503) {
-                log.debug("OCID Code 6: Reached 24hr API key request limit: " + htmlResponse);
+                log.debug("OCID Code 6: Reached 24hr API key request limit: {}", htmlResponse);
                 return htmlResponse;
 
             } else if (responseCode == 429) {
-                log.debug("OCID Code 7: Exceeded daily request limit (1000) for your API key: " + htmlResponse);
+                log.debug("OCID Code 7: Exceeded daily request limit (1000) for your API key: {}", htmlResponse);
                 return htmlResponse;
 
             } else {
-                log.debug("OCID Returned Unknown Response: " + responseCode);
+                log.debug("OCID Returned Unknown Response: {}", responseCode);
                 return null;
             }
         }

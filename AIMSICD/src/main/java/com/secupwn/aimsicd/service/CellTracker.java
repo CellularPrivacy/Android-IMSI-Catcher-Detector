@@ -361,14 +361,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             // TODO: Consider removing ??
             for (int i = 0; i < 10 && neighboringCellInfo.size() == 0; i++) {
                 try {
-                    log.debug("NeighboringCellInfo empty: trying " + i);
+                    log.debug("NeighboringCellInfo empty: trying {}", i);
                     NeighboringCellInfo info = neighboringCellBlockingQueue.poll(1, TimeUnit.SECONDS);
                     if (info == null) {
                         neighboringCellInfo = tm.getNeighboringCellInfo();
                         if (neighboringCellInfo != null) {
                             if (neighboringCellInfo.size() > 0) {
                                 // Can we think of a better log message here?
-                                log.debug("NeighboringCellInfo found on " + i + " try. (time based)");
+                                log.debug("NeighboringCellInfo found on {} try. (time based)", i);
                                 break;
                             } else {
                                 continue;
@@ -393,11 +393,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
         // Add NC list to DBi_measure:nc_list
         for (NeighboringCellInfo neighborCell : neighboringCellInfo) {
-            log.info("NeighboringCellInfo -" +
-                    " LAC:" + neighborCell.getLac() +
-                    " CID:" + neighborCell.getCid() +
-                    " PSC:" + neighborCell.getPsc() +
-                    " RSSI:" + neighborCell.getRssi());
+            log.info("NeighboringCellInfo - LAC:{} CID:{} PSC:{} RSSI:{}", neighborCell.getLac(), neighborCell.getCid(), neighborCell.getPsc(), neighborCell.getRssi());
 
             final Cell cell = new Cell(
                     neighborCell.getCid(),
@@ -457,14 +453,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         Boolean nclSupportedByNetwork = tinydb.getBoolean(ncListVariableByType);
 
         if (neighborCellsCount > 0) {
-            log.debug("NeighboringCellInfo size: " + neighborCellsCount);
+            log.debug("NeighboringCellInfo size: {}", neighborCellsCount);
             if (!nclSupportedByNetwork)  {
-                log.debug("Setting " + ncListVariableByType + " to: true");
+                log.debug("Setting {} to: true", ncListVariableByType);
                 tinydb.putBoolean(ncListVariableByType, true);
             }
         } else if (neighborCellsCount == 0 && nclSupportedByNetwork) {
             // Detection 7a
-            log.info("ALERT: No neighboring cells detected for CID: " + device.cell.getCellId());
+            log.info("ALERT: No neighboring cells detected for CID: {}", device.cell.getCellId());
 
             emptyNeighborCellsList = true;
 
@@ -473,7 +469,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         } else  {
             // Todo: remove cid string when working.
             log.debug("NC list not supported by this networkn type or not supported by AOS on this device. Nothing to do.");
-            log.debug("Setting " + ncListVariableByType + " to: false");
+            log.debug("Setting {} to: false", ncListVariableByType);
             tinydb.putBoolean(ncListVariableByType, false);
         }
         setNotification();
@@ -557,7 +553,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         if (!dbHelper.openCellExists(realm, monitorCell.getCellId())) {
                             dbHelper.toEventLog(realm, 2, "CID not in Import realm");
 
-                            log.info("ALERT: Connected to unknown CID not in Import realm: " + monitorCell.getCellId());
+                            log.info("ALERT: Connected to unknown CID not in Import realm: {}", monitorCell.getCellId());
                             vibrate(100, Status.MEDIUM);
 
                             cellIdNotInOpenDb = true;

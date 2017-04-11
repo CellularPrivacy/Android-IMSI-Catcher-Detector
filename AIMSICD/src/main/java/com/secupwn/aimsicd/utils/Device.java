@@ -139,7 +139,7 @@ public class Device {
                                     cell.setMobileNetworkCode(Integer.valueOf(homeOperator.substring(3, 5)));
                                 }
                             } catch (Exception e) {
-                                log.info("HomeOperator parse exception - " + e.getMessage(), e);
+                                log.info("HomeOperator parse exception - {}", e.getMessage(), e);
                             }
                         }
                     }

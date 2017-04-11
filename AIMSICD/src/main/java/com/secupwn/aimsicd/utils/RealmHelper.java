@@ -78,15 +78,11 @@ public final class RealmHelper {
             int lac = baseStation.getLocationAreaCode();
 
             if (cell.getLocationAreaCode() != lac) {
-                log.info("ALERT: Changing LAC on CID: " + cell.getCellId()
-                        + " LAC(API): " + cell.getLocationAreaCode()
-                        + " LAC(DBi): " + lac);
+                log.info("ALERT: Changing LAC on CID: {} LAC(API): {} LAC(DBi): {}", cell.getCellId(), cell.getLocationAreaCode(), lac);
 
                 return false;
             } else {
-                log.debug("LAC checked - no change on CID:" + cell.getCellId()
-                        + " LAC(API): " + cell.getLocationAreaCode()
-                        + " LAC(DBi): " + lac);
+                log.debug("LAC checked - no change on CID:{} LAC(API): {} LAC(DBi): {}", cell.getCellId(), cell.getLocationAreaCode(), lac);
             }
         }
         return true;
@@ -194,7 +190,7 @@ public final class RealmHelper {
                     csvWrite.writeNext("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating");
 
                     int size = c.size();
-                    log.debug("OCID UPLOAD: row count = " + size);
+                    log.debug("OCID UPLOAD: row count = {}", size);
 
                     for (Measure measure : c) {
                         csvWrite.writeNext(
@@ -288,21 +284,21 @@ public final class RealmHelper {
 
                 if (!csvCellID.isEmpty()) {
                     int lines = csvCellID.size();
-                    log.info("UpdateOpenCellID: OCID CSV size (lines): " + lines);
+                    log.info("UpdateOpenCellID: OCID CSV size (lines): {}", lines);
 
                     int rowCounter;
                     for (rowCounter = 1; rowCounter < lines; rowCounter++) {
 
                         addCSVRecord(realm, csvCellID.get(rowCounter));
                     }
-                    log.debug("PopulateDBeImport(): inserted " + rowCounter + " cells.");
+                    log.debug("PopulateDBeImport(): inserted {} cells.", rowCounter);
                 }
             } else {
                 log.error("Opencellid.csv file does not exist!");
             }
             return true;
         } catch (Exception e) {
-            log.error("Error parsing OpenCellID data: " + e.getMessage());
+            log.error("Error parsing OpenCellID data: {}", e.getMessage());
             return false;
         } finally {
             try {
@@ -599,7 +595,7 @@ public final class RealmHelper {
 
             realm.commitTransaction();
 
-            log.info("BTS updated: CID=" + cell.getCellId() + " LAC=" + cell.getLocationAreaCode());
+            log.info("BTS updated: CID={} LAC={}", cell.getCellId(), cell.getLocationAreaCode());
         }
 
         // TODO: This doesn't make sense, if it's in DBi_bts it IS part of DBi_measure!
@@ -627,7 +623,7 @@ public final class RealmHelper {
             measure.setNeighbor(false);
 
             realm.commitTransaction();
-            log.info("Measure inserted cellId=" + cell.getCellId());
+            log.info("Measure inserted cellId={}", cell.getCellId());
 
         } else {
             // Updating DBi_measure tables if already exists.
@@ -659,7 +655,7 @@ public final class RealmHelper {
                 }
             }
             realm.commitTransaction();
-            log.info("DBi_measure updated bts_id=" + cell.getCellId());
+            log.info("DBi_measure updated bts_id={}", cell.getCellId());
 
         }
 
@@ -719,7 +715,7 @@ public final class RealmHelper {
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                log.info("ToEventLog(): Added new event: id=" + DF_id + " time=" + timestamp + " cid=" + cid);
+                log.info("ToEventLog(): Added new event: id={} time={} cid={}", DF_id, timestamp, cid);
 
                 // Short 100 ms Vibration
                 // TODO not elegant solution, vibrator invocation should be moved somewhere else imho

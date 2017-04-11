@@ -204,7 +204,7 @@ public class AtCommandFragment extends InjectionFragment {
         public void onClick(View v) {
             if (mAtCommand.getText() != null) {
                 String command = mAtCommand.getText().toString();
-                log.info("AT Command Detected: " + command);
+                log.info("AT Command Detected: {}", command);
                 executeAT();
             }
         }
@@ -368,7 +368,7 @@ public class AtCommandFragment extends InjectionFragment {
         // We need a device-type check here, perhaps: gsm.version.ril-impl.
         Editable cmd = mAtCommand.getText();
         if (cmd != null && cmd.length() != 0) {
-            log.debug("ExecuteAT: attempting to send: " + cmd.toString());
+            log.debug("ExecuteAT: attempting to send: {}", cmd.toString());
 
             if (getSerialDevice() != null) {
                 mCommandTerminal.send(cmd.toString(), new Handler(Looper.getMainLooper()) {
@@ -418,17 +418,17 @@ public class AtCommandFragment extends InjectionFragment {
                 Exception e = new Exception();
 
                 if (!shell.isExecuting && !shell.isReading) {
-                    log.warn("Waiting for a command to be executed in a shell that is not executing and not reading! \n\n Command: " + cmd.getCommand());
+                    log.warn("Waiting for a command to be executed in a shell that is not executing and not reading! \n\n Command: {}", cmd.getCommand());
                     e.setStackTrace(Thread.currentThread().getStackTrace());
                     log.error(e.getMessage(), e);
 
                 } else if (shell.isExecuting && !shell.isReading) {
-                    log.error("Waiting for a command to be executed in a shell that is executing but not reading! \n\n Command: " + cmd.getCommand());
+                    log.error("Waiting for a command to be executed in a shell that is executing but not reading! \n\n Command: {}", cmd.getCommand());
                     e.setStackTrace(Thread.currentThread().getStackTrace());
                     log.error(e.getMessage(), e);
 
                 } else {
-                    log.error("Waiting for a command to be executed in a shell that is not reading! \n\n Command: " + cmd.getCommand());
+                    log.error("Waiting for a command to be executed in a shell that is not reading! \n\n Command: {}", cmd.getCommand());
                     e.setStackTrace(Thread.currentThread().getStackTrace());
                     log.error(e.getMessage(), e);
                 }

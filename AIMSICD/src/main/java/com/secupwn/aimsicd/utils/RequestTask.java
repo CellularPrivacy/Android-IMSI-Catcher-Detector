@@ -138,7 +138,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     @Cleanup Realm realm = Realm.getDefaultInstance();
                     boolean prepared = mDbAdapter.prepareOpenCellUploadData(realm);
 
-                    log.info("OCID upload data prepared - " + String.valueOf(prepared));
+                    log.info("OCID upload data prepared - {}", String.valueOf(prepared));
                     if (prepared) {
                         File file = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/aimsicd-ocid-data.csv");
                         publishProgress(25, 100);
@@ -160,9 +160,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
                         publishProgress(80, 100);
                         if (response != null) {
-                            log.info("OCID Upload Response: "
-                                    + response.code() + " - "
-                                    + response.message());
+                            log.info("OCID Upload Response: {} - {}", response.code(), response.message());
                             if (response.code() == 200) {
                                 Realm.Transaction transaction = mDbAdapter.ocidProcessed();
                                 realm.executeTransaction(transaction);
@@ -200,7 +198,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         dir.mkdirs();
                     }
                     File file = new File(dir, OCDB_File_Name);
-                    log.info("DBE_DOWNLOAD_REQUEST write to: " + dirName + OCDB_File_Name);
+                    log.info("DBE_DOWNLOAD_REQUEST write to: {}" + OCDB_File_Name, dirName);
 
                     Request request = new Request.Builder()
                             .url(commandString[0])
@@ -223,7 +221,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         try {
                             String error = response.body().string();
                             Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_error) + " " + error);
-                            log.error("Download OCID data error: " + error);
+                            log.error("Download OCID data error: {}", error);
                         } catch (Exception e) {
                             Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_error) + " "
                                     + e.getClass().getName() + " - "
@@ -238,7 +236,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                             log.debug("doInBackground DBE_DOWNLOAD_REQUEST total not returned!");
                             total = 1024; // Let's set it arbitrarily to something other than "-1"
                         } else {
-                            log.debug("doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
+                            log.debug("doInBackground DBE_DOWNLOAD_REQUEST total: {}", total);
                             publishProgress((int) (0.25 * total), (int) total); // Let's show something!
                         }
 

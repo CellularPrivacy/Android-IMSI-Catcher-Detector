@@ -98,9 +98,7 @@ public class DeviceApi18 {
                         pDevice.cell.setPrimaryScramblingCode(identityWcdma.getPsc());
 
                     } else {
-                        log.info("Unknown type of cell signal!"
-                                + "\n ClassName: " + info.getClass().getSimpleName()
-                                + "\n ToString: " + info.toString());
+                        log.info("Unknown type of cell signal!\n ClassName: {}\n ToString: {}", info.getClass().getSimpleName(), info.toString());
                     }
                     if (pDevice.cell.isValid()) {
                         break;

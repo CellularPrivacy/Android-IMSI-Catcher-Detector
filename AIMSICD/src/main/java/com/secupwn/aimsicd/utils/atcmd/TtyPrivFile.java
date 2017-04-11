@@ -28,7 +28,7 @@ public class TtyPrivFile extends TtyStream {
         mReadProc = read;
         mWriteProc = write;
 
-        log.debug("mReadProc=" + mReadProc + ", mWriteProc=" + mWriteProc);
+        log.debug("mReadProc={}, mWriteProc={}", mReadProc, mWriteProc);
     }
 
     @Override

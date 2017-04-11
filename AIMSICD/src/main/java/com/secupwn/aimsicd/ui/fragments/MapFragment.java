@@ -215,7 +215,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
         public void onReceive(Context context, Intent intent) {
             loadEntries();
             if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer != null && mCellTowerGridMarkerClusterer.getItems() != null) {
-                log.debug("mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                log.debug("mMessageReceiver CellTowerMarkers.invalidate() markers.size():{}", mCellTowerGridMarkerClusterer.getItems().size());
             }
 
         }
@@ -562,7 +562,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                 }
                 if (mCellTowerGridMarkerClusterer != null) {
                     if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer.getItems() != null) {
-                        log.debug("CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                        log.debug("CellTowerMarkers.invalidate() markers.size():{}", mCellTowerGridMarkerClusterer.getItems().size());
                     }
                     //Drawing markers of cell tower immediately as possible
                     mCellTowerGridMarkerClusterer.invalidate();

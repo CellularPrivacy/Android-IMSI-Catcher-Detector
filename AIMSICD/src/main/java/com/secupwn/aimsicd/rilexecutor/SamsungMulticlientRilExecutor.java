@@ -335,7 +335,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
                     int msgLen = (buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | (buf[3] & 0xff);
                     if (msgLen + 4 > buf.length) {
-                        log.error("Message to big. Length: " + msgLen);
+                        log.error("Message to big. Length: {}", msgLen);
                         endpos = 0;
                         continue;
                     }
@@ -363,8 +363,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
             Parcel p;
 
             if (DBG) {
-                log.debug("Received " + length + " bytes: " +
-                        HexDump.toHexString(data, pos, length));
+                log.debug("Received {} bytes: {}", length, HexDump.toHexString(data, pos, length));
             }
 
             p = Parcel.obtain();
@@ -381,7 +380,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                         processSolicited(p);
                         break;
                     default:
-                        log.debug("Invalid response type: " + responseType);
+                        log.debug("Invalid response type: {}", responseType);
                         break;
                 }
             } finally {
@@ -434,7 +433,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                                 m.sendToTarget();
                         }
                     } else {
-                        log.info("Message with token " + token + " not found");
+                        log.info("Message with token {} not found", token);
                     }
                 }
             }

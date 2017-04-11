@@ -46,7 +46,7 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            log.debug("StatusWatcher received status change to " + ((AndroidIMSICatcherDetector) getApplication()).getStatus().name() + ", updating icon");
+            log.debug("StatusWatcher received status change to {}, updating icon", ((AndroidIMSICatcherDetector) getApplication()).getStatus().name());
             updateIcon(context);
         }
     };

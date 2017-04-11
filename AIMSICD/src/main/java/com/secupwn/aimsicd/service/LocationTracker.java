@@ -131,7 +131,7 @@ public final class LocationTracker {
                     try {
                         Cell cell = context.getCell();
                         if (cell != null) {
-                            log.debug("Looking up MCC " + cell.getMobileCountryCode());
+                            log.debug("Looking up MCC {}", cell.getMobileCountryCode());
 
                             @Cleanup Realm realm = Realm.getDefaultInstance();
                             GpsLocation defLoc = mDbHelper.getDefaultLocation(realm, cell.getMobileCountryCode());
@@ -146,7 +146,7 @@ public final class LocationTracker {
         }
 
         if (loc != null) {
-            log.info("Last known location " + loc.toString());
+            log.info("Last known location {}", loc.toString());
         }
 
         return loc;

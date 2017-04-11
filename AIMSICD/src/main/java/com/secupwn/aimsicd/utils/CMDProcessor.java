@@ -77,7 +77,7 @@ public final class CMDProcessor {
         out.append(r.getStdOut());
         out.append(" ; ");
         out.append(r.getStdErr());
-        log.debug("canSU() su[" + r.getExitValue() + "]: " + out);
+        log.debug("canSU() su[{}]: {}", r.getExitValue(), out);
         return r.success();
     }
 }

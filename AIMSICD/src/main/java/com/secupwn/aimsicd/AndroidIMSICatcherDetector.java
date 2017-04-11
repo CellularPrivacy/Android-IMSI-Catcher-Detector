@@ -97,7 +97,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
             return;
         }
 
-        log.debug("BaseTask addTask activity:" + activity.getClass().getCanonicalName());
+        log.debug("BaseTask addTask activity:{}", activity.getClass().getCanonicalName());
 
         int key = activity.getClass().getCanonicalName().hashCode();
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(key);
@@ -105,7 +105,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
             tasks = new ArrayList<>();
             mActivityTaskMap.put(key, tasks);
         }
-        log.debug("BaseTask added:" + pTask.toString());
+        log.debug("BaseTask added:{}", pTask.toString());
         tasks.add(pTask);
     }
 
@@ -128,7 +128,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
         if (activity == null) {
             return;
         }
-        log.debug("BaseTask attach:" + activity.getClass().getCanonicalName());
+        log.debug("BaseTask attach:{}", activity.getClass().getCanonicalName());
 
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName().hashCode());
         if (tasks != null) {

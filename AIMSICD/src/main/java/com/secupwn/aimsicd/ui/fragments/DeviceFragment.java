@@ -207,7 +207,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
                     break;
                 }
                 default:
-                    log.error("unknown phone type: " + mDevice.getPhoneId());
+                    log.error("unknown phone type: {}", mDevice.getPhoneId());
             }
 
             if (mAimsicdService.getCell().getTimingAdvance() != Integer.MAX_VALUE) {
@@ -330,7 +330,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
 
     private void processFinish(Cell cell) {
         if (cell != null) {
-            log.info("processFinish - Cell =" + cell.toString());
+            log.info("processFinish - Cell ={}", cell.toString());
             if (cell.isValid()) {
                 mAimsicdService.setCell(cell);
                 Helpers.msgShort(mContext, getActivity().getString(R.string.refreshed_cell_id_info));  // TODO re-translating other languages

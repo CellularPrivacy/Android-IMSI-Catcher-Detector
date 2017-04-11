@@ -52,7 +52,7 @@ public class CommandResult implements Parcelable {
         this.stdErr = stderr;
         this.endTime = endTime;
 
-        log.debug("Time to execute: " + (this.endTime - this.startTime) + " ns (nanoseconds)");
+        log.debug("Time to execute: {} ns (nanoseconds)", this.endTime - this.startTime);
         // this is set last so log from here
         checkForErrors();
     }

@@ -78,7 +78,7 @@ public class RilExecutor {
         mRilExecutorDetectResult = mRequestExecutor.detect();
         if (!mRilExecutorDetectResult.available) {
             mMultiRilCompatible = false;
-            log.error("Samsung Multiclient RIL not available: " + mRilExecutorDetectResult.error);
+            log.error("Samsung Multiclient RIL not available: {}", mRilExecutorDetectResult.error);
             mRequestExecutor = null;
         } else {
             mRequestExecutor.start();

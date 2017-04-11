@@ -211,18 +211,18 @@ public class Helpers {
                                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
-                    log.info("OCID BBOX is set to: " + boundParameter + "  with radius " + radius + " Km.");
+                    log.info("OCID BBOX is set to: {}  with radius {} Km.", boundParameter, radius);
 
                     StringBuilder sb = new StringBuilder();
                     sb.append("http://www.opencellid.org/cell/getInArea?key=")
                             .append(CellTracker.OCID_API_KEY).append("&BBOX=")
                             .append(boundParameter);
 
-                    log.info("OCID MCC is set to: " + cell.getMobileCountryCode());
+                    log.info("OCID MCC is set to: {}", cell.getMobileCountryCode());
                     if (cell.getMobileCountryCode() != Integer.MAX_VALUE) {
                         sb.append("&mcc=").append(cell.getMobileCountryCode());
                     }
-                    log.info("OCID MNC is set to: " + cell.getMobileNetworkCode());
+                    log.info("OCID MNC is set to: {}", cell.getMobileNetworkCode());
                     if (cell.getMobileNetworkCode() != Integer.MAX_VALUE) {
                         sb.append("&mnc=").append(cell.getMobileNetworkCode());
                     }
@@ -278,9 +278,9 @@ public class Helpers {
                     Double.doubleToRawLongBits(cell.getLon()) != 0) {
                 GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
 
-                log.info("OCID location: " + currentLoc.toString() + "  with radius " + radius + " Km.");
-                log.info("OCID MCC is set to: " + cell.getMobileCountryCode());
-                log.info("OCID MNC is set to: " + cell.getMobileNetworkCode());
+                log.info("OCID location: {}  with radius {} Km.", currentLoc.toString(), radius);
+                log.info("OCID MCC is set to: {}", cell.getMobileCountryCode());
+                log.info("OCID MNC is set to: {}", cell.getMobileNetworkCode());
 
                 new ImportTask(injectionActivity, importFile,
                         cell.getMobileCountryCode(), cell.getMobileNetworkCode(), currentLoc, radius,
@@ -355,7 +355,7 @@ public class Helpers {
         try {
             result = SystemPropertiesReflection.get(context, prop);
         } catch (IllegalArgumentException iae) {
-            log.error("Failed to get system property: " + prop, iae);
+            log.error("Failed to get system property: {}", prop, iae);
         }
         return result == null ? def : result;
     }

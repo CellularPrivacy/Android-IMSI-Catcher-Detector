@@ -81,15 +81,13 @@ public class SignalStrengthTracker {
         long now = System.currentTimeMillis(); // [ms]
 
         if (deviceIsMoving()) {
-            log.info("Ignored signal sample for CID: " + cellID +
-                    " due to device movement. Waiting for " + ((minimumIdleTime * 1000) - (now - lastMovementDetected)) + " ms.");
+            log.info("Ignored signal sample for CID: {} due to device movement. Waiting for {} ms.", cellID, (minimumIdleTime * 1000) - (now - lastMovementDetected));
             return;
         }
 
         if (now - (sleepTimeBetweenSignalRegistration * 1000) > lastRegistrationTime) {
             long diff = now - lastRegistrationTime;
-            log.info("Scheduling signal strength calculation from CID: " + cellID +
-                    " @ " + signalStrength + " dBm. Last registration was " + diff + "ms ago.");
+            log.info("Scheduling signal strength calculation from CID: {} @ {} dBm. Last registration was {}ms ago.", cellID, signalStrength, diff);
             lastRegistrationTime = now;
 
             //mDbHelper.addSignalStrength(cellID, signalStrength, String.valueOf(System.currentTimeMillis()));
@@ -132,7 +130,7 @@ public class SignalStrengthTracker {
 
         // If moving, return false
         if (deviceIsMoving()) {
-            log.info("Cannot check signal strength for CID: " + cellID + " because of device movements.");
+            log.info("Cannot check signal strength for CID: {} because of device movements.", cellID);
             return false;
         }
 
@@ -141,13 +139,13 @@ public class SignalStrengthTracker {
         // Cached?
         if (averageSignalCache.get(cellID) != null) {
             storedAvg = averageSignalCache.get(cellID);
-            log.debug("Cached average SS for CID: " + cellID + " is: " + storedAvg);
+            log.debug("Cached average SS for CID: {} is: {}", cellID, storedAvg);
         } else {
             // Not cached, check DB
             @Cleanup Realm realm = Realm.getDefaultInstance();
             storedAvg = mDbHelper.getAverageSignalStrength(realm, cellID);
             averageSignalCache.put(cellID, storedAvg);
-            log.debug("Average SS in DB for  CID: " + cellID + " is: " + storedAvg);
+            log.debug("Average SS in DB for  CID: {} is: {}", cellID, storedAvg);
         }
 
         boolean result;
@@ -156,8 +154,7 @@ public class SignalStrengthTracker {
         } else {
             result = signalStrength - storedAvg > mysteriousSignalDifference;
         }
-        log.debug("Signal Strength mystery check for CID: " + cellID +
-                " is " + result + ", avg:" + storedAvg + ", this signal: " + signalStrength);
+        log.debug("Signal Strength mystery check for CID: {} is {}, avg:{}, this signal: {}", cellID, result, storedAvg, signalStrength);
         return result;
     }
 

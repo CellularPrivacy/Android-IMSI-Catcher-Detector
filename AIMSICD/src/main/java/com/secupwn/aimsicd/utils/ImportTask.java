@@ -131,7 +131,7 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
                 String[] opencellid_csv = new String[14];
                 while ((next = csvReader.readNext()) != null) {
                     if (next.length < 14) {
-                        log.warn("Not enough values in string: " + Arrays.toString(next));
+                        log.warn("Not enough values in string: {}", Arrays.toString(next));
                         ++failedRecords;
                         continue;
                     }
@@ -172,12 +172,12 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
                         ++progress;
 
                     } catch (NumberFormatException e) {
-                        log.warn("Problem parsing a record: " + Arrays.toString(opencellid_csv), e);
+                        log.warn("Problem parsing a record: {}", Arrays.toString(opencellid_csv), e);
                         ++failedRecords;
                     }
 
                     if ((progress % 100) == 0) {
-                        log.debug("Imported records for now: " + String.valueOf(progress));
+                        log.debug("Imported records for now: {}", String.valueOf(progress));
                         // do not know progress because determining line count in gzipped
                         // multi-gigabyte file is slow
                         //publishProgress((int) progress, (int) totalRecords);
@@ -196,9 +196,9 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
                 }
             }
             elapsedSeconds = (System.currentTimeMillis() / 1000) - elapsedSeconds;
-            log.debug("Importing took " + String.valueOf(elapsedSeconds) + " seconds");
-            log.debug("Imported records: " + String.valueOf(progress));
-            log.debug("Failed records: " + String.valueOf(failedRecords));
+            log.debug("Importing took {} seconds", String.valueOf(elapsedSeconds));
+            log.debug("Imported records: {}", String.valueOf(progress));
+            log.debug("Failed records: {}", String.valueOf(failedRecords));
 
             return "Successful";
 
@@ -216,7 +216,7 @@ public class ImportTask extends BaseAsyncTask<String, Integer, String> {
         String type = mAppContext.getContentResolver().getType(importFile);
         boolean isGzip = type != null && type.equals("application/octet-stream") &&
                 importFile.toString().endsWith(".gz");
-        log.info("Importing " + (isGzip ? "gzipped file" : "plain-text file") + ": " + importFile);
+        log.info("Importing {}: {}", isGzip ? "gzipped file" : "plain-text file", importFile);
 
         InputStream fileStream = mAppContext.getContentResolver().openInputStream(importFile);
         if (fileStream == null) {
