@@ -96,8 +96,8 @@ dependencies {
     // ShowcaseView library to highlight specific app elements
     //compile 'com.github.amlcurran.showcaseview:library:5.3.0'
 
-    provided "org.projectlombok:lombok:1.16.8"
-    apt "org.projectlombok:lombok:1.16.8"
+    provided "org.projectlombok:lombok:1.16.16"
+    apt "org.projectlombok:lombok:1.16.16"
 
     testCompile 'junit:junit:4.12'
 }
