@@ -9,17 +9,16 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.data.model.BaseTransceiverStation;
-import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.adapters.DbViewerSpinnerAdapter;
-import com.secupwn.aimsicd.data.adapter.MeasureAdapter;
 import com.secupwn.aimsicd.adapters.MeasuredCellStrengthAdapter;
 import com.secupwn.aimsicd.data.adapter.BaseStationAdapter;
 import com.secupwn.aimsicd.data.adapter.DefaultLocationAdapter;
 import com.secupwn.aimsicd.data.adapter.DetectionStringAdapter;
 import com.secupwn.aimsicd.data.adapter.EventAdapter;
 import com.secupwn.aimsicd.data.adapter.ImportAdapter;
+import com.secupwn.aimsicd.data.adapter.MeasureAdapter;
 import com.secupwn.aimsicd.data.adapter.SmsDataAdapter;
+import com.secupwn.aimsicd.data.model.BaseTransceiverStation;
 import com.secupwn.aimsicd.data.model.DefaultLocation;
 import com.secupwn.aimsicd.data.model.Event;
 import com.secupwn.aimsicd.data.model.Import;
@@ -27,6 +26,7 @@ import com.secupwn.aimsicd.data.model.Measure;
 import com.secupwn.aimsicd.data.model.SmsData;
 import com.secupwn.aimsicd.data.model.SmsDetectionString;
 import com.secupwn.aimsicd.enums.StatesDbViewer;
+import com.secupwn.aimsicd.utils.RealmHelper;
 
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
@@ -83,28 +83,28 @@ public final class DbViewerFragment extends InjectionFragment {
 
                 switch (position) {
                     case 0:
-                        setListAdapter(new BaseStationAdapter(getActivity(), realm.where(BaseTransceiverStation.class).findAll()));
+                        setListAdapter(new BaseStationAdapter(realm.where(BaseTransceiverStation.class).findAll()));
                         break;
                     case 1:
-                        setListAdapter(new MeasureAdapter(getActivity(), realm.where(Measure.class).findAll()));
+                        setListAdapter(new MeasureAdapter(realm.where(Measure.class).findAll()));
                         break;
                     case 2:
-                        setListAdapter(new ImportAdapter(getActivity(), realm.where(Import.class).findAll()));
+                        setListAdapter(new ImportAdapter(realm.where(Import.class).findAll()));
                         break;
                     case 3:
-                        setListAdapter(new DefaultLocationAdapter(getActivity(), realm.where(DefaultLocation.class).findAll()));
+                        setListAdapter(new DefaultLocationAdapter(realm.where(DefaultLocation.class).findAll()));
                         break;
                     case 4:  //Silent SMS
-                        setListAdapter(new SmsDataAdapter(getActivity(), realm.where(SmsData.class).findAll()));
+                        setListAdapter(new SmsDataAdapter(realm.where(SmsData.class).findAll()));
                         break;
                     case 5:
-                        setListAdapter(new MeasuredCellStrengthAdapter(getActivity(), realm.where(Measure.class).findAll()));
+                        setListAdapter(new MeasuredCellStrengthAdapter(realm.where(Measure.class).findAll()));
                         break;
                     case 6:
-                        setListAdapter(new EventAdapter(getActivity(), realm.where(Event.class).findAll()));
+                        setListAdapter(new EventAdapter(realm.where(Event.class).findAll()));
                         break;
                     case 7:
-                        setListAdapter(new DetectionStringAdapter(getActivity(), realm.where(SmsDetectionString.class).findAll()));
+                        setListAdapter(new DetectionStringAdapter(realm.where(SmsDetectionString.class).findAll()));
                         break;
                     default:
                         throw new IllegalArgumentException("Unknown type of table");

@@ -5,7 +5,6 @@
  */
 package com.secupwn.aimsicd.data.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +27,8 @@ import static java.lang.String.valueOf;
  */
 public class BaseStationAdapter extends RealmBaseAdapter<BaseTransceiverStation> {
 
-    public BaseStationAdapter(Context context, RealmResults<BaseTransceiverStation> realmResults) {
-        super(context, realmResults);
+    public BaseStationAdapter(RealmResults<BaseTransceiverStation> realmResults) {
+        super(realmResults);
     }
 
     @Override

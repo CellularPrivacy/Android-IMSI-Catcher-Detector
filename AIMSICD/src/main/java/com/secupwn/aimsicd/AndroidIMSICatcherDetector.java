@@ -61,15 +61,21 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
         RuntimeInjector.getInstance().register(OkHttpModule.withCache(this));
         super.onCreate();
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
+        initRealm();
+
+        TinyDB.getInstance().init(getApplicationContext());
+        TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
+    }
+
+    private void initRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .initialData(new DefaultDataTransaction())
                 .build();
 
         Realm.setDefaultConfiguration(realmConfiguration);
-
-        TinyDB.getInstance().init(getApplicationContext());
-        TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
     }
 
     public void removeTask(BaseAsyncTask<?, ?, ?> pTask) {

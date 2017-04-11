@@ -5,7 +5,6 @@
  */
 package com.secupwn.aimsicd.data.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +22,8 @@ import static java.lang.String.valueOf;
 
 public class ImportAdapter extends RealmBaseAdapter<Import> {
 
-    public ImportAdapter(Context context, RealmResults<Import> realmResults) {
-        super(context, realmResults);
+    public ImportAdapter(RealmResults<Import> realmResults) {
+        super(realmResults);
     }
 
     @Override

@@ -5,7 +5,6 @@
  */
 package com.secupwn.aimsicd.data.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +20,8 @@ import static java.lang.String.valueOf;
 
 public class DefaultLocationAdapter extends RealmBaseAdapter<DefaultLocation> {
 
-    public DefaultLocationAdapter(Context context, RealmResults<DefaultLocation> realmResults) {
-        super(context, realmResults);
+    public DefaultLocationAdapter(RealmResults<DefaultLocation> realmResults) {
+        super(realmResults);
     }
 
     @Override

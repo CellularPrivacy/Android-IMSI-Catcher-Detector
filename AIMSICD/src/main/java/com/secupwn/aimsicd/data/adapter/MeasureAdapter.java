@@ -1,6 +1,5 @@
 package com.secupwn.aimsicd.data.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +20,8 @@ import static java.lang.String.valueOf;
  */
 public class MeasureAdapter extends RealmBaseAdapter<Measure> {
 
-    public MeasureAdapter(Context context, RealmResults<Measure> realmResults) {
-        super(context, realmResults);
+    public MeasureAdapter(RealmResults<Measure> realmResults) {
+        super(realmResults);
     }
 
     @Override

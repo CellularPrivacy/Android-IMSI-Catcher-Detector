@@ -1,6 +1,5 @@
 package com.secupwn.aimsicd.data.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,8 @@ import io.realm.RealmResults;
 
 public class DetectionStringAdapter extends RealmBaseAdapter<SmsDetectionString> {
 
-    public DetectionStringAdapter(Context context, RealmResults<SmsDetectionString> realmResults) {
-        super(context, realmResults);
+    public DetectionStringAdapter(RealmResults<SmsDetectionString> realmResults) {
+        super(realmResults);
     }
 
     @Override
