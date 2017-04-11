@@ -5,16 +5,19 @@
 # ------------------------------------------------------------------------
 
 language: android
+dist: trusty
 sudo: false
 
 jdk: oraclejdk8
 
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+    - $HOME/.android/build-cache
 
 env:
   global:
@@ -26,13 +29,14 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-23.0.3
-    - android-23
+    - build-tools-25.0.2
+    - android-25
     - extra-android-m2repository
 
 before_install:
   - 'openssl aes-256-cbc -K $encrypted_dc771c3300d2_key -iv $encrypted_dc771c3300d2_iv -in keystore.jks.enc -out keystore.jks -d || true'
 
+install: ./gradlew clean
 
 script: ./gradlew build check
 
