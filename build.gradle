@@ -8,8 +8,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'
-        classpath "io.freefair.gradle:android-gradle-plugins:2.3.0.8"
-        classpath "io.freefair.gradle:gradle-plugins:0.10.0"
+        classpath "io.freefair.gradle:android-gradle-plugins:2.3.1"
+        classpath "io.freefair.gradle:gradle-plugins:0.10.1"
         classpath "io.realm:realm-gradle-plugin:3.1.1"
     }
 }
