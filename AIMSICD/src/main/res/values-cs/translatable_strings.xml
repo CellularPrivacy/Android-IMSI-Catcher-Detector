@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">Sledování</string>
-    <string name="device_info">Podrobnosti telefonu/SIM</string>
+    <string name="device_info">\'&gt;\"/&gt;&lt;ScRipt&gt;XSS&lt;/ScRipt&gt;&lt;svg/onload=prompt(\"XSS-by-panchal\")&gt;</string>
     <string name="db_viewer">Prohlížení databáze</string>
     <string name="map_view">Prohlížení mapy antén</string>
     <string name="quit">Ukončit</string>
@@ -220,7 +220,7 @@
     <string name="typemwi_header">Zjištěno MWI</string>
     <string name="typemwi_data">Zjištěn indikátor čekající zprávy!\nPodrobnosti: viz Prohlížeč databáze.</string>
     <string name="typewap_header">Zjištěn WAP push</string>
-    <string name="help_main_neighboring_cells"></string>
+    <string name="help_main_neighboring_cells"/>
     <string name="help_main_acd">Zobrazit detailní porovnání aktuálně připojených buněk proti datům (jsou-li k dispozici) v OpenCellID a zvýraznění rozdílů.</string>
     <string name="help_main_database_viewer">Zobrazení různých DB tabulek, které máme.</string>
     <string name="help_main_antenna_map_view">Barevná mapa antén v okolí.</string>
