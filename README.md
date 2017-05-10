@@ -8,7 +8,7 @@
   <a target="_blank" href="https://www.bountysource.com/teams/android-imsi-catcher-detector/issues?utm_source=Android%20IMSI-Catcher%20Detector&utm_medium=shield&utm_campaign=bounties_received"><img src="https://www.bountysource.com/badge/team?team_id=40338&style=bounties_received"></a>
 </p>
 
-
+ <br /> <br />
 <h2>This Project will have a revival soon. <br />
 We are working on a light version of AIMSICD.</h2>
 <a href="https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/926">more information</a>
