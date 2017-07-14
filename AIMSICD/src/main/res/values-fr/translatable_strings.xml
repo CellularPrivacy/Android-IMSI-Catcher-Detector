@@ -15,14 +15,14 @@
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">AVERTISSEMENT</string>
     <string name="disclaimer">"En utilisant AIMSICD vous comprenez et acceptez qu\'AIMSICD est une application
- expérimentale à usage informatif, qui peut échouer à détecter une éventuelle
- surveillance pour différentes raisons. Vous comprenez également que
- l\'application peut être contournée, évitée ou bloquée par des moyens que
- les développeurs ne connaissent pas encore. C\'est pourquoi vous acceptez que
- les sociétées et les développeurs liés à ce produit gratuit, ne peuvent en aucun
- cas être tenus responsables des résultats ou conséquences de l\'usage de cette
- application. STATUT DE DÉVELOPPEMENT : ALPHA !
- "</string>
+\n expérimentale à usage informatif, qui peut échouer à détecter une éventuelle
+\n surveillance pour différentes raisons. Vous comprenez également que
+\n l\'application peut être contournée, évitée ou bloquée par des moyens que
+\n les développeurs ne connaissent pas encore. C\'est pourquoi vous acceptez que
+\n les sociétés et les développeurs liés à ce produit gratuit, ne peuvent en aucun
+\n cas être tenus responsables des résultats ou conséquences de l\'usage de cette
+\n application. STATUT DE DÉVELOPPEMENT : ALPHA !
+\n "</string>
 
 
     <!-- MENU -->
