@@ -10,7 +10,7 @@
     <string name="text_ok">OK</string>
     <string name="text_cancel">Annuler</string>
     <string name="text_agree">J\'accepte</string>
-    <string name="text_disagree">Je n\'accepte pas</string>
+    <string name="text_disagree">Je refuse</string>
 
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">AVERTISSEMENT</string>
