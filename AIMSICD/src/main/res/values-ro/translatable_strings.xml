@@ -258,4 +258,55 @@
 \nVerificati daca dispozitivul dvs. are Busybox instalat si incercati din nou.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">A aparut o eroare necunoscuta in incercarea de a achizitiona Seria Dispozitivului.
 \nVerificati logcat-ul pentru orice eroare si postati-l pe Github.</string>
+    <string name="unknown_error_initialising_at_command_injector">A aparut o eroare necunoscuta, incercand să inițializez injectorul de comandă AT.
+\nVerificati logat-ul pentru orice eroare și postati-l pe Github.</string>
+    <string name="getting_ocid_api_key">Obtinerea cheii API OpenCellID …</string>
+    <string name="unable_to_create_map">Imposibil de creat harta!</string>
+    <string name="describe_the_problem_you_had">ATENŢIE! Descrie problema pe care ai avut-o inainte de a ne trimite aceste jurnale. FARA DESCRIERE NU-I AJUTOR!
+\n</string>
+    <string name="status">Statutul:</string>
+    <string name="status_idle">In asteptare</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">Mijlociu</string>
+    <string name="status_high">Inalt</string>
+    <string name="status_danger">Pericol</string>
+    <string name="status_skull">Fugi!</string>
+
+    <string name="adv_user_info">Acest meniu este destinat numai utilizatorilor avansati!
+\n
+\nVa rugam sa nu introduceti siruri aleatoare, deoarece va cauza detectarea necontrolabila.
+\n
+\nPentru a adauga un sir, alegeti tipul de SMS din meniul derulant, tastati sirul de detectare și apasati inserati.
+\n
+\nPentru a sterge din baza de date, apasați lung pe vizualizarea listei.</string>
+    
+    <string name="adv_user_sms_info">Acest meniu este destinat numai utilizatorilor avansati!
+\nPentru a sterge un SMS detectat, apasati lung in lista.</string>
+    <string name="title_activity_advanced_user">Sterge SMS Detectat</string>
+
+    <string name="adv_user_pref_header">Setari Utilizatori Avansati</string>
+    <string name="adv_user_pref_launch">Siruri de Detectare</string>
+    <string name="adv_user_pref_sms_launch">Sterge SMS</string>
+    <string name="adv_user_pref_summary">Introduceti si stergeti siruri de detectare</string>
+    <string name="adv_user_pref_sms_summary">Sterge SMS Detectat</string>
+   
+    <string name="adv_user_root_title">Activeata Detectarea SMS</string>
+    <string name="adv_user_root_sum">Este necesar root pentru a activa detectia SMS</string>
+
+    <string name="detection_strings">Sirul SMS detectat pentru popup personalizat</string>
+    <string name="typezero_title">ATENTIE!</string>
+    <string name="typezero_header">SMS Silentios Detectat</string>
+    <string name="typezero_data">Mesaj Tip-0 detectat!
+\nDetalii: Vezi Baza de Date.</string>
+    <string name="typemwi_title">ATENTIE!</string>
+    <string name="typemwi_header">MWI Detectat</string>
+    <string name="typemwi_data">Mesaj Indicator de Asteptare detectat!
+\nDetalii: Vezi Baza de Date.</string>
+    <string name="typewap_header">WAP Push Detectat</string>
+    <string name="typewap_data">WAP push Mesaj SMS detectat!
+\nDetalii: Vezi Baza de Date.</string>
+
+
+    <string name="help_main_neighboring_cells">Afiseaza celulele vecine.</string>
+    <string name="help_main_phone_sim_details">Detalii SIM furnizor de retea, IMEI, TMSI.</string>
     </resources>
