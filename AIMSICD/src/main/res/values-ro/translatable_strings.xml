@@ -309,4 +309,58 @@
 
     <string name="help_main_neighboring_cells">Afiseaza celulele vecine.</string>
     <string name="help_main_phone_sim_details">Detalii SIM furnizor de retea, IMEI, TMSI.</string>
+    <string name="help_main_acd">Arata o comparatie detaliata a celulei conectate in prezent, cu datele (daca exista) gasite în OpenCellID și evidentiaza diferentele.</string>
+    <string name="help_main_database_viewer">Vezi diferitele tabele DB pe care le avem.</string>
+    <string name="help_main_antenna_map_view">Harta antenelor colorate din apropiere.</string>
+    <string name="help_main_at_command_interface">Interfata care permite trimiterea comenzilor AT la Procesorul Baseband (necesita ROOT).</string>
+
+    <string name="help_tracking_toggle_attack_detection">Porneste / opreste detectarea atacurilor și colecteaza detaliile celulei in tabelele de baze de date interne.</string>
+    <string name="help_tracking_toggle_cell_tracking">Incepeți sa urmariti celulele pentru a fi afisate pe Antena Map Viewer si eventual, sa le incarcati mai tarziu in OpenCellID.</string>
+
+    <string name="help_settings_preferences">Setarile AIMSICD, cum ar fi regulile de protectie, timpul de votare și comportamentul serviciului.</string>
+    <string name="help_settings_reset_db">Stergeti și resetati toate tabelele DB sau cele specificate.</string>
+
+    <string name="help_app_add_get_ocid_api_key">Obtineti o cheie API pentru a utiliza baza de date OpenCellID pentru a incarca și descarca date …</string>
+    <string name="help_app_about">Icoanele de stare și Proiectul explicate.</string>
+    <string name="help_app_download_local_bts">Descarcari baze de date OpenCellID.</string>
+    <string name="help_app_import_cell_towers">Importuri baze de date CellTowers.</string>
+    <string name="help_app_upload_local_bts">Incarca BTS-urile tale in baza de date OpenCellID.</string>
+    <string name="help_app_debugging">Colecteaza si trimite jurnale de eroare.</string>
+    <string name="help_app_quit">Iesi din aceasta aplicatie.</string>
+    <string name="waiting_for_location">Se asteapta locatia…</string>
+    <string name="needs_location">Necesita locatia</string>
+    <string name="unique_bts_data">Date BTS Unice</string>
+    <string name="bts_measurements">Masuratori BTS</string>
+    <string name="imported_ocid_data">Date OpenCellID Importate</string>
+    <string name="default_mmc_locations">Locatiile implicite pentru MCC</string>
+    <string name="silent_sms">SMS Silentios</string>
+    <string name="eventlog">Jurnal de Evenimente</string>
+    <string name="measured_signal_strengths">Marimea Semnalului Masurat</string>
+
+    <string name="at_command_response_looking">*** Caut seria dispozitivelor AT...
+\n</string>
+    <string name="at_command_response_found">Gasit:</string>
+    <string name="at_command_response_setup_complete">*** Setarea Finalizata ***
+\n</string>
+
+    <string name="currently_connected_bts">BTS conectat în prezent</string>
+    <string name="well_known_encrypted_bts">BTS criptat binecunoscut</string>
+    <string name="unknown_or_insecure_bts">BTS necunoscut sau nesecurizat</string>
+    <string name="new_or_recently_added_bts">BTS nou sau recent adaugat</string>
+
+    <string name="delete_database_msg_success">Baza de date a fost stearsa si recreata cu succes.
+\nReporneste aplicatia pentru a sterge valorile vechi existente in memorie.</string>
+
+    <string name="invalid_key_try_later">Cheie OpenCellId invalida, incearca din nou mai tarziu.</string>
+    <string name="getting_ocid_key">Obtinerea Cheii API OpenCellId...</string>
+
+    <string name="deleted">Sters</string>
+    <string name="failed_to_delete">Nu s-a reusit stergerea</string>
+    <string name="double_quote_will_cause_db_error">"Sirul nu a fost adaugat
+\n  \" ghilimelele vor cauza o eroare db "</string>
+    <string name="the_string_was_added_to_db">Sirul a fost adaugat la baza de date</string>
+    <string name="failed_to_add_the_string_to_db">Nu s-a adaugat sirul in baza de date</string>
+    <string name="n_a">N/A</string>
+    <string name="unknown">Necunoscut</string>
+
     </resources>
