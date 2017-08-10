@@ -31,7 +31,7 @@
     <string name="clear_database">Effacer/réinitialiser la base de données</string>
     <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr ?</string>
     <string name="preferences">Préférences</string>
-    <string name="press_once_again_to_exit">Appuyez une seconde fois pour quitter.</string>
+    <string name="press_once_again_to_exit">Appuyez à nouveau pour quitter.</string>
     <string name="cell_lookup">Détails sur la/les cellule(s) actuelles</string>
     <string name="debugging">Débogage</string>
     <string name="no_network_connection_title">Aucune connexion Internet</string>
