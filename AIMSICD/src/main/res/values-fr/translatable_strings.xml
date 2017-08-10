@@ -5,7 +5,7 @@
     <string name="tracking">Pistage</string>
     <string name="device_info">Détails téléphone/carte SIM</string>
     <string name="map_view">Carte des antennes relais</string>
-    <string name="db_viewer">Visionneuse de la base de données</string>
+    <string name="db_viewer">Affichage de la base de données</string>
     <string name="quit">Quitter</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Annuler</string>
@@ -27,7 +27,7 @@
 
     <!-- MENU -->
     <string name="toggle_attack_detection">Détection d\'attaques</string>
-    <string name="toggle_cell_tracking">Suivi des antennes</string>
+    <string name="toggle_cell_tracking">Suivi des cellules</string>
     <string name="clear_database">Effacer/réinitialiser la base de données</string>
     <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr ?</string>
     <string name="preferences">Préférences</string>
@@ -111,10 +111,10 @@
     <string name="pref_persistservice_summ">Le service va continuer à fonctionner après avoir quitté l\'application (décochez pour quitter complètement)</string>
     <string name="pref_protection_title">Paramètres de protection</string>
     <string name="pref_enable_cell_title">Suivi des cellules</string>
-    <string name="pref_enable_cell_summ">Activer le tracking automatique des cellules</string>
-    <string name="pref_femto_title">Détection des FemtoCellules</string>
+    <string name="pref_enable_cell_summ">Activation du suivi automatique des cellules</string>
+    <string name="pref_femto_title">Détection des FemtoCell</string>
     <string name="pref_femto_summ">(Actuellement téléphones CDMA seulement)</string>
-    <string name="pref_femto_action_title">Protection contre les FemtoCellules</string>
+    <string name="pref_femto_action_title">Protection contre les FemtoCell</string>
     <string name="pref_femto_action_summ">Active le mode avion lorsqu\'une Femtocell est détectée (réactivation manuelle de réseau )</string>
     <string name="pref_ui_title">Paramètres de l\'interface</string>
     <string name="pref_ui_icons_title">Icone de statut</string>
@@ -125,7 +125,7 @@
     <string name="pref_ocid_key_title">Entrer une clé OpenCellID</string>
     <string name="pref_ocid_key_summ">Entrez votre clé de l\'API OpenCellID ici</string>
     <string name="pref_enable_cell_monitoring_title">Monitoring des cellules</string>
-    <string name="pref_enable_cell_monitoring_summ">Activer le monitoring des cellules</string>
+    <string name="pref_enable_cell_monitoring_summ">Activer le monitoring automatique des cellules</string>
     <string name="pref_request_ocid_key">Demander une clé de l’API d’OpenCellID</string>
     <string name="pref_ocid_requestkey_summary">Demander une clé pour accéder aux données d\'OpenCellID</string>
 
@@ -175,7 +175,7 @@
 
     <!-- Request OpenCellID Key -->
     <string name="title_ocid_key">Clé de l\'API OpenCellID</string>
-    <string name="message_request_api_key">Appuyez sur OK pour demander une clé de l\'API d\'OpenCellID.org. Cela vous permettra de télécharger leurs données et de les afficher dans la carte. Cela vous permettra également d\'uploader des données sur les cellules. Notez que si vous n\'uploadez pas de données sur les cellules dans les 20 jours, votre clé API peut devenir inactive.</string>
+    <string name="message_request_api_key">Appuyez sur OK pour demander une clé API depuis OpenCellID.org. Cela vous permettra de télécharger leurs données et de les afficher dans la carte. Cela vous permettra également d\'envoyer des données sur les cellules. Notez que si vous n\'envoyez aucunes données sur les cellules dans les 20 jours, votre clé API peut devenir inactive.</string>
     <string name="ocid_api_error">"Erreur lors de l\'obtention de la clé : "</string>
     <string name="ocid_api_success">Nouvelle clé API enregistrée.</string>
 
@@ -222,15 +222,15 @@
     <string name="main">Page d\'accueil</string>
     <string name="settings">Paramètres</string>
     <string name="application">Application</string>
-    <string name="monitoring_cell_information">Monitoring des cellules.</string>
+    <string name="monitoring_cell_information">Monitoring des informations de cellule.</string>
     <string name="stopped_monitoring_cell_information">Arrêt du monitoring des cellules.</string>
     <string name="tracking_cell_information">Informations de suivi des cellules.</string>
-    <string name="stopped_tracking_cell_information">Arrêt du tracking des cellules.</string>
+    <string name="stopped_tracking_cell_information">Arrêt du suivi des cellules.</string>
     <string name="only_one_key_per_day">Une seule demande de clé d\'API est possible par 24h !\nEssayez plus tard.</string>
     <string name="cell_id_doesnt_exist_in_db">L’identifiant de la cellule n’est pas dans la base de données OpenCelllID !</string>
     <string name="hostile_service_area_changing_lac_detected">Zone de service hostile : changement de LAC détecté !</string>
-    <string name="femtocell_detection_active">Détection des FemtoCellules activé.</string>
-    <string name="cell_tracking_active">Tracking des cellules activé.</string>
+    <string name="femtocell_detection_active">Détection active des FemtoCell .</string>
+    <string name="cell_tracking_active">Suivi actif des cellules.</string>
     <string name="cell_monitoring_active">Monitoring des cellules activé.</string>
     <string name="phone_type">Type de téléphone</string>
     <string name="status_idle_description">Statut : inactif.</string>
@@ -240,9 +240,9 @@
     <string name="alert_silent_sms_detected">ALERTE : SMS silencieux détecté !</string>
     <string name="alert_silent_wap_sms_detected">ALERTE : SMS WAP Push détecté !</string>
     <string name="alert_mwi_detected">ALERTE : indicateur de message en attente détecté !</string>
-    <string name="femtocell_only_on_cdma_devices">AIMSICD ne peut détecter les connexions femtocellules que sur les appareils CDMA.</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD ne peut détecter les connexions femtocell que sur les appareils CDMA.</string>
     <string name="service_state_changed">État du service changé !</string>
-    <string name="stopped_tracking_femtocell">: arrêt du tracking des femtocellules.</string>
+    <string name="stopped_tracking_femtocell">: arrêt du suivi des femtocell.</string>
     <string name="alert_femtocell_tracking_detected">ALERTE : pistage par femtocellule détecté !</string>
     <string name="refreshing_every">Rafraichir toutes les</string>
     <string name="refreshing_now">Rafraichissement…</string>
@@ -277,10 +277,17 @@
     <string name="status_skull">Courrez !</string>
 
     <!-- Advanced User Settings: SMS Detection Strings -->
-    <string name="adv_user_info">Ce menu concerne uniquement les utilisateurs avancés !\n\nN\'insérez pas de texte aléatoire ici, cela pourrait rendre le système de détection hors de contrôle.\n\nPour ajouter du texte, sélectionnez le type de SMS dans le menu, tapez votre texte de détection et appuyez sur Insérer.\n\nPour supprimer le texte de la base de données, appuyez longuement sur celui-ci dans la Visionneuse.</string>
+    <string name="adv_user_info">Ce menu concerne uniquement les utilisateurs avancés !
+\n
+\nN\'insérez pas de texte aléatoire ici, cela pourrait rendre le système de détection hors de contrôle.
+\n
+\nPour ajouter du texte, sélectionnez le type de SMS dans le menu, tapez votre texte de détection et appuyez sur Insérer.
+\n
+\nPour supprimer le texte de la base de données, appuyez longuement sur celui-ci dans la liste.</string>
     
     <!-- Advanced User Settings: Delete Detected SMS -->
-    <string name="adv_user_sms_info">Ce menu concerne uniquement les utilisateurs avancés !\nPour supprimer un SMS de la base de données, appuyez longuement sur celui-ci dans la Visionneuse.</string>
+    <string name="adv_user_sms_info">Ce menu concerne uniquement les utilisateurs avertis!
+\nPour supprimer un SMS de la base de donnée, appuyez longuement sur celui-ci dans la liste.</string>
     <string name="title_activity_advanced_user">Supprimer le SMS sélectionné</string>
 
     <string name="adv_user_pref_header">Paramètres avancés</string>
@@ -306,9 +313,9 @@
 
 
     <!-- Section Main-->
-    <string name="help_main_neighboring_cells">Affiche les cellules voisines.</string>
+    <string name="help_main_neighboring_cells">Affiche le voisinage de cellules.</string>
     <string name="help_main_phone_sim_details">Détail de l\'opérateur de la carte SIM, IMEI, TMSI.</string>
-    <string name="help_main_acd">Afficher une comparaison détaillée des cellules connectées avec les données (s’il y en a) trouvées dans OpenCelllD et surligner les différences.</string>
+    <string name="help_main_acd">Affiche une comparaison détaillée des cellules connectées avec les données trouvées dans OpenCelllD (s’il y en a) et montre les différences.</string>
     <string name="help_main_database_viewer">Afficher les différentes tables de la base de données.</string>
     <string name="help_main_antenna_map_view">Carte des antennes à proximité.</string>
     <string name="help_main_at_command_interface">Interface permettant d\'envoyer des commandes AT au Baseband (nécessite le ROOT).</string>
@@ -389,7 +396,7 @@
     <string name="buildnumber">Numéro du build : %s</string>
     <string name="git_sha">Empreinte SHA de Git : %s</string>
     <string name="pref_enable_gps_title">Paramètres GPS</string>
-    <string name="pref_enable_gps_summary">Activer le GPS pour la localisation des cellules</string>
+    <string name="pref_enable_gps_summary">Activer le GPS pour localiser les cellules</string>
     <string name="pref_notification_settings">Paramètres de notification</string>
     <string name="pref_notification_vibrate_enable_title">Activer le vibreur</string>
     <string name="pref_notification_vibrate_enable_summary">Vibrer lorsque la notification change</string>
