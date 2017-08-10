@@ -27,7 +27,7 @@
 
     <!-- MENU -->
     <string name="toggle_attack_detection">Détection d\'attaques</string>
-    <string name="toggle_cell_tracking">Localiser les cellules</string>
+    <string name="toggle_cell_tracking">Suivi des antennes</string>
     <string name="clear_database">Effacer/réinitialiser la base de données</string>
     <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr ?</string>
     <string name="preferences">Préférences</string>
