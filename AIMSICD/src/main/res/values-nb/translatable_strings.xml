@@ -242,99 +242,120 @@
     <string name="no_opencellid_key_detected">Ingen OpenCellID- API-nøkkel oppdaget!
 \nSkriv inn din nøkkel i Innstillinger først.</string>
     <string name="refreshed_cell_id_info">Oppfrisket CellID-info</string>
-    <string name="unable_to_acquire_root_access">Klarte ikke å få ROOT tilgang på din enhet.\nAT kommando injection krever ROOT Terminal tilgang.\nVennligst undersøk om din enhet er ROOTET og prøv igjen.</string>
-    <string name="unable_to_detect_busybox">Kunne ikke oppdage BusyBox på din enhet.\nAT kommando Injection krever BusyBoks komponenter for å virke korrekt.\nVennligst undersøk om din enhet har BusyBoks installert og prøv igen.</string>
-    <string name="unknown_error_trying_to_acquire_serial_device">En ukjent feil har oppstått under forsøk på å nå serielenheten.\nVennligst undersøk din logcat for feil og post dem på vår Github.</string>
-    <string name="unknown_error_initialising_at_command_injector">En ukjent feil har oppstått under forsøk på å nullstille AT Commado Injector.\nVennligst undersøk din logcat for feil og post dem på vår Github.</string>
-    <string name="getting_ocid_api_key">Henter OpenCellID API Nøkkel…</string>
+    <string name="unable_to_acquire_root_access">Klarte ikke å få ROOT tilgang på din enhet.
+\nAT-kommandoinjeksjon krever ROOT-terminaltilgang.
+\nUndersøk om du har superbrukerrettigheter på din enhet og prøv igjen.</string>
+    <string name="unable_to_detect_busybox">Kunne ikke oppdage BusyBox på din enhet.
+\nAT-kommandoinjeksjon krever BusyBox sine komponenter for å virke korrekt.
+\nUndersøk om din enhet har BusyBoks installert og prøv igjen.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">En ukjent feil har oppstått under forsøk på å nå seriellenheten.
+\nUndersøk din logcat for feil og post dem på vår GitHub.</string>
+    <string name="unknown_error_initialising_at_command_injector">En ukjent feil har oppstått under forsøk på å nullstille AT-kommadoinjiserer.
+\nUndersøk din logcat for feil og post dem på vår GitHub.</string>
+    <string name="getting_ocid_api_key">Henter OpenCellID- API-nøkkel…</string>
     <string name="unable_to_create_map">Kunne ikke opprette kart!</string>
-    <string name="describe_the_problem_you_had">VIKTIG! Vennligst beskriv problemet du hadde, før du sender loggene. INGEN HJELP UTEN BESKRIVELSE!\n</string>
-    <string name="status">Status:</string>
+    <string name="describe_the_problem_you_had">VIKTIG! Beskriv problemet du opplevde, før du sender loggene. INGEN HJELP UTEN BESKRIVELSE!
+\n</string>
+    <string name="status">Tilstand:</string>
     <string name="status_idle">PAUSE</string>
     <string name="status_ok">OK</string>
-    <string name="status_medium">MEDIUM</string>
-    <string name="status_high">HØY</string>
+    <string name="status_medium">MIDDELS</string>
+    <string name="status_high">HØYT</string>
     <string name="status_danger">FARE</string>
     <string name="status_skull">SPRING!</string>
 
-    <string name="adv_user_info">Denne menyen er kun for spesialister!\n\nVennligst ikke sett inn vilkårlige strenger fordi det vil få overvåkingen ut av kontroll.\n\nFor å legge til streng velg SMS type fra menyen, skriv inn strengen og trykk Legg til.\n\nFor å slette fra databasen trykk lenge på listevisning.</string>
+    <string name="adv_user_info">Denne menyen er kun for spesialister!
+\n
+\nIkke sett inn vilkårlige strenger fordi det vil få overvåkingen ut av kontroll.
+\n
+\nFor å legge til en streng, velg SMS-type fra menyen, skriv inn strengen og trykk Legg til.
+\n
+\nFor å slette fra databasen trykk lenge på Listevisning.</string>
     
-    <string name="adv_user_sms_info">Denne menyen er kun for spesialister!\nFor å slette en oppdaget SMS trykk lenge på listevisning.</string>
-    <string name="title_activity_advanced_user">Slett Oppdaget SMS</string>
+    <string name="adv_user_sms_info">Denne menyen er kun for spesialister!
+\nFor å slette en oppdaget SMS trykk lenge på Listevisning.</string>
+    <string name="title_activity_advanced_user">Slett oppdaget SMS</string>
 
-    <string name="adv_user_pref_header">Spesialist Innstillinger</string>
-    <string name="adv_user_pref_launch">"Oppdagelses  Strenger"</string>
+    <string name="adv_user_pref_header">Spesialistinnstillinger</string>
+    <string name="adv_user_pref_launch">Oppdagelsesstrenger</string>
     <string name="adv_user_pref_sms_launch">Slett SMS</string>
-    <string name="adv_user_pref_summary">Legg til og slett oppdagelses strenger</string>
-    <string name="adv_user_pref_sms_summary">Slett Oppdaget SMS</string>
+    <string name="adv_user_pref_summary">Legg til og slett oppdagelsesstrenger</string>
+    <string name="adv_user_pref_sms_summary">Slett oppdaget SMS</string>
    
-    <string name="adv_user_root_title">Slå på SMS Oppdagelse</string>
-    <string name="adv_user_root_sum">Root er påkrevet for å aktivere SMS oppdagelse</string>
+    <string name="adv_user_root_title">Slå på SMS-oppdagelse</string>
+    <string name="adv_user_root_sum">Root er påkrevet for å aktivere SMS-oppdagelse</string>
 
-    <string name="detection_strings">Oppdagelses Strenger</string>
+    <string name="detection_strings">Oppdagelsesstrenger</string>
     <string name="typezero_title">VIKTIG!</string>
-    <string name="typezero_header">Stille SMS Oppdaget</string>
-    <string name="typezero_data">Type-0 SMS Oppdaget!\nDetaljer: Se Database Viser.</string>
+    <string name="typezero_header">Stille SMS oppdaget</string>
+    <string name="typezero_data">Type-0 SMS oppdaget!
+\nDetaljer: Se databaseviser.</string>
     <string name="typemwi_title">VIKTIG!</string>
-    <string name="typemwi_header">MWI Oppdaget</string>
-    <string name="typemwi_data">Beskjed venter indikator oppdaget!\nDetaljer: Se Database Viser.</string>
-    <string name="typewap_header">WAP Push Oppdaget</string>
-    <string name="typewap_data">WAP Push SMS oppdaget!\nDetaljer: Se Database Viser.</string>
+    <string name="typemwi_header">MWI oppdaget</string>
+    <string name="typemwi_data">Beskjed ventende indikator oppdaget!
+\nDetaljer: Se databaseviser.</string>
+    <string name="typewap_header">WAP push oppdaget</string>
+    <string name="typewap_data">WAP push-SMS oppdaget!
+\nDetaljer: Se databaseviser.</string>
 
 
-    <string name="help_main_neighboring_cells">Viser NaboCeller.</string>
-    <string name="help_main_phone_sim_details">SIM Leverandør detaljer, IMEI, TMSI.</string>
+    <string name="help_main_neighboring_cells">Viser celler i nærheten.</string>
+    <string name="help_main_phone_sim_details">SIM-nettverksoperatørdetaljer, IMEI, TMSI.</string>
     <string name="help_main_acd">Vis detaljert sammenligning av nåværende tilknyttet celle, med data (hvis noen) funnet i OpenCellID og merk forskjellen.</string>
-    <string name="help_main_database_viewer">Se de forskjellige DB listene vi har.</string>
+    <string name="help_main_database_viewer">Vis de forskjellige DB-listene vi har.</string>
     <string name="help_main_antenna_map_view">Kart med fargekodede antenner i nærheten.</string>
-    <string name="help_main_at_command_interface">Kommandolinje som tillater sending av AT kommandoer til Baseband Prosessor (krever ROOT).</string>
+    <string name="help_main_at_command_interface">Kommandolinje som tillater sending av AT-kommandoer til basebandprosessor (krever ROOT).</string>
 
-    <string name="help_tracking_toggle_attack_detection">Start/stop angrepsoppdagelse og samle celledetaljer inn i interne database lister.</string>
+    <string name="help_tracking_toggle_attack_detection">Start/stop angrepsoppdagelse og samle celledetaljer i interne databaselister.</string>
     <string name="buildnumber">Versjonsnummer: %s</string>
     <string name="git_sha">Git SHA-sjekksum: %s</string>
-    <string name="help_tracking_toggle_cell_tracking">Start å søke celler for å vise i Antenne Kartet og muligens laste dem opp senere til OpenCellID.</string>
+    <string name="help_tracking_toggle_cell_tracking">Start å søke celler for å vise i antennekartet for muligens senere å laste dem opp til OpenCellID.</string>
 
-    <string name="help_settings_preferences">AIMSICD innstillinger som beskyttelsesregler, hyppighet og service oppførsel.</string>
-    <string name="help_settings_reset_db">Nullstill alle eller spesifiserte DB liste(r).</string>
+    <string name="help_settings_preferences">AIMSICD-innstillinger som beskyttelsesregler, hyppighet og tjenesteoppførsel.</string>
+    <string name="help_settings_reset_db">Nullstill alle eller spesifiserte DB-liste(r).</string>
 
-    <string name="help_app_add_get_ocid_api_key">Motta API nøkkel for å bruke OpenCellID database til å opplaste og nedlaste data…</string>
-    <string name="help_app_about">Status Icon og Project forklaring.</string>
-    <string name="help_app_download_local_bts">Last ned OpenCellID Database.</string>
-    <string name="help_app_upload_local_bts">Last opp Basestasjoner til OpenCellID Database.</string>
-    <string name="help_app_quit">Avslutt denne Appen.</string>
+    <string name="help_app_add_get_ocid_api_key">Motta API-nøkkel for å bruke OpenCellID-database til å laste opp og ned data…</string>
+    <string name="help_app_about">Statusikon og prosjektforklaring.</string>
+    <string name="help_app_download_local_bts">Last ned OpenCellID-database.</string>
+    <string name="help_app_upload_local_bts">Last opp basestasjoner til OpenCellID-database.</string>
+    <string name="help_app_quit">Avslutt dette programmet.</string>
     <string name="waiting_for_location">Venter på posisjon…</string>
-    <string name="unique_bts_data">Spesifikk Basestasjon Data</string>
-    <string name="bts_measurements">Basestasjon Målinger</string>
-    <string name="imported_ocid_data">Importert OpenCellID Data</string>
-    <string name="default_mmc_locations">Standard Landskode Plassering</string>
+    <string name="unique_bts_data">Unik basestasjonsdata</string>
+    <string name="bts_measurements">Basestasjonsmålinger</string>
+    <string name="imported_ocid_data">Importert OpenCellID-data</string>
+    <string name="default_mmc_locations">Forvalgt landskodeplassering</string>
     <string name="silent_sms">Stille SMS</string>
     <string name="eventlog">Hendelseslogg</string>
-    <string name="measured_signal_strengths">Målte Signalstyrker</string>
+    <string name="measured_signal_strengths">Målte signalstyrker</string>
 
-    <string name="at_command_response_looking">***Søker etter AT serielle enheter...\n</string>
+    <string name="at_command_response_looking">***Søker etter serielle AT-enheter...
+\n</string>
     <string name="at_command_response_found">"Funnet: "</string>
-    <string name="at_command_response_setup_complete">***Innstillinger Fullført***\n</string>
+    <string name="at_command_response_setup_complete">***Oppsett fullført***
+\n</string>
 
-    <string name="currently_connected_bts">Nåværende tilnyttet Basestasjon</string>
-    <string name="well_known_encrypted_bts">Godt kjent kryptert Basestasjon</string>
-    <string name="unknown_or_insecure_bts">Ukjent eller usikker Basestasjon</string>
-    <string name="new_or_recently_added_bts">Ny eller nylig tillagt Baserstasjon</string>
+    <string name="currently_connected_bts">Nåværende tilknyttet basestasjon</string>
+    <string name="well_known_encrypted_bts">Velkjent kryptert basestasjon</string>
+    <string name="unknown_or_insecure_bts">Ukjent eller usikker basestasjon</string>
+    <string name="new_or_recently_added_bts">Ny eller nylig tillagt basestasjon</string>
 
-    <string name="delete_database_msg_success">Database slettet og gjenopprettet vellykket.\nVennligst start Appen på nytt for å renske gamle verdier fra minnet.</string>
+    <string name="delete_database_msg_success">Database slettet og gjenopprettet.
+\nStart programmet på nytt for å renske gamle verdier fra minnet.</string>
 
-    <string name="invalid_key_try_later">"Invalid  OpenCellId nøkkel, prøv igjen senere."</string>
-    <string name="getting_ocid_key">Mottar OpenCellId API Nøkkel...</string>
+    <string name="invalid_key_try_later">Ugyldig OpenCellID-nøkkel, prøv igjen senere.</string>
+    <string name="getting_ocid_key">Mottar OpenCellID- API-nøkkel…</string>
 
     <string name="deleted">Slettet</string>
     <string name="failed_to_delete">Feil under sletting</string>
-    <string name="double_quote_will_cause_db_error">"Setning ikke lagt til\n\"dobbel apostrof vil skape databasefeil "</string>
+    <string name="double_quote_will_cause_db_error">"Setning ikke lagt til
+\n \"dobbel apostrof vil skape databasefeil "</string>
     <string name="the_string_was_added_to_db">Setningen ble lagt til i databasen</string>
     <string name="failed_to_add_the_string_to_db">Fikk ikke lagt til setningen i databasen</string>
 
     <string name="help_app_debugging">Samle og send feilmeldingslogger.</string>
     <string name="pref_enable_gps_title">GPS-innstillinger</string>
     <string name="pref_enable_gps_summary">Slå på GPS for cellesporing</string>
-    <string name="n_a">Ikke Tilgjengelig</string>
+    <string name="n_a">Ikke tilgjengelig</string>
     <string name="unknown">Ukjent</string>
 
     <string name="database_settings">Database</string>
@@ -342,10 +363,10 @@
     <string name="cell_doesnt_provide_any_neighbors">Bakkestasjonen støtter ikke celler i nærheten!</string>
     <string name="import_cell_towers">Importer CellTowers-data</string>
 
-    <string name="imporing_celltowers_data">Importerer CellTowsers-data...
-Dette kan ta litt tid.</string>
-    <string name="celltowers_data_successfully_imported">Import av CellTowers-data var vellykket.</string>
-    <string name="error_importing_celltowers_data">Import av CellTowers-data feilet.</string>
+    <string name="imporing_celltowers_data">Importerer CellTowers-data…
+\nDette kan ta litt tid.</string>
+    <string name="celltowers_data_successfully_imported">Import av CellTowers-data vellykket.</string>
+    <string name="error_importing_celltowers_data">Import av CellTowers-data mislyktes.</string>
     <string name="help_app_import_cell_towers">Importerer CellTowers-database.</string>
     <string name="needs_location">Trenger plassering</string>
     </resources>
