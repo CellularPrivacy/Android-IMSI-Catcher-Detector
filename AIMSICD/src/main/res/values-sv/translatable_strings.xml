@@ -32,7 +32,7 @@
     <string name="sim_serial">Serienummer:</string>
     <string name="device_type">Telefonmodell:</string>
     <string name="device_imei">IMEI:</string>
-    <string name="device_version">RIL Version:</string>
+    <string name="device_version">RIL-version:</string>
     <string name="network_name">Leverantörsnamn:</string>
     <string name="network_code">Leverantörskod:</string>
     <string name="network_type">Typ:</string>
