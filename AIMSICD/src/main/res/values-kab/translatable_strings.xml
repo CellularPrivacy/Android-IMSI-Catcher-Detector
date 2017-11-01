@@ -1,2 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="tracking">Aḍfaṛ</string>
+    <string name="quit">Ffeɣ</string>
+    <string name="text_ok">IH</string>
+    <string name="text_cancel">Sefsex</string>
+    <string name="disclaimer_title">Ur-tamasit</string>
+    <string name="toggle_cell_tracking">Aḍfaṛ</string>
+    <string name="preferences">Tiwelhiwin</string>
+    <string name="debugging">&amp;Débogage</string>
+    <string name="no_network_connection_title">Ulac tuqqna n Internet</string>
+    <string name="sim_info_title">Talɣut</string>
+    <string name="neighboring_cells_num_title">Uɣrid</string>
+    <string name="sim_country">Tamurt</string>
+    <string name="device_type">Tiliɣri</string>
+    <string name="device_version">Lqem:</string>
+    <string name="network_name">Isem n useǧǧaw</string>
+    <string name="network_type">Anaw:</string>
+    <string name="data_activity">Armud</string>
+    <string name="data_status">Addad</string>
+    <string name="button_refresh">Sismeḍ</string>
+    <string name="app_version">Tuttuyt %s</string>
+    <string name="about_wiki">Assefter</string>
+    <string name="about_contribute">TTEKKI</string>
+    <string name="about_disclaimer">Ur-tamasit</string>
+    <string name="about_license">Turagt</string>
+    <string name="about_credits">Ismaden</string>
+    <string name="network_netid">Azeṭṭa</string>
+    <string name="network_sysid">Anagraw</string>
+    <string name="pref_enable_gps_title">aɣewwaṛ</string>
+    <string name="pref_system_title">Imsektayen n unagraw</string>
+    <string name="pref_enable_cell_title">Aḍfaṛ</string>
+    <string name="pref_refresh_title">"Taux de rafraichissement : "</string>
+    <string name="pref_map_type_title">Takarḍa</string>
+    <string name="lat_label">Tarrut:</string>
+    <string name="lng_label">Tazegrart:</string>
+
+    <string name="response_label">D tiririt i</string>
+    <string name="execute_at">Selkem</string>
+    <string name="timeout_spinner_title">Tanzagt tezri deg unermes n %{server}</string>
+    <string name="btn_clear_logs">Sfeḍ</string>
+    <string name="btn_copy_to_clipboard">Nɣel</string>
+    <string name="btn_stop_logs">Seḥbes</string>
+    <string name="btn_start_logs">Exécuté le</string>
+
+    <string name="open_cell_id_button_cancel">Sefsex</string>
+    <string name="open_cell_id_button_ok">IH</string>
+
+    <string name="notification_vibrate_ok">IH</string>
+    <string name="notification_vibrate_medium">D alemmas</string>
+    <string name="ui_icon_white">Amlal</string>
+    <string name="map_type_normal">Amagnu</string>
+    <string name="pref_refresh_manual">Awfus</string>
+    <string name="pref_refresh_automatic">Awurman</string>
+    <string name="pref_refresh_1_min">tasint</string>
+    <string name="pref_refresh_5_min">tasint</string>
+    <string name="timeout_spinner_10_min">tasint</string>
+    <string name="main">MAIN</string>
+    <string name="settings">Iγewwaṛen</string>
+    <string name="database_settings">Taffa n isefka</string>
+    <string name="application">Asnas</string>
+    <string name="phone_type">Tiliɣri</string>
+    <string name="seconds">tasinin</string>
+    <string name="status">Addad:</string>
+    <string name="status_ok">IH</string>
+    <string name="status_medium">D alemmas</string>
+    <string name="status_high">Awriran</string>
+    <string name="status_skull">_Selkem</string>
+
+    <string name="adv_user_pref_sms_launch">KKES</string>
+    <string name="at_command_response_found">Ulac-it</string>
+    <string name="deleted">Yettwakkes!</string>
+    <string name="failed_to_delete">Anezri di tukksa n usebtar-agi.</string>
+    <string name="n_a">N/A</string>
+    <string name="unknown">Arussin</string>
+
+    </resources>
