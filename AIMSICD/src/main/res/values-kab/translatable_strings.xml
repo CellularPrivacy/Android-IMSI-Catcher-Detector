@@ -9,14 +9,14 @@
     <string name="debugging">&amp;Débogage</string>
     <string name="no_network_connection_title">Ulac tuqqna n Internet</string>
     <string name="sim_info_title">Talɣut</string>
-    <string name="neighboring_cells_num_title">Uɣrid</string>
-    <string name="sim_country">Tamurt</string>
-    <string name="device_type">Tiliɣri</string>
+    <string name="neighboring_cells_num_title">Amatu:</string>
+    <string name="sim_country">Tamurt:</string>
+    <string name="device_type">Tiliɣri:</string>
     <string name="device_version">Lqem:</string>
-    <string name="network_name">Isem n unamad</string>
+    <string name="network_name">Isem n unamad:</string>
     <string name="network_type">Anaw:</string>
-    <string name="data_activity">Armud</string>
-    <string name="data_status">Addad</string>
+    <string name="data_activity">Armud n isefka:</string>
+    <string name="data_status">Addad n isefka:</string>
     <string name="button_refresh">Smiren</string>
     <string name="app_version">Tuttuyt %s</string>
     <string name="about_wiki">TASEMLIT</string>
@@ -24,19 +24,19 @@
     <string name="about_disclaimer">Ur-tamasit</string>
     <string name="about_license">Turagt</string>
     <string name="about_credits">Ismaden</string>
-    <string name="network_netid">Azeṭṭa</string>
-    <string name="network_sysid">Anagraw</string>
+    <string name="network_netid">Asula ID n uzeṭṭa:</string>
+    <string name="network_sysid">Asulay ID n unagraw:</string>
     <string name="pref_enable_gps_title">aɣewwaṛ</string>
     <string name="pref_system_title">Imsektayen n unagraw</string>
     <string name="pref_enable_cell_title">Aḍfaṛ</string>
     <string name="pref_refresh_title">Afmidi n usmiren</string>
     <string name="pref_map_type_title">Takarḍa</string>
-    <string name="lat_label">Tarrut:</string>
-    <string name="lng_label">Tazegrart:</string>
+    <string name="lat_label">"Tar: "</string>
+    <string name="lng_label">"Taz: "</string>
 
-    <string name="response_label">D tiririt i</string>
+    <string name="response_label">Tiririt:</string>
     <string name="execute_at">Selkem</string>
-    <string name="timeout_spinner_title">Tanzagt tezri deg unermes n %{server}</string>
+    <string name="timeout_spinner_title">Tanzagt tezri:</string>
     <string name="btn_clear_logs">Sfeḍ</string>
     <string name="btn_copy_to_clipboard">Nɣel</string>
     <string name="btn_stop_logs">Seḥbes</string>
@@ -59,17 +59,17 @@
     <string name="database_settings">Taffa n isefka</string>
     <string name="application">Asnas</string>
     <string name="phone_type">Tiliɣri</string>
-    <string name="seconds">tasinin</string>
+    <string name="seconds">tasinin.</string>
     <string name="status">Addad:</string>
     <string name="status_ok">IH</string>
     <string name="status_medium">D alemmas</string>
     <string name="status_high">Awriran</string>
-    <string name="status_skull">_Selkem</string>
+    <string name="status_skull">Azzel!</string>
 
     <string name="adv_user_pref_sms_launch">KKES</string>
-    <string name="at_command_response_found">Ulac-it</string>
-    <string name="deleted">Yettwakkes!</string>
-    <string name="failed_to_delete">Anezri di tukksa n usebtar-agi.</string>
+    <string name="at_command_response_found">Yettwaf:</string>
+    <string name="deleted">Yettwakkes</string>
+    <string name="failed_to_delete">Ur izmir ara ad yekkes</string>
     <string name="n_a">N/A</string>
     <string name="unknown">Arussin</string>
 
@@ -213,7 +213,7 @@
     <string name="femtocell_only_on_cdma_devices">AIMSICD yezmer kan ad yaf tuqqniwin FemtoCell deg ibenkan CDMA.</string>
     <string name="stopped_tracking_femtocell">: iseḥbes tuddniwin FemtoCell yeṭṭafaren.</string>
     <string name="alert_femtocell_tracking_detected">"Ɣur-k: Aḍfaṛ  FemtoCell yettwaf!"</string>
-    <string name="download_error">Tuccḍa n usider</string>
+    <string name="download_error">Tuccḍa n usider:</string>
     <string name="uploaded_bts_data_successfully">isefka BTS ulin akken iwata ar OpenCellID.</string>
     <string name="unable_to_acquire_root_access">Ur izmir ara ad yeddu s UẒAR ɣef yibenl-ik.
 \nAsekcem n tladna AT tesra anekcum AẒAR.
@@ -221,7 +221,7 @@
     <string name="unable_to_detect_busybox">Ur izmir ara ad yaf Busybox ɣef yibenk-ik.
 \nTaladna AT tesra isuddisen Busybox akken ad teddu akken iwata.
 \nMa ulac aɣilif, wali mayella Busybox yebded ɣef yibenk-ik sakin ɛreḍ.</string>
-    <string name="getting_ocid_api_key">Awway n tsarut API OpenCellID...</string>
+    <string name="getting_ocid_api_key">Awway n tsarut API OpenCellID…</string>
     <string name="unable_to_create_map">Ur izmir ara ad yernu takarḍa!</string>
     <string name="status_idle">Idle</string>
     <string name="status_danger">Amihaw</string>
@@ -239,7 +239,7 @@
     <string name="help_app_download_local_bts">Ad d-isider taffa n isefka n OpenCellID.</string>
     <string name="help_app_upload_local_bts">Ad isali BTS-ik ar taffa n isefka OpenCellID.</string>
     <string name="help_app_quit">Ffeɣ seg usnas-agi.</string>
-    <string name="waiting_for_location">Yettraǧu adi...</string>
+    <string name="waiting_for_location">Yettraǧu adi…</string>
     <string name="needs_location">Yesra adig</string>
     <string name="bts_measurements">Aktili n BTS</string>
     <string name="default_mmc_locations">Adig MCC amezwer</string>
