@@ -399,4 +399,5 @@ dodanie \" spowoduje błąd bazy danych "</string>
     <string name="the_string_was_added_to_db">Dodano do bazy danych</string>
     <string name="failed_to_add_the_string_to_db">Nie powiodło się dodawanie do bazy danych</string>
     <string name="n_a">N/A</string>
+    <string name="needs_location">Potrzebuje lokalizacji</string>
     </resources>
