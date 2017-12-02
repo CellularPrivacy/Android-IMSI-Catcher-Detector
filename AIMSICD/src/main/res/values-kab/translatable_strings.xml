@@ -254,4 +254,6 @@
 
     <string name="getting_ocid_key">Awway n tsarut API OpenCellID...</string>
 
+    <string name="status_ok_detail_info">Ulac ayen n dir yettwafen, Asnas-nneɣ yessenqad yal tikelt aẓeṭṭa-ik s kra n walleln n ummesten i tesbaduḍ deg umuq akked ismenyifen.</string>
+    <string name="status_medium_detail_info">Ulac ayen n dir yettwafen, Asnas-nneɣ yessenqad yal tikelt aẓeṭṭa-ik s kra n wallalen n ummesten i tesbaduḍ deg umuɣ akked ismenyifen.</string>
     </resources>
