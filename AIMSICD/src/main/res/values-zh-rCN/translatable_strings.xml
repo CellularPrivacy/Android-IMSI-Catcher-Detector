@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">跟踪</string>
-    <string name="device_info">手机/SIM卡详细信息</string>
+    <string name="device_info">手机和SIM卡详细信息</string>
     <string name="db_viewer">数据库查看器</string>
     <string name="quit">退出</string>
     <string name="text_ok">确定</string>
@@ -11,13 +11,13 @@
     <string name="disclaimer_title">免责声明</string>
     <string name="toggle_attack_detection">攻击检测</string>
     <string name="toggle_cell_tracking">蜂窝跟踪</string>
-    <string name="clear_database">清除/重置数据库</string>
+    <string name="clear_database">清除或重置数据库</string>
     <string name="clear_database_question">所有数据将被删除。\n您确定吗？</string>
-    <string name="preferences">首选项</string>
+    <string name="preferences">设置</string>
     <string name="press_once_again_to_exit">再次按下将退出。</string>
     <string name="cell_lookup">当前所有蜂窝详细信息</string>
     <string name="debugging">调试</string>
-    <string name="no_network_connection_title">无互联网连接</string>
+    <string name="no_network_connection_title">没有互联网连接</string>
     <string name="get_opencellid">下载 BTS 数据</string>
 
     <string name="device_info_title">设备信息</string>
@@ -295,7 +295,7 @@
     <string name="help_tracking_toggle_attack_detection">开始/停止攻击检测，并收集蜂窝详细信息到内部的数据库表。</string>
     <string name="network_psc">PSC:</string>
 
-    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="git_sha">Git SHA-Hash：%s</string>
     <string name="cell_id_label">"CID: "</string>
     <string name="lac_label">"LAC: "</string>
     <string name="mcc_label">"MCC: "</string>
