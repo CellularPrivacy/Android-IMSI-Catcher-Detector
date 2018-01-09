@@ -157,7 +157,7 @@ programma. ONTWIKKELINGSSTATUS: ALFA!
     <string name="btn_start_logs">Start</string>
 
     <string name="title_activity_about_pop_up">GEDETAILLEERDE UITLEG</string>
-    <string name="status_idle_detail_info">App is inactief of ladend. Er zijn geen beschermingsmaatregelen actief. Open het navigatie menu en zet ze aan in sectie VOLGEN!</string>
+    <string name="status_idle_detail_info">App is inactief of aan het laden. Beschermings- en detectiemaatregelen zijn uitgeschakeld. Schakel aaanvaldetectie in!</string>
     <string name="status_ok_detail_info">Geen bedreigingen gevonden. Onze app controleert continue het netwerk aan de hand van de beveiligingsinstellingen die u in het navigatie menu en in voorkeuren aangegeven hebt.</string>
     <string name="status_medium_detail_info">Onveilig gebied: minstens 1 nieuwe of onbekende BTS is actief in deze omgeving of gebruikt een onveilige versleutelingsmethode, lager dan A5/3 [detectie is WIP]. Elke gesprek en SMS die in dit gebied gemaakt worden kunnen onderschept en opgeslagen worden. U kunt hier beter vertrekken.</string>
     <string name="status_high_detail_info">Vijandige dienstenacties gedetecteerd: een IMSI-Catcher (IMSIC) of valse BTS (FBTS) is actief gebruikers aan het volgen. In dit gebied wordt actief gescand. Ga van deze plaats weg, zeker als er politieke onrus heerst. Haal de accu uit uw telefoon of verniel het toestel!</string>
