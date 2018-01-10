@@ -157,14 +157,14 @@ programma. ONTWIKKELINGSSTATUS: ALFA!
     <string name="btn_start_logs">Start</string>
 
     <string name="title_activity_about_pop_up">GEDETAILLEERDE UITLEG</string>
-    <string name="status_idle_detail_info">App is inactief of aan het laden. Beschermings- en detectiemaatregelen zijn uitgeschakeld. Schakel aaanvaldetectie in!</string>
-    <string name="status_ok_detail_info">Geen bedreigingen gevonden. Onze app controleert continue het netwerk aan de hand van de beveiligingsinstellingen die u in het navigatie menu en in voorkeuren aangegeven hebt.</string>
-    <string name="status_medium_detail_info">Onveilig gebied: minstens 1 nieuwe of onbekende BTS is actief in deze omgeving of gebruikt een onveilige versleutelingsmethode, lager dan A5/3 [detectie is WIP]. Elke gesprek en SMS die in dit gebied gemaakt worden kunnen onderschept en opgeslagen worden. U kunt hier beter vertrekken.</string>
-    <string name="status_high_detail_info">Vijandige dienstenacties gedetecteerd: een IMSI-Catcher (IMSIC) of valse BTS (FBTS) is actief gebruikers aan het volgen. In dit gebied wordt actief gescand. Ga van deze plaats weg, zeker als er politieke onrus heerst. Haal de accu uit uw telefoon of verniel het toestel!</string>
-    <string name="status_danger_detail_info">Vijandig volgen gedetecteerd: een FBTS of IMSIC is U actief aan het volgen en voorkomt dat uw telefoon met uw gebruikelijke beveiligde mobioele provider verbindt. Als u reden heeft om vervolging te vrezen kunt u het beste uw telefoon vernielen en hem als gestolen opgeven.</string>
-    <string name="status_skull_detail_info">Vijandige manipulatie: iemand probeert vanaf een afstand uw telefoon te beinvloeden. Verniel (of verkoop) uw telefoon en haal ergens anders een nieuwe (breng uw huidige toestel niet naar de plaats waar u de nieuwe koopt). Gebruik een nieuwe, anonieme SIM kaart, verander uw belgedrag en waarschuw uw contacten om niet over de telefoon met u te spreken maar direct!</string>
+    <string name="status_idle_detail_info">App is inactief of aan het laden. Beschermings- en detectiemaatregelen zijn uitgeschakeld. Schakel aanvalsdetectie in!</string>
+    <string name="status_ok_detail_info">Geen bedreigingen gevonden. Je netwerk wordt continu gecontroleerd aan de hand van de ingeschakelde opsporingsinstellingen.</string>
+    <string name="status_medium_detail_info">Onveilig gebied: minstens 1 nieuwe of onbekende BTS is actief in deze omgeving of gebruikt een onveilige versleutelingsmethode, lager dan A5/3. Elke oproep en sms die in dit gebied gemaakt worden kunnen onderschept en opgeslagen worden. Vertrek hier zo snel mogelijk.</string>
+    <string name="status_high_detail_info">Vijandige dienstenacties gedetecteerd: een IMSI-Catcher (IMSIC) of valse BTS (FBTS) is actief gebruikers aan het volgen. In dit gebied wordt actief gescand. Vermijd deze plaats ten allen koste, zeker als er politieke onrust heerst. Haal de accu en simkaart uit je telefoon!</string>
+    <string name="status_danger_detail_info">Vijandig volgen gedetecteerd: een FBTS of IMSIC is JOU actief aan het volgen en voorkomt dat je telefoon met je gebruikelijke beveiligde mobiele leverancier verbindt. Als je reden hebt om vervolging te vrezen, vernietig dan je telefoon en simkaart, en geef hem als gestolen op.</string>
+    <string name="status_skull_detail_info">Vijandige manipulatie: iemand probeert vanaf een afstand je telefoon te beinvloeden. Verniel (of verkoop) je telefoon en haal ergens anders een nieuwe (breng je huidige toestel niet naar de plaats waar je de nieuwe koopt). Gebruik een nieuwe, anonieme simkaart, verander je belgedrag en waarschuw je contacten om niet over de telefoon met je te spreken maar in persoon!</string>
     <string name="open_cell_id_button_cancel">Annuleren</string>
-    <string name="open_cell_id_button_ok">OK</string>
+    <string name="open_cell_id_button_ok">Oké</string>
 
     <string name="ui_icon_flat">Plat</string>
     <string name="ui_icon_sense">Gevoeligheid</string>
@@ -308,7 +308,7 @@ programma. ONTWIKKELINGSSTATUS: ALFA!
 
     <string name="delete_database_msg_success">De database is succesvol verwijderd en opnieuw aangemaakt.\nHerstart de app om oude gegevens uit het geheugen te verwijderen.</string>
 
-    <string name="notification_vibrate_ok">OK</string>
+    <string name="notification_vibrate_ok">Oké</string>
     <string name="notification_vibrate_medium">Gemiddeld</string>
     <string name="notification_vibrate_danger">Gevaar</string>
     
@@ -334,8 +334,13 @@ programma. ONTWIKKELINGSSTATUS: ALFA!
     <string name="database_settings">Database</string>
     <string name="download_timed_out">OpenCellID API verzoek is verlopen. Later opnieuw proberen?</string>
     <string name="cell_doesnt_provide_any_neighbors">GSM-mast verstrekt geen naburige cellen!</string>
-    <string name="n_a">NVT</string>
+    <string name="n_a">N.v.t.</string>
     <string name="import_cell_towers">Importeer CellTowers-gegevens</string>
 
     <string name="needs_location">Locatie vereist</string>
+    <string name="imporing_celltowers_data">Zendmastgegevens importeren…
+\nDit kan even duren.</string>
+    <string name="celltowers_data_successfully_imported">Zendmastgegevens geïmporteerd.</string>
+    <string name="error_importing_celltowers_data">Fout bij importeren van zendmastgegevens.</string>
+    <string name="help_app_import_cell_towers">Importeert de zendmastendatabase.</string>
     </resources>
