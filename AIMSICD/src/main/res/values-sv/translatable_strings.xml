@@ -50,7 +50,7 @@
     <string name="about_contribute">BIDRA</string>
     <string name="about_disclaimer">ANSVARSFRISKRIVNING</string>
     <string name="about_releases">UTGÅVOR</string>
-    <string name="about_license">TILLSTÅND</string>
+    <string name="about_license">LICENS</string>
     <string name="status_idle_about_desc">Inaktiv / Laddar.</string>
     <string name="status_ok_about_desc">Allt OK.</string>
     <string name="status_danger_about_desc">Du blir spårad!</string>
@@ -60,4 +60,179 @@
     <string name="network_sysid">System-ID:</string>
     <string name="network_baseid">Basstations-ID:</string>
 
+    <string name="disclaimer">"Genom att använda AIMSICD förstår du och accepterar du att AIMSICD är en experimental
+\noch informativ Android Applikation som kan misslyckas att finna övervakning
+\noch spårning på grund av flera anledningar. Du förstår även att den kan kringgås eller
+\nbesegras med andra ord, ännu ej förstått av utvecklarna. Därför accepterar du även
+\natt förstå att utvecklarna och företagen relaterade till denna gratis
+\nprodukt, kan ej sättas ansvariga för resultaten,
+\nberoende på användningen av denna applikation. UTVECKLINGS FAS: ALFA!
+\n "</string>
+
+    <string name="toggle_attack_detection">Attack upptäckning</string>
+    <string name="toggle_cell_tracking">Mobil Tracking</string>
+    <string name="cell_lookup">Alla nuvarande cell detaljer</string>
+    <string name="no_network_connection_message">Kunde ej ladda ner OpenCellID utan Internet anslutning, var god aktivera data anslutning!</string>
+
+    <string name="import_cell_towers">Importera Celltorn Data</string>
+
+    <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="network_psc">PSC:</string>
+
+    <string name="upload_bts">Ladda upp BTS Data</string>
+
+    <string name="about_aimsicd">Om AIMSICD</string>
+    <string name="buildnumber">Kompileringsnummer: %s</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="aimsicd_about_info3">Android baserat projekt för att upptäcka och undvika falska basstationer (IMSI-Catchers) i GSM/UMTS Nätverk.</string>
+    <string name="about_changelog">ÄNDRINGSLOGG</string>
+    <string name="about_credits">MEDVÄRKANDE</string>
+    <string name="status_high_about_desc">Aktiv upptäckt nära dig!</string>
+    <string name="status_medium_about_desc">Osäker Service Area. Lämna omedelbart!</string>
+    <string name="status_skull_about_desc">SPRING! Telefonluren manipulerad!</string>
+    <string name="location_error_title">Lokalisering Tjänst avstängd</string>
+    <string name="location_error_message">Du kan ej spåra GPS data utan att sätta på Lokalisering Tjänsten. Slå på dem nu?</string>
+
+    <string name="pref_enable_gps_title">GPS inställning</string>
+    <string name="pref_enable_gps_summary">Slå på GPS för Cell Tracking</string>
+    <string name="pref_system_title">System Inställningar</string>
+    <string name="pref_autostart_title">Auto Start</string>
+    <string name="pref_autostart_summ">Automatiskt starta tjänst på start</string>
+    <string name="pref_persistservice_title">Beständig Service</string>
+    <string name="pref_persistservice_summ">Tjänsten kommer fortsätta att köra efter applikationen stängs (bocka av för att stänga helt)</string>
+    <string name="pref_protection_title">Skyddsinställningar</string>
+    <string name="pref_notification_settings">Notis inställningar</string>
+    <string name="pref_enable_cell_title">Cell Tracking</string>
+    <string name="pref_enable_cell_summ">Slå på automatisk cell tracking</string>
+    <string name="pref_femto_title">Femtocell upptäckning</string>
+    <string name="pref_femto_summ">(nuvarande CDMA enheter endast)</string>
+    <string name="pref_femto_action_title">Femtocell skydd</string>
+    <string name="pref_femto_action_summ">Förstärk Flygplansläge när femtocell upprätthålls (slå på nätverk manuellt)</string>
+    <string name="pref_ui_title">Gränssnitt inställningar</string>
+    <string name="pref_ui_icons_title">Status-ikoner</string>
+    <string name="pref_ui_icons_summ">Ikon tema val</string>
+    <string name="pref_refresh_title">Uppdateringsfrekvens</string>
+    <string name="pref_refresh_summ">Kontrollera frekvensen av enhets uppdateringar
+\nNuvarande val %s</string>
+    <string name="pref_ocid_title">OpenCellID Inställningar</string>
+    <string name="pref_ocid_key_title">OpenCellID API nyckel</string>
+    <string name="pref_ocid_key_summ">Ange din OpenCellID API nyckel här</string>
+    <string name="pref_enable_cell_monitoring_title">Cell övervakning</string>
+    <string name="pref_enable_cell_monitoring_summ">Slå på automatisk cell övervakning</string>
+    <string name="pref_request_ocid_key">Begär OpenCellID API nyckel</string>
+    <string name="pref_ocid_requestkey_summary">Begär API nyckel för OpenCellID Data åtkomst</string>
+
+    <string name="pref_map_title">Kartlägg visnings val</string>
+    <string name="pref_map_type_title">Karttyp</string>
+    <string name="pref_map_type_summ">Visa karta i olika stiler</string>
+    
+    <string name="cell_id_label">"CID: "</string>
+    <string name="lac_label">"LAC: "</string>
+    <string name="mcc_label">"MCC: "</string>
+    <string name="mnc_label">"MNC: "</string>
+    <string name="pc_label">"PC: "</string>
+    <string name="samples_label">"Prover: "</string>
+    <string name="open_cell_id_label">OpenCellID Data</string>
+    <string name="lat_label">"Lat: "</string>
+    <string name="table_names_prompt">Välj tabell</string>
+    <string name="at_command_title">AT Kommandotolk</string>
+    <string name="response_label">Svar:</string>
+    <string name="execute_at">Kör</string>
+    <string name="serial_device_title">Närvarande Serial Enhet:</string>
+    <string name="serial_device_prompt">Väj Serial Enhet</string>
+    <string name="serial_device_spinner_title">Funna enheter:</string>
+    <string name="timeout_spinner_prompt">Välj timeout</string>
+    <string name="command_hint">Skriv AT kommando här.</string>
+
+    <string name="sms_title">Tyst SMS hittad</string>
+    <string name="sms_message">Tyst SMS meddelande funnet!
+\nDetaljer: Se Databas läsare.</string>
+    <string name="table_contains_no_data">Tabell innehåller ingen data att visa.</string>
+
+    <string name="title_ocid_key">OpenCellID API nyckel</string>
+    <string name="message_request_api_key">Tryck OK för att begära en API nyckel från OpenCellID.org. Detta ger dig behörighet att ladda ner deras data och visa det i en karta. Det kommer även låta dig ladda upp cell data. Notera att om du inte laddar upp cell data inom 20 dagar, kommer din API nyckel bli inaktiv.</string>
+    <string name="ocid_api_error">"Kunde ej få nyckel: "</string>
+    <string name="ocid_api_success">Sparade nya API nyckel.</string>
+
+    <string name="title_debug_logs">Felsökningsloggar</string>
+    <string name="btn_clear_logs">Rensa</string>
+    <string name="btn_copy_to_clipboard">Kopiera</string>
+    <string name="msg_copied_to_clipboard">Loggar kopierade till urklippet.</string>
+    <string name="btn_stop_logs">Avbryt</string>
+    <string name="btn_start_logs">Börja</string>
+
+    <string name="title_activity_about_pop_up">DETALJERAD FÖRKLARING</string>
+    <string name="status_idle_detail_info">App körs eller laddar. Inga skydd och sök funktioner är påslagna. Var god slå på attack upptäckning!</string>
+    <string name="status_ok_detail_info">Inga hot hittades. Ditt nätverk kollas konstant beroende på de påslagna sök inställningarna.</string>
+    <string name="status_medium_detail_info">Osäkert Service Area: Åtminstonde 1 nytt eller okänt BTS är aktiv inom detta område, eller använder en osäker (trasig) enkryption algoritm lägre än A5/3. Alla telefon samtal/SMS utförda inom detta area kan bli uppsnappade och inspelade. Lämna detta område snabbt.</string>
+    <string name="status_high_detail_info">Fientlig Service Handlingar funna: En IMSI-Catcher (IMSIC) eller falsk BTS (FBTS) aktivt spårar användare. Aktiv scan tar äger rum inom detta area. Du skall undivka detta område för all del, speciellt om det anas politisk oråda. Ta ur ditt batteri och SIM kort!</string>
+    <string name="status_danger_detail_info">Fientlig Spårande funnet!: En FBTS eller IMSIC spårar DIG aktivt och förhindrar din telefon från att ansluta via din normala enkrypterade mobil leverantör. Om du är i fara eller återverkningar, förstör din telefon och SIM, sedan anmäl den som nyligen stulen.</string>
+    <string name="status_skull_detail_info">Fientlig Manipulation: Någon försöker att fjärr-manipulera din enhet. FÖrstör eller sälj din telefon och skaffa en ny långt ifrån. Bör inte din gamla telefon till stället vart du kommer skaffa den nya enheten! Använd ett nytt anonymt SIM kort med en falsk identitet registrerad via Tor-Webläsaren. Ändra dina ringnings beteende och varna dina kontakter om övervakning genom att prata med dem i verkliga livet, INTE genom att ringa dem!</string>
+    <string name="open_cell_id_button_cancel">Avbryt</string>
+    <string name="open_cell_id_button_ok">OK</string>
+
+    <string name="pref_notification_vibrate_enable_title">Slå på Vibration</string>
+    <string name="pref_notification_vibrate_enable_summary">Vibrera när notiser ändras</string>
+    <string name="pref_notification_vibrate_min_level_title">Vibrera på hot-nivå</string>
+    <string name="pref_notification_vibrate_min_level_summary">Välj minimum hot nivå att vibrera på</string>
+    <string name="notification_vibrate_idle">Tomgång</string>
+    <string name="notification_vibrate_ok">OK</string>
+    <string name="notification_vibrate_medium">Medium</string>
+    <string name="notification_vibrate_danger">Fara</string>
+    
+    <string name="ui_icon_flat">Platt</string>
+    <string name="ui_icon_sense">Känna av</string>
+    <string name="ui_icon_white">Vit</string>
+    <string name="map_type_terrain">Terräng</string>
+    <string name="map_type_normal">Normal</string>
+    <string name="pref_refresh_manual">Manuell</string>
+    <string name="pref_refresh_automatic">Automatiskt</string>
+    <string name="pref_refresh_2s">2 sekunder</string>
+    <string name="pref_refresh_5s">5 sekunder</string>
+    <string name="pref_refresh_10s">10 sekunder</string>
+    <string name="pref_refresh_25s">25 sekunder</string>
+    <string name="pref_refresh_45s">45 sekunder</string>
+    <string name="pref_refresh_1_min">1 minut</string>
+    <string name="pref_refresh_5_min">5 minuter</string>
+    <string name="timeout_spinner_2_sec">2 sekunder</string>
+    <string name="timeout_spinner_5_sec">5 sekunder</string>
+    <string name="timeout_spinner_10_sec">10 sekunder</string>
+    <string name="timeout_spinner_20_sec">20 sekunder</string>
+    <string name="timeout_spinner_30_sec">30 sekunder</string>
+    <string name="timeout_spinner_10_min">10 minuter</string>
+    <string name="main">Huvud</string>
+    <string name="settings">Inställningar</string>
+    <string name="database_settings">Databas</string>
+    <string name="application">Applikation</string>
+    <string name="monitoring_cell_information">Övervaka Cell Information.</string>
+    <string name="stopped_monitoring_cell_information">Sluta övervaka Cell Information.</string>
+    <string name="tracking_cell_information">Spåra Cell Information.</string>
+    <string name="stopped_tracking_cell_information">Avbröt spårning av Cell Information.</string>
+    <string name="only_one_key_per_day">Endast en ny API nyckel förfrågan per 24 timmar!
+\nFörsök igen senare.</string>
+    <string name="cell_id_doesnt_exist_in_db">Cell ID ej i OpenCellID Databas!</string>
+    <string name="hostile_service_area_changing_lac_detected">Fientligt Service Area: Ändring av LAC funnet!</string>
+    <string name="cell_doesnt_provide_any_neighbors">BTS ger inga grann celler!</string>
+    <string name="femtocell_detection_active">FemtoCell upphtäckning Aktiv.</string>
+    <string name="cell_tracking_active">Cell Tracking Aktiv.</string>
+    <string name="cell_monitoring_active">Cell Övervakning Aktiv.</string>
+    <string name="phone_type">Telefon Typ</string>
+    <string name="status_idle_description">Status: Tomgång.</string>
+    <string name="status_ok_description">Status: Godkänt. Inga hot funna.</string>
+    <string name="alert_threat_detected">VARNING: Några hot hittades!</string>
+    <string name="alert_femtocell_connection_detected">VARNING: FemtoCell Anslutning Hittad!</string>
+    <string name="alert_silent_sms_detected">VARNING: Tyst SMS hittad!</string>
+    <string name="alert_mwi_detected">VARNING: Meddelande Väntar Indikator hittad!</string>
+    <string name="alert_silent_wap_sms_detected">VARNING: WAP push SMS hittad!</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD kan endast hitta FemtoCell anslutningar på CDMA enheter.</string>
+    <string name="service_state_changed">Srevice status ändrad!</string>
+    <string name="stopped_tracking_femtocell">: Avbröt spårning av FemtoCell anslutningar.</string>
+    <string name="alert_femtocell_tracking_detected">VARNING: FemtoCell spårning Hittad!</string>
+    <string name="refreshing_every">Uppdaterar varje</string>
+    <string name="refreshing_now">Uppdaterar nu…</string>
+    <string name="seconds">sekunder.</string>
+    <string name="contacting_opencellid_for_data">Kontaktar OpenCellID för data...
+\nDetta kan ta ett par minuter.</string>
+    <string name="unable_to_determine_last_location">Kunde inte hitta din sista position.
+\nSlå på Position TJänster och försök igen.</string>
     </resources>
