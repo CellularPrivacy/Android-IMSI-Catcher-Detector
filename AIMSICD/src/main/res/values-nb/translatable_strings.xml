@@ -241,7 +241,7 @@
     <string name="error_uploading_bts_data">Feil under opplasting av OpenCellID-data til tjenerne!</string>
     <string name="no_opencellid_key_detected">Ingen OpenCellID- API-nøkkel oppdaget!
 \nSkriv inn din nøkkel i Innstillinger først.</string>
-    <string name="refreshed_cell_id_info">Oppfrisket CellID-info</string>
+    <string name="refreshed_cell_id_info">Frisket opp CellId-info</string>
     <string name="unable_to_acquire_root_access">Klarte ikke å få ROOT tilgang på din enhet.
 \nAT-kommandoinjeksjon krever ROOT-terminaltilgang.
 \nUndersøk om du har superbrukerrettigheter på din enhet og prøv igjen.</string>
@@ -249,9 +249,9 @@
 \nAT-kommandoinjeksjon krever BusyBox sine komponenter for å virke korrekt.
 \nUndersøk om din enhet har BusyBoks installert og prøv igjen.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">En ukjent feil har oppstått under forsøk på å nå seriellenheten.
-\nUndersøk din logcat for feil og post dem på vår GitHub.</string>
-    <string name="unknown_error_initialising_at_command_injector">En ukjent feil har oppstått under forsøk på å nullstille AT-kommadoinjiserer.
-\nUndersøk din logcat for feil og post dem på vår GitHub.</string>
+\nUndersøk din logcat for feil og send dem til vår GitHub.</string>
+    <string name="unknown_error_initialising_at_command_injector">En ukjent feil har oppstått under forsøk på å nullstille AT-kommadoinnsenderen.
+\nUndersøk din logcat for feil og send dem til vår GitHub.</string>
     <string name="getting_ocid_api_key">Henter OpenCellID- API-nøkkel…</string>
     <string name="unable_to_create_map">Kunne ikke opprette kart!</string>
     <string name="describe_the_problem_you_had">VIKTIG! Beskriv problemet du opplevde, før du sender loggene. INGEN HJELP UTEN BESKRIVELSE!
@@ -283,7 +283,7 @@
     <string name="adv_user_pref_sms_summary">Slett oppdaget SMS</string>
    
     <string name="adv_user_root_title">Slå på SMS-oppdagelse</string>
-    <string name="adv_user_root_sum">Root er påkrevet for å aktivere SMS-oppdagelse</string>
+    <string name="adv_user_root_sum">Root trengs for å aktivere SMS-oppdagelse</string>
 
     <string name="detection_strings">Oppdagelsesstrenger</string>
     <string name="typezero_title">VIKTIG!</string>
@@ -292,8 +292,8 @@
 \nDetaljer: Se databaseviser.</string>
     <string name="typemwi_title">VIKTIG!</string>
     <string name="typemwi_header">MWI oppdaget</string>
-    <string name="typemwi_data">Beskjed ventende indikator oppdaget!
-\nDetaljer: Se databaseviser.</string>
+    <string name="typemwi_data">Oppdaget indikator for ventende beskjed!
+\nDetaljer: Se databasefremviser.</string>
     <string name="typewap_header">WAP push oppdaget</string>
     <string name="typewap_data">WAP push-SMS oppdaget!
 \nDetaljer: Se databaseviser.</string>
@@ -312,7 +312,7 @@
     <string name="help_tracking_toggle_cell_tracking">Start å søke celler for å vise i antennekartet for muligens senere å laste dem opp til OpenCellID.</string>
 
     <string name="help_settings_preferences">AIMSICD-innstillinger som beskyttelsesregler, hyppighet og tjenesteoppførsel.</string>
-    <string name="help_settings_reset_db">Nullstill alle eller spesifiserte DB-liste(r).</string>
+    <string name="help_settings_reset_db">Blank ut og tilbakestill alle eller spesifisert(e) DB-tabell(er).</string>
 
     <string name="help_app_add_get_ocid_api_key">Motta API-nøkkel for å bruke OpenCellID-database til å laste opp og ned data…</string>
     <string name="help_app_about">Statusikon og prosjektforklaring.</string>
@@ -339,16 +339,16 @@
     <string name="unknown_or_insecure_bts">Ukjent eller usikker basestasjon</string>
     <string name="new_or_recently_added_bts">Ny eller nylig tillagt basestasjon</string>
 
-    <string name="delete_database_msg_success">Database slettet og gjenopprettet.
+    <string name="delete_database_msg_success">Lyktes med å slette og gjenopprette database.
 \nStart programmet på nytt for å renske gamle verdier fra minnet.</string>
 
-    <string name="invalid_key_try_later">Ugyldig OpenCellID-nøkkel, prøv igjen senere.</string>
-    <string name="getting_ocid_key">Mottar OpenCellID- API-nøkkel…</string>
+    <string name="invalid_key_try_later">Ugyldig OpenCellId-nøkkel, prøv igjen senere.</string>
+    <string name="getting_ocid_key">Mottar OpenCellId- API-nøkkel…</string>
 
     <string name="deleted">Slettet</string>
     <string name="failed_to_delete">Feil under sletting</string>
-    <string name="double_quote_will_cause_db_error">"Setning ikke lagt til
-\n \"dobbel apostrof vil skape databasefeil "</string>
+    <string name="double_quote_will_cause_db_error">"Strengen ble ikke lagt til
+\n \" dobbel apostrof vil skape databasefeil "</string>
     <string name="the_string_was_added_to_db">Setningen ble lagt til i databasen</string>
     <string name="failed_to_add_the_string_to_db">Fikk ikke lagt til setningen i databasen</string>
 
