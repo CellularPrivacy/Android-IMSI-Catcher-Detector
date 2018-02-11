@@ -234,7 +234,7 @@
     <string name="error_uploading_bts_data">Fout bij het opsturen van BTS-gegevens naar OpenCellID-servers!</string>
     <string name="no_opencellid_key_detected">Geen OpenCellID-API-sleutel gevonden!
 \nStel je sleutel eerst in de instellingen in.</string>
-    <string name="refreshed_cell_id_info">Scherm verversen</string>
+    <string name="refreshed_cell_id_info">CellID-informatie vernieuwd</string>
     <string name="unable_to_acquire_root_access">Kan geen ROOT-toegang op je apparaat krijgen.
 \nVersturen van AT-opdrachten vereist ROOT-terminaltoegang.
 \nControleer of je apparaat ROOT-toegang heeft en probeer het opnieuw.</string>
