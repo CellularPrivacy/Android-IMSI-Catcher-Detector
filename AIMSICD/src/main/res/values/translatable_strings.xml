@@ -24,8 +24,8 @@
     </string>
 
     <!-- MENU -->
-    <string name="toggle_attack_detection">Attack Detection</string>
-    <string name="toggle_cell_tracking">Cell Tracking</string>
+    <string name="toggle_attack_detection">toggle_attack_detection</string>
+    <string name="toggle_cell_tracking">toggle_cell_tracking</string>
     <string name="clear_database">Clear/Reset Database</string>
     <string name="clear_database_question">All data will be deleted.\nAre you sure?</string>
     <string name="preferences">Preferences</string>
