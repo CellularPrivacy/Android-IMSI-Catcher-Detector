@@ -18,8 +18,8 @@
 \n vedrørende bruken av dette programmet.  UTVIKLINGS-STADIE: ALPHA!
 \n "</string>
 
-    <string name="toggle_attack_detection">Angrepsoppdaging</string>
-    <string name="toggle_cell_tracking">Cellesporing</string>
+    <string name="toggle_attack_detection">toggle_attack_detection</string>
+    <string name="toggle_cell_tracking">toggle_cell_tracking</string>
     <string name="clear_database">Nullstill database</string>
     <string name="clear_database_question">Alle data vil slettes.\nEr du sikker?</string>
     <string name="press_once_again_to_exit">Trykk igjen for å avslutte.</string>
@@ -118,7 +118,7 @@
     <string name="pref_map_type_title">Karttype</string>
     <string name="pref_map_type_summ">Vis kart i flere stiler</string>
     
-    <string name="cell_id_label">"CelleID: "</string>
+    <string name="cell_id_label">"CID: "</string>
     <string name="lac_label">"OmrådeCelle: "</string>
     <string name="mcc_label">"Landskode: "</string>
     <string name="mnc_label">"Nettverkskode: "</string>
@@ -147,7 +147,7 @@
 
     <string name="title_ocid_key">OpenCellID- API-nøkkel</string>
     <string name="message_request_api_key">Trykk OK for å be om API-nøkkel fra OpenCellID.org. Dette vil gjøre det mulig å laste ned deres data og se dette i kartet. Det vil og gi deg mulighet til å laste opp celledata. Bemerk at du må laste opp data innen 20 dager for å ha API-nøkkelen aktiv.</string>
-    <string name="ocid_api_error">"Fikk ikke hentet nøkkel: "</string>
+    <string name="ocid_api_error">Fikk ikke hentet nøkkel:</string>
     <string name="ocid_api_success">Lagret ny API-nøkkel.</string>
 
     <string name="title_debug_logs">Feilsøkingslogger</string>
@@ -330,7 +330,7 @@
 
     <string name="at_command_response_looking">***Søker etter serielle AT-enheter...
 \n</string>
-    <string name="at_command_response_found">"Funnet: "</string>
+    <string name="at_command_response_found">Funnet:</string>
     <string name="at_command_response_setup_complete">***Oppsett fullført***
 \n</string>
 
