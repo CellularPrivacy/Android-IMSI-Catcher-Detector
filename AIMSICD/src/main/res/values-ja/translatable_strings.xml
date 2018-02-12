@@ -18,8 +18,8 @@
  "</string>
 
 
-    <string name="toggle_attack_detection">攻撃の検出</string>
-    <string name="toggle_cell_tracking">基地局の追跡</string>
+    <string name="toggle_attack_detection">toggle_attack_detection</string>
+    <string name="toggle_cell_tracking">toggle_cell_tracking</string>
     <string name="clear_database">データベースのクリア/リセット</string>
     <string name="clear_database_question">すべてのデータが削除されます。\nよろしいですか?</string>
     <string name="preferences">プリファレンス</string>
@@ -118,12 +118,12 @@
     <string name="pref_map_type_title">地図の種類</string>
     <string name="pref_map_type_summ">異なる形式の地図を表示します</string>
     
-    <string name="cell_id_label">"CID: "</string>
-    <string name="lac_label">"LAC: "</string>
-    <string name="mcc_label">"MCC: "</string>
-    <string name="mnc_label">"MNC: "</string>
-    <string name="pc_label">"PC: "</string>
-    <string name="samples_label">"サンプル: "</string>
+    <string name="cell_id_label">CID:</string>
+    <string name="lac_label">LAC:</string>
+    <string name="mcc_label">MCC:</string>
+    <string name="mnc_label">MNC:</string>
+    <string name="pc_label">PC:</string>
+    <string name="samples_label">サンプル:</string>
     <string name="open_cell_id_label">OpenCellID データ</string>
     <string name="lat_label">"緯度: "</string>
     <string name="lng_label">"経度: "</string>
@@ -146,7 +146,7 @@
 
     <string name="title_ocid_key">OpenCellID API キー</string>
     <string name="message_request_api_key">OpenCellID.org から API キーを要求するには、OK を押します。これでデータをダウンロードして、地図に表示することができるようになります。基地局のデータをアップロードすることもできます。20 日以内に基地局データをアップロードしない場合、あなたの API キーが非アクティブになる可能性があることに注意してください。</string>
-    <string name="ocid_api_error">"キーの取得エラー: "</string>
+    <string name="ocid_api_error">キー取得エラー:</string>
     <string name="ocid_api_success">新しい API キーを保存しました。</string>
 
     <string name="title_debug_logs">デバッグ ログ</string>
@@ -295,7 +295,7 @@
     <string name="measured_signal_strengths">測定した信号の強度</string>
 
     <string name="at_command_response_looking">*** AT シリアルデバイスを検索しています…\n</string>
-    <string name="at_command_response_found">"見つかりました: "</string>
+    <string name="at_command_response_found">見つかりました:</string>
     <string name="at_command_response_setup_complete">*** セットアップが完了しました ***\n</string>
 
     <string name="currently_connected_bts">現在接続した BTS</string>
