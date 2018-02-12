@@ -123,7 +123,7 @@
     <string name="mcc_label">"Landskode: "</string>
     <string name="mnc_label">"Nettverkskode: "</string>
     <string name="pc_label">"PC: "</string>
-    <string name="samples_label">"Eksempler: "</string>
+    <string name="samples_label">Eksempler:</string>
     <string name="open_cell_id_label">OpenCellID-data</string>
     <string name="lat_label">"Breddegrad: "</string>
     <string name="lng_label">"Lengdegrad: "</string>
