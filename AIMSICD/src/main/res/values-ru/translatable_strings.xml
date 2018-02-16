@@ -25,8 +25,8 @@ AIMSICD - это экспериментальное и информационн�
  "</string>
 
     <!-- MENU -->
-    <string name="toggle_attack_detection">Обнаружение атаки</string>
-    <string name="toggle_cell_tracking">Отслеживание соты</string>
+    <string name="toggle_attack_detection">переключить_обнаружение_атаки</string>
+    <string name="toggle_cell_tracking">переключить_отслеживание_соты</string>
     <string name="clear_database">Очистка/сброс базы данных</string>
     <string name="clear_database_question">Все данные будут удалены.\nВы уверены?</string>
     <string name="preferences">Параметры</string>
