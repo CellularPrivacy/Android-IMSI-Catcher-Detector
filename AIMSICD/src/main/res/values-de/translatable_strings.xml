@@ -26,8 +26,8 @@
     </string>
     
     <!-- MENU -->
-    <string name="toggle_attack_detection">Angriffserkennung</string>
-    <string name="toggle_cell_tracking">Funkzellen aufzeichnen</string>
+    <string name="toggle_attack_detection">Angriffserkennung umschalten</string>
+    <string name="toggle_cell_tracking">Funkzellenverfolgung umschalten</string>
     <string name="clear_database">Datenbank löschen / zurücksetzen</string>
     <string name="clear_database_question">Alle Daten werden gelöscht.\nSind Sie sicher?</string>
     <string name="preferences">Einstellungen</string>
@@ -405,8 +405,7 @@
     <string name="imporing_celltowers_data">Importiere CellTowers Daten...
 Dies kann eine Weile dauern.</string>
     <string name="celltowers_data_successfully_imported">CellTowers Daten erfolgreich importiert.</string>
-    <string name="error_importing_celltowers_data">Fehler beim Importieren von
-CellTowers Daten.</string>
+    <string name="error_importing_celltowers_data">Fehler beim Importieren von CellTowers-Daten.</string>
     <string name="help_app_import_cell_towers">Importiert CellTowers Datenbank.</string>
     <string name="needs_location">Benötigt Standort</string>
     <string name="import_cell_towers">Importiere CellTowers Daten</string>
