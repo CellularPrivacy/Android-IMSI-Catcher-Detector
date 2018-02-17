@@ -3,7 +3,7 @@
     
     <!-- Drawer -->
     <string name="tracking">Funkzellenverfolgung</string>
-    <string name="device_info">Telefon/SIM Details</string>
+    <string name="device_info">Telefon-/SIM-Details</string>
     <string name="map_view">Funkantennenkarte</string>
     <string name="db_viewer">Datenbankbetrachter</string>
     <string name="quit">Beenden</string>
