@@ -226,7 +226,7 @@
     <string name="application">Anwendung</string>
     <string name="monitoring_cell_information">Beobachte Funkzelldaten.</string>
     <string name="stopped_monitoring_cell_information">Beobachtung der Funkzelldaten angehalten.</string>
-    <string name="tracking_cell_information">Funkzelldaten werden aufzeichnet.</string>
+    <string name="tracking_cell_information">Funkzelldaten werden aufgezeichnet.</string>
     <string name="stopped_tracking_cell_information">Aufzeichnung der Funkzelldaten angehalten.</string>
     <string name="only_one_key_per_day">Anfrage für neuen API-Schlüssel nur einmal aller 24 Stunden möglich!\nBitte später erneut versuchen.</string>
     <string name="cell_id_doesnt_exist_in_db">Zell-ID nicht in OpenCellID-Datenbank!</string>
