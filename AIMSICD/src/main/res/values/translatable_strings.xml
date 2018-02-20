@@ -194,7 +194,7 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILED EXPLANATION</string>
-    <string name="status_idle_detail_info">App is idling or loading. No protection and detection measures are enabled. Please enable attack detection!</string>
+    <string name="status_idle_detail_info">Programmet venter eller starter. Ingen beskyttelse og oppdagelsesmekanismer er aktive. Vennligst slå på oppdagelsesmekanismer.</string>
     <string name="status_ok_detail_info">No threats detected. Your network is constantly being checked based upon the enabled detection settings.</string>
     <string name="status_medium_detail_info">Insecure Service Area: At least 1 new or unknown BTS is in operation in this vicinity, or using an insecure (broken) encryption algorithm lower than A5/3. Any phone calls/SMS made in this area can be intercepted and recorded. Quickly leave this place.</string>
     <string name="status_high_detail_info">Hostile Service Actions Detected: An IMSI-Catcher (IMSIC) or fake BTS (FBTS) is actively tracking users. Active scanning takes place in this area. You should avoid this place by all means, especially if there is political unrest. Take out your battery and SIM card!</string>
