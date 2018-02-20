@@ -191,7 +191,7 @@
   
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">DETAILLIERTE BESCHREIBUNG</string>
-    <string name="status_idle_detail_info">App ist im Leerlauf oder lädt. Es sind keine Schutz- und Erkennungsmaßnahmen aktiviert. Bitte aktivieren Sie die Angriffserkennung!</string>
+    <string name="status_idle_detail_info">App ist im Leerlauf oder lädt gerade. Es sind keine Schutz- und Erkennungsmaßnahmen aktiviert. Bitte aktivieren Sie die Angriffserkennung!</string>
     <string name="status_ok_detail_info">Keine Gefahren erkannt. Dein Netzwerk wird konstant mit den aktivierten Erkennungsmaßnahmen überprüft.</string>
     <string name="status_medium_detail_info">Unsichere Zone: Mindestens 1 neuer oder unbekannter Mobilfunkmast ist in dieser Gegend aktiv oder verwendet eine unsichere (geknackte) Verschlüsselung niedriger als A5/3. Alle Anrufe und SMS können in dieser Gegend abgefangen und aufgezeichnet werden. Diesen Ort schnell verlassen.</string>
     <string name="status_high_detail_info">Feindliche Betriebsaktionen erkannt: Ein IMSI-Catcher (IMSIC) oder gefälschte Mobilfunkstation (FBTS) verfolgt die Nutzer gezielt. Aktive Rasterung findet in dieser Gegend statt. Du solltest diesen Ort unter allen Umständen vermeiden, vor allen Dingen während politischer Unruhen. Batterie und SIM-Karte entfernen!</string>
