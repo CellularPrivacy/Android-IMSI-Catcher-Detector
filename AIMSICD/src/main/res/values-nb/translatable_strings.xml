@@ -10,16 +10,16 @@
     <string name="text_disagree">Jeg er uenig</string>
 
     <string name="disclaimer_title">ANSVARSFRASKRIVNING</string>
-    <string name="disclaimer">"Ved å bruke AIMSICD har du forstått og godtatt at AIMSICD er et eksperimentelt
-\n og informativt Android-program som kan mislykkes i å oppdage sporing og
-\n overvåkning av flere årsaker. Du er også klar over at det kan bli lurt eller
-\n gi tapt av årsaker ukjent for utviklerne. Du forstår også at utviklerne og selskap
-\n tilknyttet dette gratisprogrammet ikke kan holdes ansvarlig for resultater og konsekvenser
-\n vedrørende bruken av dette programmet.  UTVIKLINGS-STADIE: ALPHA!
+    <string name="disclaimer">"Ved å bruke AIMSICD har du forstått og godtatt at AIMSICD er et eksperimentelt 
+\nog informativt Android-program som kan mislykkes i å oppdage sporing og 
+\novervåkning av flere årsaker. Du er også klar over at det kan bli lurt eller 
+\ngi tapt av årsaker ukjent for utviklerne. Du forstår også at utviklerne og selskap 
+\ntilknyttet dette gratisprogrammet ikke kan holdes ansvarlig for resultater og konsekvenser 
+\nvedrørende bruken av dette programmet.  UTVIKLINGS-STADIE: ALPHA! 
 \n "</string>
 
-    <string name="toggle_attack_detection">toggle_attack_detection</string>
-    <string name="toggle_cell_tracking">toggle_cell_tracking</string>
+    <string name="toggle_attack_detection">bytt_angreps_oppdagelse</string>
+    <string name="toggle_cell_tracking">bytt_angreps_oppdagelse</string>
     <string name="clear_database">Nullstill database</string>
     <string name="clear_database_question">Alle data vil slettes.\nEr du sikker?</string>
     <string name="press_once_again_to_exit">Trykk igjen for å avslutte.</string>
@@ -158,7 +158,7 @@
     <string name="btn_start_logs">Start</string>
 
     <string name="title_activity_about_pop_up">DETALJERT FORKLARING</string>
-    <string name="status_idle_detail_info">Programmet er satt på pause eller laster. Ingen beskyttelse eller oppdaging er aktiv. Slå på angrepsoppdagning!</string>
+    <string name="status_idle_detail_info">Programmet venter eller starter, Ingen beskyttelse eller oppdagelse er påslått. Vennligst slå på oppdagelser.</string>
     <string name="status_ok_detail_info">Ingen trusler oppdaget. Ditt nettverk sjekkes konstant basert på det du har påslått i Oppdagelsesinnstillinger.</string>
     <string name="status_medium_detail_info">Usikkert område: Minst én ny eller ukjent basestasjon i området, eller med brutt eller usikker kryptering lavere enn A5/3. Alle samtaler eller SMS som utføres her kan bli avlyttet og lagret. Forlat området fort.</string>
     <string name="status_high_detail_info">Aktive fiendtlige tjenester Oppdaget: En IMSI-fangststasjon (IMSIC) eller falsk BTS (basestasjon) som aktivt sporer brukere. Aktiv sporing foregår i dette området. Du bør helst unngå dette stedet, spesielt ved masseansamlinger og uro. Ta ut batteriet og SIM-kortet!</string>
