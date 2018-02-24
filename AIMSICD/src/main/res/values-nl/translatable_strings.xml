@@ -160,7 +160,7 @@
     <string name="btn_start_logs">Start</string>
 
     <string name="title_activity_about_pop_up">GEDETAILLEERDE UITLEG</string>
-    <string name="status_idle_detail_info">App is inactief of aan het laden. Beschermings- en detectiemaatregelen zijn uitgeschakeld. Schakel aanvalsdetectie in!</string>
+    <string name="status_idle_detail_info">App is inactief of aan het laden. Bescherming en detectie zijn uitgeschakeld. Schakel detectie in.</string>
     <string name="status_ok_detail_info">Geen bedreigingen gevonden. Je netwerk wordt continu gecontroleerd aan de hand van de ingeschakelde opsporingsinstellingen.</string>
     <string name="status_medium_detail_info">Onveilig gebied: minstens 1 nieuwe of onbekende BTS is actief in deze omgeving of gebruikt een onveilige versleutelingsmethode, lager dan A5/3. Elke oproep en sms die in dit gebied gemaakt worden kunnen onderschept en opgeslagen worden. Vertrek hier zo snel mogelijk.</string>
     <string name="status_high_detail_info">Vijandige dienstenacties gedetecteerd: een IMSI-Catcher (IMSIC) of valse BTS (FBTS) is actief gebruikers aan het volgen. In dit gebied wordt actief gescand. Vermijd deze plaats ten allen koste, zeker als er politieke onrust heerst. Haal de accu en simkaart uit je telefoon!</string>
