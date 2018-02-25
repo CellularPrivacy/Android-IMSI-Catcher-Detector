@@ -157,7 +157,7 @@
     <string name="btn_start_logs">開始</string>
 
     <string name="title_activity_about_pop_up">詳細な説明</string>
-    <string name="status_idle_detail_info">アプリはアイドリングまたはロード中です。保護と検出の対策が有効になっていません。攻撃の検出を有効にしてください!</string>
+    <string name="status_idle_detail_info">アプリはアイドルリングまたはロード中です。保護または検出が有効になっていません。検出を有効にしてください!</string>
     <string name="status_ok_detail_info">脅威は検出していません。有効にした検出の設定に基づいて、常にネットワークをチェックしています。</string>
     <string name="help_main_at_command_interface">ベースバンド プロセッサに AT コマンドを送信できるようにするインターフェイスです (ROOT が必要)。</string>
 
