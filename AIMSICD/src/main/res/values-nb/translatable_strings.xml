@@ -10,13 +10,7 @@
     <string name="text_disagree">Jeg er uenig</string>
 
     <string name="disclaimer_title">ANSVARSFRASKRIVNING</string>
-    <string name="disclaimer">"Ved å bruke AIMSICD har du forstått og godtatt at AIMSICD er et eksperimentelt 
-\nog informativt Android-program som kan mislykkes i å oppdage sporing og 
-\novervåkning av flere årsaker. Du er også klar over at det kan bli lurt eller 
-\ngi tapt av årsaker ukjent for utviklerne. Du forstår også at utviklerne og selskap 
-\ntilknyttet dette gratisprogrammet ikke kan holdes ansvarlig for resultater og konsekvenser 
-\nvedrørende bruken av dette programmet.  UTVIKLINGS-STADIE: ALPHA! 
-\n "</string>
+    <string name="disclaimer">"Ved å bruke AIMSICD har du forstått og godtatt at AIMSICD er et eksperimentelt og informativt Android-program som kan mislykkes i å oppdage sporing og overvåkning av flere årsaker. Du er også klar over at det kan bli lurt eller gi tapt av årsaker ukjent for utviklerne. Du forstår også at utviklerne og selskap tilknyttet dette gratisprogrammet ikke kan holdes ansvarlig for resultater og konsekvenser vedrørende bruken av dette programmet.  UTVIKLINGS-STADIE: ALPHA!"</string>
 
     <string name="toggle_attack_detection">bytt_angreps_oppdagelse</string>
     <string name="toggle_cell_tracking">bytt_angreps_oppdagelse</string>
@@ -119,9 +113,9 @@
     <string name="pref_map_type_summ">Vis kart i flere stiler</string>
     
     <string name="cell_id_label">"CID: "</string>
-    <string name="lac_label">"OmrådeCelle: "</string>
-    <string name="mcc_label">"Landskode: "</string>
-    <string name="mnc_label">"Nettverkskode: "</string>
+    <string name="lac_label">OmrådeCelle:</string>
+    <string name="mcc_label">Landskode:</string>
+    <string name="mnc_label">Nettverkskode:</string>
     <string name="pc_label">PC:</string>
     <string name="samples_label">Eksempler:</string>
     <string name="open_cell_id_label">OpenCellID-data</string>
