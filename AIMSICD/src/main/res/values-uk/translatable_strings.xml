@@ -10,8 +10,8 @@
     <string name="text_disagree">Я не погоджуюсь</string>
 
     <string name="disclaimer_title">ВІДМОВА ВІД ВІДПОВІДАЛЬНОСТІ</string>
-    <string name="toggle_attack_detection">Виявлення атаки</string>
-    <string name="toggle_cell_tracking">Слідкування за стільниками</string>
+    <string name="toggle_attack_detection">toggle_attack_detection</string>
+    <string name="toggle_cell_tracking">toggle_cell_tracking</string>
     <string name="clear_database">Очистити/скинути БД</string>
     <string name="clear_database_question">Всі дані будуть стерті.\nПродовжити?</string>
     <string name="preferences">Параметри</string>
@@ -71,12 +71,12 @@
     <string name="pref_map_type_title">Тип карти</string>
     <string name="pref_map_type_summ">Показувати карту в різних стилях</string>
     
-    <string name="cell_id_label">"CID: "</string>
-    <string name="lac_label">"LAC: "</string>
-    <string name="mcc_label">"MCC: "</string>
-    <string name="mnc_label">"MNC: "</string>
-    <string name="pc_label">"PC: "</string>
-    <string name="samples_label">"Зразки: "</string>
+    <string name="cell_id_label">CID:</string>
+    <string name="lac_label">LAC:</string>
+    <string name="mcc_label">MCC:</string>
+    <string name="mnc_label">MNC:</string>
+    <string name="pc_label">PC:</string>
+    <string name="samples_label">Зразки:</string>
     <string name="open_cell_id_label">Дані OpenCellID</string>
     <string name="lat_label">"Широта: "</string>
     <string name="lng_label">"Довгота: "</string>
@@ -89,7 +89,7 @@
     <string name="timeout_spinner_title">Затримка часу:</string>
     <string name="timeout_spinner_prompt">Оберіть затримку часу</string>
     <string name="title_ocid_key">Ключ OpenCellID API</string>
-    <string name="ocid_api_error">"Трапилась помилка під час отримання ключа: "</string>
+    <string name="ocid_api_error">Трапилась помилка під час отримання ключа:</string>
     <string name="ocid_api_success">Збережено новий ключ API.</string>
 
     <string name="btn_clear_logs">Очистити</string>
@@ -97,8 +97,7 @@
     <string name="btn_stop_logs">Зупинити</string>
     <string name="btn_start_logs">Почати</string>
 
-    <string name="disclaimer">"При використанні AIMSICD ви розумієте та погоджуєтесь, що AIMSICD є експериментальним та інформаційним Android додатком (далі ПО), яке може і не виявити стеження та відслідковування за різними причинами. Ви також розумієте, що додаток можна обійти чи ввести в оману за допомогою інших засобів, які ще не зрозумілі розробникам. Таким чином, ви також погоджуєтесь і розумієте, що розробники та компанії, які пов\'язані з даним ПЗ ні в якому разі не можуть нести відповідальність за результати роботи ПЗ чи результати, які залежать від використання даного ПЗ, а також не несуть ніякої відповідальності за інші збитки (включаючи, без обмежень, у вигляді недоотриманого прибутку, призупинення ділової активності, втрату ділової інформації та інші конкретні збитки), які можуть статися через використання чи неможливість використання ПЗ, також в тому випадку, якщо розробники та компанії, пов\'язані з цим ПЗ, були попереджені про можливість такого збитку. СТАН РОЗРОБКИ: ALPHA!
- "</string>
+    <string name="disclaimer">При використанні AIMSICD ви розумієте та погоджуєтесь, що AIMSICD є експериментальним та інформаційним Android додатком (далі ПЗ), яке може і не виявити стеження та відслідковування за різними причинами. Ви також розумієте, що додаток можна обійти чи ввести в оману за допомогою інших засобів, які ще не зрозумілі розробникам. Таким чином, ви також погоджуєтесь і розумієте, що розробники та компанії, які пов\'язані з даним ПЗ ні в якому разі не можуть нести відповідальність за результати роботи ПЗ чи результати, які залежать від використання даного ПЗ, а також не несуть ніякої відповідальності за інші збитки (включаючи, без обмежень, у вигляді недоотриманого прибутку, призупинення ділової активності, втрату ділової інформації та інші конкретні збитки), які можуть статися через використання чи неможливість використання ПЗ, також в тому випадку, якщо розробники та компанії, пов\'язані з цим ПЗ, були попереджені про можливість такого збитку. СТАН РОЗРОБКИ: ALPHA!</string>
 
     <string name="no_network_connection_message">Не вдається завантажити OpenCellID дані без інтернету, будь ласка, з\'єднайтеся із мережею для передачі даних!</string>
 
@@ -187,7 +186,7 @@
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID дані успішно отримано.\nМаркери карти оновлено.</string>
     <string name="status">Стан:</string>
     <string name="serial_device_title">Поточний послідовний пристрій:</string>
-    <string name="status_idle_detail_info">Додаток працює в режимі очікування чи завантаження. Заходи захисту та моніторингу вимкнено. Будь ласка, активуйте режим виявлення загроз!</string>
+    <string name="status_idle_detail_info">Додаток працює в режимі очікування чи завантаження. Заходи захисту або моніторингу вимкнено. Будь ласка, активуйте режим виявлення загроз.</string>
     <string name="status_ok_detail_info">Жодних загроз не виявлено. Ваша мережа постійно перевіряється на основі параметрів захисту , які ви зазначили в меню та налаштуваннях.</string>
     <string name="ui_icon_white">Білі</string>
     <string name="map_type_terrain">Земний</string>
@@ -284,7 +283,7 @@
     <string name="eventlog">Звіт подій</string>
     <string name="measured_signal_strengths">Виміряна сила сигналу</string>
 
-    <string name="at_command_response_found">"Знайдено: "</string>
+    <string name="at_command_response_found">Знайдено:</string>
     <string name="currently_connected_bts">Поточні під\'єднані BTS</string>
     <string name="well_known_encrypted_bts">Знайомі шифровані базові станції (BTS)</string>
     <string name="unknown_or_insecure_bts">Не відомі чи небезпечні базові станції (BTS)</string>
