@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="tracking">Gjurmim</string>
     <string name="device_info">Telefon/Detajet e SIM-Kartës</string>
     <string name="map_view">Hartë treguese e antenave</string>
@@ -28,7 +28,7 @@
     <string name="device_info_title">Informacione mbi aparatin</string>
     <string name="sim_info_title">Informacione mbi SIM-Kartën</string>
     <string name="network_info">Informacione mbi rrjetin</string>
-    <string name="cell_info_title">Niveli i deritanishëm i rrezikut</string>
+    <string name="cell_info_title">Celulat fqinje</string>
     <string name="neighboring_cells_title">Kullat e afërta</string>
     <string name="ciphering_indicator_title">Treguesi kodues</string>
     <string name="neighboring_cells_num_title">Gjithsej:</string>
@@ -108,4 +108,21 @@
     <string name="pref_ocid_requestkey_summary">Apliko një çelës për hapjen e të dhënave OpenCellID</string>
 
     <string name="unknown">i panjohur</string>
+    <string name="import_cell_towers">Importo të dhënat e celulës</string>
+
+    <string name="buildnumber">Numri i ndërtimit: %s</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="pref_enable_gps_title">Cilësimet e GPS</string>
+    <string name="pref_enable_gps_summary">Aktivizo GPS për gjurmim me celula</string>
+    <string name="pref_notification_settings">Cilësimet e njoftimit</string>
+    <string name="pref_map_type_title">Tipi i hartës</string>
+    <string name="pref_map_type_summ">Shfaq hartën në stile tjera</string>
+    
+    <string name="cell_id_label">CID:</string>
+    <string name="lac_label">LAC:</string>
+    <string name="mcc_label">KKR:</string>
+    <string name="mnc_label">MNC:</string>
+    <string name="pc_label">PC:</string>
+    <string name="samples_label">Shembuj:</string>
+    <string name="lat_label">Gjer:</string>
     </resources>
