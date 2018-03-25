@@ -8,7 +8,7 @@
 
 package com.secupwn.aimsicd.data.adapter;
 
-import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -26,13 +26,14 @@ import static java.lang.String.valueOf;
 
 public class SmsDataAdapter extends RealmBaseAdapter<SmsData> {
     
-    public SmsDataAdapter(Context context, RealmResults<SmsData> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public SmsDataAdapter(RealmResults<SmsData> realmResults) {
+        super(realmResults);
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             convertView = inflater.inflate(R.layout.adv_user_sms_listview, parent, false);
             holder = new ViewHolder();
             holder.smsd_timestamp = (TextView) convertView.findViewById(R.id.tv_adv_smsdata_timestamp);

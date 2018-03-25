@@ -16,20 +16,23 @@ import com.secupwn.aimsicd.data.DefaultDataTransaction;
 import com.secupwn.aimsicd.enums.Status;
 import com.secupwn.aimsicd.utils.BaseAsyncTask;
 import com.secupwn.aimsicd.utils.TinyDB;
+import com.secupwn.aimsicd.utils.UncaughtExceptionLogger;
+
+import org.slf4j.impl.HandroidLoggerAdapter;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.injection.app.InjectionApplication;
-import io.freefair.android.injection.modules.AndroidLoggerModule;
 import io.freefair.android.injection.modules.OkHttpModule;
-import io.freefair.android.util.logging.Logger;
+import io.freefair.injection.injector.RuntimeInjector;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class AndroidIMSICatcherDetector extends InjectionApplication {
 
     private static WeakReference<AndroidIMSICatcherDetector> instance;
@@ -39,8 +42,6 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
     }
 
     private Status currentStatus;
-    @Inject
-    private Logger log;
 
     /**
      * Maps between an activity class name and the list of currently running
@@ -54,38 +55,27 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
 
     @Override
     public void onCreate() {
+        HandroidLoggerAdapter.DEBUG = BuildConfig.DEBUG;
+        UncaughtExceptionLogger.init();
         instance = new WeakReference<>(this);
-        addModule(new AndroidLoggerModule());
-        addModule(OkHttpModule.withCache(this));
+        RuntimeInjector.getInstance().register(OkHttpModule.withCache(this));
         super.onCreate();
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
-                .deleteRealmIfMigrationNeeded()
-                .build();
-
-        Realm.setDefaultConfiguration(realmConfiguration);
-        final Realm realm = Realm.getDefaultInstance();
-
-        realm.executeTransactionAsync(
-                new DefaultDataTransaction(),
-                new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                        log.debug("Loading default data successful");
-                        realm.close();
-                    }
-                },
-                new Realm.Transaction.OnError() {
-                    @Override
-                    public void onError(Throwable error) {
-                        log.error("Error loading default data", error);
-                        realm.close();
-                    }
-                }
-        );
+        initRealm();
 
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);
+    }
+
+    private void initRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .initialData(new DefaultDataTransaction())
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
     }
 
     public void removeTask(BaseAsyncTask<?, ?, ?> pTask) {
@@ -96,7 +86,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
             for (BaseAsyncTask<?, ?, ?> lTask : tasks) {
                 if (lTask.equals(pTask)) {
                     tasks.remove(lTask);
-                    log.verbose("BaseTask removed:" + pTask.toString());
+                    log.debug("BaseTask removed: {}", pTask);
 
                     break;
                 }
@@ -113,7 +103,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
             return;
         }
 
-        log.debug("BaseTask addTask activity:" + activity.getClass().getCanonicalName());
+        log.debug("BaseTask addTask activity:{}", activity.getClass().getCanonicalName());
 
         int key = activity.getClass().getCanonicalName().hashCode();
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(key);
@@ -121,7 +111,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
             tasks = new ArrayList<>();
             mActivityTaskMap.put(key, tasks);
         }
-        log.verbose("BaseTask added:" + pTask.toString());
+        log.debug("BaseTask added:{}", pTask.toString());
         tasks.add(pTask);
     }
 
@@ -130,7 +120,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
             return;
         }
 
-        log.debug("BaseTask detach:" + activity.getClass().getCanonicalName());
+        log.debug("BaseTask detach: {}", activity.getClass().getCanonicalName());
 
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName().hashCode());
         if (tasks != null) {
@@ -144,7 +134,7 @@ public class AndroidIMSICatcherDetector extends InjectionApplication {
         if (activity == null) {
             return;
         }
-        log.debug("BaseTask attach:" + activity.getClass().getCanonicalName());
+        log.debug("BaseTask attach:{}", activity.getClass().getCanonicalName());
 
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName().hashCode());
         if (tasks != null) {

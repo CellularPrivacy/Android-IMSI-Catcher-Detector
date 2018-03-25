@@ -5,16 +5,14 @@ import android.location.Location;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by Marvin Arnold on 1/07/15.
  */
 @SuppressWarnings("ParcelCreator")
+@Slf4j
 public class TruncatedLocation extends Location {
-
-    private static final Logger log = AndroidLogger.forClass(TruncatedLocation.class);
 
     public TruncatedLocation(Location l) {
         super(l);

@@ -6,9 +6,15 @@
   <a target="_blank" href="https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Development-Status"><img src="https://img.shields.io/badge/Development-ALPHA-blue.svg"></a>
   <a target="_blank" href="https://hosted.weblate.org/projects/aimsicd/strings/"><img src="https://hosted.weblate.org/widgets/aimsicd/-/svg-badge.svg"></a>
   <a target="_blank" href="https://www.bountysource.com/teams/android-imsi-catcher-detector/issues?utm_source=Android%20IMSI-Catcher%20Detector&utm_medium=shield&utm_campaign=bounties_received"><img src="https://www.bountysource.com/badge/team?team_id=40338&style=bounties_received"></a>
+  <a target="_blank" href="https://gitter.im/CellularPrivacy/Android-IMSI-Catcher-Detector?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge"><img alt="Gitter" src="https://badges.gitter.im/CellularPrivacy/Android-IMSI-Catcher-Detector.svg"></a>
 </p>
 
---
+ <br /> <br />
+<h2>This Project will have a revival soon. <br />
+We are working on a light version of AIMSICD.</h2>
+<a href="https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/926">more information</a>
+
+---
 
 `AIMSICD` is an Android app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher). These devices are false mobile towers (base stations) acting between the target mobile phone(s) and the real towers of service providers. As such they are considered a Man-In-The-Middle (MITM) attack. This surveillance technology is also known as "[StingRay](https://en.wikipedia.org/wiki/Stingray_phone_tracker)", "Cellular Interception" and alike. Find out more in our [Wiki on GitHub](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki).
 

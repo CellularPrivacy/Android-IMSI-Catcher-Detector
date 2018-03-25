@@ -19,12 +19,9 @@ import com.secupwn.aimsicd.data.adapter.SmsDataAdapter;
 import com.secupwn.aimsicd.data.model.SmsData;
 import com.secupwn.aimsicd.utils.RealmHelper;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -32,9 +29,6 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 @XmlLayout(R.layout.activity_advanced_sms_user)
 public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
-
-    @Inject
-    private final Logger log = AndroidLogger.forClass(AdvancedUserSmsActivity.class);
 
     @InjectView(R.id.listView_Adv_Sms_Activity)
     ListView listViewAdv;
@@ -50,9 +44,9 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
         realm = Realm.getDefaultInstance();
 
         dbaccess = new RealmHelper(getApplicationContext());
-        RealmResults<SmsData> msgitems = realm.where(SmsData.class).findAllSorted("timestamp");
+        RealmResults<SmsData> msgitems = realm.where(SmsData.class).findAllSortedAsync("timestamp");
 
-        listViewAdv.setAdapter(new SmsDataAdapter(getApplicationContext(), msgitems, true));
+        listViewAdv.setAdapter(new SmsDataAdapter(msgitems));
 
         listViewAdv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -62,7 +56,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        smsData.removeFromRealm();
+                        smsData.deleteFromRealm();
                     }
                 });
 

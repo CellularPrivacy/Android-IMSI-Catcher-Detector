@@ -5,7 +5,6 @@
  */
 package com.secupwn.aimsicd.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +28,8 @@ import static java.lang.String.valueOf;
  */
 public class MeasuredCellStrengthAdapter extends RealmBaseAdapter<Measure> {
 
-    public MeasuredCellStrengthAdapter(Context context, RealmResults<Measure> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public MeasuredCellStrengthAdapter(RealmResults<Measure> realmResults) {
+        super(realmResults);
     }
 
     @Override

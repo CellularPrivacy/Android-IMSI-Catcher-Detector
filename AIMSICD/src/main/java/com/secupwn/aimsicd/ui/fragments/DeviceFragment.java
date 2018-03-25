@@ -19,14 +19,14 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.TableRow;
 
+import com.kaichunlin.transition.animation.AnimationManager;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.service.CellTracker;
+import com.secupwn.aimsicd.ui.widget.HighlightTextView;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.Device;
 import com.secupwn.aimsicd.utils.Helpers;
-import com.secupwn.aimsicd.ui.widget.HighlightTextView;
-import com.kaichunlin.transition.animation.AnimationManager;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -37,17 +37,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
-import io.freefair.android.util.logging.Logger;
+import io.freefair.injection.annotation.Inject;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @XmlLayout(R.layout.fragment_device)
 public class DeviceFragment extends InjectionFragment implements SwipeRefreshLayout.OnRefreshListener {
-
-    @Inject
-    private Logger log;
 
     @Inject
     OkHttpClient okHttpClient;
@@ -58,6 +56,70 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
     private AimsicdService mAimsicdService;
     private boolean mBound;
     private Context mContext;
+
+    @InjectView(R.id.network_lac)
+    private HighlightTextView locationAreaCodeView;
+
+    @InjectView(R.id.gsm_cellid)
+    private TableRow gsmCellIdTableRow;
+
+    @InjectView(R.id.network_cellid)
+    private HighlightTextView cellIdView;
+
+    @InjectView(R.id.cdma_netid)
+    private TableRow cdmaNetworkIdRow;
+    @InjectView(R.id.cdma_sysid)
+    private TableRow cdmaSystemIdRow;
+    @InjectView(R.id.cdma_baseid)
+    private TableRow cdmaBaseIdRow;
+
+    @InjectView(R.id.network_netid)
+    private HighlightTextView networkIdView;
+    @InjectView(R.id.network_sysid)
+    private HighlightTextView systemIdView;
+    @InjectView(R.id.network_baseid)
+    private HighlightTextView baseIdView;
+
+    @InjectView(R.id.lte_timing_advance)
+    private TableRow lteTimingAdvanceRow;
+
+    @InjectView(R.id.network_lte_timing_advance)
+    private HighlightTextView lteTimingAdvanceView;
+
+    @InjectView(R.id.primary_scrambling_code)
+    private TableRow primaryScramblingCodeRow;
+
+    @InjectView(R.id.network_psc)
+    private HighlightTextView primaryScramblingCodeView;
+
+    @InjectView(R.id.sim_country)
+    private HighlightTextView simCountryView;
+    @InjectView(R.id.sim_operator_id)
+    private HighlightTextView simOperatorIdView;
+    @InjectView(R.id.sim_operator_name)
+    private HighlightTextView simOperatorNameView;
+    @InjectView(R.id.sim_imsi)
+    private HighlightTextView simImsiView;
+    @InjectView(R.id.sim_serial)
+    private HighlightTextView simSerialView;
+    @InjectView(R.id.device_type)
+    private HighlightTextView deviceTypeView;
+    @InjectView(R.id.device_imei)
+    private HighlightTextView deviceImeiView;
+    @InjectView(R.id.device_version)
+    private HighlightTextView deviceImeiVersionView;
+    @InjectView(R.id.network_name)
+    private HighlightTextView networkNameView;
+    @InjectView(R.id.network_code)
+    private HighlightTextView networkCodeView;
+    @InjectView(R.id.network_type)
+    private HighlightTextView networkTypeView;
+    @InjectView(R.id.data_activity)
+    private HighlightTextView dataActivityTypeView;
+    @InjectView(R.id.data_status)
+    private HighlightTextView dataStatusView;
+    @InjectView(R.id.network_roaming)
+    private HighlightTextView networkRoamingView;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -117,8 +179,6 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
     };
 
     private void updateUI() {
-        HighlightTextView content;
-        TableRow tr;
         if (mBound) {
             final AnimationManager ani = new AnimationManager();
 
@@ -129,81 +189,57 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
                 case TelephonyManager.PHONE_TYPE_NONE:  // Maybe bad!
                 case TelephonyManager.PHONE_TYPE_SIP:   // Maybe bad!
                 case TelephonyManager.PHONE_TYPE_GSM: {
-                    content = (HighlightTextView)  getView().findViewById(R.id.network_lac);
-                    content.updateText(String.valueOf(mAimsicdService.getCell().getLocationAreaCode()), ani);
-                    tr = (TableRow) getView().findViewById(R.id.gsm_cellid);
-                    tr.setVisibility(View.VISIBLE);
-                    content = (HighlightTextView)  getView().findViewById(R.id.network_cellid);
-                    content.updateText(String.valueOf(mAimsicdService.getCell().getCellId()), ani);
+                    locationAreaCodeView.updateText(String.valueOf(mAimsicdService.getCell().getLocationAreaCode()), ani);
+                    gsmCellIdTableRow.setVisibility(View.VISIBLE);
+                    cellIdView.updateText(String.valueOf(mAimsicdService.getCell().getCellId()), ani);
                     break;
                 }
 
                 case TelephonyManager.PHONE_TYPE_CDMA: {
-                    tr = (TableRow) getView().findViewById(R.id.cdma_netid);
-                    tr.setVisibility(View.VISIBLE);
-                    content = (HighlightTextView)  getView().findViewById(R.id.network_netid);
-                    content.updateText(String.valueOf(mAimsicdService.getCell().getLocationAreaCode()), ani);
-                    tr = (TableRow) getView().findViewById(R.id.cdma_sysid);
-                    tr.setVisibility(View.VISIBLE);
-                    content = (HighlightTextView)  getView().findViewById(R.id.network_sysid);
-                    content.updateText(String.valueOf(mAimsicdService.getCell().getSid()), ani);
-                    tr = (TableRow) getView().findViewById(R.id.cdma_baseid);
-                    tr.setVisibility(View.VISIBLE);
-                    content = (HighlightTextView)  getView().findViewById(R.id.network_baseid);
-                    content.updateText(String.valueOf(mAimsicdService.getCell().getCellId()), ani);
+                    cdmaNetworkIdRow.setVisibility(View.VISIBLE);
+                    networkIdView.updateText(String.valueOf(mAimsicdService.getCell().getLocationAreaCode()), ani);
+
+                    cdmaSystemIdRow.setVisibility(View.VISIBLE);
+                    systemIdView.updateText(String.valueOf(mAimsicdService.getCell().getSid()), ani);
+
+                    cdmaBaseIdRow.setVisibility(View.VISIBLE);
+                    baseIdView.updateText(String.valueOf(mAimsicdService.getCell().getCellId()), ani);
                     break;
                 }
+                default:
+                    log.error("unknown phone type: {}", mDevice.getPhoneId());
             }
 
             if (mAimsicdService.getCell().getTimingAdvance() != Integer.MAX_VALUE) {
-                tr = (TableRow) getView().findViewById(R.id.lte_timing_advance);
-                tr.setVisibility(View.VISIBLE);
-                content = (HighlightTextView)  getView().findViewById(R.id.network_lte_timing_advance);
-                content.updateText(String.valueOf(mAimsicdService.getCell().getTimingAdvance()), ani);
+                lteTimingAdvanceRow.setVisibility(View.VISIBLE);
+                lteTimingAdvanceView.updateText(String.valueOf(mAimsicdService.getCell().getTimingAdvance()), ani);
             } else {
-                tr = (TableRow) getView().findViewById(R.id.lte_timing_advance);
-                tr.setVisibility(View.GONE);
+                lteTimingAdvanceRow.setVisibility(View.GONE);
             }
 
             if (mAimsicdService.getCell().getPrimaryScramblingCode() != Integer.MAX_VALUE) {
-                content = (HighlightTextView)  getView().findViewById(R.id.network_psc);
-                content.updateText(String.valueOf(mAimsicdService.getCell().getPrimaryScramblingCode()), ani);
-                tr = (TableRow) getView().findViewById(R.id.primary_scrambling_code);
-                tr.setVisibility(View.VISIBLE);
+                primaryScramblingCodeView.updateText(String.valueOf(mAimsicdService.getCell().getPrimaryScramblingCode()), ani);
+                primaryScramblingCodeRow.setVisibility(View.VISIBLE);
             }
 
             String notAvailable = getString(R.string.n_a);
 
-            content = (HighlightTextView)  getView().findViewById(R.id.sim_country);
-            content.updateText(mDevice.getSimCountry().orElse(notAvailable), ani);
-            content = (HighlightTextView)  getView().findViewById(R.id.sim_operator_id);
-            content.updateText(mDevice.getSimOperator().orElse(notAvailable), ani);
-            content = (HighlightTextView) getView().findViewById(R.id.sim_operator_name);
-            content.updateText(mDevice.getSimOperatorName().orElse(notAvailable), ani);
-            content = (HighlightTextView)  getView().findViewById(R.id.sim_imsi);
-            content.updateText(mDevice.getSimSubs().orElse(notAvailable), ani);
-            content = (HighlightTextView)  getView().findViewById(R.id.sim_serial);
-            content.updateText(mDevice.getSimSerial().orElse(notAvailable), ani);
+            simCountryView.updateText(mDevice.getSimCountry().orElse(notAvailable), ani);
+            simOperatorIdView.updateText(mDevice.getSimOperator().orElse(notAvailable), ani);
+            simOperatorNameView.updateText(mDevice.getSimOperatorName().orElse(notAvailable), ani);
+            simImsiView.updateText(mDevice.getSimSubs().orElse(notAvailable), ani);
+            simSerialView.updateText(mDevice.getSimSerial().orElse(notAvailable), ani);
 
-            content = (HighlightTextView)  getView().findViewById(R.id.device_type);
-            content.updateText(mDevice.getPhoneType(), ani);
-            content = (HighlightTextView)  getView().findViewById(R.id.device_imei);
-            content.updateText(mDevice.getIMEI(), ani);
-            content = (HighlightTextView)  getView().findViewById(R.id.device_version);
-            content.updateText(mDevice.getIMEIv(), ani);
-            content = (HighlightTextView)  getView().findViewById(R.id.network_name);
-            content.updateText(mDevice.getNetworkName(), ani);
-            content = (HighlightTextView)  getView().findViewById(R.id.network_code);
-            content.updateText(mDevice.getMncMcc(), ani);
-            content = (HighlightTextView)  getView().findViewById(R.id.network_type);
-            content.updateText(mDevice.getNetworkTypeName(), ani);
+            deviceTypeView.updateText(mDevice.getPhoneType(), ani);
+            deviceImeiView.updateText(mDevice.getIMEI(), ani);
+            deviceImeiVersionView.updateText(mDevice.getIMEIv(), ani);
+            networkNameView.updateText(mDevice.getNetworkName(), ani);
+            networkCodeView.updateText(mDevice.getMncMcc(), ani);
+            networkTypeView.updateText(mDevice.getNetworkTypeName(), ani);
 
-            content = (HighlightTextView)  getView().findViewById(R.id.data_activity);
-            content.updateText(mDevice.getDataActivityType(), ani);
-            content = (HighlightTextView)  getView().findViewById(R.id.data_status);
-            content.updateText(mDevice.getDataState(), ani);
-            content = (HighlightTextView)  getView().findViewById(R.id.network_roaming);
-            content.updateText(String.valueOf(mDevice.isRoaming()), ani);
+            dataActivityTypeView.updateText(mDevice.getDataActivityType(), ani);
+            dataStatusView.updateText(mDevice.getDataState(), ani);
+            networkRoamingView.updateText(String.valueOf(mDevice.isRoaming()), ani);
 
             ani.startAnimation(5000);
         }
@@ -294,7 +330,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
 
     private void processFinish(Cell cell) {
         if (cell != null) {
-            log.info("processFinish - Cell =" + cell.toString());
+            log.info("processFinish - Cell ={}", cell.toString());
             if (cell.isValid()) {
                 mAimsicdService.setCell(cell);
                 Helpers.msgShort(mContext, getActivity().getString(R.string.refreshed_cell_id_info));  // TODO re-translating other languages

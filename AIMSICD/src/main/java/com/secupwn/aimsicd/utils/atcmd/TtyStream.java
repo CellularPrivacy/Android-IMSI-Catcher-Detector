@@ -19,7 +19,10 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import lombok.extern.slf4j.Slf4j;
+
 /*package*/
+@Slf4j
 class TtyStream extends AtCommandTerminal {
 
     protected InputStream mInputStream;

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources><string name="quit">Išeiti</string>
     <string name="text_ok">Gerai</string>
     <string name="text_cancel">Atšaukti</string>
@@ -9,8 +9,8 @@
     <string name="disclaimer">"Naudodamasis AIMSICD suprantu ir sutinku, kad AIMSICD yra ekspermentinė Android aplikacija, kuri gali ir neaptikti visų bandymų mane sekti. Suprantu, kad ši programa gali būti apgauta būdais, iki šiol nežinomiems jos kūrėjams. Taigi, sutinku ir suprantu, kad kūrėjai bei įmonės susijusios su šiuo nemokamu produktu negali būti laikomi atsakingais dėl rezultatų bei pasekmių kylančių dėl šios programos naudojimo. "</string>
 
     <string name="db_viewer">Duombazės peržiūra</string>
-    <string name="toggle_attack_detection">Įjungti atakų aptikimą</string>
-    <string name="toggle_cell_tracking">Įjungti radijo bokšto sekimą</string>
+    <string name="toggle_attack_detection">Atakų aptikimas</string>
+    <string name="toggle_cell_tracking">Radijo bokšto sekimas</string>
     <string name="clear_database">Išvalyti duombazę</string>
     <string name="clear_database_question">Duomenys bus ištrinti.\nTęsti?</string>
     <string name="preferences">Nustatymai</string>

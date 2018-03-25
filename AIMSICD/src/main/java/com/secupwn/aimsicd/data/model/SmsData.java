@@ -20,10 +20,4 @@ public class SmsData extends RealmObject {
     private int locationAreaCode;
     private int cellId;
     private String radioAccessTechnology;
-
-    @Override
-    public void removeFromRealm() {
-        gpsLocation.removeFromRealm();
-        super.removeFromRealm();
-    }
 }

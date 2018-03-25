@@ -4,12 +4,13 @@ import org.codehaus.groovy.runtime.IOGroovyMethods
 buildscript {
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0'
-        classpath 'io.freefair:gradle-plugins:2.0.0-beta5'
-        classpath "io.realm:realm-gradle-plugin:0.88.3"
+        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath "io.freefair.gradle:android-gradle-plugins:2.3.1"
+        classpath "io.freefair.gradle:gradle-plugins:0.10.1"
+        classpath "io.realm:realm-gradle-plugin:3.1.1"
     }
 }
 

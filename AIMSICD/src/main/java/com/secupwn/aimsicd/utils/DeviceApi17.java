@@ -25,13 +25,11 @@ import android.telephony.TelephonyManager;
 
 import java.util.List;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+@Slf4j
 public class DeviceApi17 {
-
-    private static final Logger log = AndroidLogger.forClass(DeviceApi17.class);
 
     public static void loadCellInfo(TelephonyManager tm, Device pDevice) {
         int lCurrentApiVersion = Build.VERSION.SDK_INT;
@@ -101,9 +99,7 @@ public class DeviceApi17 {
                         pDevice.cell.setPrimaryScramblingCode(identityWcdma.getPsc());
 
                     } else {
-                        log.info("Unknown type of cell signal! "
-                                + "ClassName: " + info.getClass().getSimpleName()
-                                + " ToString: " + info.toString());
+                        log.info("Unknown type of cell signal! ClassName: {} ToString: {}", info.getClass().getSimpleName(), info.toString());
                     }
                     if (pDevice.cell.isValid()) {
                         break;

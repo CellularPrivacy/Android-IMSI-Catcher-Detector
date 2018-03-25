@@ -21,12 +21,10 @@
 
 package com.secupwn.aimsicd.utils;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public final class CMDProcessor {
-
-    private static final Logger log = AndroidLogger.forClass(CMDProcessor.class);
 
     public CMDProcessor() {
 
@@ -79,7 +77,7 @@ public final class CMDProcessor {
         out.append(r.getStdOut());
         out.append(" ; ");
         out.append(r.getStdErr());
-        log.debug("canSU() su[" + r.getExitValue() + "]: " + out);
+        log.debug("canSU() su[{}]: {}", r.getExitValue(), out);
         return r.success();
     }
 }

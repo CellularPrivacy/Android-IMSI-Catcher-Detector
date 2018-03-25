@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: "io.freefair.android-checkstyle"
+apply plugin: "io.freefair.android-javadoc-jar"
+apply plugin: "io.freefair.android-ci"
 
 def gitSha = null
 try {
@@ -8,11 +11,9 @@ try {
     logger.warn("git not available", e)
 }
 
-def isCi = "true".equals(System.getenv("CI"))
-
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "com.SecUpwN.AIMSICD"
@@ -39,26 +40,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-    dexOptions {
-        preDexLibraries !isCi
-    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
     lintOptions {
         warning 'MissingTranslation', 'InvalidPackage'
-
-        xmlReport false
-        htmlReport !isCi
-
-        textReport isCi
-        textOutput 'stdout'
+        disable 'HardwareIds'
     }
+
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/LICENSE.txt'
     }
+
     productFlavors {
         system {
             versionName "$project.version-system"
@@ -74,7 +71,8 @@ dependencies {
     // Please group dependencies for better review like below.
 
     // Android Support Libraries
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'io.realm:android-adapters:2.0.0'
 
     // OpenCSV (comma-separated values) parser library
     compile 'au.com.bytecode:opencsv:2.4'
@@ -83,9 +81,10 @@ dependencies {
     compile 'com.github.Stericson:RootShell:d708ae1f0a'
 
     // Dependency Injection for Android
-    compile 'io.freefair.android-injection:injection:2.0.0-beta1'
-    compile 'io.freefair.android-injection:logging:2.0.0-beta1'
-    compile 'io.freefair.android-injection:okhttp:2.0.0-beta1'
+    compile 'io.freefair.injection:android-injection:2.0.0-beta16'
+    compile 'io.freefair.injection:okhttp:2.0.0-beta16'
+    compile 'io.freefair.android-util:function:3.0.0'
+    compile 'io.freefair:slf4j-android:1.7.21'
 
     compile 'io.freefair.android-colors:material:1.2.0'
 
@@ -98,18 +97,16 @@ dependencies {
     // ShowcaseView library to highlight specific app elements
     //compile 'com.github.amlcurran.showcaseview:library:5.3.0'
 
-    provided "org.projectlombok:lombok:1.16.8"
-    apt "org.projectlombok:lombok:1.16.8"
+    provided "org.projectlombok:lombok:1.16.16"
+    //apt "org.projectlombok:lombok:1.16.16"
 
     testCompile 'junit:junit:4.12'
 }
 
 apply from: "signing.gradle"
-apply plugin: "io.freefair.android-checkstyle"
-apply plugin: "io.freefair.android-javadoc-jar"
 
 checkstyle {
-    toolVersion = "6.15"
+    toolVersion = "7.+"
 }
 
 String getBuildNumber() {

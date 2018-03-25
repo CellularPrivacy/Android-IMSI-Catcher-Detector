@@ -24,14 +24,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.secupwn.aimsicd.R;
-import com.secupwn.aimsicd.ui.fragments.MapFragment;
 import com.secupwn.aimsicd.constants.DrawerMenu;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.service.CellTracker;
+import com.secupwn.aimsicd.ui.fragments.MapFragment;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -41,8 +42,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -59,9 +59,9 @@ import io.freefair.android.util.logging.Logger;
  *                  - Check for SU and BusyBox
  *
  */
- public class Helpers {
+@Slf4j
+public class Helpers {
 
-    private static final Logger log = AndroidLogger.forClass(Helpers.class);
     private static final int CHARS_PER_LINE = 34;
 
    /**
@@ -211,18 +211,18 @@ import io.freefair.android.util.logging.Logger;
                                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
-                    log.info("OCID BBOX is set to: " + boundParameter + "  with radius " + radius + " Km.");
+                    log.info("OCID BBOX is set to: {}  with radius {} Km.", boundParameter, radius);
 
                     StringBuilder sb = new StringBuilder();
                     sb.append("http://www.opencellid.org/cell/getInArea?key=")
                             .append(CellTracker.OCID_API_KEY).append("&BBOX=")
                             .append(boundParameter);
 
-                    log.info("OCID MCC is set to: " + cell.getMobileCountryCode());
+                    log.info("OCID MCC is set to: {}", cell.getMobileCountryCode());
                     if (cell.getMobileCountryCode() != Integer.MAX_VALUE) {
                         sb.append("&mcc=").append(cell.getMobileCountryCode());
                     }
-                    log.info("OCID MNC is set to: " + cell.getMobileNetworkCode());
+                    log.info("OCID MNC is set to: {}", cell.getMobileNetworkCode());
                     if (cell.getMobileNetworkCode() != Integer.MAX_VALUE) {
                         sb.append("&mnc=").append(cell.getMobileNetworkCode());
                     }
@@ -231,7 +231,7 @@ import io.freefair.android.util.logging.Logger;
                     new RequestTask(injectionActivity, type, new RequestTask.AsyncTaskCompleteListener() {
                         @Override
                         public void onAsyncTaskSucceeded() {
-                            log.verbose("RequestTask's OCID download was successful. Callback rechecking connected cell against database");
+                            log.debug("RequestTask's OCID download was successful. Callback rechecking connected cell against database");
                             service.getCellTracker().compareLacAndOpenDb();
                         }
 
@@ -260,6 +260,57 @@ import io.freefair.android.util.logging.Logger;
     }
 
     /**
+     * Description:      Imports cell data from the specified file
+     *
+     * Used:
+     * @param celltowersPath path to the cell_towers.csv / cell_towers.csv.gz
+     * @param cell Current Cell Information
+     * @param importFile
+     *
+     */
+     public static void importCellTowersData(InjectionAppCompatActivity injectionActivity, Cell cell,
+                                             Uri importFile,
+                                             final AimsicdService service) {
+        if (Helpers.isNetAvailable(injectionActivity)) {
+            int radius = 2; // Use a 2 Km radius with center at GPS location.
+
+            if (Double.doubleToRawLongBits(cell.getLat()) != 0 &&
+                    Double.doubleToRawLongBits(cell.getLon()) != 0) {
+                GeoLocation currentLoc = GeoLocation.fromDegrees(cell.getLat(), cell.getLon());
+
+                log.info("OCID location: {}  with radius {} Km.", currentLoc.toString(), radius);
+                log.info("OCID MCC is set to: {}", cell.getMobileCountryCode());
+                log.info("OCID MNC is set to: {}", cell.getMobileNetworkCode());
+
+                new ImportTask(injectionActivity, importFile,
+                        cell.getMobileCountryCode(), cell.getMobileNetworkCode(), currentLoc, radius,
+                        new ImportTask.AsyncTaskCompleteListener() {
+                    @Override
+                    public void onAsyncTaskSucceeded() {
+                        log.debug("ImportTask's OCID import was successful. Callback rechecking connected cell against database");
+                        service.getCellTracker().compareLacAndOpenDb();
+                    }
+
+                    @Override
+                    public void onAsyncTaskFailed(String result) {
+                    }
+                }).execute();
+            }
+
+        } else {
+            Fragment myFragment = injectionActivity.getSupportFragmentManager().findFragmentByTag(String.valueOf(DrawerMenu.ID.MAIN.ALL_CURRENT_CELL_DETAILS));
+            if (myFragment instanceof MapFragment) {
+                ((MapFragment) myFragment).setRefreshActionButtonState(false);
+            }
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(injectionActivity);
+            builder.setTitle(R.string.no_network_connection_title)
+                    .setMessage(R.string.no_network_connection_message);
+            builder.create().show();
+        }
+    }
+
+    /**
      * Return a String List representing response from invokeOemRilRequestRaw
      *
      * @param aob Byte array response from invokeOemRilRequestRaw
@@ -268,7 +319,7 @@ import io.freefair.android.util.logging.Logger;
 
         if (aob.length == 0) {
             // WARNING: This one is very chatty!
-            log.verbose("invokeOemRilRequestRaw: byte-list response Length = 0");
+            log.debug("invokeOemRilRequestRaw: byte-list response Length = 0");
             return Collections.emptyList();
         }
         int lines = aob.length / CHARS_PER_LINE;
@@ -304,7 +355,7 @@ import io.freefair.android.util.logging.Logger;
         try {
             result = SystemPropertiesReflection.get(context, prop);
         } catch (IllegalArgumentException iae) {
-            log.error("Failed to get system property: " + prop, iae);
+            log.error("Failed to get system property: {}", prop, iae);
         }
         return result == null ? def : result;
     }

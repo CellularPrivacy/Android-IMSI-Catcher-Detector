@@ -23,16 +23,14 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import dalvik.system.DexFile;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Class using reflection to grant access to the private hidden
  * android.os.SystemProperties class
  */
+@Slf4j
 public class SystemPropertiesReflection {
-
-    private static final Logger log = AndroidLogger.forClass(SystemPropertiesReflection.class);
 
     /**
      * This class cannot be instantiated
