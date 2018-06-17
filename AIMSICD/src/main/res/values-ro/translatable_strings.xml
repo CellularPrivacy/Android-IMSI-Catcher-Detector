@@ -13,7 +13,7 @@
     <string name="disclaimer">Prin utilizarea AIMSICD ati inteles si sunteti de acord ca AIMSICD este o aplicatie Android experimentala si informativa care poate esua sa detecteze supravegherea și urmarirea din mai multe motive. De asemenea, intelegeti ca metodele pot fi eludate sau infrante prin alte mijloace, care nu au fost inca intelese de dezvoltatori. De asemenea, sunteti de acord și intelegeti ca dezvoltatorii și companiile legate de acest produs gratuit nu pot fi trasi la raspundere pentru niciun rezultat sau rezultate, indiferent de utilizarea acestei aplicatii. STATUSUL DE DEZVOLTARE: ALPHA!</string>
 
     <string name="toggle_attack_detection">Detectarea Atacului</string>
-    <string name="toggle_cell_tracking">Urmarirea Celulelor</string>
+    <string name="toggle_cell_tracking">comutează_urmărirea_celulelor</string>
     <string name="clear_database">Sterge/Reseteaza Baza de Date</string>
     <string name="clear_database_question">Toate datele vor fi sterse.
 \nEsti sigur ?</string>
@@ -159,7 +159,7 @@
     <string name="btn_start_logs">Porneste</string>
 
     <string name="title_activity_about_pop_up">EXPLICATII DETALIATE</string>
-    <string name="status_idle_detail_info">Aplicatia este inactiva sau se incarca. Nu sunt activate masurile de protectie si detectare. Te rog activeaza detectarea atacurilor!</string>
+    <string name="status_idle_detail_info">Aplicatia este inactiva sau se incarca. Nu sunt activate masurile de protectie sau detectare. Te rog activeaza detectarea.</string>
     <string name="status_ok_detail_info">Nici o amenintare detectata. Reteaua ta este in mod constant verificata pe baza setarilor de detectare activate.</string>
     <string name="status_medium_detail_info">Zona cu Servicii Nesecurizate: cel puțin 1 BTS nou sau necunoscut este in functiune in aceasta zona sau foloseste un algoritm de criptare nesigur (spart) mai mic decat A5/3. Orice apel telefonic / SMS realizat in aceasta zona poate fi interceptat si inregistrat. Paraseste rapid acest loc.</string>
     <string name="status_high_detail_info">Actiuni Ostile Detectate: O Capcana-IMSI (IMSIC) sau un BTS fals (FBTS) urmareste in mod activ utilizatorii. In aceasta zona este activa o scanare. Ar trebui sa evitati acest loc prin toate mijloacele, mai ales daca exista miscari cu caracter politic. Scoateti bateria și cartela SIM!</string>
