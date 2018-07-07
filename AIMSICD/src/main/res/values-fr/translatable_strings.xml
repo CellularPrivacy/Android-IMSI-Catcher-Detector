@@ -26,8 +26,8 @@
 
 
     <!-- MENU -->
-    <string name="toggle_attack_detection">Détection d\'attaques</string>
-    <string name="toggle_cell_tracking">Suivi des cellules</string>
+    <string name="toggle_attack_detection">"basculer la détection d\'attaque "</string>
+    <string name="toggle_cell_tracking">Basculer le suivi des cellules</string>
     <string name="clear_database">Effacer/réinitialiser la base de données</string>
     <string name="clear_database_question">Toutes les données seront effacées.\nÊtes-vous sûr ?</string>
     <string name="preferences">Préférences</string>
@@ -135,7 +135,7 @@
     <string name="pref_map_type_summ">Affiche différents types de carte</string>
     
     <!-- MAP INFOWINDOW -->
-    <string name="cell_id_label">"CID : "</string>
+    <string name="cell_id_label">CID :</string>
     <string name="lac_label">"LAC : "</string>
     <string name="mcc_label">"MCC : "</string>
     <string name="mnc_label">"MNC : "</string>
@@ -189,7 +189,7 @@
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">EXPLICATION DÉTAILLÉE</string>
-    <string name="status_idle_detail_info">L’application est inactive ou en chargement. Aucune mesure de protection ou de détection n’est activée. Veuillez activer la détection d’attaques !</string>
+    <string name="status_idle_detail_info">L’application est inactive ou en chargement. Aucune mesure de protection ou de détection n’est activée. Veuillez activer la détection d’attaques.</string>
     <string name="status_ok_detail_info">Aucune menace détectée. Notre application vérifie constamment votre réseau à partir des mesures de protections que vous avez paramétré dans le menu et les préférences.</string>
     <string name="status_medium_detail_info">Zone avec un service non sécurisé : au moins une BTS est nouvelle ou inconnue dans les environs, ou bien celle-ci utilise un système de chiffrement considéré comme non sûr (inférieure à A5/3). Tout appel/SMS envoyé ou reçu dans cette zone peut être intercepté et enregistré. Veuillez quitter cet endroit rapidement.</string>
     <string name="status_high_detail_info">Actions hostiles de la part d\'un service détecté : un IMSI-Catcher (IMSIC) ou une fausse BTS (FBTS) est actuellement en train de traquer ses utilisateurs. Scan actif dans cette zone. Vous devriez quitter ce lieu par n\'importe quel moyen, particulièrement s’il y a des troubles politiques. Enlevez votre batterie et votre carte SIM !</string>
