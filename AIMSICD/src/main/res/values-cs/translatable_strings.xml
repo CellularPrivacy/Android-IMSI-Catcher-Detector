@@ -43,7 +43,7 @@
     <string name="no_network_connection_title">Nelze se připojit k internetu</string>
     <string name="no_network_connection_message">Nepodařilo se stáhnout data z OpenCellID, chybí připojení k internetu!</string>
 
-    <string name="cell_info_title">Aktuální Úroveň Ohrožení</string>
+    <string name="cell_info_title">Sousední buňky</string>
     <string name="neighboring_cells_title">Sousední buňky</string>
     <string name="ciphering_indicator_title">Indikace použitého šifrování</string>
     <string name="sim_serial">Serial No:</string>
@@ -112,12 +112,12 @@
     <string name="pref_map_type_title">Typ Mapy</string>
     <string name="pref_map_type_summ">Zobrazit mapu jiným stylem</string>
     
-    <string name="cell_id_label">"Cell ID: "</string>
-    <string name="lac_label">"LAC: "</string>
-    <string name="mcc_label">"MCC: "</string>
-    <string name="mnc_label">"MNC: "</string>
-    <string name="pc_label">"Kód poskytovatele (PC): "</string>
-    <string name="samples_label">"Ukázky: "</string>
+    <string name="cell_id_label">Cell ID:</string>
+    <string name="lac_label">LAC:</string>
+    <string name="mcc_label">MCC:</string>
+    <string name="mnc_label">MNC:</string>
+    <string name="pc_label">Kód poskytovatele (PC):</string>
+    <string name="samples_label">Ukázky:</string>
     <string name="open_cell_id_label">Data OpenCellID</string>
     <string name="lat_label">"šířka: "</string>
     <string name="lng_label">"délka: "</string>
@@ -129,7 +129,8 @@
     <string name="execute_at">Spustit</string>
     <string name="serial_device_title">Aktuální Sériový Port:</string>
     <string name="serial_device_prompt">Vybrat Sériové Zařízení</string>
-    <string name="disclaimer">"Používáním aplikace AIMSICD berete na vědomí že AIMSICD je experimentální a informační Android aplikace, která může selhat při detekci odposlechu a sledování z mnoha důvodů. Zároveň berete na vědomí, že detekci poskytované aplikací je možné se vyhnout způsoby, které její autoři zatím nepředpokládali nebo neznají. Tímto také souhlasíte že vývojáři a společnosti, které lze spojovat s vývojem a poskytováním této bezplatné aplikace nemohou být zodpovědni za zobrazené informace nebo jakékoli důsledky používání této aplikace.\nStav vývoje: ALPHA verze! "</string>
+    <string name="disclaimer">Používáním aplikace AIMSICD berete na vědomí že AIMSICD je experimentální a informační Android aplikace, která může selhat při detekci odposlechu a sledování z mnoha důvodů. Zároveň berete na vědomí, že detekci poskytované aplikací je možné se vyhnout způsoby, které její autoři zatím nepředpokládali nebo neznají. Tímto také souhlasíte že vývojáři a společnosti, které lze spojovat s vývojem a poskytováním této bezplatné aplikace nemohou být zodpovědni za zobrazené informace nebo jakékoli důsledky používání této aplikace.
+\nStav vývoje: ALPHA verze!</string>
 
     <string name="serial_device_spinner_title">Detekovaná zařízení:</string>
     <string name="timeout_spinner_title">Časový limit:</string>
@@ -142,7 +143,7 @@
 
     <string name="title_ocid_key">API Klíč OpenCellID</string>
     <string name="message_request_api_key">Stiskněte OK pro vyžádání API Klíče ze serveru OpenCellID.org. API Klíč vám umožní využívat jejich databázi BTS a zobrazovat ji v mapě. Zároveň vám Klíč dovolí nahrávat vámi detekované BTS zpět do veřejné databáze. Pokud během 20 dní po přidělení klíče nenahrajete žádná BTS data zpět do databáze, vás Klíč může být deaktivován.</string>
-    <string name="ocid_api_error">"Chyba při získávání API Klíče: "</string>
+    <string name="ocid_api_error">Chyba při získávání API Klíče:</string>
     <string name="ocid_api_success">Nový API Klíč uložen.</string>
 
     <string name="title_debug_logs">Ladící Logy</string>
@@ -153,7 +154,7 @@
     <string name="btn_start_logs">Spustit</string>
 
     <string name="title_activity_about_pop_up">DETAILNÍ VYSVĚTLENÍ</string>
-    <string name="status_idle_detail_info">Aplikace je neaktivní nebo se načítá. Detekce ani ochrana není povolena. Zapněte prosím SLEDOVÁNÍ v sekci Nastavení!</string>
+    <string name="status_idle_detail_info">Aplikace je neaktivní nebo se načítá. Detekce ani ochrana není povolena. Zapněte prosím SLEDOVÁNÍ v sekci Nastavení.</string>
     <string name="status_ok_detail_info">"Nebyly detekovány nebo nazeleny žádné hrozby. AIMSICD neustále kontroluje vaše  připojení v souladu s vaším nastavením."</string>
 
     <string name="unknown">Neznámý</string>
@@ -188,12 +189,18 @@
     <string name="uploaded_bts_data_successfully">Úspěšně odeslána BTS data do OpenCellID.</string>
     <string name="error_uploading_bts_data">Chyba při odesílání BTS dat na OpenCellID servery!</string>
     <string name="refreshed_cell_id_info">Aktualizovány informace o CellId</string>
-    <string name="unable_to_acquire_root_access">Na vašem zařízení nelze získat ROOT přístup. Vkládání AT příkazů vyžaduje přístup k ROOT terminalu. Prosím zkontrolujte, zda je vaše zařízení ROOTnuté a opakujte akci.</string>
-    <string name="unable_to_detect_busybox">Na vašem zařízení nebyl nalezen Busybox. Vkládání AT příkazů vyžaduje správně fungující komponentu Busybox.\nProsím zkontrolujte, zda že má zařízení Busybox nainstalován a opakujte akci.</string>
-    <string name="unknown_error_initialising_at_command_injector">Pří pokusu o inicializaci vkládání AT příkazů došlo k neznámé chybě.\nZkontrolujte výstup logcat a případné chyby a zveřejňěte na Github.</string>
+    <string name="unable_to_acquire_root_access">Na vašem zařízení nelze získat ROOT přístup. 
+\nVkládání AT příkazů vyžaduje přístup k ROOT terminalu. 
+\nProsím zkontrolujte, zda je vaše zařízení ROOTnuté a opakujte akci.</string>
+    <string name="unable_to_detect_busybox">Na vašem zařízení nebyl nalezen Busybox. 
+\nVkládání AT příkazů vyžaduje správně fungující komponentu Busybox. 
+\nProsím zkontrolujte, zda je na vašem zařízení Busybox nainstalován a opakujte akci.</string>
+    <string name="unknown_error_initialising_at_command_injector">Pří pokusu o inicializaci vkládání AT příkazů došlo k neznámé chybě.
+\nZkontrolujte výstup logcat na případné chyby a zveřejněte je na Github.</string>
     <string name="getting_ocid_api_key">Získávání klíče k OpenCellID API…</string>
     <string name="unable_to_create_map">Nepodařilo se vytvořit mapu!</string>
-    <string name="describe_the_problem_you_had">POZOR! Popište problém, který jste měli před pokusem odeslat nám log záznamy. BEZ POPISU VÁM NEUMíME POMOCI!\n</string>
+    <string name="describe_the_problem_you_had">POZOR! Než nám zašlete log záznamy, tak prosím popište problém, který se vyskytl. BEZ POPISU VÁM NEUMÍME POMOCI!
+\n</string>
     <string name="status_idle">Nečinný</string>
     <string name="status_ok">OK</string>
     <string name="status_medium">Střední</string>
@@ -216,21 +223,22 @@
     <string name="detection_strings">Detekční řetězce</string>
     <string name="typezero_title">POZOR!</string>
     <string name="typezero_header">Zjištěna skrytá SMS</string>
-    <string name="typezero_data">Objevena zpráva Typ-0!\nPodrobnosti: viz Prohlížeč databáze.</string>
+    <string name="typezero_data">Detekována zpráva Typ-0!
+\nPodrobnosti: viz Prohlížeč databáze.</string>
     <string name="typemwi_title">POZOR!</string>
     <string name="typemwi_header">Zjištěno MWI</string>
     <string name="typemwi_data">Zjištěn indikátor čekající zprávy!\nPodrobnosti: viz Prohlížeč databáze.</string>
     <string name="typewap_header">Zjištěn WAP push</string>
-    <string name="help_main_neighboring_cells"/>
-    <string name="help_main_acd">Zobrazit detailní porovnání aktuálně připojených buněk proti datům (jsou-li k dispozici) v OpenCellID a zvýraznění rozdílů.</string>
-    <string name="help_main_database_viewer">Zobrazení různých DB tabulek, které máme.</string>
+    <string name="help_main_neighboring_cells">Zobrazí sousední buňky.</string>
+    <string name="help_main_acd">Zobrazí detailní porovnání aktuálně připojených buněk proti datům (jsou-li k dispozici) v OpenCellID a zvýrazní případné rozdíly.</string>
+    <string name="help_main_database_viewer">Zobrazí různé databázové tabulky které jsou k dispozici.</string>
     <string name="help_main_antenna_map_view">Barevná mapa antén v okolí.</string>
-    <string name="help_main_at_command_interface">Rozhraní, který umožňuje odesílat příkazy AT baseband procesoru (vyžaduje ROOT).</string>
+    <string name="help_main_at_command_interface">Rozhraní, který umožňuje odesílat AT příkazy do baseband procesoru (vyžaduje ROOT).</string>
 
-    <string name="help_tracking_toggle_attack_detection">Spustit/zastavit detekci útoku a shromažďovat podrobnosti o buňce do vnitřní databáze.</string>
-    <string name="help_tracking_toggle_cell_tracking">Zapnout sledování buněk pro zobrazení na mapě antén a možné pozdější nahrání do OpenCellID.</string>
+    <string name="help_tracking_toggle_attack_detection">Spustí/zastaví detekci útoku a shromažďuje podrobnosti o buňce do vnitřní databáze.</string>
+    <string name="help_tracking_toggle_cell_tracking">Spustí sledování buněk kvůli zobrazení na mapě antén a pro pozdější možné nahrání do OpenCellID.</string>
 
-    <string name="help_settings_preferences">Nastavení AIMSICD ohledně pravidel ochrany, intervaly dotazování a chování služeb.</string>
+    <string name="help_settings_preferences">Nastavení AIMSICD ohledně pravidel ochrany, intervalů dotazování a chování služeb.</string>
     <string name="help_settings_reset_db">Vymazat a obnovit vše nebo konkrétní tabulky DB.</string>
 
     <string name="help_app_add_get_ocid_api_key">Získejte klíč API pro připojení k OpenCellID databáze k ukládání a stahování dat…</string>
@@ -248,8 +256,9 @@
     <string name="eventlog">Protokol událostí</string>
     <string name="measured_signal_strengths">Naměřené úrovně signálu</string>
 
-    <string name="at_command_response_looking">*** Hledání sériových AT zařízení...\n</string>
-    <string name="at_command_response_found">"Nalezeno: "</string>
+    <string name="at_command_response_looking">*** Hledání sériových AT zařízení... 
+\n</string>
+    <string name="at_command_response_found">Nalezeno:</string>
     <string name="at_command_response_setup_complete">*** Instalace dokončena ***\n</string>
 
     <string name="currently_connected_bts">Aktuálně připojené BTS</string>
@@ -264,10 +273,11 @@
 
     <string name="deleted">Smazáno</string>
     <string name="failed_to_delete">Odstranění se nezdařilo</string>
-    <string name="double_quote_will_cause_db_error">"Řetězec nebyl přidán\n\"dvojité uvozovky způsobují chyby databáze "</string>
+    <string name="double_quote_will_cause_db_error">"Řetězec nebyl přidán 
+\n \"dvojité uvozovky způsobí chyby v databázi "</string>
     <string name="the_string_was_added_to_db">Řetězec byl přidán do databáze</string>
     <string name="failed_to_add_the_string_to_db">Nepodařilo se přidat řetězec do databáze</string>
-    <string name="n_a">nelze aplikovat</string>
+    <string name="n_a">Nelze aplikovat</string>
     <string name="buildnumber">Verze sestavení: %s</string>
     <string name="git_sha">Git hash (SHA): %s</string>
     <string name="pref_enable_gps_title">Nastavení GPS</string>
@@ -298,11 +308,11 @@
     <string name="timeout_spinner_30_sec">30 sec</string>
     <string name="timeout_spinner_10_min">10 min</string>
     <string name="main">Hlavní</string>
-    <string name="monitoring_cell_information">Informace o sledování buněk</string>
-    <string name="stopped_monitoring_cell_information">Sledováni buněk zastaveno</string>
-    <string name="tracking_cell_information">Informace o sledování buněk</string>
+    <string name="monitoring_cell_information">Informace o monitorování buněk.</string>
+    <string name="stopped_monitoring_cell_information">Monitorování buněk zastaveno.</string>
+    <string name="tracking_cell_information">Informace o sledování buněk.</string>
     <string name="stopped_tracking_cell_information">Sledování buněk zastaveno.</string>
-    <string name="femtocell_detection_active">Detekce aktivity mikrobuňky.</string>
+    <string name="femtocell_detection_active">Detekce mikrobuňky aktivní.</string>
     <string name="cell_tracking_active">Sledování buněk aktivní.</string>
     <string name="cell_monitoring_active">Monitoring buněk aktivní.</string>
     <string name="alert_threat_detected">POZOR: Detekovány některé hrozby!</string>
@@ -313,16 +323,29 @@
     <string name="stopped_tracking_femtocell">: Zastaveno sledováni připojení přes mikrobuňky.</string>
     <string name="alert_femtocell_tracking_detected">POZOR: Detekováno sledování mikrobuňkou!</string>
     <string name="refreshing_every">Aktualizace každých</string>
-    <string name="unable_to_determine_last_location">Nelze zjistit vaše poslední umístění.\nPovolte služby pro umístění (GPS) a opakujte akci.</string>
+    <string name="unable_to_determine_last_location">Nelze zjistit vaši poslední polohu.
+\nPovolte služby umístění (GPS) a opakujte akci.</string>
     <string name="no_tracked_locations_found">Žádná lokalita se sledováním k zobrazení na mapě.</string>
     <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data úspěšně přijata.\nMapa značek aktualizována.</string>
     <string name="no_opencellid_key_detected">Nemáte OpenCellID API klíč! Zadejte prosím váš klíč v Nastavení.</string>
-    <string name="unknown_error_trying_to_acquire_serial_device">Při pokusu o přístup na sériové zařízení došlo k neznámé chybě.\nZkontrolujte výstup logcat a případné chyby zveřejňěte na Github.\t</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Při pokusu o přístup na sériové zařízení došlo k neznámé chybě.
+\nZkontrolujte výstup logcat a případné chyby zveřejněte na Github.</string>
     <string name="adv_user_info">Tato nabídka je pouze pro pokročilé uživatele!\n\nProsím, nevkládejte náhodné řetězce, jelikož to způsobí, že nepředvídatelné chování detekčních mechanismů.\n\nChcete-li přidat řetězec vyberte typ SMS z rozbalovací nabídky, zadejte detekční řetězec a stiskněte klávesu insert.\n\nOdstranění z databáze provedete dlouhým stiskem na seznamu zobrazení.</string>
     
-    <string name="typewap_data">SMS zpráva WAP Push detekována!\nPodrobnosti: viz prohlížení database.\t</string>
+    <string name="typewap_data">SMS zpráva WAP Push detekována!
+\nPodrobnosti: viz prohlížení databáze.</string>
 
 
-    <string name="help_main_phone_sim_details">Informace SIM sítě poskytovatele, IMEI, TMSI.</string>
+    <string name="help_main_phone_sim_details">Informace SIM sítě operátora, IMEI, TMSI.</string>
     <string name="ui_icon_sense">Citlivé</string>
+    <string name="import_cell_towers">Importovat data BTS</string>
+
+    <string name="pref_enable_gps_summary">Povolit GPS pro sledování buňek</string>
+    <string name="cell_doesnt_provide_any_neighbors">BTS neposkytuje žádné sousední buňky!</string>
+    <string name="imporing_celltowers_data">Načítám data BTS...
+\nMůže to chvíli trvat.</string>
+    <string name="celltowers_data_successfully_imported">BTS data úspěšně načtena.</string>
+    <string name="error_importing_celltowers_data">Chyba při načítání BTS dat.</string>
+    <string name="help_app_import_cell_towers">Importuje databázi BTS.</string>
+    <string name="needs_location">Potřebuje polohu</string>
     </resources>
