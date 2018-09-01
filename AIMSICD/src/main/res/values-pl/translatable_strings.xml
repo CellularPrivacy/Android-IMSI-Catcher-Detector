@@ -4,7 +4,7 @@
     <!-- Drawer -->
     <string name="tracking">Śledzenie</string>
     <string name="device_info">Szczegóły telefonu/SIM</string>
-    <string name="map_view">Widok mapy</string>
+    <string name="map_view">Przeglądarka Map Antenna</string>
     <string name="db_viewer">Podgląd bazy danych</string>
     <string name="quit">Wyjście</string>
     <string name="text_ok">OK</string>
@@ -19,7 +19,7 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
 
 
     <!-- MENU -->
-    <string name="toggle_attack_detection">Wykrywanie Ataków</string>
+    <string name="toggle_attack_detection">Przełącz Wykrywanie Ataków</string>
     <string name="toggle_cell_tracking">Monitorowanie Stacji Bazowych</string>
     <string name="clear_database">Wyczyść bazę danych</string>
     <string name="clear_database_question">Wszystkie dane zostaną skasowane.\nNa pewno?</string>
@@ -135,8 +135,8 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
     <string name="pc_label">PC: </string>
     <string name="samples_label">Próbki: </string>
     <string name="open_cell_id_label">Dane OpenCellID</string>
-    <string name="lat_label">Szer.: </string>
-    <string name="lng_label">Wys.: </string>
+    <string name="lat_label">"Szer.: "</string>
+    <string name="lng_label">"Wys.: "</string>
 
     <!-- Database Viewer -->
     <string name="table_names_prompt">Wybierz tabelę</string>
@@ -182,7 +182,7 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
 
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">SZCZEGÓŁOWY OPIS</string>
-    <string name="status_idle_detail_info">Aplikacja jest bezczynna lub ładuje się. Żadne środki ochrony lub wykrywania nie są włączone. Otwórz panel nawigacyjny i włącz śledzenie w menu!</string>
+    <string name="status_idle_detail_info">Aplikacja jest bezczynna lub ładuje się. Ochrona i wykrywanie nie są włączone. Włącz wykrywanie.</string>
     <string name="status_ok_detail_info">Nie wykryto żadnych zagrożeń. Twoja sieć jest ciągle sprawdzana zgodnie z ustawieniami.</string>
     <string name="status_medium_detail_info">Ta okolica nie jest bezpieczna: wykryto co najmniej jedną nieznaną stację bazową lub używane jest szyfrowanie słabsze niż A5/3. Wszystkie wiadomości i rozmowy w tym rejonie mogą być przechwycone.</string>
     <string name="status_high_detail_info">Wykryto wrogą aktywność: IMIC lub FBTS aktywnie śledzi użytkowników! Wyjmij baterię z telefoni i unikaj tego miejsca!</string>
@@ -193,7 +193,7 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
 
     <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Płaskie</string>
-    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_sense">Sens</string>
     <string name="ui_icon_white">Białe</string>
     <string name="map_type_terrain">Teren</string>
     <string name="map_type_normal">Zwyczajna</string>
@@ -231,7 +231,7 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
     <string name="alert_threat_detected">UWAGA: Wykryto zagrożenie!</string>
     <string name="alert_femtocell_connection_detected">UWAGA: Wykryto połączenie FemtoCell!</string>
     <string name="alert_silent_sms_detected">UWAGA: Wykryto Silent SMS!</string>
-    <string name="alert_mwi_detected">ALERT: Message Waiting Indicator detected!</string>
+    <string name="alert_mwi_detected">ALERT: Wykryto wskaźnik wyczekiwania wiadomości!</string>
     <string name="alert_silent_wap_sms_detected">ALERT: Wap Push SMS detected!</string>
     <string name="femtocell_only_on_cdma_devices">Aplikacja potrafi wykrywać FemtoCell tylko przez połączenie CDMA.</string>
     <string name="service_state_changed">Zmieniony został stan usługi!</string>
@@ -291,7 +291,8 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
     <string name="typezero_data">Wykryto SMS typu 0!\nSzczegóły: Zobacz podgląd bazy danych.</string>
     <string name="typemwi_title">UWAGA!</string>
     <string name="typemwi_header">Wykryto MWI</string>
-    <string name="typemwi_data">Message Waiting Indicator detected!\nDetails: See Database Viewer.</string>
+    <string name="typemwi_data">Wykryto wskaźnik wyczekiwania wiadomości!
+\nSzczegóły: zobacz Database Viewer.</string>
     <string name="typewap_header">Wap Push Detected</string>
     <string name="typewap_data">Wykryto WAP Push SMS!\nSzczegóły: Zobacz podgląd bazy danych.</string>
 
@@ -376,11 +377,11 @@ STAN ROZWOJU APLIKACJI: ALPHA! "</string>
 
     <string name="unknown">Nieznany</string>
     <string name="buildnumber">Numer Kompilacji: %s</string>
-    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="git_sha">SHA-Hash: %s</string>
     <string name="pref_enable_gps_title">Ustawienia GPS</string>
     <string name="pref_enable_gps_summary">Włącz GPS aby śledzić komórki</string>
     <string name="pref_notification_settings">Ustawienia powiadomień</string>
-    <string name="pref_notification_vibrate_enable_title">Włacz wibracje</string>
+    <string name="pref_notification_vibrate_enable_title">Włącz Wibracje</string>
     <string name="pref_notification_vibrate_enable_summary">Wibruj gdy zmienia się stan powiadomień</string>
     <string name="pref_notification_vibrate_min_level_title">Wibruj na zmianie poziomu zagrożenia</string>
     <string name="pref_notification_vibrate_min_level_summary">Wybierz minimalny poziom zagrożenia dla wibracji</string>
@@ -400,4 +401,11 @@ dodanie \" spowoduje błąd bazy danych "</string>
     <string name="failed_to_add_the_string_to_db">Nie powiodło się dodawanie do bazy danych</string>
     <string name="n_a">N/A</string>
     <string name="needs_location">Potrzebuje lokalizacji</string>
+    <string name="import_cell_towers">Importuj dane CellTowers</string>
+
+    <string name="imporing_celltowers_data">Importowanie danych CellTowers ...
+\nTo może zająć chwilę.</string>
+    <string name="celltowers_data_successfully_imported">Dane CellTowers zostały pomyślnie zaimportowane.</string>
+    <string name="error_importing_celltowers_data">Błąd podczas importowania danych CellTowers.</string>
+    <string name="help_app_import_cell_towers">Importuje bazę danych CellTowers.</string>
     </resources>
