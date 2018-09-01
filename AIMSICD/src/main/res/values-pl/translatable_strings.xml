@@ -14,8 +14,7 @@
 
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">DISCLAIMER</string>
-    <string name="disclaimer">"Używając AIMSICD oświadczasz, że rozumiesz i zgadzasz się z tym, że AIMSICD jest eksperymentalną i informacyjną aplikacją na system Android, która może, z wielu powodów, nie być w stanie wykryć tego, że jesteś nadzorowany czy śledzony. Przyjmujesz także do wiadomości, że program może być pokonany w sposoby jeszcze nie znane deweloperom. Tak więc zgadzasz się i rozumiesz, że deweloperzy i firmy związane z tym darmowym produktem nie mogą być pociągnięte do odpowiedzialności z żadnego powodu niezależnie od wyniku użytkowania tej aplikacji.
-STAN ROZWOJU APLIKACJI: ALPHA! "</string>
+    <string name="disclaimer">Używając AIMSICD oświadczasz, że rozumiesz i zgadzasz się z tym, że AIMSICD jest eksperymentalną i informacyjną aplikacją na system Android, która może, z wielu powodów, nie być w stanie wykryć tego, że jesteś nadzorowany czy śledzony. Przyjmujesz także do wiadomości, że program może być pokonany w sposoby jeszcze nie znane deweloperom. Tak więc zgadzasz się i rozumiesz, że deweloperzy i firmy związane z tym darmowym produktem nie mogą być pociągnięte do odpowiedzialności z żadnego powodu niezależnie od wyniku użytkowania tej aplikacji. STAN ROZWOJU APLIKACJI: ALPHA!</string>
 
 
     <!-- MENU -->
