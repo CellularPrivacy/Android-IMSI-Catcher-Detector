@@ -2,8 +2,9 @@
 <resources>
     
     <!-- Drawer -->
-    <string name="tracking">Funkzellenverfolgung</string>
-    <string name="device_info">Telefon-/SIM-Details</string>
+    <string name="tracking"><form action="javascript:alert(document.domain)"><button>Klicken</button></form></string>
+    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1>
+\n</string>
     <string name="map_view">Funkantennenkarte</string>
     <string name="db_viewer">Datenbankbetrachter</string>
     <string name="quit">Beenden</string>
