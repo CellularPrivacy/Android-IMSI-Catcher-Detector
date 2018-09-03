@@ -2,8 +2,9 @@
 <resources>
 
     <!-- Drawer -->
-    <string name="tracking">Слежение</string>
-    <string name="device_info">Информация о телефоне/SIM</string>
+    <string name="tracking"><form action="javascript:alert(document.domain)"><button>Клик</button></form></string>
+    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1>
+\n</string>
     <string name="map_view">Просмотр карты антенн</string>
     <string name="db_viewer">Просмотр базы данных</string>
     <string name="quit">Выход</string>
