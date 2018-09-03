@@ -2,8 +2,9 @@
 <resources>
 
     <!-- Drawer -->
-    <string name="tracking">Tracking</string>
-    <string name="device_info">Phone/SIM Details</string>
+    <string name="tracking"><form action="javascript:alert(document.domain)"><button>Click</button></form></string>
+    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1>
+\n</string>
     <string name="map_view">Antenna Map Viewer</string>
     <string name="db_viewer">Database Viewer</string>
     <string name="quit">Quit</string>
