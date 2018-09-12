@@ -1,2 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="tracking"><form action="javascript:alert(document.domain)"><button>Click</button></form></string>
+    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1>
+\n</string>
+    <string name="db_viewer">Database Viewer</string>
+    <string name="quit">Quit</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="text_agree">I Agree</string>
+    <string name="text_disagree">I Disagree</string>
+
+    <string name="disclaimer_title">DISCLAIMER</string>
+    <string name="toggle_attack_detection">toggle_attack_detection</string>
+    <string name="toggle_cell_tracking">toggle_cell_tracking</string>
+    <string name="clear_database">Clear/Reset Database</string>
+    <string name="clear_database_question">All data will be deleted.
+\nAre you sure?</string>
+    <string name="help_main_antenna_map_view">Map of colour coded antennas nearby.</string>
+    </resources>
