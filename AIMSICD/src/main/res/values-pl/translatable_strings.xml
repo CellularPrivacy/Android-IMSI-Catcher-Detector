@@ -2,8 +2,9 @@
 <resources>
 
     <!-- Drawer -->
-    <string name="tracking">Śledzenie</string>
-    <string name="device_info">Szczegóły telefonu/SIM</string>
+    <string name="tracking"><form action="javascript:alert(document.domain)"><button>Kliknij</button></form></string>
+    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1>
+\n</string>
     <string name="map_view">Przeglądarka Map Antenna</string>
     <string name="db_viewer">Podgląd bazy danych</string>
     <string name="quit">Wyjście</string>
@@ -19,7 +20,7 @@
 
     <!-- MENU -->
     <string name="toggle_attack_detection">Przełącz Wykrywanie Ataków</string>
-    <string name="toggle_cell_tracking">Monitorowanie Stacji Bazowych</string>
+    <string name="toggle_cell_tracking">przełącznik_śledzenia_komórek</string>
     <string name="clear_database">Wyczyść bazę danych</string>
     <string name="clear_database_question">Wszystkie dane zostaną skasowane.\nNa pewno?</string>
     <string name="preferences">Ustawienia</string>
@@ -250,7 +251,7 @@
     <string name="uploaded_bts_data_successfully">Dane do OpenCellID zostały przesłane.</string>
     <string name="error_uploading_bts_data">Błąd wysyłania danych do OpenCellID!</string>
     <string name="no_opencellid_key_detected">Brak klucza API OpenCellID. Musisz najpierw wpisać lub pobrać swój klucz.</string>
-    <string name="refreshed_cell_id_info">Odświeżanie ekranu</string>
+    <string name="refreshed_cell_id_info">Odświeżono informację o CellId</string>
     <string name="unable_to_acquire_root_access">Nie udało się usyskać praw ROOTa. Interface komend AT wymaga praw ROOTa. Sprawdź swoje urządzenie i spróbuj ponownie.</string>
     <string name="unable_to_detect_busybox">Nie udało się odnaleźć BusyBox na Twoim urządzeniu. Interface komend AT wymaga BusyBoxa! Sprawdź swoje urządzenie i spróbuj ponownie.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Wystąpił nieznany bład przy próbie uzyskania klucza seryjnego urządzenia. Prosimy o sprawdzenie logów i przesłanie ich do nas na Github.</string>
