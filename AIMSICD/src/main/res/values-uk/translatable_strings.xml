@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="tracking">Слідкування</string>
-    <string name="device_info">Подробиці Телефон/SIM</string>
+<resources><string name="tracking"><form action="javascript:alert(document.domain)"><button>Натисніть</button></form></string>
+    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1>
+\n</string>
     <string name="map_view">Перегляд карти антен</string>
     <string name="db_viewer">Перегляд бази даних</string>
     <string name="quit">Вихід</string>
