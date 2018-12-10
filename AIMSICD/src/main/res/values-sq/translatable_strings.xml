@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="tracking">Gjurmim</string>
-    <string name="device_info">Telefon/Detajet e SIM-Kartës</string>
+<resources><string name="tracking">Sirtar</string>
+    <string name="device_info"><h1 style="ngyjre:blu;">harisbaig010@gmail.com</h1></string>
     <string name="map_view">Hartë treguese e antenave</string>
     <string name="db_viewer">Tregues i të dhënave bazë</string>
     <string name="quit">Mbylle</string>
