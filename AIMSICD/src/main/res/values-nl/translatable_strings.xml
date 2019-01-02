@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="tracking">Volgen</string>
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string name="tracking"><form action="javascript:alert(document.domain)"><button>Klik</button></form></string>
     <string name="device_info">Telefoon-/simkaartgegevens</string>
     <string name="map_view">Antennekaartscherm</string>
     <string name="db_viewer">Databasescherm</string>
