@@ -1,6 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="tracking">Rastreo</string>
-    <string name="device_info">Detalles Telefono/SIM</string>
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string name="tracking">&lt;form action=\"javascript:alert(document.domain)\"&gt; &lt;button&gt; clic &lt;/form&gt; &lt;/form&gt;</string>
+    <string name="device_info"><h1 style="color:blue;"> harisbaig010@gmail.com </h1>
+\n</string>
     <string name="db_viewer">Visor de Bases de datos</string>
     <string name="map_view">Mapa de Antenas</string>
     <string name="quit">Salir</string>
@@ -10,11 +11,10 @@
     <string name="text_disagree">No acepto</string>
 
     <string name="disclaimer_title">AVISO</string>
-    <string name="disclaimer">"Al utilizar AIMSICD usted entiende y acepta que AIMSICD es una aplicación experimental e informativa para Android que puede dar error al detectar la vigilancia y el seguimiento por diferentes razones. Usted también entiende que puede evitarse o solucionarse usando otros medios, aún no comprendidos por sus desarrolladores. Así, también acepta y entiende que los desarrolladores y las empresas relacionadas con este producto gratuito, no pueden, bajo ningún concepto, considerarse responsables de ningún resultado o resultados, en función del uso de esta aplicación. ESTADO DE DESARROLLO: ALPHA!
- "</string>
+    <string name="disclaimer">Al utilizar AIMSICD, comprendió y está de acuerdo en que AIMSICD es una aplicación de Android experimental e informativa que puede no detectar la vigilancia y el seguimiento por muchas razones. También entiende que puede ser evadido o derrotado por otros medios, que los desarrolladores aún no entienden. Por lo tanto, también está de acuerdo y entiende que los desarrolladores y las empresas relacionadas con este producto gratuito, de ninguna manera pueden ser responsables de ningún resultado o resultado, dependiendo del uso de esta aplicación. ESTADO DE DESARROLLO: ALFA!</string>
 
-    <string name="toggle_attack_detection">Habilitar Deteccion de Ataque</string>
-    <string name="toggle_cell_tracking">Habilitar Rastreo de Celda</string>
+    <string name="toggle_attack_detection">detección_de_ataque_de_palanca</string>
+    <string name="toggle_cell_tracking">Habilitar_Rastreo_de_Celda</string>
     <string name="clear_database">Limpiar/Resetear Base de Datos</string>
     <string name="clear_database_question">Se borrara toda la informacion\nEsta Seguro?</string>
     <string name="preferences">Opciones</string>
@@ -112,12 +112,12 @@
     <string name="pref_map_type_title">Tipo de Mapa</string>
     <string name="pref_map_type_summ">Mostrar mapa en diferentes estilos</string>
     
-    <string name="cell_id_label">"CID: "</string>
-    <string name="lac_label">"LAC: "</string>
-    <string name="mcc_label">"MCC: "</string>
-    <string name="mnc_label">"MNC: "</string>
-    <string name="pc_label">"PC: "</string>
-    <string name="samples_label">"Muestras: "</string>
+    <string name="cell_id_label">CID:</string>
+    <string name="lac_label">LAC:</string>
+    <string name="mcc_label">MCC:</string>
+    <string name="mnc_label">MNC:</string>
+    <string name="pc_label">PC:</string>
+    <string name="samples_label">Muestras:</string>
     <string name="open_cell_id_label">Datos OpenCellID</string>
     <string name="lat_label">"Lat: "</string>
     <string name="lng_label">"Lon: "</string>
@@ -140,7 +140,7 @@
 
     <string name="title_ocid_key">Llave OpenCellID API</string>
     <string name="message_request_api_key">Pulse OK para solicitar una llave de API de OpenCellID.org. Esto le permitirá descargar sus datos y ver en el mapa. También le permitirá cargar datos de la celdas. Tenga en cuenta que si no sube datos de celda dentro de 20 días, su clave de API puede llegar a ser inactiva.</string>
-    <string name="ocid_api_error">"Error al obtener clave: "</string>
+    <string name="ocid_api_error">Error al obtener clave:</string>
     <string name="ocid_api_success">Nueva llave API Guardada.</string>
 
     <string name="title_debug_logs">Registros de depuración</string>
@@ -289,7 +289,7 @@
     <string name="measured_signal_strengths">Intensidades de senal medidas</string>
 
     <string name="at_command_response_looking">***Buscando Dispositivos AT Seriales...\n</string>
-    <string name="at_command_response_found">"Encontrados: "</string>
+    <string name="at_command_response_found">Encontrados:</string>
     <string name="at_command_response_setup_complete">*** Instalación completada ***\n</string>
 
     <string name="currently_connected_bts">BTS actualmente conectado</string>
@@ -329,4 +329,11 @@ Las comillas dobles \" provocan erro en la base de datos "</string>
     <string name="download_timed_out">Tiempo de espera sobrepasado para API OpenCell ID. Intentar nuevamente?</string>
     <string name="n_a">N/D</string>
     <string name="buildnumber">Número de compilación: %s</string>
-    </resources>
+    <string name="import_cell_towers">Importar datos de CellTowers</string>
+    <string name="imporing_celltowers_data">Importando datos de CellTowers…
+\nEsto puede tardar un rato.</string>
+    <string name="celltowers_data_successfully_imported">Los datos de CellTowers se importaron exitosamente.</string>
+    <string name="error_importing_celltowers_data">Error al importar datos de CellTowers.</string>
+    <string name="help_app_import_cell_towers">Importa la base de datos CellTowers.</string>
+    <string name="needs_location">Necesita ubicación</string>
+</resources>
