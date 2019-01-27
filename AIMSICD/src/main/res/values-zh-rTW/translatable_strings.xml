@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources><string name="tracking"><form action="javascript:alert(document.domain)"><button>Click</button></form></string>
+    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1> 
+\n</string>
+    <string name="quit">離開</string>
+    <string name="text_ok">確定</string>
+    <string name="text_cancel">取消</string>
+    <string name="text_agree">我同意</string>
+    <string name="text_disagree">我不同意</string>
+    <string name="disclaimer_title">免責聲明</string>
+    <string name="clear_database">清除/重設資料庫</string>
+</resources>
