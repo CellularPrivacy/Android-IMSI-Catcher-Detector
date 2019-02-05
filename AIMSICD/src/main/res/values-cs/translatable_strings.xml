@@ -278,7 +278,7 @@
     <string name="failed_to_add_the_string_to_db">Nepodařilo se přidat řetězec do databáze</string>
     <string name="n_a">Nelze aplikovat</string>
     <string name="buildnumber">Verze sestavení: %s</string>
-    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="git_sha">Git SHA hash: %s</string>
     <string name="pref_enable_gps_title">Nastavení GPS</string>
     <string name="status_medium_detail_info">Oblast s nebezpečnými službami: nejméně 1 nová či neznámá BTS je v okolí v provozu, nebo používá šifrovací algoritmus se slabým šifrovacím algoritmem, který je slabší než A5/3. Všechny telefonní hovory/SMS v této oblasti mohou být zachyceny a zaznamenány. Rychle opusťte tuto oblast.</string>
     <string name="status_high_detail_info">Zaznamenána aktivita nepřátelské služby: IMSI-Catcher (IMSIC) nebo falešná BTS (FBTS) je aktivní a provádí sledování uživatelů. V této oblasti probíhá aktivní skenování. V tomto místě se vyhněte jakékoli aktivitě, zejména v případě, že probíhají politické nepokoje. Vyjměte baterie a SIM karty!</string>
