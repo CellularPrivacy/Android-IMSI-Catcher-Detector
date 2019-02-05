@@ -1,7 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources><string name="tracking">Sledování</string>
-    <string name="device_info">\"&gt;&lt;img src=x onmouseover =confirm(0)&gt;
-\n&lt;/textarea&gt;&gt;\'&gt;\"&gt;&lt;svg/onload=prompt(\"XSS-by-panchal\")&gt;</string>
+    <string name="device_info">Podrobnosti telefonu/SIM</string>
     <string name="db_viewer">Prohlížení databáze</string>
     <string name="map_view">Prohlížení mapy antén</string>
     <string name="quit">Ukončit</string>
@@ -294,18 +293,18 @@
     <string name="map_type_terrain">Terén</string>
     <string name="pref_refresh_manual">Manuálni</string>
     <string name="pref_refresh_automatic">Automaticky</string>
-    <string name="pref_refresh_2s">2 sec</string>
-    <string name="pref_refresh_5s">5 sec</string>
-    <string name="pref_refresh_10s">10 sec</string>
-    <string name="pref_refresh_25s">25 sec</string>
-    <string name="pref_refresh_45s">45 sec</string>
+    <string name="pref_refresh_2s">2 s</string>
+    <string name="pref_refresh_5s">5 s</string>
+    <string name="pref_refresh_10s">10 s</string>
+    <string name="pref_refresh_25s">25 s</string>
+    <string name="pref_refresh_45s">45 s</string>
     <string name="pref_refresh_1_min">1 min</string>
     <string name="pref_refresh_5_min">5 min</string>
-    <string name="timeout_spinner_2_sec">2 sec</string>
-    <string name="timeout_spinner_5_sec">5 sec</string>
-    <string name="timeout_spinner_10_sec">10 sec</string>
-    <string name="timeout_spinner_20_sec">20 sec</string>
-    <string name="timeout_spinner_30_sec">30 sec</string>
+    <string name="timeout_spinner_2_sec">2 s</string>
+    <string name="timeout_spinner_5_sec">5 s</string>
+    <string name="timeout_spinner_10_sec">10 s</string>
+    <string name="timeout_spinner_20_sec">20 s</string>
+    <string name="timeout_spinner_30_sec">30 s</string>
     <string name="timeout_spinner_10_min">10 min</string>
     <string name="main">Hlavní</string>
     <string name="monitoring_cell_information">Informace o monitorování buněk.</string>
