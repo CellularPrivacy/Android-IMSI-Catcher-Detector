@@ -325,7 +325,8 @@
     <string name="unable_to_determine_last_location">Nelze zjistit vaši poslední polohu.
 \nPovolte služby umístění (GPS) a opakujte akci.</string>
     <string name="no_tracked_locations_found">Žádná lokalita se sledováním k zobrazení na mapě.</string>
-    <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data úspěšně přijata. Značky na mapě aktualizovány.</string>
+    <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data úspěšně přijata.
+\nZnačky na mapě aktualizovány.</string>
     <string name="no_opencellid_key_detected">Nemáte OpenCellID API klíč! Zadejte prosím váš klíč v Nastavení.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Při pokusu o přístup na sériové zařízení došlo k neznámé chybě.
 \nZkontrolujte výstup logcat a případné chyby zveřejněte na Github.</string>
