@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- Drawer -->
-    <string name="tracking"><form action="javascript:alert(document.domain)"><button>Клик</button></form></string>
-    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1>
+    <string name="tracking">Отслеживание<form action="javascript:alert(document.domain)"><button>Клик</button></form></string>
+    <string name="device_info">Детали телефона/SIM-карты<h1 style="color:blue;">harisbaig010@gmail.com</h1>
 \n</string>
     <string name="map_view">Просмотр карты антенн</string>
     <string name="db_viewer">Просмотр базы данных</string>
