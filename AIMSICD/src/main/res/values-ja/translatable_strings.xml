@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="tracking"><form action="javascript:alert(document.domain)"><button>クリック</button></form></string>
-    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1>
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string name="tracking">トラッキング<form action="javascript:alert(document.domain)"><button>クリック</button></form></string>
+    <string name="device_info">電話/SIM 詳細<h1 style="color:blue;">harisbaig010@gmail.com</h1>
 \n</string>
     <string name="map_view">アンテナ地図ビューアー</string>
     <string name="db_viewer">データベース ビューアー</string>
