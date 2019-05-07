@@ -1,6 +1,10 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="tracking"><form action="javascript:alert(document.domain)"><button>Натисніть</button></form></string>
-    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tracking">Відстежування<form action="javascript:alert(document.domain)">
+            <button>Натисніть</button>
+        </form>
+    </string>
+    <string name="device_info">Деталі телефону/SIM картки<h1 style="color:blue;">harisbaig010@gmail.com</h1> 
 \n</string>
     <string name="map_view">Перегляд карти антен</string>
     <string name="db_viewer">Перегляд бази даних</string>
@@ -9,7 +13,6 @@
     <string name="text_cancel">Скасувати</string>
     <string name="text_agree">Я погоджуюся</string>
     <string name="text_disagree">Я не погоджуюсь</string>
-
     <string name="disclaimer_title">ВІДМОВА ВІД ВІДПОВІДАЛЬНОСТІ</string>
     <string name="toggle_attack_detection">toggle_attack_detection</string>
     <string name="toggle_cell_tracking">toggle_cell_tracking</string>
@@ -21,7 +24,6 @@
     <string name="debugging">Зневадження</string>
     <string name="no_network_connection_title">Відсутнє з\'єднання з інтернетом</string>
     <string name="get_opencellid">Завантажити дані базових станцій</string>
-
     <string name="device_info_title">Інформація про пристрій</string>
     <string name="sim_info_title">Інформація про SIM</string>
     <string name="network_info">Інформація про мережу</string>
@@ -41,9 +43,7 @@
     <string name="network_lte_timing_advance">TA (LTE):</string>
     <string name="button_refresh">Оновити</string>
     <string name="network_psc">PSC:</string>
-
     <string name="upload_bts">Вивантажити дані базових станцій</string>
-
     <string name="about_aimsicd">Про AIMSICD</string>
     <string name="app_version">Версія: %s</string>
     <string name="about_github">AIMSICD на GitHub</string>
@@ -53,7 +53,6 @@
     <string name="network_netid">ID мережі:</string>
     <string name="network_sysid">ID системи:</string>
     <string name="network_baseid">ID базової станції:</string>
-
     <string name="pref_system_title">Системні налаштування</string>
     <string name="pref_autostart_title">Автоматичний запуск</string>
     <string name="pref_autostart_summ">Автоматичний запуск сервісу під час завантаження</string>
@@ -71,7 +70,6 @@
     <string name="pref_map_title">Налаштування перегляду карти</string>
     <string name="pref_map_type_title">Тип карти</string>
     <string name="pref_map_type_summ">Показувати карту в різних стилях</string>
-    
     <string name="cell_id_label">CID:</string>
     <string name="lac_label">LAC:</string>
     <string name="mcc_label">MCC:</string>
@@ -81,9 +79,7 @@
     <string name="open_cell_id_label">Дані OpenCellID</string>
     <string name="lat_label">"Широта: "</string>
     <string name="lng_label">"Довгота: "</string>
-
     <string name="table_names_prompt">Оберіть таблицю</string>
-
     <string name="response_label">Відповідь:</string>
     <string name="execute_at">Виконання</string>
     <string name="serial_device_spinner_title">Виявлені пристрої:</string>
@@ -92,16 +88,12 @@
     <string name="title_ocid_key">Ключ OpenCellID API</string>
     <string name="ocid_api_error">Трапилась помилка під час отримання ключа:</string>
     <string name="ocid_api_success">Збережено новий ключ API.</string>
-
     <string name="btn_clear_logs">Очистити</string>
     <string name="btn_copy_to_clipboard">Копіювати</string>
     <string name="btn_stop_logs">Зупинити</string>
     <string name="btn_start_logs">Почати</string>
-
     <string name="disclaimer">При використанні AIMSICD ви розумієте та погоджуєтесь, що AIMSICD є експериментальним та інформаційним Android додатком (далі ПЗ), яке може і не виявити стеження та відслідковування за різними причинами. Ви також розумієте, що додаток можна обійти чи ввести в оману за допомогою інших засобів, які ще не зрозумілі розробникам. Таким чином, ви також погоджуєтесь і розумієте, що розробники та компанії, які пов\'язані з даним ПЗ ні в якому разі не можуть нести відповідальність за результати роботи ПЗ чи результати, які залежать від використання даного ПЗ, а також не несуть ніякої відповідальності за інші збитки (включаючи, без обмежень, у вигляді недоотриманого прибутку, призупинення ділової активності, втрату ділової інформації та інші конкретні збитки), які можуть статися через використання чи неможливість використання ПЗ, також в тому випадку, якщо розробники та компанії, пов\'язані з цим ПЗ, були попереджені про можливість такого збитку. СТАН РОЗРОБКИ: ALPHA!</string>
-
     <string name="no_network_connection_message">Не вдається завантажити OpenCellID дані без інтернету, будь ласка, з\'єднайтеся із мережею для передачі даних!</string>
-
     <string name="neighboring_cells_num_title">Підсумок:</string>
     <string name="network_lac">Код місце-розташування:</string>
     <string name="about_contribute">ВНЕСОК</string>
@@ -112,13 +104,10 @@
     <string name="status_medium_about_desc">Небезпечна зона обслуговування. Залиште її!</string>
     <string name="status_skull_about_desc">Тікай! Маніпулюють телефоном!</string>
     <string name="about_desc_icon_title">Натисніть на піктограму стану для отримання більш детальної інформації:</string>
-
     <string name="location_error_title">Визначення координат вимкнуто</string>
     <string name="location_error_message">Ви не можете відслідковувати данні GPS без сервісу визначення координат. Увімкнути його зараз?</string>
-
     <string name="pref_persistservice_summ">Сервіс буде продовжувати роботу після виходу з додатку (зніміть прапорець «закрити повністю»)</string>
     <string name="getting_ocid_key">Отримання OpenCellID API ключа...</string>
-
     <string name="deleted">Видалено</string>
     <string name="failed_to_delete">Не вдалося видалити</string>
     <string name="neighboring_cells_title">Сусідні стільники</string>
@@ -139,19 +128,15 @@
     <string name="pref_enable_cell_monitoring_summ">Увімкнути автоматичний моніторинг стільників</string>
     <string name="pref_request_ocid_key">Запит ключа OpenCellID API</string>
     <string name="pref_ocid_requestkey_summary">Запит API ключа для доступу до OpenCellID даних</string>
-
     <string name="at_command_title">Командний інтерфейс AT</string>
     <string name="command_hint">Введіть AT команду тут.</string>
-
     <string name="sms_title">Виявлено безшумну SMS</string>
     <string name="sms_message">Безшумну SMS виявлено!\nПодробиці: Дивіться в базі даних.</string>
     <string name="table_contains_no_data">Таблиця не містить жодних даних для показу.</string>
-
     <string name="title_debug_logs">Звіт зневадження</string>
     <string name="msg_copied_to_clipboard">Звіти скопійовано до буферу обміну.</string>
     <string name="open_cell_id_button_cancel">Скасувати</string>
     <string name="open_cell_id_button_ok">Гаразд</string>
-
     <string name="pref_notification_vibrate_enable_title">Увімкнути вібрацію</string>
     <string name="pref_notification_vibrate_enable_summary">Вібрувати при зміні сповіщення</string>
     <string name="serial_device_prompt">Оберіть послідовний пристрій</string>
@@ -217,7 +202,6 @@
     <string name="notification_vibrate_ok">Гаразд</string>
     <string name="notification_vibrate_medium">Середній</string>
     <string name="notification_vibrate_danger">Небезпечний</string>
-    
     <string name="ui_icon_flat">Плоский</string>
     <string name="ui_icon_sense">Відчуття</string>
     <string name="status_idle_description">Статус: Очікування.</string>
@@ -245,18 +229,14 @@
     <string name="status_high">Високий</string>
     <string name="status_danger">Небезпечний</string>
     <string name="status_skull">Біжи!</string>
-
     <string name="title_activity_advanced_user">Видалити виявлену SMS</string>
-
     <string name="adv_user_pref_header">Розширені налаштування</string>
     <string name="adv_user_pref_launch">Рядки виявлення</string>
     <string name="adv_user_pref_sms_launch">Видалити SMS</string>
     <string name="adv_user_pref_summary">Вставити чи видалити рядки виявлення</string>
     <string name="adv_user_pref_sms_summary">Видалити виявлену SMS</string>
-   
     <string name="adv_user_root_title">Увімкнути виявлення SMS</string>
     <string name="adv_user_root_sum">Аби увімкнути виявлення потрібні root права</string>
-
     <string name="detection_strings">Рядки виявлення</string>
     <string name="typezero_title">УВАГА!</string>
     <string name="typezero_header">Виявлено безшумну SMS</string>
@@ -266,10 +246,7 @@
     <string name="typemwi_data">Виявлено індикатор очікування повідомлення (MWI)!\nПодробиці: Дивіться в переглядачі бази даних.</string>
     <string name="typewap_header">Виявлено WAP Push</string>
     <string name="typewap_data">Виявлено WAP Push SMS повідомлення!\nПодробиці: Дивіться в переглядачі бази даних.</string>
-
-
     <string name="help_settings_reset_db">Очистити чи скинути всі чи деякі таблиці бази даних.</string>
-
     <string name="help_app_add_get_ocid_api_key">Отримати ключ API для використання бази даних OpenCellID, можливості завантажувати та вивантажувати дані…</string>
     <string name="help_app_about">Піктограми стану та пояснення проекту.</string>
     <string name="help_app_download_local_bts">Завантажити базу даних OpenCellID.</string>
@@ -283,20 +260,16 @@
     <string name="silent_sms">Безшумна SMS</string>
     <string name="eventlog">Звіт подій</string>
     <string name="measured_signal_strengths">Виміряна сила сигналу</string>
-
     <string name="at_command_response_found">Знайдено:</string>
     <string name="currently_connected_bts">Поточні під\'єднані BTS</string>
     <string name="well_known_encrypted_bts">Знайомі шифровані базові станції (BTS)</string>
     <string name="unknown_or_insecure_bts">Не відомі чи небезпечні базові станції (BTS)</string>
     <string name="new_or_recently_added_bts">Нові чи нещодавно додані базові станції (BTS)</string>
-
     <string name="delete_database_msg_success">Базу даних видалено та успішно створено заново.\nБудь ласка, перезавантажте додаток, аби очистити старі значення з пам\'яті.</string>
-
     <string name="invalid_key_try_later">Не правильний ключ OpenCellID, спробуйте ще раз.</string>
     <string name="double_quote_will_cause_db_error">"Рядок не додано\n \" подвійна лапка призведе до помилки в базі даних "</string>
     <string name="the_string_was_added_to_db">Рядок додано до бази даних</string>
     <string name="failed_to_add_the_string_to_db">Не вдалося додати рядок до бази даних</string>
-
     <string name="alert_mwi_detected">ПОПЕРЕДЖЕННЯ: Виявлено індикатор очікування повідомлення!</string>
     <string name="no_tracked_locations_found">Не знайдено позицій відстежування аби показати їх на карті.</string>
     <string name="adv_user_sms_info">Це меню лише для досвідчених користувачів!\nДля видалення виявленого SMS в переліку використовуйте довге утримання на ньому.</string>
@@ -304,15 +277,12 @@
     <string name="help_main_acd">Показати детальне порівняння поточного під\'єднаного стільника із знайденими даними з OpenCellID (якщо такі є) та підсвітити різницю.</string>
     <string name="help_tracking_toggle_attack_detection">Почати/зупинити виявлення атак та збирання подробиць стільників до внутрішньої бази даних.</string>
     <string name="help_tracking_toggle_cell_tracking">Почати відслідковувати стільники для показу на карті антен і можливого подальшого вивантаження даних до OpenCellID.</string>
-
     <string name="waiting_for_location">Очікування позиції …</string>
     <string name="at_command_response_looking">*** Пошук послідовних AT пристроїв…\n</string>
     <string name="at_command_response_setup_complete">*** Налаштування завершено ***\n</string>
-
     <string name="about_credits">Подяки</string>
     <string name="status_danger_detail_info">Виявлено вороже відслідковування: FBTS чи IMSIC активно відслідковують вас та запобігають підключенню до звичайної зашифрованої мережі. Якщо ви знаходитесь в небезпеці, зламайте та викиньте ваш телефон та SIM, опісля повідомте, що ваш телефон нещодавно було викрадено.</string>
     <string name="adv_user_info">Це меню лише для досвідчених користувачів!\n\nБудь ласка, не вставляйте аби що в рядок, оскільки це може зіпсувати систему виявлення.\n\nАби додати рядок, оберіть тип SMS із спадаючого меню, введіт рядок виявлення та натисніть «вставити».\n\nАби видалити запис, використовуйте довге утримання на необхідному елементі.</string>
-    
     <string name="status_high_about_desc">Активне відслідковування поряд з вами!</string>
     <string name="pref_enable_gps_title">Налаштування GPS</string>
     <string name="pref_enable_gps_summary">Увімкнути GPS для відслідковування стільника</string>
@@ -320,20 +290,17 @@
     <string name="help_main_database_viewer">Перегляд таблиць бази даних.</string>
     <string name="help_main_antenna_map_view">Карта з кольоровими позначками сусідніх антен.</string>
     <string name="help_main_at_command_interface">Інтерфейс дозволяє надсилати AT команди до процесора (Потребує прав ROOT).</string>
-
     <string name="help_settings_preferences">Налаштування AIMSICD, такі як правила захисту, час опитування та поведінку служби.</string>
     <string name="n_a">Н/Д</string>
     <string name="unknown">Невідомий</string>
-
     <string name="database_settings">База даних</string>
     <string name="download_timed_out">Вийшов час запиту OpenCellID API. Спробувати пізніше ще раз?</string>
     <string name="cell_doesnt_provide_any_neighbors">BTS не надає сусідніх стільниць!</string>
     <string name="import_cell_towers">Імпорт даних по вишках</string>
-
     <string name="imporing_celltowers_data">Імпорт даних по вишках...
 Це займе трохи часу.</string>
     <string name="celltowers_data_successfully_imported">Дані успішно імпортовано.</string>
     <string name="error_importing_celltowers_data">Помилка імпортування даних.</string>
     <string name="help_app_import_cell_towers">Імпортування бази даних по вишках.</string>
     <string name="needs_location">Потребує позиціювання</string>
-    </resources>
+</resources>
