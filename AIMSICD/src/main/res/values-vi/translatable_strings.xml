@@ -14,8 +14,8 @@
     <string name="text_agree">Tôi đồng ý</string>
     <string name="text_disagree">Tôi không đồng ý</string>
     <string name="disclaimer_title">MIỄN TRỪ TRÁCH NHIỆM</string>
-    <string name="toggle_attack_detection">Phát hiện sự tấn công</string>
-    <string name="toggle_cell_tracking">Theo dõi sóng di động</string>
+    <string name="toggle_attack_detection">Bật phát hiện tấn công</string>
+    <string name="toggle_cell_tracking">Bật theo dõi sóng di động</string>
     <string name="clear_database">Xoá/cài lại CSDL</string>
     <string name="clear_database_question">Tất cả dữ liệu sẽ bị xóa.\nBạn có chắc không?</string>
     <string name="preferences">Tuỳ chỉnh</string>
@@ -31,7 +31,7 @@
     <string name="cell_info_title">Các trạm sóng lân cận</string>
     <string name="neighboring_cells_title">Các máy di động lân cận</string>
     <string name="ciphering_indicator_title">Bộ chỉ báo viết mã</string>
-    <string name="disclaimer">"Khi sử dụng AIMSICD, bạn hiểu và chấp nhận rằng AIMSICD là một ứng dụng Android thực nghiệm cung cấp nhiều thông tin hữu ích và nó có thể thất bại trong việc phát hiện sự giám sát và theo dõi vì nhiều lý do khác nhau. Bạn cũng hiểu rằng nó có thể bị phá rối hoặc huỷ hoại bởi các công cụ khác mà nhà phát triển chưa hiểu rõ. Vì vậy, bạn cũng chấp nhận và hiểu rằng các công ty và nhà phát triển liên quan đến sản phẩm miễn phí này, trong mọi trường hợp, sẽ không phải chịu trách nhiệm cho bất kỳ hậu quả nào do việc sử dụng phần mềm này gây ra. TRẠNG THÁI: ALPHA! "</string>
+    <string name="disclaimer">Khi sử dụng AIMSICD, bạn hiểu và chấp nhận rằng AIMSICD là một ứng dụng Android thực nghiệm cung cấp nhiều thông tin hữu ích và nó có thể thất bại trong việc phát hiện sự giám sát và theo dõi vì nhiều lý do khác nhau. Bạn cũng hiểu rằng nó có thể bị phá rối hoặc huỷ hoại bởi các công cụ khác mà nhà phát triển chưa hiểu rõ. Vì vậy, bạn cũng chấp nhận và hiểu rằng các công ty và nhà phát triển liên quan đến sản phẩm miễn phí này, trong mọi trường hợp, sẽ không phải chịu trách nhiệm cho bất kỳ hậu quả nào do việc sử dụng phần mềm này gây ra. TRẠNG THÁI PHÁT TRIỂN: ALPHA!</string>
     <string name="neighboring_cells_num_title">Tổng cộng:</string>
     <string name="sim_country">Quốc gia:</string>
     <string name="sim_operator_id">ID nhà điều hành:</string>
@@ -110,12 +110,12 @@
     <string name="pref_map_title">Tuỳ chỉnh trình xem bản đồ</string>
     <string name="pref_map_type_title">Loại bản đồ</string>
     <string name="pref_map_type_summ">Hiển thị bản đồ theo phong cách khác nhau</string>
-    <string name="cell_id_label">"CID: "</string>
-    <string name="lac_label">"LAC: "</string>
-    <string name="mcc_label">"MCC: "</string>
-    <string name="mnc_label">"MNC: "</string>
-    <string name="pc_label">"PC: "</string>
-    <string name="samples_label">"Mẫu: "</string>
+    <string name="cell_id_label">CID:</string>
+    <string name="lac_label">LAC:</string>
+    <string name="mcc_label">MCC:</string>
+    <string name="mnc_label">MNC:</string>
+    <string name="pc_label">PC:</string>
+    <string name="samples_label">Mẫu:</string>
     <string name="open_cell_id_label">Dữ liệu OpenCellID</string>
     <string name="lat_label">"Vĩ độ: "</string>
     <string name="lng_label">"Kinh độ: "</string>
@@ -134,7 +134,7 @@
     <string name="table_contains_no_data">Bảng không có dữ liệu nào để hiển thị.</string>
     <string name="title_ocid_key">Khoá API OpenCellID</string>
     <string name="message_request_api_key">Nhấn OK để yêu cầu một khóa API từ OpenCellID.org. Nó sẽ cho phép bạn tải xuống dữ liệu của họ và xem nó trong bản đồ. Nó cũng sẽ cho phép bạn tải lên dữ liệu di động. Lưu ý rằng nếu bạn không tải lên dữ liệu di động trong vòng 20 ngày, khóa API của bạn có thể trở nên vô hiệu.</string>
-    <string name="ocid_api_error">"Lỗi khi nhận khoá: "</string>
+    <string name="ocid_api_error">Lỗi khi nhận khoá:</string>
     <string name="ocid_api_success">Đã lưu khóa API mới.</string>
     <string name="title_debug_logs">Dò lỗi nhật ký</string>
     <string name="btn_clear_logs">Xoá</string>
@@ -143,7 +143,7 @@
     <string name="btn_stop_logs">Dừng</string>
     <string name="btn_start_logs">Bắt đầu</string>
     <string name="title_activity_about_pop_up">GIẢI THÍCH CHI TIẾT</string>
-    <string name="status_idle_detail_info">Ứng dụng đang nghỉ hoặc đang tải. Chưa kích hoạt cơ chế phát hiện và bảo vệ nào. Xin bật cơ chế phát hiện tấn công!</string>
+    <string name="status_idle_detail_info">Ứng dụng đang nghỉ hoặc đang tải. Chưa kích hoạt cơ chế phát hiện hay bảo vệ nào. Xin bật cơ chế phát hiện.</string>
     <string name="status_ok_detail_info">Không phát hiện mối đe doạ nào. Mạng của bạn đang được kiểm tra liên tục dựa trên các thiết lập phát hiện đã bật.</string>
     <string name="status_medium_detail_info">Khu vực dịch vụ không bảo mật: Có ít nhất 1 BTS mới hoặc không xác định đang hoạt động trong vùng lân cận này, hoặc đang sử dụng thuật toán mã hoá kém bảo mật (đã bị phá) thấp hơn A5/3. Bất kỳ cuộc gọi/SMS nào thực hiện trong khu vực này có thể bị chặn và ghi lại. Hãy rời khỏi đây ngay.</string>
     <string name="status_high_detail_info">Đã phát hiện các hoạt động dịch vụ nguy hiểm: Một IMSI-Catcher (IMSIC) hoặc BTS giả (FBTS) đang theo dõi người dùng. Có hoạt động quét diễn ra trong khu vực. Bạn nên tránh xa nơi này, đặc biệt là khi tại đây có bất ổn chính trị. Hãy tháo pin hoặc tắt điện thoại!</string>
@@ -277,7 +277,7 @@
     <string name="eventlog">Lịch sử sự kiện</string>
     <string name="measured_signal_strengths">Cường độ tín hiệu đã đo</string>
     <string name="at_command_response_looking">*** Đang tìm các thiết bị nối tiếp AT...\n</string>
-    <string name="at_command_response_found">"Tìm thấy: "</string>
+    <string name="at_command_response_found">Tìm thấy:</string>
     <string name="at_command_response_setup_complete">*** Hoàn tất cài đặt ***\n</string>
     <string name="currently_connected_bts">BTS hiện đã kết nối</string>
     <string name="well_known_encrypted_bts">BTS được mã hóa phổ biến</string>
@@ -296,4 +296,11 @@
     <string name="database_settings">Cơ sở dữ liệu</string>
     <string name="download_timed_out">Yêu cầu OpenCellID API đã quá thời gian chờ. Thử lại sau?</string>
     <string name="cell_doesnt_provide_any_neighbors">BTS không cung cấp thông tin các trạm sóng lân cận!</string>
+    <string name="import_cell_towers">Nhập dữ liệu từ Tháp Sóng</string>
+    <string name="imporing_celltowers_data">Đang nhập dữ liệu từ Tháp Sóng...
+\nĐiều này có thể mất một lúc.</string>
+    <string name="celltowers_data_successfully_imported">Dữ liệu từ Tháp Sóng đã được nhập thành công.</string>
+    <string name="error_importing_celltowers_data">Lỗi nhập dữ liệu từ Tháp Sóng.</string>
+    <string name="help_app_import_cell_towers">Nhập cơ sở dữ liệu từ Tháp Sóng.</string>
+    <string name="needs_location">Cần vị trí</string>
 </resources>
