@@ -1,6 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="tracking">Urmarire</string>
-    <string name="device_info">Detalii Telefon/SIM</string>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tracking">Urmarire</string>
+    <string name="device_info">Detalii Telefon/SIM 
+\n</string>
     <string name="map_view">Vizualizare Harta Antenelor</string>
     <string name="db_viewer">Vizualizator Baza de Date</string>
     <string name="quit">Renuntare</string>
@@ -8,10 +10,8 @@
     <string name="text_cancel">Anulare</string>
     <string name="text_agree">De acord</string>
     <string name="text_disagree">Nu sunt de acord</string>
-
     <string name="disclaimer_title">Act de Renuntare</string>
     <string name="disclaimer">Prin utilizarea AIMSICD ati inteles si sunteti de acord ca AIMSICD este o aplicatie Android experimentala si informativa care poate esua sa detecteze supravegherea și urmarirea din mai multe motive. De asemenea, intelegeti ca metodele pot fi eludate sau infrante prin alte mijloace, care nu au fost inca intelese de dezvoltatori. De asemenea, sunteti de acord și intelegeti ca dezvoltatorii și companiile legate de acest produs gratuit nu pot fi trasi la raspundere pentru niciun rezultat sau rezultate, indiferent de utilizarea acestei aplicatii. STATUSUL DE DEZVOLTARE: ALPHA!</string>
-
     <string name="toggle_attack_detection">Detectarea Atacului</string>
     <string name="toggle_cell_tracking">comutează_urmărirea_celulelor</string>
     <string name="clear_database">Sterge/Reseteaza Baza de Date</string>
@@ -23,11 +23,8 @@
     <string name="debugging">Depanare</string>
     <string name="no_network_connection_title">Fara conexiune la Internet</string>
     <string name="no_network_connection_message">Imposibil de descarcat datele OpenCellID fara conexiune la Internet, te rog activeaza conexiunea de date!</string>
-
     <string name="get_opencellid">Descarca Datele BTS</string>
-
     <string name="import_cell_towers">Importa Datele Turnurilor Celulare</string>
-
     <string name="device_info_title">Informatii despre Dispozitiv</string>
     <string name="sim_info_title">Informatii despre SIM</string>
     <string name="network_info">Informatii despre Retea</string>
@@ -56,9 +53,7 @@
     <string name="drawer_open">Deschide Sectorul de Navigare</string>
     <string name="drawer_close">Inchide Sectorul de Navigare</string>
     <string name="network_psc">PSC:</string>
-
     <string name="upload_bts">Incarca Datele BTS</string>
-
     <string name="about_aimsicd">Despre AIMSICD</string>
     <string name="app_version">Versiune: %s</string>
     <string name="buildnumber">Numarul Constructiei: %s</string>
@@ -79,14 +74,11 @@
     <string name="status_medium_about_desc">Zona cu Servicii Nesecurizate. Paraseste-o !</string>
     <string name="status_skull_about_desc">FUGI! Receptor manipulat!</string>
     <string name="about_desc_icon_title">Atinge Statusul Iconitei de mai jos pentru Informatii detaliate:</string>
-
     <string name="network_netid">ID Retea:</string>
     <string name="network_sysid">ID Sistem:</string>
     <string name="network_baseid">ID Statie de Baza:</string>
-
     <string name="location_error_title">Servicii de Localizare Dezactivate</string>
     <string name="location_error_message">Nu se pot urmari datele GPS fara activarea Serviciilor de Localizare. Le activezi acum?</string>
-
     <string name="pref_enable_gps_title">Setari GPS</string>
     <string name="pref_enable_gps_summary">Activati GPS pentru Urmarirea Celulelor</string>
     <string name="pref_system_title">Setarile Sistemului</string>
@@ -115,11 +107,9 @@
     <string name="pref_enable_cell_monitoring_summ">Activeaza Monitorizarea Automata a Celulelor</string>
     <string name="pref_request_ocid_key">Solicita Cheia API OpenCellID</string>
     <string name="pref_ocid_requestkey_summary">Solicita Cheia API OpenCellID pentru accesul la date</string>
-
     <string name="pref_map_title">Preferinte Aspect Harta</string>
     <string name="pref_map_type_title">Tipul Hartii</string>
     <string name="pref_map_type_summ">Afiseaza Harta in diferite stiluri</string>
-    
     <string name="cell_id_label">CID:</string>
     <string name="lac_label">LAC:</string>
     <string name="mcc_label">MCC:</string>
@@ -129,7 +119,6 @@
     <string name="open_cell_id_label">Date OpenCellID</string>
     <string name="lat_label">"Latitudine: "</string>
     <string name="lng_label">"Longitudine: "</string>
-
     <string name="table_names_prompt">Selecteaza Tabel</string>
     <string name="at_command_title">Interfata Comanada AT</string>
     <string name="response_label">Raspuns:</string>
@@ -140,24 +129,20 @@
     <string name="timeout_spinner_title">Timp de asteptare:</string>
     <string name="timeout_spinner_prompt">Selecteaza Timp de asteptare</string>
     <string name="command_hint">Introduceti comanda AT aici.</string>
-
     <string name="sms_title">SMS Silentios Detectat</string>
     <string name="sms_message">Mesaj SMS Silentios detectat
 \nDetalii: Vezi Vizualizatorul Bazei de Date.</string>
     <string name="table_contains_no_data">Tabelul nu contine date afisate.</string>
-
     <string name="title_ocid_key">Cheia API OpenCellID</string>
     <string name="message_request_api_key">Apasa pe OK pentru a solicita o cheie API de la OpenCellID.org. Acest lucru iti va permite sa descarci datele si sa le vizualizezi pe harta. De asemenea, iti va permite sa incarci datele despre celule. Retine ca daca nu incarci date despre celule in 20 de zile, cheia ta API poate deveni inactiva.</string>
     <string name="ocid_api_error">Eroare la obtinerea cheii:</string>
     <string name="ocid_api_success">S-a salvat noua cheie API.</string>
-
     <string name="title_debug_logs">Inregistrari Depanare</string>
     <string name="btn_clear_logs">Sterge</string>
     <string name="btn_copy_to_clipboard">Copiaza</string>
     <string name="msg_copied_to_clipboard">Inregistrari copiate in clipboard.</string>
     <string name="btn_stop_logs">Stop</string>
     <string name="btn_start_logs">Porneste</string>
-
     <string name="title_activity_about_pop_up">EXPLICATII DETALIATE</string>
     <string name="status_idle_detail_info">Aplicatia este inactiva sau se incarca. Nu sunt activate masurile de protectie sau detectare. Te rog activeaza detectarea.</string>
     <string name="status_ok_detail_info">Nici o amenintare detectata. Reteaua ta este in mod constant verificata pe baza setarilor de detectare activate.</string>
@@ -167,7 +152,6 @@
     <string name="status_skull_detail_info">Manipulare Ostila: Cineva incearca sa manipuleze telefonul tau de la distanta. Distruge sau vinde telefonul si obtine unul nou, din locuri aflate la mare distanta. Nu duce vechiul telefon in locatia schimbata! Utilizeaza o noua cartela SIM anonima, cu o identitate falsa inregistrata prin Tor-Browser. Schimba comportamentul de apelare și avertizati-va contactele despre monitorizare, vorbind cu ei fata in fata, NU prin telefon!</string>
     <string name="open_cell_id_button_cancel">Anulare</string>
     <string name="open_cell_id_button_ok">OK</string>
-
     <string name="pref_notification_vibrate_enable_title">Activeaza Vibratia</string>
     <string name="pref_notification_vibrate_enable_summary">Vibreaza cand se schimba notificarea</string>
     <string name="pref_notification_vibrate_min_level_title">Vibreaza la nivelul de amenintare</string>
@@ -176,7 +160,6 @@
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Mijlociu</string>
     <string name="notification_vibrate_danger">Pericol</string>
-    
     <string name="ui_icon_flat">Plat</string>
     <string name="ui_icon_sense">Sens</string>
     <string name="ui_icon_white">Alb</string>
@@ -271,7 +254,6 @@
     <string name="status_high">Inalt</string>
     <string name="status_danger">Pericol</string>
     <string name="status_skull">Fugi!</string>
-
     <string name="adv_user_info">Acest meniu este destinat numai utilizatorilor avansati!
 \n
 \nTe rog sa nu introduci siruri aleatoare, deoarece va cauza detectarea necontrolabila.
@@ -279,20 +261,16 @@
 \nPentru a adauga un sir, alege tipul de SMS din meniul derulant, tasteaza sirul de detectare și apasa introduceti.
 \n
 \nPentru a sterge din baza de date, apasa lung pe vizualizarea listei.</string>
-    
     <string name="adv_user_sms_info">Acest meniu este destinat numai utilizatorilor avansati!
 \nPentru a sterge un SMS detectat, apasati lung in lista.</string>
     <string name="title_activity_advanced_user">Sterge SMS Detectat</string>
-
     <string name="adv_user_pref_header">Setari Utilizatori Avansati</string>
     <string name="adv_user_pref_launch">Siruri de Detectare</string>
     <string name="adv_user_pref_sms_launch">Sterge SMS</string>
     <string name="adv_user_pref_summary">Introduceti si stergeti siruri de detectare</string>
     <string name="adv_user_pref_sms_summary">Sterge SMS Detectat</string>
-   
     <string name="adv_user_root_title">Activeaza Detectarea SMS</string>
     <string name="adv_user_root_sum">Este necesar root pentru a activa detectia SMS</string>
-
     <string name="detection_strings">Sirul SMS detectat pentru popup personalizat</string>
     <string name="typezero_title">ATENTIE!</string>
     <string name="typezero_header">SMS Silentios Detectat</string>
@@ -305,21 +283,16 @@
     <string name="typewap_header">WAP Push Detectat</string>
     <string name="typewap_data">WAP push Mesaj SMS detectat!
 \nDetalii: Vezi Baza de Date.</string>
-
-
     <string name="help_main_neighboring_cells">Afiseaza celulele vecine.</string>
     <string name="help_main_phone_sim_details">Detalii SIM furnizor de retea, IMEI, TMSI.</string>
     <string name="help_main_acd">Arata o comparatie detaliata a celulei conectate in prezent, cu datele (daca exista) gasite în OpenCellID și evidentiaza diferentele.</string>
     <string name="help_main_database_viewer">Vezi diferitele tabele DB pe care le avem.</string>
     <string name="help_main_antenna_map_view">Harta antenelor colorate din apropiere.</string>
     <string name="help_main_at_command_interface">Interfata care permite trimiterea comenzilor AT la Procesorul Baseband (necesita ROOT).</string>
-
     <string name="help_tracking_toggle_attack_detection">Porneste / opreste detectarea atacurilor și colecteaza detaliile celulei in tabelele de baze de date interne.</string>
     <string name="help_tracking_toggle_cell_tracking">Porneste urmarirea celulelor pentru a fi afisate pe Vizualizatorul Hartii cu Antene si eventual, incarcate mai tarziu in OpenCellID.</string>
-
     <string name="help_settings_preferences">Setarile AIMSICD, cum ar fi regulile de protectie, timpul de votare și comportamentul serviciului.</string>
     <string name="help_settings_reset_db">Sterge și reseteaza toate tabelele DB sau cele specificate.</string>
-
     <string name="help_app_add_get_ocid_api_key">Obtineti o cheie API pentru a utiliza baza de date OpenCellID, pentru a incarca și descarca date …</string>
     <string name="help_app_about">Statusul Iconitelor și Proiectul explicate.</string>
     <string name="help_app_download_local_bts">Descarcari baze de date OpenCellID.</string>
@@ -336,24 +309,19 @@
     <string name="silent_sms">SMS Silentios</string>
     <string name="eventlog">Jurnal de Evenimente</string>
     <string name="measured_signal_strengths">Marimea Semnalului Masurat</string>
-
     <string name="at_command_response_looking">*** Caut seria dispozitivelor AT...
 \n</string>
     <string name="at_command_response_found">Gasit:</string>
     <string name="at_command_response_setup_complete">*** Setarea Finalizata ***
 \n</string>
-
     <string name="currently_connected_bts">BTS conectat in prezent</string>
     <string name="well_known_encrypted_bts">BTS criptat binecunoscut</string>
     <string name="unknown_or_insecure_bts">BTS necunoscut sau nesecurizat</string>
     <string name="new_or_recently_added_bts">BTS nou sau recent adaugat</string>
-
     <string name="delete_database_msg_success">Baza de date a fost stearsa si recreata cu succes.
 \nReporneste aplicatia pentru a sterge valorile vechi existente in memorie.</string>
-
     <string name="invalid_key_try_later">Cheie OpenCellId invalida, incearca din nou mai tarziu.</string>
     <string name="getting_ocid_key">Obtinerea Cheii API OpenCellId...</string>
-
     <string name="deleted">Sters</string>
     <string name="failed_to_delete">Nu s-a reusit stergerea</string>
     <string name="double_quote_will_cause_db_error">"Sirul nu a fost adaugat
@@ -362,5 +330,4 @@
     <string name="failed_to_add_the_string_to_db">Nu s-a adaugat sirul in baza de date</string>
     <string name="n_a">N/A</string>
     <string name="unknown">Necunoscut</string>
-
-    </resources>
+</resources>
