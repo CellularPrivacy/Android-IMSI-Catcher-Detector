@@ -146,7 +146,7 @@
     <string name="btn_copy_to_clipboard">Copy</string>
     <string name="msg_copied_to_clipboard">Logs copied to clipboard.</string>
     <string name="btn_stop_logs">Stop</string>
-    <string name="btn_start_logs">Start</string>
+    <string name="btn_start_logs">anfangen</string>
     <string name="title_activity_about_pop_up">DETAILED EXPLANATION</string>
     <string name="status_idle_detail_info">App is idling or loading. No protection or detection is enabled. Please enable detection.</string>
     <string name="status_ok_detail_info">No threats detected. Your network is constantly being checked based upon the enabled detection settings.</string>
