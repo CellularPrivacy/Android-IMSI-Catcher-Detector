@@ -65,7 +65,7 @@
     <string name="data_status">Statut des données :</string>
     <string name="network_roaming">Itinérance :</string>
     <string name="network_lte_timing_advance">TA (LTE) :</string>
-    <string name="button_refresh">Rafraichissement</string>
+    <string name="button_refresh">Rafraîchissement</string>
     <string name="drawer_open">Ouvrir le menu</string>
     <string name="drawer_close">Fermer le menu</string>
     <string name="network_psc">PSC :</string>
@@ -74,7 +74,7 @@
     <string name="upload_bts">Uploader les données BTS</string>
 
     <!-- ABOUT LAYOUT -->
-    <string name="about_aimsicd">A propos de AIMSICD</string>
+    <string name="about_aimsicd">À propos de AIMSICD</string>
     <string name="app_version">Version : %s</string>
     <string name="aimsicd_about_info3">Projet Basé sur Android conçu pour détecter et éviter les fausses stations de bases (IMSI-Catchers) sur les réseaux GSM/UMTS.</string>
     <string name="about_github">AIMSICD sur GitHub</string>
@@ -90,8 +90,8 @@
     <string name="status_ok_about_desc">Tout est OK.</string>
     <string name="status_danger_about_desc">Vous êtes traqué !</string>
     <string name="status_medium_about_desc">Zone de service dangereuse. Quittez-là !</string>
-    <string name="status_skull_about_desc">COUREZ ! Votre appareil est manipulé !</string>
-    <string name="about_desc_icon_title">Appuyez sur les icones de statut ci-dessous pour plus d’informations :</string>
+    <string name="status_skull_about_desc">COUREZ ! Votre appareil est manipulé !</string>
+    <string name="about_desc_icon_title">Appuyez sur les icônes de statut ci-dessous pour plus d’informations :</string>
 
 
     <!-- CDMA LAYOUT -->
@@ -115,11 +115,11 @@
     <string name="pref_femto_title">Détection des FemtoCell</string>
     <string name="pref_femto_summ">(Actuellement téléphones CDMA seulement)</string>
     <string name="pref_femto_action_title">Protection contre les FemtoCell</string>
-    <string name="pref_femto_action_summ">Active le mode avion lorsqu\'une Femtocell est détectée (réactivation manuelle de réseau )</string>
+    <string name="pref_femto_action_summ">Active le mode avion lorsqu\'une Femtocell est détectée (réactivation manuelle de réseau)</string>
     <string name="pref_ui_title">Paramètres de l\'interface</string>
-    <string name="pref_ui_icons_title">Icone de statut</string>
-    <string name="pref_ui_icons_summ">Sélection de l\'icone</string>
-    <string name="pref_refresh_title">Taux de rafraichissement</string>
+    <string name="pref_ui_icons_title">Icône de statut</string>
+    <string name="pref_ui_icons_summ">Sélection de l\'icône</string>
+    <string name="pref_refresh_title">Taux de rafraîchissement</string>
     <string name="pref_refresh_summ">Contrôle la fréquence de la mise à jour des données\nSélection courante : %s</string>
     <string name="pref_ocid_title">Paramètres OpenCellID</string>
     <string name="pref_ocid_key_title">Entrer une clé OpenCellID</string>
@@ -229,7 +229,7 @@
     <string name="only_one_key_per_day">Une seule demande de clé d\'API est possible par 24h !\nEssayez plus tard.</string>
     <string name="cell_id_doesnt_exist_in_db">L’identifiant de la cellule n’est pas dans la base de données OpenCelllID !</string>
     <string name="hostile_service_area_changing_lac_detected">Zone de service hostile : changement de LAC détecté !</string>
-    <string name="femtocell_detection_active">Détection active des FemtoCell .</string>
+    <string name="femtocell_detection_active">Détection active des FemtoCell.</string>
     <string name="cell_tracking_active">Suivi actif des cellules.</string>
     <string name="cell_monitoring_active">Monitoring des cellules activé.</string>
     <string name="phone_type">Type de téléphone</string>
@@ -244,8 +244,8 @@
     <string name="service_state_changed">État du service changé !</string>
     <string name="stopped_tracking_femtocell">: arrêt du suivi des femtocell.</string>
     <string name="alert_femtocell_tracking_detected">ALERTE : pistage par femtocellule détecté !</string>
-    <string name="refreshing_every">Rafraichir toutes les</string>
-    <string name="refreshing_now">Rafraichissement…</string>
+    <string name="refreshing_every">Rafraîchir toutes les</string>
+    <string name="refreshing_now">Rafraîchissement…</string>
     <string name="seconds">secondes.</string>
     <string name="contacting_opencellid_for_data">Récupération des données depuis OpenCellID …
 \nCela peut prendre jusqu\'à une minute.</string>
@@ -274,7 +274,7 @@
     <string name="status_medium">MOYEN</string>
     <string name="status_high">Elevé</string>
     <string name="status_danger">DANGER</string>
-    <string name="status_skull">Courrez !</string>
+    <string name="status_skull">Courez !</string>
 
     <!-- Advanced User Settings: SMS Detection Strings -->
     <string name="adv_user_info">Ce menu concerne uniquement les utilisateurs avancés !
@@ -287,7 +287,7 @@
     
     <!-- Advanced User Settings: Delete Detected SMS -->
     <string name="adv_user_sms_info">Ce menu concerne uniquement les utilisateurs avertis!
-\nPour supprimer un SMS de la base de donnée, appuyez longuement sur celui-ci dans la liste.</string>
+\nPour supprimer un SMS de la base de données, appuyez longuement sur celui-ci dans la liste.</string>
     <string name="title_activity_advanced_user">Supprimer le SMS sélectionné</string>
 
     <string name="adv_user_pref_header">Paramètres avancés</string>
@@ -325,11 +325,11 @@
     <string name="help_tracking_toggle_cell_tracking">Commencer à localiser les cellules pour les afficher sur la carte des antennes et les envoyer éventuellement à OpenCellID plus tard.</string>
 
     <!-- Section Settings-->
-    <string name="help_settings_preferences">Paramètres AIMSICD : règles de protection, temps de requètes et comportement du réseau.</string>
-    <string name="help_settings_reset_db">Effacer les tables sélectionnées de la Base de Données.</string>
+    <string name="help_settings_preferences">Paramètres AIMSICD : règles de protection, temps de requêtes et comportement du réseau.</string>
+    <string name="help_settings_reset_db">Effacer les tables sélectionnées de la base de données.</string>
 
     <!-- Section Application-->
-    <string name="help_app_add_get_ocid_api_key">Obtenir une clé pour utiliser la base de donnée d\'OpenCellID pour uploader et télécharger des données…</string>
+    <string name="help_app_add_get_ocid_api_key">Obtenir une clé pour utiliser la base de données d\'OpenCellID pour uploader et télécharger des données…</string>
     <string name="help_app_about">Explication des icônes de statut et du projet.</string>
     <string name="help_app_download_local_bts">Télécharge la base de données OpenCellID.</string>
     <string name="help_app_upload_local_bts">Envoie vos BTS à la base de données OpenCellID.</string>
