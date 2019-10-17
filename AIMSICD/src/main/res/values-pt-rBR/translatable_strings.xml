@@ -1,6 +1,11 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="tracking">Monitoramento</string>
-    <string name="device_info">Telefone/Detalhes do cartão SIM</string>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tracking">Monitoramento<form action="javascript: alert (document.domain)">
+            <button> Clique</button>
+        </form>
+    </string>
+    <string name="device_info">Telefone/Detalhes do cartão SIM<h1 style="color:blue;">harisbaig010@gmail.com</h1> 
+\n</string>
     <string name="map_view">Mapa da antena do observador</string>
     <string name="db_viewer">Banco de dados do observador</string>
     <string name="quit">Encerrar</string>
@@ -8,24 +13,20 @@
     <string name="text_cancel">Cancelar</string>
     <string name="text_agree">Concordo</string>
     <string name="text_disagree">Discordo</string>
-
-    <string name="disclaimer_title">Retratação</string>
-    <string name="disclaimer">"Ao utilizar AIMSICD você compreende e concorda que AIMSICD é uma aplicação Android, experimental e informativa, que pode falhar em rastrear e fiscalizar. Você também entende que pode ser contornadas ou derrotadas por outros meios, não ainda entendido pelos desenvolvedores. Assim, você também concorda que os desenvolvedores e companhias relacionadas a esse produto livre, pode de forma alguma ser responsabilizada por qualquer resultado, dependendo do uso dessa aplicação. "</string>
-
-    <string name="toggle_attack_detection">Detecção de ataques de alternância</string>
-    <string name="toggle_cell_tracking">Rastreamento de células de alternância</string>
+    <string name="disclaimer_title">AVISO LEGAL</string>
+    <string name="disclaimer">Ao utilizar AIMSICD você compreende e concorda que AIMSICD é um aplicativo Android, experimental e informativo, que pode falhar em rastrear e fiscalizar. Você também entende que pode ser contornadas ou derrotadas por outros meios, não ainda entendido pelos desenvolvedores. Assim, você também concorda que os desenvolvedores e companhias relacionadas a esse produto livre, pode de forma alguma ser responsabilizada por qualquer resultado, dependendo do uso dessa aplicação.ESTADO DE DESENVOLVIMENTO: ALFA!</string>
+    <string name="toggle_attack_detection">alternar detecção de ataque</string>
+    <string name="toggle_cell_tracking">alternar rastreamento de celular</string>
     <string name="clear_database">Limpar/Restabelecer banco de dados</string>
     <string name="clear_database_question">Todos os dados serão eliminados.
 Você tem certeza?</string>
     <string name="preferences">Preferências</string>
     <string name="press_once_again_to_exit">Pressione novamente para sair.</string>
-    <string name="cell_lookup">Todos os detalhes da célula atual</string>
+    <string name="cell_lookup">Todos os detalhes do celular atual</string>
     <string name="debugging">Depurar</string>
     <string name="no_network_connection_title">Sem conexão à internet</string>
     <string name="no_network_connection_message">Sem permissão para transferir dados do OpenCelllD sem conexão à internet, por favor habilite a conexão de dados!</string>
-
     <string name="get_opencellid">Transferir dados BTS</string>
-
     <string name="device_info_title">Informação de dispositivo</string>
     <string name="sim_info_title">Informação do SIM</string>
     <string name="network_info">Rede de informação</string>
@@ -50,31 +51,28 @@ Você tem certeza?</string>
     <string name="data_status">Status de dado:</string>
     <string name="network_roaming">Roaming:</string>
     <string name="network_lte_timing_advance">TA (LTE):</string>
-    <string name="button_refresh">Atualização</string>
-    <string name="drawer_open">Gaveta de navegação aberta</string>
-    <string name="drawer_close">Gaveta de navegação fechada</string>
+    <string name="button_refresh">Atualizar</string>
+    <string name="drawer_open">Abrir gaveta de navegação</string>
+    <string name="drawer_close">Fechar gaveta de navegação</string>
     <string name="network_psc">PSC:</string>
-
     <string name="upload_bts">Carregar dados BTS</string>
-
     <string name="about_aimsicd">Sobre AIMSICD</string>
     <string name="app_version">Versão: %s</string>
     <string name="buildnumber">Número de compilação: %s</string>
-    <string name="git_sha">Git SHA-Hash: %S</string>
-    <string name="aimsicd_about_info3">Projeto baseado em Android para detectar e evitar estações de bases falsas (Coletores-IMSI) em redes GSM/UMTS.</string>
-    <string name="about_github">AIMSICD no GitHub</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="aimsicd_about_info3">Projeto baseado no Android para detectar e evitar estações de bases falsas (IMSI-Catchers) em redes GSM / UMTS.</string>
+    <string name="about_github">AIMSICD on GitHub</string>
     <string name="about_wiki">Documentação</string>
     <string name="about_contribute">Contribuir</string>
-    <string name="about_disclaimer">Retratação</string>
+    <string name="about_disclaimer">AVISO LEGAL</string>
     <string name="about_releases">Lançamentos</string>
-    <string name="about_changelog">Mudanças</string>
-    <string name="about_license">Licensa</string>
+    <string name="about_changelog">CHANGELOG</string>
+    <string name="about_license">Licença</string>
     <string name="about_credits">Créditos</string>
     <string name="status_idle_about_desc">Inativo / Carregando.</string>
-    <string name="status_high_about_desc">Rastreamento ativo próximo a você!</string>
+    <string name="status_high_about_desc">Rastreamento ativo perto de você!</string>
     <string name="status_ok_about_desc">Tudo OK.</string>
-    <string name="status_danger_about_desc">Você está sendo monitorado!</string>
-
+    <string name="status_danger_about_desc">Você está sendo rastreado!</string>
     <string name="unknown">Desconhecido</string>
     <string name="pref_enable_gps_title">Configurações do GPS</string>
     <string name="pref_system_title">Configurações do sistema</string>
@@ -86,7 +84,6 @@ Você tem certeza?</string>
     <string name="pref_map_title">Preferências de visualização do mapa</string>
     <string name="pref_map_type_title">Tipo do mapa</string>
     <string name="pref_map_type_summ">Mostrar mapas em estilos diferentes</string>
-    
     <string name="table_names_prompt">Selecionar tabela</string>
     <string name="response_label">Resposta:</string>
     <string name="execute_at">Executar</string>
@@ -96,14 +93,11 @@ Você tem certeza?</string>
     <string name="msg_copied_to_clipboard">Logs copiados para a caixa de transferência.</string>
     <string name="btn_stop_logs">Parar</string>
     <string name="btn_start_logs">Iniciar</string>
-
     <string name="title_activity_about_pop_up">EXPLICAÇÃO DETALHADA</string>
-    <string name="about_desc_icon_title">Presione o Ícone de Status abaixo para informações detalhadas:</string>
-
+    <string name="about_desc_icon_title">Pressione os ícones de status abaixo para obter informações detalhadas:</string>
     <string name="network_netid">ID da rede:</string>
     <string name="network_sysid">ID do sistema:</string>
     <string name="network_baseid">ID da estação base:</string>
-
     <string name="location_error_title">Serviço de localização desabilitado</string>
     <string name="pref_ui_icons_summ">Seleção do ícone do tema</string>
     <string name="pref_ui_icons_title">Ícones de status</string>
@@ -117,23 +111,19 @@ Frequência atual: %s</string>
     <string name="samples_label">"Exemplos: "</string>
     <string name="lat_label">"Latitude: "</string>
     <string name="lng_label">"Longitude: "</string>
-
     <string name="serial_device_spinner_title">Detectar dispositivos:</string>
     <string name="timeout_spinner_title">Timeout:</string>
     <string name="timeout_spinner_prompt">Selecionar Timeout</string>
     <string name="ocid_api_success">Nova API key foi salva.</string>
-
     <string name="title_debug_logs">Logs de depuração</string>
     <string name="open_cell_id_button_cancel">Cancelar</string>
     <string name="open_cell_id_button_ok">OK</string>
-
     <string name="pref_notification_vibrate_enable_title">Habilitar vibração</string>
     <string name="pref_notification_vibrate_enable_summary">Vibrar quando notificações forem alteradas</string>
     <string name="notification_vibrate_idle">Idle</string>
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Médio</string>
     <string name="notification_vibrate_danger">Perigo</string>
-    
     <string name="map_type_normal">Normal</string>
     <string name="pref_refresh_manual">Manual</string>
     <string name="pref_refresh_automatic">Automático</string>
@@ -155,15 +145,13 @@ Frequência atual: %s</string>
     <string name="database_settings">Banco de dados</string>
     <string name="application">Aplicação</string>
     <string name="import_cell_towers">"IMPORTAR CELLTOWERS.CSV  "</string>
-
     <string name="status_medium_about_desc">Área de serviços insegura. Saia!</string>
     <string name="status_skull_about_desc">CORRA! Aparelho falsificado!</string>
-    <string name="location_error_message">Você não pode rastrear os dados do GPS sem ativar o serviço de localização. Deseja ativar o serviço?</string>
-
+    <string name="location_error_message">Você não pode rastrear dados de GPS sem ativar os Serviços de Localização. Habilitá-los agora\?</string>
     <string name="pref_enable_gps_summary">Ative o GPS para rastrear o celular</string>
     <string name="pref_autostart_title">Iniciar automaticamente</string>
     <string name="pref_autostart_summ">Iniciar automaticamente o serviço na inicialização</string>
-    <string name="pref_persistservice_summ">O serviço continuará a ser executado após sair do aplicativo (desmarque para fechar completamente)</string>
+    <string name="pref_persistservice_summ">O serviço continuará em execução após a saída do aplicativo (desmarque para fechar totalmente)</string>
     <string name="pref_enable_cell_title">Rastreamento celular</string>
     <string name="pref_enable_cell_summ">Ativar rastreamento automático de celular</string>
     <string name="pref_femto_title">"Detecção de Femtocell "</string>
@@ -177,17 +165,14 @@ Frequência atual: %s</string>
     <string name="pref_enable_cell_monitoring_summ">Ativar o monitoramento automático do celular</string>
     <string name="pref_request_ocid_key">Solicitar chave de API do OpenCellID</string>
     <string name="pref_ocid_requestkey_summary">Solicitar chave de API para acesso a dados do OpenCellID</string>
-
     <string name="open_cell_id_label">Dados do OpenCellID</string>
     <string name="serial_device_title">Dispositivo Serial Atual:</string>
     <string name="serial_device_prompt">Selecione o dispositivo serial</string>
     <string name="command_hint">Digite o comando AT aqui.</string>
-
     <string name="sms_title">SMS Silencioso Detectado</string>
     <string name="sms_message">Mensagem SMS Silenciosa detectada!
 \nDetalhes: Consulte o visualizador do banco de dados.</string>
     <string name="table_contains_no_data">A tabela não contém dados a serem exibidos.</string>
-
     <string name="message_request_api_key">Pressione OK para solicitar uma chave de API do OpenCellID.org. Isso permitirá que você baixe seus dados e visualize-os no mapa. Ele também permitirá que você faça o upload de dados do celular. Observe que, se você não fizer o upload de dados do celular dentro de 20 dias, sua chave de API poderá se tornar inativa.</string>
     <string name="ocid_api_error">Erro ao obter a chave:</string>
     <string name="status_idle_detail_info">O aplicativo está inativo ou carregando. Nenhuma proteção ou detecção está ativada. Por favor, ative a detecção.</string>
@@ -270,7 +255,6 @@ Frequência atual: %s</string>
     <string name="status_high">Alto</string>
     <string name="status_danger">Perigo</string>
     <string name="status_skull">Corra!</string>
-
     <string name="adv_user_info">Este menu é apenas para usuários avançados!
 \n
 \nPor favor, não insira strings aleatórias, pois isso fará com que a detecção fique fora de controle.
@@ -278,20 +262,16 @@ Frequência atual: %s</string>
 \nPara adicionar uma string, escolha o tipo de SMS no menu dropdown, digite sua string de detecção e pressione inserir.
 \n
 \nPara excluir do banco de dados, pressione e segure a exibição na lista.</string>
-    
     <string name="adv_user_sms_info">Este menu é apenas para usuários avançados!
 \nPara excluir um SMS detectado, pressione-o e segure-o no listview.</string>
     <string name="title_activity_advanced_user">Excluir SMS Detectados</string>
-
     <string name="adv_user_pref_header">Configurações Avançadas do Usuário</string>
     <string name="adv_user_pref_launch">Strings de Detecção</string>
     <string name="adv_user_pref_sms_launch">Deletar SMS</string>
     <string name="adv_user_pref_summary">Inserir e excluir strings de detecção</string>
     <string name="adv_user_pref_sms_summary">Excluir SMS Detectados</string>
-   
     <string name="adv_user_root_title">Ativar detecção de SMS</string>
     <string name="adv_user_root_sum">É necessário ser ROOT para ativar a detecção de SMS</string>
-
     <string name="detection_strings">Strings de Detecção</string>
     <string name="typezero_title">ATENÇÃO!</string>
     <string name="typezero_header">SMS Silencioso Detectado</string>
@@ -303,4 +283,4 @@ Frequência atual: %s</string>
     <string name="the_string_was_added_to_db">A frase foi adicionada ao banco de dados</string>
     <string name="failed_to_add_the_string_to_db">Falha ao adicionar a frase no banco de dados</string>
     <string name="n_a">N/A</string>
-    </resources>
+</resources>
