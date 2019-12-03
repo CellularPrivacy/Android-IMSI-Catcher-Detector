@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tracking">Urmarire</string>
+    <string name="tracking">Localizare</string>
     <string name="device_info">Detalii Telefon/SIM 
 \n</string>
     <string name="map_view">Vizualizare Harta Antenelor</string>
