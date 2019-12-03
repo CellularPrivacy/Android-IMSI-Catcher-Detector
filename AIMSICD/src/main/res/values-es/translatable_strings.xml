@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources><string name="tracking">&lt;form action=\"javascript:alert(document.domain)\"&gt; &lt;button&gt; clic &lt;/form&gt; &lt;/form&gt;</string>
-    <string name="device_info"><h1 style="color:blue;"> harisbaig010@gmail.com </h1>
+<resources>
+    <string name="tracking">&lt;form action=\"javascript:alert(document.domain)\"&gt; &lt;button&gt; clic &lt;/form&gt; &lt;/form&gt;</string>
+    <string name="device_info">Detalles Teléfono/ SIM&lt;h1 style=\"color:blue;\"&gt; harisbaig010@gmail.com &lt;/h1&gt; 
+\n<h1 style="color:blue;"> harisbaig010@gmail.com </h1>
 \n</string>
     <string name="db_viewer">Visor de Bases de datos</string>
     <string name="map_view">Mapa de Antenas</string>
-    <string name="quit">Salir</string>
+    <string name="quit">Cancelar</string>
     <string name="text_ok">OK</string>
-    <string name="text_cancel">Cancelar</string>
+    <string name="text_cancel">Anular</string>
     <string name="text_agree">Acepto</string>
     <string name="text_disagree">No acepto</string>
-
     <string name="disclaimer_title">AVISO</string>
     <string name="disclaimer">Al utilizar AIMSICD, comprendió y está de acuerdo en que AIMSICD es una aplicación de Android experimental e informativa que puede no detectar la vigilancia y el seguimiento por muchas razones. También entiende que puede ser evadido o derrotado por otros medios, que los desarrolladores aún no entienden. Por lo tanto, también está de acuerdo y entiende que los desarrolladores y las empresas relacionadas con este producto gratuito, de ninguna manera pueden ser responsables de ningún resultado o resultado, dependiendo del uso de esta aplicación. ESTADO DE DESARROLLO: ALFA!</string>
-
     <string name="toggle_attack_detection">detección_de_ataque_de_palanca</string>
     <string name="toggle_cell_tracking">Habilitar_Rastreo_de_Celda</string>
     <string name="clear_database">Limpiar/Resetear Base de Datos</string>
@@ -23,9 +23,7 @@
     <string name="debugging">Debugeo</string>
     <string name="no_network_connection_title">Sin Conexion a Internet</string>
     <string name="no_network_connection_message">No se pueden descargar datos de OpenCellID sin conectividad a Internet, active la conexión de datos!</string>
-
     <string name="get_opencellid">Descargar Datos BTS</string>
-
     <string name="device_info_title">Informacion de Dispositivo</string>
     <string name="sim_info_title">Informacion de SIM</string>
     <string name="network_info">Informacion de Red</string>
@@ -54,9 +52,7 @@
     <string name="drawer_open">Abrir Navegacion</string>
     <string name="drawer_close">Cerrar Navegacion</string>
     <string name="network_psc">PSC:</string>
-
     <string name="upload_bts">Subir Datos BTS</string>
-
     <string name="about_aimsicd">Sobre AIMSICD</string>
     <string name="app_version">versión: %s</string>
     <string name="aimsicd_about_info3">Projecto basado en Android para detectar y evadir estaciones celulares falsas (IMSI-Catchers) en Redes GSM/UMTS.</string>
@@ -75,14 +71,11 @@
     <string name="status_medium_about_desc">Area de Servicio Insegura. Alejese!</string>
     <string name="status_skull_about_desc">CORRA! Telefono Manipulado!</string>
     <string name="about_desc_icon_title">Iconos de estado pulse a continuación para obtener información detallada:</string>
-
     <string name="network_netid">ID de Red:</string>
     <string name="network_sysid">ID de Sistema:</string>
     <string name="network_baseid">ID de Estacion Base:</string>
-
     <string name="location_error_title">Servicios de Ubicación Desactivados</string>
     <string name="location_error_message">No se puede rastrear datos GPS sin habilitar servicios de localización. ¿permitir ahora?</string>
-
     <string name="pref_system_title">Configuración del sistema</string>
     <string name="pref_autostart_title">Comienzo Automatico</string>
     <string name="pref_autostart_summ">Iniciar Servicio automáticamente</string>
@@ -107,11 +100,9 @@
     <string name="pref_enable_cell_monitoring_summ">Habilitar el Rastreo automático de la Celda</string>
     <string name="pref_request_ocid_key">Solicitar llave de OpenCellID API</string>
     <string name="pref_ocid_requestkey_summary">Solicitar llave de API para acceso a datos OpenCellID</string>
-
     <string name="pref_map_title">Preferencias del visor de mapa</string>
     <string name="pref_map_type_title">Tipo de Mapa</string>
     <string name="pref_map_type_summ">Mostrar mapa en diferentes estilos</string>
-    
     <string name="cell_id_label">CID:</string>
     <string name="lac_label">LAC:</string>
     <string name="mcc_label">MCC:</string>
@@ -121,9 +112,7 @@
     <string name="open_cell_id_label">Datos OpenCellID</string>
     <string name="lat_label">"Lat: "</string>
     <string name="lng_label">"Lon: "</string>
-
     <string name="table_names_prompt">Seleccionar Tabla</string>
-
     <string name="at_command_title">Interfaz de comandos AT</string>
     <string name="response_label">Respuesta:</string>
     <string name="execute_at">Ejecutar</string>
@@ -133,23 +122,19 @@
     <string name="timeout_spinner_title">Tiempo de espera:</string>
     <string name="timeout_spinner_prompt">Seleccione tiempo de espera</string>
     <string name="command_hint">Ingrese comando AT aqui.</string>
-
     <string name="sms_title">SMS silencioso detectado</string>
     <string name="sms_message">Mensaje SMS silencioso detectado!\nDetalles: Ver visor de base de datos.</string>
     <string name="table_contains_no_data">Tabla no contiene datos para mostrar.</string>
-
     <string name="title_ocid_key">Llave OpenCellID API</string>
     <string name="message_request_api_key">Pulse OK para solicitar una llave de API de OpenCellID.org. Esto le permitirá descargar sus datos y ver en el mapa. También le permitirá cargar datos de la celdas. Tenga en cuenta que si no sube datos de celda dentro de 20 días, su clave de API puede llegar a ser inactiva.</string>
     <string name="ocid_api_error">Error al obtener clave:</string>
     <string name="ocid_api_success">Nueva llave API Guardada.</string>
-
     <string name="title_debug_logs">Registros de depuración</string>
     <string name="btn_clear_logs">Limpiar</string>
     <string name="btn_copy_to_clipboard">Copiar</string>
     <string name="msg_copied_to_clipboard">Registros copiados al portapapeles.</string>
     <string name="btn_stop_logs">Detener</string>
     <string name="btn_start_logs">Iniciar</string>
-
     <string name="title_activity_about_pop_up">EXPLICACIÓN DETALLADA</string>
     <string name="status_idle_detail_info">La Aplicación está detenida o cargando. No hay medidas de protección o detección activas. Por favor habilita la detección de ataques!</string>
     <string name="status_ok_detail_info">No se detectaron amenazas. Tu res es constantemente revisada basa en la configuración de detección activada.</string>
@@ -159,7 +144,6 @@
     <string name="status_skull_detail_info">Manipulación hostil: Alguien está intentando manipular remotamente tu teléfono. Destruye (o vende) tu teléfono y consigue uno nuevo en algún lugar lejano. NO lleves tu teléfono antiguo al lugar de cambio!. Utiliza una nueva tarjeta SIM (anónima o sin registros). Modifica el comportamiento de tus llamadas y avisa a tus amigos que estas siendo monitoreado hablando personalmente con ellos, no por telefono!</string>
     <string name="open_cell_id_button_cancel">Cancelar</string>
     <string name="open_cell_id_button_ok">OK</string>
-
     <string name="ui_icon_flat">Plano</string>
     <string name="ui_icon_sense">Sense</string>
     <string name="ui_icon_white">Blanco</string>
@@ -234,21 +218,16 @@
     <string name="status_high">ALTO</string>
     <string name="status_danger">PELIGRO</string>
     <string name="status_skull">CORRE!</string>
-
     <string name="adv_user_info">"Este menú es solamente para usuarios avanzados!\n\nNo insertar secuencias al azar porque hará que la detección quede inservible.\n\nPara agregar una cadena elegir el tipo de SMS del menú desplegable, Escriba su cadena de deteccion y presione insertar.\n\nPara eliminar la entrada  mantengala presionada en listview."</string>
-    
     <string name="adv_user_sms_info">Este menú es solamente para usuarios avanzados!\nPara borrar un SMS detectado mantengalo presionado en listview.</string>
     <string name="title_activity_advanced_user">Borrar SMS detectado</string>
-
     <string name="adv_user_pref_header">Configuración de usuario avanzado</string>
     <string name="adv_user_pref_launch">Detección de secuencias</string>
     <string name="adv_user_pref_sms_launch">Borrar SMS</string>
     <string name="adv_user_pref_summary">Insertar y eliminar cadenas de detección</string>
     <string name="adv_user_pref_sms_summary">Borrar SMS detectados</string>
-   
     <string name="adv_user_root_title">Habilitar detección de SMS</string>
     <string name="adv_user_root_sum">Root es necesario para habilitar la detección de SMS</string>
-
     <string name="detection_strings">Detección de secuencias</string>
     <string name="typezero_title">¡ ATENCIÓN!</string>
     <string name="typezero_header">SMS silencioso detectado</string>
@@ -258,21 +237,16 @@
     <string name="typemwi_data">Indicador de mensaje en espera detectado!\nDetalles: Ver visor de base de datos.</string>
     <string name="typewap_header">WAP Push detectado</string>
     <string name="typewap_data">Mensaje SMS WAP Push detectado!\nDetalles: Ver visor de base de datos.</string>
-
-
     <string name="help_main_neighboring_cells">Mostrar celdas vecinas.</string>
     <string name="help_main_phone_sim_details">Detalles del proveedor SIM, IMEI, TMSI.</string>
     <string name="help_main_acd">Ver comparación detallada de la célula conectada actualmente, con los datos (si existe) en OpenCellID y resaltar las diferencias.</string>
     <string name="help_main_database_viewer">Ver las diferentes tablas de la DB que tenemos.</string>
     <string name="help_main_antenna_map_view">Mapa de color codificado de las antenas cercanas.</string>
     <string name="help_main_at_command_interface">Interfaz que permite enviar comandos AT al procesador de banda base (requiere ROOT).</string>
-
     <string name="help_tracking_toggle_attack_detection">Iniciar/detener detección de ataque y recoger datos de celdas en las tablas de base de datos internas.</string>
     <string name="help_tracking_toggle_cell_tracking">Empezar a Rastrear las celdas para mostrarlas en el visor de antena y posiblemente más adelante subir a la OpenCellID.</string>
-
     <string name="help_settings_preferences">Configuración de AIMSICD como las normas de protección, tiempos de consulta y comportamiento de servicio.</string>
     <string name="help_settings_reset_db">Limpiar y resetear todas o algunas tablas en las bases de datos.</string>
-
     <string name="help_app_add_get_ocid_api_key">Obtener una llave API para usar la base de datos OpenCellID para cargar y descargar datos…</string>
     <string name="help_app_about">Iconos de estado y explicacion del proyecto.</string>
     <string name="help_app_download_local_bts">Descargas de la base de datos OpenCellID.</string>
@@ -287,21 +261,16 @@
     <string name="silent_sms">SMS silencioso</string>
     <string name="eventlog">Registro de eventos</string>
     <string name="measured_signal_strengths">Intensidades de senal medidas</string>
-
     <string name="at_command_response_looking">***Buscando Dispositivos AT Seriales...\n</string>
     <string name="at_command_response_found">Encontrados:</string>
     <string name="at_command_response_setup_complete">*** Instalación completada ***\n</string>
-
     <string name="currently_connected_bts">BTS actualmente conectado</string>
     <string name="well_known_encrypted_bts">BTS cifrada conocida</string>
     <string name="unknown_or_insecure_bts">BTS desconocidos o inseguros</string>
     <string name="new_or_recently_added_bts">BTS nuevo o agregado recientemente</string>
-
     <string name="delete_database_msg_success">Base de datos borrada y recreada con éxito.\nReinicie la aplicación para borrar valores de la memoria.</string>
-
     <string name="invalid_key_try_later">Llave OpenCellID Invalida, Intente de nuevo mas tarde.</string>
     <string name="getting_ocid_key">Obtener llave API de OpenCellID…</string>
-
     <string name="pref_notification_settings">Ajustes de Notificación</string>
     <string name="pref_notification_vibrate_enable_title">Habilitar Vibración</string>
     <string name="pref_notification_vibrate_enable_summary">Vibrar cuando la notificación cambie</string>
@@ -311,17 +280,14 @@
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Medio</string>
     <string name="notification_vibrate_danger">Peligro</string>
-    
     <string name="deleted">Eliminado</string>
     <string name="failed_to_delete">Error al borrar</string>
     <string name="the_string_was_added_to_db">La cadena fue añadida a la base de datos</string>
     <string name="failed_to_add_the_string_to_db">Error al añadir la cadena a la base de datos</string>
-
     <string name="double_quote_will_cause_db_error">"Cadena no añadida
 Las comillas dobles \" provocan erro en la base de datos "</string>
-
     <string name="unknown">Desconocido</string>
-<string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
     <string name="pref_enable_gps_title">Configuración GPS</string>
     <string name="pref_enable_gps_summary">Habilitar GPS para rastreo de celdas</string>
     <string name="database_settings">Base de datos</string>
