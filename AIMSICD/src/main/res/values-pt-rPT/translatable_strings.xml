@@ -1,2 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="tracking">Monitorizar<form action="javascript:alert(document.domain)">
+            <button>Clique</button>
+        </form>
+    </string>
+    <string name="device_info">Detalhes do Telemóvel/SIM<h1 style="color:blue;">harisbaig010@gmail.com</h1> 
+\n</string>
+    <string name="db_viewer">Visualizador da Base de Dados</string>
+    <string name="quit">Sair</string>
+    <string name="text_ok">ACEITAR</string>
+    <string name="text_cancel">Cancelar</string>
+    <string name="text_agree">Eu Concordo</string>
+    <string name="text_disagree">Eu Não Concordo</string>
+    <string name="disclaimer_title">LIMITAÇÃO DE RESPONSABILIDADE</string>
+    <string name="clear_database">Limpar/Reiniciar Base de Dados</string>
+    <string name="preferences">Preferências</string>
+    <string name="press_once_again_to_exit">Toque novamente para sair.</string>
+    <string name="debugging">Depuração</string>
+    <string name="get_opencellid">Transferir Dados BTS</string>
+    <string name="device_info_title">Informação do Dispositivo</string>
+    <string name="sim_info_title">Informação do SIM</string>
+    <string name="network_info">Informação da Rede</string>
+    <string name="neighboring_cells_num_title">Total:</string>
+    <string name="sim_country">País:</string>
+    <string name="sim_operator_id">Id. do operador:</string>
+    <string name="sim_operator_name">Nome do operador:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_serial">Nr.º de série:</string>
+    <string name="device_type">Tipo de telefone:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_version">Versão de RIL:</string>
+    <string name="network_name">Nome do provedor:</string>
+    <string name="network_code">Código do provedor:</string>
+    <string name="network_type">Tipo:</string>
+    <string name="network_lac">LAC:</string>
+    <string name="network_cellid">CID:</string>
+    <string name="network_roaming">Roaming:</string>
+    <string name="network_psc">PSC:</string>
+    <string name="upload_bts">Enviar Dados BTS</string>
+    <string name="about_aimsicd">Sobre AIMSICD</string>
+    <string name="app_version">Versão: %s</string>
+    <string name="buildnumber">Nr.º da compilação: %s</string>
+    <string name="about_wiki">DOCUMENTAÇÃO</string>
+    <string name="about_contribute">CONTRIBUIR</string>
+    <string name="about_disclaimer">LIMITAÇÃO DE RESPONSABILIDADE</string>
+    <string name="about_releases">LANÇAMENTOS</string>
+    <string name="about_changelog">REGISTO DE ALTERAÇÕES</string>
+    <string name="about_license">LICENÇA</string>
+    <string name="about_credits">CRÉDITOS</string>
+    <string name="status_ok_about_desc">Tudo OK.</string>
+    <string name="network_netid">Id. da rede:</string>
+    <string name="network_sysid">Id. do sistema:</string>
+    <string name="pref_enable_gps_title">Definição do GPS</string>
+    <string name="pref_system_title">Definições do Sistema</string>
+    <string name="pref_protection_title">Definições de Proteção</string>
+    <string name="pref_notification_settings">Definições de Notificação</string>
+    <string name="pref_ui_title">Definições da Interface</string>
+    <string name="pref_ui_icons_title">Estado-Ícones</string>
+    <string name="cell_id_label">CID:</string>
+    <string name="lac_label">LAC:</string>
+    <string name="mcc_label">MCC:</string>
+    <string name="mnc_label">MNC:</string>
+    <string name="pc_label">PC:</string>
+    <string name="lat_label">"Lat.: "</string>
+    <string name="lng_label">"Lon.: "</string>
+    <string name="table_names_prompt">Selecionar Tabela</string>
+    <string name="at_command_title">Interface Comando AT</string>
+    <string name="response_label">Resposta:</string>
+    <string name="execute_at">Executar</string>
+    <string name="serial_device_spinner_title">Dispositivos detetados:</string>
+    <string name="title_debug_logs">Registos de Depuração</string>
+    <string name="btn_clear_logs">Limpar</string>
+    <string name="btn_copy_to_clipboard">Copiar</string>
+    <string name="btn_stop_logs">Parar</string>
+    <string name="btn_start_logs">Iniciar</string>
+    <string name="open_cell_id_button_cancel">Cancelar</string>
+    <string name="open_cell_id_button_ok">ACEITAR</string>
+    <string name="pref_notification_vibrate_enable_title">Ativar Vibração</string>
+    <string name="notification_vibrate_idle">Inativo</string>
+    <string name="notification_vibrate_ok">OK</string>
+    <string name="notification_vibrate_danger">Perigo</string>
+    <string name="map_type_terrain">Terreno</string>
+    <string name="map_type_normal">Normal</string>
+    <string name="pref_refresh_manual">Manual</string>
+    <string name="pref_refresh_automatic">Automática</string>
+    <string name="pref_refresh_2s">2 seg.</string>
+    <string name="pref_refresh_5s">5 seg.</string>
+    <string name="pref_refresh_10s">10 seg.</string>
+    <string name="pref_refresh_25s">25 seg.</string>
+    <string name="pref_refresh_45s">45 seg.</string>
+    <string name="main">Principal</string>
+    <string name="settings">Definições</string>
+    <string name="database_settings">Base de Dados</string>
+</resources>
