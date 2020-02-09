@@ -1,2 +1,333 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="pref_femto_title">Ανίχνευση Femtocell</string>
+    <string name="help_settings_preferences">Ρυθμίσεις AIMSICD, όπως κανόνες προστασίας, χρόνοι ψηφοφορίας και συμπεριφορά υπηρεσίας.</string>
+    <string name="the_string_was_added_to_db">Η συμβολοσειρά προστέθηκε στη βάση δεδομένων</string>
+    <string name="deleted">Διαγράφηκε</string>
+    <string name="download_timed_out">Το αίτημα OpenCellID API έληξε. Δοκιμή αργότερα \?</string>
+    <string name="network_psc">PSC:</string>
+    <string name="help_main_at_command_interface">Διασύνδεση που επιτρέπει την αποστολή εντολών AT σε επεξεργαστή βάσης (απαιτείται ROOT).</string>
+    <string name="pref_refresh_title">Ρυθμός Ανανέωσης</string>
+    <string name="help_main_database_viewer">Εμφάνιση στους διαφορετικούς πίνακες DB που διαθέτουμε.</string>
+    <string name="currently_connected_bts">Αυτή τη στιγμή συνδεδεμένο BTS</string>
+    <string name="unable_to_acquire_root_access">Δεν είναι δυνατή η απόκτηση πρόσβασης ROOT στη συσκευή σας.
+\nΤο AT Command Injection απαιτεί πρόσβαση στο Terminal.
+\nΕλέγξτε ότι η συσκευή σας είναι ROOTED και δοκιμάστε ξανά.</string>
+    <string name="pref_femto_action_summ">Ενεργοποίηση \"Λειτουργίας Πτήσης\" όταν εντοπιστεί Femtocell (ενεργοποιήστε-ξανά το δίκτυο χειροκίνητα)</string>
+    <string name="tracking">Εντοπισμός Κλικ<form action="javascript:alert(document.domain)"><button>Click</button></form></string>
+    <string name="help_app_about">Τα Εικονίδια Κατάστασης και το Project εξηγούνται.</string>
+    <string name="help_tracking_toggle_cell_tracking">Αρχίστε να παρακολουθείτε τις κυψέλες για προβολή στο Πρόγραμμα προβολής χαρτών κεραίας και, αργότερα, μεταφορτώστε στο OpenCellID.</string>
+    <string name="execute_at">Εκτέλεση</string>
+    <string name="timeout_spinner_5_sec">5 δευτ</string>
+    <string name="status_medium_detail_info">Μη Ασφαλής Περιοχή Υπηρεσιών: Τουλάχιστον 1 νέος ή κάποιος άγνωστος σταθμός BTS λειτουργεί σε αυτήν την περιοχή, χρησιμοποιώντας μη ασφαλισμένο (σπασμένο) αλγόριθμο κρυπτογράφησης, χαμηλότερο από το A5/3. Οποιεσδήποτε τηλεφωνικές κλήσεις / SMS γίνονται σε αυτήν την περιοχή μπορούν να υποκλαπούν και να καταγραφούν. Εγκαταλείψτε γρήγορα αυτό το μέρος.</string>
+    <string name="map_type_normal">Κανονικό</string>
+    <string name="lat_label">Lat:</string>
+    <string name="database_settings">Βάση Δεδομένων</string>
+    <string name="cell_tracking_active">Εντοπισμός Κυψελών Ενεργό</string>
+    <string name="error_retrieving_opencellid_data">Σφάλμα κατά την ανάκτηση δεδομένων OpenCellID.
+\nΕλέγξτε το δίκτυο σας!</string>
+    <string name="about_disclaimer">ΑΠΟΠΟΙΗΣΗ ΕΥΘΥΝΩΝ</string>
+    <string name="ui_icon_sense">Αίσθηση</string>
+    <string name="table_names_prompt">Επιλογή Πίνακα</string>
+    <string name="imporing_celltowers_data">Εισαγωγή δεδομένων CellTowers ...
+\nΑυτό μπορεί να διαρκέσει λίγο.</string>
+    <string name="adv_user_pref_summary">Εισαγωγή και διαγραφή συμβολοσειρών ανίχνευσης</string>
+    <string name="pref_enable_cell_title">Εντοπισμός Κυψελών</string>
+    <string name="notification_vibrate_medium">Μέτριο</string>
+    <string name="title_ocid_key">Κλειδί API του OpenCellID</string>
+    <string name="eventlog">EventLog</string>
+    <string name="device_type">Τύπος Τηλεφώνου:</string>
+    <string name="unknown_or_insecure_bts">Άγνωστο ή μη ασφαλές BTS</string>
+    <string name="well_known_encrypted_bts">Πολύ γνωστό κρυπτογραφημένο BTS</string>
+    <string name="timeout_spinner_2_sec">2 δευτ</string>
+    <string name="help_main_neighboring_cells">Εμφανίζει τις γειτονικές κυψέλες.</string>
+    <string name="cell_lookup">Όλες οι Τρέχουσες Λεπτομέρειες Κυψελών</string>
+    <string name="alert_silent_sms_detected">ΣΥΝΑΓΕΡΜΟΣ: Εντοπίστηκε Αθόρυβο SMS!</string>
+    <string name="refreshing_now">Ανανεώνεται τώρα...</string>
+    <string name="title_activity_about_pop_up">ΛΕΠΤΟΜΕΡΗΣ ΕΞΗΓΗΣΗ</string>
+    <string name="help_app_debugging">Συλλέξτε και στείλτε αρχεία καταγραφής σφαλμάτων.</string>
+    <string name="ocid_api_error">Σφάλμα απόκτησης κλειδιού:</string>
+    <string name="serial_device_spinner_title">Συσκευές που Εντοπίστηκαν:</string>
+    <string name="adv_user_pref_launch">Σήματα Ανίχνευσης</string>
+    <string name="text_ok">ΟΚ</string>
+    <string name="serial_device_title">Τρέχον Σειριακός Συσκευής:</string>
+    <string name="network_cellid">CID:</string>
+    <string name="get_opencellid">Λήψη Δεδομένων BTS</string>
+    <string name="pref_map_type_summ">Προβολή Χάρτη σε διαφορετικά στυλ</string>
+    <string name="pref_ocid_requestkey_summary">Ζητήστε Κλειδί API για πρόσβαση στα δεδομένα OpenCellID</string>
+    <string name="pref_ui_icons_summ">Εικονίδιο Επιλογής Θέματος</string>
+    <string name="cell_info_title">Γειτονικές Κυψέλες</string>
+    <string name="device_version">Έκδοση RIL:</string>
+    <string name="download_error">Σφάλμα Λήψης:</string>
+    <string name="aimsicd_about_info3">Πρόγραμμα βασισμένο σε Android για ανίχνευση και αποφυγή ψεύτικων σταθμών βάσης (IMSI-Catchers) σε δίκτυα GSM / UMTS.</string>
+    <string name="notification_vibrate_idle">Αδρανές</string>
+    <string name="typemwi_header">Εντοπίστηκε MWI</string>
+    <string name="femtocell_detection_active">Ανίχνευση FemtoCell Ενεργή</string>
+    <string name="adv_user_root_sum">Απαιτείται root για την ενεργοποίηση της ανίχνευσης SMS</string>
+    <string name="neighboring_cells_num_title">Σύνολο:</string>
+    <string name="unable_to_detect_busybox">Δεν είναι δυνατή η ανίχνευση Busybox στη συσκευή σας.
+\nΤο AT Command Injection απαιτεί τα στοιχεία του Busybox να λειτουργούν σωστά.
+\nΕλέγξτε ότι η συσκευή έχει εγκατεστημένο Busybox και δοκιμάστε ξανά.</string>
+    <string name="network_sysid">ID Συστήματος:</string>
+    <string name="help_app_add_get_ocid_api_key">Αποκτήστε ένα κλειδί API για τη χρήση της βάσης δεδομένων OpenCellID καθώς και για τη μεταφόρτωση και λήψη δεδομένων ...</string>
+    <string name="measured_signal_strengths">Μετρημένα Σημεία Ισχύος Σήματος</string>
+    <string name="status_skull_about_desc">ΤΡΕΞΤΕ! Το Τηλέφωνο Παρακολουθείται!</string>
+    <string name="new_or_recently_added_bts">Νέα ή πρόσφατα προστεθείσα BTS</string>
+    <string name="title_activity_advanced_user">Διαγραφή εντοπισμένων μηνυμάτων SMS</string>
+    <string name="pref_refresh_automatic">Αυτόματο</string>
+    <string name="pref_ui_title">Ρυθμίσεις Διεπαφής</string>
+    <string name="unknown">Άγνωστο</string>
+    <string name="status_danger">Κίνδυνος</string>
+    <string name="status_ok">ΟΚ</string>
+    <string name="timeout_spinner_20_sec">20 δευτ</string>
+    <string name="network_lte_timing_advance">ΤΑ (LTE):</string>
+    <string name="adv_user_sms_info">Αυτό το μενού προορίζεται μόνο για προχωρημένους χρήστες!
+\nΓια να διαγράψετε ένα ανιχνευμένο μήνυμα SMS, πατήστε παρατεταμένα στην προβολή λίστας</string>
+    <string name="status_skull">Τρέξτε!</string>
+    <string name="quit">Έξοδος</string>
+    <string name="map_view">Εμφάνιση Χάρτη Κεραιών</string>
+    <string name="alert_mwi_detected">ΣΥΝΑΓΕΡΜΟΣ: Εντοπίστηκε Δείκτης Αναμονής Μηνύματος!</string>
+    <string name="no_opencellid_key_detected">Δεν εντοπίστηκε κανένα κλειδί API OpenCellID!
+\nΕισάγετε πρώτα το κλειδί στις ρυθμίσεις.</string>
+    <string name="sim_country">Χώρα:</string>
+    <string name="help_main_antenna_map_view">Κωδικοποιημένες με χρώμα κεραίες κοντά σας.</string>
+    <string name="error_importing_celltowers_data">Σφάλμα κατά την εισαγωγή δεδομένων CellTowers.</string>
+    <string name="status_skull_detail_info">Εχθρικός Χειρισμός: Κάποιος προσπαθεί να χειριστεί από μακριά το τηλέφωνο σας. Καταστρέψτε ή πουλήστε το τηλέφωνό σας και αποκτήστε ένα νέο από πιο μακριά. Μην πάρετε μαζί το παλιό σας τηλέφωνο στην νέα σας τοποθεσία! Χρησιμοποιήστε μια νέα ανώνυμη κάρτα SIM με ψεύτικη ταυτότητα, καταχωρημένη μέσω του Tor-Browser. Αλλάξτε την συμπεριφορά των καλούντων και προειδοποιήστε τις επαφές σας σχετικά με την παρακολούθηση, μιλώντας μαζί τους απο κοντά, και ΟΧΙ τηλεφωνικά!</string>
+    <string name="adv_user_pref_header">Προηγμένες Ρυθμίσεις Χρήστη</string>
+    <string name="serial_device_prompt">Επιλογή Σειριακού Συσκευής</string>
+    <string name="db_viewer">Εμφάνιση Βάσης Δεδομένων</string>
+    <string name="timeout_spinner_10_min">10 λεπτ</string>
+    <string name="no_network_connection_title">Δεν Υπάρχει Σύνδεση Internet</string>
+    <string name="cell_id_label">CID:</string>
+    <string name="help_app_import_cell_towers">Εισάγει τη βάση δεδομένων CellTowers.</string>
+    <string name="map_type_terrain">Έδαφος</string>
+    <string name="pref_notification_settings">Ρυθμίσεις Ειδοποίησης</string>
+    <string name="service_state_changed">Η Κατάσταση Υπηρεσίας άλλαξε!</string>
+    <string name="help_app_download_local_bts">Λήψη της βάσης δεδομένων OpenCellID.</string>
+    <string name="typezero_title">ΠΡΟΣΟΧΗ!</string>
+    <string name="ciphering_indicator_title">Δείκτης Κρυπτογράφησης</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Παρουσιάστηκε ένα άγνωστο σφάλμα για την απόκτηση του σειριακού συσκευής.
+\nΕλέγξτε το logcat για τυχόν σφάλματα και δημοσιεύστε τα στο Github.</string>
+    <string name="timeout_spinner_30_sec">30 δευτ</string>
+    <string name="pref_ocid_key_summ">Εισάγετε το Κλειδί API OpenCellID εδώ</string>
+    <string name="bts_measurements">Μετρήσεις BTS</string>
+    <string name="pref_ocid_title">Ρυθμίσεις OpenCellID</string>
+    <string name="cell_monitoring_active">Παρακολούθηση Κυψελών Ενεργή.</string>
+    <string name="notification_vibrate_danger">Κίνδυνος</string>
+    <string name="about_contribute">ΣΥΝΕΙΣΦΟΡΑ</string>
+    <string name="preferences">Προτιμήσεις</string>
+    <string name="seconds">δευτερόλεπτα.</string>
+    <string name="sms_title">Εντοπίστηκε Αθόρυβο SMS</string>
+    <string name="help_main_acd">Εμφάνιση λεπτομεριών σύγκρισης της υπάρχουσας κυψέλης, με τα δεδομένα (αν υπάρχουν) που βρίσκονται στο OpenCellID και επισημάνετε τις διαφορές.</string>
+    <string name="failed_to_delete">Αποτυχία διαγραφής</string>
+    <string name="timeout_spinner_prompt">Επιλογή Τέλος χρόνου</string>
+    <string name="needs_location">Χρειάζεται τοποθεσία</string>
+    <string name="only_one_key_per_day">"Μόνο 1 νέο αίτημα κλειδιού API  κάθε 24 ώρες
+\nΠαρακαλώ προσπαθήστε ξανά αργότερα."</string>
+    <string name="about_credits">CREDITS</string>
+    <string name="failed_to_add_the_string_to_db">Αποτυχία προσθήκης της συμβολοσειράς στη βάση δεδομένων</string>
+    <string name="btn_clear_logs">Καθαρισμός</string>
+    <string name="status_danger_about_desc">Βρίσκεστε υπό παρακολούθηση!</string>
+    <string name="pref_femto_summ">(για την ώρα ΜΟΝΟ Τηλέφωνα CDMA)</string>
+    <string name="refreshing_every">Ανανέωση κάθε</string>
+    <string name="getting_ocid_key">Λήψη κλειδιού API OpenCellId ...</string>
+    <string name="sim_serial">Σειριακός:</string>
+    <string name="about_desc_icon_title">Πατήστε τα παρακάτω εικονίδια κατάστασης για περισσότερες λεπτομέρειες:</string>
+    <string name="refreshed_cell_id_info">Ανανεωμένες πληροφορίες CellId</string>
+    <string name="location_error_title">Οι Υπηρεσίες Τοποθεσίας είναι Απενεργοποιημένες</string>
+    <string name="error_uploading_bts_data">Σφάλμα κατά τη μεταφόρτωση δεδομένων BTS στους διακομιστές OpenCellID!</string>
+    <string name="data_activity">Δραστηριότητα Δεδομένων:</string>
+    <string name="ocid_api_success">Αποθηκεύτηκε νέο κλειδί API</string>
+    <string name="pref_refresh_manual">Χειροκίνητο</string>
+    <string name="pref_autostart_summ">Αυτόματη εκκίνηση υπηρεσίας κατά την εκκίνηση</string>
+    <string name="network_roaming">Περιαγωγή:</string>
+    <string name="double_quote_will_cause_db_error">Η συμβολοσειρά δεν προστέθηκε
+\n\"η διπλή παραπομπή θα προκαλέσει σφάλμα db</string>
+    <string name="sim_operator_id">ID Χειριστή:</string>
+    <string name="sms_message">Εντοπίστηκε Μήνυμα Αθόρυβου SMS
+\nΛεπτομέρειες: Δείτε την Προβολή Βάσης Δεδομένων</string>
+    <string name="about_wiki">ΤΕΚΜΗΡΙΩΣΗ</string>
+    <string name="device_info">Πληροφορίες Τηλεφώνου/SIM&lt;h1 style=\"color:blue;\"&gt;harisbaig010@gmail.com&lt;/h1&gt;
+\n<h1 style="color:blue;">harisbaig010@gmail.com</h1>
+\n</string>
+    <string name="pref_enable_cell_summ">Ενεργοποίηση Αυτόματου Εντοπισμού Κυψελών</string>
+    <string name="status_danger_detail_info">Εντοπίστηκε Εχθρική Παρακολούθηση: Ένα FBTS ή IMSIC, ΣΑΣ παρακολουθεί ενεργά και εμποδίζει το τηλέφωνό σας να συνδεθεί μέσω του φυσιολογικού κρυπτογραφημένου παρόχου κινητής τηλεφωνίας. Εάν κινδυνεύετε ή παρατηρείτε επιπτώσεις, καταστρέψτε το τηλέφωνό σας και την κάρτα SIM, και στη συνέχεια κάντε δήλωση κλοπής.</string>
+    <string name="default_mmc_locations">Προεπιλεγμένες τοποθεσίες MCC</string>
+    <string name="status_idle_detail_info">Η εφαρμογή είναι σε κατάσταση αναμονής ή φόρτωσης. Δεν έχει ενεργοποιηθεί καμία προστασία ή ανίχνευση. Παρακαλώ ενεργοποιείστε την ανίχνευση.</string>
+    <string name="detection_strings">Σήματα Ανίχνευσης</string>
+    <string name="status_idle">Αδρανές</string>
+    <string name="sim_operator_name">Όνομα Χειριστή:</string>
+    <string name="status_idle_about_desc">Αναμονή / φόρτωση.</string>
+    <string name="status_ok_about_desc">Όλα ΟΚ</string>
+    <string name="unknown_error_initialising_at_command_injector">Παρουσιάστηκε ένα άγνωστο σφάλμα προσπαθώντας να αρχικοποιήσει το AT Command Injector.
+\nΕλέγξτε το logcat για τυχόν σφάλματα και δημοσιεύστε τα στο Github.</string>
+    <string name="text_agree">Συμφωνώ</string>
+    <string name="unable_to_create_map">Δεν είναι δυνατή η δημιουργία χάρτη!</string>
+    <string name="waiting_for_location">Αναμονή για την τοποθεσία...</string>
+    <string name="typemwi_title">ΠΡΟΣΟΧΗ!</string>
+    <string name="pref_notification_vibrate_min_level_title">Δόνηση στα επίπεδα απειλής</string>
+    <string name="samples_label">Δείγματα:</string>
+    <string name="tracking_cell_information">Εντοπισμός Πληροφοριών Κυψέλης</string>
+    <string name="pref_refresh_10s">10 δευτ</string>
+    <string name="status_high_detail_info">Εντοπίστηκαν Ενέργειες Εχθρικών Υπηρεσιών: Ένα IMSI-Catcher (IMSIC) ή ψεύτικος σταθμός BTS (FBTS) παρακολουθεί ενεργά τους χρήστες. Πραγματοποιείται ενεργή σάρωση σε αυτήν την περιοχή. Θα πρέπει να αποφύγετε αυτό το μέρος με κάθε τρόπο, ειδικά εάν υπάρχει πολιτική αναταραχή. Αφαιρέστε την μπαταρία και την κάρτα SIM!</string>
+    <string name="pref_enable_cell_monitoring_summ">Ενεργοποίηση Αυτόματης Παρακολούθησης Κυψελών</string>
+    <string name="timeout_spinner_10_sec">10 δευτ</string>
+    <string name="clear_database">Καθαρισμός/Επαναφορά Βάσης Δεδομένων</string>
+    <string name="phone_type">Τύπος Τηλεφώνου</string>
+    <string name="pref_persistservice_summ">Η υπηρεσία θα συνεχίσει να λειτουργεί μετά την έξοδο από την εφαρμογή (αποεπιλέξτε για να κλείσετε πλήρως)</string>
+    <string name="toggle_attack_detection">toggle_attack_detection</string>
+    <string name="alert_femtocell_tracking_detected">ΣΥΝΑΓΕΡΜΟΣ: Ανιχνεύτηκε Εντοπισμός FemtoCell</string>
+    <string name="open_cell_id_button_ok">ΟΚ</string>
+    <string name="pref_refresh_5s">5 δευτ</string>
+    <string name="help_app_upload_local_bts">Μεταφορτώνει το BTS σας στη βάση δεδομένων OpenCellID.</string>
+    <string name="typewap_header">Ανιχνεύτηκε WAP Push</string>
+    <string name="pc_label">PC:</string>
+    <string name="pref_autostart_title">Αυτόματη Εκκίνηση</string>
+    <string name="status_high">Υψηλό</string>
+    <string name="debugging">Debugging
+\n</string>
+    <string name="monitoring_cell_information">Ανίχνευση Πληροφοριών Κυψέλης</string>
+    <string name="alert_threat_detected">ΣΥΝΑΓΕΡΜΟΣ: Εντοπίστηκαν Κάποιες Απειλές!</string>
+    <string name="celltowers_data_successfully_imported">Τα δεδομένα CellTowers έχουν εισαχθεί με επιτυχία.</string>
+    <string name="ui_icon_flat">Επίπεδο</string>
+    <string name="adv_user_root_title">Ενεργοποίηση ανίχνευσης SMS</string>
+    <string name="help_app_quit">Έξοδος από αυτήν την εφαρμογή.</string>
+    <string name="open_cell_id_button_cancel">Ακύρωση</string>
+    <string name="status">Κατάσταση:</string>
+    <string name="drawer_open">Άνοιγμα Drawer Πλοήγησης</string>
+    <string name="mcc_label">MCC:</string>
+    <string name="network_info">Πληροφορίες Δικτύου</string>
+    <string name="at_command_response_looking">*** Ψάχνετε για AT σειριακές συσκευές ...</string>
+    <string name="pref_refresh_5_min">5 λεπτ</string>
+    <string name="application">Εφαρμογή</string>
+    <string name="pref_refresh_summ">Ελέγξτε τη συχνότητα των ενημερώσεων συσκευών
+\nΤρέχουσα επιλογή: %s</string>
+    <string name="status_medium_about_desc">Μη Ασφαλής Περιοχή Υπηρεσιών. Φύγετε!</string>
+    <string name="silent_sms">Αθόρυβο SMS</string>
+    <string name="pref_persistservice_title">Μόνιμη Υπηρεσία</string>
+    <string name="mnc_label">MNC:</string>
+    <string name="opencellid_data_successfully_received">Τα δεδομένα OpenCellID λήφθηκαν επιτυχώς.</string>
+    <string name="about_aimsicd">Σχετικά με AIMSICD</string>
+    <string name="status_ok_detail_info">Δεν εντοπίστηκαν απειλές. Το δίκτυο σας ελέγχεται συνεχώς με βάση τις ενεργοποιημένες ρυθμίσεις ανίχνευσης.</string>
+    <string name="at_command_response_found">Βρέθηκε:</string>
+    <string name="opencellid_data_successfully_received_markers_updated">Τα δεδομένα OpenCellID ελήφθησαν με επιτυχία.
+\nΤα Σημάδια Χάρτη ενημερώθηκαν.</string>
+    <string name="typezero_data">Ανιχνεύθηκε Μήνυμα Type-0!
+\nΛεπτομέρειες: Δείτε την προβολή Βάσης Δεδομένων</string>
+    <string name="contacting_opencellid_for_data">Επικοινωνία με το OpenCellID για δεδομένα...
+\nΑυτό μπορεί να πάρει ένα λεπτό.</string>
+    <string name="describe_the_problem_you_had">ΠΡΟΣΟΧΗ! Παρακαλείστε να περιγράψετε το πρόβλημα που είχατε πριν στείλετε αυτά τα αρχεία καταγραφής. ΔΕΝ ΠΑΡΕΧΟΥΜΕ ΒΟΗΘΕΙΑ ΧΩΡΙΣ ΠΕΡΙΓΡΑΦΗ!</string>
+    <string name="typewap_data">Ανιχνεύτηκε Μήνυμα SMS WAP Push!
+\nΛεπτομέρειες: Δείτε την Προβολή Βάσης Δεδομένων</string>
+    <string name="btn_copy_to_clipboard">Αντιγραφή</string>
+    <string name="cell_doesnt_provide_any_neighbors">Το BTS δεν παρέχει γειτονικές κυψέλες!</string>
+    <string name="invalid_key_try_later">Μη έγκυρο κλειδί OpenCellId, δοκιμάστε ξανά αργότερα.</string>
+    <string name="main">Κύριο</string>
+    <string name="button_refresh">Ανανέωση</string>
+    <string name="pref_enable_gps_title">Ρύθμιση GPS</string>
+    <string name="cell_id_doesnt_exist_in_db">Το ID Κυψέλης δεν βρίσκεται στη Βάση Δεδομένων OpenCellID!</string>
+    <string name="drawer_close">Κλείσιμο Drawer Πλοήγησης</string>
+    <string name="pref_refresh_1_min">1 λεπτ</string>
+    <string name="network_lac">LAC:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="command_hint">Εισάγετε εντολή AT εδώ.</string>
+    <string name="pref_ocid_key_title">Κλειδί API OpenCellID</string>
+    <string name="neighboring_cells_title">Γειτονικές Κυψέλες</string>
+    <string name="timeout_spinner_title">Τέλος χρόνου:</string>
+    <string name="unique_bts_data">Μοναδικά δεδομένα BTS</string>
+    <string name="location_error_message">Δεν μπορείτε να παρακολουθήσετε δεδομένα GPS χωρίς να ενεργοποιήσετε τις Υπηρεσίες τοποθεσίας. Θέλετε να ενεργοποιηθούν τώρα;</string>
+    <string name="pref_refresh_45s">45 δευτ</string>
+    <string name="uploaded_bts_data_successfully">Τα δεδομένα BTS μεταφέρθηκαν στο OpenCellID με επιτυχία.</string>
+    <string name="lac_label">LAC:</string>
+    <string name="adv_user_info">Αυτό το μενού προορίζεται μόνο για προχωρημένους χρήστες!
+\n
+\nΠαρακαλούμε μην εισάγετε τυχαία σειρά συμβόλων επειδή θα προκαλέσει την έξοδο από την ανίχνευση.
+\n
+\nΓια να προσθέσετε μια σειρά συμβόλων, επιλέξτε τον τύπο SMS από το αναπτυσσόμενο μενού, πληκτρολογήστε τη συμβολοσειρά ανίχνευσης και πατήστε εισαγωγή.
+\n
+\nΓια να διαγράψετε από τη βάση δεδομένων πατήστε παρατεταμένα την προβολή λίστας.</string>
+    <string name="pref_map_title">Προτιμήσεις Προβολής Χάρτη</string>
+    <string name="pref_map_type_title">Τύπος Χάρτη</string>
+    <string name="network_code">Κωδικός Παρόχου:</string>
+    <string name="getting_ocid_api_key">Λήψη κλειδιού API OpenCellID ...</string>
+    <string name="status_idle_description">Κατάσταση: Αδρανές.</string>
+    <string name="status_ok_description">Κατάσταση: Καλή. Δεν Εντοπίστηκαν Απειλές.</string>
+    <string name="pref_enable_cell_monitoring_title">Παρακολούθηση Κυψελών</string>
+    <string name="pref_system_title">Ρυθμίσεις Συστήματος</string>
+    <string name="pref_ui_icons_title">Κατάσταση-Εικονίδια</string>
+    <string name="help_main_phone_sim_details">Πληροφορίες Παρόχου δικτύων SIM, IMEI, TMSI</string>
+    <string name="hostile_service_area_changing_lac_detected">Εχθρική Περιοχή Υπηρεσιών: Ανιχνεύτηκε Αλλαγή στο LAC!</string>
+    <string name="network_netid">ID Δικτύου:</string>
+    <string name="pref_enable_gps_summary">Ενεργοποίηση GPS για Εντοπισμό Κυψελών</string>
+    <string name="clear_database_question">Όλα τα δεδομένα θα διαγραφούν
+\nΕίστε σίγουροι</string>
+    <string name="adv_user_pref_sms_summary">Διαγραφή εντοπισμένων μηνυμάτων SMS</string>
+    <string name="upload_bts">Μεταφόρτωση Δεδομένων BTS</string>
+    <string name="notification_vibrate_ok">ΟΚ</string>
+    <string name="no_data_for_publishing">Δεν υπάρχουν διαθέσιμα δεδομένα για δημοσίευση.</string>
+    <string name="alert_silent_wap_sms_detected">ΣΥΝΑΓΕΡΜΟΣ: Εντοπίστηκε Προώθηση WAP στο SMS!</string>
+    <string name="data_status">Κατάσταση Δεδομένων:</string>
+    <string name="msg_copied_to_clipboard">Τα αρχεία καταγραφής αποθηκεύτηκαν στο clipboard</string>
+    <string name="text_disagree">Δεν Συμφωνώ</string>
+    <string name="status_medium">Μέτριο</string>
+    <string name="pref_refresh_2s">2 δευτ</string>
+    <string name="no_network_connection_message">Δεν είναι δυνατή η λήψη δεδομένων OpenCellID χωρίς δυνατότητα σύνδεσης στο Internet, ενεργοποιήστε τη σύνδεση δεδομένων!</string>
+    <string name="disclaimer_title">ΑΠΟΠΟΙΗΣΗ ΕΥΘΥΝΩΝ</string>
+    <string name="about_changelog">ΑΡΧΕΙΟ ΑΛΛΑΓΩΝ</string>
+    <string name="stopped_tracking_femtocell">: Παύση εντοπισμού συνδέσεων FemtoCell.</string>
+    <string name="help_tracking_toggle_attack_detection">Ξεκινήστε/σταματήστε την ανίχνευση επίθεσης και συλλέξτε λεπτομέρειες κυψέλης σε εσωτερικούς πίνακες βάσεων δεδομένων</string>
+    <string name="pref_request_ocid_key">Ζητήστε το Κλειδί API OpenCellID</string>
+    <string name="lng_label">Lon:</string>
+    <string name="open_cell_id_label">Δεδομένα OpenCellID</string>
+    <string name="network_baseid">Αναγνωριστικό ID Σταθμού Βάσης:</string>
+    <string name="pref_protection_title">Ρυθμίσεις Προστασίας</string>
+    <string name="device_info_title">Πληροφορίες Συσκευής</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="response_label">Απόκριση:</string>
+    <string name="settings">Ρυθμίσεις</string>
+    <string name="femtocell_only_on_cdma_devices">Το AIMSICD μπορεί να εντοπίσει FemtoCell συνδέσεις μόνο σε συσκευές CDMA.</string>
+    <string name="app_version">Έκδοση: %s</string>
+    <string name="about_license">ΑΔΕΙΑ</string>
+    <string name="pref_refresh_25s">25 δευτ</string>
+    <string name="stopped_monitoring_cell_information">Η παρακολούθηση πληροφοριών κυψέλης σταμάτησε.</string>
+    <string name="delete_database_msg_success">Η βάση δεδομένων διαγράφηκε και αναδημιουργήθηκε με επιτυχία.
+\nΚάντε επανεκκίνηση της εφαρμογής για να καταργήσετε τις παλιές τιμές που υπάρχουν ήδη στη μνήμη.</string>
+    <string name="pref_notification_vibrate_min_level_summary">Επιλέξτε ελάχιστο επίπεδο απειλής για την δόνηση</string>
+    <string name="network_type">Τύπος:</string>
+    <string name="message_request_api_key">Πατήστε OK για να ζητήσετε ένα κλειδί API από το OpenCellID.org. Αυτό θα σας επιτρέψει να κάνετε λήψη των δεδομένων σας και να τα δείτε στο χάρτη. Θα σας επιτρέψει επίσης να μεταφορτώσετε δεδομένα κυψελών. Λάβετε υπόψη ότι αν δεν μεταφορτώσετε δεδομένα κυψέλης εντός 20 ημερών, το κλειδί API μπορεί να γίνει ανενεργό.</string>
+    <string name="network_name">Όνομα Παρόχου:</string>
+    <string name="n_a">N/A</string>
+    <string name="about_releases">ΑΝΑΚΟΙΝΩΣΕΙΣ</string>
+    <string name="no_tracked_locations_found">Δεν βρέθηκαν τοποθεσίες που εντοπίστηκαν στο χάρτη.</string>
+    <string name="unable_to_determine_last_location">Δεν ήταν δυνατός ο προσδιορισμός της τελευταίας τοποθεσίας
+\nΕνεργοποιείστε τις υπηρεσίες τοποθεσίας και δοκιμάστε ξανά.</string>
+    <string name="disclaimer">Με τη χρήση του AIMSICD έχετε κατανοήσει και συμφωνείτε ότι το AIMSICD είναι μια πειραματική και ενημερωτική εφαρμογή Android που μπορεί να αποτύχει να ανιχνεύσει την παρακολούθηση και την εντοπισμό για πολλούς λόγους. Καταλαβαίνετε επίσης ότι μπορεί να καταστρατηγηθεί ή να αποτύχει από άλλα μέσα, χωρίς να έχουν ενημερωθεί οι προγραμματιστές. Έτσι, συμφωνείτε και καταλαβαίνετε ότι οι προγραμματιστές και οι εταιρείες που σχετίζονται με αυτό το ελεύθερο προϊόν, σε καμία περίπτωση δεν μπορούν να θεωρηθούν υπεύθυνοι για οποιαδήποτε αποτελέσματα ή αποτέλεσμα, που βασίζονται στη χρήση αυτής της εφαρμογής. ΑΝΑΠΤΥΞΙΑΚΟ ΣΤΑΔΙΟ: ALPHA!</string>
+    <string name="buildnumber">Αριθμός Κατασκευής: %s</string>
+    <string name="typemwi_data">Έχει εντοπιστεί δείκτης αναμονής μηνύματος!
+\nΛεπτομέρειες: Δείτε το πρόγραμμα προβολής βάσεων δεδομένων.</string>
+    <string name="press_once_again_to_exit">Πιέστε ξανά για έξοδο</string>
+    <string name="title_debug_logs">Αρχεία Καταγραφής Αποσφαλμάτωσης</string>
+    <string name="adv_user_pref_sms_launch">Διαγραφή SMS</string>
+    <string name="btn_stop_logs">Παύση</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="toggle_cell_tracking">toggle_cell_tracking</string>
+    <string name="imported_ocid_data">Εισαγόμενα δεδομένα OpenCellID</string>
+    <string name="about_github">AIMSICD στο GitHub</string>
+    <string name="table_contains_no_data">Ο Πίνακας δεν περιέχει δεδομένα για εμφάνιση.</string>
+    <string name="sim_info_title">Πληροφορίες SIM</string>
+    <string name="btn_start_logs">Εκκίνηση</string>
+    <string name="import_cell_towers">Εισαγωγή Μνήμης Πύργων Κυψελών</string>
+    <string name="help_settings_reset_db">Καθαρίστε και επαναφέρετε όλους τους πίνακες ή τους πίνακες DB που έχετε καθορίσει.</string>
+    <string name="at_command_title">AT Command Interface</string>
+    <string name="ui_icon_white">Άσπρο</string>
+    <string name="pref_notification_vibrate_enable_title">Ενεργοποίηση Δόνησης</string>
+    <string name="typezero_header">Εντοπίστηκε Αθόρυβο SMS</string>
+    <string name="at_command_response_setup_complete">*** Ολοκλήρωση εγκατάστασης ***
+\n</string>
+    <string name="pref_notification_vibrate_enable_summary">Δόνηση όταν η ειδοποίηση αλλάζει</string>
+    <string name="stopped_tracking_cell_information">Ο εντοπισμός πληροφοριών κυψέλης σταμάτησε</string>
+    <string name="text_cancel">Ακύρωση</string>
+    <string name="status_high_about_desc">Ενεργή παρακολούθηση κοντά σε εσάς!</string>
+    <string name="alert_femtocell_connection_detected">ΣΥΝΑΓΕΡΜΟΣ: Εντοπίστηκε Σύνδεση FemtoCell!</string>
+    <string name="pref_femto_action_title">Προστασία Femtocell</string>
+</resources>
