@@ -57,12 +57,9 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
     private void updateIcon(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         final String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (getActionBar() != null) {
-                    getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD) getApplication()).getStatus()));
-                }
+        runOnUiThread(() -> {
+            if (getActionBar() != null) {
+                getActionBar().setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD) getApplication()).getStatus()));
             }
         });
     }

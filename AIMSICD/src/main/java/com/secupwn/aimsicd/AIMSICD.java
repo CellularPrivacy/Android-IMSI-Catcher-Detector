@@ -8,7 +8,6 @@ package com.secupwn.aimsicd;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -34,7 +33,6 @@ import android.widget.Toast;
 import com.secupwn.aimsicd.activities.AboutActivity;
 import com.secupwn.aimsicd.activities.BaseActivity;
 import com.secupwn.aimsicd.activities.DebugLogs;
-import com.secupwn.aimsicd.fragments.MapFragment;
 import com.secupwn.aimsicd.activities.SettingsActivity;
 import com.secupwn.aimsicd.adapters.AIMSICDDbAdapter;
 import com.secupwn.aimsicd.constants.DrawerMenu;
@@ -44,6 +42,7 @@ import com.secupwn.aimsicd.fragments.AtCommandFragment;
 import com.secupwn.aimsicd.fragments.CellInfoFragment;
 import com.secupwn.aimsicd.fragments.DbViewerFragment;
 import com.secupwn.aimsicd.fragments.DeviceFragment;
+import com.secupwn.aimsicd.fragments.MapFragment;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.service.CellTracker;
 import com.secupwn.aimsicd.utils.AsyncResponse;
@@ -131,13 +130,11 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
         prefs = getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
 
                 /* Pref listener to enable sms detection on pref change   */
-        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                if (key.equals(getString(R.string.adv_user_root_pref_key))) {
-                    SmsDetection();
-                }
-
+        prefListener = (prefs1, key) -> {
+            if (key.equals(getString(R.string.adv_user_root_pref_key))) {
+                SmsDetection();
             }
+
         };
         prefs.registerOnSharedPreferenceChangeListener(prefListener);
 
@@ -147,27 +144,23 @@ public class AIMSICD extends BaseActivity implements AsyncResponse {
             final AlertDialog.Builder disclaimer = new AlertDialog.Builder(this)
                     .setTitle(R.string.disclaimer_title)
                     .setMessage(R.string.disclaimer)
-                    .setPositiveButton(R.string.text_agree, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            prefsEditor = prefs.edit();
-                            prefsEditor.putBoolean(mDisclaimerAccepted, true);
-                            prefsEditor.apply();
-                            startService();
-                        }
+                    .setPositiveButton(R.string.text_agree, (dialog, which) -> {
+                        prefsEditor = prefs.edit();
+                        prefsEditor.putBoolean(mDisclaimerAccepted, true);
+                        prefsEditor.apply();
+                        startService();
                     })
-                    .setNegativeButton(R.string.text_disagree, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            prefsEditor = prefs.edit();
-                            prefsEditor.putBoolean(mDisclaimerAccepted, false);
-                            prefsEditor.apply();
-                            Uri packageUri = Uri.parse("package:com.SecUpwN.AIMSICD");
-                            Intent uninstallIntent =
-                                    new Intent(Intent.ACTION_DELETE, packageUri);
-                            startActivity(uninstallIntent);
-                            finish();
-                            if (mAimsicdService != null) {
-                                mAimsicdService.onDestroy();
-                            }
+                    .setNegativeButton(R.string.text_disagree, (dialog, which) -> {
+                        prefsEditor = prefs.edit();
+                        prefsEditor.putBoolean(mDisclaimerAccepted, false);
+                        prefsEditor.apply();
+                        Uri packageUri = Uri.parse("package:com.SecUpwN.AIMSICD");
+                        Intent uninstallIntent =
+                                new Intent(Intent.ACTION_DELETE, packageUri);
+                        startActivity(uninstallIntent);
+                        finish();
+                        if (mAimsicdService != null) {
+                            mAimsicdService.onDestroy();
                         }
                     });
 

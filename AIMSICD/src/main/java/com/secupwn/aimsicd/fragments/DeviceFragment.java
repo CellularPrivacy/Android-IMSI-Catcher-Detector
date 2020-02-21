@@ -216,11 +216,9 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
             okHttpClient.newCall(request).enqueue(getOpenCellIdResponseCallback());
         } else {
             Handler refresh = new Handler(Looper.getMainLooper());
-            refresh.post(new Runnable() {
-                public void run() {
-                    Helpers.sendMsg(getActivity(), getString(R.string.no_opencellid_key_detected));
-                    swipeRefreshLayout.setRefreshing(false);
-                }
+            refresh.post(() -> {
+                Helpers.sendMsg(getActivity(), getString(R.string.no_opencellid_key_detected));
+                swipeRefreshLayout.setRefreshing(false);
             });
         }
     }
@@ -231,21 +229,15 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
             @Override
             public void onFailure(Request request, IOException e) {
                 Handler refresh = new Handler(Looper.getMainLooper());
-                refresh.post(new Runnable() {
-                    public void run() {
-                        refreshFailed();
-                    }
-                });
+                refresh.post(() -> refreshFailed());
             }
 
             @Override
             public void onResponse(final Response response) throws IOException {
                 Handler refresh = new Handler(Looper.getMainLooper());
-                refresh.post(new Runnable() {
-                    public void run() {
-                        Cell cell = responseToCell(response);
-                        processFinish(cell);
-                    }
+                refresh.post(() -> {
+                    Cell cell = responseToCell(response);
+                    processFinish(cell);
                 });
             }
         };

@@ -77,14 +77,11 @@ public class OpenCellIdActivity extends BaseActivity {
                  * application will crash due to 'UI modification from background thread, starting new
                  * runOnUIThread will prevent it.
                  */
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        pd.dismiss();
-                        Helpers.msgLong(OpenCellIdActivity.this, getString(R.string.ocid_api_error) +
-                                e.getClass().getName() + " - " + e.getMessage());
-                        finish();
-                    }
+                runOnUiThread(() -> {
+                    pd.dismiss();
+                    Helpers.msgLong(OpenCellIdActivity.this, getString(R.string.ocid_api_error) +
+                            e.getClass().getName() + " - " + e.getMessage());
+                    finish();
                 });
 
                 return null;

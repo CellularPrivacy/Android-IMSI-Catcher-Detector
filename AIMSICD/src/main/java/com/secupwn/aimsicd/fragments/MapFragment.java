@@ -446,12 +446,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
                     } while (c.moveToNext());
                 } else {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Helpers.msgLong(getActivity(), getString(R.string.no_tracked_locations_found));
-                        }
-                    });
+                    getActivity().runOnUiThread(() -> Helpers.msgLong(getActivity(), getString(R.string.no_tracked_locations_found)));
                 }
 
                 GeoPoint ret = new GeoPoint(0, 0);

@@ -8,7 +8,6 @@ package com.secupwn.aimsicd.utils;
 import android.content.Context;
 import android.location.Location;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
@@ -169,13 +168,7 @@ public class Device {
      * @return string of SIM Country data
      */
     Optional<String> getSimCountry(final TelephonyManager tm) {
-        return getSimInformation(new Supplier<String>() {
-            @Nullable
-            @Override
-            public String get() {
-                return tm.getSimCountryIso();
-            }
-        });
+        return getSimInformation(() -> tm.getSimCountryIso());
     }
 
     /**
@@ -191,13 +184,7 @@ public class Device {
      * @return string of SIM Operator data
      */
     public Optional<String> getSimOperator(final TelephonyManager tm) {
-        return getSimInformation(new Supplier<String>() {
-            @Nullable
-            @Override
-            public String get() {
-                return tm.getSimOperator();
-            }
-        });
+        return getSimInformation(() -> tm.getSimOperator());
     }
 
     public Optional<String> getSimOperator() {
@@ -210,13 +197,7 @@ public class Device {
      * @return string of SIM Operator Name
      */
     Optional<String> getSimOperatorName(final TelephonyManager tm) {
-        return getSimInformation(new Supplier<String>() {
-            @Nullable
-            @Override
-            public String get() {
-                return tm.getSimOperatorName();
-            }
-        });
+        return getSimInformation(() -> tm.getSimOperatorName());
     }
 
     public Optional<String> getSimOperatorName() {
@@ -229,13 +210,7 @@ public class Device {
      * @return string of SIM Subscriber ID data
      */
     Optional<String> getSimSubs(final TelephonyManager tm) {
-        return getSimInformation(new Supplier<String>() {
-            @Nullable
-            @Override
-            public String get() {
-                return tm.getSubscriberId();
-            }
-        });
+        return getSimInformation(() -> tm.getSubscriberId());
     }
 
     public Optional<String> getSimSubs() {
@@ -248,13 +223,7 @@ public class Device {
      * @return string of SIM Serial Number data
      */
     Optional<String> getSimSerial(final TelephonyManager tm) {
-        return getSimInformation(new Supplier<String>() {
-            @Nullable
-            @Override
-            public String get() {
-                return tm.getSimSerialNumber();
-            }
-        });
+        return getSimInformation(() -> tm.getSimSerialNumber());
     }
 
     public Optional<String> getSimSerial() {

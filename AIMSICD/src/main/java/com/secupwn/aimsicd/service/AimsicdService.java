@@ -40,7 +40,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.rilexecutor.RilExecutor;
@@ -104,30 +103,17 @@ public class AimsicdService extends InjectionService {
 
         signalStrengthTracker = new SignalStrengthTracker(getBaseContext());
 
-        mAccelerometerMonitor = new AccelerometerMonitor(this, new Runnable() {
-            @Override
-            public void run() {
-                // movement detected, so enable GPS
+        mAccelerometerMonitor = new AccelerometerMonitor(this, () -> {
+            // movement detected, so enable GPS
 
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        timerHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mLocationTracker.start();
-                            }
-                        });
-                    }
-                };
-                new Thread(runnable).start();
+            Runnable runnable = () -> timerHandler.post(() -> mLocationTracker.start());
+            new Thread(runnable).start();
 
-                signalStrengthTracker.onSensorChanged();
+            signalStrengthTracker.onSensorChanged();
 
-                // check again in a while to see if GPS should be disabled
-                // this runnable also re-enables this movement sensor
-                timerHandler.postDelayed(batterySavingRunnable, AccelerometerMonitor.MOVEMENT_THRESHOLD_MS);
-            }
+            // check again in a while to see if GPS should be disabled
+            // this runnable also re-enables this movement sensor
+            timerHandler.postDelayed(batterySavingRunnable, AccelerometerMonitor.MOVEMENT_THRESHOLD_MS);
         });
 
         mLocationTracker = new LocationTracker(this, mLocationListener);
@@ -294,46 +280,37 @@ public class AimsicdService extends InjectionService {
                 })*/
                 .create();
 
-        rememberChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        rememberChoice.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if (isChecked) {
-                    isGPSchoiceChecked = true;
-                    gpsPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = gpsPreferences.edit();
-                    editor.putBoolean(GPS_REMEMBER_CHOICE, isGPSchoiceChecked);
-                    editor.apply();
+            if (isChecked) {
+                isGPSchoiceChecked = true;
+                gpsPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = gpsPreferences.edit();
+                editor.putBoolean(GPS_REMEMBER_CHOICE, isGPSchoiceChecked);
+                editor.apply();
 
-                } else {
-                    isGPSchoiceChecked = false;
-                }
+            } else {
+                isGPSchoiceChecked = false;
             }
         });
 
-        notNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        notNow.setOnClickListener(v -> {
 
-                isLocationRequestShowing = false;
-                setCellTracking(false);
-                alertDialog.cancel();
-                alertDialog.dismiss();
-            }
+            isLocationRequestShowing = false;
+            setCellTracking(false);
+            alertDialog.cancel();
+            alertDialog.dismiss();
         });
 
-        enableGPS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        enableGPS.setOnClickListener(v -> {
 
-                isLocationRequestShowing = false;
-                Intent gpsSettings = new Intent(
-                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                gpsSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                alertDialog.cancel();
-                alertDialog.dismiss();
-                startActivity(gpsSettings);
-            }
+            isLocationRequestShowing = false;
+            Intent gpsSettings = new Intent(
+                    android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            gpsSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            alertDialog.cancel();
+            alertDialog.dismiss();
+            startActivity(gpsSettings);
         });
 
         alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);

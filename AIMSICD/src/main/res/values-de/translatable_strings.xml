@@ -247,7 +247,7 @@
     <string name="service_state_changed">Betriebsstatus verändert!</string>
     <string name="stopped_tracking_femtocell">: Femtozellerkennung angehalten.</string>
     <string name="alert_femtocell_tracking_detected">ALARM: Femtozellverfolgung erkannt!</string>
-    <string name="refreshing_every">Aktualisiere aller</string>
+    <string name="refreshing_every">Aktualisiere alle</string>
     <string name="refreshing_now">Aktualisiere jetzt…</string>
     <string name="seconds">Sekunden.</string>
     <string name="contacting_opencellid_for_data">Kontaktiere OpenCellID für Daten…\nDies kann eine Minute dauern.</string>

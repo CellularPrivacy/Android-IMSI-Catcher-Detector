@@ -6,6 +6,7 @@
 # ---------------------------------------------------------------
 
 language: android
+jdk: oraclejdk8
 sudo: false
 
 cache:
@@ -24,8 +25,11 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-23.0.2
+    - platform-tools-preview
+    - tools-preview
+    - build-tools-24.0.0-preview
     - android-23
+    - android-N
     - extra-android-m2repository
 
 before_install: 'openssl aes-256-cbc -K $encrypted_dc771c3300d2_key -iv $encrypted_dc771c3300d2_iv -in keystore.jks.enc -out keystore.jks -d || true'

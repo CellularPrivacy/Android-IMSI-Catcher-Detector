@@ -10,8 +10,6 @@ package com.secupwn.aimsicd.smsdetection;
 
 import android.content.ContentValues;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -69,60 +67,54 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
         listViewAdv.setAdapter(new AdvanceUserBaseAdapter(getApplicationContext(), msgItems));
 
-        listViewAdv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> a, View v, int position, long id) {
-                Object o = listViewAdv.getItemAtPosition(position);
-                AdvanceUserItems itemDetails = (AdvanceUserItems) o;
+        listViewAdv.setOnItemLongClickListener((adapterView, v, position, id) -> {
+            Object o = listViewAdv.getItemAtPosition(position);
+            AdvanceUserItems itemDetails = (AdvanceUserItems) o;
 
-                String itemDetail = itemDetails.getDetection_string();
+            String itemDetail = itemDetails.getDetection_string();
 
-                if (dbAccess.deleteDetectionString(itemDetails.getDetection_string())) {
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.deleted) + ": " + itemDetail, Toast.LENGTH_SHORT).show();
+            if (dbAccess.deleteDetectionString(itemDetails.getDetection_string())) {
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.deleted) + ": " + itemDetail, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.failed_to_delete)
+                        + " " + itemDetail, Toast.LENGTH_SHORT).show();
+            }
+
+            try {
+                loadDbString();
+            } catch (Exception ee) {
+                log.debug("Error loading db string", ee);
+            }
+            return false;
+        });
+
+
+        insertButton.setOnClickListener(view -> {
+
+            if (editAdvUserDet.getText().toString().contains("\"")) {
+                Toast.makeText(getApplicationContext(), R.string.double_quote_will_cause_db_error,
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                ContentValues store_new_sms_string = new ContentValues();
+                store_new_sms_string.put(DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING,
+                        editAdvUserDet.getText().toString());
+
+                store_new_sms_string.put(DBTableColumnIds.DETECTION_STRINGS_SMS_TYPE,
+                        spinner.getSelectedItem().toString());
+
+                if (dbAccess.insertNewDetectionString(store_new_sms_string)) {
+                    Toast.makeText(getApplicationContext(), R.string.the_string_was_added_to_db,
+                            Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.failed_to_delete)
-                            + " " + itemDetail, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.failed_to_add_the_string_to_db,
+                            Toast.LENGTH_SHORT).show();
                 }
 
                 try {
                     loadDbString();
                 } catch (Exception ee) {
-                    log.debug("Error loading db string", ee);
-                }
-                return false;
-            }
-        });
-
-
-        insertButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (editAdvUserDet.getText().toString().contains("\"")) {
-                    Toast.makeText(getApplicationContext(), R.string.double_quote_will_cause_db_error,
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    ContentValues store_new_sms_string = new ContentValues();
-                    store_new_sms_string.put(DBTableColumnIds.DETECTION_STRINGS_LOGCAT_STRING,
-                            editAdvUserDet.getText().toString());
-
-                    store_new_sms_string.put(DBTableColumnIds.DETECTION_STRINGS_SMS_TYPE,
-                            spinner.getSelectedItem().toString());
-
-                    if (dbAccess.insertNewDetectionString(store_new_sms_string)) {
-                        Toast.makeText(getApplicationContext(), R.string.the_string_was_added_to_db,
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), R.string.failed_to_add_the_string_to_db,
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                    try {
-                        loadDbString();
-                    } catch (Exception ee) {
-                        log.error(ee.getMessage(), ee);
-                    }
+                    log.error(ee.getMessage(), ee);
                 }
             }
         });

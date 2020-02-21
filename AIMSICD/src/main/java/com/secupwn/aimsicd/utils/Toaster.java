@@ -5,7 +5,6 @@
  */
 package com.secupwn.aimsicd.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -35,23 +34,19 @@ public class Toaster {
                 toast.cancel();
             }
 
-            new Handler(context.getMainLooper()).post(new Runnable() {
-                @SuppressLint("ShowToast")
-                @Override
-                public void run() {
-                    toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-                    new CountDownTimer(Math.max(TOAST_DURATION_MILLS - SHORT_TOAST_DURATION, 1000), 1000) {
-                        @Override
-                        public void onFinish() {
-                            toast.show();
-                        }
+            new Handler(context.getMainLooper()).post(() -> {
+                toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+                new CountDownTimer(Math.max(TOAST_DURATION_MILLS - SHORT_TOAST_DURATION, 1000), 1000) {
+                    @Override
+                    public void onFinish() {
+                        toast.show();
+                    }
 
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-                            toast.show();
-                        }
-                    }.start();
-                }
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        toast.show();
+                    }
+                }.start();
             });
         }
     }
@@ -67,12 +62,9 @@ public class Toaster {
             if (toast != null) {
                 toast.cancel();
             }
-            new Handler(context.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    toast = Toast.makeText(context, msg.trim(), Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+            new Handler(context.getMainLooper()).post(() -> {
+                toast = Toast.makeText(context, msg.trim(), Toast.LENGTH_SHORT);
+                toast.show();
             });
         }
     }

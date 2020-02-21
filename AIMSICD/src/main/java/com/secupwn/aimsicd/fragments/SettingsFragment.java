@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
@@ -30,9 +29,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         gpsPref = (CheckBoxPreference) findPreference(gps_key);
         gpsPref.setDefaultValue(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
-        gpsPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
+        gpsPref.setOnPreferenceClickListener(preference -> {
 
                 Intent gpsSettings = new Intent(
                         android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -45,24 +42,19 @@ public class SettingsFragment extends PreferenceFragment {
                 gpsPref.setChecked(false);
                 return false;
 
-            }
-
-        });
+            });
 
 
-        gpsPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+        gpsPref.setOnPreferenceChangeListener((preference, newValue) -> {
 
-                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    Log.e("pref", "changed to " + newValue);
-                    preference.setDefaultValue(newValue);
-                    return true;
-                }
-
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                Log.e("pref", "changed to " + newValue);
                 preference.setDefaultValue(newValue);
-                return false;
+                return true;
             }
+
+            preference.setDefaultValue(newValue);
+            return false;
         });
     }
 
