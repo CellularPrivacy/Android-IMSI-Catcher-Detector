@@ -146,7 +146,7 @@
     <string name="btn_copy_to_clipboard">Copy</string>
     <string name="msg_copied_to_clipboard">Logs copied to clipboard.</string>
     <string name="btn_stop_logs">Stop</string>
-    <string name="btn_start_logs">anfangen</string>
+    <string name="btn_start_logs">Start</string>
     <string name="title_activity_about_pop_up">DETAILED EXPLANATION</string>
     <string name="status_idle_detail_info">App is idling or loading. No protection or detection is enabled. Please enable detection.</string>
     <string name="status_ok_detail_info">No threats detected. Your network is constantly being checked based upon the enabled detection settings.</string>
@@ -226,4 +226,74 @@
     <string name="refreshed_cell_id_info">Refreshed CellId info</string>
     <string name="cell_doesnt_provide_any_neighbors">BTS doesn\'t provide any neighbor cells!</string>
     <string name="import_cell_towers">Import CellTowers Data</string>
+    <string name="error_retrieving_opencellid_data">Error retrieving OpenCellID data.
+\nCheck your network!</string>
+    <string name="opencellid_data_successfully_received_markers_updated">OpenCellID data successfully received.
+\nMap Markers updated.</string>
+    <string name="uploaded_bts_data_successfully">Uploaded BTS data to OpenCellID successfully.</string>
+    <string name="error_uploading_bts_data">Error in uploading BTS data to OpenCellID servers!</string>
+    <string name="no_opencellid_key_detected">No OpenCellID API Key detected!
+\nPlease enter your key in settings first.</string>
+    <string name="unable_to_acquire_root_access">Unable to acquire ROOT access on your device.
+\nAT Command Injection requires ROOT Terminal access.
+\nPlease check your device is ROOTED and try again.</string>
+    <string name="unable_to_detect_busybox">Unable to detect Busybox on your device.
+\nAT Command Injection requires Busybox components to function correctly.
+\nPlease check your device has Busybox installed and try again.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">An unknown error has occurred trying to acquire the Serial Device.
+\nPlease check your logcat for any errors and post them on our Github.</string>
+    <string name="unknown_error_initialising_at_command_injector">An unknown error has occurred trying to initialise the AT Command Injector.
+\nPlease check your logcat for any errors and post them on our Github.</string>
+    <string name="getting_ocid_api_key">Getting OpenCellID API key…</string>
+    <string name="unable_to_create_map">Unable to create map!</string>
+    <string name="describe_the_problem_you_had">ATTENTION! Please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!
+\n</string>
+    <string name="status">Status:</string>
+    <string name="status_idle">Idle</string>
+    <string name="status_ok">OK</string>
+    <string name="status_medium">Medium</string>
+    <string name="status_high">High</string>
+    <string name="status_danger">Danger</string>
+    <string name="status_skull">Run!</string>
+    <string name="adv_user_info">This menu is for advanced users only!
+\n
+\nPlease do not insert random strings because it will cause detection to go out of control.
+\n
+\nTo add a string choose the SMS type from the dropdown menu, type your detection string and press insert.
+\n
+\nTo delete from database long press on list view.</string>
+    <string name="adv_user_sms_info">This menu is for advanced users only!
+\nTo delete a detected SMS long press it in listview.</string>
+    <string name="title_activity_advanced_user">Delete Detected SMS</string>
+    <string name="adv_user_pref_header">Advanced User Settings</string>
+    <string name="adv_user_pref_launch">Detection Strings</string>
+    <string name="adv_user_pref_sms_launch">Delete SMS</string>
+    <string name="adv_user_pref_summary">Insert and delete detection strings</string>
+    <string name="adv_user_pref_sms_summary">Delete Detected SMS</string>
+    <string name="adv_user_root_title">Enable SMS Detection</string>
+    <string name="adv_user_root_sum">Root is required to enable SMS detection</string>
+    <string name="detection_strings">Detection Strings</string>
+    <string name="typezero_title">ATTENTION!</string>
+    <string name="typezero_header">Silent SMS Detected</string>
+    <string name="typezero_data">Type-0 Message detected!
+\nDetails: See Database Viewer.</string>
+    <string name="typemwi_title">ATTENTION!</string>
+    <string name="typemwi_header">MWI Detected</string>
+    <string name="help_main_phone_sim_details">SIM network provider details, IMEI, TMSI.</string>
+    <string name="help_main_acd">Show detailed comparison of the currently connected cell, with the data (if any) found in OpenCellID and highlight the differences.</string>
+    <string name="help_main_database_viewer">View the different DB tables we have.</string>
+    <string name="help_main_antenna_map_view">Map of color coded antennas nearby.</string>
+    <string name="help_main_at_command_interface">Interface that allows sending AT commands to Baseband Processor (requires ROOT).</string>
+    <string name="help_tracking_toggle_attack_detection">Start/stop attack detection and collect cell details into internal database tables.</string>
+    <string name="help_tracking_toggle_cell_tracking">Start to track cells for display on the Antenna Map Viewer and possibly later upload to OpenCellID.</string>
+    <string name="help_settings_preferences">AIMSICD settings such as protection rules, polling times and service behaviour.</string>
+    <string name="help_settings_reset_db">Clear and reset all or specified DB table(s).</string>
+    <string name="help_app_add_get_ocid_api_key">Get an API key for using the OpenCellID database to upload and download data…</string>
+    <string name="help_app_about">Status Icons and Project explained.</string>
+    <string name="help_app_download_local_bts">Downloads the OpenCellID Database.</string>
+    <string name="imporing_celltowers_data">Importing CellTowers data…
+\nThis may take a while.</string>
+    <string name="celltowers_data_successfully_imported">CellTowers data successfully imported.</string>
+    <string name="error_importing_celltowers_data">Error importing CellTowers data.</string>
+    <string name="help_app_import_cell_towers">Imports CellTowers Database.</string>
 </resources>
