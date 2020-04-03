@@ -122,8 +122,8 @@
     <string name="failed_to_delete">Αποτυχία διαγραφής</string>
     <string name="timeout_spinner_prompt">Επιλογή Τέλος χρόνου</string>
     <string name="needs_location">Χρειάζεται τοποθεσία</string>
-    <string name="only_one_key_per_day">"Μόνο 1 νέο αίτημα κλειδιού API  κάθε 24 ώρες
-\nΠαρακαλώ προσπαθήστε ξανά αργότερα."</string>
+    <string name="only_one_key_per_day">Μόνο 1 νέο αίτημα κλειδιού API κάθε 24 ώρες
+\nΠαρακαλώ προσπαθήστε ξανά αργότερα.</string>
     <string name="about_credits">CREDITS</string>
     <string name="failed_to_add_the_string_to_db">Αποτυχία προσθήκης της συμβολοσειράς στη βάση δεδομένων</string>
     <string name="btn_clear_logs">Καθαρισμός</string>
