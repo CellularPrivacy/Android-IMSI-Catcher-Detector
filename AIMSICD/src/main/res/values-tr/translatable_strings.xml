@@ -1,2 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="location_error_message">GPS verisini Konum Servislerini aktifleştirmeden kullanamazsın. Etkinleştirmek ister misin\?</string>
+    <string name="location_error_title">Konum Servisleri Devredışı</string>
+    <string name="network_baseid">Baz İstasyonu Kimliği:</string>
+    <string name="network_sysid">Sistem Kimliği:</string>
+    <string name="network_netid">Ağ Kimliği:</string>
+    <string name="about_desc_icon_title">Ayrıntılı bilgi için aşağıdaki durum simgelerine basın:</string>
+    <string name="status_skull_about_desc">KOŞ! Ahize manipüle edildi!</string>
+    <string name="status_medium_about_desc">Güvensiz Hizmet Alanı. Ayrıl!</string>
+    <string name="status_danger_about_desc">Takip ediliyorsun!</string>
+    <string name="status_ok_about_desc">Her şey yolunda.</string>
+    <string name="status_high_about_desc">Aktif takip size yakın!</string>
+    <string name="status_idle_about_desc">Boşta / Yükleniyor.</string>
+    <string name="about_credits">EMEĞİ GEÇENLER</string>
+    <string name="about_license">LİSANS</string>
+    <string name="about_changelog">DEĞİŞİKLİKLER</string>
+    <string name="about_releases">SÜRÜMLER</string>
+    <string name="about_disclaimer">FERAGATNAME</string>
+    <string name="about_contribute">KATKIDA BULUN</string>
+    <string name="about_wiki">DÖKÜMANTASYON</string>
+    <string name="about_github">Github\'da AIMSICD</string>
+    <string name="aimsicd_about_info3">GSM/UMTS ağlarında Android bazlı sahte baz istasyonu (IMSI-Yakalayıcılar) tespit edici ve önleyici.</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="buildnumber">Build Numarası: %s</string>
+    <string name="app_version">Versiyon: %s</string>
+    <string name="about_aimsicd">AIMSICD Hakkında</string>
+    <string name="upload_bts">Bİ(BTS) Verisi Yükle</string>
+    <string name="network_psc">PSC:</string>
+    <string name="drawer_close">Gezinme Çekmecesini Kapat</string>
+    <string name="drawer_open">Gezinme Çekmecesini Aç</string>
+    <string name="button_refresh">Yenile</string>
+    <string name="network_roaming">Dolaşım:</string>
+    <string name="data_status">Veri Durumu:</string>
+    <string name="data_activity">Veri Aktivitesi:</string>
+    <string name="network_cellid">CID:</string>
+    <string name="network_lac">LAC:</string>
+    <string name="network_type">Tip:</string>
+    <string name="network_code">Sağlayıcı Kodu:</string>
+    <string name="network_name">Sağlayıcı Adı:</string>
+    <string name="device_version">RIL Versiyonu:</string>
+    <string name="device_imei">IMEI:</string>
+    <string name="device_type">Telefon Tipi:</string>
+    <string name="sim_serial">Seri No:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_operator_name">Operatör Adı:</string>
+    <string name="sim_operator_id">Operatör ID:</string>
+    <string name="sim_country">Ülke:</string>
+    <string name="neighboring_cells_num_title">Toplam:</string>
+    <string name="ciphering_indicator_title">Şifreleme Göstergesi</string>
+    <string name="neighboring_cells_title">Komşu Hücreler</string>
+    <string name="cell_info_title">Komşu Hücreler</string>
+    <string name="network_info">Ağ Bilgisi</string>
+    <string name="sim_info_title">SIM Bilgisi</string>
+    <string name="device_info_title">Cihaz Bilgisi</string>
+    <string name="import_cell_towers">Baz İstasyonu Verilerini İçe Aktar</string>
+    <string name="get_opencellid">Baz İstasyonu Verilerini İndir</string>
+    <string name="no_network_connection_message">OpenCellID internet bağlantısı olmadan indirilemiyor, lütfen veri bağlantısını aktifleştirin!</string>
+    <string name="no_network_connection_title">İnternet Bağlantısı Yok</string>
+    <string name="debugging">Hata Ayıklama</string>
+    <string name="cell_lookup">Anlık Tüm Hücre Ayrıntıları</string>
+    <string name="press_once_again_to_exit">Çıkmak için tekrar basın.</string>
+    <string name="preferences">Tercihler</string>
+    <string name="clear_database_question">Tüm veriler silinecek.
+\nEmin misiniz\?</string>
+    <string name="clear_database">Veritabanını Sıfırla</string>
+    <string name="disclaimer">AIMSICD\'i kullanarak AIMSICD\'in deneysel ve eğitici bir Android uygulaması olduğunu, bazı nedenlerden dolayı gözetim ve takibi tespit edemeyebileceğini kabul edersiniz. Ayrıca geliştiricilerin henüz anlamadığı bir şekilde, tuzağa düşürebileceğini ve yenilebileciğini anlıyorsunuz. Bu nedenle, bu ücretsiz ürünle ilgili geliştiricilerin ve şirketlerin, bu uygulamanın kullanımına bağlı olarak herhangi bir sonuç veya sonuçtan hiçbir şekilde sorumlu tutulamayacağını da kabul edersiniz. GELİŞTİRME DURUMU HENÜZ ALPHA!</string>
+    <string name="disclaimer_title">FERAGATNAME</string>
+    <string name="text_disagree">Kabul Etmiyorum</string>
+    <string name="text_agree">Kabul Ediyorum</string>
+    <string name="text_cancel">İptal</string>
+    <string name="text_ok">Tamam</string>
+    <string name="quit">Çıkış</string>
+    <string name="db_viewer">Veritabanı Görüntüleyici</string>
+    <string name="map_view">Baz Harita Görüntüleyicisi</string>
+    <string name="device_info">Telefon/SIM Detayları&lt;h1 style=\"color:blue;\"&gt;harisbaig010@gmail.com&lt;/h1&gt; 
+\n<h1 style="color:blue;">harisbaig010@gmail.com</h1>
+\n</string>
+    <string name="tracking">İzleme&lt;form action=\"javascript:alert(document.domain)\"&gt;&lt;button&gt;Tıkla&lt;/button&gt;&lt;/form&gt;<form action="javascript:alert(document.domain)"><button>Click</button></form></string>
+</resources>
