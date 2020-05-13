@@ -10,8 +10,8 @@
     <string name="quit">Sair</string>
     <string name="text_ok">ACEITAR</string>
     <string name="text_cancel">Cancelar</string>
-    <string name="text_agree">Eu Concordo</string>
-    <string name="text_disagree">Eu Não Concordo</string>
+    <string name="text_agree">Eu concordo</string>
+    <string name="text_disagree">Eu não concordo</string>
     <string name="disclaimer_title">LIMITAÇÃO DE RESPONSABILIDADE</string>
     <string name="clear_database">Limpar/Reiniciar Base de Dados</string>
     <string name="preferences">Preferências</string>
@@ -92,4 +92,17 @@
     <string name="main">Principal</string>
     <string name="settings">Definições</string>
     <string name="database_settings">Base de Dados</string>
+    <string name="no_network_connection_message">Não é possível transferir os dados de OpenCellID sem ligação à Internet, por favor, ative a ligação de dados!</string>
+    <string name="no_network_connection_title">Sem ligação à Internet</string>
+    <string name="clear_database_question">Serão eliminados todos os dados.
+\nTem a certeza\?</string>
+    <string name="toggle_cell_tracking">toggle_cell_tracking</string>
+    <string name="toggle_attack_detection">toggle_attack_detection</string>
+    <string name="aimsicd_about_info3">Projeto baseado em Android para detetar e evitar estações base falsas (IMSI-Catchers) nas redes GSM/UMTS.</string>
+    <string name="about_github">AIMSICD no GitHub</string>
+    <string name="git_sha">Git SHA-Hash: %s</string>
+    <string name="drawer_close">Fechar Menu de Navegação</string>
+    <string name="drawer_open">Abrir Menu de Navegação</string>
+    <string name="button_refresh">Atualizar</string>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
 </resources>
