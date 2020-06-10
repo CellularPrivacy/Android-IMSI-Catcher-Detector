@@ -16,15 +16,14 @@
     <string name="text_disagree">Je refuse</string>
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">Notice légale</string>
-    <string name="disclaimer">"En utilisant AIMSICD vous comprenez et acceptez qu\'AIMSICD est une application
-\n expérimentale à usage informatif, qui peut échouer à détecter une éventuelle
-\n surveillance pour différentes raisons. Vous comprenez également que
-\n l\'application peut être contournée, évitée ou bloquée par des moyens que
-\n les développeurs ne connaissent pas encore. C\'est pourquoi vous acceptez que
-\n les sociétés et les développeurs liés à ce produit gratuit, ne peuvent en aucun
-\n cas être tenus responsables des résultats ou conséquences de l\'usage de cette
-\n application. STATUT DE DÉVELOPPEMENT : ALPHA !
-\n "</string>
+    <string name="disclaimer">En utilisant AIMSICD vous comprenez et acceptez qu\'AIMSICD est une application 
+\n expérimentale à usage informatif, qui peut échouer à détecter une éventuelle 
+\n surveillance pour différentes raisons. Vous comprenez également que 
+\n l\'application peut être contournée, évitée ou bloquée par des moyens que 
+\n les développeurs ne connaissent pas encore. C\'est pourquoi vous acceptez que 
+\n les sociétés et les développeurs liés à ce produit gratuit, ne peuvent en aucun 
+\n cas être tenus responsables des résultats ou conséquences de l\'usage de cette 
+\n application. STATUT DE DÉVELOPPEMENT : ALPHA !</string>
     <!-- MENU -->
     <string name="toggle_attack_detection">activer la détection d\'attaque</string>
     <string name="toggle_cell_tracking">activer le suivi des cellules</string>
