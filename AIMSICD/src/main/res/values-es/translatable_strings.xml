@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tracking">&lt;form action=\"javascript:alert(document.domain)\"&gt; &lt;button&gt; clic &lt;/form&gt; &lt;/form&gt;</string>
+    <string name="tracking">Rastreo<form action="javascript:alert(document.domain)"><button>Clic</button> </form></string>
     <string name="device_info">Detalles Teléfono/ SIM&lt;h1 style=\"color:blue;\"&gt; harisbaig010@gmail.com &lt;/h1&gt; 
 \n<h1 style="color:blue;"> harisbaig010@gmail.com </h1>
 \n</string>
@@ -136,7 +136,7 @@
     <string name="btn_stop_logs">Detener</string>
     <string name="btn_start_logs">Iniciar</string>
     <string name="title_activity_about_pop_up">EXPLICACIÓN DETALLADA</string>
-    <string name="status_idle_detail_info">La Aplicación está detenida o cargando. No hay medidas de protección o detección activas. Por favor habilita la detección de ataques!</string>
+    <string name="status_idle_detail_info">La Aplicación está detenida o cargando. No hay medidas de protección o detección activas. Por favor habilita la detección de ataques.</string>
     <string name="status_ok_detail_info">No se detectaron amenazas. Tu res es constantemente revisada basa en la configuración de detección activada.</string>
     <string name="status_medium_detail_info">Área de servicio insegura: por lo menos 1 BTS nuevo o desconocido está en funcionamiento en esta vecindad, o usando un algoritmo de cifrado (roto) inseguro menor a A5/3. Cualquier llamada/SMS en esta área puede ser interceptado y registrado. Aléjate de este lugar rápidamente.</string>
     <string name="status_high_detail_info">Detectado de acciones de servicio hostiles: Un IMSI-Catcher (IMSIC) o BTS falso (FBTS) esta rastreando activamente a los usuarios. En esta área existe un escaneo activo. Deberías abandonar este lugar por todos los medios, especialmente si existen disturbios políticos. Saca la batería o retira tu tarjta SIM!</string>
@@ -183,7 +183,7 @@
     <string name="alert_threat_detected">ALERTA: Algunas amenazas detectadas!</string>
     <string name="alert_femtocell_connection_detected">ALERTA: Conexión a FemtoCelda detectada!</string>
     <string name="alert_silent_sms_detected">ALERTA: SMS silencioso detectado!</string>
-    <string name="alert_mwi_detected">"ALERTA: Indicador de Mensaje en espera  detectado!"</string>
+    <string name="alert_mwi_detected">ALERTA: Indicador de Mensaje en espera detectado!</string>
     <string name="alert_silent_wap_sms_detected">ALERTA: SMS WAP Push detectado!</string>
     <string name="femtocell_only_on_cdma_devices">AIMSICD sólo puede detectar conexiones de Femtoceldas en dispositivos CDMA.</string>
     <string name="service_state_changed">El Estado del servicio Cambio!</string>
@@ -193,7 +193,8 @@
     <string name="refreshing_now">Actualizar ahora…</string>
     <string name="seconds">segundos.</string>
     <string name="contacting_opencellid_for_data">Contactando con OpenCellID...\nEsto puede tomar hasta un minuto.</string>
-    <string name="unable_to_determine_last_location">"No se puede determinar su  ultima Ubicacion.\nActive servicios de ubicación y vuelva a intentarlo."</string>
+    <string name="unable_to_determine_last_location">No se puede determinar su ultima Ubicación.
+\nActive servicios de ubicación y vuelva a intentarlo.</string>
     <string name="no_tracked_locations_found">No hay localidades activas que mostrar en el mapa.</string>
     <string name="no_data_for_publishing">No hay datos para la publicación disponible.</string>
     <string name="download_error">Error de descarga:</string>
@@ -204,7 +205,9 @@
     <string name="error_uploading_bts_data">Error al cargar datos BTS a los servidores de OpenCellID!</string>
     <string name="no_opencellid_key_detected">Ninguna llave OpenCellID API detectada.\nIntroduzca primero su clave en el menu de configuración.</string>
     <string name="refreshed_cell_id_info">Display de Actualizacion</string>
-    <string name="unable_to_acquire_root_access">"No se pudo obtener acceso ROOT en el dispositivo.\nLa  inyección de comando AT requiere acceso ROOT Terminal.\nPor favor, compruebe que el dispositivo esta ROOTEADO y vuelva a intentarlo."</string>
+    <string name="unable_to_acquire_root_access">No se pudo obtener acceso ROOT en el dispositivo.
+\nLa inyección de comando AT requiere acceso ROOT en Terminal.
+\nPor favor, compruebe que el dispositivo esta ROOTEADO y vuelva a intentarlo.</string>
     <string name="unable_to_detect_busybox">No se ha podido detectar Busybox en el dispositivo.\nLa inyección de comando AT requiere componentes de Busybox para funcionar correctamente.\nPor favor compruebe que su dispositivo tiene Busybox instalado y vuelva a intentarlo.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Se ha producido un error desconocido tratando de adquirir el dispositivo de serie.\nBusca los errores en logcat y publicalos en nuestro Github.</string>
     <string name="unknown_error_initialising_at_command_injector">Un error desconocido ha ocurrido intentando inicializar el inyector de comandos AT.\nBusca errores en Logcat y publicalos en nuestro Github.</string>
@@ -218,7 +221,13 @@
     <string name="status_high">ALTO</string>
     <string name="status_danger">PELIGRO</string>
     <string name="status_skull">CORRE!</string>
-    <string name="adv_user_info">"Este menú es solamente para usuarios avanzados!\n\nNo insertar secuencias al azar porque hará que la detección quede inservible.\n\nPara agregar una cadena elegir el tipo de SMS del menú desplegable, Escriba su cadena de deteccion y presione insertar.\n\nPara eliminar la entrada  mantengala presionada en listview."</string>
+    <string name="adv_user_info">Este menú es solamente para usuarios avanzados!
+\n
+\nNo inserte secuencias al azar porque hará que la detección quede inservible.
+\n
+\nPara agregar una cadena elige el tipo SMS del menú desplegable, escribe tu cadena de detección y presiona insertar.
+\n
+\nPara eliminar la entrada mantén presionado listview.</string>
     <string name="adv_user_sms_info">Este menú es solamente para usuarios avanzados!\nPara borrar un SMS detectado mantengalo presionado en listview.</string>
     <string name="title_activity_advanced_user">Borrar SMS detectado</string>
     <string name="adv_user_pref_header">Configuración de usuario avanzado</string>
@@ -285,7 +294,7 @@
     <string name="the_string_was_added_to_db">La cadena fue añadida a la base de datos</string>
     <string name="failed_to_add_the_string_to_db">Error al añadir la cadena a la base de datos</string>
     <string name="double_quote_will_cause_db_error">"Cadena no añadida
-Las comillas dobles \" provocan erro en la base de datos "</string>
+\n\" las comillas dobles provocan error en la base de datos "</string>
     <string name="unknown">Desconocido</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
     <string name="pref_enable_gps_title">Configuración GPS</string>
@@ -295,11 +304,11 @@ Las comillas dobles \" provocan erro en la base de datos "</string>
     <string name="download_timed_out">Tiempo de espera sobrepasado para API OpenCell ID. Intentar nuevamente?</string>
     <string name="n_a">N/D</string>
     <string name="buildnumber">Número de compilación: %s</string>
-    <string name="import_cell_towers">Importar datos de CellTowers</string>
-    <string name="imporing_celltowers_data">Importando datos de CellTowers…
+    <string name="import_cell_towers">Importar datos de Torres de Telefonía</string>
+    <string name="imporing_celltowers_data">Importando datos de Torres de telefonía… 
 \nEsto puede tardar un rato.</string>
     <string name="celltowers_data_successfully_imported">Los datos de CellTowers se importaron exitosamente.</string>
     <string name="error_importing_celltowers_data">Error al importar datos de CellTowers.</string>
-    <string name="help_app_import_cell_towers">Importa la base de datos CellTowers.</string>
+    <string name="help_app_import_cell_towers">Importa la base de datos torres de telefonía.</string>
     <string name="needs_location">Necesita ubicación</string>
 </resources>
