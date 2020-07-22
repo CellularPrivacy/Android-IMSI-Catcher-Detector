@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Drawer -->
-    <string name="tracking"><form action="javascript:alert(document.domain)"><button>Kliknij</button></form></string>
+    <string name="tracking">Śledzenie <form action="javascript:alert(document.domain)"> <button> Kliknij </button> </form></string>
     <string name="device_info">Telefon/szczegóły SIM <h1 style="color:blue;">harisbaig010@gmail.com</h1> 
 \n</string>
     <string name="map_view">Przeglądarka Map Antenna</string>
@@ -220,21 +220,30 @@
     <string name="refreshing_now">Odświeżam…</string>
     <string name="seconds">sekund.</string>
     <string name="contacting_opencellid_for_data">Łączenie z OpenCellID by uzyskać potrzebne dane…\nMoże to potrwać nawet minutę.</string>
-    <string name="unable_to_determine_last_location">Nie udalo się określić Twojej ostatniej lokalizacji. Włącz lokalizację w ustawieniach telefonu.</string>
+    <string name="unable_to_determine_last_location">Nie można określić Twojej ostatniej lokalizacji.
+\nWłącz usługi lokalizacyjne i spróbuj ponownie.</string>
     <string name="no_tracked_locations_found">Brak zapisanych lokalizacji do pokazania.</string>
     <string name="no_data_for_publishing">Brak nowych danych do wysłania.</string>
     <string name="download_error">Błąd pobierania:</string>
     <string name="opencellid_data_successfully_received">Poprawnie odebrano dane.</string>
     <string name="error_retrieving_opencellid_data">Błąd uzyskiwania danych z OpenCellID.\nSprawdź swoje połączenie internetowe!</string>
-    <string name="opencellid_data_successfully_received_markers_updated">Poprawnie odebrano dane. Punkty na mapie zostały zaktualizowane.</string>
+    <string name="opencellid_data_successfully_received_markers_updated">Pomyślnie odebrano dane OpenCellID.
+\nZaktualizowano znaczniki mapy.</string>
     <string name="uploaded_bts_data_successfully">Dane do OpenCellID zostały przesłane.</string>
     <string name="error_uploading_bts_data">Błąd wysyłania danych do OpenCellID!</string>
-    <string name="no_opencellid_key_detected">Brak klucza API OpenCellID. Musisz najpierw wpisać lub pobrać swój klucz.</string>
+    <string name="no_opencellid_key_detected">Nie wykryto klucza API OpenCellID!
+\nNajpierw wprowadź swój klucz w ustawieniach.</string>
     <string name="refreshed_cell_id_info">Odświeżono informację o CellId</string>
-    <string name="unable_to_acquire_root_access">Nie udało się usyskać praw ROOTa. Interface komend AT wymaga praw ROOTa. Sprawdź swoje urządzenie i spróbuj ponownie.</string>
-    <string name="unable_to_detect_busybox">Nie udało się odnaleźć BusyBox na Twoim urządzeniu. Interface komend AT wymaga BusyBoxa! Sprawdź swoje urządzenie i spróbuj ponownie.</string>
-    <string name="unknown_error_trying_to_acquire_serial_device">Wystąpił nieznany bład przy próbie uzyskania klucza seryjnego urządzenia. Prosimy o sprawdzenie logów i przesłanie ich do nas na Github.</string>
-    <string name="unknown_error_initialising_at_command_injector">AWystąpił nieznany błąd przy uruchamianiu inteface komend AT. Prosimy o sprawdzenie logów i przesłanie ich do nas na Github. Link do Githuba znajedziesz w sekcji \'O aplikacji\'.</string>
+    <string name="unable_to_acquire_root_access">Nie można uzyskać dostępu ROOT na Twoim urządzeniu.
+\nAT Command Injection wymaga dostępu do terminala ROOT.
+\nSprawdź, czy urządzenie jest ZROOTOWANE i spróbuj ponownie.</string>
+    <string name="unable_to_detect_busybox">Nie można wykryć Busybox na Twoim urządzeniu.
+\nAT Command Injection wymaga komponentów Busybox do prawidłowego działania.
+\nSprawdź, czy na Twoim urządzeniu jest zainstalowany Busybox i spróbuj ponownie.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Wystąpił nieznany błąd podczas próby uzyskania urządzenia szeregowego.
+\nSprawdź swój logcat pod kątem błędów i opublikuj je na naszym Githubie.</string>
+    <string name="unknown_error_initialising_at_command_injector">Wystąpił nieznany błąd podczas próby inicjowania polecenia wtryskiwacza AT.
+\nSprawdź błędy logcat i umieścić je na naszej GitHub.</string>
     <string name="getting_ocid_api_key">Pobieranie klucza OpenCellID…</string>
     <string name="unable_to_create_map">Nie powiodło się tworzenie mapy!</string>
     <string name="describe_the_problem_you_had">W celu uzyskania pomocy opisz swój problem. Problemy bez opisu są automatycznie ignorowane!\n</string>
@@ -354,8 +363,8 @@
     <string name="download_timed_out">Zapytanie do OpenCellID przekroczyło limit czasu. Spróbować później?</string>
     <string name="deleted">Usunięto</string>
     <string name="failed_to_delete">Usuwanie nie powiodło się</string>
-    <string name="double_quote_will_cause_db_error">"String nie został dodany
-dodanie \" spowoduje błąd bazy danych "</string>
+    <string name="double_quote_will_cause_db_error">"Ciąg nie został dodany
+\n \" Podwójny cudzysłów spowoduje błąd db "</string>
     <string name="the_string_was_added_to_db">Dodano do bazy danych</string>
     <string name="failed_to_add_the_string_to_db">Nie powiodło się dodawanie do bazy danych</string>
     <string name="n_a">N/A</string>
