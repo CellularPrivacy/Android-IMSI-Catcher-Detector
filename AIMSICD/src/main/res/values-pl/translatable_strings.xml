@@ -1,9 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Drawer -->
     <string name="tracking"><form action="javascript:alert(document.domain)"><button>Kliknij</button></form></string>
-    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1>
+    <string name="device_info">Telefon/szczegóły SIM <h1 style="color:blue;">harisbaig010@gmail.com</h1> 
 \n</string>
     <string name="map_view">Przeglądarka Map Antenna</string>
     <string name="db_viewer">Podgląd bazy danych</string>
@@ -12,12 +11,9 @@
     <string name="text_cancel">Anuluj</string>
     <string name="text_agree">Zgadzam się</string>
     <string name="text_disagree">Nie zgadzam się</string>
-
     <!-- DISCLAIMER -->
     <string name="disclaimer_title">DISCLAIMER</string>
     <string name="disclaimer">Używając AIMSICD oświadczasz, że rozumiesz i zgadzasz się z tym, że AIMSICD jest eksperymentalną i informacyjną aplikacją na system Android, która może, z wielu powodów, nie być w stanie wykryć tego, że jesteś nadzorowany czy śledzony. Przyjmujesz także do wiadomości, że program może być pokonany w sposoby jeszcze nie znane deweloperom. Tak więc zgadzasz się i rozumiesz, że deweloperzy i firmy związane z tym darmowym produktem nie mogą być pociągnięte do odpowiedzialności z żadnego powodu niezależnie od wyniku użytkowania tej aplikacji. STAN ROZWOJU APLIKACJI: ALPHA!</string>
-
-
     <!-- MENU -->
     <string name="toggle_attack_detection">Przełącz Wykrywanie Ataków</string>
     <string name="toggle_cell_tracking">przełącznik_śledzenia_komórek</string>
@@ -29,10 +25,8 @@
     <string name="debugging">Debugowanie</string>
     <string name="no_network_connection_title">Brak połączenia z Internetem</string>
     <string name="no_network_connection_message">Nie da się pobrać danych z OpenCellID bez połączenia Internetowego. Proszę włączyć połączenie danych!</string>
-
     <!-- MAP VIEWER -->
     <string name="get_opencellid">Pobierz Informacje O Stacjach Bazowych</string>
-
     <!-- LAYOUT -->
     <string name="device_info_title">Informacje o urządzeniu</string>
     <string name="sim_info_title">Informacje o SIM</string>
@@ -62,10 +56,8 @@
     <string name="drawer_open">Otwórz menu</string>
     <string name="drawer_close">Zamknij menu</string>
     <string name="network_psc">PSC:</string>
-
     <!-- Upload BTS to OpenCellID -->
     <string name="upload_bts">Wyślij Informacje O Lokalnych Stacjach Bazowych</string>
-
     <!-- ABOUT LAYOUT -->
     <string name="about_aimsicd">O AIMSICD</string>
     <string name="app_version">Wersja: %s</string>
@@ -85,17 +77,13 @@
     <string name="status_medium_about_desc">Niebezpieczny obszar. Opuść go!</string>
     <string name="status_skull_about_desc">Uciekaj! Telefon ulega manipulacji!</string>
     <string name="about_desc_icon_title">Kliknij na ikonę by uzyskać więcej informacji:</string>
-
-
     <!-- CDMA LAYOUT -->
     <string name="network_netid">ID sieci:</string>
     <string name="network_sysid">ID systemu:</string>
     <string name="network_baseid">ID stacji bazowej:</string>
-
     <!-- LOCATION HELPER -->
     <string name="location_error_title">Serwis lokalizacji wyłączony</string>
     <string name="location_error_message">Nie można śledzić komórek bez włączonego GPSu. Włączyć teraz?</string>
-
     <!-- PREFERENCES -->
     <string name="pref_system_title">Ustawienia systemu</string>
     <string name="pref_autostart_title">Uruchamiaj automatycznie</string>
@@ -121,12 +109,10 @@
     <string name="pref_enable_cell_monitoring_summ">Włącz automatyczne monitorowanie komórek</string>
     <string name="pref_request_ocid_key">Zażądaj klucz API OpenCellID</string>
     <string name="pref_ocid_requestkey_summary">Pobierz nowy klucz API dla danych OpenCellID</string>
-
     <!-- MAP PREFERENCES -->
     <string name="pref_map_title">Ustawienia widoku mapy</string>
     <string name="pref_map_type_title">Rodzaj mapy</string>
     <string name="pref_map_type_summ">Wyświetl mapę w różnych stylach</string>
-    
     <!-- MAP INFOWINDOW -->
     <string name="cell_id_label">CID: </string>
     <string name="lac_label">LAC: </string>
@@ -137,7 +123,6 @@
     <string name="open_cell_id_label">Dane OpenCellID</string>
     <string name="lat_label">"Szer.: "</string>
     <string name="lng_label">"Wys.: "</string>
-
     <!-- Database Viewer -->
     <string name="table_names_prompt">Wybierz tabelę</string>
     <string-array name="table_names">
@@ -149,7 +134,6 @@
         <item>@string/measured_signal_strengths</item>
         <item>@string/eventlog</item>
     </string-array>
-
     <!-- AT Command Interface  -->
     <string name="at_command_title">Interface komend AT</string>
     <string name="response_label">Odpowiedź:</string>
@@ -160,18 +144,15 @@
     <string name="timeout_spinner_title">Czas:</string>
     <string name="timeout_spinner_prompt">Wybierz czas oczekiwania na odpowiedź</string>
     <string name="command_hint">Wpisz komendę AT tutaj.</string>
-
     <!-- SILENT SMS FRAGMENT -->
     <string name="sms_title">Przechwycono SilentSMS</string>
     <string name="sms_message">Przechwycono SilentSMS!\nWięcej infromacji w widoku bazy danych.</string>
     <string name="table_contains_no_data">Brak danych do wyświetlenia.</string>
-
     <!-- Request OpenCellID Key -->
     <string name="title_ocid_key">Klucz API OpenCellID</string>
     <string name="message_request_api_key">Wybierz OK by pobrać klucz API z OpenCellID.org. Pozwoli Ci to na pobranie danych i wyświetlanie ich na mapie, oraz na wysyłanie zebranych danych. Jeśli nie wyślesz żadanych danych w ciągu 20dni, Twój klucz może zostać zdezaktywowany.</string>
     <string name="ocid_api_error">Błąd pobierania klucza: </string>
     <string name="ocid_api_success">Zapisano nowy klucz API.</string>
-
     <!-- Debug logs -->
     <string name="title_debug_logs">Logi</string>
     <string name="btn_clear_logs">Wyczyść</string>
@@ -179,7 +160,6 @@
     <string name="msg_copied_to_clipboard">Skopiowano logi do schowka.</string>
     <string name="btn_stop_logs">Zakończ</string>
     <string name="btn_start_logs">Rozpocznij</string>
-
     <!-- Detailed Info Strings -->
     <string name="title_activity_about_pop_up">SZCZEGÓŁOWY OPIS</string>
     <string name="status_idle_detail_info">Aplikacja jest bezczynna lub ładuje się. Ochrona i wykrywanie nie są włączone. Włącz wykrywanie.</string>
@@ -190,7 +170,6 @@
     <string name="status_skull_detail_info">Wykryto manipulację: ktoś próbuje zdalnie manipulować Twoim telefonem. Zniszcz lub sprzedaj telefon!</string>
     <string name="open_cell_id_button_cancel">Anuluj</string>
     <string name="open_cell_id_button_ok">OK</string>
-
     <!-- UI Icon Preferences -->
     <string name="ui_icon_flat">Płaskie</string>
     <string name="ui_icon_sense">Sens</string>
@@ -266,24 +245,19 @@
     <string name="status_high">WYSOKI</string>
     <string name="status_danger">ZAGROŻENIE</string>
     <string name="status_skull">UCIEKAJ!</string>
-
     <!-- Advanced User Settings: SMS Detection Strings -->
     <string name="adv_user_info">To menu jest tylko dla zaawansowanych użytkowników!\n\nProszę nie wprowadzaj losowych ciągów znaków gdyż sprawi to, że wykrywanie nie będzie działać przewidywalnie.\n\nAby dodać łańcuch znaków wybierz typ SMS z rozwijanego menu, wpisz łańcuch znaków i naciśnij dodaj.\n\nAby usunąć z bazy danych przyciśnij dłużej w widoku listy.</string>
-    
     <!-- Advanced User Settings: Delete Detected SMS -->
     <string name="adv_user_sms_info">To menu jest tylko dla zaawansowanych użytkowników!\nAby usunąć wykryty SMS naciśnij go długo w widoku listy.</string>
     <string name="title_activity_advanced_user">Skasuj wykryty SMS</string>
-
     <string name="adv_user_pref_header">Ustawienia zaawansowane</string>
     <string name="adv_user_pref_launch">Łańcuchy znaków wykrywania</string>
     <string name="adv_user_pref_sms_launch">Skasuj SMS</string>
     <string name="adv_user_pref_summary">Wprowadzanie i usuwanie łańcuchów znaków wykrywania</string>
     <string name="adv_user_pref_sms_summary">Skasuj wykrytye SMSy</string>
-   
     <!-- Advanced User Settings: Enable SMS Detection -->
     <string name="adv_user_root_title">Włącz wykrywanie SMSów</string>
     <string name="adv_user_root_sum">Aby uaktywnić wykrywanie SMSów wymagane są prawa Roota</string>
-
     <!-- Detected SMS string for custom popup -->
     <string name="detection_strings">Łańcuchy znaków wykrywania</string>
     <string name="typezero_title">UWAGA!</string>
@@ -295,8 +269,6 @@
 \nSzczegóły: zobacz Database Viewer.</string>
     <string name="typewap_header">Wap Push Detected</string>
     <string name="typewap_data">Wykryto WAP Push SMS!\nSzczegóły: Zobacz podgląd bazy danych.</string>
-
-
     <!-- Section Main-->
     <string name="help_main_neighboring_cells">Pokaż sąsiednie komórki.</string>
     <string name="help_main_phone_sim_details">Szczegóły SIM, IMEI, TMSI.</string>
@@ -304,15 +276,12 @@
     <string name="help_main_database_viewer">Pokaż tablele baz danych.</string>
     <string name="help_main_antenna_map_view">Mapa pokazująca pobliskie nadajniki.</string>
     <string name="help_main_at_command_interface">Interface komend AT pozwalający wysyłać komendy AT do BS (wymaga ROOT).</string>
-
     <!-- Section Tracking-->
     <string name="help_tracking_toggle_attack_detection">Rozpoczyna/zatrzymuje wykrywanie ataku i zbieranie danych do lokalnej bazy danych.</string>
     <string name="help_tracking_toggle_cell_tracking">Zacznij śledzić komórki do wyświetlania na antenie Map Viewer i ewentualnie później przesłać do OpenCellID.</string>
-
     <!-- Section Settings-->
     <string name="help_settings_preferences">Ustawienia AIMSICD, czas odświeżania i zachowanie serwisów.</string>
     <string name="help_settings_reset_db">Wyczyść wszystkie tabele bazy danych.</string>
-
     <!-- Section Application-->
     <string name="help_app_add_get_ocid_api_key">Uzyskaj klucz API do OpenCellID by pobierać i wysyłać dane…</string>
     <string name="help_app_about">O nas i kogo wspieramy.</string>
@@ -328,30 +297,24 @@
     <string name="silent_sms">Bezgłośny SMS</string>
     <string name="eventlog">Logi zdarzeń</string>
     <string name="measured_signal_strengths">Pomiary siły sygnałów</string>
-
     <string name="at_command_response_looking">*** Wykrywanie urządzeń AT…\n</string>
     <string name="at_command_response_found">Wykryto: </string>
     <string name="at_command_response_setup_complete">*** Konfiguracja zakończona ***\n</string>
-
     <string name="currently_connected_bts">Obecnie podłączony BTS</string>
     <string name="well_known_encrypted_bts">Dobrze znany szyfrujący BTS</string>
     <string name="unknown_or_insecure_bts">Nieznany lub niebezpieczny BTS</string>
     <string name="new_or_recently_added_bts">Nowy lub niedawno dodany BTS</string>
-
     <string name="invalid_key_try_later">Nieprawidłowany klucz OpenCellID, spróbuj później.</string>
     <string name="getting_ocid_key">Pobieranie klucza API OpenCellID…</string>
-
     <string-array name="pref_ui_icons_entries">
         <item>@string/ui_icon_flat</item>
         <item>@string/ui_icon_sense</item>
         <item>@string/ui_icon_white</item>
     </string-array>
-
     <string-array name="pref_map_type_entries">
         <item>@string/map_type_normal</item>
         <item>@string/map_type_terrain</item>
     </string-array>
-
     <string-array name="pref_refresh_entries">
         <item>@string/pref_refresh_manual</item>
         <item>@string/pref_refresh_automatic</item>
@@ -363,7 +326,6 @@
         <item>@string/pref_refresh_1_min</item>
         <item>@string/pref_refresh_5_min</item>
     </string-array>
-
     <string-array name="timeout_spinner_values">
         <item>@string/timeout_spinner_2_sec</item>
         <item>@string/timeout_spinner_5_sec</item>
@@ -372,9 +334,7 @@
         <item>@string/timeout_spinner_30_sec</item>
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
-
     <string name="delete_database_msg_success">Baza danych została usunięta i odtworzona.\nProszę zrestartować aplikację by usunąć resztę danych z pamięci.</string>
-
     <string name="unknown">Nieznany</string>
     <string name="buildnumber">Numer Kompilacji: %s</string>
     <string name="git_sha">SHA-Hash: %s</string>
@@ -389,7 +349,6 @@
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Średni</string>
     <string name="notification_vibrate_danger">Zagrożenie</string>
-    
     <string name="database_settings">Baza danych</string>
     <string name="cell_doesnt_provide_any_neighbors">BTS nie dostarcza informacji o żadnych sąsiednich komórkach!</string>
     <string name="download_timed_out">Zapytanie do OpenCellID przekroczyło limit czasu. Spróbować później?</string>
@@ -402,10 +361,9 @@ dodanie \" spowoduje błąd bazy danych "</string>
     <string name="n_a">N/A</string>
     <string name="needs_location">Potrzebuje lokalizacji</string>
     <string name="import_cell_towers">Importuj dane CellTowers</string>
-
     <string name="imporing_celltowers_data">Importowanie danych CellTowers ...
 \nTo może zająć chwilę.</string>
     <string name="celltowers_data_successfully_imported">Dane CellTowers zostały pomyślnie zaimportowane.</string>
     <string name="error_importing_celltowers_data">Błąd podczas importowania danych CellTowers.</string>
     <string name="help_app_import_cell_towers">Importuje bazę danych CellTowers.</string>
-    </resources>
+</resources>
