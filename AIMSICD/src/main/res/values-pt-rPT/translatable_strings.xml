@@ -105,4 +105,232 @@
     <string name="drawer_open">Abrir Menu de Navegação</string>
     <string name="button_refresh">Atualizar</string>
     <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="help_app_upload_local_bts">Envia o seu BTS ao banco de dados do OpenCellID.</string>
+    <string name="describe_the_problem_you_had">ATENÇÃO! Por favor, descreva o problema que teve, antes de nos enviar esses registos. NENHUMA AJUDA SEM DESCRIÇÕES!
+\n</string>
+    <string name="title_ocid_key">Chave da API da OpenCellID</string>
+    <string name="n_a">N/D</string>
+    <string name="double_quote_will_cause_db_error">"Cadeia não adicionada
+\n \" dupla citação causará erro de db "</string>
+    <string name="getting_ocid_key">Obtendo a chave API do OpenCellId...</string>
+    <string name="invalid_key_try_later">Chave inválida da OpenCellId, tente novamente mais tarde.</string>
+    <string name="delete_database_msg_success">Banco de dados apagado e recriado com sucesso.
+\nPor favor reinicie a aplicação para limpar valores antigos já na memória.</string>
+    <string name="new_or_recently_added_bts">BTS novo ou recentemente adicionado</string>
+    <string name="unknown_or_insecure_bts">BTS desconhecido ou inseguro</string>
+    <string name="well_known_encrypted_bts">BTS encriptado bem conhecido</string>
+    <string name="currently_connected_bts">BTS atualmente conectado</string>
+    <string name="at_command_response_setup_complete">*** Configuração Completa ***
+\n</string>
+    <string name="at_command_response_looking">*** À procura de aparelhos seriais…
+\n</string>
+    <string name="measured_signal_strengths">Intensidades de sinal medidas</string>
+    <string name="eventlog">EventLog</string>
+    <string name="default_mmc_locations">Localizações predefinidas do CCM</string>
+    <string name="imported_ocid_data">Dados do OpenCellID foram importados</string>
+    <string name="bts_measurements">Medidas BTS</string>
+    <string name="unique_bts_data">Dados únicos do BTS</string>
+    <string name="help_app_debugging">Coletar e enviar registos de erros.</string>
+    <string name="help_app_about">Ícones de estado e projeto explicado.</string>
+    <string name="help_app_add_get_ocid_api_key">Obtenha uma chave API para usar a base de dados OpenCellID para enviar e descarregar dados…</string>
+    <string name="help_settings_reset_db">Limpar e reiniciar todas as tabelas de BD ou tabela(s) especificada(s).</string>
+    <string name="help_settings_preferences">Configurações do AIMSICD, tais como regras de proteção, tempos de inquéritos e comportamento de serviço.</string>
+    <string name="help_tracking_toggle_cell_tracking">Começar a rastrear células para exibição no visualizador de mapa de antenas e possivelmente mais tarde enviar ao OpenCellID.</string>
+    <string name="help_tracking_toggle_attack_detection">Iniciar/parar a deteção de ataques e recolher detalhes das células nas tabelas internas da base de dados.</string>
+    <string name="help_main_at_command_interface">Interface que permite enviar comandos AT para o processador de banda base (requer ROOT).</string>
+    <string name="help_main_antenna_map_view">Mapa de antenas próximas codificadas por cores.</string>
+    <string name="help_main_acd">Mostrar uma comparação detalhada da célula atualmente conectada, com os dados encontrados no OpenCellID (se houver) e destacar as diferenças.</string>
+    <string name="help_main_phone_sim_details">Detalhes do provedor de rede SIM, IMEI, TMSI.</string>
+    <string name="help_main_neighboring_cells">Mostra as células vizinhas.</string>
+    <string name="typemwi_data">Indicador de mensagem em espera detetado!
+\nDetalhes: Veja no visualizador de banco de dados.</string>
+    <string name="ui_icon_sense">Sentido</string>
+    <string name="samples_label">Exemplos:</string>
+    <string name="map_view">Visualizador de Mapa de Antena</string>
+    <string name="unknown">Desconhecido</string>
+    <string name="failed_to_add_the_string_to_db">Falha ao adicionar a cadeia ao banco de dados</string>
+    <string name="the_string_was_added_to_db">A cadeia foi adicionada ao banco de dados</string>
+    <string name="failed_to_delete">Falha ao apagar</string>
+    <string name="deleted">Apagado</string>
+    <string name="at_command_response_found">Encontrado:</string>
+    <string name="silent_sms">SMS silencioso</string>
+    <string name="needs_location">Requer localização</string>
+    <string name="waiting_for_location">À espera da localização…</string>
+    <string name="help_app_quit">Sair desta app.</string>
+    <string name="help_app_import_cell_towers">Importa o banco de dados do CellTowers.</string>
+    <string name="help_app_download_local_bts">Descarrega o banco de dados do CellTowers.</string>
+    <string name="help_main_database_viewer">Exibir os bancos de dados diferents que temos.</string>
+    <string name="typewap_data">Mensagem SMS de WAP Push detetado! 
+\nDetalhes: consulte o visualizador do banco de dados.</string>
+    <string name="typewap_header">WAP Push detetado</string>
+    <string name="typemwi_header">MWI detetado</string>
+    <string name="typemwi_title">ATENÇÃO!</string>
+    <string name="typezero_data">Mensagem de tipo-0 detetada! 
+\nDetalhes: consulte o visualizador do banco de dados.</string>
+    <string name="typezero_header">SMS silencioso detetado</string>
+    <string name="typezero_title">ATENÇÃO!</string>
+    <string name="detection_strings">Cadeias de Deteção</string>
+    <string name="adv_user_root_sum">É necessário ser root para ativar a deteção de SMS</string>
+    <string name="adv_user_root_title">Ativar deteção de SMS</string>
+    <string name="adv_user_pref_sms_summary">Apagar SMS detetados</string>
+    <string name="adv_user_pref_summary">Inserir e apagar cadeias de deteção</string>
+    <string name="adv_user_pref_sms_launch">Apagar SMS</string>
+    <string name="adv_user_pref_launch">Cadeias de detecção</string>
+    <string name="adv_user_pref_header">Configurações avançadas do utilizador</string>
+    <string name="title_activity_advanced_user">Apagar SMS detetados</string>
+    <string name="adv_user_sms_info">Este menu é apenas para utilizadores avançados! 
+\nPara apagar um SMS detetado, pressione-o e segure-o na lista de exibição.</string>
+    <string name="adv_user_info">Este menu é apenas para utilizadores avançados! 
+\n 
+\nPor favor, não insire cadeias aleatórias, pois isso fará com que a detecção fique fora de controle. 
+\n 
+\nPara adicionar uma cadeia, escolha o tipo de SMS no menu dropdown, digite sua cadeia de deteção e pressione inserir. 
+\n 
+\nPara apagar do banco de dados, pressione e segure na lista de exibição.</string>
+    <string name="status_skull">Corra!</string>
+    <string name="status_danger">Perigo</string>
+    <string name="status_high">Alto</string>
+    <string name="status_medium">Médio</string>
+    <string name="status_ok">Tudo bem</string>
+    <string name="status_idle">Ocioso</string>
+    <string name="status">Estado:</string>
+    <string name="unable_to_create_map">Não foi possível criar o mapa!</string>
+    <string name="getting_ocid_api_key">Obtendo a chave da API do OpenCellID…</string>
+    <string name="unknown_error_initialising_at_command_injector">Ocorreu um erro desconhecido ao tentar inicializar o AT Command Injection. 
+\nPor favor, verifique o seu logcat por erros e publique-os no nosso Github.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Ocorreu um erro desconhecido ao tentar adquirir o aparelho serial. 
+\nPor favor, verifique o seu logcat por erros e publique-os no nosso Github.</string>
+    <string name="unable_to_detect_busybox">Não é possível detetar o Busybox no seu aparelho. 
+\nAT Command Injection requer que os componentes do Busybox funcionem corretamente. 
+\nPor favor, verifique se o seu aparelho tem o Busybox instalado e tente novamente.</string>
+    <string name="unable_to_acquire_root_access">Não é possível adquirir acesso ROOT no seu aparelho. 
+\nAT Command Injection requer acesso ao terminal ROOT. 
+\nPor favor, verifique se o seu aparelho foi ROOTED e tente novamente.</string>
+    <string name="error_importing_celltowers_data">Erro ao importar dados do CellTowers.</string>
+    <string name="celltowers_data_successfully_imported">Dados do CellTowers importados com sucesso.</string>
+    <string name="imporing_celltowers_data">A importar dados do CellTowers… 
+\nIsso pode demorar um pouco.</string>
+    <string name="refreshed_cell_id_info">Informações do CellId atualizadas</string>
+    <string name="no_opencellid_key_detected">Nenhuma chave de API OpenCellID detetada! 
+\nPor favor, digite sua chave nas configurações.</string>
+    <string name="error_uploading_bts_data">Erro ao enviar dados BTS para servidores do OpenCellID!</string>
+    <string name="uploaded_bts_data_successfully">Dados BTS enviados ao OpenCellID com sucesso.</string>
+    <string name="opencellid_data_successfully_received_markers_updated">Dados do OpenCellID recebidos com sucesso. 
+\nMarcadores de mapa atualizados.</string>
+    <string name="error_retrieving_opencellid_data">Erro ao recuperar dados do OpenCellID. 
+\nVerifique a sua rede!</string>
+    <string name="opencellid_data_successfully_received">Dados do OpenCellID recebidos com sucesso.</string>
+    <string name="download_timed_out">A solicitação da API do OpenCellID expirou. Tentar mais tarde\?</string>
+    <string name="download_error">Erro de descarregamento:</string>
+    <string name="no_data_for_publishing">Não há dados para serem publicados.</string>
+    <string name="no_tracked_locations_found">Nenhum local rastreado foi encontrado no mapa.</string>
+    <string name="unable_to_determine_last_location">Não é possível determinar sua última localização. 
+\nAtive os serviços de localização e tente novamente.</string>
+    <string name="contacting_opencellid_for_data">Entrando em contato com o OpenCellID para dados… 
+\nIsso pode demorar até um minuto.</string>
+    <string name="seconds">segundos.</string>
+    <string name="refreshing_now">Atualizando agora…</string>
+    <string name="refreshing_every">Atualizando a cada</string>
+    <string name="alert_femtocell_tracking_detected">ALERTA: rastreamento FemtoCell detetado!</string>
+    <string name="stopped_tracking_femtocell">: Parou de rastrear conexões do FemtoCell.</string>
+    <string name="service_state_changed">Estado de serviço alterado!</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD só pode detetar conexões FemtoCell em aparelhos CDMA.</string>
+    <string name="alert_silent_wap_sms_detected">ALERTA: SMS de WAP Push detetado!</string>
+    <string name="alert_mwi_detected">ALERTA: indicador de mensagem em espera detetado!</string>
+    <string name="alert_silent_sms_detected">ALERTA: SMS silencioso detetado!</string>
+    <string name="alert_femtocell_connection_detected">ALERTA: conexão FemtoCell detetada!</string>
+    <string name="alert_threat_detected">ALERTA: alguma ameaça detetada!</string>
+    <string name="status_ok_description">Estado: bom. Nenhuma ameaça detectada.</string>
+    <string name="status_idle_description">Estado: Ocioso.</string>
+    <string name="phone_type">Tipo de telefone</string>
+    <string name="cell_monitoring_active">Monitoramento de célula ativo.</string>
+    <string name="cell_tracking_active">Rastreamento de célula ativo.</string>
+    <string name="femtocell_detection_active">Deteção FemtoCell ativada.</string>
+    <string name="cell_doesnt_provide_any_neighbors">O BTS não fornece células vizinhas!</string>
+    <string name="hostile_service_area_changing_lac_detected">Área de serviço hostil: alteração no LAC foi detetada!</string>
+    <string name="cell_id_doesnt_exist_in_db">A ID da célula não está no banco de dados do OpenCellID!</string>
+    <string name="only_one_key_per_day">Apenas uma nova solicitação de chave de API a cada 24 horas! 
+\nPor favor, tente novamente mais tarde.</string>
+    <string name="stopped_tracking_cell_information">Parou de rastrear informações da célula.</string>
+    <string name="tracking_cell_information">A monitorar informações da célula.</string>
+    <string name="stopped_monitoring_cell_information">Parou de monitorar as informações da célula.</string>
+    <string name="monitoring_cell_information">A monitorar informações da célula.</string>
+    <string name="application">Aplicação</string>
+    <string name="timeout_spinner_10_min">10 minutos</string>
+    <string name="timeout_spinner_30_sec">30 segundos</string>
+    <string name="timeout_spinner_20_sec">20 segundos</string>
+    <string name="timeout_spinner_10_sec">10 segundos</string>
+    <string name="timeout_spinner_5_sec">5 segundos</string>
+    <string name="timeout_spinner_2_sec">2 segundos</string>
+    <string name="pref_refresh_5_min">5 minutos</string>
+    <string name="pref_refresh_1_min">1 minuto</string>
+    <string name="ui_icon_white">Branco</string>
+    <string name="ui_icon_flat">Plano</string>
+    <string name="notification_vibrate_medium">Médio</string>
+    <string name="pref_notification_vibrate_min_level_summary">Selecione o nível mínimo de ameaça para vibrar</string>
+    <string name="pref_notification_vibrate_min_level_title">Vibrar no nível de ameaça</string>
+    <string name="pref_notification_vibrate_enable_summary">Vibrar quando notificações forem alteradas</string>
+    <string name="status_skull_detail_info">Manipulação Hostil: alguém está a tentar manipular remotamente o seu aparelho. Destrua ou venda o seu telefone e leve um novo para longe. Não leve o seu telefone antigo para o novo local! Use um novo cartão SIM anônimo com uma identidade falsa registada via Tor-Browser. Mude o seu comportamento de chamadas e avise os seus contatos sobre ser monitorado falando com eles na vida real, NÃO chamando-os!</string>
+    <string name="status_danger_detail_info">Rastreamento hostil detetado: um FBTS ou IMSIC está rastreando VOCÊ ativamente e impedindo que o telefone se conecte por meio de seu provedor de celular criptografado normal. Se estiver em perigo ou com repercussões, destrua seu telefone e o cartão SIM e denuncie-o como recentemente roubado.</string>
+    <string name="status_high_detail_info">Ações de serviços hostils detetadas: um IMSI-Catcher (IMSIC) ou um BTS falso (FBTS) está rastreando ativamente utilizadores. Uma varredura ativa está ocorrendo nesta área. Deve evitar este lugar por todos os meios, especialmente se houver uma agitação política. Retire sua bateria e cartão SIM!</string>
+    <string name="status_medium_detail_info">Área de serviço insegura: pelo menos 1 BTS novo ou desconhecido está em operação nessa vizinhança ou usando um algoritmo de criptografia inseguro (quebrado) menor que A5/3. Quaisquer telefonemas/SMS feitos nesta área podem ser interceptados e gravados. Saia rapidamente deste lugar.</string>
+    <string name="status_ok_detail_info">Nenhuma ameaça detetada. A sua rede está a ser constantemente verificada com base nas configurações de deteção ativadas.</string>
+    <string name="status_idle_detail_info">A app está inativa ou a carregar. Nenhuma proteção ou detecção está ativada. Por favor, ative a detecção.</string>
+    <string name="title_activity_about_pop_up">EXPLICAÇÃO DETALHADA</string>
+    <string name="msg_copied_to_clipboard">Logs copiados para a área de transferência.</string>
+    <string name="ocid_api_success">Nova API key foi gravada.</string>
+    <string name="ocid_api_error">Erro ao obter a chave:</string>
+    <string name="message_request_api_key">Pressione OK para solicitar uma chave de API do OpenCellID.org. Isso permitirá que descarregue os seus dados e visualize-os no mapa. Ele também permitirá que envie os dados do celular. Observe que, se não enviar dados da célula dentro de 20 dias, asua chave de API poderá tornar-se inativa.</string>
+    <string name="table_contains_no_data">A tabela não contém dados a serem exibidos.</string>
+    <string name="sms_message">Mensagem SMS silenciosa detetada! 
+\nDetalhes: Consulte o visualizador do banco de dados.</string>
+    <string name="sms_title">SMS silencioso detetado</string>
+    <string name="command_hint">Digite o comando AT aqui.</string>
+    <string name="timeout_spinner_prompt">Selecionar tempo limite</string>
+    <string name="timeout_spinner_title">Tempo limite:</string>
+    <string name="serial_device_prompt">Selecione o aparelho serial</string>
+    <string name="serial_device_title">Aparelho Serial Atual:</string>
+    <string name="open_cell_id_label">Dados do OpenCellID</string>
+    <string name="pref_map_type_summ">Mostrar mapas em estilos diferentes</string>
+    <string name="pref_map_type_title">Tipo do mapa</string>
+    <string name="pref_map_title">Preferências de visualização do mapa</string>
+    <string name="pref_ocid_requestkey_summary">Solicitar chave de API para acesso a dados do OpenCellID</string>
+    <string name="pref_request_ocid_key">Solicitar chave de API do OpenCellID</string>
+    <string name="pref_enable_cell_monitoring_summ">Ativar o monitoramento automático da célula</string>
+    <string name="pref_enable_cell_monitoring_title">Monitoramento da célula</string>
+    <string name="pref_ocid_key_summ">Insira a sua chave de API do OpenCellID aqui</string>
+    <string name="pref_ocid_key_title">Chave de API do OpenCellID</string>
+    <string name="pref_ocid_title">Configurações do OpenCellID</string>
+    <string name="pref_refresh_summ">Controle a frequência de atualização dos aparelhos
+\nFrequência atual: %s</string>
+    <string name="pref_refresh_title">Taxa de atualização</string>
+    <string name="pref_ui_icons_summ">Seleção do ícone do tema</string>
+    <string name="pref_femto_action_summ">Ativar o Modo Avião quando a Femtocell for detetado (reative a rede manualmente)</string>
+    <string name="pref_femto_action_title">Proteção da Femtocell</string>
+    <string name="pref_femto_summ">(atualmente APENAS telefones CDMA)</string>
+    <string name="pref_femto_title">Deteção da Femtocell</string>
+    <string name="pref_enable_cell_summ">Ativar rastreamento automático da célula</string>
+    <string name="pref_enable_cell_title">Rastreamento da célula</string>
+    <string name="pref_persistservice_summ">O serviço continuará a ser executado após a saída da aplicação (desmarque para fechar totalmente)</string>
+    <string name="pref_persistservice_title">Serviço persistente</string>
+    <string name="pref_autostart_summ">Iniciar o serviço automaticamente na inicialização</string>
+    <string name="pref_autostart_title">Iniciar automaticamente</string>
+    <string name="pref_enable_gps_summary">Ative o GPS para rastrear a célula</string>
+    <string name="location_error_message">Não pode rastrear dados de GPS sem ativar os Serviços de Localização. Ativá-los agora\?</string>
+    <string name="location_error_title">Serviço de localização destivado</string>
+    <string name="network_baseid">ID da estação base:</string>
+    <string name="about_desc_icon_title">Pressione os ícones de estado abaixo para obter informações detalhadas:</string>
+    <string name="status_skull_about_desc">CORRA! Aparelho falsificado!</string>
+    <string name="status_medium_about_desc">Área de serviços insegura. Saia!</string>
+    <string name="status_danger_about_desc">Está a ser rastreado!</string>
+    <string name="status_high_about_desc">Rastreamento ativo perto de si!</string>
+    <string name="status_idle_about_desc">Inativo / Carregando.</string>
+    <string name="data_status">Estado de dados:</string>
+    <string name="data_activity">Atividade de dados:</string>
+    <string name="ciphering_indicator_title">Indicador de codificação</string>
+    <string name="neighboring_cells_title">Células vizinhas</string>
+    <string name="cell_info_title">Células vizinhas</string>
+    <string name="import_cell_towers">Importar dados de CellTowers</string>
+    <string name="cell_lookup">Todos os detalhes do célula atual</string>
+    <string name="disclaimer">Ao utilizar AIMSICD compreende e concorda que AIMSICD é uma aplicação Android, experimental e informativa, que pode falhar em rastrear e fiscalizar. Também entende que pode ser contornada ou derrotada por outros meios, não ainda entendido pelos programadores. Assim, também concorda que os programadores e companhias relacionadas a esse produto livre, não podem de forma alguma ser responsabilizada por qualquer resultado, dependendo do uso dessa aplicação.ESTADO DE DESENVOLVIMENTO: ALFA!</string>
 </resources>
