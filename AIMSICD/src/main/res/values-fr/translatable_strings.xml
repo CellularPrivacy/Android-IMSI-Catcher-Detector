@@ -125,8 +125,8 @@
     <string name="pref_map_type_summ">Affiche différents types de carte</string>
     <!-- MAP INFOWINDOW -->
     <string name="cell_id_label">CID :</string>
-    <string name="lac_label">"LAC : "</string>
-    <string name="mcc_label">"MCC : "</string>
+    <string name="lac_label">LAC :</string>
+    <string name="mcc_label">MCC :</string>
     <string name="mnc_label">"MNC : "</string>
     <string name="pc_label">"PC : "</string>
     <string name="samples_label">"Exemples : "</string>
