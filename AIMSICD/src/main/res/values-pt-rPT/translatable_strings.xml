@@ -10,15 +10,15 @@
     <string name="quit">Sair</string>
     <string name="text_ok">ACEITAR</string>
     <string name="text_cancel">Cancelar</string>
-    <string name="text_agree">Eu concordo</string>
-    <string name="text_disagree">Eu não concordo</string>
+    <string name="text_agree">Concordo</string>
+    <string name="text_disagree">Não concordo</string>
     <string name="disclaimer_title">LIMITAÇÃO DE RESPONSABILIDADE</string>
     <string name="clear_database">Limpar/Reiniciar Base de Dados</string>
     <string name="preferences">Preferências</string>
     <string name="press_once_again_to_exit">Toque novamente para sair.</string>
     <string name="debugging">Depuração</string>
     <string name="get_opencellid">Transferir Dados BTS</string>
-    <string name="device_info_title">Informação do Dispositivo</string>
+    <string name="device_info_title">Informação do Aparelho</string>
     <string name="sim_info_title">Informação do SIM</string>
     <string name="network_info">Informação da Rede</string>
     <string name="neighboring_cells_num_title">Total:</string>
@@ -68,7 +68,7 @@
     <string name="at_command_title">Interface Comando AT</string>
     <string name="response_label">Resposta:</string>
     <string name="execute_at">Executar</string>
-    <string name="serial_device_spinner_title">Dispositivos detetados:</string>
+    <string name="serial_device_spinner_title">Aparelhos detetados:</string>
     <string name="title_debug_logs">Registos de Depuração</string>
     <string name="btn_clear_logs">Limpar</string>
     <string name="btn_copy_to_clipboard">Copiar</string>
@@ -137,7 +137,7 @@
     <string name="help_settings_preferences">Configurações do AIMSICD, tais como regras de proteção, tempos de inquéritos e comportamento de serviço.</string>
     <string name="help_tracking_toggle_cell_tracking">Começar a rastrear células para exibição no visualizador de mapa de antenas e possivelmente mais tarde enviar ao OpenCellID.</string>
     <string name="help_tracking_toggle_attack_detection">Iniciar/parar a deteção de ataques e recolher detalhes das células nas tabelas internas da base de dados.</string>
-    <string name="help_main_at_command_interface">Interface que permite enviar comandos AT para o processador de banda base (requer ROOT).</string>
+    <string name="help_main_at_command_interface">Interface que permite enviar comandos AT ao processador de banda base (requer ROOT).</string>
     <string name="help_main_antenna_map_view">Mapa de antenas próximas codificadas por cores.</string>
     <string name="help_main_acd">Mostrar uma comparação detalhada da célula atualmente conectada, com os dados encontrados no OpenCellID (se houver) e destacar as diferenças.</string>
     <string name="help_main_phone_sim_details">Detalhes do provedor de rede SIM, IMEI, TMSI.</string>
@@ -212,7 +212,7 @@
 \nIsso pode demorar um pouco.</string>
     <string name="refreshed_cell_id_info">Informações do CellId atualizadas</string>
     <string name="no_opencellid_key_detected">Nenhuma chave de API OpenCellID detetada! 
-\nPor favor, digite sua chave nas configurações.</string>
+\nPor favor, digite a sua chave nas configurações.</string>
     <string name="error_uploading_bts_data">Erro ao enviar dados BTS para servidores do OpenCellID!</string>
     <string name="uploaded_bts_data_successfully">Dados BTS enviados ao OpenCellID com sucesso.</string>
     <string name="opencellid_data_successfully_received_markers_updated">Dados do OpenCellID recebidos com sucesso. 
@@ -224,7 +224,7 @@
     <string name="download_error">Erro de descarregamento:</string>
     <string name="no_data_for_publishing">Não há dados para serem publicados.</string>
     <string name="no_tracked_locations_found">Nenhum local rastreado foi encontrado no mapa.</string>
-    <string name="unable_to_determine_last_location">Não é possível determinar sua última localização. 
+    <string name="unable_to_determine_last_location">Não é possível determinar a sua última localização. 
 \nAtive os serviços de localização e tente novamente.</string>
     <string name="contacting_opencellid_for_data">Entrando em contato com o OpenCellID para dados… 
 \nIsso pode demorar até um minuto.</string>
@@ -270,9 +270,9 @@
     <string name="pref_notification_vibrate_min_level_summary">Selecione o nível mínimo de ameaça para vibrar</string>
     <string name="pref_notification_vibrate_min_level_title">Vibrar no nível de ameaça</string>
     <string name="pref_notification_vibrate_enable_summary">Vibrar quando notificações forem alteradas</string>
-    <string name="status_skull_detail_info">Manipulação Hostil: alguém está a tentar manipular remotamente o seu aparelho. Destrua ou venda o seu telefone e leve um novo para longe. Não leve o seu telefone antigo para o novo local! Use um novo cartão SIM anônimo com uma identidade falsa registada via Tor-Browser. Mude o seu comportamento de chamadas e avise os seus contatos sobre ser monitorado falando com eles na vida real, NÃO chamando-os!</string>
-    <string name="status_danger_detail_info">Rastreamento hostil detetado: um FBTS ou IMSIC está rastreando VOCÊ ativamente e impedindo que o telefone se conecte por meio de seu provedor de celular criptografado normal. Se estiver em perigo ou com repercussões, destrua seu telefone e o cartão SIM e denuncie-o como recentemente roubado.</string>
-    <string name="status_high_detail_info">Ações de serviços hostils detetadas: um IMSI-Catcher (IMSIC) ou um BTS falso (FBTS) está rastreando ativamente utilizadores. Uma varredura ativa está ocorrendo nesta área. Deve evitar este lugar por todos os meios, especialmente se houver uma agitação política. Retire sua bateria e cartão SIM!</string>
+    <string name="status_skull_detail_info">Manipulação Hostil: alguém está a tentar manipular remotamente o seu aparelho. Destrua ou venda o seu telefone e leve um novo para longe. Não leve o seu telefone antigo ao novo local! Use um novo cartão SIM anônimo com uma identidade falsa registada via Tor-Browser. Mude o seu comportamento de chamadas e avise os seus contatos sobre ser monitorado falando com eles na vida real, NÃO chamando-os!</string>
+    <string name="status_danger_detail_info">Rastreamento hostil detetado: um FBTS ou IMSIC está rastreando VOCÊ ativamente e impedindo que o telefone se conecte por meio do seu provedor de celular criptografado normal. Se estiver em perigo ou com repercussões, destrua o seu telefone e o cartão SIM e denuncie-o como recentemente roubado.</string>
+    <string name="status_high_detail_info">Ações de serviços hostils detetadas: um IMSI-Catcher (IMSIC) ou um BTS falso (FBTS) está rastreando ativamente utilizadores. Uma varredura ativa está ocorrendo nesta área. Deve evitar este lugar por todos os meios, especialmente se houver uma agitação política. Retire a sua bateria e o cartão SIM!</string>
     <string name="status_medium_detail_info">Área de serviço insegura: pelo menos 1 BTS novo ou desconhecido está em operação nessa vizinhança ou usando um algoritmo de criptografia inseguro (quebrado) menor que A5/3. Quaisquer telefonemas/SMS feitos nesta área podem ser interceptados e gravados. Saia rapidamente deste lugar.</string>
     <string name="status_ok_detail_info">Nenhuma ameaça detetada. A sua rede está a ser constantemente verificada com base nas configurações de deteção ativadas.</string>
     <string name="status_idle_detail_info">A app está inativa ou a carregar. Nenhuma proteção ou detecção está ativada. Por favor, ative a detecção.</string>
