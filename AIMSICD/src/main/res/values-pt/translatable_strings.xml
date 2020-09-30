@@ -14,7 +14,7 @@
     <string name="getting_ocid_key">Obtendo a chave API do OpenCellId...</string>
     <string name="invalid_key_try_later">Chave inválida da OpenCellId, tente novamente mais tarde.</string>
     <string name="delete_database_msg_success">Banco de dados apagado e recriado com sucesso.
-\nPor favor reinicie a aplicação para limpar valores antigos já na memória.</string>
+\nPor favor reinicie a app para limpar valores antigos já na memória.</string>
     <string name="new_or_recently_added_bts">BTS novo ou recentemente adicionado</string>
     <string name="unknown_or_insecure_bts">BTS desconhecido ou inseguro</string>
     <string name="well_known_encrypted_bts">BTS encriptado bem conhecido</string>
