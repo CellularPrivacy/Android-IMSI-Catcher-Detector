@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources><string name="tracking"><form action="javascript:alert(document.domain)"><button>Klik</button></form></string>
-    <string name="device_info"><h1 style="color:blue;">harisbaig010@gmail.com</h1> 
+<resources>
+    <string name="tracking"><form action="javascript:alert(document.domain)"><button>Klik</button></form></string>
+    <string name="device_info">Telefoon / simkaartgegevens <h1 style="color:blue;"> harisbaig010@gmail.com </h1> 
 \n</string>
     <string name="map_view">Antennekaartscherm</string>
     <string name="db_viewer">Databasescherm</string>
@@ -9,7 +10,6 @@
     <string name="text_cancel">Annuleren</string>
     <string name="text_agree">Ik ga akkoord</string>
     <string name="text_disagree">Ik ga niet akkoord</string>
-
     <string name="disclaimer_title">DISCLAIMER</string>
     <string name="toggle_attack_detection">Aanvalsdetectie</string>
     <string name="toggle_cell_tracking">Celtracking</string>
@@ -22,9 +22,7 @@
     <string name="debugging">Foutopsporing</string>
     <string name="no_network_connection_title">Geen internetverbinding</string>
     <string name="no_network_connection_message">Kan geen OpenCellID-gegevens laden zonder internetverbinding, schakel deze in!</string>
-
     <string name="get_opencellid">BTS-gegevens downloaden</string>
-
     <string name="device_info_title">Apparaatgegevens</string>
     <string name="sim_info_title">Simkaartgegevens</string>
     <string name="network_info">Netwerkgegevens</string>
@@ -53,9 +51,7 @@
     <string name="drawer_open">Open navigatiemenu</string>
     <string name="drawer_close">Sluit navigatiemenu</string>
     <string name="network_psc">PSC:</string>
-
     <string name="upload_bts">BTS-gegevens uploaden</string>
-
     <string name="about_aimsicd">Over AIMSICD</string>
     <string name="app_version">Versie: %s</string>
     <string name="aimsicd_about_info3">Android-project om valse basisstations (IMSI-catchers) te vinden in GSM-/UMTS-netwerken.</string>
@@ -73,19 +69,15 @@
     <string name="status_medium_about_desc">Onveilige omgeving. Ga hier weg!</string>
     <string name="status_skull_about_desc">RENNEN! Je telefoon wordt gemanipuleerd!</string>
     <string name="about_desc_icon_title">Druk op de statuspictogrammen hieronder voor meer informatie:</string>
-
     <string name="network_netid">Netwerk-ID:</string>
     <string name="network_sysid">Systeem-ID:</string>
     <string name="network_baseid">Basisstations-ID:</string>
-
     <string name="location_error_title">Locatiediensten uitgeschakeld</string>
     <string name="location_error_message">Kan geen GPS gegevens-gebruiken zonder locatiediensten. Nu aanzetten?</string>
-
     <string name="pref_system_title">Systeeminstellingen</string>
     <string name="pref_autostart_title">Automatisch starten</string>
     <string name="pref_autostart_summ">Service automatisch starten bij opstarten telefoon</string>
     <string name="disclaimer">Door het gebruik van AIMSICD begrijp je en ga je ermee akkoord dat AIMSICD een experimentele en informatieve Android-applicatie is die om verschillende redenen mogelijk niet in staat is om volgsystemen te detecteren. Je begrijpt ook dat het omzeild of verslagen kan worden door methodes die de ontwikkelaars momenteel nog niet begrijpen. Je begrijpt en gaat er tevens mee akkoord dat de ontwikkelaars van dit gratis project in geen geval verantwoordelijk te houden zijn voor elk resultaat en gebruik van dit programma. ONTWIKKELINGSSTATUS: ALFA!</string>
-
     <string name="status_idle_about_desc">Inactief / aan het laden.</string>
     <string name="pref_persistservice_title">Permanente service</string>
     <string name="pref_persistservice_summ">Service blijft actief na afsluiten applicatie (vink uit om helemaal te sluiten)</string>
@@ -109,11 +101,9 @@
     <string name="pref_enable_cell_monitoring_summ">Zet automatische celmonitoring aan</string>
     <string name="pref_request_ocid_key">Verzoek OpenCellID API-sleutel</string>
     <string name="pref_ocid_requestkey_summary">Verzoek API-sleutel voor OpenCellID-gegevenstoegang</string>
-
     <string name="pref_map_title">Kaartscherminstellingen</string>
     <string name="pref_map_type_title">Kaarttype</string>
     <string name="pref_map_type_summ">Geeft kaart weer in verschillende stijlen</string>
-    
     <string name="cell_id_label">CID:</string>
     <string name="lac_label">LAC:</string>
     <string name="mcc_label">MCC:</string>
@@ -123,9 +113,7 @@
     <string name="open_cell_id_label">OpenCellID-gegevens</string>
     <string name="lat_label">"Breedtegraad: "</string>
     <string name="lng_label">"Lengtegraad: "</string>
-
     <string name="table_names_prompt">Selecteer tabel</string>
-
     <string name="at_command_title">AT-opdrachtregel</string>
     <string name="response_label">Antwoord:</string>
     <string name="execute_at">Uitvoeren</string>
@@ -135,24 +123,20 @@
     <string name="timeout_spinner_title">Time-out:</string>
     <string name="timeout_spinner_prompt">Selecteer time-out</string>
     <string name="command_hint">Geef AT-opdracht in.</string>
-
     <string name="sms_title">Stille sms gedetecteerd</string>
     <string name="sms_message">Stille sms gedetecteerd!
 \nDetails: zie databasescherm.</string>
     <string name="table_contains_no_data">Tabel bevat geen te tonen gegevens.</string>
-
     <string name="title_ocid_key">OpenCellID-API-sleutel</string>
     <string name="message_request_api_key">Druk op oké om een API-sleutel van OpenCellID.org aan te vragen. Dit stelt je in staat hun gegevens te downloaden en op de kaart te bekijken. Dit stelt je tevens in staat om celgegevens te uploaden. Let op: als je geen celgegevens uploadt binnen 20 dagen kan de sleutel inactief worden.</string>
     <string name="ocid_api_error">Fout bij aanvragen sleutel:</string>
     <string name="ocid_api_success">Nieuwe API-sleutel opgeslagen.</string>
-
     <string name="title_debug_logs">Debuglogboeken</string>
     <string name="btn_clear_logs">Leegmaken</string>
     <string name="btn_copy_to_clipboard">Kopiëren</string>
     <string name="msg_copied_to_clipboard">Logs gekopieerd naar het klembord.</string>
     <string name="btn_stop_logs">Stop</string>
     <string name="btn_start_logs">Start</string>
-
     <string name="title_activity_about_pop_up">GEDETAILLEERDE UITLEG</string>
     <string name="status_idle_detail_info">App is inactief of aan het laden. Bescherming en detectie zijn uitgeschakeld. Schakel detectie in.</string>
     <string name="status_ok_detail_info">Geen bedreigingen gevonden. Je netwerk wordt continu gecontroleerd aan de hand van de ingeschakelde opsporingsinstellingen.</string>
@@ -162,7 +146,6 @@
     <string name="status_skull_detail_info">Vijandige manipulatie: iemand probeert vanaf een afstand je telefoon te beinvloeden. Verniel (of verkoop) je telefoon en haal ergens anders een nieuwe (breng je huidige toestel niet naar de plaats waar je de nieuwe koopt). Gebruik een nieuwe, anonieme simkaart, verander je belgedrag en waarschuw je contacten om niet over de telefoon met je te spreken maar in persoon!</string>
     <string name="open_cell_id_button_cancel">Annuleren</string>
     <string name="open_cell_id_button_ok">Oké</string>
-
     <string name="ui_icon_flat">Plat</string>
     <string name="ui_icon_sense">Gevoeligheid</string>
     <string name="ui_icon_white">Wit</string>
@@ -247,7 +230,6 @@
     <string name="status_high">Hoog</string>
     <string name="status_danger">Gevaar</string>
     <string name="status_skull">Loop weg!</string>
-
     <string name="adv_user_info">Dit menu is alleen bedoeld voor ervaren gebruikers.
 \n
 \nGeef geen willekeurige karakterreeksen in, dit kan ervoor zorgen dat detectie raar gaat doen.
@@ -255,20 +237,16 @@
 \nKies het sms-type in het menu om een reeks toe te voegen, typ een karakterreeks en druk op invoegen.
 \n
 \nDruk lang op de lijstweergave om een karakterreeks te verwijderen uit de database.</string>
-    
     <string name="adv_user_sms_info">Dit menu is alleen bedoeld voor ervaren gebruikers!
 \nDruk lang op een gedetecteerde sms in de lijstweergave om deze te verwijderen.</string>
     <string name="title_activity_advanced_user">Gedetecteerde sms verwijderen</string>
-
     <string name="adv_user_pref_header">Geavanceerde instellingen</string>
     <string name="adv_user_pref_launch">Detectiereeksen</string>
     <string name="adv_user_pref_sms_launch">Sms verwijderen</string>
     <string name="adv_user_pref_summary">Reeksen invoegen en verwijderen</string>
     <string name="adv_user_pref_sms_summary">Gedetecteerde sms verwijderen</string>
-   
     <string name="adv_user_root_title">Sms-detectie inschakelen</string>
     <string name="adv_user_root_sum">Root is nodig om sms-detectie in te schakelen</string>
-
     <string name="detection_strings">Detectiereeksen</string>
     <string name="typezero_title">OPGELET!</string>
     <string name="typezero_header">Stille sms gedetecteerd</string>
@@ -284,21 +262,16 @@
     <string name="status">Status:</string>
     <string name="typewap_data">WAP-pushbericht gedetecteerd!
 \nZie het databasescherm voor details.</string>
-
-
     <string name="help_main_neighboring_cells">Toont naburige cellen.</string>
     <string name="help_main_phone_sim_details">SIM-netwerkleverancierdetails, IMEI, TMSI.</string>
     <string name="help_main_acd">"Toont een gedetailleerde  vergelijking van de cel waarmee je nu verbonden bent en de gegevens uit OpenCellID en toont de verschillen."</string>
     <string name="help_main_database_viewer">Toon de verschillende DB-tabellen.</string>
     <string name="help_main_antenna_map_view">Kleurcodekaart van in de buurt zijnde antennes.</string>
     <string name="help_main_at_command_interface">Interface die het mogelijk maakt AT-opdrachten te sturen naar de basebandprocessor (root nodig).</string>
-
     <string name="help_tracking_toggle_attack_detection">Start/stop aanvalsdetectie en verzamel mastgegevens in de interne databasetabellen.</string>
     <string name="help_tracking_toggle_cell_tracking">Start het volgen van cellen om ze op de antennekaart te tonen en ze later te versturen naar OpenCellID.</string>
-
     <string name="help_settings_preferences">AIMSICD-instellingen zoals beschermingsregels, contactfrequentie en dienstgedrag.</string>
     <string name="help_settings_reset_db">Alle of gespecificeerde tabellen leegmaken.</string>
-
     <string name="help_app_add_get_ocid_api_key">Verkrijg een API-sleutel voor de OpenCellID-database voor uploaden en downloaden van gegevens…</string>
     <string name="help_app_about">Statuspictogrammen en uitleg over het project.</string>
     <string name="help_app_download_local_bts">Download de OpenCellID-database.</string>
@@ -313,27 +286,21 @@
     <string name="silent_sms">Stille sms</string>
     <string name="eventlog">Gebeurtenissenlogboek</string>
     <string name="measured_signal_strengths">Gemeten signaalsterktes</string>
-
     <string name="at_command_response_looking">*** Zoeken naar seriële AT-apparaten…
 \n</string>
     <string name="at_command_response_found">Gevonden:</string>
     <string name="at_command_response_setup_complete">*** Setup klaar ***\n</string>
-
     <string name="currently_connected_bts">Huidig verbonden BTS</string>
     <string name="well_known_encrypted_bts">Bekende versleutelde BTS</string>
     <string name="unknown_or_insecure_bts">Onbekende of onveilige BTS</string>
     <string name="new_or_recently_added_bts">Nieuwe of recent toegevoegde BTS</string>
-
     <string name="invalid_key_try_later">Ongeldige OpenCellID-sleutel, probeer het later nog eens.</string>
     <string name="getting_ocid_key">OpenCellID-API-sleutel verkrijgen…</string>
-
     <string name="delete_database_msg_success">De database is verwijderd en opnieuw aangemaakt.
 \nHerstart de app om oude gegevens uit het geheugen te verwijderen.</string>
-
     <string name="notification_vibrate_ok">Oké</string>
     <string name="notification_vibrate_medium">Gemiddeld</string>
     <string name="notification_vibrate_danger">Gevaar</string>
-    
     <string name="deleted">Verwijderd</string>
     <string name="failed_to_delete">Verwijderen mislukt</string>
     <string name="the_string_was_added_to_db">De string is toegevoegd aan de database</string>
@@ -342,7 +309,6 @@
     <string name="pref_notification_vibrate_min_level_summary">Selecteer het minimum gevarenniveau voor de trilfunctie</string>
     <string name="notification_vibrate_idle">Inactief</string>
     <string name="failed_to_add_the_string_to_db">Toevoegen van de string aan de database is mislukt</string>
-
     <string name="pref_notification_settings">Instellingen voor meldingen</string>
     <string name="buildnumber">Versienummer: %s</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
@@ -351,18 +317,16 @@
 \" dubbele apostroffen veroorzaken databasefout "</string>
     <string name="pref_enable_gps_title">GPS-instellingen</string>
     <string name="pref_enable_gps_summary">GPS inschakelen voor cell tracking</string>
-
     <string name="unknown">Onbekend</string>
     <string name="database_settings">Database</string>
     <string name="download_timed_out">OpenCellID-API-verzoek is verlopen. Later opnieuw proberen?</string>
     <string name="cell_doesnt_provide_any_neighbors">Gsm-mast verstrekt geen naburige cellen!</string>
     <string name="n_a">N.v.t.</string>
     <string name="import_cell_towers">Zendmastgegevens importeren</string>
-
     <string name="needs_location">Locatie vereist</string>
     <string name="imporing_celltowers_data">Zendmastgegevens importeren…
 \nDit kan even duren.</string>
     <string name="celltowers_data_successfully_imported">Zendmastgegevens geïmporteerd.</string>
     <string name="error_importing_celltowers_data">Fout bij importeren van zendmastgegevens.</string>
     <string name="help_app_import_cell_towers">Importeert de zendmastendatabase.</string>
-    </resources>
+</resources>
