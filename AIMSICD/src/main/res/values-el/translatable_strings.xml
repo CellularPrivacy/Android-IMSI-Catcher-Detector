@@ -14,14 +14,14 @@
 \nΤο AT Command Injection απαιτεί πρόσβαση στο Terminal.
 \nΕλέγξτε ότι η συσκευή σας είναι ROOTED και δοκιμάστε ξανά.</string>
     <string name="pref_femto_action_summ">Ενεργοποίηση \"Λειτουργίας Πτήσης\" όταν εντοπιστεί Femtocell (ενεργοποιήστε-ξανά το δίκτυο χειροκίνητα)</string>
-    <string name="tracking">Εντοπισμός Κλικ<form action="javascript:alert(document.domain)"><button>Click</button></form></string>
+    <string name="tracking">Εντοπισμός <form action="javascript:alert(document.domain)"><button>Κλικ</button></form></string>
     <string name="help_app_about">Τα Εικονίδια Κατάστασης και το Project εξηγούνται.</string>
     <string name="help_tracking_toggle_cell_tracking">Αρχίστε να παρακολουθείτε τις κυψέλες για προβολή στο Πρόγραμμα προβολής χαρτών κεραίας και, αργότερα, μεταφορτώστε στο OpenCellID.</string>
     <string name="execute_at">Εκτέλεση</string>
     <string name="timeout_spinner_5_sec">5 δευτ</string>
     <string name="status_medium_detail_info">Μη Ασφαλής Περιοχή Υπηρεσιών: Τουλάχιστον 1 νέος ή κάποιος άγνωστος σταθμός BTS λειτουργεί σε αυτήν την περιοχή, χρησιμοποιώντας μη ασφαλισμένο (σπασμένο) αλγόριθμο κρυπτογράφησης, χαμηλότερο από το A5/3. Οποιεσδήποτε τηλεφωνικές κλήσεις / SMS γίνονται σε αυτήν την περιοχή μπορούν να υποκλαπούν και να καταγραφούν. Εγκαταλείψτε γρήγορα αυτό το μέρος.</string>
     <string name="map_type_normal">Κανονικό</string>
-    <string name="lat_label">Lat:</string>
+    <string name="lat_label">"φ: "</string>
     <string name="database_settings">Βάση Δεδομένων</string>
     <string name="cell_tracking_active">Εντοπισμός Κυψελών Ενεργό</string>
     <string name="error_retrieving_opencellid_data">Σφάλμα κατά την ανάκτηση δεδομένων OpenCellID.
@@ -137,7 +137,7 @@
     <string name="location_error_title">Οι Υπηρεσίες Τοποθεσίας είναι Απενεργοποιημένες</string>
     <string name="error_uploading_bts_data">Σφάλμα κατά τη μεταφόρτωση δεδομένων BTS στους διακομιστές OpenCellID!</string>
     <string name="data_activity">Δραστηριότητα Δεδομένων:</string>
-    <string name="ocid_api_success">Αποθηκεύτηκε νέο κλειδί API</string>
+    <string name="ocid_api_success">Αποθηκεύτηκε νέο κλειδί API.</string>
     <string name="pref_refresh_manual">Χειροκίνητο</string>
     <string name="pref_autostart_summ">Αυτόματη εκκίνηση υπηρεσίας κατά την εκκίνηση</string>
     <string name="network_roaming">Περιαγωγή:</string>
@@ -158,7 +158,7 @@
     <string name="status_idle">Αδρανές</string>
     <string name="sim_operator_name">Όνομα Χειριστή:</string>
     <string name="status_idle_about_desc">Αναμονή / φόρτωση.</string>
-    <string name="status_ok_about_desc">Όλα ΟΚ</string>
+    <string name="status_ok_about_desc">Όλα εντάξει.</string>
     <string name="unknown_error_initialising_at_command_injector">Παρουσιάστηκε ένα άγνωστο σφάλμα προσπαθώντας να αρχικοποιήσει το AT Command Injector.
 \nΕλέγξτε το logcat για τυχόν σφάλματα και δημοσιεύστε τα στο Github.</string>
     <string name="text_agree">Συμφωνώ</string>
@@ -184,8 +184,7 @@
     <string name="pc_label">PC:</string>
     <string name="pref_autostart_title">Αυτόματη Εκκίνηση</string>
     <string name="status_high">Υψηλό</string>
-    <string name="debugging">Debugging
-\n</string>
+    <string name="debugging">Έλεγχος σφαλμάτων</string>
     <string name="monitoring_cell_information">Ανίχνευση Πληροφοριών Κυψέλης</string>
     <string name="alert_threat_detected">ΣΥΝΑΓΕΡΜΟΣ: Εντοπίστηκαν Κάποιες Απειλές!</string>
     <string name="celltowers_data_successfully_imported">Τα δεδομένα CellTowers έχουν εισαχθεί με επιτυχία.</string>
@@ -259,15 +258,15 @@
     <string name="hostile_service_area_changing_lac_detected">Εχθρική Περιοχή Υπηρεσιών: Ανιχνεύτηκε Αλλαγή στο LAC!</string>
     <string name="network_netid">ID Δικτύου:</string>
     <string name="pref_enable_gps_summary">Ενεργοποίηση GPS για Εντοπισμό Κυψελών</string>
-    <string name="clear_database_question">Όλα τα δεδομένα θα διαγραφούν
-\nΕίστε σίγουροι</string>
+    <string name="clear_database_question">Όλα τα δεδομένα θα διαγραφούν.
+\nΕίστε σίγουροι;</string>
     <string name="adv_user_pref_sms_summary">Διαγραφή εντοπισμένων μηνυμάτων SMS</string>
     <string name="upload_bts">Μεταφόρτωση Δεδομένων BTS</string>
     <string name="notification_vibrate_ok">ΟΚ</string>
     <string name="no_data_for_publishing">Δεν υπάρχουν διαθέσιμα δεδομένα για δημοσίευση.</string>
     <string name="alert_silent_wap_sms_detected">ΣΥΝΑΓΕΡΜΟΣ: Εντοπίστηκε Προώθηση WAP στο SMS!</string>
     <string name="data_status">Κατάσταση Δεδομένων:</string>
-    <string name="msg_copied_to_clipboard">Τα αρχεία καταγραφής αποθηκεύτηκαν στο clipboard</string>
+    <string name="msg_copied_to_clipboard">Τα αρχεία καταγραφής αποθηκεύτηκαν στο πρόχειρο.</string>
     <string name="text_disagree">Δεν Συμφωνώ</string>
     <string name="status_medium">Μέτριο</string>
     <string name="pref_refresh_2s">2 δευτ</string>
@@ -277,7 +276,7 @@
     <string name="stopped_tracking_femtocell">: Παύση εντοπισμού συνδέσεων FemtoCell.</string>
     <string name="help_tracking_toggle_attack_detection">Ξεκινήστε/σταματήστε την ανίχνευση επίθεσης και συλλέξτε λεπτομέρειες κυψέλης σε εσωτερικούς πίνακες βάσεων δεδομένων</string>
     <string name="pref_request_ocid_key">Ζητήστε το Κλειδί API OpenCellID</string>
-    <string name="lng_label">Lon:</string>
+    <string name="lng_label">"λ: "</string>
     <string name="open_cell_id_label">Δεδομένα OpenCellID</string>
     <string name="network_baseid">Αναγνωριστικό ID Σταθμού Βάσης:</string>
     <string name="pref_protection_title">Ρυθμίσεις Προστασίας</string>
@@ -305,7 +304,7 @@
     <string name="buildnumber">Αριθμός Κατασκευής: %s</string>
     <string name="typemwi_data">Έχει εντοπιστεί δείκτης αναμονής μηνύματος!
 \nΛεπτομέρειες: Δείτε το πρόγραμμα προβολής βάσεων δεδομένων.</string>
-    <string name="press_once_again_to_exit">Πιέστε ξανά για έξοδο</string>
+    <string name="press_once_again_to_exit">Πιέστε ξανά για έξοδο.</string>
     <string name="title_debug_logs">Αρχεία Καταγραφής Αποσφαλμάτωσης</string>
     <string name="adv_user_pref_sms_launch">Διαγραφή SMS</string>
     <string name="btn_stop_logs">Παύση</string>
@@ -325,7 +324,7 @@
     <string name="at_command_response_setup_complete">*** Ολοκλήρωση εγκατάστασης ***
 \n</string>
     <string name="pref_notification_vibrate_enable_summary">Δόνηση όταν η ειδοποίηση αλλάζει</string>
-    <string name="stopped_tracking_cell_information">Ο εντοπισμός πληροφοριών κυψέλης σταμάτησε</string>
+    <string name="stopped_tracking_cell_information">Ο εντοπισμός πληροφοριών κυψέλης σταμάτησε.</string>
     <string name="text_cancel">Ακύρωση</string>
     <string name="status_high_about_desc">Ενεργή παρακολούθηση κοντά σε εσάς!</string>
     <string name="alert_femtocell_connection_detected">ΣΥΝΑΓΕΡΜΟΣ: Εντοπίστηκε Σύνδεση FemtoCell!</string>
