@@ -1,5 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="device_info">Detail Telepon/SIM</string>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="device_info">6281391611561 
+\n</string>
     <string name="map_view">Penampil Peta Antena</string>
     <string name="db_viewer">Penampil Basisdata</string>
     <string name="quit">Keluar</string>
@@ -7,7 +9,6 @@
     <string name="text_cancel">Batalkan</string>
     <string name="text_agree">Saya setuju</string>
     <string name="text_disagree">Saya tidak setuju</string>
-
     <string name="toggle_attack_detection">Pendeteksian Serangan</string>
     <string name="clear_database">Bersihkan Basisdata</string>
     <string name="clear_database_question">Semua data akan dihapus. Apakah Anda yakin?</string>
@@ -15,9 +16,7 @@
     <string name="press_once_again_to_exit">Tekan lagi untuk keluar.</string>
     <string name="no_network_connection_title">Tidak ada koneksi internet</string>
     <string name="no_network_connection_message">Tidak dapat mengunduh data OpenCellID tanpa koneksi internet, mohon aktifkan koneksi data!</string>
-
     <string name="get_opencellid">Mengunduh data BTS</string>
-
     <string name="device_info_title">Informasi Perangkat</string>
     <string name="sim_info_title">Informasi SIM</string>
     <string name="network_info">Informasi Jaringan</string>
@@ -43,9 +42,7 @@
     <string name="drawer_open">Buka Navigation Drawer</string>
     <string name="drawer_close">Tutup Navigation Drawer</string>
     <string name="network_psc">PSC:</string>
-
     <string name="upload_bts">Mengunggah Data BTS</string>
-
     <string name="about_aimsicd">Tentang AIMSICD</string>
     <string name="app_version">Versi: %s</string>
     <string name="buildnumber">Nomor build: %s</string>
@@ -62,7 +59,6 @@
     <string name="adv_user_pref_sms_launch">Menghapus SMS</string>
     <string name="adv_user_root_title">Aktifkan Deteksi SMS</string>
     <string name="adv_user_root_sum">Root dibutuhkan untuk mengaktifkan deteksi SMS</string>
-
     <string name="detection_strings">Deteksi Strings</string>
     <string name="typezero_title">PERHATIAN!</string>
     <string name="typezero_header">SMS Diam-diam Terdeteksi</string>
@@ -74,21 +70,16 @@
     <string name="unique_bts_data">BTS Data yang Unik</string>
     <string name="bts_measurements">Pengukuran BTS</string>
     <string name="measured_signal_strengths">Perkiraan Kekuatan Signal</string>
-
     <string name="at_command_response_found">Ditemukan:</string>
     <string name="at_command_response_setup_complete">*** Pengaturan berhasil ***
 \n</string>
-
     <string name="currently_connected_bts">BTS yang saat ini terhubung</string>
     <string name="well_known_encrypted_bts">BTS yang diketahui terenkripsi</string>
     <string name="unknown_or_insecure_bts">BTS yang tidak aman atau tidak diketahui</string>
     <string name="new_or_recently_added_bts">BTS yang baru ditambahkan</string>
-
     <string name="getting_ocid_key">Mendapatkan Kunci API OpenCellID...</string>
-
     <string name="deleted">Terhapus</string>
     <string name="failed_to_delete">Gagal untuk menghapus</string>
     <string name="n_a">N/A</string>
     <string name="unknown">Tidak diketahui</string>
-
-    </resources>
+</resources>
