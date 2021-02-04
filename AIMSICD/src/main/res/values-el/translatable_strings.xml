@@ -22,7 +22,7 @@
     <string name="status_medium_detail_info">Μη Ασφαλής Περιοχή Υπηρεσιών: Τουλάχιστον 1 νέος ή κάποιος άγνωστος σταθμός BTS λειτουργεί σε αυτήν την περιοχή, χρησιμοποιώντας μη ασφαλισμένο (σπασμένο) αλγόριθμο κρυπτογράφησης, χαμηλότερο από το A5/3. Οποιεσδήποτε τηλεφωνικές κλήσεις / SMS γίνονται σε αυτήν την περιοχή μπορούν να υποκλαπούν και να καταγραφούν. Εγκαταλείψτε γρήγορα αυτό το μέρος.</string>
     <string name="map_type_normal">Κανονικό</string>
     <string name="lat_label">"φ: "</string>
-    <string name="database_settings">Βάση Δεδομένων</string>
+    <string name="database_settings">Βάση δεδομένων</string>
     <string name="cell_tracking_active">Εντοπισμός Κυψελών Ενεργό</string>
     <string name="error_retrieving_opencellid_data">Σφάλμα κατά την ανάκτηση δεδομένων OpenCellID.
 \nΕλέγξτε το δίκτυο σας!</string>
@@ -49,7 +49,7 @@
     <string name="ocid_api_error">Σφάλμα απόκτησης κλειδιού:</string>
     <string name="serial_device_spinner_title">Συσκευές που Εντοπίστηκαν:</string>
     <string name="adv_user_pref_launch">Σήματα Ανίχνευσης</string>
-    <string name="text_ok">ΟΚ</string>
+    <string name="text_ok">Εντάξει</string>
     <string name="serial_device_title">Τρέχον Σειριακός Συσκευής:</string>
     <string name="network_cellid">CID:</string>
     <string name="get_opencellid">Λήψη Δεδομένων BTS</string>
@@ -78,7 +78,7 @@
     <string name="pref_ui_title">Ρυθμίσεις Διεπαφής</string>
     <string name="unknown">Άγνωστο</string>
     <string name="status_danger">Κίνδυνος</string>
-    <string name="status_ok">ΟΚ</string>
+    <string name="status_ok">Εντάξει</string>
     <string name="timeout_spinner_20_sec">20 δευτ</string>
     <string name="network_lte_timing_advance">ΤΑ (LTE):</string>
     <string name="adv_user_sms_info">Αυτό το μενού προορίζεται μόνο για προχωρημένους χρήστες!
@@ -177,7 +177,7 @@
     <string name="pref_persistservice_summ">Η υπηρεσία θα συνεχίσει να λειτουργεί μετά την έξοδο από την εφαρμογή (αποεπιλέξτε για να κλείσετε πλήρως)</string>
     <string name="toggle_attack_detection">toggle_attack_detection</string>
     <string name="alert_femtocell_tracking_detected">ΣΥΝΑΓΕΡΜΟΣ: Ανιχνεύτηκε Εντοπισμός FemtoCell</string>
-    <string name="open_cell_id_button_ok">ΟΚ</string>
+    <string name="open_cell_id_button_ok">Εντάξει</string>
     <string name="pref_refresh_5s">5 δευτ</string>
     <string name="help_app_upload_local_bts">Μεταφορτώνει το BTS σας στη βάση δεδομένων OpenCellID.</string>
     <string name="typewap_header">Ανιχνεύτηκε WAP Push</string>
@@ -262,7 +262,7 @@
 \nΕίστε σίγουροι;</string>
     <string name="adv_user_pref_sms_summary">Διαγραφή εντοπισμένων μηνυμάτων SMS</string>
     <string name="upload_bts">Μεταφόρτωση Δεδομένων BTS</string>
-    <string name="notification_vibrate_ok">ΟΚ</string>
+    <string name="notification_vibrate_ok">Εντάξει</string>
     <string name="no_data_for_publishing">Δεν υπάρχουν διαθέσιμα δεδομένα για δημοσίευση.</string>
     <string name="alert_silent_wap_sms_detected">ΣΥΝΑΓΕΡΜΟΣ: Εντοπίστηκε Προώθηση WAP στο SMS!</string>
     <string name="data_status">Κατάσταση Δεδομένων:</string>
