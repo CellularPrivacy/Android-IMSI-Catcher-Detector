@@ -82,4 +82,8 @@
     <string name="failed_to_delete">Gagal untuk menghapus</string>
     <string name="n_a">N/A</string>
     <string name="unknown">Tidak diketahui</string>
+    <string name="import_cell_towers">Impor Data CellTowers</string>
+    <string name="debugging">Debugging</string>
+    <string name="toggle_cell_tracking">toggle_cell_tracking</string>
+    <string name="disclaimer_title">PERNYATAAN</string>
 </resources>
