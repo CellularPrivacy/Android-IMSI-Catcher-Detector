@@ -191,7 +191,7 @@
     <string name="ui_icon_flat">Επίπεδο</string>
     <string name="adv_user_root_title">Ενεργοποίηση ανίχνευσης SMS</string>
     <string name="help_app_quit">Έξοδος από αυτήν την εφαρμογή.</string>
-    <string name="open_cell_id_button_cancel">Ακύρωση</string>
+    <string name="open_cell_id_button_cancel">Άκυρο</string>
     <string name="status">Κατάσταση:</string>
     <string name="drawer_open">Άνοιγμα Drawer Πλοήγησης</string>
     <string name="mcc_label">MCC:</string>
@@ -325,7 +325,7 @@
 \n</string>
     <string name="pref_notification_vibrate_enable_summary">Δόνηση όταν η ειδοποίηση αλλάζει</string>
     <string name="stopped_tracking_cell_information">Ο εντοπισμός πληροφοριών κυψέλης σταμάτησε.</string>
-    <string name="text_cancel">Ακύρωση</string>
+    <string name="text_cancel">Άκυρο</string>
     <string name="status_high_about_desc">Ενεργή παρακολούθηση κοντά σε εσάς!</string>
     <string name="alert_femtocell_connection_detected">ΣΥΝΑΓΕΡΜΟΣ: Εντοπίστηκε Σύνδεση FemtoCell!</string>
     <string name="pref_femto_action_title">Προστασία Femtocell</string>
