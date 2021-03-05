@@ -5,7 +5,7 @@
     <string name="about_github">AIMSICD GitHub-en</string>
     <string name="cell_lookup">Telefonoaren xehetasun guztiak</string>
     <string name="toggle_attack_detection">toggle_attack_detection</string>
-    <string name="disclaimer_title">Erantzinkuzun deskargua</string>
+    <string name="disclaimer_title">ABISUAK</string>
     <string name="aimsicd_about_info3">Androiden oinarritutako proiektua telefono-etxe faltsuak (IMSI-Catchers) detektatu eta ekiditeko GSM/UMTS sareetan.</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
     <string name="buildnumber">Build zenbakia: %s</string>
@@ -89,7 +89,7 @@
     <string name="pref_enable_cell_monitoring_summ">Aktibatu Telefono Monitorizatze Automatikoa</string>
     <string name="pref_enable_cell_monitoring_title">Telefono Monitorizatzea</string>
     <string name="pref_ocid_key_summ">Sartu hemen zure OpenCellID API Key-a</string>
-    <string name="pref_ocid_key_title">OpenCellID API Key</string>
+    <string name="pref_ocid_key_title">Irekin CellID API Giltza</string>
     <string name="pref_ocid_title">OpenCellID Ezarpenak</string>
     <string name="pref_refresh_summ">Gailuaren gaurkotze frekuentzia aldatu
 \nIndarrezkoa: %s</string>
@@ -128,6 +128,11 @@
     <string name="about_license">LIZENTZIA</string>
     <string name="about_changelog">ALDAKETAK</string>
     <string name="about_releases">ARGITARATZEAK</string>
-    <string name="about_disclaimer">DISCLAIMER</string>
+    <string name="about_disclaimer">ABISUAK</string>
     <string name="tracking">Bilatzen&lt;form action=\"javascript:alert(document.domain)\"&gt;&lt;button&gt;Klik&lt;/button&gt;&lt;/form&gt;<form action="javascript:alert(document.domain)"><button>Click</button></form></string>
+    <string name="title_ocid_key">IrekiMugikorraren ID PAI giltza</string>
+    <string name="table_contains_no_data">Egun horretan ez da autokidetzarik.</string>
+    <string name="sms_message">Mezu labur isil bat detektatu da!
+\nXehetasunak: Ikus Database Viewer.</string>
+    <string name="sms_title">Mezu labur isil bat detektatu da</string>
 </resources>
