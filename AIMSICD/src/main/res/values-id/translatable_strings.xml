@@ -86,4 +86,41 @@
     <string name="debugging">Debugging</string>
     <string name="toggle_cell_tracking">toggle_cell_tracking</string>
     <string name="disclaimer_title">PERNYATAAN</string>
+    <string name="pref_ui_title">Pengaturan Antarmuka</string>
+    <string name="pref_femto_title">Deteksi Femtocell</string>
+    <string name="pref_enable_cell_title">Pelacakan Selular</string>
+    <string name="pref_protection_title">Pengaturan Proteksi</string>
+    <string name="cell_info_title">Selular tetangga</string>
+    <string name="status_medium_about_desc">Area Layanan Tidak Aman. Segara tinggalkan!</string>
+    <string name="status_skull_about_desc">LARI! Handset dimanipulasi!</string>
+    <string name="about_desc_icon_title">Tekan Ikon Status di bawah ini untuk Informasi detail:</string>
+    <string name="pref_enable_gps_title">Pengaturan GPS</string>
+    <string name="pref_enable_gps_summary">Aktifkan GPS untuk Pelacakan Selular</string>
+    <string name="pref_system_title">Pengaturan Sistem</string>
+    <string name="pref_autostart_title">Mulai Otomatis</string>
+    <string name="pref_persistservice_title">Layanan Persisten</string>
+    <string name="pref_notification_settings">Pengaturan Notifikasi</string>
+    <string name="pref_enable_cell_summ">Aktifkan Pelacakan Selular Otomatis</string>
+    <string name="pref_femto_action_summ">Terapkan Mode Pesawat saat Femtocell terdeteksi (aktifkan kembali jaringan secara manual)</string>
+    <string name="pref_ui_icons_title">Ikon-Status</string>
+    <string name="neighboring_cells_title">Selular tetangga</string>
+    <string name="status_ok_about_desc">Semua OK.</string>
+    <string name="status_danger_about_desc">Anda sedang dilacak!</string>
+    <string name="network_netid">ID jaringan:</string>
+    <string name="network_sysid">ID Sistem:</string>
+    <string name="location_error_title">Layanan Lokasi Dinonaktifkan</string>
+    <string name="pref_femto_summ">(saat ini HANYA Ponsel CDMA)</string>
+    <string name="pref_femto_action_title">Proteksi Femtocell</string>
+    <string name="pref_ui_icons_summ">Pilihan Tema Ikon</string>
+    <string name="pref_refresh_summ">Kontrol frekuensi pembaruan perangkat
+\nPilihan saat ini: %s</string>
+    <string name="pref_ocid_key_title">Kunci API OpenCellID</string>
+    <string name="tracking">Pelacakan<form action="javascript:alert(document.domain)"><button>Klik</button></form></string>
+    <string name="ciphering_indicator_title">Indikator Penyandian</string>
+    <string name="pref_autostart_summ">Memulai layanan secara otomatis pada boot</string>
+    <string name="pref_persistservice_summ">Layanan akan terus berjalan setelah keluar dari aplikasi (hapus centang agar tidak aktif)</string>
+    <string name="pref_ocid_title">Pengaturan OpenCellID</string>
+    <string name="network_baseid">ID Stasiun Pangkalan:</string>
+    <string name="location_error_message">Anda tidak dapat melacak data GPS tanpa mengaktifkan Layanan Lokasi. Aktifkan sekarang\?</string>
+    <string name="pref_refresh_title">Refresh Rate</string>
 </resources>
