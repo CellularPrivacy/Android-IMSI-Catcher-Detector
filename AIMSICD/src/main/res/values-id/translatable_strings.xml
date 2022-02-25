@@ -172,4 +172,5 @@
     <string name="mnc_label">MNC:</string>
     <string name="pc_label">PC:</string>
     <string name="pref_map_type_title">Tipe Peta</string>
+    <string name="the_string_was_added_to_db">String ditambahkan ke database</string>
 </resources>
