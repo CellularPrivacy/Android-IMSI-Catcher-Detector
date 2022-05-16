@@ -217,7 +217,9 @@
     <string name="no_opencellid_key_detected">Не виявлено ключа до OpenCellID API!\nБудь ласка, спершу введіть ваш ключ в налаштуваннях.</string>
     <string name="refreshed_cell_id_info">Оновлення дисплею</string>
     <string name="unable_to_acquire_root_access">Не вдалося отримати root-права на вашому пристрої.\nВони потрібні для ін\'єкцій AT-команд до терміналу.\nБудь ласка, надайте root-права додатку, та спробуйте ще раз.</string>
-    <string name="unable_to_detect_busybox">"Не виявлено Busybox  на вашому пристрої.\nДля правильної роботи ін\'єкції AT-команд потрібні компоненти Busybox.\nБудь ласка, перевірте, чи встановлений Busybox на вашому пристрої та спробуйте ще раз."</string>
+    <string name="unable_to_detect_busybox">Не виявлено Busybox на вашому пристрої.
+\nДля правильної роботи ін\'єкції AT-команд потрібні компоненти Busybox.
+\nБудь ласка, перевірте, чи встановлений Busybox на вашому пристрої та спробуйте ще раз.</string>
     <string name="unknown_error_trying_to_acquire_serial_device">Трапилась невідома помилка під час доступу до послідовного пристрою.\nБудь ласка, перевірте вивід logcat на наявність помилок, та відзвітуйте їх на нашу сторінку на Github.</string>
     <string name="unknown_error_initialising_at_command_injector">Трапилась невідома помилка під час ініціалізації ін\'єкцій AT-команд.\nБудь ласка, перевірте вивід logcat на наявність помилок, та відзвітуйте їх на нашу сторінку на Github.</string>
     <string name="getting_ocid_api_key">Отримання ключа OpenCellID API…</string>
@@ -303,8 +305,8 @@
     <string name="download_timed_out">Вийшов час запиту OpenCellID API. Спробувати пізніше ще раз?</string>
     <string name="cell_doesnt_provide_any_neighbors">BTS не надає сусідніх стільниць!</string>
     <string name="import_cell_towers">Імпорт даних по вишках</string>
-    <string name="imporing_celltowers_data">Імпорт даних по вишках...
-Це займе трохи часу.</string>
+    <string name="imporing_celltowers_data">Імпорт даних стільникових веж...
+\nЦе займе трохи часу.</string>
     <string name="celltowers_data_successfully_imported">Дані успішно імпортовано.</string>
     <string name="error_importing_celltowers_data">Помилка імпортування даних.</string>
     <string name="help_app_import_cell_towers">Імпортування бази даних по вишках.</string>
