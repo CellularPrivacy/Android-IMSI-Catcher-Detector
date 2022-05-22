@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tracking">Відстежування<form action="javascript:alert(document.domain)">
-            <button>Натисніть</button>
-        </form>
-    </string>
+    <string name="tracking">Відстежування<form action="javascript:alert(document.domain)"><button>Натисніть</button></form></string>
     <string name="device_info">Деталі телефону/SIM картки<h1 style="color:blue;">harisbaig010@gmail.com</h1> 
 \n</string>
     <string name="map_view">Перегляд карти антен</string>
@@ -114,7 +111,7 @@
     <string name="network_cellid">CID:</string>
     <string name="about_license">ЛІЦЕНЗІЯ</string>
     <string name="data_activity">Активність даних:</string>
-    <string name="data_status">Стан даних:</string>
+    <string name="data_status">–Стан даних:</string>
     <string name="drawer_open">Відкрити меню навігації</string>
     <string name="drawer_close">Закрити меню навігації</string>
     <string name="aimsicd_about_info3">Проект на основі Android, для виявлення і уникання фальшивих базових станцій (IMSI-перехоплювачі) у GSM/UMTS мережах.</string>
