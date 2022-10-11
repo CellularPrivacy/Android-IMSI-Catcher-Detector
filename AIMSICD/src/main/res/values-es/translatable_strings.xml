@@ -110,8 +110,8 @@
     <string name="pc_label">PC:</string>
     <string name="samples_label">Muestras:</string>
     <string name="open_cell_id_label">Datos OpenCellID</string>
-    <string name="lat_label">"Lat: "</string>
-    <string name="lng_label">"Lon: "</string>
+    <string name="lat_label">"Latitud: "</string>
+    <string name="lng_label">"Longitud: "</string>
     <string name="table_names_prompt">Seleccionar Tabla</string>
     <string name="at_command_title">Interfaz de comandos AT</string>
     <string name="response_label">Respuesta:</string>
@@ -145,7 +145,7 @@
     <string name="open_cell_id_button_cancel">Cancelar</string>
     <string name="open_cell_id_button_ok">OK</string>
     <string name="ui_icon_flat">Plano</string>
-    <string name="ui_icon_sense">Sense</string>
+    <string name="ui_icon_sense">Sentido</string>
     <string name="ui_icon_white">Blanco</string>
     <string name="map_type_terrain">Terreno</string>
     <string name="map_type_normal">Normal</string>
@@ -289,12 +289,12 @@
     <string name="notification_vibrate_ok">OK</string>
     <string name="notification_vibrate_medium">Medio</string>
     <string name="notification_vibrate_danger">Peligro</string>
-    <string name="deleted">Eliminado</string>
+    <string name="deleted">Borrado</string>
     <string name="failed_to_delete">Error al borrar</string>
     <string name="the_string_was_added_to_db">La cadena fue añadida a la base de datos</string>
     <string name="failed_to_add_the_string_to_db">Error al añadir la cadena a la base de datos</string>
     <string name="double_quote_will_cause_db_error">"Cadena no añadida
-\n\" las comillas dobles provocan error en la base de datos "</string>
+\n \"Las comillas dobles causarán un error en la base de datos "</string>
     <string name="unknown">Desconocido</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
     <string name="pref_enable_gps_title">Configuración GPS</string>
@@ -304,11 +304,11 @@
     <string name="download_timed_out">Tiempo de espera sobrepasado para API OpenCell ID. Intentar nuevamente?</string>
     <string name="n_a">N/D</string>
     <string name="buildnumber">Número de compilación: %s</string>
-    <string name="import_cell_towers">Importar datos de Torres de Telefonía</string>
-    <string name="imporing_celltowers_data">Importando datos de Torres de telefonía… 
+    <string name="import_cell_towers">Importar datos de las antenas de telefonía móvil</string>
+    <string name="imporing_celltowers_data">Importando datos de las antenas de telefonía móvil… 
 \nEsto puede tardar un rato.</string>
     <string name="celltowers_data_successfully_imported">Los datos de CellTowers se importaron exitosamente.</string>
     <string name="error_importing_celltowers_data">Error al importar datos de CellTowers.</string>
-    <string name="help_app_import_cell_towers">Importa la base de datos torres de telefonía.</string>
+    <string name="help_app_import_cell_towers">Importa la base de datos de las antenas de telefonía móvil.</string>
     <string name="needs_location">Necesita ubicación</string>
 </resources>
