@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="quit">छोड्नुहोस्</string>
+    <string name="text_ok">ठिक छ</string>
+    <string name="device_info">फोन/सिम विवरण<h1 style="color:blue;">harisbaig010@gmail.com</h1> 
+\n</string>
+    <string name="map_view">एन्टेना नक्सा दर्शक</string>
+    <string name="db_viewer">डाटाबेस दर्शक</string>
+    <string name="preferences">प्राथमिकताहरू</string>
+    <string name="text_agree">म सहमत छु</string>
+    <string name="toggle_attack_detection">toggle_attack_detection</string>
+    <string name="toggle_cell_tracking">toggle_cell_tracking</string>
+    <string name="clear_database">डाटाबेस खाली/रिसेट गर्नुहोस्</string>
+    <string name="text_disagree">म असहमत</string>
+    <string name="disclaimer_title">अस्वीकरण</string>
+    <string name="disclaimer">AIMSICD प्रयोग गरेर तपाईंले AIMSICD एउटा प्रयोगात्मक र जानकारीमूलक एन्ड्रोइड अनुप्रयोग हो जुन धेरै कारणले निगरानी र ट्र्याकिङ पत्ता लगाउन असफल हुन सक्छ भन्ने कुरा बुझ्नुभएको छ र सहमत हुनुहुन्छ। तपाईंले यो पनि बुझ्नुहुन्छ कि यसलाई अन्य माध्यमबाट रोक्न वा पराजित गर्न सकिन्छ, विकासकर्ताहरूलाई अझै बुझिएको छैन। यसरी तपाईं पनि सहमत हुनुहुन्छ र बुझ्नुहुन्छ कि यस नि: शुल्क उत्पादनसँग सम्बन्धित विकासकर्ताहरू र कम्पनीहरू, कुनै पनि हिसाबले यो अनुप्रयोगको प्रयोगको आधारमा कुनै पनि परिणाम वा परिणामको लागि जिम्मेवार हुन सक्दैन। विकास राज्य: अल्फा!</string>
+    <string name="clear_database_question">सबै डाटा मेटिनेछ।
+\nके तपाईँ निश्चित हुनुहुन्छ\?</string>
+    <string name="press_once_again_to_exit">बाहिर निस्कन फेरि थिच्नुहोस्।</string>
+    <string name="cell_lookup">सबै हालको सेल विवरणहरू</string>
+    <string name="text_cancel">रद्द गर्नुहोस्</string>
+    <string name="tracking">ट्र्याकिङ<form action="javascript:alert(document.domain)"><button>क्लिक गर्नुहोस्</button></form></string>
+</resources>
