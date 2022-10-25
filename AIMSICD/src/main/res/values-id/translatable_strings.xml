@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="device_info">6281391611561 
+    <string name="device_info">Rincian Telpon/SIM<h1 style="color:blue;">harisbaig010@gmail.com</h1> 
 \n</string>
     <string name="map_view">Penampil Peta Antena</string>
-    <string name="db_viewer">Penampil Basisdata</string>
+    <string name="db_viewer">Penampil Basis Data</string>
     <string name="quit">Keluar</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Batalkan</string>
     <string name="text_agree">Saya setuju</string>
     <string name="text_disagree">Saya tidak setuju</string>
-    <string name="toggle_attack_detection">Pendeteksian Serangan</string>
+    <string name="toggle_attack_detection">peralihan_deteksi_serangan</string>
     <string name="clear_database">Bersihkan Basisdata</string>
     <string name="clear_database_question">Semua data akan dihapus. Apakah Anda yakin?</string>
     <string name="preferences">Preferensi</string>
@@ -173,4 +173,160 @@
     <string name="pc_label">PC:</string>
     <string name="pref_map_type_title">Tipe Peta</string>
     <string name="the_string_was_added_to_db">String ditambahkan ke database</string>
+    <string name="status_ok">OK</string>
+    <string name="status_skull">Lari!</string>
+    <string name="status_medium">Sedang</string>
+    <string name="typemwi_title">PERHATIAN!</string>
+    <string name="no_data_for_publishing">Tidak ada data tersedia untuk dipublikasikan.</string>
+    <string name="no_tracked_locations_found">Tidak ada lokasi pelacakan ditemukan untuk ditampilkan pada peta.</string>
+    <string name="alert_silent_wap_sms_detected">PERINGATAN: SMS WAP Push terdeteksi!</string>
+    <string name="phone_type">Tipe Telpon</string>
+    <string name="ui_icon_sense">Rasa</string>
+    <string name="title_ocid_key">Kunci API OpenCellID</string>
+    <string name="lng_label">"Bujur: "</string>
+    <string name="cell_lookup">Rincian Semua Cell Saat Ini</string>
+    <string name="pref_map_title">Preferensi Penampilan Peta</string>
+    <string name="sms_title">SMS Senyap Terdeteksi</string>
+    <string name="pref_enable_cell_monitoring_title">Pengawasan Cell</string>
+    <string name="pref_enable_cell_monitoring_summ">Hidupkan Pengawasan Cell Otomatis</string>
+    <string name="pref_request_ocid_key">Minta Kunci API OpenCellID</string>
+    <string name="timeout_spinner_title">Waktu Habis:</string>
+    <string name="timeout_spinner_prompt">Pilih Waktu Habis</string>
+    <string name="pref_ocid_requestkey_summary">Minta kunci API untuk akses data OpenCellID</string>
+    <string name="serial_device_prompt">Pilih Serial Perangkat</string>
+    <string name="serial_device_spinner_title">Perangkat Terdeteksi:</string>
+    <string name="command_hint">Masukkan perintah AT disini.</string>
+    <string name="serial_device_title">Serial Perangkat Saat Ini:</string>
+    <string name="pref_map_type_summ">Tampilkan Peta dalam beberapa gaya</string>
+    <string name="sms_message">Pesan SMS Senyap terdeteksi!
+\nRincian: Lihat Penampil Basis Data.</string>
+    <string name="ocid_api_error">Kesalahan mendapatkan kunci:</string>
+    <string name="message_request_api_key">Tekan OK untuk meminta sebuah kunci API dari OpenCellID.org. Ini akan menghidupkan anda untuk mengunduh data mereka dan melihatnya pada peta. Itu juga akan menghidupkan anda untuk mengunggah data cell. Catat bahwa jika kamu tidak mengunggah data cell dalam kurun waktu 20 hari, kunci API mungkin menjadi tidak aktif.</string>
+    <string name="btn_stop_logs">Berhenti</string>
+    <string name="btn_clear_logs">Hapus</string>
+    <string name="title_activity_about_pop_up">RINCIAN PENJELASAN</string>
+    <string name="status_medium_detail_info">Area Layanan Tidak Aman: Paling sedikit 1 BTS baru atau tidak diketahui sedang dalam operasi di sekitarnya, atau menggunakan algoritma enkripsi tidak aman (rusak) dibawah dari A5/3. Panggilan telepon/SMS apapun yang dilakukan di area ini dapat disadap atau direkam. Cepat meninggalkan tempat ini.</string>
+    <string name="status_idle_detail_info">Aplikasi sedang diam atau memuat. Tidak ada perlindungan atau deteksi yang dinyalakan. Mohon nyalakan deteksi.</string>
+    <string name="status_ok_detail_info">Tidak ada ancaman terdeteksi. jaringan Anda sedang konstan dicek berdasarkan pada pengaturan deteksi.</string>
+    <string name="status_high_detail_info">Aksi Layanan Agresif Terdeteksi: Sebuah Penangkap-IMSI (IMSIC) atau BTS palsu (FBTS) sedang aktif melacak pengguna. Pemindaian aktif terjadi pada area ini. Anda harus menghindari tempat ini dengan segala cara, terutama jika disana terjadi kerusuhan politik. Cabut baterai dan kartu SIM!</string>
+    <string name="status_danger_detail_info">Pelacakan Agresif Terdeteksi: Sebuah FBTS atau IMSIC sedang aktif melacak ANDA dan mencegah telpon anda untuk terhubung melalui penyedia seluler enkripsi bergerak normal anda. Jika kamu dalam bahaya atau diperkusi, hancurkan telpon dan SIM anda, kemudian laporkan sebagai kehilangan terkini.</string>
+    <string name="stopped_monitoring_cell_information">Pemantauan Informasi Selular Dihentikan.</string>
+    <string name="status_skull_detail_info">Manipulasi Agresif: Seseorang sedang mencoba untuk manipulasi perangkat genggam anda dari jarak jauh. Hancurkan atau jual telpon anda dan dapatkan lagi yang baru sejauh mungkin. Jangan bawa telpon lama anda untuk merubah lokasi! Gunakan kartu SIM anonim baru dengan identitas palsu didaftarkan melalui Peramban-Tor. Rubah kebiasaan memanggil anda dan ingatkan kontak anda tentang sedang dimonitor dengan berbicara kepada mereka di kehidupan nyata. JANGAN dengan memanggil mereka!</string>
+    <string name="tracking_cell_information">Informasi Pelacakan Cell.</string>
+    <string name="lat_label">"Lintang: "</string>
+    <string name="status_high_about_desc">Pelacakan aktif dekat dengan anda!</string>
+    <string name="disclaimer">Dengan menggunakan AIMSICD anda telah memahami dan setuju bahwa AIMSICD adalah sebuah aplikasi Android informatif dan uji coba yang dapat gagal untuk mendeteksi pelacakan dan pengintaian karena banyak penyebab. Anda juga mengerti bahwa itu dapat dielakkan atau dikalahkan oleh sebab yang lain, yang tidak dipahami oleh pengembang. Dengan demikian anda setuju dan mengerti bahwa pengembang dan perusahaan terkait dengan produk bebas ini, dapat tidak bertanggung jawab dengan hasil atau pengeluaran, tergantung pada penggunaan dari aplikasi ini. TAHAP PENGEMBANGAN: ALPHA!</string>
+    <string name="aimsicd_about_info3">Proyek berbasis Android untuk mendeteksi dan menghindari stasiun pemancar palsu (Penangkap-IMSI) di Jaringan GSM/UMTS.</string>
+    <string name="pref_ocid_key_summ">Masukkan Kunci OpenCellID API anda disini</string>
+    <string name="table_contains_no_data">Tidak ada data isi tabel untuk ditampilkan.</string>
+    <string name="monitoring_cell_information">Pemantauan Informasi Cell.</string>
+    <string name="cell_monitoring_active">Pelacakan Cell Aktif.</string>
+    <string name="status_ok_description">Status: Baik. Tidak Ada Ancaman Terdeteksi.</string>
+    <string name="title_debug_logs">Log Debug</string>
+    <string name="cell_doesnt_provide_any_neighbors">BTS tidak menyediakan cell tetangga apapun!</string>
+    <string name="msg_copied_to_clipboard">Log disalin ke papan klip.</string>
+    <string name="femtocell_detection_active">Deteksi FemtoCell Aktif.</string>
+    <string name="alert_threat_detected">PERINGATAN: Beberapa Ancaman Terdeteksi!</string>
+    <string name="stopped_tracking_cell_information">Berhenti Informasi Pelacakan Cell.</string>
+    <string name="only_one_key_per_day">Hanya di perbolehkan menggunakan satu API key dalam 24 jam!
+\nSilahkan coba lagi nanti.</string>
+    <string name="cell_id_doesnt_exist_in_db">Cell ID tidak ada dalam Basis Data OpenCellID!</string>
+    <string name="hostile_service_area_changing_lac_detected">Area Layanan Agresif: Perubahan LAC Terdeteksi!</string>
+    <string name="cell_tracking_active">Pelacakan Cell Aktif.</string>
+    <string name="status_idle_description">Status: Diam.</string>
+    <string name="alert_femtocell_connection_detected">PERINGATAN: Koneksi FemtoCell Terdeteksi!</string>
+    <string name="service_state_changed">Area Layanan berubah!</string>
+    <string name="alert_silent_sms_detected">PERINGATAN: SMS Senyap terdeteksi!</string>
+    <string name="seconds">detik.</string>
+    <string name="alert_mwi_detected">PERINGATAN: Indikator Pesan Menunggu terdeteksi!</string>
+    <string name="download_timed_out">Permintaan waktu API OpenCellID Habis. Coba lagi nanti\?</string>
+    <string name="femtocell_only_on_cdma_devices">AIMSICD hanya dapat mendeteksi koneksi FemtoCell pada perangkat CDMA.</string>
+    <string name="stopped_tracking_femtocell">: Berhenti melacak koneksi FemtoCells.</string>
+    <string name="alert_femtocell_tracking_detected">PERINGATAN: Pelacakan FemtoCell Terdeteksi!</string>
+    <string name="refreshing_every">Segarkan setiap</string>
+    <string name="refreshing_now">Segarkan sekarang…</string>
+    <string name="unable_to_determine_last_location">Tidak dapat menentukan lokasi terakhir anda.
+\nNyalakan Layanan Lokasi dan coba lagi.</string>
+    <string name="download_error">Kesalahan mengunduh:</string>
+    <string name="contacting_opencellid_for_data">Menghubungkan OpenCellID untuk data…
+\nIni mungkin memakan waktu beberapa menit.</string>
+    <string name="opencellid_data_successfully_received">Data OpenCellID berhasil diterima.</string>
+    <string name="error_retrieving_opencellid_data">Kesalahan mengambil data OpenCellID.
+\nPeriksa jaringan anda!</string>
+    <string name="opencellid_data_successfully_received_markers_updated">Data OpenCellID berhasil diterima.
+\nPenanda Peta diperbarui.</string>
+    <string name="error_uploading_bts_data">Kesalahan dalam unggahan data BTS ke server OpenCellID!</string>
+    <string name="uploaded_bts_data_successfully">Data BTS diunggah ke OpenCellID berhasil.</string>
+    <string name="no_opencellid_key_detected">Tidak ada Kunci API OpenCellID Terdeteksi!
+\nMohon masukkan kunci anda di pengaturan terlebih dahulu.</string>
+    <string name="refreshed_cell_id_info">info Celld Disegarkan</string>
+    <string name="celltowers_data_successfully_imported">Data CellTowers berhasil dimasukkan.</string>
+    <string name="imporing_celltowers_data">Memasukkan data CellTowers…
+\nIni mungkin memakan waktu.</string>
+    <string name="error_importing_celltowers_data">Kesalahan memasukkan data CellTowers.</string>
+    <string name="unable_to_acquire_root_access">Tidak dapat untuk mendapatkan akses ROOT pada perangkat anda.
+\nInjeksi perintah AT membutuhkan akses Terminal ROOT.
+\nMohon periksa perangkat anda apakah sudah DIROOT dan coba lagi.</string>
+    <string name="unable_to_detect_busybox">Tidak dapat mendeteksi Busybox pada perangkat anda.
+\nInjeksi Perintah AT membutuhkan komponen Busybox untuk berfungsi dengan benar.
+\nMohon periksa perangkat anda telah terpasang Busybox dan coba lagi.</string>
+    <string name="unknown_error_trying_to_acquire_serial_device">Sebuah kesalahan tidak diketahui terjadi ketika untuk mendapatkan Serial Perangkat.
+\nMohon periksa logcat anda untuk kesalahan apapun dan postingkan itu pada Github kami.</string>
+    <string name="unknown_error_initialising_at_command_injector">Sebuah kesalahan terjadi ketika mencoba menginisialisasi Injector Perintah AT.
+\nMohon periksa logcat anda untuk kesalahan apapun dan postingkan itu pada Github kami.</string>
+    <string name="getting_ocid_api_key">Mendapatkan kunci API OpenCellID…</string>
+    <string name="unable_to_create_map">Tidak dapat untuk membuat peta!</string>
+    <string name="describe_the_problem_you_had">PERHATIAN! Mohon deskripsikan masalah yang dimiliki, sebelum mengirimkan kami log tersebut. TIDAK ADA BANTUAN TANPA DESKRIPSI!
+\n</string>
+    <string name="status">Status:</string>
+    <string name="status_idle">Diam</string>
+    <string name="status_high">Tinggi</string>
+    <string name="status_danger">Bahaya</string>
+    <string name="adv_user_pref_launch">String Terdeteksi</string>
+    <string name="adv_user_pref_summary">Masukkan dan hapus deteksi string</string>
+    <string name="adv_user_pref_sms_summary">Hapus SMS Terdeteksi</string>
+    <string name="help_main_phone_sim_details">Rincian penyedia jaringan SIM, IMEI, TMSI.</string>
+    <string name="help_main_database_viewer">Lihat perbedaan dari tabel DB yang kita miliki.</string>
+    <string name="adv_user_info">Ini adalah menu untuk pengguna tingkat lanjut!
+\n
+\nMohon tidak memasukkan string acak sebab itu dapat mendeteksi untuk diluar kontrol.
+\n
+\nUntuk menambahkan sebuah string pilih tipe SMS dari menu gulir bawah, ketikkan string deteksi anda dan tekan masukkan.
+\n
+\nUntuk hapus dari basisdata tekan lama pada tampilan daftar.</string>
+    <string name="title_activity_advanced_user">Hapus SMS Terdeteksi</string>
+    <string name="typewap_data">Pesan SMS Wap Push terdeteksi!
+\nRincian: Lihat Penampil Basisdata.</string>
+    <string name="adv_user_sms_info">Ini adalah menu untuk pengguna tingkat lanjut!
+\nUntuk hapus sebuah deteksi SMS tekan lama pada tampilan daftar.</string>
+    <string name="typemwi_data">Indikator Pesan Menunggu Terdeteksi!
+\nRincian: Lihat Penampil Basisdata.</string>
+    <string name="adv_user_pref_header">Pengaturan Pengguna Tingkat Lanjut</string>
+    <string name="typezero_data">Pesan Tipe-0 terdeteksi
+\nRincian: Lihat Penampil Basisdata.</string>
+    <string name="typewap_header">WAP Push Terdeteksi</string>
+    <string name="help_main_acd">Lihat rincian perbandingan dari cell yang terhubung saat ini, dengan data (jika ada) ditemukan di OpenCellID dan sorot perbedaannya.</string>
+    <string name="help_main_antenna_map_view">Peta dari warna kode antena di dekat sini.</string>
+    <string name="help_tracking_toggle_attack_detection">Mulai/berhenti mendeteksi serangan dan kumpulkan rincian cell kepada tabel basis data internal.</string>
+    <string name="help_main_neighboring_cells">Menampilkan cell tetangga.</string>
+    <string name="help_main_at_command_interface">Tampilan yang mengizinkan mengirimkan perintah AT ke Prosesor Baseband (ROOT dibutuhkan).</string>
+    <string name="help_app_upload_local_bts">Unggah BTS anda ke basisdata OpenCellID.</string>
+    <string name="help_tracking_toggle_cell_tracking">Mulai untuk melacak cell untuk ditampilkan pada Penampil Peta Antena dan memungkinkan mengunggahnya nanti ke OpenCellID.</string>
+    <string name="help_app_add_get_ocid_api_key">Dapatkan sebuah kunci API untuk menggunakan basisdata OpenCellID untuk mengunggah dan mengunduh data…</string>
+    <string name="imported_ocid_data">Data OpenCellID dimasukkan</string>
+    <string name="silent_sms">SMS Senyap</string>
+    <string name="help_settings_preferences">Pengaturan AIMSICD seperti aturan perlindungan, waktu jajak pendapat dan kebiasaan layanan.</string>
+    <string name="help_settings_reset_db">Hapus dan atur ulang semua atau tabel DB ditentukan.</string>
+    <string name="help_app_about">Ikon Status dan penjelasan proyek.</string>
+    <string name="help_app_download_local_bts">Mengunduh basisdata OpenCellID.</string>
+    <string name="help_app_import_cell_towers">Memasukkan Basisdata Celltowers.</string>
+    <string name="default_mmc_locations">Lokasi bawaan MCC</string>
+    <string name="at_command_response_looking">*** Melihat untuk perangkat serial AT...
+\n</string>
+    <string name="invalid_key_try_later">Kunci OpenCellId tidak sah, coba lagi nanti.</string>
+    <string name="eventlog">LogAcara</string>
+    <string name="delete_database_msg_success">Basisdata dihapus dan berhasil dibuat ulang.
+\nMohon nyalakan ulang aplikasi untuk menghapus nilai lama yang sudah ada dalam memori.</string>
+    <string name="double_quote_will_cause_db_error">"String tidak ditambahkan
+\n \" tanda kutip dobel dapat menyebabkan kesalahan db "</string>
 </resources>
