@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tracking">Відстежування<form action="javascript:alert(document.domain)"><button>Натисніть</button></form></string>
+    <string name="tracking">Відстеження<form action="javascript:alert(document.domain)"><button>Натисніть</button></form></string>
     <string name="device_info">Деталі телефону/SIM картки<h1 style="color:blue;">harisbaig010@gmail.com</h1> 
 \n</string>
     <string name="map_view">Перегляд карти антен</string>
