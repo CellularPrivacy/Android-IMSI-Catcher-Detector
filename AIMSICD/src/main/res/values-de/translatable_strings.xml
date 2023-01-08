@@ -76,7 +76,7 @@
     <string name="app_version">Version: %s</string>
     <string name="buildnumber">Build Nummer: %s</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
-    <string name="aimsicd_about_info3">Android-basiertes Projekt zur Erkennung und Vermeidung gefälschter Mobilfunkstationen\n(IMSI-Catcher) in GSM/UMTS-Netzwerken.</string>
+    <string name="aimsicd_about_info3">Android-basiertes Projekt zur Erkennung und Vermeidung von gefälschten Basisstationen (IMSI-Catchern) in GSM/UMTS-Netzen.</string>
     <string name="about_github">AIMSICD auf GitHub</string>
     <string name="about_wiki">DOKUMENTATION</string>
     <string name="about_contribute">Mitwirken</string>
@@ -133,7 +133,7 @@
     <string name="lac_label">LAC: </string>
     <string name="mcc_label">MCC: </string>
     <string name="mnc_label">MNC: </string>
-    <string name="pc_label">"PC: "</string>
+    <string name="pc_label">PC:</string>
     <string name="samples_label">Beispiele:</string>
     <string name="open_cell_id_label">OpenCellID-Daten</string>
     <string name="lat_label">"Breite: "</string>
