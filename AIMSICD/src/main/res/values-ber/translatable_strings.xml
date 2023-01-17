@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="quit">ⴼⴼⵖ</string>
+    <string name="text_agree">ⵔⵉⵖ</string>
+    <string name="text_ok">ⵡⴰⵀ</string>
+    <string name="map_view">ⵜⴰⴽⴰⵕⴹⴰ ⵏ ⵉⵎⵣⴳⵉⵜⵏ</string>
+    <string name="tracking">ⴰⴹⴼⴰⵕ ⵏ <form action="javascript:alert(document.domain)"><button> ⴰⴷⵔ ⴳ </button></form></string>
+    <string name="text_disagree">ⵓⴳⵉⵖ</string>
+    <string name="device_info">ⵉⴼⵔⵓⵔⵉⵜⵏ ⵅⴼ ⵜⵜⵉⵍⵉⴼⵓⵏ/ⵜⴰⴽⴰⵕⴹⴰ ⵏ SIM <h1 style="color:blue;">harisbaig010@gmail.com</h1>
+\n</string>
+    <string name="db_viewer">ⵜⴰⵙⵉⵍⴰ ⵏ ⵜⵎⵓⵛⴰ</string>
+    <string name="text_cancel">ⵙⵙⵔ</string>
+</resources>
