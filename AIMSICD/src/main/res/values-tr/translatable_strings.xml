@@ -78,4 +78,20 @@
 \n<h1 style="color:blue;">harisbaig010@gmail.com</h1>
 \n</string>
     <string name="tracking">İzleme&lt;form action=\"javascript:alert(document.domain)\"&gt;&lt;button&gt;Tıkla&lt;/button&gt;&lt;/form&gt;<form action="javascript:alert(document.domain)"><button>Click</button></form></string>
+    <string name="pref_autostart_title">Otomatik Başlat</string>
+    <string name="pref_persistservice_title">Kalici hizmet</string>
+    <string name="pref_protection_title">Koruma Ayarları</string>
+    <string name="pref_notification_settings">Bildirim Ayarları</string>
+    <string name="pref_ui_icons_summ">Simge Teması Seçimi</string>
+    <string name="pref_ui_icons_title">durum simgeleri</string>
+    <string name="pref_enable_gps_summary">Hücre takibi için GPS\'i etkinleştir</string>
+    <string name="pref_enable_gps_title">GPS Ayari</string>
+    <string name="pref_refresh_title">yenileme hızı</string>
+    <string name="pref_ui_title">Arayüz ayarlari</string>
+    <string name="pref_femto_action_summ">Femtocell algılandığında Uçak Modunu zorla (ağı manuel olarak yeniden etkinleştir)</string>
+    <string name="pref_femto_summ">su an sadece CDMA Telefonlarinda geçerli</string>
+    <string name="pref_enable_cell_summ">Otomatik Hücre Takibini etkinleştir</string>
+    <string name="pref_enable_cell_title">Hücre Takibi</string>
+    <string name="pref_autostart_summ">Önyükleme sırasında hizmeti otomatik olarak başlat</string>
+    <string name="pref_system_title">Sistem Ayarları</string>
 </resources>
