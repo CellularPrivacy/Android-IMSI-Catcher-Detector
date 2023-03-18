@@ -309,8 +309,8 @@
     <string name="sim_info_title">Informação do SIM</string>
     <string name="device_info_title">Informação do Aparelho</string>
     <string name="import_cell_towers">Importar dados de CellTowers</string>
-    <string name="get_opencellid">Transferir Dados BTS</string>
-    <string name="no_network_connection_message">Não é possível transferir os dados de OpenCellID sem ligação à Internet, por favor, ative a ligação de dados!</string>
+    <string name="get_opencellid">Descarregar dados de BTS</string>
+    <string name="no_network_connection_message">Não é possível descarregar os dados de OpenCellID sem ligação à Internet, por favor, ative a ligação de dados!</string>
     <string name="no_network_connection_title">Sem ligação à Internet</string>
     <string name="debugging">Depuração</string>
     <string name="cell_lookup">Todos os detalhes do célula atual</string>
