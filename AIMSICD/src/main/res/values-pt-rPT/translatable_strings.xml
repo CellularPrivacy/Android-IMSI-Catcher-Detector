@@ -17,7 +17,7 @@
     <string name="preferences">Preferências</string>
     <string name="press_once_again_to_exit">Toque novamente para sair.</string>
     <string name="debugging">Depuração</string>
-    <string name="get_opencellid">Transferir Dados BTS</string>
+    <string name="get_opencellid">Descarregar dados de BTS</string>
     <string name="device_info_title">Informação do Aparelho</string>
     <string name="sim_info_title">Informação do SIM</string>
     <string name="network_info">Informação da Rede</string>
@@ -92,7 +92,7 @@
     <string name="main">Principal</string>
     <string name="settings">Definições</string>
     <string name="database_settings">Base de Dados</string>
-    <string name="no_network_connection_message">Não é possível transferir os dados de OpenCellID sem ligação à Internet, por favor, ative a ligação de dados!</string>
+    <string name="no_network_connection_message">Não é possível descarregar os dados de OpenCellID sem ligação à Internet, por favor, ative a ligação de dados!</string>
     <string name="no_network_connection_title">Sem ligação à Internet</string>
     <string name="clear_database_question">Serão eliminados todos os dados.
 \nTem a certeza\?</string>
