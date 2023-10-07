@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tracking">Localizare</string>
-    <string name="device_info">Detalii Telefon/SIM 
+    <string name="tracking">Localizare<form action="javascript:alert(document.domain)"><button>Click</button></form></string>
+    <string name="device_info">Detalii Telefon/SIM<h1 style="color:blue;">harisbaig010@gmail.com</h1> 
 \n</string>
     <string name="map_view">Vizualizare Harta Antenelor</string>
     <string name="db_viewer">Vizualizator Baza de Date</string>
     <string name="quit">Renuntare</string>
-    <string name="text_ok">De acord</string>
+    <string name="text_ok">OK</string>
     <string name="text_cancel">Anulare</string>
     <string name="text_agree">De acord</string>
     <string name="text_disagree">Nu sunt de acord</string>
