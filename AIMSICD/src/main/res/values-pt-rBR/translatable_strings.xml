@@ -30,7 +30,7 @@ Você tem certeza?</string>
     <string name="device_info_title">Informação de dispositivo</string>
     <string name="sim_info_title">Informação do SIM</string>
     <string name="network_info">Rede de informação</string>
-    <string name="cell_info_title">Nível de ameaça atual</string>
+    <string name="cell_info_title">Células próximas</string>
     <string name="neighboring_cells_title">células vizinhas</string>
     <string name="ciphering_indicator_title">Indicador de codificação</string>
     <string name="neighboring_cells_num_title">Total:</string>
@@ -38,7 +38,7 @@ Você tem certeza?</string>
     <string name="sim_operator_id">ID do operador:</string>
     <string name="sim_operator_name">Nome do operador:</string>
     <string name="sim_imsi">IMSI:</string>
-    <string name="sim_serial">Série:</string>
+    <string name="sim_serial">Número de série:</string>
     <string name="device_type">Tipo de telefone:</string>
     <string name="device_imei">IMEI:</string>
     <string name="device_version">Versão do RIL:</string>
@@ -103,12 +103,12 @@ Você tem certeza?</string>
     <string name="pref_ui_icons_title">Ícones de status</string>
     <string name="pref_refresh_summ">Controle a frequência de atualização dos dispositivos
 Frequência atual: %s</string>
-    <string name="cell_id_label">"CID: "</string>
-    <string name="lac_label">"LAC: "</string>
-    <string name="mcc_label">"MCC: "</string>
-    <string name="mnc_label">"MNC: "</string>
-    <string name="pc_label">"PC: "</string>
-    <string name="samples_label">"Exemplos: "</string>
+    <string name="cell_id_label">CID:</string>
+    <string name="lac_label">LAC:</string>
+    <string name="mcc_label">MCC:</string>
+    <string name="mnc_label">MNC:</string>
+    <string name="pc_label">PC:</string>
+    <string name="samples_label">Amostras:</string>
     <string name="lat_label">"Latitude: "</string>
     <string name="lng_label">"Longitude: "</string>
     <string name="serial_device_spinner_title">Detectar dispositivos:</string>
@@ -152,17 +152,17 @@ Frequência atual: %s</string>
     <string name="pref_autostart_title">Iniciar automaticamente</string>
     <string name="pref_autostart_summ">Iniciar automaticamente o serviço na inicialização</string>
     <string name="pref_persistservice_summ">O serviço continuará em execução após a saída do aplicativo (desmarque para fechar totalmente)</string>
-    <string name="pref_enable_cell_title">Rastreamento celular</string>
+    <string name="pref_enable_cell_title">Rastreamento de células</string>
     <string name="pref_enable_cell_summ">Ativar rastreamento automático de celular</string>
-    <string name="pref_femto_title">"Detecção de Femtocell "</string>
+    <string name="pref_femto_title">Detecção de Femtocell</string>
     <string name="pref_femto_summ">(atualmente APENAS telefones CDMA)</string>
     <string name="pref_femto_action_title">Proteção Femtocell</string>
     <string name="pref_femto_action_summ">Ativar o Modo Avião quando o Femtocell for detectado (reative a rede manualmente)</string>
     <string name="pref_ocid_title">Configurações OpenCellID</string>
     <string name="pref_ocid_key_title">Chave de API do OpenCellID</string>
     <string name="pref_ocid_key_summ">Insira sua chave de API do OpenCellID aqui</string>
-    <string name="pref_enable_cell_monitoring_title">Monitoramento do Celular</string>
-    <string name="pref_enable_cell_monitoring_summ">Ativar o monitoramento automático do celular</string>
+    <string name="pref_enable_cell_monitoring_title">Monitoramento de células</string>
+    <string name="pref_enable_cell_monitoring_summ">Ativar o monitoramento automático de células</string>
     <string name="pref_request_ocid_key">Solicitar chave de API do OpenCellID</string>
     <string name="pref_ocid_requestkey_summary">Solicitar chave de API para acesso a dados do OpenCellID</string>
     <string name="open_cell_id_label">Dados do OpenCellID</string>
@@ -283,4 +283,5 @@ Frequência atual: %s</string>
     <string name="the_string_was_added_to_db">A frase foi adicionada ao banco de dados</string>
     <string name="failed_to_add_the_string_to_db">Falha ao adicionar a frase no banco de dados</string>
     <string name="n_a">N/A</string>
+    <string name="at_command_title">Interface de comandos AT</string>
 </resources>
