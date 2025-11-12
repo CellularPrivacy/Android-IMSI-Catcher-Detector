@@ -104,6 +104,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.activities.PrivacyAdvisorActivity"
+            android:label="@string/menu_privacy_advisor"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:configChanges="keyboardHidden|screenLayout|screenSize|orientation">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
         <service
             android:name=".service.AimsicdService"
             android:enabled="true"
