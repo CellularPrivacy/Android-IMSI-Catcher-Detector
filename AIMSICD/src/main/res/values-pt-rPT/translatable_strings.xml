@@ -252,7 +252,7 @@
     <string name="only_one_key_per_day">Apenas uma nova solicitação de chave de API a cada 24 horas! 
 \nPor favor, tente novamente mais tarde.</string>
     <string name="stopped_tracking_cell_information">Parou de rastrear informações da célula.</string>
-    <string name="tracking_cell_information">A monitorar informações da célula.</string>
+    <string name="tracking_cell_information">A rastrear informações da célula.</string>
     <string name="stopped_monitoring_cell_information">Parou de monitorar as informações da célula.</string>
     <string name="monitoring_cell_information">A monitorar informações da célula.</string>
     <string name="application">Aplicação</string>
