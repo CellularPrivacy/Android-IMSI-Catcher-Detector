@@ -27,13 +27,13 @@
     <string name="quit">வெளியேறு</string>
     <string name="text_ok">சரி</string>
     <string name="text_cancel">ரத்துசெய்</string>
-    <string name="device_info">தொலைபேசி/சிம் விவரங்கள் <h1 style="color:blue;"> harisbaig010@gmail.com </h1>. \n</string>
+    <string name="device_info">தொலைபேசி/சிம் விவரங்கள் <h1 style="color:blue;">harisbaig010@gmail.com</h1>. \n</string>
     <string name="text_agree">நான் ஒப்புக்கொள்கிறேன்</string>
     <string name="text_disagree">நான் உடன்படவில்லை</string>
     <string name="disclaimer_title">மறுப்பு</string>
     <string name="disclaimer">AIMSICD ஐப் பயன்படுத்துவதன் மூலம், AIMSICD என்பது ஒரு சோதனை மற்றும் தகவலறிந்த ஆண்ட்ராய்டு பயன்பாடு என்பதை நீங்கள் புரிந்துகொண்டு ஒப்புக்கொண்டீர்கள், இது பல காரணங்களுக்காக கண்காணிப்பு மற்றும் கண்காணிப்பைக் கண்டறியத் தவறிவிடும். டெவலப்பர்களிடம் இன்னும் புரிந்து கொள்ளப்படாத, அதை வேறு வழிகளில் மீறலாம் அல்லது தோற்கடிக்கலாம் என்பதையும் நீங்கள் புரிந்துகொள்கிறீர்கள். இந்த இலவச தயாரிப்பு தொடர்பான உருவாக்குபவர்கள் மற்றும் நிறுவனங்கள் இந்த பயன்பாட்டின் பயன்பாட்டைப் பொறுத்து எந்த முடிவுகளுக்கும் அல்லது விளைவுகளுக்கும் எந்த வகையிலும் பொறுப்பேற்க முடியாது என்பதையும் நீங்கள் ஒப்புக்கொள்கிறீர்கள், புரிந்துகொள்கிறீர்கள். மேம்பாட்டு நிலை: ஆல்பா!</string>
-    <string name="toggle_attack_detection">TOGGLE_ATTACK_DETECTION</string>
-    <string name="toggle_cell_tracking">TOGGLE_CELL_TRACKING</string>
+    <string name="toggle_attack_detection">மாற்று_தாக்குதல்_கண்டுபிடிப்பு</string>
+    <string name="toggle_cell_tracking">மாற்று_செல்_கண்காணிப்பு</string>
     <string name="clear_database">தரவுத்தளத்தை அழிக்கவும்/மீட்டமைக்கவும்</string>
     <string name="clear_database_question">எல்லா தரவுகளும் நீக்கப்படும்.\n நீங்கள் உறுதியாக இருக்கிறீர்களா?</string>
     <string name="preferences">விருப்பத்தேர்வுகள்</string>
@@ -107,7 +107,7 @@
     <string name="pref_autostart_summ">துவக்கத்தில் தானாக சேவையைத் தொடங்கவும்</string>
     <string name="pref_persistservice_title">தொடர்ச்சியான பணி</string>
     <string name="pref_enable_cell_title">செல் கண்காணிப்பு</string>
-    <string name="pref_enable_cell_summ">தானியங்கி செல் கண்காணிப்பை இயக்கவும்</string>
+    <string name="pref_enable_cell_summ">தானியங்கி செல் கண்காணிப்பை இயக்கு</string>
     <string name="pref_femto_title">ஃபெம்டோசெல் கண்டறிதல்</string>
     <string name="pref_femto_summ">(தற்போது சிடிஎம்ஏ தொலைபேசிகள் மட்டுமே)</string>
     <string name="pref_femto_action_title">ஃபெம்டோசெல் பாதுகாப்பு</string>
@@ -292,7 +292,7 @@
     <string name="getting_ocid_key">ஓபன்செல்லிட் பநிஇ விசையைப் பெறுதல் ...</string>
     <string name="deleted">நீக்கப்பட்டது</string>
     <string name="failed_to_delete">நீக்கத் தவறிவிட்டது</string>
-    <string name="double_quote_will_cause_db_error">"சரம் சேர்க்கப்படவில்லை\n \"இரட்டை மேற்கோள் DB பிழையை ஏற்படுத்தும் "</string>
+    <string name="double_quote_will_cause_db_error">"சரம் சேர்க்கப்படவில்லை\n \"இரட்டை மேற்கோள் தரவுதள பிழையை ஏற்படுத்தும் "</string>
     <string name="the_string_was_added_to_db">தரவுத்தளத்தில் சரம் சேர்க்கப்பட்டது</string>
     <string name="failed_to_add_the_string_to_db">தரவுத்தளத்தில் சரம் சேர்க்கத் தவறிவிட்டது</string>
     <string name="n_a">இதற்கில்லை</string>
