@@ -25,14 +25,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import static java.lang.System.nanoTime;
 
+@Slf4j
 public class ChildProcess {
 
-    private final Logger log = AndroidLogger.forClass(ChildProcess.class);
     private static final int PIPE_SIZE = 1024;
 
     private class ChildReader extends Thread {

@@ -53,6 +53,9 @@ import com.secupwn.aimsicd.utils.RequestTask;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class MainActivity extends BaseActivity implements AsyncResponse {
 
     private boolean mBound;
@@ -78,6 +81,8 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
     private long mLastPress = 0;    // Back press to exit timer
 
     private DrawerMenuActivityConfiguration mNavConf;
+
+    private static final int ACTIVITY_RESULT_SELECT_CELLTOWERS = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -255,13 +260,18 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA) {
             downloadBtsDataIfApiKeyAvailable();
+        } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.IMPORT_CELL_TOWERS_DATA) {
+            Intent pickFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            pickFileIntent.setType("*/*");
+            pickFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
+            startActivityForResult(pickFileIntent, ACTIVITY_RESULT_SELECT_CELLTOWERS);
         } else if (selectedItem.getId() == DrawerMenu.ID.APPLICATION.QUIT) {
             try {
                 if (mAimsicdService.isSmsTracking()) {
                     mAimsicdService.stopSmsTracking();
                 }
             } catch (Exception ee) {
-                log.warn("Exception in smstracking module: " + ee.getMessage());
+                log.warn("Exception in smstracking module: {}", ee.getMessage());
             }
 
             if (mAimsicdService != null) {
@@ -278,6 +288,17 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
         if (this.mDrawerLayout.isDrawerOpen(this.mDrawerList)) {
             mDrawerLayout.closeDrawer(mDrawerList);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ACTIVITY_RESULT_SELECT_CELLTOWERS) {
+            if (resultCode == RESULT_OK) {
+                log.debug("Chosen file: {}", data.getDataString());
+                importCellTowersData(data.getData());
+            }
         }
     }
 
@@ -301,7 +322,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                 cell.setMobileCountryCode(mcc);
                 int mnc = Integer.parseInt(networkOperator.substring(3));
                 cell.setMobileNetworkCode(mnc);
-                log.debug("CELL:: mobileCountryCode=" + mcc + " mobileNetworkCode=" + mnc);
+                log.debug("CELL:: mobileCountryCode={} mobileNetworkCode={}", mcc, mnc);
             }
 
 
@@ -332,9 +353,36 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         }
     }
 
+    private void importCellTowersData(Uri importFile) {
+
+        Cell cell = new Cell();
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String networkOperator = tm.getNetworkOperator();
+
+        if (networkOperator != null && !networkOperator.isEmpty()) {
+            int mcc = Integer.parseInt(networkOperator.substring(0, 3));
+            cell.setMobileCountryCode(mcc);
+            int mnc = Integer.parseInt(networkOperator.substring(3));
+            cell.setMobileNetworkCode(mnc);
+            log.debug("CELL:: mobileCountryCode={} mobileNetworkCode={}", mcc, mnc);
+        }
+
+        GeoLocation loc = mAimsicdService.lastKnownLocation();
+        if (loc != null) {
+            Helpers.msgLong(this, getString(R.string.imporing_celltowers_data));
+
+            cell.setLon(loc.getLongitudeInDegrees());
+            cell.setLat(loc.getLatitudeInDegrees());
+            Helpers.importCellTowersData(this, cell, importFile, mAimsicdService);
+
+        } else {
+            Helpers.msgShort(this, getString(R.string.needs_location));
+        }
+    }
+
     @Override
     public void processFinish(float[] location) {
-        log.info("processFinish - location[0]=" + location[0] + " location[1]=" + location[1]);
+        log.info("processFinish - location[0]={} location[1]={}", location[0], location[1]);
 
 
         if (Float.floatToRawIntBits(location[0]) == 0
@@ -351,7 +399,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         if (cells != null) {
             if (!cells.isEmpty()) {
                 for (Cell cell : cells) {
-                    log.info("processFinish - Cell =" + cell.toString());
+                    log.info("processFinish - Cell ={}", cell.toString());
                     if (cell.isValid()) {
                         mAimsicdService.setCell(cell);
                         Intent intent = new Intent(AimsicdService.UPDATE_DISPLAY);
@@ -534,7 +582,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                     mAimsicdService.stopSmsTracking();
                 }
             } catch (Exception ee) {
-                log.error("Error: Stopping SMS detection : " + ee.getMessage());
+                log.error("Error: Stopping SMS detection : {}", ee.getMessage());
             }
             finish();
         }

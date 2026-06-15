@@ -13,17 +13,15 @@ import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 
-import io.freefair.android.util.function.Optional;
-import io.freefair.android.util.function.Supplier;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import io.freefair.util.function.Optional;
+import io.freefair.util.function.Supplier;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
+@Slf4j
 public class Device {
-
-    private static final Logger log = AndroidLogger.forClass(Device.class);
 
     public Cell cell;
     /**
@@ -122,12 +120,7 @@ public class Device {
                 if (!cell.isValid()) {
                     CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) tm.getCellLocation();
                     if (cdmaCellLocation != null) {
-                        cell.setCellId(cdmaCellLocation.getBaseStationId());
-                        cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());
-                        cell.setSid(cdmaCellLocation.getSystemId()); // one of these must be a bug !!
-                        // See: http://stackoverflow.com/questions/8088046/android-how-to-identify-carrier-on-cdma-network
-                        // and: https://github.com/klinker41/android-smsmms/issues/26
-                        cell.setMobileNetworkCode(cdmaCellLocation.getSystemId()); // todo: check! (Also CellTracker.java)
+                        cell.setCdmaCellLocation(cdmaCellLocation);
 
                         //Retrieve MCC through System Property
                         String homeOperator = Helpers.getSystemProp(context,
@@ -141,7 +134,7 @@ public class Device {
                                     cell.setMobileNetworkCode(Integer.valueOf(homeOperator.substring(3, 5)));
                                 }
                             } catch (Exception e) {
-                                log.info("HomeOperator parse exception - " + e.getMessage(), e);
+                                log.info("HomeOperator parse exception - {}", e.getMessage(), e);
                             }
                         }
                     }

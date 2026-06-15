@@ -1,5 +1,4 @@
 # Contribution Guide
---------------------
 
 Thank you for contributing! Please select:
 
@@ -12,9 +11,7 @@ Thank you for contributing! Please select:
 * [Donating](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#donating)
 * [Respecting](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#code-of-conduct)
 
----
-
-#### DEVELOPING
+## DEVELOPING
 
 Feel invited to develop with us using these steps:
 
@@ -26,9 +23,7 @@ Feel invited to develop with us using these steps:
 6. Test your changes and submit a [pull request](https://help.github.com/articles/using-pull-requests/) when we shall add it.
 7. Don't be shy to ask for help in an Issue and feel invited to [contact us](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Contact).
 
----
-
-#### TRANSLATING
+## TRANSLATING
 
 Let our app start up in your native language!
 
@@ -37,9 +32,7 @@ Let our app start up in your native language!
 * Please make sure to *finish* your translation, if you start a new one!
 * Translations will be pulled into our GitHub automatically. Enjoy!
 
----
-
-#### TESTING
+## TESTING
 
 Can't code (yet)? No problem, we love you too!
 
@@ -49,9 +42,7 @@ Can't code (yet)? No problem, we love you too!
 4. Test all functions of our app and check for possible translation bugs.
 5. Share [our website](https://secupwn.github.io/Android-IMSI-Catcher-Detector) and [Media Material](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Media-Material) or [tweet about us](https://twitter.com/AIMSICD).
 
----
-
-#### FORMATTING
+## FORMATTING
 
 Useful links to help you with correctly formatting posts.
 
@@ -63,13 +54,10 @@ Useful links to help you with correctly formatting posts.
 * [Markdown Tables Generator](http://www.tablesgenerator.com/markdown_tables)
 * [Code/Syntax Highlighting](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml)
 
----
-
-#### DEBUGGING
+## DEBUGGING
 
 Thanks for helping us squashing bugs! Please be patient.
 
----
 **Important Bug Submission Rules:**
 
 1. **SAFETY FIRST:** Remove CID, LAT, IMEI, IMSI and phone number from logs you submit!
@@ -80,8 +68,6 @@ Thanks for helping us squashing bugs! Please be patient.
 6. Describe your Issue as thoroughly as possible and *add logs* so that we can reproduce it.
 8. Maintain your filed Issues! Nothing is more annoying than unresponsive bug reporters.
 
----
-
 In all cases, you **MUST** include the following:
 
 * AIMSICD version (see the About-Tab within our app)
@@ -90,8 +76,6 @@ In all cases, you **MUST** include the following:
 * The output of `getprop` command to a Pastebin-Site such as [PIE-Bin](https://defuse.ca/pastebin.htm)
 * Logcat from button `Debugging` in Navigation Drawer (remove personal data)
 * Feel free to attach any other logs made by a logcat tool like [MatLog](https://github.com/plusCubed/matlog)
-
----
 
 Command line junkie?
 
@@ -121,28 +105,22 @@ alias aimrun='cdaim; logclr; am start -n com.SecUpwN.AIMSICD/.AIMSICD; read dumm
 To run it, just type: `aimrun`.
 If you want to also supply *radio* logcat, add `-b radio` somewhere in the `logdmp` alias, but know that your GPS location and cell info may be included when you do that.
 
----
-
-#### SEEKING
+## SEEKING
 
 Special positions we are currently seeking skilled people for:
 
 * People with a CryptoPhone for another detection verification.
 * Bugfixer for [Coverity Scan Defects](https://scan.coverity.com/projects/3346) detected within our app.
 
----
-
-#### DONATING
+## DONATING
 
 Thank you for encouraging our developers!
 
 * Feel invited to donate using [this guide](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Donations).
 
----
+## Code of Conduct
 
-#### Code of Conduct
-
-**Our Pledge**
+### Our Pledge
 
 In the interest of fostering an open and welcoming environment, we as
 contributors and maintainers pledge to making participation in our project and
@@ -151,7 +129,7 @@ size, disability, ethnicity, gender identity and expression, level of experience
 nationality, personal appearance, race, religion, or sexual identity and
 orientation.
 
-**Our Standards**
+### Our Standards
 
 Examples of behavior that contributes to creating a positive environment
 include:
@@ -173,7 +151,7 @@ advances
 * Other conduct which could reasonably be considered inappropriate in a
   professional setting
 
-**Our Responsibilities**
+### Our Responsibilities
 
 Project maintainers are responsible for clarifying the standards of acceptable
 behavior and are expected to take appropriate and fair corrective action in
@@ -185,7 +163,7 @@ that are not aligned to this Code of Conduct, or to ban temporarily or
 permanently any contributor for other behaviors that they deem inappropriate,
 threatening, offensive, or harmful.
 
-**Scope**
+### Scope
 
 This Code of Conduct applies both within project spaces and in public spaces
 when an individual is representing the project or its community. Examples of
@@ -194,7 +172,7 @@ address, posting via an official social media account, or acting as an appointed
 representative at an online or offline event. Representation of a project may be
 further defined and clarified by project maintainers.
 
-**Enforcement**
+### Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported by contacting the [project maintainer](https://github.com/SecUpwN). All
@@ -207,6 +185,6 @@ Project maintainers who do not follow or enforce the Code of Conduct in good
 faith may face temporary or permanent repercussions as determined by other
 members of the project's leadership.
 
-**Attribution**
+### Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant](http://contributor-covenant.org), Version 1.4

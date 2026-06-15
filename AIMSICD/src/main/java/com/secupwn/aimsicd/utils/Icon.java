@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.enums.Status;
 
-import io.freefair.android.util.function.Function;
+import io.freefair.util.function.Function;
 
 /**
  * Class that holds and returns the correct icon based on requested icon format and

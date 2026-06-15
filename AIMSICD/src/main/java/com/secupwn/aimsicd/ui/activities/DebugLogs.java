@@ -23,11 +23,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.annotation.XmlMenu;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *  Description:    This class is providing for the Debug log feature in the swipe menu.
@@ -52,12 +51,10 @@ import io.freefair.android.util.logging.Logger;
  *
  *  TODO:   [ ]     We should add an XPrivacy button (or automatic) to add XPrivacy filters when used.
  */
+@Slf4j
 @XmlLayout(R.layout.activity_debug_logs)
 @XmlMenu(R.menu.activity_debug_logs)
 public class DebugLogs extends BaseActivity {
-
-    @Inject
-    private Logger log;
 
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;

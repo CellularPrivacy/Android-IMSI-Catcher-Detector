@@ -7,6 +7,9 @@ package com.secupwn.aimsicd.utils.atcmd;
 
 import java.io.IOException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class TtyPrivFile extends TtyStream {
 
     protected Process mReadProc;
@@ -25,7 +28,7 @@ public class TtyPrivFile extends TtyStream {
         mReadProc = read;
         mWriteProc = write;
 
-        log.debug("mReadProc=" + mReadProc + ", mWriteProc=" + mWriteProc);
+        log.debug("mReadProc={}, mWriteProc={}", mReadProc, mWriteProc);
     }
 
     @Override

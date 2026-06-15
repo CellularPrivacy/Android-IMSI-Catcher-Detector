@@ -49,6 +49,7 @@ public class DrawerMenu {
          */
         public static class APPLICATION {
             public static final int DOWNLOAD_LOCAL_BTS_DATA = 400;  //Download Local BST Data FIXME     Is this should be "Download Local OCID Data" ?
+            public static final int IMPORT_CELL_TOWERS_DATA = 401;  //Download CellTowers Data
             public static final int UPLOAD_LOCAL_BTS_DATA = 410;    //Upload Local BST Data
             public static final int ADD_GET_OCID_API_KEY = 420;     // Add/Get OCID API key
             public static final int FAQ = 450;                      // TODO Help/FAQ

@@ -90,6 +90,9 @@ public class DrawerMenuItem implements NavDrawerItem {
             case APPLICATION.DOWNLOAD_LOCAL_BTS_DATA:
                 return R.string.help_app_download_local_bts;
 
+            case APPLICATION.IMPORT_CELL_TOWERS_DATA:
+                return R.string.help_app_import_cell_towers;
+
             case APPLICATION.ADD_GET_OCID_API_KEY:
                 return R.string.help_app_add_get_ocid_api_key;
 

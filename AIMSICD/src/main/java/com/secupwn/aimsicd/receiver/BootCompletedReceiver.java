@@ -10,15 +10,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
-
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.service.AimsicdService;
 
-public class BootCompletedReceiver extends BroadcastReceiver {
+import lombok.extern.slf4j.Slf4j;
 
-    private final Logger log = AndroidLogger.forClass(BootCompletedReceiver.class);
+@Slf4j
+public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {

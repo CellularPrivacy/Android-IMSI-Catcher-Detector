@@ -13,8 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * These are the OEM commands used by the MulticlientRil ServiceMode menu scraper,
@@ -22,9 +21,8 @@ import io.freefair.android.util.logging.Logger;
  * and these particular ones are for Samsung Galaxy S2, AFAIK.
  * -- E:V:A
  */
+@Slf4j
 public class OemCommands {
-
-    private static final Logger log = AndroidLogger.forClass(OemCommands.class);
 
     public static final char OEM_SERVM_FUNCTAG = 1;
     public static final char OEM_SM_ACTION = 0;

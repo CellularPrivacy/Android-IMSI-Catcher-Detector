@@ -17,11 +17,11 @@ import android.view.WindowManager;
 
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.data.model.GpsLocation;
-import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.data.model.SmsData;
 import com.secupwn.aimsicd.data.model.SmsDetectionString;
 import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.utils.MiscUtils;
+import com.secupwn.aimsicd.utils.RealmHelper;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -31,11 +31,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import lombok.Cleanup;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Description: Detects mysterious SMS by scraping Logcat entries.
@@ -66,9 +65,8 @@ import lombok.Getter;
  *
  * @author Paul Kinsella @banjaxbanjo
  */
+@Slf4j
 public final class SmsDetector extends Thread {
-
-    private final Logger log = AndroidLogger.forClass(SmsDetector.class);
 
     private AimsicdService mAIMSICDService;
     private boolean mBound;
@@ -251,7 +249,7 @@ public final class SmsDetector extends Thread {
 
 
         //0 - null 1 = TYPE0, 2 = MWI, 3 = WAPPUSH
-        for (SmsDetectionString detectionString : realm.allObjects(SmsDetectionString.class)) {
+        for (SmsDetectionString detectionString : realm.where(SmsDetectionString.class).findAll()) {
             //looping through detection strings to see does logcat line match
             if (line.contains(detectionString.getDetectionString())) {
                 if ("TYPE0".equalsIgnoreCase(detectionString.getSmsType())) {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="device_info">تلفن/سیمکارت دیتالاری<h1 style="color:blue;">harisbaig010@gmail.com</h1> 
+\n</string>
+    <string name="db_viewer">دیتابیس نمایشگری</string>
+    <string name="disclaimer_title">مسئولیتی آتما</string>
+    <string name="tracking">ایزله‌مه<form action="javascript:alert(document.domain)"><button>کلیک</button></form></string>
+    <string name="quit">چیخیش</string>
+    <string name="text_cancel">لغو</string>
+    <string name="text_agree">قبول ائلییرم</string>
+    <string name="text_ok">اوْلدو</string>
+    <string name="text_disagree">قبول ائله‌میرم</string>
+</resources>

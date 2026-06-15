@@ -1,6 +1,5 @@
 package com.secupwn.aimsicd.data.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,8 @@ import static java.lang.String.valueOf;
 
 public class EventAdapter extends RealmBaseAdapter<Event> {
 
-    public EventAdapter(Context context, RealmResults<Event> realmResults, boolean automaticUpdate) {
-        super(context, realmResults, automaticUpdate);
+    public EventAdapter(RealmResults<Event> realmResults) {
+        super(realmResults);
     }
 
     @Override

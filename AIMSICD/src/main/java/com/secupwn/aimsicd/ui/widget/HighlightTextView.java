@@ -1,20 +1,20 @@
 package com.secupwn.aimsicd.ui.widget;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 
-import com.secupwn.aimsicd.R;
 import com.kaichunlin.transition.ViewTransitionBuilder;
 import com.kaichunlin.transition.animation.AnimationManager;
 import com.kaichunlin.transition.internal.TransitionController;
 import com.nineoldandroids.animation.ArgbEvaluator;
+import com.secupwn.aimsicd.R;
 
 /**
  * Highlight the updated text
  */
-public class HighlightTextView extends TextView {
+public class HighlightTextView extends AppCompatTextView {
     private static final int DURATION = 3000;
 
     public HighlightTextView(Context context) {

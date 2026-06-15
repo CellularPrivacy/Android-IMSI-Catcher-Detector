@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
 import com.secupwn.aimsicd.constants.DrawerMenu;
 import com.secupwn.aimsicd.constants.TinyDbKeys;
@@ -33,11 +32,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeUnit;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.Logger;
+import io.freefair.injection.annotation.Inject;
 import io.realm.Realm;
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -78,6 +77,7 @@ import lombok.Cleanup;
  *      [ ] App is blocked while downloading.
  *
  */
+@Slf4j
 public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     //Calling from the menu more extensive(more difficult for sever),
@@ -89,9 +89,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     public static final char DBE_DOWNLOAD_REQUEST_FROM_MAP = 2; // OCID download request from "Antenna Map Viewer"
     public static final char DBE_UPLOAD_REQUEST = 6;            // OCID upload request from "APPLICATION" drawer title
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ALL_CURRENT_CELL_DETAILS)"
-
-    @Inject
-    private Logger log;
 
     private RealmHelper mDbAdapter;
     private Context mAppContext;
@@ -106,7 +103,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     /**
      *
      * @param context App context
-     * @param type What type of request to be performed (download OCID, upload OCID, DB backup, etc.)
+     * @param type What type of request to be performed (download OCID, upload OCID, etc.)
      * @param listener Allows the caller of RequestTask to implement success/fail callbacks
      */
     public RequestTask(InjectionAppCompatActivity context, char type, AsyncTaskCompleteListener listener) {
@@ -141,7 +138,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     @Cleanup Realm realm = Realm.getDefaultInstance();
                     boolean prepared = mDbAdapter.prepareOpenCellUploadData(realm);
 
-                    log.info("OCID upload data prepared - " + String.valueOf(prepared));
+                    log.info("OCID upload data prepared - {}", String.valueOf(prepared));
                     if (prepared) {
                         File file = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/aimsicd-ocid-data.csv");
                         publishProgress(25, 100);
@@ -163,9 +160,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
                         publishProgress(80, 100);
                         if (response != null) {
-                            log.info("OCID Upload Response: "
-                                    + response.code() + " - "
-                                    + response.message());
+                            log.info("OCID Upload Response: {} - {}", response.code(), response.message());
                             if (response.code() == 200) {
                                 Realm.Transaction transaction = mDbAdapter.ocidProcessed();
                                 realm.executeTransaction(transaction);
@@ -203,7 +198,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         dir.mkdirs();
                     }
                     File file = new File(dir, OCDB_File_Name);
-                    log.info("DBE_DOWNLOAD_REQUEST write to: " + dirName + OCDB_File_Name);
+                    log.info("DBE_DOWNLOAD_REQUEST write to: {}" + OCDB_File_Name, dirName);
 
                     Request request = new Request.Builder()
                             .url(commandString[0])
@@ -226,7 +221,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         try {
                             String error = response.body().string();
                             Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_error) + " " + error);
-                            log.error("Download OCID data error: " + error);
+                            log.error("Download OCID data error: {}", error);
                         } catch (Exception e) {
                             Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_error) + " "
                                     + e.getClass().getName() + " - "
@@ -241,7 +236,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                             log.debug("doInBackground DBE_DOWNLOAD_REQUEST total not returned!");
                             total = 1024; // Let's set it arbitrarily to something other than "-1"
                         } else {
-                            log.debug("doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
+                            log.debug("doInBackground DBE_DOWNLOAD_REQUEST total: {}", total);
                             publishProgress((int) (0.25 * total), (int) total); // Let's show something!
                         }
 
@@ -367,8 +362,8 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
     private void showHideMapProgressBar(boolean pFlag) {
         InjectionAppCompatActivity lActivity = getActivity();
-        if (BuildConfig.DEBUG && lActivity == null) {
-            log.verbose("BaseTask showHideMapProgressBar() activity is null");
+        if (lActivity == null) {
+            log.debug("BaseTask showHideMapProgressBar() activity is null");
         }
 
         if (lActivity != null) {

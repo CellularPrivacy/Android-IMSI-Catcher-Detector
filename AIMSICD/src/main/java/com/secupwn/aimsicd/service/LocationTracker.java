@@ -21,17 +21,16 @@ import com.secupwn.aimsicd.utils.GeoLocation;
 import com.secupwn.aimsicd.utils.RealmHelper;
 import com.secupwn.aimsicd.utils.TruncatedLocation;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 import io.realm.Realm;
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Class to handle GPS location tracking
  */
+@Slf4j
 public final class LocationTracker {
 
-    private final Logger log = AndroidLogger.forClass(LocationTracker.class);
     // how long with no movement detected, before we assume we are not moving
     public static final long MOVEMENT_THRESHOLD_MS = 20 * 1000;
 
@@ -132,7 +131,7 @@ public final class LocationTracker {
                     try {
                         Cell cell = context.getCell();
                         if (cell != null) {
-                            log.debug("Looking up MCC " + cell.getMobileCountryCode());
+                            log.debug("Looking up MCC {}", cell.getMobileCountryCode());
 
                             @Cleanup Realm realm = Realm.getDefaultInstance();
                             GpsLocation defLoc = mDbHelper.getDefaultLocation(realm, cell.getMobileCountryCode());
@@ -147,7 +146,7 @@ public final class LocationTracker {
         }
 
         if (loc != null) {
-            log.info("Last known location " + loc.toString());
+            log.info("Last known location {}", loc.toString());
         }
 
         return loc;

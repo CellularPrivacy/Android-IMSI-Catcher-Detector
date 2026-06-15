@@ -48,22 +48,19 @@ import com.secupwn.aimsicd.smsdetection.SmsDetector;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.GeoLocation;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionService;
-import io.freefair.android.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This starts the (background?) AIMSICD service to check for SMS and track
  * cells with or without GPS enabled.
  */
+@Slf4j
 public class AimsicdService extends InjectionService {
 
     public static boolean isGPSchoiceChecked;
     public static final String GPS_REMEMBER_CHOICE = "remember choice";
     SharedPreferences gpsPreferences;
-
-    @Inject
-    private Logger log;
 
     // /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
