@@ -567,8 +567,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             case TelephonyManager.PHONE_TYPE_CDMA:
                 CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) location;
                 if (cdmaCellLocation != null) {
-                    monitorCell.setLocationAreaCode(cdmaCellLocation.getNetworkId());
-                    monitorCell.setCellId(cdmaCellLocation.getBaseStationId());
+                    monitorCell.setCdmaCellLocation(cdmaCellLocation);
 
                     boolean lacOK = dbHelper.checkLAC(realm, monitorCell);
                     if (!lacOK) {
@@ -751,10 +750,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                                         device.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
                                         device.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
-                        device.cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());      // NID
-                        device.cell.setCellId(cdmaCellLocation.getBaseStationId());  // BID
-                        device.cell.setSid(cdmaCellLocation.getSystemId());       // SID
-                        device.cell.setMobileNetworkCode(cdmaCellLocation.getSystemId());       // MNC <== BUG!??
+                        device.cell.setCdmaCellLocation(cdmaCellLocation);
                         device.setNetworkName(tm.getNetworkOperatorName());        // ??
                     }
             }
@@ -873,11 +869,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                     case TelephonyManager.PHONE_TYPE_CDMA:
                         CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cellLocation;
-                        device.cell.setCellId(cdmaCellLocation.getBaseStationId()); // BSID ??
-                        device.cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());     // NID
-                        device.cell.setSid(cdmaCellLocation.getSystemId());      // SID
-                        device.cell.setMobileNetworkCode(cdmaCellLocation.getSystemId());      // MNC <== BUG!??
-
+                        device.cell.setCdmaCellLocation(cdmaCellLocation);
                         break;
                 }
             }

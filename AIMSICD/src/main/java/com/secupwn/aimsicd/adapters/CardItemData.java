@@ -74,13 +74,15 @@ public class CardItemData {
     public CardItemData(Cell cell, String recordId) {
 
         if (cell.getCellId() != Integer.MAX_VALUE && cell.getCellId() != -1) {
-            cellId = "CID: " + cell.getCellId() + "  (0x" + Integer.toHexString(cell.getCellId()) + ")";
+            String label = cell.isCdma() ? "BID: " : "CID: ";
+            cellId = label + cell.getCellId() + "  (0x" + Integer.toHexString(cell.getCellId()) + ")";
         } else {
             cellId = "N/A";
         }
 
         if (cell.getLocationAreaCode() != Integer.MAX_VALUE && cell.getLocationAreaCode() != -1) {
-            lac = "LAC: " + cell.getLocationAreaCode();
+            String label = cell.isCdma() ? "NID: " : "LAC: ";
+            lac = label + cell.getLocationAreaCode();
         } else {
             lac = "N/A";
         }
@@ -91,7 +93,9 @@ public class CardItemData {
             mcc = "N/A";
         }
 
-        if (cell.getMobileNetworkCode() != Integer.MAX_VALUE && cell.getMobileNetworkCode() != 0) {
+        if (cell.isCdma()) {
+            mnc = "SID: " + cell.getSid();
+        } else if (cell.getMobileNetworkCode() != Integer.MAX_VALUE && cell.getMobileNetworkCode() != 0) {
             mnc = "MNC: " + cell.getMobileNetworkCode();
         } else {
             mnc = "N/A";

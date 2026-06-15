@@ -10,6 +10,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
+import android.telephony.cdma.CdmaCellLocation;
 
 import com.secupwn.aimsicd.R;
 
@@ -215,6 +216,33 @@ public class Cell implements Parcelable {
     }
 
     /**
+     * Store CDMA identity values using the existing GSM-oriented fields.
+     *
+     * CDMA does not have GSM LAC/CID values. The equivalent values exposed by Android are:
+     * SID (system ID), NID (network ID), and BID (base station ID). Keeping NID in
+     * locationAreaCode and BID in cellId preserves the existing database schema while avoiding
+     * the previous bug where SID was also written into MNC.
+     */
+    public void setCdmaCellIdentity(int systemId, int networkId, int baseStationId) {
+        setSid(systemId);
+        setLocationAreaCode(networkId);
+        setCellId(baseStationId);
+    }
+
+    public void setCdmaCellLocation(CdmaCellLocation cdmaCellLocation) {
+        if (cdmaCellLocation != null) {
+            setCdmaCellIdentity(
+                    cdmaCellLocation.getSystemId(),
+                    cdmaCellLocation.getNetworkId(),
+                    cdmaCellLocation.getBaseStationId());
+        }
+    }
+
+    public boolean isCdma() {
+        return sid != Integer.MAX_VALUE && sid != -1;
+    }
+
+    /**
      * Radio Access Technology (RAT)
      *
      * Some places in the app refers to this as the Network Type.
@@ -265,8 +293,14 @@ public class Cell implements Parcelable {
     public String toString() {
         StringBuilder result = new StringBuilder();
 
-        result.append("cid - ").append(cellId).append("\n");
-        result.append("LAC - ").append(locationAreaCode).append("\n");
+        if (isCdma()) {
+            result.append("BID - ").append(cellId).append("\n");
+            result.append("NID - ").append(locationAreaCode).append("\n");
+            result.append("SID - ").append(sid).append("\n");
+        } else {
+            result.append("cid - ").append(cellId).append("\n");
+            result.append("LAC - ").append(locationAreaCode).append("\n");
+        }
         result.append("MCC - ").append(mobileCountryCode).append("\n");
         result.append("MNC - ").append(mobileNetworkCode).append("\n");
         result.append("DBm - ").append(dbm).append("\n");

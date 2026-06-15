@@ -69,10 +69,10 @@ public class DeviceApi18 {
                         // Signal Strength
                         pDevice.cell.setDbm(cdma.getDbm());
                         // Cell Identity
-                        pDevice.cell.setCellId(identityCdma.getBasestationId());
-                        pDevice.cell.setMobileNetworkCode(identityCdma.getSystemId());
-                        pDevice.cell.setLocationAreaCode(identityCdma.getNetworkId());
-                        pDevice.cell.setSid(identityCdma.getSystemId());
+                        pDevice.cell.setCdmaCellIdentity(
+                                identityCdma.getSystemId(),
+                                identityCdma.getNetworkId(),
+                                identityCdma.getBasestationId());
 
                     } else if (info instanceof CellInfoLte) {
                         final CellSignalStrengthLte lte = ((CellInfoLte) info).getCellSignalStrength();
