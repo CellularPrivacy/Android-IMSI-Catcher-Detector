@@ -122,10 +122,9 @@ public class Device {
                     if (cdmaCellLocation != null) {
                         cell.setCellId(cdmaCellLocation.getBaseStationId());
                         cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());
-                        cell.setSid(cdmaCellLocation.getSystemId()); // one of these must be a bug !!
-                        // See: http://stackoverflow.com/questions/8088046/android-how-to-identify-carrier-on-cdma-network
-                        // and: https://github.com/klinker41/android-smsmms/issues/26
-                        cell.setMobileNetworkCode(cdmaCellLocation.getSystemId()); // todo: check! (Also CellTracker.java)
+                        cell.setSid(cdmaCellLocation.getSystemId()); // SID
+                        // Note: MNC is NOT the same as SID. MCC/MNC comes from
+                        // ro.cdma.home.operator.numeric, handled below
 
                         //Retrieve MCC through System Property
                         String homeOperator = Helpers.getSystemProp(context,

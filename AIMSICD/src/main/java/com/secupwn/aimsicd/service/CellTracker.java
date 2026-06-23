@@ -754,7 +754,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         device.cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());      // NID
                         device.cell.setCellId(cdmaCellLocation.getBaseStationId());  // BID
                         device.cell.setSid(cdmaCellLocation.getSystemId());       // SID
-                        device.cell.setMobileNetworkCode(cdmaCellLocation.getSystemId());       // MNC <== BUG!??
+                        // Note: MNC is NOT the same as SID. MCC/MNC comes from
+                        // ro.cdma.home.operator.numeric, handled in Device.refreshDeviceInfo()
                         device.setNetworkName(tm.getNetworkOperatorName());        // ??
                     }
             }
@@ -873,10 +874,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
 
                     case TelephonyManager.PHONE_TYPE_CDMA:
                         CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cellLocation;
-                        device.cell.setCellId(cdmaCellLocation.getBaseStationId()); // BSID ??
+                        device.cell.setCellId(cdmaCellLocation.getBaseStationId()); // BID
                         device.cell.setLocationAreaCode(cdmaCellLocation.getNetworkId());     // NID
                         device.cell.setSid(cdmaCellLocation.getSystemId());      // SID
-                        device.cell.setMobileNetworkCode(cdmaCellLocation.getSystemId());      // MNC <== BUG!??
+                        // Note: MNC is NOT the same as SID. MCC/MNC comes from
+                        // ro.cdma.home.operator.numeric, handled in Device.refreshDeviceInfo()
 
                         break;
                 }
