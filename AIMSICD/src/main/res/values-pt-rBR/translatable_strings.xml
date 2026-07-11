@@ -284,4 +284,6 @@ Frequência atual: %s</string>
     <string name="failed_to_add_the_string_to_db">Falha ao adicionar a frase no banco de dados</string>
     <string name="n_a">N/A</string>
     <string name="at_command_title">Interface de comandos AT</string>
+    <string name="help_main_acd">Mostrar uma comparação detalhada da célula conectada atualmente com os dados, caso encontrados, no OpenCellID e destaque as diferenças.</string>
+    <string name="help_main_database_viewer">Mostrar as diferentes tabelas do BD que temos.</string>
 </resources>
