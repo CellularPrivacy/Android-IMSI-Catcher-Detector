@@ -159,15 +159,14 @@ public class Device {
         dataState = getDataState(tm);
     }
 
-    private Optional<String> getSimInformation(Supplier<String> simInfoSupplier) {
-        try {
-            return Optional.ofNullable(simInfoSupplier.get());
-        } catch (Exception e) {
-            // SIM methods can cause Exceptions on some devices
-            log.error("Failed to get SIM-Information", e);
-        }
-        return Optional.empty();
-    }
+    private static Optional<String> getSimInformation(Supplier<String> simInfoSupplier) {
+		try {
+			return Optional.ofNullable(simInfoSupplier.get());
+		} catch (Exception e) {
+			log.error("Failed to get SIM-Information", e);
+		}
+		return Optional.empty();
+	}
 
     /**
      * SIM Country
