@@ -265,13 +265,20 @@ public class Cell implements Parcelable {
     public String toString() {
         StringBuilder result = new StringBuilder();
 
-        result.append("cid - ").append(cellId).append("\n");
-        result.append("LAC - ").append(locationAreaCode).append("\n");
+        if (isCdma()) {
+            // CDMA uses BID/NID/SID instead of CID/LAC/PSC
+            result.append("BID - ").append(cellId).append("\n");
+            result.append("NID - ").append(locationAreaCode).append("\n");
+            result.append("SID - ").append(sid).append("\n");
+        } else {
+            result.append("cid - ").append(cellId).append("\n");
+            result.append("LAC - ").append(locationAreaCode).append("\n");
+            result.append("PSC - ").append(validatePscValue(primaryScramblingCode)).append("\n");
+        }
         result.append("MCC - ").append(mobileCountryCode).append("\n");
         result.append("MNC - ").append(mobileNetworkCode).append("\n");
         result.append("DBm - ").append(dbm).append("\n");
-        result.append("PSC - ").append(validatePscValue(primaryScramblingCode)).append("\n");
-        result.append("Type - ").append(netType).append("\n");
+        result.append("Type - ").append(getRat()).append("\n");
         result.append("Lon - ").append(lon).append("\n");
         result.append("Lat - ").append(lat).append("\n");
 

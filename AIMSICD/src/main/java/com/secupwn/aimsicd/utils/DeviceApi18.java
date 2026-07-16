@@ -69,10 +69,11 @@ public class DeviceApi18 {
                         // Signal Strength
                         pDevice.cell.setDbm(cdma.getDbm());
                         // Cell Identity
-                        pDevice.cell.setCellId(identityCdma.getBasestationId());
-                        pDevice.cell.setMobileNetworkCode(identityCdma.getSystemId());
-                        pDevice.cell.setLocationAreaCode(identityCdma.getNetworkId());
-                        pDevice.cell.setSid(identityCdma.getSystemId());
+                        pDevice.cell.setCellId(identityCdma.getBasestationId());  // BID
+                        pDevice.cell.setLocationAreaCode(identityCdma.getNetworkId());  // NID
+                        pDevice.cell.setSid(identityCdma.getSystemId());  // SID
+                        // Note: MNC is NOT the same as SID. MCC/MNC should come from
+                        // ro.cdma.home.operator.numeric system property, handled in Device.java
 
                     } else if (info instanceof CellInfoLte) {
                         final CellSignalStrengthLte lte = ((CellInfoLte) info).getCellSignalStrength();
