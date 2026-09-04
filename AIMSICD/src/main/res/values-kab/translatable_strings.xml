@@ -40,7 +40,7 @@
     <string name="btn_clear_logs">Sfeḍ</string>
     <string name="btn_copy_to_clipboard">Nɣel</string>
     <string name="btn_stop_logs">Seḥbes</string>
-    <string name="btn_start_logs">Exécuté le</string>
+    <string name="btn_start_logs">Asekker</string>
     <string name="open_cell_id_button_cancel">Sefsex</string>
     <string name="open_cell_id_button_ok">IH</string>
     <string name="notification_vibrate_ok">IH</string>
