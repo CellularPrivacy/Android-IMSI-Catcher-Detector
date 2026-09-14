@@ -31,4 +31,9 @@
         android:icon="@drawable/ic_action_computer"
         android:title="@string/debugging"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/privacy_advisor"
+        android:icon="@drawable/ic_action_settings"
+        android:title="@string/menu_privacy_advisor"
+        app:showAsAction="never" />
 </menu>

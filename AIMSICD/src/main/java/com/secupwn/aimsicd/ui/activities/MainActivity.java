@@ -558,6 +558,10 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                 Intent i = new Intent(this, DebugLogs.class);
                 startActivity(i);
                 break;
+            case R.id.privacy_advisor:
+                Intent pa = new Intent(this, PrivacyAdvisorActivity.class);
+                startActivity(pa);
+                break;
         }
 
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);

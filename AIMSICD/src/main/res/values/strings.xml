@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="antenna_map_viewer">Antenna Map Viewer</string>
+    <string name="menu_privacy_advisor">Privacy Advisor</string>
+    <string name="privacy_header">Apps requesting phone/SIM permissions (tap for details)</string>
+    <string name="privacy_empty">No installed apps request telephony-related permissions.</string>
+    <string name="privacy_perms_count">%1$d granted of %2$d requested</string>
+    <string name="privacy_dialog_title">%1$s</string>
+    <string name="privacy_dialog_pkg">Package:</string>
+    <string name="privacy_dialog_requested">Requested telephony permissions:</string>
+    <string name="privacy_dialog_granted">(granted)</string>
+    <string name="privacy_dialog_denied">(denied)</string>
+    <string name="privacy_copy_cmds">Copy ADB commands</string>
+    <string name="perm_read_phone_state">Read phone state</string>
+    <string name="perm_read_phone_numbers">Read phone numbers</string>
+    <string name="perm_read_sms">Read SMS</string>
+    <string name="perm_read_call_log">Read call log</string>
 </resources>
