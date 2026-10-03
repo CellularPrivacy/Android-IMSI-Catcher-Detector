@@ -319,7 +319,7 @@
     <string name="n_a">Ikke tilgjengelig</string>
     <string name="unknown">Ukjent</string>
     <string name="database_settings">Database</string>
-    <string name="download_timed_out">Tidsavbrudd for OpenCellID- API-forespørsel. Prøv igjen senere!?</string>
+    <string name="download_timed_out">Tidsavbrudd for OpenCellID- API-forespørsel. Prøv igjen senere?</string>
     <string name="cell_doesnt_provide_any_neighbors">Bakkestasjonen støtter ikke celler i nærheten!</string>
     <string name="import_cell_towers">Importer CellTowers-data</string>
     <string name="imporing_celltowers_data">Importerer CellTowers-data…
