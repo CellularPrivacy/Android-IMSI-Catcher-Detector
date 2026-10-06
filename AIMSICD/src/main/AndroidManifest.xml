@@ -117,6 +117,17 @@
             </intent-filter>
         </receiver>
 
+        <!-- Receives SIM_STATE_CHANGED so hot SIM swaps are detected even when the activity UI
+             is closed. The receiver forwards to the running AimsicdService; when the service is
+             not running the event is ignored (the service re-checks on next start). -->
+        <receiver android:name=".receiver.SimSwapAlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SIM_STATE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".smsdetection.AdvancedUserActivity"
             android:label="@string/title_activity_advanced_user" >

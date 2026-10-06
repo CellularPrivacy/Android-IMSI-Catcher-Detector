@@ -122,6 +122,10 @@
     <string name="pref_femto_summ">(currently CDMA Phones ONLY)</string>
     <string name="pref_femto_action_title">Femtocell Protection</string>
     <string name="pref_femto_action_summ">Enforce Airplane Mode when Femtocell detected (re-enable network manually)</string>
+    <string name="pref_sim_swap_protect_title">SIM-Swap Auto-Protection</string>
+    <string name="pref_sim_swap_protect_summ">Automatically cut the mobile network (airplane mode) when a SIM swap or network loss is detected</string>
+    <string name="pref_wipe_sensitive_title">Wipe Trails on Danger</string>
+    <string name="pref_wipe_sensitive_summ">Delete locally recorded cell &amp; SMS logs when a dangerous threat is detected</string>
     <string name="pref_ui_title">Interface Settings</string>
     <string name="pref_ui_icons_title">Status-Icons</string>
     <string name="pref_ui_icons_summ">Icon Theme Selection</string>
@@ -295,6 +299,10 @@
     <string name="status_high">High</string>
     <string name="status_danger">Danger</string>
     <string name="status_skull">Run!</string>
+    <string name="alert_sim_swap_detected">Possible SIM swap detected: SIM identity changed!</string>
+    <string name="alert_sim_card_removed">SIM card removed from device.</string>
+    <string name="alert_sim_card_reinserted">SIM card re-inserted.</string>
+    <string name="alert_network_signal_lost">Mobile network signal lost (possible swap or rogue BTS).</string>
 
     <!-- Advanced User Settings: SMS Detection Strings -->
     <string name="adv_user_info">This menu is for advanced users only!\n\nPlease do not insert random strings because it will cause detection to go out of control.\n\nTo add a string choose the SMS type from the dropdown menu, type your detection string and press insert.\n\nTo delete from database long press on list view.</string>

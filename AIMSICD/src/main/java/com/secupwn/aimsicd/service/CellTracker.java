@@ -30,7 +30,9 @@ import android.telephony.gsm.GsmCellLocation;
 import com.secupwn.aimsicd.AndroidIMSICatcherDetector;
 import com.secupwn.aimsicd.BuildConfig;
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.constants.ProtectionConstants;
 import com.secupwn.aimsicd.enums.Status;
+import com.secupwn.aimsicd.protection.AutoProtector;
 import com.secupwn.aimsicd.ui.activities.MainActivity;
 import com.secupwn.aimsicd.utils.Cell;
 import com.secupwn.aimsicd.utils.Device;
@@ -75,7 +77,7 @@ import lombok.extern.slf4j.Slf4j;
  *              [x] Use TinyDB.java to simplify Shared Preferences usage
  */
 @Slf4j
-public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeListener, SimSwapper.Reactor {
 
     @Getter
     public static Cell monitorCell;
@@ -118,6 +120,18 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
     private boolean emptyNeighborCellsList;
     private boolean vibrateEnabled;
     private int vibrateMinThreatLevel;
+
+    // === Automatic protection (SIM-swap / IMSI-catcher countermeasures) ===
+    private SimSwapper mSimSwapper;
+    private AutoProtector mAutoProtector;
+    /** Threat level raised by the protection subsystem; consulted by setNotification(). */
+    private Status protectionStatus;
+    /** Human readable description of the latest protection event (shown in the notification). */
+    private String protectionNotificationText;
+
+    // Countermeasure preferences, loaded together with the other settings.
+    private boolean protectionAirplaneEnabled;
+    private boolean protectionWipeEnabled;
     private LinkedBlockingQueue<NeighboringCellInfo> neighboringCellBlockingQueue;
 
     private final RealmHelper dbHelper;
@@ -164,6 +178,17 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         }
         device.refreshDeviceInfo(tm, context); // Telephony Manager
         monitorCell = new Cell();
+
+        // Protection subsystem: SIM-swap / subscriber-change detection + automatic
+        // countermeasures. Started explicitly via startProtection().
+        mSimSwapper = new SimSwapper(context, this, dbHelper);
+
+        // loadPreferences() above may already have enabled tracking (its default is ON); in that
+        // case the protection subsystem must be started now — it would otherwise only start on
+        // the next manual toggle.
+        if (trackingCell) {
+            startProtection();
+        }
     }
 
     /**
@@ -194,6 +219,7 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         if (isTrackingFemtocell()) {
             stopTrackingFemto();
         }
+        stopProtection();
         cancelNotification();
         tm.listen(cellSignalListener, PhoneStateListener.LISTEN_NONE);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
@@ -245,12 +271,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             );
             trackingCell = true;
             Helpers.msgShort(context, context.getString(R.string.tracking_cell_information));
+            startProtection();
         } else {
             tm.listen(cellSignalListener, PhoneStateListener.LISTEN_NONE);
             device.cell.setLon(0.0);
             device.cell.setLat(0.0);
             device.setCellInfo("[0,0]|nn|nn|"); //default entries into "locationinfo"::Connection
             trackingCell = false;
+            stopProtection();
             Helpers.msgShort(context, context.getString(R.string.stopped_tracking_cell_information));
         }
         setNotification();
@@ -310,6 +338,10 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             vibrateEnabled = sharedPreferences.getBoolean(VIBRATE_ENABLE, true);
         } else if (key.equals(VIBRATE_MIN_LEVEL)) {
             vibrateMinThreatLevel = Integer.valueOf(sharedPreferences.getString(VIBRATE_MIN_LEVEL, String.valueOf(Status.MEDIUM.ordinal())));
+        } else if (key.equals(context.getString(R.string.pref_sim_swap_protect_key))) {
+            protectionAirplaneEnabled = sharedPreferences.getBoolean(key, false);
+        } else if (key.equals(context.getString(R.string.pref_wipe_sensitive_key))) {
+            protectionWipeEnabled = sharedPreferences.getBoolean(key, false);
         }
     }
 
@@ -642,6 +674,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         String refreshRate = prefs.getString(context.getString(R.string.pref_refresh_key), "1");
         this.vibrateEnabled = prefs.getBoolean(context.getString(R.string.pref_notification_vibrate_enable), true);
         this.vibrateMinThreatLevel = Integer.valueOf(prefs.getString(context.getString(R.string.pref_notification_vibrate_min_level), String.valueOf(Status.MEDIUM.ordinal())));
+        this.protectionAirplaneEnabled = prefs.getBoolean(context.getString(R.string.pref_sim_swap_protect_key), false);
+        this.protectionWipeEnabled = prefs.getBoolean(context.getString(R.string.pref_wipe_sensitive_key), false);
 
         // Default to Automatic ("1")
         if (refreshRate.isEmpty()) {
@@ -950,8 +984,13 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
         String tickerText;
         String contentText = "Phone Type " + device.getPhoneType();
 
-        if (femtoDetected || typeZeroSmsDetected) {
+        if (protectionStatus != null && protectionStatus.ordinal() >= Status.HIGH.ordinal()) {
+            // SIM-swap / network-loss alarms take precedence over the cellular heuristics.
+            getApplication().setCurrentStatus(protectionStatus, vibrateEnabled, vibrateMinThreatLevel);
+            applyProtectionCountermeasures(protectionStatus);
+        } else if (femtoDetected || typeZeroSmsDetected) {
             getApplication().setCurrentStatus(Status.DANGER, vibrateEnabled, vibrateMinThreatLevel);
+            applyProtectionCountermeasures(Status.DANGER);
         } else if (changedLAC) {
             getApplication().setCurrentStatus(Status.MEDIUM, vibrateEnabled, vibrateMinThreatLevel);
             contentText = context.getString(R.string.hostile_service_area_changing_lac_detected);
@@ -1009,9 +1048,25 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     }
                     break;
 
+                case HIGH: // ORANGE
+                    tickerText = context.getResources().getString(R.string.app_name_short);
+                    if (protectionNotificationText != null) {
+                        contentText = protectionNotificationText;
+                        tickerText += " - " + contentText;
+                    } else if (femtoDetected) {
+                        contentText = context.getString(R.string.alert_femtocell_tracking_detected);
+                        tickerText += " - " + contentText;
+                    }
+                    break;
+
                 case DANGER: // RED
                     tickerText = context.getResources().getString(R.string.app_name_short) + " - " + context.getString(R.string.alert_threat_detected); // Hmm, this is vague!
-                    if (femtoDetected) {
+                    if (protectionStatus != null) {
+                        contentText = protectionNotificationText != null
+                                ? protectionNotificationText
+                                : context.getString(R.string.alert_sim_swap_detected);
+                        tickerText += " - " + contentText;
+                    } else if (femtoDetected) {
                         contentText = context.getString(R.string.alert_femtocell_connection_detected);
                     } else if (typeZeroSmsDetected) {
                         contentText = context.getString(R.string.alert_silent_sms_detected);
@@ -1052,6 +1107,122 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                 .from(context)
                 .notify(NOTIFICATION_ID, notification);
 
+    }
+
+    /**
+     * Returns the {@link SimSwapper} attached to this tracker, so that static broadcast
+     * receivers can forward SIM-state broadcasts to it. May be {@code null} before the
+     * protection subsystem is constructed.
+     */
+    public SimSwapper getSimSwapper() {
+        return mSimSwapper;
+    }
+
+    /**
+     * Starts the automatic protection subsystem:
+     * <ul>
+     *     <li>SIM-swap / subscriber-identity monitoring ({@link SimSwapper});</li>
+     *     <li>countermeasure execution ({@link AutoProtector}).</li>
+     * </ul>
+     * Idempotent. Call from the service when tracking starts.
+     */
+    public void startProtection() {
+        if (mAutoProtector == null) {
+            mAutoProtector = new AutoProtector(context);
+        }
+        if (mSimSwapper != null) {
+            mSimSwapper.start();
+        }
+    }
+
+    /**
+     * Stops the automatic protection subsystem. Idempotent. Call from the service when
+     * tracking stops or the service is destroyed.
+     */
+    public void stopProtection() {
+        if (mSimSwapper != null) {
+            mSimSwapper.stop();
+        }
+        protectionStatus = null;
+        protectionNotificationText = null;
+    }
+
+    /**
+     * Runs the configured automatic countermeasures in response to a detected threat.
+     * Preferences decide which responses are enabled; airplane-mode engagement is additionally
+     * gated on the threat level being at least MEDIUM.
+     */
+    private void applyProtectionCountermeasures(Status threatLevel) {
+        if (protectionAirplaneEnabled && threatLevel.ordinal() >= Status.MEDIUM.ordinal()) {
+            String reason = protectionNotificationText != null
+                    ? protectionNotificationText
+                    : context.getString(R.string.alert_threat_detected);
+            if (mAutoProtector == null) {
+                mAutoProtector = new AutoProtector(context);
+            }
+            boolean engaged = mAutoProtector.enableAirplaneMode(reason);
+            if (engaged) {
+                @Cleanup Realm realm = Realm.getDefaultInstance();
+                dbHelper.toEventLog(realm, ProtectionConstants.EVENT_AIRPLANE_ENGAGED,
+                        "Auto-protection engaged airplane mode");
+            }
+        }
+        if (protectionWipeEnabled && threatLevel.ordinal() >= Status.DANGER.ordinal()) {
+            String reason = protectionNotificationText != null
+                    ? protectionNotificationText
+                    : context.getString(R.string.alert_threat_detected);
+            if (mAutoProtector == null) {
+                mAutoProtector = new AutoProtector(context);
+            }
+            boolean wiped = mAutoProtector.wipeSensitiveData(reason);
+            if (wiped) {
+                @Cleanup Realm realm = Realm.getDefaultInstance();
+                dbHelper.toEventLog(realm, ProtectionConstants.EVENT_SENSITIVE_DATA_WIPED,
+                        "Auto-protection wiped sensitive data");
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>Called by {@link SimSwapper} when a protection-relevant event (SIM swap, SIM absent,
+     * network loss, ...) was detected. The event has already been written to the EventLog by the
+     * caller; here we update the visible threat level and let {@link #setNotification()} run the
+     * configured countermeasures.</p>
+     */
+    @Override
+    public void onProtectionEvent(Status threatLevel, int eventId, String description) {
+        protectionStatus = threatLevel;
+        // Map the high-level descriptions to localized strings where we have them.
+        switch (eventId) {
+            case ProtectionConstants.EVENT_SIM_SWAP_DETECTED:
+                protectionNotificationText = context.getString(R.string.alert_sim_swap_detected);
+                break;
+            case ProtectionConstants.EVENT_SIM_ABSENT:
+                protectionNotificationText = context.getString(R.string.alert_sim_card_removed);
+                break;
+            case ProtectionConstants.EVENT_SIM_REINSERTED:
+                protectionNotificationText = context.getString(R.string.alert_sim_card_reinserted);
+                break;
+            case ProtectionConstants.EVENT_NETWORK_LOSS:
+                protectionNotificationText = context.getString(R.string.alert_network_signal_lost);
+                break;
+            default:
+                protectionNotificationText = description;
+                break;
+        }
+        setNotification();
+    }
+
+    /**
+     * Raised by the silent-SMS detector when a Type-0 (silent) message was captured. Elevates
+     * the threat status to DANGER so the user is warned and the configured automatic
+     * countermeasures are applied. Latching: the status stays elevated until tracking resets it.
+     */
+    public void onSilentSmsThreat() {
+        typeZeroSmsDetected = true;
+        setNotification();
     }
 
     private AndroidIMSICatcherDetector getApplication() {
