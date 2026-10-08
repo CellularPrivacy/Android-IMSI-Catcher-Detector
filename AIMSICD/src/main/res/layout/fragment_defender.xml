@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/defender_title"
+            android:textSize="18sp"
+            android:textColor="@color/green_text"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/defender_threat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Threat: NONE"
+            android:textSize="20sp"
+            android:padding="6dp" />
+
+        <TextView
+            android:id="@+id/defender_cell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="12sp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingBottom="6dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/defender_protection"
+            android:textSize="16sp"
+            android:textColor="@color/green_text"
+            android:padding="4dp" />
+
+        <Switch
+            android:id="@+id/defender_sw_autoprotect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/defender_auto_protect" />
+
+        <Switch
+            android:id="@+id/defender_sw_firewall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/defender_firewall" />
+
+        <Switch
+            android:id="@+id/defender_sw_autorules"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/defender_auto_rules" />
+
+        <Switch
+            android:id="@+id/defender_sw_traffic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/defender_traffic_monitor" />
+
+        <Switch
+            android:id="@+id/defender_sw_lte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/defender_lte_spoof" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/defender_btn_lockdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/defender_lockdown_now" />
+
+            <Button
+                android:id="@+id/defender_btn_radio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/defender_radio_reset" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/defender_traffic_title"
+            android:textSize="16sp"
+            android:textColor="@color/green_text"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/defender_traffic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/defender_talkers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:padding="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/defender_firewall_title"
+            android:textSize="16sp"
+            android:textColor="@color/green_text"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/defender_vpn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:padding="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/defender_btn_add_rule"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/defender_add_rule" />
+
+            <Button
+                android:id="@+id/defender_btn_clear_auto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/defender_clear_auto" />
+
+            <Button
+                android:id="@+id/defender_btn_vpn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/defender_vpn_start" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/defender_rules"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/defender_events_title"
+            android:textSize="16sp"
+            android:textColor="@color/green_text"
+            android:padding="4dp" />
+
+        <ListView
+            android:id="@+id/defender_events"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+    </LinearLayout>
+</ScrollView>

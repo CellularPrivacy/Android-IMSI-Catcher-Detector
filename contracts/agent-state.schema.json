@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.infinity/contracts/agent-state.schema.json",
+  "title": "AgentState",
+  "description": "Live agent presence on the Agent City map. Served by GET /v1/agents with faction RBAC/ABAC masking (masked entries carry x=null, y=null, masked=true).",
+  "type": "object",
+  "required": ["agent_id", "faction", "status", "last_seen"],
+  "properties": {
+    "agent_id": { "type": "string" },
+    "faction": {
+      "type": "string",
+      "enum": ["INF", "PRM", "DEF", "UNT", "EQB", "PKB"]
+    },
+    "role": { "type": "string", "description": "E.g. code, defender, research, patrol, operator." },
+    "x": { "type": ["number", "null"], "description": "City-grid X, nulled when masked." },
+    "y": { "type": ["number", "null"], "description": "City-grid Y, nulled when masked." },
+    "sector": { "type": "string", "description": "Owning map sector; always visible." },
+    "status": {
+      "type": "string",
+      "enum": ["online", "offline", "stealth"]
+    },
+    "masked": { "type": "boolean" },
+    "last_seen": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

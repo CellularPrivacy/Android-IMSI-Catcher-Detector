@@ -38,6 +38,7 @@ import com.secupwn.aimsicd.service.AimsicdService;
 import com.secupwn.aimsicd.service.CellTracker;
 import com.secupwn.aimsicd.ui.drawer.DrawerMenuActivityConfiguration;
 import com.secupwn.aimsicd.ui.drawer.NavDrawerItem;
+import com.secupwn.aimsicd.defender.ui.DefenderFragment;
 import com.secupwn.aimsicd.ui.fragments.AtCommandFragment;
 import com.secupwn.aimsicd.ui.fragments.CellInfoFragment;
 import com.secupwn.aimsicd.ui.fragments.DbViewerFragment;
@@ -77,6 +78,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
     private AtCommandFragment atCommandFragment;
     private DbViewerFragment dbViewerFragment;
     private MapFragment mapFragment;
+    private DefenderFragment defenderFragment;
 
     private long mLastPress = 0;    // Back press to exit timer
 
@@ -94,6 +96,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         atCommandFragment = new AtCommandFragment();
         dbViewerFragment = new DbViewerFragment();
         mapFragment = new MapFragment();
+        defenderFragment = new DefenderFragment();
 
         mNavConf = new DrawerMenuActivityConfiguration.Builder(this).build();
 
@@ -248,6 +251,10 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
             case DrawerMenu.ID.MAIN.ANTENNA_MAP_VIEW:
                 openFragment(mapFragment);
                 title = getString(R.string.app_name_short);
+                break;
+            case DrawerMenu.ID.MAIN.DEFENDER_AGENT:
+                openFragment(defenderFragment);
+                title = getString(R.string.defender_title);
                 break;
         }
 

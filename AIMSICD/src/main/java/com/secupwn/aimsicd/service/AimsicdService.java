@@ -43,6 +43,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.secupwn.aimsicd.R;
+import com.secupwn.aimsicd.defender.DefenderAgent;
 import com.secupwn.aimsicd.rilexecutor.RilExecutor;
 import com.secupwn.aimsicd.smsdetection.SmsDetector;
 import com.secupwn.aimsicd.utils.Cell;
@@ -62,6 +63,29 @@ public class AimsicdService extends InjectionService {
     public static final String GPS_REMEMBER_CHOICE = "remember choice";
     SharedPreferences gpsPreferences;
 
+    /** The single running instance of the service, or {@code null} when stopped. */
+    private static AimsicdService sInstance;
+
+    /**
+     * @return true when the service is currently running.
+     */
+    public static boolean isRunning() {
+        return sInstance != null;
+    }
+
+    /**
+     * Exposes the {@link SimSwapper} of the running service so that static receivers
+     * (e.g. {@code SimSwapAlarmReceiver}) can forward SIM-state broadcasts to it.
+     *
+     * @return the active SimSwapper, or {@code null} when the service is stopped.
+     */
+    public static SimSwapper getSimSwapper() {
+        if (sInstance == null || sInstance.getCellTracker() == null) {
+            return null;
+        }
+        return sInstance.getCellTracker().getSimSwapper();
+    }
+
     // /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
     public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
     public static final String UPDATE_DISPLAY = "UPDATE_DISPLAY";
@@ -78,6 +102,7 @@ public class AimsicdService extends InjectionService {
     private LocationTracker mLocationTracker;
     private RilExecutor mRilExecutor;
     private SmsDetector smsdetector;
+    private DefenderAgent mDefenderAgent;
 
     private boolean isLocationRequestShowing = false;
 
@@ -96,6 +121,7 @@ public class AimsicdService extends InjectionService {
     @Override
     public void onCreate() {
         super.onCreate();
+        sInstance = this;
         setTheme(R.style.AppTheme);
 
 
@@ -131,6 +157,14 @@ public class AimsicdService extends InjectionService {
         mRilExecutor = new RilExecutor(this);
         mCellTracker = new CellTracker(this, signalStrengthTracker);
 
+        // Defender agent: IMSI-catcher + LTE spoofing auto-protect, firewall, traffic monitor.
+        try {
+            mDefenderAgent = DefenderAgent.getInstance(this);
+            mDefenderAgent.start();
+        } catch (Exception e) {
+            log.warn("DefenderAgent failed to start: {}", e.getMessage());
+        }
+
         log.info("Service launched successfully.");
     }
 
@@ -145,6 +179,12 @@ public class AimsicdService extends InjectionService {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mDefenderAgent != null) {
+            try {
+                mDefenderAgent.stop();
+            } catch (Exception ignored) {
+            }
+        }
         mCellTracker.stop();
         mLocationTracker.stop();
         mAccelerometerMonitor.stop();
@@ -153,6 +193,7 @@ public class AimsicdService extends InjectionService {
         if (SmsDetector.getSmsDetectionState()) {
             smsdetector.stopSmsDetection();
         }
+        sInstance = null;
         log.info("Service destroyed.");
     }
 
@@ -166,6 +207,50 @@ public class AimsicdService extends InjectionService {
 
     public CellTracker getCellTracker() {
         return mCellTracker;
+    }
+
+    public DefenderAgent getDefenderAgent() {
+        if (mDefenderAgent == null) {
+            try {
+                mDefenderAgent = DefenderAgent.getInstance(this);
+            } catch (Exception e) {
+                log.warn("getDefenderAgent failed: {}", e.getMessage());
+            }
+        }
+        return mDefenderAgent;
+    }
+
+    // ---- Defender convenience API (used by UI) ----
+
+    public boolean isAutoProtectEnabled() {
+        return getDefenderAgent() != null
+                && getDefenderAgent().getAutoProtect().isAutoProtectEnabled();
+    }
+
+    public void setAutoProtectEnabled(boolean enable) {
+        if (getDefenderAgent() != null) {
+            getDefenderAgent().setAutoProtectEnabled(enable);
+        }
+    }
+
+    public boolean isFirewallEnabled() {
+        return getDefenderAgent() != null && getDefenderAgent().getFirewall().isEnabled();
+    }
+
+    public void setFirewallEnabled(boolean enable) {
+        if (getDefenderAgent() != null) {
+            getDefenderAgent().getFirewall().setEnabled(enable);
+        }
+    }
+
+    public boolean isTrafficMonitorEnabled() {
+        return getDefenderAgent() != null && getDefenderAgent().isTrafficMonitorEnabled();
+    }
+
+    public void setTrafficMonitorEnabled(boolean enable) {
+        if (getDefenderAgent() != null) {
+            getDefenderAgent().setTrafficMonitorEnabled(enable);
+        }
     }
 
     public Cell getCell() {

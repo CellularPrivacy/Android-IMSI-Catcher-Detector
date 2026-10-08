@@ -1,0 +1,36 @@
+# Prometheus Project: Infinity [Phase 2] — local/cloud stack.
+# TLS terminates at the edge LB (port 443) in front of `backend`.
+# Required env: POSTGRES_PASSWORD, JWT_SECRET, PROVISION_KEY.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: prometheus
+      POSTGRES_USER: prometheus
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prometheus -d prometheus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql://prometheus:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@db:5432/prometheus?sslmode=require"
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET}
+      PROVISION_KEY: ${PROVISION_KEY:?set PROVISION_KEY}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      OIDC_JWKS_URL: ${OIDC_JWKS_URL:-}
+    ports:
+      - "8443:8443"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

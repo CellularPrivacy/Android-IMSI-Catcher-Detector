@@ -98,6 +98,14 @@ public final class SmsDetector extends Thread {
     }
 
     public void startPopUpInfo(SmsType smsType) {
+        // Feed the defender agent so silent-SMS fuses with cell/spoof signals.
+        try {
+            if (mAIMSICDService != null && mAIMSICDService.getCellTracker() != null) {
+                mAIMSICDService.getCellTracker().setSilentSmsDetected(true);
+            }
+        } catch (Exception e) {
+            log.debug("defender silent-sms feed failed: {}", e.getMessage());
+        }
         MiscUtils.showNotification(
                 mContext,
                 mContext.getString(smsType.getAlert()),
@@ -298,6 +306,11 @@ public final class SmsDetector extends Thread {
 
             mDbAdapter.toEventLog(realm, 3, "Detected Type-0 SMS");
             startPopUpInfo(SmsType.SILENT);
+
+            // Escalate the app threat status so the automatic protection / countermeasures kick in.
+            if (mAIMSICDService != null && mAIMSICDService.getCellTracker() != null) {
+                mAIMSICDService.getCellTracker().onSilentSmsThreat();
+            }
         } else {
             log.debug("Detected Sms already logged");
         }

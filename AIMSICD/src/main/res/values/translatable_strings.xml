@@ -122,6 +122,25 @@
     <string name="pref_femto_summ">(currently CDMA Phones ONLY)</string>
     <string name="pref_femto_action_title">Femtocell Protection</string>
     <string name="pref_femto_action_summ">Enforce Airplane Mode when Femtocell detected (re-enable network manually)</string>
+    <string name="pref_sim_swap_protect_title">SIM-Swap Auto-Protection</string>
+    <string name="pref_sim_swap_protect_summ">Automatically cut the mobile network (airplane mode) when a SIM swap or network loss is detected</string>
+    <string name="pref_wipe_sensitive_title">Wipe Trails on Danger</string>
+    <string name="pref_wipe_sensitive_summ">Delete locally recorded cell &amp; SMS logs when a dangerous threat is detected</string>
+    <string name="pref_apn_guard_title">APN Binding Guard</string>
+    <string name="pref_apn_guard_summ">Warn when the active access point (APN) differs from your expected APN</string>
+    <string name="pref_apn_expected_title">My APN</string>
+    <string name="pref_apn_expected_summ">Your carrier APN (e.g. internet). Empty means learn automatically. Find it in system Settings → Mobile network → Access Point Names</string>
+    <string name="pref_apn_autobind_title">Auto-Bind APN</string>
+    <string name="pref_apn_autobind_summ">Automatically learn the current APN as the baseline when none is set yet</string>
+    <string name="pref_apn_autoadapt_title">Auto-Adapt to APN Changes</string>
+    <string name="pref_apn_autoadapt_summ">Adopt a persistently changed APN as the new baseline (never overrides your typed APN)</string>
+    <string name="pref_prometheus_title">Prometheus Uplink</string>
+    <string name="pref_prometheus_enable_title">Prometheus Uplink</string>
+    <string name="pref_prometheus_enable_summ">Stream detection events and crash reports to the Infinity backend over HTTPS</string>
+    <string name="pref_prometheus_endpoint_title">Backend Endpoint</string>
+    <string name="pref_prometheus_endpoint_summ">https:// URL of the Prometheus API (e.g. https://api.prometheus.example)</string>
+    <string name="pref_prometheus_token_title">Device Token</string>
+    <string name="pref_prometheus_token_summ">Server-minted device JWT (see backend provisioning). Stored on this device only</string>
     <string name="pref_ui_title">Interface Settings</string>
     <string name="pref_ui_icons_title">Status-Icons</string>
     <string name="pref_ui_icons_summ">Icon Theme Selection</string>
@@ -295,6 +314,11 @@
     <string name="status_high">High</string>
     <string name="status_danger">Danger</string>
     <string name="status_skull">Run!</string>
+    <string name="alert_sim_swap_detected">Possible SIM swap detected: SIM identity changed!</string>
+    <string name="alert_sim_card_removed">SIM card removed from device.</string>
+    <string name="alert_sim_card_reinserted">SIM card re-inserted.</string>
+    <string name="alert_network_signal_lost">Mobile network signal lost (possible swap or rogue BTS).</string>
+    <string name="alert_apn_mismatch">Active APN differs from your expected APN!</string>
 
     <!-- Advanced User Settings: SMS Detection Strings -->
     <string name="adv_user_info">This menu is for advanced users only!\n\nPlease do not insert random strings because it will cause detection to go out of control.\n\nTo add a string choose the SMS type from the dropdown menu, type your detection string and press insert.\n\nTo delete from database long press on list view.</string>
@@ -422,5 +446,66 @@
         <item>@string/timeout_spinner_30_sec</item>
         <item>@string/timeout_spinner_10_min</item>
     </string-array>
+
+    <!-- Defender Agent: IMSI-catcher + LTE spoofing auto-protect, firewall, traffic monitor -->
+    <string name="defender_title">Defender Agent</string>
+    <string name="defender_protection">Protection</string>
+    <string name="defender_auto_protect">Auto-protect (notify + lockdown + radio reset)</string>
+    <string name="defender_firewall">Firewall (iptables on root, VPN sinkhole otherwise)</string>
+    <string name="defender_auto_rules">Firewall auto rule adder</string>
+    <string name="defender_traffic_monitor">In/Out traffic monitoring scanner</string>
+    <string name="defender_lte_spoof">LTE channel-spoofing detection</string>
+    <string name="defender_threat_level">Threat: %1$s</string>
+    <string name="defender_traffic_title">Live Traffic (In/Out)</string>
+    <string name="defender_traffic_waiting">Collecting traffic samples…</string>
+    <string name="defender_traffic_off">Traffic monitor is OFF. Enable it to scan in/out traffic.</string>
+    <string name="defender_no_talkers">No active app traffic in this sample.</string>
+    <string name="defender_firewall_title">Firewall Rules</string>
+    <string name="defender_add_rule">Add</string>
+    <string name="defender_add_rule_title">Block IP or CIDR (outbound)</string>
+    <string name="defender_clear_auto">Clear auto</string>
+    <string name="defender_cleared_auto">Cleared %1$d auto rules</string>
+    <string name="defender_lockdown_now">Lockdown data</string>
+    <string name="defender_clear_lockdown">Clear lockdown</string>
+    <string name="defender_radio_reset">Reset radio</string>
+    <string name="defender_vpn_start">VPN ON</string>
+    <string name="defender_vpn_stop">VPN OFF</string>
+    <string name="defender_events_title">Recent Defender Events</string>
+    <string name="defender_no_events">No defender events yet.</string>
+    <string name="defender_notif_title">Defender %1$s</string>
+    <string name="defender_notif_radio_title">Defender: radio reset needed</string>
+    <string name="defender_data_lockdown_on">Defender: data lockdown ON. Clear it from the Defender panel when safe.</string>
+    <string name="defender_lockdown_limited">Defender: lockdown limited without root — DENY rules still enforced. Turn VPN ON for non-root blocking.</string>
+    <string name="defender_vpn_consent_hint">Tap VPN ON and accept the system dialog to enable non-root blocking.</string>
+    <string name="defender_lockdown_cleared">Defender: lockdown cleared.</string>
+    <string name="defender_radio_reset_done">Defender: radio re-attached (airplane pulse).</string>
+    <string name="defender_radio_reset_manual">Defender: please toggle Airplane Mode once to drop the suspicious cell (needs root for auto).</string>
+    <string name="defender_sig_lac_change">LAC changed for known CID</string>
+    <string name="defender_sig_no_neighbors">No neighbor cells where expected</string>
+    <string name="defender_sig_unknown_cid">CID unknown to OpenCellID import</string>
+    <string name="defender_sig_femto">Femtocell connection</string>
+    <string name="defender_sig_silent_sms">Silent SMS detected</string>
+    <string name="defender_evt_catcher_title">IMSI-catcher suspect</string>
+    <string name="defender_evt_lte_title">LTE channel-spoofing suspect</string>
+    <string name="defender_evt_downgrade_title">Possible downgrade attack (LTE-\u003e2G)</string>
+    <string name="defender_evt_autorule_title">Firewall auto-blocked %1$d target(s)</string>
+    <string name="help_main_defender">Auto-protect agent: IMSI-catcher + LTE spoofing defense, firewall and traffic scanner.</string>
+
+    <!-- Defender preferences -->
+    <string name="pref_defender_title">Defender Agent</string>
+    <string name="pref_defender_autoprotect_title">Auto-protect</string>
+    <string name="pref_defender_autoprotect_summ">Auto lockdown + radio reset on HIGH/CRITICAL threats</string>
+    <string name="pref_defender_firewall_title">Firewall</string>
+    <string name="pref_defender_firewall_summ">Block attacker IPs (iptables with root, VPN sinkhole without)</string>
+    <string name="pref_defender_autorules_title">Firewall auto rule adder</string>
+    <string name="pref_defender_autorules_summ">Auto-block suspicious IPs/apps found by detection + traffic scanner</string>
+    <string name="pref_defender_traffic_title">Traffic monitor</string>
+    <string name="pref_defender_traffic_summ">Scan in/out traffic, per-app rates and upload anomalies</string>
+    <string name="pref_defender_lte_title">LTE spoofing detection</string>
+    <string name="pref_defender_lte_summ">Detect fake tracking areas, PCI confusion, EARFCN hops, downgrades</string>
+    <string name="pref_defender_datalock_title">Data lockdown on HIGH+</string>
+    <string name="pref_defender_datalock_summ">Block outbound data automatically on HIGH threats</string>
+    <string name="pref_defender_radioreset_title">Radio reset on CRITICAL</string>
+    <string name="pref_defender_radioreset_summ">Airplane-mode pulse on CRITICAL (needs root; otherwise manual prompt)</string>
 
 </resources>

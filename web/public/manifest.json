@@ -1,0 +1,19 @@
+{
+  "name": "Prometheus Project: Infinity",
+  "short_name": "Infinity",
+  "description": "Origins entry + Agent City live 3D command map.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#020202",
+  "theme_color": "#020202",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

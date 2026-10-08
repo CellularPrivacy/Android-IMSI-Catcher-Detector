@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --obsidian: #020202;
+  --core-fire: #ff6b00;
+  --infinity-cyan: #00d9ff;
+}
+
+html,
+body {
+  background: var(--obsidian);
+  color: #e8f6ff;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Holographic HUD panel */
+.hud-panel {
+  background: linear-gradient(160deg, rgba(0, 217, 255, 0.08), rgba(2, 2, 2, 0.9));
+  border: 1px solid rgba(0, 217, 255, 0.25);
+  backdrop-filter: blur(6px);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 12px rgba(0, 217, 255, 0.8);
+}
+
+.text-glow-fire {
+  text-shadow: 0 0 12px rgba(255, 107, 0, 0.8);
+}
+
+.scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 217, 255, 0.03) 4px
+  );
+}

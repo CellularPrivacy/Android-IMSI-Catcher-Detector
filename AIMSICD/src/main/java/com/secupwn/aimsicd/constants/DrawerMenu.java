@@ -34,6 +34,7 @@ public class DrawerMenu {
             public static final int DB_VIEWER = 130;
             public static final int ANTENNA_MAP_VIEW = 140;
             public static final int AT_COMMAND_INTERFACE = 150;
+            public static final int DEFENDER_AGENT = 160;
 
         }
 

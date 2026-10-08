@@ -70,3 +70,11 @@ import-summary.txt
 manifest-merger*.txt
 .navigation/
 scratchpad
+node_modules/
+web/.next/
+__pycache__/
+*.pyc
+.venv/
+.env
+next-env.d.ts
+*.tsbuildinfo

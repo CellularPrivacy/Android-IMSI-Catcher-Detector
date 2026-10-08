@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.infinity/contracts/telemetry-event.schema.json",
+  "title": "TelemetryEvent",
+  "description": "Detection event uplinked by a Prometheus field node (AIMSICD Android DEF sensor). Consumed by POST /v1/telemetry and fanned out over WS /v1/stream.",
+  "type": "object",
+  "required": ["event_id", "threat_level", "occurred_at"],
+  "properties": {
+    "event_id": {
+      "type": "integer",
+      "description": "AIMSICD DF_id: 1-7 classic detections, 100-109 auto-protection subsystem."
+    },
+    "device_id": { "type": "string", "description": "Stable field-node identifier (matches JWT sub)." },
+    "faction": {
+      "type": "string",
+      "enum": ["INF", "PRM", "DEF", "UNT", "EQB", "PKB"],
+      "description": "Owning faction of the reporting node."
+    },
+    "threat_level": {
+      "type": "string",
+      "enum": ["IDLE", "OK", "MEDIUM", "HIGH", "DANGER"]
+    },
+    "description": { "type": "string" },
+    "cell": {
+      "type": "object",
+      "properties": {
+        "mcc": { "type": "integer" },
+        "mnc": { "type": "integer" },
+        "lac": { "type": "integer" },
+        "cid": { "type": "integer" },
+        "rat": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "apn": { "type": "string", "description": "Active APN value when the APN guard is relevant." },
+    "sim_fingerprint_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "One-way subscriber fingerprint; raw identifiers are never uplinked."
+    },
+    "app_version": { "type": "string" },
+    "occurred_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

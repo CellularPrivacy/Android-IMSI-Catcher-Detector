@@ -88,6 +88,7 @@ public class DrawerMenuActivityConfiguration {
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.DB_VIEWER, mContext.getString(R.string.db_viewer), R.drawable.ic_action_storage, true));
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.ANTENNA_MAP_VIEW, mContext.getString(R.string.map_view), R.drawable.ic_action_map, false));
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.AT_COMMAND_INTERFACE, mContext.getString(R.string.at_command_title), R.drawable.ic_action_computer, true));
+            menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.DEFENDER_AGENT, mContext.getString(R.string.defender_title), R.drawable.ic_action_settings, true));
 
             //Section Settings
             menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_DATABASE_SETTINGS, mContext.getString(R.string.database_settings)));

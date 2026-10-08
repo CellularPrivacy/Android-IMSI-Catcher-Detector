@@ -69,6 +69,25 @@
     </string-array>
 
 
+    <!-- Defender Agent preference keys (must match DefenderAgent/AutoProtectController literals) -->
+    <string name="pref_defender_autoprotect_key" translatable="false">pref_defender_auto_protect</string>
+    <string name="pref_defender_firewall_key" translatable="false">pref_defender_firewall</string>
+    <string name="pref_defender_autorules_key" translatable="false">pref_defender_auto_rules</string>
+    <string name="pref_defender_traffic_key" translatable="false">pref_defender_traffic_monitor</string>
+    <string name="pref_defender_lte_key" translatable="false">pref_defender_lte_spoof</string>
+    <string name="pref_defender_datalock_key" translatable="false">pref_defender_data_lockdown</string>
+    <string name="pref_defender_radioreset_key" translatable="false">pref_defender_radio_reset</string>
+
+    <!-- SIM-swap / IMSI-catcher auto-protection preference keys -->
+    <string name="pref_sim_swap_protect_key" translatable="false">pref_sim_swap_protect</string>
+    <string name="pref_wipe_sensitive_key" translatable="false">pref_wipe_sensitive</string>
+    <string name="pref_apn_guard_key" translatable="false">pref_apn_guard</string>
+    <string name="pref_apn_expected_key" translatable="false">pref_apn_expected</string>
+    <string name="pref_apn_autobind_key" translatable="false">pref_apn_autobind</string>
+    <string name="pref_apn_autoadapt_key" translatable="false">pref_apn_autoadapt</string>
+    <string name="pref_prometheus_enable_key" translatable="false">pref_prometheus_enable</string>
+    <string name="pref_prometheus_endpoint_key" translatable="false">pref_prometheus_endpoint</string>
+    <string name="pref_prometheus_token_key" translatable="false">pref_prometheus_token</string>
     <string name="adv_user_root_pref_key">is_root_sms_enabled</string>
     <string name="TYPE0">TYPE0</string>
     <string name="MWI">MWI</string>

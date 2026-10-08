@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prometheus.infinity/contracts/error-report.schema.json",
+  "title": "ErrorReport",
+  "description": "Neural error-logger payload: uncaught exceptions / fatal errors from any Prometheus client. Consumed by POST /v1/errors; feeds the self-learning vector DB.",
+  "type": "object",
+  "required": ["app", "exception_type", "stack_trace", "occurred_at"],
+  "properties": {
+    "app": {
+      "type": "string",
+      "enum": ["aimsicd-android", "prometheus-backend", "prometheus-web"]
+    },
+    "app_version": { "type": "string" },
+    "os": { "type": "string", "description": "Free-form OS string, e.g. Android 14 / SDK 34." },
+    "device_id": { "type": "string" },
+    "exception_type": { "type": "string" },
+    "message": { "type": "string" },
+    "stack_trace": { "type": "string" },
+    "breadcrumbs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Last N log lines preceding the crash (most recent last)."
+    },
+    "occurred_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}
