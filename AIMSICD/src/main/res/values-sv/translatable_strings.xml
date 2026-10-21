@@ -29,11 +29,11 @@
     <string name="ciphering_indicator_title">Kodindikator</string>
     <string name="neighboring_cells_num_title">Total:</string>
     <string name="sim_country">Land:</string>
-    <string name="sim_operator_id">Användar-ID:</string>
-    <string name="sim_operator_name">Användarnamn:</string>
+    <string name="sim_operator_id">Operatörs-ID:</string>
+    <string name="sim_operator_name">Operatörens namn:</string>
     <string name="sim_imsi">IMSI:</string>
     <string name="sim_serial">Serienummer:</string>
-    <string name="device_type">Telefonmodell:</string>
+    <string name="device_type">Telefontyp:</string>
     <string name="device_imei">IMEI:</string>
     <string name="device_version">RIL-version:</string>
     <string name="network_name">Leverantörsnamn:</string>
@@ -64,8 +64,8 @@
     <string name="disclaimer">Genom att använda AIMSICD förstår och accepterar du att AIMSICD är en experimentell och informativ Android-app som av många skäl kan missa övervakning och spårning. Du förstår också att den kan kringgås eller besegras med metoder som utvecklarna ännu inte känner till. Du accepterar därför att utvecklarna och de företag som är kopplade till den här fria produkten inte kan hållas ansvariga för något resultat eller utfall som beror på användningen av appen. UTVECKLINGSSTATUS: ALFA!</string>
     <string name="toggle_attack_detection">toggle_attack_detection</string>
     <string name="toggle_cell_tracking">toggle_cell_tracking</string>
-    <string name="cell_lookup">Alla nuvarande cell detaljer</string>
-    <string name="no_network_connection_message">Kunde ej ladda ner OpenCellID utan Internet anslutning, var god aktivera data anslutning!</string>
+    <string name="cell_lookup">Alla detaljer om aktuella celler</string>
+    <string name="no_network_connection_message">Det går inte att hämta OpenCellID-data utan internetanslutning. Aktivera dataanslutningen!</string>
     <string name="import_cell_towers">Importera Celltorn Data</string>
     <string name="network_lte_timing_advance">TA (LTE):</string>
     <string name="network_psc">PSC:</string>
@@ -73,7 +73,7 @@
     <string name="about_aimsicd">Om AIMSICD</string>
     <string name="buildnumber">Kompileringsnummer: %s</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
-    <string name="aimsicd_about_info3">Android baserat projekt för att upptäcka och undvika falska basstationer (IMSI-Catchers) i GSM/UMTS Nätverk.</string>
+    <string name="aimsicd_about_info3">Androidbaserat projekt för att upptäcka och undvika falska basstationer (IMSI-fångare) i GSM/UMTS-nät.</string>
     <string name="about_changelog">ÄNDRINGSLOGG</string>
     <string name="about_credits">MEDVÄRKANDE</string>
     <string name="status_high_about_desc">Aktiv upptäckt nära dig!</string>
