@@ -69,7 +69,7 @@
     <string name="import_cell_towers">Importera Celltorn Data</string>
     <string name="network_lte_timing_advance">TA (LTE):</string>
     <string name="network_psc">PSC:</string>
-    <string name="upload_bts">Ladda upp BTS Data</string>
+    <string name="upload_bts">Ladda upp BTS-data</string>
     <string name="about_aimsicd">Om AIMSICD</string>
     <string name="buildnumber">Kompileringsnummer: %s</string>
     <string name="git_sha">Git SHA-Hash: %s</string>
