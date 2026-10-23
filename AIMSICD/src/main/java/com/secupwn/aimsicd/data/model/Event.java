@@ -16,6 +16,9 @@ import lombok.Setter;
  * 5       "Detected WAP PUSH SMS"
  * 6       "Detected WAP PUSH (2) SMS"
  * 7
+ *
+ * IDs {@code 100..109} are reserved for the automatic protection / countermeasure subsystem;
+ * see {@link com.secupwn.aimsicd.constants.ProtectionConstants}.
  */
 @Getter
 @Setter

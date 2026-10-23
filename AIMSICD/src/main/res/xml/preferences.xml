@@ -58,6 +58,16 @@
             android:key="@string/adv_user_root_pref_key"
             android:summary="@string/adv_user_root_sum"
             android:title="@string/adv_user_root_title"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/pref_sim_swap_protect_key"
+            android:summary="@string/pref_sim_swap_protect_summ"
+            android:title="@string/pref_sim_swap_protect_title"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/pref_wipe_sensitive_key"
+            android:summary="@string/pref_wipe_sensitive_summ"
+            android:title="@string/pref_wipe_sensitive_title"/>
     </PreferenceCategory>
 
     <PreferenceCategory

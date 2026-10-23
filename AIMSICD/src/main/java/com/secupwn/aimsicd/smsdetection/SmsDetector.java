@@ -298,6 +298,11 @@ public final class SmsDetector extends Thread {
 
             mDbAdapter.toEventLog(realm, 3, "Detected Type-0 SMS");
             startPopUpInfo(SmsType.SILENT);
+
+            // Escalate the app threat status so the automatic protection / countermeasures kick in.
+            if (mAIMSICDService != null && mAIMSICDService.getCellTracker() != null) {
+                mAIMSICDService.getCellTracker().onSilentSmsThreat();
+            }
         } else {
             log.debug("Detected Sms already logged");
         }

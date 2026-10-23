@@ -68,10 +68,26 @@ public class TinyDB {
         return preferences.getString(key, "");
     }
 
+    public void putString(String key, String value) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
     public void putInt(String key, int value) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(key, value);
         editor.apply();
+    }
+
+    public void putLong(String key, long value) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong(key, value);
+        editor.apply();
+    }
+
+    public long getLong(String key) {
+        return preferences.getLong(key, 0L);
     }
 
     public void putBoolean(String key, boolean value) {
